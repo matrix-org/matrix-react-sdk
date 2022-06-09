@@ -169,7 +169,7 @@ limitations under the License.
                 }
 
                 &:hover,
-                &.mx_MessageComposer_closeButtonMenu {
+                &.mx_MessageComposer_button--menu--close {
                     &::after {
                         background: rgba($accent, 0.1);
                     }
@@ -179,7 +179,7 @@ limitations under the License.
                     }
                 }
 
-                &.mx_MessageComposer_buttonMenu::before {
+                &.mx_MessageComposer_button--menu::before {
                     mask-image: url('$(res)/img/image-view/more.svg');
                 }
 
@@ -187,11 +187,11 @@ limitations under the License.
                     background-color: $alert;
                 }
 
-                &.mx_MessageComposer_emoji::before {
+                &.mx_MessageComposer_button--emoji::before {
                     mask-image: url('$(res)/img/element-icons/room/composer/emoji.svg');
                 }
 
-                &.mx_MessageComposer_upload::before {
+                &.mx_MessageComposer_button--upload::before {
                     mask-image: url('$(res)/img/element-icons/room/composer/attach.svg');
                 }
             }
@@ -403,19 +403,19 @@ limitations under the License.
 
 // Buttons inside the context menu
 .mx_IconizedContextMenu_icon {
-    &.mx_MessageComposer_poll::before {
+    &.mx_MessageComposer_button--poll::before {
         mask-image: url('$(res)/img/element-icons/room/composer/poll.svg');
     }
 
-    &.mx_MessageComposer_voiceMessage::before {
+    &.mx_MessageComposer_button--voiceMessage::before {
         mask-image: url('$(res)/img/voip/mic-on-mask.svg');
     }
 
-    &.mx_MessageComposer_location::before {
+    &.mx_MessageComposer_button--location::before {
         mask-image: url('$(res)/img/element-icons/room/composer/location.svg');
     }
 
-    &.mx_MessageComposer_stickers::before {
+    &.mx_MessageComposer_button--stickers::before {
         mask-image: url('$(res)/img/element-icons/room/composer/sticker.svg');
     }
 }

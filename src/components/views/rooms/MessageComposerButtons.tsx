@@ -96,9 +96,9 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     moreButtons = moreButtons.filter((x: ReactElement) => x);
 
     const moreOptionsClasses = classNames({
-        mx_MessageComposer_button: true,
-        mx_MessageComposer_buttonMenu: true,
-        mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
+        "mx_MessageComposer_button": true,
+        'mx_MessageComposer_button--menu': true,
+        'mx_MessageComposer_button--menu--close': props.isMenuOpen,
     });
 
     return <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
@@ -172,7 +172,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
     return <React.Fragment>
         <CollapsibleButton
             className={className}
-            iconClassName="mx_MessageComposer_emoji"
+            iconClassName="mx_MessageComposer_button--emoji"
             onClick={openMenu}
             title={_t("Emoji")}
         />
@@ -259,7 +259,7 @@ const UploadButton = () => {
 
     return <CollapsibleButton
         className="mx_MessageComposer_button"
-        iconClassName="mx_MessageComposer_upload"
+        iconClassName="mx_MessageComposer_button--upload"
         onClick={onClick}
         title={_t('Attachment')}
     />;
@@ -272,7 +272,7 @@ function showStickersButton(props: IProps): ReactElement {
                 id='stickersButton'
                 key="controls_stickers"
                 className="mx_MessageComposer_button"
-                iconClassName="mx_MessageComposer_stickers"
+                iconClassName="mx_MessageComposer_button--stickers"
                 onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
                 title={props.isStickerPickerOpen ? _t("Hide stickers") : _t("Sticker")}
             />
@@ -288,7 +288,7 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
             : <CollapsibleButton
                 key="voice_message_send"
                 className="mx_MessageComposer_button"
-                iconClassName="mx_MessageComposer_voiceMessage"
+                iconClassName="mx_MessageComposer_button--voiceMessage"
                 onClick={props.onRecordStartEndClick}
                 title={_t("Voice Message")}
             />
@@ -353,7 +353,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         return (
             <CollapsibleButton
                 className="mx_MessageComposer_button"
-                iconClassName="mx_MessageComposer_poll"
+                iconClassName="mx_MessageComposer_button--poll"
                 onClick={this.onCreateClick}
                 title={_t("Poll")}
             />

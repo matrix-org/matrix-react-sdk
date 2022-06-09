@@ -20,7 +20,7 @@ import { ElementSession } from "../session";
 
 export async function sendSticker(session: ElementSession): Promise<void> {
     session.log.step(`opens composer menu`);
-    const kebabButton = await session.query('.mx_MessageComposer_buttonMenu');
+    const kebabButton = await session.query('.mx_MessageComposer_button--menu');
     await kebabButton.click();
     session.log.done();
 
