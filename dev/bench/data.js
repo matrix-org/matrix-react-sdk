@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654766359116,
+  "lastUpdate": 1654777852906,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99740,6 +99740,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4986,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2bdb4d396a1e13ab82581617b3ccd0d43d385b71",
+          "message": "Live location share - show loading UI for beacons with start timestamp in the future (PSF-1081) (#8775)\n\n* check for beacons that are yet to start and show loading ui\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update snapshots for js-sdk rename\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* Update test/components/views/messages/MBeaconBody-test.tsx\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>\r\n\r\n* Update src/components/views/beacon/displayStatus.ts\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-06-09T13:25:30+01:00",
+          "tree_id": "15a9c0c67333bb753e2ec0fb7b87bc9b58e31f98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2bdb4d396a1e13ab82581617b3ccd0d43d385b71"
+        },
+        "date": 1654777841058,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4795.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 923.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1551.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4266,
             "unit": "ms",
             "extra": "type: measure"
           }
