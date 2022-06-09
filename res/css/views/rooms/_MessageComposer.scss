@@ -96,15 +96,15 @@ limitations under the License.
                 opacity: 0;
             }
 
-            .mx_MessageComposer_sendMessageWrapper-enter-active {
-                width: var(--sendMessageSize);
-                transform: scale(1);
-                opacity: 1;
-            }
-
             .mx_MessageComposer_sendMessageWrapper {
                 --sendMessageSize: 32px;
                 transition: all var(--transition-short);
+
+                &.mx_MessageComposer_sendMessageWrapper-enter-active {
+                    width: var(--sendMessageSize);
+                    transform: scale(1);
+                    opacity: 1;
+                }
 
                 .mx_MessageComposer_sendMessageButton {
                     position: relative;
