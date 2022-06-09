@@ -148,14 +148,14 @@ limitations under the License.
                 &.mx_MessageComposer_hangup:not(.mx_AccessibleButton_disabled)::before {
                     background-color: $alert;
                 }
-            }
 
-            .mx_MessageComposer_upload::before {
-                mask-image: url('$(res)/img/element-icons/room/composer/attach.svg');
-            }
+                &.mx_MessageComposer_emoji::before {
+                    mask-image: url('$(res)/img/element-icons/room/composer/emoji.svg');
+                }
 
-            .mx_MessageComposer_emoji::before {
-                mask-image: url('$(res)/img/element-icons/room/composer/emoji.svg');
+                &.mx_MessageComposer_upload::before {
+                    mask-image: url('$(res)/img/element-icons/room/composer/attach.svg');
+                }
             }
         }
 
@@ -295,22 +295,6 @@ limitations under the License.
     }
 }
 
-.mx_MessageComposer_poll::before {
-    mask-image: url('$(res)/img/element-icons/room/composer/poll.svg');
-}
-
-.mx_MessageComposer_voiceMessage::before {
-    mask-image: url('$(res)/img/voip/mic-on-mask.svg');
-}
-
-.mx_MessageComposer_location::before {
-    mask-image: url('$(res)/img/element-icons/room/composer/location.svg');
-}
-
-.mx_MessageComposer_stickers::before {
-    mask-image: url('$(res)/img/element-icons/room/composer/sticker.svg');
-}
-
 .mx_MessageComposer_sendMessageWrapper,
 .mx_MessageComposer_sendMessageWrapper-enter,
 .mx_MessageComposer_sendMessageWrapper-exit {
@@ -415,6 +399,25 @@ limitations under the License.
 
     &.mx_MessageComposer_markdownDisabled {
         opacity: 0.2;
+    }
+}
+
+// Buttons inside the context menu
+.mx_IconizedContextMenu_icon {
+    &.mx_MessageComposer_poll::before {
+        mask-image: url('$(res)/img/element-icons/room/composer/poll.svg');
+    }
+
+    &.mx_MessageComposer_voiceMessage::before {
+        mask-image: url('$(res)/img/voip/mic-on-mask.svg');
+    }
+
+    &.mx_MessageComposer_location::before {
+        mask-image: url('$(res)/img/element-icons/room/composer/location.svg');
+    }
+
+    &.mx_MessageComposer_stickers::before {
+        mask-image: url('$(res)/img/element-icons/room/composer/sticker.svg');
     }
 }
 
