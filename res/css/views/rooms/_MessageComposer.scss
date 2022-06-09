@@ -88,6 +88,20 @@ limitations under the License.
             align-items: center;
             gap: 6px; // TODO: Use a spacing variable
 
+            .mx_MessageComposer_sendMessageWrapper,
+            .mx_MessageComposer_sendMessageWrapper-enter,
+            .mx_MessageComposer_sendMessageWrapper-exit {
+                width: 0;
+                transform: scale(.6);
+                opacity: 0;
+            }
+
+            .mx_MessageComposer_sendMessageWrapper-enter-active {
+                width: var(--sendMessageSize);
+                transform: scale(1);
+                opacity: 1;
+            }
+
             .mx_MessageComposer_sendMessageWrapper {
                 --sendMessageSize: 32px;
                 transition: all var(--transition-short);
@@ -317,20 +331,6 @@ limitations under the License.
     &::before {
         background-color: $accent !important;
     }
-}
-
-.mx_MessageComposer_sendMessageWrapper,
-.mx_MessageComposer_sendMessageWrapper-enter,
-.mx_MessageComposer_sendMessageWrapper-exit {
-    width: 0;
-    transform: scale(.6);
-    opacity: 0;
-}
-
-.mx_MessageComposer_sendMessageWrapper-enter-active {
-    width: var(--sendMessageSize);
-    transform: scale(1);
-    opacity: 1;
 }
 
 .mx_MessageComposer_formatting {
