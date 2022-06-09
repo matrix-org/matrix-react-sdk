@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654781165008,
+  "lastUpdate": 1654782392572,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99908,6 +99908,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 805.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4e1958d9fe37b2a168a1e214d5c679134c57a88a",
+          "message": "Fix #20026: send read marker as soon as we change it (#8802)",
+          "timestamp": "2022-06-09T13:41:09Z",
+          "tree_id": "49a6e2df69ba7b8f5d853dd6b49e3bcc02ae8118",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4e1958d9fe37b2a168a1e214d5c679134c57a88a"
+        },
+        "date": 1654782381650,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4702.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 966.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1561,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4378.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
