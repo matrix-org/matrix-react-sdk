@@ -24,7 +24,6 @@ import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { canRedact } from "../../../utils/EventUtils";
 
 interface IProps {
     // The event we're displaying reactions for
@@ -58,11 +57,8 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
     onClick = () => {
         const { mxEvent, myReactionEvent, content } = this.props;
         if (myReactionEvent) {
-            const roomId = mxEvent.getRoomId();
-            if (!canRedact(roomId, myReactionEvent)) return;
-
             this.context.redactEvent(
-                roomId,
+                mxEvent.getRoomId(),
                 myReactionEvent.getId(),
             );
         } else {
@@ -131,7 +127,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             className={classes}
             aria-label={label}
             onClick={this.onClick}
-            disabled={this.props.disabled || (myReactionEvent && !canRedact(mxEvent.getRoomId(), myReactionEvent))}
+            disabled={this.props.disabled}
             onMouseOver={this.onMouseOver}
             onMouseLeave={this.onMouseLeave}
         >

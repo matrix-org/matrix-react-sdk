@@ -292,9 +292,3 @@ export function canForward(event: MatrixEvent): boolean {
 export function hasThreadSummary(event: MatrixEvent): boolean {
     return event.isThreadRoot && event.getThread()?.length && !!event.getThread().replyToEvent;
 }
-
-export function canRedact(roomId: string, mxEvent: MatrixEvent): boolean {
-    const client = MatrixClientPeg.get();
-    const room = client.getRoom(roomId);
-    return room.currentState.maySendRedactionForEvent(mxEvent, client.getUserId());
-}
