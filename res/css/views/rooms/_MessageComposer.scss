@@ -418,6 +418,11 @@ limitations under the License.
     &.mx_MessageComposer_button--stickers::before {
         mask-image: url('$(res)/img/element-icons/room/composer/sticker.svg');
     }
+
+    // On narrow message panel
+    &.mx_MessageComposer_button--upload::before {
+        mask-image: url('$(res)/img/element-icons/room/composer/attach.svg');
+    }
 }
 
 .mx_MainSplit_timeline {
