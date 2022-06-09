@@ -101,7 +101,7 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
 
     const synapseId = await dockerRun({
         image: "matrixdotorg/synapse:develop",
-        containerName: `react-sdk-cypress-sliding-${crypto.randomBytes(4).toString("hex")}`,
+        containerName: `react-sdk-cypress-synapse-${crypto.randomBytes(4).toString("hex")}`,
         params: [
             "--rm",
             "-v", `${synCfg.configDir}:/data`,

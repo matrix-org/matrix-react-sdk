@@ -33,14 +33,17 @@ export function dockerRun(args: {
     const userInfo = os.userInfo();
     const params = args.params ?? [];
 
+    if (userInfo.uid >= 0) {
+        // On *nix we run the docker container as our uid:gid otherwise cleaning it up its media_store can be difficult
+        params.push("-u", `${userInfo.uid}:${userInfo.gid}`);
+    }
+
     return new Promise<string>((resolve, reject) => {
         childProcess.execFile('docker', [
             "run",
             "--name", args.containerName,
             "-d",
             ...params,
-            // We run the docker container as our uid:gid otherwise cleaning it up any bind mounts can be difficult
-            "-u", `${userInfo.uid}:${userInfo.gid}`,
             args.image,
             "run",
         ], (err, stdout) => {
