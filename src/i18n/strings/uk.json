@@ -3466,5 +3466,15 @@
     "Send reply…": "Надіслати відповідь…",
     "Send encrypted reply…": "Надіслати зашифровану відповідь…",
     "Show HTML representation of room topics": "Показати HTML-подання тем кімнати",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері."
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері.",
+    "Joining the beta will reload %(brand)s.": "Перехід до бета-тестування перезавантажить %(brand)s.",
+    "Leaving the beta will reload %(brand)s.": "Вихід з бета-тестування перезавантажить %(brand)s.",
+    "Video rooms are a beta feature": "Відеокімнати — це бета-функція",
+    "Yes, the chat timeline is displayed alongside the video.": "Так, стрічка бесіди показана поряд із відео.",
+    "Can I use text chat alongside the video call?": "Чи можу я писати текстові повідомлення під час відеовиклику?",
+    "Use the “+” button in the room section of the left panel.": "Натисніть кнопку «+» у розділі кімнат на лівій панелі.",
+    "How can I create a video room?": "Як створити відеокімнату?",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Відеокімнати — це завжди в VOIP-канали, вбудовані в кімнату в %(brand)s.",
+    "A new way to chat over voice and video in %(brand)s.": "Новий спосіб спілкування за допомогою голосового та відеозв’язку в %(brand)s.",
+    "Video rooms": "Відеокімнати"
 }
