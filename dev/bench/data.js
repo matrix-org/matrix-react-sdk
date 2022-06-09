@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654777852906,
+  "lastUpdate": 1654778218375,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99788,6 +99788,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4266,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "67cace7de7e8674a0c916bf47836c0f60becb651",
+          "message": "Move style rules for EventTile on ThreadView from _ThreadPanel.scss to _EventTile.scss (#8689)",
+          "timestamp": "2022-06-09T13:31:38+01:00",
+          "tree_id": "5345e60616eadf98a42d6a8da7995610208ea99f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/67cace7de7e8674a0c916bf47836c0f60becb651"
+        },
+        "date": 1654778208119,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5132.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 666.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
