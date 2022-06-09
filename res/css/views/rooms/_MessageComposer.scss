@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_MessageComposer {
 .mx_MessageComposer_wrapper {
     vertical-align: middle;
     margin: auto;
@@ -95,6 +96,7 @@ limitations under the License.
     .mx_VoiceMessagePrimaryContainer {
         margin-right: $spacing-8;
     }
+}
 }
 
 .mx_MessageComposer_autocomplete_wrapper {
@@ -422,9 +424,11 @@ limitations under the License.
 }
 
 .mx_MainSplit_timeline {
+    .mx_MessageComposer {
     .mx_MessageComposer_wrapper {
         margin: $spacing-8 $spacing-16;
     }
+}
 }
 
 .mx_MatrixChat_useCompactLayout {
