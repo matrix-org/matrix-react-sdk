@@ -3466,5 +3466,15 @@
     "Reply to <User />": "Odpovědět uživateli <User />",
     "Send message…": "Odeslat zprávu…",
     "Show HTML representation of room topics": "Zobrazit HTML reprezentaci témat místností",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlášení budou tyto klíče z tohoto zařízení odstraněny, což znamená, že nebudete moci číst zašifrované zprávy, pokud k nim nemáte klíče v jiných zařízeních nebo je nemáte zálohované na serveru."
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlášení budou tyto klíče z tohoto zařízení odstraněny, což znamená, že nebudete moci číst zašifrované zprávy, pokud k nim nemáte klíče v jiných zařízeních nebo je nemáte zálohované na serveru.",
+    "Joining the beta will reload %(brand)s.": "Po připojení k betě se %(brand)s znovu načte.",
+    "Leaving the beta will reload %(brand)s.": "Po opuštění beta verze se %(brand)s znovu načte.",
+    "Video rooms are a beta feature": "Video místnosti jsou beta funkce",
+    "Yes, the chat timeline is displayed alongside the video.": "Ano, časová osa chatu se zobrazuje vedle videa.",
+    "Can I use text chat alongside the video call?": "Mohu vedle videohovoru používat i textový chat?",
+    "Use the “+” button in the room section of the left panel.": "Použijte tlačítko \"+\" v sekci místnosti na levém panelu.",
+    "How can I create a video room?": "Jak mohu vytvořit video místnost?",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Video místnosti jsou vždy zapnuté VoIP kanály vložené do místnosti v aplikaci %(brand)s.",
+    "A new way to chat over voice and video in %(brand)s.": "Nový způsob hlasového a video hovoru v aplikaci %(brand)s.",
+    "Video rooms": "Video místnosti"
 }
