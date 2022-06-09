@@ -143,6 +143,10 @@ limitations under the License.
                     }
                 }
 
+                &.mx_MessageComposer_buttonMenu::before {
+                    mask-image: url('$(res)/img/image-view/more.svg');
+                }
+
                 &.mx_MessageComposer_hangup:not(.mx_AccessibleButton_disabled)::before {
                     background-color: $alert;
                 }
@@ -316,10 +320,6 @@ limitations under the License.
 
 .mx_MessageComposer_stickers::before {
     mask-image: url('$(res)/img/element-icons/room/composer/sticker.svg');
-}
-
-.mx_MessageComposer_buttonMenu::before {
-    mask-image: url('$(res)/img/image-view/more.svg');
 }
 
 .mx_MessageComposer_sendMessageWrapper,
