@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654779048635,
+  "lastUpdate": 1654781165008,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99872,6 +99872,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4237.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d9396b0b54f115c393bd6fb86d0dc8407be66542",
+          "message": "Expire video member events after 1 hour (#8776)\n\n* Expire video member events after 1 hour\r\n\r\n* Iterate based on feedback\r\n\r\n* Validate the types of video member events better\r\n\r\n* Even more parentheses",
+          "timestamp": "2022-06-09T13:19:52Z",
+          "tree_id": "d8611b937a76612b54c5fc573f8e95951e2c60fd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d9396b0b54f115c393bd6fb86d0dc8407be66542"
+        },
+        "date": 1654781152943,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4771.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 805.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
