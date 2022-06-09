@@ -147,6 +147,10 @@ limitations under the License.
                     background-color: $alert;
                 }
             }
+
+            .mx_MessageComposer_upload::before {
+                mask-image: url('$(res)/img/element-icons/room/composer/attach.svg');
+            }
         }
 
         >[role=button] {
@@ -292,11 +296,6 @@ limitations under the License.
     &::before {
         background-color: $accent !important;
     }
-}
-
-
-.mx_MessageComposer_upload::before {
-    mask-image: url('$(res)/img/element-icons/room/composer/attach.svg');
 }
 
 .mx_MessageComposer_poll::before {
