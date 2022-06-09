@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654794868258,
+  "lastUpdate": 1654796198676,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100064,6 +100064,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 865.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8e9f7407e991f21360f28319a098601b3b29e52e",
+          "message": "Allow AppTiles to shrink as much as necessary (#8805)",
+          "timestamp": "2022-06-09T13:30:58-04:00",
+          "tree_id": "ebf9ebf926225ab8a6ea0d022e80f16e0334932f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8e9f7407e991f21360f28319a098601b3b29e52e"
+        },
+        "date": 1654796186742,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4903.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 693.2999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
