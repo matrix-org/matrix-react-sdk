@@ -3465,5 +3465,6 @@
     "Send encrypted reply…": "Odeslat šifrovanou odpověď…",
     "Reply to <User />": "Odpovědět uživateli <User />",
     "Send message…": "Odeslat zprávu…",
-    "Show HTML representation of room topics": "Zobrazit HTML reprezentaci témat místností"
+    "Show HTML representation of room topics": "Zobrazit HTML reprezentaci témat místností",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlášení budou tyto klíče z tohoto zařízení odstraněny, což znamená, že nebudete moci číst zašifrované zprávy, pokud k nim nemáte klíče v jiných zařízeních nebo je nemáte zálohované na serveru."
 }
