@@ -18,7 +18,6 @@ limitations under the License.
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { UserCredentials } from "../../support/login";
-import Chainable = Cypress.Chainable;
 
 const STICKER_PICKER_WIDGET_ID = "fake-sticker-picker";
 const STICKER_PICKER_WIDGET_NAME = "Fake Stickers";
@@ -107,15 +106,12 @@ describe("Stickers", () => {
 
     let stickerPickerUrl: string;
     let synapse: SynapseInstance;
-    let user: UserCredentials;
 
     beforeEach(() => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Sally").then(testUser => {
-                user = testUser;
-            });
+            cy.initTestUser(synapse, "Sally");
         });
         cy.serveHtmlFile(WIDGET_HTML).then(url => {
             stickerPickerUrl = url;
