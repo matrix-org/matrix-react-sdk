@@ -85,8 +85,8 @@ limitations under the License.
         .mx_MessageComposer_controls {
             grid-area: controls;
             display: flex;
-            align-items: flex-end;
-            margin-bottom: 2px;
+            align-items: center;
+            gap: 6px; // TODO: Use a spacing variable
 
             .mx_MessageComposer_sendMessageWrapper {
                 --sendMessageSize: 32px;
@@ -101,8 +101,6 @@ limitations under the License.
                 width: auto;
                 padding-left: var(--MessageComposer_button-size);
                 border-radius: 50%;
-                margin-inline-end: 6px;
-                margin-block-end: 7px;
 
                 &:last-child {
                     margin-right: auto;
@@ -163,15 +161,6 @@ limitations under the License.
 
         >[role=button] {
             margin-bottom: 7px;
-        }
-
-        .mx_VoiceRecordComposerTile_delete {
-            margin-bottom: 9px;
-        }
-
-        .mx_VoiceRecordComposerTile_stop,
-        .mx_MessageComposer_sendMessage {
-            margin-bottom: $spacing-4;
         }
 
         .mx_VoiceMessagePrimaryContainer {
