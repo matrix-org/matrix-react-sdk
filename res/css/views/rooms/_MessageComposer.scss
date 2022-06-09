@@ -421,6 +421,12 @@ limitations under the License.
     }
 }
 
+.mx_MainSplit_timeline {
+    .mx_MessageComposer_wrapper {
+        margin: $spacing-8 $spacing-16;
+    }
+}
+
 .mx_MatrixChat_useCompactLayout {
     .mx_MessageComposer_input {
         min-height: 50px;
