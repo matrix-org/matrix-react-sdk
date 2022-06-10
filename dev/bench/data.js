@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654849699787,
+  "lastUpdate": 1654861358343,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100136,6 +100136,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 774.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1b7e9d95daa751c7a2e41b3a058aa56d7758ffe5",
+          "message": "Fix flex blowout on image reply (#8809)\n\n* Set min-width to prevent a flex blowout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use a native spacing property\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set max-width: 100% to display name inside the image reply\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-10T12:36:17+01:00",
+          "tree_id": "000fae450d5e77a0404d65ebbfd45d042f108be6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1b7e9d95daa751c7a2e41b3a058aa56d7758ffe5"
+        },
+        "date": 1654861346395,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4886.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 742.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
