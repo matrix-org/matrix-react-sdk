@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654796198676,
+  "lastUpdate": 1654849699787,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100100,6 +100100,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 693.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0d3fe300aaf726fba3a546e9777f0d431cfd8c75",
+          "message": "Enable background color on hover for chat panel and thread panel (#8644)\n\n* Enable background color on hover for chat panel and thread panel\r\n\r\n- Display reactions row on hover\r\n- Use variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Replace --BaseCard_EventTile-spacing-horizontal with --BaseCard_EventTile-spacing-inline\r\n\r\n- horizontal: inline\r\n- vertical: block\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* mx_EventTile.mx_EventTile_bad[data-layout=bubble] seems to require bubble layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-10T10:21:22+02:00",
+          "tree_id": "7ff7402df4b8b81d5dcb0630e664c6423a7962a5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0d3fe300aaf726fba3a546e9777f0d431cfd8c75"
+        },
+        "date": 1654849684755,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4961,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 774.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
