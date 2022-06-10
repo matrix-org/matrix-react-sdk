@@ -3466,5 +3466,15 @@
     "Send reply…": "Odoslať odpoveď…",
     "Send encrypted reply…": "Odoslať šifrovanú odpoveď…",
     "Show HTML representation of room topics": "Zobraziť HTML znázornenie tém miestnosti",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlásení sa tieto kľúče z tohto zariadenia vymažú, čo znamená, že nebudete môcť čítať zašifrované správy, pokiaľ k nim nemáte kľúče v iných zariadeniach alebo ich nemáte zálohované na serveri."
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlásení sa tieto kľúče z tohto zariadenia vymažú, čo znamená, že nebudete môcť čítať zašifrované správy, pokiaľ k nim nemáte kľúče v iných zariadeniach alebo ich nemáte zálohované na serveri.",
+    "Joining the beta will reload %(brand)s.": "Vstupom do beta verzie sa %(brand)s znovu načíta.",
+    "Leaving the beta will reload %(brand)s.": "Po opustení beta verzie sa znovu načíta aplikácia %(brand)s.",
+    "Video rooms are a beta feature": "Video miestnosti sú beta funkciou",
+    "Yes, the chat timeline is displayed alongside the video.": "Áno, časová os konverzácie sa zobrazuje spolu s videom.",
+    "Can I use text chat alongside the video call?": "Môžem popri videohovore používať aj textovú konverzáciu?",
+    "Use the “+” button in the room section of the left panel.": "Použite tlačidlo \"+\" na ľavom paneli v sekcii miestnosti.",
+    "How can I create a video room?": "Ako môžem vytvoriť video miestnosť?",
+    "A new way to chat over voice and video in %(brand)s.": "Nový spôsob konverzácie prostredníctvom hlasu a videa v aplikácii %(brand)s.",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Video miestnosti sú vždy zapnuté VoIP kanály zabudované do miestnosti v aplikácii %(brand)s.",
+    "Video rooms": "Video miestnosti"
 }
