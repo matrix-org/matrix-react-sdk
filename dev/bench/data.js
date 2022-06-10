@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654886816786,
+  "lastUpdate": 1654897536661,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100382,6 +100382,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 771,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ba2ce5ecba2982ae6587e586e71384e60f3b224d",
+          "message": "Abstract electron settings properly to avoid boilerplate-hell (#8798)\n\n* Remove unused method `BasePlatform::screenCaptureErrorString`\r\n\r\n* Improve platform typescripting\r\n\r\n* Remove redundant awaits\r\n\r\n* Abstract electron settings properly to avoid boilerplate-hell\r\n\r\n* i18n\r\n\r\n* Fix stray semi-colons\r\n\r\n* Fix setting level order for Platform settings",
+          "timestamp": "2022-06-10T22:38:50+01:00",
+          "tree_id": "1d2966674ee5c0288286a75118e87868e4377b6c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ba2ce5ecba2982ae6587e586e71384e60f3b224d"
+        },
+        "date": 1654897521847,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4923.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 761.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
