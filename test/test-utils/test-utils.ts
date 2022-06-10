@@ -93,6 +93,7 @@ export function createTestClient(): MatrixClient {
         emit: eventEmitter.emit.bind(eventEmitter),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         peekInRoom: jest.fn().mockResolvedValue(mkStubRoom(undefined, undefined, undefined)),
+        stopPeeking: jest.fn(),
 
         paginateEventTimeline: jest.fn().mockResolvedValue(undefined),
         sendReadReceipt: jest.fn().mockResolvedValue(undefined),
@@ -117,6 +118,7 @@ export function createTestClient(): MatrixClient {
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomReadMarkers: jest.fn().mockResolvedValue({}),
+        setRoomTopic: jest.fn(),
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: () => jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
@@ -155,6 +157,8 @@ export function createTestClient(): MatrixClient {
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
         relations: jest.fn().mockRejectedValue(undefined),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
+        hasLazyLoadMembersEnabled: jest.fn().mockReturnValue(false),
+        isInitialSyncComplete: jest.fn().mockReturnValue(true),
         downloadKeys: jest.fn(),
         fetchRoomEvent: jest.fn(),
     } as unknown as MatrixClient;
@@ -360,7 +364,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         setUnreadNotificationCount: jest.fn(),
         getMembers: jest.fn().mockReturnValue([]),
         getPendingEvents: () => [],
-        getLiveTimeline: () => stubTimeline,
+        getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
         getUnfilteredTimelineSet: () => null,
         findEventById: () => null,
         getAccountData: () => null,
@@ -402,6 +406,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         myUserId: client?.getUserId(),
         canInvite: jest.fn(),
         getThreads: jest.fn().mockReturnValue([]),
+        eventShouldLiveIn: jest.fn().mockReturnValue({}),
     } as unknown as Room;
 }
 

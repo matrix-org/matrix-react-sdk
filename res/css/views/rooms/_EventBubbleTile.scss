@@ -53,9 +53,12 @@ limitations under the License.
 }
 
 .mx_EventTile[data-layout=bubble] {
+    --EventTile_bubble-margin-inline-start: 49px;
+    --EventTile_bubble-margin-inline-end: 60px;
+
     position: relative;
     margin-top: var(--gutterSize);
-    margin-left: 49px;
+    margin-left: var(--EventTile_bubble-margin-inline-start);
     font-size: $font-14px;
 
     .mx_ThreadSummary {
@@ -89,8 +92,8 @@ limitations under the License.
         position: absolute;
         top: -1px;
         bottom: -1px;
-        left: -60px;
-        right: -60px;
+        left: calc(-1 * var(--EventTile_bubble-margin-inline-start));
+        right: calc(-1 * var(--EventTile_bubble-margin-inline-end));
         z-index: -1;
         border-radius: 4px;
     }
@@ -111,8 +114,10 @@ limitations under the License.
 
     .mx_DisambiguatedProfile,
     .mx_EventTile_line {
+        --EventBubbleTile_line-max-width: 70%;
+
         width: fit-content;
-        max-width: var(--EventBubbleTile_line-max-width);
+        max-width: var(--EventBubbleTile_line-max-width); // Align message bubble and displayName
         line-height: $font-18px; // fixed line height to prevent emoji from being taller than text
     }
 
@@ -264,7 +269,6 @@ limitations under the License.
 
     .mx_EventTile_line {
         --EventBubbleTile_line-margin-inline-end: -12px;
-        --EventBubbleTile_line-max-width: 70%;
 
         position: relative;
         display: flex;
@@ -485,37 +489,63 @@ limitations under the License.
         margin-left: -9px;
     }
 
-    /* Special layout scenario for "Unable To Decrypt (UTD)" events */
-    &.mx_EventTile_bad > .mx_EventTile_line {
-        display: grid;
-        grid-template:
-            "reply reply" auto
-            "shield body" auto
-            "shield link" auto
-            / auto  1fr;
+    &.mx_EventTile_bad {
+        /* Special layout scenario for "Unable To Decrypt (UTD)" events */
+        .mx_EventTile_line {
+            display: grid;
+            grid-template:
+                "reply reply" auto
+                "shield body" auto
+                "shield link" auto
+                / auto  1fr;
 
-        .mx_EventTile_e2eIcon {
-            grid-area: shield;
+            .mx_UnknownBody,
+            .mx_EventTile_keyRequestInfo,
+            .mx_ReplyChain_wrapper,
+            .mx_ViewSourceEvent {
+                min-width: 0; // Prevent a grid blowout
+            }
+
+            .mx_EventTile_e2eIcon {
+                grid-area: shield;
+            }
+
+            .mx_UnknownBody {
+                grid-area: body;
+            }
+
+            .mx_EventTile_keyRequestInfo {
+                grid-area: link;
+            }
+
+            .mx_ReplyChain_wrapper {
+                grid-area: reply;
+            }
         }
 
-        .mx_UnknownBody {
-            grid-area: body;
-        }
+        &.mx_EventTile_info {
+            // "Unable To Decrypt" layout for hidden events
+            .mx_EventTile_line {
+                gap: 0 9px; // 9px: margin value of E2E icon
+                align-items: center;
+                grid-template:
+                    "shield source" auto
+                    "shield link" auto
+                    / auto  1fr;
 
-        .mx_EventTile_keyRequestInfo {
-            grid-area: link;
-        }
-
-        .mx_ReplyChain_wrapper {
-            grid-area: reply;
-            min-width: 0; // Prevent a grid blowout due to nowrap displayName
+                .mx_ViewSourceEvent {
+                    grid-area: source;
+                }
+            }
         }
     }
 
     .mx_ReadReceiptGroup {
         position: absolute;
+
         // as close to right gutter without clipping as possible
-        right: -78px;
+        inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end));
+
         // (EventTileLine.line-height - ReadReceiptGroup.height) / 2
         // this centers the ReadReceiptGroup if we’ve got a single line
         bottom: calc(($font-18px - 24px) / 2);
@@ -638,6 +668,17 @@ limitations under the License.
         }
     }
 
+    /* events that do not require bubble layout */
+    .mx_EventTile_line {
+        background: transparent;
+    }
+
+    &:hover {
+        &::before {
+            background: transparent;
+        }
+    }
+
     &::after {
         content: "";
         clear: both;
@@ -666,30 +707,17 @@ limitations under the License.
 
             .mx_MessageActionBar {
                 inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
-                right: 48px; // align with that of right-column bubbles
+                inset-inline-end: 48px; // align with that of right-column bubbles
             }
 
             .mx_ReadReceiptGroup {
-                right: -18px; // match alignment to RRs of chat bubbles
+                // match alignment to RRs of chat bubbles
+                inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end) + 60px);
             }
 
             &::before {
-                right: 0; // match alignment of the hover background to that of chat bubbles
+                inset-inline-end: 0; // match alignment of the hover background to that of chat bubbles
             }
-        }
-    }
-}
-
-/* events that do not require bubble layout */
-.mx_GenericEventListSummary[data-layout=bubble],
-.mx_EventTile.mx_EventTile_bad[data-layout=bubble] {
-    .mx_EventTile_line {
-        background: transparent;
-    }
-
-    &:hover {
-        &::before {
-            background: transparent;
         }
     }
 }

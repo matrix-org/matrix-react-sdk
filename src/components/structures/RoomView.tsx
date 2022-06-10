@@ -30,6 +30,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
+import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { throttle } from "lodash";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
@@ -282,6 +283,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.dispatcherRef = dis.register(this.onAction);
         context.on(ClientEvent.Room, this.onRoom);
         context.on(RoomEvent.Timeline, this.onRoomTimeline);
+        context.on(RoomEvent.TimelineReset, this.onRoomTimelineReset);
         context.on(RoomEvent.Name, this.onRoomName);
         context.on(RoomStateEvent.Events, this.onRoomStateEvents);
         context.on(RoomStateEvent.Update, this.onRoomStateUpdate);
@@ -974,9 +976,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         CHAT_EFFECTS.forEach(effect => {
             if (containsEmoji(ev.getContent(), effect.emojis) || ev.getContent().msgtype === effect.msgType) {
-                // For initial threads launch, chat effects are disabled
-                // see #19731
-                if (!SettingsStore.getValue("feature_thread") || !ev.isThreadRelation) {
+                // For initial threads launch, chat effects are disabled see #19731
+                if (!SettingsStore.getValue("feature_thread") || !ev.isRelation(THREAD_RELATION_TYPE.name)) {
                     dis.dispatch({ action: `effects.${effect.command}` });
                 }
             }
@@ -1021,6 +1022,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             tombstone: this.getRoomTombstone(room),
             liveTimeline: room.getLiveTimeline(),
         });
+    };
+
+    private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet) => {
+        if (!room || room.roomId !== this.state.room?.roomId) return;
+        logger.log(`Live timeline of ${room.roomId} was reset`);
+        this.setState({ liveTimeline: timelineSet.getLiveTimeline() });
     };
 
     private getRoomTombstone(room = this.state.room) {
@@ -1137,15 +1144,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (!this.state.room || this.state.room.roomId !== state.roomId) return;
 
         switch (ev.getType()) {
-            case EventType.RoomCanonicalAlias:
-                // re-view the room so MatrixChat can manage the alias in the URL properly
-                dis.dispatch<ViewRoomPayload>({
-                    action: Action.ViewRoom,
-                    room_id: this.state.room.roomId,
-                    metricsTrigger: undefined, // room doesn't change
-                });
-                break;
-
             case EventType.RoomTombstone:
                 this.setState({ tombstone: this.getRoomTombstone() });
                 break;

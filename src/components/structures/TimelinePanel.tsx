@@ -408,7 +408,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // matrix-js-sdk.
         let serializedEventIdsFromTimelineSets: { [key: string]: string[] }[];
         let serializedEventIdsFromThreadsTimelineSets: { [key: string]: string[] }[];
-        const serializedThreadsMap: { [key: string]: string[] } = {};
+        const serializedThreadsMap: { [key: string]: any } = {};
         if (room) {
             const timelineSets = room.getTimelineSets();
             const threadsTimelineSets = room.threadsTimelineSets;
@@ -419,7 +419,15 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             // Serialize all threads in the room from theadId -> event IDs in the thread
             room.getThreads().forEach((thread) => {
-                serializedThreadsMap[thread.id] = thread.events.map(ev => ev.getId());
+                serializedThreadsMap[thread.id] = {
+                    events: thread.events.map(ev => ev.getId()),
+                    numTimelines: thread.timelineSet.getTimelines().length,
+                    liveTimeline: thread.timelineSet.getLiveTimeline().getEvents().length,
+                    prevTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Backward)
+                        ?.getEvents().length,
+                    nextTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Forward)
+                        ?.getEvents().length,
+                };
             });
         }
 
@@ -1108,11 +1116,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
     public forgetReadMarker = (): void => {
         if (!this.props.manageReadMarkers) return;
 
+        // Find the read receipt - we will set the read marker to this
         const rmId = this.getCurrentReadReceipt();
 
-        // see if we know the timestamp for the rr event
+        // Look up the timestamp if we can find it
         const tl = this.props.timelineSet.getTimelineForEvent(rmId);
-        let rmTs;
+        let rmTs: number;
         if (tl) {
             const event = tl.getEvents().find((e) => { return e.getId() == rmId; });
             if (event) {
@@ -1120,7 +1129,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             }
         }
 
+        // Update the read marker to the values we found
         this.setReadMarker(rmId, rmTs);
+
+        // Send the receipts to the server immediately (don't wait for activity)
+        this.sendReadReceipt();
     };
 
     /* return true if the content is fully scrolled down and we are
@@ -1418,27 +1431,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // if we're at the end of the live timeline, append the pending events
         if (!this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             const pendingEvents = this.props.timelineSet.getPendingEvents();
-            if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
-                events.push(...pendingEvents.filter(e => e.threadRootId === this.context.threadId));
-            } else {
-                events.push(...pendingEvents.filter(e => {
-                    const hasNoRelation = !e.getRelation();
-                    if (hasNoRelation) {
-                        return true;
-                    }
+            events.push(...pendingEvents.filter(event => {
+                const {
+                    shouldLiveInRoom,
+                    threadId,
+                } = this.props.timelineSet.room.eventShouldLiveIn(event, pendingEvents);
 
-                    if (e.isThreadRelation) {
-                        return false;
-                    }
-
-                    const parentEvent = this.props.timelineSet.findEventById(e.getAssociatedId());
-                    if (!parentEvent) {
-                        return false;
-                    } else {
-                        return !parentEvent.isThreadRelation;
-                    }
-                }));
-            }
+                if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+                    return threadId === this.context.threadId;
+                } {
+                    return shouldLiveInRoom;
+                }
+            }));
         }
 
         return {
@@ -1673,7 +1677,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         eventId: string,
         relationType: RelationType,
         eventType: EventType | string,
-    ) => this.props.timelineSet.getRelationsForEvent(eventId, relationType, eventType);
+    ) => this.props.timelineSet.relations?.getChildEventsForEvent(eventId, relationType, eventType);
 
     private buildCallEventGroupers(events?: MatrixEvent[]): void {
         this.callEventGroupers = buildCallEventGroupers(this.callEventGroupers, events);
