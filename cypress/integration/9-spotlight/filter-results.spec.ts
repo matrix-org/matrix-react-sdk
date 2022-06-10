@@ -16,7 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { MatrixClient } from "../../../../matrix-js-sdk";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
