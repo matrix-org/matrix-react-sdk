@@ -3466,5 +3466,15 @@
     "Send reply…": "Kirim balasan…",
     "Send encrypted reply…": "Kirim balasan terenkripsi…",
     "Show HTML representation of room topics": "Tampilkan versi HTML dari topik ruangan",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server."
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
+    "Joining the beta will reload %(brand)s.": "Bergabung ke beta akan memuat ulang %(brand)s.",
+    "Leaving the beta will reload %(brand)s.": "Meninggalkan beta akan memuat ulang %(brand)s.",
+    "Video rooms are a beta feature": "Ruangan video adalah fitur beta",
+    "Yes, the chat timeline is displayed alongside the video.": "Iya, linimasa obrolan akan ditampilkan di sebelah videonya.",
+    "Can I use text chat alongside the video call?": "Bisakah saya mengobrol dengan teks saat ada panggilan video?",
+    "Use the “+” button in the room section of the left panel.": "Gunakan tombol “+” di bagian ruangan di panel kiri.",
+    "How can I create a video room?": "Bagaimana caranya saya membuat sebuah ruangan video?",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Ruangan video adalah saluran VoIP yang selalu ada tersemat di dalam sebuah ruangan di %(brand)s.",
+    "A new way to chat over voice and video in %(brand)s.": "Sebuah cara baru untuk mengobrol melalui suara dan video di %(brand)s.",
+    "Video rooms": "Ruangan video"
 }
