@@ -29,3 +29,4 @@ import "./bot";
 import "./clipboard";
 import "./util";
 import "./app";
+import "./percy";
