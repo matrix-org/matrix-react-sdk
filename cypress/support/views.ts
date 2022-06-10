@@ -17,28 +17,23 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
-import AUTWindow = Cypress.AUTWindow;
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
-             * Applies tweaks to the config read from config.json
+             * Opens the given room by name. The room must be visible in the
+             * room list.
+             * @param name The room name to find and click on/open.
              */
-            tweakConfig(tweaks: Record<string, any>): Chainable<AUTWindow>;
+            viewRoomByName(name: string): Chainable<JQuery<HTMLElement>>;
         }
     }
 }
 
-Cypress.Commands.add("tweakConfig", (tweaks: Record<string, any>): Chainable<AUTWindow> => {
-    return cy.window().then(win => {
-        // note: we can't *set* the object because the window version is effectively a pointer.
-        for (const [k, v] of Object.entries(tweaks)) {
-            // @ts-ignore - for some reason it's not picking up on global.d.ts types.
-            win.mxReactSdkConfig[k] = v;
-        }
-    });
+Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
+    return cy.get(`.mx_RoomTile[aria-label="${name}"]`).click();
 });
 
 // Needed to make this file a module

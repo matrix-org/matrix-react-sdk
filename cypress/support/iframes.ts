@@ -17,28 +17,28 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
-import AUTWindow = Cypress.AUTWindow;
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
-             * Applies tweaks to the config read from config.json
+             * Gets you into the `body` of the selectable iframe. Best to call
+             * `within({}, () => { ... })` on the returned Chainable to access
+             * further elements.
+             * @param selector The jquery selector to find the frame with.
              */
-            tweakConfig(tweaks: Record<string, any>): Chainable<AUTWindow>;
+            accessIframe(selector: string): Chainable<JQuery<HTMLElement>>;
         }
     }
 }
 
-Cypress.Commands.add("tweakConfig", (tweaks: Record<string, any>): Chainable<AUTWindow> => {
-    return cy.window().then(win => {
-        // note: we can't *set* the object because the window version is effectively a pointer.
-        for (const [k, v] of Object.entries(tweaks)) {
-            // @ts-ignore - for some reason it's not picking up on global.d.ts types.
-            win.mxReactSdkConfig[k] = v;
-        }
-    });
+// Inspired by https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
+Cypress.Commands.add("accessIframe", (selector: string): Chainable<JQuery<HTMLElement>> => {
+    return cy.get(selector)
+        .its("0.contentDocument.body").should("not.be.empty")
+        // Cypress loses types in the mess of wrapping, so force cast
+        .then(cy.wrap) as Chainable<JQuery<HTMLElement>>;
 });
 
 // Needed to make this file a module

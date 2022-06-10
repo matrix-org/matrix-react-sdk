@@ -17,29 +17,36 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
-import AUTWindow = Cypress.AUTWindow;
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
-             * Applies tweaks to the config read from config.json
+             * Starts a web server which serves the given HTML.
+             * @param html The HTML to serve
+             * @returns The URL at which the HTML can be accessed.
              */
-            tweakConfig(tweaks: Record<string, any>): Chainable<AUTWindow>;
+            serveHtmlFile(html: string): Chainable<string>;
+
+            /**
+             * Stops all running web servers.
+             */
+            stopWebServers(): Chainable<void>;
         }
     }
 }
 
-Cypress.Commands.add("tweakConfig", (tweaks: Record<string, any>): Chainable<AUTWindow> => {
-    return cy.window().then(win => {
-        // note: we can't *set* the object because the window version is effectively a pointer.
-        for (const [k, v] of Object.entries(tweaks)) {
-            // @ts-ignore - for some reason it's not picking up on global.d.ts types.
-            win.mxReactSdkConfig[k] = v;
-        }
-    });
-});
+function serveHtmlFile(html: string): Chainable<string> {
+    return cy.task<string>("serveHtmlFile", html);
+}
+
+function stopWebServers(): Chainable<void> {
+    return cy.task("stopWebServers");
+}
+
+Cypress.Commands.add("serveHtmlFile", serveHtmlFile);
+Cypress.Commands.add("stopWebServers", stopWebServers);
 
 // Needed to make this file a module
 export { };
