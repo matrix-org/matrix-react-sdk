@@ -42,6 +42,7 @@ import SettingsStore from '../../../settings/SettingsStore';
 import JumpToBottomButton from '../rooms/JumpToBottomButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import Measured from '../elements/Measured';
+import Heading from '../typography/Heading';
 
 interface IProps {
     room: Room;
@@ -193,7 +194,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
 
     private renderTimelineCardHeader = (): JSX.Element => {
         return <div className="mx_BaseCard_header_title">
-            <span>{ _t("Chat") }</span>
+            <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Chat") }</Heading>
         </div>;
     };
 

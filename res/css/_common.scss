@@ -830,7 +830,7 @@ legend {
                 width: calc(100% - 60px);
                 margin-inline-start: var(--RightPanelCard_header-button-size);
 
-                span {
+                .mx_BaseCard_header_title_heading {
                     margin-inline-start: 6px;
                 }
             }
@@ -848,10 +848,7 @@ legend {
             height: 24px;
             flex: 1;
 
-            span:first-of-type {
-                font-weight: 600;
-                font-size: 15px;
-                line-height: 18px;
+            .mx_BaseCard_header_title_heading {
                 color: $secondary-content;
             }
         }

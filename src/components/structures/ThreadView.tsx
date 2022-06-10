@@ -54,6 +54,7 @@ import { ButtonEvent } from "../views/elements/AccessibleButton";
 import { RoomViewStore } from '../../stores/RoomViewStore';
 import Spinner from "../views/elements/Spinner";
 import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
+import Heading from '../views/typography/Heading';
 
 interface IProps {
     room: Room;
@@ -299,7 +300,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private renderThreadViewHeader = (): JSX.Element => {
         return <div className="mx_BaseCard_header_title">
-            <span>{ _t("Thread") }</span>
+            <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Thread") }</Heading>
             <ThreadListContextMenu
                 mxEvent={this.props.mxEvent}
                 permalinkCreator={this.props.permalinkCreator} />

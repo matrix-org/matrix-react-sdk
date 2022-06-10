@@ -40,6 +40,7 @@ import { Action } from '../../dispatcher/actions';
 import { UserTab } from '../views/dialogs/UserTab';
 import dis from '../../dispatcher/dispatcher';
 import Spinner from "../views/elements/Spinner";
+import Heading from '../views/typography/Heading';
 
 interface IProps {
     roomId: string;
@@ -118,7 +119,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
         { contextMenuOptions }
     </ContextMenu> : null;
     return <div className="mx_BaseCard_header_title">
-        <span>{ _t("Threads") }</span>
+        <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Threads") }</Heading>
         { !empty && <>
             <ContextMenuButton
                 className="mx_ThreadPanel_dropdown"

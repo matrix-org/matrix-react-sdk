@@ -175,7 +175,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
 
     return <BaseCard
         header={<div className="mx_BaseCard_header_title">
-            <span>{ _t("Pinned messages") }</span>
+            <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Pinned messages") }</Heading>
         </div>}
         className="mx_PinnedMessagesCard"
         onClose={onClose}
