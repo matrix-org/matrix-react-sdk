@@ -819,8 +819,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_DisambiguatedProfile {
-        margin-inline-start: 0;
-        margin-right: 12px;
+        margin-inline: 0 $spacing-12;
         display: inline-flex;
         flex: 1;
 
