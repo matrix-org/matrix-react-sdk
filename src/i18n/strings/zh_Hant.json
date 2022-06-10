@@ -3466,5 +3466,15 @@
     "Send reply…": "傳送回覆……",
     "Send encrypted reply…": "傳送加密回覆……",
     "Show HTML representation of room topics": "顯示聊天室主題的 HTML 表現",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "當您登出時，這些金鑰將會從此裝置被刪除，這代表您將無法再閱讀加密的訊息，除非您在其他裝置上有那些訊息的金鑰，或是將它們備份到伺服器上。"
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "當您登出時，這些金鑰將會從此裝置被刪除，這代表您將無法再閱讀加密的訊息，除非您在其他裝置上有那些訊息的金鑰，或是將它們備份到伺服器上。",
+    "Joining the beta will reload %(brand)s.": "加入測試版將會重新載入 %(brand)s。",
+    "Leaving the beta will reload %(brand)s.": "離開測試版將會重新載入 %(brand)s。",
+    "Video rooms are a beta feature": "視訊聊天室為測試版功能",
+    "Yes, the chat timeline is displayed alongside the video.": "是的，聊天時間軸會顯示在視訊旁。",
+    "Can I use text chat alongside the video call?": "我可以在視訊通話的同時使用文字聊天嗎？",
+    "Use the “+” button in the room section of the left panel.": "使用左側聊天室部份的 “+” 按鈕。",
+    "How can I create a video room?": "我要如何建立視訊聊天室？",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "視訊聊天室是嵌入在 %(brand)s 聊天室內的一律開啟的 VoIP 頻道。",
+    "A new way to chat over voice and video in %(brand)s.": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
+    "Video rooms": "視訊聊天室"
 }
