@@ -246,6 +246,11 @@ const findVisibleRoomMembers = (cli: MatrixClient, filterDMs = true) => {
     ).filter(it => it.userId !== cli.getUserId());
 };
 
+interface IDirectoryOpts {
+    limit: number;
+    query: string;
+}
+
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
     const inputRef = useRef<HTMLInputElement>();
     const scrollContainerRef = useRef<HTMLDivElement>();
@@ -275,10 +280,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const { publicRooms, protocols, config, setConfig, search: searchPublicRooms } = usePublicRoomDirectory();
     const { users, search: searchPeople } = useUserDirectory();
     const { profile, search: searchProfileInfo } = useProfileInfo();
-    const searchParams = useMemo(() => ({
+    const searchParams: [IDirectoryOpts] = useMemo(() => ([{
         query: trimmedQuery,
         limit: SECTION_LIMIT,
-    }), [trimmedQuery]);
+    }]), [trimmedQuery]);
     useDebouncedCallback(
         filter === Filter.PublicRooms,
         searchPublicRooms,

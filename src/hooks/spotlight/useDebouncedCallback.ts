@@ -21,7 +21,7 @@ const DEBOUNCE_TIMEOUT = 100;
 export function useDebouncedCallback<T extends any[]>(
     enabled: boolean,
     callback: (...params: T) => void,
-    ...params: T
+    params: T,
 ) {
     useEffect(() => {
         let handle: number | null = null;
@@ -37,6 +37,5 @@ export function useDebouncedCallback<T extends any[]>(
                 }
             };
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [enabled, callback, ...params]);
+    }, [enabled, callback, params]);
 }

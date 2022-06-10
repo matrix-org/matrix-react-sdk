@@ -22,7 +22,7 @@ import { act } from "react-dom/test-utils";
 import { useDebouncedCallback } from "../../src/hooks/spotlight/useDebouncedCallback";
 
 function DebouncedCallbackComponent({ enabled, params, callback }) {
-    useDebouncedCallback(enabled, callback, ...params);
+    useDebouncedCallback(enabled, callback, params);
     return <div>
         { JSON.stringify(params) }
     </div>;
