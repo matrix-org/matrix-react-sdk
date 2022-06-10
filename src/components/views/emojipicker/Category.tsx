@@ -61,7 +61,7 @@ class Category extends React.PureComponent<IProps> {
                     onClick={onClick}
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
-                    disabled={this.props.isEmojiDisabled(emoji.unicode)}
+                    disabled={this.props.isEmojiDisabled?.(emoji.unicode)}
                 />
             ))
         }</div>);
