@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654861358343,
+  "lastUpdate": 1654866325101,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100172,6 +100172,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 742.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "53340db5e9db48303e53c62509a6a2c7f807eccf",
+          "message": "Update the live timeline when the JS SDK resets it (#8806)",
+          "timestamp": "2022-06-10T08:59:07-04:00",
+          "tree_id": "41c09bc3cb84433593ab2224dbd48cbb9e712148",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/53340db5e9db48303e53c62509a6a2c7f807eccf"
+        },
+        "date": 1654866312313,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2467.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
