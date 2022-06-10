@@ -37,5 +37,6 @@ export function useDebouncedCallback<T extends any[]>(
                 }
             };
         }
-    }, [enabled, params, callback]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enabled, callback, ...params]);
 }

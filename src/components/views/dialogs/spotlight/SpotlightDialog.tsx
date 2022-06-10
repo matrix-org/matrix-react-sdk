@@ -270,7 +270,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
     const ownInviteLink = makeUserPermalink(cli.getUserId());
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
-    const trimmedQuery = query.trim();
+    const trimmedQuery = useMemo(() => query.trim(), [query]);
 
     const { publicRooms, protocols, config, setConfig, search: searchPublicRooms } = usePublicRoomDirectory();
     const { users, search: searchPeople } = useUserDirectory();
