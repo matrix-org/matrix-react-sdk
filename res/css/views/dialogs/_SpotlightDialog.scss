@@ -259,15 +259,20 @@ limitations under the License.
                         display: flex;
                         flex-direction: row;
                         line-height: $font-24px;
+                        margin-right: 8px;
 
                         .mx_SpotlightDialog_result_publicRoomName {
                             color: $primary-content;
                             font-size: $font-15px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                         .mx_SpotlightDialog_result_publicRoomAlias {
                             color: $tertiary-content;
                             font-size: $font-12px;
                             margin-left: 8px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                     }
                     .mx_SpotlightDialog_result_publicRoomDescription {
