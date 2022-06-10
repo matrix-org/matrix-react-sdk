@@ -619,7 +619,7 @@
     "WARNING: Session already verified, but keys do NOT MATCH!": "AVISO: xa está verificada a sesión, pero as chaves NON CONCORDAN!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "AVISO: FALLOU A VERIFICACIÓN DAS CHAVES! A chave de firma para %(userId)s na sesión %(deviceId)s é \"%(fprint)s\" que non concordan coa chave proporcionada \"%(fingerprint)s\". Esto podería significar que as túas comunicacións foron interceptadas!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "A chave de firma proporcionada concorda coa chave de firma recibida desde a sesión %(deviceId)s de %(userId)s. Sesión marcada como verificada.",
-    "Whether or not you're using the 'breadcrumbs' feature (avatars above the room list)": "Se usas ou non a función 'breadcrumbs ' (avatares enriba da listaxe de salas)",
+    "Whether or not you're using the 'breadcrumbs' feature (avatars above the room list)": "Se estás a usar ou non a función 'breadcrumbs ' (avatares enriba da listaxe de salas)",
     "Unbans user with given ID": "Desbloquea usuaria co ID dado",
     "Verifies a user, session, and pubkey tuple": "Verifica unha usuaria, sesión e chave pública",
     "Forces the current outbound group session in an encrypted room to be discarded": "Forza que se descarte a sesión de saída actual nunha sala cifrada",
@@ -3465,5 +3465,16 @@
     "Send encrypted message…": "Enviar mensaxe cifrada…",
     "Send reply…": "Enviar resposta…",
     "Send encrypted reply…": "Enviar resposta cifrada…",
-    "Show HTML representation of room topics": "Mostrar representación HTML dos temas da sala"
+    "Show HTML representation of room topics": "Mostrar representación HTML dos temas da sala",
+    "Joining the beta will reload %(brand)s.": "Ao unirte á beta recargaremos %(brand)s.",
+    "Leaving the beta will reload %(brand)s.": "Ao saír da beta volveremos a cargar %(brand)s.",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
+    "Video rooms are a beta feature": "As salas de vídeo están en fase beta",
+    "Yes, the chat timeline is displayed alongside the video.": "Si, a cronoloxía de texto móstrase xunto co vídeo.",
+    "Can I use text chat alongside the video call?": "Podo usar chat de texto xunto á chamada de vídeo?",
+    "Use the “+” button in the room section of the left panel.": "Usa o botón \"+\" na sección da sala do panel esquerdo.",
+    "How can I create a video room?": "Como creo unha sala de vídeo?",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "As salas de vídeo son canles VoIP sempre activas dentro dunha sala en %(brand)s.",
+    "A new way to chat over voice and video in %(brand)s.": "Un novo xeito de conversar con voz e vídeo en %(brand)s.",
+    "Video rooms": "Salas de vídeo"
 }
