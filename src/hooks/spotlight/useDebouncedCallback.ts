@@ -18,19 +18,18 @@ import { useEffect } from "react";
 
 const DEBOUNCE_TIMEOUT = 100;
 
-export function useDebouncedSearch<T>(
-    query: string | null,
-    search: (params: { query: string } & T) => void,
+export function useDebouncedCallback<T extends any[]>(
     enabled: boolean,
-    params?: T,
+    callback: (...params: T) => void,
+    ...params: T
 ) {
     useEffect(() => {
         let handle: number | null = null;
         const doSearch = () => {
             handle = null;
-            search({ query, ...params });
+            callback(...params);
         };
-        if (query !== null && enabled !== false) {
+        if (enabled !== false) {
             handle = setTimeout(doSearch, DEBOUNCE_TIMEOUT);
             return () => {
                 if (handle) {
@@ -38,5 +37,5 @@ export function useDebouncedSearch<T>(
                 }
             };
         }
-    }, [enabled, params, query, search]);
+    }, [enabled, params, callback]);
 }

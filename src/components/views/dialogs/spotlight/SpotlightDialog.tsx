@@ -46,7 +46,7 @@ import { mediaFromMxc } from "../../../../customisations/Media";
 import { Action } from "../../../../dispatcher/actions";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
-import { useDebouncedSearch } from "../../../../hooks/spotlight/useDebouncedSearch";
+import { useDebouncedCallback } from "../../../../hooks/spotlight/useDebouncedCallback";
 import { useRecentSearches } from "../../../../hooks/spotlight/useRecentSearches";
 import { useProfileInfo } from "../../../../hooks/useProfileInfo";
 import { usePublicRoomDirectory } from "../../../../hooks/usePublicRoomDirectory";
@@ -93,10 +93,6 @@ import { TooltipOption } from "./TooltipOption";
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
 const AVATAR_SIZE = 24;
-
-const SEARCH_PARAMS = {
-    limit: SECTION_LIMIT,
-};
 
 interface IProps extends IDialogProps {
     initialText?: string;
@@ -279,22 +275,24 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const { publicRooms, protocols, config, setConfig, search: searchPublicRooms } = usePublicRoomDirectory();
     const { users, search: searchPeople } = useUserDirectory();
     const { profile, search: searchProfileInfo } = useProfileInfo();
-    useDebouncedSearch(
-        trimmedQuery,
-        searchPublicRooms,
+    const searchParams = useMemo(() => ({
+        query: trimmedQuery,
+        limit: SECTION_LIMIT,
+    }), [trimmedQuery]);
+    useDebouncedCallback(
         filter === Filter.PublicRooms,
-        SEARCH_PARAMS,
+        searchPublicRooms,
+        searchParams,
     );
-    useDebouncedSearch(
-        trimmedQuery,
+    useDebouncedCallback(
+        filter === Filter.People,
         searchPeople,
-        filter === Filter.People,
-        SEARCH_PARAMS,
+        searchParams,
     );
-    useDebouncedSearch(
-        trimmedQuery,
-        searchProfileInfo,
+    useDebouncedCallback(
         filter === Filter.People,
+        searchProfileInfo,
+        searchParams,
     );
     const possibleResults = useMemo<Result[]>(
         () => {
