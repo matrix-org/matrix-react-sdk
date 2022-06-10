@@ -3476,5 +3476,6 @@
     "How can I create a video room?": "Kuidas ma saan luua videotoa?",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videotoad on kogu aeg saadaval VoIP kanalid, mis on lõimitud jututubadega ja kasutatavad rakenduses %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Uus võimalus videovestlusteks rakenduses %(brand)s.",
-    "Video rooms": "Videotoad"
+    "Video rooms": "Videotoad",
+    "Enable hardware acceleration": "Kasuta riistvaralist kiirendust"
 }
