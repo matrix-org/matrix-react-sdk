@@ -123,7 +123,6 @@ class ReactionPicker extends React.Component<IProps, IState> {
 
     private isEmojiDisabled = (unicode: string): boolean => {
         if (!this.getReactions()[unicode]) return false;
-        if (this.props.mxEvent.isRedacted()) return false;
         if (this.context.canSelfRedact) return false;
 
         return true;
