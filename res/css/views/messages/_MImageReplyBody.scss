@@ -27,6 +27,10 @@ limitations under the License.
     .mx_MImageReplyBody_info {
         .mx_MImageReplyBody_sender {
             grid-area: sender;
+
+            .mx_DisambiguatedProfile {
+                max-width: 100%;
+            }
         }
 
         .mx_MImageReplyBody_filename {
