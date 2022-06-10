@@ -28,11 +28,7 @@ interface ILoginOptions {
 }
 
 // TODO: Move this to JS SDK
-interface ILoginFlow {
-    actions?: ("login" | "register")[];
-}
-
-interface IPasswordFlow extends ILoginFlow {
+interface IPasswordFlow {
     type: "m.login.password";
 }
 
@@ -52,7 +48,7 @@ export interface IIdentityProvider {
     brand?: IdentityProviderBrand | string;
 }
 
-export interface ISSOFlow extends ILoginFlow {
+export interface ISSOFlow {
     type: "m.login.sso" | "m.login.cas";
     // eslint-disable-next-line camelcase
     identity_providers?: IIdentityProvider[];
@@ -125,19 +121,10 @@ export default class Login {
         });
     }
 
-    /**
-     * Get login flows supported by the homeserver.
-     * @param action Only return flows supporting this action
-     * @returns Array of available flows
-     */
-    public async getFlows(action?: "login" | "register"): Promise<Array<LoginFlow>> {
+    public async getFlows(): Promise<Array<LoginFlow>> {
         const client = this.createTemporaryClient();
         const { flows } = await client.loginFlows();
-        if (action) {
-            this.flows = (flows as LoginFlow[]).filter(f => !f.actions || f.actions.includes(action));
-        } else {
-            this.flows = flows;
-        }
+        this.flows = flows;
         return this.flows;
     }
 
