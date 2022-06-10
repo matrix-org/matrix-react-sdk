@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654874984754,
+  "lastUpdate": 1654878160375,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100298,6 +100298,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4792.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3f99f594de62a9b528268f5026f45230eca684fa",
+          "message": "Keep draft in composer when a slash command syntax errors (#8811)",
+          "timestamp": "2022-06-10T17:16:31+01:00",
+          "tree_id": "ca40b93a9158a7d12263c157beb9d41682f4f3ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3f99f594de62a9b528268f5026f45230eca684fa"
+        },
+        "date": 1654878145873,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5148.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1072.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1666.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4733.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
