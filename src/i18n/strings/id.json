@@ -3476,5 +3476,6 @@
     "How can I create a video room?": "Bagaimana caranya saya membuat sebuah ruangan video?",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Ruangan video adalah saluran VoIP yang selalu ada tersemat di dalam sebuah ruangan di %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Sebuah cara baru untuk mengobrol melalui suara dan video di %(brand)s.",
-    "Video rooms": "Ruangan video"
+    "Video rooms": "Ruangan video",
+    "Enable hardware acceleration": "Aktifkan akselerasi perangkat keras"
 }
