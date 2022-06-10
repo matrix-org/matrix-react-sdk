@@ -199,7 +199,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     <span className="mx_SettingsTab_subheading">{ _t("General") }</span>
                     { this.renderGroup(PreferencesUserSettingsTab.GENERAL_SETTINGS) }
 
-                    <SettingsFlag name="Electron.showTrayIcon" level={SettingLevel.PLATFORM} hideIfCannotSet />;
+                    <SettingsFlag name="Electron.showTrayIcon" level={SettingLevel.PLATFORM} hideIfCannotSet />
                     <SettingsFlag
                         name="Electron.enableHardwareAcceleration"
                         level={SettingLevel.PLATFORM}
@@ -207,10 +207,10 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                         label={_t('Enable hardware acceleration (restart %(appName)s to take effect)', {
                             appName: SdkConfig.get().brand,
                         })}
-                    />;
-                    <SettingsFlag name="Electron.alwaysShowMenuBar" level={SettingLevel.PLATFORM} hideIfCannotSet />;
-                    <SettingsFlag name="Electron.autoLaunch" level={SettingLevel.PLATFORM} hideIfCannotSet />;
-                    <SettingsFlag name="Electron.warnBeforeExit" level={SettingLevel.PLATFORM} hideIfCannotSet />;
+                    />
+                    <SettingsFlag name="Electron.alwaysShowMenuBar" level={SettingLevel.PLATFORM} hideIfCannotSet />
+                    <SettingsFlag name="Electron.autoLaunch" level={SettingLevel.PLATFORM} hideIfCannotSet />
+                    <SettingsFlag name="Electron.warnBeforeExit" level={SettingLevel.PLATFORM} hideIfCannotSet />
 
                     <Field
                         label={_t('Autocomplete delay (ms)')}
