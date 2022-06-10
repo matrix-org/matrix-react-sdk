@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654872489448,
+  "lastUpdate": 1654874984754,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100250,6 +100250,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4326,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4171c008a415900fbf1f9f571c35288172b0fb3f",
+          "message": "Convert sticker end-to-end tests to Cypress (#8807)\n\n* Convert sticker end-to-end tests to Cypress\r\n\r\nReference materials:\r\n* https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/\r\n* https://github.com/cypress-io/cypress/issues/136\r\n* https://docs.cypress.io/api/commands/origin#Other-limitations\r\n\r\nIdeally we'd be able to use `cy.origin()` to jump into the iframe, but it's explicitly not supported. Instead we disable web security as instructed by cypress because it's our only reasonable option here. Thankfully, disabling web security doesn't appear to remove the crypto libraries from the browser so we can still function in that respect.\r\n\r\nRationale for why we can't just serve the sticker picker off the app domain is included in the code.\r\n\r\n* Appease the linter\r\n\r\n* More linter appeasement",
+          "timestamp": "2022-06-10T09:24:15-06:00",
+          "tree_id": "ad26128939ad238e2afe0f6a0188a6168ffd3650",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4171c008a415900fbf1f9f571c35288172b0fb3f"
+        },
+        "date": 1654874973335,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5835,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1044,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1749.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4792.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
