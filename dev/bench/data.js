@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654897536661,
+  "lastUpdate": 1654982646674,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100418,6 +100418,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 761.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5e18064ab1ac937811dca52bd18506147a346ca",
+          "message": "Import React to appease IDE linter (#8817)\n\nApparently we shouldn't be using global references to React, so import it.",
+          "timestamp": "2022-06-11T21:17:55Z",
+          "tree_id": "7e66a4e8f8bf291aaa93b3d92e63c5a40632bd68",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5e18064ab1ac937811dca52bd18506147a346ca"
+        },
+        "date": 1654982633280,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5909.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1090.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1778.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5216,
             "unit": "ms",
             "extra": "type: measure"
           }
