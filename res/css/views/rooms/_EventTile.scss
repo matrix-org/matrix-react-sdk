@@ -273,21 +273,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         margin: 0;
         padding: 4px 64px;
     }
-
-    // Media query to improve UI on mobile
-    // See: https://github.com/matrix-org/matrix-react-sdk/pull/4656
-    @media only screen and (max-width: 480px) {
-        .mx_EventTile_line,
-        .mx_EventTile_reply {
-            padding-left: 0;
-            margin-right: 0;
-        }
-
-        .mx_EventTile_content {
-            margin-top: 10px;
-            margin-right: 0;
-        }
-    }
 }
 
 .mx_GenericEventListSummary:not([data-layout=bubble]) {
