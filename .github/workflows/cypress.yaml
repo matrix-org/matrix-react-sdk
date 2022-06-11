@@ -63,8 +63,8 @@ jobs:
       # Only run Percy when it is demanded or on develop
       - name: Disable Percy if not needed
         if: |
-          github.event.workflow_run.event != 'pull_request' ||
-          contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+          github.event.workflow_run.event == 'pull_request' &&
+          !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
         run: |
           echo "PERCY_ENABLE=0" >> $GITHUB_ENV
 
@@ -134,7 +134,7 @@ jobs:
           name: cypress-benchmark
 
       - name: Store benchmark result
-        uses: matrix-org/github-action-benchmark@jsperfentry-5
+        uses: matrix-org/github-action-benchmark@jsperfentry-6
         with:
           name: Cypress measurements
           tool: 'jsperformanceentry'
