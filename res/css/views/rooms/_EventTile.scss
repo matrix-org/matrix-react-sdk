@@ -70,10 +70,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         flex-flow: wrap;
         align-items: center;
         gap: $spacing-4;
-
-        .mx_ReactionsRowButton {
-            margin: 0;
-        }
     }
 
     &[data-layout=group] {
