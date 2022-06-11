@@ -3476,5 +3476,6 @@
     "How can I create a video room?": "Як створити відеокімнату?",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Відеокімнати — це завжди в VOIP-канали, вбудовані в кімнату в %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Новий спосіб спілкування за допомогою голосового та відеозв’язку в %(brand)s.",
-    "Video rooms": "Відеокімнати"
+    "Video rooms": "Відеокімнати",
+    "Enable hardware acceleration": "Увімкнути апаратне прискорення"
 }
