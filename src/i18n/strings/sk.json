@@ -3476,5 +3476,6 @@
     "How can I create a video room?": "Ako môžem vytvoriť video miestnosť?",
     "A new way to chat over voice and video in %(brand)s.": "Nový spôsob konverzácie prostredníctvom hlasu a videa v aplikácii %(brand)s.",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Video miestnosti sú vždy zapnuté VoIP kanály zabudované do miestnosti v aplikácii %(brand)s.",
-    "Video rooms": "Video miestnosti"
+    "Video rooms": "Video miestnosti",
+    "Enable hardware acceleration": "Povoliť hardvérovú akceleráciu"
 }
