@@ -1046,7 +1046,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 }
 
 // Media query for mobile UI
-// See: https://github.com/matrix-org/matrix-react-sdk/pull/4656
 @media only screen and (max-width: 480px) {
     .mx_EventTile_content {
         margin-right: 0;
