@@ -27,10 +27,10 @@ limitations under the License.
     font-weight: 600;
     color: $primary-content;
     margin-block: 10px; // TODO: Use a spacing variable
-}
 
-.mx_SettingsTab_heading:nth-child(n + 2) {
-    margin-block-start: 30px; // TODO: Use a spacing variable
+    &:nth-child(n + 2) {
+        margin-block-start: 30px; // TODO: Use a spacing variable
+    }
 }
 
 .mx_SettingsTab_subheading {
