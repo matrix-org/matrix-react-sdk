@@ -60,18 +60,8 @@ limitations under the License.
         .mx_SettingsFlag_label {
             vertical-align: middle;
             display: inline-block;
-            font-size: $font-14px;
-            color: $primary-content;
             max-width: calc(100% - $font-48px); // Force word wrap instead of colliding with the switch
             box-sizing: border-box;
-            padding-inline-end: 10px; // TODO: Use a spacing variable
-        }
-
-        .mx_SettingsFlag_microcopy {
-            margin-block-start: $spacing-4;
-            font-size: $font-12px;
-            line-height: $font-15px;
-            color: $secondary-content;
         }
 
         .mx_ToggleSwitch {
