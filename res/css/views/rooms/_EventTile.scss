@@ -845,8 +845,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_MessageTimestamp {
+        font-size: $font-12px;
         max-width: 80px;
-        width: auto;
     }
 }
 
