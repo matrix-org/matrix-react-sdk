@@ -58,17 +58,8 @@ limitations under the License.
     .mx_SettingsFlag {
         margin-right: $right-gutter;
         margin-bottom: 10px;
-    }
 
-    > p {
-        margin-right: $right-gutter;
-    }
-
-    &.mx_SettingsTab_subsectionText .mx_SettingsFlag {
-        margin-right: 0 !important;
-    }
-
-    .mx_SettingsFlag .mx_SettingsFlag_label {
+    .mx_SettingsFlag_label {
         vertical-align: middle;
         display: inline-block;
         font-size: $font-14px;
@@ -78,15 +69,24 @@ limitations under the License.
         padding-right: 10px;
     }
 
-    .mx_SettingsFlag .mx_SettingsFlag_microcopy {
+    .mx_SettingsFlag_microcopy {
         margin-top: 4px;
         font-size: $font-12px;
         line-height: $font-15px;
         color: $secondary-content;
     }
 
-    .mx_SettingsFlag .mx_ToggleSwitch {
+    .mx_ToggleSwitch {
         float: right;
+    }
+    }
+
+    > p {
+        margin-right: $right-gutter;
+    }
+
+    &.mx_SettingsTab_subsectionText .mx_SettingsFlag {
+        margin-right: 0 !important;
     }
 }
 
