@@ -23,4 +23,5 @@ limitations under the License.
     display: block; // enable the width setting below
     width: $MessageTimestamp_width;
     white-space: nowrap;
+    user-select: none;
 }

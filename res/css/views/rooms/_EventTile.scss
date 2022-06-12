@@ -139,7 +139,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_MessageTimestamp {
         left: 0px;
         text-align: center;
-        user-select: none;
     }
 
     &.mx_EventTile_continuation .mx_EventTile_line {
