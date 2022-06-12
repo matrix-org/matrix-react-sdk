@@ -102,7 +102,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     // set some defaults for the creation
     const createOpts: ICreateRoomOpts = opts.createOpts || {};
     createOpts.preset = createOpts.preset || defaultPreset;
-    createOpts.visibility = createOpts.visibility || Visibility.Private;
+    createOpts.visibility = createOpts.preset === Preset.PublicChat ? Visibility.Public : Visibility.Private;
     if (opts.dmUserId && createOpts.invite === undefined) {
         switch (getAddressType(opts.dmUserId)) {
             case 'mx-user-id':
