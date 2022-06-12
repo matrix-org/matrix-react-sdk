@@ -877,10 +877,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             padding-inline-end: 0;
         }
 
-        .mx_MessageTimestamp {
-            font-size: $font-10px;
-        }
-
         // handling for hidden events (e.g reactions) in the thread view
         &.mx_EventTile_info {
             padding-top: 0;
