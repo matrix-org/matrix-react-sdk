@@ -25,6 +25,12 @@ limitations under the License.
 
     .mx_KeyboardShortcut_shortcutRow {
         column-gap: $spacing-8;
+        margin-bottom: $spacing-4;
+
+        // TODO: Use flexbox
+        &:last-of-type {
+            margin-bottom: 0;
+        }
 
         .mx_KeyboardShortcut {
             flex-wrap: nowrap;
