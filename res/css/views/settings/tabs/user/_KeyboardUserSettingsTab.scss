@@ -34,6 +34,7 @@ limitations under the License.
 
         .mx_KeyboardShortcut {
             flex-wrap: nowrap;
+            column-gap: 5px; // TODO: Use a spacing variable
         }
     }
 }
