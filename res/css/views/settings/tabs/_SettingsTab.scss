@@ -68,26 +68,26 @@ limitations under the License.
         margin-right: 0 !important;
     }
 
-.mx_SettingsFlag .mx_SettingsFlag_label {
-    vertical-align: middle;
-    display: inline-block;
-    font-size: $font-14px;
-    color: $primary-content;
-    max-width: calc(100% - $font-48px); // Force word wrap instead of colliding with the switch
-    box-sizing: border-box;
-    padding-right: 10px;
-}
+    .mx_SettingsFlag .mx_SettingsFlag_label {
+        vertical-align: middle;
+        display: inline-block;
+        font-size: $font-14px;
+        color: $primary-content;
+        max-width: calc(100% - $font-48px); // Force word wrap instead of colliding with the switch
+        box-sizing: border-box;
+        padding-right: 10px;
+    }
 
-.mx_SettingsFlag .mx_SettingsFlag_microcopy {
-    margin-top: 4px;
-    font-size: $font-12px;
-    line-height: $font-15px;
-    color: $secondary-content;
-}
+    .mx_SettingsFlag .mx_SettingsFlag_microcopy {
+        margin-top: 4px;
+        font-size: $font-12px;
+        line-height: $font-15px;
+        color: $secondary-content;
+    }
 
-.mx_SettingsFlag .mx_ToggleSwitch {
-    float: right;
-}
+    .mx_SettingsFlag .mx_ToggleSwitch {
+        float: right;
+    }
 }
 
 .mx_SettingsTab_linkBtn {
