@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_AppearanceUserSettingsTab .mx_Field {
-    width: 256px;
-}
-
 .mx_AppearanceUserSettingsTab {
     > .mx_SettingsTab_SubHeading {
         margin-block: $spacing-12 $spacing-32;
     }
+
+.mx_Field {
+   width: 256px;
 }
 
 .mx_AppearanceUserSettingsTab_Advanced {
@@ -32,4 +31,5 @@ limitations under the License.
     .mx_AppearanceUserSettingsTab_systemFont {
         margin-inline-start: calc($font-16px + 10px);
     }
+}
 }
