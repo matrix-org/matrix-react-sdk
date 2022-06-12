@@ -86,6 +86,8 @@ limitations under the License.
 
         .mx_PinnedEventTile_timestamp {
             color: $secondary-content;
+            display: unset;
+            width: unset; // Cancel the default width value
         }
 
         .mx_AccessibleButton_kind_link {
