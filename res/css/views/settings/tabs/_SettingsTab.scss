@@ -26,12 +26,11 @@ limitations under the License.
     font-size: $font-20px;
     font-weight: 600;
     color: $primary-content;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-block: 10px; // TODO: Use a spacing variable
 }
 
 .mx_SettingsTab_heading:nth-child(n + 2) {
-    margin-top: 30px;
+    margin-block-start: 30px; // TODO: Use a spacing variable
 }
 
 .mx_SettingsTab_subheading {
@@ -39,8 +38,7 @@ limitations under the License.
     display: block;
     font-weight: 600;
     color: $primary-content;
-    margin-bottom: 10px;
-    margin-top: 12px;
+    margin-block: $spacing-12 10px; // TODO: Use a spacing variable
 }
 
 .mx_SettingsTab_subsectionText {
@@ -51,13 +49,13 @@ limitations under the License.
 }
 
 .mx_SettingsTab_section {
-    $right-gutter: 80px;
+    $end-gutter: 80px;
 
-    margin-bottom: 24px;
+    margin-block-end: $spacing-24;
 
     .mx_SettingsFlag {
-        margin-right: $right-gutter;
-        margin-bottom: 10px;
+        margin-inline-end: $end-gutter;
+        margin-block-end: 10px; // TODO: Use a spacing variable
 
         .mx_SettingsFlag_label {
             vertical-align: middle;
@@ -66,27 +64,27 @@ limitations under the License.
             color: $primary-content;
             max-width: calc(100% - $font-48px); // Force word wrap instead of colliding with the switch
             box-sizing: border-box;
-            padding-right: 10px;
+            padding-inline-end: 10px; // TODO: Use a spacing variable
         }
 
         .mx_SettingsFlag_microcopy {
-            margin-top: 4px;
+            margin-block-start: $spacing-4;
             font-size: $font-12px;
             line-height: $font-15px;
             color: $secondary-content;
         }
 
         .mx_ToggleSwitch {
-            float: right;
+            float: inline-end;
         }
     }
 
     > p {
-        margin-right: $right-gutter;
+        margin-inline-end: $end-gutter;
     }
 
     &.mx_SettingsTab_subsectionText .mx_SettingsFlag {
-        margin-right: 0 !important;
+        margin-inline-end: 0 !important;
     }
 }
 
@@ -101,5 +99,5 @@ limitations under the License.
 }
 
 .mx_SettingsTab_toggleWithDescription {
-    margin-top: 24px;
+    margin-block-start: $spacing-24;
 }
