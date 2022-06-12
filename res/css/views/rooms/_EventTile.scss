@@ -1021,6 +1021,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
             .mx_MessageTimestamp {
                 top: 2px; // Align with mx_EventTile_content
+                position: absolute; // for IRC layout
             }
 
             .mx_EventTile_senderDetails {
