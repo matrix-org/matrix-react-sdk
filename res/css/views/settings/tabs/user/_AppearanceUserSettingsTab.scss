@@ -19,17 +19,17 @@ limitations under the License.
         margin-block: $spacing-12 $spacing-32;
     }
 
-.mx_Field {
-   width: 256px;
-}
-
-.mx_AppearanceUserSettingsTab_Advanced {
-    .mx_Checkbox {
-        margin-block: $spacing-16;
+    .mx_Field {
+        width: 256px;
     }
 
-    .mx_AppearanceUserSettingsTab_systemFont {
-        margin-inline-start: calc($font-16px + 10px);
+    .mx_AppearanceUserSettingsTab_Advanced {
+        .mx_Checkbox {
+            margin-block: $spacing-16;
+        }
+
+        .mx_AppearanceUserSettingsTab_systemFont {
+            margin-inline-start: calc($font-16px + 10px);
+        }
     }
-}
 }
