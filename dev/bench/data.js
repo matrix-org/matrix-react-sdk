@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654982646674,
+  "lastUpdate": 1655032815734,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100466,6 +100466,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5216,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "89743c9321af4f341fe24da6438b86444296ecc9",
+          "message": "Fix clickable area of advanced toggle on appearance user settings tab (#8820)",
+          "timestamp": "2022-06-12T13:13:41+02:00",
+          "tree_id": "5080ca2561000c8eecbe8510942c6be66b6d7988",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/89743c9321af4f341fe24da6438b86444296ecc9"
+        },
+        "date": 1655032801103,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4980.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1182.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1791.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5169.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
