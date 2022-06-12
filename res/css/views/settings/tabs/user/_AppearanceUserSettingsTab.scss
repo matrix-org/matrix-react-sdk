@@ -20,8 +20,7 @@ limitations under the License.
 
 .mx_AppearanceUserSettingsTab {
     > .mx_SettingsTab_SubHeading {
-        margin-bottom: 32px;
-        margin-top: 12px;
+        margin-block: $spacing-12 $spacing-32;
     }
 }
 
@@ -31,6 +30,6 @@ limitations under the License.
     }
 
     .mx_AppearanceUserSettingsTab_systemFont {
-        margin-left: calc($font-16px + 10px);
+        margin-inline-start: calc($font-16px + 10px);
     }
 }
