@@ -20,4 +20,5 @@ limitations under the License.
     font-variant-numeric: tabular-nums;
     display: block; // enable the width setting below
     width: $MessageTimestamp_width;
+    white-space: nowrap;
 }
