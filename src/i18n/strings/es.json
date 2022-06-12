@@ -3465,5 +3465,17 @@
     "Send message…": "Enviar mensaje…",
     "Send encrypted message…": "Enviar mensaje cifrado…",
     "Send encrypted reply…": "Enviar respuesta cifrada…",
-    "Send reply…": "Enviar respuesta…"
+    "Send reply…": "Enviar respuesta…",
+    "Joining the beta will reload %(brand)s.": "Al unirte a la beta, %(brand)s volverá a cargarse.",
+    "Leaving the beta will reload %(brand)s.": "Al salir de la beta, %(brand)s volverá a cargarse.",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Al cerrar sesión, estas claves serán eliminadas del dispositivo. Esto significa que no podrás leer mensajes cifrados salvo que tengas sus claves en otros dispositivos, o hayas hecho una copia de seguridad usando el servidor.",
+    "Video rooms are a beta feature": "Las salas de vídeo están en beta",
+    "Enable hardware acceleration": "Activar aceleración por hardware",
+    "Yes, the chat timeline is displayed alongside the video.": "Sí, el historial de la sala aparece al lado del vídeo.",
+    "Can I use text chat alongside the video call?": "¿Puedo mandar mensajes de texto en la videollamada?",
+    "Use the “+” button in the room section of the left panel.": "Usa el botón «+» en la sección de la sala del panel izquierdo.",
+    "How can I create a video room?": "Cómo crear una sala de vídeo",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Las salas de vídeo son canales de VoIP siempre abiertos, disponibles dentro de una sala en %(brand)s.",
+    "A new way to chat over voice and video in %(brand)s.": "Una nueva forma de hablar por voz y vídeo en %(brand)s.",
+    "Video rooms": "Salas de vídeo"
 }
