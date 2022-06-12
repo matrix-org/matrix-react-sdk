@@ -17,7 +17,6 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { ReactNode } from "react";
-import { deepCopy } from "matrix-js-sdk/src/utils";
 
 import DeviceSettingsHandler from "./handlers/DeviceSettingsHandler";
 import RoomDeviceSettingsHandler from "./handlers/RoomDeviceSettingsHandler";
