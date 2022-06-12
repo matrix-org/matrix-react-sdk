@@ -28,7 +28,7 @@ const TEST_DATA = [
 ];
 
 describe("SettingsStore", () => {
-    let platformSettings;
+    let platformSettings: object;
 
     beforeAll(() => {
         jest.clearAllMocks();

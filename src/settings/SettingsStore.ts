@@ -80,6 +80,7 @@ export const LEVEL_ORDER = [
 function getLevelOrder(setting: ISetting): SettingLevel[] {
     // Settings which support only a single setting level are inherently ordered
     if (setting.supportedLevelsAreOrdered || setting.supportedLevels.length === 1) {
+        // return a copy to prevent callers from modifying the array
         return [...setting.supportedLevels];
     }
     return LEVEL_ORDER;
