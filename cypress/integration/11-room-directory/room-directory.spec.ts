@@ -90,9 +90,7 @@ describe("Room Directory", () => {
 
         cy.get('.mx_RoomDirectory_dialogWrapper [name="dirsearch"]').type("Unknown Room");
         cy.get(".mx_RoomDirectory_dialogWrapper h5").should("contain", 'No results for "Unknown Room"');
-        cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered no results", {
-            widths: [724],
-        });
+        cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered no results");
 
         cy.get('.mx_RoomDirectory_dialogWrapper [name="dirsearch"]').type("{selectAll}{backspace}test1234");
         cy.get(".mx_RoomDirectory_dialogWrapper").contains(".mx_RoomDirectory_listItem", name)
@@ -103,7 +101,6 @@ describe("Room Directory", () => {
                 .mx_BaseAvatar_initial + .mx_BaseAvatar_image,
                 .mx_BaseAvatar_initial { background-color: "#ac3ba8"; }
             `,
-            widths: [724],
         });
         cy.get("@resultRow").find(".mx_AccessibleButton").contains("Join").click();
 
