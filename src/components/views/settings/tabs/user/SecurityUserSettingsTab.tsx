@@ -73,7 +73,6 @@ interface IState {
     waitingUnignored: string[];
     managingInvites: boolean;
     invitedRoomIds: Set<string>;
-    canDisableReadReceipts: boolean;
 }
 
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
@@ -85,15 +84,10 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         // Get rooms we're invited to
         const invitedRoomIds = new Set(this.getInvitedRooms().map(room => room.roomId));
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285").then((canDisableReadReceipts) => {
-            this.setState({ canDisableReadReceipts });
-        });
-
         this.state = {
             ignoredUserIds: MatrixClientPeg.get().getIgnoredUsers(),
             waitingUnignored: [],
             managingInvites: false,
-            canDisableReadReceipts: false,
             invitedRoomIds,
         };
     }
@@ -300,7 +294,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             </div>;
         }
 
-        let analytics;
+        let privacySection;
         if (Analytics.canEnable() || PosthogAnalytics.instance.isEnabled()) {
             const onClickAnalyticsLearnMore = () => {
                 if (PosthogAnalytics.instance.isEnabled()) {
@@ -312,28 +306,31 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     Analytics.showDetailsModal();
                 }
             };
-            analytics = <React.Fragment>
-                <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
-                <div className="mx_SettingsTab_subsectionText">
-                    <p>
-                        { _t("Share anonymous data to help us identify issues. Nothing personal. " +
-                            "No third parties.") }
-                    </p>
-                    <p>
-                        <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
-                            { _t("Learn more") }
-                        </AccessibleButton>
-                    </p>
+            privacySection = <React.Fragment>
+                <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
+                    <div className="mx_SettingsTab_subsectionText">
+                        <p>
+                            { _t("Share anonymous data to help us identify issues. Nothing personal. " +
+                                "No third parties.") }
+                        </p>
+                        <p>
+                            <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
+                                { _t("Learn more") }
+                            </AccessibleButton>
+                        </p>
+                    </div>
+                    {
+                        PosthogAnalytics.instance.isEnabled() ?
+                            <SettingsFlag name="pseudonymousAnalyticsOptIn"
+                                level={SettingLevel.ACCOUNT}
+                                onChange={this.updateAnalytics} /> :
+                            <SettingsFlag name="analyticsOptIn"
+                                level={SettingLevel.DEVICE}
+                                onChange={this.updateAnalytics} />
+                    }
                 </div>
-                {
-                    PosthogAnalytics.instance.isEnabled() ?
-                        <SettingsFlag name="pseudonymousAnalyticsOptIn"
-                            level={SettingLevel.ACCOUNT}
-                            onChange={this.updateAnalytics} /> :
-                        <SettingsFlag name="analyticsOptIn"
-                            level={SettingLevel.DEVICE}
-                            onChange={this.updateAnalytics} />
-                }
             </React.Fragment>;
         }
 
@@ -375,19 +372,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     { crossSigning }
                     <CryptographyPanel />
                 </div>
-                <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
-                <div className="mx_SettingsTab_section">
-                    { analytics }
-                    <span className="mx_SettingsTab_subheading">{ _t("Presence") }</span>
-                    <SettingsFlag name="sendTypingNotifications" level={SettingLevel.ACCOUNT} />
-                    <SettingsFlag
-                        disabled={!this.state.canDisableReadReceipts}
-                        disabledTooltipText={_t("Your server doesn't support disabling read receipts")}
-                        name="sendReadReceipts"
-                        level={SettingLevel.ACCOUNT}
-                    />
-                </div>
-
+                { privacySection }
                 { advancedSection }
             </div>
         );

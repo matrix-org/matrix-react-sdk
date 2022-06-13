@@ -30,6 +30,7 @@ import { UserTab } from "../../../dialogs/UserTab";
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
 import SdkConfig from "../../../../../SdkConfig";
+import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
@@ -45,6 +46,7 @@ interface IState {
     minimizeToTraySupported: boolean;
     minimizeToTray: boolean;
     togglingHardwareAccelerationSupported: boolean;
+    disablingReadReceiptsSupported: boolean;
     enableHardwareAcceleration: boolean;
     autocompleteDelay: string;
     readMarkerInViewThresholdMs: string;
@@ -62,6 +64,10 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
     static KEYBINDINGS_SETTINGS = [
         'ctrlFForSearch',
+    ];
+
+    static PRESENCE_SETTINGS = [
+        "sendTypingNotifications",
     ];
 
     static COMPOSER_SETTINGS = [
@@ -121,6 +127,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTraySupported: false,
             enableHardwareAcceleration: true,
             togglingHardwareAccelerationSupported: false,
+            disablingReadReceiptsSupported: false,
             autocompleteDelay:
                 SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
             readMarkerInViewThresholdMs:
@@ -163,6 +170,10 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             enableHardwareAcceleration = await platform.getHardwareAccelerationEnabled();
         }
 
+        const disablingReadReceiptsSupported = (
+            await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285")
+        );
+
         this.setState({
             autoLaunch,
             autoLaunchSupported,
@@ -173,6 +184,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTraySupported,
             minimizeToTray,
             togglingHardwareAccelerationSupported,
+            disablingReadReceiptsSupported,
             enableHardwareAcceleration,
         });
     }
@@ -305,6 +317,20 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Displaying time") }</span>
                     { this.renderGroup(PreferencesUserSettingsTab.TIME_SETTINGS) }
+                </div>
+
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{ _t("Presence") }</span>
+                    <span className="mx_SettingsTab_subsectionText">
+                        { _t("Choose what real-time activity other users can see from you.") }
+                    </span>
+                    <SettingsFlag
+                        disabled={!this.state.disablingReadReceiptsSupported}
+                        disabledTooltipText={_t("Your server doesn't support disabling read receipts")}
+                        name="sendReadReceipts"
+                        level={SettingLevel.ACCOUNT}
+                    />
+                    { this.renderGroup(PreferencesUserSettingsTab.PRESENCE_SETTINGS) }
                 </div>
 
                 <div className="mx_SettingsTab_section">
