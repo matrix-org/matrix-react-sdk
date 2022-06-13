@@ -41,7 +41,7 @@ jobs:
             retention-days: 14
 
       - name: Store benchmark result
-        if: github.ref == 'refs/heads/develop' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.ref == 'refs/heads/develop' && github.repository == 'matrix-org/matrix-react-sdk'
         uses: matrix-org/github-action-benchmark@jsperfentry-1
         with:
           tool: 'jsperformanceentry'
