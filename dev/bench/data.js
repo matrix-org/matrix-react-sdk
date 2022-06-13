@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655118740840,
+  "lastUpdate": 1655123722727,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100826,6 +100826,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 721,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f10d35cb182b4c1c8dcadca57c76afe62c1832f6",
+          "message": "Add try-catch around blurhash loading (#8830)",
+          "timestamp": "2022-06-13T13:25:32+01:00",
+          "tree_id": "4b58705d4b27a008586bb4e87d2ffa18fb05ae02",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f10d35cb182b4c1c8dcadca57c76afe62c1832f6"
+        },
+        "date": 1655123710818,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4874.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 986.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1617.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4673.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
