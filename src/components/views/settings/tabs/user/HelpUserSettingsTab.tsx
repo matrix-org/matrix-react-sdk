@@ -110,7 +110,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         }
 
         return (
-            <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
+            <div className='mx_SettingsTab_section'>
                 <span className='mx_SettingsTab_subheading'>{ _t("Legal") }</span>
                 <div className='mx_SettingsTab_subsectionText'>
                     { legalLinks }
@@ -280,7 +280,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         { _t("Keyboard Shortcuts") }
                     </AccessibleButton>
                 </div>
-                <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
+                <div className='mx_SettingsTab_section'>
                     <span className='mx_SettingsTab_subheading'>{ _t("Versions") }</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         <CopyableText getTextToCopy={this.getVersionTextToCopy}>
@@ -292,7 +292,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 </div>
                 { this.renderLegal() }
                 { this.renderCredits() }
-                <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
+                <div className='mx_SettingsTab_section'>
                     <span className='mx_SettingsTab_subheading'>{ _t("Advanced") }</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         { _t("Homeserver is") } <code>{ MatrixClientPeg.get().getHomeserverUrl() }</code><br />
