@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655100514169,
+  "lastUpdate": 1655105046051,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100706,6 +100706,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4577,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "68ce7bf35e7f8c15a296e5eb2cec7b81b570b110",
+          "message": "Remove an obsolete style declaration of .mx_ReplyChain_show (#8743)\n\nIt was added with https://github.com/matrix-org/matrix-react-sdk/pull/6291/files#diff-11808ff6468e6efa5982f414119fcc8a3a3eea4090b1a4ebda8ed6eae732418aR163\r\n\r\nIt has not been effective for unknown period, and since the layout of the area has changed, it should be able to be safely removed.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-13T09:17:48+02:00",
+          "tree_id": "69bbfc04053cbe68982ccb6460990133aac62f1d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/68ce7bf35e7f8c15a296e5eb2cec7b81b570b110"
+        },
+        "date": 1655105032697,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5675.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 730.5,
             "unit": "ms",
             "extra": "type: measure"
           }
