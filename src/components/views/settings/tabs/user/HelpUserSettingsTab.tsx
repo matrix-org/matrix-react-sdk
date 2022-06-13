@@ -298,7 +298,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         { _t("Homeserver is") } <code>{ MatrixClientPeg.get().getHomeserverUrl() }</code><br />
                         { _t("Identity server is") } <code>{ MatrixClientPeg.get().getIdentityServerUrl() }</code><br />
                         <details>
-                            <summary>{ _t("Access Token") }</summary><br />
+                            <summary>{ _t("Access Token") }</summary>
                             <b>{ _t("Your access token gives full access to your account."
                                + " Do not share it with anyone.") }</b>
                             <CopyableText getTextToCopy={() => MatrixClientPeg.get().getAccessToken()}>

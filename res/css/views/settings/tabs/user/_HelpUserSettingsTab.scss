@@ -23,5 +23,9 @@ limitations under the License.
 
     details {
         margin: $spacing-12 auto;
+
+        summary {
+            margin-bottom: $spacing-12;
+        }
     }
 }
