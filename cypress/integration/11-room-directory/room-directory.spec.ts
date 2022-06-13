@@ -95,13 +95,7 @@ describe("Room Directory", () => {
         cy.get('.mx_RoomDirectory_dialogWrapper [name="dirsearch"]').type("{selectAll}{backspace}test1234");
         cy.get(".mx_RoomDirectory_dialogWrapper").contains(".mx_RoomDirectory_listItem", name)
             .should("exist").as("resultRow");
-        cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered one result", {
-            // Stick the default room avatar colour, so it doesn't cause a false diff on the screenshot
-            percyCSS: `
-                .mx_BaseAvatar_initial + .mx_BaseAvatar_image,
-                .mx_BaseAvatar_initial { background-color: "#ac3ba8"; }
-            `,
-        });
+        cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered one result");
         cy.get("@resultRow").find(".mx_AccessibleButton").contains("Join").click();
 
         cy.url().should('contain', `/#/room/#test1234:localhost`);
