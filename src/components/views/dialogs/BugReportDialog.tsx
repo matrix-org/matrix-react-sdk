@@ -110,7 +110,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         }).then(() => {
             if (!this.unmounted) {
                 this.props.onFinished(false);
-                // N.B. first param is passed to piwik and so doesn't want i18n
                 Modal.createTrackedDialog('Bug report sent', '', QuestionDialog, {
                     title: _t('Logs sent'),
                     description: _t('Thank you!'),

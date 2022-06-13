@@ -81,15 +81,23 @@ const onUsageDataClicked = () => {
 
 const TOAST_KEY = "analytics";
 
-const getAnonymousDescription = (): ReactNode => {
-    // get toast description for anonymous tracking (the previous scheme pre-posthog)
-    const brand = SdkConfig.get().brand;
+export function getPolicyUrl(): Optional<string> {
+    const policyUrl = SdkConfig.get("privacy_policy_url");
+    if (policyUrl) return policyUrl;
+
     const piwikConfig = SdkConfig.get("piwik");
     let piwik: Optional<SnakedObject<Extract<IConfigOptions["piwik"], object>>>;
     if (typeof piwikConfig === 'object') {
         piwik = new SnakedObject(piwikConfig);
     }
-    const cookiePolicyUrl = piwik?.get("policy_url");
+    return piwik?.get("policy_url");
+}
+
+const getAnonymousDescription = (): ReactNode => {
+    // get toast description for anonymous tracking (the previous scheme pre-posthog)
+    const brand = SdkConfig.get().brand;
+    const policyUrl = getPolicyUrl();
+
     return _t(
         "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. " +
         "This will use a <PolicyLink>cookie</PolicyLink>.",
@@ -100,8 +108,8 @@ const getAnonymousDescription = (): ReactNode => {
             "UsageDataLink": (sub) => (
                 <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
             ),
-            "PolicyLink": (sub) => cookiePolicyUrl ? (
-                <a target="_blank" href={cookiePolicyUrl}>{ sub }</a>
+            "PolicyLink": (sub) => policyUrl ? (
+                <a target="_blank" href={policyUrl}>{ sub }</a>
             ) : sub,
         },
     );
