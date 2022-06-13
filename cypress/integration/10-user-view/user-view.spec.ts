@@ -44,7 +44,11 @@ describe("UserView", () => {
         cy.get(".mx_RightPanel .mx_Spinner").should("not.exist"); // wait for spinners to finish
         cy.get(".mx_RightPanel").percySnapshotElement("User View", {
             // Hide the MXID field as it'll vary on each test
-            percyCSS: ".mx_UserInfo_profile_mxid { visibility: hidden !important; }",
+            percyCSS: `
+                .mx_BaseAvatar_initial + .mx_BaseAvatar_image,
+                .mx_UserInfo_profile_mxid { visibility: hidden !important; }
+                .mx_BaseAvatar_initial { background-color: "#ac3ba8"; }
+            `,
             widths: [260, 500],
         });
     });
