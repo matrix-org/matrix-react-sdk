@@ -371,7 +371,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
             client.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
             this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
-            DecryptionFailureTracker.instance.addVisibleEvent(this.props.mxEvent);
+            DecryptionFailureTracker.instance.addRenderedEvent(this.props.mxEvent);
             if (this.props.showReactions) {
                 this.props.mxEvent.on(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
             }
@@ -458,7 +458,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
         this.isListeningForReceipts = false;
         this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
-        DecryptionFailureTracker.instance.removeVisibleEvent(this.props.mxEvent);
+        DecryptionFailureTracker.instance.removeRenderedEvent(this.props.mxEvent);
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }

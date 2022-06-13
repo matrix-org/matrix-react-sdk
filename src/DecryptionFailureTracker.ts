@@ -64,21 +64,21 @@ export class DecryptionFailureTracker {
     // Map of event IDs to DecryptionFailure items.
     public failures: Map<string, DecryptionFailure> = new Map();
 
-    // Set of event IDs that have been visible to the user.
-    public visibleEvents: Set<string> = new Set();
+    // Set of event IDs that have been rendered in the DOM
+    public renderedEvents: Set<string> = new Set();
 
-    // Map of visible event IDs to `DecryptionFailure`s. Every
+    // Map of rendered event IDs to `DecryptionFailure`s. Every
     // `CHECK_INTERVAL_MS`, this map is checked for failures that
     // happened > `GRACE_PERIOD_MS` ago. Those that did are
     // accumulated in `failureCounts`.
-    public visibleFailures: Map<string, DecryptionFailure> = new Map();
+    public renderedFailures: Map<string, DecryptionFailure> = new Map();
 
-    // For analytics purposes, we report visible decryption failures
+    // For analytics purposes, we report rendered decryption failures
     // even after the user scrolls or clicks away, as long as they
     // don't get decrypted within the grace period. However, it's also
-    // useful to keep track of what decryption failures are in view
+    // useful to keep track of what decryption failures are in the DOM
     // right now.
-    public onlyCurrentVisibleFailures = new Set<string>();
+    public onlyCurrentRenderedFailures = new Set<string>();
 
     // A histogram of the number of failures that will be tracked at the next tracking
     // interval, split by failure error code.
@@ -148,12 +148,12 @@ export class DecryptionFailureTracker {
         }
     }
 
-    public addVisibleEvent(e: MatrixEvent): void {
+    public addRenderedEvent(e: MatrixEvent): void {
         const eventId = e.getId();
 
-        this.visibleEvents.add(eventId);
+        this.renderedEvents.add(eventId);
         if (this.failures.has(eventId)) {
-            this.addVisibleFailure(eventId);
+            this.addRenderedFailure(eventId);
         }
     }
 
@@ -161,45 +161,45 @@ export class DecryptionFailureTracker {
         const eventId = failure.failedEventId;
 
         this.failures.set(eventId, failure);
-        if (this.visibleEvents.has(eventId)) {
-            this.addVisibleFailure(eventId);
+        if (this.renderedEvents.has(eventId)) {
+            this.addRenderedFailure(eventId);
         }
     }
 
-    private addVisibleFailure(eventId: string): void {
-        if (!this.trackedEvents.has(eventId) && !this.visibleFailures.has(eventId)) {
-            this.visibleFailures.set(eventId, this.failures.get(eventId));
+    private addRenderedFailure(eventId: string): void {
+        if (!this.trackedEvents.has(eventId) && !this.renderedFailures.has(eventId)) {
+            this.renderedFailures.set(eventId, this.failures.get(eventId));
         }
-        if (!this.onlyCurrentVisibleFailures.has(eventId)) {
-            this.onlyCurrentVisibleFailures.add(eventId);
-            this.reportCurrentVisibleFailures();
+        if (!this.onlyCurrentRenderedFailures.has(eventId)) {
+            this.onlyCurrentRenderedFailures.add(eventId);
+            this.reportCurrentRenderedFailures();
         }
     }
 
     public removeDecryptionFailuresForEvent(e: MatrixEvent): void {
         const eventId = e.getId();
         this.failures.delete(eventId);
-        this.visibleFailures.delete(eventId);
-        this.removeCurrentVisibleFailure(eventId);
+        this.renderedFailures.delete(eventId);
+        this.removeCurrentRenderedFailure(eventId);
     }
 
-    public removeVisibleEvent(e: MatrixEvent): void {
+    public removeRenderedEvent(e: MatrixEvent): void {
         const eventId = e.getId();
-        this.visibleEvents.delete(eventId);
-        this.removeCurrentVisibleFailure(eventId);
+        this.renderedEvents.delete(eventId);
+        this.removeCurrentRenderedFailure(eventId);
     }
 
-    private removeCurrentVisibleFailure(eventId: string): void {
-        if (this.onlyCurrentVisibleFailures.has(eventId)) {
-            this.onlyCurrentVisibleFailures.delete(eventId);
-            this.reportCurrentVisibleFailures();
+    private removeCurrentRenderedFailure(eventId: string): void {
+        if (this.onlyCurrentRenderedFailures.has(eventId)) {
+            this.onlyCurrentRenderedFailures.delete(eventId);
+            this.reportCurrentRenderedFailures();
         }
     }
 
-    private reportCurrentVisibleFailures(): void {
+    private reportCurrentRenderedFailures(): void {
         dis.dispatch({
-            action: 'update_visible_decryption_failures',
-            eventIds: this.onlyCurrentVisibleFailures,
+            action: 'update_rendered_decryption_failures',
+            eventIds: this.onlyCurrentRenderedFailures,
         });
     }
 
@@ -226,8 +226,8 @@ export class DecryptionFailureTracker {
         clearInterval(this.trackInterval);
 
         this.failures = new Map();
-        this.visibleEvents = new Set();
-        this.visibleFailures = new Map();
+        this.renderedEvents = new Set();
+        this.renderedFailures = new Map();
         this.failureCounts = {};
     }
 
@@ -239,7 +239,7 @@ export class DecryptionFailureTracker {
     public checkFailures(nowTs: number): void {
         const failuresGivenGrace: Set<DecryptionFailure> = new Set();
         const failuresNotReady: Map<string, DecryptionFailure> = new Map();
-        for (const [eventId, failure] of this.visibleFailures) {
+        for (const [eventId, failure] of this.renderedFailures) {
             if (nowTs > failure.ts + DecryptionFailureTracker.GRACE_PERIOD_MS) {
                 failuresGivenGrace.add(failure);
                 this.trackedEvents.add(eventId);
@@ -247,7 +247,7 @@ export class DecryptionFailureTracker {
                 failuresNotReady.set(eventId, failure);
             }
         }
-        this.visibleFailures = failuresNotReady;
+        this.renderedFailures = failuresNotReady;
 
         // Commented out for now for expediency, we need to consider unbound nature of storing
         // this in localStorage

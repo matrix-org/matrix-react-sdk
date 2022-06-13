@@ -219,7 +219,7 @@ export interface IRoomState {
     threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
-    visibleDecryptionFailures?: Set<string>;
+    renderedDecryptionFailures?: Set<string>;
 }
 
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
@@ -279,7 +279,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
             narrow: false,
-            visibleDecryptionFailures: new Set(),
+            renderedDecryptionFailures: new Set(),
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -919,8 +919,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     this.messagePanel?.jumpToLiveTimeline();
                 }
                 break;
-            case 'update_visible_decryption_failures':
-                this.setState({ visibleDecryptionFailures: new Set(payload.eventIds) });
+            case 'update_rendered_decryption_failures':
+                this.setState({ renderedDecryptionFailures: new Set(payload.eventIds) });
                 break;
         }
     };
@@ -1973,9 +1973,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     ) }
                 </AccessibleButton>
             );
-        } else if (this.state.visibleDecryptionFailures.size > 0) {
+        } else if (this.state.renderedDecryptionFailures.size > 0) {
             aux = <DecryptionFailureBar
-                failures={this.state.visibleDecryptionFailures}
+                failures={this.state.renderedDecryptionFailures}
                 room={this.state.room}
             />;
         }
