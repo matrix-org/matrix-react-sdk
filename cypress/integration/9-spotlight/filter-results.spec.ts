@@ -25,11 +25,10 @@ function openSpotlightDialog(): Chainable<JQuery<HTMLElement>> {
     return cy.get('[role=dialog][aria-label="Search Dialog"]');
 }
 
-/*
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function clearFilter(): Chainable<JQuery<HTMLElement>> {
     return cy.get(".mx_SpotlightDialog_filter");
 }
-*/
 
 function filterPeople(): Chainable<JQuery<HTMLElement>> {
     return cy.get("#mx_SpotlightDialog_button_startChat", { timeout: 15000 });
@@ -46,29 +45,39 @@ function spotlightSearch(): Chainable<JQuery<HTMLInputElement>> {
 describe("Spotlight filtering", () => {
     let synapse: SynapseInstance;
 
-    const botName = "BotBob";
-    let bot: MatrixClient;
+    const bot1Name = "BotBob";
+    let bot1: MatrixClient;
 
-    const roomName = "247";
-    let roomId: string;
+    const bot2Name = "ByteBot";
+    let bot2: MatrixClient;
+
+    const room1Name = "247";
+    let room1Id: string;
+
+    const room2Name = "Lounge";
+    let room2Id: string;
 
     beforeEach(() => {
         cy.enableLabsFeature("feature_spotlight");
         cy.startSynapse("default").then(data => {
             synapse = data;
-            cy.initTestUser(synapse, "Jim");
-            cy.getBot(synapse, botName).then(_bot => {
-                bot = _bot;
-            }).then(() => {
-                cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
-                    cy.createRoom({ name: roomName, visibility: Visibility.Public }).then(_roomId => {
-                        roomId = _roomId;
-                        cy.inviteUser(roomId, bot.getUserId());
-                        cy.visit("/#/room/" + roomId);
-                    });
+            cy.initTestUser(synapse, "Jim").then(() => cy.getBot(synapse, bot1Name).then(_bot1 => {
+                bot1 = _bot1;
+            })).then(() => cy.getBot(synapse, bot2Name).then(_bot2 => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                bot2 = _bot2;
+            })).then(() => cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
+                cy.createRoom({ name: room1Name, visibility: Visibility.Public }).then(_room1Id => {
+                    room1Id = _room1Id;
+                    cy.inviteUser(room1Id, bot1.getUserId());
+                    cy.visit("/#/room/" + room1Id);
                 });
-            });
-            cy.get('.mx_RoomSublist_skeletonUI').should('not.exist');
+                bot2.createRoom({ name: room2Name, visibility: Visibility.Public })
+                    .then(({ room_id: _room2Id }) => {
+                        room2Id = _room2Id;
+                        bot2.invite(room2Id, bot1.getUserId());
+                    });
+            })).then(() => cy.get('.mx_RoomSublist_skeletonUI').should('not.exist'));
         });
     });
 
@@ -78,30 +87,50 @@ describe("Spotlight filtering", () => {
 
     it("should find joined rooms", () => {
         openSpotlightDialog().within(() => {
-            spotlightSearch().clear().type(roomName);
+            spotlightSearch().clear().type(room1Name);
             const options = cy.get(".mx_SpotlightDialog_option");
             options.should("have.length", 3);
-            options.first().should("contain", roomName);
+            options.first().should("contain", room1Name);
         });
     });
 
-    it("should find public rooms", () => {
+    it("should find known public rooms", () => {
         openSpotlightDialog().within(() => {
             filterPublicRooms().click();
-            spotlightSearch().clear().type(roomName);
+            spotlightSearch().clear().type(room1Name);
             const options = cy.get(".mx_SpotlightDialog_option");
             options.should("have.length", 3);
-            options.first().should("contain", roomName);
+            options.first().should("contain", room1Name);
+        });
+    });
+
+    it("should find unknown public rooms", () => {
+        openSpotlightDialog().within(() => {
+            filterPublicRooms().click();
+            spotlightSearch().clear().type(room2Name);
+            const options = cy.get(".mx_SpotlightDialog_option");
+            options.should("have.length", 3);
+            options.first().should("contain", room2Name);
         });
     });
 
     it("should find known people", () => {
         openSpotlightDialog().within(() => {
             filterPeople().click();
-            spotlightSearch().clear().type(botName);
+            spotlightSearch().clear().type(bot1Name);
             const options = cy.get(".mx_SpotlightDialog_option");
             options.should("have.length", 4);
-            options.first().should("contain", botName);
+            options.first().should("contain", bot1Name);
+        });
+    });
+
+    it("should find unknown people", () => {
+        openSpotlightDialog().within(() => {
+            filterPeople().click();
+            spotlightSearch().clear().type(bot2Name);
+            const options = cy.get(".mx_SpotlightDialog_option");
+            options.should("have.length", 4);
+            options.first().should("contain", bot2Name);
         });
     });
 });
