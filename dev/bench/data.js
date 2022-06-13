@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655134534022,
+  "lastUpdate": 1655145044531,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100922,6 +100922,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4219.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b03aa2ebf57c724f0915a845bbfc8a0aef590b5e",
+          "message": "Move room directory Puppeteer tests over to Cypress (#8832)\n\n* Fix user view percy test by sticking the user avatar colour\r\n\r\n* Move room directory Puppeteer tests over to Cypress\r\n\r\n* Consolidate import\r\n\r\n* Fix tests\r\n\r\n* Grab default widths\r\n\r\n* Tweak Percy CSS mechanism",
+          "timestamp": "2022-06-13T19:25:39+01:00",
+          "tree_id": "9901317d38996f6af7c04ddc95e1c6fdebf45098",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b03aa2ebf57c724f0915a845bbfc8a0aef590b5e"
+        },
+        "date": 1655145034076,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4969.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2540,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4841.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
