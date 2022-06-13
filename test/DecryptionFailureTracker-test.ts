@@ -60,20 +60,20 @@ describe('DecryptionFailureTracker', function() {
         spyDispatcher.mockReset();
     });
 
-    it('tracks a failed decryption for a visible event', function(done) {
+    it('tracks a failed decryption for a rendered event', function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
         // @ts-ignore - private constructor
         const tracker = new DecryptionFailureTracker((total: number) => count += total, () => "UnknownError");
 
-        tracker.addVisibleEvent(failedDecryptionEvent);
+        tracker.addRenderedEvent(failedDecryptionEvent);
 
         const err = new MockDecryptionError();
         tracker.eventDecrypted(failedDecryptionEvent, err);
 
         expect(spyDispatcher).toHaveBeenCalledWith({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
             // @ts-ignore - jest expect.extend is weird with TS
             eventIds: expect.setContaining(failedDecryptionEvent.getId()),
         });
@@ -89,7 +89,7 @@ describe('DecryptionFailureTracker', function() {
         done();
     });
 
-    it('tracks a failed decryption with expected raw error for a visible event', function(done) {
+    it('tracks a failed decryption with expected raw error for a rendered event', function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -100,7 +100,7 @@ describe('DecryptionFailureTracker', function() {
             reportedRawCode = rawCode;
         }, () => "UnknownError");
 
-        tracker.addVisibleEvent(failedDecryptionEvent);
+        tracker.addRenderedEvent(failedDecryptionEvent);
 
         const err = new MockDecryptionError('INBOUND_SESSION_MISMATCH_ROOM_ID');
         tracker.eventDecrypted(failedDecryptionEvent, err);
@@ -117,7 +117,7 @@ describe('DecryptionFailureTracker', function() {
         done();
     });
 
-    it('tracks a failed decryption for an event that becomes visible later', function(done) {
+    it('tracks a failed decryption for an event that becomes rendered later', function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -127,10 +127,10 @@ describe('DecryptionFailureTracker', function() {
         const err = new MockDecryptionError();
         tracker.eventDecrypted(failedDecryptionEvent, err);
 
-        tracker.addVisibleEvent(failedDecryptionEvent);
+        tracker.addRenderedEvent(failedDecryptionEvent);
 
         expect(spyDispatcher).toHaveBeenCalledWith({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
             // @ts-ignore - jest expect.extend is weird with TS
             eventIds: expect.setContaining(failedDecryptionEvent.getId()),
         });
@@ -146,7 +146,7 @@ describe('DecryptionFailureTracker', function() {
         done();
     });
 
-    it('does not track a failed decryption for an event that never becomes visible', function(done) {
+    it('does not track a failed decryption for an event that never becomes rendered', function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -157,7 +157,7 @@ describe('DecryptionFailureTracker', function() {
         tracker.eventDecrypted(failedDecryptionEvent, err);
 
         expect(spyDispatcher).not.toHaveBeenCalledWith(expect.objectContaining({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
         }));
 
         // Pretend "now" is Infinity
@@ -180,13 +180,13 @@ describe('DecryptionFailureTracker', function() {
             expect(true).toBe(false);
         }, () => "UnknownError");
 
-        tracker.addVisibleEvent(decryptedEvent);
+        tracker.addRenderedEvent(decryptedEvent);
 
         const err = new MockDecryptionError();
         tracker.eventDecrypted(decryptedEvent, err);
 
         expect(spyDispatcher).toHaveBeenCalledWith({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
             // @ts-ignore - jest expect.extend is weird with TS
             eventIds: expect.setContaining(decryptedEvent.getId()),
         });
@@ -197,7 +197,7 @@ describe('DecryptionFailureTracker', function() {
         tracker.eventDecrypted(decryptedEvent, null);
 
         expect(spyDispatcher).toHaveBeenCalledWith({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
             // @ts-ignore - jest expect.extend is weird with TS
             eventIds: expect.not.setContaining(decryptedEvent.getId()),
         });
@@ -211,7 +211,7 @@ describe('DecryptionFailureTracker', function() {
     });
 
     it('does not track a failed decryption where the event is subsequently successfully decrypted ' +
-       'and later becomes visible', (done) => {
+       'and later becomes rendered', (done) => {
         const decryptedEvent = createFailedDecryptionEvent();
         // @ts-ignore - private method
         const tracker = new DecryptionFailureTracker((_total: number) => {
@@ -226,10 +226,10 @@ describe('DecryptionFailureTracker', function() {
         decryptedEvent.setClearData({});
         tracker.eventDecrypted(decryptedEvent, null);
 
-        tracker.addVisibleEvent(decryptedEvent);
+        tracker.addRenderedEvent(decryptedEvent);
 
         expect(spyDispatcher).not.toHaveBeenCalledWith(expect.objectContaining({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
         }));
 
         // Pretend "now" is Infinity
@@ -248,7 +248,7 @@ describe('DecryptionFailureTracker', function() {
         // @ts-ignore
         const tracker = new DecryptionFailureTracker((total: number) => count += total, () => "UnknownError");
 
-        tracker.addVisibleEvent(decryptedEvent);
+        tracker.addRenderedEvent(decryptedEvent);
 
         // Arbitrary number of failed decryptions for both events
         const err = new MockDecryptionError();
@@ -259,7 +259,7 @@ describe('DecryptionFailureTracker', function() {
         tracker.eventDecrypted(decryptedEvent, err);
         tracker.eventDecrypted(decryptedEvent2, err);
         tracker.eventDecrypted(decryptedEvent2, err);
-        tracker.addVisibleEvent(decryptedEvent2);
+        tracker.addRenderedEvent(decryptedEvent2);
         tracker.eventDecrypted(decryptedEvent2, err);
 
         expect(spyDispatcher).toHaveBeenCalledTimes(2);
@@ -285,7 +285,7 @@ describe('DecryptionFailureTracker', function() {
         // @ts-ignore
         const tracker = new DecryptionFailureTracker((total: number) => count += total, () => "UnknownError");
 
-        tracker.addVisibleEvent(decryptedEvent);
+        tracker.addRenderedEvent(decryptedEvent);
 
         // Indicate decryption
         const err = new MockDecryptionError();
@@ -316,7 +316,7 @@ describe('DecryptionFailureTracker', function() {
         // @ts-ignore
         const tracker = new DecryptionFailureTracker((total: number) => count += total, () => "UnknownError");
 
-        tracker.addVisibleEvent(decryptedEvent);
+        tracker.addRenderedEvent(decryptedEvent);
 
         // Indicate decryption
         const err = new MockDecryptionError();
@@ -332,7 +332,7 @@ describe('DecryptionFailureTracker', function() {
         // @ts-ignore
         const secondTracker = new DecryptionFailureTracker((total: number) => count += total, () => "UnknownError");
 
-        secondTracker.addVisibleEvent(decryptedEvent);
+        secondTracker.addRenderedEvent(decryptedEvent);
 
         //secondTracker.loadTrackedEvents();
 
@@ -360,9 +360,9 @@ describe('DecryptionFailureTracker', function() {
         const error1 = new MockDecryptionError('UnknownError');
         const error2 = new MockDecryptionError('OlmKeysNotSentError');
 
-        tracker.addVisibleEvent(decryptedEvent1);
-        tracker.addVisibleEvent(decryptedEvent2);
-        tracker.addVisibleEvent(decryptedEvent3);
+        tracker.addRenderedEvent(decryptedEvent1);
+        tracker.addRenderedEvent(decryptedEvent2);
+        tracker.addRenderedEvent(decryptedEvent3);
 
         // One failure of ERROR_CODE_1, and effectively two for ERROR_CODE_2
         tracker.eventDecrypted(decryptedEvent1, error1);
@@ -395,9 +395,9 @@ describe('DecryptionFailureTracker', function() {
         const error2 = new MockDecryptionError('ERROR_CODE_2');
         const error3 = new MockDecryptionError('ERROR_CODE_3');
 
-        tracker.addVisibleEvent(decryptedEvent1);
-        tracker.addVisibleEvent(decryptedEvent2);
-        tracker.addVisibleEvent(decryptedEvent3);
+        tracker.addRenderedEvent(decryptedEvent1);
+        tracker.addRenderedEvent(decryptedEvent2);
+        tracker.addRenderedEvent(decryptedEvent3);
 
         tracker.eventDecrypted(decryptedEvent1, error1);
         tracker.eventDecrypted(decryptedEvent2, error2);
@@ -423,7 +423,7 @@ describe('DecryptionFailureTracker', function() {
 
         const error = new MockDecryptionError('ERROR_CODE_1');
 
-        tracker.addVisibleEvent(decryptedEvent);
+        tracker.addRenderedEvent(decryptedEvent);
 
         tracker.eventDecrypted(decryptedEvent, error);
 
@@ -436,7 +436,7 @@ describe('DecryptionFailureTracker', function() {
             .toBe(1);
     });
 
-    it('should continue tracking an event that leaves visibility and then becomes visible again, ' +
+    it('should continue tracking an event that leaves visibility and then becomes rendered again, ' +
         'but should report it to analytics exactly once', () => {
         let count = 0;
         // @ts-ignore
@@ -446,19 +446,19 @@ describe('DecryptionFailureTracker', function() {
 
         const error = new MockDecryptionError();
 
-        tracker.addVisibleEvent(failedDecryptionEvent);
+        tracker.addRenderedEvent(failedDecryptionEvent);
         tracker.eventDecrypted(failedDecryptionEvent, error);
 
         expect(spyDispatcher).toHaveBeenCalledWith({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
             // @ts-ignore - jest expect.extend is weird with TS
             eventIds: expect.setContaining(failedDecryptionEvent.getId()),
         });
 
-        tracker.removeVisibleEvent(failedDecryptionEvent);
+        tracker.removeRenderedEvent(failedDecryptionEvent);
 
         expect(spyDispatcher).toHaveBeenCalledWith({
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
             // @ts-ignore - jest expect.extend is weird with TS
             eventIds: expect.not.setContaining(failedDecryptionEvent.getId()),
         });
@@ -467,10 +467,10 @@ describe('DecryptionFailureTracker', function() {
         tracker.checkFailures(Infinity);
         tracker.trackFailures();
 
-        tracker.addVisibleEvent(failedDecryptionEvent);
+        tracker.addRenderedEvent(failedDecryptionEvent);
 
         expect(spyDispatcher).toHaveBeenNthCalledWith(3, {
-            action: 'update_visible_decryption_failures',
+            action: 'update_rendered_decryption_failures',
             // @ts-ignore - jest expect.extend is weird with TS
             eventIds: expect.setContaining(failedDecryptionEvent.getId()),
         });
