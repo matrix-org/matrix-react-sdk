@@ -297,7 +297,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <div className='mx_SettingsTab_subsectionText'>
                         { _t("Homeserver is") } <code>{ MatrixClientPeg.get().getHomeserverUrl() }</code><br />
                         { _t("Identity server is") } <code>{ MatrixClientPeg.get().getIdentityServerUrl() }</code><br />
-                        <br />
                         <details>
                             <summary>{ _t("Access Token") }</summary><br />
                             <b>{ _t("Your access token gives full access to your account."
@@ -305,7 +304,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             <CopyableText getTextToCopy={() => MatrixClientPeg.get().getAccessToken()}>
                                 { MatrixClientPeg.get().getAccessToken() }
                             </CopyableText>
-                        </details><br />
+                        </details>
                         <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
                             { _t("Clear cache and reload") }
                         </AccessibleButton>
