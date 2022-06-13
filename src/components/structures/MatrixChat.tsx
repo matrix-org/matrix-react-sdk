@@ -39,7 +39,6 @@ import 'focus-visible';
 import 'what-input';
 
 import PosthogTrackers from '../../PosthogTrackers';
-import Analytics from "../../Analytics";
 import { DecryptionFailureTracker } from "../../DecryptionFailureTracker";
 import { IMatrixClientCreds, MatrixClientPeg } from "../../MatrixClientPeg";
 import PlatformPeg from "../../PlatformPeg";
@@ -73,8 +72,7 @@ import LoggedInView from './LoggedInView';
 import { Action } from "../../dispatcher/actions";
 import {
     hideToast as hideAnalyticsToast,
-    showAnonymousAnalyticsOptInToast,
-    showPseudonymousAnalyticsOptInToast,
+    showToast as showAnalyticsToast,
 } from "../../toasts/AnalyticsToast";
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
@@ -344,10 +342,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         }
 
-        if (SettingsStore.getValue("pseudonymousAnalyticsOptIn")) {
-            Analytics.enable();
-        }
-
         initSentry(SdkConfig.get("sentry"));
     }
 
@@ -406,7 +400,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     componentDidUpdate(prevProps, prevState) {
         if (this.shouldTrackPageChange(prevState, this.state)) {
             const durationMs = this.stopPageChangeTimer();
-            Analytics.trackPageChange(durationMs);
             PosthogTrackers.instance.trackPageChange(this.state.view, this.state.page_type, durationMs);
         }
         if (this.focusComposer) {
@@ -800,19 +793,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.setState({
                     hideToSRUsers: false,
                 });
-                break;
-            case Action.AnonymousAnalyticsAccept:
-                hideAnalyticsToast();
-                SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, true);
-                SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
-                if (Analytics.canEnable()) {
-                    Analytics.enable();
-                }
-                break;
-            case Action.AnonymousAnalyticsReject:
-                hideAnalyticsToast();
-                SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, false);
-                SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
                 break;
             case Action.PseudonymousAnalyticsAccept:
                 hideAnalyticsToast();
@@ -1271,8 +1251,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
             this.initPosthogAnalyticsToast();
-        } else if (Analytics.canEnable() && SettingsStore.getValue("showCookieBar")) {
-            showAnonymousAnalyticsOptInToast();
         }
 
         if (SdkConfig.get("mobile_guide_toast")) {
@@ -1282,14 +1260,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private showPosthogToast(analyticsOptIn: boolean) {
-        showPseudonymousAnalyticsOptInToast(analyticsOptIn);
-    }
-
     private initPosthogAnalyticsToast() {
         // Show the analytics toast if necessary
         if (SettingsStore.getValue("pseudonymousAnalyticsOptIn") === null) {
-            this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
+            showAnalyticsToast();
         }
 
         // Listen to changes in settings and show the toast if appropriate - this is necessary because account
@@ -1298,7 +1272,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         SettingsStore.watchSetting("pseudonymousAnalyticsOptIn", null,
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
                 if (newValue === null) {
-                    this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
+                    showAnalyticsToast();
                 } else {
                     // It's possible for the value to change if a cached sync loads at page load, but then network
                     // sync contains a new value of the flag with it set to false (e.g. another device set it since last

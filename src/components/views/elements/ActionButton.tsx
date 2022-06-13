@@ -18,7 +18,6 @@ import React from 'react';
 
 import AccessibleButton from './AccessibleButton';
 import dis from '../../../dispatcher/dispatcher';
-import Analytics from '../../../Analytics';
 import Tooltip from './Tooltip';
 
 interface IProps {
@@ -52,7 +51,6 @@ export default class ActionButton extends React.Component<IProps, IState> {
 
     private onClick = (ev: React.MouseEvent): void => {
         ev.stopPropagation();
-        Analytics.trackEvent('Action Button', 'click', this.props.action);
         dis.dispatch({ action: this.props.action });
     };
 

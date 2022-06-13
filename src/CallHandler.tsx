@@ -47,7 +47,6 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
-import Analytics from './Analytics';
 import { UIFeature } from "./settings/UIFeature";
 import { Action } from './dispatcher/actions';
 import VoipUserMapper from './VoipUserMapper';
@@ -305,7 +304,6 @@ export default class CallHandler extends EventEmitter {
             return;
         }
 
-        Analytics.trackEvent('voip', 'receiveCall', 'type', call.type);
         this.addCallForRoom(mappedRoomId, call);
         this.setCallListeners(call);
         // Explicitly handle first state change
@@ -447,7 +445,6 @@ export default class CallHandler extends EventEmitter {
         call.on(CallEvent.Error, (err: CallError) => {
             if (!this.matchesCallForThisRoom(call)) return;
 
-            Analytics.trackEvent('voip', 'callError', 'error', err.toString());
             logger.error("Call error:", err);
 
             if (err.code === CallErrorCode.NoUserMedia) {
@@ -470,8 +467,6 @@ export default class CallHandler extends EventEmitter {
         });
         call.on(CallEvent.Hangup, () => {
             if (!this.matchesCallForThisRoom(call)) return;
-
-            Analytics.trackEvent('voip', 'callHangup');
 
             this.removeCallForRoom(mappedRoomId);
         });
@@ -584,7 +579,6 @@ export default class CallHandler extends EventEmitter {
             }
             case CallState.Ended: {
                 const hangupReason = call.hangupReason;
-                Analytics.trackEvent('voip', 'callEnded', 'hangupReason', hangupReason);
                 this.removeCallForRoom(mappedRoomId);
                 if (oldState === CallState.InviteSent && call.hangupParty === CallParty.Remote) {
                     this.play(AudioID.Busy);
@@ -765,8 +759,6 @@ export default class CallHandler extends EventEmitter {
     }
 
     private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
-        Analytics.trackEvent('voip', 'placeCall', 'type', type);
-
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
 
@@ -1036,7 +1028,6 @@ export default class CallHandler extends EventEmitter {
     private async placeJitsiCall(roomId: string, type: CallType): Promise<void> {
         const client = MatrixClientPeg.get();
         logger.info(`Place conference call in ${roomId}`);
-        Analytics.trackEvent('voip', 'placeConferenceCall');
 
         dis.dispatch({ action: 'appsDrawer', show: true });
 

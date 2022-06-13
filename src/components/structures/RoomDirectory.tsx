@@ -27,7 +27,6 @@ import Modal from "../../Modal";
 import { _t } from '../../languageHandler';
 import SdkConfig from '../../SdkConfig';
 import { instanceForInstanceId, protocolNameForInstanceId, ALL_ROOMS, Protocols } from '../../utils/DirectoryUtils';
-import Analytics from '../../Analytics';
 import NetworkDropdown from "../views/directory/NetworkDropdown";
 import SettingsStore from "../../settings/SettingsStore";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
@@ -46,10 +45,6 @@ import { GenericError } from "../../utils/error";
 
 const LAST_SERVER_KEY = "mx_last_room_directory_server";
 const LAST_INSTANCE_KEY = "mx_last_room_directory_instance";
-
-function track(action: string) {
-    Analytics.trackEvent('RoomDirectory', action);
-}
 
 interface IProps extends IDialogProps {
     initialText?: string;
@@ -121,7 +116,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     // thing you see when loading the client!
                     return;
                 }
-                track('Failed to get protocol list from homeserver');
                 const brand = SdkConfig.get().brand;
                 this.setState({
                     error: _t(
@@ -225,7 +219,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             }
 
             logger.error("Failed to get publicRooms: %s", JSON.stringify(err));
-            track('Failed to get public room list');
             const brand = SdkConfig.get().brand;
             this.setState({
                 loading: false,

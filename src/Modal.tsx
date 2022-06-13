@@ -20,7 +20,6 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 
-import Analytics from './Analytics';
 import dis from './dispatcher/dispatcher';
 import AsyncWrapper from './AsyncWrapper';
 
@@ -108,7 +107,6 @@ export class ModalManager {
         analyticsInfo: string,
         ...rest: Parameters<ModalManager["createDialog"]>
     ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
         return this.createDialog<T>(...rest);
     }
 
@@ -117,7 +115,6 @@ export class ModalManager {
         analyticsInfo: string,
         ...rest: Parameters<ModalManager["appendDialog"]>
     ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
         return this.appendDialog<T>(...rest);
     }
 
@@ -140,7 +137,6 @@ export class ModalManager {
         analyticsInfo: string,
         ...rest: Parameters<ModalManager["createDialogAsync"]>
     ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
         return this.createDialogAsync<T>(...rest);
     }
 
@@ -149,7 +145,6 @@ export class ModalManager {
         analyticsInfo: string,
         ...rest: Parameters<ModalManager["appendDialogAsync"]>
     ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
         return this.appendDialogAsync<T>(...rest);
     }
 

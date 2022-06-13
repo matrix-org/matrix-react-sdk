@@ -28,7 +28,6 @@ import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
 import SecurityCustomisations from "./customisations/Security";
 import EventIndexPeg from './indexing/EventIndexPeg';
 import createMatrixClient from './utils/createMatrixClient';
-import Analytics from './Analytics';
 import Notifier from './Notifier';
 import UserActivity from './UserActivity';
 import Presence from './Presence';
@@ -597,8 +596,6 @@ async function doSetLoggedIn(
         await abortLogin();
     }
 
-    Analytics.setLoggedIn(credentials.guest, credentials.homeserverUrl);
-
     MatrixClientPeg.replaceUsingCreds(credentials);
 
     setSentryUser(credentials.userId);
@@ -880,8 +877,6 @@ export async function onLoggedOut(): Promise<void> {
  * @returns {Promise} promise which resolves once the stores have been cleared
  */
 async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void> {
-    Analytics.disable();
-
     if (window.localStorage) {
         // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
