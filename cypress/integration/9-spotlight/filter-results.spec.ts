@@ -16,6 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import { Visibility } from "../../../../matrix-js-sdk";
 import { MatrixClient } from "../../global";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
@@ -35,17 +36,15 @@ function filterPeople(): Chainable<JQuery<HTMLElement>> {
     return cy.get("#mx_SpotlightDialog_button_startChat", { timeout: 15000 });
 }
 
-/*
 function filterPublicRooms(): Chainable<JQuery<HTMLElement>> {
     return cy.get("#mx_SpotlightDialog_button_explorePublicRooms", { timeout: 15000 });
 }
-*/
 
 function spotlightSearch(): Chainable<JQuery<HTMLInputElement>> {
     return cy.get(".mx_SpotlightDialog_searchBox input", { timeout: 15000 });
 }
 
-describe("Filter Results", () => {
+describe("Spotlight filtering", () => {
     let synapse: SynapseInstance;
 
     const botName = "BotBob";
@@ -63,7 +62,7 @@ describe("Filter Results", () => {
                 bot = _bot;
             });
 
-            cy.createRoom({ name: roomName }).then(_roomId => {
+            cy.createRoom({ name: roomName, visibility: Visibility.Public }).then(_roomId => {
                 roomId = _roomId;
                 cy.inviteUser(roomId, bot.getUserId());
                 cy.visit("/#/room/" + roomId);
@@ -78,6 +77,16 @@ describe("Filter Results", () => {
 
     it("should find joined rooms", () => {
         openSpotlightDialog().within(() => {
+            spotlightSearch().clear().type(roomName);
+            const options = cy.get(".mx_SpotlightDialog_option");
+            options.should("have.length", 3);
+            options.first().should("contain", roomName);
+        });
+    });
+
+    it("should find public rooms", () => {
+        openSpotlightDialog().within(() => {
+            filterPublicRooms().click();
             spotlightSearch().clear().type(roomName);
             const options = cy.get(".mx_SpotlightDialog_option");
             options.should("have.length", 3);
