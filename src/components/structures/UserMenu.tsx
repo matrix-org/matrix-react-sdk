@@ -333,6 +333,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     iconClassName="mx_UserMenu_iconLock"
                     label={_t("Security & Privacy")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
+                    data-test-id="user-menu-security-item"
                 />
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconSettings"
@@ -421,6 +422,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 label={_t("User menu")}
                 isExpanded={!!this.state.contextMenuPosition}
                 onContextMenu={this.onContextMenu}
+                data-test-id="user-menu-button"
             >
                 <div className="mx_UserMenu_userAvatar">
                     <BaseAvatar

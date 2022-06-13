@@ -408,7 +408,12 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 <p>{ _t("Back up your keys before signing out to avoid losing them.") }</p>
             </>;
             actions.push(
-                <AccessibleButton key="setup" kind="primary" onClick={this.startNewBackup}>
+                <AccessibleButton
+                    key="setup"
+                    kind="primary"
+                    onClick={this.startNewBackup}
+                    data-test-id="set-up-secure-backup-button"
+                >
                     { _t("Set up") }
                 </AccessibleButton>,
             );

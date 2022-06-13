@@ -740,6 +740,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                             className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
                             onClick={this.onCopyClick}
                             disabled={this.state.phase === Phase.Storing}
+                            data-test-id="copy-recovery-key-button"
                         >
                             { this.state.copied ? _t("Copied!") : _t("Copy") }
                         </AccessibleButton>
