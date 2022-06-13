@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655123722727,
+  "lastUpdate": 1655134534022,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100874,6 +100874,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4673.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dfdba46d576ecdc39875a2751eb1f57c394bd26e",
+          "message": "Remove _NotificationUserSettingsTab.scss (#8831)",
+          "timestamp": "2022-06-13T17:30:07+02:00",
+          "tree_id": "f865638149e9991aefac37c8047cf84dc59dffb7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dfdba46d576ecdc39875a2751eb1f57c394bd26e"
+        },
+        "date": 1655134522311,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5542.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 957.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1563.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4219.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
