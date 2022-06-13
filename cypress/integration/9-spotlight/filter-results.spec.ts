@@ -168,4 +168,8 @@ describe("Spotlight", () => {
             spotlightOptions().eq(1).should("have.attr", "aria-selected", "false");
         });
     });
+
+    // TODO: homeserver dialog
+    // TODO: opening single DMs
+    // TODO: opening group DMs
 });
