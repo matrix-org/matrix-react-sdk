@@ -108,7 +108,6 @@ export async function createDmLocalRoom(
         userId,
         {
             pendingEventOrdering: PendingEventOrdering.Detached,
-            unstableClientRelationAggregation: true,
         },
     );
     const events = [];

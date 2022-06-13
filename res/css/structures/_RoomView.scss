@@ -32,7 +32,8 @@ limitations under the License.
     position: relative;
 }
 
-.mx_MainSplit_timeline {
+.mx_MainSplit_timeline,
+.mx_RoomView--local {
     .mx_MessageComposer_wrapper {
         margin: $spacing-8 $spacing-16;
     }

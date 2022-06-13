@@ -320,7 +320,6 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { topicElement }
                     { betaPill }
                     { buttons }
-                    <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
                 <RoomLiveShareWarning roomId={this.props.room.roomId} />
             </div>
