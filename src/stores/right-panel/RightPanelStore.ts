@@ -201,7 +201,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return removedCard;
     }
 
-    public togglePanel(roomId?: string) {
+    public togglePanel(roomId: string | null) {
         const rId = roomId ?? this.viewedRoomId;
         if (!this.byRoom[rId]) return;
 
@@ -209,13 +209,13 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
 
-    public show(roomId?: string) {
+    public show(roomId: string | null) {
         if (!this.isOpenForRoom(roomId ?? this.viewedRoomId)) {
             this.togglePanel(roomId);
         }
     }
 
-    public hide(roomId?: string) {
+    public hide(roomId: string | null) {
         if (this.isOpenForRoom(roomId ?? this.viewedRoomId)) {
             this.togglePanel(roomId);
         }
