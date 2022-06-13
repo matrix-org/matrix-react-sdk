@@ -51,20 +51,21 @@ export default class RightPanelStore extends ReadyWatchingStore {
     } = {};
     private viewedRoomId: Optional<string>;
 
-    private constructor() {
+    // Public for tests
+    public constructor() {
         super(defaultDispatcher);
     }
 
-    protected async onReady(): Promise<any> {
+    protected onReady = async (): Promise<any> => {
         this.viewedRoomId = RoomViewStore.instance.getRoomId();
         this.matrixClient.on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
-    }
+    };
 
-    protected async onNotReady(): Promise<any> {
+    protected onNotReady = async (): Promise<any> => {
         this.matrixClient.off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
-    }
+    };
 
     protected onDispatcherAction(payload: ActionPayload) {
         if (payload.action !== Action.ActiveRoomChanged) return;
@@ -141,7 +142,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             const hist = this.byRoom[rId]?.history ?? [];
             hist[hist.length - 1].state = cardState;
             this.emitAndUpdateSettings();
-        } else if (targetPhase !== this.currentCard?.phase || !this.byRoom[rId]) {
+        } else if (targetPhase !== this.currentCardForRoom(rId)?.phase || !this.byRoom[rId]) {
             // Set right panel and initialize/erase history
             const history = [{ phase: targetPhase, state: cardState ?? {} }];
             this.byRoom[rId] = { history, isOpen: true };
@@ -161,16 +162,16 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
 
+    // Appends a card to the history and shows the right panel if not already visible
     public pushCard(
         card: IRightPanelCard,
         allowClose = true,
         roomId: string = null,
     ) {
-        // This function appends a card to the history and shows the right panel if now already visible.
         const rId = roomId ?? this.viewedRoomId;
         const redirect = this.getVerificationRedirect(card);
         const targetPhase = redirect?.phase ?? card.phase;
-        const pState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
+        const pState = redirect?.state ?? card.state ?? {};
 
         // Checks for wrong SetRightPanelPhase requests
         if (!this.isPhaseValid(targetPhase, Boolean(rId))) return;
@@ -183,7 +184,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         } else {
             // setup room panel cache with the new card
             this.byRoom[rId] = {
-                history: [{ phase: targetPhase, state: pState ?? {} }],
+                history: [{ phase: targetPhase, state: pState }],
                 // if there was no right panel store object the the panel was closed -> keep it closed, except if allowClose==false
                 isOpen: !allowClose,
             };
