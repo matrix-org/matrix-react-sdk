@@ -246,7 +246,7 @@ export const Notifier = {
                         ? _t('%(brand)s does not have permission to send you notifications - ' +
                             'please check your browser settings', { brand })
                         : _t('%(brand)s was not given permission to send notifications - please try again', { brand });
-                    Modal.createTrackedDialog('Unable to enable Notifications', result, ErrorDialog, {
+                    Modal.createDialog(ErrorDialog, {
                         title: _t('Unable to enable Notifications'),
                         description,
                     });

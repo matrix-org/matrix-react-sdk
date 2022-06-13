@@ -248,7 +248,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             desc = _t('Remove %(name)s from the directory?', { name: name });
         }
 
-        Modal.createTrackedDialog('Remove from Directory', '', QuestionDialog, {
+        Modal.createDialog(QuestionDialog, {
             title: _t('Remove from Directory'),
             description: desc,
             onFinished: (shouldDelete: boolean) => {
@@ -268,7 +268,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     modal.close();
                     this.refreshRoomList();
                     logger.error("Failed to " + step + ": " + err);
-                    Modal.createTrackedDialog('Remove from Directory Error', '', ErrorDialog, {
+                    Modal.createDialog(ErrorDialog, {
                         title: _t('Error'),
                         description: (err && err.message)
                             ? err.message
@@ -353,7 +353,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             });
         } catch (e) {
             if (e instanceof GenericError) {
-                Modal.createTrackedDialog(e.message, '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: e.message,
                     description: e.description,
                 });
