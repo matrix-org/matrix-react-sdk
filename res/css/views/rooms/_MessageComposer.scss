@@ -37,6 +37,8 @@ limitations under the License.
     }
 
     .mx_MessageComposer_row {
+        /* This forces the composer to wrap its content, even if it has no word boundaries. Fixes #22507 */
+        overflow: hidden;
         grid-area: composer;
     }
 
