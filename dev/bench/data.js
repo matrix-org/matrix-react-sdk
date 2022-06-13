@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655105046051,
+  "lastUpdate": 1655105380266,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100742,6 +100742,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 730.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cda18a3dfbe2d947b6c7f0593fabd7c4f705ce1d",
+          "message": "Improve CSS rules of zoom buttons on live location (#8728)\n\n* Use flex to stop redundant margin-top from appearing\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove ButtonResetDefault which resets nothing\r\n\r\nIt should be avoided to use ButtonResetDefault where there is nothing to be reset, in order to prevent resources from being wasted.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Ensure that unexpected regressions will never happen on the buttons and their icons\r\n\r\nRules can be extracted when needed. Until then there is no point of exposing elements to possible regressions, which could easily happen on the current architecture.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use SASS variables and remove a redundant declaration\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-13T09:23:49+02:00",
+          "tree_id": "ad3e1fdd041c5741c58aeca293c37530f4c2dbb2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cda18a3dfbe2d947b6c7f0593fabd7c4f705ce1d"
+        },
+        "date": 1655105368042,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5825.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1241.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1775.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4992.5,
             "unit": "ms",
             "extra": "type: measure"
           }
