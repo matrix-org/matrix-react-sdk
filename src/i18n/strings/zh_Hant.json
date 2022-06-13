@@ -3476,5 +3476,6 @@
     "How can I create a video room?": "我要如何建立視訊聊天室？",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "視訊聊天室是嵌入在 %(brand)s 聊天室內的一律開啟的 VoIP 頻道。",
     "A new way to chat over voice and video in %(brand)s.": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
-    "Video rooms": "視訊聊天室"
+    "Video rooms": "視訊聊天室",
+    "Enable hardware acceleration": "啟用硬體加速"
 }
