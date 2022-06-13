@@ -888,7 +888,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
         switch (action) {
             case KeyBindingAction.Backspace:
-                if (query === "" && filter) {
+                if (!query && filter !== null) {
                     ev.stopPropagation();
                     ev.preventDefault();
                     setFilter(null);
@@ -901,7 +901,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
                 if (rovingContext.state.refs.length > 0) {
                     let refs = rovingContext.state.refs;
-                    if (!query && !filter) {
+                    if (!query && !filter !== null) {
                         // If the current selection is not in the recently viewed row then only include the
                         // first recently viewed so that is the target when the user is switching into recently viewed.
                         const keptRecentlyViewedRef = refIsForRecentlyViewed(rovingContext.state.activeRef)
@@ -919,7 +919,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             case KeyBindingAction.ArrowLeft:
             case KeyBindingAction.ArrowRight:
                 // only handle these keys when we are in the recently viewed row of options
-                if (!query && !filter &&
+                if (!query && !filter !== null &&
                     rovingContext.state.refs.length > 0 &&
                     refIsForRecentlyViewed(rovingContext.state.activeRef)
                 ) {
@@ -964,8 +964,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 arrows: () => <>
                     <div>↓</div>
                     <div>↑</div>
-                    { !filter && !query && <div>←</div> }
-                    { !filter && !query && <div>→</div> }
+                    { !filter !== null && !query && <div>←</div> }
+                    { !filter !== null && !query && <div>→</div> }
                 </>,
             }) }
         </div>
