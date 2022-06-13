@@ -42,7 +42,11 @@ function spotlightSearch(): Chainable<JQuery<HTMLInputElement>> {
     return cy.get(".mx_SpotlightDialog_searchBox input", { timeout: 15000 });
 }
 
-describe("Spotlight filtering", () => {
+function spotlightOptions(): Chainable<JQuery<HTMLElement>> {
+    return cy.get(".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option");
+}
+
+describe("Spotlight", () => {
     let synapse: SynapseInstance;
 
     const bot1Name = "BotBob";
@@ -61,23 +65,31 @@ describe("Spotlight filtering", () => {
         cy.enableLabsFeature("feature_spotlight");
         cy.startSynapse("default").then(data => {
             synapse = data;
-            cy.initTestUser(synapse, "Jim").then(() => cy.getBot(synapse, bot1Name).then(_bot1 => {
-                bot1 = _bot1;
-            })).then(() => cy.getBot(synapse, bot2Name).then(_bot2 => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                bot2 = _bot2;
-            })).then(() => cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
-                cy.createRoom({ name: room1Name, visibility: Visibility.Public }).then(_room1Id => {
-                    room1Id = _room1Id;
-                    cy.inviteUser(room1Id, bot1.getUserId());
-                    cy.visit("/#/room/" + room1Id);
-                });
-                bot2.createRoom({ name: room2Name, visibility: Visibility.Public })
-                    .then(({ room_id: _room2Id }) => {
-                        room2Id = _room2Id;
-                        bot2.invite(room2Id, bot1.getUserId());
+            cy.initTestUser(synapse, "Jim").then(() =>
+                cy.getBot(synapse, bot1Name).then(_bot1 => {
+                    bot1 = _bot1;
+                }),
+            ).then(() =>
+                cy.getBot(synapse, bot2Name).then(_bot2 => {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    bot2 = _bot2;
+                }),
+            ).then(() =>
+                cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
+                    cy.createRoom({ name: room1Name, visibility: Visibility.Public }).then(_room1Id => {
+                        room1Id = _room1Id;
+                        cy.inviteUser(room1Id, bot1.getUserId());
+                        cy.visit("/#/room/" + room1Id);
                     });
-            })).then(() => cy.get('.mx_RoomSublist_skeletonUI').should('not.exist'));
+                    bot2.createRoom({ name: room2Name, visibility: Visibility.Public })
+                        .then(({ room_id: _room2Id }) => {
+                            room2Id = _room2Id;
+                            bot2.invite(room2Id, bot1.getUserId());
+                        });
+                }),
+            ).then(() =>
+                cy.get('.mx_RoomSublist_skeletonUI').should('not.exist'),
+            );
         });
     });
 
@@ -88,9 +100,10 @@ describe("Spotlight filtering", () => {
     it("should find joined rooms", () => {
         openSpotlightDialog().within(() => {
             spotlightSearch().clear().type(room1Name);
-            const options = cy.get(".mx_SpotlightDialog_option");
-            options.should("have.length", 3);
-            options.first().should("contain", room1Name);
+            spotlightOptions().should("have.length", 1);
+            spotlightOptions().eq(0).should("contain", room1Name);
+            spotlightOptions().eq(0).click();
+            cy.url().should("contain", room1Id);
         });
     });
 
@@ -98,9 +111,10 @@ describe("Spotlight filtering", () => {
         openSpotlightDialog().within(() => {
             filterPublicRooms().click();
             spotlightSearch().clear().type(room1Name);
-            const options = cy.get(".mx_SpotlightDialog_option");
-            options.should("have.length", 3);
-            options.first().should("contain", room1Name);
+            spotlightOptions().should("have.length", 1);
+            spotlightOptions().eq(0).should("contain", room1Name);
+            spotlightOptions().eq(0).click();
+            cy.url().should("contain", room1Id);
         });
     });
 
@@ -108,9 +122,10 @@ describe("Spotlight filtering", () => {
         openSpotlightDialog().within(() => {
             filterPublicRooms().click();
             spotlightSearch().clear().type(room2Name);
-            const options = cy.get(".mx_SpotlightDialog_option");
-            options.should("have.length", 3);
-            options.first().should("contain", room2Name);
+            spotlightOptions().should("have.length", 1);
+            spotlightOptions().eq(0).should("contain", room2Name);
+            spotlightOptions().eq(0).click();
+            cy.url().should("contain", room2Id);
         });
     });
 
@@ -118,9 +133,8 @@ describe("Spotlight filtering", () => {
         openSpotlightDialog().within(() => {
             filterPeople().click();
             spotlightSearch().clear().type(bot1Name);
-            const options = cy.get(".mx_SpotlightDialog_option");
-            options.should("have.length", 4);
-            options.first().should("contain", bot1Name);
+            spotlightOptions().should("have.length", 1);
+            spotlightOptions().eq(0).should("contain", bot1Name);
         });
     });
 
@@ -128,9 +142,30 @@ describe("Spotlight filtering", () => {
         openSpotlightDialog().within(() => {
             filterPeople().click();
             spotlightSearch().clear().type(bot2Name);
-            const options = cy.get(".mx_SpotlightDialog_option");
-            options.should("have.length", 4);
-            options.first().should("contain", bot2Name);
+            spotlightOptions().should("have.length", 1);
+            spotlightOptions().eq(0).should("contain", bot2Name);
+        });
+    });
+
+    it("should navigate results", () => {
+        openSpotlightDialog().within(() => {
+            filterPeople().click();
+            spotlightSearch().clear().type("b");
+            spotlightOptions().should("have.length", 2);
+            spotlightOptions().eq(0).should("have.attr", "aria-selected", "true");
+            spotlightOptions().eq(1).should("have.attr", "aria-selected", "false");
+            spotlightSearch().type("{downArrow}");
+            spotlightOptions().eq(0).should("have.attr", "aria-selected", "false");
+            spotlightOptions().eq(1).should("have.attr", "aria-selected", "true");
+            spotlightSearch().type("{downArrow}");
+            spotlightOptions().eq(0).should("have.attr", "aria-selected", "false");
+            spotlightOptions().eq(1).should("have.attr", "aria-selected", "false");
+            spotlightSearch().type("{upArrow}");
+            spotlightOptions().eq(0).should("have.attr", "aria-selected", "false");
+            spotlightOptions().eq(1).should("have.attr", "aria-selected", "true");
+            spotlightSearch().type("{upArrow}");
+            spotlightOptions().eq(0).should("have.attr", "aria-selected", "true");
+            spotlightOptions().eq(1).should("have.attr", "aria-selected", "false");
         });
     });
 });
