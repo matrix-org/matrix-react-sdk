@@ -14,30 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_AppearanceUserSettingsTab .mx_Field {
-    width: 256px;
-}
-
 .mx_AppearanceUserSettingsTab {
-    > .mx_SettingsTab_SubHeading {
-        margin-bottom: 32px;
-        margin-top: 12px;
-    }
-}
-
-.mx_AppearanceUserSettingsTab_Advanced {
-    color: $primary-content;
-
-    > * {
-        margin-bottom: 16px;
+    .mx_SettingsTab_subsectionText {
+        margin-block: $spacing-12 $spacing-32;
+        color: $primary-content; // Same as mx_SettingsTab
     }
 
-    .mx_AppearanceUserSettingsTab_AdvancedToggle {
-        color: $accent;
-        cursor: pointer;
+    .mx_Field {
+        width: 256px;
     }
 
-    .mx_AppearanceUserSettingsTab_systemFont {
-        margin-left: calc($font-16px + 10px);
+    .mx_AppearanceUserSettingsTab_Advanced {
+        .mx_Checkbox {
+            margin-block: $spacing-16;
+        }
+
+        .mx_AppearanceUserSettingsTab_systemFont {
+            margin-inline-start: calc($font-16px + 10px);
+        }
     }
 }

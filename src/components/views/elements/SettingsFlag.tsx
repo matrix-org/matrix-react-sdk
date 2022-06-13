@@ -34,6 +34,7 @@ interface IProps {
     useCheckbox?: boolean;
     disabled?: boolean;
     disabledTooltipText?: string;
+    hideIfCannotSet?: boolean;
     onChange?(checked: boolean): void;
 }
 
@@ -76,6 +77,8 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
 
     public render() {
         const canChange = SettingsStore.canSetValue(this.props.name, this.props.roomId, this.props.level);
+
+        if (!canChange && this.props.hideIfCannotSet) return null;
 
         const label = this.props.label
             ? _t(this.props.label)
