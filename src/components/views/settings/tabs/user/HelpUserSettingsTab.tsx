@@ -245,11 +245,11 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             "last interacted with, and the usernames of other users. " +
                             "They do not contain messages.",
                         ) }
-                        <div className='mx_HelpUserSettingsTab_debugButton'>
-                            <AccessibleButton onClick={this.onBugReport} kind='primary'>
-                                { _t("Submit debug logs") }
-                            </AccessibleButton>
-                        </div>
+                    </div>
+                    <AccessibleButton onClick={this.onBugReport} kind='primary'>
+                        { _t("Submit debug logs") }
+                    </AccessibleButton>
+                    <div className='mx_SettingsTab_subsectionText'>
                         { _t(
                             "To report a Matrix-related security issue, please read the Matrix.org " +
                             "<a>Security Disclosure Policy</a>.", {},
