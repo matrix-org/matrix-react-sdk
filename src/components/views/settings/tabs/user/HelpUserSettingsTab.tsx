@@ -125,7 +125,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         return (
             <div className='mx_SettingsTab_section'>
                 <span className='mx_SettingsTab_subheading'>{ _t("Credits") }</span>
-                <ul>
+                <ul className='mx_SettingsTab_subsectionText'>
                     <li>
                         The <a href="themes/element/img/backgrounds/lake.jpg" rel="noreferrer noopener" target="_blank">
                             default cover photo
