@@ -56,19 +56,19 @@ describe("Spotlight filtering", () => {
         cy.enableLabsFeature("feature_spotlight");
         cy.startSynapse("default").then(data => {
             synapse = data;
-            cy.window({ log: false }).then(win => {
-                cy.initTestUser(synapse, "Jim");
-                cy.getBot(synapse, botName).then(_bot => {
-                    bot = _bot;
+            cy.initTestUser(synapse, "Jim");
+            cy.getBot(synapse, botName).then(_bot => {
+                bot = _bot;
+            }).then(() => {
+                cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
+                    cy.createRoom({ name: roomName, visibility: Visibility.Public }).then(_roomId => {
+                        roomId = _roomId;
+                        cy.inviteUser(roomId, bot.getUserId());
+                        cy.visit("/#/room/" + roomId);
+                    });
                 });
-
-                cy.createRoom({ name: roomName, visibility: win.matrixcs.Visibility.Public }).then(_roomId => {
-                    roomId = _roomId;
-                    cy.inviteUser(roomId, bot.getUserId());
-                    cy.visit("/#/room/" + roomId);
-                });
-                cy.get('.mx_RoomSublist_skeletonUI').should('not.exist');
             });
+            cy.get('.mx_RoomSublist_skeletonUI').should('not.exist');
         });
     });
 
@@ -95,7 +95,7 @@ describe("Spotlight filtering", () => {
         });
     });
 
-    it("should find people", () => {
+    it("should find known people", () => {
         openSpotlightDialog().within(() => {
             filterPeople().click();
             spotlightSearch().clear().type(botName);
