@@ -47,14 +47,14 @@ describe("Room Directory", () => {
         cy.openRoomSettings();
 
         // First add a local address `gaming`
-        cy.get(".mx_SettingsFieldset").contains(".mx_SettingsFieldset", "Local Addresses").within(() => {
+        cy.contains(".mx_SettingsFieldset", "Local Addresses").within(() => {
             cy.get(".mx_Field input").type("gaming");
-            cy.get(".mx_AccessibleButton").contains("Add").click();
+            cy.contains(".mx_AccessibleButton", "Add").click();
             cy.get(".mx_EditableItem_item").should("contain", "#gaming:localhost");
         });
 
         // Publish into the public rooms directory
-        cy.get(".mx_SettingsFieldset").contains(".mx_SettingsFieldset", "Published Addresses").within(() => {
+        cy.contains(".mx_SettingsFieldset", "Published Addresses").within(() => {
             cy.get("#canonicalAlias").find(":selected").should("contain", "#gaming:localhost");
             cy.get(`[aria-label="Publish this room to the public in localhost's room directory?"]`).click()
                 .should("have.attr", "aria-checked", "true");
@@ -95,7 +95,7 @@ describe("Room Directory", () => {
         });
 
         cy.get('.mx_RoomDirectory_dialogWrapper [name="dirsearch"]').type("{selectAll}{backspace}test1234");
-        cy.get(".mx_RoomDirectory_dialogWrapper .mx_RoomDirectory_name").contains(".mx_RoomDirectory_listItem", name)
+        cy.get(".mx_RoomDirectory_dialogWrapper").contains(".mx_RoomDirectory_listItem", name)
             .should("exist").as("resultRow");
         cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered one result", {
             // Stick the default room avatar colour, so it doesn't cause a false diff on the screenshot
