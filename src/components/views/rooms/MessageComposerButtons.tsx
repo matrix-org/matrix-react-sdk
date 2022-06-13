@@ -302,7 +302,6 @@ function pollButton(room: Room, relation?: IEventRelation): ReactElement {
 interface IPollButtonProps {
     room: Room;
     relation?: IEventRelation;
-    mxClient?: MatrixClient;
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
