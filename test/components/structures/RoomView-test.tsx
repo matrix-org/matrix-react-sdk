@@ -56,15 +56,10 @@ describe("RoomView", () => {
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
         DMRoomMap.makeShared();
-
         RightPanelStore.instance.useUnitTestClient(cli);
-        // @ts-ignore
-        await RightPanelStore.instance.onReady();
     });
 
     afterEach(async () => {
-        // @ts-ignore
-        await RightPanelStore.instance.onNotReady();
         unmockPlatformPeg();
         jest.restoreAllMocks();
     });
