@@ -83,6 +83,7 @@
 @import "./views/avatars/_DecoratedRoomAvatar.scss";
 @import "./views/avatars/_WidgetAvatar.scss";
 @import "./views/beta/_BetaCard.scss";
+@import "./views/buttons/_Cancel.scss";
 @import "./views/context_menus/_CallContextMenu.scss";
 @import "./views/context_menus/_DeviceContextMenu.scss";
 @import "./views/context_menus/_IconizedContextMenu.scss";
@@ -274,6 +275,7 @@
 @import "./views/rooms/_ThreadSummary.scss";
 @import "./views/rooms/_TopUnreadMessagesBar.scss";
 @import "./views/rooms/_VoiceRecordComposerTile.scss";
+@import "./views/rooms/_VideoRoomSummary.scss";
 @import "./views/rooms/_WhoIsTypingTile.scss";
 @import "./views/settings/_AvatarSetting.scss";
 @import "./views/settings/_CrossSigningPanel.scss";

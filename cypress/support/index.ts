@@ -28,3 +28,7 @@ import "./bot";
 import "./clipboard";
 import "./util";
 import "./app";
+import "./percy";
+import "./webserver";
+import "./views";
+import "./iframes";

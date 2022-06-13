@@ -20,7 +20,7 @@ import { EventStatus, IContent, MatrixEvent } from 'matrix-js-sdk/src/models/eve
 import { MsgType } from 'matrix-js-sdk/src/@types/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { logger } from "matrix-js-sdk/src/logger";
-import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
+import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -332,13 +332,14 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
                     const threadId = editedEvent?.getThread()?.id || null;
+                    const [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId);
+                    if (!commandSuccessful) {
+                        return; // errored
+                    }
+
                     if (cmd.category === CommandCategories.messages) {
-                        editContent["m.new_content"] = await runSlashCommand(cmd, args, roomId, threadId);
-                        if (!editContent["m.new_content"]) {
-                            return; // errored
-                        }
+                        editContent["m.new_content"] = content;
                     } else {
-                        runSlashCommand(cmd, args, roomId, threadId);
                         shouldSend = false;
                     }
                 } else if (!await shouldSendAnyway(commandText)) {
