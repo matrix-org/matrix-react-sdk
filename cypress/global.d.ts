@@ -25,7 +25,7 @@ import type {
     RoomStateEvent,
     Visibility,
     RoomMemberEvent,
-} from "matrix-js-sdk/src/matrix"
+} from "matrix-js-sdk/src/matrix";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
 
