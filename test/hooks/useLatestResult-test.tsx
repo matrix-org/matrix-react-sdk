@@ -36,7 +36,7 @@ function LatestResultsComponent({ query, doRequest }) {
     </div>;
 }
 
-describe("useDebouncedSearch", () => {
+describe("useLatestResult", () => {
     it("should return results", async () => {
         const doRequest = async (query) => {
             await sleep(20);
