@@ -129,14 +129,6 @@ export function createTestClient(): MatrixClient {
         }),
         createRoom: jest.fn().mockResolvedValue({ room_id: "!1:example.org" }),
         setPowerLevel: jest.fn().mockResolvedValue(undefined),
-
-        // Used by various internal bits we aren't concerned with (yet)
-        sessionStore: {
-            store: {
-                getItem: jest.fn(),
-                setItem: jest.fn(),
-            },
-        },
         pushRules: {},
         decryptEventIfNeeded: () => Promise.resolve(),
         isUserIgnored: jest.fn().mockReturnValue(false),
