@@ -29,6 +29,7 @@ import { measureStart, measureStop } from '../util';
 
 export async function e2eEncryptionScenarios(alice: ElementSession, bob: ElementSession) {
     console.log(" creating an e2e encrypted DM and join through invite:");
+    // to be replaced by Cypress crypto test
     return;
     await createDm(bob, ['@alice:localhost']);
     await checkRoomSettings(bob, { encryption: true }); // for sanity, should be e2e-by-default

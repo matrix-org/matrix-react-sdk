@@ -72,7 +72,7 @@ describe("Threads", () => {
 
     it("should be usable for a conversation", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse, "BotBob").then(_bot => {
+        cy.getBot(synapse, { displayName: "BobBot" }).then(_bot => {
             bot = _bot;
         });
 

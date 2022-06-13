@@ -1058,6 +1058,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 disabled={this.state.busy || (this.props.kind == KIND_CALL_TRANSFER && this.state.targets.length > 0)}
                 autoComplete="off"
                 placeholder={hasPlaceholder ? _t("Search") : null}
+                data-test-id="invite-dialog-input"
             />
         );
         return (
@@ -1314,6 +1315,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             onClick={goButtonFn}
             className='mx_InviteDialog_goButton'
             disabled={this.state.busy || !hasSelection}
+            data-test-id="invite-dialog-go-button"
         >
             { buttonText }
         </AccessibleButton>;

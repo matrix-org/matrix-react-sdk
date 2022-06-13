@@ -18,10 +18,25 @@ limitations under the License.
 
 import request from "browser-request";
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../plugins/synapsedocker";
 import { MockStorage } from "./storage";
 import Chainable = Cypress.Chainable;
+
+interface ICreateBotOpts {
+    /**
+     * Whether the bot should automatically accept all invites.
+     */
+    autoAcceptInvites?: boolean;
+    /**
+     * The display name to give to that bot user
+     */
+    displayName?: string;
+}
+
+const defaultCreateBotOptions = {
+    autoAcceptInvites: true,
+} as ICreateBotOpts;
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -30,17 +45,34 @@ declare global {
             /**
              * Returns a new Bot instance
              * @param synapse the instance on which to register the bot user
-             * @param displayName the display name to give to the bot user
+             * @param opts create bot options
              */
-            getBot(synapse: SynapseInstance, displayName?: string): Chainable<MatrixClient>;
+            getBot(synapse: SynapseInstance, opts: ICreateBotOpts): Chainable<MatrixClient>;
+            botJoinRoom(bot: MatrixClient, roomId: string): Chainable<Room>;
+            botJoinRoomByName(bot: MatrixClient, roomName: string): Chainable<Room>;
         }
     }
 }
 
-Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string): Chainable<MatrixClient> => {
+Cypress.Commands.add("botJoinRoom", (bot: MatrixClient, roomId: string): Chainable<Room> => {
+    return cy.wrap(bot.joinRoom(roomId));
+});
+
+Cypress.Commands.add("botJoinRoomByName", (bot: MatrixClient, roomName: string): Chainable<Room> => {
+    const room = bot.getRooms().find((r) => r.getDefaultRoomName(bot.getUserId()) === roomName);
+
+    if (room) {
+        return cy.botJoinRoom(bot, room.roomId);
+    }
+
+    return cy.wrap(Promise.reject());
+});
+
+Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: ICreateBotOpts): Chainable<MatrixClient> => {
+    opts = Object.assign({}, defaultCreateBotOptions, opts);
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
-    return cy.registerUser(synapse, username, password, displayName).then(credentials => {
+    return cy.registerUser(synapse, username, password, opts.displayName).then(credentials => {
         return cy.window({ log: false }).then(win => {
             const cli = new win.matrixcs.MatrixClient({
                 baseUrl: synapse.baseUrl,
@@ -56,7 +88,9 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
 
             cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
                 if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                    cli.joinRoom(member.roomId);
+                    if (opts.autoAcceptInvites) {
+                        cli.joinRoom(member.roomId);
+                    }
                 }
             });
 

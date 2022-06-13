@@ -47,9 +47,29 @@ declare global {
              * @param userId the id of the user to invite
              */
             inviteUser(roomId: string, userId: string): Chainable<{}>;
+            /**
+             * Sets up key backup
+             * @param password the user password
+             * @return recovery key
+             */
+            setupKeyBackup(password: string): Chainable<void>;
         }
     }
 }
+
+Cypress.Commands.add("setupKeyBackup", (password: string): Chainable<void> => {
+    cy.get('[data-test-id="user-menu-button"]').click();
+    cy.get('[data-test-id="user-menu-security-item"]').click();
+    cy.get('[data-test-id="set-up-secure-backup-button"]').click();
+    cy.get('[data-test-id="dialog-primary-button"]').click();
+    cy.get('[data-test-id="copy-recovery-key-button"]').click();
+    cy.get('[data-test-id="dialog-primary-button"]:not([disabled])').click();
+    cy.get('#mx_Field_2').type(password);
+    cy.get('[data-test-id="submit-password-button"]:not([disabled])').click();
+    cy.contains('.mx_Dialog_title', 'Setting up keys').should('exist');
+    cy.contains('.mx_Dialog_title', 'Setting up keys').should('not.exist');
+    return;
+});
 
 Cypress.Commands.add("getClient", (): Chainable<MatrixClient | undefined> => {
     return cy.window({ log: false }).then(win => win.mxMatrixClientPeg.matrixClient);

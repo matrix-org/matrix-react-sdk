@@ -31,6 +31,7 @@ export enum LocalRoomState {
  * Its main purpose is to be used for temporary rooms when creating a DM.
  */
 export class LocalRoom extends Room {
+    encrypted: boolean;
     realRoomId: string;
     targets: Member[];
     afterCreateCallbacks: Function[] = [];

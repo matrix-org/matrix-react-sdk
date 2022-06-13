@@ -186,6 +186,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
             tooltipClassName="mx_RoomSublist_addRoomTooltip"
             aria-label={_t("Start chat")}
             title={_t("Start chat")}
+            data-test-id="create-chat-button"
         />;
     }
 

@@ -19,6 +19,7 @@ import * as puppeteer from "puppeteer";
 
 import { measureStart, measureStop } from '../util';
 import { ElementSession } from "../session";
+import { sendMessage } from "./send-message";
 
 export async function openRoomDirectory(session: ElementSession): Promise<void> {
     const roomDirectoryButton = await session.query('.mx_LeftPanel_exploreButton');
@@ -81,8 +82,9 @@ export async function createDm(session: ElementSession, invitees: string[]): Pro
     const goButton = await session.query('.mx_InviteDialog_goButton');
     await goButton.click();
 
-    await session.query('.mx_MessageComposer');
-    session.log.done();
+    sendMessage(session, 'Hi');
+    await session.query('.mx_EventTile_body');
 
+    session.log.done();
     await measureStop(session, "mx_CreateDM");
 }

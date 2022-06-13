@@ -129,6 +129,7 @@ export async function createDmLocalRoom(
     }));
 
     if (await determineCreateRoomEncryptionOption(client, targets)) {
+        localRoom.encrypted = true;
         events.push(
             new MatrixEvent({
                 event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
@@ -226,6 +227,34 @@ async function applyAfterCreateCallbacks(
     localRoom.afterCreateCallbacks = [];
 }
 
+/**
+ * Tests whether a room created based on a local room is ready.
+ */
+function isRoomReady(
+    client: MatrixClient,
+    localRoom: LocalRoom,
+): boolean {
+    // not ready if no real room id exists
+    if (!localRoom.realRoomId) return false;
+
+    const room = client.getRoom(localRoom.realRoomId);
+    // not ready if the room does not exist
+    if (!room) return false;
+
+    // not ready if not all targets have been invited
+    if (room.getInvitedMemberCount() !== localRoom.targets.length) return false;
+
+    const roomHistoryVisibilityEvents = room.currentState.getStateEvents(EventType.RoomHistoryVisibility);
+    // not ready if the room history has not been configured
+    if (roomHistoryVisibilityEvents.length === 0) return false;
+
+    const roomEncryptionEvents = room.currentState.getStateEvents(EventType.RoomEncryption);
+    // not ready if encryption has not been configured (applies only to encrypted rooms)
+    if (localRoom.encrypted === true && roomEncryptionEvents.length === 0) return false;
+
+    return true;
+}
+
 export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: LocalRoom) {
     if (!localRoom.isNew) {
         // This action only makes sense for new local rooms.
@@ -235,10 +264,30 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
     localRoom.state = LocalRoomState.CREATING;
     client.emit(ClientEvent.Room, localRoom);
 
-    const roomId = await startDm(client, localRoom.targets);
-    localRoom.realRoomId = roomId;
-    await applyAfterCreateCallbacks(localRoom, roomId);
-    localRoom.state = LocalRoomState.CREATED;
+    return new Promise<void>((resolve) => {
+        let checkRoomStateInterval: number;
+        let stopgapTimeoutHandle: number;
+
+        const finish = () => {
+            if (checkRoomStateInterval) clearInterval(checkRoomStateInterval);
+            if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
+
+            applyAfterCreateCallbacks(localRoom, localRoom.realRoomId).then(() => {
+                localRoom.state = LocalRoomState.CREATED;
+                resolve();
+            });
+        };
+
+        startDm(client, localRoom.targets).then((roomId) => {
+            localRoom.realRoomId = roomId;
+            if (isRoomReady(client, localRoom)) finish();
+            stopgapTimeoutHandle = setTimeout(finish, 5000);
+            // polling the room state is not as beautiful as listening on the events, but it is more reliable
+            checkRoomStateInterval = setInterval(() => {
+                if (isRoomReady(client, localRoom)) finish();
+            }, 500);
+        });
+    });
 }
 
 /**
