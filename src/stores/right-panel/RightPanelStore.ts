@@ -134,7 +134,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         const cardState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
 
         // Checks for wrong SetRightPanelPhase requests
-        if (!this.isPhaseValid(targetPhase)) return;
+        if (!this.isPhaseValid(targetPhase, Boolean(rId))) return;
 
         if ((targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState)) {
             // Update state: set right panel with a new state but keep the phase (don't know it this is ever needed...)
@@ -173,7 +173,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         const pState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
 
         // Checks for wrong SetRightPanelPhase requests
-        if (!this.isPhaseValid(targetPhase)) return;
+        if (!this.isPhaseValid(targetPhase, Boolean(rId))) return;
 
         const roomCache = this.byRoom[rId];
         if (!!roomCache) {
@@ -317,9 +317,16 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return null;
     }
 
-    public isPhaseValid(targetPhase: RightPanelPhases): boolean {
+    private isPhaseValid(targetPhase: RightPanelPhases, isViewingRoom: boolean): boolean {
         if (!RightPanelPhases[targetPhase]) {
             logger.warn(`Tried to switch right panel to unknown phase: ${targetPhase}`);
+            return false;
+        }
+        if (!isViewingRoom) {
+            logger.warn(
+                `Tried to switch right panel to a room phase: ${targetPhase}, ` +
+                `but we are currently not viewing a room`,
+            );
             return false;
         }
         return true;
