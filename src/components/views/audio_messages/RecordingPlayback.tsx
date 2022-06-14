@@ -66,7 +66,7 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
 
     protected renderComponent(): ReactNode {
         let body: ReactNode;
-        switch(this.props.layout) {
+        switch (this.props.layout) {
             case PlaybackLayout.Composer:
                 body = this.renderComposerLook();
                 break;
