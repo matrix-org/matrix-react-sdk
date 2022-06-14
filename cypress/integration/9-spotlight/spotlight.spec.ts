@@ -160,6 +160,25 @@ describe("Spotlight", () => {
         cy.stopSynapse(synapse);
     });
 
+    it("should be able to add and remove filters via keyboard", () => {
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightSearch().type("{downArrow}");
+            cy.get("#mx_SpotlightDialog_button_explorePublicRooms").should("have.attr", "aria-selected", "true");
+            cy.spotlightSearch().type("{enter}");
+            cy.get(".mx_SpotlightDialog_filter").should("contain", "Public rooms");
+            cy.spotlightSearch().type("{backspace}");
+            cy.get(".mx_SpotlightDialog_filter").should("not.exist");
+
+            cy.spotlightSearch().type("{downArrow}");
+            cy.spotlightSearch().type("{downArrow}");
+            cy.get("#mx_SpotlightDialog_button_startChat").should("have.attr", "aria-selected", "true");
+            cy.spotlightSearch().type("{enter}");
+            cy.get(".mx_SpotlightDialog_filter").should("contain", "People");
+            cy.spotlightSearch().type("{backspace}");
+            cy.get(".mx_SpotlightDialog_filter").should("not.exist");
+        });
+    });
+
     it("should find joined rooms", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightSearch().clear().type(room1Name);
@@ -222,7 +241,6 @@ describe("Spotlight", () => {
         }));
     });
     */
-
     it("should find known people", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
