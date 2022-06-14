@@ -136,7 +136,7 @@ export interface IConfigOptions {
     };
 
     piwik?: false | {
-        policy_url: string; // legacy location for cookie policy
+        policy_url: string; // deprecated in favour of `privacy_policy_url` at root instead
     };
     posthog?: {
         project_api_key: string;
