@@ -291,23 +291,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         },
 
     },
-    "feature_custom_status": {
-        isFeature: true,
-        labsGroup: LabGroup.Profile,
-        displayName: _td("Custom user status messages"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new CustomStatusController(),
-    },
-    "feature_video_rooms": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        displayName: _td("Video rooms (under active development)"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        // Reload to ensure that the left panel etc. get remounted
-        controller: new ReloadOnChangeController(),
-    },
     "feature_disableAEC": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
