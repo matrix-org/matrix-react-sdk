@@ -76,6 +76,7 @@ export default class PlaybackClock extends React.PureComponent<IProps, IState> {
         }
         return <Clock
             seconds={seconds}
+            role="timer"
             aria-live={this.state.playbackPhase === PlaybackState.Playing ? "off" : undefined}
         />;
     }
