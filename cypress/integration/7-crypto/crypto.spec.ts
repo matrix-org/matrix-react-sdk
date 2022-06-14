@@ -42,7 +42,7 @@ describe("Cryptography", () => {
     let bob: MatrixClient;
 
     const startDMWithBob = () => {
-        cy.get('[data-test-id="start-chat-button"]').click();
+        cy.get('.mx_RoomList [aria-label="Start chat"]').click();
         cy.get('[data-test-id="invite-dialog-input"]').type(bob.getUserId());
         cy.contains(".mx_InviteDialog_tile_nameStack_name", "Bob").click();
         cy.contains(".mx_InviteDialog_userTile_pill .mx_InviteDialog_userTile_name", "Bob").should("exist");

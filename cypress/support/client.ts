@@ -64,13 +64,13 @@ declare global {
 }
 
 Cypress.Commands.add("setUpKeyBackup", (password: string): Chainable<void> => {
-    cy.get('[data-test-id="user-menu-button"]').click();
-    cy.get('[data-test-id="user-menu-security-item"]').click();
-    cy.get('[data-test-id="set-up-secure-backup-button"]').click();
-    cy.get('[data-test-id="dialog-primary-button"]').click();
-    cy.get('[data-test-id="copy-recovery-key-button"]').click();
-    cy.get('[data-test-id="dialog-primary-button"]:not([disabled])').click();
-    cy.get('#mx_Field_2').type(password);
+    cy.get('.mx_AccessibleButton[aria-label="User menu"]').click();
+    cy.get('.mx_AccessibleButton[aria-label="Security & Privacy"]').click();
+    cy.contains('.mx_AccessibleButton', "Set up Secure Backup").click();
+    cy.contains('.mx_Dialog_primary', 'Continue').click();
+    cy.contains('.mx_AccessibleButton', 'Copy').click();
+    cy.contains('.mx_Dialog_primary:not([disabled])', 'Continue').click();
+    cy.get('.mx_Dialog input[label="Password"]').type(password);
     cy.get(".mx_Dialog_primary").click();
     cy.contains('.mx_Dialog_title', 'Setting up keys').should('exist');
     cy.contains('.mx_Dialog_title', 'Setting up keys').should('not.exist');
