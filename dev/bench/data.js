@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655213326614,
+  "lastUpdate": 1655225887603,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101162,6 +101162,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 679.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c5c2bef6dbac51ce6e1864056523815ca4c38d9",
+          "message": "Remove Piwik support (#8835)\n\n* Remove all mentions of Piwik\r\n\r\n* Kill off all consumer of the old Piwik Analytics module\r\n\r\n* Simplify ModalManager interface\r\n\r\n* i18n\r\n\r\n* Attempt to fix old e2e tests\r\n\r\n* Remove unused component\r\n\r\n* Iterate PR",
+          "timestamp": "2022-06-14T17:51:51+01:00",
+          "tree_id": "bb63b6a39b2c412282d1ea9294390bf6c76108c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c5c2bef6dbac51ce6e1864056523815ca4c38d9"
+        },
+        "date": 1655225875955,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5144.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 690.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
