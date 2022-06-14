@@ -18,7 +18,7 @@ import React, { HTMLProps } from "react";
 
 import { formatSeconds } from "../../../DateUtils";
 
-export interface IProps extends Pick<HTMLProps<HTMLSpanElement>, "aria-live" | "role"> {
+interface IProps extends Pick<HTMLProps<HTMLSpanElement>, "aria-live" | "role"> {
     seconds: number;
 }
 
