@@ -39,6 +39,9 @@ declare global {
             openSpotlightDialog(
                 options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
             ): Chainable<JQuery<HTMLElement>>;
+            spotlightDialog(
+                options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+            ): Chainable<JQuery<HTMLElement>>;
             spotlightFilter(
                 filter: Filter | null,
                 options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
@@ -60,7 +63,13 @@ Cypress.Commands.add("openSpotlightDialog", (
     options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
 ): Chainable<JQuery<HTMLElement>> => {
     cy.get('.mx_RoomSearch_spotlightTrigger', options).click({ force: true });
-    return cy.get('[role=dialog][aria-label="Search Dialog"]');
+    return cy.spotlightDialog(options);
+});
+
+Cypress.Commands.add("spotlightDialog", (
+    options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
+): Chainable<JQuery<HTMLElement>> => {
+    return cy.get('[role=dialog][aria-label="Search Dialog"]', options);
 });
 
 Cypress.Commands.add("spotlightFilter", (
@@ -114,6 +123,9 @@ describe("Spotlight", () => {
 
     const room2Name = "Lounge";
     let room2Id: string;
+
+    const room3Name = "Matrix HQ";
+    const room3Id = "#matrix:matrix.org";
 
     beforeEach(() => {
         cy.enableLabsFeature("feature_spotlight");
@@ -190,6 +202,27 @@ describe("Spotlight", () => {
         });
     });
 
+    // TODO: We currently can’t test finding rooms on other homeservers/other protocols
+    // We obviously don’t have federation or bridges in cypress tests
+    /*
+    it("should find unknown public rooms on other homeservers", () => {
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.PublicRooms);
+            cy.spotlightSearch().clear().type(room3Name);
+            cy.get("[aria-haspopup=true][role=button]").click();
+        }).then(() => {
+            cy.contains(".mx_GenericDropdownMenu_Option--header", "matrix.org")
+                .next("[role=menuitemradio]")
+                .click();
+            cy.wait(3_600_000);
+        }).then(() => cy.spotlightDialog().within(() => {
+            cy.spotlightResults().should("have.length", 1);
+            cy.spotlightResults().eq(0).should("contain", room3Name);
+            cy.spotlightResults().eq(0).should("contain", room3Id);
+        }));
+    });
+    */
+
     it("should find known people", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
@@ -214,6 +247,19 @@ describe("Spotlight", () => {
         });
     });
 
+    it("should allow opening group chat dialog", () => {
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.People);
+            cy.spotlightSearch().clear().type(bot2Name);
+            cy.spotlightResults().should("have.length", 1);
+            cy.spotlightResults().eq(0).should("contain", bot2Name);
+            cy.get(".mx_SpotlightDialog_startGroupChat").should("contain", "Start a group chat");
+            cy.get(".mx_SpotlightDialog_startGroupChat").click();
+        }).then(() => {
+            cy.get('[role=dialog]').should("contain", "Direct Messages");
+        });
+    });
+
     it("should navigate results", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
@@ -235,7 +281,4 @@ describe("Spotlight", () => {
             cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "false");
         });
     });
-
-    // TODO: homeserver dialog
-    // TODO: opening group DMs
 });
