@@ -64,13 +64,16 @@ limitations under the License.
             position: absolute;
             left: 0;
             top: 0;
+
+            // drop the whole waveform into the background a bit so the seek thumb can be seen
+            opacity: 0.6;
         }
 
         .mx_SeekBar {
             position: absolute;
             left: 0;
             height: 30px;
-            top: -1px; // visually vertically centered
+            top: -2px; // visually vertically centered
 
             // Hide the hairline progress bar. Need to have distinct rules because CSS is weird.
             background: none;
@@ -82,15 +85,15 @@ limitations under the License.
             }
 
             // Make the thumb easier to see. Like the SeekBar original styles, these need to be
-            // distinct. We also convert it into a line instead of a ball.
+            // distinct. We also make it a bit bigger.
             &::-webkit-slider-thumb {
-                width: 2px;
-                height: 30px; // height of waveform
+                width: 10px;
+                height: 10px;
                 background-color: $accent;
             }
             &::-moz-range-thumb {
-                width: 2px;
-                height: 30px; // height of waveform
+                width: 10px;
+                height: 10px;
                 background-color: $accent;
             }
         }
