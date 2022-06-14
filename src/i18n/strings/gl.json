@@ -3476,5 +3476,6 @@
     "How can I create a video room?": "Como creo unha sala de vídeo?",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "As salas de vídeo son canles VoIP sempre activas dentro dunha sala en %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Un novo xeito de conversar con voz e vídeo en %(brand)s.",
-    "Video rooms": "Salas de vídeo"
+    "Video rooms": "Salas de vídeo",
+    "Enable hardware acceleration": "Activar aceleración por hardware"
 }
