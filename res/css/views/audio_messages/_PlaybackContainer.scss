@@ -64,9 +64,6 @@ limitations under the License.
             position: absolute;
             left: 0;
             top: 0;
-
-            // drop the whole waveform into the background a bit so the seek thumb can be seen
-            opacity: 0.6;
         }
 
         .mx_SeekBar {
@@ -75,7 +72,8 @@ limitations under the License.
             height: 30px;
             top: -2px; // visually vertically centered
 
-            // Hide the hairline progress bar. Need to have distinct rules because CSS is weird.
+            // Hide the hairline progress bar since we're at 100% height. Need to have distinct rules
+            // because CSS is weird.
             background: none;
             &::before {
                 background: none;
@@ -85,16 +83,18 @@ limitations under the License.
             }
 
             // Make the thumb easier to see. Like the SeekBar original styles, these need to be
-            // distinct. We also make it a bit bigger.
+            // distinct. We make it transparent so it doesn't show up on the UI, but also larger
+            // so it's easier to grab by mouse users in some browsers. Most browsers let the user
+            // move and drag the thumb regardless of hitting the thumb, however.
             &::-webkit-slider-thumb {
                 width: 10px;
                 height: 10px;
-                background-color: $accent;
+                background-color: transparent;
             }
             &::-moz-range-thumb {
                 width: 10px;
                 height: 10px;
-                background-color: $accent;
+                background-color: transparent;
             }
         }
 
