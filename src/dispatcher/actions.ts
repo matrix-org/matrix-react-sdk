@@ -226,19 +226,6 @@ export enum Action {
     PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
 
     /**
-     * The user accepted anonymous analytics (i.e. matomo, pre-posthog) from the toast
-     * (this action and its handler can be removed once posthog is rolled out)
-     * Payload: none
-     */
-    AnonymousAnalyticsAccept = "anonymous_analytics_accept",
-
-    /**
-     * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
-     * Payload: none
-     */
-    AnonymousAnalyticsReject = "anonymous_analytics_reject",
-
-    /**
      * Fires after crypto is setup if key backup is not enabled
      * Used to trigger auto rageshakes when configured
      */
@@ -306,4 +293,26 @@ export enum Action {
      * Opens a dialog to add an existing object to a space. Used with a OpenAddExistingToSpaceDialogPayload.
      */
     OpenAddToExistingSpaceDialog = "open_add_to_existing_space_dialog",
+
+    /**
+     * Let components know that they should log any useful debugging information
+     * because we're probably about to send bug report which includes all of the
+     * logs. Fires with no payload.
+     */
+    DumpDebugLogs = "dump_debug_logs",
+
+    /**
+     * Show current room topic
+     */
+    ShowRoomTopic = "show_room_topic",
+
+    /**
+     * Fired when the client was logged out. No additional payload information required.
+     */
+    OnLoggedOut = "on_logged_out",
+
+    /**
+     * Fired when the client was logged in. No additional payload information required.
+     */
+    OnLoggedIn = "on_logged_in",
 }

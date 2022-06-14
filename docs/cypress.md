@@ -6,6 +6,7 @@ It aims to cover:
  * How to run the tests yourself
  * How the tests work
  * How to write great Cypress tests
+ * Visual testing
 
 ## Running the Tests
 Our Cypress tests run automatically as part of our CI along with our other tests,
@@ -31,7 +32,7 @@ This will run the Cypress tests once, non-interactively.
 You can also run individual tests this way too, as you'd expect:
 
 ```
-yarn run test:cypress cypress/integration/1-register/register.spec.ts
+yarn run test:cypress --spec cypress/integration/1-register/register.spec.ts
 ```
 
 Cypress also has its own UI that you can use to run and debug the tests.
@@ -131,11 +132,16 @@ but the signature can be maintained for simpler maintenance.
 ### Joining a Room
 Many tests will also want to start with the client in a room, ready to send & receive messages. Best
 way to do this may be to get an access token for the user and use this to create a room with the REST
-API before logging the user in.
+API before logging the user in. You can make use of `cy.getBot(synapse)` and `cy.getClient()` to do this.
 
 ### Convenience APIs
 We should probably end up with convenience APIs that wrap the synapse creation, logging in and room
 creation that can be called to set up tests.
+
+### Using matrix-js-sdk
+Due to the way we run the Cypress tests in CI, at this time you can only use the matrix-js-sdk module
+exposed on `window.matrixcs`. This has the limitation that it is only accessible with the app loaded.
+This may be revisited in the future.
 
 ## Good Test Hygiene
 This section mostly summarises general good Cypress testing practice, and should not be news to anyone
@@ -161,3 +167,13 @@ already familiar with Cypress.
 
 This is a small selection - the Cypress best practices guide, linked above, has more good advice, and we
 should generally try to adhere to them.
+
+## Percy Visual Testing
+We also support visual testing via Percy, this extracts the DOM from Cypress and renders it using custom renderers
+for Safari, Firefox, Chrome & Edge, allowing us to spot visual regressions before they become release regressions.
+Each `cy.percySnapshot()` call results in 8 screenshots (4 browsers, 2 sizes) this can quickly be exhausted and
+so we only run Percy testing on `develop` and PRs which are labelled `X-Needs-Percy`.
+
+To record a snapshot use `cy.percySnapshot()`, you may have to pass `percyCSS` into the 2nd argument to hide certain
+elements which contain dynamic/generated data to avoid them cause false positives in the Percy screenshot diffs.
+

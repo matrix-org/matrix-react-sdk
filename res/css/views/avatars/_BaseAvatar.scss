@@ -47,7 +47,17 @@ limitations under the License.
 
 .mx_BaseAvatar_image {
     object-fit: cover;
+    aspect-ratio: 1;
     border-radius: 125px;
     vertical-align: top;
     background-color: $background;
+}
+
+// Percy screenshot test specific CSS
+@media only percy {
+    .mx_BaseAvatar_initial,
+    .mx_BaseAvatar_initial + .mx_BaseAvatar_image {
+        // Stick the default room avatar colour, so it doesn't cause a false diff on the screenshot
+        background-color: $username-variant2-color !important;
+    }
 }

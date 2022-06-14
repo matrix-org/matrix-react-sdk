@@ -60,7 +60,6 @@ export const BetaPill = ({
                 </div>
             </div>}
             onClick={onClick}
-            yOffset={-10}
         >
             { _t("Beta") }
         </AccessibleTooltipButton>;
@@ -80,7 +79,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     const {
         title,
         caption,
-        disclaimer,
+        faq,
         image,
         feedbackLabel,
         feedbackSubheading,
@@ -92,12 +91,20 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     if (value && feedbackLabel && feedbackSubheading && SdkConfig.get().bug_report_endpoint_url) {
         feedbackButton = <AccessibleButton
             onClick={() => {
-                Modal.createTrackedDialog("Beta Feedback", featureId, BetaFeedbackDialog, { featureId });
+                Modal.createDialog(BetaFeedbackDialog, { featureId });
             }}
             kind="primary"
         >
             { _t("Feedback") }
         </AccessibleButton>;
+    }
+
+    let refreshWarning: string;
+    if (requiresRefresh) {
+        const brand = SdkConfig.get().brand;
+        refreshWarning = value
+            ? _t("Leaving the beta will reload %(brand)s.", { brand })
+            : _t("Joining the beta will reload %(brand)s.", { brand });
     }
 
     let content: ReactNode;
@@ -138,8 +145,11 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                         { content }
                     </AccessibleButton>
                 </div>
-                { disclaimer && <div className="mx_BetaCard_disclaimer">
-                    { disclaimer(value) }
+                { refreshWarning && <div className="mx_BetaCard_refreshWarning">
+                    { refreshWarning }
+                </div> }
+                { faq && <div className="mx_BetaCard_faq">
+                    { faq(value) }
                 </div> }
             </div>
             <div className="mx_BetaCard_columns_image_wrapper">
