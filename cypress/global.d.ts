@@ -15,10 +15,17 @@ limitations under the License.
 */
 
 import "matrix-js-sdk/src/@types/global";
-import type { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
-import type { Visibility } from "matrix-js-sdk/src/@types/partials";
-import type { MatrixScheduler, MemoryCryptoStore, MemoryStore, RoomStateEvent } from "matrix-js-sdk/src/matrix";
-import type { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
+import type {
+    MatrixClient,
+    ClientEvent,
+    MatrixScheduler,
+    MemoryCryptoStore,
+    MemoryStore,
+    Preset,
+    RoomStateEvent,
+    Visibility,
+    RoomMemberEvent,
+} from "matrix-js-sdk/src/matrix";
 import type { WebStorageSessionStore } from "matrix-js-sdk/src/store/session/webstorage";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
@@ -44,6 +51,7 @@ declare global {
                 MemoryCryptoStore: typeof MemoryCryptoStore;
                 WebStorageSessionStore: typeof WebStorageSessionStore;
                 Visibility: typeof Visibility;
+                Preset: typeof Preset;
             };
         }
     }
