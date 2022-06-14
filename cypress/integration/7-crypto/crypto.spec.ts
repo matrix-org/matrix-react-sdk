@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-
+import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import type { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { UserCredentials } from "../../support/login";
 
 const waitForVerificationRequest = (cli: MatrixClient): Promise<VerificationRequest> => {
     return new Promise<VerificationRequest>(resolve => {
         const onVerificationRequestEvent = (request: VerificationRequest) => {
-            cli.off(CryptoEvent.VerificationRequest, onVerificationRequestEvent);
+            // @ts-ignore CryptoEvent is not exported to window.matrixcs; using the string value here
+            cli.off("crypto.verification.request", onVerificationRequestEvent);
             resolve(request);
         };
-        cli.on(CryptoEvent.VerificationRequest, onVerificationRequestEvent);
+        // @ts-ignore
+        cli.on("crypto.verification.request", onVerificationRequestEvent);
     });
 };
 
