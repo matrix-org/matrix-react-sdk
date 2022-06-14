@@ -124,9 +124,6 @@ describe("Spotlight", () => {
     const room2Name = "Lounge";
     let room2Id: string;
 
-    const room3Name = "Matrix HQ";
-    const room3Id = "#matrix:matrix.org";
-
     beforeEach(() => {
         cy.enableLabsFeature("feature_spotlight");
         cy.startSynapse("default").then(data => {
@@ -205,6 +202,9 @@ describe("Spotlight", () => {
     // TODO: We currently can’t test finding rooms on other homeservers/other protocols
     // We obviously don’t have federation or bridges in cypress tests
     /*
+    const room3Name = "Matrix HQ";
+    const room3Id = "#matrix:matrix.org";
+
     it("should find unknown public rooms on other homeservers", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.PublicRooms);
