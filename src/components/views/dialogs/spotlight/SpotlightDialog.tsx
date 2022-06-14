@@ -458,7 +458,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 <h4>
                     { trimmedQuery
                         ? _t('Use "%(query)s" to search', { query })
-                        : _t("Other searches") }
+                        : _t("Search for") }
                 </h4>
                 <div>
                     { (filter !== Filter.PublicRooms) && (
