@@ -26,10 +26,11 @@ limitations under the License.
     font-size: $font-20px;
     font-weight: 600;
     color: $primary-content;
-    margin-block: 10px; // TODO: Use a spacing variable
+    margin-top: 10px; // TODO: Use a spacing variable
+    margin-bottom: 10px; // TODO: Use a spacing variable
 
     &:nth-child(n + 2) {
-        margin-block-start: 30px; // TODO: Use a spacing variable
+        margin-top: 30px; // TODO: Use a spacing variable
     }
 }
 
@@ -38,24 +39,28 @@ limitations under the License.
     display: block;
     font-weight: 600;
     color: $primary-content;
-    margin-block: $spacing-12 10px; // TODO: Use a spacing variable
+    margin-top: $spacing-12;
+    margin-bottom: 10px; // TODO: Use a spacing variable
 }
 
 .mx_SettingsTab_subsectionText {
     color: $settings-subsection-fg-color;
     font-size: $font-14px;
     display: block;
-    margin: 10px 80px 10px 0; // Align with the rest of the view
+    margin-top: 10px; // TODO: Use a spacing variable
+    margin-inline-end: 80px; // Align with the rest of the view
+    margin-bottom: 10px; // TODO: Use a spacing variable
+    margin-inline-start: 0;
 }
 
 .mx_SettingsTab_section {
     $end-gutter: 80px;
 
-    margin-block-end: $spacing-24;
+    margin-bottom: $spacing-24;
 
     .mx_SettingsFlag {
         margin-inline-end: $end-gutter;
-        margin-block-end: 10px; // TODO: Use a spacing variable
+        margin-bottom: 10px; // TODO: Use a spacing variable
 
         .mx_SettingsFlag_label {
             vertical-align: middle;
@@ -89,5 +94,5 @@ limitations under the License.
 }
 
 .mx_SettingsTab_toggleWithDescription {
-    margin-block-start: $spacing-24;
+    margin-top: $spacing-24;
 }
