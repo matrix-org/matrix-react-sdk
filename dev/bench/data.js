@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655230942644,
+  "lastUpdate": 1655238878650,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101240,6 +101240,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4635.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d81e2cea14e64805b1d0f84e41abb9f6df4a82bd",
+          "message": "Remove unused sessionStorage layer (#8834)\n\n* Remove unused sessionStorage layer\r\n\r\n* Update global.d.ts\r\n\r\n* Fix tests",
+          "timestamp": "2022-06-14T21:29:24+01:00",
+          "tree_id": "9f97062dde4521b8f1559502bd8e51dbd0f574b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d81e2cea14e64805b1d0f84e41abb9f6df4a82bd"
+        },
+        "date": 1655238868008,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4853,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2208.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4709,
             "unit": "ms",
             "extra": "type: measure"
           }
