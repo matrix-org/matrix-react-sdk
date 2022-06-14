@@ -26,14 +26,14 @@ interface IProps extends IAudioPlayerBaseProps {
     /**
      * When true, use a waveform instead of a seek bar
      */
-    withWaveform?: boolean;
+    withWaveform?: boolean; // TODO: Refactor into look&feel enum
 }
 
 export default class RecordingPlayback extends AudioPlayerBase<IProps> {
     // This component is rendered in two ways: the composer and timeline. They have different
     // rendering properties (specifically the difference of a waveform or not).
 
-    private renderWaveformLook(): ReactNode {
+    private renderComposerLook(): ReactNode {
         return <>
             <PlaybackClock playback={this.props.playback} />
             <PlaybackWaveform playback={this.props.playback} />
@@ -42,12 +42,15 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
 
     private renderSeekableLook(): ReactNode {
         return <>
-            <SeekBar
-                playback={this.props.playback}
-                tabIndex={-1} // prevent tabbing into the bar
-                playbackPhase={this.state.playbackPhase}
-                ref={this.seekRef}
-            />
+            <div className="mx_RecordingPlayback_waveformAndSeek">
+                <PlaybackWaveform playback={this.props.playback} />
+                <SeekBar
+                    playback={this.props.playback}
+                    tabIndex={-1} // prevent tabbing into the bar
+                    playbackPhase={this.state.playbackPhase}
+                    ref={this.seekRef}
+                />
+            </div>
             <PlaybackClock playback={this.props.playback} />
         </>;
     }
@@ -60,7 +63,8 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
                     playbackPhase={this.state.playbackPhase}
                     ref={this.playPauseRef}
                 />
-                { this.props.withWaveform ? this.renderWaveformLook() : this.renderSeekableLook() }
+                { this.props.withWaveform ? this.renderComposerLook() : null }
+                { this.renderSeekableLook() }
             </div>
         );
     }
