@@ -25,6 +25,7 @@ import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
+import { OwnBeaconStore } from "../../../stores/OwnBeaconStore";
 
 export enum LocationShareType {
     Own = 'Own',
@@ -48,7 +49,6 @@ const handleShareError = (error: Error, openMenu: () => void, shareType: Locatio
         "We couldn't start sharing your live location" :
         "We couldn't send your location";
     logger.error(errorMessage, error);
-    const analyticsAction = errorMessage;
     const params = {
         title: _t("We couldn't send your location"),
         description: _t("%(brand)s could not send your location. Please try again later.", {
@@ -62,7 +62,7 @@ const handleShareError = (error: Error, openMenu: () => void, shareType: Locatio
             }
         },
     };
-    Modal.createTrackedDialog(analyticsAction, '', QuestionDialog, params);
+    Modal.createDialog(QuestionDialog, params);
 };
 
 export const shareLiveLocation = (
@@ -70,7 +70,7 @@ export const shareLiveLocation = (
 ): ShareLocationFn => async ({ timeout }) => {
     const description = _t(`%(displayName)s's live location`, { displayName });
     try {
-        await client.unstable_createLiveBeacon(
+        await OwnBeaconStore.instance.createLiveBeacon(
             roomId,
             makeBeaconInfoContent(
                 timeout ?? DEFAULT_LIVE_DURATION,

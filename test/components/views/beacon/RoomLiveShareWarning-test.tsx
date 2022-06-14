@@ -32,6 +32,8 @@ import {
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from '../../../test-utils';
+import defaultDispatcher from '../../../../src/dispatcher/dispatcher';
+import { Action } from '../../../../src/dispatcher/actions';
 
 jest.useFakeTimers();
 describe('<RoomLiveShareWarning />', () => {
@@ -93,19 +95,31 @@ describe('<RoomLiveShareWarning />', () => {
         return component;
     };
 
+    const localStorageSpy = jest.spyOn(localStorage.__proto__, 'getItem').mockReturnValue(undefined);
+
     beforeEach(() => {
         mockGeolocation();
         jest.spyOn(global.Date, 'now').mockReturnValue(now);
         mockClient.unstable_setLiveBeacon.mockReset().mockResolvedValue({ event_id: '1' });
+
+        // assume all beacons were created on this device
+        localStorageSpy.mockReturnValue(JSON.stringify([
+            room1Beacon1.getId(),
+            room2Beacon1.getId(),
+            room2Beacon2.getId(),
+            room3Beacon1.getId(),
+        ]));
     });
 
     afterEach(async () => {
-        jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockRestore();
+        jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError').mockRestore();
         await resetAsyncStoreWithClient(OwnBeaconStore.instance);
     });
 
     afterAll(() => {
         jest.spyOn(global.Date, 'now').mockRestore();
+        localStorageSpy.mockRestore();
+        jest.spyOn(defaultDispatcher, 'dispatch').mockRestore();
     });
 
     const getExpiryText = wrapper => findByTestId(wrapper, 'room-live-share-expiry').text();
@@ -252,6 +266,24 @@ describe('<RoomLiveShareWarning />', () => {
             expect(clearIntervalSpy).toHaveBeenCalled();
         });
 
+        it('navigates to beacon tile on click', () => {
+            const dispatcherSpy = jest.spyOn(defaultDispatcher, 'dispatch');
+            const component = getComponent({ roomId: room1Id });
+
+            act(() => {
+                component.simulate('click');
+            });
+
+            expect(dispatcherSpy).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                event_id: room1Beacon1.getId(),
+                room_id: room1Id,
+                highlighted: true,
+                scroll_into_view: true,
+                metricsTrigger: undefined,
+            });
+        });
+
         describe('stopping beacons', () => {
             it('stops beacon on stop sharing click', () => {
                 const component = getComponent({ roomId: room2Id });
@@ -317,41 +349,53 @@ describe('<RoomLiveShareWarning />', () => {
             });
         });
 
-        describe('with wire errors', () => {
-            it('displays wire error when mounted with wire errors', async () => {
-                const hasWireErrorsSpy = jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
+        describe('with location publish errors', () => {
+            it('displays location publish error when mounted with location publish errors', async () => {
+                const locationPublishErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
+                    .mockReturnValue(true);
                 const component = getComponent({ roomId: room2Id });
 
                 expect(component).toMatchSnapshot();
-                expect(hasWireErrorsSpy).toHaveBeenCalledWith(room2Id);
-            });
-
-            it('displays wire error when wireError event is emitted and beacons have errors', async () => {
-                const hasWireErrorsSpy = jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(false);
-                const component = getComponent({ roomId: room2Id });
-
-                // update mock and emit event
-                act(() => {
-                    hasWireErrorsSpy.mockReturnValue(true);
-                    OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, getBeaconInfoIdentifier(room2Beacon1));
-                });
-                component.setProps({});
-
-                // renders wire error ui
-                expect(component.find('.mx_RoomLiveShareWarning_label').text()).toEqual(
-                    'An error occured whilst sharing your live location, please try again',
+                expect(locationPublishErrorSpy).toHaveBeenCalledWith(
+                    getBeaconInfoIdentifier(room2Beacon1), 0, [getBeaconInfoIdentifier(room2Beacon1)],
                 );
-                expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeTruthy();
             });
+
+            it(
+                'displays location publish error when locationPublishError event is emitted' +
+                ' and beacons have errors',
+                async () => {
+                    const locationPublishErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
+                        .mockReturnValue(false);
+                    const component = getComponent({ roomId: room2Id });
+
+                    // update mock and emit event
+                    act(() => {
+                        locationPublishErrorSpy.mockReturnValue(true);
+                        OwnBeaconStore.instance.emit(
+                            OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(room2Beacon1),
+                        );
+                    });
+                    component.setProps({});
+
+                    // renders wire error ui
+                    expect(component.find('.mx_RoomLiveShareWarning_label').text()).toEqual(
+                        'An error occurred whilst sharing your live location, please try again',
+                    );
+                    expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeTruthy();
+                });
 
             it('stops displaying wire error when errors are cleared', async () => {
-                const hasWireErrorsSpy = jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
+                const locationPublishErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
+                    .mockReturnValue(true);
                 const component = getComponent({ roomId: room2Id });
 
                 // update mock and emit event
                 act(() => {
-                    hasWireErrorsSpy.mockReturnValue(false);
-                    OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, getBeaconInfoIdentifier(room2Beacon1));
+                    locationPublishErrorSpy.mockReturnValue(false);
+                    OwnBeaconStore.instance.emit(
+                        OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(room2Beacon1),
+                    );
                 });
                 component.setProps({});
 
@@ -362,9 +406,9 @@ describe('<RoomLiveShareWarning />', () => {
                 expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeFalsy();
             });
 
-            it('clicking retry button resets wire errors', async () => {
-                jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
-                const resetErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'resetWireError');
+            it('clicking retry button resets location publish errors', async () => {
+                jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError').mockReturnValue(true);
+                const resetErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'resetLocationPublishError');
 
                 const component = getComponent({ roomId: room2Id });
 
@@ -376,7 +420,7 @@ describe('<RoomLiveShareWarning />', () => {
             });
 
             it('clicking close button stops beacons', async () => {
-                jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
+                jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError').mockReturnValue(true);
                 const stopBeaconSpy = jest.spyOn(OwnBeaconStore.instance, 'stopBeacon');
 
                 const component = getComponent({ roomId: room2Id });

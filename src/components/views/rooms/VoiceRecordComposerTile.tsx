@@ -162,7 +162,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         // The "microphone access error" dialogs are used a lot, so let's functionify them
         const accessError = () => {
-            Modal.createTrackedDialog('Microphone Access Error', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Unable to access your microphone"),
                 description: <>
                     <p>{ _t(
@@ -177,7 +177,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         try {
             const devices = await MediaDeviceHandler.getDevices();
             if (!devices?.[MediaDeviceKindEnum.AudioInput]?.length) {
-                Modal.createTrackedDialog('No Microphone Error', '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t("No microphone found"),
                     description: <>
                         <p>{ _t(
@@ -196,7 +196,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         try {
             // stop any noises which might be happening
-            await PlaybackManager.instance.pauseAllExcept(null);
+            PlaybackManager.instance.pauseAllExcept(null);
 
             const recorder = VoiceRecordingStore.instance.startRecording(this.props.room.roomId);
             await recorder.start();

@@ -49,6 +49,7 @@ import dis from "../../dispatcher/dispatcher";
 import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permalinks";
 import SettingsStore from "../../settings/SettingsStore";
 import { RoomViewStore } from "../RoomViewStore";
+import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 
 // TODO: Purge this from the universe
 
@@ -77,7 +78,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         // button if the widget says it supports screenshots.
         this.allowedCapabilities = new Set([...allowedCapabilities,
             MatrixCapabilities.Screenshots,
-            MatrixCapabilities.RequiresClient]);
+            ElementWidgetCapabilities.RequiresClient]);
 
         // Grant the permissions that are specific to given widget types
         if (WidgetType.JITSI.matches(this.forWidget.type) && forWidgetKind === WidgetKind.Room) {
@@ -117,8 +118,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         let rememberApproved = false;
         if (missing.size > 0) {
             try {
-                const [result] = await Modal.createTrackedDialog(
-                    'Approve Widget Caps', '',
+                const [result] = await Modal.createDialog(
                     WidgetCapabilitiesPromptDialog,
                     {
                         requestedCapabilities: missing,
@@ -264,7 +264,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         observer.update({ state: OpenIDRequestState.PendingUserConfirmation });
 
-        Modal.createTrackedDialog("OpenID widget permissions", '', WidgetOpenIDPermissionsDialog, {
+        Modal.createDialog(WidgetOpenIDPermissionsDialog, {
             widget: this.forWidget,
             widgetKind: this.forWidgetKind,
             inRoomId: this.inRoomId,

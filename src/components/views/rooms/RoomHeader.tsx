@@ -23,6 +23,9 @@ import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { UserTab } from "../dialogs/UserTab";
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
@@ -41,6 +44,7 @@ import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePha
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import RoomContext from "../../../contexts/RoomContext";
 import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
+import { BetaPill } from "../beta/BetaCard";
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -53,6 +57,7 @@ interface IProps {
     oobData?: IOOBData;
     inRoom: boolean;
     onSearchClick: () => void;
+    onInviteClick: () => void;
     onForgetClick: () => void;
     onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
@@ -185,11 +190,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             </ContextMenuTooltipButton>
         );
 
-        const topicElement = <RoomTopic room={this.props.room}>
-            { (topic, ref) => <div className="mx_RoomHeader_topic" ref={ref} title={topic} dir="auto">
-                { topic }
-            </div> }
-        </RoomTopic>;
+        const topicElement = <RoomTopic
+            room={this.props.room}
+            className="mx_RoomHeader_topic"
+        />;
 
         let roomAvatar;
         if (this.props.room) {
@@ -255,12 +259,31 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             buttons.push(searchButton);
         }
 
+        if (this.props.onInviteClick && this.props.inRoom) {
+            const inviteButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                onClick={this.props.onInviteClick}
+                title={_t("Invite")}
+                key="invite"
+            />;
+            buttons.push(inviteButton);
+        }
+
         const rightRow =
             <div className="mx_RoomHeader_buttons">
                 { buttons }
             </div>;
 
         const e2eIcon = this.props.e2eStatus ? <E2EIcon status={this.props.e2eStatus} /> : undefined;
+
+        const isVideoRoom = SettingsStore.getValue("feature_video_rooms") && this.props.room.isElementVideoRoom();
+        const viewLabs = () => defaultDispatcher.dispatch({
+            action: Action.ViewUserSettings,
+            initialTabId: UserTab.Labs,
+        });
+        const betaPill = isVideoRoom ? (
+            <BetaPill onClick={viewLabs} tooltipTitle={_t("Video rooms are a beta feature")} />
+        ) : null;
 
         return (
             <div className="mx_RoomHeader light-panel">
@@ -270,6 +293,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { name }
                     { searchStatus }
                     { topicElement }
+                    { betaPill }
                     { rightRow }
                     <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>

@@ -32,6 +32,12 @@ limitations under the License.
     position: relative;
 }
 
+.mx_MainSplit_timeline {
+    .mx_MessageComposer_wrapper {
+        margin: $spacing-8 $spacing-16;
+    }
+}
+
 .mx_RoomView_auxPanel {
     min-width: 0px;
     width: 100%;
@@ -70,10 +76,6 @@ limitations under the License.
     overflow-y: auto;
     flex: 1 1 0;
     overflow-anchor: none;
-
-    &[data-scrollbar=false] {
-        overflow-y: hidden;
-    }
 }
 
 .mx_RoomView_messagePanelSearchSpinner {
@@ -159,7 +161,7 @@ limitations under the License.
     .mx_RoomView_messageListWrapper {
         justify-content: flex-start;
 
-        >.mx_RoomView_MessageList > li > ol {
+        > .mx_RoomView_MessageList > li > ol {
             list-style-type: none;
         }
     }
@@ -211,21 +213,9 @@ hr.mx_RoomView_myReadMarker {
     opacity: 1;
 }
 
-// Immersive widgets
-.mx_RoomView_immersive {
-    .mx_RoomHeader_wrapper {
-        border: unset;
-    }
-
-    .mx_AppTile {
-        margin: $container-gap-width;
-        margin-right: calc($container-gap-width / 2);
-        width: auto;
-        height: 100%;
-        padding-top: 33px; // to match the right panel chat heading
-
-        border-radius: 8px;
-    }
+// Rooms with immersive content
+.mx_RoomView_immersive .mx_RoomHeader_wrapper {
+    border: unset;
 }
 
 .mx_RoomView_callStatusBar .mx_UploadBar_uploadProgressInner {

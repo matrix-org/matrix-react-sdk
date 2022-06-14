@@ -87,7 +87,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 positionOptions: {
                     enableHighAccuracy: true,
                 },
-                trackUserLocation: true,
+                trackUserLocation: false,
             });
 
             this.map.addControl(this.geolocate);
@@ -183,15 +183,10 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         // pin drop location without permissions is ok
         if (isSharingOwnLocation(this.props.shareType)) {
             this.props.onFinished();
-            Modal.createTrackedDialog(
-                'Could not fetch location',
-                '',
-                ErrorDialog,
-                {
-                    title: _t("Could not fetch location"),
-                    description: positionFailureMessage(e.code),
-                },
-            );
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Could not fetch location"),
+                description: positionFailureMessage(e.code),
+            });
         }
 
         if (this.geolocate) {
@@ -225,6 +220,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
+
                 { this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
                     <span>
                         { this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin") }

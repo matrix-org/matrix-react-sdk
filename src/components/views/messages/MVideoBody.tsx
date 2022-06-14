@@ -136,7 +136,11 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             this.forceUpdate(); // we don't really have a reliable thing to update, so just update the whole thing
         });
 
-        this.loadBlurhash();
+        try {
+            this.loadBlurhash();
+        } catch (e) {
+            logger.error("Failed to load blurhash", e);
+        }
 
         if (this.props.mediaEventHelper.media.isEncrypted && this.state.decryptedUrl === null) {
             try {
@@ -281,6 +285,9 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         src={contentUrl}
                         title={content.body}
                         controls
+                        // Disable downloading as it doesn't work with e2ee video,
+                        // users should use the dedicated Download button in the Message Action Bar
+                        controlsList="nodownload"
                         preload={preload}
                         muted={autoplay}
                         autoPlay={autoplay}

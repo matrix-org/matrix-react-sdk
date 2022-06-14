@@ -18,7 +18,9 @@ import React from "react";
 import TestRenderer from "react-test-renderer";
 import { jest } from "@jest/globals";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixWidgetType } from "matrix-widget-api";
+import { ClientWidgetApi, MatrixWidgetType } from "matrix-widget-api";
+import { mount, ReactWrapper } from "enzyme";
+import { Optional } from "matrix-events-sdk";
 
 import RightPanel from "../../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -33,14 +35,18 @@ import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelS
 import RightPanelStore from "../../../../src/stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../../src/stores/AsyncStore";
 import WidgetStore, { IApp } from "../../../../src/stores/WidgetStore";
+import ActiveWidgetStore from "../../../../src/stores/ActiveWidgetStore";
 import AppTile from "../../../../src/components/views/elements/AppTile";
 import { Container, WidgetLayoutStore } from "../../../../src/stores/widgets/WidgetLayoutStore";
 import AppsDrawer from "../../../../src/components/views/rooms/AppsDrawer";
+import { ElementWidgetCapabilities } from "../../../../src/stores/widgets/ElementWidgetCapabilities";
+import { ElementWidget } from "../../../../src/stores/widgets/StopGapWidget";
+import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 
 describe("AppTile", () => {
     let cli;
-    let r1;
-    let r2;
+    let r1: Room;
+    let r2: Room;
     const resizeNotifier = new ResizeNotifier();
     let app1: IApp;
     let app2: IApp;
@@ -116,26 +122,6 @@ describe("AppTile", () => {
         jest.spyOn(SettingsStore, "getValue").mockRestore();
     });
 
-    it("tracks live tiles correctly", () => {
-        expect(AppTile.isLive("1", "r1")).toEqual(false);
-
-        // Try removing the tile before it gets added
-        AppTile.removeLiveTile("1", "r1");
-        expect(AppTile.isLive("1", "r1")).toEqual(false);
-
-        AppTile.addLiveTile("1", "r1");
-        expect(AppTile.isLive("1", "r1")).toEqual(true);
-
-        AppTile.addLiveTile("1", "r1");
-        expect(AppTile.isLive("1", "r1")).toEqual(true);
-
-        AppTile.removeLiveTile("1", "r1");
-        expect(AppTile.isLive("1", "r1")).toEqual(true);
-
-        AppTile.removeLiveTile("1", "r1");
-        expect(AppTile.isLive("1", "r1")).toEqual(false);
-    });
-
     it("destroys non-persisted right panel widget on room change", async () => {
         // Set up right panel state
         const realGetValue = SettingsStore.getValue;
@@ -170,7 +156,7 @@ describe("AppTile", () => {
         });
         await rpsUpdated;
 
-        expect(AppTile.isLive("1", "r1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
 
         // We want to verify that as we change to room 2, we should close the
         // right panel and destroy the widget.
@@ -190,7 +176,7 @@ describe("AppTile", () => {
         </MatrixClientContext.Provider>);
 
         expect(endWidgetActions.mock.calls.length).toBe(1);
-        expect(AppTile.isLive("1", "r1")).toBe(false);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(false);
 
         mockSettings.mockRestore();
     });
@@ -231,8 +217,8 @@ describe("AppTile", () => {
         });
         await rpsUpdated1;
 
-        expect(AppTile.isLive("1", "r1")).toBe(true);
-        expect(AppTile.isLive("1", "r2")).toBe(false);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r2")).toBe(false);
 
         jest.spyOn(SettingsStore, "getValue").mockImplementation((name, roomId) => {
             if (name === "RightPanel.phases") {
@@ -266,8 +252,8 @@ describe("AppTile", () => {
         </MatrixClientContext.Provider>);
         await rpsUpdated2;
 
-        expect(AppTile.isLive("1", "r1")).toBe(false);
-        expect(AppTile.isLive("1", "r2")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(false);
+        expect(ActiveWidgetStore.instance.isLive("1", "r2")).toBe(true);
     });
 
     it("preserves non-persisted widget on container move", async () => {
@@ -300,7 +286,7 @@ describe("AppTile", () => {
             />
         </MatrixClientContext.Provider>);
 
-        expect(AppTile.isLive("1", "r1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
 
         // We want to verify that as we move the widget to the center container,
         // the widget frame remains running.
@@ -316,7 +302,7 @@ describe("AppTile", () => {
         });
 
         expect(endWidgetActions.mock.calls.length).toBe(0);
-        expect(AppTile.isLive("1", "r1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
     });
 
     afterAll(async () => {
@@ -325,5 +311,86 @@ describe("AppTile", () => {
         // @ts-ignore
         await RightPanelStore.instance.onNotReady();
         jest.restoreAllMocks();
+    });
+
+    describe("for a pinned widget", () => {
+        let wrapper: ReactWrapper;
+        let moveToContainerSpy;
+
+        beforeEach(() => {
+            wrapper = mount((
+                <MatrixClientContext.Provider value={cli}>
+                    <AppTile
+                        key={app1.id}
+                        app={app1}
+                        room={r1}
+                    />
+                </MatrixClientContext.Provider>
+            ));
+
+            moveToContainerSpy = jest.spyOn(WidgetLayoutStore.instance, 'moveToContainer');
+        });
+
+        it("requiresClient should be true", () => {
+            expect(wrapper.state('requiresClient')).toBe(true);
+        });
+
+        it("clicking 'minimise' should send the widget to the right", () => {
+            const minimiseButton = wrapper.find('.mx_AppTileMenuBar_iconButton_minimise');
+            minimiseButton.first().simulate('click');
+            expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Right);
+        });
+
+        it("clicking 'maximise' should send the widget to the center", () => {
+            const minimiseButton = wrapper.find('.mx_AppTileMenuBar_iconButton_maximise');
+            minimiseButton.first().simulate('click');
+            expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Center);
+        });
+
+        describe("for a maximised (centered) widget", () => {
+            beforeEach(() => {
+                jest.spyOn(WidgetLayoutStore.instance, 'isInContainer').mockImplementation(
+                    (room: Optional<Room>, widget: IApp, container: Container) => {
+                        return room === r1 && widget === app1 && container === Container.Center;
+                    },
+                );
+            });
+
+            it("clicking 'un-maximise' should send the widget to the top", () => {
+                const unMaximiseButton = wrapper.find('.mx_AppTileMenuBar_iconButton_collapse');
+                unMaximiseButton.first().simulate('click');
+                expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Top);
+            });
+        });
+
+        describe("with an existing widgetApi holding requiresClient = false", () => {
+            let wrapper: ReactWrapper;
+
+            beforeEach(() => {
+                const api = {
+                    hasCapability: (capability: ElementWidgetCapabilities): boolean => {
+                        return !(capability === ElementWidgetCapabilities.RequiresClient);
+                    },
+                    once: () => {},
+                } as unknown as ClientWidgetApi;
+
+                const mockWidget = new ElementWidget(app1);
+                WidgetMessagingStore.instance.storeMessaging(mockWidget, r1.roomId, api);
+
+                wrapper = mount((
+                    <MatrixClientContext.Provider value={cli}>
+                        <AppTile
+                            key={app1.id}
+                            app={app1}
+                            room={r1}
+                        />
+                    </MatrixClientContext.Provider>
+                ));
+            });
+
+            it("requiresClient should be false", () => {
+                expect(wrapper.state('requiresClient')).toBe(false);
+            });
+        });
     });
 });

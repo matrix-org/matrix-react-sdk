@@ -66,16 +66,13 @@ export class IntegrationManagerInstance {
             return IntegrationManagers.sharedInstance().showDisabledDialog();
         }
 
-        const dialog = Modal.createTrackedDialog(
-            'Integration Manager', '', IntegrationManager,
-            { loading: true }, 'mx_IntegrationManager',
-        );
+        const dialog = Modal.createDialog(IntegrationManager, { loading: true }, 'mx_IntegrationManager');
 
         const client = this.getScalarClient();
         client.setTermsInteractionCallback((policyInfo, agreedUrls) => {
             // To avoid visual glitching of two modals stacking briefly, we customise the
             // terms dialog sizing when it will appear for the integration manager so that
-            // it gets the same basic size as the IM's own modal.
+            // it gets the same basic size as the integration manager's own modal.
             return dialogTermsInteractionCallback(
                 policyInfo, agreedUrls, 'mx_TermsDialog_forIntegrationManager',
             );
@@ -101,9 +98,6 @@ export class IntegrationManagerInstance {
 
         // Close the old dialog and open a new one
         dialog.close();
-        Modal.createTrackedDialog(
-            'Integration Manager', '', IntegrationManager,
-            newProps, 'mx_IntegrationManager',
-        );
+        Modal.createDialog(IntegrationManager, newProps, 'mx_IntegrationManager');
     }
 }

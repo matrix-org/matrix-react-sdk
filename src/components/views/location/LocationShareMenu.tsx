@@ -21,12 +21,14 @@ import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
 import LocationPicker, { ILocationPickerProps } from "./LocationPicker";
-import { shareLiveLocation, shareLocation } from './shareLocation';
+import { shareLiveLocation, shareLocation, LocationShareType } from './shareLocation';
 import SettingsStore from '../../../settings/SettingsStore';
 import ShareDialogButtons from './ShareDialogButtons';
 import ShareType from './ShareType';
-import { LocationShareType } from './shareLocation';
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
+import { EnableLiveShare } from './EnableLiveShare';
+import { useFeatureEnabled } from '../../../hooks/useSettings';
+import { SettingLevel } from '../../../settings/SettingLevel';
 
 type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
     onFinished: (ev?: SyntheticEvent) => void;
@@ -36,10 +38,14 @@ type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
     relation?: IEventRelation;
 };
 
-const getEnabledShareTypes = (): LocationShareType[] => {
-    const enabledShareTypes = [LocationShareType.Own];
+const getEnabledShareTypes = (relation): LocationShareType[] => {
+    const enabledShareTypes = [
+        LocationShareType.Own,
+    ];
 
-    if (SettingsStore.getValue("feature_location_share_live")) {
+    // live locations cannot have a relation
+    // hide the option when composer has a relation
+    if (!relation) {
         enabledShareTypes.push(LocationShareType.Live);
     }
 
@@ -59,7 +65,8 @@ const LocationShareMenu: React.FC<Props> = ({
     relation,
 }) => {
     const matrixClient = useContext(MatrixClientContext);
-    const enabledShareTypes = getEnabledShareTypes();
+    const enabledShareTypes = getEnabledShareTypes(relation);
+    const isLiveShareEnabled = useFeatureEnabled("feature_location_share_live");
 
     const multipleShareTypesEnabled = enabledShareTypes.length > 1;
 
@@ -73,19 +80,32 @@ const LocationShareMenu: React.FC<Props> = ({
         shareLiveLocation(matrixClient, roomId, displayName, openMenu) :
         shareLocation(matrixClient, roomId, shareType, relation, openMenu);
 
+    const onLiveShareEnableSubmit = () => {
+        SettingsStore.setValue("feature_location_share_live", undefined, SettingLevel.DEVICE, true);
+    };
+
+    const shouldAdvertiseLiveLabsFlag = shareType === LocationShareType.Live && !isLiveShareEnabled;
+
     return <ContextMenu
         {...menuPosition}
         onFinished={onFinished}
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            { shareType ?
+            { shouldAdvertiseLiveLabsFlag &&
+                <EnableLiveShare
+                    onSubmit={onLiveShareEnableSubmit}
+                />
+            }
+            { !shouldAdvertiseLiveLabsFlag && !!shareType &&
                 <LocationPicker
                     sender={sender}
                     shareType={shareType}
                     onChoose={onLocationSubmit}
                     onFinished={onFinished}
-                /> :
+                />
+            }
+            { !shareType &&
                 <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} />
             }
             <ShareDialogButtons displayBack={!!shareType && multipleShareTypesEnabled} onBack={() => setShareType(undefined)} onCancel={onFinished} />

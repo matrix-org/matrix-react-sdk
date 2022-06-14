@@ -23,7 +23,7 @@ limitations under the License.
     border-radius: 50%;
 
     background-color: $location-live-color;
-    border-color: $location-live-secondary-color;
+    border-color: $location-live-color;
     padding: 2px;
     // colors icon
     color: white;
@@ -32,4 +32,9 @@ limitations under the License.
 .mx_StyledLiveBeaconIcon.mx_StyledLiveBeaconIcon_error {
     background-color: $alert;
     border-color: $alert;
+}
+
+.mx_StyledLiveBeaconIcon.mx_StyledLiveBeaconIcon_idle {
+    background-color: $quaternary-content;
+    border-color: $quaternary-content;
 }

@@ -17,15 +17,14 @@ limitations under the License.
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START } from "matrix-events-sdk";
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
 import SettingsStore from "../settings/SettingsStore";
 import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory } from "../events/EventTileFactory";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import { getMessageModerationState, MessageModerationState } from "./EventUtils";
+import { getMessageModerationState, isLocationEvent, MessageModerationState } from "./EventUtils";
 
-export function getEventDisplayInfo(mxEvent: MatrixEvent, hideEvent?: boolean): {
+export function getEventDisplayInfo(mxEvent: MatrixEvent, showHiddenEvents: boolean, hideEvent?: boolean): {
     isInfoMessage: boolean;
     hasRenderer: boolean;
     isBubbleMessage: boolean;
@@ -52,7 +51,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent, hideEvent?: boolean): 
     }
 
     // TODO: Thread a MatrixClient through to here
-    let factory = pickFactory(mxEvent, MatrixClientPeg.get());
+    let factory = pickFactory(mxEvent, MatrixClientPeg.get(), showHiddenEvents);
 
     // Info messages are basically information about commands processed on a room
     let isBubbleMessage = (
@@ -80,22 +79,19 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent, hideEvent?: boolean): 
     const noBubbleEvent = (
         (eventType === EventType.RoomMessage && msgtype === MsgType.Emote) ||
         M_POLL_START.matches(eventType) ||
-        M_LOCATION.matches(eventType) ||
-        (
-            eventType === EventType.RoomMessage &&
-            M_LOCATION.matches(msgtype)
-        )
+        M_BEACON_INFO.matches(eventType) ||
+        isLocationEvent(mxEvent)
     );
 
     // If we're showing hidden events in the timeline, we should use the
     // source tile when there's no regular tile for an event and also for
     // replace relations (which otherwise would display as a confusing
     // duplicate of the thing they are replacing).
-    if (hideEvent || !haveRendererForEvent(mxEvent)) {
+    if (hideEvent || !haveRendererForEvent(mxEvent, showHiddenEvents)) {
         // forcefully ask for a factory for a hidden event (hidden event
         // setting is checked internally)
         // TODO: Thread a MatrixClient through to here
-        factory = pickFactory(mxEvent, MatrixClientPeg.get(), true);
+        factory = pickFactory(mxEvent, MatrixClientPeg.get(), showHiddenEvents, true);
         if (factory === JSONEventFactory) {
             isBubbleMessage = false;
             // Reuse info message avatar and sender profile styling

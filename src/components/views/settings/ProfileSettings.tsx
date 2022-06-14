@@ -29,6 +29,7 @@ import AccessibleButton from '../elements/AccessibleButton';
 import AvatarSetting from './AvatarSetting';
 import ExternalLink from '../elements/ExternalLink';
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IState {
     userId?: string;
@@ -119,7 +120,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
             }
         } catch (err) {
             logger.log("Failed to save profile", err);
-            Modal.createTrackedDialog('Failed to save profile', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to save your profile"),
                 description: ((err && err.message) ? err.message : _t("The operation could not be completed")),
             });
@@ -188,6 +189,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                     type="file"
                     ref={this.avatarUpload}
                     className="mx_ProfileSettings_avatarUpload"
+                    onClick={chromeFileInputFix}
                     onChange={this.onAvatarChanged}
                     accept="image/*"
                 />

@@ -54,7 +54,7 @@ export const useBeacon = (beaconInfoEvent: MatrixEvent): Beacon | undefined => {
         }
     }, [beaconInfoEvent, matrixClient]);
 
-    // beacon update will fire when this beacon is superceded
+    // beacon update will fire when this beacon is superseded
     // check the updated event id for equality to the matrix event
     const beaconInstanceEventId = useEventEmitterState(
         beacon,
@@ -67,6 +67,12 @@ export const useBeacon = (beaconInfoEvent: MatrixEvent): Beacon | undefined => {
             setBeacon(undefined);
         }
     }, [beaconInstanceEventId, beaconInfoEvent]);
+
+    useEffect(() => {
+        if (beacon) {
+            beacon.monitorLiveness();
+        }
+    }, [beacon]);
 
     return beacon;
 };

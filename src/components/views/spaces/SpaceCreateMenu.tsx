@@ -56,7 +56,7 @@ export const createSpace = async (
                 events_default: 100,
                 invite: isPublic ? 0 : 50,
             },
-            room_alias_name: isPublic && alias ? alias.substr(1, alias.indexOf(":") - 1) : undefined,
+            room_alias_name: isPublic && alias ? alias.substring(1, alias.indexOf(":")) : undefined,
             topic,
             ...createOpts,
         },
@@ -109,7 +109,7 @@ export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
             kind="link"
             onClick={() => {
                 if (onClick) onClick();
-                Modal.createTrackedDialog("Spaces Feedback", "", GenericFeatureFeedbackDialog, {
+                Modal.createDialog(GenericFeatureFeedbackDialog, {
                     title: _t("Spaces feedback"),
                     subheading: _t("Thank you for trying Spaces. " +
                         "Your feedback will help inform the next versions."),
