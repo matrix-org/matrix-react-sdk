@@ -278,7 +278,7 @@ describe("Spotlight", () => {
         });
     });
 
-    it("should navigate results", () => {
+    it("should be able to navigate results via keyboard", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type("b");
