@@ -52,36 +52,55 @@ limitations under the License.
         padding-left: 8px; // isolate from recording circle / play control
     }
 
-    // For timeline-rendered playback, mirror the values for where the clock is in
-    // the waveform version.
-    .mx_SeekBar {
-        & + .mx_Clock {
-            text-align: right;
-
-            // Take the padding off the clock because it's accounted for in the seek bar
-            padding: 0;
-        }
-    }
-
     .mx_RecordingPlayback_timelineLayoutMiddle {
         margin-left: 8px;
         margin-right: 6px;
         position: relative;
-        width: 100%;
-        height: 32px;
+        display: inline-block;
+        flex: 1;
+        height: 30px; // same height as mx_Waveform, needed for automatic vertical centering
 
         .mx_Waveform {
             position: absolute;
-            top: -1px;
             left: 0;
-            width: 102%;
+            top: 0;
         }
 
         .mx_SeekBar {
             position: absolute;
-            top: 13px;
             left: 0;
-            width: 100%;
+            height: 30px;
+            top: -1px; // visually vertically centered
+
+            // Hide the hairline progress bar. Need to have distinct rules because CSS is weird.
+            background: none;
+            &::before {
+                background: none;
+            }
+            &::-moz-range-progress {
+                background: none;
+            }
+
+            // Make the thumb easier to see. Like the SeekBar original styles, these need to be
+            // distinct. We also convert it into a line instead of a ball.
+            &::-webkit-slider-thumb {
+                width: 2px;
+                height: 30px; // height of waveform
+                background-color: $accent;
+            }
+            &::-moz-range-thumb {
+                width: 2px;
+                height: 30px; // height of waveform
+                background-color: $accent;
+            }
+        }
+
+        // For timeline-rendered playback, the clock is on the other side of the waveform.
+        & + .mx_Clock {
+            text-align: right;
+
+            // Take the padding off the clock because it's accounted for by the `timelineLayoutMiddle`
+            padding: 0;
         }
     }
 }
