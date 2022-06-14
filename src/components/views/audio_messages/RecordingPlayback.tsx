@@ -55,7 +55,7 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
                 <PlaybackWaveform playback={this.props.playback} />
                 <SeekBar
                     playback={this.props.playback}
-                    tabIndex={-1} // prevent tabbing into the bar
+                    tabIndex={0} // allow keyboard users to fall into the seek bar
                     playbackPhase={this.state.playbackPhase}
                     ref={this.seekRef}
                 />
