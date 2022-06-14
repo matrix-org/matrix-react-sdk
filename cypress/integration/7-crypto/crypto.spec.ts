@@ -17,7 +17,6 @@ limitations under the License.
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import type { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import { UserCredentials } from "../../support/login";
 
 const waitForVerificationRequest = (cli: MatrixClient): Promise<VerificationRequest> => {
     return new Promise<VerificationRequest>(resolve => {
@@ -37,7 +36,6 @@ const checkDMRoom = () => {
 };
 
 describe("Cryptography", () => {
-    let credentials: UserCredentials;
     let synapse: SynapseInstance;
     let bob: MatrixClient;
 
@@ -86,9 +84,7 @@ describe("Cryptography", () => {
     beforeEach(() => {
         cy.startSynapse("default").then(data => {
             synapse = data;
-            cy.initTestUser(synapse, "Alice").then(_credentials => {
-                credentials = _credentials;
-            });
+            cy.initTestUser(synapse, "Alice");
             cy.getBot(synapse, { displayName: "Bob", autoAcceptInvites: false }).then(_bob => {
                 bob = _bob;
             });
