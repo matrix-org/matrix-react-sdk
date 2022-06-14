@@ -196,7 +196,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     </span>
                     <SettingsFlag
                         disabled={!this.state.disablingReadReceiptsSupported}
-                        disabledTooltipText={_t("Your server doesn't support disabling read receipts")}
+                        disabledDescription={_t("Your server doesn't support disabling sending read receipts.")}
                         name="sendReadReceipts"
                         level={SettingLevel.ACCOUNT}
                     />
