@@ -100,7 +100,7 @@ describe("Cryptography", () => {
     });
 
     it("creating a DM should work, being e2e-encrypted / user verification", () => {
-        cy.setUpKeyBackup(credentials.password);
+        cy.setUpKeyBackup();
         startDMWithBob();
         checkDMRoom();
         bobJoin();

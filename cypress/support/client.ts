@@ -48,11 +48,10 @@ declare global {
              */
             inviteUser(roomId: string, userId: string): Chainable<{}>;
             /**
-             * Sets up key backup
-             * @param password the user password
-             * @return recovery key
+             * Sets up key backup.
+             * Stores the security key under the "securityKey" alias.
              */
-            setUpKeyBackup(password: string): Chainable<void>;
+            setUpKeyBackup(): Chainable<void>;
             /**
              * Sets account data for the user.
              * @param type The type of account data.
@@ -63,17 +62,16 @@ declare global {
     }
 }
 
-Cypress.Commands.add("setUpKeyBackup", (password: string): Chainable<void> => {
+Cypress.Commands.add("setUpKeyBackup", (): Chainable<void> => {
     cy.get('.mx_AccessibleButton[aria-label="User menu"]').click();
     cy.get('.mx_AccessibleButton[aria-label="Security & Privacy"]').click();
-    cy.contains('.mx_AccessibleButton', "Set up Secure Backup").click();
-    cy.contains('.mx_Dialog_primary', 'Continue').click();
-    cy.contains('.mx_AccessibleButton', 'Copy').click();
-    cy.contains('.mx_Dialog_primary:not([disabled])', 'Continue').click();
-    cy.get('.mx_Dialog input[label="Password"]').type(password);
-    cy.get(".mx_Dialog_primary").click();
-    cy.contains('.mx_Dialog_title', 'Setting up keys').should('exist');
-    cy.contains('.mx_Dialog_title', 'Setting up keys').should('not.exist');
+    cy.contains(".mx_AccessibleButton", "Set up Secure Backup").click();
+    cy.contains(".mx_Dialog_primary", "Continue").click();
+    cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
+    cy.contains(".mx_AccessibleButton", "Copy").click();
+    cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+    cy.contains(".mx_Dialog_title", "Setting up keys").should("exist");
+    cy.contains(".mx_Dialog_title", "Setting up keys").should("not.exist");
     return;
 });
 
