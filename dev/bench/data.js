@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655190689600,
+  "lastUpdate": 1655203340431,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101006,6 +101006,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5139.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "79195dea8b9e1f6125dd3afee763216b5dff2744",
+          "message": "Skip running jobs on fork `develop` where they lack secrets (#8837)\n\n* Skip running jobs on fork `develop` where they lack secrets\r\n\r\n* Fix contexts",
+          "timestamp": "2022-06-14T11:37:07+01:00",
+          "tree_id": "a5eb1dbd45e2fbd9e04be3fe8f71c393cbcb4e3b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/79195dea8b9e1f6125dd3afee763216b5dff2744"
+        },
+        "date": 1655203329905,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5846.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2373,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4992.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
