@@ -82,6 +82,11 @@ export function createTestClient(): MatrixClient {
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         credentials: { userId: "@userId:matrix.rog" },
 
+        store: {
+            getPendingEvents: jest.fn().mockResolvedValue([]),
+            setPendingEvents: jest.fn().mockResolvedValue(undefined),
+        },
+
         getPushActionsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation(mkStubRoom),
         getRooms: jest.fn().mockReturnValue([]),
