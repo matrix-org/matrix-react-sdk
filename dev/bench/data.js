@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655225887603,
+  "lastUpdate": 1655230942644,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101198,6 +101198,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 690.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7da8c51c6b1b2e82f392552565ff517d1f5aee86",
+          "message": "Improve colors in settings (#7283)",
+          "timestamp": "2022-06-14T18:17:10Z",
+          "tree_id": "7a5e02086921a502bd0e484627a6148518e76132",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7da8c51c6b1b2e82f392552565ff517d1f5aee86"
+        },
+        "date": 1655230930695,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4842.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2195.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4635.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
