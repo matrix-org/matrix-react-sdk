@@ -22,11 +22,20 @@ import AudioPlayerBase, { IProps as IAudioPlayerBaseProps } from "./AudioPlayerB
 import SeekBar from "./SeekBar";
 import PlaybackWaveform from "./PlaybackWaveform";
 
-interface IProps extends IAudioPlayerBaseProps {
+export enum PlaybackLayout {
     /**
-     * When true, use a waveform instead of a seek bar
+     * Clock on the left side of a waveform, without seek bar.
      */
-    withWaveform?: boolean; // TODO: Refactor into look&feel enum
+    Composer,
+
+    /**
+     * Clock on the right side of a waveform, with an added seek bar.
+     */
+    Timeline,
+}
+
+interface IProps extends IAudioPlayerBaseProps {
+    layout?: PlaybackLayout; // Defaults to Timeline layout
 }
 
 export default class RecordingPlayback extends AudioPlayerBase<IProps> {
@@ -40,9 +49,9 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
         </>;
     }
 
-    private renderSeekableLook(): ReactNode {
+    private renderTimelineLook(): ReactNode {
         return <>
-            <div className="mx_RecordingPlayback_waveformAndSeek">
+            <div className="mx_RecordingPlayback_timelineLayoutMiddle">
                 <PlaybackWaveform playback={this.props.playback} />
                 <SeekBar
                     playback={this.props.playback}
@@ -56,6 +65,17 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
     }
 
     protected renderComponent(): ReactNode {
+        let body: ReactNode;
+        switch(this.props.layout) {
+            case PlaybackLayout.Composer:
+                body = this.renderComposerLook();
+                break;
+            case PlaybackLayout.Timeline: // default is timeline, fall through.
+            default:
+                body = this.renderTimelineLook();
+                break;
+        }
+
         return (
             <div className="mx_MediaBody mx_VoiceMessagePrimaryContainer" onKeyDown={this.onKeyDown}>
                 <PlayPauseButton
@@ -63,8 +83,7 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
                     playbackPhase={this.state.playbackPhase}
                     ref={this.playPauseRef}
                 />
-                { this.props.withWaveform ? this.renderComposerLook() : null }
-                { this.renderSeekableLook() }
+                { body }
             </div>
         );
     }
