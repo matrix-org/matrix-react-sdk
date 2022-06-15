@@ -18,15 +18,12 @@ limitations under the License.
 import { range } from './util';
 import { signup } from './usecases/signup';
 import { toastScenarios } from './scenarios/toast';
-import { roomDirectoryScenarios } from './scenarios/directory';
 import { lazyLoadingScenarios } from './scenarios/lazy-loading';
 import { e2eEncryptionScenarios } from './scenarios/e2e-encryption';
 import { ElementSession } from "./session";
 import { RestSessionCreator } from "./rest/creator";
 import { RestMultiSession } from "./rest/multi";
 import { RestSession } from "./rest/session";
-import { stickerScenarios } from './scenarios/sticker';
-import { userViewScenarios } from "./scenarios/user-view";
 
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
@@ -47,21 +44,10 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     const bob = await createUser("bob");
 
     await toastScenarios(alice, bob);
-    await userViewScenarios(alice, bob);
-    await roomDirectoryScenarios(alice, bob);
     await e2eEncryptionScenarios(alice, bob);
     console.log("create REST users:");
     const charlies = await createRestUsers(restCreator);
     await lazyLoadingScenarios(alice, bob, charlies);
-
-    // we spawn another session for stickers, partially because it involves injecting
-    // a custom sticker picker widget for the account, although mostly because for these
-    // tests to scale, they probably need to be split up more, which means running each
-    // scenario with it's own session (and will make it easier to find relevant logs),
-    // so lets move in this direction (although at some point we'll also need to start
-    // closing them as we go rather than leaving them all open until the end).
-    const stickerSession = await createSession("sally");
-    await stickerScenarios("sally", "ilikestickers", stickerSession, restCreator);
 }
 
 async function createRestUsers(restCreator: RestSessionCreator): Promise<RestMultiSession> {

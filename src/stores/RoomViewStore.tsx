@@ -20,8 +20,8 @@ import React, { ReactNode } from "react";
 import { Store } from 'flux/utils';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ViewRoom as ViewRoomEvent } from "matrix-analytics-events/types/typescript/ViewRoom";
-import { JoinedRoom as JoinedRoomEvent } from "matrix-analytics-events/types/typescript/JoinedRoom";
+import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
+import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { ClientEvent } from "matrix-js-sdk/src/client";
@@ -448,7 +448,7 @@ export class RoomViewStore extends Store<ActionPayload> {
             }
         }
 
-        Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("Failed to join"),
             description,
         });
