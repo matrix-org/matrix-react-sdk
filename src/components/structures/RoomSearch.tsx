@@ -31,7 +31,7 @@ import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { IS_MAC, Key } from "../../Keyboard";
 import SettingsStore from "../../settings/SettingsStore";
 import Modal from "../../Modal";
-import SpotlightDialog from "../views/dialogs/SpotlightDialog";
+import SpotlightDialog from "../views/dialogs/spotlight/SpotlightDialog";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import ToastStore from "../../stores/ToastStore";
 
@@ -104,7 +104,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     };
 
     private openSpotlight() {
-        Modal.createTrackedDialog("Spotlight", "", SpotlightDialog, {}, "mx_SpotlightDialog_wrapper", false, true);
+        Modal.createDialog(SpotlightDialog, {}, "mx_SpotlightDialog_wrapper", false, true);
     }
 
     private onAction = (payload: ActionPayload) => {

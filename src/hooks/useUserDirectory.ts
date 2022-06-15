@@ -18,6 +18,7 @@ import { useCallback, useState } from "react";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { DirectoryMember } from "../utils/direct-messages";
+import { useLatestResult } from "./useLatestResult";
 
 export interface IUserDirectoryOpts {
     limit: number;
@@ -29,10 +30,15 @@ export const useUserDirectory = () => {
 
     const [loading, setLoading] = useState(false);
 
+    const [updateQuery, updateResult] = useLatestResult<{ term: string, limit?: number }, DirectoryMember[]>(setUsers);
+
     const search = useCallback(async ({
         limit = 20,
         query: term,
     }: IUserDirectoryOpts): Promise<boolean> => {
+        const opts = { limit, term };
+        updateQuery(opts);
+
         if (!term?.length) {
             setUsers([]);
             return true;
@@ -40,20 +46,17 @@ export const useUserDirectory = () => {
 
         try {
             setLoading(true);
-            const { results } = await MatrixClientPeg.get().searchUserDirectory({
-                limit,
-                term,
-            });
-            setUsers(results.map(user => new DirectoryMember(user)));
+            const { results } = await MatrixClientPeg.get().searchUserDirectory(opts);
+            updateResult(opts, results.map(user => new DirectoryMember(user)));
             return true;
         } catch (e) {
             console.error("Could not fetch user in user directory for params", { limit, term }, e);
-            setUsers([]);
+            updateResult(opts, []);
             return false;
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [updateQuery, updateResult]);
 
     return {
         ready: true,
