@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655310337171,
+  "lastUpdate": 1655314297643,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101696,6 +101696,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4774.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "81c894f2d9c7c0b536b80cadb75c233b58b7a343",
+          "message": "Stop using mx_GroupLayout for styling (#8711)",
+          "timestamp": "2022-06-15T17:26:24Z",
+          "tree_id": "3d6984c3d92b17872f7d6f26c609b256b5dcfac4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/81c894f2d9c7c0b536b80cadb75c233b58b7a343"
+        },
+        "date": 1655314285957,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4720.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 675.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
