@@ -3477,5 +3477,20 @@
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videotoad on kogu aeg saadaval VoIP kanalid, mis on lõimitud jututubadega ja kasutatavad rakenduses %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Uus võimalus videovestlusteks rakenduses %(brand)s.",
     "Video rooms": "Videotoad",
-    "Enable hardware acceleration": "Kasuta riistvaralist kiirendust"
+    "Enable hardware acceleration": "Kasuta riistvaralist kiirendust",
+    "Remove search filter for %(filter)s": "Eemalda otsingufilter „%(filter)s“",
+    "Start a group chat": "Alusta rühmavestlust",
+    "Other options": "Muud valikud",
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Kui sa ei leia otsitavat jututuba, siis palu sinna kutset või loo uus jututuba.",
+    "Some results may be hidden": "Mõned tulemused võivad olla peidetud",
+    "Copy invite link": "Kopeeri kutse link",
+    "If you can't see who you're looking for, send them your invite link.": "Kui sa ei leia otsitavaid, siis saada neile kutse.",
+    "Some results may be hidden for privacy": "Mõned tulemused võivad privaatsusseadistuste tõttu olla peidetud",
+    "Search for": "Otsingusõna",
+    "%(count)s Members|one": "%(count)s liige",
+    "%(count)s Members|other": "%(count)s liiget",
+    "Show: Matrix rooms": "Näita: Matrix'i jututoad",
+    "Show: %(instance)s rooms (%(server)s)": "Näita: %(instance)s jututuba %(server)s serveris",
+    "Add new server…": "Lisa uus server…",
+    "Remove server “%(roomServer)s”": "Eemalda server „%(roomServer)s“"
 }
