@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655302790587,
+  "lastUpdate": 1655303875301,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101450,6 +101450,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4957.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9333e609b0c1cc1ff97647e2c3fc20e846d4b276",
+          "message": "Update the avatar mask so it doesn’t cut off spaces’ avatars anymore (#8849)\n\n* Update the avatar mask so it doesn’t cut off spaces’ avatars anymore\r\n* Remove unused mask\r\n* Remove unused class",
+          "timestamp": "2022-06-15T14:32:25Z",
+          "tree_id": "b0c7dc6355cc27faed03a44830773a888880e12c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9333e609b0c1cc1ff97647e2c3fc20e846d4b276"
+        },
+        "date": 1655303863648,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4806.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 656.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
