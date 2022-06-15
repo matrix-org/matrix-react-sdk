@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655275871926,
+  "lastUpdate": 1655302790587,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101408,6 +101408,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4801.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5096e7b992cecefc392244feb0345c7172cee9bd",
+          "message": "Integrate searching public rooms and people into the new search experience (#8707)\n\n* Implement searching for public rooms and users in new search experience\r\n* Implement loading indicator for spotlight results\r\n* Moved spotlight dialog into own subfolder\r\n* Extract search result avatar into separate component\r\n* Build generic new dropdown menu component\r\n* Build new network menu based on new network dropdown component\r\n* Switch roomdirectory to use new network dropdown\r\n* Replace old networkdropdown with new networkdropdown\r\n* Added component for public room result details\r\n* Extract hooks and subcomponents from SpotlightDialog\r\n* Create new hook to get profile info based for an mxid\r\n* Add hook to automatically re-request search results\r\n* Add hook to prevent out-of-order search results\r\n* Extract member sort algorithm from InviteDialog\r\n* Keep sorting for non-room results stable\r\n* Sort people suggestions using sort algorithm from InviteDialog\r\n* Add copy/copied tooltip for invite link option in spotlight\r\n* Clamp length of topic for public room results\r\n* Add unit test for useDebouncedSearch\r\n* Add unit test for useProfileInfo\r\n* Create cypress test cases for spotlight dialog\r\n* Add test for useLatestResult to prevent out-of-order results",
+          "timestamp": "2022-06-15T16:14:05+02:00",
+          "tree_id": "27789ec00e214e43d258863a6931b02aba33b1aa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5096e7b992cecefc392244feb0345c7172cee9bd"
+        },
+        "date": 1655302779205,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4540.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2360.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4957.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
