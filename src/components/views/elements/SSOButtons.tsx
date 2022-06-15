@@ -28,7 +28,7 @@ import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
-interface ISSOButtonProps extends Omit<IProps, "flow"> {
+interface ISSOButtonProps extends IProps {
     idp?: IIdentityProvider;
     mini?: boolean;
     action?: "login" | "register";
@@ -81,9 +81,17 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     primary,
     mini,
     action,
+    flow,
     ...props
 }) => {
-    const label = idp ? _t("Continue with %(provider)s", { provider: idp.name }) : _t("Sign in with single sign-on");
+    let label: string;
+    if (idp) {
+        label = _t("Continue with %(provider)s", { provider: idp.name });
+    } else if (flow["org.matrix.msc3824.delegated.oidc.compatibility"]) {
+        label = _t("Continue");
+    } else {
+        label = _t("Sign in with single sign-on");
+    }
 
     const onClick = () => {
         const authenticationType = getAuthenticationType(idp?.brand ?? "");
@@ -149,6 +157,7 @@ const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentA
                 idp={providers[0]}
                 primary={primary}
                 action={action}
+                flow={flow}
             />
         </div>;
     }
@@ -169,6 +178,7 @@ const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentA
                         mini={true}
                         primary={primary}
                         action={action}
+                        flow={flow}
                     />
                 )) }
             </div>
