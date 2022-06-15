@@ -909,7 +909,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // tiles visible, it becomes 'show less'.
             let showNButton = null;
             const hasMoreSlidingSync = (
-                this.slidingSyncMode && this.state.slidingSyncJoinedCount > this.state.rooms.length
+                this.slidingSyncMode && (this.state.slidingSyncJoinedCount > this.state.rooms.length)
             );
 
             if ((maxTilesPx > this.state.height) || hasMoreSlidingSync) {
