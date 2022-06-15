@@ -1536,7 +1536,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }, (error) => {
             logger.error("Search failed", error);
-            Modal.createTrackedDialog('Search failed', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Search failed"),
                 description: ((error && error.message) ? error.message :
                     _t("Server may be unavailable, overloaded, or search timed out :(")),
@@ -1661,7 +1661,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
-            Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to reject invite"),
                 description: msg,
             });
@@ -1694,7 +1694,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
-            Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to reject invite"),
                 description: msg,
             });
