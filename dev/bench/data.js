@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655303875301,
+  "lastUpdate": 1655304348141,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101486,6 +101486,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 656.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aac97e01e3980952d7bc38d53eae98d032d324de",
+          "message": "Reload map on reconnect (#8848)\n\nPSD-282",
+          "timestamp": "2022-06-15T16:38:35+02:00",
+          "tree_id": "8f2f7b413e5971524c35865576690cc50911fb1e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aac97e01e3980952d7bc38d53eae98d032d324de"
+        },
+        "date": 1655304334335,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4886.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2580.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5574.5,
             "unit": "ms",
             "extra": "type: measure"
           }
