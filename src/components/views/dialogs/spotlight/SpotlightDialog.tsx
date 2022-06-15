@@ -745,7 +745,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         })}
                     >
                         <span className="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline">
-                            { _t("Create new Room") }
+                            { _t("Create new room") }
                         </span>
                     </Option>
                 </div>
