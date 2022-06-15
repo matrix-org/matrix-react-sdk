@@ -114,4 +114,11 @@ export class ProxiedModuleApi implements ModuleApi {
             });
         }
     }
+
+    public getConfigValue<T>(namespace: string, key: string): T {
+        // Force cast to `any` because the namespace won't be known to the SdkConfig types
+        const maybeObj = SdkConfig.get(namespace as any);
+        if (!maybeObj || !(typeof maybeObj === "object")) return undefined;
+        return maybeObj[key];
+    }
 }
