@@ -3477,5 +3477,14 @@
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Video místnosti jsou vždy zapnuté VoIP kanály vložené do místnosti v aplikaci %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Nový způsob hlasového a video hovoru v aplikaci %(brand)s.",
     "Video rooms": "Video místnosti",
-    "Enable hardware acceleration": "Povolit hardwarovou akceleraci"
+    "Enable hardware acceleration": "Povolit hardwarovou akceleraci",
+    "If you can't see who you're looking for, send them your invite link.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku.",
+    "Some results may be hidden for privacy": "Některé výsledky mohou být z důvodu ochrany soukromí skryté",
+    "Search for": "Hledat",
+    "%(count)s Members|one": "%(count)s člen",
+    "%(count)s Members|other": "%(count)s členů",
+    "Show: Matrix rooms": "Zobrazit: Matrix místnosti",
+    "Show: %(instance)s rooms (%(server)s)": "Zobrazit: %(instance)s místností (%(server)s)",
+    "Add new server…": "Přidat nový server…",
+    "Remove server “%(roomServer)s”": "Odstranit server \"%(roomServer)s\""
 }
