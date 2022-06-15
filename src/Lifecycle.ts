@@ -242,7 +242,7 @@ export function attemptTokenLogin(
                         idBaseUrl: identityServer,
                     });
                     const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
-                    PlatformPeg.get().startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId);
+                    PlatformPeg.get().startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, "login");
                 }
             },
         });

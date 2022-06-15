@@ -356,7 +356,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             ev.stopPropagation();
             const ssoKind = ssoFlow.type === 'm.login.sso' ? 'sso' : 'cas';
             PlatformPeg.get().startSingleSignOn(this.loginLogic.createTemporaryClient(), ssoKind,
-                this.props.fragmentAfterLogin);
+                this.props.fragmentAfterLogin, undefined, "register");
         } else {
             // Don't intercept - just go through to the register page
             this.onRegisterClick(ev);
