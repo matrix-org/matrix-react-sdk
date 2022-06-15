@@ -20,7 +20,7 @@ limitations under the License.
 // TODO: This component is enormous! There's several things which could stand-alone:
 //  - Search results component
 
-import React, { createRef, ReactNode, RefObject, useContext } from 'react';
+import React, { createRef, ReactElement, ReactNode, RefObject, useContext } from 'react';
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { IThreadBundledRelationship, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -46,7 +46,7 @@ import ResizeNotifier from '../../utils/ResizeNotifier';
 import ContentMessages from '../../ContentMessages';
 import Modal from '../../Modal';
 import CallHandler, { CallHandlerEvent } from '../../CallHandler';
-import dis from '../../dispatcher/dispatcher';
+import dis, { defaultDispatcher } from '../../dispatcher/dispatcher';
 import * as Rooms from '../../Rooms';
 import eventSearch, { searchPagination } from '../../Searching';
 import MainSplit from './MainSplit';
@@ -115,6 +115,8 @@ import { LocalRoom, LocalRoomState } from '../../models/LocalRoom';
 import { createRoomFromLocalRoom } from '../../utils/direct-messages';
 import NewRoomIntro from '../views/rooms/NewRoomIntro';
 import EncryptionEvent from '../views/messages/EncryptionEvent';
+import { UnsentMessagesRoomStatusBar } from './UnsentMessagesRoomStatusBar';
+import { StaticNotificationState } from '../../stores/notifications/StaticNotificationState';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -235,11 +237,43 @@ interface ILocalRoomViewProps {
 
 function LocalRoomView(props: ILocalRoomViewProps) {
     const context = useContext(RoomContext);
+    const room = context.room as LocalRoom;
     const encryptionEvent = context.room.currentState.getStateEvents(EventType.RoomEncryption)[0];
     let encryptionTile: ReactNode;
 
     if (encryptionEvent) {
         encryptionTile = <EncryptionEvent mxEvent={encryptionEvent} />;
+    }
+
+    const onRetryClicked = () => {
+        room.state = LocalRoomState.NEW;
+        defaultDispatcher.dispatch({
+            action: "local_room_event",
+            roomId: room.roomId,
+        });
+    };
+
+    let statusBar: ReactElement;
+    let composer: ReactElement;
+
+    if (room.isError) {
+        const buttons = (
+            <AccessibleButton onClick={onRetryClicked} className="mx_RoomStatusBar_unsentRetry">
+                { _t("Retry") }
+            </AccessibleButton>
+        );
+
+        statusBar = <UnsentMessagesRoomStatusBar
+            title={_t("Some of your messages have not been sent")}
+            notificationState={StaticNotificationState.RED_EXCLAMATION}
+            buttons={buttons}
+        />;
+    } else {
+        composer = <MessageComposer
+            room={context.room}
+            resizeNotifier={props.resizeNotifier}
+            permalinkCreator={props.permalinkCreator}
+        />;
     }
 
     return (
@@ -271,11 +305,8 @@ function LocalRoomView(props: ILocalRoomViewProps) {
                             <NewRoomIntro />
                         </ScrollPanel>
                     </div>
-                    <MessageComposer
-                        room={context.room}
-                        resizeNotifier={props.resizeNotifier}
-                        permalinkCreator={props.permalinkCreator}
-                    />
+                    { statusBar }
+                    { composer }
                 </main>
             </ErrorBoundary>
         </div>

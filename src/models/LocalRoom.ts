@@ -24,6 +24,7 @@ export enum LocalRoomState {
     NEW, // new local room; only known to the client
     CREATING, // real room is being created
     CREATED, // real room has been created via API; events applied
+    ERROR, // error during room creation
 }
 
 /**
@@ -43,5 +44,9 @@ export class LocalRoom extends Room {
 
     public get isCreated(): boolean {
         return this.state === LocalRoomState.CREATED;
+    }
+
+    public get isError(): boolean {
+        return this.state === LocalRoomState.ERROR;
     }
 }

@@ -20,6 +20,7 @@ import { EventType } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import createRoom, { canEncryptToAllUsers } from "../createRoom";
 import { Action } from "../dispatcher/actions";
@@ -267,6 +268,11 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
         let checkRoomStateInterval: number;
         let stopgapTimeoutHandle: number;
 
+        const stopgapFinish = () => {
+            logger.warn(`Assuming local room ${localRoom.roomId} is ready after hitting timeout`);
+            finish();
+        };
+
         const finish = () => {
             if (checkRoomStateInterval) clearInterval(checkRoomStateInterval);
             if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
@@ -277,15 +283,22 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
             });
         };
 
-        startDm(client, localRoom.targets).then((roomId) => {
-            localRoom.realRoomId = roomId;
-            if (isRoomReady(client, localRoom)) finish();
-            stopgapTimeoutHandle = setTimeout(finish, 5000);
-            // polling the room state is not as beautiful as listening on the events, but it is more reliable
-            checkRoomStateInterval = setInterval(() => {
+        startDm(client, localRoom.targets).then(
+            (roomId) => {
+                localRoom.realRoomId = roomId;
                 if (isRoomReady(client, localRoom)) finish();
-            }, 500);
-        });
+                stopgapTimeoutHandle = setTimeout(stopgapFinish, 5000);
+                // polling the room state is not as beautiful as listening on the events, but it is more reliable
+                checkRoomStateInterval = setInterval(() => {
+                    if (isRoomReady(client, localRoom)) finish();
+                }, 500);
+            },
+            () => {
+                logger.warn(`Error creating DM for local room ${localRoom.roomId}`);
+                localRoom.state = LocalRoomState.ERROR;
+                client.emit(ClientEvent.Room, localRoom);
+            },
+        );
     });
 }
 
