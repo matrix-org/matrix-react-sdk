@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655238878650,
+  "lastUpdate": 1655252404799,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101282,6 +101282,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4709,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "39f2bbaaf4381e23439f34da0c8161bafc49f4e8",
+          "message": "Bring back waveform for voice messages and retain seeking (#8843)\n\n* Crude way of layering the waveform and seek bar\r\n\r\nNot intended for production.\r\n\r\n* Use a layout prop instead of something less descriptive\r\n\r\n* Fix alignment properly, and play with styles\r\n\r\n* Convert back to a ball\r\n\r\n* Use `transparent` which makes NVDA happy enough\r\n\r\n* Allow keyboards in the seek bar\r\n\r\n* Try to make the clock behave more correctly with screen readers\r\n\r\nMIDNIGHT\r\n\r\n* Remove legacy export\r\n\r\n* Remove redundant attr\r\n\r\n* Appease the linter",
+          "timestamp": "2022-06-14T18:13:13-06:00",
+          "tree_id": "b92cb229d01f1027fc9be97f02da1960027ccba2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/39f2bbaaf4381e23439f34da0c8161bafc49f4e8"
+        },
+        "date": 1655252388828,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4960.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2581.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5463.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
