@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655308660736,
+  "lastUpdate": 1655310337171,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101654,6 +101654,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5502.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f9100d5fb6c7ec69dfa70a957b64b3ae461f2093",
+          "message": "Fix issues with the Create new room button in Spotlight (#8851)\n\n* Correct label of create new room button\r\n* Capitalize suggested name for new room",
+          "timestamp": "2022-06-15T16:16:40Z",
+          "tree_id": "2c9f8419fcb7596e217ae368109b15d444e34d1a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f9100d5fb6c7ec69dfa70a957b64b3ae461f2093"
+        },
+        "date": 1655310324901,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5529.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2566.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4774.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
