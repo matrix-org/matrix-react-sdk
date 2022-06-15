@@ -192,9 +192,7 @@ export async function createDmLocalRoom(
     localRoom.addLiveEvents(events);
     localRoom.currentState.setStateEvents(events);
     localRoom.name = localRoom.getDefaultRoomName(userId);
-
     client.store.storeRoom(localRoom);
-    client.sessionStore.store.setItem('mx_pending_events_local_room', []);
 
     return localRoom;
 }
