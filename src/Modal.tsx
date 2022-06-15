@@ -23,9 +23,9 @@ import { defer, sleep } from "matrix-js-sdk/src/utils";
 import AsyncWrapper from './AsyncWrapper';
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
-const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
 export interface IModal<T extends any[]> {
+    id: number;
     elem: React.ReactNode;
     className?: string;
     beforeClosePromise?: Promise<boolean>;
@@ -79,26 +79,8 @@ export class ModalManager {
         return container;
     }
 
-    private static getOrCreateStaticContainer() {
-        let container = document.getElementById(STATIC_DIALOG_CONTAINER_ID);
-
-        if (!container) {
-            container = document.createElement("div");
-            container.id = STATIC_DIALOG_CONTAINER_ID;
-            document.body.appendChild(container);
-        }
-
-        return container;
-    }
-
-    public toggleCurrentDialogVisibility() {
-        const modal = this.getCurrentModal();
-        if (!modal) return;
-        modal.hidden = !modal.hidden;
-    }
-
-    public hasDialogs() {
-        return this.priorityModal || this.staticModal || this.modals.length > 0;
+    public hasDialogs(): boolean {
+        return !!this.priorityModal || !!this.staticModal || this.modals.length > 0;
     }
 
     public createDialog<T extends any[]>(
@@ -116,10 +98,8 @@ export class ModalManager {
     }
 
     public closeCurrentModal(reason: string) {
-        const modal = this.getCurrentModal();
-        if (!modal) {
-            return;
-        }
+        const [modal] = this.getModals();
+        if (!modal) return;
         modal.closeReason = reason;
         modal.close();
     }
@@ -131,6 +111,7 @@ export class ModalManager {
         options?: IOptions<T>,
     ) {
         const modal: IModal<T> = {
+            id: this.counter++,
             onFinished: props ? props.onFinished : null,
             onBeforeClose: options.onBeforeClose,
             beforeClosePromise: null,
@@ -142,16 +123,25 @@ export class ModalManager {
             close: null,
         };
 
+        const setModalHidden = () => {
+            modal.hidden = !modal.hidden;
+            this.reRender();
+        };
+
         // never call this from onFinished() otherwise it will loop
         const [closeDialog, onFinishedProm] = this.getCloseFn<T>(modal, props);
 
-        // don't attempt to reuse the same AsyncWrapper for different dialogs,
-        // otherwise we'll get confused.
-        const modalCount = this.counter++;
-
         // FIXME: If a dialog uses getDefaultProps it clobbers the onFinished
         // property set here so you can't close the dialog from a button click!
-        modal.elem = <AsyncWrapper key={modalCount} prom={prom} {...props} onFinished={closeDialog} />;
+        modal.elem = (
+            <AsyncWrapper
+                key={modal.id}
+                prom={prom}
+                {...props}
+                onFinished={closeDialog}
+                setModalHidden={setModalHidden}
+            />
+        );
         modal.close = closeDialog;
 
         return { modal, closeDialog, onFinishedProm };
@@ -174,7 +164,7 @@ export class ModalManager {
                 }
             }
             deferred.resolve(args);
-            if (props && props.onFinished) props.onFinished.apply(null, args);
+            props?.onFinished?.apply(null, args);
             const i = this.modals.indexOf(modal);
             if (i >= 0) {
                 this.modals.splice(i, 1);
@@ -207,7 +197,7 @@ export class ModalManager {
     /**
      * Open a modal view.
      *
-     * This can be used to display a react component which is loaded as an asynchronous
+     * This can be used to display a React component which is loaded as an asynchronous
      * webpack component. To do this, set 'loader' as:
      *
      *   (cb) => {
@@ -276,72 +266,58 @@ export class ModalManager {
         };
     }
 
-    private onBackgroundClick = () => {
-        const modal = this.getCurrentModal();
-        if (!modal) {
-            return;
-        }
-        // we want to pass a reason to the onBeforeClose
-        // callback, but close is currently defined to
-        // pass all number of arguments to the onFinished callback
-        // so, pass the reason to close through a member variable
-        modal.closeReason = "backgroundClick";
-        modal.close();
-        modal.closeReason = null;
-    };
+    private getModals(): IModal<any>[] {
+        return [
+            this.priorityModal,
+            ...this.modals,
+            this.staticModal,
+        ].filter(Boolean);
+    }
 
-    private getCurrentModal(): IModal<any> {
-        return this.priorityModal ? this.priorityModal : (this.modals[0] || this.staticModal);
+    private onActiveModalClick(this: IModal<any>, ev: MouseEvent): void {
+        const target = ev.target as HTMLElement;
+        if (target.tagName === "DIALOG" && target.classList.contains("mx_Dialog_wrapper")) {
+            // we want to pass a reason to the onBeforeClose
+            // callback, but close is currently defined to
+            // pass all number of arguments to the onFinished callback
+            // so, pass the reason to close through a member variable
+            this.closeReason = "backgroundClick";
+            this.close();
+            this.closeReason = null;
+        }
+    }
+
+    private onActiveModalRender(this: IModal<any>, elem: HTMLDialogElement): void {
+        if (!elem || elem.open) return;
+        elem.oncancel = this.close;
+        elem.showModal();
     }
 
     private async reRender() {
         // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
         await sleep(0);
 
-        if (this.modals.length === 0 && !this.priorityModal && !this.staticModal) {
+        const modals = this.getModals();
+        if (modals.length === 0) {
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
             return;
         }
 
-        const modal = this.getCurrentModal();
-        if (this.staticModal) {
-            const classes = classNames("mx_Dialog_wrapper mx_Dialog_staticWrapper", this.staticModal.className);
-
-            const staticDialog = (
-                <div className={classes}>
-                    <dialog className="mx_Dialog" open={modal === this.staticModal}>
-                        { this.staticModal.elem }
-                    </dialog>
-                    <div className="mx_Dialog_background mx_Dialog_staticBackground" onClick={this.onBackgroundClick} />
-                </div>
-            );
-
-            ReactDOM.render(staticDialog, ModalManager.getOrCreateStaticContainer());
-        } else {
-            // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
-        }
-
-        if (modal !== this.staticModal && !modal.hidden) {
-            const classes = classNames("mx_Dialog_wrapper", modal.className, {
-                mx_Dialog_wrapperWithStaticUnder: this.staticModal,
-            });
-
-            const dialog = (
-                <div className={classes}>
-                    <dialog className="mx_Dialog" open>
-                        { modal.elem }
-                    </dialog>
-                    <div className="mx_Dialog_background" onClick={this.onBackgroundClick} />
-                </div>
-            );
-
-            setImmediate(() => ReactDOM.render(dialog, ModalManager.getOrCreateContainer()));
-        } else {
-            // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
-        }
+        const firstVisible = modals.find(m => !m.hidden);
+        setImmediate(() => ReactDOM.render(<>
+            { modals.map(m => (
+                <dialog
+                    key={m.id}
+                    className={classNames("mx_Dialog_wrapper", m.className)}
+                    onClick={m === firstVisible ? this.onActiveModalClick.bind(m) : undefined}
+                    ref={m === firstVisible ? this.onActiveModalRender.bind(m) : undefined}
+                >
+                    <div className="mx_Dialog">
+                        { m.elem }
+                    </div>
+                </dialog>
+            )) }
+        </>, ModalManager.getOrCreateContainer()));
     }
 }
 

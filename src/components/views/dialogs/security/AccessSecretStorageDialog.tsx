@@ -221,10 +221,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         // Hide ourselves so the user can interact with the reset dialogs.
         // We don't conclude the promise chain (onFinished) yet to avoid confusing
         // any upstream code flows.
-        //
-        // Note: this will unmount us, so don't call `setState` or anything in the
-        // rest of this function.
-        Modal.toggleCurrentDialogVisibility();
+        this.props.setModalHidden(true);
 
         try {
             // Force reset secret storage (which resets the key backup)
@@ -426,7 +423,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         }
 
         return (
-            <BaseDialog className='mx_AccessSecretStorageDialog'
+            <BaseDialog
+                className='mx_AccessSecretStorageDialog'
                 onFinished={this.props.onFinished}
                 title={title}
                 titleClass={titleClass}

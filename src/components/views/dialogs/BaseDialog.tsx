@@ -27,8 +27,6 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Heading from '../typography/Heading';
 import { IDialogProps } from "./IDialogProps";
 import { PosthogScreenTracker, ScreenName } from "../../../PosthogTrackers";
-import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps extends IDialogProps {
     // Whether the dialog should have a 'close' button that will
@@ -93,21 +91,6 @@ export default class BaseDialog extends React.Component<IProps> {
         this.matrixClient = MatrixClientPeg.get();
     }
 
-    private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
-        this.props.onKeyDown?.(e);
-
-        const action = getKeyBindingsManager().getAccessibilityAction(e);
-        switch (action) {
-            case KeyBindingAction.Escape:
-                if (!this.props.hasCancel) break;
-
-                e.stopPropagation();
-                e.preventDefault();
-                this.props.onFinished(false);
-                break;
-        }
-    };
-
     private onCancelClick = (e: ButtonEvent): void => {
         this.props.onFinished(false);
     };
@@ -126,7 +109,6 @@ export default class BaseDialog extends React.Component<IProps> {
         }
 
         const props = {
-            "onKeyDown": this.onKeyDown,
             "role": "dialog",
             // This should point to a node describing the dialog.
             // If we were about to completely follow this recommendation we'd need to

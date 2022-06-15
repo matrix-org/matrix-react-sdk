@@ -174,7 +174,11 @@ declare global {
     }
 
     interface HTMLStyleElement {
-        disabled?: boolean;
+        disabled: boolean;
+    }
+
+    interface HTMLDialogElement {
+        oncancel?(ev: Event);
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour

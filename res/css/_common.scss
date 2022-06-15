@@ -279,22 +279,32 @@ legend {
  */
 
 .mx_Dialog_wrapper {
-    position: fixed;
-    z-index: 4000;
-    top: 0;
+    position: absolute;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // override browser default decorations
+    border: none;
+    background: unset;
+
+    &::backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        background-color: $dialog-backdrop-color;
+        opacity: 0.8;
+    }
 }
 
 .mx_Dialog {
     background-color: $background;
     color: $light-fg-color;
-    z-index: 4012;
     font-size: $font-15px;
     position: relative;
     padding: 24px;
@@ -376,33 +386,7 @@ legend {
     max-width: 704px;
 }
 
-.mx_Dialog_staticWrapper .mx_Dialog {
-    z-index: 4010;
-    contain: content;
-}
-
-.mx_Dialog_background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: $dialog-backdrop-color;
-    opacity: 0.8;
-    z-index: 4011;
-}
-
-.mx_Dialog_background.mx_Dialog_staticBackground {
-    z-index: 4009;
-}
-
-.mx_Dialog_wrapperWithStaticUnder .mx_Dialog_background {
-    // Roughly half of what it would normally be - we don't want to black out
-    // the app, just make it clear that the dialogs are stacked.
-    opacity: 0.4;
-}
-
-.mx_Dialog_lightbox .mx_Dialog_background {
+.mx_Dialog_lightbox {
     opacity: $lightbox-background-bg-opacity;
     background-color: $lightbox-background-bg-color;
     animation-name: mx_Dialog_lightbox_background_keyframes;
@@ -586,7 +570,7 @@ legend {
 }
 
 /* Spinner Dialog overide */
-.mx_Dialog_wrapper.mx_Dialog_spinner .mx_Dialog {
+.mx_Dialog_spinner .mx_Dialog {
     width: auto;
     border-radius: 8px;
     padding: 8px;
