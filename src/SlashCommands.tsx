@@ -25,14 +25,15 @@ import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
 import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from 'matrix-js-sdk/src/models/event';
-import { SlashCommand as SlashCommandEvent } from "matrix-analytics-events/types/typescript/SlashCommand";
+import { MRoomTopicEventContent } from 'matrix-js-sdk/src/@types/topic';
+import { SlashCommand as SlashCommandEvent } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import { _t, _td, ITranslatableError, newTranslatableError } from './languageHandler';
 import Modal from './Modal';
 import MultiInviter from './utils/MultiInviter';
-import { linkifyAndSanitizeHtml } from './HtmlUtils';
+import { linkifyElement, topicToHtml } from './HtmlUtils';
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import WidgetUtils from "./utils/WidgetUtils";
 import { textToHtmlRainbow } from "./utils/colour";
@@ -66,6 +67,7 @@ import { XOR } from "./@types/common";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import VoipUserMapper from './VoipUserMapper';
+import { htmlSerializeFromMdIfNeeded } from './editor/serialize';
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
@@ -80,7 +82,7 @@ const singleMxcUpload = async (): Promise<any> => {
         fileSelector.onchange = (ev: HTMLInputEvent) => {
             const file = ev.target.files[0];
 
-            Modal.createTrackedDialog('Upload Files confirmation', '', UploadConfirmDialog, {
+            Modal.createDialog(UploadConfirmDialog, {
                 file,
                 onFinished: (shouldContinue) => {
                     resolve(shouldContinue ? MatrixClientPeg.get().uploadContent(file) : null);
@@ -305,7 +307,7 @@ export const Commands = [
                     );
                 }
 
-                const { finished } = Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
+                const { finished } = Modal.createDialog(
                     RoomUpgradeWarningDialog, { roomId: roomId, targetVersion: args }, /*className=*/null,
                     /*isPriority=*/false, /*isStatic=*/true);
 
@@ -463,7 +465,8 @@ export const Commands = [
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
             if (args) {
-                return success(cli.setRoomTopic(roomId, args));
+                const html = htmlSerializeFromMdIfNeeded(args, { forceHTML: false });
+                return success(cli.setRoomTopic(roomId, args, html));
             }
             const room = cli.getRoom(roomId);
             if (!room) {
@@ -472,14 +475,19 @@ export const Commands = [
                 );
             }
 
-            const topicEvents = room.currentState.getStateEvents('m.room.topic', '');
-            const topic = topicEvents && topicEvents.getContent().topic;
-            const topicHtml = topic ? linkifyAndSanitizeHtml(topic) : _t('This room has no topic.');
+            const content: MRoomTopicEventContent = room.currentState.getStateEvents('m.room.topic', '')?.getContent();
+            const topic = !!content
+                ? ContentHelpers.parseTopicContent(content)
+                : { text: _t('This room has no topic.') };
 
-            Modal.createTrackedDialog('Slash Commands', 'Topic', InfoDialog, {
+            const ref = e => e && linkifyElement(e);
+            const body = topicToHtml(topic.text, topic.html, ref, true);
+
+            Modal.createDialog(InfoDialog, {
                 title: room.name,
-                description: <div dangerouslySetInnerHTML={{ __html: topicHtml }} />,
+                description: <div ref={ref}>{ body }</div>,
                 hasCloseButton: true,
+                className: "markdown-body",
             });
             return success();
         },
@@ -521,22 +529,18 @@ export const Commands = [
                     ) {
                         const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
                         if (defaultIdentityServerUrl) {
-                            const { finished } = Modal.createTrackedDialog<[boolean]>(
-                                'Slash Commands',
-                                'Identity server',
-                                QuestionDialog, {
-                                    title: _t("Use an identity server"),
-                                    description: <p>{ _t(
-                                        "Use an identity server to invite by email. " +
-                                        "Click continue to use the default identity server " +
-                                        "(%(defaultIdentityServerName)s) or manage in Settings.",
-                                        {
-                                            defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
-                                        },
-                                    ) }</p>,
-                                    button: _t("Continue"),
-                                },
-                            );
+                            const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+                                title: _t("Use an identity server"),
+                                description: <p>{ _t(
+                                    "Use an identity server to invite by email. " +
+                                    "Click continue to use the default identity server " +
+                                    "(%(defaultIdentityServerName)s) or manage in Settings.",
+                                    {
+                                        defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
+                                    },
+                                ) }</p>,
+                                button: _t("Continue"),
+                            });
 
                             prom = finished.then(([useDefault]) => {
                                 if (useDefault) {
@@ -802,7 +806,7 @@ export const Commands = [
                     ignoredUsers.push(userId); // de-duped internally in the js-sdk
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createTrackedDialog('Slash Commands', 'User ignored', InfoDialog, {
+                            Modal.createDialog(InfoDialog, {
                                 title: _t('Ignored user'),
                                 description: <div>
                                     <p>{ _t('You are now ignoring %(userId)s', { userId }) }</p>
@@ -832,7 +836,7 @@ export const Commands = [
                     if (index !== -1) ignoredUsers.splice(index, 1);
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createTrackedDialog('Slash Commands', 'User unignored', InfoDialog, {
+                            Modal.createDialog(InfoDialog, {
                                 title: _t('Unignored user'),
                                 description: <div>
                                     <p>{ _t('You are no longer ignoring %(userId)s', { userId }) }</p>
@@ -1032,7 +1036,7 @@ export const Commands = [
                         await cli.setDeviceVerified(userId, deviceId, true);
 
                         // Tell the user we verified everything
-                        Modal.createTrackedDialog('Slash Commands', 'Verified key', InfoDialog, {
+                        Modal.createDialog(InfoDialog, {
                             title: _t('Verified key'),
                             description: <div>
                                 <p>
@@ -1090,7 +1094,7 @@ export const Commands = [
         command: "help",
         description: _td("Displays list of commands with usages and descriptions"),
         runFn: function() {
-            Modal.createTrackedDialog('Slash Commands', 'Help', SlashCommandHelpDialog);
+            Modal.createDialog(SlashCommandHelpDialog);
             return success();
         },
         category: CommandCategories.advanced,
@@ -1122,7 +1126,7 @@ export const Commands = [
         args: "<description>",
         runFn: function(roomId, args) {
             return success(
-                Modal.createTrackedDialog('Slash Commands', 'Bug Report Dialog', BugReportDialog, {
+                Modal.createDialog(BugReportDialog, {
                     initialText: args,
                 }).finished,
             );
@@ -1333,11 +1337,10 @@ interface ICmd {
 }
 
 /**
- * Process the given text for /commands and return a bound method to perform them.
+ * Process the given text for /commands and returns a parsed command that can be used for running the operation.
  * @param {string} input The raw text input by the user.
- * @return {null|function(): Object} Function returning an object with the property 'error' if there was an error
- * processing the command, or 'promise' if a request was sent out.
- * Returns null if the input didn't match a command.
+ * @return {ICmd} The parsed command object.
+ * Returns an empty object if the input didn't match a command.
  */
 export function getCommand(input: string): ICmd {
     const { cmd, args } = parseCommandString(input);
