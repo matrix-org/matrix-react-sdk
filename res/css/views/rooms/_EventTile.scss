@@ -1063,14 +1063,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 }
 
-// Media query for mobile UI
-@media only screen and (max-width: 480px) {
-    .mx_EventTile_content {
-        margin-right: 0;
-    }
-}
 
-// Cascading - compact modern layout
+// Cascading - compact modern layout on the main timeline and the right panel
 .mx_MatrixChat_useCompactLayout {
     .mx_EventTile {
         // Override :not([data-layout="bubble"])
@@ -1082,7 +1076,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 font-size: $font-13px;
 
                 .mx_EventTile_avatar {
-                    top: 4px;
+                    top: $spacing-4;
                 }
 
                 .mx_EventTile_line,
@@ -1099,7 +1093,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
                     .mx_EventTile_line,
                     .mx_EventTile_reply {
-                        padding-block: 0;
+                        padding-top: 0;
+                        padding-bottom: 0;
                     }
                 }
 
@@ -1109,7 +1104,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
                 .mx_EventTile_line,
                 .mx_EventTile_reply {
-                    padding-top: 0px;
+                    padding-top: 0;
                     padding-bottom: 1px;
                 }
             }
@@ -1120,7 +1115,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
             .mx_EventTile_line,
             .mx_EventTile_reply {
-                padding-block: 0;
+                padding-top: 0;
+                padding-bottom: 0;
             }
 
             .mx_EventTile_e2eIcon {
@@ -1149,5 +1145,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
             }
         }
+    }
+}
+
+// Media query for mobile UI
+@media only screen and (max-width: 480px) {
+    .mx_EventTile_content {
+        margin-right: 0;
     }
 }
