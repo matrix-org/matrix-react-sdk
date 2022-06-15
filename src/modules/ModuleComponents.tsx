@@ -21,7 +21,12 @@ import React from "react";
 import Field from "../components/views/elements/Field";
 import Spinner from "../components/views/elements/Spinner";
 
-// TODO: @@ Is this future-proof enough? Will we remember to do this for new components?
+// Here we define all the render factories for the module API components. This file should be
+// imported by the ModuleRunner to load them into the call stack at runtime.
+//
+// If a new component is added to the module API, it should be added here too.
+//
+// Don't forget to add a test to ensure the renderFactory is overridden! See ModuleComponents-test.tsx
 
 TextInputField.renderFactory = (props) => (
     <Field

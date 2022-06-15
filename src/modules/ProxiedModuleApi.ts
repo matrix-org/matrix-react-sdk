@@ -20,7 +20,7 @@ import { Optional } from "matrix-events-sdk";
 import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import React from "react";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
-import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/src/types/translations";
+import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 
 import Modal from "../Modal";
@@ -137,7 +137,6 @@ export class ProxiedModuleApi implements ModuleApi {
         navigateToPermalink(uri);
 
         const parts = parsePermalink(uri);
-        if (parts.roomIdOrAlias)
         if (parts.roomIdOrAlias && andJoin) {
             let roomId = parts.roomIdOrAlias;
             let servers = parts.viaServers;

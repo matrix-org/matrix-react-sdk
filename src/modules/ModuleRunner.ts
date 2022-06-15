@@ -34,6 +34,15 @@ export class ModuleRunner {
     }
 
     /**
+     * Resets the runner, clearing all known modules.
+     *
+     * Intended for test usage only.
+     */
+    public reset() {
+        this.modules = [];
+    }
+
+    /**
      * All custom translations from all registered modules.
      */
     public get allTranslations(): TranslationStringsObject {
