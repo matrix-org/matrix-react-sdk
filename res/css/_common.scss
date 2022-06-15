@@ -806,3 +806,25 @@ legend {
     mask-repeat: no-repeat;
     mask-size: contain;
 }
+
+@define-mixin AudioPlayer {
+    .mx_PlayPauseButton {
+        margin-inline-end: $spacing-8;
+    }
+
+    // For audio player and voice message player
+    .mx_SeekBar,
+    .mx_RecordingPlayback_timelineLayoutMiddle {
+        flex: 1;
+
+        + .mx_Clock {
+            margin-inline-start: $spacing-8;
+        }
+    }
+
+    .mx_Clock {
+        min-width: $font-42px; // for flexbox
+        text-align: justify;
+        white-space: nowrap;
+    }
+}
