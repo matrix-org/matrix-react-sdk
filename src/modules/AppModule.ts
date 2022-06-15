@@ -14,14 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ModuleFactory } from "./ModuleFactory";
 import { RuntimeModule } from "@matrix-org/react-sdk-module-api/lib/RuntimeModule";
+
+import { ModuleFactory } from "./ModuleFactory";
 import { ProxiedModuleApi } from "./ProxiedModuleApi";
 
+/**
+ * Wraps a module factory into a usable module. Acts as a simple container
+ * for the constructs needed to operate a module.
+ */
 export class AppModule {
+    /**
+     * The module instance.
+     */
     public readonly module: RuntimeModule;
+
+    /**
+     * The API instance used by the module.
+     */
     public readonly api = new ProxiedModuleApi();
 
+    /**
+     * Converts a factory into an AppModule. The factory will be called
+     * immediately.
+     * @param factory The module factory.
+     */
     public constructor(factory: ModuleFactory) {
         this.module = factory(this.api);
     }

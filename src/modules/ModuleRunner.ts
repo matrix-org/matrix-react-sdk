@@ -15,11 +15,15 @@ limitations under the License.
 */
 
 import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/types/translations";
+import { AnyLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/types";
+
 import { AppModule } from "./AppModule";
 import { ModuleFactory } from "./ModuleFactory";
-import { AnyLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/types";
 import "./ModuleComponents";
 
+/**
+ * Handles and coordinates the operation of modules.
+ */
 export class ModuleRunner {
     public static readonly instance = new ModuleRunner();
 
@@ -29,6 +33,9 @@ export class ModuleRunner {
         // we only want one instance
     }
 
+    /**
+     * All custom translations from all registered modules.
+     */
     public get allTranslations(): TranslationStringsObject {
         const merged: TranslationStringsObject = {};
 
@@ -47,10 +54,20 @@ export class ModuleRunner {
         return merged;
     }
 
+    /**
+     * Registers a factory which creates a module for later loading. The factory
+     * will be called immediately.
+     * @param factory The module factory.
+     */
     public registerModule(factory: ModuleFactory) {
         this.modules.push(new AppModule(factory));
     }
 
+    /**
+     * Invokes a lifecycle event, notifying registered modules.
+     * @param lifecycleEvent The lifecycle event.
+     * @param args The arguments for the lifecycle event.
+     */
     public invoke(lifecycleEvent: AnyLifecycle, ...args: any[]): void {
         for (const module of this.modules) {
             module.module.emit(lifecycleEvent, ...args);

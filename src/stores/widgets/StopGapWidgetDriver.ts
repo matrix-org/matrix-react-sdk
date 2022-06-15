@@ -46,7 +46,6 @@ import { WidgetType } from "../../widgets/WidgetType";
 import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
-import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permalinks";
 import SettingsStore from "../../settings/SettingsStore";
 import { RoomViewStore } from "../RoomViewStore";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";

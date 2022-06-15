@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// TODO: @@ Is this future-proof enough? Will we remember to do this for new components?
 import { TextInputField } from "@matrix-org/react-sdk-module-api/lib/components/TextInputField";
 import { Spinner as ModuleSpinner } from "@matrix-org/react-sdk-module-api/lib/components/Spinner";
 import React from "react";
+
 import Field from "../components/views/elements/Field";
 import Spinner from "../components/views/elements/Spinner";
+
+// TODO: @@ Is this future-proof enough? Will we remember to do this for new components?
 
 TextInputField.renderFactory = (props) => (
     <Field
