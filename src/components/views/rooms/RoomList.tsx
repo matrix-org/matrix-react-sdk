@@ -16,9 +16,8 @@ limitations under the License.
 
 import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
 import * as fbEmitter from "fbemitter";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t, _td } from "../../../languageHandler";
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
@@ -42,6 +41,7 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { BetaPill } from "../beta/BetaCard";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
     isMetaSpace,
@@ -142,6 +142,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
                             e.stopPropagation();
                             closeMenu();
                             defaultDispatcher.dispatch({ action: "view_create_chat" });
+                            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
                         }}
                     /> }
                     { showInviteUsers && <IconizedContextMenuOption
@@ -178,7 +179,10 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
     } else if (!activeSpace && showCreateRooms) {
         return <AccessibleTooltipButton
             tabIndex={tabIndex}
-            onClick={() => dispatcher.dispatch({ action: 'view_create_chat' })}
+            onClick={(e) => {
+                dispatcher.dispatch({ action: 'view_create_chat' });
+                PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
+            }}
             className="mx_RoomSublist_auxButton"
             tooltipClassName="mx_RoomSublist_addRoomTooltip"
             aria-label={_t("Start chat")}
@@ -235,19 +239,23 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                             tooltip={canAddRooms ? undefined
                                 : _t("You do not have permissions to create new rooms in this space")}
                         />
-                        { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
-                            label={_t("New video room")}
-                            iconClassName="mx_RoomList_iconNewVideoRoom"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                closeMenu();
-                                showCreateNewRoom(activeSpace, RoomType.ElementVideo);
-                            }}
-                            disabled={!canAddRooms}
-                            tooltip={canAddRooms ? undefined
-                                : _t("You do not have permissions to create new rooms in this space")}
-                        /> }
+                        { SettingsStore.getValue("feature_video_rooms") && (
+                            <IconizedContextMenuOption
+                                label={_t("New video room")}
+                                iconClassName="mx_RoomList_iconNewVideoRoom"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    closeMenu();
+                                    showCreateNewRoom(activeSpace, RoomType.ElementVideo);
+                                }}
+                                disabled={!canAddRooms}
+                                tooltip={canAddRooms ? undefined
+                                    : _t("You do not have permissions to create new rooms in this space")}
+                            >
+                                <BetaPill />
+                            </IconizedContextMenuOption>
+                        ) }
                         <IconizedContextMenuOption
                             label={_t("Add existing room")}
                             iconClassName="mx_RoomList_iconAddExistingRoom"
@@ -279,19 +287,23 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                         PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                     }}
                 />
-                { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
-                    label={_t("New video room")}
-                    iconClassName="mx_RoomList_iconNewVideoRoom"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        defaultDispatcher.dispatch({
-                            action: "view_create_room",
-                            type: RoomType.ElementVideo,
-                        });
-                    }}
-                /> }
+                { SettingsStore.getValue("feature_video_rooms") && (
+                    <IconizedContextMenuOption
+                        label={_t("New video room")}
+                        iconClassName="mx_RoomList_iconNewVideoRoom"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            defaultDispatcher.dispatch({
+                                action: "view_create_room",
+                                type: RoomType.ElementVideo,
+                            });
+                        }}
+                    >
+                        <BetaPill />
+                    </IconizedContextMenuOption>
+                ) }
             </> }
             <IconizedContextMenuOption
                 label={_t("Explore public rooms")}
@@ -300,6 +312,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     closeMenu();
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
                     defaultDispatcher.fire(Action.ViewRoomDirectory);
                 }}
             />
@@ -496,9 +509,10 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private onStartChat = () => {
+    private onStartChat = (ev: ButtonEvent) => {
         const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
         defaultDispatcher.dispatch({ action: "view_create_chat", initialText });
+        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", ev);
     };
 
     private onExplore = (ev: ButtonEvent) => {
@@ -512,6 +526,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         } else {
             const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
             defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
+            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", ev);
         }
     };
 
@@ -662,11 +677,8 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     public focus(): void {
         // focus the first focusable element in this aria treeview widget
         const treeItems = this.treeRef.current?.querySelectorAll<HTMLElement>('[role="treeitem"]');
-        if (treeItems) {
-            return;
-        }
-        [...treeItems]
-            .find(e => e.offsetParent !== null)?.focus();
+        if (!treeItems) return;
+        [...treeItems].find(e => e.offsetParent !== null)?.focus();
     }
 
     public render() {

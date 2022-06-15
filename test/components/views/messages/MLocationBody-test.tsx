@@ -56,6 +56,15 @@ describe("MLocationBody", () => {
             wrappingComponent: MatrixClientContext.Provider,
             wrappingComponentProps: { value: mockClient },
         });
+
+        beforeAll(() => {
+            maplibregl.AttributionControl = jest.fn();
+        });
+
+        beforeEach(() => {
+            jest.clearAllMocks();
+        });
+
         describe('with error', () => {
             let sdkConfigSpy;
 
@@ -118,7 +127,7 @@ describe("MLocationBody", () => {
             });
 
             it('opens map dialog on click', () => {
-                const modalSpy = jest.spyOn(Modal, 'createTrackedDialog').mockReturnValue(undefined);
+                const modalSpy = jest.spyOn(Modal, 'createDialog').mockReturnValue(undefined);
                 const component = getComponent();
 
                 act(() => {

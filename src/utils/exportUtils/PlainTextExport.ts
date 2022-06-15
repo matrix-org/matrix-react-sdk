@@ -17,6 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import React from "react";
 
 import Exporter from "./Exporter";
 import { formatFullDateNoDay } from "../../DateUtils";
@@ -112,7 +113,7 @@ export default class PlainTextExporter extends Exporter {
                 total: events.length,
             }), false, true);
             if (this.cancelled) return this.cleanUp();
-            if (!haveRendererForEvent(event)) continue;
+            if (!haveRendererForEvent(event, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
             content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
         }

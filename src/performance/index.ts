@@ -71,7 +71,7 @@ export default class PerformanceMonitor {
      * with the start marker
      * @param name Name of the recording
      * @param id Specify an identifier appended to the measurement name
-     * @returns {void}
+     * @returns The measurement
      */
     stop(name: string, id?: string): PerformanceEntry {
         if (!this.supportsPerformanceApi()) {
@@ -165,7 +165,8 @@ export default class PerformanceMonitor {
      * @returns {string} a compound of the name and identifier if present
      */
     private buildKey(name: string, id?: string): string {
-        return `${name}${id ? `:${id}` : ''}`;
+        const suffix = id ? `:${id}` : '';
+        return `${name}${suffix}`;
     }
 }
 

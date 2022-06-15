@@ -29,7 +29,6 @@ import {
     M_POLL_END,
     PollStartEvent,
 } from "matrix-events-sdk";
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -46,6 +45,7 @@ import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 import UserIdentifierCustomisations from './customisations/UserIdentifier';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { isLocationEvent } from './utils/EventUtils';
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
@@ -224,7 +224,7 @@ const onViewJoinRuleSettingsClick = () => {
     });
 };
 
-function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => Renderable {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     switch (ev.getContent().join_rule) {
         case JoinRule.Public:
@@ -281,7 +281,7 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
     const prev = {
         deny: Array.isArray(prevContent.deny) ? prevContent.deny : [],
         allow: Array.isArray(prevContent.allow) ? prevContent.allow : [],
-        allow_ip_literals: !(prevContent.allow_ip_literals === false),
+        allow_ip_literals: prevContent.allow_ip_literals !== false,
     };
 
     let getText = null;
@@ -305,11 +305,7 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
-    const type = ev.getType();
-    const content = ev.getContent();
-    const msgtype = content.msgtype;
-
-    if (M_LOCATION.matches(type) || M_LOCATION.matches(msgtype)) {
+    if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
 
@@ -372,13 +368,15 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
                 addresses: addedAltAliases.join(", "),
                 count: addedAltAliases.length,
             });
-        } if (removedAltAliases.length && !addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && !addedAltAliases.length) {
             return () => _t('%(senderName)s removed the alternative addresses %(addresses)s for this room.', {
                 senderName,
                 addresses: removedAltAliases.join(", "),
                 count: removedAltAliases.length,
             });
-        } if (removedAltAliases.length && addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && addedAltAliases.length) {
             return () => _t('%(senderName)s changed the alternative addresses for this room.', {
                 senderName,
             });
@@ -504,7 +502,7 @@ const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
-function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => Renderable {
     if (!SettingsStore.getValue("feature_pinning")) return null;
     const senderName = getSenderName(event);
     const roomId = event.getRoomId();
@@ -758,10 +756,12 @@ function textForPollEndEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+type Renderable = string | JSX.Element | null;
+
 interface IHandlers {
     [type: string]:
         (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
-            (() => string | JSX.Element | null);
+            (() => Renderable);
 }
 
 const handlers: IHandlers = {

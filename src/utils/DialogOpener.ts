@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import classnames from "classnames";
+
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import Modal from "../Modal";
@@ -23,7 +25,6 @@ import ForwardDialog from "../components/views/dialogs/ForwardDialog";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { Action } from "../dispatcher/actions";
 import ReportEventDialog from "../components/views/dialogs/ReportEventDialog";
-import TabbedIntegrationManagerDialog from "../components/views/dialogs/TabbedIntegrationManagerDialog";
 import SpacePreferencesDialog from "../components/views/dialogs/SpacePreferencesDialog";
 import SpaceSettingsDialog from "../components/views/dialogs/SpaceSettingsDialog";
 import InviteDialog from "../components/views/dialogs/InviteDialog";
@@ -56,60 +57,48 @@ export class DialogOpener {
     private onDispatch = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'open_room_settings':
-                Modal.createTrackedDialog('Room settings', '', RoomSettingsDialog, {
+                Modal.createDialog(RoomSettingsDialog, {
                     roomId: payload.room_id || RoomViewStore.instance.getRoomId(),
                     initialTabId: payload.initial_tab_id,
                 }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
                 break;
             case Action.OpenForwardDialog:
-                Modal.createTrackedDialog('Forward Message', '', ForwardDialog, {
+                Modal.createDialog(ForwardDialog, {
                     matrixClient: MatrixClientPeg.get(),
                     event: payload.event,
                     permalinkCreator: payload.permalinkCreator,
                 });
                 break;
             case Action.OpenReportEventDialog:
-                Modal.createTrackedDialog('Report Event', '', ReportEventDialog, {
+                Modal.createDialog(ReportEventDialog, {
                     mxEvent: payload.event,
                 }, 'mx_Dialog_reportEvent');
                 break;
-            case Action.OpenTabbedIntegrationManagerDialog:
-                Modal.createTrackedDialog(
-                    'Tabbed Integration Manager', '', TabbedIntegrationManagerDialog,
-                    {
-                        room: payload.room,
-                        screen: payload.screen,
-                        integrationId: payload.integrationId,
-                    },
-                    'mx_TabbedIntegrationManagerDialog',
-                );
-                break;
             case Action.OpenSpacePreferences:
-                Modal.createTrackedDialog("Space preferences", "", SpacePreferencesDialog, {
+                Modal.createDialog(SpacePreferencesDialog, {
                     initialTabId: payload.initalTabId,
                     space: payload.space,
                 }, null, false, true);
                 break;
             case Action.OpenSpaceSettings:
-                Modal.createTrackedDialog("Space Settings", "", SpaceSettingsDialog, {
+                Modal.createDialog(SpaceSettingsDialog, {
                     matrixClient: payload.space.client,
                     space: payload.space,
                 }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
                 break;
             case Action.OpenInviteDialog:
-                Modal.createTrackedDialog(payload.analyticsName, '', InviteDialog, {
+                Modal.createDialog(InviteDialog, {
                     kind: payload.kind,
                     call: payload.call,
                     roomId: payload.roomId,
-                }, payload.className, false, true).finished.then((results) => {
-                    payload.onFinishedCallback?.(results);
-                });
+                }, classnames("mx_InviteDialog_flexWrapper", payload.className), false, true).finished
+                    .then((results) => {
+                        payload.onFinishedCallback?.(results);
+                    });
                 break;
             case Action.OpenAddToExistingSpaceDialog: {
                 const space = payload.space;
-                Modal.createTrackedDialog(
-                    "Space Landing",
-                    "Add Existing",
+                Modal.createDialog(
                     AddExistingToSpaceDialog,
                     {
                         onCreateRoomClick: (ev: ButtonEvent) => {

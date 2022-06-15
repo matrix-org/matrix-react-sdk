@@ -17,26 +17,24 @@ limitations under the License.
 
 import * as url from "url";
 import { base32 } from "rfc4648";
-import { Capability, IWidget, IWidgetData, MatrixCapabilities } from "matrix-widget-api";
+import { IWidget, IWidgetData } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
+import { randomString, randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import SdkConfig from "../SdkConfig";
 import dis from '../dispatcher/dispatcher';
 import WidgetEchoStore from '../stores/WidgetEchoStore';
-import SettingsStore from "../settings/SettingsStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
 import { WidgetType } from "../widgets/WidgetType";
 import { Jitsi } from "../widgets/Jitsi";
 import { objectClone } from "./objects";
 import { _t } from "../languageHandler";
 import { IApp } from "../stores/WidgetStore";
-import { VIDEO_CHANNEL } from "./VideoChannelUtils";
 
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
@@ -287,6 +285,7 @@ export default class WidgetUtils {
         widgetUrl?: string,
         widgetName?: string,
         widgetData?: object,
+        widgetAvatarUrl?: string,
     ) {
         let content;
 
@@ -300,6 +299,7 @@ export default class WidgetUtils {
                 url: widgetUrl,
                 name: widgetName,
                 data: widgetData,
+                avatar_url: widgetAvatarUrl,
             };
         } else {
             content = {};
@@ -443,11 +443,12 @@ export default class WidgetUtils {
         roomId: string,
         type: CallType,
         name: string,
-        widgetId: string,
+        isVideoChannel: boolean,
         oobRoomName?: string,
     ): Promise<void> {
         const domain = Jitsi.getInstance().preferredDomain;
         const auth = await Jitsi.getInstance().getJitsiAuth();
+        const widgetId = randomString(24); // Must be globally unique
 
         let confId;
         if (auth === 'openidtoken-jwt') {
@@ -470,7 +471,7 @@ export default class WidgetUtils {
             conferenceId: confId,
             roomName: oobRoomName ?? MatrixClientPeg.get().getRoom(roomId)?.name,
             isAudioOnly: type === CallType.Voice,
-            isVideoChannel: widgetId === VIDEO_CHANNEL,
+            isVideoChannel,
             domain,
             auth,
         });
@@ -494,21 +495,6 @@ export default class WidgetUtils {
         app.name = app.name || app.type;
 
         return app as IApp;
-    }
-
-    static getCapWhitelistForAppTypeInRoomId(appType: string, roomId: string): Capability[] {
-        const enableScreenshots = SettingsStore.getValue("enableWidgetScreenshots", roomId);
-
-        const capWhitelist = enableScreenshots ? [MatrixCapabilities.Screenshots] : [];
-
-        // Obviously anyone that can add a widget can claim it's a jitsi widget,
-        // so this doesn't really offer much over the set of domains we load
-        // widgets from at all, but it probably makes sense for sanity.
-        if (WidgetType.JITSI.matches(appType)) {
-            capWhitelist.push(MatrixCapabilities.AlwaysOnScreen);
-        }
-
-        return capWhitelist;
     }
 
     static getLocalJitsiWrapperUrl(opts: {forLocalRender?: boolean, auth?: string} = {}) {
@@ -560,12 +546,8 @@ export default class WidgetUtils {
     }
 
     static editWidget(room: Room, app: IApp): void {
-        // TODO: Open the right manager for the widget
-        if (SettingsStore.getValue("feature_many_integration_managers")) {
-            IntegrationManagers.sharedInstance().openAll(room, 'type_' + app.type, app.id);
-        } else {
-            IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
-        }
+        // noinspection JSIgnoredPromiseFromCall
+        IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
     }
 
     static isManagedByManager(app) {

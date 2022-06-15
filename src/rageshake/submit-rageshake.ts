@@ -216,7 +216,7 @@ export default async function sendBugReport(bugReportEndpoint: string, opts: IOp
     const body = await collectBugReport(opts);
 
     progressCallback(_t("Uploading logs"));
-    return await submitReport(bugReportEndpoint, body, progressCallback);
+    return submitReport(bugReportEndpoint, body, progressCallback);
 }
 
 /**

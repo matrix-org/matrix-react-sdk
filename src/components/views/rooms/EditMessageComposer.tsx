@@ -20,7 +20,7 @@ import { EventStatus, IContent, MatrixEvent } from 'matrix-js-sdk/src/models/eve
 import { MsgType } from 'matrix-js-sdk/src/@types/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { logger } from "matrix-js-sdk/src/logger";
-import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
+import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -95,7 +95,10 @@ function createEditContent(
         body: `${plainPrefix} * ${body}`,
     };
 
-    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: isReply });
+    const formattedBody = htmlSerializeIfNeeded(model, {
+        forceHTML: isReply,
+        useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
+    });
     if (formattedBody) {
         newContent.format = "org.matrix.custom.html";
         newContent.formatted_body = formattedBody;
@@ -329,13 +332,14 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
                     const threadId = editedEvent?.getThread()?.id || null;
+                    const [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId);
+                    if (!commandSuccessful) {
+                        return; // errored
+                    }
+
                     if (cmd.category === CommandCategories.messages) {
-                        editContent["m.new_content"] = await runSlashCommand(cmd, args, roomId, threadId);
-                        if (!editContent["m.new_content"]) {
-                            return; // errored
-                        }
+                        editContent["m.new_content"] = content;
                     } else {
-                        runSlashCommand(cmd, args, roomId, threadId);
                         shouldSend = false;
                     }
                 } else if (!await shouldSendAnyway(commandText)) {
@@ -404,7 +408,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         } else {
             // otherwise, either restore serialized parts from localStorage or parse the body of the event
             const restoredParts = this.restoreStoredEditorState(partCreator);
-            parts = restoredParts || parseEvent(editState.getEvent(), partCreator);
+            parts = restoredParts || parseEvent(editState.getEvent(), partCreator, {
+                shouldEscape: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
+            });
             isRestored = !!restoredParts;
         }
         this.model = new EditorModel(parts, partCreator);

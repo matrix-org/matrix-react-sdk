@@ -53,3 +53,31 @@ export const getMockClientWithEventEmitter = (
     return mock;
 };
 
+export const unmockClientPeg = () => jest.spyOn(MatrixClientPeg, 'get').mockRestore();
+
+/**
+ * Returns basic mocked client methods related to the current user
+ * ```
+ * const mockClient = getMockClientWithEventEmitter({
+        ...mockClientMethodsUser('@mytestuser:domain'),
+    });
+ * ```
+ */
+export const mockClientMethodsUser = (userId = '@alice:domain') => ({
+    getUserId: jest.fn().mockReturnValue(userId),
+    isGuest: jest.fn().mockReturnValue(false),
+    mxcUrlToHttp: jest.fn().mockReturnValue('mock-mxcUrlToHttp'),
+    credentials: { userId },
+});
+
+/**
+ * Returns basic mocked client methods related to rendering events
+ * ```
+ * const mockClient = getMockClientWithEventEmitter({
+        ...mockClientMethodsUser('@mytestuser:domain'),
+    });
+ * ```
+ */
+export const mockClientMethodsEvents = () => ({
+    decryptEventIfNeeded: jest.fn(),
+});

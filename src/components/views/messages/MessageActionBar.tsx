@@ -21,16 +21,17 @@ import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/mo
 import classNames from 'classnames';
 import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
-import { isContentActionable, canEditContent, editEvent } from '../../../utils/EventUtils';
+import { isContentActionable, canEditContent, editEvent, canCancel } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
-import MessageContextMenu, { canCancel } from "../context_menus/MessageContextMenu";
+import MessageContextMenu from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
@@ -76,6 +77,17 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
 
+    const onOptionsClick = (e: React.MouseEvent): void => {
+        // Don't open the regular browser or our context menu on right-click
+        e.preventDefault();
+        e.stopPropagation();
+        openMenu();
+        // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
+        // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
+        // position in the page even when someone is clicking around.
+        onFocus();
+    };
+
     let contextMenu: ReactElement | null;
     if (menuDisplayed) {
         const tile = getTile && getTile();
@@ -97,13 +109,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         <ContextMenuTooltipButton
             className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
             title={_t("Options")}
-            onClick={() => {
-                openMenu();
-                // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
-                // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
-                // position in the page even when someone is clicking around.
-                onFocus();
-            }}
+            onClick={onOptionsClick}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -183,7 +189,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
                 action: Action.ViewUserSettings,
                 initialTabId: UserTab.Labs,
             });
-        } else if (mxEvent.isThreadRelation) {
+        } else if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
             showThread({
                 rootEvent: mxEvent.getThread().rootEvent,
                 initialEvent: mxEvent,
@@ -308,6 +314,11 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     ];
 
     private get showReplyInThreadAction(): boolean {
+        if (!SettingsStore.getValue("feature_thread") && !Thread.hasServerSideSupport) {
+            // hide the prompt if the user would only have degraded mode
+            return null;
+        }
+
         if (!SettingsStore.getBetaInfo("feature_thread") &&
             !SettingsStore.getValue("feature_thread") &&
             !SdkConfig.get("show_labs_settings")
@@ -319,8 +330,14 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
         const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
 
-        const isAllowedMessageType = !this.forbiddenThreadHeadMsgType.includes(
-            this.props.mxEvent.getContent().msgtype as MsgType,
+        const isAllowedMessageType = (
+            !this.forbiddenThreadHeadMsgType.includes(
+                this.props.mxEvent.getContent().msgtype as MsgType) &&
+            /** forbid threads from live location shares
+             * until cross-platform support
+             * (PSF-1041)
+             */
+            !M_BEACON_INFO.matches(this.props.mxEvent.getType())
         );
 
         return inNotThreadTimeline && isAllowedMessageType;
@@ -379,7 +396,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
-        const threadTooltipButton = <ReplyInThreadButton mxEvent={this.props.mxEvent} />;
+        const threadTooltipButton = <ReplyInThreadButton mxEvent={this.props.mxEvent} key="reply_thread" />;
 
         // We show a different toolbar for failed events, so detect that first.
         const mxEvent = this.props.mxEvent;

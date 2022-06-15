@@ -30,22 +30,20 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { useEventEmitter } from "../../hooks/useEventEmitter";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../views/elements/MiniAvatarUploader";
-import Analytics from "../../Analytics";
 import PosthogTrackers from "../../PosthogTrackers";
 import EmbeddedPage from "./EmbeddedPage";
 
-const onClickSendDm = () => {
-    Analytics.trackEvent('home_page', 'button', 'dm');
+const onClickSendDm = (ev: ButtonEvent) => {
+    PosthogTrackers.trackInteraction("WebHomeCreateChatButton", ev);
     dis.dispatch({ action: 'view_create_chat' });
 };
 
-const onClickExplore = () => {
-    Analytics.trackEvent('home_page', 'button', 'room_directory');
+const onClickExplore = (ev: ButtonEvent) => {
+    PosthogTrackers.trackInteraction("WebHomeExploreRoomsButton", ev);
     dis.fire(Action.ViewRoomDirectory);
 };
 
 const onClickNewRoom = (ev: ButtonEvent) => {
-    Analytics.trackEvent('home_page', 'button', 'create_room');
     PosthogTrackers.trackInteraction("WebHomeCreateRoomButton", ev);
     dis.dispatch({ action: 'view_create_room' });
 };
@@ -73,6 +71,8 @@ const UserWelcomeTop = () => {
             hasAvatarLabel={_tDom("Great, that'll help people know it's you")}
             noAvatarLabel={_tDom("Add a photo so people know it's you.")}
             setAvatarUrl={url => cli.setAvatarUrl(url)}
+            isUserAvatar
+            onClick={ev => PosthogTrackers.trackInteraction("WebHomeMiniAvatarUploadButton", ev)}
         >
             <BaseAvatar
                 idName={userId}
@@ -98,7 +98,7 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
     }
 
     let introSection;
-    if (justRegistered) {
+    if (justRegistered || !!OwnProfileStore.instance.getHttpAvatarUrl(AVATAR_SIZE)) {
         introSection = <UserWelcomeTop />;
     } else {
         const brandingConfig = SdkConfig.getObject("branding");

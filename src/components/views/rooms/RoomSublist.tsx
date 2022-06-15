@@ -40,7 +40,6 @@ import ContextMenu, {
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorithms/models";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
-import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import NotificationBadge from "./NotificationBadge";
@@ -560,7 +559,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
 
         if (room) {
-            dis.dispatch<ViewRoomPayload>({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
                 show_room_tile: true, // to make sure the room gets scrolled into view

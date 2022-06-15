@@ -19,27 +19,27 @@ import { Beacon, BeaconEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
 
-import { Icon as LocationMarkerIcon } from '../../../../res/img/element-icons/location.svg';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
-import { useBeacon } from '../../../utils/beacon';
+import { isBeaconWaitingToStart, useBeacon } from '../../../utils/beacon';
 import { isSelfLocation } from '../../../utils/location';
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
 import BeaconStatus from '../beacon/BeaconStatus';
-import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
+import MapFallback from '../location/MapFallback';
 import SmartMarker from '../location/SmartMarker';
 import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
-import { IBodyProps } from "./IBodyProps";
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
+import { IBodyProps } from "./IBodyProps";
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
     description?: string;
     latestLocationState?: BeaconLocationState;
     isLive?: boolean;
+    waitingToStart?: boolean;
 } => {
     const beacon = useBeacon(beaconInfoEvent);
 
@@ -57,12 +57,19 @@ const useBeaconState = (beaconInfoEvent: MatrixEvent): {
         return {};
     }
 
+    // a beacon's starting timestamp can be in the future
+    // (either from small deviations in system clock times, or on purpose from another client)
+    // a beacon is only live between its start timestamp and expiry
+    // detect when a beacon is waiting to become live
+    // and display a loading state
+    const waitingToStart = !!beacon && isBeaconWaitingToStart(beacon);
     const { description } = beacon.beaconInfo;
 
     return {
         beacon,
         description,
         isLive,
+        waitingToStart,
         latestLocationState,
     };
 };
@@ -85,12 +92,13 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
         beacon,
         isLive,
         latestLocationState,
+        waitingToStart,
     } = useBeaconState(mxEvent);
     const mapId = useUniqueId(mxEvent.getId());
 
     const matrixClient = useContext(MatrixClientContext);
     const [error, setError] = useState<Error>();
-    const displayStatus = getBeaconDisplayStatus(isLive, latestLocationState, error);
+    const displayStatus = getBeaconDisplayStatus(isLive, latestLocationState, error, waitingToStart);
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
     const isOwnBeacon = beacon?.beaconInfoOwner === matrixClient.getUserId();
 
@@ -98,13 +106,12 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
         if (displayStatus !== BeaconDisplayStatus.Active) {
             return;
         }
-        Modal.createTrackedDialog(
-            'Beacon View',
-            '',
+        Modal.createDialog(
             BeaconViewDialog,
             {
                 roomId: mxEvent.getRoomId(),
                 matrixClient,
+                focusBeacon: beacon,
             },
             "mx_BeaconViewDialog_wrapper",
             false, // isPriority
@@ -133,24 +140,24 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                             />
                     }
                 </Map>
-                : <div className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'>
-                    { displayStatus === BeaconDisplayStatus.Loading ?
-                        <Spinner h={32} w={32} /> :
-                        <LocationMarkerIcon className='mx_MBeaconBody_mapFallbackIcon' />
-                    }
-                </div>
+                : <MapFallback
+                    isLoading={displayStatus === BeaconDisplayStatus.Loading}
+                    className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'
+                />
             }
             { isOwnBeacon ?
                 <OwnBeaconStatus
                     className='mx_MBeaconBody_chin'
                     beacon={beacon}
                     displayStatus={displayStatus}
+                    withIcon
                 /> :
                 <BeaconStatus
                     className='mx_MBeaconBody_chin'
                     beacon={beacon}
                     displayStatus={displayStatus}
                     label={_t('View live location')}
+                    withIcon
                 />
             }
         </div>

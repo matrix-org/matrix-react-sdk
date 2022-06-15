@@ -91,7 +91,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         }
     }
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
+    private doBootstrapUIAuth = async (makeRequest: (authData: any) => Promise<{}>): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
                 type: 'm.login.password',
@@ -123,18 +123,15 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 },
             };
 
-            const { finished } = Modal.createTrackedDialog(
-                'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                {
-                    title: _t("Setting up keys"),
-                    matrixClient: MatrixClientPeg.get(),
-                    makeRequest,
-                    aestheticsForStagePhases: {
-                        [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
-                        [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
-                    },
+            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                title: _t("Setting up keys"),
+                matrixClient: MatrixClientPeg.get(),
+                makeRequest,
+                aestheticsForStagePhases: {
+                    [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
+                    [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                 },
-            );
+            });
             const [confirmed] = await finished;
             if (!confirmed) {
                 throw new Error("Cross-signing key upload auth canceled");

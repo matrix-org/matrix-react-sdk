@@ -15,22 +15,24 @@ limitations under the License.
 */
 
 import React from 'react';
-import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/matrix';
 
 import { _t } from '../../../languageHandler';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../stores/OwnBeaconStore';
 import { useOwnLiveBeacons } from '../../../utils/beacon';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import Spinner from '../elements/Spinner';
 import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
 import { Icon as CloseIcon } from '../../../../res/img/image-view/close.svg';
 import LiveTimeRemaining from './LiveTimeRemaining';
+import dispatcher from '../../../dispatcher/dispatcher';
+import { ViewRoomPayload } from '../../../dispatcher/payloads/ViewRoomPayload';
+import { Action } from '../../../dispatcher/actions';
 
-const getLabel = (hasWireError: boolean, hasStopSharingError: boolean): string => {
-    if (hasWireError) {
-        return _t('An error occured whilst sharing your live location, please try again');
+const getLabel = (hasLocationPublishError: boolean, hasStopSharingError: boolean): string => {
+    if (hasLocationPublishError) {
+        return _t('An error occurred whilst sharing your live location, please try again');
     }
     if (hasStopSharingError) {
         return _t('An error occurred while stopping your live location, please try again');
@@ -45,34 +47,53 @@ interface RoomLiveShareWarningInnerProps {
 const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ liveBeaconIds, roomId }) => {
     const {
         onStopSharing,
-        onResetWireError,
+        onResetLocationPublishError,
         beacon,
         stoppingInProgress,
         hasStopSharingError,
-        hasWireError,
+        hasLocationPublishError,
     } = useOwnLiveBeacons(liveBeaconIds);
 
     if (!beacon) {
         return null;
     }
 
-    const hasError = hasStopSharingError || hasWireError;
+    const hasError = hasStopSharingError || hasLocationPublishError;
+
+    // eat events from buttons so navigate to tile
+    // is not triggered
+    const stopPropagationWrapper = (callback: () => void) => (e?: ButtonEvent) => {
+        e?.stopPropagation();
+        callback();
+    };
 
     const onButtonClick = () => {
-        if (hasWireError) {
-            onResetWireError();
+        if (hasLocationPublishError) {
+            onResetLocationPublishError();
         } else {
             onStopSharing();
         }
     };
 
+    const onClick = () => {
+        dispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: beacon.roomId,
+            metricsTrigger: undefined,
+            event_id: beacon.beaconInfoId,
+            scroll_into_view: true,
+            highlighted: true,
+        });
+    };
+
     return <div
-        className={classNames('mx_RoomLiveShareWarning')}
+        className='mx_RoomLiveShareWarning'
+        onClick={onClick}
     >
         <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" withError={hasError} />
 
         <span className="mx_RoomLiveShareWarning_label">
-            { getLabel(hasWireError, hasStopSharingError) }
+            { getLabel(hasLocationPublishError, hasStopSharingError) }
         </span>
 
         { stoppingInProgress &&
@@ -83,19 +104,19 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
         <AccessibleButton
             className='mx_RoomLiveShareWarning_stopButton'
             data-test-id='room-live-share-primary-button'
-            onClick={onButtonClick}
+            onClick={stopPropagationWrapper(onButtonClick)}
             kind='danger'
             element='button'
             disabled={stoppingInProgress}
         >
             { hasError ? _t('Retry') : _t('Stop sharing') }
         </AccessibleButton>
-        { hasWireError && <AccessibleButton
+        { hasLocationPublishError && <AccessibleButton
             data-test-id='room-live-share-wire-error-close-button'
             title={_t('Stop sharing and close')}
             element='button'
             className='mx_RoomLiveShareWarning_closeButton'
-            onClick={onStopSharing}
+            onClick={stopPropagationWrapper(onStopSharing)}
         >
             <CloseIcon className='mx_RoomLiveShareWarning_closeButtonIcon' />
         </AccessibleButton> }

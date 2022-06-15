@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import url from 'url';
-import React, { ContextType, createRef } from 'react';
+import React, { ContextType, createRef, MutableRefObject } from 'react';
 import classNames from 'classnames';
 import { MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
@@ -35,7 +35,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, ContextMenuButton } from "../../structures/ContextMenu";
 import PersistedElement, { getPersistKey } from "./PersistedElement";
 import { WidgetType } from "../../../widgets/WidgetType";
-import { StopGapWidget } from "../../../stores/widgets/StopGapWidget";
+import { ElementWidget, StopGapWidget } from "../../../stores/widgets/StopGapWidget";
 import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
 import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
@@ -49,6 +49,8 @@ import WidgetUtils from '../../../utils/WidgetUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from '../../../dispatcher/actions';
+import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
+import { WidgetMessagingStore } from '../../../stores/widgets/WidgetMessagingStore';
 
 interface IProps {
     app: IApp;
@@ -56,7 +58,7 @@ interface IProps {
     // which bypasses permission prompts as it was added explicitly by that user
     room?: Room;
     threadId?: string | null;
-    // Specifying 'fullWidth' as true will render the app tile to fill the width of the app drawer continer.
+    // Specifying 'fullWidth' as true will render the app tile to fill the width of the app drawer container.
     // This should be set to true when there is only one widget in the app drawer, otherwise it should be false.
     fullWidth?: boolean;
     // Optional. If set, renders a smaller view of the widget
@@ -83,6 +85,8 @@ interface IProps {
     pointerEvents?: string;
     widgetPageTitle?: string;
     showLayoutButtons?: boolean;
+    // Handle to manually notify the PersistedElement that it needs to move
+    movePersistedElement?: MutableRefObject<() => void>;
 }
 
 interface IState {
@@ -116,30 +120,6 @@ export default class AppTile extends React.Component<IProps, IState> {
         showLayoutButtons: true,
     };
 
-    // We track a count of all "live" `AppTile`s for a given widget UID.
-    // For this purpose, an `AppTile` is considered live from the time it is
-    // constructed until it is unmounted. This is used to aid logic around when
-    // to tear down the widget iframe. See `componentWillUnmount` for details.
-    private static liveTilesByUid = new Map<string, number>();
-
-    public static addLiveTile(widgetId: string, roomId: string): void {
-        const uid = WidgetUtils.calcWidgetUid(widgetId, roomId);
-        const refs = this.liveTilesByUid.get(uid) ?? 0;
-        this.liveTilesByUid.set(uid, refs + 1);
-    }
-
-    public static removeLiveTile(widgetId: string, roomId: string): void {
-        const uid = WidgetUtils.calcWidgetUid(widgetId, roomId);
-        const refs = this.liveTilesByUid.get(uid);
-        if (refs) this.liveTilesByUid.set(uid, refs - 1);
-    }
-
-    public static isLive(widgetId: string, roomId: string): boolean {
-        const uid = WidgetUtils.calcWidgetUid(widgetId, roomId);
-        const refs = this.liveTilesByUid.get(uid) ?? 0;
-        return refs > 0;
-    }
-
     private contextMenuButton = createRef<any>();
     private iframe: HTMLIFrameElement; // ref to the iframe (callback style)
     private allowedWidgetsWatchRef: string;
@@ -151,7 +131,10 @@ export default class AppTile extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        AppTile.addLiveTile(this.props.app.id, this.props.app.roomId);
+        // Tiles in miniMode are floating, and therefore not docked
+        if (!this.props.miniMode) {
+            ActiveWidgetStore.instance.dockWidget(this.props.app.id, this.props.app.roomId);
+        }
 
         // The key used for PersistedElement
         this.persistKey = getPersistKey(WidgetUtils.getWidgetUid(this.props.app));
@@ -214,6 +197,24 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
     };
 
+    private determineInitialRequiresClientState(): boolean {
+        try {
+            const mockWidget = new ElementWidget(this.props.app);
+            const widgetApi = WidgetMessagingStore.instance.getMessaging(mockWidget, this.props.room.roomId);
+            if (widgetApi) {
+                // Load value from existing API to prevent resetting the requiresClient value on layout changes.
+                return widgetApi.hasCapability(ElementWidgetCapabilities.RequiresClient);
+            }
+        } catch {
+            // fallback to true
+        }
+
+        // requiresClient is initially set to true. This avoids the broken state of the popout
+        // button being visible (for an instance) and then disappearing when the widget is loaded.
+        // requiresClient <-> hide the popout button
+        return true;
+    }
+
     /**
      * Set initial component state when the App wUrl (widget URL) is being updated.
      * Component props *must* be passed (rather than relying on this.props).
@@ -232,10 +233,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
-            // requiresClient is initially set to true. This avoids the broken state of the popout
-            // button being visible (for an instance) and then disappearing when the widget is loaded.
-            // requiresClient <-> hide the popout button
-            requiresClient: true,
+            requiresClient: this.determineInitialRequiresClientState(),
         };
     }
 
@@ -283,27 +281,14 @@ export default class AppTile extends React.Component<IProps, IState> {
     public componentWillUnmount(): void {
         this.unmounted = true;
 
-        // It might seem simplest to always tear down the widget itself here,
-        // and indeed that would be a bit easier to reason about... however, we
-        // support moving widgets between containers (e.g. top <-> center).
-        // During such a move, this component will unmount from the old
-        // container and remount in the new container. By keeping the widget
-        // iframe loaded across this transition, the widget doesn't notice that
-        // anything happened, which improves overall widget UX. During this kind
-        // of movement between containers, the new `AppTile` for the new
-        // container is constructed before the old one unmounts. By counting the
-        // mounted `AppTile`s for each widget, we know to only tear down the
-        // widget iframe when the last the `AppTile` unmounts.
-        AppTile.removeLiveTile(this.props.app.id, this.props.app.roomId);
+        if (!this.props.miniMode) {
+            ActiveWidgetStore.instance.undockWidget(this.props.app.id, this.props.app.roomId);
+        }
 
-        // We also support a separate "persistence" mode where a single widget
-        // can request to be "sticky" and follow you across rooms in a PIP
-        // container.
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
-            this.props.app.id, this.props.app.roomId,
-        );
-
-        if (!AppTile.isLive(this.props.app.id, this.props.app.roomId) && !isActiveWidget) {
+        // Only tear down the widget if no other component is keeping it alive,
+        // because we support moving widgets between containers, in which case
+        // another component will keep it loaded throughout the transition
+        if (!ActiveWidgetStore.instance.isLive(this.props.app.id, this.props.app.roomId)) {
             this.endWidgetActions();
         }
 
@@ -321,7 +306,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private setupSgListeners() {
         this.sgWidget.on("preparing", this.onWidgetPreparing);
         this.sgWidget.on("ready", this.onWidgetReady);
-        // emits when the capabilites have been setup or changed
+        // emits when the capabilities have been set up or changed
         this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
     }
 
@@ -430,7 +415,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private onWidgetCapabilitiesNotified = (): void => {
         this.setState({
-            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
+            requiresClient: this.sgWidget.widgetApi.hasCapability(ElementWidgetCapabilities.RequiresClient),
         });
     };
 
@@ -543,18 +528,14 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!this.props.room) return; // ignore action - it shouldn't even be visible
         const targetContainer =
             WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
-                ? Container.Right
+                ? Container.Top
                 : Container.Center;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 
-    private onTogglePinnedClick = (): void => {
+    private onMinimiseClicked = (): void => {
         if (!this.props.room) return; // ignore action - it shouldn't even be visible
-        const targetContainer =
-            WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Top)
-                ? Container.Right
-                : Container.Top;
-        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
+        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, Container.Right);
     };
 
     private onContextMenuClick = (): void => {
@@ -576,7 +557,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         const sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox " +
             "allow-same-origin allow-scripts allow-presentation allow-downloads";
 
-        // Additional iframe feature pemissions
+        // Additional iframe feature permissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
         const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write;";
 
@@ -656,7 +637,11 @@ export default class AppTile extends React.Component<IProps, IState> {
                     const zIndexAboveOtherPersistentElements = 101;
 
                     appTileBody = <div className="mx_AppTile_persistedWrapper">
-                        <PersistedElement zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9} persistKey={this.persistKey}>
+                        <PersistedElement
+                            zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9}
+                            persistKey={this.persistKey}
+                            moveRef={this.props.movePersistedElement}
+                        >
                             { appTileBody }
                         </PersistedElement>
                     </div>;
@@ -695,32 +680,23 @@ export default class AppTile extends React.Component<IProps, IState> {
                 isInContainer(this.props.room, this.props.app, Container.Center);
             const maximisedClasses = classNames({
                 "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_close": isMaximised,
+                "mx_AppTileMenuBar_iconButton_collapse": isMaximised,
                 "mx_AppTileMenuBar_iconButton_maximise": !isMaximised,
             });
             layoutButtons.push(<AccessibleButton
                 key="toggleMaximised"
                 className={maximisedClasses}
                 title={
-                    isMaximised ? _t("Close") : _t("Maximise")
+                    isMaximised ? _t("Un-maximise") : _t("Maximise")
                 }
                 onClick={this.onToggleMaximisedClick}
             />);
 
-            const isPinned = WidgetLayoutStore.instance.
-                isInContainer(this.props.room, this.props.app, Container.Top);
-            const pinnedClasses = classNames({
-                "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_unpin": isPinned,
-                "mx_AppTileMenuBar_iconButton_pin": !isPinned,
-            });
             layoutButtons.push(<AccessibleButton
-                key="togglePinned"
-                className={pinnedClasses}
-                title={
-                    isPinned ? _t("Unpin") : _t("Pin")
-                }
-                onClick={this.onTogglePinnedClick}
+                key="minimise"
+                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
+                title={_t("Minimise")}
+                onClick={this.onMinimiseClicked}
             />);
         }
 

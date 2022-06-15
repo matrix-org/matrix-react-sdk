@@ -1,4 +1,12 @@
 {
     "baseUrl": "http://localhost:8080",
-    "videoUploadOnPasses": false
+    "videoUploadOnPasses": false,
+    "projectId": "ppvnzg",
+    "experimentalSessionAndOrigin": true,
+    "experimentalInteractiveRunEvents": true,
+    "retries": {
+        "runMode": 2,
+        "openMode": 0
+    },
+    "chromeWebSecurity": false
 }

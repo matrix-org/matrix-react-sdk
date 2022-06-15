@@ -21,7 +21,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
-import Pill from "../elements/Pill";
+import Pill, { PillType } from "../elements/Pill";
 import { makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import BaseAvatar from "../avatars/BaseAvatar";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -93,7 +93,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         if (content.creator) {
             creator = <li>{ _t("This bridge was provisioned by <user />.", {}, {
                 user: () => <Pill
-                    type={Pill.TYPE_USER_MENTION}
+                    type={PillType.UserMention}
                     room={this.props.room}
                     url={makeUserPermalink(content.creator)}
                     shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
@@ -103,7 +103,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
 
         const bot = <li>{ _t("This bridge is managed by <user />.", {}, {
             user: () => <Pill
-                type={Pill.TYPE_USER_MENTION}
+                type={PillType.UserMention}
                 room={this.props.room}
                 url={makeUserPermalink(content.bridgebot)}
                 shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
@@ -115,7 +115,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         if (protocol.avatar_url) {
             const avatarUrl = mediaFromMxc(protocol.avatar_url).getSquareThumbnailHttp(64);
 
-            networkIcon = <BaseAvatar className="protocol-icon"
+            networkIcon = <BaseAvatar className="mx_RoomSettingsDialog_protocolIcon"
                 width={48}
                 height={48}
                 resizeMethod='crop'
@@ -124,7 +124,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                 url={avatarUrl}
             />;
         } else {
-            networkIcon = <div className="noProtocolIcon" />;
+            networkIcon = <div className="mx_RoomSettingsDialog_noProtocolIcon" />;
         }
         let networkItem = null;
         if (network) {
@@ -146,19 +146,19 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         }
 
         const id = this.props.ev.getId();
-        return (<li key={id}>
-            <div className="column-icon">
+        return (<li key={id} className="mx_RoomSettingsDialog_BridgeList_listItem">
+            <div className="mx_RoomSettingsDialog_column_icon">
                 { networkIcon }
             </div>
-            <div className="column-data">
-                <h3>{ protocolName }</h3>
-                <p className="workspace-channel-details">
+            <div className="mx_RoomSettingsDialog_column_data">
+                <h3 className="mx_RoomSettingsDialog_column_data_protocolName">{ protocolName }</h3>
+                <p className="mx_RoomSettingsDialog_column_data_details mx_RoomSettingsDialog_workspace_channel_details">
                     { networkItem }
-                    <span className="channel">{ _t("Channel: <channelLink/>", {}, {
+                    <span className="mx_RoomSettingsDialog_channel">{ _t("Channel: <channelLink/>", {}, {
                         channelLink: () => channelLink,
                     }) }</span>
                 </p>
-                <ul className="metadata">
+                <ul className="mx_RoomSettingsDialog_column_data_metadata mx_RoomSettingsDialog_metadata">
                     { creator } { bot }
                 </ul>
             </div>

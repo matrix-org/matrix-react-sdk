@@ -27,13 +27,17 @@ import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
 
-import { _linkifyElement, _linkifyString } from './linkify-matrix';
+import {
+    _linkifyElement,
+    _linkifyString,
+    ELEMENT_URL_PATTERN,
+    options as linkifyMatrixOptions,
+} from './linkify-matrix';
 import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
 import { mediaFromMxc } from "./customisations/Media";
-import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
 import { stripHTMLReply, stripPlainReply } from './utils/Reply';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
@@ -45,10 +49,10 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
 // Regex pattern for Zero-Width joiner unicode characters
-const ZWJ_REGEX = new RegExp("\u200D|\u2003", "g");
+const ZWJ_REGEX = /[\u200D\u2003]/g;
 
 // Regex pattern for whitespace characters
-const WHITESPACE_REGEX = new RegExp("\\s", "g");
+const WHITESPACE_REGEX = /\s/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
 
@@ -183,7 +187,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
                 delete attribs.target;
             }
         } else {
-            // Delete the href attrib if it is falsey
+            // Delete the href attrib if it is falsy
             delete attribs.href;
         }
 
@@ -240,6 +244,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         }
         return { tagName, attribs };
     },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '*': function(tagName: string, attribs: sanitizeHtml.Attributes) {
         // Delete any style previously assigned, style is an allowedTag for font, span & img,
         // because attributes are stripped after transforming.
@@ -316,6 +321,18 @@ const composerSanitizeHtmlParams: IExtendedSanitizeOptions = {
         'code': transformTags['code'],
         '*': transformTags['*'],
     },
+};
+
+// reduced set of allowed tags to avoid turning topics into Myspace
+const topicSanitizeHtmlParams: IExtendedSanitizeOptions = {
+    ...sanitizeHtmlParams,
+    allowedTags: [
+        'font', // custom to matrix for IRC-style font coloring
+        'del', // for markdown
+        'a', 'sup', 'sub',
+        'b', 'i', 'u', 'strong', 'em', 'strike', 'br', 'div',
+        'span',
+    ],
 };
 
 abstract class BaseHighlighter<T extends React.ReactNode> {
@@ -598,6 +615,57 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
             dir="auto"
         /> : <span key="body" ref={opts.ref} className={className} dir="auto">
             { emojiBodyElements || strippedBody }
+        </span>;
+}
+
+/**
+ * Turn a room topic into html
+ * @param topic plain text topic
+ * @param htmlTopic optional html topic
+ * @param ref React ref to attach to any React components returned
+ * @param allowExtendedHtml whether to allow extended HTML tags such as headings and lists
+ * @return The HTML-ified node.
+ */
+export function topicToHtml(
+    topic: string,
+    htmlTopic?: string,
+    ref?: React.Ref<HTMLSpanElement>,
+    allowExtendedHtml = false,
+): ReactNode {
+    if (!SettingsStore.getValue("feature_html_topic")) {
+        htmlTopic = null;
+    }
+
+    let isFormattedTopic = !!htmlTopic;
+    let topicHasEmoji = false;
+    let safeTopic = "";
+
+    try {
+        topicHasEmoji = mightContainEmoji(isFormattedTopic ? htmlTopic : topic);
+
+        if (isFormattedTopic) {
+            safeTopic = sanitizeHtml(htmlTopic, allowExtendedHtml ? sanitizeHtmlParams : topicSanitizeHtmlParams);
+            if (topicHasEmoji) {
+                safeTopic = formatEmojis(safeTopic, true).join('');
+            }
+        }
+    } catch {
+        isFormattedTopic = false; // Fall back to plain-text topic
+    }
+
+    let emojiBodyElements: ReturnType<typeof formatEmojis>;
+    if (!isFormattedTopic && topicHasEmoji) {
+        emojiBodyElements = formatEmojis(topic, false);
+    }
+
+    return isFormattedTopic ?
+        <span
+            key="body"
+            ref={ref}
+            dangerouslySetInnerHTML={{ __html: safeTopic }}
+            dir="auto"
+        /> : <span key="body" ref={ref} dir="auto">
+            { emojiBodyElements || topic }
         </span>;
 }
 
