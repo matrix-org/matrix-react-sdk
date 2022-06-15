@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655308455758,
+  "lastUpdate": 1655308660736,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101612,6 +101612,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4486.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1188f1a5082bc47346ddc8022899e1bbad6a8dbf",
+          "message": "Remove margin from E2E icon between avatar and hidden event (#8584)\n\n* Remove margin from warning E2E icon between an avatar and a hidden event\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use a variable to ensure the same spacing around the E2E icon\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply the style to E2E icon\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Rename variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-15T09:50:35-06:00",
+          "tree_id": "c65b68efcd024cf3dc4f42c642f0f9250babb359",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1188f1a5082bc47346ddc8022899e1bbad6a8dbf"
+        },
+        "date": 1655308646519,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6536.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2546.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5502.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
