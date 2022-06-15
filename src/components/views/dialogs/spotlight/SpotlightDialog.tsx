@@ -951,7 +951,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     };
 
     const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
-        Modal.createTrackedDialog("Spotlight Feedback", "feature_spotlight", BetaFeedbackDialog, {
+        Modal.createDialog(BetaFeedbackDialog, {
             featureId: "feature_spotlight",
         });
     } : null;

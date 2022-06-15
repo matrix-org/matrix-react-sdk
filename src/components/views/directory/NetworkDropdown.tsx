@@ -182,21 +182,15 @@ export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
                 className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--item"
                 onClick={async () => {
                     closeMenu();
-                    const { finished } = Modal.createTrackedDialog(
-                        "Network Dropdown",
-                        "Add a new server",
-                        TextInputDialog,
-                        {
-                            title: _t("Add a new server"),
-                            description: _t("Enter the name of a new server you want to explore."),
-                            button: _t("Add"),
-                            hasCancel: false,
-                            placeholder: _t("Server name"),
-                            validator: validServer,
-                            fixedWidth: false,
-                        },
-                        "mx_NetworkDropdown_dialog",
-                    );
+                    const { finished } = Modal.createDialog(TextInputDialog, {
+                        title: _t("Add a new server"),
+                        description: _t("Enter the name of a new server you want to explore."),
+                        button: _t("Add"),
+                        hasCancel: false,
+                        placeholder: _t("Server name"),
+                        validator: validServer,
+                        fixedWidth: false,
+                    }, "mx_NetworkDropdown_dialog");
 
                     const [ok, newServer] = await finished;
                     if (!ok) return;
