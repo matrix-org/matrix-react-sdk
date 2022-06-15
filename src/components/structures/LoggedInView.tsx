@@ -89,7 +89,6 @@ interface IProps {
     // Called with the credentials of a registered user (if they were a ROU that
     // transitioned to PWLU)
     onRegistered: (credentials: IMatrixClientCreds) => Promise<MatrixClient>;
-    hideToSRUsers: boolean;
     resizeNotifier: ResizeNotifier;
     // eslint-disable-next-line camelcase
     page_type?: string;
@@ -668,7 +667,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                     onPaste={this.onPaste}
                     onKeyDown={this.onReactKeyDown}
                     className={wrapperClasses}
-                    aria-hidden={this.props.hideToSRUsers}
                 >
                     <ToastContainer />
                     <div className={bodyClasses}>

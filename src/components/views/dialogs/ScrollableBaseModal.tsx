@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { FormEvent } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import FocusLock from "react-focus-lock";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { IDialogProps } from "./IDialogProps";
@@ -74,16 +73,12 @@ export default abstract class ScrollableBaseModal<TProps extends IDialogProps, T
     public render(): JSX.Element {
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
-                <FocusLock
-                    returnFocus={true}
-                    lockProps={{
-                        onKeyDown: this.onKeyDown,
-                        role: "dialog",
-                        ["aria-labelledby"]: "mx_CompoundDialog_title",
-
-                        // Like BaseDialog, we'll just point this at the whole content
-                        ["aria-describedby"]: "mx_CompoundDialog_content",
-                    }}
+                <div
+                    onKeyDown={this.onKeyDown}
+                    role="dialog"
+                    aria-labelledby="mx_CompoundDialog_title"
+                    // Like BaseDialog, we'll just point this at the whole content
+                    aria-describedby="mx_CompoundDialog_content"
                     className="mx_CompoundDialog mx_ScrollableBaseDialog"
                 >
                     <div className="mx_CompoundDialog_header">
@@ -114,7 +109,7 @@ export default abstract class ScrollableBaseModal<TProps extends IDialogProps, T
                             </AccessibleButton>
                         </div>
                     </form>
-                </FocusLock>
+                </div>
             </MatrixClientContext.Provider>
         );
     }

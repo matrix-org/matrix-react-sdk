@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import FocusLock from 'react-focus-lock';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
@@ -95,9 +94,7 @@ export default class BaseDialog extends React.Component<IProps> {
     }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
-        if (this.props.onKeyDown) {
-            this.props.onKeyDown(e);
-        }
+        this.props.onKeyDown?.(e);
 
         const action = getKeyBindingsManager().getAccessibilityAction(e);
         switch (action) {
@@ -128,7 +125,7 @@ export default class BaseDialog extends React.Component<IProps> {
             headerImage = <img className="mx_Dialog_titleImage" src={this.props.headerImage} alt="" />;
         }
 
-        const lockProps = {
+        const props = {
             "onKeyDown": this.onKeyDown,
             "role": "dialog",
             // This should point to a node describing the dialog.
@@ -141,17 +138,16 @@ export default class BaseDialog extends React.Component<IProps> {
         };
 
         if (this.props["aria-label"]) {
-            lockProps["aria-label"] = this.props["aria-label"];
+            props["aria-label"] = this.props["aria-label"];
         } else {
-            lockProps["aria-labelledby"] = "mx_BaseDialog_title";
+            props["aria-labelledby"] = "mx_BaseDialog_title";
         }
 
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
                 <PosthogScreenTracker screenName={this.props.screenName} />
-                <FocusLock
-                    returnFocus={true}
-                    lockProps={lockProps}
+                <div
+                    {...props}
                     className={classNames({
                         [this.props.className]: true,
                         'mx_Dialog_fixedWidth': this.props.fixedWidth,
@@ -169,7 +165,7 @@ export default class BaseDialog extends React.Component<IProps> {
                         { cancelButton }
                     </div>
                     { this.props.children }
-                </FocusLock>
+                </div>
             </MatrixClientContext.Provider>
         );
     }
