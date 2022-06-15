@@ -76,7 +76,7 @@ export const usePublicRoomDirectory = () => {
         const opts: IRoomDirectoryOptions = { limit };
 
         if (config?.roomServer != MatrixClientPeg.getHomeserverName()) {
-            opts.server = config.roomServer;
+            opts.server = config?.roomServer;
         }
 
         if (config?.instanceId === ALL_ROOMS) {
