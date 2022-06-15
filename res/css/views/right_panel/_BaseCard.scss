@@ -107,6 +107,29 @@ limitations under the License.
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
+
+            .mx_BaseCard_header_title_button--option {
+                position: relative;
+                width: var(--BaseCard_header-button-size);
+                height: var(--BaseCard_header-button-size);
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    inset-block-start: 0;
+                    inset-inline-start: 0;
+                    height: 100%;
+                    width: 100%;
+                    mask-repeat: no-repeat;
+                    mask-position: center;
+                    mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
+                    background-color: $secondary-content;
+                }
+
+                &:hover::after {
+                    background-color: $primary-content;
+                }
+            }
         }
     }
 

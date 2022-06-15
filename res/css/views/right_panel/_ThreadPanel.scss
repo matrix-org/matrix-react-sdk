@@ -25,20 +25,6 @@ limitations under the License.
                 color: $secondary-content;
             }
 
-            .mx_MessageActionBar_optionsButton {
-                position: relative;
-            }
-
-            .mx_MessageActionBar_maskButton {
-                width: var(--BaseCard_header-button-size);
-                height: var(--BaseCard_header-button-size);
-
-                &::after {
-                    mask-size: var(--BaseCard_header-button-size);
-                    mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
-                }
-            }
-
             .mx_ThreadPanel_dropdown {
                 padding: 3px $spacing-4 3px $spacing-8; // TODO: Use a spacing variable
                 border-radius: 4px;
