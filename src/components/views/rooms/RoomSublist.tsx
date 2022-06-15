@@ -912,7 +912,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 this.slidingSyncMode && this.state.slidingSyncJoinedCount > this.state.rooms.length
             );
 
-            if (maxTilesPx > this.state.height || hasMoreSlidingSync) {
+            if ((maxTilesPx > this.state.height) || hasMoreSlidingSync) {
                 // the height of all the tiles is greater than the section height: we need a 'show more' button
                 const nonPaddedHeight = this.state.height - RESIZE_HANDLE_HEIGHT - SHOW_N_BUTTON_HEIGHT;
                 const amountFullyShown = Math.floor(nonPaddedHeight / this.layout.tileHeight);
