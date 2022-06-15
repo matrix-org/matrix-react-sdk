@@ -50,6 +50,7 @@ import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permali
 import SettingsStore from "../../settings/SettingsStore";
 import { RoomViewStore } from "../RoomViewStore";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
+import { navigateToPermalink } from "../../utils/permalinks/navigator";
 
 // TODO: Purge this from the universe
 
@@ -280,10 +281,6 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async navigate(uri: string): Promise<void> {
-        const localUri = tryTransformPermalinkToLocalHref(uri);
-        if (!localUri || localUri === uri) { // parse failure can lead to an unmodified URL
-            throw new Error("Failed to transform URI");
-        }
-        window.location.hash = localUri; // it'll just be a fragment
+        navigateToPermalink(uri);
     }
 }

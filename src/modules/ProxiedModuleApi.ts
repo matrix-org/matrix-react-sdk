@@ -17,18 +17,24 @@ limitations under the License.
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import { Optional } from "matrix-events-sdk";
-import { _t } from "../languageHandler";
 import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
-import Modal from "../Modal";
-import { ModuleUiDialog } from "../components/views/dialogs/ModuleUiDialog";
 import React from "react";
-import { AccountInformation } from "@matrix-org/react-sdk-module-api/lib/types/credentials";
+import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
+import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/src/types/translations";
 import * as Matrix from "matrix-js-sdk/src/matrix";
+
+import Modal from "../Modal";
+import { _t } from "../languageHandler";
+import { ModuleUiDialog } from "../components/views/dialogs/ModuleUiDialog";
 import SdkConfig from "../SdkConfig";
 import PlatformPeg from "../PlatformPeg";
 import { doSetLoggedIn } from "../Lifecycle";
 import dispatcher from "../dispatcher/dispatcher";
-import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/src/types/translations";
+import { navigateToPermalink } from "../utils/permalinks/navigator";
+import { parsePermalink } from "../utils/permalinks/Permalinks";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { getCachedRoomIDForAlias } from "../RoomAliasCache";
+import { Action } from "../dispatcher/actions";
 
 export class ProxiedModuleApi implements ModuleApi {
     private cachedTranslations: Optional<TranslationStringsObject>;
@@ -59,7 +65,7 @@ export class ProxiedModuleApi implements ModuleApi {
         });
     }
 
-    public async registerAccount(username: string, password: string, displayName?: string): Promise<AccountInformation> {
+    public async registerSimpleAccount(username: string, password: string, displayName?: string): Promise<AccountAuthInfo> {
         const hsUrl = SdkConfig.get("validated_server_config").hsUrl;
         const client = Matrix.createClient({ baseUrl: hsUrl });
         const req = {
@@ -95,23 +101,41 @@ export class ProxiedModuleApi implements ModuleApi {
         };
     }
 
-    public async useAccount(accountInfo: AccountInformation): Promise<void> {
+    public async overwriteAccountAuth(accountInfo: AccountAuthInfo): Promise<void> {
         await doSetLoggedIn({
             ...accountInfo,
             guest: false,
         }, true);
     }
 
-    public async switchToRoom(roomId: string, andJoin?: boolean): Promise<void> {
-        dispatcher.dispatch({
-            action: "view_room",
-            room_id: roomId,
-        });
+    public async navigatePermalink(uri: string, andJoin?: boolean): Promise<void> {
+        navigateToPermalink(uri);
 
-        if (andJoin) {
+        const parts = parsePermalink(uri);
+        if (parts.roomIdOrAlias)
+        if (parts.roomIdOrAlias && andJoin) {
+            let roomId = parts.roomIdOrAlias;
+            let servers = parts.viaServers;
+            if (roomId.startsWith("#")) {
+                roomId = getCachedRoomIDForAlias(parts.roomIdOrAlias);
+                if (!roomId) {
+                    // alias resolution failed
+                    const result = await MatrixClientPeg.get().getRoomIdForAlias(parts.roomIdOrAlias);
+                    roomId = result.room_id;
+                    if (!servers) servers = result.servers; // use provided servers first, if available
+                }
+            }
             dispatcher.dispatch({
-                action: "join_room",
+                action: Action.ViewRoom,
+                room_id: roomId,
+                via_servers: servers,
             });
+
+            if (andJoin) {
+                dispatcher.dispatch({
+                    action: Action.JoinRoom,
+                });
+            }
         }
     }
 
