@@ -87,7 +87,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     let label: string;
     if (idp) {
         label = _t("Continue with %(provider)s", { provider: idp.name });
-    } else if (flow["org.matrix.msc3824.delegated.oidc.compatibility"]) {
+    } else if (flow["org.matrix.msc3824.delegated_oidc_compatibility"]) {
         label = _t("Continue");
     } else {
         label = _t("Sign in with single sign-on");
