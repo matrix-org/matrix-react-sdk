@@ -42,23 +42,23 @@ interface IState {
 }
 
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
-    static ROOM_LIST_SETTINGS = [
+    private static ROOM_LIST_SETTINGS = [
         'breadcrumbs',
     ];
 
-    static SPACES_SETTINGS = [
+    private static SPACES_SETTINGS = [
         "Spaces.allRoomsInHome",
     ];
 
-    static KEYBINDINGS_SETTINGS = [
+    private static KEYBINDINGS_SETTINGS = [
         'ctrlFForSearch',
     ];
 
-    static PRESENCE_SETTINGS = [
+    private static PRESENCE_SETTINGS = [
         "sendTypingNotifications",
     ];
 
-    static COMPOSER_SETTINGS = [
+    private static COMPOSER_SETTINGS = [
         'MessageComposerInput.autoReplaceEmoji',
         'MessageComposerInput.useMarkdown',
         'MessageComposerInput.suggestEmoji',
@@ -68,22 +68,25 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         'MessageComposerInput.insertTrailingColon',
     ];
 
-    static TIME_SETTINGS = [
+    private static TIME_SETTINGS = [
         'showTwelveHourTimestamps',
         'alwaysShowTimestamps',
     ];
-    static CODE_BLOCKS_SETTINGS = [
+
+    private static CODE_BLOCKS_SETTINGS = [
         'enableSyntaxHighlightLanguageDetection',
         'expandCodeByDefault',
         'showCodeLineNumbers',
     ];
-    static IMAGES_AND_VIDEOS_SETTINGS = [
+
+    private static IMAGES_AND_VIDEOS_SETTINGS = [
         'urlPreviewsEnabled',
         'autoplayGifs',
         'autoplayVideo',
         'showImages',
     ];
-    static TIMELINE_SETTINGS = [
+
+    private static TIMELINE_SETTINGS = [
         'showTypingNotifications',
         'showRedactions',
         'showReadReceipts',
@@ -95,7 +98,8 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         'TextualBody.enableBigEmoji',
         'scrollToBottomOnMessageSent',
     ];
-    static GENERAL_SETTINGS = [
+
+    private static GENERAL_SETTINGS = [
         'promptBeforeInviteUnknownUsers',
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
