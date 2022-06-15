@@ -136,6 +136,13 @@ limitations under the License.
             font-size: $font-15px;
             line-height: $font-24px;
         }
+
+        > .mx_Spinner {
+            flex-grow: 0;
+            width: unset;
+            height: unset;
+            margin-left: 16px;
+        }
     }
 
     #mx_SpotlightDialog_content {

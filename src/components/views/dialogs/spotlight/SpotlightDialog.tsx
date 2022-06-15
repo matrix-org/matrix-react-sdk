@@ -277,9 +277,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = useMemo(() => query.trim(), [query]);
 
-    const { publicRooms, protocols, config, setConfig, search: searchPublicRooms } = usePublicRoomDirectory();
-    const { users, search: searchPeople } = useUserDirectory();
-    const { profile, search: searchProfileInfo } = useProfileInfo();
+    const { loading: publicRoomsLoading, publicRooms, protocols, config, setConfig, search: searchPublicRooms } =
+        usePublicRoomDirectory();
+    const { loading: peopleLoading, users, search: searchPeople } = useUserDirectory();
+    const { loading: profileLoading, profile, search: searchProfileInfo } = useProfileInfo();
     const searchParams: [IDirectoryOpts] = useMemo(() => ([{
         query: trimmedQuery,
         limit: SECTION_LIMIT,
@@ -1008,6 +1009,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     aria-label={_t("Search")}
                     aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                 />
+                { (publicRoomsLoading || peopleLoading || profileLoading) && (
+                    <Spinner w={24} h={24} />
+                ) }
             </div>
 
             <div
