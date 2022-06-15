@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655252404799,
+  "lastUpdate": 1655268521028,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101324,6 +101324,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5463.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "44b2667f736f85c9f2451b93beb8953999393214",
+          "message": "Add a bit of safety around timestamp handling for threads (#8845)",
+          "timestamp": "2022-06-14T22:43:20-06:00",
+          "tree_id": "87173ae7d73f5b7fb9e12872c0c5ef6ac7581750",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/44b2667f736f85c9f2451b93beb8953999393214"
+        },
+        "date": 1655268509747,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4889.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2329.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4711.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
