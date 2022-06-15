@@ -78,7 +78,6 @@ limitations under the License.
     .mx_AccessibleButton_hasKind {
         &.mx_AccessibleButton_kind_link {
             font-size: $font-14px;
-            margin: 7px 18px;
 
             &.mx_SettingsTab_showAdvanced {
                 margin: 18px 0;
@@ -93,6 +92,12 @@ limitations under the License.
 
         .mx_SpaceSettingsDialog_visibilityIcon::before {
             mask-image: url('$(res)/img/element-icons/eye.svg');
+        }
+    }
+
+    .mx_SpaceSettingsGeneralTab {
+        .mx_SpaceSettingsGeneralTab_cancelButton {
+            margin: var(--AccessibleButton_hasKind-padding-block) var(--AccessibleButton_hasKind-padding-inline);
         }
     }
 }

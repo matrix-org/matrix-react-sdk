@@ -91,7 +91,7 @@ const SpaceSettingsGeneralTab = ({ matrixClient: cli, space, onFinished }: IProp
         }
     };
 
-    return <div className="mx_SettingsTab">
+    return <div className="mx_SettingsTab mx_SpaceSettingsGeneralTab">
         <div className="mx_SettingsTab_heading">{ _t("General") }</div>
 
         <div>{ _t("Edit settings relating to your space.") }</div>
@@ -115,6 +115,7 @@ const SpaceSettingsGeneralTab = ({ matrixClient: cli, space, onFinished }: IProp
                 onClick={onCancel}
                 disabled={busy || !(avatarChanged || nameChanged || topicChanged)}
                 kind="link"
+                className="mx_SpaceSettingsGeneralTab_cancelButton"
             >
                 { _t("Cancel") }
             </AccessibleButton>
