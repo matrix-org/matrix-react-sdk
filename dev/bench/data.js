@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655402043519,
+  "lastUpdate": 1655421827759,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101858,6 +101858,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5313.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "will@half-shot.uk",
+            "name": "Will Hunt",
+            "username": "Half-Shot"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4faacdaec0f410c0bb933abbd0b62a6998f0236d",
+          "message": "Allow integration managers to validate user identity after opening (#8782)\n\n* Add getOpenIdToken function\r\n\r\n* tidy up\r\n\r\n* tidy up\r\n\r\n* log an error\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-06-16T17:19:04-06:00",
+          "tree_id": "7fd03ca4564fd36b71efac7401a77936b64ea4a4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4faacdaec0f410c0bb933abbd0b62a6998f0236d"
+        },
+        "date": 1655421816964,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4562.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 651.7999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
