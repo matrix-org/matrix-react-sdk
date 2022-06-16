@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655364496262,
+  "lastUpdate": 1655386873449,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101774,6 +101774,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4565,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3b28b1100fead5102d343c81010746c4927f1afd",
+          "message": "Include mx_MessageActionBar_maskButton in mx_MessageActionBar  (#8792)\n\n* Include mx_MessageActionBar_maskButton in mx_MessageActionBar\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-16T14:34:56+01:00",
+          "tree_id": "16cabc04f13589e52a3a238654d1826b582c07aa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3b28b1100fead5102d343c81010746c4927f1afd"
+        },
+        "date": 1655386860479,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4790.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2322.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5397.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
