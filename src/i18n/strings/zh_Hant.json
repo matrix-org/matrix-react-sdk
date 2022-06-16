@@ -3477,5 +3477,20 @@
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "視訊聊天室是嵌入在 %(brand)s 聊天室內的一律開啟的 VoIP 頻道。",
     "A new way to chat over voice and video in %(brand)s.": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
     "Video rooms": "視訊聊天室",
-    "Enable hardware acceleration": "啟用硬體加速"
+    "Enable hardware acceleration": "啟用硬體加速",
+    "Remove search filter for %(filter)s": "移除 %(filter)s 的搜尋過濾條件",
+    "Start a group chat": "開始群組聊天",
+    "Other options": "其他選項",
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "若您找不到您要找的聊天室，要求邀請或是建立新的聊天室。",
+    "Some results may be hidden": "某些結果可能會被隱藏",
+    "Copy invite link": "複製邀請連結",
+    "If you can't see who you're looking for, send them your invite link.": "若您看不到要找的人，請將您的邀請連結傳送給他們。",
+    "Some results may be hidden for privacy": "出於癮思考留，某些結果可能會被隱藏",
+    "Search for": "搜尋",
+    "%(count)s Members|one": "%(count)s 個成員",
+    "%(count)s Members|other": "%(count)s 個成員",
+    "Show: Matrix rooms": "顯示：Matrix 聊天室",
+    "Show: %(instance)s rooms (%(server)s)": "顯示：%(instance)s 聊天室 (%(server)s)",
+    "Add new server…": "加入新伺服器……",
+    "Remove server “%(roomServer)s”": "移除伺服器「%(roomServer)s」"
 }
