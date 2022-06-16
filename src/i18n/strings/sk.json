@@ -3477,5 +3477,20 @@
     "A new way to chat over voice and video in %(brand)s.": "Nový spôsob konverzácie prostredníctvom hlasu a videa v aplikácii %(brand)s.",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Video miestnosti sú vždy zapnuté VoIP kanály zabudované do miestnosti v aplikácii %(brand)s.",
     "Video rooms": "Video miestnosti",
-    "Enable hardware acceleration": "Povoliť hardvérovú akceleráciu"
+    "Enable hardware acceleration": "Povoliť hardvérovú akceleráciu",
+    "%(count)s Members|other": "%(count)s členov",
+    "Remove search filter for %(filter)s": "Odstrániť filter vyhľadávania pre %(filter)s",
+    "Start a group chat": "Začať skupinovú konverzáciu",
+    "Other options": "Ďalšie možnosti",
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ak nemôžete nájsť hľadanú miestnosť, požiadajte o pozvánku alebo vytvorte novú miestnosť.",
+    "Some results may be hidden": "Niektoré výsledky môžu byť skryté",
+    "Copy invite link": "Kopírovať odkaz na pozvánku",
+    "If you can't see who you're looking for, send them your invite link.": "Ak nevidíte toho, koho hľadáte, pošlite im odkaz na pozvánku.",
+    "Some results may be hidden for privacy": "Niektoré výsledky môžu byť skryté kvôli ochrane súkromia",
+    "Search for": "Hľadať",
+    "%(count)s Members|one": "%(count)s člen",
+    "Show: Matrix rooms": "Zobraziť: Matrix miestnosti",
+    "Show: %(instance)s rooms (%(server)s)": "Zobraziť: %(instance)s miestnosti (%(server)s)",
+    "Add new server…": "Pridať nový server…",
+    "Remove server “%(roomServer)s”": "Odstrániť server \"%(roomServer)s\""
 }
