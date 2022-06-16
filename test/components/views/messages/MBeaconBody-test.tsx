@@ -78,7 +78,7 @@ describe('<MBeaconBody />', () => {
             wrappingComponentProps: { value: mockClient },
         });
 
-    const modalSpy = jest.spyOn(Modal, 'createTrackedDialog').mockReturnValue(undefined);
+    const modalSpy = jest.spyOn(Modal, 'createDialog').mockReturnValue(undefined);
 
     beforeAll(() => {
         maplibregl.AttributionControl = jest.fn();
@@ -109,6 +109,19 @@ describe('<MBeaconBody />', () => {
         makeRoomWithStateEvents([beaconInfoEvent], { roomId, mockClient });
         const component = getComponent({ mxEvent: beaconInfoEvent });
         expect(component.text()).toEqual("Live location ended");
+    });
+
+    it('renders loading beacon UI for a beacon that has not started yet', () => {
+        const beaconInfoEvent = makeBeaconInfoEvent(
+            aliceId,
+            roomId,
+            // puts this beacons start timestamp in the future
+            { isLive: true, timestamp: now + 60000, timeout: 500 },
+            '$alice-room1-1',
+        );
+        makeRoomWithStateEvents([beaconInfoEvent], { roomId, mockClient });
+        const component = getComponent({ mxEvent: beaconInfoEvent });
+        expect(component.text()).toEqual("Loading live location...");
     });
 
     it('does not open maximised map when on click when beacon is stopped', () => {

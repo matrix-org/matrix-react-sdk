@@ -1121,9 +1121,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             || Boolean(this.state.contextMenu));
 
         // Thread panel shows the timestamp of the last reply in that thread
-        const ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
+        let ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
             ? this.props.mxEvent.getTs()
-            : this.state.thread?.replyToEvent.getTs();
+            : this.state.thread?.replyToEvent?.getTs();
+        if (typeof ts !== "number") {
+            // Fall back to something we can use
+            ts = this.props.mxEvent.getTs();
+        }
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
@@ -1372,13 +1376,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoom"
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoomButton"
                                 onClick={this.viewInRoom}
                                 title={_t("View in room")}
                                 key="view_in_room"
                             />
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkToThread"
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkButton"
                                 onClick={this.copyLinkToThread}
                                 title={_t("Copy link to thread")}
                                 key="copy_link_to_thread"
