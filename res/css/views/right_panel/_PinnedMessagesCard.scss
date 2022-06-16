@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 .mx_PinnedMessagesCard {
-    @mixin RightPanelCard;
-
     .mx_PinnedMessagesCard_empty_wrapper {
         display: flex;
         height: 100%;
