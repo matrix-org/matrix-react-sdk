@@ -17,6 +17,9 @@ limitations under the License.
 .mx_ThreadPanel {
     @mixin RightPanelCard;
 
+    height: 100px;
+    overflow: visible;
+
     .mx_BaseCard_header {
         .mx_BaseCard_header_title {
             .mx_AccessibleButton {
