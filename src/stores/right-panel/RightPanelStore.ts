@@ -51,8 +51,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     } = {};
     private viewedRoomId: Optional<string>;
 
-    // Public for tests
-    public constructor() {
+    private constructor() {
         super(defaultDispatcher);
     }
 

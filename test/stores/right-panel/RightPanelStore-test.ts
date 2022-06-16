@@ -36,6 +36,9 @@ describe("RightPanelStore", () => {
         stubClient();
         cli = mocked(MatrixClientPeg.get());
 
+        // @ts-ignore
+        // The constructor is private but we want to use it anyways to prevent
+        // state from being shared between tests
         store = new RightPanelStore();
         store.useUnitTestClient(cli);
     });
