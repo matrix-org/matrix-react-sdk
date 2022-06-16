@@ -16,9 +16,11 @@ limitations under the License.
 
 import { mocked, MockedObject } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { stubClient } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
+import DMRoomMap from "../../../src/utils/DMRoomMap";
 import { Action } from "../../../src/dispatcher/actions";
 import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import { ActiveRoomChangedPayload } from "../../../src/dispatcher/payloads/ActiveRoomChangedPayload";
@@ -35,6 +37,7 @@ describe("RightPanelStore", () => {
     beforeEach(() => {
         stubClient();
         cli = mocked(MatrixClientPeg.get());
+        DMRoomMap.makeShared();
 
         // @ts-ignore
         // The constructor is private but we want to use it anyways to prevent
@@ -203,5 +206,24 @@ describe("RightPanelStore", () => {
             store.togglePanel(null);
             expect(store.isOpen).toEqual(true);
         });
+    });
+
+    it("doesn't restore member info cards when switching back to a room", async () => {
+        await viewRoom("!1:example.org");
+        store.setCards([
+            {
+                phase: RightPanelPhases.RoomMemberList,
+            },
+            {
+                phase: RightPanelPhases.RoomMemberInfo,
+                state: { member: new RoomMember("!1:example.org", "@alice:example.org") },
+            },
+        ], true, "!1:example.org");
+        expect(store.currentCardForRoom("!1:example.org").phase).toEqual(RightPanelPhases.RoomMemberInfo);
+
+        // Switch away and back
+        await viewRoom("!2:example.org");
+        await viewRoom("!1:example.org");
+        expect(store.currentCardForRoom("!1:example.org").phase).toEqual(RightPanelPhases.RoomMemberList);
     });
 });

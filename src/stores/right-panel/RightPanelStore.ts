@@ -222,14 +222,18 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     private loadCacheFromSettings() {
-        const room = this.viewedRoomId && this.mxClient?.getRoom(this.viewedRoomId);
-        if (!!room) {
-            this.global = this.global ??
-                convertToStatePanel(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
-            this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
-                convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
-        } else {
-            logger.warn("Could not restore the right panel after load because there was no associated room object.");
+        if (this.viewedRoomId) {
+            const room = this.mxClient?.getRoom(this.viewedRoomId);
+            if (!!room) {
+                this.global = this.global ??
+                    convertToStatePanel(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
+                this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
+                    convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
+            } else {
+                logger.warn(
+                    "Could not restore the right panel after load because there was no associated room object.",
+                );
+            }
         }
     }
 
