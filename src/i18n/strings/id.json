@@ -3477,5 +3477,20 @@
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Ruangan video adalah saluran VoIP yang selalu ada tersemat di dalam sebuah ruangan di %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Sebuah cara baru untuk mengobrol melalui suara dan video di %(brand)s.",
     "Video rooms": "Ruangan video",
-    "Enable hardware acceleration": "Aktifkan akselerasi perangkat keras"
+    "Enable hardware acceleration": "Aktifkan akselerasi perangkat keras",
+    "Remove search filter for %(filter)s": "Hapus saringan pencarian untuk %(filter)s",
+    "Start a group chat": "Mulai sebuah grup obrolan",
+    "Other options": "Opsi lain",
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jika Anda tidak dapat menemukan ruangan yang Anda cari, minta sebuah undangan atau buat sebuah ruangan baru.",
+    "Some results may be hidden": "Beberapa hasil mungkin tersembunyi",
+    "Copy invite link": "Salin tautan undangan",
+    "If you can't see who you're looking for, send them your invite link.": "Jika Anda tidak dapat menemukan siapa yang Anda mencari, kirimkan tautan undangan Anda.",
+    "Some results may be hidden for privacy": "Beberapa hasil mungkin disembunyikan untuk privasi",
+    "Search for": "Cari",
+    "%(count)s Members|one": "%(count)s Anggota",
+    "%(count)s Members|other": "%(count)s Anggota",
+    "Show: Matrix rooms": "Tampilkan: ruangan Matrix",
+    "Show: %(instance)s rooms (%(server)s)": "Tampilkan: %(instance)s ruangan (%(server)s)",
+    "Add new server…": "Tambahkan server baru…",
+    "Remove server “%(roomServer)s”": "Hapus server “%(roomServer)s”"
 }
