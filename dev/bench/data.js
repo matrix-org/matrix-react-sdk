@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655386873449,
+  "lastUpdate": 1655402043519,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101816,6 +101816,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5397.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "43f2ee4283f09e800ccfecf62ad29dc9bb849c40",
+          "message": "Fix reactions row overflow and gap between reactions (#8813)",
+          "timestamp": "2022-06-16T17:47:37Z",
+          "tree_id": "0fb165b9d4fef2946e19311f0d4889c74337d8c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/43f2ee4283f09e800ccfecf62ad29dc9bb849c40"
+        },
+        "date": 1655402028849,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4915,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2563.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5313.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
