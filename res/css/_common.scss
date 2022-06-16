@@ -810,22 +810,4 @@ legend {
 @define-mixin RightPanelCard {
     height: 100px;
     overflow: visible;
-
-    .mx_BaseCard_header {
-        .mx_BaseCard_header_title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: calc(100% - 38px);
-            height: 24px;
-            flex: 1;
-
-            .mx_BaseCard_header_title_heading {
-                color: $secondary-content;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-        }
-    }
 }
