@@ -29,11 +29,11 @@ limitations under the License.
             }
 
             .mx_MessageActionBar_maskButton {
-                width: var(--RightPanelCard_header-button-size);
-                height: var(--RightPanelCard_header-button-size);
+                width: var(--BaseCard_header-button-size);
+                height: var(--BaseCard_header-button-size);
 
                 &::after {
-                    mask-size: var(--RightPanelCard_header-button-size);
+                    mask-size: var(--BaseCard_header-button-size);
                     mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
                 }
             }

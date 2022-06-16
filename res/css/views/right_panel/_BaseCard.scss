@@ -17,6 +17,7 @@ limitations under the License.
 .mx_BaseCard {
     --BaseCard_EventTile_line-padding-block: 2px;
     --BaseCard_EventTile-spacing-inline: 36px;
+    --BaseCard_header-button-size: 24px;
 
     padding: 0 8px;
     overflow: hidden;
@@ -42,8 +43,8 @@ limitations under the License.
         .mx_BaseCard_close {
             position: absolute;
             background-color: rgba(141, 151, 165, 0.2);
-            height: 20px;
-            width: 20px;
+            width: var(--BaseCard_header-button-size);
+            height: var(--BaseCard_header-button-size);
             margin: var(--BaseCard_header_button-margin);
             top: 0;
             border-radius: 50%;

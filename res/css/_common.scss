@@ -808,19 +808,11 @@ legend {
 }
 
 @define-mixin RightPanelCard {
-    --RightPanelCard_header-button-size: 24px;
-
     height: 100px;
     overflow: visible;
 
     .mx_BaseCard_header {
         margin-bottom: $spacing-12;
-
-        .mx_BaseCard_back,
-        .mx_BaseCard_close {
-            width: var(--RightPanelCard_header-button-size);
-            height: var(--RightPanelCard_header-button-size);
-        }
 
         .mx_BaseCard_back {
             margin-inline-start: calc(var(--BaseCard_header_button-margin) - $spacing-4);
@@ -828,7 +820,7 @@ legend {
             // Header title with the back button
             ~ .mx_BaseCard_header_title {
                 width: calc(100% - 60px);
-                margin-inline-start: var(--RightPanelCard_header-button-size);
+                margin-inline-start: var(--BaseCard_header-button-size);
 
                 .mx_BaseCard_header_title_heading {
                     margin-inline-start: 6px; // TODO: Use a spacing variable
