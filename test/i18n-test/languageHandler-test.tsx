@@ -1,3 +1,19 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import React from 'react';
 
 import {
@@ -11,6 +27,10 @@ import {
 import { stubClient } from '../test-utils';
 
 describe('languageHandler', function() {
+    /*
+      See /__mocks__/browser-request.js/ for how we are stubbing out translations
+      to provide fixture data for these tests
+     */
     const basicString = 'Rooms';
     const selfClosingTagSub = 'Accept <policyLink /> to continue:';
     const textInTagSub = '<a>Upgrade</a> to your own domain';
@@ -19,6 +39,7 @@ describe('languageHandler', function() {
 
     type TestCase = [string, string, Record<string, unknown>, Record<string, unknown>, TranslatedString];
     const testCasesEn: TestCase[] = [
+        // description of the test case, translationString, variables, tags, expected result
         ['translates a basic string', basicString, {}, undefined, 'Rooms'],
         [
             'handles plurals when count is 0',
@@ -199,6 +220,19 @@ describe('languageHandler', function() {
                     },
                 );
             });
+        });
+    });
+
+    describe('when languages dont load', () => {
+        it('_t', async () => {
+            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
+            expect(_t(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(STRING_NOT_IN_THE_DICTIONARY);
+        });
+
+        it('_tDom', async () => {
+            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
+            expect(_tDom(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(
+                <span lang="en">{ STRING_NOT_IN_THE_DICTIONARY }</span>);
         });
     });
 });

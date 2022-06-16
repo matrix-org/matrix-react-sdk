@@ -16,13 +16,17 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import { createMap, LocationBodyContent, locationEventGeoUri, parseGeoUri } from '../messages/MLocationBody';
+import { locationEventGeoUri, isSelfLocation } from '../../../utils/location';
+import Map from './Map';
+import SmartMarker from './SmartMarker';
+import ZoomButtons from './ZoomButtons';
 
 interface IProps extends IDialogProps {
+    matrixClient: MatrixClient;
     mxEvent: MatrixEvent;
 }
 
@@ -30,67 +34,58 @@ interface IState {
     error: Error;
 }
 
-@replaceableComponent("views.location.LocationViewDialog")
+/**
+ * Dialog to view m.location events maximised
+ */
 export default class LocationViewDialog extends React.Component<IProps, IState> {
-    private coords: GeolocationCoordinates;
-    private map?: maplibregl.Map;
-
     constructor(props: IProps) {
         super(props);
 
-        this.coords = parseGeoUri(locationEventGeoUri(this.props.mxEvent));
-        this.map = null;
         this.state = {
             error: undefined,
         };
-    }
-
-    componentDidMount() {
-        if (this.state.error) {
-            return;
-        }
-
-        this.map = createMap(
-            this.coords,
-            true,
-            this.getBodyId(),
-            this.getMarkerId(),
-            (e: Error) => this.setState({ error: e }),
-        );
     }
 
     private getBodyId = () => {
         return `mx_LocationViewDialog_${this.props.mxEvent.getId()}`;
     };
 
-    private getMarkerId = () => {
-        return `mx_MLocationViewDialog_marker_${this.props.mxEvent.getId()}`;
-    };
-
-    private onZoomIn = () => {
-        this.map?.zoomIn();
-    };
-
-    private onZoomOut = () => {
-        this.map?.zoomOut();
+    private onError = (error) => {
+        this.setState({ error });
     };
 
     render() {
+        const { mxEvent } = this.props;
+
+        // only pass member to marker when should render avatar marker
+        const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
+        const geoUri = locationEventGeoUri(mxEvent);
         return (
             <BaseDialog
                 className='mx_LocationViewDialog'
                 onFinished={this.props.onFinished}
                 fixedWidth={false}
             >
-                <LocationBodyContent
-                    mxEvent={this.props.mxEvent}
-                    bodyId={this.getBodyId()}
-                    markerId={this.getMarkerId()}
-                    error={this.state.error}
-                    zoomButtons={true}
-                    onZoomIn={this.onZoomIn}
-                    onZoomOut={this.onZoomOut}
-                />
+                <Map
+                    id={this.getBodyId()}
+                    centerGeoUri={geoUri}
+                    onError={this.onError}
+                    interactive
+                    className="mx_LocationViewDialog_map"
+                >
+                    {
+                        ({ map }) =>
+                            <>
+                                <SmartMarker
+                                    map={map}
+                                    id={`${this.getBodyId()}-marker`}
+                                    geoUri={geoUri}
+                                    roomMember={markerRoomMember}
+                                />
+                                <ZoomButtons map={map} />
+                            </>
+                    }
+                </Map>
             </BaseDialog>
         );
     }

@@ -72,7 +72,7 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
                             className="mx_filterFlipColor"
                             alt=""
                             role="presentation"
-                            src={require("../../../../res/img/cancel.svg")}
+                            src={require("../../../../res/img/cancel.svg").default}
                             width="18"
                             height="18"
                         />

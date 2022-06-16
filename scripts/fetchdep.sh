@@ -10,6 +10,9 @@ defbranch="$3"
 
 rm -r "$defrepo" || true
 
+PR_ORG=${PR_ORG:-"matrix-org"}
+PR_REPO=${PR_REPO:-"matrix-react-sdk"}
+
 # A function that clones a branch of a repo based on the org, repo and branch
 clone() {
     org=$1
@@ -29,8 +32,7 @@ getPRInfo() {
     if [ -n "$number" ]; then
         echo "Getting info about a PR with number $number"
 
-        apiEndpoint="https://api.github.com/repos/matrix-org/matrix-react-sdk/pulls/"
-        apiEndpoint+=$number
+        apiEndpoint="https://api.github.com/repos/$PR_ORG/$PR_REPO/pulls/$number"
 
         head=$(curl $apiEndpoint | jq -r '.head.label')
     fi
@@ -57,15 +59,18 @@ BRANCH_ARRAY=(${head//:/ })
 TRY_ORG=$deforg
 TRY_BRANCH=${BRANCH_ARRAY[0]}
 if [[ "$head" == *":"* ]]; then
-    TRY_ORG=${BRANCH_ARRAY[0]}
+    # ... but only match that fork if it's a real fork
+    if [ "${BRANCH_ARRAY[0]}" != "$PR_ORG" ]; then
+        TRY_ORG=${BRANCH_ARRAY[0]}
+    fi
     TRY_BRANCH=${BRANCH_ARRAY[1]}
 fi
 clone ${TRY_ORG} $defrepo ${TRY_BRANCH}
 
 # Try the target branch of the push or PR.
-if [ -n $GITHUB_BASE_REF ]; then
+if [ -n "$GITHUB_BASE_REF" ]; then
     clone $deforg $defrepo $GITHUB_BASE_REF
-elif [ -n $BUILDKITE_PULL_REQUEST_BASE_BRANCH ]; then
+elif [ -n "$BUILDKITE_PULL_REQUEST_BASE_BRANCH" ]; then
     clone $deforg $defrepo $BUILDKITE_PULL_REQUEST_BASE_BRANCH
 fi
 

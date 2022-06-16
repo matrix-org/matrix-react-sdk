@@ -33,6 +33,7 @@ interface IProps extends IContextMenuProps {
 interface IOptionListProps {
     first?: boolean;
     red?: boolean;
+    label?: string;
     className?: string;
 }
 
@@ -59,6 +60,7 @@ export const IconizedContextMenuRadio: React.FC<IRadioProps> = ({
     return <MenuItemRadio
         {...props}
         className={classNames(className, {
+            mx_IconizedContextMenu_item: true,
             mx_IconizedContextMenu_active: active,
         })}
         active={active}
@@ -93,6 +95,7 @@ export const IconizedContextMenuCheckbox: React.FC<ICheckboxProps> = ({
     return <MenuItemCheckbox
         {...props}
         className={classNames(className, {
+            mx_IconizedContextMenu_item: true,
             mx_IconizedContextMenu_active: active,
         })}
         active={active}
@@ -104,21 +107,40 @@ export const IconizedContextMenuCheckbox: React.FC<ICheckboxProps> = ({
     </MenuItemCheckbox>;
 };
 
-export const IconizedContextMenuOption: React.FC<IOptionProps> = ({ label, iconClassName, children, ...props }) => {
-    return <MenuItem {...props} label={label}>
+export const IconizedContextMenuOption: React.FC<IOptionProps> = ({
+    label,
+    className,
+    iconClassName,
+    children,
+    ...props
+}) => {
+    return <MenuItem
+        {...props}
+        className={classNames(className, {
+            mx_IconizedContextMenu_item: true,
+        })}
+        label={label}
+    >
         { iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} /> }
         <span className="mx_IconizedContextMenu_label">{ label }</span>
         { children }
     </MenuItem>;
 };
 
-export const IconizedContextMenuOptionList: React.FC<IOptionListProps> = ({ first, red, className, children }) => {
+export const IconizedContextMenuOptionList: React.FC<IOptionListProps> = ({
+    first,
+    red,
+    className,
+    label,
+    children,
+}) => {
     const classes = classNames("mx_IconizedContextMenu_optionList", className, {
         mx_IconizedContextMenu_optionList_notFirst: !first,
         mx_IconizedContextMenu_optionList_red: red,
     });
 
     return <div className={classes}>
+        { label && <div><span className="mx_IconizedContextMenu_optionList_label">{ label }</span></div> }
         { children }
     </div>;
 };

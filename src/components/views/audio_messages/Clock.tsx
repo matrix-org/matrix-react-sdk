@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { HTMLProps } from "react";
 
 import { formatSeconds } from "../../../DateUtils";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
-export interface IProps {
+interface IProps extends Pick<HTMLProps<HTMLSpanElement>, "aria-live" | "role"> {
     seconds: number;
 }
 
@@ -27,19 +26,20 @@ export interface IProps {
  * Simply converts seconds into minutes and seconds. Note that hours will not be
  * displayed, making it possible to see "82:29".
  */
-@replaceableComponent("views.audio_messages.Clock")
 export default class Clock extends React.Component<IProps> {
     public constructor(props) {
         super(props);
     }
 
-    shouldComponentUpdate(nextProps: Readonly<IProps>): boolean {
+    public shouldComponentUpdate(nextProps: Readonly<IProps>): boolean {
         const currentFloor = Math.floor(this.props.seconds);
         const nextFloor = Math.floor(nextProps.seconds);
         return currentFloor !== nextFloor;
     }
 
     public render() {
-        return <span className='mx_Clock'>{ formatSeconds(this.props.seconds) }</span>;
+        return <span aria-live={this.props["aria-live"]} role={this.props.role} className='mx_Clock'>
+            { formatSeconds(this.props.seconds) }
+        </span>;
     }
 }

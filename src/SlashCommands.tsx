@@ -22,20 +22,22 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
-import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
+import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from 'matrix-js-sdk/src/models/event';
+import { MRoomTopicEventContent } from 'matrix-js-sdk/src/@types/topic';
+import { SlashCommand as SlashCommandEvent } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
-import { _t, _td, newTranslatableError, ITranslatableError } from './languageHandler';
+import { _t, _td, ITranslatableError, newTranslatableError } from './languageHandler';
 import Modal from './Modal';
 import MultiInviter from './utils/MultiInviter';
-import { linkifyAndSanitizeHtml } from './HtmlUtils';
+import { linkifyElement, topicToHtml } from './HtmlUtils';
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import WidgetUtils from "./utils/WidgetUtils";
 import { textToHtmlRainbow } from "./utils/colour";
-import { getAddressType } from './UserAddress';
+import { AddressType, getAddressType } from './UserAddress';
 import { abbreviateUrl } from './utils/UrlUtils';
 import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/IdentityServerUtils';
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
@@ -45,7 +47,7 @@ import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
-import { EffectiveMembership, getEffectiveMembership, leaveRoomBehaviour } from "./utils/membership";
+import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
 import SdkConfig from "./SdkConfig";
 import SettingsStore from "./settings/SettingsStore";
 import { UIComponent, UIFeature } from "./settings/UIFeature";
@@ -60,8 +62,13 @@ import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from './contexts/RoomContext';
-import RoomViewStore from "./stores/RoomViewStore";
+import { RoomViewStore } from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
+import { PosthogAnalytics } from "./PosthogAnalytics";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import VoipUserMapper from './VoipUserMapper';
+import { htmlSerializeFromMdIfNeeded } from './editor/serialize';
+import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -75,7 +82,7 @@ const singleMxcUpload = async (): Promise<any> => {
         fileSelector.onchange = (ev: HTMLInputEvent) => {
             const file = ev.target.files[0];
 
-            Modal.createTrackedDialog('Upload Files confirmation', '', UploadConfirmDialog, {
+            Modal.createDialog(UploadConfirmDialog, {
                 file,
                 onFinished: (shouldContinue) => {
                     resolve(shouldContinue ? MatrixClientPeg.get().uploadContent(file) : null);
@@ -105,6 +112,7 @@ interface ICommandOpts {
     aliases?: string[];
     args?: string;
     description: string;
+    analyticsName?: SlashCommandEvent["command"];
     runFn?: RunFn;
     category: string;
     hideCompletionAfterSpace?: boolean;
@@ -121,6 +129,7 @@ export class Command {
     public readonly category: string;
     public readonly hideCompletionAfterSpace: boolean;
     public readonly renderingTypes?: TimelineRenderingType[];
+    public readonly analyticsName?: SlashCommandEvent["command"];
     private readonly _isEnabled?: () => boolean;
 
     constructor(opts: ICommandOpts) {
@@ -133,6 +142,7 @@ export class Command {
         this.hideCompletionAfterSpace = opts.hideCompletionAfterSpace || false;
         this._isEnabled = opts.isEnabled;
         this.renderingTypes = opts.renderingTypes;
+        this.analyticsName = opts.analyticsName;
     }
 
     public getCommand() {
@@ -146,13 +156,11 @@ export class Command {
     public run(roomId: string, threadId: string, args: string): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
-            reject(
+            return reject(
                 newTranslatableError(
                     "Command error: Unable to handle slash command.",
                 ),
             );
-
-            return;
         }
 
         const renderingType = threadId
@@ -165,6 +173,13 @@ export class Command {
                     { renderingType },
                 ),
             );
+        }
+
+        if (this.analyticsName) {
+            PosthogAnalytics.instance.trackEvent<SlashCommandEvent>({
+                eventName: "SlashCommand",
+                command: this.analyticsName,
+            });
         }
 
         return this.runFn.bind(this)(roomId, args);
@@ -292,7 +307,7 @@ export const Commands = [
                     );
                 }
 
-                const { finished } = Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
+                const { finished } = Modal.createDialog(
                     RoomUpgradeWarningDialog, { roomId: roomId, targetVersion: args }, /*className=*/null,
                     /*isPriority=*/false, /*isStatic=*/true);
 
@@ -308,8 +323,8 @@ export const Commands = [
     }),
     new Command({
         command: 'jumptodate',
-        args: '<date>',
-        description: _td('Jump to the given date in the timeline (YYYY-MM-DD)'),
+        args: '<YYYY-MM-DD>',
+        description: _td('Jump to the given date in the timeline'),
         isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
         runFn: function(roomId, args) {
             if (args) {
@@ -332,11 +347,13 @@ export const Commands = [
                     logger.log(
                         `/timestamp_to_event: found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp}`,
                     );
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         event_id: eventId,
                         highlighted: true,
                         room_id: roomId,
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     });
                 })());
             }
@@ -448,7 +465,8 @@ export const Commands = [
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
             if (args) {
-                return success(cli.setRoomTopic(roomId, args));
+                const html = htmlSerializeFromMdIfNeeded(args, { forceHTML: false });
+                return success(cli.setRoomTopic(roomId, args, html));
             }
             const room = cli.getRoom(roomId);
             if (!room) {
@@ -457,14 +475,19 @@ export const Commands = [
                 );
             }
 
-            const topicEvents = room.currentState.getStateEvents('m.room.topic', '');
-            const topic = topicEvents && topicEvents.getContent().topic;
-            const topicHtml = topic ? linkifyAndSanitizeHtml(topic) : _t('This room has no topic.');
+            const content: MRoomTopicEventContent = room.currentState.getStateEvents('m.room.topic', '')?.getContent();
+            const topic = !!content
+                ? ContentHelpers.parseTopicContent(content)
+                : { text: _t('This room has no topic.') };
 
-            Modal.createTrackedDialog('Slash Commands', 'Topic', InfoDialog, {
+            const ref = e => e && linkifyElement(e);
+            const body = topicToHtml(topic.text, topic.html, ref, true);
+
+            Modal.createDialog(InfoDialog, {
                 title: room.name,
-                description: <div dangerouslySetInnerHTML={{ __html: topicHtml }} />,
+                description: <div ref={ref}>{ body }</div>,
                 hasCloseButton: true,
+                className: "markdown-body",
             });
             return success();
         },
@@ -488,6 +511,7 @@ export const Commands = [
         command: 'invite',
         args: '<user-id> [<reason>]',
         description: _td('Invites user with given id to current room'),
+        analyticsName: "Invite",
         isEnabled: () => shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
             if (args) {
@@ -500,27 +524,23 @@ export const Commands = [
                     // meaningful.
                     let prom = Promise.resolve();
                     if (
-                        getAddressType(address) === 'email' &&
+                        getAddressType(address) === AddressType.Email &&
                         !MatrixClientPeg.get().getIdentityServerUrl()
                     ) {
                         const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
                         if (defaultIdentityServerUrl) {
-                            const { finished } = Modal.createTrackedDialog<[boolean]>(
-                                'Slash Commands',
-                                'Identity server',
-                                QuestionDialog, {
-                                    title: _t("Use an identity server"),
-                                    description: <p>{ _t(
-                                        "Use an identity server to invite by email. " +
-                                        "Click continue to use the default identity server " +
-                                        "(%(defaultIdentityServerName)s) or manage in Settings.",
-                                        {
-                                            defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
-                                        },
-                                    ) }</p>,
-                                    button: _t("Continue"),
-                                },
-                            );
+                            const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+                                title: _t("Use an identity server"),
+                                description: <p>{ _t(
+                                    "Use an identity server to invite by email. " +
+                                    "Click continue to use the default identity server " +
+                                    "(%(defaultIdentityServerName)s) or manage in Settings.",
+                                    {
+                                        defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
+                                    },
+                                ) }</p>,
+                                button: _t("Continue"),
+                            });
 
                             prom = finished.then(([useDefault]) => {
                                 if (useDefault) {
@@ -541,7 +561,7 @@ export const Commands = [
                     }
                     const inviter = new MultiInviter(roomId);
                     return success(prom.then(() => {
-                        return inviter.invite([address], reason);
+                        return inviter.invite([address], reason, true);
                     }).then(() => {
                         if (inviter.getCompletionState(address) !== "invited") {
                             throw new Error(inviter.getErrorText(address));
@@ -595,26 +615,24 @@ export const Commands = [
                         roomAlias += ':' + MatrixClientPeg.get().getDomain();
                     }
 
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_alias: roomAlias,
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     });
                     return success();
                 } else if (params[0][0] === '!') {
                     const [roomId, ...viaServers] = params;
 
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: roomId,
-                        opts: {
-                            // These are passed down to the js-sdk's /join call
-                            viaServers: viaServers,
-                        },
                         via_servers: viaServers, // for the rejoin button
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     });
                     return success();
                 } else if (isPermalink) {
@@ -626,7 +644,7 @@ export const Commands = [
                         return reject(this.getUsage());
                     }
 
-                    // If for some reason someone wanted to join a group or user, we should
+                    // If for some reason someone wanted to join a user, we should
                     // stop them now.
                     if (!permalinkParts.roomIdOrAlias) {
                         return reject(this.getUsage());
@@ -636,10 +654,11 @@ export const Commands = [
                     const viaServers = permalinkParts.viaServers;
                     const eventId = permalinkParts.eventId;
 
-                    const dispatch = {
+                    const dispatch: ViewRoomPayload = {
                         action: Action.ViewRoom,
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     };
 
                     if (entity[0] === '!') dispatch["room_id"] = entity;
@@ -674,6 +693,7 @@ export const Commands = [
         command: 'part',
         args: '[<room-address>]',
         description: _td('Leave room'),
+        analyticsName: "Part",
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
@@ -786,7 +806,7 @@ export const Commands = [
                     ignoredUsers.push(userId); // de-duped internally in the js-sdk
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createTrackedDialog('Slash Commands', 'User ignored', InfoDialog, {
+                            Modal.createDialog(InfoDialog, {
                                 title: _t('Ignored user'),
                                 description: <div>
                                     <p>{ _t('You are now ignoring %(userId)s', { userId }) }</p>
@@ -816,7 +836,7 @@ export const Commands = [
                     if (index !== -1) ignoredUsers.splice(index, 1);
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createTrackedDialog('Slash Commands', 'User unignored', InfoDialog, {
+                            Modal.createDialog(InfoDialog, {
                                 title: _t('Unignored user'),
                                 description: <div>
                                     <p>{ _t('You are no longer ignoring %(userId)s', { userId }) }</p>
@@ -836,7 +856,7 @@ export const Commands = [
         description: _td('Define the power level of a user'),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
-            const room = cli.getRoom(RoomViewStore.getRoomId());
+            const room = cli.getRoom(RoomViewStore.instance.getRoomId());
             return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
         },
         runFn: function(roomId, args) {
@@ -876,7 +896,7 @@ export const Commands = [
         description: _td('Deops user with given id'),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
-            const room = cli.getRoom(RoomViewStore.getRoomId());
+            const room = cli.getRoom(RoomViewStore.instance.getRoomId());
             return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
         },
         runFn: function(roomId, args) {
@@ -907,7 +927,7 @@ export const Commands = [
         command: 'devtools',
         description: _td('Opens the Developer Tools dialog'),
         runFn: function(roomId) {
-            Modal.createDialog(DevtoolsDialog, { roomId });
+            Modal.createDialog(DevtoolsDialog, { roomId }, "mx_DevtoolsDialog_wrapper");
             return success();
         },
         category: CommandCategories.advanced,
@@ -916,7 +936,7 @@ export const Commands = [
         command: 'addwidget',
         args: '<url | embed code | Jitsi url>',
         description: _td('Adds a custom widget by URL to the room'),
-        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets),
+        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets) && shouldShowComponent(UIComponent.AddIntegrations),
         runFn: function(roomId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(newTranslatableError("Please supply a widget URL or embed code"));
@@ -945,7 +965,7 @@ export const Commands = [
                 const nowMs = (new Date()).getTime();
                 const widgetId = encodeURIComponent(`${roomId}_${userId}_${nowMs}`);
                 let type = WidgetType.CUSTOM;
-                let name = "Custom Widget";
+                let name = "Custom";
                 let data = {};
 
                 // Make the widget a Jitsi widget if it looks like a Jitsi widget
@@ -953,7 +973,7 @@ export const Commands = [
                 if (jitsiData) {
                     logger.log("Making /addwidget widget a Jitsi conference");
                     type = WidgetType.JITSI;
-                    name = "Jitsi Conference";
+                    name = "Jitsi";
                     data = jitsiData;
                     widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl();
                 }
@@ -1016,7 +1036,7 @@ export const Commands = [
                         await cli.setDeviceVerified(userId, deviceId, true);
 
                         // Tell the user we verified everything
-                        Modal.createTrackedDialog('Slash Commands', 'Verified key', InfoDialog, {
+                        Modal.createDialog(InfoDialog, {
                             title: _t('Verified key'),
                             description: <div>
                                 <p>
@@ -1074,7 +1094,7 @@ export const Commands = [
         command: "help",
         description: _td("Displays list of commands with usages and descriptions"),
         runFn: function() {
-            Modal.createTrackedDialog('Slash Commands', 'Help', SlashCommandHelpDialog);
+            Modal.createDialog(SlashCommandHelpDialog);
             return success();
         },
         category: CommandCategories.advanced,
@@ -1106,12 +1126,32 @@ export const Commands = [
         args: "<description>",
         runFn: function(roomId, args) {
             return success(
-                Modal.createTrackedDialog('Slash Commands', 'Bug Report Dialog', BugReportDialog, {
+                Modal.createDialog(BugReportDialog, {
                     initialText: args,
                 }).finished,
             );
         },
         category: CommandCategories.advanced,
+    }),
+    new Command({
+        command: "tovirtual",
+        description: _td("Switches to this room's virtual room, if it has one"),
+        category: CommandCategories.advanced,
+        isEnabled(): boolean {
+            return CallHandler.instance.getSupportsVirtualRooms();
+        },
+        runFn: (roomId) => {
+            return success((async () => {
+                const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
+                if (!room) throw newTranslatableError("No virtual room for this room");
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: room.roomId,
+                    metricsTrigger: "SlashCommand",
+                    metricsViaKeyboard: true,
+                });
+            })());
+        },
     }),
     new Command({
         command: "query",
@@ -1136,9 +1176,11 @@ export const Commands = [
 
                 const roomId = await ensureDMExists(MatrixClientPeg.get(), userId);
 
-                dis.dispatch({
+                dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: roomId,
+                    metricsTrigger: "SlashCommand",
+                    metricsViaKeyboard: true,
                 });
             })());
         },
@@ -1158,9 +1200,11 @@ export const Commands = [
                         return success((async () => {
                             const cli = MatrixClientPeg.get();
                             const roomId = await ensureDMExists(cli, userId);
-                            dis.dispatch({
+                            dis.dispatch<ViewRoomPayload>({
                                 action: Action.ViewRoom,
                                 room_id: roomId,
+                                metricsTrigger: "SlashCommand",
+                                metricsViaKeyboard: true,
                             });
                             if (msg) {
                                 cli.sendTextMessage(roomId, msg);
@@ -1293,11 +1337,10 @@ interface ICmd {
 }
 
 /**
- * Process the given text for /commands and return a bound method to perform them.
+ * Process the given text for /commands and returns a parsed command that can be used for running the operation.
  * @param {string} input The raw text input by the user.
- * @return {null|function(): Object} Function returning an object with the property 'error' if there was an error
- * processing the command, or 'promise' if a request was sent out.
- * Returns null if the input didn't match a command.
+ * @return {ICmd} The parsed command object.
+ * Returns an empty object if the input didn't match a command.
  */
 export function getCommand(input: string): ICmd {
     const { cmd, args } = parseCommandString(input);

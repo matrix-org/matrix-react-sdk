@@ -30,8 +30,9 @@ limitations under the License.
             flex-direction: column;
 
             width: 300px;
+            min-width: 0;
 
-            border: 1px solid $appearance-tab-border-color;
+            border: 1px solid $quinary-content;
             border-radius: 10px;
 
             .mx_EventTile_msgOption,
@@ -66,11 +67,7 @@ limitations under the License.
         }
 
         .mx_StyledRadioButton {
-            border-top: 1px solid $appearance-tab-border-color;
-
-            > input + div {
-                border-color: rgba($muted-fg-color, 0.2);
-            }
+            border-top: 1px solid $quinary-content;
         }
 
         .mx_StyledRadioButton_checked {
@@ -81,6 +78,7 @@ limitations under the License.
             margin: 0;
             &[data-layout=bubble] {
                 margin-right: 40px;
+                flex-shrink: 1;
             }
             &[data-layout=irc] {
                 > a {

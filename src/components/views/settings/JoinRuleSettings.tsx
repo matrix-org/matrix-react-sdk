@@ -34,6 +34,7 @@ import { useLocalEcho } from "../../../hooks/useLocalEcho";
 import dis from "../../../dispatcher/dispatcher";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
 import { Action } from "../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     room: Room;
@@ -62,9 +63,9 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         onError,
     );
 
-    const { join_rule: joinRule } = content;
+    const { join_rule: joinRule = JoinRule.Invite } = content || {};
     const restrictedAllowRoomIds = joinRule === JoinRule.Restricted
-        ? content.allow.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
+        ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
@@ -74,7 +75,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         }
 
         const matrixClient = MatrixClientPeg.get();
-        const { finished } = Modal.createTrackedDialog('Edit restricted', '', ManageRestrictedJoinRuleDialog, {
+        const { finished } = Modal.createDialog(ManageRestrictedJoinRuleDialog, {
             matrixClient,
             room,
             selected,
@@ -226,7 +227,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                     </b>;
                 }
 
-                Modal.createTrackedDialog('Restricted join rule upgrade', '', RoomUpgradeWarningDialog, {
+                Modal.createDialog(RoomUpgradeWarningDialog, {
                     roomId: room.roomId,
                     targetVersion,
                     description: <>
@@ -267,9 +268,10 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         closeSettingsFn();
 
                         // switch to the new room in the background
-                        dis.dispatch({
+                        dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: roomId,
+                            metricsTrigger: undefined, // other
                         });
 
                         // open new settings on this tab

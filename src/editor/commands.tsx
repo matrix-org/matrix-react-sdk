@@ -59,7 +59,7 @@ export async function runSlashCommand(
     args: string,
     roomId: string,
     threadId: string | null,
-): Promise<IContent | null> {
+): Promise<[content: IContent | null, success: boolean]> {
     const result = cmd.run(roomId, threadId, args);
     let messageContent: IContent | null = null;
     let error = result.error;
@@ -92,19 +92,20 @@ export async function runSlashCommand(
             errText = _t("Server unavailable, overloaded, or something else went wrong.");
         }
 
-        Modal.createTrackedDialog(title, '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t(title),
             description: errText,
         });
+        return [null, false];
     } else {
         logger.log("Command success.");
-        if (messageContent) return messageContent;
+        return [messageContent, true];
     }
 }
 
 export async function shouldSendAnyway(commandText: string): Promise<boolean> {
     // ask the user if their unknown command should be sent as a message
-    const { finished } = Modal.createTrackedDialog("Unknown command", "", QuestionDialog, {
+    const { finished } = Modal.createDialog(QuestionDialog, {
         title: _t("Unknown Command"),
         description: <div>
             <p>

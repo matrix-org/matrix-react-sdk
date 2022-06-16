@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 The Matrix.org Foundation C.I.C.
+ * Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Optional } from "matrix-events-sdk";
 
 import SettingsStore from "../../settings/SettingsStore";
 import WidgetStore, { IApp } from "../WidgetStore";
@@ -27,8 +29,6 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { compare } from "../../utils/strings";
-import RightPanelStore from "../right-panel/RightPanelStore";
-import { RightPanelPhases } from "../right-panel/RightPanelStorePhases";
 
 export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
 
@@ -131,7 +131,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     protected async onReady(): Promise<any> {
         this.updateAllRooms();
 
-        this.matrixClient.on("RoomState.events", this.updateRoomFromState);
+        this.matrixClient.on(RoomStateEvent.Events, this.updateRoomFromState);
         this.pinnedRef = SettingsStore.watchSetting("Widgets.pinned", null, this.updateFromSettings);
         this.layoutRef = SettingsStore.watchSetting("Widgets.layout", null, this.updateFromSettings);
         WidgetStore.instance.on(UPDATE_EVENT, this.updateFromWidgetStore);
@@ -140,6 +140,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     protected async onNotReady(): Promise<any> {
         this.byRoom = {};
 
+        this.matrixClient?.off(RoomStateEvent.Events, this.updateRoomFromState);
         SettingsStore.unwatchSetting(this.pinnedRef);
         SettingsStore.unwatchSetting(this.layoutRef);
         WidgetStore.instance.off(UPDATE_EVENT, this.updateFromWidgetStore);
@@ -345,28 +346,12 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
     }
 
-    public getContainerWidgets(room: Room, container: Container): IApp[] {
+    public getContainerWidgets(room: Optional<Room>, container: Container): IApp[] {
         return this.byRoom[room?.roomId]?.[container]?.ordered || [];
     }
 
-    public isInContainer(room: Room, widget: IApp, container: Container): boolean {
+    public isInContainer(room: Optional<Room>, widget: IApp, container: Container): boolean {
         return this.getContainerWidgets(room, container).some(w => w.id === widget.id);
-    }
-
-    public isVisibleOnScreen(room: Room, widgetId: string) {
-        const wId = widgetId;
-        const inRightPanel =
-            (RightPanelStore.instance.currentCard.phase == RightPanelPhases.Widget &&
-                wId == RightPanelStore.instance.currentCard.state?.widgetId);
-        const inCenterContainer =
-            this.getContainerWidgets(room, Container.Center).some((app) => app.id == wId);
-        const inTopContainer =
-            this.getContainerWidgets(room, Container.Top).some(app => app.id == wId);
-
-        // The widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
-        // either, because we are viewing a different room OR because it is in none of the possible containers of the room view.
-        const isVisibleOnScreen = (inRightPanel || inCenterContainer || inTopContainer);
-        return isVisibleOnScreen;
     }
 
     public canAddToContainer(room: Room, container: Container): boolean {

@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as linkifyjs from '@matrix-org/linkifyjs';
-import linkifyElement from '@matrix-org/linkify-element';
-import linkifyString from '@matrix-org/linkify-string';
+import * as linkifyjs from 'linkifyjs';
+import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
+import linkifyElement from 'linkify-element';
+import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { registerCustomProtocol, registerPlugin } from '@matrix-org/linkifyjs';
 
 import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
@@ -30,12 +30,14 @@ import {
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { showGroupReplacedWithSpacesDialog } from "./group_helpers";
 
 export enum Type {
     URL = "url",
     UserId = "userid",
     RoomAlias = "roomalias",
-    GroupId = "groupid"
+    GroupId = "groupid",
 }
 
 // Linkify stuff doesn't type scanner/parser/utils properly :/
@@ -114,17 +116,19 @@ function onUserClick(event: MouseEvent, userId: string) {
     });
 }
 
-function onAliasClick(event: MouseEvent, roomAlias: string) {
-    event.preventDefault();
-    dis.dispatch({
-        action: Action.ViewRoom,
-        room_alias: roomAlias,
-    });
-}
-
 function onGroupClick(event: MouseEvent, groupId: string) {
     event.preventDefault();
-    dis.dispatch({ action: 'view_group', group_id: groupId });
+    showGroupReplacedWithSpacesDialog(groupId);
+}
+
+function onAliasClick(event: MouseEvent, roomAlias: string) {
+    event.preventDefault();
+    dis.dispatch<ViewRoomPayload>({
+        action: Action.ViewRoom,
+        room_alias: roomAlias,
+        metricsTrigger: "Timeline",
+        metricsViaKeyboard: false,
+    });
 }
 
 const escapeRegExp = function(string): string {
@@ -132,9 +136,9 @@ const escapeRegExp = function(string): string {
 };
 
 // Recognise URLs from both our local and official Element deployments.
-// Anyone else really should be using matrix.to.
+// Anyone else really should be using matrix.to. vector:// allowed to support Element Desktop relative links.
 export const ELEMENT_URL_PATTERN =
-    "^(?:https?://)?(?:" +
+    "^(?:vector://|https?://)?(?:" +
         escapeRegExp(window.location.host + window.location.pathname) + "|" +
         "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
         "(?:app|beta|staging|develop)\\.element\\.io/" +
@@ -152,21 +156,21 @@ export const options = {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
                 try {
                     const permalink = parsePermalink(href);
-                    if (permalink && permalink.userId) {
+                    if (permalink?.userId) {
                         return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
-                            click: function(e) {
+                            click: function(e: MouseEvent) {
                                 onUserClick(e, permalink.userId);
                             },
                         };
                     } else {
-                        // for events, rooms etc. (anything other then users)
+                        // for events, rooms etc. (anything other than users)
                         const localHref = tryTransformPermalinkToLocalHref(href);
                         if (localHref !== href) {
                             // it could be converted to a localHref -> therefore handle locally
                             return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
-                                click: function(e) {
+                                click: function(e: MouseEvent) {
                                     e.preventDefault();
                                     window.location.hash = localHref;
                                 },
@@ -181,7 +185,7 @@ export const options = {
             case Type.UserId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e) {
+                    click: function(e: MouseEvent) {
                         const userId = parsePermalink(href).userId;
                         onUserClick(e, userId);
                     },
@@ -189,15 +193,16 @@ export const options = {
             case Type.RoomAlias:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e) {
+                    click: function(e: MouseEvent) {
                         const alias = parsePermalink(href).roomIdOrAlias;
                         onAliasClick(e, alias);
                     },
                 };
+
             case Type.GroupId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e) {
+                    click: function(e: MouseEvent) {
                         const groupId = parsePermalink(href).groupId;
                         onGroupClick(e, groupId);
                     },
@@ -219,6 +224,8 @@ export const options = {
     attributes: {
         rel: 'noreferrer noopener',
     },
+
+    ignoreTags: ['pre', 'code'],
 
     className: 'linkified',
 

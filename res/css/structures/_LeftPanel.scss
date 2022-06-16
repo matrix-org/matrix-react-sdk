@@ -23,13 +23,21 @@ $roomListCollapsedWidth: 68px;
     }
 }
 
-.mx_LeftPanel_wrapper {
+.mx_LeftPanel_outerWrapper {
     display: flex;
+    flex-direction: column;
     max-width: 50%;
     position: relative;
 
     // Contain the amount of layers rendered by constraining what actually needs re-layering via css
     contain: layout paint;
+}
+
+.mx_LeftPanel_wrapper {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    height: 100%; // ensure space panel is still scrollable with an outer wrapper
 
     .mx_LeftPanel_wrapper--user {
         background-color: $roomlist-bg-color;
@@ -45,9 +53,8 @@ $roomListCollapsedWidth: 68px;
 
 .mx_LeftPanel {
     background-color: $roomlist-bg-color;
-    // TODO decrease this once Spaces launches as it'll no longer need to include the 56px Community Panel
 
-    // Create a row-based flexbox for the GroupFilterPanel and the room list
+    // Create a row-based flexbox for the space panel and the room list
     display: flex;
     contain: content;
     position: relative;
@@ -110,11 +117,6 @@ $roomListCollapsedWidth: 68px;
             // Create a flexbox to organize the inputs
             display: flex;
             align-items: center;
-
-            .mx_UserMenu {
-                // mini-mode for when Space Panel is disabled
-                margin-right: 12px;
-            }
 
             & + .mx_RoomListHeader {
                 margin-top: 12px;

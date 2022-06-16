@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,22 +16,18 @@ limitations under the License.
 
 import React from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import Analytics from "../../../../../Analytics";
 import dis from "../../../../../dispatcher/dispatcher";
-import { privateShouldBeEncrypted } from "../../../../../createRoom";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
-import CountlyAnalytics from "../../../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import CryptographyPanel from "../../CryptographyPanel";
 import DevicesPanel from "../../DevicesPanel";
@@ -42,6 +37,7 @@ import EventIndexPanel from "../../EventIndexPanel";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
+import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -78,7 +74,6 @@ interface IState {
     invitedRoomIds: Set<string>;
 }
 
-@replaceableComponent("views.settings.tabs.user.SecurityUserSettingsTab")
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
     private dispatcherRef: string;
 
@@ -106,18 +101,13 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on("Room.myMembership", this.onMyMembership);
+        MatrixClientPeg.get().on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     public componentWillUnmount(): void {
         dis.unregister(this.dispatcherRef);
-        MatrixClientPeg.get().removeListener("Room.myMembership", this.onMyMembership);
+        MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
-
-    private updateAnalytics = (checked: boolean): void => {
-        checked ? Analytics.enable() : Analytics.disable();
-        CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
-    };
 
     private onMyMembership = (room: Room, membership: string): void => {
         if (room.isSpaceRoom()) {
@@ -147,14 +137,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 invitedRoomIds: newInvitedRoomIds,
             };
         });
-    };
-
-    private onGoToUserProfileClick = (): void => {
-        dis.dispatch({
-            action: 'view_user_info',
-            userId: MatrixClientPeg.get().getUserId(),
-        });
-        this.props.closeSettingsFn();
     };
 
     private onUserUnignored = async (userId: string): Promise<void> => {
@@ -308,16 +290,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         let privacySection;
-        if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable() || PosthogAnalytics.instance.isEnabled()) {
+        if (PosthogAnalytics.instance.isEnabled()) {
             const onClickAnalyticsLearnMore = () => {
-                if (PosthogAnalytics.instance.isEnabled()) {
-                    showAnalyticsLearnMoreDialog({
-                        primaryButton: _t("Okay"),
-                        hasCancel: false,
-                    });
-                } else {
-                    Analytics.showDetailsModal();
-                }
+                showAnalyticsLearnMoreDialog({
+                    primaryButton: _t("Okay"),
+                    hasCancel: false,
+                });
             };
             privacySection = <React.Fragment>
                 <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
@@ -334,15 +312,11 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                             </AccessibleButton>
                         </p>
                     </div>
-                    {
-                        PosthogAnalytics.instance.isEnabled() ?
-                            <SettingsFlag name="pseudonymousAnalyticsOptIn"
-                                level={SettingLevel.ACCOUNT}
-                                onChange={this.updateAnalytics} /> :
-                            <SettingsFlag name="analyticsOptIn"
-                                level={SettingLevel.DEVICE}
-                                onChange={this.updateAnalytics} />
-                    }
+                    { PosthogAnalytics.instance.isEnabled() && (
+                        <SettingsFlag
+                            name="pseudonymousAnalyticsOptIn"
+                            level={SettingLevel.ACCOUNT} />
+                    ) }
                 </div>
             </React.Fragment>;
         }
@@ -370,7 +344,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 { warning }
                 <div className="mx_SettingsTab_heading">{ _t("Where you're signed in") }</div>
                 <div className="mx_SettingsTab_section">
-                    <span>
+                    <span className="mx_SettingsTab_subsectionText">
                         { _t(
                             "Manage your signed-in devices below. " +
                             "A device's name is visible to people you communicate with.",

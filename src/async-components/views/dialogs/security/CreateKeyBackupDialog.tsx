@@ -291,7 +291,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             changeText = _t("Use a different passphrase?");
         } else if (!this.state.passPhrase.startsWith(this.state.passPhraseConfirm)) {
             // only tell them they're wrong if they've actually gone wrong.
-            // Security concious readers will note that if you left element-web unattended
+            // Security conscious readers will note that if you left element-web unattended
             // on this screen, this would make it easy for a malicious person to guess
             // your passphrase one letter at a time, but they could get this faster by
             // just opening the browser's developer tools and reading it.
@@ -455,13 +455,12 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         if (this.state.error) {
             content = <div>
                 <p>{ _t("Unable to create key backup") }</p>
-                <div className="mx_Dialog_buttons">
-                    <DialogButtons primaryButton={_t('Retry')}
-                        onPrimaryButtonClick={this.createBackup}
-                        hasCancel={true}
-                        onCancel={this.onCancel}
-                    />
-                </div>
+                <DialogButtons
+                    primaryButton={_t('Retry')}
+                    onPrimaryButtonClick={this.createBackup}
+                    hasCancel={true}
+                    onCancel={this.onCancel}
+                />
             </div>;
         } else {
             switch (this.state.phase) {

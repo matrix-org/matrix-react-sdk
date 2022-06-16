@@ -22,7 +22,6 @@ import { _t } from '../../../languageHandler';
 import ToggleSwitch from "./ToggleSwitch";
 import StyledCheckbox from "./StyledCheckbox";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // The setting must be a boolean
@@ -34,6 +33,7 @@ interface IProps {
     // XXX: once design replaces all toggles make this the default
     useCheckbox?: boolean;
     disabled?: boolean;
+    hideIfCannotSet?: boolean;
     onChange?(checked: boolean): void;
 }
 
@@ -41,7 +41,6 @@ interface IState {
     value: boolean;
 }
 
-@replaceableComponent("views.elements.SettingsFlag")
 export default class SettingsFlag extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -77,6 +76,8 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
 
     public render() {
         const canChange = SettingsStore.canSetValue(this.props.name, this.props.roomId, this.props.level);
+
+        if (!canChange && this.props.hideIfCannotSet) return null;
 
         const label = this.props.label
             ? _t(this.props.label)

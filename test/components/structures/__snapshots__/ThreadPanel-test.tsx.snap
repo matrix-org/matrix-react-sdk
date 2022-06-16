@@ -2,11 +2,14 @@
 
 exports[`ThreadPanel Header expect that All filter for ThreadPanelHeader properly renders Show: All threads 1`] = `
 <div
-  className="mx_ThreadPanel__header"
+  className="mx_BaseCard_header_title"
 >
-  <span>
+  <Heading
+    className="mx_BaseCard_header_title_heading"
+    size="h4"
+  >
     Threads
-  </span>
+  </Heading>
   <ContextMenuButton
     className="mx_ThreadPanel_dropdown"
     inputRef={
@@ -24,11 +27,14 @@ exports[`ThreadPanel Header expect that All filter for ThreadPanelHeader properl
 
 exports[`ThreadPanel Header expect that My filter for ThreadPanelHeader properly renders Show: My threads 1`] = `
 <div
-  className="mx_ThreadPanel__header"
+  className="mx_BaseCard_header_title"
 >
-  <span>
+  <Heading
+    className="mx_BaseCard_header_title_heading"
+    size="h4"
+  >
     Threads
-  </span>
+  </Heading>
   <ContextMenuButton
     className="mx_ThreadPanel_dropdown"
     inputRef={
@@ -59,9 +65,10 @@ exports[`ThreadPanel Header expect that ThreadPanelHeader has the correct option
       Object {
         "current": <div
           aria-checked="true"
-          class="mx_AccessibleButton mx_ThreadPanel_Header_FilterOptionItem"
+          class="mx_AccessibleButton mx_ThreadPanel_Header_FilterOptionItem focus-visible"
+          data-focus-visible-added=""
           role="menuitemradio"
-          tabindex="-1"
+          tabindex="0"
         >
           <span>
             All threads
@@ -75,7 +82,7 @@ exports[`ThreadPanel Header expect that ThreadPanelHeader has the correct option
     onClick={[Function]}
     onFocus={[Function]}
     role="menuitemradio"
-    tabIndex={-1}
+    tabIndex={0}
   >
     <div
       aria-checked={true}
@@ -85,7 +92,7 @@ exports[`ThreadPanel Header expect that ThreadPanelHeader has the correct option
       onKeyDown={[Function]}
       onKeyUp={[Function]}
       role="menuitemradio"
-      tabIndex={-1}
+      tabIndex={0}
     >
       <span>
         All threads

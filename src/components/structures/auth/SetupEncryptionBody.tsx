@@ -25,7 +25,6 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
 import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import Spinner from '../../views/elements/Spinner';
@@ -49,7 +48,6 @@ interface IState {
     lostKeys: boolean;
 }
 
-@replaceableComponent("structures.auth.SetupEncryptionBody")
 export default class SetupEncryptionBody extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
@@ -100,7 +98,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         // We need to call onFinished now to close this dialog, and
         // again later to signal that the verification is complete.
         this.props.onFinished();
-        Modal.createTrackedDialog('New Session Verification', 'Starting dialog', VerificationRequestDialog, {
+        Modal.createDialog(VerificationRequestDialog, {
             verificationRequestPromise: requestPromise,
             member: cli.getUser(userId),
             onFinished: async () => {
@@ -214,9 +212,13 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
                             { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
-                                a: (sub) => <button
+                                a: (sub) => <AccessibleButton
+                                    kind="link_inline"
+                                    className="mx_SetupEncryptionBody_reset_link"
                                     onClick={this.onResetClick}
-                                    className="mx_SetupEncryptionBody_reset_link">{ sub }</button>,
+                                >
+                                    { sub }
+                                </AccessibleButton>,
                             }) }
                         </div>
                     </div>

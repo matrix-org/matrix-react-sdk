@@ -20,7 +20,6 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ErrorDialog from './ErrorDialog';
 import TextInputDialog from "./TextInputDialog";
 
@@ -31,7 +30,6 @@ interface IProps {
 /*
  * A dialog for confirming a redaction.
  */
-@replaceableComponent("views.dialogs.ConfirmRedactDialog")
 export default class ConfirmRedactDialog extends React.Component<IProps> {
     render() {
         return (
@@ -55,7 +53,7 @@ export function createRedactEventDialog({
     mxEvent: MatrixEvent;
     onCloseDialog?: () => void;
 }) {
-    Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
+    Modal.createDialog(ConfirmRedactDialog, {
         onFinished: async (proceed: boolean, reason?: string) => {
             if (!proceed) return;
 
@@ -75,7 +73,7 @@ export function createRedactEventDialog({
                 // detached queue and we show the room status bar to allow retry
                 if (typeof code !== "undefined") {
                     // display error message stating you couldn't delete this.
-                    Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
+                    Modal.createDialog(ErrorDialog, {
                         title: _t('Error'),
                         description: _t('You cannot delete this message. (%(code)s)', { code }),
                     });

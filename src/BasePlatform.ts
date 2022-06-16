@@ -31,6 +31,8 @@ import { Action } from "./dispatcher/actions";
 import { hideToast as hideUpdateToast } from "./toasts/UpdateToast";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { idbLoad, idbSave, idbDelete } from "./utils/StorageManager";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { IConfigOptions } from "./IConfigOptions";
 
 export const SSO_HOMESERVER_URL_KEY = "mx_sso_hs_url";
 export const SSO_ID_SERVER_URL_KEY = "mx_sso_is_url";
@@ -42,6 +44,17 @@ export enum UpdateCheckStatus {
     NotAvailable = "NOTAVAILABLE",
     Downloading = "DOWNLOADING",
     Ready = "READY",
+}
+
+export interface UpdateStatus {
+    /**
+     * The current phase of the manual update check.
+     */
+    status: UpdateCheckStatus;
+    /**
+     * Detail string relating to the current status, typically for error details.
+     */
+    detail?: string;
 }
 
 const UPDATE_DEFER_KEY = "mx_defer_update";
@@ -61,38 +74,38 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
-    abstract getConfig(): Promise<{}>;
+    public abstract getConfig(): Promise<IConfigOptions>;
 
-    abstract getDefaultDeviceDisplayName(): string;
+    public abstract getDefaultDeviceDisplayName(): string;
 
-    protected onAction = (payload: ActionPayload) => {
+    protected onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
             case 'on_client_not_viable':
-            case 'on_logged_out':
+            case Action.OnLoggedOut:
                 this.setNotificationCount(0);
                 break;
         }
     };
 
     // Used primarily for Analytics
-    abstract getHumanReadableName(): string;
+    public abstract getHumanReadableName(): string;
 
-    setNotificationCount(count: number) {
+    public setNotificationCount(count: number): void {
         this.notificationCount = count;
     }
 
-    setErrorStatus(errorDidOccur: boolean) {
+    public setErrorStatus(errorDidOccur: boolean): void {
         this.errorDidOccur = errorDidOccur;
     }
 
     /**
      * Whether we can call checkForUpdate on this platform build
      */
-    async canSelfUpdate(): Promise<boolean> {
+    public async canSelfUpdate(): Promise<boolean> {
         return false;
     }
 
-    startUpdateCheck() {
+    public startUpdateCheck(): void {
         hideUpdateToast();
         localStorage.removeItem(UPDATE_DEFER_KEY);
         dis.dispatch<CheckUpdatesPayload>({
@@ -105,8 +118,7 @@ export default abstract class BasePlatform {
      * Update the currently running app to the latest available version
      * and replace this instance of the app with the new version.
      */
-    installUpdate() {
-    }
+    public installUpdate(): void {}
 
     /**
      * Check if the version update has been deferred and that deferment is still in effect
@@ -128,7 +140,7 @@ export default abstract class BasePlatform {
      * Ignore the pending update and don't prompt about this version
      * until the next morning (8am).
      */
-    deferUpdate(newVersion: string) {
+    public deferUpdate(newVersion: string): void {
         const date = new Date(Date.now() + 24 * 60 * 60 * 1000);
         date.setHours(8, 0, 0, 0); // set to next 8am
         localStorage.setItem(UPDATE_DEFER_KEY, JSON.stringify([newVersion, date.getTime()]));
@@ -139,7 +151,14 @@ export default abstract class BasePlatform {
      * Return true if platform supports multi-language
      * spell-checking, otherwise false.
      */
-    supportsMultiLanguageSpellCheck(): boolean {
+    public supportsMultiLanguageSpellCheck(): boolean {
+        return false;
+    }
+
+    /**
+     * Returns true if platform allows overriding native context menus
+     */
+    public allowOverridingNativeContextMenus(): boolean {
         return false;
     }
 
@@ -148,7 +167,7 @@ export default abstract class BasePlatform {
      * notifications, otherwise false.
      * @returns {boolean} whether the platform supports displaying notifications
      */
-    supportsNotifications(): boolean {
+    public supportsNotifications(): boolean {
         return false;
     }
 
@@ -157,7 +176,7 @@ export default abstract class BasePlatform {
      * to display notifications. Otherwise false.
      * @returns {boolean} whether the application has permission to display notifications
      */
-    maySendNotifications(): boolean {
+    public maySendNotifications(): boolean {
         return false;
     }
 
@@ -168,7 +187,7 @@ export default abstract class BasePlatform {
      * that is 'granted' if the user allowed the request or
      * 'denied' otherwise.
      */
-    abstract requestNotificationPermission(): Promise<string>;
+    public abstract requestNotificationPermission(): Promise<string>;
 
     public displayNotification(
         title: string,
@@ -185,9 +204,10 @@ export default abstract class BasePlatform {
         const notification = new window.Notification(title, notifBody);
 
         notification.onclick = () => {
-            const payload: ActionPayload = {
+            const payload: ViewRoomPayload = {
                 action: Action.ViewRoom,
                 room_id: room.roomId,
+                metricsTrigger: "Notification",
             };
 
             if (ev.getThread()) {
@@ -201,10 +221,9 @@ export default abstract class BasePlatform {
         return notification;
     }
 
-    loudNotification(ev: MatrixEvent, room: Room) {
-    }
+    public loudNotification(ev: MatrixEvent, room: Room): void {}
 
-    clearNotification(notif: Notification) {
+    public clearNotification(notif: Notification): void {
         // Some browsers don't support this, e.g Safari on iOS
         // https://developer.mozilla.org/en-US/docs/Web/API/Notification/close
         if (notif.close) {
@@ -215,69 +234,23 @@ export default abstract class BasePlatform {
     /**
      * Returns a promise that resolves to a string representing the current version of the application.
      */
-    abstract getAppVersion(): Promise<string>;
-
-    /*
-     * If it's not expected that capturing the screen will work
-     * with getUserMedia, return a string explaining why not.
-     * Otherwise, return null.
-     */
-    screenCaptureErrorString(): string {
-        return "Not implemented";
-    }
+    public abstract getAppVersion(): Promise<string>;
 
     /**
-     * Restarts the application, without neccessarily reloading
+     * Restarts the application, without necessarily reloading
      * any application code
      */
-    abstract reload();
+    public abstract reload(): void;
 
-    supportsAutoLaunch(): boolean {
+    public supportsSetting(settingName?: string): boolean {
         return false;
     }
 
-    // XXX: Surely this should be a setting like any other?
-    async getAutoLaunchEnabled(): Promise<boolean> {
-        return false;
+    public getSettingValue(settingName: string): Promise<any> {
+        return undefined;
     }
 
-    async setAutoLaunchEnabled(enabled: boolean): Promise<void> {
-        throw new Error("Unimplemented");
-    }
-
-    supportsWarnBeforeExit(): boolean {
-        return false;
-    }
-
-    async shouldWarnBeforeExit(): Promise<boolean> {
-        return false;
-    }
-
-    async setWarnBeforeExit(enabled: boolean): Promise<void> {
-        throw new Error("Unimplemented");
-    }
-
-    supportsAutoHideMenuBar(): boolean {
-        return false;
-    }
-
-    async getAutoHideMenuBarEnabled(): Promise<boolean> {
-        return false;
-    }
-
-    async setAutoHideMenuBarEnabled(enabled: boolean): Promise<void> {
-        throw new Error("Unimplemented");
-    }
-
-    supportsMinimizeToTray(): boolean {
-        return false;
-    }
-
-    async getMinimizeToTrayEnabled(): Promise<boolean> {
-        return false;
-    }
-
-    async setMinimizeToTrayEnabled(enabled: boolean): Promise<void> {
+    public setSettingValue(settingName: string, value: any): Promise<void> {
         throw new Error("Unimplemented");
     }
 
@@ -287,19 +260,33 @@ export default abstract class BasePlatform {
      * @return {BaseEventIndexManager} The EventIndex manager for our platform,
      * can be null if the platform doesn't support event indexing.
      */
-    getEventIndexingManager(): BaseEventIndexManager | null {
+    public getEventIndexingManager(): BaseEventIndexManager | null {
         return null;
     }
 
-    async setLanguage(preferredLangs: string[]) {}
+    public setLanguage(preferredLangs: string[]) {}
 
-    setSpellCheckLanguages(preferredLangs: string[]) {}
+    public setSpellCheckLanguages(preferredLangs: string[]) {}
 
-    getSpellCheckLanguages(): Promise<string[]> | null {
+    public getSpellCheckLanguages(): Promise<string[]> | null {
         return null;
     }
 
-    getAvailableSpellCheckLanguages(): Promise<string[]> | null {
+    public async getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>> {
+        return [];
+    }
+
+    public supportsDesktopCapturer(): boolean {
+        return false;
+    }
+
+    public overrideBrowserShortcuts(): boolean {
+        return false;
+    }
+
+    public navigateForwardBack(back: boolean): void {}
+
+    public getAvailableSpellCheckLanguages(): Promise<string[]> | null {
         return null;
     }
 
@@ -316,7 +303,12 @@ export default abstract class BasePlatform {
      * @param {string} fragmentAfterLogin the hash to pass to the app during sso callback.
      * @param {string} idpId The ID of the Identity Provider being targeted, optional.
      */
-    startSingleSignOn(mxClient: MatrixClient, loginType: "sso" | "cas", fragmentAfterLogin: string, idpId?: string) {
+    public startSingleSignOn(
+        mxClient: MatrixClient,
+        loginType: "sso" | "cas",
+        fragmentAfterLogin: string,
+        idpId?: string,
+    ): void {
         // persist hs url and is url for when the user is returned to the app with the login token
         localStorage.setItem(SSO_HOMESERVER_URL_KEY, mxClient.getHomeserverUrl());
         if (mxClient.getIdentityServerUrl()) {
@@ -329,10 +321,6 @@ export default abstract class BasePlatform {
         window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId); // redirect to SSO
     }
 
-    onKeyDown(ev: KeyboardEvent): boolean {
-        return false; // no shortcuts implemented
-    }
-
     /**
      * Get a previously stored pickle key.  The pickle key is used for
      * encrypting libolm objects.
@@ -341,7 +329,7 @@ export default abstract class BasePlatform {
      * @returns {string|null} the previously stored pickle key, or null if no
      *     pickle key has been stored.
      */
-    async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
+    public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
         if (!window.crypto || !window.crypto.subtle) {
             return null;
         }
@@ -387,7 +375,7 @@ export default abstract class BasePlatform {
      * @returns {string|null} the pickle key, or null if the platform does not
      *     support storing pickle keys.
      */
-    async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
+    public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         if (!window.crypto || !window.crypto.subtle) {
             return null;
         }
@@ -426,7 +414,7 @@ export default abstract class BasePlatform {
      * @param {string} userId the user ID for the user that the pickle key is for.
      * @param {string} userId the device ID that the pickle key is for.
      */
-    async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
+    public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
             await idbDelete("pickleKey", [userId, deviceId]);
         } catch (e) {

@@ -20,8 +20,9 @@ import FileSaver from 'file-saver';
 import { logger } from "matrix-js-sdk/src/logger";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
-import { CrossSigningKeys } from "matrix-js-sdk/src";
+import { CrossSigningKeys } from "matrix-js-sdk/src/matrix";
 import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { _t, _td } from '../../../../languageHandler';
@@ -145,13 +146,13 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             accountPassword,
         };
 
-        MatrixClientPeg.get().on('crypto.keyBackupStatus', this.onKeyBackupStatusChange);
+        MatrixClientPeg.get().on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
 
         this.getInitialPhase();
     }
 
     public componentWillUnmount(): void {
-        MatrixClientPeg.get().removeListener('crypto.keyBackupStatus', this.onKeyBackupStatusChange);
+        MatrixClientPeg.get().removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
     }
 
     private getInitialPhase(): void {
@@ -273,7 +274,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         });
     };
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
+    private doBootstrapUIAuth = async (makeRequest: (authData: any) => Promise<{}>): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
                 type: 'm.login.password',
@@ -302,18 +303,15 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 },
             };
 
-            const { finished } = Modal.createTrackedDialog(
-                'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                {
-                    title: _t("Setting up keys"),
-                    matrixClient: MatrixClientPeg.get(),
-                    makeRequest,
-                    aestheticsForStagePhases: {
-                        [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
-                        [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
-                    },
+            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                title: _t("Setting up keys"),
+                matrixClient: MatrixClientPeg.get(),
+                makeRequest,
+                aestheticsForStagePhases: {
+                    [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
+                    [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                 },
-            );
+            });
             const [confirmed] = await finished;
             if (!confirmed) {
                 throw new Error("Cross-signing key upload auth canceled");
@@ -389,14 +387,10 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         // so let's stash it here, rather than prompting for it twice.
         const keyCallback = k => this.backupKey = k;
 
-        const { finished } = Modal.createTrackedDialog(
-            'Restore Backup', '', RestoreKeyBackupDialog,
-            {
-                showSummary: false,
-                keyCallback,
-            },
-            null, /* priority = */ false, /* static = */ false,
-        );
+        const { finished } = Modal.createDialog(RestoreKeyBackupDialog, {
+            showSummary: false,
+            keyCallback,
+        }, null, /* priority = */ false, /* static = */ false);
 
         await finished;
         const { backupSigStatus } = await this.fetchBackupInfo();
@@ -648,7 +642,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             changeText = _t("Use a different passphrase?");
         } else if (!this.state.passPhrase.startsWith(this.state.passPhraseConfirm)) {
             // only tell them they're wrong if they've actually gone wrong.
-            // Security concious readers will note that if you left element-web unattended
+            // Security conscious readers will note that if you left element-web unattended
             // on this screen, this would make it easy for a malicious person to guess
             // your passphrase one letter at a time, but they could get this faster by
             // just opening the browser's developer tools and reading it.
@@ -740,20 +734,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                             onClick={this.onCopyClick}
                             disabled={this.state.phase === Phase.Storing}
                         >
-                            <span
-                                className="mx_CreateSecretStorageDialog_recoveryKeyCopyButtonText"
-                                style={{ height: this.state.copied ? '0' : 'auto' }}
-                                aria-hidden={this.state.copied}
-                            >
-                                { _t("Copy") }
-                            </span>
-                            <span
-                                className="mx_CreateSecretStorageDialog_recoveryKeyCopyButtonText"
-                                style={{ height: this.state.copied ? 'auto' : '0' }}
-                                aria-hidden={!this.state.copied}
-                            >
-                                { _t("Copied!") }
-                            </span>
+                            { this.state.copied ? _t("Copied!") : _t("Copy") }
                         </AccessibleButton>
                     </div>
                 </div>

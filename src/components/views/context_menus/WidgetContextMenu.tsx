@@ -57,7 +57,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForId(app.id);
+    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(app));
     const canModify = userWidget || WidgetUtils.canUserModifyWidgets(roomId);
 
     let streamAudioStreamButton;
@@ -69,7 +69,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
                 logger.error("Failed to start livestream", err);
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
                 const message = err.message || _t("Unable to start audio streaming.");
-                Modal.createTrackedDialog('WidgetContext Menu', 'Livestream failed', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t('Failed to start livestream'),
                     description: message,
                 });
@@ -82,8 +82,11 @@ const WidgetContextMenu: React.FC<IProps> = ({
         />;
     }
 
+    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
+    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
+
     let unpinButton;
-    if (showUnpin) {
+    if (showUnpin && widgetIndex >= 0) {
         const onUnpinClick = () => {
             WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right);
             onFinished();
@@ -107,7 +110,8 @@ const WidgetContextMenu: React.FC<IProps> = ({
     }
 
     let snapshotButton;
-    if (widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
+    const screenshotsEnabled = SettingsStore.getValue("enableWidgetScreenshots");
+    if (screenshotsEnabled && widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
         const onSnapshotClick = () => {
             widgetMessaging?.takeScreenshot().then(data => {
                 dis.dispatch({
@@ -130,7 +134,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
                 onDeleteClick();
             } else {
                 // Show delete confirmation dialog
-                Modal.createTrackedDialog('Delete Widget', '', QuestionDialog, {
+                Modal.createDialog(QuestionDialog, {
                     title: _t("Delete Widget"),
                     description: _t(
                         "Deleting a widget removes it for all users in this room." +
@@ -174,9 +178,6 @@ const WidgetContextMenu: React.FC<IProps> = ({
 
         revokeButton = <IconizedContextMenuOption onClick={onRevokeClick} label={_t("Revoke permissions")} />;
     }
-
-    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
-    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
 
     let moveLeftButton;
     if (showUnpin && widgetIndex > 0) {

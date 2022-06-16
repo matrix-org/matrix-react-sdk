@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src';
+import { MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/matrix';
 import classNames from 'classnames';
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
 import AccessibleButton from '../elements/AccessibleButton';
@@ -31,7 +30,6 @@ interface IState {
     expanded: boolean;
 }
 
-@replaceableComponent("views.messages.ViewSourceEvent")
 export default class ViewSourceEvent extends React.PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
@@ -48,7 +46,7 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
         client.decryptEventIfNeeded(mxEvent);
 
         if (mxEvent.isBeingDecrypted()) {
-            mxEvent.once("Event.decrypted", () => this.forceUpdate());
+            mxEvent.once(MatrixEventEvent.Decrypted, () => this.forceUpdate());
         }
     }
 

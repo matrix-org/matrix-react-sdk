@@ -23,10 +23,10 @@ import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
 import SettingsStore from "../../../../../settings/SettingsStore";
 import SettingsFlag from '../../../elements/SettingsFlag';
 import Field from '../../../elements/Field';
+import AccessibleButton from "../../../elements/AccessibleButton";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { Layout } from "../../../../../settings/enums/Layout";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import LayoutSwitcher from "../../LayoutSwitcher";
 import FontScalingPanel from '../../FontScalingPanel';
 import ThemeChoicePanel from '../../ThemeChoicePanel';
@@ -46,7 +46,6 @@ interface IState {
     avatarUrl: string;
 }
 
-@replaceableComponent("views.settings.tabs.user.AppearanceUserSettingsTab")
 export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
     private readonly MESSAGE_PREVIEW_TEXT = _t("Hey you. You're the best!");
 
@@ -92,12 +91,12 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         if (!SettingsStore.getValue(UIFeature.AdvancedSettings)) return null;
 
         const brand = SdkConfig.get().brand;
-        const toggle = <div
-            className="mx_AppearanceUserSettingsTab_AdvancedToggle"
+        const toggle = <AccessibleButton
+            kind="link"
             onClick={() => this.setState({ showAdvanced: !this.state.showAdvanced })}
         >
             { this.state.showAdvanced ? _t("Hide advanced") : _t("Show advanced") }
-        </div>;
+        </AccessibleButton>;
 
         let advanced: React.ReactNode;
 
@@ -144,7 +143,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         return (
             <div className="mx_SettingsTab mx_AppearanceUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Customise your appearance") }</div>
-                <div className="mx_SettingsTab_SubHeading">
+                <div className="mx_SettingsTab_subsectionText">
                     { _t("Appearance Settings only affect this %(brand)s session.", { brand }) }
                 </div>
                 <ThemeChoicePanel />

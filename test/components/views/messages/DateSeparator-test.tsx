@@ -16,17 +16,16 @@ limitations under the License.
 
 import React from "react";
 import { mount } from "enzyme";
+import { mocked } from "jest-mock";
 
-import sdk from "../../../skinned-sdk";
-import * as TestUtils from "../../../test-utils";
 import { formatFullDateNoTime } from "../../../../src/DateUtils";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { UIFeature } from "../../../../src/settings/UIFeature";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import { getMockClientWithEventEmitter } from "../../../test-utils";
+import DateSeparator from "../../../../src/components/views/messages/DateSeparator";
 
 jest.mock("../../../../src/settings/SettingsStore");
-
-const _DateSeparator = sdk.getComponent("views.messages.DateSeparator");
-const DateSeparator = TestUtils.wrapInMatrixClientContext(_DateSeparator);
 
 describe("DateSeparator", () => {
     const HOUR_MS = 3600000;
@@ -37,6 +36,7 @@ describe("DateSeparator", () => {
     const defaultProps = {
         ts: nowMs,
         now,
+        roomId: "!unused:example.org",
     };
     const RealDate = global.Date;
     class MockDate extends Date {
@@ -45,8 +45,12 @@ describe("DateSeparator", () => {
         }
     }
 
+    const mockClient = getMockClientWithEventEmitter({});
     const getComponent = (props = {}) =>
-        mount(<DateSeparator {...defaultProps} {...props} />);
+        mount(<DateSeparator {...defaultProps} {...props} />, {
+            wrappingComponent: MatrixClientContext.Provider,
+            wrappingComponentProps: { value: mockClient },
+        });
 
     type TestCase = [string, number, string];
     const testCases: TestCase[] = [
@@ -64,7 +68,11 @@ describe("DateSeparator", () => {
 
     beforeEach(() => {
         global.Date = MockDate as unknown as DateConstructor;
-        (SettingsStore.getValue as jest.Mock).mockReturnValue(true);
+        (SettingsStore.getValue as jest.Mock) = jest.fn((arg) => {
+            if (arg === UIFeature.TimelineEnableRelativeDates) {
+                return true;
+            }
+        });
     });
 
     afterAll(() => {
@@ -89,10 +97,28 @@ describe("DateSeparator", () => {
 
     describe('when Settings.TimelineEnableRelativeDates is falsy', () => {
         beforeEach(() => {
-            (SettingsStore.getValue as jest.Mock).mockReturnValue(false);
+            (SettingsStore.getValue as jest.Mock) = jest.fn((arg) => {
+                if (arg === UIFeature.TimelineEnableRelativeDates) {
+                    return false;
+                }
+            });
         });
         it.each(testCases)('formats date in full when current time is %s', (_d, ts) => {
             expect(getComponent({ ts, forExport: false }).text()).toEqual(formatFullDateNoTime(new Date(ts)));
+        });
+    });
+
+    describe('when feature_jump_to_date is enabled', () => {
+        beforeEach(() => {
+            mocked(SettingsStore).getValue.mockImplementation((arg) => {
+                if (arg === "feature_jump_to_date") {
+                    return true;
+                }
+            });
+        });
+        it('renders the date separator correctly', () => {
+            const component = getComponent();
+            expect(component).toMatchSnapshot();
         });
     });
 });

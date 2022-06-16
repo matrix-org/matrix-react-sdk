@@ -39,15 +39,22 @@ limitations under the License.
 
 // the frequency with which we flush to indexeddb
 import { logger } from "matrix-js-sdk/src/logger";
+import { randomString } from "matrix-js-sdk/src/randomstring";
+
+import { getCircularReplacer } from "../utils/JSON";
 
 const FLUSH_RATE_MS = 30 * 1000;
 
 // the length of log data we keep in indexeddb (and include in the reports)
 const MAX_LOG_SIZE = 1024 * 1024 * 5; // 5 MB
 
+type LogFunction = (...args: (Error | DOMException | object | string)[]) => void;
+type LogFunctionName = "log" | "info" | "warn" | "error";
+
 // A class which monkey-patches the global console and stores log lines.
 export class ConsoleLogger {
     private logs = "";
+    private originalFunctions: {[key in LogFunctionName]?: LogFunction} = {};
 
     public monkeyPatch(consoleObj: Console): void {
         // Monkey-patch console logging
@@ -60,6 +67,7 @@ export class ConsoleLogger {
         Object.keys(consoleFunctionsToLevels).forEach((fnName) => {
             const level = consoleFunctionsToLevels[fnName];
             const originalFn = consoleObj[fnName].bind(consoleObj);
+            this.originalFunctions[fnName] = originalFn;
             consoleObj[fnName] = (...args) => {
                 this.log(level, ...args);
                 originalFn(...args);
@@ -67,7 +75,14 @@ export class ConsoleLogger {
         });
     }
 
-    private log(level: string, ...args: (Error | DOMException | object | string)[]): void {
+    public bypassRageshake(
+        fnName: LogFunctionName,
+        ...args: (Error | DOMException | object | string)[]
+    ): void {
+        this.originalFunctions[fnName](...args);
+    }
+
+    public log(level: string, ...args: (Error | DOMException | object | string)[]): void {
         // We don't know what locale the user may be running so use ISO strings
         const ts = new Date().toISOString();
 
@@ -78,21 +93,7 @@ export class ConsoleLogger {
             } else if (arg instanceof Error) {
                 return arg.message + (arg.stack ? `\n${arg.stack}` : '');
             } else if (typeof (arg) === 'object') {
-                try {
-                    return JSON.stringify(arg);
-                } catch (e) {
-                    // In development, it can be useful to log complex cyclic
-                    // objects to the console for inspection. This is fine for
-                    // the console, but default `stringify` can't handle that.
-                    // We workaround this by using a special replacer function
-                    // to only log values of the root object and avoid cycles.
-                    return JSON.stringify(arg, (key, value) => {
-                        if (key && typeof value === "object") {
-                            return "<object>";
-                        }
-                        return value;
-                    });
-                }
+                return JSON.stringify(arg, getCircularReplacer());
             } else {
                 return arg;
             }
@@ -140,7 +141,7 @@ export class IndexedDBLogStore {
         private indexedDB: IDBFactory,
         private logger: ConsoleLogger,
     ) {
-        this.id = "instance-" + Math.random() + Date.now();
+        this.id = "instance-" + randomString(16);
     }
 
     /**
@@ -524,7 +525,7 @@ export async function getLogsForReport() {
     if (global.mx_rage_store) {
         // flush most recent logs
         await global.mx_rage_store.flush();
-        return await global.mx_rage_store.consume();
+        return global.mx_rage_store.consume();
     } else {
         return [{
             lines: global.mx_rage_logger.flush(true),

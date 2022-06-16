@@ -13,28 +13,21 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount } from 'enzyme';
-import '../../../skinned-sdk';
-import { IPushRule, IPushRules, RuleId } from 'matrix-js-sdk';
-import { ThreepidMedium } from 'matrix-js-sdk/src/@types/threepids';
+import { mount, ReactWrapper } from 'enzyme';
+import { IPushRule, IPushRules, RuleId, IPusher } from 'matrix-js-sdk/src/matrix';
+import { IThreepid, ThreepidMedium } from 'matrix-js-sdk/src/@types/threepids';
 import { act } from 'react-dom/test-utils';
 
-import { createTestClient } from '../../../test-utils';
 import Notifications from '../../../../src/components/views/settings/Notifications';
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { StandardActions } from '../../../../src/notifications/StandardActions';
-
-jest.mock('../../../../src/settings/SettingsStore', () => ({
-    monitorSetting: jest.fn(),
-    getValue: jest.fn(),
-    setValue: jest.fn(),
-}));
+import { getMockClientWithEventEmitter } from '../../../test-utils';
 
 // don't pollute test output with error logs from mock rejections
 jest.mock("matrix-js-sdk/src/logger");
 
-jest.useFakeTimers();
+// Avoid indirectly importing any eagerly created stores that would require extra setup
+jest.mock("../../../../src/Notifier");
 
 const masterRule = {
     actions: ["dont_notify"],
@@ -52,7 +45,7 @@ const encryptedGroupRule = { "conditions": [{ "kind": "event_match", "key": "typ
 // eslint-disable-next-line max-len
 const pushRules: IPushRules = { "global": { "underride": [{ "conditions": [{ "kind": "event_match", "key": "type", "pattern": "m.call.invite" }], "actions": ["notify", { "set_tweak": "sound", "value": "ring" }, { "set_tweak": "highlight", "value": false }], "rule_id": ".m.rule.call", "default": true, "enabled": true }, oneToOneRule, encryptedOneToOneRule, { "conditions": [{ "kind": "event_match", "key": "type", "pattern": "m.room.message" }], "actions": ["notify", { "set_tweak": "sound", "value": "default" }, { "set_tweak": "highlight", "value": false }], "rule_id": ".m.rule.message", "default": true, "enabled": true }, encryptedGroupRule, { "conditions": [{ "kind": "event_match", "key": "type", "pattern": "im.vector.modular.widgets" }, { "kind": "event_match", "key": "content.type", "pattern": "jitsi" }, { "kind": "event_match", "key": "state_key", "pattern": "*" }], "actions": ["notify", { "set_tweak": "highlight", "value": false }], "rule_id": ".im.vector.jitsi", "default": true, "enabled": true }], "sender": [], "room": [{ "actions": ["dont_notify"], "rule_id": "!zJPyWqpMorfCcWObge:matrix.org", "default": false, "enabled": true }], "content": [{ "actions": ["notify", { "set_tweak": "highlight", "value": false }], "pattern": "banana", "rule_id": "banana", "default": false, "enabled": true }, { "actions": ["notify", { "set_tweak": "sound", "value": "default" }, { "set_tweak": "highlight" }], "pattern": "kadev1", "rule_id": ".m.rule.contains_user_name", "default": true, "enabled": true }], "override": [{ "conditions": [], "actions": ["dont_notify"], "rule_id": ".m.rule.master", "default": true, "enabled": false }, { "conditions": [{ "kind": "event_match", "key": "content.msgtype", "pattern": "m.notice" }], "actions": ["dont_notify"], "rule_id": ".m.rule.suppress_notices", "default": true, "enabled": true }, { "conditions": [{ "kind": "event_match", "key": "type", "pattern": "m.room.member" }, { "kind": "event_match", "key": "content.membership", "pattern": "invite" }, { "kind": "event_match", "key": "state_key", "pattern": "@kadev1:matrix.org" }], "actions": ["notify", { "set_tweak": "sound", "value": "default" }, { "set_tweak": "highlight", "value": false }], "rule_id": ".m.rule.invite_for_me", "default": true, "enabled": true }, { "conditions": [{ "kind": "event_match", "key": "type", "pattern": "m.room.member" }], "actions": ["dont_notify"], "rule_id": ".m.rule.member_event", "default": true, "enabled": true }, { "conditions": [{ "kind": "contains_display_name" }], "actions": ["notify", { "set_tweak": "sound", "value": "default" }, { "set_tweak": "highlight" }], "rule_id": ".m.rule.contains_display_name", "default": true, "enabled": true }, { "conditions": [{ "kind": "event_match", "key": "content.body", "pattern": "@room" }, { "kind": "sender_notification_permission", "key": "room" }], "actions": ["notify", { "set_tweak": "highlight", "value": true }], "rule_id": ".m.rule.roomnotif", "default": true, "enabled": true }, { "conditions": [{ "kind": "event_match", "key": "type", "pattern": "m.room.tombstone" }, { "kind": "event_match", "key": "state_key", "pattern": "" }], "actions": ["notify", { "set_tweak": "highlight", "value": true }], "rule_id": ".m.rule.tombstone", "default": true, "enabled": true }, { "conditions": [{ "kind": "event_match", "key": "type", "pattern": "m.reaction" }], "actions": ["dont_notify"], "rule_id": ".m.rule.reaction", "default": true, "enabled": true }] }, "device": {} } as IPushRules;
 
-const flushPromises = async () => await new Promise(process.nextTick);
+const flushPromises = async () => await new Promise(resolve => setTimeout(resolve));
 
 describe('<Notifications />', () => {
     const getComponent = () => mount(<Notifications />);
@@ -65,23 +58,24 @@ describe('<Notifications />', () => {
         return component;
     };
 
-    const mockClient = createTestClient();
+    const mockClient = getMockClientWithEventEmitter({
+        getPushRules: jest.fn(),
+        getPushers: jest.fn(),
+        getThreePids: jest.fn(),
+        setPusher: jest.fn(),
+        setPushRuleEnabled: jest.fn(),
+        setPushRuleActions: jest.fn(),
+        getRooms: jest.fn().mockReturnValue([]),
+    });
     mockClient.getPushRules.mockResolvedValue(pushRules);
 
     const findByTestId = (component, id) => component.find(`[data-test-id="${id}"]`);
-
-    beforeAll(() => {
-        MatrixClientPeg.get = () => mockClient;
-    });
 
     beforeEach(() => {
         mockClient.getPushRules.mockClear().mockResolvedValue(pushRules);
         mockClient.getPushers.mockClear().mockResolvedValue({ pushers: [] });
         mockClient.getThreePids.mockClear().mockResolvedValue({ threepids: [] });
         mockClient.setPusher.mockClear().mockResolvedValue({});
-
-        (SettingsStore.getValue as jest.Mock).mockClear().mockReturnValue(true);
-        (SettingsStore.setValue as jest.Mock).mockClear().mockResolvedValue(true);
     });
 
     it('renders spinner while loading', () => {
@@ -90,22 +84,17 @@ describe('<Notifications />', () => {
     });
 
     it('renders error message when fetching push rules fails', async () => {
-        mockClient.getPushRules.mockRejectedValue();
-        const component = await getComponentAndWait();
-        expect(findByTestId(component, 'error-message').length).toBeTruthy();
-    });
-    it('renders error message when fetching push rules fails', async () => {
-        mockClient.getPushRules.mockRejectedValue();
+        mockClient.getPushRules.mockRejectedValue({});
         const component = await getComponentAndWait();
         expect(findByTestId(component, 'error-message').length).toBeTruthy();
     });
     it('renders error message when fetching pushers fails', async () => {
-        mockClient.getPushers.mockRejectedValue();
+        mockClient.getPushers.mockRejectedValue({});
         const component = await getComponentAndWait();
         expect(findByTestId(component, 'error-message').length).toBeTruthy();
     });
     it('renders error message when fetching threepids fails', async () => {
-        mockClient.getThreePids.mockRejectedValue();
+        mockClient.getThreePids.mockRejectedValue({});
         const component = await getComponentAndWait();
         expect(findByTestId(component, 'error-message').length).toBeTruthy();
     });
@@ -117,7 +106,7 @@ describe('<Notifications />', () => {
                     ...pushRules.global,
                     override: [{ ...masterRule, enabled: true }],
                 },
-            };
+            } as unknown as IPushRules;
             mockClient.getPushRules.mockClear().mockResolvedValue(disableNotificationsPushRules);
             const component = await getComponentAndWait();
 
@@ -141,7 +130,7 @@ describe('<Notifications />', () => {
                         {
                             medium: ThreepidMedium.Email,
                             address: testEmail,
-                        },
+                        } as unknown as IThreepid,
                     ],
                 });
             });
@@ -153,7 +142,11 @@ describe('<Notifications />', () => {
             });
 
             it('renders email switches correctly when notifications are on for email', async () => {
-                mockClient.getPushers.mockResolvedValue({ pushers: [{ kind: 'email', pushkey: testEmail }] });
+                mockClient.getPushers.mockResolvedValue({
+                    pushers: [
+                        { kind: 'email', pushkey: testEmail } as unknown as IPusher,
+                    ],
+                });
                 const component = await getComponentAndWait();
 
                 expect(findByTestId(component, 'notif-email-switch').props().value).toEqual(true);
@@ -180,7 +173,7 @@ describe('<Notifications />', () => {
             });
 
             it('displays error when pusher update fails', async () => {
-                mockClient.setPusher.mockRejectedValue();
+                mockClient.setPusher.mockRejectedValue({});
                 const component = await getComponentAndWait();
 
                 const emailToggle = findByTestId(component, 'notif-email-switch')
@@ -198,7 +191,7 @@ describe('<Notifications />', () => {
             });
 
             it('enables email notification when toggling off', async () => {
-                const testPusher = { kind: 'email', pushkey: 'tester@test.com' };
+                const testPusher = { kind: 'email', pushkey: 'tester@test.com' } as unknown as IPusher;
                 mockClient.getPushers.mockResolvedValue({ pushers: [testPusher] });
                 const component = await getComponentAndWait();
 
@@ -215,17 +208,24 @@ describe('<Notifications />', () => {
             });
         });
 
-        it('sets settings value on toggle click', async () => {
+        it('toggles and sets settings correctly', async () => {
             const component = await getComponentAndWait();
+            let audioNotifsToggle: ReactWrapper;
 
-            const audioNotifsToggle = findByTestId(component, 'notif-setting-audioNotificationsEnabled')
-                .find('div[role="switch"]');
+            const update = () => {
+                audioNotifsToggle = findByTestId(component, 'notif-setting-audioNotificationsEnabled')
+                    .find('div[role="switch"]');
+            };
+            update();
 
-            await act(async () => {
-                audioNotifsToggle.simulate('click');
-            });
+            expect(audioNotifsToggle.getDOMNode<HTMLElement>().getAttribute("aria-checked")).toEqual("true");
+            expect(SettingsStore.getValue("audioNotificationsEnabled")).toEqual(true);
 
-            expect(SettingsStore.setValue).toHaveBeenCalledWith('audioNotificationsEnabled', null, "device", false);
+            act(() => { audioNotifsToggle.simulate('click'); });
+            update();
+
+            expect(audioNotifsToggle.getDOMNode<HTMLElement>().getAttribute("aria-checked")).toEqual("false");
+            expect(SettingsStore.getValue("audioNotificationsEnabled")).toEqual(false);
         });
     });
 
