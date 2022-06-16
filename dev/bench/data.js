@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655314297643,
+  "lastUpdate": 1655364496262,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101732,6 +101732,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 675.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe8c267a143390807b20e0874aecc153385fd28e",
+          "message": "Create a common header on right panel cards on BaseCard (#8808)\n\n* Remove duplicate declarations and add height and overflow properties\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Move mx_TimelineCard__header under mx_BaseCard_header for normalization\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Normalize mx_BaseCard_close position\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Normalize className of header\n\n- mx_BaseCard_header__ThreadPanel\n- mx_BaseCard_header__TimelineCard\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Normalize header's button size\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Normalize inline start header margin\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* normalize header bottom margin for PinnedMessagesCard and TimelineCard\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Normalize header declarations\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Add mixin RightPanelCard\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Move common declarations - top level\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Move common declarations - mx_BaseCard_header\n\nRemove specific declarations on PinnedMessagesCard\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Move common declarations - mx_BaseCard_back and mx_BaseCard_close\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Create a common class name - mx_BaseCard_header_title\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Create a common class name - mx_BaseCard_header_title - ThreadPanel\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Move common declarations - mx_BaseCard_header_title\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Move common declarations - span:first-of-type\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove redundant declarations\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Rename a variable to remove --ThreadPanel_header-button-size\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove class name - mx_BaseCard_header_title\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove mx_BaseCard_header_title--ThreadPanel and h2 declarations from PinnedMessagesCard\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Headers need Heading\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Use spacing variables\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Move common style rules of mx_ContextualMenu inside mx_BaseCard_header_title to BaseCard\n\nleaving style rules specific to ThreadPanel.\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Hide long header title with ellipsis\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Merge style rules - BaseCard_header-button-size\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Merge style rules - BaseCard_header margin-bottom\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Merge style rules - BaseCard back and close margin\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Merge style rules - BaseCard back ~ mx_BaseCard_header_title\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Merge style rules - mx_BaseCard_header_title\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Return special declarations to _ThreadPanel.scss\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove the mixin\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Add mx_BaseCard_header_title_button--option\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove redundant margin from AppTileFullWidth\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Header on mx_RoomSummaryCard - remove default declarations\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove default declarations from mx_UserInfo\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Use variables - _BaseCard.scss\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-16T09:22:45+02:00",
+          "tree_id": "83e3c38a756ce5c09f9ee23d81d31f8f311468c8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe8c267a143390807b20e0874aecc153385fd28e"
+        },
+        "date": 1655364484099,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5322.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2701.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4565,
             "unit": "ms",
             "extra": "type: measure"
           }
