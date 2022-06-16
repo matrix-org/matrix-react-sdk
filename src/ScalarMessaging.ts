@@ -600,6 +600,7 @@ async function getOpenIdToken(event: MessageEvent<any>) {
         const tokenObject = MatrixClientPeg.get().getOpenIdToken();
         sendResponse(event, tokenObject);
     } catch (ex) {
+        logger.warn("Unable to fetch openId token.", ex);
         sendError(event, 'Unable to fetch openId token.');
     }
 }
