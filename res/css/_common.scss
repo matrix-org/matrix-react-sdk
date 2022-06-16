@@ -812,18 +812,6 @@ legend {
     overflow: visible;
 
     .mx_BaseCard_header {
-        .mx_BaseCard_back {
-            // Header title with the back button
-            ~ .mx_BaseCard_header_title {
-                width: calc(100% - 60px);
-                margin-inline-start: var(--BaseCard_header-button-size);
-
-                .mx_BaseCard_header_title_heading {
-                    margin-inline-start: 6px; // TODO: Use a spacing variable
-                }
-            }
-        }
-
         .mx_BaseCard_header_title {
             display: flex;
             align-items: center;
