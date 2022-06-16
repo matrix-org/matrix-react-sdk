@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 .mx_SettingsTab {
+    --SettingsTab_section-margin-bottom-preferences-labs: 30px;
     color: $primary-content;
 
     a {
-        color: $accent-alt;
+        color: $links;
     }
 }
 
@@ -48,7 +49,7 @@ limitations under the License.
 }
 
 .mx_SettingsTab_subsectionText {
-    color: $settings-subsection-fg-color;
+    color: $secondary-content;
     font-size: $font-14px;
     display: block;
     margin-top: 10px; // TODO: Use a spacing variable
