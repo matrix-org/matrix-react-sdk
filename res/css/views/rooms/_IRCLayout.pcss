@@ -26,16 +26,15 @@ $irc-line-height: $font-18px;
     .mx_EventTile[data-layout="irc"] {
         --EventTile_irc_line-padding-block: 1px;
 
+        display: flex;
+        align-items: flex-start;
+        padding-top: 0;
+
         /* timestamps are links which shouldn't be underlined */
         > a {
             text-decoration: none;
             min-width: $MessageTimestamp_width;
         }
-
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding-top: 0;
 
         > * {
             margin-right: var(--right-padding);
