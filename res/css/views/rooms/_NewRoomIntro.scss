@@ -24,7 +24,7 @@ limitations under the License.
     }
 
     .mx_NewRoomIntro_buttons {
-        margin-top: 28px;
+        margin-block-start: 28px;
         display: flex;
         flex-flow: wrap;
         gap: 14px 12px;
@@ -42,7 +42,7 @@ limitations under the License.
                 mask-size: 20px;
                 width: 20px;
                 height: 20px;
-                margin-right: 5px;
+                margin-inline-end: 5px;
                 vertical-align: text-bottom;
             }
         }
@@ -53,7 +53,7 @@ limitations under the License.
     }
 
     > h2 {
-        margin-top: 24px;
+        margin-block-start: 24px;
         font-size: $font-24px;
         font-weight: 600;
     }

@@ -20,7 +20,7 @@ limitations under the License.
 
     hr {
         border: none;
-        border-bottom: 1px solid $quinary-content;
+        border-block-end: 1px solid $quinary-content;
     }
 }
 
@@ -42,13 +42,13 @@ limitations under the License.
     .mx_E2EIcon {
         width: 24px;
         height: 24px;
-        margin-left: 0;
-        margin-right: 5px;
+        margin-inline-start: 0;
+        margin-inline-end: 5px;
     }
 }
 
 .mx_DevicesPanel_deleteButton {
-    margin-top: 10px;
+    margin-block-start: 10px;
 }
 
 .mx_DevicesPanel_device {
@@ -59,8 +59,8 @@ limitations under the License.
 }
 
 .mx_DevicesPanel_icon, .mx_DevicesPanel_checkbox {
-    margin-left: 9px;
-    margin-top: 2px;
+    margin-inline-start: 9px;
+    margin-block-start: 2px;
 }
 
 .mx_DevicesPanel_deviceInfo {

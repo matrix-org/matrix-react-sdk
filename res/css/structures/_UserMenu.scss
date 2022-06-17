@@ -36,13 +36,13 @@ limitations under the License.
         font-weight: $font-semi-bold;
         font-size: $font-15px;
         line-height: $font-24px;
-        margin-left: 10px;
+        margin-inline-start: 10px;
     }
 
     .mx_UserMenu_dndBadge {
         position: absolute;
         bottom: -2px;
-        right: -7px;
+        inset-inline-end: -7px;
         width: 16px;
         height: 16px;
         border-radius: 50%;
@@ -117,7 +117,7 @@ limitations under the License.
             max-width: 32px;
             width: 32px;
             height: 32px;
-            margin-left: 8px;
+            margin-inline-start: 8px;
             border-radius: 32px;
             background-color: $theme-button-bg-color;
             cursor: pointer;
@@ -141,7 +141,7 @@ limitations under the License.
                 display: block;
 
                 & + span {
-                    margin-top: 8px;
+                    margin-block-start: 8px;
                 }
             }
         }
@@ -229,12 +229,12 @@ limitations under the License.
 
             position: absolute;
             top: 50%;
-            right: 0;
+            inset-inline-end: 0;
             transform: translateY(-50%);
 
             width: 16px;
             height: 16px;
-            margin-right: 8px;
+            margin-inline-end: 8px;
             background-color: $quinary-content;
             border-radius: 50%;
 

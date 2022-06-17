@@ -17,7 +17,7 @@ limitations under the License.
 .mx_NonUrgentToastContainer {
     position: absolute;
     bottom: 30px;
-    left: 28px;
+    inset-inline-start: 28px;
     z-index: 101; // same level as other toasts
 
     .mx_NonUrgentToastContainer_toast {
@@ -25,7 +25,7 @@ limitations under the License.
         border-radius: 8px;
         width: 320px;
         font-size: $font-13px;
-        margin-top: 8px;
+        margin-block-start: 8px;
 
         // We don't use variables on the colours because we want it to be the same
         // in all themes.

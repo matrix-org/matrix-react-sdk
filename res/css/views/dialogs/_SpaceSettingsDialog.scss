@@ -22,30 +22,30 @@ limitations under the License.
         font-size: $font-12px;
         line-height: $font-15px;
         color: $alert;
-        margin-bottom: 28px;
+        margin-block-end: 28px;
     }
 
     .mx_ToggleSwitch {
         display: inline-block;
         vertical-align: middle;
-        margin-left: 16px;
+        margin-inline-start: 16px;
     }
 
     .mx_SettingsTab_section {
         .mx_SettingsTab_section_caption {
-            margin-top: 12px;
-            margin-bottom: 20px;
+            margin-block-start: 12px;
+            margin-block-end: 20px;
         }
 
         & + .mx_SettingsTab_subheading {
-            border-top: 1px solid $menu-border-color;
-            margin-top: 0;
+            border-block-start: 1px solid $menu-border-color;
+            margin-block-start: 0;
             padding-top: 24px;
         }
 
         .mx_StyledRadioButton {
-            margin-top: 8px;
-            margin-bottom: 4px;
+            margin-block-start: 8px;
+            margin-block-end: 4px;
 
             .mx_StyledRadioButton_content {
                 font-weight: $font-semi-bold;
@@ -57,21 +57,21 @@ limitations under the License.
                 font-size: $font-15px;
                 line-height: $font-18px;
                 color: $secondary-content;
-                margin-left: 26px;
+                margin-inline-start: 26px;
             }
         }
     }
 
     .mx_SpaceSettingsDialog_buttons {
         display: flex;
-        margin-top: 64px;
+        margin-block-start: 64px;
 
         .mx_AccessibleButton {
             display: inline-block;
         }
 
         .mx_AccessibleButton_kind_link {
-            margin-left: auto;
+            margin-inline-start: auto;
         }
     }
 

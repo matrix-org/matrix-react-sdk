@@ -32,8 +32,8 @@ limitations under the License.
         border-radius: 2px; // rounded end caps, based on the border
         min-height: 0; // like the width, we'll rely on the border to give us height
         max-height: 100%; // this makes the `height: 42%` work on the element
-        margin-left: 1px; // we want 2px between each bar, so 1px on either side for balance
-        margin-right: 1px;
+        margin-inline-start: 1px; // we want 2px between each bar, so 1px on either side for balance
+        margin-inline-end: 1px;
 
         // background color is handled by the parent components
     }

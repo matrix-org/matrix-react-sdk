@@ -29,7 +29,7 @@ limitations under the License.
 
 .mx_JumpToDatePicker_datePicker {
     margin: 0;
-    margin-left: 8px;
+    margin-inline-start: 8px;
 
     &, & > input {
         border-radius: 8px;
@@ -37,5 +37,5 @@ limitations under the License.
 }
 
 .mx_JumpToDatePicker_submitButton {
-    margin-left: 8px;
+    margin-inline-start: 8px;
 }

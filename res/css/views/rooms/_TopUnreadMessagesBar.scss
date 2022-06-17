@@ -20,7 +20,7 @@ limitations under the License.
     z-index: 1000;
     position: absolute;
     top: 24px;
-    right: 24px;
+    inset-inline-end: 24px;
     width: 38px;
 }
 
@@ -28,7 +28,7 @@ limitations under the License.
     content: "";
     position: absolute;
     top: -8px;
-    left: 10.5px;
+    inset-inline-start: 10.5px;
     width: 4px;
     height: 4px;
     border-radius: 16px;

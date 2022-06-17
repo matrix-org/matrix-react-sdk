@@ -68,7 +68,7 @@ limitations under the License.
         // Absolute positioning to ensure it overlaps with the existing bar
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
 
         // Sizing to match the bar
         width: 100%;
@@ -97,7 +97,7 @@ limitations under the License.
         position: absolute;
         top: -6px;
         bottom: -6px;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
     }
 }

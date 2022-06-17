@@ -48,7 +48,7 @@ limitations under the License.
                 pointer-events: none;
 
                 .mx_EventTile[data-layout=bubble] .mx_EventTile_line {
-                    padding-right: 11px;
+                    padding-inline-end: 11px;
                 }
             }
 
@@ -58,7 +58,7 @@ limitations under the License.
             }
 
             .mx_EventTile_content {
-                margin-right: 0;
+                margin-inline-end: 0;
             }
 
             &.mx_LayoutSwitcher_RadioButton_selected {
@@ -67,7 +67,7 @@ limitations under the License.
         }
 
         .mx_StyledRadioButton {
-            border-top: 1px solid $quinary-content;
+            border-block-start: 1px solid $quinary-content;
         }
 
         .mx_StyledRadioButton_checked {
@@ -77,7 +77,7 @@ limitations under the License.
         .mx_EventTile {
             margin: 0;
             &[data-layout=bubble] {
-                margin-right: 40px;
+                margin-inline-end: 40px;
                 flex-shrink: 1;
             }
             &[data-layout=irc] {

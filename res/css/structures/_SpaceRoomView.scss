@@ -41,7 +41,7 @@ $SpaceRoomViewInnerWidth: 428px;
         width: 32px;
         height: 32px;
         top: 24px;
-        left: 20px;
+        inset-inline-start: 20px;
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: 24px;
@@ -82,8 +82,8 @@ $SpaceRoomViewInnerWidth: 428px;
         .mx_SpaceRoomView_description {
             font-size: $font-15px;
             color: $secondary-content;
-            margin-top: 12px;
-            margin-bottom: 24px;
+            margin-block-start: 12px;
+            margin-block-end: 24px;
             max-width: $SpaceRoomViewInnerWidth;
         }
 
@@ -102,13 +102,13 @@ $SpaceRoomViewInnerWidth: 428px;
 
         .mx_SpaceRoomView_buttons {
             display: block;
-            margin-top: 44px;
+            margin-block-start: 44px;
             width: $SpaceRoomViewInnerWidth;
-            text-align: right; // button alignment right
+            text-alignt: end; // button alignment right
 
             .mx_AccessibleButton_hasKind {
                 padding: 8px 22px;
-                margin-left: 16px;
+                margin-inline-start: 16px;
             }
 
             input.mx_AccessibleButton {
@@ -120,7 +120,7 @@ $SpaceRoomViewInnerWidth: 428px;
             max-width: $SpaceRoomViewInnerWidth;
 
             & + .mx_Field {
-                margin-top: 28px;
+                margin-block-start: 28px;
             }
         }
 
@@ -129,7 +129,7 @@ $SpaceRoomViewInnerWidth: 428px;
             font-size: $font-12px;
             line-height: $font-15px;
             color: $alert;
-            margin-bottom: 28px;
+            margin-block-end: 28px;
         }
 
         .mx_AccessibleButton_disabled {
@@ -161,7 +161,7 @@ $SpaceRoomViewInnerWidth: 428px;
                 border-radius: 8px;
                 width: max-content;
                 height: fit-content;
-                margin-left: 24px;
+                margin-inline-start: 24px;
             }
         }
 
@@ -182,7 +182,7 @@ $SpaceRoomViewInnerWidth: 428px;
 
             .mx_SpaceRoomView_landing_inviter {
                 .mx_BaseAvatar {
-                    margin-right: 4px;
+                    margin-inline-end: 4px;
                     vertical-align: middle;
                 }
             }
@@ -227,7 +227,7 @@ $SpaceRoomViewInnerWidth: 428px;
                     height: min-content;
 
                     &::before {
-                        left: 8px;
+                        inset-inline-start: 8px;
                         height: 16px;
                         width: 16px;
                         background: #fff; // white icon fill
@@ -241,7 +241,7 @@ $SpaceRoomViewInnerWidth: 428px;
                     height: 24px;
 
                     &::before {
-                        left: 0;
+                        inset-inline-start: 0;
                         top: 0;
                         height: 24px;
                         width: 24px;
@@ -255,8 +255,8 @@ $SpaceRoomViewInnerWidth: 428px;
 
         .mx_SpaceRoomView_landing_topic {
             font-size: $font-15px;
-            margin-top: 12px;
-            margin-bottom: 16px;
+            margin-block-start: 12px;
+            margin-block-end: 16px;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
@@ -294,19 +294,19 @@ $SpaceRoomViewInnerWidth: 428px;
 
             .mx_BetaCard_betaPill {
                 position: absolute;
-                left: 16px;
+                inset-inline-start: 16px;
                 top: 16px;
             }
         }
 
         .mx_SpaceRoomView_inviteTeammates_buttons {
             color: $secondary-content;
-            margin-top: 28px;
+            margin-block-start: 28px;
 
             .mx_AccessibleButton {
                 position: relative;
                 display: inline-block;
-                padding-left: 32px;
+                padding-inline-start: 32px;
                 line-height: 24px; // to center icons
 
                 &::before {
@@ -315,7 +315,7 @@ $SpaceRoomViewInnerWidth: 428px;
                     height: 24px;
                     width: 24px;
                     top: 0;
-                    left: 0;
+                    inset-inline-start: 0;
                     background-color: $secondary-content;
                     mask-repeat: no-repeat;
                     mask-position: center;
@@ -323,7 +323,7 @@ $SpaceRoomViewInnerWidth: 428px;
                 }
 
                 & + .mx_AccessibleButton {
-                    margin-left: 32px;
+                    margin-inline-start: 32px;
                 }
             }
 

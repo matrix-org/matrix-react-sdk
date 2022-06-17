@@ -83,7 +83,7 @@ describe('<LocationShareMenu />', () => {
 
     const defaultProps = {
         menuPosition: {
-            top: 1, left: 1,
+            top: 1, inset-inline-start: 1,
             chevronFace: ChevronFace.Bottom,
         },
         onFinished: jest.fn(),

@@ -62,7 +62,7 @@ $button-gap: 24px;
 
 .mx_ImageView_info_wrapper {
     pointer-events: initial;
-    padding-left: 32px;
+    padding-inline-start: 32px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -70,7 +70,7 @@ $button-gap: 24px;
 }
 
 .mx_ImageView_info {
-    padding-left: 12px;
+    padding-inline-start: 12px;
     display: flex;
     flex-direction: column;
 }
@@ -85,7 +85,7 @@ $button-gap: 24px;
 }
 
 .mx_ImageView_toolbar {
-    padding-right: 16px;
+    padding-inline-end: 16px;
     pointer-events: initial;
     display: flex;
     align-items: center;

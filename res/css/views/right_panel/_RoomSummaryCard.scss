@@ -17,7 +17,7 @@ limitations under the License.
 .mx_RoomSummaryCard {
     .mx_BaseCard_header {
         text-align: center;
-        margin-top: $spacing-20;
+        margin-block-start: $spacing-20;
 
         h2 {
             margin: $spacing-12 0 $spacing-4;
@@ -47,15 +47,15 @@ limitations under the License.
                 height: 54px;
                 border-radius: 50%;
                 background-color: #737d8c;
-                margin-top: -3px; // alignment
-                margin-left: -10px; // overlap
+                margin-block-start: -3px; // alignment
+                margin-inline-start: -10px; // overlap
                 border: 3px solid $dark-panel-bg-color;
 
                 &::before {
                     content: '';
                     position: absolute;
                     top: 13px;
-                    left: 13px;
+                    inset-inline-start: 13px;
                     height: 28px;
                     width: 28px;
                     mask-size: cover;
@@ -91,13 +91,13 @@ limitations under the License.
 
     .mx_RoomSummaryCard_aboutGroup {
         .mx_RoomSummaryCard_Button {
-            padding-left: 44px;
+            padding-inline-start: 44px;
 
             &::before {
                 content: '';
                 position: absolute;
                 top: 8px;
-                left: 10px;
+                inset-inline-start: 10px;
                 height: 24px;
                 width: 24px;
                 mask-repeat: no-repeat;
@@ -122,7 +122,7 @@ limitations under the License.
 
                 .mx_BaseAvatar_image {
                     vertical-align: top;
-                    margin-right: 12px;
+                    margin-inline-end: 12px;
                 }
 
                 span {
@@ -148,7 +148,7 @@ limitations under the License.
                         height: 24px;
                         width: 24px;
                         top: 8px; // equal to padding-top of parent
-                        left: 0;
+                        inset-inline-start: 0;
                         border-radius: 12px;
                         background-color: rgba(141, 151, 165, 0.1);
                     }
@@ -167,14 +167,14 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_app_pinToggle {
-                right: 8px;
+                inset-inline-end: 8px;
 
                 &::before {
                     mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
                 }
             }
             .mx_RoomSummaryCard_app_maximiseToggle {
-                right: 32px; //24 + 8
+                inset-inline-end: 32px; //24 + 8
 
                 &::before {
                     mask-size: 14px;
@@ -183,7 +183,7 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_app_options {
-                right: 56px; //2*24 + 8
+                inset-inline-end: 56px; //2*24 + 8
                 display: none;
 
                 &::before {
@@ -213,7 +213,7 @@ limitations under the License.
 
             &:hover {
                 .mx_RoomSummaryCard_icon_app {
-                    padding-right: 72px;
+                    padding-inline-end: 72px;
                 }
 
                 .mx_RoomSummaryCard_app_options {
@@ -233,8 +233,8 @@ limitations under the License.
     }
 
     .mx_AccessibleButton_kind_link {
-        margin-top: 12px;
-        margin-bottom: 12px;
+        margin-block-start: 12px;
+        margin-block-end: 12px;
         font-size: $font-13px;
         font-weight: $font-semi-bold;
     }

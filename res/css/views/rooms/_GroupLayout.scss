@@ -87,12 +87,12 @@ limitations under the License.
 
         .mx_EventTile_content .markdown-body {
             p, ul, ol, dl, blockquote, pre, table {
-                margin-bottom: 4px; // 1/4 of the non-compact margin-bottom
+                margin-block-end: 4px; // 1/4 of the non-compact margin-block-end
             }
         }
     }
 
     .mx_RoomView_MessageList h2 {
-        margin-top: 6px;
+        margin-block-start: 6px;
     }
 }

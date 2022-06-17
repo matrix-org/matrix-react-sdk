@@ -33,11 +33,11 @@ limitations under the License.
 }
 
 .mx_InteractiveTooltip.mx_InteractiveTooltip_withChevron_left {
-    left: 10px; // 8px chevron + 2px spacing
+    inset-inline-start: 10px; // 8px chevron + 2px spacing
 }
 
 .mx_InteractiveTooltip.mx_InteractiveTooltip_withChevron_right {
-    right: 10px; // 8px chevron + 2px spacing
+    inset-inline-end: 10px; // 8px chevron + 2px spacing
 }
 
 .mx_InteractiveTooltip.mx_InteractiveTooltip_withChevron_bottom {
@@ -46,13 +46,13 @@ limitations under the License.
 
 .mx_InteractiveTooltip_chevron_top {
     position: absolute;
-    left: calc(50% - 8px);
+    inset-inline-start: calc(50% - 8px);
     top: -8px;
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-bottom: 8px solid $background;
-    border-right: 8px solid transparent;
+    border-inline-start: 8px solid transparent;
+    border-block-end: 8px solid $background;
+    border-inline-end: 8px solid transparent;
 }
 
 // Adapted from https://codyhouse.co/blog/post/css-rounded-triangles-with-clip-path
@@ -72,13 +72,13 @@ limitations under the License.
 
 .mx_InteractiveTooltip_chevron_bottom {
     position: absolute;
-    left: calc(50% - 8px);
+    inset-inline-start: calc(50% - 8px);
     bottom: -8px;
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-top: 8px solid $background;
-    border-right: 8px solid transparent;
+    border-inline-start: 8px solid transparent;
+    border-block-start: 8px solid $background;
+    border-inline-end: 8px solid transparent;
 }
 
 // Adapted from https://codyhouse.co/blog/post/css-rounded-triangles-with-clip-path

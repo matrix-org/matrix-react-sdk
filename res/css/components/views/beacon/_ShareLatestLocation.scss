@@ -23,6 +23,6 @@ limitations under the License.
 .mx_ShareLatestLocation_copy {
     // override copyable text style to make compact
     .mx_CopyableText_copyButton {
-        margin-left: $spacing-8 !important;
+        margin-inline-start: $spacing-8 !important;
     }
 }

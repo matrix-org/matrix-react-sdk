@@ -9,17 +9,17 @@
 
 .mx_CryptographyPanel_sessionInfo > tr > td {
     padding-bottom: 0em;
-    padding-left: 0em;
-    padding-right: 1em;
+    padding-inline-start: 0em;
+    padding-inline-end: 1em;
     padding-top: 0em;
 }
 
 .mx_CryptographyPanel_importExportButtons .mx_AccessibleButton {
-    margin-right: 10px;
+    margin-inline-end: 10px;
 }
 
 .mx_CryptographyPanel_importExportButtons {
-    margin-bottom: 15px;
+    margin-block-end: 15px;
     display: inline-flex;
     flex-flow: wrap;
     row-gap: 10px;

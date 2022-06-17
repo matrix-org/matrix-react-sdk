@@ -23,7 +23,7 @@ limitations under the License.
     color: $primary-content;
     font-size: $font-14px;
     font-weight: normal;
-    margin-right: 4px;
+    margin-inline-end: 4px;
 }
 
 .mx_AddressTile.mx_AddressTile_error {
@@ -35,16 +35,16 @@ limitations under the License.
 .mx_AddressTile_network {
     display: inline-block;
     position: relative;
-    padding-left: 2px;
-    padding-right: 4px;
+    padding-inline-start: 2px;
+    padding-inline-end: 4px;
     vertical-align: middle;
 }
 
 .mx_AddressTile_avatar {
     display: inline-block;
     position: relative;
-    padding-left: 2px;
-    padding-right: 7px;
+    padding-inline-start: 2px;
+    padding-inline-end: 7px;
     vertical-align: middle;
 }
 
@@ -57,7 +57,7 @@ limitations under the License.
 
 .mx_AddressTile_name {
     display: inline-block;
-    padding-right: 4px;
+    padding-inline-end: 4px;
     font-weight: 600;
     overflow: hidden;
     height: 26px;
@@ -74,7 +74,7 @@ limitations under the License.
 
 .mx_AddressTile_id {
     display: inline-block;
-    padding-right: 11px;
+    padding-inline-end: 11px;
 }
 
 .mx_AddressTile_id.mx_AddressTile_justified {
@@ -88,7 +88,7 @@ limitations under the License.
 .mx_AddressTile_unknownMx {
     display: inline-block;
     font-weight: 600;
-    padding-right: 11px;
+    padding-inline-end: 11px;
 }
 
 .mx_AddressTile_unknownMxl.mx_AddressTile_justified {
@@ -102,7 +102,7 @@ limitations under the License.
 .mx_AddressTile_email {
     display: inline-block;
     font-weight: 600;
-    padding-right: 11px;
+    padding-inline-end: 11px;
 }
 
 .mx_AddressTile_email.mx_AddressTile_justified {
@@ -115,7 +115,7 @@ limitations under the License.
 
 .mx_AddressTile_unknown {
     display: inline-block;
-    padding-right: 11px;
+    padding-inline-end: 11px;
 }
 
 .mx_AddressTile_unknown.mx_AddressTile_justified {
@@ -128,8 +128,8 @@ limitations under the License.
 
 .mx_AddressTile_dismiss {
     display: inline-block;
-    padding-right: 11px;
-    padding-left: 1px;
+    padding-inline-end: 11px;
+    padding-inline-start: 1px;
     cursor: pointer;
 }
 

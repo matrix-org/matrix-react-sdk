@@ -31,7 +31,7 @@ limitations under the License.
 
     & + .mx_PinnedEventTile {
         padding: 12px 4px;
-        border-top: 1px solid $menu-border-color;
+        border-block-start: 1px solid $menu-border-color;
     }
 
     .mx_PinnedEventTile_senderAvatar,
@@ -99,7 +99,7 @@ limitations under the License.
         }
 
         .mx_AccessibleButton_kind_link {
-            margin-left: 12px;
+            margin-inline-start: 12px;
         }
     }
 

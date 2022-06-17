@@ -21,8 +21,8 @@ limitations under the License.
         font-family: $font-family;
         font-weight: $font-semi-bold;
         color: $primary-content;
-        margin-top: 18px;
-        margin-bottom: 12px;
+        margin-block-start: 18px;
+        margin-block-end: 12px;
     }
 
     &.mx_ExportDialog_Exporting {
@@ -59,15 +59,15 @@ limitations under the License.
 
     .mx_ExportDialog_progress {
         .mx_Dialog_buttons {
-            margin-top: unset;
-            margin-left: 18px;
+            margin-block-start: unset;
+            margin-inline-start: 18px;
         }
 
         .mx_Spinner {
             width: unset;
             height: unset;
             flex: unset;
-            margin-right: 10px;
+            margin-inline-end: 10px;
         }
 
         display: flex;
@@ -77,8 +77,8 @@ limitations under the License.
     }
 
     .mx_StyledRadioButton > .mx_StyledRadioButton_content {
-        margin-top: 5px;
-        margin-bottom: 5px;
+        margin-block-start: 5px;
+        margin-block-end: 5px;
     }
 
     .mx_Field {
@@ -91,5 +91,5 @@ limitations under the License.
 }
 
 .mx_ExportDialog_attachments-checkbox {
-    margin-top: $spacing-16;
+    margin-block-start: $spacing-16;
 }

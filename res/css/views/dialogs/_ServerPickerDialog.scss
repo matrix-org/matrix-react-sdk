@@ -19,7 +19,7 @@ limitations under the License.
     box-sizing: border-box;
 
     .mx_Dialog_content {
-        margin-bottom: 0;
+        margin-block-end: 0;
 
         > p {
             color: $secondary-content;
@@ -27,7 +27,7 @@ limitations under the License.
             margin: 16px 0;
 
             &:first-of-type {
-                margin-bottom: 40px;
+                margin-block-end: 40px;
             }
 
             &:last-of-type {
@@ -39,34 +39,34 @@ limitations under the License.
             font-size: $font-15px;
             font-weight: $font-semi-bold;
             color: $secondary-content;
-            margin-left: 8px;
+            margin-inline-start: 8px;
         }
 
         > a {
             color: $accent;
-            margin-left: 8px;
+            margin-inline-start: 8px;
         }
     }
 
     .mx_ServerPickerDialog_otherHomeserverRadio {
         input[type="radio"] + div {
-            margin-top: auto;
-            margin-bottom: auto;
+            margin-block-start: auto;
+            margin-block-end: auto;
         }
     }
 
     .mx_ServerPickerDialog_otherHomeserver {
-        border-top: none;
-        border-left: none;
-        border-right: none;
+        border-block-start: none;
+        border-inline-start: none;
+        border-inline-end: none;
         border-radius: unset;
 
         > input {
-            padding-left: 0;
+            padding-inline-start: 0;
         }
 
         > label {
-            margin-left: 0;
+            margin-inline-start: 0;
         }
     }
 

@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 .mx_SlashCommandHelpDialog .mx_SlashCommandHelpDialog_headerRow h2 {
-    margin-bottom: 2px;
+    margin-block-end: 2px;
 }
 
 .mx_SlashCommandHelpDialog .mx_Dialog_content {
-    margin-top: 12px;
-    margin-bottom: 34px;
+    margin-block-start: 12px;
+    margin-block-end: 34px;
 }

@@ -16,13 +16,13 @@ limitations under the License.
 
 .mx_AliasSettings_editable {
     border: 0px;
-    border-bottom: 1px solid $strong-input-border-color;
+    border-block-end: 1px solid $strong-input-border-color;
     padding: 0px;
     min-width: 240px;
 }
 
 .mx_AliasSettings_editable:focus {
-    border-bottom: 1px solid $accent;
+    border-block-end: 1px solid $accent;
     outline: none;
     box-shadow: none;
 }
@@ -41,6 +41,6 @@ limitations under the License.
     }
 
     .mx_AliasSettings_localAliasHeader {
-        margin-top: 35px;
+        margin-block-start: 35px;
     }
 }

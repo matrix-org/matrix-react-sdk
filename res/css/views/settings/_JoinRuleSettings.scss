@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_JoinRuleSettings_upgradeRequired {
-    margin-left: 16px;
+    margin-inline-start: 16px;
     padding: 4px 16px;
     border: 1px solid $accent;
     border-radius: 8px;
@@ -46,21 +46,21 @@ limitations under the License.
         }
 
         .mx_BaseAvatar {
-            margin-right: 8px;
+            margin-inline-end: 8px;
         }
 
         & + span {
-            margin-left: 16px;
+            margin-inline-start: 16px;
         }
     }
 }
 
 .mx_JoinRuleSettings_radioButton {
     padding-top: 16px;
-    margin-bottom: 8px;
+    margin-block-end: 8px;
 
     .mx_StyledRadioButton_content {
-        margin-left: 14px;
+        margin-inline-start: 14px;
         font-weight: $font-semi-bold;
         font-size: $font-15px;
         line-height: $font-24px;
@@ -70,14 +70,14 @@ limitations under the License.
 
     & + span {
         display: inline-block;
-        margin-left: 34px;
-        margin-bottom: 16px;
+        margin-inline-start: 34px;
+        margin-block-end: 16px;
         font-size: $font-15px;
         line-height: $font-24px;
         color: $secondary-content;
 
         & + .mx_StyledRadioButton {
-            border-top: 1px solid $quinary-content;
+            border-block-start: 1px solid $quinary-content;
         }
     }
 }

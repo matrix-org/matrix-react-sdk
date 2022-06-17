@@ -38,13 +38,13 @@ limitations under the License.
 .mx_CallViewHeader_secondaryCallInfo {
     &::before {
         content: '·';
-        margin-left: 6px;
-        margin-right: 6px;
+        margin-inline-start: 6px;
+        margin-inline-end: 6px;
     }
 }
 
 .mx_CallViewHeader_controls {
-    margin-left: auto;
+    margin-inline-start: auto;
     display: flex;
     gap: 5px;
 }
@@ -86,8 +86,8 @@ limitations under the License.
 }
 
 .mx_CallViewHeader_callInfo {
-    margin-left: 12px;
-    margin-right: 16px;
+    margin-inline-start: 12px;
+    margin-inline-end: 16px;
     overflow: hidden;
 }
 
@@ -103,12 +103,12 @@ limitations under the License.
 }
 
 .mx_CallView_secondaryCall_roomName {
-    margin-left: 4px;
+    margin-inline-start: 4px;
 }
 
 .mx_CallViewHeader_icon {
     display: inline-block;
-    margin-right: 6px;
+    margin-inline-end: 6px;
     height: 16px;
     width: 16px;
     vertical-align: middle;

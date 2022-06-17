@@ -38,7 +38,7 @@ limitations under the License.
             background-color: $header-panel-bg-color;
 
             .mx_BetaCard_betaPill {
-                margin-right: 8px;
+                margin-inline-end: 8px;
                 vertical-align: middle;
             }
         }
@@ -51,7 +51,7 @@ limitations under the License.
 
     .mx_CreateSubspaceDialog_footer {
         display: flex;
-        margin-top: 20px;
+        margin-block-start: 20px;
 
         .mx_CreateSubspaceDialog_footer_prompt {
             flex-grow: 1;
@@ -70,7 +70,7 @@ limitations under the License.
         }
 
         .mx_AccessibleButton_kind_primary {
-            margin-left: 16px;
+            margin-inline-start: 16px;
             padding: 8px 36px;
         }
     }

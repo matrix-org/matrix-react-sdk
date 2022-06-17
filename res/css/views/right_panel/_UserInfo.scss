@@ -64,18 +64,18 @@ limitations under the License.
         }
 
         .mx_UserInfo_container_verifyButton {
-            margin-top: $spacing-8;
+            margin-block-start: $spacing-8;
         }
     }
 
     .mx_UserInfo_separator {
-        border-bottom: 1px solid rgba($primary-content, .1);
+        border-block-end: 1px solid rgba($primary-content, .1);
     }
 
     .mx_UserInfo_memberDetailsContainer {
         padding-top: 0;
         padding-bottom: 0;
-        margin-bottom: $spacing-8;
+        margin-block-end: $spacing-8;
     }
 
     .mx_RoomTile_titleContainer {
@@ -112,7 +112,7 @@ limitations under the License.
                     border-radius: 100%;
                     position: absolute;
                     top: 0;
-                    left: 0;
+                    inset-inline-start: 0;
                     width: 100% !important;
                     height: 100% !important;
                 }
@@ -177,14 +177,14 @@ limitations under the License.
             }
 
             .mx_E2EIcon {
-                margin-top: 3px; // visual vertical centering to the top line of text. TODO: Use a variable
+                margin-block-start: 3px; // visual vertical centering to the top line of text. TODO: Use a variable
                 margin-inline-end: $spacing-4; // margin from displayName
                 min-width: 18px; // convince flexbox to not collapse it
             }
         }
 
         .mx_UserInfo_profileStatus {
-            margin-top: $spacing-12;
+            margin-block-start: $spacing-12;
         }
     }
 
@@ -272,7 +272,7 @@ limitations under the License.
 
         .mx_UserInfo_expand {
             column-gap: 5px; // cf: mx_UserInfo_device_name
-            margin-bottom: 11px;
+            margin-block-end: 11px;
             align-items: initial; // Cancel the default property
         }
     }

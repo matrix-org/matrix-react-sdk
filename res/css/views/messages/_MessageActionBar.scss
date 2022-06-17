@@ -32,7 +32,7 @@ limitations under the License.
     background: $background;
     border: 1px solid $input-border-color;
     top: -32px;
-    right: 8px;
+    inset-inline-end: 8px;
     user-select: none;
     // Ensure the action bar appears above other things like the read marker
     // and sender avatar (for small screens)
@@ -50,7 +50,7 @@ limitations under the License.
         // safe area + action bar
         height: calc(20px + 100%);
         top: -12px;
-        left: -58px;
+        inset-inline-start: -58px;
         z-index: -1;
         cursor: initial;
     }
@@ -82,7 +82,7 @@ limitations under the License.
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            inset-inline-start: 0;
             height: 100%;
             width: 100%;
             mask-size: 18px;

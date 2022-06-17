@@ -16,15 +16,15 @@ limitations under the License.
 
 .mx_DirectorySearchBox {
     display: flex;
-    padding-left: 9px;
-    padding-right: 9px;
+    padding-inline-start: 9px;
+    padding-inline-end: 9px;
 }
 
 .mx_DirectorySearchBox_joinButton {
     display: table-cell;
     padding: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-inline-start: 10px;
+    padding-inline-end: 10px;
     background-color: $secondary-accent-color;
     border-radius: 3px;
     background-image: url('$(res)/img/icon-return.svg');

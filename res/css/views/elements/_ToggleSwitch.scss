@@ -35,7 +35,7 @@ limitations under the License.
     background-color: $accent;
 
     > .mx_ToggleSwitch_ball {
-        left: calc(100% - $font-20px);
+        inset-inline-start: calc(100% - $font-20px);
     }
 }
 
@@ -46,5 +46,5 @@ limitations under the License.
     border-radius: $font-20px;
     background-color: $togglesw-ball-color;
     transition: left 0.15s ease-out 0.1s;
-    left: 0;
+    inset-inline-start: 0;
 }

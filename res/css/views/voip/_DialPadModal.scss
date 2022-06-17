@@ -25,17 +25,17 @@ limitations under the License.
 }
 
 .mx_DialPadModal_header {
-    margin-top: 32px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-block-start: 32px;
+    margin-inline-start: 40px;
+    margin-inline-end: 40px;
 
     /* a separator between the input line and the dial buttons */
-    border-bottom: 1px solid $quaternary-content;
-    transition: border-bottom 0.25s;
+    border-block-end: 1px solid $quaternary-content;
+    transition: border-block-end 0.25s;
 }
 
 .mx_DialPadModal_header:focus-within {
-    border-bottom: 1px solid $accent;
+    border-block-end: 1px solid $accent;
 }
 
 .mx_DialPadModal_title {
@@ -46,10 +46,10 @@ limitations under the License.
 
 .mx_DialPadModal_cancel {
     @mixin customisedCancelButton;
-    float: right;
+    float: inline-end;
     width: 14px;
     height: 14px;
-    margin-right: 16px;
+    margin-inline-end: 16px;
 }
 
 .mx_DialPadModal_field {
@@ -60,7 +60,7 @@ limitations under the License.
 
 .mx_DialPadModal_field .mx_Field_postfix {
     /* Remove border separator between postfix and field content */
-    border-left: none;
+    border-inline-start: none;
 }
 
 .mx_DialPadModal_field input {
@@ -69,7 +69,7 @@ limitations under the License.
 }
 
 .mx_DialPadModal_dialPad {
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-top: 16px;
+    margin-inline-start: 16px;
+    margin-inline-end: 16px;
+    margin-block-start: 16px;
 }

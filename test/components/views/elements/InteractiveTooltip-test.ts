@@ -23,18 +23,18 @@ describe("InteractiveTooltip", () => {
                 width: 20,
                 height: 20,
                 top: 300,
-                right: 370,
+                inset-inline-end: 370,
                 bottom: 320,
-                left: 350,
+                inset-inline-start: 350,
             } as DOMRect;
 
             const contentRect = {
                 width: 100,
                 height: 400,
                 top: 100,
-                right: 200,
+                inset-inline-end: 200,
                 bottom: 500,
-                left: 100,
+                inset-inline-start: 100,
             } as DOMRect;
 
             // just within top left corner of contentRect
@@ -58,18 +58,18 @@ describe("InteractiveTooltip", () => {
                 width: 20,
                 height: 20,
                 top: 300,
-                right: 370,
+                inset-inline-end: 370,
                 bottom: 320,
-                left: 350,
+                inset-inline-start: 350,
             } as DOMRect;
 
             const contentRect = {
                 width: 100,
                 height: 400,
                 top: 100,
-                right: 620,
+                inset-inline-end: 620,
                 bottom: 500,
-                left: 520,
+                inset-inline-start: 520,
             } as DOMRect;
 
             // just within top right corner of contentRect
@@ -93,18 +93,18 @@ describe("InteractiveTooltip", () => {
                 width: 20,
                 height: 20,
                 top: 300,
-                right: 370,
+                inset-inline-end: 370,
                 bottom: 320,
-                left: 350,
+                inset-inline-start: 350,
             } as DOMRect;
 
             const contentRect = {
                 width: 400,
                 height: 100,
                 top: 100,
-                right: 550,
+                inset-inline-end: 550,
                 bottom: 200,
-                left: 150,
+                inset-inline-start: 150,
             } as DOMRect;
 
             // just within top right corner of contentRect
@@ -128,18 +128,18 @@ describe("InteractiveTooltip", () => {
                 width: 20,
                 height: 20,
                 top: 300,
-                right: 370,
+                inset-inline-end: 370,
                 bottom: 320,
-                left: 350,
+                inset-inline-start: 350,
             } as DOMRect;
 
             const contentRect = {
                 width: 400,
                 height: 100,
                 top: 420,
-                right: 550,
+                inset-inline-end: 550,
                 bottom: 520,
-                left: 150,
+                inset-inline-start: 150,
             } as DOMRect;
 
             // just within bottom left corner of contentRect

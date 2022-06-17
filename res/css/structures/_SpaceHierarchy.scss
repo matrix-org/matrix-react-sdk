@@ -42,7 +42,7 @@ limitations under the License.
         font-size: $font-15px;
         line-height: $font-24px;
         color: $primary-content;
-        margin-bottom: 12px;
+        margin-block-end: 12px;
 
         .mx_SpaceHierarchy_listHeader_header {
             grid-column-start: 1;
@@ -76,7 +76,7 @@ limitations under the License.
         font-size: $font-15px;
         line-height: $font-18px;
         margin: 20px auto 12px;
-        padding-left: 24px;
+        padding-inline-start: 24px;
         width: max-content;
 
         &::before {
@@ -84,7 +84,7 @@ limitations under the License.
             position: absolute;
             height: 16px;
             width: 16px;
-            left: 0;
+            inset-inline-start: 0;
             background-image: url("$(res)/img/element-icons/warning-badge.svg");
             background-size: cover;
             background-repeat: no-repeat;
@@ -101,7 +101,7 @@ limitations under the License.
         }
 
         > span {
-            margin-left: 8px;
+            margin-inline-start: 8px;
             font-size: $font-15px;
             line-height: $font-24px;
             color: $secondary-content;
@@ -116,7 +116,7 @@ limitations under the License.
 
     .mx_SpaceHierarchy_subspace_toggle {
         position: absolute;
-        left: -1px;
+        inset-inline-start: -1px;
         top: 10px;
         height: 16px;
         width: 16px;
@@ -127,7 +127,7 @@ limitations under the License.
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            inset-inline-start: 0;
             height: 16px;
             width: 16px;
             mask-repeat: no-repeat;
@@ -145,7 +145,7 @@ limitations under the License.
 
     .mx_SpaceHierarchy_subspace_children {
         position: relative;
-        padding-left: 12px;
+        padding-inline-start: 12px;
     }
 
     .mx_SpaceHierarchy_list {
@@ -187,20 +187,20 @@ limitations under the License.
 
                         .mx_InfoTooltip,
                         .mx_SpaceHierarchy_roomTile_joined {
-                            margin-left: 12px;
+                            margin-inline-start: 12px;
                             color: $tertiary-content;
                             font-size: $font-12px;
                             line-height: $font-15px;
 
                             .mx_InfoTooltip_icon {
-                                margin-right: 4px;
+                                margin-inline-end: 4px;
                                 position: relative;
                                 vertical-align: text-top;
 
                                 &::before {
                                     position: absolute;
                                     top: 0;
-                                    left: 0;
+                                    inset-inline-start: 0;
                                 }
                             }
                         }
@@ -212,14 +212,14 @@ limitations under the License.
                         .mx_SpaceHierarchy_roomTile_joined {
                             display: inline;
                             position: relative;
-                            padding-left: 16px;
+                            padding-inline-start: 16px;
 
                             &::before {
                                 content: '';
                                 width: 20px;
                                 height: 20px;
                                 top: -2px;
-                                left: -4px;
+                                inset-inline-start: -4px;
                                 position: absolute;
                                 mask-position: center;
                                 mask-size: contain;
@@ -248,7 +248,7 @@ limitations under the License.
                     display: flex;
                     align-items: center;
                     column-gap: 12px;
-                    margin-left: auto;
+                    margin-inline-start: auto;
 
                     .mx_AccessibleButton {
                         line-height: $font-24px;
@@ -298,7 +298,7 @@ limitations under the License.
             background-color: $spacePanel-bg-color;
             width: 1px;
             height: 100%;
-            left: 6px;
+            inset-inline-start: 6px;
             top: 0;
         }
     }

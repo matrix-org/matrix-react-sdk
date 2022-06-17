@@ -19,7 +19,7 @@ limitations under the License.
     display: inline-block;
     width: 11px;
     height: 11px;
-    margin-left: 5px;
+    margin-inline-start: 5px;
 
     border: 2px solid $neutral-badge-color;
     border-radius: 20px;
@@ -41,7 +41,7 @@ limitations under the License.
 .mx_TooltipButton_container {
     position: relative;
     top: -18px;
-    left: 4px;
+    inset-inline-start: 4px;
 }
 
 .mx_TooltipButton_helpText {

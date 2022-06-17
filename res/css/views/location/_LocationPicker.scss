@@ -33,19 +33,19 @@ limitations under the License.
     }
 
     #mx_LocationPicker_map {
-        border-top-left-radius: inherit;
-        border-top-right-radius: inherit;
+        border-block-start-left-radius: inherit;
+        border-block-start-right-radius: inherit;
         flex: 1;
 
         .maplibregl-ctrl.maplibregl-ctrl-group,
         .maplibregl-ctrl.maplibregl-ctrl-attrib {
-            margin-right: $spacing-16;
+            margin-inline-end: $spacing-16;
         }
 
         .maplibregl-ctrl.maplibregl-ctrl-group {
             // place below the close button
             // padding-16 + 24px close button + padding-10
-            margin-top: 50px;
+            margin-block-start: 50px;
         }
 
         .maplibregl-user-location-accuracy-circle {
@@ -66,8 +66,8 @@ limitations under the License.
         flex-direction: column;
         justify-content: stretch;
 
-        border-bottom-left-radius: inherit;
-        border-bottom-right-radius: inherit;
+        border-block-end-left-radius: inherit;
+        border-block-end-right-radius: inherit;
 
         background-color: $header-panel-bg-color;
     }

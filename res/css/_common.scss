@@ -102,8 +102,8 @@ h2 {
     color: $primary-content;
     font-weight: 400;
     font-size: $font-18px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-block-start: 16px;
+    margin-block-end: 16px;
 }
 
 a:hover,
@@ -124,7 +124,7 @@ input[type=password] {
 
 input[type=text].mx_textinput_icon,
 input[type=search].mx_textinput_icon {
-    padding-left: 36px;
+    padding-inline-start: 36px;
     background-repeat: no-repeat;
     background-position: 10px center;
 }
@@ -282,7 +282,7 @@ legend {
     position: fixed;
     z-index: 4000;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 100%;
 
@@ -358,7 +358,7 @@ legend {
 .mx_Dialog .markdown-body h1,
 .mx_Dialog .markdown-body h2 {
     font-size: 1.5em;
-    border-bottom: none !important; // override GFM
+    border-block-end: none !important; // override GFM
 }
 
 .mx_Dialog .markdown-body a {
@@ -366,7 +366,7 @@ legend {
 }
 
 .mx_Dialog .markdown-body blockquote {
-    border-left: 2px solid $blockquote-bar-color;
+    border-inline-start: 2px solid $blockquote-bar-color;
     border-radius: 2px;
     padding: 0 10px;
 }
@@ -384,7 +384,7 @@ legend {
 .mx_Dialog_background {
     position: fixed;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 100%;
     background-color: $dialog-backdrop-color;
@@ -423,16 +423,16 @@ legend {
 .mx_Dialog_header {
     position: relative;
     padding: 3px 0;
-    margin-bottom: 10px;
+    margin-block-end: 10px;
 }
 
 .mx_Dialog_titleImage {
     vertical-align: sub;
     width: 25px;
     height: 25px;
-    margin-left: -2px;
-    margin-right: 4px;
-    margin-bottom: 2px;
+    margin-inline-start: -2px;
+    margin-inline-end: 4px;
+    margin-block-end: 2px;
 }
 
 .mx_Dialog_title {
@@ -446,7 +446,7 @@ legend {
     text-align: center;
 }
 .mx_Dialog_header.mx_Dialog_headerWithCancel {
-    padding-right: 20px; // leave space for the 'X' cancel button
+    padding-inline-end: 20px; // leave space for the 'X' cancel button
 }
 
 .mx_Dialog_title.danger {
@@ -471,7 +471,7 @@ legend {
     height: 14px;
     position: absolute;
     top: 10px;
-    right: 0;
+    inset-inline-end: 0;
 }
 
 .mx_Dialog_content {
@@ -482,13 +482,13 @@ legend {
 }
 
 .mx_Dialog_buttons {
-    margin-top: $spacing-20;
+    margin-block-start: $spacing-20;
     margin-inline-start: auto;
-    text-align: right;
+    text-alignt: end;
 
     .mx_Dialog_buttons_additive {
         // The consumer is responsible for positioning their elements.
-        float: left;
+        float: inline-start;
     }
 }
 
@@ -500,8 +500,8 @@ legend {
     margin-inline-start: auto;
 
     // default gap among elements
-    column-gap: $spacing-8; // See margin-right below inside the button style
-    row-gap: 5px; // See margin-bottom below inside the button style
+    column-gap: $spacing-8; // See margin-inline-end below inside the button style
+    row-gap: 5px; // See margin-block-end below inside the button style
 
     button {
         margin: 0 !important; // override the margin settings
@@ -522,9 +522,9 @@ legend {
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
 .mx_Dialog_buttons input[type="submit"] {
     @mixin mx_DialogButton;
-    margin-left: 0px;
-    margin-right: 8px;
-    margin-bottom: 5px;
+    margin-inline-start: 0px;
+    margin-inline-end: 8px;
+    margin-block-end: 5px;
 
     // flip colours for the secondary ones
     font-weight: 600;
@@ -535,7 +535,7 @@ legend {
 }
 
 .mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):last-child {
-    margin-right: 0px;
+    margin-inline-end: 0px;
 }
 
 .mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):hover,
@@ -626,7 +626,7 @@ legend {
 }
 
 .mx_TextInputDialog_label {
-    text-align: left;
+    text-align: start;
     padding-bottom: 12px;
 }
 
@@ -648,7 +648,7 @@ legend {
 }
 
 .mx_button_row {
-    margin-top: 69px;
+    margin-block-start: 69px;
 }
 
 // username colors
@@ -697,12 +697,12 @@ legend {
 // This is a workaround for our mixins not supporting child selectors
 .mx_Tooltip_dark {
     .mx_Tooltip_chevron::after {
-        border-right-color: $tooltip-timeline-bg-color;
+        border-inline-end-color: $tooltip-timeline-bg-color;
     }
 }
 
 @define-mixin mx_Settings_fullWidthField {
-    margin-right: 100px;
+    margin-inline-end: 100px;
 }
 
 @define-mixin mx_Settings_tooltip {
@@ -767,7 +767,7 @@ legend {
     font-weight: 600;
     height: $font-24px;
     line-height: $font-24px;
-    margin-right: 0;
+    margin-inline-end: 0;
 
     span {
         display: flex;
@@ -779,7 +779,7 @@ legend {
             background-color: $button-fg-color;
             mask-position: center;
             mask-repeat: no-repeat;
-            margin-right: 8px;
+            margin-inline-end: 8px;
         }
     }
 }

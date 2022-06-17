@@ -77,8 +77,8 @@ limitations under the License.
         .mx_VideoLobby_controls {
             position: absolute;
             bottom: 0;
-            left: 0;
-            right: 0;
+            inset-inline-start: 0;
+            inset-inline-end: 0;
 
             background-color: rgba($video-lobby-background, 0.9);
 
@@ -124,7 +124,7 @@ limitations under the License.
 
                     position: absolute;
                     bottom: 0;
-                    right: -2.5px;
+                    inset-inline-end: -2.5px;
                     width: $size;
                     height: $size;
 
@@ -168,7 +168,7 @@ limitations under the License.
     }
 
     .mx_VideoLobby_joinButton {
-        padding-left: 50px;
-        padding-right: 50px;
+        padding-inline-start: 50px;
+        padding-inline-end: 50px;
     }
 }

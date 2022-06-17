@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_InlineTermsAgreement_cbContainer {
-    margin-bottom: 10px;
+    margin-block-end: 10px;
     font-size: $font-14px;
 
     a {
@@ -24,7 +24,7 @@ limitations under the License.
     }
 
     .mx_InlineTermsAgreement_checkbox {
-        margin-top: 10px;
+        margin-block-start: 10px;
 
         input {
             vertical-align: text-bottom;
@@ -40,6 +40,6 @@ limitations under the License.
     mask-size: contain;
     width: 12px;
     height: 12px;
-    margin-left: 3px;
+    margin-inline-start: 3px;
     vertical-align: middle;
 }

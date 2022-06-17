@@ -30,12 +30,12 @@ limitations under the License.
     }
 
     > img:first-child {
-        margin-bottom: 16px;
+        margin-block-end: 16px;
         width: max-content;
     }
 
     .mx_Login_submit {
-        margin-bottom: 0;
+        margin-block-end: 0;
     }
 }
 
@@ -44,8 +44,8 @@ limitations under the License.
     flex-direction: row;
     justify-content: space-between;
     padding-top: 16px;
-    margin-top: 16px;
-    border-top: 1px solid rgba(141, 151, 165, 0.2);
+    margin-block-start: 16px;
+    border-block-start: 1px solid rgba(141, 151, 165, 0.2);
 
     > * {
         flex-basis: content;

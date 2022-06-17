@@ -45,7 +45,7 @@ limitations under the License.
             // Align with middle of title, 34px from right edge
             position: absolute;
             top: 34px;
-            right: 34px;
+            inset-inline-end: 34px;
         }
     }
 
@@ -56,14 +56,14 @@ limitations under the License.
 
     .mx_CompoundDialog_footer {
         padding: 20px 32px;
-        text-align: right;
+        text-alignt: end;
         position: absolute;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
 
         .mx_AccessibleButton {
-            margin-left: 24px;
+            margin-inline-start: 24px;
         }
     }
 }

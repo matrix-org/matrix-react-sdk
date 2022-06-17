@@ -17,14 +17,14 @@ limitations under the License.
 .mx_ReplyPreview {
     border: 1px solid $system;
 
-    margin-left: calc(-1 * $spacing-16);
-    margin-right: calc(-1 * $spacing-16);
+    margin-inline-start: calc(-1 * $spacing-16);
+    margin-inline-end: calc(-1 * $spacing-16);
     padding: $spacing-8 $spacing-16 0 $spacing-16;
 
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-block-start-left-radius: 16px;
+    border-block-start-right-radius: 16px;
 
-    border-bottom: none;
+    border-block-end: none;
     background: $background;
     max-height: 50vh;
     overflow: auto;
@@ -39,12 +39,12 @@ limitations under the License.
     > svg {
         width: 1em;
         vertical-align: middle;
-        margin-right: $spacing-8;
+        margin-inline-end: $spacing-8;
     }
 
     .mx_CancelButton {
         position: absolute;
-        right: 0;
+        inset-inline-end: 0;
         top: 50%;
         transform: translateY(-50%);
     }
@@ -52,7 +52,7 @@ limitations under the License.
 
 .mx_ReplyPreview_header_cancel {
     position: absolute;
-    right: 0;
+    inset-inline-end: 0;
     color: $primary-content;
     width: 18px;
 }

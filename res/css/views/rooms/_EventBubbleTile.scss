@@ -28,14 +28,14 @@ limitations under the License.
     --gutterSize: 11px;
     --cornerRadius: 12px;
     --maxWidth: 70%;
-    margin-right: 60px;
+    margin-inline-end: 60px;
 }
 
 .mx_RoomView_searchResultsPanel {
     .mx_EventTile[data-layout=bubble] {
         .mx_SenderProfile {
             // Group layout adds a 64px left margin, which we really don't want on search results
-            margin-left: 0;
+            margin-inline-start: 0;
         }
 
         &[data-self=true] {
@@ -60,8 +60,8 @@ limitations under the License.
     --EventTile_bubble_gap-inline: 5px;
 
     position: relative;
-    margin-top: var(--gutterSize);
-    margin-left: var(--EventTile_bubble-margin-inline-start);
+    margin-block-start: var(--gutterSize);
+    margin-inline-start: var(--EventTile_bubble-margin-inline-start);
     font-size: $font-14px;
 
     .mx_ThreadSummary {
@@ -70,11 +70,11 @@ limitations under the License.
     }
 
     .mx_EventTile_content {
-        margin-right: 0;
+        margin-inline-end: 0;
     }
 
     &.mx_EventTile_continuation {
-        margin-top: 2px;
+        margin-block-start: 2px;
     }
 
     &.mx_EventTile_highlight {
@@ -95,8 +95,8 @@ limitations under the License.
         position: absolute;
         top: -1px;
         bottom: -1px;
-        left: calc(-1 * var(--EventTile_bubble-margin-inline-start));
-        right: calc(-1 * var(--EventTile_bubble-margin-inline-end));
+        inset-inline-start: calc(-1 * var(--EventTile_bubble-margin-inline-start));
+        inset-inline-end: calc(-1 * var(--EventTile_bubble-margin-inline-end));
         z-index: -1;
         border-radius: 4px;
     }
@@ -149,7 +149,7 @@ limitations under the License.
     .mx_EventTile_senderDetails > .mx_DisambiguatedProfile {
         position: relative;
         top: -2px;
-        left: 2px;
+        inset-inline-start: 2px;
         font-size: $font-15px;
     }
 
@@ -160,7 +160,7 @@ limitations under the License.
 
     .mx_MediaBody {
         // leave space for the timestamp
-        padding-right: 48px;
+        padding-inline-end: 48px;
     }
 
     .mx_MImageBody {
@@ -185,7 +185,7 @@ limitations under the License.
 
     &[data-self=false] {
         .mx_EventTile_line {
-            border-bottom-right-radius: var(--cornerRadius);
+            border-block-end-right-radius: var(--cornerRadius);
 
             .mx_MImageBody .mx_MImageBody_thumbnail_container,
             .mx_MImageBody::before,
@@ -193,17 +193,17 @@ limitations under the License.
             .mx_MediaBody,
             .mx_MLocationBody_map,
             .mx_MBeaconBody {
-                border-bottom-right-radius: var(--cornerRadius) !important;
+                border-block-end-right-radius: var(--cornerRadius) !important;
             }
         }
 
         .mx_EventTile_avatar {
-            left: -34px;
+            inset-inline-start: -34px;
         }
 
         .mx_MessageActionBar {
             inset-inline-start: calc(100% - var(--MessageActionBar-size-box));
-            right: initial; // Reset the default value
+            inset-inline-end: initial; // Reset the default value
         }
 
         .mx_ThreadSummary {
@@ -221,7 +221,7 @@ limitations under the License.
     &[data-self=true] {
         .mx_EventTile_line {
             margin-inline-start: auto;
-            border-bottom-left-radius: var(--cornerRadius);
+            border-block-end-left-radius: var(--cornerRadius);
 
             .mx_MImageBody .mx_MImageBody_thumbnail_container,
             .mx_MImageBody::before,
@@ -229,13 +229,13 @@ limitations under the License.
             .mx_MediaBody,
             .mx_MLocationBody_map,
             .mx_MBeaconBody {
-                border-bottom-left-radius: var(--cornerRadius) !important;
+                border-block-end-left-radius: var(--cornerRadius) !important;
             }
         }
 
         .mx_EventTile_sticker {
             // align timestamp with those inside bubbles
-            margin-right: 32px;
+            margin-inline-end: 32px;
         }
 
         .mx_ThreadSummary {
@@ -261,7 +261,7 @@ limitations under the License.
 
         .mx_EventTile_avatar {
             top: -19px; // height of the sender block
-            right: -35px;
+            inset-inline-end: -35px;
         }
 
         .mx_MediaBody {
@@ -281,8 +281,8 @@ limitations under the License.
         gap: 5px var(--EventTile_bubble_gap-inline);
         margin-block: 0;
         margin-inline: var(--EventTile_bubble_line-margin-inline-start) var(--EventTile_bubble_line-margin-inline-end);
-        border-top-left-radius: var(--cornerRadius);
-        border-top-right-radius: var(--cornerRadius);
+        border-block-start-left-radius: var(--cornerRadius);
+        border-block-start-right-radius: var(--cornerRadius);
 
         // the selector here is quite weird because timestamps can appear linked & unlinked and in different places
         // in the DOM depending on the specific rendering context
@@ -291,7 +291,7 @@ limitations under the License.
             position: absolute;
             padding: 4px 8px;
             bottom: 0;
-            right: 0;
+            inset-inline-end: 0;
             z-index: 3; // above media and location share maps
         }
 
@@ -322,8 +322,8 @@ limitations under the License.
                     z-index: 1;
                     top: 0;
                     bottom: 0;
-                    left: 0;
-                    right: 0;
+                    inset-inline-start: 0;
+                    inset-inline-end: 0;
                     pointer-events: none;
                 }
             }
@@ -333,8 +333,8 @@ limitations under the License.
             > a, // timestamp wrapper anchor
             .mx_MessageActionBar + .mx_MessageTimestamp {
                 // position timestamps for stickers to the right of the un-bubbled sticker
-                right: unset;
-                left: 100%;
+                inset-inline-end: unset;
+                inset-inline-start: 100%;
             }
 
             .mx_MStickerBody_wrapper {
@@ -356,8 +356,8 @@ limitations under the License.
         .mx_MVideoBody .mx_MVideoBody_container,
         .mx_MediaBody {
             border-radius: unset;
-            border-top-left-radius: var(--cornerRadius);
-            border-top-right-radius: var(--cornerRadius);
+            border-block-start-left-radius: var(--cornerRadius);
+            border-block-start-right-radius: var(--cornerRadius);
         }
 
         .mx_EventTile_e2eIcon {
@@ -369,7 +369,7 @@ limitations under the License.
         // make the top and bottom padding 1px smaller so that we can pad .mx_EventTile_content by 1px
         // to avoid anti-zalgo cutting off our larger than text emojis.
         padding: calc(var(--gutterSize) - 1px);
-        padding-right: 60px; // space for the timestamp
+        padding-inline-end: 60px; // space for the timestamp
         background: var(--backgroundColor);
 
         .mx_EventTile_content {
@@ -378,7 +378,7 @@ limitations under the License.
     }
 
     &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {
-        border-top-left-radius: 0;
+        border-block-start-left-radius: 0;
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
         .mx_MVideoBody .mx_MVideoBody_container,
@@ -386,11 +386,11 @@ limitations under the License.
         .mx_MediaBody,
         .mx_MLocationBody_map,
         .mx_MBeaconBody {
-            border-top-left-radius: 0;
+            border-block-start-left-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=false] .mx_EventTile_line {
-        border-bottom-left-radius: var(--cornerRadius);
+        border-block-end-left-radius: var(--cornerRadius);
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
         .mx_MVideoBody .mx_MVideoBody_container,
@@ -398,12 +398,12 @@ limitations under the License.
         .mx_MediaBody,
         .mx_MLocationBody_map,
         .mx_MBeaconBody {
-            border-bottom-left-radius: var(--cornerRadius);
+            border-block-end-left-radius: var(--cornerRadius);
         }
     }
 
     &.mx_EventTile_continuation[data-self=true] .mx_EventTile_line {
-        border-top-right-radius: 0;
+        border-block-start-right-radius: 0;
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
         .mx_MVideoBody .mx_MVideoBody_container,
@@ -411,11 +411,11 @@ limitations under the License.
         .mx_MediaBody,
         .mx_MLocationBody_map,
         .mx_MBeaconBody {
-            border-top-right-radius: 0;
+            border-block-start-right-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=true] .mx_EventTile_line {
-        border-bottom-right-radius: var(--cornerRadius);
+        border-block-end-right-radius: var(--cornerRadius);
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
         .mx_MVideoBody .mx_MVideoBody_container,
@@ -423,7 +423,7 @@ limitations under the License.
         .mx_MediaBody,
         .mx_MLocationBody_map,
         .mx_MBeaconBody {
-            border-bottom-right-radius: var(--cornerRadius);
+            border-block-end-right-radius: var(--cornerRadius);
         }
     }
 
@@ -563,7 +563,7 @@ limitations under the License.
     --backgroundColor: transparent;
 
     .mx_EventTile_line.mx_EventTile_emote {
-        padding-right: 60px; // align with bubbles text
+        padding-inline-end: 60px; // align with bubbles text
         font-style: italic;
 
         > a { // timestamp anchor wrapper
@@ -620,8 +620,8 @@ limitations under the License.
     .mx_EventTile_line {
         > a, // timestamp wrapper anchor
         .mx_MessageActionBar + .mx_MessageTimestamp {
-            right: auto;
-            left: -77px;
+            inset-inline-end: auto;
+            inset-inline-start: -77px;
             bottom: unset;
             align-self: center;
 
@@ -634,7 +634,7 @@ limitations under the License.
 
 .mx_GenericEventListSummary[data-layout=bubble] {
     --maxWidth: 70%;
-    margin-left: calc(var(--avatarSize) + var(--gutterSize));
+    margin-inline-start: calc(var(--avatarSize) + var(--gutterSize));
 
     .mx_GenericEventListSummary_toggle {
         margin: 0 55px 0 5px;
@@ -644,7 +644,7 @@ limitations under the License.
             order: 9;
         }
         &[aria-expanded=true] {
-            text-align: right;
+            text-alignt: end;
         }
     }
 
@@ -689,7 +689,7 @@ limitations under the License.
 
         // increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
         + .mx_EventTile[data-layout=bubble][data-self=true] {
-            margin-top: 20px;
+            margin-block-start: 20px;
         }
     }
 
@@ -702,7 +702,7 @@ limitations under the License.
 
         .mx_EventTile_info {
             padding: 2px 0;
-            margin-right: 0;
+            margin-inline-end: 0;
 
             .mx_MessageActionBar {
                 inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar

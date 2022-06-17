@@ -15,20 +15,20 @@ limitations under the License.
 */
 
 .mx_SecurityUserSettingsTab_bulkOptions .mx_AccessibleButton {
-    margin-right: 10px;
+    margin-inline-end: 10px;
 }
 
 .mx_SecurityUserSettingsTab_ignoredUser {
-    margin-bottom: 5px;
+    margin-block-end: 5px;
 }
 
 .mx_SecurityUserSettingsTab_ignoredUser .mx_AccessibleButton {
-    margin-right: 10px;
+    margin-inline-end: 10px;
 }
 
 .mx_SecurityUserSettingsTab {
     .mx_SettingsTab_heading {
-        margin-bottom: 22px;
+        margin-block-end: 22px;
     }
     .mx_SettingsTab_section {
         .mx_AccessibleButton_kind_link {
@@ -40,8 +40,8 @@ limitations under the License.
     .mx_SecurityUserSettingsTab_warning {
         color: $alert;
         position: relative;
-        padding-left: 40px;
-        margin-top: 30px;
+        padding-inline-start: 40px;
+        margin-block-start: 30px;
 
         &::before {
             mask-repeat: no-repeat;
@@ -52,7 +52,7 @@ limitations under the License.
             height: $font-24px;
             content: "";
             top: 0;
-            left: 0;
+            inset-inline-start: 0;
             background-color: $alert;
             mask-image: url('$(res)/img/feather-customised/alert-triangle.svg');
         }

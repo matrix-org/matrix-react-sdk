@@ -23,7 +23,7 @@ limitations under the License.
     .mx_IncomingCallToast_content {
         display: flex;
         flex-direction: column;
-        margin-left: 8px;
+        margin-inline-start: 8px;
 
         .mx_CallEvent_caller {
             font-weight: bold;
@@ -34,8 +34,8 @@ limitations under the License.
             text-overflow: ellipsis;
             white-space: nowrap;
 
-            margin-top: 2px;
-            margin-right: 6px;
+            margin-block-start: 2px;
+            margin-inline-end: 6px;
 
             max-width: 200px;
         }
@@ -45,8 +45,8 @@ limitations under the License.
             line-height: $font-15px;
             color: $tertiary-content;
 
-            margin-top: 4px;
-            margin-bottom: 6px;
+            margin-block-start: 4px;
+            margin-block-end: 6px;
 
             display: flex;
             flex-direction: row;
@@ -55,7 +55,7 @@ limitations under the License.
             .mx_CallEvent_type_icon {
                 height: 16px;
                 width: 16px;
-                margin-right: 6px;
+                margin-inline-end: 6px;
 
                 &::before {
                     content: '';
@@ -84,7 +84,7 @@ limitations under the License.
         }
 
         .mx_IncomingCallToast_buttons {
-            margin-top: 8px;
+            margin-block-start: 8px;
             display: flex;
             flex-direction: row;
             gap: 12px;

@@ -28,8 +28,8 @@ limitations under the License.
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        margin-left: 8px;
-        margin-right: auto;
+        margin-inline-start: 8px;
+        margin-inline-end: auto;
         user-select: none;
     }
 
@@ -45,7 +45,7 @@ limitations under the License.
             width: 20px;
             height: 20px;
             top: 3px;
-            right: 0;
+            inset-inline-end: 0;
             position: absolute;
             mask-position: center;
             mask-size: contain;
@@ -69,8 +69,8 @@ limitations under the License.
         border-radius: 8px;
         position: relative;
         padding: 8px;
-        margin-left: 8px;
-        margin-right: 12px;
+        margin-inline-start: 8px;
+        margin-inline-end: 12px;
         background-color: $panel-actions;
         box-sizing: border-box;
         flex-shrink: 0;

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_WhoIsTypingTile {
-    margin-left: -18px; //offset padding from mx_RoomView_MessageList to center avatars
+    margin-inline-start: -18px; //offset padding from mx_RoomView_MessageList to center avatars
     padding-top: 18px;
     display: flex;
     align-items: center;
@@ -28,7 +28,7 @@ limitations under the License.
 }
 
 .mx_WhoIsTypingTile_avatars > :not(:first-child) {
-    margin-left: -12px;
+    margin-inline-start: -12px;
 }
 
 .mx_WhoIsTypingTile_avatars .mx_BaseAvatar_initial {

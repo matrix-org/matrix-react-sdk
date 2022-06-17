@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 .mx_ServerPicker {
-    margin-bottom: 14px;
+    margin-block-end: 14px;
     padding-bottom: $spacing-16;
-    border-bottom: 1px solid rgba(141, 151, 165, 0.2);
+    border-block-end: 1px solid rgba(141, 151, 165, 0.2);
     display: grid;
     grid-template-columns: auto min-content;
     grid-template-rows: auto auto auto;
@@ -38,7 +38,7 @@ limitations under the License.
         border-radius: 10px;
         grid-column: 2;
         grid-row: 1;
-        margin-left: auto;
+        margin-inline-start: auto;
         text-align: center;
         color: #ffffff;
         font-size: 16px;
@@ -50,7 +50,7 @@ limitations under the License.
             height: 24px;
             position: absolute;
             top: -2px;
-            left: -2px;
+            inset-inline-start: -2px;
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
@@ -65,7 +65,7 @@ limitations under the License.
         grid-row: 2;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-right: 8px;
+        margin-inline-end: 8px;
     }
 
     .mx_ServerPicker_change {
@@ -76,7 +76,7 @@ limitations under the License.
     }
 
     .mx_ServerPicker_desc {
-        margin-top: 4px;
+        margin-block-start: 4px;
         color: $tertiary-content;
         grid-column: 1 / 2;
         grid-row: 3;

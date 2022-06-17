@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_JoinRuleDropdown {
-    margin-bottom: 8px;
+    margin-block-end: 8px;
     font-weight: normal;
     font-family: $font-family;
     font-size: $font-14px;
@@ -32,7 +32,7 @@ limitations under the License.
         min-height: 32px;
 
         > div {
-            padding-left: 30px;
+            padding-inline-start: 30px;
             position: relative;
 
             &::before {
@@ -40,7 +40,7 @@ limitations under the License.
                 position: absolute;
                 height: 16px;
                 width: 16px;
-                left: 6px;
+                inset-inline-start: 6px;
                 top: 8px;
                 mask-repeat: no-repeat;
                 mask-position: center;

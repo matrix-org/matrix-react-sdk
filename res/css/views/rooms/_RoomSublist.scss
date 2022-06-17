@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 .mx_RoomSublist {
-    margin-left: 8px;
-    margin-bottom: 4px;
+    margin-inline-start: 8px;
+    margin-block-end: 4px;
 
     &.mx_RoomSublist_hidden {
         display: none;
@@ -90,19 +90,19 @@ limitations under the License.
             // Apply the width and margin to the badge so the container doesn't occupy dead space
             .mx_NotificationBadge {
                 // Do not set a width so the badges get properly sized
-                margin-left: 8px; // same as menu+aux buttons
+                margin-inline-start: 8px; // same as menu+aux buttons
             }
         }
 
         &:not(.mx_RoomSublist_headerContainer_withAux) {
             .mx_NotificationBadge {
-                margin-right: 4px; // just to push it over a bit, aligning it with the other elements
+                margin-inline-end: 4px; // just to push it over a bit, aligning it with the other elements
             }
         }
 
         .mx_RoomSublist_auxButton,
         .mx_RoomSublist_menuButton {
-            margin-left: 8px; // should be the same as the notification badge
+            margin-inline-start: 8px; // should be the same as the notification badge
             position: relative;
             width: 24px;
             height: 24px;
@@ -114,7 +114,7 @@ limitations under the License.
                 height: 16px;
                 position: absolute;
                 top: 4px;
-                left: 4px;
+                inset-inline-start: 4px;
                 mask-position: center;
                 mask-size: contain;
                 mask-repeat: no-repeat;
@@ -159,7 +159,7 @@ limitations under the License.
                 position: relative;
                 width: 14px;
                 height: 14px;
-                margin-right: 6px;
+                margin-inline-end: 6px;
 
                 &::before {
                     content: '';
@@ -273,13 +273,13 @@ limitations under the License.
             position: relative;
             width: 18px;
             height: 18px;
-            margin-left: 12px;
-            margin-right: 16px;
+            margin-inline-start: 12px;
+            margin-inline-end: 16px;
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
             background: $tertiary-content;
-            left: -1px; // adjust for image position
+            inset-inline-start: -1px; // adjust for image position
         }
 
         .mx_RoomSublist_showMoreButtonChevron,
@@ -298,7 +298,7 @@ limitations under the License.
         .mx_RoomSublist_menuButton {
             visibility: visible;
             width: 24px;
-            margin-left: 8px;
+            margin-inline-start: 8px;
         }
     }
 
@@ -311,7 +311,7 @@ limitations under the License.
             .mx_RoomSublist_badgeContainer {
                 order: 0;
                 align-self: flex-end;
-                margin-right: 0;
+                margin-inline-end: 0;
             }
 
             .mx_RoomSublist_stickable {
@@ -324,13 +324,13 @@ limitations under the License.
                 visibility: visible;
                 width: 32px !important; // !important to override hover styles
                 height: 32px !important; // !important to override hover styles
-                margin-left: 0 !important; // !important to override hover styles
+                margin-inline-start: 0 !important; // !important to override hover styles
                 background-color: $panel-actions;
-                margin-top: 8px;
+                margin-block-start: 8px;
 
                 &::before {
                     top: 8px;
-                    left: 8px;
+                    inset-inline-start: 8px;
                 }
             }
         }
@@ -343,7 +343,7 @@ limitations under the License.
             flex-direction: column;
 
             .mx_RoomSublist_showNButtonChevron {
-                margin-right: 12px; // to center
+                margin-inline-end: 12px; // to center
             }
         }
 
@@ -357,7 +357,7 @@ limitations under the License.
                 visibility: visible;
                 position: absolute;
                 bottom: 48px; // align to middle of name, 40px for aux button (with padding) and 8px for alignment
-                right: 0;
+                inset-inline-end: 0;
                 width: 16px;
                 height: 16px;
                 border-radius: 0;
@@ -369,7 +369,7 @@ limitations under the License.
 
                 &::before {
                     top: 0;
-                    left: 0;
+                    inset-inline-start: 0;
                 }
             }
 
@@ -387,9 +387,9 @@ limitations under the License.
     width: 250px;
 
     hr {
-        margin-top: 16px;
-        margin-bottom: 16px;
-        margin-right: 16px; // additional 16px
+        margin-block-start: 16px;
+        margin-block-end: 16px;
+        margin-inline-end: 16px; // additional 16px
         border: 1px solid $primary-content;
         opacity: 0.1;
     }
@@ -398,17 +398,17 @@ limitations under the License.
         font-size: $font-15px;
         line-height: $font-20px;
         font-weight: 600;
-        margin-bottom: 4px;
+        margin-block-end: 4px;
     }
 
     .mx_StyledRadioButton, .mx_Checkbox {
-        margin-top: 8px;
+        margin-block-start: 8px;
     }
 }
 
 .mx_RoomSublist_skeletonUI {
     position: relative;
-    margin-left: 4px;
+    margin-inline-start: 4px;
     height: 240px;
 
     &::before {
@@ -427,5 +427,5 @@ limitations under the License.
 
 .mx_RoomSublist_minimized .mx_RoomSublist_skeletonUI {
     width: 32px; // cut off the horizontal lines in the svg
-    margin-left: 10px; // align with sublist + buttons
+    margin-inline-start: 10px; // align with sublist + buttons
 }

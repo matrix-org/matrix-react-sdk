@@ -20,7 +20,7 @@ limitations under the License.
     height: 28px;
     border: 2px solid $voice-record-stop-border-color;
     border-radius: 32px;
-    margin-right: 8px; // between us and the waveform component
+    margin-inline-end: 8px; // between us and the waveform component
     position: relative;
 
     &::after {
@@ -29,7 +29,7 @@ limitations under the License.
         height: 14px;
         position: absolute;
         top: 7px;
-        left: 7px;
+        inset-inline-start: 7px;
         border-radius: 2px;
         background-color: $voice-record-stop-symbol-color;
     }
@@ -39,7 +39,7 @@ limitations under the License.
     width: 24px;
     height: 24px;
     vertical-align: middle;
-    margin-right: 8px; // distance from left edge of waveform container (container has some margin too)
+    margin-inline-end: 8px; // distance from left edge of waveform container (container has some margin too)
     background-color: $voice-record-icon-color;
     mask-repeat: no-repeat;
     mask-size: contain;
@@ -47,16 +47,16 @@ limitations under the License.
 }
 
 .mx_VoiceRecordComposerTile_uploadingState {
-    margin-right: 10px;
+    margin-inline-end: 10px;
     color: $secondary-content;
 }
 
 .mx_VoiceRecordComposerTile_failedState {
-    margin-right: 21px;
+    margin-inline-end: 21px;
 
     .mx_VoiceRecordComposerTile_uploadState_badge {
         display: inline-block;
-        margin-right: 4px;
+        margin-inline-end: 4px;
         vertical-align: middle;
     }
 }
@@ -69,14 +69,14 @@ limitations under the License.
     height: 32px;
 
     margin: 6px; // force the composer area to put a gutter around us
-    margin-right: 12px; // isolate from stop/send button
+    margin-inline-end: 12px; // isolate from stop/send button
 
     position: relative; // important for the live circle
 
     &.mx_VoiceRecordComposerTile_recording {
         // We are putting the circle in this padding, so we need +10px from the regular
         // padding on the left side.
-        padding-left: 22px;
+        padding-inline-start: 22px;
 
         &::before {
             animation: recording-pulse 2s infinite;
@@ -86,7 +86,7 @@ limitations under the License.
             width: 10px;
             height: 10px;
             position: absolute;
-            left: 12px; // 12px from the left edge for container padding
+            inset-inline-start: 12px; // 12px from the left edge for container padding
             top: 17px; // vertically center (middle align with clock)
             border-radius: 10px;
         }

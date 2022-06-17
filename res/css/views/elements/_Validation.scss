@@ -19,7 +19,7 @@ limitations under the License.
 }
 
 .mx_Validation_details {
-    padding-left: 20px;
+    padding-inline-start: 20px;
     margin: 0;
 }
 
@@ -31,10 +31,10 @@ limitations under the License.
     position: relative;
     font-weight: normal;
     list-style: none;
-    margin-bottom: 0.5em;
+    margin-block-end: 0.5em;
 
     &:last-child {
-        margin-bottom: 0;
+        margin-block-end: 0;
     }
 
     &::before {
@@ -43,7 +43,7 @@ limitations under the License.
         width: 14px;
         height: 14px;
         top: 0;
-        left: -18px;
+        inset-inline-start: -18px;
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: contain;

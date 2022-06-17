@@ -16,25 +16,25 @@ limitations under the License.
 
 .mx_SidebarUserSettingsTab {
     .mx_Checkbox {
-        margin-top: 12px;
+        margin-block-start: 12px;
         font-size: $font-15px;
         line-height: $font-24px;
         color: $secondary-content;
     }
 
     .mx_SidebarUserSettingsTab_checkboxMicrocopy {
-        margin-bottom: 12px;
-        margin-left: 24px;
+        margin-block-end: 12px;
+        margin-inline-start: 24px;
         font-size: $font-15px;
         line-height: $font-24px;
         color: $secondary-content;
     }
 
     .mx_SidebarUserSettingsTab_homeAllRoomsCheckbox {
-        margin-left: 24px;
+        margin-inline-start: 24px;
 
         & + div {
-            margin-left: 48px;
+            margin-inline-start: 48px;
         }
     }
 
@@ -43,7 +43,7 @@ limitations under the License.
     .mx_SidebarUserSettingsTab_peopleCheckbox,
     .mx_SidebarUserSettingsTab_orphansCheckbox {
         .mx_Checkbox_background + div {
-            padding-left: 20px;
+            padding-inline-start: 20px;
             position: relative;
 
             &::before {
@@ -55,7 +55,7 @@ limitations under the License.
                 width: 16px;
                 height: 16px;
                 position: absolute;
-                left: 0;
+                inset-inline-start: 0;
                 top: 50%;
                 transform: translateY(-50%);
             }

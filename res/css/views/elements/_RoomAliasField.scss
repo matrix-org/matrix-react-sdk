@@ -25,8 +25,8 @@ limitations under the License.
 
     input {
         width: 150px;
-        padding-left: 0;
-        padding-right: 0;
+        padding-inline-start: 0;
+        padding-inline-end: 0;
     }
 
     input::placeholder {
@@ -36,8 +36,8 @@ limitations under the License.
 
     .mx_Field_prefix, .mx_Field_postfix {
         color: $info-plinth-fg-color;
-        border-left: none;
-        border-right: none;
+        border-inline-start: none;
+        border-inline-end: none;
         font-weight: 600;
         padding: 9px 10px;
         flex: 0 0 auto;

@@ -34,12 +34,12 @@ limitations under the License.
 
     .mx_AddExistingToSpace_noResults {
         display: block;
-        margin-top: 24px;
+        margin-block-start: 24px;
     }
 
     .mx_AddExistingToSpace_section {
         &:not(:first-child) {
-            margin-top: 24px;
+            margin-block-start: 24px;
         }
 
         > h3 {
@@ -53,13 +53,13 @@ limitations under the License.
         .mx_AccessibleButton_kind_link {
             font-size: $font-12px;
             line-height: $font-15px;
-            margin-top: 8px;
+            margin-block-start: 8px;
         }
     }
 
     .mx_AddExistingToSpace_footer {
         display: flex;
-        margin-top: 20px;
+        margin-block-start: 20px;
 
         > span {
             flex-grow: 1;
@@ -75,7 +75,7 @@ limitations under the License.
             }
 
             .mx_AddExistingToSpaceDialog_progressText {
-                margin-top: 8px;
+                margin-block-start: 8px;
                 font-size: $font-15px;
                 line-height: $font-24px;
                 color: $primary-content;
@@ -87,7 +87,7 @@ limitations under the License.
         }
 
         .mx_AddExistingToSpace_error {
-            padding-left: 12px;
+            padding-inline-start: 12px;
 
             > img {
                 align-self: center;
@@ -101,7 +101,7 @@ limitations under the License.
             }
 
             .mx_AddExistingToSpace_errorCaption {
-                margin-top: 4px;
+                margin-block-start: 4px;
                 font-size: $font-12px;
                 line-height: $font-15px;
                 color: $primary-content;
@@ -118,8 +118,8 @@ limitations under the License.
         }
 
         .mx_AddExistingToSpace_retryButton {
-            margin-left: 12px;
-            padding-left: 24px;
+            margin-inline-start: 12px;
+            padding-inline-start: 24px;
             position: relative;
 
             &::before {
@@ -132,7 +132,7 @@ limitations under the License.
                 mask-image: url('$(res)/img/element-icons/retry.svg');
                 width: 18px;
                 height: 18px;
-                left: 0;
+                inset-inline-start: 0;
             }
         }
     }
@@ -180,7 +180,7 @@ limitations under the License.
         border: none;
 
         > .mx_Dropdown_option {
-            padding-left: 0;
+            padding-inline-start: 0;
             flex: unset;
             height: unset;
             color: $secondary-content;
@@ -195,7 +195,7 @@ limitations under the License.
         .mx_Dropdown_menu {
             .mx_SubspaceSelector_dropdownOptionActive {
                 color: $accent;
-                padding-right: 32px;
+                padding-inline-end: 32px;
                 position: relative;
 
                 &::before {
@@ -203,7 +203,7 @@ limitations under the License.
                     width: 20px;
                     height: 20px;
                     top: 8px;
-                    right: 0;
+                    inset-inline-end: 0;
                     position: absolute;
                     mask-position: center;
                     mask-size: contain;
@@ -224,11 +224,11 @@ limitations under the License.
 
 .mx_AddExistingToSpace_entry {
     display: flex;
-    margin-top: 12px;
+    margin-block-start: 12px;
 
     .mx_DecoratedRoomAvatar, // we can't target .mx_BaseAvatar here as it'll break the decorated avatar styling
     .mx_BaseAvatar.mx_RoomAvatar_isSpaceRoom {
-        margin-right: 12px;
+        margin-inline-end: 12px;
     }
 
     img.mx_RoomAvatar_isSpaceRoom,
@@ -243,7 +243,7 @@ limitations under the License.
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        margin-right: 12px;
+        margin-inline-end: 12px;
     }
 
     .mx_Checkbox {

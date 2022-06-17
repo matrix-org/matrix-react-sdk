@@ -28,11 +28,11 @@ limitations under the License.
 }
 
 .mx_Field_prefix {
-    border-right: 1px solid $input-border-color;
+    border-inline-end: 1px solid $input-border-color;
 }
 
 .mx_Field_postfix {
-    border-left: 1px solid $input-border-color;
+    border-inline-start: 1px solid $input-border-color;
 }
 
 .mx_Field input,
@@ -62,7 +62,7 @@ limitations under the License.
     content: "";
     position: absolute;
     top: 15px;
-    right: 10px;
+    inset-inline-end: 10px;
     width: 10px;
     height: 6px;
     mask: url('$(res)/img/feather-customised/dropdown-arrow.svg');
@@ -105,7 +105,7 @@ limitations under the License.
     font-size: $font-14px;
     transform: translateY(0);
     position: absolute;
-    left: 0px;
+    inset-inline-start: 0px;
     margin: 7px 8px;
     padding: 2px;
     pointer-events: none; // Allow clicks to fall through to the input
@@ -174,8 +174,8 @@ limitations under the License.
 }
 
 .mx_Field_tooltip {
-    margin-top: -12px;
-    margin-left: 4px;
+    margin-block-start: -12px;
+    margin-inline-start: 4px;
     width: 200px;
 }
 

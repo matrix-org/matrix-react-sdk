@@ -21,7 +21,7 @@ limitations under the License.
         display: flex;
 
         .mx_PlayPauseButton {
-            margin-right: 8px;
+            margin-inline-end: 8px;
         }
 
         .mx_AudioPlayer_mediaInfo {
@@ -59,7 +59,7 @@ limitations under the License.
 
         .mx_Clock {
             min-width: $font-42px; // for flexbox
-            padding-left: $spacing-4; // isolate from seek bar
+            padding-inline-start: $spacing-4; // isolate from seek bar
             text-align: justify;
             white-space: nowrap;
         }

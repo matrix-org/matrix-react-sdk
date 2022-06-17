@@ -22,13 +22,13 @@ limitations under the License.
     display: flex;
     visibility: hidden;
     min-width: 250px;
-    margin-left: -125px;
+    margin-inline-start: -125px;
     background-color: #333;
     color: #fff;
     text-align: center;
     position: fixed;
     z-index: 1;
-    left: 50%;
+    inset-inline-start: 50%;
     bottom: 30px;
     font-size: 17px;
     padding: 6px 16px;
@@ -120,14 +120,14 @@ a.mx_reply_anchor:hover {
 }
 
 .mx_ReplyChain_Export {
-    margin-top: 0;
-    margin-bottom: 5px;
+    margin-block-start: 0;
+    margin-block-end: 5px;
 }
 
 .mx_RedactedBody,
 .mx_HiddenBody {
 
-    padding-left: unset;
+    padding-inline-start: unset;
 }
 
 img {

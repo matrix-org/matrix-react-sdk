@@ -38,9 +38,9 @@ limitations under the License.
 }
 
 .mx_MFileBody_download object {
-    margin-left: -16px;
-    padding-right: 4px;
-    margin-top: -4px;
+    margin-inline-start: -16px;
+    padding-inline-end: 4px;
+    margin-block-start: -4px;
     vertical-align: middle;
     pointer-events: none;
 }
@@ -70,7 +70,7 @@ limitations under the License.
         height: 32px;
         position: relative;
         vertical-align: middle;
-        margin-right: 12px;
+        margin-inline-end: 12px;
 
         &::before {
             content: '';
@@ -84,7 +84,7 @@ limitations under the License.
 
             position: absolute;
             top: 8px;
-            left: 8px;
+            inset-inline-start: 8px;
         }
     }
 

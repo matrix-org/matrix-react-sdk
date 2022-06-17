@@ -20,24 +20,24 @@ limitations under the License.
     }
 
     .mx_Dialog_content {
-        margin-bottom: 16px;
+        margin-block-end: 16px;
     }
 
     .mx_WidgetCapabilitiesPromptDialog_cap {
-        margin-top: 20px;
+        margin-block-start: 20px;
         font-size: $font-15px;
         line-height: $font-15px;
 
         .mx_WidgetCapabilitiesPromptDialog_byline {
             color: $muted-fg-color;
-            margin-left: 26px;
+            margin-inline-start: 26px;
             font-size: $font-12px;
             line-height: $font-12px;
         }
     }
 
     .mx_Dialog_buttons {
-        margin-top: 40px; // double normal
+        margin-block-start: 40px; // double normal
     }
 
     .mx_SettingsFlag {
@@ -51,7 +51,7 @@ limitations under the License.
             height: $font-15px;
 
             &.mx_ToggleSwitch_on > .mx_ToggleSwitch_ball {
-                left: calc(100% - $font-15px);
+                inset-inline-start: calc(100% - $font-15px);
             }
 
             .mx_ToggleSwitch_ball {

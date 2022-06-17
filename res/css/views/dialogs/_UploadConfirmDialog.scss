@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_UploadConfirmDialog_fileIcon {
-    margin-right: 5px;
+    margin-inline-end: 5px;
 }
 
 .mx_UploadConfirmDialog_previewOuter {
@@ -24,7 +24,7 @@ limitations under the License.
 
 .mx_UploadConfirmDialog_previewInner {
     display: inline-block;
-    text-align: left;
+    text-align: start;
 }
 
 .mx_UploadConfirmDialog_imagePreview {

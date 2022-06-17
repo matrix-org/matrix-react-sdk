@@ -25,7 +25,7 @@ limitations under the License.
 
         // Overlap the children
         > * + * {
-            margin-right: -8px;
+            margin-inline-end: -8px;
         }
 
         .mx_BaseAvatar_image {
@@ -48,7 +48,7 @@ limitations under the License.
                 z-index: 1;
                 position: absolute;
                 top: 0;
-                left: 0;
+                inset-inline-start: 0;
                 height: inherit;
                 width: inherit;
                 background: $tertiary-content;
@@ -61,7 +61,7 @@ limitations under the License.
     }
 
     .mx_FacePile_summary {
-        margin-left: 12px;
+        margin-inline-start: 12px;
         font-size: $font-14px;
         line-height: $font-24px;
         color: $tertiary-content;

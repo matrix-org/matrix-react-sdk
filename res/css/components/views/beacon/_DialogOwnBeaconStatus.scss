@@ -18,8 +18,8 @@ limitations under the License.
     position: absolute;
     bottom: $spacing-32;
     width: 300px;
-    margin-left: -150px;
-    left: 50%;
+    margin-inline-start: -150px;
+    inset-inline-start: 50%;
 
     box-sizing: border-box;
     display: flex;
@@ -52,5 +52,5 @@ limitations under the License.
 
 .mx_DialogOwnBeaconStatus_status {
     flex: 1 1;
-    padding-right: 0;
+    padding-inline-end: 0;
 }

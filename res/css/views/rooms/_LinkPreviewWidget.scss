@@ -15,24 +15,24 @@ limitations under the License.
 */
 
 .mx_LinkPreviewWidget {
-    margin-top: 15px;
-    margin-right: 15px;
-    margin-bottom: 15px;
+    margin-block-start: 15px;
+    margin-inline-end: 15px;
+    margin-block-end: 15px;
     display: flex;
-    border-left: 2px solid $preview-widget-bar-color;
+    border-inline-start: 2px solid $preview-widget-bar-color;
     border-radius: 2px;
     color: $info-plinth-fg-color;
 }
 
 .mx_LinkPreviewWidget_image {
     flex: 0 0 100px;
-    margin-left: 15px;
+    margin-inline-start: 15px;
     text-align: center;
     cursor: pointer;
 }
 
 .mx_LinkPreviewWidget_caption {
-    margin-left: 15px;
+    margin-inline-start: 15px;
     flex: 1 1 auto;
     overflow: hidden; // cause it to wrap rather than clip
 }
@@ -51,7 +51,7 @@ limitations under the License.
 }
 
 .mx_LinkPreviewWidget_description {
-    margin-top: 8px;
+    margin-block-start: 8px;
     white-space: normal;
     word-wrap: break-word;
     display: -webkit-box;
@@ -61,7 +61,7 @@ limitations under the License.
 
 .mx_MatrixChat_useCompactLayout {
     .mx_LinkPreviewWidget {
-        margin-top: 6px;
-        margin-bottom: 6px;
+        margin-block-start: 6px;
+        margin-block-end: 6px;
     }
 }

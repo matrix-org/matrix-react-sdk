@@ -34,8 +34,8 @@ limitations under the License.
         display: flex;
         flex-direction: column;
 
-        margin-left: 8px;
-        margin-right: 8px;
+        margin-inline-start: 8px;
+        margin-inline-end: 8px;
     }
 
     .mx_StyledRadioButton_spacer {
@@ -63,7 +63,7 @@ limitations under the License.
             box-sizing: border-box;
             height: $font-16px;
             width: $font-16px;
-            margin-left: 2px; // For the highlight on focus
+            margin-inline-start: 2px; // For the highlight on focus
 
             border: $font-1-5px solid $radio-circle-color;
             border-radius: $font-16px;

@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 .mx_ChatCreateOrReuseDialog .mx_ChatCreateOrReuseDialog_tiles {
-    margin-top: 24px;
+    margin-block-start: 24px;
 }
 
 .mx_ChatCreateOrReuseDialog .mx_Dialog_content {
-    margin-bottom: 24px;
+    margin-block-end: 24px;
 
     /*
        To stop spinner that mx_ChatCreateOrReuseDialog_profile replaces from causing a

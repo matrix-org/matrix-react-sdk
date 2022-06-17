@@ -18,7 +18,7 @@ limitations under the License.
     width: 90px;
     min-width: 90px; // so it doesn't get crushed by the flexbox in languages with longer words
     height: 90px;
-    margin-top: 8px;
+    margin-block-start: 8px;
     position: relative;
 
     .mx_AvatarSetting_hover {
@@ -28,8 +28,8 @@ limitations under the License.
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
 
         pointer-events: none; // let the pointer fall through the underlying thing
 
@@ -47,8 +47,8 @@ limitations under the License.
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 0;
-            right: 0;
+            inset-inline-start: 0;
+            inset-inline-end: 0;
 
             opacity: 0.5;
             background-color: $quinary-content;
@@ -69,7 +69,7 @@ limitations under the License.
     }
 
     .mx_AccessibleButton.mx_AccessibleButton_kind_primary {
-        margin-top: 8px;
+        margin-block-start: 8px;
     }
 
     .mx_AccessibleButton.mx_AccessibleButton_kind_link_sm {
@@ -100,8 +100,8 @@ limitations under the License.
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
     }
 
     .mx_AvatarSetting_uploadButton {
@@ -112,7 +112,7 @@ limitations under the License.
 
         position: absolute;
         bottom: 0;
-        right: 0;
+        inset-inline-end: 0;
     }
 
     .mx_AvatarSetting_uploadButton::before {

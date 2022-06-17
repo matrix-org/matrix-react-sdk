@@ -32,7 +32,7 @@ limitations under the License.
 }
 
 .mx_NotificationPanel .mx_RoomView_MessageList h2 {
-    margin-left: 0px;
+    margin-inline-start: 0px;
 }
 
 /* FIXME: rather than having EventTile's default CSS be for MessagePanel,
@@ -47,8 +47,8 @@ limitations under the License.
     &:not(.mx_EventTile_last):not(.mx_EventTile_lastInSection)::after {
         position: absolute;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         background-color: $tertiary-content;
         height: 1px;
         opacity: 0.4;
@@ -65,7 +65,7 @@ limitations under the License.
     }
 
     > .mx_BaseAvatar {
-        margin-right: 8px;
+        margin-inline-end: 8px;
     }
 }
 
@@ -85,7 +85,7 @@ limitations under the License.
 }
 
 .mx_NotificationPanel .mx_EventTile:not([data-layout=bubble]) .mx_EventTile_senderDetails {
-    padding-left: 36px; // align with the room name
+    padding-inline-start: 36px; // align with the room name
     position: relative;
 
     a {
@@ -102,19 +102,19 @@ limitations under the License.
     visibility: visible;
     position: initial;
     display: inline;
-    padding-left: 5px;
+    padding-inline-start: 5px;
 }
 
 .mx_NotificationPanel .mx_EventTile:not([data-layout=bubble]) .mx_EventTile_line {
-    margin-right: 0px;
-    padding-left: 36px; // align with the room name
+    margin-inline-end: 0px;
+    padding-inline-start: 36px; // align with the room name
     padding-top: 0px;
     padding-bottom: 0px;
-    padding-right: 0px;
+    padding-inline-end: 0px;
 }
 
 .mx_NotificationPanel .mx_EventTile_selected .mx_EventTile_line {
-    padding-left: 0px;
+    padding-inline-start: 0px;
 }
 
 .mx_NotificationPanel .mx_EventTile:hover .mx_EventTile_line {
@@ -122,7 +122,7 @@ limitations under the License.
 }
 
 .mx_NotificationPanel .mx_EventTile_content {
-    margin-right: 0px;
+    margin-inline-end: 0px;
 }
 
 .mx_NotificationPanel_empty::before {

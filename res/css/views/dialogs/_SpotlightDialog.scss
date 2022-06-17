@@ -28,7 +28,7 @@ limitations under the License.
         border-radius: 8px;
         background-color: $background;
         top: -60px; // relative to the top of the modal
-        left: 50%;
+        inset-inline-start: 50%;
         transform: translateX(-50%);
         font-size: $font-12px;
         line-height: $font-15px;
@@ -59,14 +59,14 @@ limitations under the License.
         margin: 0;
         border: none;
         padding: 12px 16px;
-        border-bottom: 1px solid $system;
+        border-block-end: 1px solid $system;
 
         > .mx_SpotlightDialog_filter {
             display: flex;
             align-content: center;
             align-items: center;
             border-radius: 8px;
-            margin-right: 8px;
+            margin-inline-end: 8px;
             background-color: $quinary-content;
             vertical-align: middle;
             color: $primary-content;
@@ -82,7 +82,7 @@ limitations under the License.
                 width: 18px;
                 height: 18px;
                 position: absolute;
-                left: 8px;
+                inset-inline-start: 8px;
                 top: 50%;
                 transform: translateY(-50%);
             }
@@ -102,7 +102,7 @@ limitations under the License.
                 height: 16px;
                 background: $system;
                 border-radius: 8px;
-                margin-left: 8px;
+                margin-inline-start: 8px;
                 text-align: center;
                 line-height: 16px;
                 color: $secondary-content;
@@ -116,7 +116,7 @@ limitations under the License.
                     width: 8px;
                     height: 8px;
                     position: absolute;
-                    left: 50%;
+                    inset-inline-start: 50%;
                     top: 50%;
                     transform: translate(-50%, -50%);
                     mask-image: url("$(res)/img/cancel-small.svg");
@@ -141,7 +141,7 @@ limitations under the License.
             flex-grow: 0;
             width: unset;
             height: unset;
-            margin-left: 16px;
+            margin-inline-start: 16px;
         }
     }
 
@@ -160,18 +160,18 @@ limitations under the License.
             }
 
             > h4 {
-                margin-bottom: 8px;
+                margin-block-end: 8px;
             }
 
             .mx_SpotlightDialog_sectionHeader {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 8px;
+                margin-block-end: 8px;
             }
 
             & + .mx_SpotlightDialog_section {
-                margin-top: 24px;
+                margin-block-start: 24px;
             }
         }
 
@@ -180,7 +180,7 @@ limitations under the License.
                 display: flex;
                 white-space: nowrap;
                 overflow-x: hidden;
-                margin-right: 1px; // occlude the 1px visible of the very next tile to prevent it looking broken
+                margin-inline-end: 1px; // occlude the 1px visible of the very next tile to prevent it looking broken
             }
 
             .mx_SpotlightDialog_option {
@@ -203,7 +203,7 @@ limitations under the License.
                 }
 
                 & + .mx_SpotlightDialog_option {
-                    margin-left: 16px;
+                    margin-inline-start: 16px;
                 }
 
                 &:hover, &[aria-selected=true] {
@@ -238,15 +238,15 @@ limitations under the License.
                     }
 
                     .mx_SpotlightDialog_enterPrompt {
-                        margin-top: 9px;
-                        margin-right: 8px;
+                        margin-block-start: 9px;
+                        margin-inline-end: 8px;
                     }
                 }
 
                 > .mx_SpotlightDialog_metaspaceResult,
                 > .mx_DecoratedRoomAvatar,
                 > .mx_BaseAvatar {
-                    margin-right: 8px;
+                    margin-inline-end: 8px;
                     width: 24px;
                     height: 24px;
 
@@ -266,7 +266,7 @@ limitations under the License.
                         display: flex;
                         flex-direction: row;
                         line-height: $font-24px;
-                        margin-right: 8px;
+                        margin-inline-end: 8px;
 
                         .mx_SpotlightDialog_result_publicRoomName {
                             color: $primary-content;
@@ -277,7 +277,7 @@ limitations under the License.
                         .mx_SpotlightDialog_result_publicRoomAlias {
                             color: $tertiary-content;
                             font-size: $font-12px;
-                            margin-left: 8px;
+                            margin-inline-start: 8px;
                             overflow: hidden;
                             text-overflow: ellipsis;
                         }
@@ -295,7 +295,7 @@ limitations under the License.
                 }
 
                 .mx_NotificationBadge {
-                    margin-left: 8px;
+                    margin-inline-start: 8px;
                 }
 
                 &:hover, &[aria-selected=true] {
@@ -310,7 +310,7 @@ limitations under the License.
 
         .mx_SpotlightDialog_inviteLink,
         .mx_SpotlightDialog_createRoom {
-            margin-top: 8px;
+            margin-block-start: 8px;
 
             .mx_AccessibleButton {
                 position: relative;
@@ -324,7 +324,7 @@ limitations under the License.
                     mask-repeat: no-repeat;
                     mask-position: center;
                     mask-size: contain;
-                    left: 8px;
+                    inset-inline-start: 8px;
                     width: 16px;
                     height: 16px;
                     background: $accent;
@@ -345,7 +345,7 @@ limitations under the License.
             .mx_SpotlightDialog_joinRoomAlias,
             .mx_SpotlightDialog_explorePublicRooms,
             .mx_SpotlightDialog_startGroupChat {
-                padding-left: 32px;
+                padding-inline-start: 32px;
                 position: relative;
 
                 &::before {
@@ -357,7 +357,7 @@ limitations under the License.
                     width: 24px;
                     height: 24px;
                     position: absolute;
-                    left: 4px;
+                    inset-inline-start: 4px;
                     top: 50%;
                     transform: translateY(-50%);
                 }
@@ -398,8 +398,8 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_result_details {
-            margin-left: 8px;
-            margin-right: 8px;
+            margin-inline-start: 8px;
+            margin-inline-end: 8px;
             color: $tertiary-content;
             font-size: $font-12px;
             line-height: $font-15px;
@@ -410,7 +410,7 @@ limitations under the License.
 
         .mx_SpotlightDialog_recentSearches > h4 > .mx_AccessibleButton_kind_link {
             padding: 0;
-            float: right;
+            float: inline-end;
             font-size: $font-12px;
             line-height: $font-15px;
             color: $secondary-content;
@@ -457,10 +457,10 @@ limitations under the License.
         color: $secondary-content;
         padding: 12px 16px 16px;
         display: flex;
-        border-top: 1px solid $quinary-content;
+        border-block-start: 1px solid $quinary-content;
 
         .mx_BetaCard_betaPill {
-            margin-right: 12px;
+            margin-inline-end: 12px;
             height: min-content;
             align-self: center;
         }
@@ -477,7 +477,7 @@ limitations under the License.
             padding: 4px 8px;
             border-color: $secondary-content;
             color: $secondary-content;
-            margin-left: auto;
+            margin-inline-start: auto;
         }
     }
 }

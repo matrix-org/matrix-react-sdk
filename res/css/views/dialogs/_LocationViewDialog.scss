@@ -41,7 +41,7 @@ limitations under the License.
         .mx_Dialog_cancelButton {
             z-index: 4010;
             position: absolute;
-            right: 5vw;
+            inset-inline-end: 5vw;
             top: 5vh;
             width: 20px;
             height: 20px;

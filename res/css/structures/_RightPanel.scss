@@ -34,7 +34,7 @@ limitations under the License.
 
 .mx_RightPanel_header {
     order: 1;
-    border-bottom: 1px solid $primary-hairline-color;
+    border-block-end: 1px solid $primary-hairline-color;
     flex: 0 0 52px;
 }
 
@@ -51,8 +51,8 @@ limitations under the License.
 .mx_RightPanel_headerButton {
     cursor: pointer;
     flex: 0 0 auto;
-    margin-left: 1px;
-    margin-right: 1px;
+    margin-inline-start: 1px;
+    margin-inline-end: 1px;
     height: 32px;
     width: 32px;
     position: relative;
@@ -62,7 +62,7 @@ limitations under the License.
         content: '';
         position: absolute;
         top: 4px; // center with parent of 32px
-        left: 4px; // center with parent of 32px
+        inset-inline-start: 4px; // center with parent of 32px
         height: 24px;
         width: 24px;
         background-color: $icon-button-color;
@@ -106,7 +106,7 @@ $pulse-color: $alert;
 
 .mx_RightPanel_headerButton_unreadIndicator_bg {
     position: absolute;
-    right: $dot-offset;
+    inset-inline-end: $dot-offset;
     top: $dot-offset;
     margin: 4px;
     width: $dot-size;
@@ -119,7 +119,7 @@ $pulse-color: $alert;
 
 .mx_RightPanel_headerButton_unreadIndicator {
     position: absolute;
-    right: $dot-offset;
+    inset-inline-end: $dot-offset;
     top: $dot-offset;
     margin: 4px;
 
@@ -196,13 +196,13 @@ $pulse-color: $alert;
     font-weight: bold;
     position: absolute;
     top: -4px;
-    left: 20px;
+    inset-inline-start: 20px;
     padding: 2px 4px;
 }
 
 .mx_RightPanel_collapsebutton {
     flex: 1;
-    text-align: right;
+    text-alignt: end;
     height: 16px;
     border: none;
 }
@@ -220,7 +220,7 @@ $pulse-color: $alert;
 }
 
 .mx_RightPanel_empty {
-    margin-right: -28px;
+    margin-inline-end: -28px;
 
     h2 {
         font-weight: 700;
@@ -253,7 +253,7 @@ $pulse-color: $alert;
     line-height: $font-22px;
 
     .mx_BaseAvatar {
-        margin-right: 8px;
+        margin-inline-end: 8px;
         vertical-align: middle;
     }
 

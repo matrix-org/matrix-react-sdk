@@ -17,7 +17,7 @@ limitations under the License.
     color: $muted-fg-color;
     vertical-align: middle;
 
-    padding-left: 20px;
+    padding-inline-start: 20px;
     position: relative;
 
     &::before {
@@ -31,6 +31,6 @@ limitations under the License.
         content: '';
         position: absolute;
         top: 1px;
-        left: 0;
+        inset-inline-start: 0;
     }
 }

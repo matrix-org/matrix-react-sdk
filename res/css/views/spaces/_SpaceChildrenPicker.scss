@@ -18,7 +18,7 @@ limitations under the License.
     margin: 16px 0;
 
     .mx_StyledRadioButton + .mx_StyledRadioButton {
-        margin-top: 16px;
+        margin-block-start: 16px;
     }
 
     .mx_SearchBox {
@@ -30,6 +30,6 @@ limitations under the License.
 
     .mx_SpaceChildrenPicker_noResults {
         display: block;
-        margin-top: 24px;
+        margin-block-start: 24px;
     }
 }

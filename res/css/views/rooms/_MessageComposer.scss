@@ -18,7 +18,7 @@ limitations under the License.
 .mx_MessageComposer_wrapper {
     vertical-align: middle;
     margin: auto;
-    border-top: 1px solid $primary-hairline-color;
+    border-block-start: 1px solid $primary-hairline-color;
     position: relative;
 
     display: grid;
@@ -45,24 +45,24 @@ limitations under the License.
         grid-area: controls;
         display: flex;
         align-items: flex-end;
-        margin-bottom: 2px;
+        margin-block-end: 2px;
     }
 
     >[role=button] {
-        margin-bottom: 7px;
+        margin-block-end: 7px;
     }
 
     .mx_VoiceRecordComposerTile_delete {
-        margin-bottom: 9px;
+        margin-block-end: 9px;
     }
 
     .mx_VoiceRecordComposerTile_stop,
     .mx_MessageComposer_sendMessage {
-        margin-bottom: $spacing-4;
+        margin-block-end: $spacing-4;
     }
 
     .mx_VoiceMessagePrimaryContainer {
-        margin-right: $spacing-8;
+        margin-inline-end: $spacing-8;
     }
 }
 
@@ -78,7 +78,7 @@ limitations under the License.
     border: 1px solid $quaternary-content;
     border-radius: 12px;
     padding: $spacing-12 $spacing-8;
-    margin-right: $spacing-16;
+    margin-inline-end: $spacing-16;
 
     transition: border-color var(--transition-short);
 
@@ -109,7 +109,7 @@ limitations under the License.
 
 .mx_MessageComposer .mx_MessageComposer_avatar {
     position: absolute;
-    left: 26px;
+    inset-inline-start: 26px;
 }
 
 .mx_MessageComposer .mx_MessageComposer_avatar .mx_BaseAvatar {
@@ -149,7 +149,7 @@ limitations under the License.
     justify-content: flex-start;
     align-items: flex-start;
     font-size: $font-14px;
-    margin-right: 6px;
+    margin-inline-end: 6px;
 }
 
 .mx_MessageComposer_editor {
@@ -164,11 +164,11 @@ limitations under the License.
 // FIXME: rather unpleasant hack to get rid of <p/> margins.
 // really we should be mixing in markdown-body from gfm.css instead
 .mx_MessageComposer_editor > :first-child {
-    margin-top: 0 !important;
+    margin-block-start: 0 !important;
 }
 
 .mx_MessageComposer_editor > :last-child {
-    margin-bottom: 0 !important;
+    margin-block-end: 0 !important;
 }
 
 @keyframes visualbell {
@@ -195,8 +195,8 @@ limitations under the License.
     display: block;
     width: 100%;
     padding: 0px;
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-block-start: 6px;
+    margin-block-end: 6px;
     border: 0px;
     resize: none;
     outline: none;
@@ -235,20 +235,20 @@ limitations under the License.
     height: var(--size);
     line-height: var(--size);
     width: auto;
-    padding-left: var(--size);
+    padding-inline-start: var(--size);
     border-radius: 50%;
-    margin-right: 6px;
-    margin-bottom: 7px;
+    margin-inline-end: 6px;
+    margin-block-end: 7px;
 
     &:last-child {
-        margin-right: auto;
+        margin-inline-end: auto;
     }
 
     &::before {
         content: '';
         position: absolute;
         top: 3px;
-        left: 3px;
+        inset-inline-start: 3px;
         height: 20px;
         width: 20px;
         background-color: $icon-button-color;
@@ -260,7 +260,7 @@ limitations under the License.
     &::after {
         content: '';
         position: absolute;
-        left: 0;
+        inset-inline-start: 0;
         top: 0;
         z-index: 0;
         width: var(--size);
@@ -344,7 +344,7 @@ limitations under the License.
         height: 16px;
         width: 16px;
         top: 8px;
-        left: 9px;
+        inset-inline-start: 9px;
 
         mask-image: url('$(res)/img/element-icons/send-message.svg');
         mask-repeat: no-repeat;
@@ -376,7 +376,7 @@ limitations under the License.
     height: 30px;
 
     box-sizing: border-box;
-    padding-left: 62px;
+    padding-inline-start: 62px;
 
     flex-direction: row;
     align-items: center;
@@ -385,7 +385,7 @@ limitations under the License.
 }
 
 .mx_MessageComposer_formatbar * {
-    margin-right: 4px;
+    margin-inline-end: 4px;
 }
 
 .mx_MessageComposer_format_button,
@@ -395,13 +395,13 @@ limitations under the License.
 }
 
 .mx_MessageComposer_formatbar_cancel {
-    margin-right: 22px;
+    margin-inline-end: 22px;
 }
 
 .mx_MessageComposer_formatbar_markdown {
     height: 17px;
     width: 30px;
-    margin-right: 64px;
+    margin-inline-end: 64px;
 }
 
 .mx_MessageComposer_input_markdownIndicator {
@@ -435,9 +435,9 @@ limitations under the License.
  */
 
 .mx_MessageComposer.mx_MessageComposer--compact {
-    margin-right: 0;
+    margin-inline-end: 0;
 
     .mx_MessageComposer_button:last-child {
-        margin-right: 0;
+        margin-inline-end: 0;
     }
 }

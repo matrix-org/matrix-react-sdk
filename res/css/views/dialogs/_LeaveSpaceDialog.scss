@@ -46,7 +46,7 @@ limitations under the License.
                     &::before {
                         content: '';
                         position: absolute;
-                        left: 10px;
+                        inset-inline-start: 10px;
                         top: calc(50% - 8px); // vertical centering
                         height: 16px;
                         width: 16px;

@@ -18,13 +18,13 @@ limitations under the License.
     height: 56px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid $primary-hairline-color;
+    border-block-end: 1px solid $primary-hairline-color;
 
     .mx_SearchBar_input {
         // border: 1px solid $input-border-color;
         // font-size: $font-15px;
         flex: 1 1 0;
-        margin-left: 22px;
+        margin-inline-start: 22px;
     }
 
     .mx_SearchBar_searchButton {
@@ -48,7 +48,7 @@ limitations under the License.
         font-size: $font-15px;
         cursor: pointer;
         color: $primary-content;
-        border-bottom: 2px solid $accent;
+        border-block-end: 2px solid $accent;
         font-weight: 600;
     }
 

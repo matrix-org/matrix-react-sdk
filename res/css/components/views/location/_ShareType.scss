@@ -30,7 +30,7 @@ limitations under the License.
         flex-direction: column;
         row-gap: $spacing-12;
         width: 100%;
-        margin-top: $spacing-12;
+        margin-block-start: $spacing-12;
 
         .mx_ShareType_option {
             display: flex;
@@ -58,7 +58,7 @@ limitations under the License.
 .mx_ShareType_badge {
     height: 60px;
     width: 60px;
-    margin-bottom: $spacing-20;
+    margin-block-end: $spacing-20;
     background-color: $accent;
     border-radius: 50%;
     border: 14px solid $accent;
@@ -76,7 +76,7 @@ limitations under the License.
     height: 40px;
     width: 40px;
     box-sizing: border-box;
-    margin-right: $spacing-12;
+    margin-inline-end: $spacing-12;
     flex: 0 0 40px;
     border-width: 2px;
     border-style: solid;

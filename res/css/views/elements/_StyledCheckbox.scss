@@ -65,7 +65,7 @@ limitations under the License.
         }
 
         & + label > *:not(.mx_Checkbox_background) {
-            margin-left: 10px;
+            margin-inline-start: 10px;
         }
 
         &:disabled + label {

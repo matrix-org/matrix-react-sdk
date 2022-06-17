@@ -38,8 +38,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
+            inset-inline-start: 0;
+            inset-inline-end: 0;
         }
     }
 
@@ -75,7 +75,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &[data-layout=group] {
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
-            margin-left: $left-gutter;
+            margin-inline-start: $left-gutter;
         }
 
         > .mx_EventTile_avatar {
@@ -105,12 +105,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     .mx_ThreadSummary,
     .mx_ThreadSummaryIcon {
-        margin-left: 64px;
+        margin-inline-start: 64px;
     }
 
     .mx_EventTile_avatar {
         top: 14px;
-        left: 8px;
+        inset-inline-start: 8px;
         cursor: pointer;
         user-select: none;
     }
@@ -162,7 +162,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_MessageTimestamp {
         display: block;
         white-space: nowrap;
-        left: 0px;
+        inset-inline-start: 0px;
         text-align: center;
         user-select: none;
     }
@@ -174,12 +174,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile_line,
     .mx_EventTile_reply {
         position: relative;
-        padding-left: $left-gutter;
+        padding-inline-start: $left-gutter;
         border-radius: 8px;
     }
 
     .mx_EventTile_reply {
-        margin-right: 10px;
+        margin-inline-end: 10px;
     }
 
     /* this is used for the tile for the event which is selected via the URL.
@@ -201,7 +201,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     &.mx_EventTile_selected.mx_EventTile_info .mx_EventTile_line {
-        padding-left: calc($left-gutter + 18px);
+        padding-inline-start: calc($left-gutter + 18px);
     }
 
     &.mx_EventTile:hover .mx_EventTile_line,
@@ -214,8 +214,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         background-color: $accent;
         color: $accent-fg-color;
         border-radius: 5px;
-        padding-left: 2px;
-        padding-right: 2px;
+        padding-inline-start: 2px;
+        padding-inline-end: 2px;
         cursor: pointer;
     }
 
@@ -229,17 +229,17 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_EventTile_msgOption {
-        float: right;
-        text-align: right;
+        float: inline-end;
+        text-alignt: end;
         position: relative;
         width: 90px;
 
         /* Hack to stop the height of this pushing the messages apart.
-           Replaces margin-top: -6px. This interacts better with a read
+           Replaces margin-block-start: -6px. This interacts better with a read
            marker being in between. Content overflows. */
         height: 1px;
 
-        margin-right: 10px;
+        margin-inline-end: 10px;
     }
 
     .mx_EventTile_msgOption a {
@@ -266,7 +266,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
     &:hover.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
     &:hover.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-        padding-left: calc($left-gutter + 18px + $selected-message-border-width);
+        padding-inline-start: calc($left-gutter + 18px + $selected-message-border-width);
     }
 
     /* End to end encryption stuff */
@@ -275,7 +275,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_MImageBody {
-        margin-right: 34px;
+        margin-inline-end: 34px;
 
         .mx_MImageBody_thumbnail_container {
             justify-content: flex-start;
@@ -287,9 +287,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile_e2eIcon {
         position: absolute;
         top: 6px;
-        left: 44px;
+        inset-inline-start: 44px;
         bottom: 0;
-        right: 0;
+        inset-inline-end: 0;
     }
 
     .mx_ReactionsRow {
@@ -299,7 +299,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_GenericEventListSummary:not([data-layout=bubble]) {
     .mx_EventTile_line {
-        padding-left: $left-gutter;
+        padding-inline-start: $left-gutter;
 
         .mx_RedactedBody {
             line-height: 1; // remove spacing between lines
@@ -309,7 +309,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
 .mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-    padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+    padding-inline-start: calc($left-gutter + 20px); // override padding-inline-start $left-gutter
 }
 
 .mx_EventTile_content {
@@ -322,7 +322,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     */
     overflow-y: hidden;
     overflow-x: hidden;
-    margin-right: 34px;
+    margin-inline-end: 34px;
 
     .mx_EventTile_edited,
     .mx_EventTile_pendingModeration {
@@ -330,7 +330,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         font-size: $font-12px;
         color: $roomtopic-color;
         display: inline-block;
-        margin-left: 9px;
+        margin-inline-start: 9px;
     }
 
     .mx_EventTile_edited {
@@ -388,7 +388,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         h1,
         h2 {
             font-size: 1.5em;
-            border-bottom: none !important; // override GFM
+            border-block-end: none !important; // override GFM
         }
 
         a {
@@ -396,7 +396,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         blockquote {
-            border-left: 2px solid $blockquote-bar-color;
+            border-inline-start: 2px solid $blockquote-bar-color;
             border-radius: 2px;
             padding: 0 10px;
         }
@@ -441,7 +441,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_ThreadSummaryIcon,
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
-            margin-right: 80px;
+            margin-inline-end: 80px;
             min-height: $font-14px;
         }
 
@@ -458,7 +458,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     grid-template-columns: 1fr 100px;
 
     .mx_EventTile_line {
-        margin-right: 0;
+        margin-inline-end: 0;
         grid-column: 1 / 3;
         // override default padding of mx_EventTile_line so that we can be centered
         padding: 0 !important;
@@ -501,8 +501,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: contain;
@@ -557,14 +557,14 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 }
 
 .mx_EventTile_lineNumbers {
-    float: left;
+    float: inline-start;
     margin: 0 0.5em 0 -1.5em;
     color: gray;
 
     & span {
-        text-align: right;
+        text-alignt: end;
         display: block;
-        padding-left: 1em;
+        padding-inline-start: 1em;
     }
 }
 
@@ -615,7 +615,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile_button {
         position: absolute;
         top: 8px;
-        right: 8px;
+        inset-inline-end: 8px;
         width: 19px;
         height: 19px;
         visibility: hidden;
@@ -653,15 +653,15 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_EventTile_keyRequestInfo_tooltip_contents p {
     text-align: auto;
-    margin-left: 3px;
-    margin-right: 3px;
+    margin-inline-start: 3px;
+    margin-inline-end: 3px;
 
     &:first-child {
-        margin-top: 0px;
+        margin-block-start: 0px;
     }
 
     &:last-child {
-        margin-bottom: 0px;
+        margin-block-end: 0px;
     }
 }
 
@@ -670,11 +670,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     text-align: center;
 
     // Remove some of the default tile padding so that the error is centered
-    margin-right: 0;
+    margin-inline-end: 0;
 
     .mx_EventTile_line {
-        padding-left: 0;
-        margin-right: 0;
+        padding-inline-start: 0;
+        margin-inline-end: 0;
     }
 
     .mx_EventTile_line span {
@@ -682,7 +682,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     a {
-        margin-left: 1em;
+        margin-inline-start: 1em;
     }
 }
 
@@ -714,13 +714,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     display: inline-block;
     font-size: $font-12px;
     color: $secondary-content !important;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-block-start: 8px;
+    margin-block-end: 8px;
 
     &::before {
         vertical-align: middle;
-        margin-right: 8px;
-        margin-top: -2px;
+        margin-inline-end: 8px;
+        margin-block-start: -2px;
     }
 }
 
@@ -799,11 +799,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             content: unset;
         }
 
-        margin-bottom: 0;
+        margin-block-end: 0;
     }
 
     &:first-child {
-        margin-top: 0;
+        margin-block-start: 0;
     }
 
     .mx_EventTile_avatar {
@@ -838,7 +838,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         padding-bottom: 0;
 
         .mx_ThreadPanel_replies {
-            margin-top: $spacing-8;
+            margin-block-start: $spacing-8;
             display: flex;
             align-items: center;
             position: relative;
@@ -900,8 +900,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             .mx_EventTile_avatar {
                 position: absolute;
                 top: 1.5px; // Align with hidden event content
-                margin-top: 0;
-                margin-bottom: 0;
+                margin-block-start: 0;
+                margin-block-end: 0;
                 width: 14px; // avatar img size
                 height: 14px; // avatar img size
             }
@@ -931,7 +931,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
 
                 .mx_EventTile_avatar {
-                    left: calc($MessageTimestamp_width + 14px - 4px); // 14px: avatar width, 4px: align with text
+                    inset-inline-start: calc($MessageTimestamp_width + 14px - 4px); // 14px: avatar width, 4px: align with text
                     z-index: 9; // position above the hover styling
                 }
             }
@@ -1053,7 +1053,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                     align-items: center;
 
                     .mx_DisambiguatedProfile {
-                        margin-left: 8px;
+                        margin-inline-start: 8px;
                         flex: 1;
                     }
                 }
@@ -1072,6 +1072,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 // Media query for mobile UI
 @media only screen and (max-width: 480px) {
     .mx_EventTile_content {
-        margin-right: 0;
+        margin-inline-end: 0;
     }
 }

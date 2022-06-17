@@ -27,8 +27,8 @@ limitations under the License.
     .mx_UserInfo_container:not(.mx_UserInfo_separator) {
 
         > div > p {
-            margin-top: 0;
-            margin-bottom: 0;
+            margin-block-start: 0;
+            margin-block-end: 0;
         }
 
         .mx_VerificationPanel_verifyByEmojiButton,
@@ -56,7 +56,7 @@ limitations under the License.
         position: absolute;
         z-index: 100;
         top: 14px;
-        right: 14px;
+        inset-inline-end: 14px;
     }
 
     .mx_VerificationPanel_qrCode {
@@ -91,8 +91,8 @@ limitations under the License.
 .mx_Dialog, .mx_CompleteSecurity_body {
     .mx_VerificationPanel_QRPhase_startOptions {
         display: flex;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-block-start: 10px;
+        margin-block-end: 10px;
         align-items: stretch;
         justify-content: center;
 
@@ -128,7 +128,7 @@ limitations under the License.
             }
 
             > p {
-                margin-top: 0;
+                margin-block-start: 0;
                 font-weight: 700;
             }
 
@@ -144,13 +144,13 @@ limitations under the License.
     .mx_VerificationPanel_verified_section {
         // right align the "Got it" button
         .mx_AccessibleButton {
-            float: right;
+            float: inline-end;
         }
     }
 
     .mx_VerificationPanel_reciprocate_section {
         .mx_AccessibleButton {
-            margin-left: 10px;
+            margin-inline-start: 10px;
             padding: 7px 40px;
         }
 

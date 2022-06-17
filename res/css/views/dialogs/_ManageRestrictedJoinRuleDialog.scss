@@ -42,12 +42,12 @@ limitations under the License.
 
     .mx_ManageRestrictedJoinRuleDialog_noResults {
         display: block;
-        margin-top: 24px;
+        margin-block-start: 24px;
     }
 
     .mx_ManageRestrictedJoinRuleDialog_section {
         &:not(:first-child) {
-            margin-top: 24px;
+            margin-block-start: 24px;
         }
 
         > h3 {
@@ -60,7 +60,7 @@ limitations under the License.
 
         .mx_ManageRestrictedJoinRuleDialog_entry {
             display: flex;
-            margin-top: 12px;
+            margin-block-start: 12px;
 
             > div {
                 flex-grow: 1;
@@ -82,7 +82,7 @@ limitations under the License.
             }
 
             .mx_ManageRestrictedJoinRuleDialog_entry_description {
-                margin-top: 8px;
+                margin-block-start: 8px;
                 font-size: $font-12px;
                 line-height: $font-15px;
                 color: $tertiary-content;
@@ -96,7 +96,7 @@ limitations under the License.
 
     .mx_ManageRestrictedJoinRuleDialog_section_spaces {
         .mx_BaseAvatar {
-            margin-right: 12px;
+            margin-inline-end: 12px;
         }
 
         .mx_BaseAvatar_image {
@@ -118,7 +118,7 @@ limitations under the License.
         &::before {
             content: '';
             position: absolute;
-            left: 10px;
+            inset-inline-start: 10px;
             top: calc(50% - 8px); // vertical centering
             height: 16px;
             width: 16px;
@@ -131,18 +131,18 @@ limitations under the License.
     }
 
     .mx_ManageRestrictedJoinRuleDialog_footer {
-        margin-top: 20px;
+        margin-block-start: 20px;
 
         .mx_ManageRestrictedJoinRuleDialog_footer_buttons {
             display: flex;
             width: max-content;
-            margin-left: auto;
+            margin-inline-start: auto;
 
             .mx_AccessibleButton {
                 display: inline-block;
 
                 & + .mx_AccessibleButton {
-                    margin-left: 24px;
+                    margin-inline-start: 24px;
                 }
             }
         }

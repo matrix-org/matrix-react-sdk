@@ -47,16 +47,16 @@ limitations under the License.
 
 .mx_FilePanel .mx_EventTile:not([data-layout=bubble]) {
     word-break: break-word;
-    margin-top: 10px;
+    margin-block-start: 10px;
     padding-top: 0;
 
     .mx_EventTile_line {
-        padding-left: 0;
+        padding-inline-start: 0;
     }
 }
 
 .mx_FilePanel .mx_EventTile .mx_MImageBody {
-    margin-right: 0px;
+    margin-inline-end: 0px;
 }
 
 .mx_FilePanel .mx_EventTile .mx_MFileBody {
@@ -78,7 +78,7 @@ limitations under the License.
 .mx_FilePanel .mx_EventTile .mx_MImageBody_size {
     flex: 1 0 0;
     font-size: $font-14px;
-    text-align: right;
+    text-alignt: end;
     white-space: nowrap;
 }
 
@@ -86,7 +86,7 @@ limitations under the License.
 
 .mx_FilePanel .mx_EventTile_senderDetails {
     display: flex;
-    margin-top: -2px;
+    margin-block-start: -2px;
 }
 
 .mx_FilePanel .mx_EventTile_senderDetailsLink {
@@ -104,7 +104,7 @@ limitations under the License.
 
 .mx_FilePanel .mx_EventTile .mx_MessageTimestamp {
     flex: 1 0 0;
-    text-align: right;
+    text-alignt: end;
     visibility: visible;
     position: initial;
     font-size: $font-14px;
@@ -115,12 +115,12 @@ limitations under the License.
 /* Overrides for the wrappers around the body tile */
 
 .mx_FilePanel .mx_EventTile_line {
-    margin-right: 0px;
-    padding-left: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
 }
 
 .mx_FilePanel .mx_EventTile_selected .mx_EventTile_line {
-    padding-left: 0px;
+    padding-inline-start: 0px;
 }
 
 .mx_FilePanel_empty::before {

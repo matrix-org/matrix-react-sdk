@@ -16,20 +16,20 @@ limitations under the License.
 
 .mx_ModalWidgetDialog {
     .mx_ModalWidgetDialog_warning {
-        margin-bottom: 24px;
+        margin-block-end: 24px;
 
         > img {
             vertical-align: middle;
-            margin-right: 8px;
+            margin-inline-end: 8px;
         }
     }
 
     .mx_ModalWidgetDialog_buttons {
-        float: right;
-        margin-top: 24px;
+        float: inline-end;
+        margin-block-start: 24px;
 
         .mx_AccessibleButton + .mx_AccessibleButton {
-            margin-left: 8px;
+            margin-inline-start: 8px;
         }
     }
 

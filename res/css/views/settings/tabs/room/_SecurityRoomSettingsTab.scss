@@ -17,7 +17,7 @@ limitations under the License.
 .mx_SecurityRoomSettingsTab {
     .mx_SettingsTab_showAdvanced {
         padding: 0;
-        margin-bottom: 16px;
+        margin-block-end: 16px;
     }
 }
 
@@ -26,14 +26,14 @@ limitations under the License.
 
     img {
         vertical-align: middle;
-        margin-right: 5px;
-        margin-left: 3px;
-        margin-bottom: 5px;
+        margin-inline-end: 5px;
+        margin-inline-start: 3px;
+        margin-block-end: 5px;
     }
 }
 
 .mx_SecurityRoomSettingsTab_encryptionSection {
     padding-bottom: 24px;
-    border-bottom: 1px solid $quinary-content;
-    margin-bottom: 32px;
+    border-block-end: 1px solid $quinary-content;
+    margin-block-end: 32px;
 }

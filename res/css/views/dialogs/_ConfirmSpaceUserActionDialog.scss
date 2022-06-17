@@ -36,7 +36,7 @@ limitations under the License.
     }
 
     .mx_ConfirmUserActionDialog_reasonField {
-        margin-bottom: 12px;
+        margin-block-end: 12px;
     }
 
     .mx_ConfirmSpaceUserActionDialog_warning {
@@ -52,7 +52,7 @@ limitations under the License.
         &::before {
             content: '';
             position: absolute;
-            left: 10px;
+            inset-inline-start: 10px;
             top: calc(50% - 8px); // vertical centering
             height: 16px;
             width: 16px;

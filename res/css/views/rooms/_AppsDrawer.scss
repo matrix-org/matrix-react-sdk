@@ -21,8 +21,8 @@ $MinWidth: 240px;
 
 .mx_AppsDrawer {
     margin: $container-gap-width;
-    margin-right: calc($container-gap-width / 2); // The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser.
-    margin-bottom: 0; // No bottom margin for the correct gap to the CallView below.
+    margin-inline-end: calc($container-gap-width / 2); // The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser.
+    margin-block-end: 0; // No bottom margin for the correct gap to the CallView below.
     position: relative;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@ $MinWidth: 240px;
     flex-grow: 1;
 
     &.mx_AppsDrawer_maximise {
-        margin-bottom: $container-gap-width;
+        margin-block-end: $container-gap-width;
     }
 
     .mx_AppsContainer_resizerHandleContainer {
@@ -63,8 +63,8 @@ $MinWidth: 240px;
 
             // Together, these make the bar 64px wide
             // These are also overridden from the library
-            left: calc(50% - 32px);
-            right: calc(50% - 32px);
+            inset-inline-start: calc(50% - 32px);
+            inset-inline-end: calc(50% - 32px);
         }
     }
 
@@ -76,7 +76,7 @@ $MinWidth: 240px;
 
         .mx_ResizeHandle_horizontal::before {
             position: absolute;
-            left: 3px;
+            inset-inline-start: 3px;
             top: 50%;
             transform: translate(0, -50%);
 
@@ -117,7 +117,7 @@ $MinWidth: 240px;
 }
 
 .mx_AppsContainer_resizer {
-    margin-bottom: $container-gap-width;
+    margin-block-end: $container-gap-width;
 }
 
 .mx_AppsContainer {
@@ -131,11 +131,11 @@ $MinWidth: 240px;
     min-height: 0;
 
     .mx_AppTile:first-of-type {
-        border-left-width: $container-border-width;
+        border-inline-start-width: $container-border-width;
         border-radius: 10px 0 0 10px;
     }
     .mx_AppTile:last-of-type {
-        border-right-width: $container-border-width;
+        border-inline-end-width: $container-border-width;
         border-radius: 0 10px 10px 0;
     }
 
@@ -207,16 +207,16 @@ $MinWidth: 240px;
     text-overflow: ellipsis;
 
     .mx_WidgetAvatar {
-        margin-right: 12px;
+        margin-inline-end: 12px;
     }
 }
 
 .mx_AppTileMenuBarTitle > :last-child {
-    margin-left: 9px;
+    margin-inline-start: 9px;
 }
 
 .mx_AppTileMenuBarWidgets {
-    float: right;
+    float: inline-end;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -244,7 +244,7 @@ $MinWidth: 240px;
         border-radius: 50%;
         content: '';
         height: 24px;
-        left: 0;
+        inset-inline-start: 0;
         position: absolute;
         top: 0;
         width: 24px;
@@ -320,7 +320,7 @@ $MinWidth: 240px;
 }
 
 .mx_AppPermissionWarning_row {
-    margin-bottom: 12px;
+    margin-block-end: 12px;
 }
 
 .mx_AppPermissionWarning_smallText {
@@ -337,8 +337,8 @@ $MinWidth: 240px;
 }
 
 .mx_AppPermissionWarning_helpIcon {
-    margin-top: 1px;
-    margin-right: 2px;
+    margin-block-start: 1px;
+    margin-inline-end: 2px;
     width: 10px;
     height: 10px;
     display: inline-block;
@@ -362,8 +362,8 @@ $MinWidth: 240px;
 
     ul {
         list-style-position: inside;
-        padding-left: 2px;
-        margin-left: 0;
+        padding-inline-start: 2px;
+        margin-inline-start: 0;
     }
 }
 
@@ -385,8 +385,8 @@ $MinWidth: 240px;
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
 }
 
 .mx_AppLoading_spinner_fadeIn {

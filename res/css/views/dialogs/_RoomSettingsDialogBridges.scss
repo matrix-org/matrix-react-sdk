@@ -31,7 +31,7 @@ limitations under the License.
             flex-wrap: wrap;
             gap: $spacing-8;
             padding: 5px;
-            margin-bottom: $spacing-8;
+            margin-block-end: $spacing-8;
 
             // border-style around each bridge list item
             border-width: 1px 1px;
@@ -67,7 +67,7 @@ limitations under the License.
 
                     span {
                         /* Correct letter placement */
-                        left: auto;
+                        inset-inline-start: auto;
                     }
                 }
             }
@@ -80,20 +80,20 @@ limitations under the License.
                 .mx_RoomSettingsDialog_column_data_metadata,
                 .mx_RoomSettingsDialog_column_data_metadata li,
                 .mx_RoomSettingsDialog_column_data_protocolName {
-                    margin-bottom: 0;
+                    margin-block-end: 0;
                 }
 
                 .mx_RoomSettingsDialog_column_data_details,
                 .mx_RoomSettingsDialog_column_data_metadata {
-                    margin-top: $spacing-4;
+                    margin-block-start: $spacing-4;
                 }
 
                 .mx_RoomSettingsDialog_column_data_metadata li {
-                    margin-top: $spacing-8;
+                    margin-block-start: $spacing-8;
                 }
 
                 .mx_RoomSettingsDialog_column_data_protocolName {
-                    margin-top: 0;
+                    margin-block-start: 0;
                     font-size: 16pt;
                     color: $primary-content;
                 }
@@ -109,7 +109,7 @@ limitations under the License.
 
                 .mx_RoomSettingsDialog_metadata {
                     color: $muted-fg-color;
-                    margin-bottom: 0;
+                    margin-block-end: 0;
                     overflow-y: visible;
                     text-overflow: ellipsis;
                     white-space: normal;

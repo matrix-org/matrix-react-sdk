@@ -28,7 +28,7 @@ limitations under the License.
     }
 
     .mx_EventTile_content {
-        margin-right: 0;
+        margin-inline-end: 0;
     }
 
     .mx_EventTile {
@@ -64,14 +64,14 @@ limitations under the License.
             }
 
             .mx_ThreadSummary {
-                margin-right: 0;
+                margin-inline-end: 0;
                 max-width: min(calc(100% - 36px), 600px);
             }
 
             .mx_EventTile_avatar {
                 position: absolute; // for IRC layout
                 top: 12px;
-                left: -3px;
+                inset-inline-start: -3px;
             }
 
             .mx_MessageTimestamp {
@@ -87,7 +87,7 @@ limitations under the License.
 
             &.mx_EventTile_info {
                 .mx_EventTile_avatar {
-                    left: 18px;
+                    inset-inline-start: 18px;
                 }
             }
         }
@@ -97,17 +97,17 @@ limitations under the License.
     .mx_GenericEventListSummary {
         .mx_ThreadSummary {
             position: relative;
-            padding-right: 11px;
+            padding-inline-end: 11px;
 
             &::after {
                 content: '';
                 display: block;
                 position: absolute;
-                left: 0;
+                inset-inline-start: 0;
                 bottom: -16px;
                 height: 1px;
                 width: 100%;
-                border-bottom: 1px solid $message-action-bar-border-color;
+                border-block-end: 1px solid $message-action-bar-border-color;
             }
         }
     }
@@ -133,7 +133,7 @@ limitations under the License.
     }
 
     .mx_WhoIsTypingTile {
-        margin-left: -12px; // undo padding on the message list
+        margin-inline-start: -12px; // undo padding on the message list
     }
 
     .mx_WhoIsTypingTile_avatars {

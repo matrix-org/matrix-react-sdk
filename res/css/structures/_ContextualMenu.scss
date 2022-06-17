@@ -23,7 +23,7 @@ limitations under the License.
 .mx_ContextualMenu_background {
     position: fixed;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 100%;
     opacity: 1.0;
@@ -41,41 +41,41 @@ limitations under the License.
 }
 
 .mx_ContextualMenu_right {
-    right: 16px;
+    inset-inline-end: 16px;
 }
 
 .mx_ContextualMenu.mx_ContextualMenu_withChevron_right {
-    right: 8px;
+    inset-inline-end: 8px;
 }
 
 .mx_ContextualMenu_chevron_right {
     position: absolute;
-    right: -8px;
+    inset-inline-end: -8px;
     top: 0px;
     width: 0;
     height: 0;
-    border-top: 8px solid transparent;
-    border-left: 8px solid $menu-bg-color;
-    border-bottom: 8px solid transparent;
+    border-block-start: 8px solid transparent;
+    border-inline-start: 8px solid $menu-bg-color;
+    border-block-end: 8px solid transparent;
 }
 
 .mx_ContextualMenu_left {
-    left: 0;
+    inset-inline-start: 0;
 }
 
 .mx_ContextualMenu.mx_ContextualMenu_withChevron_left {
-    left: 8px;
+    inset-inline-start: 8px;
 }
 
 .mx_ContextualMenu_chevron_left {
     position: absolute;
-    left: -8px;
+    inset-inline-start: -8px;
     top: 0px;
     width: 0;
     height: 0;
-    border-top: 8px solid transparent;
-    border-right: 8px solid $menu-bg-color;
-    border-bottom: 8px solid transparent;
+    border-block-start: 8px solid transparent;
+    border-inline-end: 8px solid $menu-bg-color;
+    border-block-end: 8px solid transparent;
 }
 
 .mx_ContextualMenu_top {
@@ -88,13 +88,13 @@ limitations under the License.
 
 .mx_ContextualMenu_chevron_top {
     position: absolute;
-    left: 0px;
+    inset-inline-start: 0px;
     top: -8px;
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-bottom: 8px solid $menu-bg-color;
-    border-right: 8px solid transparent;
+    border-inline-start: 8px solid transparent;
+    border-block-end: 8px solid $menu-bg-color;
+    border-inline-end: 8px solid transparent;
 }
 
 .mx_ContextualMenu_bottom {
@@ -107,13 +107,13 @@ limitations under the License.
 
 .mx_ContextualMenu_chevron_bottom {
     position: absolute;
-    left: 0px;
+    inset-inline-start: 0px;
     bottom: -8px;
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-top: 8px solid $menu-bg-color;
-    border-right: 8px solid transparent;
+    border-inline-start: 8px solid transparent;
+    border-block-start: 8px solid $menu-bg-color;
+    border-inline-end: 8px solid transparent;
 }
 
 .mx_ContextualMenu_rightAligned {

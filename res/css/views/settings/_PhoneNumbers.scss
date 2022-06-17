@@ -18,11 +18,11 @@ limitations under the License.
 .mx_ExistingPhoneNumber {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-block-end: 5px;
 }
 
 .mx_ExistingPhoneNumber_delete {
-    margin-right: 5px;
+    margin-inline-end: 5px;
     cursor: pointer;
     vertical-align: middle;
 }
@@ -30,11 +30,11 @@ limitations under the License.
 .mx_ExistingPhoneNumber_address,
 .mx_ExistingPhoneNumber_promptText {
     flex: 1;
-    margin-right: 10px;
+    margin-inline-end: 10px;
 }
 
 .mx_ExistingPhoneNumber_confirmBtn {
-    margin-left: 5px;
+    margin-inline-start: 5px;
 }
 
 .mx_ExistingPhoneNumber_verification {

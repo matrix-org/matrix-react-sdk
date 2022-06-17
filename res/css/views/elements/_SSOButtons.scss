@@ -21,7 +21,7 @@ limitations under the License.
 
     .mx_SSOButtons_row {
         & + .mx_SSOButtons_row {
-            margin-top: 16px;
+            margin-block-start: 16px;
         }
     }
 
@@ -40,7 +40,7 @@ limitations under the License.
         > img {
             object-fit: contain;
             position: absolute;
-            left: 8px;
+            inset-inline-start: 8px;
             top: 4px;
         }
     }
@@ -67,12 +67,12 @@ limitations under the License.
         padding: 12px;
 
         > img {
-            left: 12px;
+            inset-inline-start: 12px;
             top: 12px;
         }
 
         & + .mx_SSOButton_mini {
-            margin-left: 16px;
+            margin-inline-start: 16px;
         }
     }
 }

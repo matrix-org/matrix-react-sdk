@@ -24,7 +24,7 @@ limitations under the License.
         mask-repeat: no-repeat;
         background-color: #fff; // we know that non-urgent toasts are always styled the same
         mask-image: url('$(res)/img/element-icons/cloud-off.svg');
-        margin-right: 8px;
+        margin-inline-end: 8px;
     }
 
     span { // includes the i18n block

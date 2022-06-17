@@ -113,15 +113,15 @@ limitations under the License.
                 display: flex;
                 flex-direction: column;
                 gap: $spacing-4;
-                margin-left: 10px; // To match mx_CallEvent
-                margin-right: 10px;
+                margin-inline-start: 10px; // To match mx_CallEvent
+                margin-inline-end: 10px;
                 min-width: 0;
 
                 .mx_CallEvent_sender {
                     font-weight: 600;
                     font-size: 1.5rem;
                     line-height: 1.8rem;
-                    margin-bottom: $spacing-4;
+                    margin-block-end: $spacing-4;
 
                     overflow: hidden;
                     white-space: nowrap;
@@ -139,7 +139,7 @@ limitations under the License.
                     .mx_CallEvent_type_icon {
                         height: 13px;
                         width: 13px;
-                        margin-right: 5px;
+                        margin-inline-end: 5px;
 
                         &::before {
                             content: '';
@@ -184,7 +184,7 @@ limitations under the License.
             }
 
             .mx_CallEvent_content_tooltip {
-                margin-right: 5px;
+                margin-inline-end: 5px;
             }
         }
 
@@ -197,9 +197,9 @@ limitations under the License.
 
             .mx_CallEvent_iconButton {
                 position: absolute;
-                margin-right: 0;
+                margin-inline-end: 0;
                 top: 12px;
-                right: 12px;
+                inset-inline-end: 12px;
                 height: 16px;
                 width: 16px;
                 display: flex;
@@ -217,8 +217,8 @@ limitations under the License.
         .mx_CallEvent {
             position: relative;
 
-            // 5px (gap) + 14px (e2e icon size * mask-size) + 9px (margin-left of e2e icon)
-            right: calc(5px + 14px + 9px);
+            // 5px (gap) + 14px (e2e icon size * mask-size) + 9px (margin-inline-start of e2e icon)
+            inset-inline-end: calc(5px + 14px + 9px);
         }
     }
 }

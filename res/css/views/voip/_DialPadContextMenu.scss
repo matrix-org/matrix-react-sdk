@@ -25,24 +25,24 @@ limitations under the License.
 
 .mx_DialPadContextMenu_header {
     border: none;
-    margin-top: 32px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-block-start: 32px;
+    margin-inline-start: 20px;
+    margin-inline-end: 20px;
 
     /* a separator between the input line and the dial buttons */
-    border-bottom: 1px solid $quaternary-content;
-    transition: border-bottom 0.25s;
+    border-block-end: 1px solid $quaternary-content;
+    transition: border-block-end 0.25s;
 }
 
 .mx_DialPadContextMenu_cancel {
     @mixin customisedCancelButton;
-    float: right;
+    float: inline-end;
     width: 14px;
     height: 14px;
 }
 
 .mx_DialPadContextMenu_header:focus-within {
-    border-bottom: 1px solid $accent;
+    border-block-end: 1px solid $accent;
 }
 
 .mx_DialPadContextMenu_title {
@@ -63,7 +63,7 @@ limitations under the License.
     font-weight: 600;
     overflow: hidden;
     max-width: 185px;
-    text-align: left;
+    text-align: start;
     padding: 8px 0px;
     background-color: rgb(0, 0, 0, 0);
 }

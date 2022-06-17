@@ -29,9 +29,9 @@ limitations under the License.
         font-weight: $font-semi-bold;
         line-height: $font-24px;
         color: $primary-content;
-        margin-top: $spacing-24;
+        margin-block-start: $spacing-24;
         position: relative;
-        padding-left: calc(20px + $spacing-8);
+        padding-inline-start: calc(20px + $spacing-8);
 
         .mx_AccessibleButton_kind_link {
             display: inline;
@@ -45,7 +45,7 @@ limitations under the License.
             position: absolute;
             height: $font-24px;
             width: 20px;
-            left: 0;
+            inset-inline-start: 0;
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: contain;
@@ -57,11 +57,11 @@ limitations under the License.
     .mx_RoomPreviewCard_inviter {
         display: flex;
         align-items: center;
-        margin-bottom: $spacing-20;
+        margin-block-end: $spacing-20;
         font-size: $font-15px;
 
         > div {
-            margin-left: $spacing-8;
+            margin-inline-start: $spacing-8;
 
             .mx_RoomPreviewCard_inviter_name {
                 line-height: $font-18px;
@@ -91,7 +91,7 @@ limitations under the License.
             border: 3px solid $system;
 
             position: relative;
-            left: calc(-50px / 4 - 3px);
+            inset-inline-start: calc(-50px / 4 - 3px);
 
             &::before {
                 content: "";
@@ -109,7 +109,7 @@ limitations under the License.
         // XXX Remove this when video rooms leave beta
         .mx_BetaCard_betaPill {
             position: absolute;
-            right: $spacing-24;
+            inset-inline-end: $spacing-24;
             top: $spacing-32;
         }
     }
@@ -120,17 +120,17 @@ limitations under the License.
 
     .mx_RoomPreviewCard_topic {
         line-height: $font-22px;
-        margin-top: $spacing-16;
+        margin-block-start: $spacing-16;
         max-height: 160px;
         overflow-y: auto;
     }
 
     .mx_FacePile {
-        margin-top: $spacing-20;
+        margin-block-start: $spacing-20;
     }
 
     .mx_RoomPreviewCard_joinButtons {
-        margin-top: $spacing-20;
+        margin-block-start: $spacing-20;
         display: flex;
         gap: $spacing-20;
 

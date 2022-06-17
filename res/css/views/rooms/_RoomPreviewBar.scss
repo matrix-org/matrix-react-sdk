@@ -82,7 +82,7 @@ limitations under the License.
         padding: 3px 8px;
 
         & > * {
-            margin-left: 12px;
+            margin-inline-start: 12px;
         }
     }
 
@@ -101,8 +101,8 @@ limitations under the License.
 // With maximised widgets, the panel fits in better when rounded
 .mx_MainSplit_maximisedWidget .mx_RoomPreviewBar_panel {
     margin: $container-gap-width;
-    margin-right: calc($container-gap-width / 2); // Shared with right panel
-    margin-top: 0; // Already covered by apps drawer
+    margin-inline-end: calc($container-gap-width / 2); // Shared with right panel
+    margin-block-start: 0; // Already covered by apps drawer
     border-radius: 8px;
 }
 
@@ -130,12 +130,12 @@ limitations under the License.
         }
 
         & > * {
-            margin-top: 12px;
+            margin-block-start: 12px;
         }
         .mx_AccessibleButton.mx_AccessibleButton_kind_primary {
             // to account for the padding of the primary button which causes inconsistent look between
             // subsequent secondary (text) buttons
-            margin-bottom: 7px;
+            margin-block-end: 7px;
         }
     }
 }

@@ -27,7 +27,7 @@ limitations under the License.
 
 .mx_TermsDialog_termsTableHeader {
     font-weight: bold;
-    text-align: left;
+    text-align: start;
 }
 
 .mx_TermsDialog_termsTable {
@@ -36,7 +36,7 @@ limitations under the License.
 }
 
 .mx_TermsDialog_service, .mx_TermsDialog_summary {
-    padding-right: 10px;
+    padding-inline-end: 10px;
 }
 
 .mx_TermsDialog_link {

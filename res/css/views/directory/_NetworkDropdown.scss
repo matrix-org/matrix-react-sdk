@@ -33,7 +33,7 @@ limitations under the License.
     text-align: center;
     line-height: 16px;
     color: $secondary-content;
-    margin-left: auto;
+    margin-inline-start: auto;
 
     &::before {
         background-color: $secondary-content;
@@ -44,7 +44,7 @@ limitations under the License.
         width: 8px;
         height: 8px;
         position: absolute;
-        left: 50%;
+        inset-inline-start: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
         mask-image: url("$(res)/img/cancel-small.svg");

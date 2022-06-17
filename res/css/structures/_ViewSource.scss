@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_ViewSource_separator {
     clear: both;
-    border-bottom: 1px solid #e5e5e5;
+    border-block-end: 1px solid #e5e5e5;
     padding-top: 0.7em;
     padding-bottom: 0.7em;
 }
@@ -25,11 +25,11 @@ limitations under the License.
     font-size: $font-17px;
     font-weight: 400;
     color: $primary-content;
-    margin-top: 0.7em;
+    margin-block-start: 0.7em;
 }
 
 .mx_ViewSource pre {
-    text-align: left;
+    text-align: start;
     font-size: $font-12px;
     padding: 0.5em 1em 0.5em 1em;
     word-wrap: break-word;
@@ -38,7 +38,7 @@ limitations under the License.
 }
 
 .mx_ViewSource_details {
-    margin-top: 0.8em;
+    margin-block-start: 0.8em;
 }
 
 .mx_ViewSource_container {

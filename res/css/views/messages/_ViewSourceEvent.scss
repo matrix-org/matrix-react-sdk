@@ -48,7 +48,7 @@ limitations under the License.
 
     &.mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle {
         mask-position: 0 bottom;
-        margin-bottom: 5px;
+        margin-block-end: 5px;
         mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
     }
 }

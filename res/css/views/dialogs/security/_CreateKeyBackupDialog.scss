@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_CreateKeyBackupDialog .mx_Dialog_title {
     /* TODO: Consider setting this for all dialog titles. */
-    margin-bottom: 1em;
+    margin-block-end: 1em;
 }
 
 .mx_CreateKeyBackupDialog_primaryContainer {
@@ -41,15 +41,15 @@ limitations under the License.
     border: 1px solid $accent;
     border-radius: 5px;
     padding: 10px;
-    margin-bottom: 1em;
+    margin-block-end: 1em;
 }
 
 .mx_CreateKeyBackupDialog_passPhraseMatch {
-    margin-left: 20px;
+    margin-inline-start: 20px;
 }
 
 .mx_CreateKeyBackupDialog_recoveryKeyHeader {
-    margin-bottom: 1em;
+    margin-block-end: 1em;
 }
 
 .mx_CreateKeyBackupDialog_recoveryKeyContainer {
@@ -61,7 +61,7 @@ limitations under the License.
     padding: 20px;
     color: $info-plinth-fg-color;
     background-color: $info-plinth-bg-color;
-    margin-right: 12px;
+    margin-inline-end: 12px;
 }
 
 .mx_CreateKeyBackupDialog_recoveryKeyButtons {

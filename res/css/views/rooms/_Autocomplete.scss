@@ -5,7 +5,7 @@
     width: 100%;
     border: 1px solid $primary-hairline-color;
     background: $background;
-    border-bottom: none;
+    border-block-end: none;
     border-radius: 8px 8px 0 0;
     overflow: clip;
     display: flex;
@@ -14,7 +14,7 @@
 }
 
 .mx_Autocomplete_ProviderSection {
-    border-bottom: 1px solid $primary-hairline-color;
+    border-block-end: 1px solid $primary-hairline-color;
     width: 100%;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .mx_Autocomplete_Completion_pill > * {
-    margin-right: 0.3rem;
+    margin-inline-end: 0.3rem;
 }
 
 /* styling for common completion elements */

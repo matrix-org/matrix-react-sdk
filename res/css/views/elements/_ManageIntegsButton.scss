@@ -16,20 +16,20 @@ limitations under the License.
 
 .mx_ManageIntegsButton_error {
     position: relative;
-    float: right;
+    float: inline-end;
     cursor: not-allowed;
 }
 
 .mx_ManageIntegsButton_error img {
     position: absolute;
-    right: -5px;
+    inset-inline-end: -5px;
     top: -5px;
 }
 
 .mx_ManageIntegsButton_errorPopup {
     position: absolute;
     top: 110%;
-    left: -275%;
+    inset-inline-start: -275%;
     width: 550%;
     padding: 30%;
     font-size: 10pt;

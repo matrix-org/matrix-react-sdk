@@ -21,10 +21,10 @@ limitations under the License.
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin-bottom: 12px;
+    margin-block-end: 12px;
 
     .mx_RoomBreadcrumbs_crumb {
-        margin-right: 8px;
+        margin-inline-end: 8px;
         width: 32px;
     }
 
@@ -52,6 +52,6 @@ limitations under the License.
 }
 
 .mx_RoomBreadcrumbs_Tooltip {
-    margin-left: -42px;
-    margin-top: -42px;
+    margin-inline-start: -42px;
+    margin-block-start: -42px;
 }

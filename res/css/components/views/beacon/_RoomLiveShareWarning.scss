@@ -32,7 +32,7 @@ limitations under the License.
 .mx_RoomLiveShareWarning_icon {
     height: 32px;
     width: 32px;
-    margin-right: $spacing-8;
+    margin-inline-end: $spacing-8;
 }
 
 .mx_RoomLiveShareWarning_label {
@@ -41,16 +41,16 @@ limitations under the License.
 }
 
 .mx_RoomLiveShareWarning_spinner {
-    margin-right: $spacing-16;
+    margin-inline-end: $spacing-16;
 }
 
 .mx_RoomLiveShareWarning_closeButton {
     @mixin ButtonResetDefault;
-    margin-left: $spacing-16;
+    margin-inline-start: $spacing-16;
 }
 
 .mx_RoomLiveShareWarning_stopButton {
-    margin-left: $spacing-16;
+    margin-inline-start: $spacing-16;
 }
 
 .mx_RoomLiveShareWarning_closeButtonIcon {

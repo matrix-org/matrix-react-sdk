@@ -27,7 +27,7 @@ limitations under the License.
 
 .mx_ProfileSettings_controls {
     flex-grow: 1;
-    margin-right: 54px;
+    margin-inline-end: 54px;
 }
 
 .mx_ProfileSettings_controls .mx_Field #profileTopic {
@@ -35,11 +35,11 @@ limitations under the License.
 }
 
 .mx_ProfileSettings_controls .mx_Field:first-child {
-    margin-top: 0;
+    margin-block-start: 0;
 }
 
 .mx_ProfileSettings_userId {
-    margin-right: $spacing-20;
+    margin-inline-end: $spacing-20;
 }
 
 .mx_ProfileSettings_avatarUpload {
@@ -48,15 +48,15 @@ limitations under the License.
 
 .mx_ProfileSettings_profileForm {
     @mixin mx_Settings_fullWidthField;
-    border-bottom: 1px solid $quinary-content;
+    border-block-end: 1px solid $quinary-content;
 }
 
 .mx_ProfileSettings_buttons {
-    margin-top: 10px; // 18px is already accounted for by the <p> above the buttons
-    margin-bottom: 28px;
+    margin-block-start: 10px; // 18px is already accounted for by the <p> above the buttons
+    margin-block-end: 28px;
 
     > .mx_AccessibleButton_kind_link {
         font-size: $font-14px;
-        margin-right: 10px;
+        margin-inline-end: 10px;
     }
 }

@@ -17,7 +17,7 @@ limitations under the License.
 .mx_ReplyChain {
     margin: 0 0 $spacing-8 0;
     padding: 0 10px; // TODO: Use a spacing variable
-    border-left: 2px solid $accent;
+    border-inline-start: 2px solid $accent;
     border-radius: 2px;
 
     .mx_ReplyChain_show {
@@ -32,35 +32,35 @@ limitations under the License.
     }
 
     &.mx_ReplyChain_color1 {
-        border-left-color: $username-variant1-color;
+        border-inline-start-color: $username-variant1-color;
     }
 
     &.mx_ReplyChain_color2 {
-        border-left-color: $username-variant2-color;
+        border-inline-start-color: $username-variant2-color;
     }
 
     &.mx_ReplyChain_color3 {
-        border-left-color: $username-variant3-color;
+        border-inline-start-color: $username-variant3-color;
     }
 
     &.mx_ReplyChain_color4 {
-        border-left-color: $username-variant4-color;
+        border-inline-start-color: $username-variant4-color;
     }
 
     &.mx_ReplyChain_color5 {
-        border-left-color: $username-variant5-color;
+        border-inline-start-color: $username-variant5-color;
     }
 
     &.mx_ReplyChain_color6 {
-        border-left-color: $username-variant6-color;
+        border-inline-start-color: $username-variant6-color;
     }
 
     &.mx_ReplyChain_color7 {
-        border-left-color: $username-variant7-color;
+        border-inline-start-color: $username-variant7-color;
     }
 
     &.mx_ReplyChain_color8 {
-        border-left-color: $username-variant8-color;
+        border-inline-start-color: $username-variant8-color;
     }
 }
 

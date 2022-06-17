@@ -19,7 +19,7 @@ limitations under the License.
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
-    margin-top: 8px;
+    margin-block-start: 8px;
 }
 
 .mx_MemberInfo_name {
@@ -28,7 +28,7 @@ limitations under the License.
 }
 
 .mx_MemberInfo_name > .mx_E2EIcon {
-    margin-right: 0;
+    margin-inline-end: 0;
 }
 
 .mx_MemberInfo_cancel {
@@ -72,7 +72,7 @@ limitations under the License.
 
 .mx_MemberInfo_avatar {
     background: $spacePanel-bg-color;
-    margin-bottom: 16px;
+    margin-block-end: 16px;
 }
 
 .mx_MemberInfo_avatar > img {
@@ -88,7 +88,7 @@ limitations under the License.
 }
 
 .mx_MemberInfo_profile {
-    margin-bottom: 16px;
+    margin-block-end: 16px;
 }
 
 .mx_MemberInfo h3 {
@@ -105,14 +105,14 @@ limitations under the License.
 }
 
 .mx_MemberInfo_buttons {
-    margin-bottom: 16px;
+    margin-block-end: 16px;
 }
 
 .mx_MemberInfo_field {
     cursor: pointer;
     font-size: $font-15px;
     color: $primary-content;
-    margin-left: 8px;
+    margin-inline-start: 8px;
     line-height: $font-23px;
 }
 
@@ -140,8 +140,8 @@ limitations under the License.
 
 .mx_MemberInfo input[type="radio"] {
     vertical-align: -2px;
-    margin-right: 5px;
-    margin-left: 8px;
+    margin-inline-end: 5px;
+    margin-inline-start: 8px;
 }
 
 .mx_MemberInfo_statusMessage {

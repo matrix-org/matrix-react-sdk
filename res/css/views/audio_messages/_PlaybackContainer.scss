@@ -21,7 +21,7 @@ limitations under the License.
 .mx_MediaBody.mx_VoiceMessagePrimaryContainer {
     // The waveform (right) has a 1px padding on it that we want to account for, otherwise
     // inherit from mx_MediaBody
-    padding-right: 11px;
+    padding-inline-end: 11px;
 
     // Cheat at alignment a bit
     display: flex;
@@ -48,26 +48,26 @@ limitations under the License.
     .mx_Clock {
         width: $font-42px; // we're not using a monospace font, so fake it
         min-width: $font-42px; // force sensible layouts in awkward flexboxes (file panel, for example)
-        padding-right: 6px; // with the fixed width this ends up as a visual 8px most of the time, as intended.
-        padding-left: 8px; // isolate from recording circle / play control
+        padding-inline-end: 6px; // with the fixed width this ends up as a visual 8px most of the time, as intended.
+        padding-inline-start: 8px; // isolate from recording circle / play control
     }
 
     .mx_RecordingPlayback_timelineLayoutMiddle {
-        margin-left: 8px;
-        margin-right: 6px;
+        margin-inline-start: 8px;
+        margin-inline-end: 6px;
         position: relative;
         display: inline-block;
         flex: 1;
         height: 30px; // same height as mx_Waveform, needed for automatic vertical centering
 
         .mx_Waveform {
-            left: 0;
+            inset-inline-start: 0;
             top: 0;
         }
 
         .mx_SeekBar {
             position: absolute;
-            left: 0;
+            inset-inline-start: 0;
             height: 30px;
             top: -2px; // visually vertically centered
 
@@ -99,7 +99,7 @@ limitations under the License.
 
         // For timeline-rendered playback, the clock is on the other side of the waveform.
         & + .mx_Clock {
-            text-align: right;
+            text-alignt: end;
 
             // Take the padding off the clock because it's accounted for by the `timelineLayoutMiddle`
             padding: 0;

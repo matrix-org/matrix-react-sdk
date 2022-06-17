@@ -19,8 +19,8 @@ limitations under the License.
 .mx_CallView {
     border-radius: 8px;
     background-color: $dark-panel-bg-color;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-inline-start: 8px;
+    padding-inline-end: 8px;
     // XXX: PiPContainer sets pointer-events: none - should probably be set back in a better place
     pointer-events: initial;
 
@@ -61,7 +61,7 @@ limitations under the License.
             border-radius: 10px;
 
             padding: 10px;
-            padding-right: calc(20% + 20px); // Space for the sidebar
+            padding-inline-end: calc(20% + 20px); // Space for the sidebar
 
             background-color: $call-view-content-background;
 
@@ -77,15 +77,15 @@ limitations under the License.
                 justify-content: center;
 
                 div {
-                    margin-left: 12px;
-                    margin-right: 12px;
+                    margin-inline-start: 12px;
+                    margin-inline-end: 12px;
                 }
             }
 
             .mx_CallView_holdBackground {
                 position: absolute;
-                left: 0;
-                right: 0;
+                inset-inline-start: 0;
+                inset-inline-end: 0;
 
                 width: 100%;
                 height: 100%;
@@ -101,8 +101,8 @@ limitations under the License.
                     position: absolute;
                     width: 100%;
                     height: 100%;
-                    left: 0;
-                    right: 0;
+                    inset-inline-start: 0;
+                    inset-inline-end: 0;
                     background-color: rgba(0, 0, 0, 0.6);
                 }
             }
@@ -113,8 +113,8 @@ limitations under the License.
 
                 &::before {
                     display: block;
-                    margin-left: auto;
-                    margin-right: auto;
+                    margin-inline-start: auto;
+                    margin-inline-end: auto;
                     content: "";
                     width: 40px;
                     height: 40px;
@@ -193,11 +193,11 @@ limitations under the License.
 
         margin: $container-gap-width;
         // The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser.
-        margin-right: calc($container-gap-width / 2);
-        margin-bottom: 10px;
+        margin-inline-end: calc($container-gap-width / 2);
+        margin-block-end: 10px;
     }
 
     &.mx_CallView_belowWidget {
-        margin-top: 0;
+        margin-block-start: 0;
     }
 }

@@ -37,25 +37,25 @@ limitations under the License.
 
 .mx_Tooltip_chevron {
     position: absolute;
-    left: -7px;
+    inset-inline-start: -7px;
     top: 10px;
     width: 0;
     height: 0;
-    border-top: 7px solid transparent;
-    border-right: 7px solid $menu-border-color;
-    border-bottom: 7px solid transparent;
+    border-block-start: 7px solid transparent;
+    border-inline-end: 7px solid $menu-border-color;
+    border-block-end: 7px solid transparent;
 }
 
 .mx_Tooltip_chevron::after {
     content: '';
     width: 0;
     height: 0;
-    border-top: 6px solid transparent;
-    border-right: 6px solid $menu-bg-color;
-    border-bottom: 6px solid transparent;
+    border-block-start: 6px solid transparent;
+    border-inline-end: 6px solid $menu-bg-color;
+    border-block-end: 6px solid transparent;
     position: absolute;
     top: -6px;
-    left: 1px;
+    inset-inline-start: 1px;
 }
 
 .mx_Tooltip {
@@ -77,8 +77,8 @@ limitations under the License.
     text-align: center;
 
     &:not(.mx_Tooltip_noMargin) {
-        margin-left: 6px;
-        margin-right: 6px;
+        margin-inline-start: 6px;
+        margin-inline-end: 6px;
     }
 
     .mx_Tooltip_chevron {
@@ -112,5 +112,5 @@ limitations under the License.
 
 .mx_Tooltip_sub {
     opacity: 0.7;
-    margin-top: 4px;
+    margin-block-start: 4px;
 }

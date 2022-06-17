@@ -25,9 +25,9 @@ limitations under the License.
     line-height: 32px;
 
     &.expanded {
-        margin-left: 20px;
-        padding-left: 44px; // align with toggle collapse button text
-        padding-right: 8px;
+        margin-inline-start: 20px;
+        padding-inline-start: 44px; // align with toggle collapse button text
+        padding-inline-end: 8px;
     }
 
     &::before {
@@ -35,7 +35,7 @@ limitations under the License.
         position: absolute;
         width: 32px;
         height: 32px;
-        left: 0;
+        inset-inline-start: 0;
         mask-image: url('$(res)/img/element-icons/settings.svg');
         mask-repeat: no-repeat;
         mask-position: center;
@@ -68,7 +68,7 @@ limitations under the License.
 
     .mx_AccessibleButton_hasKind {
         display: block;
-        margin-top: 4px;
+        margin-block-start: 4px;
     }
 
     > div > h4 {
@@ -81,20 +81,20 @@ limitations under the License.
     }
 
     .mx_QuickSettingsButton_pinToSidebarHeading {
-        padding-left: 24px;
+        padding-inline-start: 24px;
         position: relative;
     }
 
     .mx_Checkbox {
-        margin-bottom: 8px;
+        margin-block-end: 8px;
     }
 
     .mx_QuickSettingsButton_favouritesCheckbox,
     .mx_QuickSettingsButton_peopleCheckbox {
         .mx_Checkbox_background + div {
-            padding-left: 22px;
+            padding-inline-start: 22px;
             position: relative;
-            margin-left: 6px;
+            margin-inline-start: 6px;
             font-size: $font-15px;
             line-height: $font-24px;
             color: $secondary-content;
@@ -102,13 +102,13 @@ limitations under the License.
     }
 
     .mx_QuickSettingsButton_moreOptionsButton {
-        padding-left: 22px;
-        margin-left: 22px;
+        padding-inline-start: 22px;
+        margin-inline-start: 22px;
         font-size: $font-15px;
         line-height: $font-24px;
         color: $secondary-content;
         position: relative;
-        margin-bottom: 16px;
+        margin-block-end: 16px;
     }
 }
 
@@ -119,7 +119,7 @@ limitations under the License.
     width: 16px;
     height: 16px;
     position: absolute;
-    left: 0;
+    inset-inline-start: 0;
     top: 50%;
     transform: translateY(-50%);
 }

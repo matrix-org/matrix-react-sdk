@@ -30,10 +30,10 @@ limitations under the License.
     background-color: $authpage-modal-bg-color;
 
     @media only screen and (max-height: 768px) {
-        margin-top: 50px;
+        margin-block-start: 50px;
     }
 
     @media only screen and (max-width: 480px) {
-        margin-top: 0;
+        margin-block-start: 0;
     }
 }

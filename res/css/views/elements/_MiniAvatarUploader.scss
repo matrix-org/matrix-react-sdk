@@ -24,7 +24,7 @@ limitations under the License.
         position: absolute;
         z-index: unset;
         width: max-content;
-        left: 72px;
+        inset-inline-start: 72px;
         // top edge starting at 50 % of parent - 50 % of itself -> centered vertically
         top: 50%;
         transform: translateY(-50%);
@@ -36,7 +36,7 @@ limitations under the License.
         height: 26px;
         width: 26px;
 
-        right: -6px;
+        inset-inline-end: -6px;
         bottom: -6px;
 
         background-color: $background;

@@ -110,7 +110,7 @@ $roomListCollapsedWidth: 68px;
         .mx_LeftPanel_filterContainer {
             margin: 0 12px;
             padding: 12px 0 8px;
-            border-bottom: 1px solid $quinary-content;
+            border-block-end: 1px solid $quinary-content;
 
             flex-shrink: 0; // to convince safari's layout engine the flexbox is fine
 
@@ -119,7 +119,7 @@ $roomListCollapsedWidth: 68px;
             align-items: center;
 
             & + .mx_RoomListHeader {
-                margin-top: 12px;
+                margin-block-start: 12px;
             }
 
             .mx_RoomSearch_shortcutPrompt {
@@ -131,7 +131,7 @@ $roomListCollapsedWidth: 68px;
                 line-height: $font-15px;
                 font-weight: $font-semi-bold;
                 color: $light-fg-color;
-                margin-right: 6px;
+                margin-inline-end: 6px;
             }
 
             .mx_RoomSearch_focused, .mx_RoomSearch_hasQuery {
@@ -160,13 +160,13 @@ $roomListCollapsedWidth: 68px;
                 border-radius: 8px;
                 background-color: $panel-actions;
                 position: relative;
-                margin-left: 8px;
+                margin-inline-start: 8px;
 
                 &::before {
                     content: '';
                     position: absolute;
                     top: 8px;
-                    left: 8px;
+                    inset-inline-start: 8px;
                     width: 16px;
                     height: 16px;
                     mask-image: url('$(res)/img/element-icons/call/dialpad.svg');
@@ -184,13 +184,13 @@ $roomListCollapsedWidth: 68px;
                 border-radius: 8px;
                 background-color: $panel-actions;
                 position: relative;
-                margin-left: 8px;
+                margin-inline-start: 8px;
 
                 &::before {
                     content: '';
                     position: absolute;
                     top: 8px;
-                    left: 8px;
+                    inset-inline-start: 8px;
                     width: 16px;
                     height: 16px;
                     mask-position: center;
@@ -220,16 +220,16 @@ $roomListCollapsedWidth: 68px;
         .mx_LeftPanel_roomListFilterCount {
             font-size: $font-13px;
             font-weight: $font-semi-bold;
-            margin-left: 12px;
-            margin-top: 14px;
-            margin-bottom: -4px; // to counteract the normal roomListWrapper margin-top
+            margin-inline-start: 12px;
+            margin-block-start: 14px;
+            margin-block-end: -4px; // to counteract the normal roomListWrapper margin-block-start
         }
 
         .mx_LeftPanel_roomListWrapper {
             // Make the y-scrollbar more responsive
-            padding-right: 2px;
+            padding-inline-end: 2px;
             overflow: hidden;
-            margin-top: 10px; // so we're not up against the search/filter
+            margin-block-start: 10px; // so we're not up against the search/filter
             flex: 1 0 0; // needed in Safari to properly set flex-basis
 
             &.mx_LeftPanel_roomListWrapper_stickyBottom {
@@ -267,15 +267,15 @@ $roomListCollapsedWidth: 68px;
                 justify-content: center;
 
                 .mx_LeftPanel_dialPadButton {
-                    margin-left: 0;
-                    margin-top: 8px;
+                    margin-inline-start: 0;
+                    margin-block-start: 8px;
                     background-color: transparent;
                 }
 
                 .mx_LeftPanel_exploreButton,
                 .mx_LeftPanel_recentsButton {
-                    margin-left: 0;
-                    margin-top: 8px;
+                    margin-inline-start: 0;
+                    margin-block-start: 8px;
                 }
             }
         }

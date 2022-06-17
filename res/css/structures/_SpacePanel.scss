@@ -42,7 +42,7 @@ $activeBorderColor: $primary-content;
         border-radius: 50%;
         background-color: $tertiary-content;
         top: 19px; // v-align with avatar
-        right: -8px;
+        inset-inline-end: -8px;
 
         &::before {
             content: "";
@@ -80,7 +80,7 @@ $activeBorderColor: $primary-content;
         padding: 0;
 
         > .mx_SpaceItem {
-            padding-left: 16px;
+            padding-inline-start: 16px;
         }
     }
 
@@ -118,13 +118,13 @@ $activeBorderColor: $primary-content;
 
         .mx_BetaDot {
             position: absolute;
-            left: 33px;
+            inset-inline-start: 33px;
             top: -5px;
         }
     }
 
     .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton {
-        margin-left: $gutterSize;
+        margin-inline-start: $gutterSize;
         min-width: 40px;
     }
 
@@ -160,7 +160,7 @@ $activeBorderColor: $primary-content;
 
         .mx_SpaceButton_name {
             flex: 1;
-            margin-left: 8px;
+            margin-inline-start: 8px;
             white-space: nowrap;
             display: block;
             text-overflow: ellipsis;
@@ -193,7 +193,7 @@ $activeBorderColor: $primary-content;
                 width: $topLevelHeight;
                 height: $topLevelHeight;
                 top: 0;
-                left: 0;
+                inset-inline-start: 0;
                 mask-position: center;
                 mask-repeat: no-repeat;
                 mask-size: 18px;
@@ -249,15 +249,15 @@ $activeBorderColor: $primary-content;
             width: 20px;
             min-width: 20px; // yay flex
             height: 20px;
-            margin-top: auto;
-            margin-bottom: auto;
+            margin-block-start: auto;
+            margin-block-end: auto;
             display: none;
             position: absolute;
-            right: 4px;
+            inset-inline-end: 4px;
 
             &::before {
                 top: 3px;
-                left: 2px;
+                inset-inline-start: 2px;
                 content: '';
                 width: 16px;
                 height: 16px;
@@ -301,7 +301,7 @@ $activeBorderColor: $primary-content;
         display: flex;
         align-items: center;
         position: absolute;
-        right: -3px;
+        inset-inline-end: -3px;
         top: -3px;
 
         .mx_NotificationBadge {
@@ -354,7 +354,7 @@ $activeBorderColor: $primary-content;
         }
 
         & > ul {
-            padding-left: 0;
+            padding-inline-start: 0;
         }
 
         &.mx_IndicatorScrollbar_topOverflow {
@@ -372,7 +372,7 @@ $activeBorderColor: $primary-content;
 
     .mx_UserMenu {
         padding: 0 2px 8px;
-        border-bottom: 1px solid $quinary-content;
+        border-block-end: 1px solid $quinary-content;
         margin: 12px 14px 4px 18px;
     }
 }
@@ -421,7 +421,7 @@ $activeBorderColor: $primary-content;
         display: none;
 
         & + .mx_IconizedContextMenu_label {
-            padding-left: 5px !important; // override default iconized label style to align with header
+            padding-inline-start: 5px !important; // override default iconized label style to align with header
         }
     }
 
@@ -430,7 +430,7 @@ $activeBorderColor: $primary-content;
         font-size: $font-10px;
         line-height: $font-12px;
         font-weight: $font-semi-bold;
-        //margin-left: 8px;
+        //margin-inline-start: 8px;
     }
 }
 

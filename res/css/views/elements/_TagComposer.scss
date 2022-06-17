@@ -26,7 +26,7 @@ limitations under the License.
         .mx_AccessibleButton {
             min-width: 70px;
             padding: 0 8px; // override from button styles
-            margin-left: 16px; // distance from <Field>
+            margin-inline-start: 16px; // distance from <Field>
         }
 
         .mx_Field,
@@ -40,12 +40,12 @@ limitations under the License.
     .mx_TagComposer_tags {
         display: flex;
         flex-wrap: wrap;
-        margin-top: 12px; // this plus 12px from the tags makes 24px from the input
+        margin-block-start: 12px; // this plus 12px from the tags makes 24px from the input
     }
 
     .mx_Tag {
-        margin-right: 12px;
-        margin-top: 12px;
+        margin-inline-end: 12px;
+        margin-block-start: 12px;
     }
 }
 

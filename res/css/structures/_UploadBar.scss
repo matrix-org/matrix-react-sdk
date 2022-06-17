@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_UploadBar {
-    padding-left: 65px; // line up with the shield area in the composer
+    padding-inline-start: 65px; // line up with the shield area in the composer
     position: relative;
 
     .mx_ProgressBar {
@@ -25,15 +25,15 @@ limitations under the License.
 
 .mx_ThreadView {
     .mx_UploadBar {
-        padding-left: 0;
+        padding-inline-start: 0;
     }
 }
 
 .mx_UploadBar_filename {
-    margin-top: 5px;
+    margin-block-start: 5px;
     color: $muted-fg-color;
     position: relative;
-    padding-left: 22px; // 18px for icon, 4px for padding
+    padding-inline-start: 22px; // 18px for icon, 4px for padding
     font-size: $font-15px;
     vertical-align: middle;
 
@@ -43,7 +43,7 @@ limitations under the License.
         width: 18px;
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         mask-repeat: no-repeat;
         mask-position: center;
         background-color: $muted-fg-color;
@@ -54,10 +54,10 @@ limitations under the License.
 .mx_UploadBar_cancel {
     position: absolute;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     height: 16px;
     width: 16px;
-    margin-right: 16px; // align over rightmost button in composer
+    margin-inline-end: 16px; // align over rightmost button in composer
     mask-repeat: no-repeat;
     mask-position: center;
     background-color: $muted-fg-color;

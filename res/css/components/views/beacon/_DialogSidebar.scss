@@ -17,7 +17,7 @@ limitations under the License.
 .mx_DialogSidebar {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     height: 100%;
     width: 265px;
 
@@ -36,7 +36,7 @@ limitations under the License.
         justify-content: space-between;
 
         flex: 0 0;
-        margin-bottom: $spacing-16;
+        margin-block-end: $spacing-16;
 
         color: $primary-content;
 

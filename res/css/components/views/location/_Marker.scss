@@ -32,9 +32,9 @@ limitations under the License.
     // caret down
     &::before {
         content: '';
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 5px solid currentColor;
+        border-inline-start: 5px solid transparent;
+        border-inline-end: 5px solid transparent;
+        border-block-start: 5px solid currentColor;
         position: absolute;
         bottom: -4px;
     }

@@ -32,7 +32,7 @@ limitations under the License.
     h2 {
         font-size: $font-24px;
         font-weight: 600;
-        margin-top: 8px;
+        margin-block-start: 8px;
         color: $authpage-primary-color;
     }
 
@@ -103,7 +103,7 @@ limitations under the License.
 
 .mx_AuthBody_fieldRow {
     display: flex;
-    margin-bottom: 10px;
+    margin-block-end: 10px;
 }
 
 .mx_AuthBody_fieldRow > .mx_Field {
@@ -111,11 +111,11 @@ limitations under the License.
 }
 
 .mx_AuthBody_fieldRow > .mx_Field:first-child {
-    margin-left: 0;
+    margin-inline-start: 0;
 }
 
 .mx_AuthBody_fieldRow > .mx_Field:last-child {
-    margin-right: 0;
+    margin-inline-end: 0;
 }
 
 .mx_AuthBody_paddedFooter {
@@ -124,18 +124,18 @@ limitations under the License.
     text-align: center;
 
     .mx_AuthBody_paddedFooter_title {
-        margin-top: 16px;
+        margin-block-start: 16px;
         font-size: $font-15px;
         line-height: $font-24px;
 
         .mx_InlineSpinner img {
             vertical-align: sub;
-            margin-right: 5px;
+            margin-inline-end: 5px;
         }
     }
 
     .mx_AuthBody_paddedFooter_subtitle {
-        margin-top: 8px;
+        margin-block-start: 8px;
         font-size: $font-10px;
         line-height: $font-14px;
     }
@@ -151,7 +151,7 @@ limitations under the License.
 }
 
 .mx_SSOButtons + .mx_AuthBody_changeFlow {
-    margin-top: 24px;
+    margin-block-start: 24px;
 }
 
 .mx_AuthBody_spinner {

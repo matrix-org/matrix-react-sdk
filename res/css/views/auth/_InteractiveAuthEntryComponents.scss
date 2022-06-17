@@ -31,13 +31,13 @@ limitations under the License.
 }
 
 .mx_InteractiveAuthEntryComponents_msisdnSubmit {
-    margin-top: 4px;
-    margin-bottom: 5px;
+    margin-block-start: 4px;
+    margin-block-end: 5px;
 }
 
 .mx_InteractiveAuthEntryComponents_termsSubmit {
-    margin-top: 20px;
-    margin-bottom: 5px;
+    margin-block-start: 20px;
+    margin-block-end: 5px;
     display: block;
     width: 100%;
 }
@@ -68,10 +68,10 @@ limitations under the License.
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-block-start: 20px;
 
     .mx_AccessibleButton {
-        margin-left: 5px;
+        margin-inline-start: 5px;
     }
 }
 

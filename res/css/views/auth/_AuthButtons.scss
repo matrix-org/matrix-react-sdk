@@ -30,12 +30,12 @@ limitations under the License.
 
 .mx_AuthButtons_loginButton,
 .mx_AuthButtons_registerButton {
-    margin-top: 3px;
+    margin-block-start: 3px;
     height: 40px;
     border: 0px;
     border-radius: 40px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-inline-start: 4px;
+    margin-inline-end: 4px;
     min-width: 80px;
 
     background-color: $accent;

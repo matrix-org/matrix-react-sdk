@@ -20,7 +20,7 @@ $timeline-image-border-radius: 8px;
 .mx_MImageBody_banner {
     position: absolute;
     bottom: $spacing-4;
-    left: $spacing-4;
+    inset-inline-start: $spacing-4;
     padding: $spacing-4;
     border-radius: $timeline-image-border-radius;
     font-size: $font-15px;
@@ -42,7 +42,7 @@ $timeline-image-border-radius: 8px;
 .mx_MImageBody_placeholder {
     // Position the placeholder on top of the thumbnail, so that the reveal animation can work
     position: absolute;
-    left: 0;
+    inset-inline-start: 0;
     top: 0;
     height: 100%;
     width: 100%;
@@ -81,7 +81,7 @@ $timeline-image-border-radius: 8px;
     position: absolute;
     display: block;
     top: 0px;
-    left: 14px;
+    inset-inline-start: 14px;
     padding: 5px;
     border-radius: 5px;
     background: $imagebody-giflabel;
@@ -92,10 +92,10 @@ $timeline-image-border-radius: 8px;
 
 .mx_HiddenImagePlaceholder {
     position: absolute;
-    left: 0;
+    inset-inline-start: 0;
     top: 0;
     bottom: 0;
-    right: 0;
+    inset-inline-end: 0;
 
     // To center the text in the middle of the frame
     display: flex;
@@ -110,7 +110,7 @@ $timeline-image-border-radius: 8px;
         color: $accent;
 
         span.mx_HiddenImagePlaceholder_eye {
-            margin-right: 8px;
+            margin-inline-end: 8px;
 
             background-color: $accent;
             mask-image: url('$(res)/img/feather-customised/eye.svg');

@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 .mx_RoleButton {
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-inline-start: 4px;
+    margin-inline-end: 4px;
     cursor: pointer;
     display: inline-block;
 }
@@ -29,5 +29,5 @@ limitations under the License.
     display: inline-block;
     position: relative;
     top: -25px;
-    left: 6px;
+    inset-inline-start: 6px;
 }

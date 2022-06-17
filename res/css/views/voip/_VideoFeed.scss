@@ -25,7 +25,7 @@ limitations under the License.
 
     &.mx_VideoFeed_secondary {
         position: absolute;
-        right: 24px;
+        inset-inline-end: 24px;
         bottom: 72px;
         width: 20%;
     }
@@ -55,7 +55,7 @@ limitations under the License.
 
     .mx_VideoFeed_mic {
         position: absolute;
-        left: 6px;
+        inset-inline-start: 6px;
         bottom: 6px;
         display: flex;
         align-items: center;

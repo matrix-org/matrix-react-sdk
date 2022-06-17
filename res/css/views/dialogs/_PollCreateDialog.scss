@@ -17,8 +17,8 @@ limitations under the License.
 .mx_PollCreateDialog {
     .mx_PollCreateDialog_busy {
         position: absolute;
-        left: 0px;
-        right: 0px;
+        inset-inline-start: 0px;
+        inset-inline-end: 0px;
         top: 0px;
         bottom: 0px;
         background-color: rgba($background, 0.6);
@@ -29,11 +29,11 @@ limitations under the License.
         font-weight: 600;
         font-size: $font-15px;
         line-height: $font-24px;
-        margin-top: 0;
-        margin-bottom: 8px;
+        margin-block-start: 0;
+        margin-block-end: 8px;
 
         &:nth-child(n + 2) {
-            margin-top: 20px;
+            margin-block-start: 20px;
         }
     }
 
@@ -44,8 +44,8 @@ limitations under the License.
     .mx_PollCreateDialog_option {
         display: flex;
         align-items: center;
-        margin-top: 11px;
-        margin-bottom: 16px; // 11px from the top will collapse, so this creates a 16px gap between options
+        margin-block-start: 11px;
+        margin-block-end: 16px; // 11px from the top will collapse, so this creates a 16px gap between options
 
         .mx_Field {
             flex: 1;
@@ -53,7 +53,7 @@ limitations under the License.
         }
 
         .mx_PollCreateDialog_removeOption {
-            margin-left: 12px;
+            margin-inline-start: 12px;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -71,7 +71,7 @@ limitations under the License.
                 height: 8px;
                 position: absolute;
                 top: 6px;
-                left: 6px;
+                inset-inline-start: 6px;
                 background-color: $secondary-content;
             }
         }
@@ -79,7 +79,7 @@ limitations under the License.
 
     .mx_PollCreateDialog_addOption {
         padding: 0;
-        margin-bottom: 40px; // arbitrary to create scrollable area under the poll
+        margin-block-end: 40px; // arbitrary to create scrollable area under the poll
     }
 
     .mx_AccessibleButton_disabled {

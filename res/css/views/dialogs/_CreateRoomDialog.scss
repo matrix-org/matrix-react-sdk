@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_CreateRoomDialog_details {
-    margin-top: 15px;
+    margin-block-start: 15px;
 
     .mx_CreateRoomDialog_details_summary {
         outline: none;
@@ -36,18 +36,18 @@ limitations under the License.
         margin: 5px 0;
 
         input[type=checkbox] {
-            margin-right: 10px;
+            margin-inline-end: 10px;
         }
     }
 }
 
 .mx_CreateRoomDialog_label {
-    text-align: left;
+    text-align: start;
     padding-bottom: 12px;
 }
 
 .mx_CreateRoomDialog_input_container {
-    padding-right: 20px;
+    padding-inline-end: 20px;
 }
 
 .mx_CreateRoomDialog_input {
@@ -78,7 +78,7 @@ limitations under the License.
     }
 
     .mx_Dialog_content {
-        margin-bottom: 40px;
+        margin-block-end: 40px;
     }
 
     p,
@@ -98,11 +98,11 @@ limitations under the License.
 
     .mx_ToggleSwitch {
         flex: 0 0 auto;
-        margin-left: 30px;
+        margin-inline-start: 30px;
     }
 
     .mx_Dialog_content > .mx_SettingsFlag {
-        margin-top: 24px;
+        margin-block-start: 24px;
     }
 
     p {

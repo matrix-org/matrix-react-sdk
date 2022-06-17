@@ -21,7 +21,7 @@ limitations under the License.
 
     .mx_SpaceBasicSettings_avatarContainer {
         display: flex;
-        margin-top: 24px;
+        margin-block-start: 24px;
 
         .mx_SpaceBasicSettings_avatar {
             position: relative;
@@ -48,7 +48,7 @@ limitations under the License.
                 height: 80px;
                 width: 80px;
                 top: 0;
-                left: 0;
+                inset-inline-start: 0;
                 background-color: #ffffff; // white icon fill
                 mask-repeat: no-repeat;
                 mask-position: center;
@@ -74,7 +74,7 @@ limitations under the License.
     }
 
     .mx_AccessibleButton_hasKind {
-        margin-left: auto;
+        margin-inline-start: auto;
         display: block;
         width: min-content;
     }

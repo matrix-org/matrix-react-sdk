@@ -27,7 +27,7 @@ limitations under the License.
         max-height: 100%;
 
         .mx_Dialog_buttons button {
-            margin-bottom: 0;
+            margin-block-end: 0;
         }
     }
 }
@@ -37,12 +37,12 @@ limitations under the License.
 }
 
 .mx_DevTools_RoomStateExplorer_query {
-    margin-bottom: 10px;
+    margin-block-end: 10px;
 }
 
 .mx_DevTools_button {
     font-family: monospace !important;
-    margin-bottom: 8px !important;
+    margin-block-end: 8px !important;
 }
 
 .mx_DevTools_RoomStateExplorer_button_hasSpaces {
@@ -54,16 +54,16 @@ limitations under the License.
 }
 
 .mx_DevTools_label_left {
-    float: left;
+    float: inline-start;
 }
 
 .mx_DevTools_label_right {
-    float: right;
+    float: inline-end;
 }
 
 .mx_DevTools_label_bottom {
     clear: both;
-    border-bottom: 1px solid #e5e5e5;
+    border-block-end: 1px solid #e5e5e5;
 }
 
 .mx_DevTools_inputRow {
@@ -73,7 +73,7 @@ limitations under the License.
 .mx_DevTools_inputLabelCell {
     display: table-cell;
     font-weight: bold;
-    padding-right: 24px;
+    padding-inline-end: 24px;
 }
 
 .mx_DevTools_textarea {
@@ -89,14 +89,14 @@ limitations under the License.
 }
 
 .mx_DevTools_content .mx_Field_input:first-of-type {
-    margin-right: 42px;
+    margin-inline-end: 42px;
 }
 
 .mx_DevTools_VerificationRequest {
     border: 1px solid #cccccc;
     border-radius: 3px;
     padding: 1px 5px;
-    margin-bottom: 6px;
+    margin-block-end: 6px;
     font-family: $monospace-font-family;
 
     dl {
@@ -134,8 +134,8 @@ limitations under the License.
 
         th {
             // Colour choice: first one autocomplete gave me.
-            border-bottom: 1px solid $accent;
-            text-align: left;
+            border-block-end: 1px solid $accent;
+            text-align: start;
         }
 
         td, th {
@@ -165,15 +165,15 @@ limitations under the License.
     }
 
     .mx_DevTools_SettingsExplorer_edit {
-        float: right;
-        margin-right: 16px;
+        float: inline-end;
+        margin-inline-end: 16px;
     }
 
     .mx_DevTools_SettingsExplorer_warning {
         border: 2px solid $alert;
         border-radius: 4px;
         padding: 4px;
-        margin-bottom: 8px;
+        margin-block-end: 8px;
     }
 }
 

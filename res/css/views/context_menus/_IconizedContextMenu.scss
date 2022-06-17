@@ -21,8 +21,8 @@ limitations under the License.
 
     .mx_IconizedContextMenu_optionList {
         & > * {
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-inline-start: 20px;
+            padding-inline-end: 20px;
         }
 
         .mx_IconizedContextMenu_optionList_label {
@@ -32,7 +32,7 @@ limitations under the License.
 
         // the notFirst class is for cases where the optionList might be under a header of sorts.
         &:nth-child(n + 2), .mx_IconizedContextMenu_optionList_notFirst {
-            // This is a bit of a hack when we could just use a simple border-top property,
+            // This is a bit of a hack when we could just use a simple border-block-start property,
             // however we have a (kinda) good reason for doing it this way: we need opacity.
             // To get the right color, we need an opacity modifier which means we have to work
             // around the problem. PostCSS doesn't support the opacity() function, and if we
@@ -42,7 +42,7 @@ limitations under the License.
             //
             // Therefore, we just hack in a line and border the thing ourselves
             &::before {
-                border-top: 1px solid $primary-content;
+                border-block-start: 1px solid $primary-content;
                 opacity: 0.1;
                 content: '';
 
@@ -50,7 +50,7 @@ limitations under the License.
                 // unless we position it absolutely then it does the right thing).
                 width: 100%;
                 position: absolute;
-                left: 0;
+                inset-inline-start: 0;
             }
         }
 
@@ -108,11 +108,11 @@ limitations under the License.
             }
 
             .mx_IconizedContextMenu_icon + .mx_IconizedContextMenu_label {
-                padding-left: 14px;
+                padding-inline-start: 14px;
             }
 
             .mx_BetaCard_betaPill {
-                margin-left: 16px;
+                margin-inline-start: 16px;
             }
         }
     }
@@ -170,8 +170,8 @@ limitations under the License.
 
     .mx_IconizedContextMenu_checked,
     .mx_IconizedContextMenu_unchecked {
-        margin-left: 16px;
-        margin-right: -5px;
+        margin-inline-start: 16px;
+        margin-inline-end: -5px;
     }
 
     .mx_IconizedContextMenu_checked::before {
@@ -183,7 +183,7 @@ limitations under the License.
     }
 
     .mx_IconizedContextMenu_sublabel {
-        margin-left: 20px;
+        margin-inline-start: 20px;
         color: $tertiary-content;
     }
 }

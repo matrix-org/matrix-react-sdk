@@ -17,7 +17,7 @@ limitations under the License.
 .mx_FontScalingPanel {
     color: $primary-content;
     > .mx_SettingsTab_SubHeading {
-        margin-bottom: 32px;
+        margin-block-end: 32px;
     }
 }
 
@@ -38,8 +38,8 @@ limitations under the License.
     background: rgba($quinary-content, 0.2);
     border-radius: 10px;
     font-size: 10px;
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-block-start: 24px;
+    margin-block-end: 24px;
 }
 
 .mx_FontScalingPanel_fontSlider_preview {
@@ -50,7 +50,7 @@ limitations under the License.
     display: flow-root;
 
     .mx_EventTile[data-layout=bubble] {
-        margin-top: 30px;
+        margin-block-start: 30px;
     }
 
     .mx_EventTile_msgOption {
@@ -64,18 +64,18 @@ limitations under the License.
 
 .mx_FontScalingPanel_fontSlider_smallText {
     font-size: 15px;
-    padding-right: 20px;
-    padding-left: 5px;
+    padding-inline-end: 20px;
+    padding-inline-start: 5px;
     font-weight: 500;
 }
 
 .mx_FontScalingPanel_fontSlider_largeText {
     font-size: 18px;
-    padding-left: 20px;
-    padding-right: 5px;
+    padding-inline-start: 20px;
+    padding-inline-end: 5px;
     font-weight: 500;
 }
 
 .mx_FontScalingPanel_customFontSizeField {
-    margin-left: calc($font-16px + 10px);
+    margin-inline-start: calc($font-16px + 10px);
 }

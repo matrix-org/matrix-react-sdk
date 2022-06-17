@@ -23,9 +23,9 @@ limitations under the License.
         font-size: $font-15px;
         line-height: $font-18px;
         font-weight: $font-semi-bold;
-        margin-top: 16px;
+        margin-block-start: 16px;
         position: relative;
-        padding-left: 8px;
+        padding-inline-start: 8px;
         align-items: center;
 
         &::before {
@@ -33,7 +33,7 @@ limitations under the License.
             position: absolute;
             height: 24px;
             width: 24px;
-            left: 0;
+            inset-inline-start: 0;
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: contain;
@@ -41,7 +41,7 @@ limitations under the License.
         }
 
         input + div {
-            margin-top: 8px;
+            margin-block-start: 8px;
         }
 
         .mx_NotificationSettingsTab_microCopy {
@@ -49,7 +49,7 @@ limitations under the License.
             font-weight: normal;
             font-size: $font-12px;
             line-height: $font-15px;
-            margin-right: 32px;
+            margin-inline-end: 32px;
         }
     }
 

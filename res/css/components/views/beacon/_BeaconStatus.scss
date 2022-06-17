@@ -42,7 +42,7 @@ limitations under the License.
     width: 32px;
 
     flex: 0 0 32px;
-    margin-right: $spacing-8;
+    margin-inline-end: $spacing-8;
 }
 
 .mx_BeaconStatus_description {
@@ -51,7 +51,7 @@ limitations under the License.
     flex-direction: column;
     line-height: $font-14px;
 
-    padding-right: $spacing-8;
+    padding-inline-end: $spacing-8;
 
     white-space: nowrap;
     overflow: hidden;
@@ -67,7 +67,7 @@ limitations under the License.
 }
 
 .mx_BeaconStatus_label {
-    margin-bottom: 2px;
+    margin-block-end: 2px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

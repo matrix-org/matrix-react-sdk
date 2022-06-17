@@ -15,19 +15,19 @@ limitations under the License.
 */
 
 .mx_EditableItemList {
-    margin-top: 12px;
-    margin-bottom: 10px;
+    margin-block-start: 12px;
+    margin-block-end: 10px;
 }
 
 .mx_EditableItem {
     display: flex;
-    margin-bottom: 5px;
+    margin-block-end: 5px;
 }
 
 .mx_EditableItem_delete {
     @mixin customisedCancelButton;
     order: 3;
-    margin-right: 5px;
+    margin-inline-end: 5px;
     vertical-align: middle;
     width: 14px;
     height: 14px;
@@ -40,12 +40,12 @@ limitations under the License.
 }
 
 .mx_EditableItem_promptText {
-    margin-right: 10px;
+    margin-inline-end: 10px;
     order: 2;
 }
 
 .mx_EditableItem_confirmBtn {
-    margin-right: 5px;
+    margin-inline-end: 5px;
 }
 
 .mx_EditableItem_item {
@@ -57,5 +57,5 @@ limitations under the License.
 }
 
 .mx_EditableItemList_label {
-    margin-bottom: 5px;
+    margin-block-end: 5px;
 }

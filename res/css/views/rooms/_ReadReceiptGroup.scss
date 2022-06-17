@@ -44,7 +44,7 @@ limitations under the License.
         color: $secondary-content;
         font-size: $font-11px;
         line-height: $font-16px;
-        margin-right: 4px;
+        margin-inline-end: 4px;
     }
 
     .mx_ReadReceiptGroup_container {
@@ -74,11 +74,11 @@ limitations under the License.
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    text-align: left;
+    text-align: start;
     font-size: 12px;
     line-height: 15px;
 
-    right: 0;
+    inset-inline-end: 0;
 
     &.mx_ContextualMenu_top {
         top: 8px;
@@ -110,7 +110,7 @@ limitations under the License.
             }
 
             &:last-child {
-                margin-bottom: 8px;
+                margin-block-end: 8px;
             }
 
             .mx_BaseAvatar {

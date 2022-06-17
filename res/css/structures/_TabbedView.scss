@@ -23,9 +23,9 @@ limitations under the License.
     flex-direction: column;
     top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    margin-top: 8px;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    margin-block-start: 8px;
 }
 
 .mx_TabbedView_tabsOnLeft {
@@ -39,7 +39,7 @@ limitations under the License.
     }
 
     .mx_TabbedView_tabPanel {
-        margin-left: 240px; // 170px sidebar + 70px padding
+        margin-inline-start: 240px; // 170px sidebar + 70px padding
         flex-direction: column;
     }
 
@@ -55,7 +55,7 @@ limitations under the License.
     .mx_TabbedView_maskedIcon {
         width: 16px;
         height: 16px;
-        margin-right: 16px;
+        margin-inline-end: 16px;
     }
 
     .mx_TabbedView_maskedIcon::before {
@@ -70,12 +70,12 @@ limitations under the License.
 
     .mx_TabbedView_tabLabels {
         display: flex;
-        margin-bottom: 8px;
+        margin-block-end: 8px;
     }
 
     .mx_TabbedView_tabLabel {
-        padding-left: 0px;
-        padding-right: 52px;
+        padding-inline-start: 0px;
+        padding-inline-end: 52px;
 
         .mx_TabbedView_tabLabel_text {
             font-size: 15px;
@@ -101,8 +101,8 @@ limitations under the License.
     .mx_TabbedView_maskedIcon {
         width: 22px;
         height: 22px;
-        margin-left: 0px;
-        margin-right: 8px;
+        margin-inline-start: 0px;
+        margin-inline-end: 8px;
     }
 
     .mx_TabbedView_maskedIcon::before {

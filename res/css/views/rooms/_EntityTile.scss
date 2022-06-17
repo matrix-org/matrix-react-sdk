@@ -25,12 +25,12 @@ limitations under the License.
         margin: 0;
         position: absolute;
         bottom: 2px;
-        right: 7px;
+        inset-inline-end: 7px;
     }
 }
 
 .mx_EntityTile:hover {
-    padding-right: 30px;
+    padding-inline-end: 30px;
     position: relative; // to keep the chevron aligned
 }
 
@@ -38,7 +38,7 @@ limitations under the License.
     content: "";
     position: absolute;
     top: calc(50% - 8px); // center
-    right: -8px;
+    inset-inline-end: -8px;
     mask: url('$(res)/img/member_chevron.png');
     mask-repeat: no-repeat;
     width: 16px;
@@ -57,13 +57,13 @@ limitations under the License.
 .mx_EntityTile_invite {
     display: table-cell;
     vertical-align: middle;
-    margin-left: 10px;
+    margin-inline-start: 10px;
     width: 26px;
 }
 
 .mx_EntityTile_avatar {
-    padding-left: 3px;
-    padding-right: 12px;
+    padding-inline-start: 3px;
+    padding-inline-end: 12px;
     padding-top: 4px;
     padding-bottom: 4px;
     position: relative;

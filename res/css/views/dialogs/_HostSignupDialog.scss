@@ -29,17 +29,17 @@ limitations under the License.
         text-align: center;
 
         .mx_HostSignupDialog_content_top {
-            margin-bottom: 24px;
+            margin-block-end: 24px;
         }
 
         .mx_HostSignupDialog_paragraphs {
-            text-align: left;
-            padding-left: 25%;
-            padding-right: 25%;
+            text-align: start;
+            padding-inline-start: 25%;
+            padding-inline-end: 25%;
         }
 
         .mx_HostSignupDialog_buttons {
-            margin-bottom: 24px;
+            margin-block-end: 24px;
             display: flex;
             justify-content: center;
 
@@ -55,7 +55,7 @@ limitations under the License.
             align-items: baseline;
 
             img {
-                padding-right: 5px;
+                padding-inline-end: 5px;
             }
         }
     }
@@ -88,7 +88,7 @@ limitations under the License.
     cursor: pointer;
     position: absolute;
     top: 10px;
-    right: 10px;
+    inset-inline-end: 10px;
 }
 
 .mx_HostSignup_minimize_button {
@@ -102,7 +102,7 @@ limitations under the License.
     cursor: pointer;
     position: absolute;
     top: 10px;
-    right: 25px;
+    inset-inline-end: 25px;
 }
 
 .mx_HostSignup_persisted {
@@ -111,7 +111,7 @@ limitations under the License.
     height: 80vh;
     max-height: 600px;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     position: fixed;
     display: none;
 }
@@ -119,7 +119,7 @@ limitations under the License.
 .mx_HostSignupDialog_minimized {
     position: fixed;
     bottom: 80px;
-    right: 26px;
+    inset-inline-end: 26px;
     width: 314px;
     height: 217px;
     overflow: hidden;
@@ -129,8 +129,8 @@ limitations under the License.
     }
 
     .mx_Dialog_title {
-        text-align: left !important;
-        padding-left: 20px;
+        text-align: start !important;
+        padding-inline-start: 20px;
         font-size: $font-15px;
     }
 

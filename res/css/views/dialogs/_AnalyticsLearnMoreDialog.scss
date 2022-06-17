@@ -25,13 +25,13 @@ limitations under the License.
     }
 
     .mx_Dialog_content {
-        margin-bottom: 0px;
+        margin-block-end: 0px;
     }
 
     .mx_AnalyticsLearnMore_copy {
-        border-bottom: 1px solid $menu-border-color;
+        border-block-end: 1px solid $menu-border-color;
         padding-bottom: 20px;
-        margin-bottom: 20px;
+        margin-block-end: 20px;
     }
 
     a {
@@ -47,12 +47,12 @@ limitations under the License.
         mask-size: contain;
         width: 12px;
         height: 12px;
-        margin-left: 3px;
+        margin-inline-start: 3px;
         vertical-align: middle;
     }
 
     .mx_AnalyticsLearnMore_bullets {
-        padding-left: 0px;
+        padding-inline-start: 0px;
     }
 
     .mx_AnalyticsLearnMore_bullets li {

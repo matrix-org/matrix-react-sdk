@@ -71,7 +71,7 @@ limitations under the License.
             height: var(--CallViewButtons_dropdownButton-size);
 
             position: absolute;
-            right: 0;
+            inset-inline-end: 0;
             bottom: 0;
 
             &::before {

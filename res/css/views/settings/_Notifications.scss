@@ -20,7 +20,7 @@ limitations under the License.
     grid-template-columns: auto repeat(3, 62px);
     place-items: center center;
     grid-gap: 8px;
-    margin-top: $spacing-40;
+    margin-block-start: $spacing-40;
 
     // Override StyledRadioButton default styles
     .mx_StyledRadioButton {
@@ -49,7 +49,7 @@ limitations under the License.
     // <legend> does not accept
     // display: inline | inline-block
     // force it inline using float
-    float: left;
+    float: inline-start;
 }
 .mx_UserNotifSettings_gridRowHeading {
     font-size: $font-18px;
@@ -66,7 +66,7 @@ limitations under the License.
     color: $primary-content; // override from default settings page styles
 
     .mx_UserNotifSettings_floatingSection {
-        margin-top: 40px;
+        margin-block-start: 40px;
 
         & > div:first-child { // section header
             font-size: $font-18px;
@@ -76,24 +76,24 @@ limitations under the License.
         > table {
             border-collapse: collapse;
             border-spacing: 0;
-            margin-top: 8px;
+            margin-block-start: 8px;
 
             tr > td:first-child {
                 // Just for a bit of spacing
-                padding-right: 8px;
+                padding-inline-end: 8px;
             }
         }
     }
 
     .mx_UserNotifSettings_clearNotifsButton {
-        margin-top: 8px;
+        margin-block-start: 8px;
     }
 
     .mx_TagComposer {
-        margin-top: 35px; // lots of distance from the last line of the table
+        margin-block-start: 35px; // lots of distance from the last line of the table
     }
 }
 
 .mx_AccessibleButton.mx_NotificationSound_browse {
-    margin-right: 10px;
+    margin-inline-end: 10px;
 }

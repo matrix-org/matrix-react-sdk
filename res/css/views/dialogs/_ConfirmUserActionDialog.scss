@@ -16,12 +16,12 @@ limitations under the License.
 
 .mx_ConfirmUserActionDialog .mx_Dialog_content .mx_ConfirmUserActionDialog_user {
     min-height: 48px;
-    margin-bottom: 24px;
+    margin-block-end: 24px;
 }
 
 .mx_ConfirmUserActionDialog_avatar {
-    float: left;
-    margin-right: 20px;
+    float: inline-start;
+    margin-inline-end: 20px;
 }
 
 .mx_ConfirmUserActionDialog_name {

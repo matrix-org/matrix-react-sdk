@@ -16,7 +16,7 @@ limitations under the License.
 
 // Note: the room tile expects to be in a flexbox column container
 .mx_RoomTile {
-    margin-bottom: 4px;
+    margin-block-end: 4px;
     padding: 4px;
 
     // The tile is also a flexbox row itself
@@ -35,7 +35,7 @@ limitations under the License.
     }
 
     .mx_DecoratedRoomAvatar, .mx_RoomTile_avatarContainer {
-        margin-right: 10px;
+        margin-inline-end: 10px;
     }
 
     .mx_RoomTile_details {
@@ -47,7 +47,7 @@ limitations under the License.
         min-width: 0;
         flex-basis: 0;
         flex-grow: 1;
-        margin-right: 8px; // spacing to buttons/badges
+        margin-inline-end: 8px; // spacing to buttons/badges
 
         // Create a new column layout flexbox for the title parts
         display: flex;
@@ -78,12 +78,12 @@ limitations under the License.
         }
 
         .mx_RoomTile_titleWithSubtitle {
-            margin-top: -3px; // shift the title up a bit more
+            margin-block-start: -3px; // shift the title up a bit more
         }
     }
 
     .mx_RoomTile_notificationsButton {
-        margin-left: 4px; // spacing between buttons
+        margin-inline-start: 4px; // spacing between buttons
     }
 
     .mx_RoomTile_badgeContainer {
@@ -96,13 +96,13 @@ limitations under the License.
         align-items: center;
 
         .mx_NotificationBadge {
-            margin-right: 2px; // centering
+            margin-inline-end: 2px; // centering
         }
 
         .mx_NotificationBadge_dot {
             // make the smaller dot occupy the same width for centering
-            margin-left: 5px;
-            margin-right: 7px;
+            margin-inline-start: 5px;
+            margin-inline-end: 7px;
         }
     }
 
@@ -112,14 +112,14 @@ limitations under the License.
         width: 20px;
         min-width: 20px; // yay flex
         height: 20px;
-        margin-top: auto;
-        margin-bottom: auto;
+        margin-block-start: auto;
+        margin-block-end: auto;
         position: relative;
         display: none;
 
         &::before {
             top: 2px;
-            left: 2px;
+            inset-inline-start: 2px;
             content: '';
             width: 16px;
             height: 16px;
@@ -164,7 +164,7 @@ limitations under the License.
         position: relative;
 
         .mx_DecoratedRoomAvatar, .mx_RoomTile_avatarContainer {
-            margin-right: 0;
+            margin-inline-end: 0;
         }
     }
 }

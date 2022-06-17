@@ -37,7 +37,7 @@ limitations under the License.
         overflow-y: auto;
 
         .mx_EventTile[data-layout=bubble] {
-            margin-top: 20px;
+            margin-block-start: 20px;
         }
 
         div {
@@ -58,7 +58,7 @@ limitations under the License.
     > hr {
         width: 100%;
         border: none;
-        border-top: 1px solid $input-border-color;
+        border-block-start: 1px solid $input-border-color;
         margin: 12px 0;
     }
 
@@ -77,16 +77,16 @@ limitations under the License.
 
         .mx_ForwardList_noResults {
             display: block;
-            margin-top: 24px;
+            margin-block-start: 24px;
         }
 
         .mx_ForwardList_results {
             &:not(:first-child) {
-                margin-top: 24px;
+                margin-block-start: 24px;
             }
 
             .mx_ForwardList_resultsList {
-                padding-right: 8px;
+                padding-inline-end: 8px;
             }
 
             .mx_ForwardList_entry {
@@ -102,11 +102,11 @@ limitations under the License.
 
                 .mx_ForwardList_roomButton {
                     display: flex;
-                    margin-right: 12px;
+                    margin-inline-end: 12px;
                     min-width: 0;
 
                     .mx_DecoratedRoomAvatar {
-                        margin-right: 12px;
+                        margin-inline-end: 12px;
                     }
 
                     .mx_ForwardList_entry_name,
@@ -123,14 +123,14 @@ limitations under the License.
 
                     .mx_ForwardList_entry_detail {
                         font-size: $font-12px;
-                        margin-left: 8px;
+                        margin-inline-start: 8px;
                         color: $tertiary-content;
                     }
                 }
 
                 .mx_ForwardList_sendButton {
                     position: relative;
-                    margin-left: 12px;
+                    margin-inline-start: 12px;
 
                     &:not(.mx_ForwardList_canSend) .mx_ForwardList_sendLabel {
                         // Hide the "Send" label while preserving button size

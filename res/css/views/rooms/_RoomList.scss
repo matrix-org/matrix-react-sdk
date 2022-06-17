@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_RoomList {
-    padding-right: 7px; // width of the scrollbar, to line things up
+    padding-inline-end: 7px; // width of the scrollbar, to line things up
 }
 
 .mx_RoomList_iconPlus::before {
@@ -46,7 +46,7 @@ limitations under the License.
 .mx_RoomList_explorePrompt {
     margin: 4px 12px 4px;
     padding-top: 12px;
-    border-top: 1px solid $input-border-color;
+    border-block-start: 1px solid $input-border-color;
     font-size: $font-14px;
 
     div:first-child {
@@ -60,7 +60,7 @@ limitations under the License.
         position: relative;
         padding: 8px 8px 8px 32px;
         font-size: inherit;
-        margin-top: 12px;
+        margin-block-start: 12px;
         display: block;
         text-align: start;
         background-color: $panel-actions;
@@ -72,7 +72,7 @@ limitations under the License.
             height: 16px;
             position: absolute;
             top: 8px;
-            left: 8px;
+            inset-inline-start: 8px;
             background: $secondary-content;
             mask-position: center;
             mask-size: contain;

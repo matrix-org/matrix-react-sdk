@@ -11,9 +11,9 @@
     .mx_AppTileFullWidth {
         height: unset;
         box-sizing: border-box;
-        border-left: none;
-        border-right: none;
-        border-bottom: none;
+        border-inline-start: none;
+        border-inline-end: none;
+        border-block-end: none;
     }
 
     .mx_AppTileMenuBar {

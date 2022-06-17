@@ -17,13 +17,13 @@ limitations under the License.
 .mx_NewSessionReviewDialog_header {
     display: flex;
     align-items: center;
-    margin-top: 0;
+    margin-block-start: 0;
 }
 
 .mx_NewSessionReviewDialog_headerIcon {
     width: 24px;
     height: 24px;
-    margin-right: 4px;
+    margin-inline-end: 4px;
     position: relative;
 }
 

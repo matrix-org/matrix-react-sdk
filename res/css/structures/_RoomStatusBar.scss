@@ -15,23 +15,23 @@ limitations under the License.
 */
 
 .mx_RoomStatusBar:not(.mx_RoomStatusBar_unsentMessages) {
-    margin-left: 65px;
+    margin-inline-start: 65px;
     min-height: 50px;
 }
 
 .mx_RoomStatusBar_typingIndicatorAvatars {
     width: 52px;
-    margin-top: -1px;
-    text-align: left;
+    margin-block-start: -1px;
+    text-align: start;
 }
 
 .mx_RoomStatusBar_typingIndicatorAvatars .mx_BaseAvatar_image {
-    margin-right: -12px;
+    margin-inline-end: -12px;
     border: 1px solid $background;
 }
 
 .mx_RoomStatusBar_typingIndicatorAvatars .mx_BaseAvatar_initial {
-    padding-left: 1px;
+    padding-inline-start: 1px;
     padding-top: 1px;
 }
 
@@ -52,7 +52,7 @@ limitations under the License.
 
 .mx_RoomStatusBar_scrollDownIndicator {
     cursor: pointer;
-    padding-left: 1px;
+    padding-inline-start: 1px;
 }
 
 .mx_RoomStatusBar_unreadMessagesBar {
@@ -64,7 +64,7 @@ limitations under the License.
 .mx_RoomStatusBar_connectionLostBar {
     display: flex;
 
-    margin-top: 19px;
+    margin-block-start: 19px;
     min-height: 58px;
 }
 
@@ -75,13 +75,13 @@ limitations under the License.
         align-items: center;
         min-height: 70px;
         margin: 12px;
-        padding-left: 16px;
+        padding-inline-start: 16px;
         background-color: $header-panel-bg-color;
         border-radius: 4px;
     }
 
     .mx_RoomStatusBar_unsentBadge {
-        margin-right: 12px;
+        margin-inline-end: 12px;
 
         .mx_NotificationBadge {
             // Override sizing from the default badge
@@ -106,24 +106,24 @@ limitations under the License.
 
     .mx_RoomStatusBar_unsentButtonBar {
         flex-grow: 1;
-        text-align: right;
-        margin-right: 22px;
+        text-alignt: end;
+        margin-inline-end: 22px;
         color: $muted-fg-color;
 
         .mx_AccessibleButton {
             padding: 5px 10px;
-            padding-left: 30px; // 18px for the icon, 2px margin to text, 10px regular padding
+            padding-inline-start: 30px; // 18px for the icon, 2px margin to text, 10px regular padding
             display: inline-block;
             position: relative;
 
             &:nth-child(2) {
-                border-left: 1px solid $resend-button-divider-color;
+                border-inline-start: 1px solid $resend-button-divider-color;
             }
 
             &::before {
                 content: '';
                 position: absolute;
-                left: 10px; // inset for regular button padding
+                inset-inline-start: 10px; // inset for regular button padding
                 background-color: $muted-fg-color;
                 mask-repeat: no-repeat;
                 mask-position: center;
@@ -139,7 +139,7 @@ limitations under the License.
             }
 
             &.mx_RoomStatusBar_unsentResendAllBtn {
-                padding-left: 34px; // 28px from above, but +6px to account for the wider icon
+                padding-inline-start: 34px; // 28px from above, but +6px to account for the wider icon
 
                 &::before {
                     mask-image: url('$(res)/img/element-icons/retry.svg');
@@ -149,21 +149,21 @@ limitations under the License.
 
         .mx_InlineSpinner {
             vertical-align: middle;
-            margin-right: 5px;
+            margin-inline-end: 5px;
             top: 1px; // just to help the vertical alignment be slightly better
 
             & + span {
-                margin-right: 10px; // same margin/padding as the rightmost button
+                margin-inline-end: 10px; // same margin/padding as the rightmost button
             }
         }
     }
 }
 
 .mx_RoomStatusBar_connectionLostBar img {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-inline-start: 10px;
+    padding-inline-end: 10px;
     vertical-align: middle;
-    float: left;
+    float: inline-start;
 }
 
 .mx_RoomStatusBar_connectionLostBar_title {
@@ -199,7 +199,7 @@ limitations under the License.
     }
 
     .mx_RoomStatusBar_indicator {
-        margin-top: 10px;
+        margin-block-start: 10px;
     }
 
     .mx_RoomStatusBar_typingBar {

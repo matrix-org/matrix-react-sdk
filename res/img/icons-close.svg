@@ -44,10 +44,10 @@
    inkscape:window-y="27"
    inkscape:window-maximized="1"
    inkscape:current-layer="icons_create_room"
-   fit-margin-top="0"
-   fit-margin-left="0"
-   fit-margin-right="0"
-   fit-margin-bottom="0" />
+   fit-margin-block-start="0"
+   fit-margin-inline-start="0"
+   fit-margin-inline-end="0"
+   fit-margin-block-end="0" />
 <style
    type="text/css"
    id="style2">

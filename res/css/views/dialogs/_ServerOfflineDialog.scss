@@ -16,20 +16,20 @@ limitations under the License.
 
 .mx_ServerOfflineDialog {
     .mx_ServerOfflineDialog_content {
-        padding-right: 85px;
+        padding-inline-end: 85px;
         color: $primary-content;
 
         hr {
             border-color: $primary-content;
             opacity: 0.1;
-            border-bottom: none;
+            border-block-end: none;
         }
 
         ul {
             padding: 16px;
 
             li:nth-child(n + 2) {
-                margin-top: 16px;
+                margin-block-start: 16px;
             }
         }
 
@@ -48,21 +48,21 @@ limitations under the License.
 
                 .mx_ServerOfflineDialog_content_context_timeline_header {
                     span {
-                        margin-left: 8px;
+                        margin-inline-start: 8px;
                         vertical-align: middle;
                     }
                 }
 
                 .mx_ServerOfflineDialog_content_context_txn {
                     position: relative;
-                    margin-top: 8px;
+                    margin-block-start: 8px;
 
                     .mx_ServerOfflineDialog_content_context_txn_desc {
                         width: calc(100% - 100px); // 100px is an arbitrary margin for the button
                     }
 
                     .mx_AccessibleButton {
-                        float: right;
+                        float: inline-end;
                         padding: 0;
                     }
                 }
