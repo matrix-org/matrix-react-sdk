@@ -141,6 +141,7 @@ describe("Cryptography", () => {
             cy.contains(".mx_Dialog_primary", "Continue").click();
             cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
             cy.contains(".mx_AccessibleButton", "Copy").click();
+            cy.contains(".mx_AccessibleButton", "Copied!").should('exist');
             cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
             cy.contains(".mx_Dialog_title", "Setting up keys").should("exist");
             cy.contains(".mx_Dialog_title", "Setting up keys").should("not.exist");
