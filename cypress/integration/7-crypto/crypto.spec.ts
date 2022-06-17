@@ -140,10 +140,8 @@ describe("Cryptography", () => {
         cy.get(".mx_Dialog").within(() => {
             cy.contains(".mx_Dialog_primary", "Continue").click();
             cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
-            // fixme: the timeout is necessary for the test to work
-            // This shouldn't be the case.
-            cy.wait(1000);
-            cy.contains(".mx_AccessibleButton", "Copy").click();
+            // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
+            cy.contains(".mx_AccessibleButton", "Download").click();
             cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
             cy.contains(".mx_Dialog_title", "Setting up keys").should("exist");
             cy.contains(".mx_Dialog_title", "Setting up keys").should("not.exist");
