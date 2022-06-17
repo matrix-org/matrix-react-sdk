@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655464126237,
+  "lastUpdate": 1655472733639,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102104,6 +102104,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4766.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b51ef246ab93d2811c3f27be5086c8a5b6e042f1",
+          "message": "Live location share - forward latest location (PSF-1044) (#8860)\n\n* handle beacon location events in ForwardDialog\r\n\r\n* add transformer for forwarded events in MessageContextMenu\r\n\r\n* remove canForward\r\n\r\n* update snapshots for beacon model change\r\n\r\n* add comments\r\n\r\n* fix bad copy pasted test\r\n\r\n* add test for beacon locations",
+          "timestamp": "2022-06-17T15:27:08+02:00",
+          "tree_id": "c4a06bcba6fc53447e8f900aca43d2ee496b16c3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b51ef246ab93d2811c3f27be5086c8a5b6e042f1"
+        },
+        "date": 1655472722118,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4738.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2286.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4484.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
