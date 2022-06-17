@@ -19,7 +19,7 @@ $irc-line-height: $font-18px;
 .mx_IRCLayout {
     --name-width: 70px;
     --icon-width: 14px;
-    --right-padding: 5px;
+    --right-padding: 5px; /* TODO: Use a spacing variable */
 
     line-height: $irc-line-height !important;
 
@@ -90,7 +90,7 @@ $irc-line-height: $font-18px;
                 visibility: collapse;
                 /* Override the inherited margin. */
                 margin-left: 0;
-                padding: 0 5px;
+                padding: 0 5px; /* TODO: Use a spacing variable */
             }
 
             &:hover {
@@ -102,7 +102,7 @@ $irc-line-height: $font-18px;
                     display: inline;
                     background-color: $event-selected-color;
                     border-radius: 8px 0 0 8px;
-                    padding-right: 8px;
+                    padding-right: $spacing-8;
                 }
 
                 > .mx_DisambiguatedProfile_mxid {
