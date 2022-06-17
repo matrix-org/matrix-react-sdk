@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655476504491,
+  "lastUpdate": 1655499776155,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102188,6 +102188,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5059.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef48443dc95392c73ca948a62ea7e5157ade5baa",
+          "message": "Show chat panel when opening a video room with unread messages (#8812)\n\n* Show chat panel when opening a video room with unread messages\r\n\r\n* Remove unnecessary calls to private methods in tests\r\n\r\n* Make room ID mandatory when toggling the right panel\r\n\r\n* Restore the isViewingRoom check\r\n\r\n* Test RightPanelStore\r\n\r\n* Make the constructor private again\r\n\r\n* Add even more tests\r\n\r\n* Fix onReady",
+          "timestamp": "2022-06-17T16:57:40-04:00",
+          "tree_id": "13fe7fef44fb56b578bb16580fab62c175319d0c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ef48443dc95392c73ca948a62ea7e5157ade5baa"
+        },
+        "date": 1655499763339,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4878.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2180.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4863.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
