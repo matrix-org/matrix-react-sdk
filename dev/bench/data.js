@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655457215416,
+  "lastUpdate": 1655464126237,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102062,6 +102062,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4702.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0a90674e893f872580cd63a64163ef635527772f",
+          "message": "Fix crash when drawing blurHash for portrait videos PSB-139 (#8855)",
+          "timestamp": "2022-06-17T11:03:29Z",
+          "tree_id": "401da7e23953bd52e932069a7ac98ffa22697647",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0a90674e893f872580cd63a64163ef635527772f"
+        },
+        "date": 1655464115167,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4818.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2216,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4766.5,
             "unit": "ms",
             "extra": "type: measure"
           }
