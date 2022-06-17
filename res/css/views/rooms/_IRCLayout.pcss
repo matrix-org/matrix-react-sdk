@@ -150,6 +150,13 @@ $irc-line-height: $font-18px;
         .mx_EditMessageComposer_buttons {
             position: relative;
         }
+
+        &.mx_EventTile_info {
+            .mx_ViewSourceEvent, /* For hidden events */
+            .mx_TextualEvent {
+                line-height: $irc-line-height;
+            }
+        }
     }
 
     .mx_EventTile_emote {
@@ -160,13 +167,6 @@ $irc-line-height: $font-18px;
 
     blockquote {
         margin: 0;
-    }
-
-    .mx_EventTile.mx_EventTile_info {
-        .mx_ViewSourceEvent, /* For hidden events */
-        .mx_TextualEvent {
-            line-height: $irc-line-height;
-        }
     }
 
     /* Suppress highlight thing from the normal Layout. */
