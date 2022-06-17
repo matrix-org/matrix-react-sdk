@@ -3544,7 +3544,7 @@
     "Missing domain separator e.g. (:domain.org)": "Fehlender Doppelpunkt vor Server (z.B. :domain.org)",
     "was removed %(count)s times|other": "wurde %(count)s mal entfernt",
     "was removed %(count)s times|one": "wurde entfernt",
-    "were removed %(count)s times|one": "wurde entfernt",
+    "were removed %(count)s times|one": "wurden entfernt",
     "were removed %(count)s times|other": "wurden %(count)s mal entfernt",
     "Let moderators hide messages pending moderation.": "Erlaube Moderatoren, noch nicht moderierte Nachrichten auszublenden.",
     "Message pending moderation: %(reason)s": "Nachricht erwartet Moderation: %(reason)s",
