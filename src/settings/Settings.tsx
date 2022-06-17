@@ -378,13 +378,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Use new room breadcrumbs"),
         default: false,
     },
-    "feature_spotlight": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New search experience"),
-        default: true,
-    },
     "feature_right_panel_default_open": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
