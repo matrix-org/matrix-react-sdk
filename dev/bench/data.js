@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655421827759,
+  "lastUpdate": 1655443217342,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -101894,6 +101894,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 651.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4653394a1fbd29cf50a77202fac539a6984c9aaf",
+          "message": "Guard watchers against invalid settings (#8857)",
+          "timestamp": "2022-06-16T23:15:02-06:00",
+          "tree_id": "40f35f5c27f6be5c83375d840b4491ed3d4b16ee",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4653394a1fbd29cf50a77202fac539a6984c9aaf"
+        },
+        "date": 1655443206390,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4992.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2287.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4719.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
