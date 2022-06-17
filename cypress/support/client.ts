@@ -48,32 +48,18 @@ declare global {
              */
             inviteUser(roomId: string, userId: string): Chainable<{}>;
             /**
-             * Sets up key backup.
-             * Stores the security key under the "securityKey" alias.
-             */
-            setUpKeyBackup(): Chainable<void>;
-            /**
              * Sets account data for the user.
              * @param type The type of account data.
              * @param data The data to store.
              */
             setAccountData(type: string, data: object): Chainable<{}>;
+            /**
+             * Boostraps cross-signing.
+             */
+            bootstrapCrossSigning(): Chainable<void>;
         }
     }
 }
-
-Cypress.Commands.add("setUpKeyBackup", (): Chainable<void> => {
-    cy.get('.mx_AccessibleButton[aria-label="User menu"]').click();
-    cy.get('.mx_AccessibleButton[aria-label="Security & Privacy"]').click();
-    cy.contains(".mx_AccessibleButton", "Set up Secure Backup").click();
-    cy.contains(".mx_Dialog_primary", "Continue").click();
-    cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
-    cy.contains(".mx_AccessibleButton", "Copy").click();
-    cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
-    cy.contains(".mx_Dialog_title", "Setting up keys").should("exist");
-    cy.contains(".mx_Dialog_title", "Setting up keys").should("not.exist");
-    return;
-});
 
 Cypress.Commands.add("getClient", (): Chainable<MatrixClient | undefined> => {
     return cy.window({ log: false }).then(win => win.mxMatrixClientPeg.matrixClient);
@@ -119,5 +105,13 @@ Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{
 Cypress.Commands.add("setAccountData", (type: string, data: object): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setAccountData(type, data);
+    });
+});
+
+Cypress.Commands.add("bootstrapCrossSigning", () => {
+    cy.window({ log: false }).then(win => {
+        win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
+            authUploadDeviceSigningKeys: async func => { await func({}); },
+        });
     });
 });

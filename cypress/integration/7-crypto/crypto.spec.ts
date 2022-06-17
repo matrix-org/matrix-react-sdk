@@ -15,8 +15,12 @@ limitations under the License.
 */
 
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import type { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
+import Chainable = Cypress.Chainable;
+
+type EmojiMapping = [emoji: string, name: string];
 
 const waitForVerificationRequest = (cli: MatrixClient): Promise<VerificationRequest> => {
     return new Promise<VerificationRequest>(resolve => {
@@ -28,6 +32,11 @@ const waitForVerificationRequest = (cli: MatrixClient): Promise<VerificationRequ
         // @ts-ignore
         cli.on("crypto.verification.request", onVerificationRequestEvent);
     });
+};
+
+const openRoomInfo = () => {
+    cy.get(".mx_RightPanel_roomSummaryButton").click();
+    return cy.get(".mx_RightPanel");
 };
 
 const checkDMRoom = () => {
@@ -68,17 +77,47 @@ describe("Cryptography", () => {
         cy.contains(".mx_TextualEvent", "Bob joined the room").should("exist");
     };
 
+    const bobDoVerification = (request: VerificationRequest): Chainable<EmojiMapping[]> => {
+        return cy.wrap(new Promise<EmojiMapping[]>((resolve) => {
+            const onShowSas = (event: ISasEvent) => {
+                resolve(event.sas.emoji);
+                verifier.off("show_sas", onShowSas);
+                event.confirm();
+                verifier.done();
+            };
+
+            const verifier = request.beginKeyVerification("m.sas.v1");
+            verifier.on("show_sas", onShowSas);
+            verifier.verify();
+        }));
+    };
+
     const verify = () => {
         const bobsVerificationRequestPromise = waitForVerificationRequest(bob);
-        cy.get(".mx_RightPanel_roomSummaryButton").click();
-        cy.get(".mx_RoomSummaryCard_icon_people").click();
-        cy.contains(".mx_EntityTile_name", "Bob").click();
-        cy.contains(".mx_UserInfo_verifyButton", "Verify").click(),
-        cy.wrap(bobsVerificationRequestPromise).then((verificationRequest: VerificationRequest) => {
-            // ↓ doesn't work - shows spinner
-            verificationRequest.accept();
+
+        openRoomInfo().within(() => {
+            cy.get(".mx_RoomSummaryCard_icon_people").click();
+            cy.contains(".mx_EntityTile_name", "Bob").click();
+            cy.contains(".mx_UserInfo_verifyButton", "Verify").click();
+            cy.contains(".mx_AccessibleButton", "Start Verification").click();
+            cy.wrap(bobsVerificationRequestPromise).then((verificationRequest: VerificationRequest) => {
+                verificationRequest.accept();
+                return verificationRequest;
+            }).as("bobsVerificationRequest");
+            cy.contains(".mx_AccessibleButton", "Verify by emoji").click();
+            cy.get<VerificationRequest>("@bobsVerificationRequest").then((request: VerificationRequest) => {
+                return bobDoVerification(request).then((emojis: EmojiMapping[]) => {
+                    emojis.forEach((emoji: EmojiMapping) => {
+                        cy.contains(".mx_VerificationShowSas_emojiSas_emoji", emoji[0]).should("exist");
+                        cy.contains(".mx_VerificationShowSas_emojiSas_label", emoji[1], { matchCase: false })
+                            .should("exist");
+                    });
+                });
+            });
+            cy.contains(".mx_AccessibleButton", "They match").click();
+            cy.contains("You've successfully verified Bob!").should("exist");
+            cy.contains(".mx_AccessibleButton", "Got it").click();
         });
-        cy.pause();
     };
 
     beforeEach(() => {
@@ -95,8 +134,22 @@ describe("Cryptography", () => {
         cy.stopSynapse(synapse);
     });
 
+    it("setting up secure key backup should work", () => {
+        cy.openUserSettings("Security & Privacy");
+        cy.contains(".mx_AccessibleButton", "Set up Secure Backup").click();
+        cy.get(".mx_Dialog").within(() => {
+            cy.contains(".mx_Dialog_primary", "Continue").click();
+            cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
+            cy.contains(".mx_AccessibleButton", "Copy").click();
+            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+            cy.contains(".mx_Dialog_title", "Setting up keys").should("exist");
+            cy.contains(".mx_Dialog_title", "Setting up keys").should("not.exist");
+        });
+        return;
+    });
+
     it("creating a DM should work, being e2e-encrypted / user verification", () => {
-        cy.setUpKeyBackup();
+        cy.bootstrapCrossSigning();
         startDMWithBob();
         checkDMRoom();
         bobJoin();

@@ -92,6 +92,9 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: ICreateBotOpts):
                 cli.initCrypto()
                     .then(() => cli.setGlobalErrorOnUnknownDevices(false))
                     .then(() => cli.startClient())
+                    .then(() => cli.bootstrapCrossSigning({
+                        authUploadDeviceSigningKeys: async func => { await func({}); },
+                    }))
                     .then(() => cli),
             );
         });
