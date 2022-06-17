@@ -1,0 +1,1 @@
+# A trivial spam-check API implementation to return error messages

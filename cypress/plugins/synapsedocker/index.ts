@@ -29,12 +29,24 @@ import PluginConfigOptions = Cypress.PluginConfigOptions;
 // A cypress plugins to add command to start & stop synapses in
 // docker with preset templates.
 
+// Options passed when starting Synapse.
+export type StartSynapseOptions = {
+    // The name of the template (e.g. "default", "consent")
+    template: string;
+
+    // If `true`, print docker logs on the console.
+    printDockerLogs?: boolean;
+};
+
 interface SynapseConfig {
     configDir: string;
     registrationSecret: string;
     // Synapse must be configured with its public_baseurl so we have to allocate a port & url at this stage
     baseUrl: string;
     port: number;
+    // The Docker image to use. It may be a dockerhub image or something
+    // we have created locally.
+    matrixImage: string;
 }
 
 export interface SynapseInstance extends SynapseConfig {
@@ -93,21 +105,45 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     console.log(`Gen ${path.join(templateDir, "localhost.signing.key")}`);
     await fse.writeFile(path.join(tempDir, "localhost.signing.key"), `ed25519 x ${signingKey}`);
 
+    // If we have a `Dockerfile`, this means that the template needs its own image.
+    // If so, let's create a custom Docker image.
+    let matrixImage;
+    if (fse.existsSync(path.join(templateDir, "Dockerfile"))) {
+        matrixImage = `matrix-react-sdk-test-${template}`;
+        try {
+            childProcess.execFileSync('docker', [
+                "build",
+                templateDir,
+                "-t",
+                matrixImage,
+            ]);
+            console.log("Docker image built!");
+        } catch (ex) {
+            console.error("Failed to build docker image", ex);
+            throw ex;
+        }
+    } else {
+        // Otherwise, we can use our stock Matrix image.
+        matrixImage = "matrixdotorg/synapse:develop";
+    }
+
     return {
         port,
         baseUrl,
         configDir: tempDir,
         registrationSecret,
+        matrixImage,
     };
 }
 
 // Start a synapse instance: the template must be the name of
 // one of the templates in the cypress/plugins/synapsedocker/templates
 // directory
-async function synapseStart(template: string): Promise<SynapseInstance> {
+async function synapseStart(options: StartSynapseOptions): Promise<SynapseInstance> {
+    const template = options.template;
     const synCfg = await cfgDirFromTemplate(template);
 
-    console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
+    console.log(`Starting synapse ${synCfg.matrixImage} with config dir ${synCfg.configDir}...`);
 
     const containerName = `react-sdk-cypress-synapse-${crypto.randomBytes(4).toString("hex")}`;
     const userInfo = os.userInfo();
@@ -126,7 +162,7 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
             "-v", `${synCfg.configDir}:/data`,
             "-p", `${synCfg.port}:8008/tcp`,
             ...userParams,
-            "matrixdotorg/synapse:develop",
+            synCfg.matrixImage,
             "run",
         ], (err, stdout) => {
             if (err) reject(err);
@@ -152,6 +188,24 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
             else resolve();
         });
     });
+
+    if (options.printDockerLogs) {
+        // Let's print docker logs as a background process.
+        // This will die once docker container `synapseId` dies.
+        const ps = childProcess.spawn("docker", [
+            "logs",
+            synapseId,
+            "--follow",
+        ]);
+        ps.stdout.on('data', data => {
+            console.log("synapse out", data);
+        });
+        ps.stderr.on('data', data => {
+            // Note: we use `data.toString()` rather than simply `data` to get a string
+            // representation of any `Buffer`.
+            console.log("synapse err", data.toString());
+        });
+    }
 
     const synapse: SynapseInstance = { synapseId, ...synCfg };
     synapses.set(synapseId, synapse);

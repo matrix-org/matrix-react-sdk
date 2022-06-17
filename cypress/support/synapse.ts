@@ -20,7 +20,7 @@ import * as crypto from 'crypto';
 
 import Chainable = Cypress.Chainable;
 import AUTWindow = Cypress.AUTWindow;
-import { SynapseInstance } from "../plugins/synapsedocker";
+import { StartSynapseOptions, SynapseInstance } from "../plugins/synapsedocker";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -30,7 +30,7 @@ declare global {
              * Start a synapse instance with a given config template.
              * @param template path to template within cypress/plugins/synapsedocker/template/ directory.
              */
-            startSynapse(template: string): Chainable<SynapseInstance>;
+            startSynapse(template: string | StartSynapseOptions): Chainable<SynapseInstance>;
 
             /**
              * Custom command wrapping task:synapseStop whilst preventing uncaught exceptions
@@ -56,8 +56,14 @@ declare global {
     }
 }
 
-function startSynapse(template: string): Chainable<SynapseInstance> {
-    return cy.task<SynapseInstance>("synapseStart", template);
+function startSynapse(options: string | StartSynapseOptions): Chainable<SynapseInstance> {
+    // Normalize to `StartSynapseOptions`.
+    if (typeof options === "string") {
+        options = {
+            template: options,
+        };
+    }
+    return cy.task<SynapseInstance>("synapseStart", options);
 }
 
 function stopSynapse(synapse?: SynapseInstance): Chainable<AUTWindow> {
