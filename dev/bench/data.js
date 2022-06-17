@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655472733639,
+  "lastUpdate": 1655476504491,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102146,6 +102146,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4484.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "162be6ca94d8bc5c0832d68d60414fa75ce189b0",
+          "message": "Improve homeserver dropdown dialog styling (#8850)",
+          "timestamp": "2022-06-17T16:29:03+02:00",
+          "tree_id": "c99d642a1d20eab04c7c998ad48a3e6b7479e9c9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/162be6ca94d8bc5c0832d68d60414fa75ce189b0"
+        },
+        "date": 1655476491126,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5962.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2427.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5059.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
