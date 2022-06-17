@@ -15,26 +15,6 @@ limitations under the License.
 */
 
 .mx_TimelineCard {
-    .mx_TimelineCard__header {
-        margin-left: 6px;
-
-        span:first-of-type {
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 18px;
-            color: $secondary-content;
-        }
-    }
-
-    .mx_BaseCard_header {
-        margin: 5px 0 9px 0;
-
-        .mx_BaseCard_close {
-            margin: 8px;
-            right: 0;
-        }
-    }
-
     .mx_TimelineCard_timeline {
         overflow: hidden;
         position: relative; // offset parent for jump to bottom button
@@ -80,10 +60,7 @@ limitations under the License.
             }
 
             .mx_ReactionsRow {
-                padding: 0;
-
-                // See margin setting of ReactionsRow on _EventTile.scss
-                margin-right: 8px;
+                margin-inline-end: $spacing-8; // See: var(--ThreadView_group_spacing-end) for ReactionsRow on _EventTile.scss
             }
 
             .mx_ThreadSummary {
