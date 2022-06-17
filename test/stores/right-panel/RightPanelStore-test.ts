@@ -32,17 +32,15 @@ describe("RightPanelStore", () => {
     // Mock out the settings store so the right panel store can't persist values between tests
     jest.spyOn(SettingsStore, "setValue").mockImplementation(async () => {});
 
-    let store: RightPanelStore;
+    const store = RightPanelStore.instance;
     let cli: MockedObject<MatrixClient>;
     beforeEach(() => {
         stubClient();
         cli = mocked(MatrixClientPeg.get());
         DMRoomMap.makeShared();
 
-        // @ts-ignore
-        // The constructor is private but we want to use it anyways to prevent
-        // state from being shared between tests
-        store = new RightPanelStore();
+        // Make sure we start with a clean store
+        store.reset();
         store.useUnitTestClient(cli);
     });
 

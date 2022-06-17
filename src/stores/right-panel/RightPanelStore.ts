@@ -45,26 +45,34 @@ import { RoomViewStore } from "../RoomViewStore";
 export default class RightPanelStore extends ReadyWatchingStore {
     private static internalInstance: RightPanelStore;
 
-    private global?: IRightPanelForRoom = null;
-    private byRoom: {
-        [roomId: string]: IRightPanelForRoom;
-    } = {};
+    private global?: IRightPanelForRoom;
+    private byRoom: { [roomId: string]: IRightPanelForRoom };
     private viewedRoomId: Optional<string>;
 
     private constructor() {
         super(defaultDispatcher);
+        this.reset();
     }
 
-    protected onReady = async (): Promise<any> => {
+    /**
+     * Resets the store. Intended for test usage only.
+     */
+    public reset() {
+        this.global = null;
+        this.byRoom = {};
+        this.viewedRoomId = null;
+    }
+
+    protected async onReady(): Promise<any> {
         this.viewedRoomId = RoomViewStore.instance.getRoomId();
         this.matrixClient.on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
-    };
+    }
 
-    protected onNotReady = async (): Promise<any> => {
+    protected async onNotReady(): Promise<any> {
         this.matrixClient.off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
-    };
+    }
 
     protected onDispatcherAction(payload: ActionPayload) {
         if (payload.action !== Action.ActiveRoomChanged) return;

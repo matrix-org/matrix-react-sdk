@@ -70,9 +70,8 @@ describe("RightPanel", () => {
         // This is private but it's the only way to selectively enable stores
         await WidgetLayoutStore.instance.onReady();
 
-        // @ts-ignore
         // Make sure we start with a clean store
-        RightPanelStore.internalInstance = null;
+        RightPanelStore.instance.reset();
         RightPanelStore.instance.useUnitTestClient(cli);
         // @ts-ignore
         await RightPanelStore.instance.onReady();
