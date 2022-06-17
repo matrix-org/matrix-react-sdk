@@ -119,16 +119,12 @@ describe('MessageContextMenu', () => {
             });
 
             it('does not allow forwarding a live beacon that does not have a latestLocation', () => {
-                const deadBeaconEvent = makeBeaconInfoEvent(aliceId, roomId, { isLive: false });
-                const beaconLocation = makeBeaconEvent(
-                    aliceId, { beaconInfoId: deadBeaconEvent.getId(), geoUri: 'geo:51,41' },
-                );
-                const beacon = new Beacon(deadBeaconEvent);
-                // @ts-ignore illegally set private prop
-                beacon._latestLocationEvent = beaconLocation;
+                const beaconEvent = makeBeaconInfoEvent(aliceId, roomId, { isLive: true });
+
+                const beacon = new Beacon(beaconEvent);
                 const beacons = new Map<BeaconIdentifier, Beacon>();
-                beacons.set(getBeaconInfoIdentifier(deadBeaconEvent), beacon);
-                const menu = createMenu(deadBeaconEvent, {}, {}, beacons);
+                beacons.set(getBeaconInfoIdentifier(beaconEvent), beacon);
+                const menu = createMenu(beaconEvent, {}, {}, beacons);
                 expect(menu.find('div[aria-label="Forward"]')).toHaveLength(0);
             });
 
