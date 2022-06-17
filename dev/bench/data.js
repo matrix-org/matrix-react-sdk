@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655457065850,
+  "lastUpdate": 1655457215416,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102020,6 +102020,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5597.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8cceda66eefca5af3f12d0346023b75c4985a969",
+          "message": "Make cypress tests for spotlight less flaky (#8856)",
+          "timestamp": "2022-06-17T11:08:17+02:00",
+          "tree_id": "6a25df4757aa2c9f2fc29c48e7d17f7e6ca33254",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8cceda66eefca5af3f12d0346023b75c4985a969"
+        },
+        "date": 1655457203708,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5250.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2341.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4702.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
