@@ -21,7 +21,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { ILocationContent, LocationAssetType, M_LOCATION, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
+import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 

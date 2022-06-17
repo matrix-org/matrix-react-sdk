@@ -20,6 +20,10 @@ import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { getForwardableBeaconEvent } from "./getForwardableBeacon";
 
+/**
+ * Get forwardable event for a given event
+ * If an event is not forwardable return null
+ */
 export const getForwardableEvent = (event: MatrixEvent, cli: MatrixClient): MatrixEvent | null => {
     if (M_POLL_START.matches(event.getType())) {
         return null;

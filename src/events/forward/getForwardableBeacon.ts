@@ -18,12 +18,14 @@ import { getBeaconInfoIdentifier } from "matrix-js-sdk/src/matrix";
 
 import { ForwardableEventTransformFunction } from "./types";
 
+/**
+ * Live location beacons should forward their latest location as a static pin location
+ * If the beacon is not live, or doesn't have a location forwarding is not allowed
+ */
 export const getForwardableBeaconEvent: ForwardableEventTransformFunction = (event, cli) => {
     const room = cli.getRoom(event.getRoomId());
     const beacon = room.currentState.beacons?.get(getBeaconInfoIdentifier(event));
     const latestLocationEvent = beacon.latestLocationEvent;
-
-    console.log(beacon.isLive, latestLocationEvent);
 
     if (beacon.isLive && latestLocationEvent) {
         return latestLocationEvent;
