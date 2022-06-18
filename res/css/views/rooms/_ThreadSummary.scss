@@ -82,11 +82,10 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
         @mixin ThreadSummaryIcon;
         align-self: center; // v-align the threads icon
     }
-}
 
-// XXX: these classes are re-used outside of the component
-.mx_ThreadSummary_ThreadsAmount {
-    @mixin ThreadsAmount;
+    .mx_ThreadSummary_replies_amount {
+        @mixin ThreadsRepliesAmount;
+    }
 }
 
 .mx_ThreadSummary_sender {
