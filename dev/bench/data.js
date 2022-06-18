@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655562742141,
+  "lastUpdate": 1655562861603,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102308,6 +102308,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1166.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "edf071acae0e4f4994bc5d12b9adaa99e3bda8be",
+          "message": "Fix position of message action bar on the info tile on TimelineCard in message bubble layout (#8865)",
+          "timestamp": "2022-06-18T14:29:04Z",
+          "tree_id": "fc3ba3c13c9eeed1fc6c961ee0c03206e80ea72a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/edf071acae0e4f4994bc5d12b9adaa99e3bda8be"
+        },
+        "date": 1655562849594,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5537.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2301.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4659.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
