@@ -115,13 +115,13 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     display: inline-block;
     font-size: $font-12px;
     color: $secondary-content !important;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: $spacing-8;
+    margin-bottom: $spacing-8;
 
     &::before {
         @mixin ThreadSummaryIcon;
         vertical-align: middle;
-        margin-right: 8px;
+        margin-inline-end: $spacing-8;
         margin-top: -2px;
     }
 }

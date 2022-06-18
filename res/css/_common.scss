@@ -776,11 +776,9 @@ legend {
 }
 
 @define-mixin ThreadsRepliesAmount {
-    $threadInfoLineHeight: calc(2 * $font-12px);
-
     color: $secondary-content;
     font-weight: $font-semi-bold;
-    line-height: $threadInfoLineHeight;
+    line-height: calc(2 * $font-12px);
     white-space: nowrap;
     position: relative;
     padding: 0 $spacing-12 0 $spacing-8;
