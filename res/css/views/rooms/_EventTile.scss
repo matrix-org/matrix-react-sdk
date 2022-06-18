@@ -824,6 +824,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             align-items: center;
             position: relative;
 
+            &::before {
+                @mixin ThreadSummaryIcon;
+            }
+
             .mx_ThreadPanel_replies_amount {
                 @mixin ThreadsRepliesAmount;
                 font-size: $font-12px; // Same font size as the counter on the main panel
