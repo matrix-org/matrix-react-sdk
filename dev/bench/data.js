@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655499776155,
+  "lastUpdate": 1655560124552,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102230,6 +102230,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4863.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c4460d8add9ee6622207b1b4740ccf1abbcfa033",
+          "message": "Move EventTile style rules of compact modern layout, enabling it on the right panel as well (#8766)",
+          "timestamp": "2022-06-18T15:43:23+02:00",
+          "tree_id": "2abe111618ecafdd12a07d4b7a42a6b7dcc675ab",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c4460d8add9ee6622207b1b4740ccf1abbcfa033"
+        },
+        "date": 1655560112948,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5993.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2367.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4820.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
