@@ -641,7 +641,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     <div className="mx_SpotlightDialog_sectionHeader">
                         <h4>{ _t("Suggestions") }</h4>
                         <div className="mx_SpotlightDialog_options">
-                            { cli.doesServerSupportUnstableFeature("org.matrix.msc3827") && <>
+                            { SettingsStore.getValue("feature_exploring_public_spaces") && <>
                                 <LabelledCheckbox
                                     label={_t("Show rooms")}
                                     value={showRooms}
