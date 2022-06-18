@@ -111,11 +111,8 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     margin-inline-end: $spacing-8;
 }
 
-.mx_ThreadPanel_replies::before,
-.mx_ThreadSummaryIcon::before,
-.mx_ThreadSummary::before {
+.mx_ThreadPanel_replies::before {
     @mixin ThreadSummaryIcon;
-    background-color: $secondary-content !important;
 }
 
 .mx_ThreadSummaryIcon {
