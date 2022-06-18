@@ -3477,5 +3477,16 @@
     "How can I create a video room?": "Cómo crear una sala de vídeo",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Las salas de vídeo son canales de VoIP siempre abiertos, disponibles dentro de una sala en %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Una nueva forma de hablar por voz y vídeo en %(brand)s.",
-    "Video rooms": "Salas de vídeo"
+    "Video rooms": "Salas de vídeo",
+    "%(count)s Members|one": "%(count)s miembro",
+    "%(count)s Members|other": "%(count)s miembros",
+    "Some results may be hidden": "Algunos resultados pueden estar ocultos",
+    "Other options": "Otras opciones",
+    "Copy invite link": "Copiar enlace de invitación",
+    "Some results may be hidden for privacy": "Algunos resultados pueden estar ocultos por motivos de privacidad",
+    "Search for": "Buscar",
+    "Show: %(instance)s rooms (%(server)s)": "Mostrar: salas de %(instance)s (%(server)s)",
+    "Show: Matrix rooms": "Mostrar: salas de Matrix",
+    "Add new server…": "Añadir nuevo servidor…",
+    "Remove server “%(roomServer)s”": "Quitar servidor «%(roomServer)s»"
 }
