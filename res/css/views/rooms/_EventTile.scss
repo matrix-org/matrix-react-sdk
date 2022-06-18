@@ -828,7 +828,7 @@ $left-gutter: 64px;
             }
 
             .mx_ThreadPanel_replies_amount {
-                @mixin ThreadsRepliesAmount;
+                @mixin ThreadRepliesAmount;
                 font-size: $font-12px; // Same font size as the counter on the main panel
             }
         }

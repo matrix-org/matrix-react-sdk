@@ -775,7 +775,7 @@ legend {
     }
 }
 
-@define-mixin ThreadsRepliesAmount {
+@define-mixin ThreadRepliesAmount {
     color: $secondary-content;
     font-weight: $font-semi-bold;
     line-height: calc(2 * $font-12px);
