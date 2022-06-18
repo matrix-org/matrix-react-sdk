@@ -711,33 +711,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 }
 
-.mx_ThreadPanel_replies::before,
-.mx_ThreadSummaryIcon::before,
-.mx_ThreadSummary::before {
-    @mixin ThreadSummaryIcon;
-    background-color: $secondary-content !important;
-}
-
-.mx_ThreadSummaryIcon {
-    display: inline-block;
-    font-size: $font-12px;
-    color: $secondary-content !important;
-    margin-top: 8px;
-    margin-bottom: 8px;
-
-    &::before {
-        vertical-align: middle;
-        margin-right: 8px;
-        margin-top: -2px;
-    }
-}
-
-.mx_MessagePanel_narrow .mx_ThreadSummary {
-    min-width: initial;
-    max-width: 100%; // prevent overflow
-    width: initial;
-}
-
 .mx_EventTile[data-shape=ThreadsList] {
     --topOffset: $spacing-12;
     --leftOffset: 48px;
