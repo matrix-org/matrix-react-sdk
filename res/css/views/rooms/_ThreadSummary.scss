@@ -112,10 +112,6 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     margin-inline-end: $spacing-8;
 }
 
-.mx_ThreadSummaryIcon::before {
-    @mixin ThreadSummaryIcon;
-}
-
 .mx_ThreadPanel_replies::before,
 .mx_ThreadSummaryIcon::before,
 .mx_ThreadSummary::before {
@@ -131,6 +127,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     margin-bottom: 8px;
 
     &::before {
+        @mixin ThreadSummaryIcon;
         vertical-align: middle;
         margin-right: 8px;
         margin-top: -2px;
