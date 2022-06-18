@@ -121,7 +121,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_ThreadSummary,
-        .mx_ThreadSummaryIcon {
+        .mx_ThreadSummary_icon {
             margin-left: $left-gutter;
         }
 
@@ -446,7 +446,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile[data-layout=group] {
 
         .mx_ThreadSummary,
-        .mx_ThreadSummaryIcon,
+        .mx_ThreadSummary_icon,
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
             margin-right: 80px;

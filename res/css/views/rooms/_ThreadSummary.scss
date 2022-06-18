@@ -111,7 +111,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     margin-inline-end: $spacing-8;
 }
 
-.mx_ThreadSummaryIcon {
+.mx_ThreadSummary_icon {
     display: inline-block;
     font-size: $font-12px;
     color: $secondary-content !important;
