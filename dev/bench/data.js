@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655560124552,
+  "lastUpdate": 1655562742141,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102272,6 +102272,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4820.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e8f56c26d0b54443be29ec35118e2d0f5f84465b",
+          "message": "Remove inline start margin from display name in reply tile on the timeline with a maximized widget (#8864)",
+          "timestamp": "2022-06-18T14:27:17Z",
+          "tree_id": "82556d66ce1654e9eaf440ea30fec2701d1ff35c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e8f56c26d0b54443be29ec35118e2d0f5f84465b"
+        },
+        "date": 1655562731180,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4771.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1166.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
