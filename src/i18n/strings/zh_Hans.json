@@ -3481,5 +3481,10 @@
     "Fetched %(count)s events out of %(total)s|other": "已获取 %(total)s 事件中的 %(count)s 个",
     "Generating a ZIP": "生成 ZIP",
     "Failed to load list of rooms.": "加载聊天室列表失败。",
-    "Open in OpenStreetMap": "在 OpenStreetMap 中打开"
+    "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
+    "Jump to the given date in the timeline": "跳转到时间线中的给定日期",
+    "Command error: Unable to handle slash command.": "命令错误：无法处理斜杠命令。",
+    "Failed to invite users to %(roomName)s": "未能邀请用户加入 %(roomName)s",
+    "That link is no longer supported": "该链接已不再受支持",
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "如果此页面包含可识别信息，例如房间、用户 ID，则该数据在发送到服务器之前会被删除。"
 }
