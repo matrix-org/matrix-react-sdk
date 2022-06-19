@@ -45,6 +45,7 @@ interface IProps {
     getRelationsForEvent?: (
         (eventId: string, relationType: string, eventType: string) => Relations
     );
+    showSenderProfile?: boolean;
 }
 
 export default class ReplyTile extends React.PureComponent<IProps> {
@@ -52,6 +53,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
     static defaultProps = {
         onHeightChanged: () => {},
+        showSenderProfile: true,
     };
 
     componentDidMount() {

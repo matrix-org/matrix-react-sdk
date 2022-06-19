@@ -16,7 +16,7 @@ limitations under the License.
 
 import classNames from 'classnames';
 import React, { useEffect } from 'react';
-import { Beacon, BeaconIdentifier, Room } from 'matrix-js-sdk/src/matrix';
+import { Beacon, BeaconIdentifier } from 'matrix-js-sdk/src/matrix';
 
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { _t } from '../../../languageHandler';
@@ -33,13 +33,12 @@ interface Props {
 
 /**
  * Choose the most relevant beacon
- * and get its roomId
  */
-const chooseBestBeaconRoomId = (
+const chooseBestBeacon = (
     liveBeaconIds: BeaconIdentifier[],
     updateErrorBeaconIds: BeaconIdentifier[],
     locationErrorBeaconIds: BeaconIdentifier[],
-): Room['roomId'] | undefined => {
+): Beacon | undefined => {
     // both lists are ordered by creation timestamp in store
     // so select latest beacon
     const beaconId = updateErrorBeaconIds?.[0] ?? locationErrorBeaconIds?.[0] ?? liveBeaconIds?.[0];
@@ -48,7 +47,7 @@ const chooseBestBeaconRoomId = (
     }
     const beacon = OwnBeaconStore.instance.getBeaconById(beaconId);
 
-    return beacon?.roomId;
+    return beacon;
 };
 
 const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): string => {
@@ -56,7 +55,7 @@ const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): strin
         return _t('An error occurred while stopping your live location');
     }
     if (hasLocationErrors) {
-        return _t('An error occured whilst sharing your live location');
+        return _t('An error occurred whilst sharing your live location');
     }
     return _t('You are sharing your live location');
 };
@@ -68,13 +67,13 @@ const useLivenessMonitor = (liveBeaconIds: BeaconIdentifier[], beacons: Map<Beac
         // refresh beacon monitors when the tab becomes active again
         const onPageVisibilityChanged = () => {
             if (document.visibilityState === 'visible') {
-                liveBeaconIds.map(identifier => beacons.get(identifier)?.monitorLiveness());
+                liveBeaconIds.forEach(identifier => beacons.get(identifier)?.monitorLiveness());
             }
         };
         if (liveBeaconIds.length) {
             document.addEventListener("visibilitychange", onPageVisibilityChanged);
         }
-        () => {
+        return () => {
             document.removeEventListener("visibilitychange", onPageVisibilityChanged);
         };
     }, [liveBeaconIds, beacons]);
@@ -116,15 +115,18 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         return null;
     }
 
-    const relevantBeaconRoomId = chooseBestBeaconRoomId(
+    const relevantBeacon = chooseBestBeacon(
         liveBeaconIds, beaconIdsWithStoppingError, beaconIdsWithLocationPublishError,
     );
 
-    const onWarningClick = relevantBeaconRoomId ? () => {
+    const onWarningClick = relevantBeacon ? () => {
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
-            room_id: relevantBeaconRoomId,
+            room_id: relevantBeacon.roomId,
             metricsTrigger: undefined,
+            event_id: relevantBeacon.beaconInfoId,
+            scroll_into_view: true,
+            highlighted: true,
         });
     } : undefined;
 

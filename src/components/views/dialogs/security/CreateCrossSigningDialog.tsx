@@ -91,9 +91,9 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         }
     }
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
+    private doBootstrapUIAuth = async (makeRequest: (authData: any) => Promise<{}>): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
-            makeRequest({
+            await makeRequest({
                 type: 'm.login.password',
                 identifier: {
                     type: 'm.id.user',
@@ -106,7 +106,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             });
         } else if (this.props.tokenLogin) {
             // We are hoping the grace period is active
-            makeRequest({});
+            await makeRequest({});
         } else {
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {
@@ -123,18 +123,15 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 },
             };
 
-            const { finished } = Modal.createTrackedDialog(
-                'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                {
-                    title: _t("Setting up keys"),
-                    matrixClient: MatrixClientPeg.get(),
-                    makeRequest,
-                    aestheticsForStagePhases: {
-                        [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
-                        [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
-                    },
+            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                title: _t("Setting up keys"),
+                matrixClient: MatrixClientPeg.get(),
+                makeRequest,
+                aestheticsForStagePhases: {
+                    [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
+                    [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                 },
-            );
+            });
             const [confirmed] = await finished;
             if (!confirmed) {
                 throw new Error("Cross-signing key upload auth canceled");

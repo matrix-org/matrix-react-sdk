@@ -34,7 +34,6 @@ import type { Renderer } from "react-dom";
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
 import CallHandler from "../CallHandler";
-import { Analytics } from "../Analytics";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -51,6 +50,7 @@ import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
 import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import AutoRageshakeStore from "../stores/AutoRageshakeStore";
 import { IConfigOptions } from "../IConfigOptions";
+import { MatrixDispatcher } from "../dispatcher/dispatcher";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -90,7 +90,6 @@ declare global {
         mxWidgetStore: WidgetStore;
         mxWidgetLayoutStore: WidgetLayoutStore;
         mxCallHandler: CallHandler;
-        mxAnalytics: Analytics;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -109,6 +108,7 @@ declare global {
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
         mxAutoRageshakeStore?: AutoRageshakeStore;
+        mxDispatcher: MatrixDispatcher;
     }
 
     interface Electron {

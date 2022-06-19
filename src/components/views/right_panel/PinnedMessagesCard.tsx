@@ -32,6 +32,7 @@ import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { ReadPinsEventId } from "./types";
+import Heading from '../typography/Heading';
 
 interface IProps {
     room: Room;
@@ -154,16 +155,16 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
             />
         ));
     } else {
-        content = <div className="mx_PinnedMessagesCard_empty">
-            <div>
+        content = <div className="mx_PinnedMessagesCard_empty_wrapper">
+            <div className="mx_PinnedMessagesCard_empty">
                 { /* XXX: We reuse the classes for simplicity, but deliberately not the components for non-interactivity. */ }
-                <div className="mx_PinnedMessagesCard_MessageActionBar">
+                <div className="mx_MessageActionBar mx_PinnedMessagesCard_MessageActionBar">
                     <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton" />
                     <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton" />
                     <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton" />
                 </div>
 
-                <h2>{ _t("Nothing pinned, yet") }</h2>
+                <Heading size="h4" className="mx_PinnedMessagesCard_empty_header">{ _t("Nothing pinned, yet") }</Heading>
                 { _t("If you have permissions, open the menu on any message and select " +
                     "<b>Pin</b> to stick them here.", {}, {
                     b: sub => <b>{ sub }</b>,
@@ -173,7 +174,9 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
     }
 
     return <BaseCard
-        header={<h2>{ _t("Pinned messages") }</h2>}
+        header={<div className="mx_BaseCard_header_title">
+            <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Pinned messages") }</Heading>
+        </div>}
         className="mx_PinnedMessagesCard"
         onClose={onClose}
     >

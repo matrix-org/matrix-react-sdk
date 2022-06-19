@@ -16,5 +16,20 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import "@percy/cypress";
+import "cypress-real-events";
+
+import "./performance";
 import "./synapse";
 import "./login";
+import "./labs";
+import "./client";
+import "./settings";
+import "./bot";
+import "./clipboard";
+import "./util";
+import "./app";
+import "./percy";
+import "./webserver";
+import "./views";
+import "./iframes";

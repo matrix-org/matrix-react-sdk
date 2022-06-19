@@ -76,7 +76,6 @@ $menu-selected-color: $room-highlight-color;
 
 // Settings
 // ********************
-$settings-profile-overlay-placeholder-fg-color: #454545;
 $settings-profile-button-bg-color: #e7e7e7;
 $settings-subsection-fg-color: $text-secondary-color;
 // ********************
@@ -268,6 +267,10 @@ $selected-color: $room-highlight-color;
     text-decoration: none;
 }
 // ********************
+
+body {
+    color-scheme: dark;
+}
 
 // Nasty hacks to apply a filter to arbitrary monochrome artwork to make it
 // better match the theme.  Typically applied to dark grey 'off' buttons or

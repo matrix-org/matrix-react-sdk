@@ -15,13 +15,15 @@ limitations under the License.
 */
 
 .mx_Pill {
-    padding: $font-1px 0.4em $font-1px 0;
+    padding: $font-1px 0.4em $font-1px 0.4em;
     line-height: $font-17px;
     border-radius: $font-16px;
     vertical-align: text-top;
     display: inline-flex;
     align-items: center;
-
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: hidden;
     cursor: pointer;
 
     color: $accent-fg-color !important; // To override .markdown-body
@@ -46,12 +48,17 @@ limitations under the License.
         cursor: unset;
     }
 
+    &::before,
     .mx_BaseAvatar {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        border-radius: 10rem;
-        margin-right: 0.24rem;
+        margin-inline-start: -0.3em; // Otherwise the gap is too large
+        margin-inline-end: 0.2em;
+        min-width: $font-16px; // ensure the avatar is not compressed
+    }
+
+    .mx_Pill_linkText {
+        white-space: nowrap; // enforce the pill text to be a single line
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     a& {

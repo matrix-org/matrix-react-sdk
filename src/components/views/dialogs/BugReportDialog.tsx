@@ -30,6 +30,8 @@ import Field from '../elements/Field';
 import Spinner from "../elements/Spinner";
 import DialogButtons from "../elements/DialogButtons";
 import { sendSentryReport } from "../../../sentry";
+import defaultDispatcher from '../../../dispatcher/dispatcher';
+import { Action } from '../../../dispatcher/actions';
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -65,6 +67,16 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             downloadProgress: null,
         };
         this.unmounted = false;
+
+        // Get all of the extra info dumped to the console when someone is about
+        // to send debug logs. Since this is a fire and forget action, we do
+        // this when the bug report dialog is opened instead of when we submit
+        // logs because we have no signal to know when all of the various
+        // components have finished logging. Someone could potentially send logs
+        // before we fully dump everything but it's probably unlikely.
+        defaultDispatcher.dispatch({
+            action: Action.DumpDebugLogs,
+        });
     }
 
     public componentWillUnmount() {
@@ -98,8 +110,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         }).then(() => {
             if (!this.unmounted) {
                 this.props.onFinished(false);
-                // N.B. first param is passed to piwik and so doesn't want i18n
-                Modal.createTrackedDialog('Bug report sent', '', QuestionDialog, {
+                Modal.createDialog(QuestionDialog, {
                     title: _t('Logs sent'),
                     description: _t('Thank you!'),
                     hasCancelButton: false,
