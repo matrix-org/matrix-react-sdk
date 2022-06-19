@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$left-gutter: 64px; // From _EventTile.scss
 $threadSummaryLineHeight: calc(2 * $font-12px);
 
 .mx_ThreadSummary,
@@ -35,7 +34,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
 
 .mx_ThreadSummary {
     min-width: 267px;
-    max-width: min(calc(100% - $left-gutter), 600px); // leave space on both left & right gutters
+    max-width: min(calc(100% - var(--EventTile-gutter-start)), 600px); // leave space on both left & right gutters
     width: fit-content;
     height: 40px;
     position: relative;

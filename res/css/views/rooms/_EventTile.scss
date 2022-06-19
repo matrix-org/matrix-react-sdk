@@ -18,6 +18,8 @@ limitations under the License.
 $left-gutter: 64px;
 
 .mx_EventTile {
+    --EventTile-gutter-start: $left-gutter;
+
     flex-shrink: 0;
 
     .mx_EventTile_avatar {
