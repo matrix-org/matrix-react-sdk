@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$threadSummaryLineHeight: calc(2 * $font-12px);
-
 .mx_ThreadSummary,
 .mx_ThreadSummary_content,
 .mx_ThreadSummary_icon {
@@ -103,7 +101,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        line-height: $threadSummaryLineHeight;
+        line-height: calc(2 * $font-12px);
     }
 
     .mx_ThreadSummary_sender {
