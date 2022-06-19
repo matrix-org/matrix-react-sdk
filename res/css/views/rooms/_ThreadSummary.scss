@@ -82,7 +82,6 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
 
     &:hover,
     &:focus {
-        cursor: pointer;
         border-color: $quinary-content;
 
         .mx_ThreadSummary_chevron {
