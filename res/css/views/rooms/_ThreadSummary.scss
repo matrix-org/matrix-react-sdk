@@ -99,6 +99,12 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     .mx_ThreadSummary_replies_amount {
         @mixin ThreadRepliesAmount;
     }
+
+    .mx_MessagePanel_narrow & {
+        min-width: initial;
+        max-width: 100%; // prevent overflow
+        width: initial;
+    }
 }
 
 .mx_ThreadSummary_sender,
@@ -133,10 +139,4 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
         margin-inline-end: $spacing-8;
         margin-top: -2px;
     }
-}
-
-.mx_MessagePanel_narrow .mx_ThreadSummary {
-    min-width: initial;
-    max-width: 100%; // prevent overflow
-    width: initial;
 }
