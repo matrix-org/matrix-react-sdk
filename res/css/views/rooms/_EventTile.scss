@@ -19,6 +19,7 @@ $left-gutter: 64px;
 
 .mx_EventTile {
     --EventTile-gutter-start: $left-gutter;
+    --EventTile_ThreadSummary-line-height: calc(2 * $font-12px);
 
     flex-shrink: 0;
 
@@ -831,6 +832,7 @@ $left-gutter: 64px;
 
             .mx_ThreadPanel_replies_amount {
                 @mixin ThreadRepliesAmount;
+                line-height: var(--EventTile_ThreadSummary-line-height);
                 font-size: $font-12px; // Same font size as the counter on the main panel
             }
         }

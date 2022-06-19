@@ -92,8 +92,10 @@ limitations under the License.
         align-self: center; // v-align the threads icon
     }
 
+    .mx_ThreadSummary_sender,
+    .mx_ThreadSummary_content,
     .mx_ThreadSummary_replies_amount {
-        @mixin ThreadRepliesAmount;
+        line-height: var(--EventTile_ThreadSummary-line-height);
     }
 
     .mx_ThreadSummary_sender,
@@ -101,7 +103,6 @@ limitations under the License.
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        line-height: calc(2 * $font-12px);
     }
 
     .mx_ThreadSummary_sender {
@@ -111,6 +112,10 @@ limitations under the License.
     .mx_ThreadSummary_content {
         margin-left: $spacing-4;
         flex: 1;
+    }
+
+    .mx_ThreadSummary_replies_amount {
+        @mixin ThreadRepliesAmount;
     }
 
     .mx_MessagePanel_narrow & {

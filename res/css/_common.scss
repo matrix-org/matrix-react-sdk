@@ -778,7 +778,6 @@ legend {
 @define-mixin ThreadRepliesAmount {
     color: $secondary-content;
     font-weight: $font-semi-bold;
-    line-height: calc(2 * $font-12px);
     white-space: nowrap;
     position: relative;
     padding: 0 $spacing-12 0 $spacing-8;
