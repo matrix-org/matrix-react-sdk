@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655642457776,
+  "lastUpdate": 1655650672569,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102554,6 +102554,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 736.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "769efa30747b6619aa6c18b0873a2a0af53ce7d3",
+          "message": "Move the beta pill to the right side and display the pill on video room only (#8873)",
+          "timestamp": "2022-06-19T14:52:58Z",
+          "tree_id": "c4230a155986a947dd570de9e021b90be7c3e10a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/769efa30747b6619aa6c18b0873a2a0af53ce7d3"
+        },
+        "date": 1655650662477,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4552.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 625.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
