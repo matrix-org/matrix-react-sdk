@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655632962842,
+  "lastUpdate": 1655642457776,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102518,6 +102518,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5526.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cfbe1cb066697a8cd0b5ebf45fb5e5c49048a076",
+          "message": "Stop using absolute property to place beta pill on RoomPreviewCard (#8872)",
+          "timestamp": "2022-06-19T14:35:04+02:00",
+          "tree_id": "8c15d817b86c3c783c687e9a7511229a28162651",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cfbe1cb066697a8cd0b5ebf45fb5e5c49048a076"
+        },
+        "date": 1655642444311,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5157.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 736.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
