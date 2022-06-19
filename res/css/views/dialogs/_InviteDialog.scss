@@ -36,7 +36,7 @@ limitations under the License.
         background-color: $header-panel-bg-color;
         border-radius: 4px;
         min-height: 25px;
-        padding-left: $spacing-8;
+        padding-inline-start: $spacing-8;
         overflow-x: hidden;
         overflow-y: auto;
         display: flex;
@@ -54,7 +54,7 @@ limitations under the License.
             height: 24px;
             line-height: $font-24px;
             font-size: $font-14px;
-            padding-left: $spacing-12;
+            padding-inline-start: $spacing-12;
             border: 0 !important;
             outline: 0 !important;
             resize: none;
@@ -67,7 +67,7 @@ limitations under the License.
 
     .mx_InviteDialog_goButton {
         min-width: 48px;
-        margin-left: 10px; // TODO: Use a spacing variable
+        margin-inline-start: 10px; // TODO: Use a spacing variable
         height: 25px;
         line-height: $font-25px;
     }
@@ -77,7 +77,7 @@ limitations under the License.
             // Width and height are required to trick the layout engine.
             width: 20px;
             height: 20px;
-            margin-left: 5px; // TODO: Use a spacing variable
+            margin-inline-start: 5px; // TODO: Use a spacing variable
             display: inline-block;
             vertical-align: middle;
         }
@@ -148,7 +148,7 @@ limitations under the License.
 
 // Many of these styles are stolen from mx_UserPill, but adjusted for the invite dialog.
 .mx_InviteDialog_userTile {
-    margin-right: $spacing-8;
+    margin-inline-end: $spacing-8;
 
     .mx_InviteDialog_userTile_pill {
         background-color: $username-variant1-color;
@@ -156,8 +156,7 @@ limitations under the License.
         display: inline-block;
         height: 24px;
         line-height: $font-24px;
-        padding-left: $spacing-8;
-        padding-right: $spacing-8;
+        padding-inline: $spacing-8;
         color: #ffffff; // this is fine without a var because it's for both themes
 
         .mx_SearchResultAvatar {
@@ -182,7 +181,7 @@ limitations under the License.
 
     .mx_InviteDialog_userTile_remove {
         display: inline-block;
-        margin-left: $spacing-4;
+        margin-inline-start: $spacing-4;
     }
 }
 
@@ -194,11 +193,11 @@ limitations under the License.
     overflow: hidden;
 
     .mx_InviteDialog_addressBar {
-        margin-right: 0;
+        margin-inline-end: 0;
     }
 
     .mx_InviteDialog_userSections {
-        padding-right: 0;
+        padding-inline-end: 0;
 
         .mx_InviteDialog_section {
             padding-bottom: 0;
@@ -245,7 +244,7 @@ limitations under the License.
     }
 
     input[type="checkbox"] {
-        margin-right: $spacing-8;
+        margin-inline-end: $spacing-8;
     }
 }
 
@@ -303,10 +302,8 @@ limitations under the License.
     /* This wants a drop shadow the full width of the dialog, so use negative margin to make it full width,
      * then compensate with padding
      */
-    padding-left: $spacing-24;
-    padding-right: $spacing-24;
-    margin-left: calc(-1 * $spacing-24);
-    margin-right: calc(-1 * $spacing-24);
+    padding-inline: $spacing-24;
+    margin-inline: calc(-1 * $spacing-24);
     border-top: 1px solid $quinary-content;
 
     display: flex;
@@ -315,7 +312,7 @@ limitations under the License.
 }
 
 .mx_InviteDialog_transferConsultConnect_pushRight {
-    margin-left: auto;
+    margin-inline-start: auto;
 }
 
 .mx_InviteDialog_userDirectoryIcon::before {
