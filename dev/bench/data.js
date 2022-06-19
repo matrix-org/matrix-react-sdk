@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655632565006,
+  "lastUpdate": 1655632620073,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102434,6 +102434,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4436.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a434402b41b86ccd9eac09493be5b068cf0334a2",
+          "message": "Hide overflow of public room description on spotlight dialog result (#8870)",
+          "timestamp": "2022-06-19T11:51:24+02:00",
+          "tree_id": "23372cdd1d2d2a6203dabdedecbb0289a87f4fe1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a434402b41b86ccd9eac09493be5b068cf0334a2"
+        },
+        "date": 1655632609070,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5157.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2338.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5347.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
