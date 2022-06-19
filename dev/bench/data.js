@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655632620073,
+  "lastUpdate": 1655632962842,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102476,6 +102476,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5347.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b1e07e8ef01e51f0238096763bb338c4f56d483b",
+          "message": "Make the pill text single line (#8744)",
+          "timestamp": "2022-06-19T11:56:37+02:00",
+          "tree_id": "b990e0d86ae05f91e489708fcfde14a50e018e02",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b1e07e8ef01e51f0238096763bb338c4f56d483b"
+        },
+        "date": 1655632948588,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4908,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2365.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5526.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
