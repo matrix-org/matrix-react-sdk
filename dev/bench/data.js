@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655562861603,
+  "lastUpdate": 1655626933369,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102350,6 +102350,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4659.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "da9f2f6caa3e0db2a42e9ef7a4ce1b49eb862f53",
+          "message": "Improve _InviteDialog.scss by applying spacing variables (#8869)",
+          "timestamp": "2022-06-19T10:17:05+02:00",
+          "tree_id": "ac865b2a4095a5549f063fffd6aa5676344d882d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/da9f2f6caa3e0db2a42e9ef7a4ce1b49eb862f53"
+        },
+        "date": 1655626922384,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4686.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2285.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4536.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
