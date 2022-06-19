@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655626933369,
+  "lastUpdate": 1655632565006,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102392,6 +102392,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4536.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ee4484fa40b022e0ef5e2c8273c09dcd11b5f2af",
+          "message": "Use spacing variables on _SpotlightDialog.scss (#8871)",
+          "timestamp": "2022-06-19T11:50:32+02:00",
+          "tree_id": "bcdf9abd7ec7d2a26c47f9bebaff7ed62cdb803b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ee4484fa40b022e0ef5e2c8273c09dcd11b5f2af"
+        },
+        "date": 1655632551370,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4873.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2190,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4436.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
