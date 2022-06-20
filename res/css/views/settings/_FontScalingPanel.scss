@@ -46,16 +46,16 @@ limitations under the License.
     pointer-events: none;
     display: flow-root;
 
+    &.mx_IRCLayout {
+        padding-top: 9px; // TODO: Use a spacing variable
+    }
+
     .mx_EventTile[data-layout=bubble] {
         margin-top: 30px; // TODO: Use a spacing variable
     }
 
     .mx_EventTile_msgOption {
         display: none;
-    }
-
-    &.mx_IRCLayout {
-        padding-top: 9px;
     }
 }
 
