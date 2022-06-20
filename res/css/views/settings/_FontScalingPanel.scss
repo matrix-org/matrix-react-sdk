@@ -59,18 +59,19 @@ limitations under the License.
     }
 }
 
-.mx_FontScalingPanel_fontSlider_smallText {
-    font-size: 15px;
+.mx_FontScalingPanel_fontSlider_smallText,
+.mx_FontScalingPanel_fontSlider_largeText {
     padding-right: $spacing-20;
     padding-left: 5px; // TODO: Use a spacing variable
     font-weight: 500;
 }
 
+.mx_FontScalingPanel_fontSlider_smallText {
+    font-size: 15px;
+}
+
 .mx_FontScalingPanel_fontSlider_largeText {
     font-size: 18px;
-    padding-left: $spacing-20;
-    padding-right: 5px; // TODO: Use a spacing variable
-    font-weight: 500;
 }
 
 .mx_FontScalingPanel_customFontSizeField {
