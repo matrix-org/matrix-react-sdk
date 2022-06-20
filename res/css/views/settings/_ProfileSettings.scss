@@ -47,7 +47,7 @@ limitations under the License.
 }
 
 .mx_ProfileSettings_profileForm {
-    @mixin mx_Settings_fullWidthField;
+    margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
     border-bottom: 1px solid $quinary-content;
 }
 
