@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655735514917,
+  "lastUpdate": 1655744547720,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102668,6 +102668,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4635.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "18c21d77cd6c31b975bf50c645ccd5f99ae6351f",
+          "message": "Remove references to mx_GroupLayout from scss files (#8875)",
+          "timestamp": "2022-06-20T18:55:47+02:00",
+          "tree_id": "7f75feb65f9aa43a584033969bc67e2f3dfcbde1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/18c21d77cd6c31b975bf50c645ccd5f99ae6351f"
+        },
+        "date": 1655744534082,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5274.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2586.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5614.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
