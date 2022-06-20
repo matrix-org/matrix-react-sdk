@@ -20,23 +20,10 @@ limitations under the License.
 .mx_Field {
     width: 256px;
 }
-}
 
-.mx_FontScalingPanel_fontSlider,
-.mx_FontScalingPanel_fontSlider_preview {
-    @mixin mx_Settings_fullWidthField;
-}
-
+.mx_FontScalingPanel_fontSlider_preview,
 .mx_FontScalingPanel_fontSlider {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 15px 15px 35px; // TODO: Use spacing variables
-    background: rgba($quinary-content, 0.2);
-    border-radius: 10px;
-    font-size: 10px;
-    margin-top: $spacing-24;
-    margin-bottom: $spacing-24;
+    @mixin mx_Settings_fullWidthField;
 }
 
 .mx_FontScalingPanel_fontSlider_preview {
@@ -57,6 +44,19 @@ limitations under the License.
     .mx_EventTile_msgOption {
         display: none;
     }
+}
+
+.mx_FontScalingPanel_fontSlider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 15px 35px; // TODO: Use spacing variables
+    background: rgba($quinary-content, 0.2);
+    border-radius: 10px;
+    font-size: 10px;
+    margin-top: $spacing-24;
+    margin-bottom: $spacing-24;
+}
 }
 
 .mx_FontScalingPanel_fontSlider_smallText,
