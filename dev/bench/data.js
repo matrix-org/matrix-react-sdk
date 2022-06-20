@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655650672569,
+  "lastUpdate": 1655698582155,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102590,6 +102590,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 625.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "98dffebfefa1cb9089e8b4f90924ef339cd85bdd",
+          "message": "Fix alignment of pill letter (#8874)",
+          "timestamp": "2022-06-20T06:11:13+02:00",
+          "tree_id": "e7bb8ab2b95aa2c02606cfcdfb37af8d07422b6f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/98dffebfefa1cb9089e8b4f90924ef339cd85bdd"
+        },
+        "date": 1655698570800,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4803.500000000029,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 673.5,
             "unit": "ms",
             "extra": "type: measure"
           }
