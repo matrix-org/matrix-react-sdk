@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655698582155,
+  "lastUpdate": 1655735514917,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102626,6 +102626,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 673.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14a8b1e69e57dcf39f68e1c45226854c38fcb9ec",
+          "message": "Set 100% max-width to display name on reply tiles (#8867)",
+          "timestamp": "2022-06-20T16:26:34+02:00",
+          "tree_id": "467ca671b4d6f4d882789256c863e60db4d5b564",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14a8b1e69e57dcf39f68e1c45226854c38fcb9ec"
+        },
+        "date": 1655735502631,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5453.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2436.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4635.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
