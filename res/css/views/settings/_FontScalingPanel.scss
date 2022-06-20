@@ -31,23 +31,23 @@ limitations under the License.
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 15px 15px 35px;
+    padding: 15px 15px 35px; // TODO: Use spacing variables
     background: rgba($quinary-content, 0.2);
     border-radius: 10px;
     font-size: 10px;
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-top: $spacing-24;
+    margin-bottom: $spacing-24;
 }
 
 .mx_FontScalingPanel_fontSlider_preview {
     border: 1px solid $quinary-content;
     border-radius: 10px;
-    padding: 0 16px 9px 16px;
+    padding: 0 $spacing-16 9px $spacing-16;
     pointer-events: none;
     display: flow-root;
 
     .mx_EventTile[data-layout=bubble] {
-        margin-top: 30px;
+        margin-top: 30px; // TODO: Use a spacing variable
     }
 
     .mx_EventTile_msgOption {
@@ -61,15 +61,15 @@ limitations under the License.
 
 .mx_FontScalingPanel_fontSlider_smallText {
     font-size: 15px;
-    padding-right: 20px;
-    padding-left: 5px;
+    padding-right: $spacing-20;
+    padding-left: 5px; // TODO: Use a spacing variable
     font-weight: 500;
 }
 
 .mx_FontScalingPanel_fontSlider_largeText {
     font-size: 18px;
-    padding-left: 20px;
-    padding-right: 5px;
+    padding-left: $spacing-20;
+    padding-right: 5px; // TODO: Use a spacing variable
     font-weight: 500;
 }
 
