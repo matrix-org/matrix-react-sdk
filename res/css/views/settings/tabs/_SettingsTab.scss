@@ -16,6 +16,9 @@ limitations under the License.
 
 .mx_SettingsTab {
     --SettingsTab_section-margin-bottom-preferences-labs: 30px;
+    --SettingsTab_heading-bottom: 10px; // TODO: Use a spacing variable
+    --SettingsTab_heading_nth_child-margin-top: 30px; // TODO: Use a spacing variable
+
     color: $primary-content;
 
     a {
@@ -32,10 +35,10 @@ limitations under the License.
     font-weight: 600;
     color: $primary-content;
     margin-top: 10px; // TODO: Use a spacing variable
-    margin-bottom: 10px; // TODO: Use a spacing variable
+    margin-bottom: var(--SettingsTab_heading-bottom);
 
     &:nth-child(n + 2) {
-        margin-top: 30px; // TODO: Use a spacing variable
+        margin-top: var(--SettingsTab_heading_nth_child-margin-top);
     }
 }
 
