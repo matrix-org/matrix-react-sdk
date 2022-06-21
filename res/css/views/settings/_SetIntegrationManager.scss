@@ -15,17 +15,24 @@ limitations under the License.
 */
 
 .mx_SetIntegrationManager {
-    .mx_SettingsTab_heading {
+    .mx_SetIntegrationManager_heading {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .mx_SettingsTab_subheading {
+        .mx_SetIntegrationManager_heading_manager {
             margin-top: 0;
             margin-bottom: 0;
             display: flex;
+            align-items: center;
             flex-wrap: wrap;
             column-gap: $spacing-4;
+
+            .mx_SettingsTab_heading,
+            .mx_SettingsTab_subheading {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
         }
 
         .mx_ToggleSwitch {
