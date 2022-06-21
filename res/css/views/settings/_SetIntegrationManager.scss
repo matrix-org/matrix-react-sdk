@@ -15,22 +15,19 @@ limitations under the License.
 */
 
 .mx_SetIntegrationManager {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+    .mx_SettingsTab_heading {
+        .mx_SettingsTab_subheading {
+            display: inline;
 
-.mx_SetIntegrationManager > .mx_SettingsTab_heading {
-    margin-bottom: 10px;
-}
+            .mx_SettingsTab_subheading_managerName {
+                display: inline-block;
+                padding-inline-start: 5px;
+                margin-top: 0;
+            }
+        }
 
-.mx_SetIntegrationManager > .mx_SettingsTab_heading > .mx_SettingsTab_subheading {
-    display: inline-block;
-    padding-left: 5px;
-    margin-top: 0px;
-}
-
-.mx_SetIntegrationManager .mx_ToggleSwitch {
-    display: inline-block;
-    float: right;
-    top: 9px;
+        .mx_ToggleSwitch {
+            float: inline-end;
+        }
+    }
 }

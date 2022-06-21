@@ -75,8 +75,10 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
         return (
             <div className='mx_SetIntegrationManager'>
                 <div className="mx_SettingsTab_heading">
-                    <span>{ _t("Manage integrations") }</span>
-                    <span className="mx_SettingsTab_subheading">{ managerName }</span>
+                    <div className="mx_SettingsTab_subheading">
+                        <span>{ _t("Manage integrations") }</span>
+                        <span className="mx_SettingsTab_subheading_managerName">{ managerName }</span>
+                    </div>
                     <ToggleSwitch
                         checked={this.state.provisioningEnabled}
                         disabled={false}
