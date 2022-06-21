@@ -16,18 +16,16 @@ limitations under the License.
 
 .mx_SetIntegrationManager {
     .mx_SettingsTab_heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
         .mx_SettingsTab_subheading {
-            display: inline;
-
-            .mx_SettingsTab_subheading_managerName {
-                display: inline-block;
-                padding-inline-start: 5px;
-                margin-top: 0;
-            }
-        }
-
-        .mx_ToggleSwitch {
-            float: inline-end;
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: $spacing-4;
         }
     }
 }
