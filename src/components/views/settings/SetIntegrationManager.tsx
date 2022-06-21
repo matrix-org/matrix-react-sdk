@@ -85,15 +85,15 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
                         onChange={this.onProvisioningToggled}
                     />
                 </div>
-                <span className="mx_SettingsTab_subsectionText">
+                <div className="mx_SettingsTab_subsectionText">
                     { bodyText }
-                    <br />
-                    <br />
+                </div>
+                <div className="mx_SettingsTab_subsectionText">
                     { _t(
                         "Integration managers receive configuration data, and can modify widgets, " +
                         "send room invites, and set power levels on your behalf.",
                     ) }
-                </span>
+                </div>
             </div>
         );
     }
