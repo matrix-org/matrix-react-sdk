@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 .mx_GeneralUserSettingsTab {
+    --GeneralUserSettingsTab_SettingsTab_subheading-margin-top: $spacing-24;
+
 .mx_GeneralUserSettingsTab_changePassword {
     .mx_Field {
         margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
@@ -27,9 +29,8 @@ limitations under the License.
 
 /* TODO: Make this selector less painful */
 .mx_GeneralUserSettingsTab_accountSection .mx_SettingsTab_subheading:nth-child(n + 1),
-.mx_GeneralUserSettingsTab_discovery .mx_SettingsTab_subheading:nth-child(n + 2),
-.mx_SetIdServer .mx_SettingsTab_subheading {
-    margin-top: 24px;
+.mx_GeneralUserSettingsTab_discovery .mx_SettingsTab_subheading:nth-child(n + 2) {
+    margin-top: var(--GeneralUserSettingsTab_SettingsTab_subheading-margin-top);
 }
 
 .mx_GeneralUserSettingsTab_accountSection .mx_Spinner,
