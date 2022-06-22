@@ -17,43 +17,43 @@ limitations under the License.
 .mx_GeneralUserSettingsTab {
     --GeneralUserSettingsTab_SettingsTab_subheading-margin-top: $spacing-24;
 
-.mx_GeneralUserSettingsTab_changePassword {
-    .mx_Field {
-        margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
+    .mx_GeneralUserSettingsTab_changePassword {
+        .mx_Field {
+            margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
 
-        &:first-child {
-            margin-top: 0;
+            &:first-child {
+                margin-top: 0;
+            }
         }
     }
-}
 
-/* TODO: Make this selector less painful */
-.mx_GeneralUserSettingsTab_accountSection .mx_SettingsTab_subheading:nth-child(n + 1),
-.mx_GeneralUserSettingsTab_discovery .mx_SettingsTab_subheading:nth-child(n + 2) {
-    margin-top: var(--GeneralUserSettingsTab_SettingsTab_subheading-margin-top);
-}
+    /* TODO: Make this selector less painful */
+    .mx_GeneralUserSettingsTab_accountSection .mx_SettingsTab_subheading:nth-child(n + 1),
+    .mx_GeneralUserSettingsTab_discovery .mx_SettingsTab_subheading:nth-child(n + 2) {
+        margin-top: var(--GeneralUserSettingsTab_SettingsTab_subheading-margin-top);
+    }
 
-.mx_GeneralUserSettingsTab_accountSection,
-.mx_GeneralUserSettingsTab_discovery {
-    .mx_Spinner {
-    /* Move the spinner to the left side of the container (default center) */
-    justify-content: left;
-}
-}
+    .mx_GeneralUserSettingsTab_accountSection,
+    .mx_GeneralUserSettingsTab_discovery {
+        .mx_Spinner {
+            /* Move the spinner to the left side of the container (default center) */
+            justify-content: left;
+        }
+    }
 
-.mx_GeneralUserSettingsTab_accountSection .mx_EmailAddresses,
-.mx_GeneralUserSettingsTab_accountSection .mx_PhoneNumbers,
-.mx_GeneralUserSettingsTab_discovery .mx_ExistingEmailAddress,
-.mx_GeneralUserSettingsTab_discovery .mx_ExistingPhoneNumber,
-.mx_GeneralUserSettingsTab_languageInput {
-    margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
-}
+    .mx_GeneralUserSettingsTab_accountSection .mx_EmailAddresses,
+    .mx_GeneralUserSettingsTab_accountSection .mx_PhoneNumbers,
+    .mx_GeneralUserSettingsTab_discovery .mx_ExistingEmailAddress,
+    .mx_GeneralUserSettingsTab_discovery .mx_ExistingPhoneNumber,
+    .mx_GeneralUserSettingsTab_languageInput {
+        margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
+    }
 
-.mx_GeneralUserSettingsTab_warningIcon {
-    vertical-align: middle;
-}
+    .mx_GeneralUserSettingsTab_warningIcon {
+        vertical-align: middle;
+    }
 
-.mx_SettingsTab_section_spellcheck .mx_ToggleSwitch {
-    float: right;
-}
+    .mx_SettingsTab_section_spellcheck .mx_ToggleSwitch {
+        float: right;
+    }
 }
