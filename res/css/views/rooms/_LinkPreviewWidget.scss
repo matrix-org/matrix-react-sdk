@@ -26,6 +26,10 @@ limitations under the License.
         margin-bottom: 6px;
     }
 
+    .mx_LinkPreviewWidget_wrap {
+        display: flex;
+        flex-wrap: wrap;
+
     .mx_LinkPreviewWidget_image,
     .mx_LinkPreviewWidget_caption {
         margin-inline-start: $spacing-16;
@@ -39,7 +43,7 @@ limitations under the License.
     }
 
     .mx_LinkPreviewWidget_caption {
-        flex: 1 1 auto;
+        flex: 1;
         overflow: hidden; // cause it to wrap rather than clip
     }
 
@@ -64,5 +68,6 @@ limitations under the License.
         margin-top: $spacing-8;
         word-wrap: break-word;
         -webkit-line-clamp: 3;
+    }
     }
 }
