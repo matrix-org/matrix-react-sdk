@@ -48,7 +48,7 @@ limitations under the License.
         padding: 15px 15px 35px; // TODO: Use spacing variables
         background: rgba($quinary-content, 0.2);
         border-radius: 10px;
-        font-size: 10px;
+        font-size: $font-10px;
         margin-top: $spacing-24;
         margin-bottom: $spacing-24;
 
@@ -59,11 +59,11 @@ limitations under the License.
         }
 
         .mx_FontScalingPanel_fontSlider_smallText {
-            font-size: 15px;
+            font-size: $font-15px;
         }
 
         .mx_FontScalingPanel_fontSlider_largeText {
-            font-size: 18px;
+            font-size: $font-18px;
         }
     }
 
