@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_GeneralUserSettingsTab_changePassword .mx_Field {
-    margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
-}
+.mx_GeneralUserSettingsTab_changePassword {
+    .mx_Field {
+        margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
 
-.mx_GeneralUserSettingsTab_changePassword .mx_Field:first-child {
-    margin-top: 0;
+        &:first-child {
+            margin-top: 0;
+        }
+    }
 }
 
 /* TODO: Make this selector less painful */
