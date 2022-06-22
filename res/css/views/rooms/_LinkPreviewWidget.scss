@@ -29,6 +29,7 @@ limitations under the License.
     .mx_LinkPreviewWidget_image,
     .mx_LinkPreviewWidget_caption {
         margin-inline-start: $spacing-16;
+        min-width: 0; // Prevent blowout
     }
 
     .mx_LinkPreviewWidget_image {
