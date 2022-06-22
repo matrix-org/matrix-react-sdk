@@ -3485,5 +3485,12 @@
     "How can I create a video room?": "Come posso creare una stanza video?",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Le stanze video sono canali VoIP sempre attivi integrati all'interno della stanza in %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Un nuovo modo di fare chiamate audio e video in %(brand)s.",
-    "Video rooms": "Stanze video"
+    "Video rooms": "Stanze video",
+    "Joining the beta will reload %(brand)s.": "Unirsi alla beta ricaricherà %(brand)s.",
+    "Leaving the beta will reload %(brand)s.": "Lasciare la beta ricaricherà %(brand)s.",
+    "Remove search filter for %(filter)s": "Rimuovi filtro di ricerca per %(filter)s",
+    "Start a group chat": "Inizia una conversazione di gruppo",
+    "Other options": "Altre opzioni",
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Se non trovi la stanza che stai cercando, chiedi un invito o crea una stanza nuova.",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Quando ti disconnetti queste chiavi verranno eliminate dal dispositivo, quindi non potrai leggere i messaggi cifrati a meno che tu non abbia le chiavi su altri dispositivi, o salvate in backup sul server."
 }
