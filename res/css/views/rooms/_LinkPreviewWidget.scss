@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 .mx_LinkPreviewWidget {
-    margin-top: 15px;
-    margin-right: 15px;
-    margin-bottom: 15px;
+    margin: 15px 15px 15px auto;
     display: flex;
     border-left: 2px solid $preview-widget-bar-color;
     border-radius: 2px;
