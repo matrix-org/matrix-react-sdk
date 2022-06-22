@@ -16,9 +16,7 @@ limitations under the License.
 
 .mx_SetIntegrationManager {
     .mx_SettingsFlag {
-        display: flex;
         align-items: center;
-        justify-content: space-between;
         margin-top: var(--SettingsTab_heading_nth_child-margin-top);
 
         .mx_SetIntegrationManager_heading_manager {
