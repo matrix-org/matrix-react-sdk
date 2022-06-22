@@ -20,6 +20,11 @@ limitations under the License.
     border-left: 2px solid $preview-widget-bar-color;
     border-radius: 2px;
     color: $info-plinth-fg-color;
+
+    .mx_MatrixChat_useCompactLayout & {
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
 }
 
 .mx_LinkPreviewWidget_image,
@@ -59,11 +64,4 @@ limitations under the License.
     margin-top: 8px;
     word-wrap: break-word;
     -webkit-line-clamp: 3;
-}
-
-.mx_MatrixChat_useCompactLayout {
-    .mx_LinkPreviewWidget {
-        margin-top: 6px;
-        margin-bottom: 6px;
-    }
 }
