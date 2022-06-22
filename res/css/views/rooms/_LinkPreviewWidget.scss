@@ -22,15 +22,18 @@ limitations under the License.
     color: $info-plinth-fg-color;
 }
 
+.mx_LinkPreviewWidget_image,
+.mx_LinkPreviewWidget_caption {
+    margin-left: 15px;
+}
+
 .mx_LinkPreviewWidget_image {
     flex: 0 0 100px;
-    margin-left: 15px;
     text-align: center;
     cursor: pointer;
 }
 
 .mx_LinkPreviewWidget_caption {
-    margin-left: 15px;
     flex: 1 1 auto;
     overflow: hidden; // cause it to wrap rather than clip
 }
