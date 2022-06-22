@@ -528,7 +528,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         }
 
         return (
-            <div className="mx_SettingsTab">
+            <div className="mx_SettingsTab mx_GeneralUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("General")}</div>
                 {this.renderProfileSection()}
                 {this.renderAccountSection()}
