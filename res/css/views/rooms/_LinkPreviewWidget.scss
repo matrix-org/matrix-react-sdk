@@ -30,44 +30,44 @@ limitations under the License.
         display: flex;
         flex-wrap: wrap;
 
-    .mx_LinkPreviewWidget_image,
-    .mx_LinkPreviewWidget_caption {
-        margin-inline-start: $spacing-16;
-        min-width: 0; // Prevent blowout
-    }
-
-    .mx_LinkPreviewWidget_image {
-        flex: 0 0 100px;
-        text-align: center;
-        cursor: pointer;
-    }
-
-    .mx_LinkPreviewWidget_caption {
-        flex: 1;
-        overflow: hidden; // cause it to wrap rather than clip
-    }
-
-    .mx_LinkPreviewWidget_title,
-    .mx_LinkPreviewWidget_description {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        white-space: normal;
-    }
-
-    .mx_LinkPreviewWidget_title {
-        font-weight: bold;
-        -webkit-line-clamp: 2;
-
-        .mx_LinkPreviewWidget_siteName {
-            font-weight: normal;
+        .mx_LinkPreviewWidget_image,
+        .mx_LinkPreviewWidget_caption {
+            margin-inline-start: $spacing-16;
+            min-width: 0; // Prevent blowout
         }
-    }
 
-    .mx_LinkPreviewWidget_description {
-        margin-top: $spacing-8;
-        word-wrap: break-word;
-        -webkit-line-clamp: 3;
-    }
+        .mx_LinkPreviewWidget_image {
+            flex: 0 0 100px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .mx_LinkPreviewWidget_caption {
+            flex: 1;
+            overflow: hidden; // cause it to wrap rather than clip
+        }
+
+        .mx_LinkPreviewWidget_title,
+        .mx_LinkPreviewWidget_description {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: normal;
+        }
+
+        .mx_LinkPreviewWidget_title {
+            font-weight: bold;
+            -webkit-line-clamp: 2;
+
+            .mx_LinkPreviewWidget_siteName {
+                font-weight: normal;
+            }
+        }
+
+        .mx_LinkPreviewWidget_description {
+            margin-top: $spacing-8;
+            word-wrap: break-word;
+            -webkit-line-clamp: 3;
+        }
     }
 }
