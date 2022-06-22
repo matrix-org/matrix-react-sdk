@@ -35,13 +35,17 @@ limitations under the License.
     overflow: hidden; // cause it to wrap rather than clip
 }
 
-.mx_LinkPreviewWidget_title {
-    font-weight: bold;
-    white-space: normal;
+.mx_LinkPreviewWidget_title,
+.mx_LinkPreviewWidget_description {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    white-space: normal;
+}
+
+.mx_LinkPreviewWidget_title {
+    font-weight: bold;
+    -webkit-line-clamp: 2;
 
     .mx_LinkPreviewWidget_siteName {
         font-weight: normal;
@@ -50,11 +54,8 @@ limitations under the License.
 
 .mx_LinkPreviewWidget_description {
     margin-top: 8px;
-    white-space: normal;
     word-wrap: break-word;
-    display: -webkit-box;
     -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
 }
 
 .mx_MatrixChat_useCompactLayout {
