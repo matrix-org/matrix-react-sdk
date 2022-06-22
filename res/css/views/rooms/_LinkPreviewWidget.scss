@@ -29,6 +29,7 @@ limitations under the License.
     .mx_LinkPreviewWidget_wrap {
         display: flex;
         flex-wrap: wrap;
+        row-gap: $spacing-8;
 
         .mx_LinkPreviewWidget_image,
         .mx_LinkPreviewWidget_caption {
