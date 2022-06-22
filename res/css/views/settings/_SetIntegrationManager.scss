@@ -15,14 +15,11 @@ limitations under the License.
 */
 
 .mx_SetIntegrationManager {
-    .mx_SetIntegrationManager_heading {
+    .mx_SettingsFlag {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-top: var(--SettingsTab_heading_nth_child-margin-top);
-        margin-bottom: var(--SettingsTab_heading-bottom);
-
-        @mixin mx_Settings_fullWidthField;
 
         .mx_SetIntegrationManager_heading_manager {
             display: flex;
