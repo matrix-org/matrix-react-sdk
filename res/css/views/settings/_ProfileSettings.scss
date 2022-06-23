@@ -27,7 +27,7 @@ limitations under the License.
 
         .mx_ProfileSettings_profileForm_profile_controls {
             flex-grow: 1;
-            margin-right: 54px;
+            margin-inline-end: 54px;
 
             .mx_Field {
                 &:first-child {
@@ -47,18 +47,18 @@ limitations under the License.
             }
 
             .mx_ProfileSettings_profileForm_profile_controls_userId {
-                margin-right: $spacing-20;
+                margin-inline-end: $spacing-20;
             }
         }
     }
 
     .mx_ProfileSettings_profileForm_buttons {
         margin-top: 10px; // 18px is already accounted for by the <p> above the buttons
-        margin-bottom: 28px;
+        margin-bottom: $spacing-28;
 
         > .mx_AccessibleButton_kind_link {
             font-size: $font-14px;
-            margin-right: 10px;
+            margin-inline-end: 10px; // TODO: Use a spacing variable
         }
     }
 }
