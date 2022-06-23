@@ -14,13 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_ProfileSettings_profile_controls_topic {
-    & > textarea {
-        font-family: inherit;
-        resize: vertical;
-    }
-}
-
 .mx_ProfileSettings_profile {
     display: flex;
 
@@ -35,6 +28,13 @@ limitations under the License.
 
         #profileTopic {
             height: 4em;
+        }
+    }
+
+    .mx_ProfileSettings_profile_controls_topic {
+        & > textarea {
+            font-family: inherit;
+            resize: vertical;
         }
     }
 }
