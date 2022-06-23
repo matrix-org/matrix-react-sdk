@@ -25,16 +25,13 @@ limitations under the License.
     }
 
     .mx_ViewSource_header {
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 0.7em;
+        margin-bottom: 0.7em;
+
         .mx_CopyableText {
             word-break: break-all;
         }
-    }
-
-    .mx_ViewSource_separator {
-        clear: both;
-        border-bottom: 1px solid #e5e5e5;
-        padding-top: 0.7em;
-        padding-bottom: 0.7em;
     }
 
     .mx_ViewSource_heading {

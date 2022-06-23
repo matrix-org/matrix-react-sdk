@@ -174,7 +174,6 @@ export default class ViewSource extends React.Component<IProps, IState> {
                         { _t("Event ID: %(eventId)s", { eventId }) }
                     </CopyableText>
                 </div>
-                <div className="mx_ViewSource_separator" />
                 { isEditing ? this.editSourceContent() : this.viewSourceContent() }
                 { !isEditing && canEdit && (
                     <div className="mx_Dialog_buttons">
