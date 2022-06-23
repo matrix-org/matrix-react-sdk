@@ -14,6 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_ViewSource {
+    .mx_ViewSource_header {
+        .mx_CopyableText {
+            word-break: break-all;
+        }
+    }
+}
+
 .mx_ViewSource_separator {
     clear: both;
     border-bottom: 1px solid #e5e5e5;
