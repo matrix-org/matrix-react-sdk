@@ -44,11 +44,8 @@ limitations under the License.
         margin-top: $spacing-12;
     }
 
-    .mx_ViewSource_container {
-        max-width: calc(100% - 24px);
-
-        .mx_CopyableText_border {
-            width: 100%;
-        }
+    .mx_CopyableText_border {
+        box-sizing: border-box;
+        width: 100%;
     }
 }

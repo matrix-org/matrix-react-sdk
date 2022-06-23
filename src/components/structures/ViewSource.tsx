@@ -79,13 +79,11 @@ export default class ViewSource extends React.Component<IProps, IState> {
                                 { _t("Decrypted event source") }
                             </span>
                         </summary>
-                        <div className="mx_ViewSource_container">
-                            <CopyableText getTextToCopy={copyDecryptedFunc}>
-                                <SyntaxHighlight language="json">
-                                    { stringify(decryptedEventSource) }
-                                </SyntaxHighlight>
-                            </CopyableText>
-                        </div>
+                        <CopyableText getTextToCopy={copyDecryptedFunc}>
+                            <SyntaxHighlight language="json">
+                                { stringify(decryptedEventSource) }
+                            </SyntaxHighlight>
+                        </CopyableText>
                     </details>
                     <details className="mx_ViewSource_details">
                         <summary>
@@ -93,13 +91,11 @@ export default class ViewSource extends React.Component<IProps, IState> {
                                 { _t("Original event source") }
                             </span>
                         </summary>
-                        <div className="mx_ViewSource_container">
-                            <CopyableText getTextToCopy={copyOriginalFunc}>
-                                <SyntaxHighlight language="json">
-                                    { stringify(originalEventSource) }
-                                </SyntaxHighlight>
-                            </CopyableText>
-                        </div>
+                        <CopyableText getTextToCopy={copyOriginalFunc}>
+                            <SyntaxHighlight language="json">
+                                { stringify(originalEventSource) }
+                            </SyntaxHighlight>
+                        </CopyableText>
                     </details>
                 </>
             );
@@ -109,13 +105,11 @@ export default class ViewSource extends React.Component<IProps, IState> {
                     <div className="mx_ViewSource_heading">
                         { _t("Original event source") }
                     </div>
-                    <div className="mx_ViewSource_container">
-                        <CopyableText getTextToCopy={copyOriginalFunc}>
-                            <SyntaxHighlight language="json">
-                                { stringify(originalEventSource) }
-                            </SyntaxHighlight>
-                        </CopyableText>
-                    </div>
+                    <CopyableText getTextToCopy={copyOriginalFunc}>
+                        <SyntaxHighlight language="json">
+                            { stringify(originalEventSource) }
+                        </SyntaxHighlight>
+                    </CopyableText>
                 </>
             );
         }
