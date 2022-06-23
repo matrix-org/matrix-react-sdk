@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
+import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -270,7 +271,10 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                             disabled={!this.state.canSetName}
                         />
                         <Field
-                            className="mx_ProfileSettings_profile_controls_topic mx_ProfileSettings_profile_controls_topic--room"
+                            className={classNames(
+                                "mx_ProfileSettings_profile_controls_topic",
+                                "mx_ProfileSettings_profile_controls_topic--room",
+                            )}
                             label={_t("Room Topic")}
                             disabled={!this.state.canSetTopic}
                             type="text"
