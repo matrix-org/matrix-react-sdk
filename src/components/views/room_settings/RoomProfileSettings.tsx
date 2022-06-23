@@ -260,7 +260,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                     accept="image/*"
                 />
                 <div className="mx_ProfileSettings_profile">
-                    <div className="mx_ProfileSettings_controls">
+                    <div className="mx_ProfileSettings_profile_controls">
                         <Field
                             label={_t("Room Name")}
                             type="text"
