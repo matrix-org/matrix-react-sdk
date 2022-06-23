@@ -225,7 +225,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
             this.state.canSetAvatar
         ) {
             profileSettingsButtons = (
-                <div className="mx_ProfileSettings_buttons">
+                <div className="mx_ProfileSettings_profileForm_buttons">
                     <AccessibleButton
                         onClick={this.cancelProfileChanges}
                         kind="link"

@@ -217,7 +217,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                         uploadAvatar={this.uploadAvatar}
                         removeAvatar={this.removeAvatar} />
                 </div>
-                <div className="mx_ProfileSettings_buttons">
+                <div className="mx_ProfileSettings_profileForm_buttons">
                     <AccessibleButton
                         onClick={this.cancelProfileChanges}
                         kind="link"
