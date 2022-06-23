@@ -249,18 +249,18 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                 onSubmit={this.saveProfile}
                 autoComplete="off"
                 noValidate={true}
-                className="mx_ProfileSettings_profileForm"
+                className="mx_ProfileSettings_profileForm_profileForm"
             >
                 <input
                     type="file"
                     ref={this.avatarUpload}
-                    className="mx_ProfileSettings_profileForm_avatarUpload"
+                    className="mx_ProfileSettings_profileForm_profileForm_avatarUpload"
                     onClick={chromeFileInputFix}
                     onChange={this.onAvatarChanged}
                     accept="image/*"
                 />
-                <div className="mx_ProfileSettings_profile">
-                    <div className="mx_ProfileSettings_profile_controls">
+                <div className="mx_ProfileSettings_profileForm_profile">
+                    <div className="mx_ProfileSettings_profileForm_profile_controls">
                         <Field
                             label={_t("Room Name")}
                             type="text"
@@ -270,7 +270,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                             disabled={!this.state.canSetName}
                         />
                         <Field
-                            className="mx_ProfileSettings_profile_controls_topic"
+                            className="mx_ProfileSettings_profileForm_profile_controls_topic"
                             id="profileTopic"
                             label={_t("Room Topic")}
                             disabled={!this.state.canSetTopic}
