@@ -260,8 +260,11 @@ export class StopGapWidget extends EventEmitter {
      */
     public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
+
+        const client = MatrixClientPeg.get();
         const allowedCapabilities = this.appTileProps.whitelistCapabilities || [];
         const driver = new StopGapWidgetDriver(allowedCapabilities, this.mockWidget, this.kind, this.roomId);
+
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
         this.messaging.on("ready", () => this.emit("ready"));
@@ -302,7 +305,7 @@ export class StopGapWidget extends EventEmitter {
         // Populate the map of "read up to" events for this widget with the current event in every room.
         // This is a bit inefficient, but should be okay. We do this for all rooms in case the widget
         // requests timeline capabilities in other rooms down the road. It's just easier to manage here.
-        for (const room of MatrixClientPeg.get().getRooms()) {
+        for (const room of client.getRooms()) {
             // Timelines are most recent last
             const events = room.getLiveTimeline()?.getEvents() || [];
             const roomEvent = events[events.length - 1];
@@ -311,8 +314,9 @@ export class StopGapWidget extends EventEmitter {
         }
 
         // Attach listeners for feeding events - the underlying widget classes handle permissions for us
-        MatrixClientPeg.get().on(ClientEvent.Event, this.onEvent);
-        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        client.on(ClientEvent.Event, this.onEvent);
+        client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        client.on(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
 
         this.messaging.on(`action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
             (ev: CustomEvent<IStickyActionRequest>) => {
@@ -363,7 +367,7 @@ export class StopGapWidget extends EventEmitter {
 
                     // noinspection JSIgnoredPromiseFromCall
                     IntegrationManagers.sharedInstance().getPrimaryManager().open(
-                        MatrixClientPeg.get().getRoom(RoomViewStore.instance.getRoomId()),
+                        client.getRoom(RoomViewStore.instance.getRoomId()),
                         `type_${integType}`,
                         integId,
                     );
@@ -426,9 +430,11 @@ export class StopGapWidget extends EventEmitter {
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget, this.roomId);
         this.messaging = null;
 
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().off(ClientEvent.Event, this.onEvent);
-            MatrixClientPeg.get().off(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        const client = MatrixClientPeg.get();
+        if (client) {
+            client.off(ClientEvent.Event, this.onEvent);
+            client.off(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+            client.off(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
         }
     }
 
@@ -441,6 +447,12 @@ export class StopGapWidget extends EventEmitter {
     private onEventDecrypted = (ev: MatrixEvent) => {
         if (ev.isDecryptionFailure()) return;
         this.feedEvent(ev);
+    };
+
+    private onToDeviceEvent = async (ev: MatrixEvent) => {
+        await MatrixClientPeg.get().decryptEventIfNeeded(ev);
+        if (ev.isDecryptionFailure()) return;
+        this.messaging.feedToDevice(ev.getEffectiveEvent());
     };
 
     private feedEvent(ev: MatrixEvent) {

@@ -20,6 +20,7 @@ import {
     IOpenIDCredentials,
     IOpenIDUpdate,
     ISendEventDetails,
+    IRoomEvent,
     MatrixCapabilities,
     OpenIDRequestState,
     SimpleObservable,
@@ -182,6 +183,13 @@ export class StopGapWidgetDriver extends WidgetDriver {
         return { roomId, eventId: r.event_id };
     }
 
+    public async sendToDevice(
+        eventType: string,
+        contentMap: { [userId: string]: { [deviceId: string]: unknown } },
+    ): Promise<void> {
+        await MatrixClientPeg.get().sendToDevice(eventType, contentMap);
+    }
+
     private pickRooms(roomIds: (string | Symbols.AnyRoom)[] = null): Room[] {
         const client = MatrixClientPeg.get();
         if (!client) throw new Error("Not attached to a client");
@@ -195,10 +203,12 @@ export class StopGapWidgetDriver extends WidgetDriver {
     public async readRoomEvents(
         eventType: string,
         msgtype: string | undefined,
-        limitPerRoom: number,
         roomIds: (string | Symbols.AnyRoom)[] = null,
-    ): Promise<object[]> {
-        limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
+        limit?: number,
+    ): Promise<IRoomEvent[]> {
+        limit = limit === undefined
+            ? Number.MAX_SAFE_INTEGER
+            : Math.min(limit, Number.MAX_SAFE_INTEGER); // relatively arbitrary
 
         const rooms = this.pickRooms(roomIds);
         const allResults: IEvent[] = [];
@@ -206,7 +216,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
             const results: MatrixEvent[] = [];
             const events = room.getLiveTimeline().getEvents(); // timelines are most recent last
             for (let i = events.length - 1; i > 0; i--) {
-                if (results.length >= limitPerRoom) break;
+                if (results.length >= limit) break;
 
                 const ev = events[i];
                 if (ev.getType() !== eventType || ev.isState()) continue;
@@ -222,10 +232,12 @@ export class StopGapWidgetDriver extends WidgetDriver {
     public async readStateEvents(
         eventType: string,
         stateKey: string | undefined,
-        limitPerRoom: number,
         roomIds: (string | Symbols.AnyRoom)[] = null,
-    ): Promise<object[]> {
-        limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
+        limit?: number,
+    ): Promise<IRoomEvent[]> {
+        limit = limit === undefined
+            ? Number.MAX_SAFE_INTEGER
+            : Math.min(limit, Number.MAX_SAFE_INTEGER); // relatively arbitrary
 
         const rooms = this.pickRooms(roomIds);
         const allResults: IEvent[] = [];
@@ -241,7 +253,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 }
             }
 
-            results.slice(0, limitPerRoom).forEach(e => allResults.push(e.getEffectiveEvent()));
+            results.slice(0, limit).forEach(e => allResults.push(e.getEffectiveEvent()));
         }
         return allResults;
     }
