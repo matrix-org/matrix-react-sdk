@@ -679,10 +679,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile_line {
         padding-left: 0;
         margin-right: 0;
-    }
 
-    .mx_EventTile_line span {
-        padding: 4px 8px;
+        span {
+            padding: $spacing-4 $spacing-8;
+        }
     }
 
     a {
