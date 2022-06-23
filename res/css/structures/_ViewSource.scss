@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 .mx_ViewSource {
-pre {
-    text-align: left;
-    font-size: $font-12px;
-    padding: 0.5em 1em 0.5em 1em;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
+    pre {
+        text-align: left;
+        font-size: $font-12px;
+        padding: 0.5em 1em 0.5em 1em;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
 
     .mx_ViewSource_header {
         .mx_CopyableText {
@@ -30,29 +30,29 @@ pre {
         }
     }
 
-.mx_ViewSource_separator {
-    clear: both;
-    border-bottom: 1px solid #e5e5e5;
-    padding-top: 0.7em;
-    padding-bottom: 0.7em;
-}
+    .mx_ViewSource_separator {
+        clear: both;
+        border-bottom: 1px solid #e5e5e5;
+        padding-top: 0.7em;
+        padding-bottom: 0.7em;
+    }
 
-.mx_ViewSource_heading {
-    font-size: $font-17px;
-    font-weight: 400;
-    color: $primary-content;
-    margin-top: 0.7em;
-}
+    .mx_ViewSource_heading {
+        font-size: $font-17px;
+        font-weight: 400;
+        color: $primary-content;
+        margin-top: 0.7em;
+    }
 
-.mx_ViewSource_details {
-    margin-top: 0.8em;
-}
+    .mx_ViewSource_details {
+        margin-top: 0.8em;
+    }
 
-.mx_ViewSource_container {
-    max-width: calc(100% - 24px);
+    .mx_ViewSource_container {
+        max-width: calc(100% - 24px);
 
-.mx_CopyableText_border {
-    width: 100%;
-}
-}
+        .mx_CopyableText_border {
+            width: 100%;
+        }
+    }
 }
