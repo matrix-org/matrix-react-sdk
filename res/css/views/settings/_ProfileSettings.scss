@@ -44,11 +44,11 @@ limitations under the License.
 }
 }
 
-.mx_ProfileSettings_profileForm_profileForm {
+.mx_ProfileSettings_profileForm {
     @mixin mx_Settings_fullWidthField;
     border-bottom: 1px solid $quinary-content;
 
-    .mx_ProfileSettings_profileForm_profileForm_avatarUpload {
+    .mx_ProfileSettings_profileForm_avatarUpload {
         display: none;
     }
 }

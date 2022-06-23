@@ -183,12 +183,12 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                 onSubmit={this.saveProfile}
                 autoComplete="off"
                 noValidate={true}
-                className="mx_ProfileSettings_profileForm_profileForm"
+                className="mx_ProfileSettings_profileForm"
             >
                 <input
                     type="file"
                     ref={this.avatarUpload}
-                    className="mx_ProfileSettings_profileForm_profileForm_avatarUpload"
+                    className="mx_ProfileSettings_profileForm_avatarUpload"
                     onClick={chromeFileInputFix}
                     onChange={this.onAvatarChanged}
                     accept="image/*"
