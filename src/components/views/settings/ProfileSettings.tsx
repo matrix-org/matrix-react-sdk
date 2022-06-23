@@ -188,7 +188,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                 <input
                     type="file"
                     ref={this.avatarUpload}
-                    className="mx_ProfileSettings_avatarUpload"
+                    className="mx_ProfileSettings_profileForm_avatarUpload"
                     onClick={chromeFileInputFix}
                     onChange={this.onAvatarChanged}
                     accept="image/*"
