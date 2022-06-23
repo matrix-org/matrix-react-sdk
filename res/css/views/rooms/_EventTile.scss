@@ -584,8 +584,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         // Inserted adjacent to <pre> blocks, (See TextualBody)
         .mx_EventTile_button {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: $spacing-8;
+            right: $spacing-8;
             width: 19px;
             height: 19px;
             visibility: hidden;
