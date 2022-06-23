@@ -29,9 +29,9 @@ limitations under the License.
     .mx_RoomView_MessageList {
         width: 100%;
 
-    h2 {
-        display: none;
-    }
+        h2 {
+            display: none;
+        }
     }
 
     /* FIXME: rather than having EventTile's default CSS be for MessagePanel,
@@ -54,44 +54,45 @@ limitations under the License.
         }
     }
 
-    .mx_MFileBody {
-        line-height: 2.4rem;
-    }
+    .mx_EventTile {
+        .mx_MFileBody {
+            line-height: 2.4rem;
+        }
 
-    .mx_MFileBody_download {
-        padding-top: 8px;
-        display: flex;
-        font-size: $font-14px;
-        color: $event-timestamp-color;
-    }
+        .mx_MFileBody_download {
+            padding-top: 8px;
+            display: flex;
+            font-size: $font-14px;
+            color: $event-timestamp-color;
+        }
 
-    .mx_MFileBody_downloadLink {
-        flex: 1 1 auto;
-        color: $light-fg-color;
-    }
+        .mx_MFileBody_downloadLink {
+            flex: 1 1 auto;
+            color: $light-fg-color;
+        }
 
-    .mx_MImageBody_size {
-        flex: 1 0 0;
-        font-size: $font-14px;
-        text-align: right;
-        white-space: nowrap;
-    }
+        .mx_MImageBody_size {
+            flex: 1 0 0;
+            font-size: $font-14px;
+            text-align: right;
+            white-space: nowrap;
+        }
 
-    .mx_DisambiguatedProfile {
-        flex: 1 1 auto;
-        line-height: initial;
-        opacity: 1.0;
-        color: $event-timestamp-color;
-    }
+        .mx_DisambiguatedProfile {
+            flex: 1 1 auto;
+            line-height: initial;
+            opacity: 1.0;
+            color: $event-timestamp-color;
+        }
 
-    .mx_MessageTimestamp {
-        flex: 1 0 0;
-        text-align: right;
-        visibility: visible;
-        position: initial;
-        font-size: $font-14px;
-        opacity: 1.0;
-    }
+        .mx_MessageTimestamp {
+            flex: 1 0 0;
+            text-align: right;
+            visibility: visible;
+            position: initial;
+            font-size: $font-14px;
+            opacity: 1.0;
+        }
     }
 
     /* Overides for the sender details line */
