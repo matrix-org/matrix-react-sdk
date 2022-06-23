@@ -204,7 +204,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                             onChange={this.onDisplayNameChanged}
                         />
                         <p>
-                            { userIdentifier && <span className="mx_ProfileSettings_userId">
+                            { userIdentifier && <span className="mx_ProfileSettings_profile_controls_userId">
                                 { userIdentifier }
                             </span> }
                             { hostingSignup }
