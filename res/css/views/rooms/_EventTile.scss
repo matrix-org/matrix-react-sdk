@@ -545,6 +545,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     pre {
         border: 1px solid transparent;
+
+        .mx_EventTile:hover &,
+        .mx_EventTile.focus-visible:focus-within & {
+            border: 1px solid $tertiary-content;
+        }
     }
 
     // selector wrongly applies to pill avatars but those have explicit width/height passed at a higher specificity
@@ -608,11 +613,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         display: block;
         padding-left: 1em;
     }
-}
-
-.mx_EventTile:hover .mx_EventTile_body pre,
-.mx_EventTile.focus-visible:focus-within .mx_EventTile_body pre {
-    border: 1px solid $tertiary-content;
 }
 
 .mx_EventTile_button {
