@@ -166,18 +166,16 @@ export default class ViewSource extends React.Component<IProps, IState> {
         const canEdit = mxEvent.isState() ? this.canSendStateEvent(mxEvent) : canEditContent(this.props.mxEvent);
         return (
             <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>
-                <div>
-                    <div className="mx_ViewSource_header">
-                        <CopyableText getTextToCopy={() => roomId} border={false}>
-                            { _t("Room ID: %(roomId)s", { roomId }) }
-                        </CopyableText>
-                        <CopyableText getTextToCopy={() => eventId} border={false}>
-                            { _t("Event ID: %(eventId)s", { eventId }) }
-                        </CopyableText>
-                    </div>
-                    <div className="mx_ViewSource_separator" />
-                    { isEditing ? this.editSourceContent() : this.viewSourceContent() }
+                <div className="mx_ViewSource_header">
+                    <CopyableText getTextToCopy={() => roomId} border={false}>
+                        { _t("Room ID: %(roomId)s", { roomId }) }
+                    </CopyableText>
+                    <CopyableText getTextToCopy={() => eventId} border={false}>
+                        { _t("Event ID: %(eventId)s", { eventId }) }
+                    </CopyableText>
                 </div>
+                <div className="mx_ViewSource_separator" />
+                { isEditing ? this.editSourceContent() : this.viewSourceContent() }
                 { !isEditing && canEdit && (
                     <div className="mx_Dialog_buttons">
                         <button onClick={() => this.onEdit()}>{ _t("Edit") }</button>
