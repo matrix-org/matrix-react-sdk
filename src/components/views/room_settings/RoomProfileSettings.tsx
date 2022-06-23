@@ -270,8 +270,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                             disabled={!this.state.canSetName}
                         />
                         <Field
-                            className="mx_ProfileSettings_profile_controls_topic"
-                            id="profileTopic"
+                            className="mx_ProfileSettings_profile_controls_topic mx_ProfileSettings_profile_controls_topic--room"
                             label={_t("Room Topic")}
                             disabled={!this.state.canSetTopic}
                             type="text"
