@@ -17,31 +17,31 @@ limitations under the License.
 .mx_ProfileSettings_profileForm_profile {
     display: flex;
 
-.mx_ProfileSettings_profileForm_profile_controls {
-    flex-grow: 1;
-    margin-right: 54px;
+    .mx_ProfileSettings_profileForm_profile_controls {
+        flex-grow: 1;
+        margin-right: 54px;
 
-    .mx_Field {
-        &:first-child {
-            margin-top: 0;
+        .mx_Field {
+            &:first-child {
+                margin-top: 0;
+            }
+
+            #profileTopic {
+                height: 4em;
+            }
         }
 
-        #profileTopic {
-            height: 4em;
+        .mx_ProfileSettings_profileForm_profile_controls_topic {
+            & > textarea {
+                font-family: inherit;
+                resize: vertical;
+            }
+        }
+
+        .mx_ProfileSettings_profileForm_profile_controls_userId {
+            margin-right: $spacing-20;
         }
     }
-
-    .mx_ProfileSettings_profileForm_profile_controls_topic {
-        & > textarea {
-            font-family: inherit;
-            resize: vertical;
-        }
-    }
-
-    .mx_ProfileSettings_profileForm_profile_controls_userId {
-        margin-right: $spacing-20;
-    }
-}
 }
 
 .mx_ProfileSettings_profileForm {
