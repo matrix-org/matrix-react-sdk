@@ -26,8 +26,8 @@ limitations under the License.
 
     .mx_ViewSource_header {
         border-bottom: 1px solid $quinary-content;
-        padding-bottom: 0.7em;
-        margin-bottom: 0.7em;
+        padding-bottom: $spacing-12;
+        margin-bottom: $spacing-12;
 
         .mx_CopyableText {
             word-break: break-all;
@@ -38,11 +38,11 @@ limitations under the License.
         font-size: $font-17px;
         font-weight: 400;
         color: $primary-content;
-        margin-top: 0.7em;
+        margin-top: $spacing-12;
     }
 
     .mx_ViewSource_details {
-        margin-top: 0.8em;
+        margin-top: $spacing-12;
     }
 
     .mx_ViewSource_container {
