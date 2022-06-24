@@ -90,6 +90,7 @@ import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultDetails } from "./RoomResultDetails";
 import { TooltipOption } from "./TooltipOption";
 import LabelledCheckbox from "../../elements/LabelledCheckbox";
+import { useFeatureEnabled } from "../../../../hooks/useSettings";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -289,6 +290,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const ownInviteLink = makeUserPermalink(cli.getUserId());
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = useMemo(() => query.trim(), [query]);
+
+    const exploringPublicSpacesEnabled = useFeatureEnabled("feature_exploring_public_spaces");
 
     const { loading: publicRoomsLoading, publicRooms, protocols, config, setConfig, search: searchPublicRooms } =
         usePublicRoomDirectory();
@@ -641,7 +644,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     <div className="mx_SpotlightDialog_sectionHeader">
                         <h4>{ _t("Suggestions") }</h4>
                         <div className="mx_SpotlightDialog_options">
-                            { SettingsStore.getValue("feature_exploring_public_spaces") && <>
+                            { exploringPublicSpacesEnabled && <>
                                 <LabelledCheckbox
                                     label={_t("Show rooms")}
                                     value={showRooms}
