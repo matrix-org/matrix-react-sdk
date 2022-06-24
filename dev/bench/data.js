@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655744547720,
+  "lastUpdate": 1656083643077,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102710,6 +102710,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5614.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "663bca559f7cd1e1b7cb44255e0c9c2f0b788010",
+          "message": "Implement MSC3827: Filtering of `/publicRooms` by room type (#8866)",
+          "timestamp": "2022-06-24T15:08:00Z",
+          "tree_id": "1570890084e620acf0ea836c0c1e60828fba1c78",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/663bca559f7cd1e1b7cb44255e0c9c2f0b788010"
+        },
+        "date": 1656083631227,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4990.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2315.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5252.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
