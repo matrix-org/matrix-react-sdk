@@ -2846,7 +2846,7 @@
     "Joining": "En train de rejoindre",
     "You're all caught up": "Vous êtes à jour",
     "We call the places where you can host your account 'homeservers'.": "Nous appelons « serveur d'accueils » les lieux où vous pouvez héberger votre compte.",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org est le plus grand serveur d’accueil public, donc c’est un bon choix pour la plupart des gens.",
+    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org est le plus grand serveur d’accueil public, c'est donc un bon choix pour la plupart des gens.",
     "If you can't see who you're looking for, send them your invite link below.": "Si vous ne trouvez pas la personne que vous cherchez, envoyez leur le lien d’invitation ci-dessous.",
     "You can't disable this later. Bridges & most bots won't work yet.": "Vous ne pourrez pas le désactiver plus tard. Les passerelles et la plupart des bots ne fonctionneront pas pour le moment.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Dans les salons chiffrés, vérifiez tous les utilisateurs pour vous assurer qu’il est sécurisé.",
