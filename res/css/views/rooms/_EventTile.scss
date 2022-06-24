@@ -94,6 +94,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             padding-bottom: 3px;
             line-height: $font-22px;
         }
+
+        .mx_ReactionsRow {
+            margin: $spacing-4 64px;
+        }
     }
 }
 
@@ -290,10 +294,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         left: 44px;
         bottom: 0;
         right: 0;
-    }
-
-    .mx_ReactionsRow {
-        margin: $spacing-4 64px;
     }
 }
 
