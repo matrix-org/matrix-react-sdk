@@ -31,6 +31,10 @@ limitations under the License.
         height: 100%;
     }
 
+    h3 {
+        margin-block: $spacing-20;
+    }
+
     .mx_IntegrationManager_loading,
     .mx_IntegrationManager_error {
         text-align: center;
