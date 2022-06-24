@@ -31,12 +31,12 @@ limitations under the License.
         height: 100%;
     }
 
-    .mx_IntegrationManager_loading h3 {
+    .mx_IntegrationManager_loading,
+    .mx_IntegrationManager_error {
         text-align: center;
     }
 
     .mx_IntegrationManager_error {
-        text-align: center;
         padding-top: 20px;
     }
 
