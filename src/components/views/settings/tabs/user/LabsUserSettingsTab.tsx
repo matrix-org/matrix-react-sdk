@@ -48,18 +48,26 @@ export class LabsSettingToggle extends React.Component<ILabsSettingToggleProps> 
 
 interface IState {
     showJumpToDate: boolean;
+    showExploringPublicSpaces: boolean;
 }
 
 export default class LabsUserSettingsTab extends React.Component<{}, IState> {
     constructor(props: {}) {
         super(props);
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
+        const cli = MatrixClientPeg.get();
+
+        cli.doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
             this.setState({ showJumpToDate });
+        });
+
+        cli.doesServerSupportUnstableFeature("org.matrix.msc3827").then((showExploringPublicSpaces) => {
+            this.setState({ showExploringPublicSpaces });
         });
 
         this.state = {
             showJumpToDate: false,
+            showExploringPublicSpaces: false,
         };
     }
 
@@ -112,6 +120,16 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                     <SettingsFlag
                         key="feature_jump_to_date"
                         name="feature_jump_to_date"
+                        level={SettingLevel.DEVICE}
+                    />,
+                );
+            }
+
+            if (this.state.showExploringPublicSpaces) {
+                groups.getOrCreate(LabGroup.Spaces, []).push(
+                    <SettingsFlag
+                        key="feature_exploring_public_spaces"
+                        name="feature_exploring_public_spaces"
                         level={SettingLevel.DEVICE}
                     />,
                 );
