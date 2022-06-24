@@ -17,12 +17,12 @@ limitations under the License.
 .mx_FontScalingPanel {
     color: $primary-content;
 
-    .mx_FontScalingPanel_fontSlider_preview,
+    .mx_FontScalingPanel_preview,
     .mx_FontScalingPanel_fontSlider {
         @mixin mx_Settings_fullWidthField;
     }
 
-    .mx_FontScalingPanel_fontSlider_preview {
+    .mx_FontScalingPanel_preview {
         border: 1px solid $quinary-content;
         border-radius: 10px;
         padding: 0 $spacing-16 9px $spacing-16;
