@@ -15,26 +15,6 @@ limitations under the License.
 */
 
 .mx_TimelineCard {
-    .mx_TimelineCard__header {
-        margin-left: 6px;
-
-        span:first-of-type {
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 18px;
-            color: $secondary-content;
-        }
-    }
-
-    .mx_BaseCard_header {
-        margin: 5px 0 9px 0;
-
-        .mx_BaseCard_close {
-            margin: 8px;
-            right: 0;
-        }
-    }
-
     .mx_TimelineCard_timeline {
         overflow: hidden;
         position: relative; // offset parent for jump to bottom button
@@ -55,6 +35,10 @@ limitations under the License.
         &[data-layout=bubble] {
             &::before {
                 z-index: auto; // enable background color on hover
+            }
+
+            &.mx_EventTile_info .mx_MessageActionBar {
+                inset-inline-end: calc($container-gap-width + var(--BaseCard_padding-inline) + 1px); // 1px: border width
             }
 
             .mx_ReactionsRow {
@@ -79,11 +63,12 @@ limitations under the License.
                 margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
             }
 
-            .mx_ReactionsRow {
-                padding: 0;
+            .mx_ReplyTile .mx_DisambiguatedProfile {
+                margin-inline-start: 0;
+            }
 
-                // See margin setting of ReactionsRow on _EventTile.scss
-                margin-right: 8px;
+            .mx_ReactionsRow {
+                margin-inline-end: $spacing-8; // See: var(--ThreadView_group_spacing-end) for ReactionsRow on _EventTile.scss
             }
 
             .mx_ThreadSummary {
