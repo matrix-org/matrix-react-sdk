@@ -56,16 +56,19 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
     constructor(props: {}) {
         super(props);
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285").then((showHiddenReadReceipts) => {
+        const cli = MatrixClientPeg.get();
+
+        cli.doesServerSupportUnstableFeature("org.matrix.msc2285").then((showHiddenReadReceipts) => {
             this.setState({ showHiddenReadReceipts });
         });
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
+        cli.doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
             this.setState({ showJumpToDate });
         });
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827").
-            then((showExploringPublicSpaces) => this.setState({ showExploringPublicSpaces }));
+        cli.doesServerSupportUnstableFeature("org.matrix.msc3827").then((showExploringPublicSpaces) => {
+            this.setState({ showExploringPublicSpaces });
+        });
 
         this.state = {
             showHiddenReadReceipts: false,
