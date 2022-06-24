@@ -3492,5 +3492,9 @@
     "Show: Matrix rooms": "Показати: кімнати Matrix",
     "Show: %(instance)s rooms (%(server)s)": "Показати: %(instance)s кімнат (%(server)s)",
     "Add new server…": "Додати новий сервер…",
-    "Remove server “%(roomServer)s”": "Вилучити сервер «%(roomServer)s»"
+    "Remove server “%(roomServer)s”": "Вилучити сервер «%(roomServer)s»",
+    "You cannot search for rooms that are neither a room nor a space": "Ви не можете шукати кімнати, які не є ні кімнатою, ні простором",
+    "Show spaces": "Показати простори",
+    "Show rooms": "Показати кімнати",
+    "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку"
 }
