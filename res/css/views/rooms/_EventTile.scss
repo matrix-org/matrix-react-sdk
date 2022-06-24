@@ -1091,13 +1091,15 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         // Override :not([data-layout="bubble"])
         &[data-layout=group] {
             --MatrixChat_useCompactLayout_group-padding-top: $spacing-4;
+            --MatrixChat_useCompactLayout-top-avatar: 2px;
+            --MatrixChat_useCompactLayout-top-e2eIcon: 3px;
+            --MatrixChat_useCompactLayout_line-spacing-block: 0px;
 
             padding-top: var(--MatrixChat_useCompactLayout_group-padding-top);
 
             .mx_EventTile_line,
             .mx_EventTile_reply {
-                padding-top: 0;
-                padding-bottom: 0;
+                padding-block: var(--MatrixChat_useCompactLayout_line-spacing-block);
             }
 
             &.mx_EventTile_info {
@@ -1107,7 +1109,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 .mx_EventTile_e2eIcon,
                 .mx_EventTile_avatar {
                     top: 0;
-                    margin-block: 0;
+                    margin-block: var(--MatrixChat_useCompactLayout_line-spacing-block);
                 }
 
                 .mx_EventTile_line,
@@ -1120,7 +1122,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 padding-top: $spacing-8; // add a bit more space for emotes so that avatars don't collide
 
                 .mx_EventTile_avatar {
-                    top: 2px;
+                    top: var(--MatrixChat_useCompactLayout-top-avatar);
                 }
 
                 .mx_EventTile_line,
@@ -1131,22 +1133,22 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 &.mx_EventTile_continuation {
                     .mx_EventTile_line,
                     .mx_EventTile_reply {
-                        padding-bottom: 0;
+                        padding-bottom: var(--MatrixChat_useCompactLayout_line-spacing-block);
                     }
                 }
             }
 
             // Cascading - apply zero padding to every element including mx_EventTile_emote
             &.mx_EventTile_continuation {
-                padding-top: 0;
+                padding-top: var(--MatrixChat_useCompactLayout_line-spacing-block);
             }
 
             .mx_EventTile_avatar {
-                top: 2px;
+                top: var(--MatrixChat_useCompactLayout-top-avatar);
             }
 
             .mx_EventTile_e2eIcon {
-                top: 3px;
+                top: var(--MatrixChat_useCompactLayout-top-e2eIcon);
             }
 
             .mx_DisambiguatedProfile {
