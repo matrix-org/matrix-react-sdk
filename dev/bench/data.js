@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656159855535,
+  "lastUpdate": 1656159908942,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103034,6 +103034,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4364.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "814ca6811cde574505516c5d95b5d133bf8165bc",
+          "message": "Improve font scaling panel style (#8887)",
+          "timestamp": "2022-06-25T14:20:01+02:00",
+          "tree_id": "bb0911fa69b6894bcae3fd2c1018a11fd68bbfc5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/814ca6811cde574505516c5d95b5d133bf8165bc"
+        },
+        "date": 1656159897481,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4744.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2302.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4658.5,
             "unit": "ms",
             "extra": "type: measure"
           }
