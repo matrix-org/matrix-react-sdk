@@ -275,6 +275,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                                 "mx_ProfileSettings_profile_controls_topic",
                                 "mx_ProfileSettings_profile_controls_topic--room",
                             )}
+                            id="profileTopic" // See: NewRoomIntro.tsx
                             label={_t("Room Topic")}
                             disabled={!this.state.canSetTopic}
                             type="text"
