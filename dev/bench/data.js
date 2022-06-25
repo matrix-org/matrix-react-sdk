@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656158359015,
+  "lastUpdate": 1656158506269,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102914,6 +102914,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4380.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ca93076d85c650056c26ff95eeb53b1ad45934d4",
+          "message": "Display description of E2E advanced panel as subsection text (#8889)",
+          "timestamp": "2022-06-25T13:55:04+02:00",
+          "tree_id": "715d2cfab4c17de9250335e6b18bdb83dfde3ec0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ca93076d85c650056c26ff95eeb53b1ad45934d4"
+        },
+        "date": 1656158488742,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4936.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 701.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
