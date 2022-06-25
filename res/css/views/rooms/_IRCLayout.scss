@@ -94,9 +94,8 @@ $irc-line-height: $font-18px;
                 margin-left: 0;
                 padding: 0 5px;
             }
-        }
 
-        .mx_DisambiguatedProfile:hover {
+        &:hover {
             overflow: visible;
             z-index: 10;
 
@@ -113,6 +112,7 @@ $irc-line-height: $font-18px;
                 opacity: 1;
                 background-color: $event-selected-color;
             }
+        }
         }
 
         .mx_MessageTimestamp {
