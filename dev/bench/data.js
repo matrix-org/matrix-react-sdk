@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656180767957,
+  "lastUpdate": 1656195634500,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103370,6 +103370,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5311.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "25263210+ckiee@users.noreply.github.com",
+            "name": "ckie",
+            "username": "ckiee"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f251009cedde74733dd1c9b77e50b545e0ba221d",
+          "message": "rethemendex: use /usr/bin/env (#8896)\n\nThis increases Linux distro compatibility, in my case so it works with NixOS[0].\r\n\r\n[0]: https://nixos.org\r\n\r\nSigned-off-by: ckie <git-525ff67@ckie.dev>",
+          "timestamp": "2022-06-25T18:15:09-04:00",
+          "tree_id": "1f13c10a756bcf192c33e6937ed81eb4f01ab7d1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f251009cedde74733dd1c9b77e50b545e0ba221d"
+        },
+        "date": 1656195622931,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 7716.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2359.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4830.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
