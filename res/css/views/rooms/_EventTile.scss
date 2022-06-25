@@ -90,7 +90,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_line,
         .mx_EventTile_reply {
             position: relative;
-            padding-left: $left-gutter;
             border-radius: 8px;
         }
 
@@ -124,6 +123,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_reply {
             padding-top: 1px;
             padding-bottom: 3px;
+            padding-left: $left-gutter;
             line-height: $font-22px;
         }
 
