@@ -47,6 +47,9 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
                 deviceId: credentials.deviceId,
                 accessToken: credentials.accessToken,
                 request,
+                store: new win.matrixcs.MemoryStore(),
+                scheduler: new win.matrixcs.MatrixScheduler(),
+                cryptoStore: new win.matrixcs.MemoryCryptoStore(),
             });
 
             cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
@@ -55,9 +58,12 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
                 }
             });
 
-            cli.startClient();
-
-            return cli;
+            return cy.wrap(
+                cli.initCrypto()
+                    .then(() => cli.setGlobalErrorOnUnknownDevices(false))
+                    .then(() => cli.startClient())
+                    .then(() => cli),
+            );
         });
     });
 });

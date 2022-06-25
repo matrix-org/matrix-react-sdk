@@ -61,21 +61,21 @@ export function inviteMultipleToRoom(
 
 export function showStartChatInviteDialog(initialText = ""): void {
     // This dialog handles the room creation internally - we don't need to worry about it.
-    Modal.createTrackedDialog(
-        'Start DM', '', InviteDialog, { kind: KIND_DM, initialText },
-        /*className=*/null, /*isPriority=*/false, /*isStatic=*/true,
+    Modal.createDialog(
+        InviteDialog, { kind: KIND_DM, initialText },
+        /*className=*/"mx_InviteDialog_flexWrapper", /*isPriority=*/false, /*isStatic=*/true,
     );
 }
 
 export function showRoomInviteDialog(roomId: string, initialText = ""): void {
     // This dialog handles the room creation internally - we don't need to worry about it.
-    Modal.createTrackedDialog(
-        "Invite Users", "", InviteDialog, {
+    Modal.createDialog(
+        InviteDialog, {
             kind: KIND_INVITE,
             initialText,
             roomId,
         },
-        /*className=*/null, /*isPriority=*/false, /*isStatic=*/true,
+        /*className=*/"mx_InviteDialog_flexWrapper", /*isPriority=*/false, /*isStatic=*/true,
     );
 }
 
@@ -108,7 +108,7 @@ export function inviteUsersToRoom(
         showAnyInviteErrors(result.states, room, result.inviter);
     }).catch((err) => {
         logger.error(err.stack);
-        Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("Failed to invite"),
             description: ((err && err.message) ? err.message : _t("Operation failed")),
         });
@@ -127,7 +127,7 @@ export function showAnyInviteErrors(
         // Just get the first message because there was a fatal problem on the first
         // user. This usually means that no other users were attempted, making it
         // pointless for us to list who failed exactly.
-        Modal.createTrackedDialog('Failed to invite users to the room', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("Failed to invite users to %(roomName)s", { roomName: room.name }),
             description: inviter.getErrorText(failedUsers[0]),
         });
@@ -153,19 +153,21 @@ export function showAnyInviteErrors(
                         const user = userMap?.get(addr) || cli.getUser(addr);
                         const name = (user as Member).name || (user as User).rawDisplayName;
                         const avatarUrl = (user as Member).getMxcAvatarUrl?.() || (user as User).avatarUrl;
-                        return <div key={addr} className="mx_InviteDialog_multiInviterError_entry">
-                            <div className="mx_InviteDialog_multiInviterError_entry_userProfile">
+                        return <div key={addr} className="mx_InviteDialog_tile mx_InviteDialog_tile--inviterError">
+                            <div className="mx_InviteDialog_tile_avatarStack">
                                 <BaseAvatar
                                     url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24) : null}
                                     name={name}
                                     idName={user.userId}
-                                    width={24}
-                                    height={24}
+                                    width={36}
+                                    height={36}
                                 />
-                                <span className="mx_InviteDialog_multiInviterError_entry_name">{ name }</span>
-                                <span className="mx_InviteDialog_multiInviterError_entry_userId">{ user.userId }</span>
                             </div>
-                            <div className="mx_InviteDialog_multiInviterError_entry_error">
+                            <div className="mx_InviteDialog_tile_nameStack">
+                                <span className="mx_InviteDialog_tile_nameStack_name">{ name }</span>
+                                <span className="mx_InviteDialog_tile_nameStack_userId">{ user.userId }</span>
+                            </div>
+                            <div className="mx_InviteDialog_tile--inviterError_errorText">
                                 { inviter.getErrorText(addr) }
                             </div>
                         </div>;
@@ -173,7 +175,7 @@ export function showAnyInviteErrors(
                 </div>
             </div>;
 
-            Modal.createTrackedDialog("Some invites could not be sent", "", ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Some invites couldn't be sent"),
                 description,
             });

@@ -71,6 +71,12 @@ limitations under the License.
                 color: $secondary-content;
             }
         }
+
+        // XXX Remove this when video rooms leave beta
+        .mx_BetaCard_betaPill {
+            margin-inline-start: auto;
+            align-self: start;
+        }
     }
 
     .mx_RoomPreviewCard_avatar {

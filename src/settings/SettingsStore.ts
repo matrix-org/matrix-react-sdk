@@ -34,6 +34,7 @@ import { SettingLevel } from "./SettingLevel";
 import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 import { Action } from "../dispatcher/actions";
+import PlatformSettingsHandler from "./handlers/PlatformSettingsHandler";
 
 const defaultWatchManager = new WatchManager();
 
@@ -61,6 +62,7 @@ const LEVEL_HANDLERS = {
     ),
     [SettingLevel.ACCOUNT]: new LocalEchoWrapper(new AccountSettingsHandler(defaultWatchManager), SettingLevel.ACCOUNT),
     [SettingLevel.ROOM]: new LocalEchoWrapper(new RoomSettingsHandler(defaultWatchManager), SettingLevel.ROOM),
+    [SettingLevel.PLATFORM]: new LocalEchoWrapper(new PlatformSettingsHandler(), SettingLevel.PLATFORM),
     [SettingLevel.CONFIG]: new ConfigSettingsHandler(featureNames),
     [SettingLevel.DEFAULT]: new DefaultSettingsHandler(defaultSettings, invertedDefaultSettings),
 };
@@ -74,6 +76,15 @@ export const LEVEL_ORDER = [
     SettingLevel.CONFIG,
     SettingLevel.DEFAULT,
 ];
+
+function getLevelOrder(setting: ISetting): SettingLevel[] {
+    // Settings which support only a single setting level are inherently ordered
+    if (setting.supportedLevelsAreOrdered || setting.supportedLevels.length === 1) {
+        // return a copy to prevent callers from modifying the array
+        return [...setting.supportedLevels];
+    }
+    return LEVEL_ORDER;
+}
 
 export type CallbackFn = (
     settingName: string,
@@ -163,6 +174,14 @@ export default class SettingsStore {
         const watcherId = `${new Date().getTime()}_${SettingsStore.watcherCount++}_${settingName}_${roomId}`;
 
         const localizedCallback = (changedInRoomId: string | null, atLevel: SettingLevel, newValAtLevel: any) => {
+            if (!SettingsStore.doesSettingSupportLevel(originalSettingName, atLevel)) {
+                logger.warn(
+                    `Setting handler notified for an update of an invalid setting level: ` +
+                    `${originalSettingName}@${atLevel} - this likely means a weird setting value ` +
+                    `made it into the level's storage. The notification will be ignored.`,
+                );
+                return;
+            }
             const newValue = SettingsStore.getValue(originalSettingName);
             const newValueAtLevel = SettingsStore.getValueAt(atLevel, originalSettingName) ?? newValAtLevel;
             callbackFn(originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue);
@@ -316,7 +335,7 @@ export default class SettingsStore {
         }
 
         const setting = SETTINGS[settingName];
-        const levelOrder = (setting.supportedLevelsAreOrdered ? setting.supportedLevels : LEVEL_ORDER);
+        const levelOrder = getLevelOrder(setting);
 
         return SettingsStore.getValueAt(levelOrder[0], settingName, roomId, false, excludeDefault);
     }
@@ -345,11 +364,11 @@ export default class SettingsStore {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
         }
 
-        const levelOrder = (setting.supportedLevelsAreOrdered ? setting.supportedLevels : LEVEL_ORDER);
+        const levelOrder = getLevelOrder(setting);
         if (!levelOrder.includes(SettingLevel.DEFAULT)) levelOrder.push(SettingLevel.DEFAULT); // always include default
 
         const minIndex = levelOrder.indexOf(level);
-        if (minIndex === -1) throw new Error("Level " + level + " is not prioritized");
+        if (minIndex === -1) throw new Error(`Level "${level}" for setting "${settingName}" is not prioritized`);
 
         const handlers = SettingsStore.getHandlers(settingName);
 
@@ -506,6 +525,23 @@ export default class SettingsStore {
     }
 
     /**
+     * Determines if a setting supports a particular level.
+     * @param settingName The setting name.
+     * @param level The level.
+     * @returns True if supported, false otherwise. Note that this will not check to see if
+     * the level itself can be supported by the runtime (ie: you will need to call #isLevelSupported()
+     * on your own).
+     */
+    public static doesSettingSupportLevel(settingName: string, level: SettingLevel): boolean {
+        const setting = SETTINGS[settingName];
+        if (!setting) {
+            throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
+        }
+
+        return level === SettingLevel.DEFAULT || (setting.supportedLevels.includes(level));
+    }
+
+    /**
      * Determines the first supported level out of all the levels that can be used for a
      * specific setting.
      * @param {string} settingName The setting name.
@@ -518,7 +554,7 @@ export default class SettingsStore {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
         }
 
-        const levelOrder = (setting.supportedLevelsAreOrdered ? setting.supportedLevels : LEVEL_ORDER);
+        const levelOrder = getLevelOrder(setting);
         if (!levelOrder.includes(SettingLevel.DEFAULT)) levelOrder.push(SettingLevel.DEFAULT); // always include default
 
         const handlers = SettingsStore.getHandlers(settingName);

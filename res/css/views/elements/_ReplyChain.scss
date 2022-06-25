@@ -15,20 +15,20 @@ limitations under the License.
 */
 
 .mx_ReplyChain {
-    margin-top: 0;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 8px;
-    padding: 0 10px;
+    margin: 0 0 $spacing-8 0;
+    padding: 0 10px; // TODO: Use a spacing variable
     border-left: 2px solid $accent;
     border-radius: 2px;
 
     .mx_ReplyChain_show {
-        @mixin ButtonResetDefault;
-        color: inherit;
+        &.mx_AccessibleButton_kind_link_inline {
+            padding: 0;
+            color: unset;
+            white-space: nowrap; // Enforce 'In reply to' to be a single line
 
-        &:hover {
-            color: $links;
+            &:hover {
+                color: $links;
+            }
         }
     }
 

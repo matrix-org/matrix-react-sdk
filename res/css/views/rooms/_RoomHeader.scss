@@ -44,6 +44,10 @@ limitations under the License.
     .mx_InviteOnlyIcon_large {
         margin: 0;
     }
+
+    .mx_BetaCard_betaPill {
+        margin-right: $spacing-8;
+    }
 }
 
 .mx_RoomHeader_spinner {
@@ -164,6 +168,12 @@ limitations under the License.
     -webkit-line-clamp: $lines; // See: https://drafts.csswg.org/css-overflow-3/#webkit-line-clamp
     -webkit-box-orient: vertical;
     display: -webkit-box;
+}
+
+.mx_RoomHeader_topic .mx_Emoji {
+    // Undo font size increase to prevent vertical cropping and ensure the same size
+    // as in plain text emojis
+    font-size: inherit;
 }
 
 .mx_RoomHeader_avatar {
