@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656158681388,
+  "lastUpdate": 1656159855535,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102992,6 +102992,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4764.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4ad8b1934cbbf5237eba50f70d89f5850ab98f41",
+          "message": "Stop using :not() pseudo class for mx_MImageBody to decrease the specificity of the rule for images on file panel (#8886)",
+          "timestamp": "2022-06-25T14:19:02+02:00",
+          "tree_id": "61ca0885fd7b634797de6e1e6e0f07807bc096e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4ad8b1934cbbf5237eba50f70d89f5850ab98f41"
+        },
+        "date": 1656159844193,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4974.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2292.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4364.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
