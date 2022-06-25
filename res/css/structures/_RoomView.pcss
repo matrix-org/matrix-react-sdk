@@ -69,9 +69,8 @@ limitations under the License.
     background-size: 25px;
     background-repeat: no-repeat;
     position: relative;
-}
 
-.mx_RoomView_messagePanelSearchSpinner::before {
+&::before {
     background-color: $info-plinth-fg-color;
     mask: url("$(res)/img/feather-customised/search-input.svg");
     mask-repeat: no-repeat;
@@ -83,6 +82,7 @@ limitations under the License.
     left: 0;
     right: 0;
     height: 50px;
+}
 }
 
 .mx_RoomView_body {
