@@ -102,6 +102,14 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             line-height: $font-22px;
         }
 
+        .mx_EventTile_e2eIcon {
+            position: absolute;
+            top: 6px;
+            left: 44px;
+            bottom: 0;
+            right: 0;
+        }
+
         .mx_ThreadSummary,
         .mx_ThreadSummaryIcon {
             margin-left: $left-gutter;
@@ -291,14 +299,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             min-height: $font-44px;
             min-width: $font-44px;
         }
-    }
-
-    .mx_EventTile_e2eIcon {
-        position: absolute;
-        top: 6px;
-        left: 44px;
-        bottom: 0;
-        right: 0;
     }
 }
 
