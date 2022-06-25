@@ -104,10 +104,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_EventTile_e2eIcon {
             position: absolute;
-            top: 6px;
-            left: 44px;
-            bottom: 0;
-            right: 0;
+            inset: 6px 0 0 44px;
         }
 
         .mx_ThreadSummary,
