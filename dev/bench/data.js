@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656161124266,
+  "lastUpdate": 1656161769562,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103118,6 +103118,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4884.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3ccde7afa104483617cefe93ea718c2b9b6d8727",
+          "message": "Improve view source dialog style (#8883)",
+          "timestamp": "2022-06-25T14:50:58+02:00",
+          "tree_id": "95708fcececcf2eb7bea22dc2760594d47031ca8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3ccde7afa104483617cefe93ea718c2b9b6d8727"
+        },
+        "date": 1656161758341,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4711,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2102.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4396.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
