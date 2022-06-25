@@ -97,7 +97,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_ThreadSummary,
         .mx_ThreadSummaryIcon {
-            margin-left: 64px;
+            margin-left: $left-gutter;
         }
     }
 }
