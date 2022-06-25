@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656153262092,
+  "lastUpdate": 1656154162430,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102794,6 +102794,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4401.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eca14dea57e50769a640a613410e73e6947351aa",
+          "message": "Disable option to `Quote` when we don't have sufficient permissions (#8893)",
+          "timestamp": "2022-06-25T12:43:18+02:00",
+          "tree_id": "047ca8767420bf61c480485bdc2b040c5a8b6b2f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eca14dea57e50769a640a613410e73e6947351aa"
+        },
+        "date": 1656154148158,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5458.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2560.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5018.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
