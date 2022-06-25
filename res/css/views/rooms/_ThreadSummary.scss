@@ -131,7 +131,6 @@ limitations under the License.
 
 .mx_ThreadSummary_icon {
     display: inline-block;
-    color: $secondary-content !important;
     margin-bottom: $spacing-8;
 
     &::before {
@@ -139,5 +138,9 @@ limitations under the License.
         vertical-align: middle;
         margin-inline-end: $spacing-8;
         margin-top: -2px;
+    }
+
+    a& {
+        color: $secondary-content;
     }
 }
