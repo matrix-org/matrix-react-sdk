@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656158506269,
+  "lastUpdate": 1656158681388,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102950,6 +102950,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 701.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9a94586181422e99c2be4414c4de5d102d6d1331",
+          "message": "Remove inline margin from \"From a thread\" (ThreadSummaryIcon) on search result panel on IRC layout (#8892)",
+          "timestamp": "2022-06-25T13:59:25+02:00",
+          "tree_id": "24864cc2652b5ecfa98e48810cac7ee6f3a6b7ed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9a94586181422e99c2be4414c4de5d102d6d1331"
+        },
+        "date": 1656158669476,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5226.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2596.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4764.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
