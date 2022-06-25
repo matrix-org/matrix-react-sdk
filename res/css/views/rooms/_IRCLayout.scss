@@ -157,11 +157,9 @@ $irc-line-height: $font-18px;
     .mx_DisambiguatedProfile {
         width: var(--name-width);
         margin-inline-end: 0; // override mx_EventTile > *
-        display: flex;
+        display: inline-block;
         order: 2;
         flex-shrink: 0;
-        justify-content: flex-start;
-        align-items: center;
 
         > .mx_DisambiguatedProfile_displayName {
             width: 100%;
