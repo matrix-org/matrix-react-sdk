@@ -39,6 +39,25 @@ limitations under the License.
                 top: 12px;
                 left: -3px;
             }
+
+            .mx_DisambiguatedProfile,
+            .mx_ReactionsRow,
+            .mx_ThreadSummary {
+                margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
+            }
+
+            .mx_ReplyTile .mx_DisambiguatedProfile {
+                margin-inline-start: 0;
+            }
+
+            .mx_ReactionsRow {
+                margin-inline-end: $spacing-8; // See: var(--ThreadView_group_spacing-end) for ReactionsRow on _EventTile.scss
+            }
+
+            .mx_ThreadSummary {
+                margin-right: 0;
+                max-width: min(calc(100% - 36px), 600px);
+            }
         }
 
         &[data-layout=bubble] {
@@ -64,25 +83,6 @@ limitations under the License.
                 .mx_EventTile_e2eIcon {
                     inset-inline-start: 8px;
                 }
-            }
-
-            .mx_DisambiguatedProfile,
-            .mx_ReactionsRow,
-            .mx_ThreadSummary {
-                margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
-            }
-
-            .mx_ReplyTile .mx_DisambiguatedProfile {
-                margin-inline-start: 0;
-            }
-
-            .mx_ReactionsRow {
-                margin-inline-end: $spacing-8; // See: var(--ThreadView_group_spacing-end) for ReactionsRow on _EventTile.scss
-            }
-
-            .mx_ThreadSummary {
-                margin-right: 0;
-                max-width: min(calc(100% - 36px), 600px);
             }
 
             .mx_MessageTimestamp {
