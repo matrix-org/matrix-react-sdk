@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656178174306,
+  "lastUpdate": 1656179748994,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103286,6 +103286,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5432.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b391a20434e74db0c860cd258acf87a1731e2a0c",
+          "message": "Move mx_EventTile_e2eIcon style out of mx_EventTile:not([data-layout=bubble]) (#8895)",
+          "timestamp": "2022-06-25T17:49:34Z",
+          "tree_id": "6f81c32d0e582f871f4b291db91e0cef6ad77315",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b391a20434e74db0c860cd258acf87a1731e2a0c"
+        },
+        "date": 1656179734421,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5046.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2322.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4666.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
