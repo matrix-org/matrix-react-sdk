@@ -3492,5 +3492,9 @@
     "Show: Matrix rooms": "Tampilkan: ruangan Matrix",
     "Show: %(instance)s rooms (%(server)s)": "Tampilkan: %(instance)s ruangan (%(server)s)",
     "Add new server…": "Tambahkan server baru…",
-    "Remove server “%(roomServer)s”": "Hapus server “%(roomServer)s”"
+    "Remove server “%(roomServer)s”": "Hapus server “%(roomServer)s”",
+    "You cannot search for rooms that are neither a room nor a space": "Anda tidak dapat mencari ruangan yang bukan sebuah ruangan atau sebuah space",
+    "Show spaces": "Tampilkan space",
+    "Show rooms": "Tampilkan ruangan",
+    "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru"
 }
