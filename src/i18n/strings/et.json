@@ -3492,5 +3492,9 @@
     "Show: Matrix rooms": "Näita: Matrix'i jututoad",
     "Show: %(instance)s rooms (%(server)s)": "Näita: %(instance)s jututuba %(server)s serveris",
     "Add new server…": "Lisa uus server…",
-    "Remove server “%(roomServer)s”": "Eemalda server „%(roomServer)s“"
+    "Remove server “%(roomServer)s”": "Eemalda server „%(roomServer)s“",
+    "You cannot search for rooms that are neither a room nor a space": "Sa ei saa otsida sellised objekte, mis pole ei jututoad ega kogukonnad",
+    "Show spaces": "Näita kogukondi",
+    "Show rooms": "Näita jututubasid",
+    "Explore public spaces in the new search dialog": "Tutvu avalike kogukondadega kasutades uut otsinguvaadet"
 }
