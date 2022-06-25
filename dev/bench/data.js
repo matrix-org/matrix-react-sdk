@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656158176086,
+  "lastUpdate": 1656158359015,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -102872,6 +102872,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 656.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e49aac7b3facf9fbb3fe2436d9989513c81dc611",
+          "message": "Improve integration manager dialog style (#8888)",
+          "timestamp": "2022-06-25T13:54:07+02:00",
+          "tree_id": "d418f6aa8cf13b113141a4372d40f37de114f2fd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e49aac7b3facf9fbb3fe2436d9989513c81dc611"
+        },
+        "date": 1656158346640,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5677,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2216.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4380.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
