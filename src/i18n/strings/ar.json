@@ -1558,5 +1558,7 @@
     "You cannot place calls in this browser.": "لا يمكنك إجراء المكالمات في هذا المتصفّح.",
     "Calls are unsupported": "المكالمات غير مدعومة",
     "Some examples of the information being sent to us to help make %(brand)s better includes:": "بعض الأمثلة للمعلومات التي نستلمها لتحسين %(brand)s:",
-    "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.": "يمكنك أن تجد سياسة الكعكات الكاملة لنا من <CookiePolicyLink>هنا</CookiePolicyLink>."
+    "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.": "يمكنك أن تجد سياسة الكعكات الكاملة لنا من <CookiePolicyLink>هنا</CookiePolicyLink>.",
+    "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "أنت تحاول الوصول إلى رابط مجتمع (%(groupId)s).<br/> المجتمعات لم تعد مدعومة بعد الآن وتم استبدالها بالمساحات.<br2/><a>تعلم المزيد عن المساحات هنا.</a>",
+    "That link is no longer supported": "هذا الرابط لم يعد مدعومًا"
 }
