@@ -3488,5 +3488,13 @@
     "Show: %(instance)s rooms (%(server)s)": "Mostrar: salas de %(instance)s (%(server)s)",
     "Show: Matrix rooms": "Mostrar: salas de Matrix",
     "Add new server…": "Añadir nuevo servidor…",
-    "Remove server “%(roomServer)s”": "Quitar servidor «%(roomServer)s»"
+    "Remove server “%(roomServer)s”": "Quitar servidor «%(roomServer)s»",
+    "Remove search filter for %(filter)s": "Quitar filtro de búsqueda para %(filter)s",
+    "Start a group chat": "Crear conversación en grupo",
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Si no encuentras una sala, pide que te inviten a ella o que te manden su enlace.",
+    "If you can't see who you're looking for, send them your invite link.": "Si no ves a quien buscas, pídele que te envíe su enlace de invitación.",
+    "You cannot search for rooms that are neither a room nor a space": "No puedes buscar salas que no sean salas ni espacios",
+    "Explore public spaces in the new search dialog": "Explora espacios públicos con la nueva ventana de búsqueda",
+    "Show spaces": "Ver espacios",
+    "Show rooms": "Ver salas"
 }
