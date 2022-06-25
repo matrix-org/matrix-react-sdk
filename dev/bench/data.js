@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656167379568,
+  "lastUpdate": 1656178127476,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103202,6 +103202,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5084.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "33d680b134251e1c19eff4aee368bb7a335a83b1",
+          "message": "Clarify style rule structure of ProfileSettings to avoid unexpected regressions (#8884)",
+          "timestamp": "2022-06-25T19:23:33+02:00",
+          "tree_id": "2bb991ffe656b3a93f07f2d75eaa634c7634e560",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/33d680b134251e1c19eff4aee368bb7a335a83b1"
+        },
+        "date": 1656178114531,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4867.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2188.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4625.5,
             "unit": "ms",
             "extra": "type: measure"
           }
