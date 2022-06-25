@@ -61,8 +61,6 @@ $irc-line-height: $font-18px;
         > .mx_EventTile_avatar {
             order: 1;
             position: relative;
-            top: 0;
-            left: 0;
             flex-shrink: 0;
             height: $irc-line-height;
             display: flex;
