@@ -74,6 +74,11 @@ limitations under the License.
                 max-width: unset;
             }
 
+            .mx_MessageTimestamp {
+                position: absolute;
+                inset-inline: auto 0;
+            }
+
             .mx_ReactionsRow {
                 margin-inline-end: $spacing-8; // See: var(--ThreadView_group_spacing-end) for ReactionsRow on _EventTile.scss
             }
@@ -95,14 +100,6 @@ limitations under the License.
 
             .mx_ReactionsRow {
                 position: relative; // display on hover
-            }
-        }
-
-        &:not([data-layout="bubble"]) {
-            .mx_MessageTimestamp {
-                position: absolute; // for modern layout and IRC layout
-                inset-inline-start: auto;
-                inset-inline-end: 0;
             }
         }
     }
