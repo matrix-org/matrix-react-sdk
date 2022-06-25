@@ -39,6 +39,14 @@ limitations under the License.
                 top: 12px;
                 left: -3px;
             }
+
+            .mx_DisambiguatedProfile {
+                margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
+            }
+
+            .mx_ReplyTile .mx_DisambiguatedProfile {
+                margin-inline-start: 0;
+            }
         }
 
         &[data-layout=bubble] {
@@ -66,14 +74,9 @@ limitations under the License.
                 }
             }
 
-            .mx_DisambiguatedProfile,
             .mx_ReactionsRow,
             .mx_ThreadSummary {
                 margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
-            }
-
-            .mx_ReplyTile .mx_DisambiguatedProfile {
-                margin-inline-start: 0;
             }
 
             .mx_ReactionsRow {
