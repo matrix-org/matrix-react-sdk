@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656159908942,
+  "lastUpdate": 1656161124266,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103076,6 +103076,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4658.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3ecf7e1065f0e050d43ef30d0d9d85685f00a616",
+          "message": "Ensure the max width value of the tooltip is used only on settings tabs (#8880)",
+          "timestamp": "2022-06-25T14:40:16+02:00",
+          "tree_id": "75ff3555f4dcdea72dd4a83c69745f2eb04391be",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3ecf7e1065f0e050d43ef30d0d9d85685f00a616"
+        },
+        "date": 1656161112833,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4791.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2228,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4884.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
