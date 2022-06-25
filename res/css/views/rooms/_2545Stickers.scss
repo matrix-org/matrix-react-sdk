@@ -1,0 +1,35 @@
+// .mx_2545Stickers_*
+
+.mx_2545Stickers_root {
+    overflow: scroll;
+    height: 500px;
+    .mx_RoomView_MessageList {
+        // grrr
+        height: unset !important;
+    }
+    .mx_EmojiPicker_search {
+        margin: 0px 0px 8px 0px;
+    }
+}
+
+.mx_2545Stickers_grid {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.mx_2545Stickers_imageContainer {
+    flex-shrink: 1;
+    flex-basis: calc(25% - 10px);
+    margin: 5px;
+    user-select: none;
+    img {
+        width: 100%;
+        object-fit: contain;
+    }
+}
+
+.mx_2545Stickers_label {
+    margin-top: 0px;
+}

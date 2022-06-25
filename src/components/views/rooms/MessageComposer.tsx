@@ -27,7 +27,6 @@ import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import { ActionPayload } from "../../../dispatcher/payloads";
-import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink, RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import E2EIcon from './E2EIcon';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -58,6 +57,7 @@ import {
     startNewVoiceBroadcastRecording,
     VoiceBroadcastRecordingsStore,
 } from '../../../voice-broadcast';
+import { MSC2545StickerPicker } from './MSC2545StickerPicker';
 
 let instanceCount = 0;
 
@@ -461,7 +461,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             : null;
 
         controls.push(
-            <Stickerpicker
+            <MSC2545StickerPicker
                 room={this.props.room}
                 threadId={threadId}
                 isStickerPickerOpen={this.state.isStickerPickerOpen}
