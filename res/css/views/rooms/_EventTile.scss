@@ -72,6 +72,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         gap: $spacing-4;
     }
 
+    &[data-layout=irc],
+    &[data-layout=group] {
+        .mx_MImageBody {
+            margin-right: 34px;
+        }
+    }
+
     &[data-layout=group] {
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
@@ -95,6 +102,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             line-height: $font-22px;
         }
 
+        .mx_ThreadSummary,
+        .mx_ThreadSummaryIcon {
+            margin-left: $left-gutter;
+        }
+
         .mx_ReactionsRow {
             margin: $spacing-4 64px;
         }
@@ -107,11 +119,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     padding-top: 18px;
     font-size: $font-14px;
     position: relative;
-
-    .mx_ThreadSummary,
-    .mx_ThreadSummaryIcon {
-        margin-left: 64px;
-    }
 
     .mx_EventTile_avatar {
         top: 14px;
@@ -279,8 +286,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_MImageBody {
-        margin-right: 34px;
-
         .mx_MImageBody_thumbnail_container {
             justify-content: flex-start;
             min-height: $font-44px;
