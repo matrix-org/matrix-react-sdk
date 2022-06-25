@@ -213,12 +213,16 @@ function successSync(value: any) {
 export const Commands = [
     new Command({
         command: 'spoiler',
-        args: '<message>',
+        args: '[!<warning>!] <message>',
         description: _td('Sends the given message as a spoiler'),
         runFn: function(roomId, message) {
+            const regex = /!([^!]+)!/;
+            const result = regex.exec(message);
+            const attr = result == null ? "" : `="${result[1]}"`;
+
             return successSync(ContentHelpers.makeHtmlMessage(
                 message,
-                `<span data-mx-spoiler>${message}</span>`,
+                `<span data-mx-spoiler${attr}>${message.replace(regex, "")}</span>`,
             ));
         },
         category: CommandCategories.messages,
