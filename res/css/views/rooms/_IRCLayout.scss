@@ -95,24 +95,24 @@ $irc-line-height: $font-18px;
                 padding: 0 5px;
             }
 
-        &:hover {
-            overflow: visible;
-            z-index: 10;
-
-            > .mx_DisambiguatedProfile_displayName {
+            &:hover {
                 overflow: visible;
-                display: inline;
-                background-color: $event-selected-color;
-                border-radius: 8px 0 0 8px;
-                padding-right: 8px;
-            }
+                z-index: 10;
 
-            > .mx_DisambiguatedProfile_mxid {
-                visibility: visible;
-                opacity: 1;
-                background-color: $event-selected-color;
+                > .mx_DisambiguatedProfile_displayName {
+                    overflow: visible;
+                    display: inline;
+                    background-color: $event-selected-color;
+                    border-radius: 8px 0 0 8px;
+                    padding-right: 8px;
+                }
+
+                > .mx_DisambiguatedProfile_mxid {
+                    visibility: visible;
+                    opacity: 1;
+                    background-color: $event-selected-color;
+                }
             }
-        }
         }
 
         .mx_MessageTimestamp {
