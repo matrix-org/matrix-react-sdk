@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656179748994,
+  "lastUpdate": 1656180767957,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103328,6 +103328,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4666.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "173d8f33b7dfe8796357d82e7326a90464eac74f",
+          "message": "Use a variable to ensure the margin declaration is applied to components on mx_SettingsTab only (#8877)",
+          "timestamp": "2022-06-25T18:06:08Z",
+          "tree_id": "bb8db8a5c14630ac35367e6c214a003ca10f1e21",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/173d8f33b7dfe8796357d82e7326a90464eac74f"
+        },
+        "date": 1656180751865,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4964.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2516.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5311.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
