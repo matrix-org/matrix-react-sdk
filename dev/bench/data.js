@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656161769562,
+  "lastUpdate": 1656167379568,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103160,6 +103160,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4396.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4cc82548acdc4c9a27bc3d202f79ef5618cb7c64",
+          "message": "Remove inline margin from reactions row on IRC layout (#8891)",
+          "timestamp": "2022-06-25T14:24:18Z",
+          "tree_id": "0a3feb20be2bcce1e1d456593e946cbfc4e2da8e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4cc82548acdc4c9a27bc3d202f79ef5618cb7c64"
+        },
+        "date": 1656167367452,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4832.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2302.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5084.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
