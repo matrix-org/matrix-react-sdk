@@ -74,6 +74,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     &[data-layout=irc],
     &[data-layout=group] {
+        .mx_EventTile_e2eIcon {
+            position: absolute;
+        }
+
         .mx_MImageBody {
             margin-right: 34px;
         }
@@ -103,7 +107,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_EventTile_e2eIcon {
-            position: absolute;
             inset: 6px 0 0 44px;
         }
 
