@@ -36,6 +36,7 @@ limitations under the License.
     color: $primary-content;
     margin-top: 10px; // TODO: Use a spacing variable
     margin-bottom: 10px; // TODO: Use a spacing variable
+    margin-right: 100px; // TODO: Use a spacing variable
 
     &:nth-child(n + 2) {
         margin-top: 30px; // TODO: Use a spacing variable
@@ -49,6 +50,7 @@ limitations under the License.
     color: $primary-content;
     margin-top: $spacing-12;
     margin-bottom: 10px; // TODO: Use a spacing variable
+    margin-right: 100px; // TODO: Use a spacing variable
 }
 
 .mx_SettingsTab_subsectionText {

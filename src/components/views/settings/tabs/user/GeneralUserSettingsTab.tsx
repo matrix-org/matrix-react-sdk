@@ -130,11 +130,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     public async componentDidMount(): Promise<void> {
+        const spellCheckEnabled = await PlatformPeg.get().getSpellCheckEnabled();
         const spellCheckLanguages = await PlatformPeg.get().getSpellCheckLanguages();
 
         if (spellCheckLanguages) {
             this.setState({
-                spellCheckEnabled: Boolean(spellCheckLanguages.length),
+                spellCheckEnabled,
                 spellCheckLanguages,
             });
         }
@@ -249,16 +250,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private onSpellCheckEnabledChange = (spellCheckEnabled: boolean): void => {
         this.setState({ spellCheckEnabled });
-
-        if (spellCheckEnabled && IS_MAC) {
-            // XXX: On macOS the languages are controlled by the system
-            // settings, so we just set something, so that spell check gets
-            // enabled
-            PlatformPeg.get()?.setSpellCheckLanguages(["en_US"]);
-        } else if (!spellCheckEnabled) {
-            this.setState({ spellCheckLanguages: [] });
-            PlatformPeg.get()?.setSpellCheckLanguages([]);
-        }
+        PlatformPeg.get()?.setSpellCheckEnabled(spellCheckEnabled);
     };
 
     private onPasswordChangeError = (err): void => {

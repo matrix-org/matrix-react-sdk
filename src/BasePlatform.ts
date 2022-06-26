@@ -266,6 +266,12 @@ export default abstract class BasePlatform {
 
     public setLanguage(preferredLangs: string[]) {}
 
+    public setSpellCheckEnabled(enabled: boolean): void {}
+
+    public async getSpellCheckEnabled(): Promise<boolean> {
+        return null;
+    }
+
     public setSpellCheckLanguages(preferredLangs: string[]) {}
 
     public getSpellCheckLanguages(): Promise<string[]> | null {
