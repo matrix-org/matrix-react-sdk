@@ -84,6 +84,14 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_MImageBody {
+            .mx_MImageBody_thumbnail_container {
+                justify-content: flex-start;
+                min-height: $font-44px;
+                min-width: $font-44px;
+            }
+        }
+
+        .mx_MImageBody {
             margin-right: 34px;
         }
     }
@@ -296,14 +304,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     /* End to end encryption stuff */
     &:hover .mx_EventTile_e2eIcon {
         opacity: 1;
-    }
-
-    .mx_MImageBody {
-        .mx_MImageBody_thumbnail_container {
-            justify-content: flex-start;
-            min-height: $font-44px;
-            min-width: $font-44px;
-        }
     }
 }
 
