@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import { IImageInfo, Room } from 'matrix-js-sdk/src/matrix';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { mediaFromMxc } from '../../../customisations/Media';
@@ -57,8 +57,9 @@ const PackImage: React.FC<{
     image: I2545Image,
     roomId: string,
     threadId: string,
-    setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
-}> = ({ image, roomId, threadId, setStickerPickerOpen }) => {
+    setStickerPickerOpen: (isStickerPickerOpen: boolean) => void,
+    innerRef: React.RefObject<HTMLImageElement> | null
+}> = ({ image, roomId, threadId, setStickerPickerOpen, innerRef }) => {
     const cli = useContext(MatrixClientContext);
     const media = mediaFromMxc(image.url, cli);
     // noinspection JSIgnoredPromiseFromCall
@@ -74,7 +75,7 @@ const PackImage: React.FC<{
 
     // eslint-disable-next-line new-cap
     return <div className={cc("imageContainer")}>
-        <img src={media.srcHttp} onClick={onImageClick} alt={image.body} />
+        <img ref={innerRef} src={media.srcHttp} onClick={onImageClick} alt={image.body} />
     </div>;
 };
 
@@ -104,13 +105,18 @@ export const MSC2545StickerPicker: React.FC<{
                 });
         }).flat(1);
 
-    const finished = () => {
+    const topStickerRef = React.createRef<HTMLImageElement>();
+
+    const finished = (send: boolean) => () => {
         if (isStickerPickerOpen) {
+            if (send) topStickerRef.current.click();
             setStickerPickerOpen(false);
+            setSearchFilter("");
         }
     };
 
-    const renderedPacks = packs.map(({ pack, packName }) => {
+
+    const renderedPacks = packs.map(({ pack, packName }, packIdx) => {
         const lcFilter = searchFilter.toLowerCase().trim(); // filter is case insensitive
         const images = Object.values(pack.images)
             .filter(im => im.body.toLowerCase().includes(lcFilter));
@@ -121,6 +127,7 @@ export const MSC2545StickerPicker: React.FC<{
             <h3 className={cc("label")}>{pack.pack.display_name}</h3>
             <div className={cc("grid")}>
                 {images.map((im, idx) => <PackImage
+                    innerRef={(!packIdx && !idx) ? topStickerRef : null}
                     key={idx}
                     image={im}
                     roomId={room.roomId}
@@ -135,7 +142,7 @@ export const MSC2545StickerPicker: React.FC<{
         chevronFace={ChevronFace.Bottom}
         menuWidth={300}
         menuHeight={500}
-        onFinished={finished}
+        onFinished={finished(false)}
         menuPaddingTop={0}
         menuPaddingLeft={0}
         menuPaddingRight={0}
@@ -144,10 +151,10 @@ export const MSC2545StickerPicker: React.FC<{
     >
         <GenericElementContextMenu element={
             <ScrollPanel startAtBottom={false} className={cc("root")}>
-                <Search query={searchFilter} onChange={setSearchFilter} onEnter={() => { }} />
+                <Search query={searchFilter} onChange={setSearchFilter} onEnter={finished(true)} />
                 {renderedPacks}
             </ScrollPanel>}
-            onResize={finished} />
+            onResize={finished(false)} />
     </ContextMenu>;
 };
 
