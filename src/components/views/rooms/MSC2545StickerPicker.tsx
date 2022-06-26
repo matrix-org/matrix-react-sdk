@@ -27,8 +27,10 @@ import ScrollPanel from '../../structures/ScrollPanel';
 import GenericElementContextMenu from '../context_menus/GenericElementContextMenu';
 import Search from '../emojipicker/Search';
 
-const EMOTE_ROOMS_EVENT_TYPE = "im.ponies.emote_rooms";
-const ROOM_EMOTES_EVENT_TYPE = "im.ponies.room_emotes";
+// TODO: support more image sources:
+// https://github.com/Sorunome/matrix-doc/blob/soru/emotes/proposals/2545-emotes.md#image-sources
+const USER_PACK_ROOMS_EVENT_TYPE = "im.ponies.emote_rooms";
+const PACK_ROOM_EVENT_TYPE = "im.ponies.room_emotes";
 
 // Css Class; it's a short name for easy usage.
 const cc = (thing: string) => "mx_2545Stickers_" + thing;
@@ -88,7 +90,7 @@ export const MSC2545StickerPicker: React.FC<{
     const [searchFilter, setSearchFilter] = useState("");
     if (!isStickerPickerOpen) return null;
 
-    const evt = cli.getAccountData(EMOTE_ROOMS_EVENT_TYPE);
+    const evt = cli.getAccountData(USER_PACK_ROOMS_EVENT_TYPE);
     const evtContent = evt.event.content as { rooms: { [roomId: string]: { [packName: string]: {} } } };
 
     const packs = Object.keys(evtContent.rooms)
@@ -96,7 +98,7 @@ export const MSC2545StickerPicker: React.FC<{
             const room = cli.getRoom(roomId);
             return Object.keys(evtContent.rooms[roomId])
                 .map(name => {
-                    const pack = room.currentState.getStateEvents(ROOM_EMOTES_EVENT_TYPE, name)
+                    const pack = room.currentState.getStateEvents(PACK_ROOM_EVENT_TYPE, name)
                         .event.content as I2545Pack;
                     return { room, pack, packName: name };
                 });
