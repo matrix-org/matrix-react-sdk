@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656252383869,
+  "lastUpdate": 1656286399073,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103532,6 +103532,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 680.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "97a9af42d527fc41738fc976ca9f20e71699fb58",
+          "message": "Stop setting `auto_join` on space child events (#8863)\n\nIt's not a specified property and not even used.",
+          "timestamp": "2022-06-26T23:28:02Z",
+          "tree_id": "d58c9174bc3cd99759b6212d11b30af4c52db6a4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/97a9af42d527fc41738fc976ca9f20e71699fb58"
+        },
+        "date": 1656286386521,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4729.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2182.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4871.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
