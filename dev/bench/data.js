@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656236066664,
+  "lastUpdate": 1656240531281,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103454,6 +103454,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5314.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7852e168a02c5e6586224e123d9700f6bef235ee",
+          "message": "Improve SetIntegrationManager (#8878)",
+          "timestamp": "2022-06-26T10:43:33Z",
+          "tree_id": "266f0a9d9eaab57c81bca972028098d3d3cf88c5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7852e168a02c5e6586224e123d9700f6bef235ee"
+        },
+        "date": 1656240519751,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5183.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2837,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5131,
             "unit": "ms",
             "extra": "type: measure"
           }
