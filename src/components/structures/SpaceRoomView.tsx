@@ -60,7 +60,7 @@ import {
     defaultDmsRenderer,
     defaultRoomsRenderer,
 } from "../views/dialogs/AddExistingToSpaceDialog";
-import AccessibleButton from "../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import ErrorBoundary from "../views/elements/ErrorBoundary";
 import Field from "../views/elements/Field";
@@ -123,7 +123,7 @@ const SpaceLandingAddButton = ({ space }) => {
                 { canCreateRoom && <>
                     <IconizedContextMenuOption
                         label={_t("New room")}
-                        iconClassName="mx_RoomList_iconPlus"
+                        iconClassName="mx_RoomList_iconNewRoom"
                         onClick={async (e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -135,19 +135,23 @@ const SpaceLandingAddButton = ({ space }) => {
                             }
                         }}
                     />
-                    { videoRoomsEnabled && <IconizedContextMenuOption
-                        label={_t("New video room")}
-                        iconClassName="mx_RoomList_iconNewVideoRoom"
-                        onClick={async (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            closeMenu();
+                    { videoRoomsEnabled && (
+                        <IconizedContextMenuOption
+                            label={_t("New video room")}
+                            iconClassName="mx_RoomList_iconNewVideoRoom"
+                            onClick={async (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                closeMenu();
 
-                            if (await showCreateNewRoom(space, RoomType.ElementVideo)) {
-                                defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
-                            }
-                        }}
-                    /> }
+                                if (await showCreateNewRoom(space, RoomType.ElementVideo)) {
+                                    defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                                }
+                            }}
+                        >
+                            <BetaPill />
+                        </IconizedContextMenuOption>
+                    ) }
                 </> }
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
@@ -295,7 +299,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
         />;
     });
 
-    const onNextClick = async (ev) => {
+    const onNextClick = async (ev: ButtonEvent) => {
         ev.preventDefault();
         if (busy) return;
         setError("");
@@ -326,7 +330,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
         setBusy(false);
     };
 
-    let onClick = (ev) => {
+    let onClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         onFinished();
     };

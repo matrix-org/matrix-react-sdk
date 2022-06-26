@@ -22,6 +22,7 @@ import { EventEmitter } from "events";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ActionPayload } from "../dispatcher/payloads";
 import { IDestroyable } from "../utils/IDestroyable";
+import { Action } from "../dispatcher/actions";
 
 export abstract class ReadyWatchingStore extends EventEmitter implements IDestroyable {
     protected matrixClient: MatrixClient;
@@ -72,18 +73,18 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
             // Everything after this is unnecessary (we only need to know once we have a client)
             // and we intentionally don't set the client before this point to avoid stores
             // updating for every event emitted during the cached sync.
-            if (!(payload.prevState === SyncState.Prepared && payload.state !== SyncState.Prepared)) {
-                return;
-            }
-
-            if (this.matrixClient !== payload.matrixClient) {
+            if (
+                payload.prevState !== SyncState.Prepared
+                && payload.state === SyncState.Prepared
+                && this.matrixClient !== payload.matrixClient
+            ) {
                 if (this.matrixClient) {
                     await this.onNotReady();
                 }
                 this.matrixClient = payload.matrixClient;
                 await this.onReady();
             }
-        } else if (payload.action === 'on_client_not_viable' || payload.action === 'on_logged_out') {
+        } else if (payload.action === 'on_client_not_viable' || payload.action === Action.OnLoggedOut) {
             if (this.matrixClient) {
                 await this.onNotReady();
                 this.matrixClient = null;

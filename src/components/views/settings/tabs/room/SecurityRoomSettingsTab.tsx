@@ -104,7 +104,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
     private onEncryptionChange = async () => {
         if (this.context.getRoom(this.props.roomId)?.getJoinRule() === JoinRule.Public) {
-            const dialog = Modal.createTrackedDialog('Confirm Public Encrypted Room', '', QuestionDialog, {
+            const dialog = Modal.createDialog(QuestionDialog, {
                 title: _t('Are you sure you want to add encryption to this public room?'),
                 description: <div>
                     <p> { _t(
@@ -137,7 +137,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             if (!confirm) return;
         }
 
-        Modal.createTrackedDialog('Enable encryption', '', QuestionDialog, {
+        Modal.createDialog(QuestionDialog, {
             title: _t('Enable encryption?'),
             description: _t(
                 "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted " +
@@ -185,9 +185,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     };
 
     private createNewRoom = async (defaultPublic: boolean, defaultEncrypted: boolean) => {
-        const modal = Modal.createTrackedDialog<[boolean, IOpts]>(
-            "Create Room",
-            "Create room after trying to make an E2EE room public",
+        const modal = Modal.createDialog<[boolean, IOpts]>(
             CreateRoomDialog,
             { defaultPublic, defaultEncrypted },
         );
@@ -220,16 +218,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
     private async hasAliases(): Promise<boolean> {
         const cli = this.context;
-        if (await cli.doesServerSupportUnstableFeature("org.matrix.msc2432")) {
-            const response = await cli.unstableGetLocalAliases(this.props.roomId);
-            const localAliases = response.aliases;
-            return Array.isArray(localAliases) && localAliases.length !== 0;
-        } else {
-            const room = cli.getRoom(this.props.roomId);
-            const aliasEvents = room.currentState.getStateEvents(EventType.RoomAliases) || [];
-            const hasAliases = !!aliasEvents.find((ev) => (ev.getContent().aliases || []).length > 0);
-            return hasAliases;
-        }
+        const response = await cli.getLocalAliases(this.props.roomId);
+        const localAliases = response.aliases;
+        return Array.isArray(localAliases) && localAliases.length !== 0;
     }
 
     private renderJoinRule() {
@@ -264,7 +255,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     }
 
     private onJoinRuleChangeError = (error: Error) => {
-        Modal.createTrackedDialog('Room not found', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("Failed to update the join rules"),
             description: error.message ?? _t("Unknown failure"),
         });
@@ -272,7 +263,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
     private onBeforeJoinRuleChange = async (joinRule: JoinRule): Promise<boolean> => {
         if (this.state.encrypted && joinRule === JoinRule.Public) {
-            const dialog = Modal.createTrackedDialog('Confirm Public Encrypted Room', '', QuestionDialog, {
+            const dialog = Modal.createDialog(QuestionDialog, {
                 title: _t("Are you sure you want to make this encrypted room public?"),
                 description: <div>
                     <p> { _t(

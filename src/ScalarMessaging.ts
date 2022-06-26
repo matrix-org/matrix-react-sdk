@@ -148,6 +148,7 @@ Request:
    can configure/lay out the widget in different ways. All widgets must have a type.
  - `name` (String) is an optional human-readable string about the widget.
  - `data` (Object) is some optional data about the widget, and can contain arbitrary key/value pairs.
+ - `avatar_url` (String) is some optional mxc: URI pointing to the avatar of the widget.
 Response:
 {
     success: true
@@ -233,6 +234,13 @@ Example:
         avatar_url: null
     }
 }
+
+get_open_id_token
+-----------------
+Get an openID token for the current user session.
+Request: No parameters
+Response:
+ - The openId token object as described in https://spec.matrix.org/v1.2/client-server-api/#post_matrixclientv3useruseridopenidrequest_token
 */
 
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
@@ -261,6 +269,7 @@ enum Action {
     BotOptions = "bot_options",
     SetBotOptions = "set_bot_options",
     SetBotPower = "set_bot_power",
+    GetOpenIdToken = "get_open_id_token"
 }
 
 function sendResponse(event: MessageEvent<any>, res: any): void {
@@ -319,6 +328,7 @@ function setWidget(event: MessageEvent<any>, roomId: string): void {
     const widgetUrl = event.data.url;
     const widgetName = event.data.name; // optional
     const widgetData = event.data.data; // optional
+    const widgetAvatarUrl = event.data.avatar_url; // optional
     const userWidget = event.data.userWidget;
 
     // both adding/removing widgets need these checks
@@ -335,6 +345,14 @@ function setWidget(event: MessageEvent<any>, roomId: string): void {
         }
         if (widgetData !== undefined && !(widgetData instanceof Object)) {
             sendError(event, _t("Unable to create widget."), new Error("Optional field 'data' must be an Object."));
+            return;
+        }
+        if (widgetAvatarUrl !== undefined && typeof widgetAvatarUrl !== 'string') {
+            sendError(
+                event,
+                _t("Unable to create widget."),
+                new Error("Optional field 'avatar_url' must be a string."),
+            );
             return;
         }
         if (typeof widgetType !== 'string') {
@@ -364,13 +382,14 @@ function setWidget(event: MessageEvent<any>, roomId: string): void {
         if (!roomId) {
             sendError(event, _t('Missing roomId.'), null);
         }
-        WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData).then(() => {
-            sendResponse(event, {
-                success: true,
+        WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData, widgetAvatarUrl)
+            .then(() => {
+                sendResponse(event, {
+                    success: true,
+                });
+            }, (err) => {
+                sendError(event, _t('Failed to send request.'), err);
             });
-        }, (err) => {
-            sendError(event, _t('Failed to send request.'), err);
-        });
     }
 }
 
@@ -576,6 +595,16 @@ function returnStateEvent(event: MessageEvent<any>, roomId: string, eventType: s
     sendResponse(event, stateEvent.getContent());
 }
 
+async function getOpenIdToken(event: MessageEvent<any>) {
+    try {
+        const tokenObject = MatrixClientPeg.get().getOpenIdToken();
+        sendResponse(event, tokenObject);
+    } catch (ex) {
+        logger.warn("Unable to fetch openId token.", ex);
+        sendError(event, 'Unable to fetch openId token.');
+    }
+}
+
 const onMessage = function(event: MessageEvent<any>): void {
     if (!event.origin) { // stupid chrome
         // @ts-ignore
@@ -689,6 +718,9 @@ const onMessage = function(event: MessageEvent<any>): void {
             break;
         case Action.SetBotPower:
             setBotPower(event, roomId, userId, event.data.level, event.data.ignoreIfGreater);
+            break;
+        case Action.GetOpenIdToken:
+            getOpenIdToken(event);
             break;
         default:
             logger.warn("Unhandled postMessage event with action '" + event.data.action +"'");

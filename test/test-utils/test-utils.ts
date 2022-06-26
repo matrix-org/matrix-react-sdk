@@ -79,7 +79,13 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         credentials: { userId: "@userId:matrix.rog" },
+
+        store: {
+            getPendingEvents: jest.fn().mockResolvedValue([]),
+            setPendingEvents: jest.fn().mockResolvedValue(undefined),
+        },
 
         getPushActionsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation(mkStubRoom),
@@ -92,6 +98,7 @@ export function createTestClient(): MatrixClient {
         emit: eventEmitter.emit.bind(eventEmitter),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         peekInRoom: jest.fn().mockResolvedValue(mkStubRoom(undefined, undefined, undefined)),
+        stopPeeking: jest.fn(),
 
         paginateEventTimeline: jest.fn().mockResolvedValue(undefined),
         sendReadReceipt: jest.fn().mockResolvedValue(undefined),
@@ -115,6 +122,7 @@ export function createTestClient(): MatrixClient {
         mxcUrlToHttp: (mxc) => `http://this.is.a.url/${mxc.substring(6)}`,
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
+        setRoomTopic: jest.fn(),
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: () => jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
@@ -126,14 +134,6 @@ export function createTestClient(): MatrixClient {
         }),
         createRoom: jest.fn().mockResolvedValue({ room_id: "!1:example.org" }),
         setPowerLevel: jest.fn().mockResolvedValue(undefined),
-
-        // Used by various internal bits we aren't concerned with (yet)
-        sessionStore: {
-            store: {
-                getItem: jest.fn(),
-                setItem: jest.fn(),
-            },
-        },
         pushRules: {},
         decryptEventIfNeeded: () => Promise.resolve(),
         isUserIgnored: jest.fn().mockReturnValue(false),
@@ -153,6 +153,8 @@ export function createTestClient(): MatrixClient {
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
         relations: jest.fn().mockRejectedValue(undefined),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
+        hasLazyLoadMembersEnabled: jest.fn().mockReturnValue(false),
+        isInitialSyncComplete: jest.fn().mockReturnValue(true),
         downloadKeys: jest.fn(),
         fetchRoomEvent: jest.fn(),
     } as unknown as MatrixClient;
@@ -356,7 +358,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getJoinedMemberCount: jest.fn().mockReturnValue(1),
         getMembers: jest.fn().mockReturnValue([]),
         getPendingEvents: () => [],
-        getLiveTimeline: () => stubTimeline,
+        getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
         getUnfilteredTimelineSet: () => null,
         findEventById: () => null,
         getAccountData: () => null,

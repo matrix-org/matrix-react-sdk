@@ -14,15 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useRef } from "react";
+import React, { useCallback, useContext, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { linkifyElement } from "../../../HtmlUtils";
 import { useTopic } from "../../../hooks/room/useTopic";
-import useHover from "../../../hooks/useHover";
-import Tooltip, { Alignment } from "./Tooltip";
+import { Alignment } from "./Tooltip";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -32,6 +30,8 @@ import { useDispatcher } from "../../../hooks/useDispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
 import { Linkify } from "./Linkify";
+import TooltipTarget from "./TooltipTarget";
+import { topicToHtml } from "../../../HtmlUtils";
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
     room?: Room;
@@ -43,9 +43,9 @@ export default function RoomTopic({
 }: IProps) {
     const client = useContext(MatrixClientContext);
     const ref = useRef<HTMLDivElement>();
-    const hovered = useHover(ref);
 
     const topic = useTopic(room);
+    const body = topicToHtml(topic?.text, topic?.html, ref);
 
     const onClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         props.onClick?.(e);
@@ -57,14 +57,28 @@ export default function RoomTopic({
         dis.fire(Action.ShowRoomTopic);
     }, [props]);
 
+    const ignoreHover = (ev: React.MouseEvent): boolean => {
+        return (ev.target as HTMLElement).tagName.toUpperCase() === "A";
+    };
+
     useDispatcher(dis, (payload) => {
         if (payload.action === Action.ShowRoomTopic) {
             const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getUserId());
+            const body = topicToHtml(topic?.text, topic?.html, ref, true);
 
             const modal = Modal.createDialog(InfoDialog, {
                 title: room.name,
                 description: <div>
-                    <Linkify as="p">{ topic }</Linkify>
+                    <Linkify
+                        as="p"
+                        onClick={(ev: MouseEvent) => {
+                            if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
+                                modal.close();
+                            }
+                        }}
+                    >
+                        { body }
+                    </Linkify>
                     { canSetTopic && <AccessibleButton
                         kind="primary_outline"
                         onClick={() => {
@@ -80,10 +94,6 @@ export default function RoomTopic({
         }
     });
 
-    useEffect(() => {
-        linkifyElement(ref.current);
-    }, [topic]);
-
     const className = classNames(props.className, "mx_RoomTopic");
 
     return <div {...props}
@@ -92,9 +102,10 @@ export default function RoomTopic({
         dir="auto"
         className={className}
     >
-        { topic }
-        { hovered && (
-            <Tooltip label={_t("Click to read topic")} alignment={Alignment.Bottom} />
-        ) }
+        <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom} ignoreHover={ignoreHover}>
+            <Linkify>
+                { body }
+            </Linkify>
+        </TooltipTarget>
     </div>;
 }
