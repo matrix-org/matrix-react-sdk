@@ -51,6 +51,32 @@ interface I2545Pack {
     };
 }
 
+const PackImage: React.FC<{
+    image: I2545Image,
+    roomId: string,
+    threadId: string,
+    setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
+}> = ({ image, roomId, threadId, setStickerPickerOpen }) => {
+    const cli = useContext(MatrixClientContext);
+    const media = mediaFromMxc(image.url, cli);
+    // noinspection JSIgnoredPromiseFromCall
+
+    const onImageClick = (imgEvt: React.MouseEvent) => {
+        imgEvt.preventDefault();
+        cli.sendStickerMessage(roomId, threadId, media.srcMxc, image.info, image.body);
+        setStickerPickerOpen(false);
+    };
+
+    if (media.isEncrypted) return
+        <p>Stickers from encrypted rooms aren't supported {"):"}</p>;
+
+    // eslint-disable-next-line new-cap
+    return <div className={cc("imageContainer")}>
+        <img src={media.srcHttp} onClick={onImageClick} alt={image.body} />
+    </div>;
+};
+
+
 export const MSC2545StickerPicker: React.FC<{
     room: Room;
     threadId: string;
@@ -64,22 +90,6 @@ export const MSC2545StickerPicker: React.FC<{
 
     const evt = cli.getAccountData(EMOTE_ROOMS_EVENT_TYPE);
     const evtContent = evt.event.content as { rooms: { [roomId: string]: { [packName: string]: {} } } };
-
-    const packImage = (image: I2545Image) => {
-        const media = mediaFromMxc(image.url, cli);
-        // noinspection JSIgnoredPromiseFromCall
-        media.downloadSource();
-        const onImageClick = (imgEvt: React.MouseEvent) => {
-            imgEvt.preventDefault();
-            cli.sendStickerMessage(room.roomId, threadId, media.srcMxc, image.info, image.body);
-            setStickerPickerOpen(false);
-        };
-
-        // eslint-disable-next-line new-cap
-        return <div key={image.url + image.body} className={cc("imageContainer")}>
-            <img src={media.srcHttp} onClick={onImageClick} />
-        </div>;
-    };
 
     const packs = Object.keys(evtContent.rooms)
         .map(roomId => {
@@ -108,7 +118,12 @@ export const MSC2545StickerPicker: React.FC<{
         return <div key={"pack-" + packName}>
             <h3 className={cc("label")}>{pack.pack.display_name}</h3>
             <div className={cc("grid")}>
-                {images.map(packImage)}
+                {images.map((im, idx) => <PackImage
+                    key={idx}
+                    image={im}
+                    roomId={room.roomId}
+                    threadId={threadId}
+                    setStickerPickerOpen={setStickerPickerOpen} />)}
             </div>
         </div>;
     });
