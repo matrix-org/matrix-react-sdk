@@ -40,6 +40,10 @@ limitations under the License.
                 left: -3px;
             }
 
+            .mx_EventTile_msgOption {
+                margin-inline-end: 0;
+            }
+
             .mx_DisambiguatedProfile,
             .mx_ReactionsRow,
             .mx_ThreadSummary {
@@ -89,11 +93,6 @@ limitations under the License.
                 position: absolute; // for modern layout and IRC layout
                 inset-inline-start: auto;
                 inset-inline-end: 0;
-            }
-
-            .mx_EventTile_msgOption {
-                // Override mx_EventTile_msgOption of mx_EventTile:not([data-layout="bubble"])
-                margin-inline-end: 0;
             }
 
             &.mx_EventTile_info {
