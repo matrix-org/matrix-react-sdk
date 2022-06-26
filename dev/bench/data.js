@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656195634500,
+  "lastUpdate": 1656236066664,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103412,6 +103412,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4830.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ea5616a05f30f9dc3e13f8c78dfae08f566e2d21",
+          "message": "Remove a special declaration about position of avatars on TimelineCard (#8900)",
+          "timestamp": "2022-06-26T11:28:43+02:00",
+          "tree_id": "e0beb3a9db6bb2c63b49aa4ad254bc85d70d71c2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ea5616a05f30f9dc3e13f8c78dfae08f566e2d21"
+        },
+        "date": 1656236053580,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5047.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2330.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5314.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
