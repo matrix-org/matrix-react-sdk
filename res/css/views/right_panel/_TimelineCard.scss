@@ -46,13 +46,13 @@ limitations under the License.
 
             &.mx_EventTile_info {
                 .mx_EventTile_avatar {
-                    left: 18px;
+                    inset-inline-start: 18px;
                 }
             }
 
             .mx_EventTile_avatar {
                 position: absolute; // for IRC layout
-                left: -3px;
+                inset-inline-start: -3px;
             }
 
             .mx_EventTile_msgOption {
