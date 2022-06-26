@@ -193,8 +193,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             }
         }
 
-        StorageManager.trackStores(this.matrixClient);
-
         // try to initialise e2e on the new client
         try {
             // check that we have a version of the js-sdk which includes initCrypto
@@ -285,7 +283,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 SHOW_QR_CODE_METHOD,
                 verificationMethods.RECIPROCATE_QR_CODE,
             ],
-            unstableClientRelationAggregation: true,
             identityServer: new IdentityAuthClient(),
             cryptoCallbacks: {},
         };

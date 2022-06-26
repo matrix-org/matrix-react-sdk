@@ -41,7 +41,10 @@ describe("Login", () => {
         });
 
         it("logs in with an existing account and lands on the home screen", () => {
-            cy.get(".mx_ServerPicker_change", { timeout: 15000 }).click();
+            cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
+            cy.percySnapshot("Login");
+
+            cy.get(".mx_ServerPicker_change").click();
             cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
             cy.get(".mx_ServerPickerDialog_continue").click();
             // wait for the dialog to go away
@@ -49,9 +52,52 @@ describe("Login", () => {
 
             cy.get("#mx_LoginForm_username").type(username);
             cy.get("#mx_LoginForm_password").type(password);
+            cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
             cy.url().should('contain', '/#/home');
+            cy.stopMeasuring("from-submit-to-home");
+        });
+    });
+
+    describe("logout", () => {
+        beforeEach(() => {
+            cy.initTestUser(synapse, "Erin");
+        });
+
+        it("should go to login page on logout", () => {
+            cy.get('[aria-label="User menu"]').click();
+
+            // give a change for the outstanding requests queue to settle before logging out
+            cy.wait(500);
+
+            cy.get(".mx_UserMenu_contextMenu").within(() => {
+                cy.get(".mx_UserMenu_iconSignOut").click();
+            });
+
+            cy.url().should("contain", "/#/login");
+        });
+
+        it("should respect logout_redirect_url", () => {
+            cy.tweakConfig({
+                // We redirect to decoder-ring because it's a predictable page that isn't Element itself.
+                // We could use example.org, matrix.org, or something else, however this puts dependency of external
+                // infrastructure on our tests. In the same vein, we don't really want to figure out how to ship a
+                // `test-landing.html` page when running with an uncontrolled Element (via `yarn start`).
+                // Using the decoder-ring is just as fine, and we can search for strategic names.
+                logout_redirect_url: "/decoder-ring/",
+            });
+
+            cy.get('[aria-label="User menu"]').click();
+
+            // give a change for the outstanding requests queue to settle before logging out
+            cy.wait(500);
+
+            cy.get(".mx_UserMenu_contextMenu").within(() => {
+                cy.get(".mx_UserMenu_iconSignOut").click();
+            });
+
+            cy.url().should("contains", "decoder-ring");
         });
     });
 });

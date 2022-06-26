@@ -29,8 +29,6 @@ limitations under the License.
     user-select: none;
 
     &.mx_RoomAvatar_isSpaceRoom {
-        mask-image: unset !important; // override mx_DecoratedRoomAvatar_cutout
-
         &.mx_BaseAvatar_image, .mx_BaseAvatar_image {
             border-radius: 8px;
         }
@@ -53,4 +51,13 @@ limitations under the License.
     border-radius: 125px;
     vertical-align: top;
     background-color: $background;
+}
+
+// Percy screenshot test specific CSS
+@media only percy {
+    .mx_BaseAvatar_initial,
+    .mx_BaseAvatar_initial + .mx_BaseAvatar_image {
+        // Stick the default room avatar colour, so it doesn't cause a false diff on the screenshot
+        background-color: $username-variant2-color !important;
+    }
 }

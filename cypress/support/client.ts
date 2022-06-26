@@ -36,21 +36,33 @@ declare global {
              */
             createRoom(options: ICreateRoomOpts): Chainable<string>;
             /**
+             * Create a space with given options.
+             * @param options the options to apply when creating the space
+             * @return the ID of the newly created space (room)
+             */
+            createSpace(options: ICreateRoomOpts): Chainable<string>;
+            /**
              * Invites the given user to the given room.
              * @param roomId the id of the room to invite to
              * @param userId the id of the user to invite
              */
             inviteUser(roomId: string, userId: string): Chainable<{}>;
+            /**
+             * Sets account data for the user.
+             * @param type The type of account data.
+             * @param data The data to store.
+             */
+            setAccountData(type: string, data: object): Chainable<{}>;
         }
     }
 }
 
 Cypress.Commands.add("getClient", (): Chainable<MatrixClient | undefined> => {
-    return cy.window().then(win => win.mxMatrixClientPeg.matrixClient);
+    return cy.window({ log: false }).then(win => win.mxMatrixClientPeg.matrixClient);
 });
 
 Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
-    return cy.window().then(async win => {
+    return cy.window({ log: false }).then(async win => {
         const cli = win.mxMatrixClientPeg.matrixClient;
         const resp = await cli.createRoom(options);
         const roomId = resp.room_id;
@@ -71,8 +83,23 @@ Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string>
     });
 });
 
+Cypress.Commands.add("createSpace", (options: ICreateRoomOpts): Chainable<string> => {
+    return cy.createRoom({
+        ...options,
+        creation_content: {
+            "type": "m.space",
+        },
+    });
+});
+
 Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.invite(roomId, userId);
+    });
+});
+
+Cypress.Commands.add("setAccountData", (type: string, data: object): Chainable<{}> => {
+    return cy.getClient().then(async (cli: MatrixClient) => {
+        return cli.setAccountData(type, data);
     });
 });
