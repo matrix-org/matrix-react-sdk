@@ -31,6 +31,7 @@ import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewSto
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { RoomNotifState } from "../../../RoomNotifs";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { RoomNotificationContextMenu } from "../context_menus/RoomNotificationContextMenu";
 import NotificationBadge from "./NotificationBadge";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
@@ -39,10 +40,6 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { CachedRoomKey, RoomEchoChamber } from "../../../stores/local-echo/RoomEchoChamber";
 import { PROPERTY_UPDATED } from "../../../stores/local-echo/GenericEchoChamber";
-import IconizedContextMenu, {
-    IconizedContextMenuOptionList,
-    IconizedContextMenuRadio,
-} from "../context_menus/IconizedContextMenu";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -263,27 +260,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.setState({ generalMenuPosition: null });
     };
 
-    private async saveNotifState(ev: ButtonEvent, newState: RoomNotifState) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (MatrixClientPeg.get().isGuest()) return;
-
-        this.roomProps.notificationVolume = newState;
-
-        const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
-        switch (action) {
-            case KeyBindingAction.Enter:
-                // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
-                this.setState({ notificationsMenuPosition: null }); // hide the menu
-                break;
-        }
-    }
-
-    private onClickAllNotifs = ev => this.saveNotifState(ev, RoomNotifState.AllMessages);
-    private onClickAlertMe = ev => this.saveNotifState(ev, RoomNotifState.AllMessagesLoud);
-    private onClickMentions = ev => this.saveNotifState(ev, RoomNotifState.MentionsOnly);
-    private onClickMute = ev => this.saveNotifState(ev, RoomNotifState.Mute);
-
     private renderNotificationsMenu(isActive: boolean): React.ReactElement {
         if (MatrixClientPeg.get().isGuest() || this.props.tag === DefaultTagID.Archived ||
             !this.showContextMenu || this.props.isMinimized
@@ -294,49 +270,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         const state = this.roomProps.notificationVolume;
 
-        let contextMenu = null;
-        if (this.state.notificationsMenuPosition) {
-            contextMenu = <IconizedContextMenu
-                {...contextMenuBelow(this.state.notificationsMenuPosition)}
-                onFinished={this.onCloseNotificationsMenu}
-                className="mx_RoomTile_contextMenu"
-                compact
-            >
-                <IconizedContextMenuOptionList first>
-                    <IconizedContextMenuRadio
-                        label={_t("Use default")}
-                        active={state === RoomNotifState.AllMessages}
-                        iconClassName="mx_RoomTile_iconBell"
-                        onClick={this.onClickAllNotifs}
-                    />
-                    <IconizedContextMenuRadio
-                        label={_t("All messages")}
-                        active={state === RoomNotifState.AllMessagesLoud}
-                        iconClassName="mx_RoomTile_iconBellDot"
-                        onClick={this.onClickAlertMe}
-                    />
-                    <IconizedContextMenuRadio
-                        label={_t("Mentions & Keywords")}
-                        active={state === RoomNotifState.MentionsOnly}
-                        iconClassName="mx_RoomTile_iconBellMentions"
-                        onClick={this.onClickMentions}
-                    />
-                    <IconizedContextMenuRadio
-                        label={_t("None")}
-                        active={state === RoomNotifState.Mute}
-                        iconClassName="mx_RoomTile_iconBellCrossed"
-                        onClick={this.onClickMute}
-                    />
-                </IconizedContextMenuOptionList>
-            </IconizedContextMenu>;
-        }
-
         const classes = classNames("mx_RoomTile_notificationsButton", {
             // Show bell icon for the default case too.
-            mx_RoomTile_iconBell: state === RoomNotifState.AllMessages,
-            mx_RoomTile_iconBellDot: state === RoomNotifState.AllMessagesLoud,
-            mx_RoomTile_iconBellMentions: state === RoomNotifState.MentionsOnly,
-            mx_RoomTile_iconBellCrossed: state === RoomNotifState.Mute,
+            mx_RoomNotificationContextMenu_iconBell: state === RoomNotifState.AllMessages,
+            mx_RoomNotificationContextMenu_iconBellDot: state === RoomNotifState.AllMessagesLoud,
+            mx_RoomNotificationContextMenu_iconBellMentions: state === RoomNotifState.MentionsOnly,
+            mx_RoomNotificationContextMenu_iconBellCrossed: state === RoomNotifState.Mute,
 
             // Only show the icon by default if the room is overridden to muted.
             // TODO: [FTUE Notifications] Probably need to detect global mute state
@@ -352,7 +291,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     isExpanded={!!this.state.notificationsMenuPosition}
                     tabIndex={isActive ? 0 : -1}
                 />
-                { contextMenu }
+                { this.state.notificationsMenuPosition && (
+                    <RoomNotificationContextMenu
+                        {...contextMenuBelow(this.state.notificationsMenuPosition)}
+                        onFinished={this.onCloseNotificationsMenu}
+                        room={this.props.room}
+                    />
+                ) }
             </React.Fragment>
         );
     }
