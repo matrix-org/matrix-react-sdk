@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656351090316,
+  "lastUpdate": 1656351962844,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103766,6 +103766,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 682.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5c67ef14eca9755854b212ffddf7ae74b8084ea3",
+          "message": "Don't overlap tile bubbles with timestamps in modern layout (#8908)\n\n* Don't overlap tile bubbles with timestamps in modern layout\r\n\r\n* Use timestamp width variable",
+          "timestamp": "2022-06-27T17:40:46Z",
+          "tree_id": "2c278ba40db079580375923ac385aad5c04e7f10",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5c67ef14eca9755854b212ffddf7ae74b8084ea3"
+        },
+        "date": 1656351949266,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4883.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2089.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4502.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
