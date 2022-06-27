@@ -16,9 +16,10 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
+import type { ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import type { Room } from "matrix-js-sdk/src/models/room";
+import type { IContent } from "matrix-js-sdk/src/models/event";
 import Chainable = Cypress.Chainable;
 
 declare global {
@@ -53,6 +54,26 @@ declare global {
              * @param data The data to store.
              */
             setAccountData(type: string, data: object): Chainable<{}>;
+            /**
+             * @param {string} roomId
+             * @param {string} threadId
+             * @param {string} eventType
+             * @param {Object} content
+             * @return {module:http-api.MatrixError} Rejects: with an error response.
+             */
+            sendEvent(
+                roomId: string,
+                threadId: string | null,
+                eventType: string,
+                content: IContent
+            ): Chainable<ISendEventResponse>;
+            /**
+             * @param {string} name
+             * @param {module:client.callback} callback Optional.
+             * @return {Promise} Resolves: {} an empty object.
+             * @return {module:http-api.MatrixError} Rejects: with an error response.
+             */
+            setDisplayName(name: string): Chainable<{}>;
         }
     }
 }
@@ -101,5 +122,22 @@ Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{
 Cypress.Commands.add("setAccountData", (type: string, data: object): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setAccountData(type, data);
+    });
+});
+
+Cypress.Commands.add("sendEvent", (
+    roomId: string,
+    threadId: string | null,
+    eventType: string,
+    content: IContent,
+): Chainable<ISendEventResponse> => {
+    return cy.getClient().then(async (cli: MatrixClient) => {
+        return cli.sendEvent(roomId, threadId, eventType, content);
+    });
+});
+
+Cypress.Commands.add("setDisplayName", (name: string): Chainable<{}> => {
+    return cy.getClient().then(async (cli: MatrixClient) => {
+        return cli.setDisplayName(name);
     });
 });
