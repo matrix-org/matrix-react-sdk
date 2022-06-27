@@ -18,7 +18,6 @@ limitations under the License.
 
 import Chainable = Cypress.Chainable;
 import type { SettingLevel } from "../../src/settings/SettingLevel";
-import SettingsStore from "../../src/settings/SettingsStore";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -27,7 +26,7 @@ declare global {
             /**
              * Returns the SettingsStore
              */
-            getSettingsStore(): Chainable<typeof SettingsStore | undefined>;
+            getSettingsStore(): Chainable<any | undefined>; // XXX: Importing SettingsStore causes a bunch of type lint errors
             /**
              * Open the top left user menu, returning a handle to the resulting context menu.
              */
@@ -101,7 +100,7 @@ declare global {
     }
 }
 
-Cypress.Commands.add("getSettingsStore", (): Chainable<typeof SettingsStore> => {
+Cypress.Commands.add("getSettingsStore", (): Chainable<any> => {
     return cy.window({ log: false }).then(win => win.mxSettingsStore);
 });
 
@@ -111,14 +110,14 @@ Cypress.Commands.add("setSettingValue", (
     level: SettingLevel,
     value: any,
 ): Chainable<void> => {
-    return cy.getSettingsStore().then(async (store: typeof SettingsStore) => {
+    return cy.getSettingsStore().then(async (store: any) => {
         return store.setValue(name, roomId, level, value);
     });
 });
 
 Cypress.Commands.add("getSettingValue", <T = any>(name: string, roomId?: string): Chainable<T> => {
-    return cy.getSettingsStore().then(<T>(store: typeof SettingsStore) => {
-        return store.getValue<T>(name, roomId);
+    return cy.getSettingsStore().then((store: any) => {
+        return store.getValue(name, roomId);
     });
 });
 
