@@ -18,7 +18,7 @@ import React, { ComponentProps, RefObject, SyntheticEvent, KeyboardEvent, useCon
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
-import { HistoryVisibility, Preset } from "matrix-js-sdk/src/@types/partials";
+import { HistoryVisibility, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -37,6 +37,7 @@ import GenericFeatureFeedbackDialog from "../dialogs/GenericFeatureFeedbackDialo
 import SettingsStore from "../../../settings/SettingsStore";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 export const createSpace = async (
     name: string,
@@ -51,6 +52,9 @@ export const createSpace = async (
         createOpts: {
             name,
             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
+            visibility: (isPublic && await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827"))
+                ? Visibility.Public
+                : Visibility.Private,
             power_level_content_override: {
                 // Only allow Admins to write to the timeline to prevent hidden sync spam
                 events_default: 100,
@@ -80,11 +84,6 @@ const SpaceCreateMenuType = ({ title, description, className, onClick }) => {
     );
 };
 
-enum Visibility {
-    Public,
-    Private,
-}
-
 const spaceNameValidator = withValidation({
     rules: [
         {
@@ -109,7 +108,7 @@ export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
             kind="link"
             onClick={() => {
                 if (onClick) onClick();
-                Modal.createTrackedDialog("Spaces Feedback", "", GenericFeatureFeedbackDialog, {
+                Modal.createDialog(GenericFeatureFeedbackDialog, {
                     title: _t("Spaces feedback"),
                     subheading: _t("Thank you for trying Spaces. " +
                         "Your feedback will help inform the next versions."),

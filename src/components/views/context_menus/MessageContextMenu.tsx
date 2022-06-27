@@ -30,7 +30,7 @@ import Modal from '../../../Modal';
 import Resend from '../../../Resend';
 import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
-import { canEditContent, canForward, editEvent, isContentActionable, isLocationEvent } from '../../../utils/EventUtils';
+import { canEditContent, editEvent, isContentActionable, isLocationEvent } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
 import { ReadPinsEventId } from "../right_panel/types";
 import { Action } from "../../../dispatcher/actions";
@@ -51,6 +51,7 @@ import { GetRelationsForEvent, IEventTileOps } from "../rooms/EventTile";
 import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwardDialogPayload";
 import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenReportEventDialogPayload";
 import { createMapSiteLinkFromEvent } from '../../../utils/location';
+import { getForwardableEvent } from '../../../events/forward/getForwardableEvent';
 
 interface IProps extends IPosition {
     chevronFace: ChevronFace;
@@ -173,7 +174,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onViewSourceClick = (): void => {
-        Modal.createTrackedDialog('View Event Source', '', ViewSource, {
+        Modal.createDialog(ViewSource, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
         this.closeMenu();
@@ -188,10 +189,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private onForwardClick = (): void => {
+    private onForwardClick = (forwardableEvent: MatrixEvent) => (): void => {
         dis.dispatch<OpenForwardDialogPayload>({
             action: Action.OpenForwardDialog,
-            event: this.props.mxEvent,
+            event: forwardableEvent,
             permalinkCreator: this.props.permalinkCreator,
         });
         this.closeMenu();
@@ -238,7 +239,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private onShareClick = (e: React.MouseEvent): void => {
         e.preventDefault();
-        Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
+        Modal.createDialog(ShareDialog, {
             target: this.props.mxEvent,
             permalinkCreator: this.props.permalinkCreator,
         });
@@ -286,7 +287,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private onEndPollClick = (): void => {
         const matrixClient = MatrixClientPeg.get();
-        Modal.createTrackedDialog('End Poll', '', EndPollDialog, {
+        Modal.createDialog(EndPollDialog, {
             matrixClient,
             event: this.props.mxEvent,
             getRelationsForEvent: this.props.getRelationsForEvent,
@@ -379,12 +380,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         let forwardButton: JSX.Element;
-        if (contentActionable && canForward(mxEvent)) {
+        const forwardableEvent = getForwardableEvent(mxEvent, cli);
+        if (contentActionable && forwardableEvent) {
             forwardButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconForward"
                     label={_t("Forward")}
-                    onClick={this.onForwardClick}
+                    onClick={this.onForwardClick(forwardableEvent)}
                 />
             );
         }
@@ -452,7 +454,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         let quoteButton: JSX.Element;
-        if (eventTileOps) { // this event is rendered using TextualBody
+        if (eventTileOps && canSendMessages) { // this event is rendered using TextualBody
             quoteButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconQuote"
@@ -670,6 +672,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     {...this.props}
                     className="mx_MessageContextMenu"
                     compact={true}
+                    data-testid="mx_MessageContextMenu"
                 >
                     { nativeItemsList }
                     { quickItemsList }

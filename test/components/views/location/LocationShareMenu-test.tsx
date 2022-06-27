@@ -16,12 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
+import { mocked } from 'jest-mock';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { mocked } from 'jest-mock';
-import { act } from 'react-dom/test-utils';
-import { M_ASSET, LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import { RelationType } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
+import { M_ASSET, LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import { act } from 'react-dom/test-utils';
 
 import LocationShareMenu from '../../../../src/components/views/location/LocationShareMenu';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
@@ -65,7 +66,7 @@ jest.mock('../../../../src/stores/OwnProfileStore', () => ({
 }));
 
 jest.mock('../../../../src/Modal', () => ({
-    createTrackedDialog: jest.fn(),
+    createDialog: jest.fn(),
 }));
 
 describe('<LocationShareMenu />', () => {
@@ -120,7 +121,7 @@ describe('<LocationShareMenu />', () => {
         mockClient.sendMessage.mockClear();
         mockClient.unstable_createLiveBeacon.mockClear().mockResolvedValue({ event_id: '1' });
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
-        mocked(Modal).createTrackedDialog.mockClear();
+        mocked(Modal).createDialog.mockClear();
 
         jest.clearAllMocks();
 
@@ -375,6 +376,16 @@ describe('<LocationShareMenu />', () => {
     describe('Live location share', () => {
         beforeEach(() => enableSettings(["feature_location_share_live"]));
 
+        it('does not display live location share option when composer has a relation', () => {
+            const relation = {
+                rel_type: RelationType.Thread,
+                event_id: '12345',
+            };
+            const component = getComponent({ relation });
+
+            expect(getShareTypeOption(component, LocationShareType.Live).length).toBeFalsy();
+        });
+
         it('creates beacon info event on submission', () => {
             const onFinished = jest.fn();
             const component = getComponent({ onFinished });
@@ -422,7 +433,7 @@ describe('<LocationShareMenu />', () => {
             await flushPromisesWithFakeTimers();
 
             expect(logSpy).toHaveBeenCalledWith("We couldn't start sharing your live location", error);
-            expect(mocked(Modal).createTrackedDialog).toHaveBeenCalled();
+            expect(mocked(Modal).createDialog).toHaveBeenCalled();
         });
     });
 });
