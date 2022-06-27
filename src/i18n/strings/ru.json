@@ -1158,7 +1158,7 @@
     "Enable desktop notifications for this session": "Включить уведомления для рабочего стола для этой сессии",
     "Enable audible notifications for this session": "Включить звуковые уведомления для этой сессии",
     "Manage integrations": "Управление интеграциями",
-    "Direct Messages": "Диалоги",
+    "Direct Messages": "Личные сообщения",
     "%(count)s sessions|other": "%(count)s сессий",
     "Hide sessions": "Скрыть сессии",
     "Enable 'Manage Integrations' in Settings to do this.": "Включите «Управление интеграциями» в настройках, чтобы сделать это.",
@@ -2972,7 +2972,7 @@
     "Sorry, your vote was not registered. Please try again.": "Извините, ваш голос не был засчитан. Пожалуйста, попробуйте еще раз.",
     "Vote not registered": "Голос не засчитан",
     "Expand map": "Развернуть карту",
-    "Reply in thread": "Ответить в ветке",
+    "Reply in thread": "Обсудить",
     "Pick a date to jump to": "Выберите дату для перехода",
     "Message pending moderation": "Сообщение ожидает модерации",
     "Message pending moderation: %(reason)s": "Сообщение ожидает модерации: %(reason)s",
@@ -3243,5 +3243,13 @@
     "%(value)sh": "%(value)sч",
     "%(value)sd": "%(value)sд",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Начните сообщение с <code>/plain</code>, чтобы отправить его без markdown, и с <code>/md</code>, чтобы отправить с ним.",
-    "Enable Markdown": "Использовать Markdown"
+    "Enable Markdown": "Использовать Markdown",
+    "The person who invited you has already left.": "Человек, который вас пригласил, уже ушёл.",
+    "There was an error joining.": "Ошибка при вступлении.",
+    "The user's homeserver does not support the version of the space.": "Домашний сервер пользователя не поддерживает версию пространства.",
+    "User may or may not exist": "Пользователь может быть, а может и не быть",
+    "User is already in the space": "Пользователь уже пребывает в пространстве",
+    "User is already invited to the space": "Пользователь уже приглашён в пространство",
+    "Jump to the given date in the timeline": "Перейти к заданной дате в ленте сообщений",
+    "You do not have permission to invite people to this space.": "Вам не разрешено приглашать людей в это пространство."
 }
