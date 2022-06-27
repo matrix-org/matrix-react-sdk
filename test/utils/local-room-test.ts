@@ -37,7 +37,7 @@ describe("doMaybeLocalRoomAction", () => {
             getRoom: jest.fn(),
         } as unknown as MatrixClient;
         localRoom = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", client, "@test:example.com");
-        localRoom.realRoomId = "@new:example.com";
+        localRoom.actualRoomId = "@new:example.com";
         mocked(client.getRoom).mockImplementation((roomId: string) => {
             if (roomId === localRoom.roomId) {
                 return localRoom;
@@ -54,7 +54,7 @@ describe("doMaybeLocalRoomAction", () => {
     it("should invoke the callback with the new room ID for a created room", () => {
         localRoom.state = LocalRoomState.CREATED;
         doMaybeLocalRoomAction(localRoom.roomId, callback, client);
-        expect(callback).toHaveBeenCalledWith(localRoom.realRoomId);
+        expect(callback).toHaveBeenCalledWith(localRoom.actualRoomId);
     });
 
     describe("for a local room", () => {
@@ -73,7 +73,7 @@ describe("doMaybeLocalRoomAction", () => {
 
         it("should resolve the promise after invoking the callback", async () => {
             localRoom.afterCreateCallbacks.forEach((callback) => {
-                callback(localRoom.realRoomId);
+                callback(localRoom.actualRoomId);
             });
             await prom;
         });

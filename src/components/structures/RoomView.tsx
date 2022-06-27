@@ -235,7 +235,13 @@ interface ILocalRoomViewProps {
     onFileDrop: (dataTransfer: DataTransfer) => Promise<void>;
 }
 
-function LocalRoomView(props: ILocalRoomViewProps) {
+/**
+ * Local room view. Uses only the bits necessary to display a local room view like room header or composer.
+ *
+ * @param {ILocalRoomViewProps} props Room view props
+ * @returns {ReactElement}
+ */
+function LocalRoomView(props: ILocalRoomViewProps): ReactElement {
     const context = useContext(RoomContext);
     const room = context.room as LocalRoom;
     const encryptionEvent = context.room.currentState.getStateEvents(EventType.RoomEncryption)[0];
@@ -318,7 +324,13 @@ interface ILocalRoomCreateLoaderProps {
     resizeNotifier: ResizeNotifier;
 }
 
-function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps) {
+/**
+ * Room create loader view displaying a message and a spinner.
+ *
+ * @param {ILocalRoomCreateLoaderProps} props Room view props
+ * @return {ReactElement}
+ */
+function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement {
     const context = useContext(RoomContext);
     const text = _t("We're creating a room with %(names)s", { names: props.names });
     return (
@@ -1907,30 +1919,34 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return this.getPermalinkCreatorForRoom(this.state.room);
     }
 
-    render() {
-        if (this.state.room instanceof LocalRoom && this.state.room.state === LocalRoomState.CREATING) {
-            const names = this.state.room.getDefaultRoomName(this.props.mxClient.getUserId());
-            return (
-                <RoomContext.Provider value={this.state}>
-                    <LocalRoomCreateLoader
-                        names={names}
-                        resizeNotifier={this.props.resizeNotifier}
-                    />
-                </RoomContext.Provider>
-            );
-        }
+    private renderLocalRoomCreateLoader(): ReactElement {
+        const names = this.state.room.getDefaultRoomName(this.props.mxClient.getUserId());
+        return <RoomContext.Provider value={this.state}>
+            <LocalRoomCreateLoader
+                names={names}
+                resizeNotifier={this.props.resizeNotifier}
+            />
+        </RoomContext.Provider>;
+    }
 
+    private renderLocalRoomView(): ReactElement {
+        return <RoomContext.Provider value={this.state}>
+            <LocalRoomView
+                resizeNotifier={this.props.resizeNotifier}
+                permalinkCreator={this.permalinkCreator}
+                roomView={this.roomView}
+                onFileDrop={this.onFileDrop}
+            />
+        </RoomContext.Provider>;
+    }
+
+    render() {
         if (this.state.room instanceof LocalRoom) {
-            return (
-                <RoomContext.Provider value={this.state}>
-                    <LocalRoomView
-                        resizeNotifier={this.props.resizeNotifier}
-                        permalinkCreator={this.permalinkCreator}
-                        roomView={this.roomView}
-                        onFileDrop={this.onFileDrop}
-                    />
-                </RoomContext.Provider>
-            );
+            if (this.state.room.state === LocalRoomState.CREATING) {
+                return this.renderLocalRoomCreateLoader();
+            }
+
+            return this.renderLocalRoomView();
         }
 
         if (!this.state.room) {

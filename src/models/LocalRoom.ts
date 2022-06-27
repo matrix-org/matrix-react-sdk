@@ -28,13 +28,17 @@ export enum LocalRoomState {
 }
 
 /**
- * A local room that only exists on the client side.
+ * A local room that only exists client side.
  * Its main purpose is to be used for temporary rooms when creating a DM.
  */
 export class LocalRoom extends Room {
+    /** Whether the actual room should be encrypted. */
     encrypted: boolean;
-    realRoomId: string;
+    /** If the actual room has been created, this holds its ID. */
+    actualRoomId: string;
+    /** DM chat partner */
     targets: Member[];
+    /** Callbacks that should be invoked after the actual room has been created. */
     afterCreateCallbacks: Function[] = [];
     state: LocalRoomState = LocalRoomState.NEW;
 

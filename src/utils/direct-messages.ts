@@ -232,10 +232,10 @@ function isRoomReady(
     client: MatrixClient,
     localRoom: LocalRoom,
 ): boolean {
-    // not ready if no real room id exists
-    if (!localRoom.realRoomId) return false;
+    // not ready if no actual room id exists
+    if (!localRoom.actualRoomId) return false;
 
-    const room = client.getRoom(localRoom.realRoomId);
+    const room = client.getRoom(localRoom.actualRoomId);
     // not ready if the room does not exist
     if (!room) return false;
 
@@ -275,7 +275,7 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
             if (checkRoomStateInterval) clearInterval(checkRoomStateInterval);
             if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
 
-            applyAfterCreateCallbacks(localRoom, localRoom.realRoomId).then(() => {
+            applyAfterCreateCallbacks(localRoom, localRoom.actualRoomId).then(() => {
                 localRoom.state = LocalRoomState.CREATED;
                 resolve();
             });
@@ -283,7 +283,7 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
 
         startDm(client, localRoom.targets).then(
             (roomId) => {
-                localRoom.realRoomId = roomId;
+                localRoom.actualRoomId = roomId;
                 if (isRoomReady(client, localRoom)) finish();
                 stopgapTimeoutHandle = setTimeout(stopgapFinish, 5000);
                 // polling the room state is not as beautiful as listening on the events, but it is more reliable

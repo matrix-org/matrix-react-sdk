@@ -43,7 +43,7 @@ export async function doMaybeLocalRoomAction<T>(
         const room = client.getRoom(roomId) as LocalRoom;
 
         if (room.isCreated) {
-            return fn(room.realRoomId);
+            return fn(room.actualRoomId);
         }
 
         return new Promise<T>((resolve, reject) => {
