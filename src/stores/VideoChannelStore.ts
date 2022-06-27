@@ -335,12 +335,13 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     };
 
     private onDock = async () => {
-        // The widget is no longer a PiP
+        // The widget is no longer a PiP, so let's restore the default layout
         await this.activeChannel.transport.send(ElementWidgetActions.TileLayout, {});
     };
 
     private onUndock = async () => {
-        // The widget has become a PiP
+        // The widget has become a PiP, so let's switch Jitsi to spotlight mode
+        // to only show the active speaker and economize on space
         await this.activeChannel.transport.send(ElementWidgetActions.SpotlightLayout, {});
     };
 }
