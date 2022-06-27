@@ -70,9 +70,10 @@ export class ProxiedModuleApi implements ModuleApi {
     public openDialog<
         M extends object,
         P extends DialogProps = DialogProps,
-        C extends React.Component = React.Component>(
-            title: string,
-            body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
+        C extends React.Component = React.Component,
+    >(
+        title: string,
+        body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
     ): Promise<{ didOkOrSubmit: boolean, model: M }> {
         return new Promise<{ didOkOrSubmit: boolean, model: M }>((resolve) => {
             Modal.createDialog(ModuleUiDialog, {
