@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656351962844,
+  "lastUpdate": 1656363114810,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103808,6 +103808,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4502.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "84cf40e0f3ab5d2c659ecf745366325e68e897a5",
+          "message": "Switch video rooms to spotlight layout when in PiP mode (#8912)\n\n* Switch video rooms to spotlight layout when in PiP mode\r\n\r\n* Add some comments",
+          "timestamp": "2022-06-27T20:45:13Z",
+          "tree_id": "f9130d15418861fbcd4befe59141c0b889af626b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/84cf40e0f3ab5d2c659ecf745366325e68e897a5"
+        },
+        "date": 1656363100469,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6346.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2564.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5915.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
