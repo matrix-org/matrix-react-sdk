@@ -3492,5 +3492,9 @@
     "Show: Matrix rooms": "Zobraziť: Matrix miestnosti",
     "Show: %(instance)s rooms (%(server)s)": "Zobraziť: %(instance)s miestnosti (%(server)s)",
     "Add new server…": "Pridať nový server…",
-    "Remove server “%(roomServer)s”": "Odstrániť server \"%(roomServer)s\""
+    "Remove server “%(roomServer)s”": "Odstrániť server \"%(roomServer)s\"",
+    "You cannot search for rooms that are neither a room nor a space": "Nemôžete vyhľadávať miestnosti, ktoré nie sú ani miestnosťou, ani priestorom",
+    "Show spaces": "Zobraziť priestory",
+    "Show rooms": "Zobraziť miestnosti",
+    "Explore public spaces in the new search dialog": "Preskúmajte verejné priestory v novom okne vyhľadávania"
 }
