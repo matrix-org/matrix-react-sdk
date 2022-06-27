@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656332855700,
+  "lastUpdate": 1656336112336,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103688,6 +103688,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5439.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a9a97d1be38cf9c8b923670b1ecb4ddf60bf600e",
+          "message": "Maximize width value of display name on TimelineCard with IRC/modern layout (#8904)\n\n* Set 100% max-width to mx_DisambiguatedProfile on TimelineCard\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Unset the max-width value inside ReplyTile\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-27T15:16:40+02:00",
+          "tree_id": "1de01091a2da0ab82ee0fdd63f5dc33eace78ca9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a9a97d1be38cf9c8b923670b1ecb4ddf60bf600e"
+        },
+        "date": 1656336101038,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4774.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2225.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4675.5,
             "unit": "ms",
             "extra": "type: measure"
           }
