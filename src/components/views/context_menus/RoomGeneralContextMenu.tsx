@@ -145,7 +145,7 @@ export const RoomGeneralContextMenu = ({
     if (roomTags.includes(DefaultTagID.Archived)) {
         leaveOption = <IconizedContextMenuOption
             iconClassName="mx_RoomGeneralContextMenu_iconSignOut"
-            label={_t("Forget")}
+            label={_t("Forget Room")}
             className="mx_IconizedContextMenu_option_red"
             onClick={wrapHandler(() => dis.dispatch({
                 action: "forget_room",
