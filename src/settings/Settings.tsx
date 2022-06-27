@@ -937,7 +937,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "Spaces.includeSubSpaceRoomsInRoomList": {
         displayName: _td("Display all people and rooms from nested spaces in the room list for a space"),
-        supportedLevels: LEVELS_ROOM_SETTINGS,
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: true,
     },
     "developerMode": {
