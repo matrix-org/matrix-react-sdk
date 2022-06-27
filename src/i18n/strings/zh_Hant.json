@@ -3492,5 +3492,9 @@
     "Show: Matrix rooms": "顯示：Matrix 聊天室",
     "Show: %(instance)s rooms (%(server)s)": "顯示：%(instance)s 聊天室 (%(server)s)",
     "Add new server…": "加入新伺服器……",
-    "Remove server “%(roomServer)s”": "移除伺服器「%(roomServer)s」"
+    "Remove server “%(roomServer)s”": "移除伺服器「%(roomServer)s」",
+    "You cannot search for rooms that are neither a room nor a space": "您無法搜尋既不是聊天室也不是空間的聊天室",
+    "Show spaces": "顯示空間",
+    "Show rooms": "顯示聊天室",
+    "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開空間"
 }
