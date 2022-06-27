@@ -20,6 +20,19 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
 
+/**
+ * Does a room action:
+ * For non-local rooms it calls fn directly.
+ * For local rooms it adds the callback function to the room's afterCreateCallbacks and
+ * dispatches a "local_room_event".
+ *
+ * @async
+ * @template T
+ * @param {string} roomId Room ID of the target room
+ * @param {(actualRoomId: string) => Promise<T>} fn Callback to be called directly or collected at the local room
+ * @param {MatrixClient} [client]
+ * @returns {Promise<T>} Promise that gets resolved after the callback has finished
+ */
 export async function doMaybeLocalRoomAction<T>(
     roomId: string,
     fn: (actualRoomId: string) => Promise<T>,
