@@ -42,7 +42,7 @@ describe("ContentMessages", () => {
     });
 
     describe("sendStickerContentToRoom", () => {
-        it("should forward the call to doMaybeLocalRoomAction", () => {
+        beforeEach(() => {
             mocked(client.sendStickerMessage).mockReturnValue(prom);
             mocked(doMaybeLocalRoomAction).mockImplementation((
                 roomId: string,
@@ -51,6 +51,9 @@ describe("ContentMessages", () => {
             ) => {
                 return fn(roomId);
             });
+        });
+
+        it("should forward the call to doMaybeLocalRoomAction", () => {
             const returnProm = contentMessages.sendStickerContentToRoom(
                 stickerUrl,
                 roomId,
