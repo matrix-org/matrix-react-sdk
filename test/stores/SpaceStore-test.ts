@@ -1000,10 +1000,12 @@ describe("SpaceStore", () => {
     });
 
     describe("space auto switching tests", () => {
-        beforeEach(async () => {
-            [room1, room2, room3, orphan1].forEach(mkRoom);
+        const setupStore = async () => {
+            [room1, room2, room3, room4, orphan1].forEach(mkRoom);
+            mkSpace(space4, [room1]);
+            mkSpace(space3, [room4, space4]);
             mkSpace(space1, [room1, room2, room3]);
-            mkSpace(space2, [room1, room2]);
+            mkSpace(space2, [room1, room2, space3]);
 
             const cliRoom2 = client.getRoom(room2);
             mocked(cliRoom2.currentState).getStateEvents.mockImplementation(testUtils.mockStateEventImplementation([
@@ -1018,55 +1020,118 @@ describe("SpaceStore", () => {
                 }),
             ]));
             await run();
-        });
+        };
 
-        it("no switch required, room is in current space", async () => {
-            viewRoom(room1);
-            store.setActiveSpace(space1, false);
-            viewRoom(room2);
-            expect(store.activeSpace).toBe(space1);
-        });
-
-        it("switch to canonical parent space for room", async () => {
-            viewRoom(room1);
-            store.setActiveSpace(space2, false);
-            viewRoom(room2);
-            expect(store.activeSpace).toBe(space2);
-        });
-
-        it("switch to first containing space for room", async () => {
-            viewRoom(room2);
-            store.setActiveSpace(space2, false);
-            viewRoom(room3);
-            expect(store.activeSpace).toBe(space1);
-        });
-
-        it("switch to other rooms for orphaned room", async () => {
-            viewRoom(room1);
-            store.setActiveSpace(space1, false);
-            viewRoom(orphan1);
-            expect(store.activeSpace).toBe(MetaSpace.Orphans);
-        });
-
-        it("switch to first valid space when selected metaspace is disabled", async () => {
-            store.setActiveSpace(MetaSpace.People, false);
-            expect(store.activeSpace).toBe(MetaSpace.People);
-            await SettingsStore.setValue("Spaces.enabledMetaSpaces", null, SettingLevel.DEVICE, {
-                [MetaSpace.Home]: false,
-                [MetaSpace.Favourites]: true,
-                [MetaSpace.People]: false,
-                [MetaSpace.Orphans]: true,
+        describe('when includeSubSpaceRoomsInRoomList is true', () => {
+            beforeEach(async () => {
+                await setupStore();
             });
-            jest.runAllTimers();
-            expect(store.activeSpace).toBe(MetaSpace.Orphans);
+
+            it("no switch required, room is in current space", async () => {
+                viewRoom(room1);
+                store.setActiveSpace(space1, false);
+                viewRoom(room2);
+                expect(store.activeSpace).toBe(space1);
+            });
+
+            it("switch to canonical parent space for room", async () => {
+                viewRoom(room1);
+                store.setActiveSpace(space2, false);
+                viewRoom(room2);
+                expect(store.activeSpace).toBe(space2);
+            });
+
+            it("switch to first containing space for room", async () => {
+                viewRoom(room2);
+                store.setActiveSpace(space2, false);
+                viewRoom(room3);
+                expect(store.activeSpace).toBe(space1);
+            });
+
+            it("switches to first root space containing the room", async () => {
+                viewRoom(room2);
+                store.setActiveSpace(space1, false);
+                // space2 > space3 > room4
+                viewRoom(room4);
+                expect(store.activeSpace).toBe(space2);
+            });
+
+            it("switch to other rooms for orphaned room", async () => {
+                viewRoom(room1);
+                store.setActiveSpace(space1, false);
+                viewRoom(orphan1);
+                expect(store.activeSpace).toBe(MetaSpace.Orphans);
+            });
+
+            it("switch to first valid space when selected metaspace is disabled", async () => {
+                store.setActiveSpace(MetaSpace.People, false);
+                expect(store.activeSpace).toBe(MetaSpace.People);
+                await SettingsStore.setValue("Spaces.enabledMetaSpaces", null, SettingLevel.DEVICE, {
+                    [MetaSpace.Home]: false,
+                    [MetaSpace.Favourites]: true,
+                    [MetaSpace.People]: false,
+                    [MetaSpace.Orphans]: true,
+                });
+                jest.runAllTimers();
+                expect(store.activeSpace).toBe(MetaSpace.Orphans);
+            });
+
+            it("when switching rooms in the all rooms home space don't switch to related space", async () => {
+                await setShowAllRooms(true);
+                viewRoom(room2);
+                store.setActiveSpace(MetaSpace.Home, false);
+                viewRoom(room1);
+                expect(store.activeSpace).toBe(MetaSpace.Home);
+            });
         });
 
-        it("when switching rooms in the all rooms home space don't switch to related space", async () => {
-            await setShowAllRooms(true);
-            viewRoom(room2);
-            store.setActiveSpace(MetaSpace.Home, false);
-            viewRoom(room1);
-            expect(store.activeSpace).toBe(MetaSpace.Home);
+        describe('when includeSubSpaceRoomsInRoomList is false', () => {
+            beforeAll(() => {
+                SettingsStore.setValue(
+                    'Spaces.includeSubSpaceRoomsInRoomList', undefined, SettingLevel.ACCOUNT, false,
+                );
+            });
+
+            afterAll(() => {
+                SettingsStore.setValue(
+                    'Spaces.includeSubSpaceRoomsInRoomList', undefined, SettingLevel.ACCOUNT, true,
+                );
+            });
+
+            beforeEach(async () => {
+                await setupStore();
+            });
+
+            it("no switch required, room is in current space", async () => {
+                expect(SettingsStore.getValue('Spaces.includeSubSpaceRoomsInRoomList')).toEqual(false);
+                viewRoom(room1);
+                store.setActiveSpace(space1, false);
+                viewRoom(room2);
+                expect(store.activeSpace).toBe(space1);
+            });
+
+            it("switches to canonical parent space for room when viewing room", async () => {
+                viewRoom(room1);
+                store.setActiveSpace(space2, false);
+                viewRoom(room2);
+                expect(store.activeSpace).toBe(space2);
+            });
+
+            it("switches to first parent space for room when viewing room", async () => {
+                // differs from behaviour when includeSubSpaceRoomsInRoomList is truthy
+                viewRoom(room2);
+                store.setActiveSpace(space1, false);
+                // space2 > space3 > room4
+                viewRoom(room4);
+                expect(store.activeSpace).toBe(space3);
+            });
+
+            it("switch to other rooms for orphaned room", async () => {
+                viewRoom(room1);
+                store.setActiveSpace(space1, false);
+                viewRoom(orphan1);
+                expect(store.activeSpace).toBe(MetaSpace.Orphans);
+            });
         });
     });
 

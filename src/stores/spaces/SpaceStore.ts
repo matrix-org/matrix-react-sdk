@@ -815,15 +815,30 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         // try to find the canonical parent first
         let parent: SpaceKey = this.getCanonicalParent(roomId)?.roomId;
 
+        const includeSubSpaceRoomsInRoomList = SettingsStore.getValue("Spaces.includeSubSpaceRoomsInRoomList");
+        console.log('PPPP', roomId, parent, includeSubSpaceRoomsInRoomList);
+
+        // otherwise, if subspaces rooms are not aggregated
+        // use the first known direct parent of the room
+        if (!parent && !includeSubSpaceRoomsInRoomList) {
+            const parents = this.getKnownParents(roomId);
+
+            // use the first known parent
+            parent = parents.values().next().value;
+        }
+
         // otherwise, try to find a root space which contains this room
         if (!parent) {
-            parent = this.rootSpaces.find(s => this.isRoomInSpace(s.roomId, roomId))?.roomId;
+            parent = this.rootSpaces.find(s =>
+                this.isRoomInSpace(s.roomId, roomId, includeSubSpaceRoomsInRoomList))?.roomId;
         }
 
         // otherwise, try to find a metaspace which contains this room
         if (!parent) {
             // search meta spaces in reverse as Home is the first and least specific one
-            parent = [...this.enabledMetaSpaces].reverse().find(s => this.isRoomInSpace(s, roomId));
+            parent = [...this.enabledMetaSpaces].reverse().find(s =>
+                this.isRoomInSpace(s, roomId, includeSubSpaceRoomsInRoomList),
+            );
         }
 
         // don't trigger a context switch when we are switching a space to match the chosen room
