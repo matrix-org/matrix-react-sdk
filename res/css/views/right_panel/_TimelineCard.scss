@@ -40,7 +40,7 @@ limitations under the License.
                 padding-inline-end: $MessageTimestamp_width; // ensure timestamp is not hidden
 
                 .mx_EventTile_e2eIcon {
-                    inset-inline-start: 8px;
+                    inset-inline-start: $spacing-8;
                 }
             }
 
