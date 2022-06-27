@@ -96,7 +96,7 @@ describe("VideoChannelStore", () => {
         const waitForConnect = new Promise<void>(resolve =>
             store.once(VideoChannelEvent.Connect, resolve),
         );
-        join({ detail: {} } as unknown as CustomEvent<IWidgetApiRequest>);
+        join(new CustomEvent("widgetapirequest", { detail: {} }) as CustomEvent<IWidgetApiRequest>);
         await waitForConnect;
     };
 
@@ -109,7 +109,7 @@ describe("VideoChannelStore", () => {
         const waitForHangup = new Promise<void>(resolve =>
             store.once(VideoChannelEvent.Disconnect, resolve),
         );
-        hangup({ detail: {} } as unknown as CustomEvent<IWidgetApiRequest>);
+        hangup(new CustomEvent("widgetapirequest", { detail: {} }) as CustomEvent<IWidgetApiRequest>);
         await waitForHangup;
     };
 
