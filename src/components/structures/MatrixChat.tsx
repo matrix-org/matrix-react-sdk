@@ -130,6 +130,7 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
+import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1493,7 +1494,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // When logging out, stop tracking failures and destroy state
         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
-        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as MatrixError));
+        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
 
         cli.on(ClientEvent.Room, (room) => {
             if (MatrixClientPeg.get().isCryptoEnabled()) {
