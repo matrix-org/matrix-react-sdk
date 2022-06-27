@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656319755417,
+  "lastUpdate": 1656332855700,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103646,6 +103646,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 669.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5538161acd57099488c045ee6429b1c490eb5542",
+          "message": "render message deleted tile for beacons (#8905)",
+          "timestamp": "2022-06-27T14:21:22+02:00",
+          "tree_id": "40235a89414571b48f403edafe70a37b73736aad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5538161acd57099488c045ee6429b1c490eb5542"
+        },
+        "date": 1656332839783,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5289.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2452,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5439.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
