@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656336112336,
+  "lastUpdate": 1656351090316,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103730,6 +103730,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4675.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ff4e66517babfdf1ce34e32665571fccab25d457",
+          "message": "Connect to Jitsi unmuted by default (#8909)",
+          "timestamp": "2022-06-27T13:26:25-04:00",
+          "tree_id": "39d1e34b10448e2e3ed7fa92ededc68c4dd055cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ff4e66517babfdf1ce34e32665571fccab25d457"
+        },
+        "date": 1656351078852,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5141.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 682.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
