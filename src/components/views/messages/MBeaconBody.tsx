@@ -14,8 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useEffect, useState } from 'react';
-import { Beacon, BeaconEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import {
+    Beacon,
+    BeaconEvent,
+    MatrixEvent,
+    MatrixEventEvent,
+    MatrixClient,
+    RelationType,
+} from 'matrix-js-sdk/src/matrix';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
 
@@ -33,6 +40,8 @@ import SmartMarker from '../location/SmartMarker';
 import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
+import { GetRelationsForEvent } from '../rooms/EventTile';
+import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -87,7 +96,37 @@ const useUniqueId = (eventId: string): string => {
     return id;
 };
 
-const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) => {
+const useHandleBeaconRedaction = (
+    event: MatrixEvent,
+    getRelationsForEvent: GetRelationsForEvent,
+    cli: MatrixClient,
+): void => {
+    const onBeforeBeaconInfoRedaction = useCallback((_event: MatrixEvent, redactionEvent: MatrixEvent) => {
+        const relations = getRelationsForEvent ?
+            getRelationsForEvent(event.getId(), RelationType.Reference, M_BEACON.name) :
+            undefined;
+
+        console.log('hhh', { relations, event });
+
+        relations?.getRelations()?.forEach(locationEvent => {
+            cli.redactEvent(
+                locationEvent.getRoomId(),
+                locationEvent.getId(),
+                undefined,
+                redactionEvent.getContent(),
+            );
+        });
+    }, [event, getRelationsForEvent, cli]);
+
+    useEffect(() => {
+        event.addListener(MatrixEventEvent.BeforeRedaction, onBeforeBeaconInfoRedaction);
+        return () => {
+            event.removeListener(MatrixEventEvent.BeforeRedaction, onBeforeBeaconInfoRedaction);
+        };
+    }, [event, onBeforeBeaconInfoRedaction]);
+};
+
+const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelationsForEvent }, ref) => {
     const {
         beacon,
         isLive,
@@ -101,6 +140,8 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
     const displayStatus = getBeaconDisplayStatus(isLive, latestLocationState, error, waitingToStart);
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
     const isOwnBeacon = beacon?.beaconInfoOwner === matrixClient.getUserId();
+
+    useHandleBeaconRedaction(mxEvent, getRelationsForEvent, matrixClient);
 
     const onClick = () => {
         if (displayStatus !== BeaconDisplayStatus.Active) {

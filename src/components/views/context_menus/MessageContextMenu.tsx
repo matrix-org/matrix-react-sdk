@@ -52,6 +52,7 @@ import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwa
 import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenReportEventDialogPayload";
 import { createMapSiteLinkFromEvent } from '../../../utils/location';
 import { getForwardableEvent } from '../../../events/forward/getForwardableEvent';
+import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
 
 interface IProps extends IPosition {
     chevronFace: ChevronFace;
@@ -182,6 +183,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private onRedactClick = (): void => {
         const { mxEvent, onCloseDialog } = this.props;
+        const related = this.props.getRelationsForEvent(mxEvent.getId(), 'm.reference', M_BEACON.name);
+        const relatedAlt = this.props.getRelationsForEvent(mxEvent.getId(), 'm.reference', M_BEACON.altName);
+        console.log('hhh', { related, relatedAlt});
         createRedactEventDialog({
             mxEvent,
             onCloseDialog,
