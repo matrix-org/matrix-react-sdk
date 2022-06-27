@@ -42,7 +42,7 @@ describe("Update", () => {
             },
         }).as("version");
 
-        cy.initTestUser(synapse, "Ursa");
+        cy.initElementWithNewUser(synapse, "Ursa");
 
         cy.wait("@version");
         cy.url().should("contain", "updated=" + NEW_VERSION).then(href => {

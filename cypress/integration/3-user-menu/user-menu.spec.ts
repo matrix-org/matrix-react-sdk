@@ -27,7 +27,7 @@ describe("User Menu", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Jeff").then(credentials => {
+            cy.initElementWithNewUser(synapse, "Jeff").then(credentials => {
                 user = credentials;
             });
         });

@@ -68,7 +68,7 @@ describe("Spaces", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Sue").then(_user => {
+            cy.initElementWithNewUser(synapse, "Sue").then(_user => {
                 user = _user;
                 cy.mockClipboard();
             });
@@ -167,7 +167,7 @@ describe("Spaces", () => {
 
     it("should allow user to invite another to a space", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse, "BotBob").then(_bot => {
+        cy.registerBot(synapse, "BotBob").then(_bot => {
             bot = _bot;
         });
 
@@ -202,7 +202,7 @@ describe("Spaces", () => {
         });
         getSpacePanelButton("My Space").should("exist");
 
-        cy.getBot(synapse, "BotBob").then({ timeout: 10000 }, async bot => {
+        cy.registerBot(synapse, "BotBob").then({ timeout: 10000 }, async bot => {
             const { room_id: roomId } = await bot.createRoom(spaceCreateOptions("Space Space"));
             await bot.invite(roomId, user.userId);
         });

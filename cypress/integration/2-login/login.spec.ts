@@ -62,7 +62,7 @@ describe("Login", () => {
 
     describe("logout", () => {
         beforeEach(() => {
-            cy.initTestUser(synapse, "Erin");
+            cy.initElementWithNewUser(synapse, "Erin");
         });
 
         it("should go to login page on logout", () => {

@@ -110,7 +110,7 @@ describe("Stickers", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Sally");
+            cy.initElementWithNewUser(synapse, "Sally");
         });
         cy.serveHtmlFile(WIDGET_HTML).then(url => {
             stickerPickerUrl = url;

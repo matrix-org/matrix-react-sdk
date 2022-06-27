@@ -27,7 +27,7 @@ describe("Consent", () => {
         cy.startSynapse("consent").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Bob");
+            cy.initElementWithNewUser(synapse, "Bob");
         });
     });
 

@@ -26,8 +26,8 @@ describe("UserView", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Violet");
-            cy.getBot(synapse, "Usman").as("bot");
+            cy.initElementWithNewUser(synapse, "Violet");
+            cy.registerBot(synapse, "Usman").as("bot");
         });
     });
 

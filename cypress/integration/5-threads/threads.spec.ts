@@ -35,7 +35,7 @@ describe("Threads", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Tom");
+            cy.initElementWithNewUser(synapse, "Tom");
         });
     });
 
@@ -72,7 +72,7 @@ describe("Threads", () => {
 
     it("should be usable for a conversation", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse, "BotBob").then(_bot => {
+        cy.registerBot(synapse, "BotBob").then(_bot => {
             bot = _bot;
         });
 

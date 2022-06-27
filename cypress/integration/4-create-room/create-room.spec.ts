@@ -32,7 +32,7 @@ describe("Create Room", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Jim");
+            cy.initElementWithNewUser(synapse, "Jim");
         });
     });
 
