@@ -3492,5 +3492,9 @@
     "How can I create a video room?": "Hoe kan ik een videokamer maken?",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videoruimten zijn altijd-ann VoIP-kanalen die zijn geïntegreerd in een kamer in %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Een nieuwe manier om te chatten via spraak en video in %(brand)s.",
-    "Video rooms": "Video kamers"
+    "Video rooms": "Video kamers",
+    "You cannot search for rooms that are neither a room nor a space": "U kunt niet zoeken naar kamers die geen kamer of een space zijn",
+    "Show spaces": "Toon spaces",
+    "Show rooms": "Toon kamers",
+    "Explore public spaces in the new search dialog": "Ontdek openbare ruimtes in het nieuwe zoekvenster"
 }
