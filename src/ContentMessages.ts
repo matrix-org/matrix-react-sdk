@@ -356,7 +356,8 @@ export default class ContentMessages {
             roomId,
             (actualRoomId: string) => matrixClient.sendStickerMessage(actualRoomId, threadId, url, info, text),
             matrixClient,
-        ).catch((e) => {
+        );
+        prom.catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
