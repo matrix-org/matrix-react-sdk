@@ -315,4 +315,9 @@ export enum Action {
      * Fired when the client was logged in. No additional payload information required.
      */
     OnLoggedIn = "on_logged_in",
+
+    /**
+     * Overwrites the existing login with fresh session credentials. Use with a OverwriteLoginPayload.
+     */
+    OverwriteLogin = "overwrite_login",
 }

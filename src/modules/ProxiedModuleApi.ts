@@ -28,13 +28,13 @@ import { _t } from "../languageHandler";
 import { ModuleUiDialog } from "../components/views/dialogs/ModuleUiDialog";
 import SdkConfig from "../SdkConfig";
 import PlatformPeg from "../PlatformPeg";
-import { doSetLoggedIn } from "../Lifecycle";
 import dispatcher from "../dispatcher/dispatcher";
 import { navigateToPermalink } from "../utils/permalinks/navigator";
 import { parsePermalink } from "../utils/permalinks/Permalinks";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCachedRoomIDForAlias } from "../RoomAliasCache";
 import { Action } from "../dispatcher/actions";
+import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayload";
 
 /**
  * Glue between the `ModuleApi` interface and the react-sdk. Anticipates one instance
@@ -136,10 +136,13 @@ export class ProxiedModuleApi implements ModuleApi {
      * @override
      */
     public async overwriteAccountAuth(accountInfo: AccountAuthInfo): Promise<void> {
-        await doSetLoggedIn({
-            ...accountInfo,
-            guest: false,
-        }, true);
+        dispatcher.dispatch<OverwriteLoginPayload>({
+            action: Action.OverwriteLogin,
+            credentials: {
+                ...accountInfo,
+                guest: false,
+            },
+        }, true); // require to be sync to match inherited interface behaviour
     }
 
     /**
