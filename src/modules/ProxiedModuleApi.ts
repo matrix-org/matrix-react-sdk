@@ -67,7 +67,13 @@ export class ProxiedModuleApi implements ModuleApi {
     /**
      * @override
      */
-    public openDialog<M extends object, P extends DialogProps = DialogProps, C extends React.Component = React.Component>(title: string, body: (props: P, ref: React.RefObject<C>) => React.ReactNode): Promise<{ didOkOrSubmit: boolean, model: M }> {
+    public openDialog<
+        M extends object,
+        P extends DialogProps = DialogProps,
+        C extends React.Component = React.Component>(
+            title: string,
+            body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
+    ): Promise<{ didOkOrSubmit: boolean, model: M }> {
         return new Promise<{ didOkOrSubmit: boolean, model: M }>((resolve) => {
             Modal.createDialog(ModuleUiDialog, {
                 title: title,
@@ -84,13 +90,19 @@ export class ProxiedModuleApi implements ModuleApi {
     /**
      * @override
      */
-    public async registerSimpleAccount(username: string, password: string, displayName?: string): Promise<AccountAuthInfo> {
+    public async registerSimpleAccount(
+        username: string,
+        password: string,
+        displayName?: string,
+    ): Promise<AccountAuthInfo> {
         const hsUrl = SdkConfig.get("validated_server_config").hsUrl;
         const client = Matrix.createClient({ baseUrl: hsUrl });
+        const deviceName = SdkConfig.get("default_device_display_name")
+            || PlatformPeg.get().getDefaultDeviceDisplayName();
         const req = {
             username,
             password,
-            initial_device_display_name: SdkConfig.get("default_device_display_name") || PlatformPeg.get().getDefaultDeviceDisplayName(),
+            initial_device_display_name: deviceName,
             auth: undefined,
             inhibit_login: false,
         };

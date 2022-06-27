@@ -21,6 +21,10 @@ import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { IJoinRuleEventContent, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import classNames from 'classnames';
+import {
+    RoomPreviewOpts,
+    RoomViewLifecycle,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -35,10 +39,6 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
-import {
-    RoomPreviewOpts,
-    RoomViewLifecycle,
-} from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 const MemberEventHtmlReasonField = "io.element.html_reason";
 
@@ -320,7 +320,8 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             case MessageCase.NotLoggedIn: {
                 const opts: RoomPreviewOpts = { canJoin: false };
                 if (this.props.room?.roomId) {
-                    ModuleRunner.instance.invoke(RoomViewLifecycle.PreviewRoomNotLoggedIn, opts, this.props.room.roomId);
+                    ModuleRunner.instance
+                        .invoke(RoomViewLifecycle.PreviewRoomNotLoggedIn, opts, this.props.room.roomId);
                 }
                 if (opts.canJoin) {
                     title = _t("Join the room to participate");

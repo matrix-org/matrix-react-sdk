@@ -28,10 +28,10 @@ import PlatformPeg from "./PlatformPeg";
 import { SettingLevel } from "./settings/SettingLevel";
 import { retry } from "./utils/promise";
 import SdkConfig from "./SdkConfig";
+import { ModuleRunner } from "./modules/ModuleRunner";
 
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
-import { ModuleRunner } from "./modules/ModuleRunner";
 
 const i18nFolder = 'i18n/';
 

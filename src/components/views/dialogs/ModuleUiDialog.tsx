@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
+import { DialogContent, DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "./ScrollableBaseModal";
 import { IDialogProps } from "./IDialogProps";
-import { DialogContent, DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import { _t } from "../../../languageHandler";
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps extends IDialogProps {
     contentFactory: (props: DialogProps, ref: React.Ref<DialogContent>) => React.ReactNode;

@@ -16,6 +16,7 @@ limitations under the License.
 
 import { RuntimeModule } from "@matrix-org/react-sdk-module-api/lib/RuntimeModule";
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
+
 import { ModuleRunner } from "../../src/modules/ModuleRunner";
 
 export class MockModule extends RuntimeModule {
