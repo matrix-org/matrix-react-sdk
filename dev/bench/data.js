@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656312207387,
+  "lastUpdate": 1656319755417,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103610,6 +103610,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 669.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e7a8dbd04cc068241d449387408100228bd44368",
+          "message": "Revert recent composer changes (#8840)\n\n* Revert \"Prevent new composer from overflowing from non-breakable text (#8829)\"\r\n\r\nThis reverts commit 57dff8131c6ecbd708011004928d2c943ad02cab.\r\n\r\n* Revert \"Fix scroll jump issue with the composer (#8791)\"\r\n\r\nThis reverts commit 5167521ea42c4593820e02d015b7d20a71bd96aa.\r\n\r\n* Revert \"Fix scroll jump issue with the composer (#8788)\"\r\n\r\nThis reverts commit f568a76dc6444ef04fe2dc3809c0d8e38f94c079.\r\n\r\n* Revert \"Revert link color change in composer (#8784)\"\r\n\r\nThis reverts commit aedbeb299595a29efbfa73a08489118115d3654a.\r\n\r\n* Revert \"Improve composer visiblity (#8578)\"\r\n\r\nThis reverts commit f14374a51c153f64f313243f2df6ea4971db4e15.",
+          "timestamp": "2022-06-27T09:43:58+01:00",
+          "tree_id": "7fddef32f578224a898d8ec094d10f37ea6aa903",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e7a8dbd04cc068241d449387408100228bd44368"
+        },
+        "date": 1656319743804,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5088.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 669.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
