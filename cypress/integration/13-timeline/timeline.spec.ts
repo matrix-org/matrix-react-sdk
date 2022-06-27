@@ -16,9 +16,10 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MessageEvent } from "matrix-events-sdk";
 
+import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import type { EventType } from "matrix-js-sdk/src/@types/event";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import Chainable = Cypress.Chainable;
@@ -29,6 +30,15 @@ const getEventTilesWithBodies = (): Chainable<JQuery> => {
 
 const expectDisplayName = (e: JQuery<HTMLElement>, displayName: string): void => {
     expect(e.find(".mx_DisambiguatedProfile_displayName").text()).to.equal(displayName);
+};
+
+const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
+    return cy.sendEvent(
+        roomId,
+        null,
+        "m.room.message" as EventType,
+        MessageEvent.from("Message").serialize().content,
+    );
 };
 
 describe("Timeline", () => {
@@ -57,10 +67,10 @@ describe("Timeline", () => {
 
         it("should show historical profiles if disabled", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, false);
-            cy.sendEvent(roomId, null, EventType.RoomMessage, MessageEvent.from("Message 1").serialize().content);
+            sendEvent(roomId);
             cy.setDisplayName("Alan (away)");
             cy.wait(500);
-            cy.sendEvent(roomId, null, EventType.RoomMessage, MessageEvent.from("Message 2").serialize().content);
+            sendEvent(roomId);
             cy.viewRoomByName(roomName);
 
             const events = getEventTilesWithBodies();
@@ -74,10 +84,10 @@ describe("Timeline", () => {
 
         it("should not show historical profiles if enabled", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, true);
-            cy.sendEvent(roomId, null, EventType.RoomMessage, MessageEvent.from("Message 1").serialize().content);
+            sendEvent(roomId);
             cy.setDisplayName("Alan (away)");
             cy.wait(500);
-            cy.sendEvent(roomId, null, EventType.RoomMessage, MessageEvent.from("Message 2").serialize().content);
+            sendEvent(roomId);
             cy.viewRoomByName(roomName);
 
             const events = getEventTilesWithBodies();
