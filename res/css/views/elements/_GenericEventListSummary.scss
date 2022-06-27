@@ -17,7 +17,8 @@ limitations under the License.
 .mx_GenericEventListSummary {
     position: relative;
 
-    &:not([data-layout=bubble]) {
+    &[data-layout=irc],
+    &[data-layout=group] {
         .mx_GenericEventListSummary_toggle {
             float: right;
             margin: 8px 10px 0 0;
