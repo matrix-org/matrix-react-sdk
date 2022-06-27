@@ -143,6 +143,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         SettingsStore.monitorSetting("Spaces.allRoomsInHome", null);
         SettingsStore.monitorSetting("Spaces.enabledMetaSpaces", null);
         SettingsStore.monitorSetting("Spaces.showPeopleInSpace", null);
+        // @TODO kerry handle switching spaces if needed when this changes?
         SettingsStore.monitorSetting("Spaces.includeSubSpaceRoomsInRoomList", null);
     }
 
