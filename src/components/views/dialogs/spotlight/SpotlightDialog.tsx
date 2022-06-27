@@ -87,6 +87,7 @@ import { IDialogProps } from "../IDialogProps";
 import { UserTab } from "../UserTab";
 import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
+import { RoomResultContextMenus } from "./RoomResultContextMenus";
 import { RoomResultDetails } from "./RoomResultDetails";
 import { TooltipOption } from "./TooltipOption";
 import LabelledCheckbox from "../../elements/LabelledCheckbox";
@@ -515,6 +516,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         onClick={(ev) => {
                             viewRoom(result.room.roomId, true, ev?.type !== "click");
                         }}
+                        endAdornment={<RoomResultContextMenus room={result.room} />}
                     >
                         <DecoratedRoomAvatar room={result.room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                         { result.room.name }
@@ -858,6 +860,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 onClick={(ev) => {
                                     viewRoom(room.roomId, true, ev?.type !== "click");
                                 }}
+                                endAdornment={<RoomResultContextMenus room={room} />}
                             >
                                 <DecoratedRoomAvatar room={room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
