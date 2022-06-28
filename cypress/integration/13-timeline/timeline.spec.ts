@@ -30,6 +30,12 @@ const AVATAR_SIZE = 30;
 // The resize method used in the timeline
 const AVATAR_RESIZE_METHOD = "crop";
 
+const ROOM_NAME = "Test room";
+const OLD_AVATAR = "avatar_image1";
+const NEW_AVATAR = "avatar_image2";
+const OLD_NAME = "Alan";
+const NEW_NAME = "Alan (away)";
+
 const getEventTilesWithBodies = (): Chainable<JQuery> => {
     return cy.get(".mx_EventTile").filter((_i, e) => e.getElementsByClassName("mx_EventTile_body").length > 0);
 };
@@ -59,34 +65,28 @@ const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
 describe("Timeline", () => {
     let synapse: SynapseInstance;
 
-    const oldAvatar = "avatar_image1";
-    const newAvatar = "avatar_image2";
+    let roomId: string;
+
     let oldAvatarUrl: string;
     let newAvatarUrl: string;
-
-    const oldName = "Alan";
-    const newName = "Alan (away)";
-
-    const roomName = "Test room";
-    let roomId: string;
 
     describe("useOnlyCurrentProfiles", () => {
         beforeEach(() => {
             cy.startSynapse("default").then(data => {
                 synapse = data;
-                cy.initTestUser(synapse, oldName).then(() =>
+                cy.initTestUser(synapse, OLD_NAME).then(() =>
                     cy.window({ log: false }).then(() => {
-                        cy.createRoom({ name: roomName }).then(_room1Id => {
+                        cy.createRoom({ name: ROOM_NAME }).then(_room1Id => {
                             roomId = _room1Id;
                         });
                     }),
                 ).then(() => {
-                    cy.uploadContent(oldAvatar).then((url) => {
+                    cy.uploadContent(OLD_AVATAR).then((url) => {
                         oldAvatarUrl = url;
                         cy.setAvatarUrl(url);
                     });
                 }).then(() => {
-                    cy.uploadContent(newAvatar).then((url) => {
+                    cy.uploadContent(NEW_AVATAR).then((url) => {
                         newAvatarUrl = url;
                     });
                 });
@@ -104,17 +104,17 @@ describe("Timeline", () => {
             cy.setAvatarUrl(newAvatarUrl);
             cy.wait(500);
             sendEvent(roomId);
-            cy.viewRoomByName(roomName);
+            cy.viewRoomByName(ROOM_NAME);
 
             const events = getEventTilesWithBodies();
 
             events.should("have.length", 2);
             events.each((e, i) => {
                 if (i === 0) {
-                    expectDisplayName(e, oldName);
+                    expectDisplayName(e, OLD_NAME);
                     expectAvatar(e, oldAvatarUrl);
                 } else if (i === 1) {
-                    expectDisplayName(e, newName);
+                    expectDisplayName(e, NEW_NAME);
                     expectAvatar(e, newAvatarUrl);
                 }
             });
@@ -123,17 +123,17 @@ describe("Timeline", () => {
         it("should not show historical profiles if enabled", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, true);
             sendEvent(roomId);
-            cy.setDisplayName(newName);
+            cy.setDisplayName(NEW_NAME);
             cy.setAvatarUrl(newAvatarUrl);
             cy.wait(500);
             sendEvent(roomId);
-            cy.viewRoomByName(roomName);
+            cy.viewRoomByName(ROOM_NAME);
 
             const events = getEventTilesWithBodies();
 
             events.should("have.length", 2);
             events.each((e) => {
-                expectDisplayName(e, newName);
+                expectDisplayName(e, NEW_NAME);
                 expectAvatar(e, newAvatarUrl);
             });
         });
