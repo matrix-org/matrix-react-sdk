@@ -44,6 +44,8 @@ const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
 describe("Timeline", () => {
     let synapse: SynapseInstance;
 
+    const oldName = "Alan";
+    const newName = "Alan (away)";
     const roomName = "Test room";
     let roomId: string;
 
@@ -51,7 +53,7 @@ describe("Timeline", () => {
         beforeEach(() => {
             cy.startSynapse("default").then(data => {
                 synapse = data;
-                cy.initTestUser(synapse, "Alan").then(() =>
+                cy.initTestUser(synapse, oldName).then(() =>
                     cy.window({ log: false }).then(() => {
                         cy.createRoom({ name: roomName }).then(_room1Id => {
                             roomId = _room1Id;
@@ -77,15 +79,15 @@ describe("Timeline", () => {
 
             events.should("have.length", 2);
             events.each((e, i) => {
-                if (i === 0) expectDisplayName(e, "Alan");
-                else if (i === 1) expectDisplayName(e, "Alan (away)");
+                if (i === 0) expectDisplayName(e, oldName);
+                else if (i === 1) expectDisplayName(e, newName);
             });
         });
 
         it("should not show historical profiles if enabled", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, true);
             sendEvent(roomId);
-            cy.setDisplayName("Alan (away)");
+            cy.setDisplayName(newName);
             cy.wait(500);
             sendEvent(roomId);
             cy.viewRoomByName(roomName);
@@ -94,7 +96,7 @@ describe("Timeline", () => {
 
             events.should("have.length", 2);
             events.each((e) => {
-                expectDisplayName(e, "Alan (away)");
+                expectDisplayName(e, newName);
             });
         });
     });
