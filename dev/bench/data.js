@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656421920202,
+  "lastUpdate": 1656422621481,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104042,6 +104042,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5697.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7f7ad10b04f04cccfa6ce0baf8c2358df253f901",
+          "message": "Update matrix-web-i18n (#8914)",
+          "timestamp": "2022-06-28T14:15:51+01:00",
+          "tree_id": "a4c6acf6326f46b587fd84b575a73acff63b3205",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7f7ad10b04f04cccfa6ce0baf8c2358df253f901"
+        },
+        "date": 1656422605174,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5103.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2712.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5758.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
