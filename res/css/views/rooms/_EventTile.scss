@@ -315,10 +315,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_line .mx_RedactedBody {
             line-height: 1; // remove spacing between lines
         }
-
-        .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
-        }
     }
 
     &[data-layout=irc] {
@@ -334,6 +330,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &[data-layout=group] {
         .mx_EventTile_line {
             padding-left: $left-gutter;
+        }
+
+        .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
+            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
         }
     }
 }
