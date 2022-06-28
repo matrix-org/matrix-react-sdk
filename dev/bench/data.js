@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656363114810,
+  "lastUpdate": 1656400304563,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103850,6 +103850,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5915.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d7969a6dd377434a9eb37dff1006df5800aa6c08",
+          "message": "Keep clicks on pills within the app (#8917)\n\n* Keep clicks on pills within the app\r\n\r\n* Add a regression test",
+          "timestamp": "2022-06-28T09:06:26+02:00",
+          "tree_id": "8f62684a618ac1f3c81d18e9b82f46ae4a922a21",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d7969a6dd377434a9eb37dff1006df5800aa6c08"
+        },
+        "date": 1656400292967,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5527.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 623.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
