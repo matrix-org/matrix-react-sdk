@@ -44,9 +44,9 @@ jest.mock("../../../../src/utils/strings", () => ({
     getSelectedText: jest.fn(),
 }));
 jest.mock("../../../../src/utils/EventUtils", () => ({
+    // @ts-ignore don't mock everything
+    ...jest.requireActual("../../../../src/utils/EventUtils"),
     canEditContent: jest.fn(),
-    isContentActionable: jest.fn(),
-    isLocationEvent: jest.fn(),
 }));
 
 const roomId = 'roomid';
@@ -76,7 +76,6 @@ describe('MessageContextMenu', () => {
 
     describe('message forwarding', () => {
         it('allows forwarding a room message', () => {
-            mocked(isContentActionable).mockReturnValue(true);
 
             const eventContent = MessageEvent.from("hello");
             const menu = createMenuWithContent(eventContent);
@@ -92,7 +91,7 @@ describe('MessageContextMenu', () => {
         describe('forwarding beacons', () => {
             const aliceId = "@alice:server.org";
             beforeEach(() => {
-                mocked(isContentActionable).mockReturnValue(true);
+
             });
 
             it('does not allow forwarding a beacon that is not live', () => {
@@ -212,7 +211,6 @@ describe('MessageContextMenu', () => {
             const context = {
                 canSendMessages: true,
             };
-            mocked(isContentActionable).mockReturnValue(true);
 
             const menu = createRightClickMenuWithContent(eventContent, context);
             const replyButton = menu.find('div[aria-label="Reply"]');
@@ -224,9 +222,11 @@ describe('MessageContextMenu', () => {
             const context = {
                 canSendMessages: true,
             };
-            mocked(isContentActionable).mockReturnValue(false);
+            const unsentMessage = new MatrixEvent(eventContent.serialize());
+            // queued messages are not actionable
+            unsentMessage.setStatus(EventStatus.QUEUED)
 
-            const menu = createRightClickMenuWithContent(eventContent, context);
+            const menu = createMenu(unsentMessage, {}, context);
             const replyButton = menu.find('div[aria-label="Reply"]');
             expect(replyButton).toHaveLength(0);
         });
@@ -236,7 +236,6 @@ describe('MessageContextMenu', () => {
             const context = {
                 canReact: true,
             };
-            mocked(isContentActionable).mockReturnValue(true);
 
             const menu = createRightClickMenuWithContent(eventContent, context);
             const reactButton = menu.find('div[aria-label="React"]');
