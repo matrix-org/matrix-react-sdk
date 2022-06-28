@@ -46,7 +46,7 @@ describe("Pills", () => {
         cy.all([
             cy.get<string>("@targetRoomId"),
             cy.get<string>("@messageRoomId"),
-        ]).then(([targetRoomId, messageRoomId]) => { // discard room IDs - we don't need them
+        ]).then(([targetRoomId, messageRoomId]) => { // discard the target room ID - we don't need it
             cy.viewRoomByName(messageRoom);
             cy.url().should("contain", `/#/room/${messageRoomId}`);
 
@@ -72,5 +72,4 @@ describe("Pills", () => {
             cy.url().should("contain", `https://matrix.to/#/#${targetLocalpart}:`);
         });
     });
-
 });
