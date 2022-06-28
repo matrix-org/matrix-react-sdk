@@ -21,6 +21,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 .mx_EventTile {
     flex-shrink: 0;
 
+    .mx_EventTile_avatar {
+        cursor: pointer;
+        user-select: none;
+    }
+
     .mx_EventTile_receiptSent,
     .mx_EventTile_receiptSending {
         position: relative;
@@ -65,9 +70,67 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 
+    .mx_ReactionsRow {
+        display: flex;
+        flex-flow: wrap;
+        align-items: center;
+        gap: $spacing-4;
+    }
+
+    &[data-layout=irc],
     &[data-layout=group] {
-        .mx_EventTile_line {
-            line-height: var(--GroupLayout-EventTile-line-height);
+        .mx_EventTile_e2eIcon {
+            position: absolute;
+        }
+
+        .mx_MImageBody {
+            margin-right: 34px;
+        }
+    }
+
+    &[data-layout=group] {
+        > .mx_DisambiguatedProfile {
+            line-height: $font-20px;
+            margin-left: $left-gutter;
+            max-width: calc(100% - $left-gutter);
+        }
+
+        > .mx_EventTile_avatar {
+            position: absolute;
+            z-index: 9;
+        }
+
+        .mx_EventTile_avatar {
+            top: 14px;
+            left: $spacing-8;
+        }
+
+        .mx_MessageTimestamp {
+            position: absolute; // for modern layout
+        }
+
+        .mx_EventTile_line,
+        .mx_EventTile_reply {
+            padding-top: 1px;
+            padding-bottom: 3px;
+            line-height: $font-22px;
+        }
+
+        .mx_EventTile_e2eIcon {
+            inset: 6px 0 0 44px;
+        }
+
+        .mx_EventTile_msgOption {
+            margin-right: 10px;
+        }
+
+        .mx_ThreadSummary,
+        .mx_ThreadSummaryIcon {
+            margin-left: $left-gutter;
+        }
+
+        .mx_ReactionsRow {
+            margin: $spacing-4 64px;
         }
     }
 }
@@ -78,18 +141,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     padding-top: 18px;
     font-size: $font-14px;
     position: relative;
-
-    .mx_ThreadSummary,
-    .mx_ThreadSummaryIcon {
-        margin-left: 64px;
-    }
-
-    .mx_EventTile_avatar {
-        top: 14px;
-        left: 8px;
-        cursor: pointer;
-        user-select: none;
-    }
 
     &.mx_EventTile_info {
         padding-top: 0;
@@ -128,8 +179,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         display: inline-block;
         padding-bottom: 0px;
         padding-top: 0px;
-        margin: 0px;
-        max-width: calc(100% - $left-gutter);
     }
 
     &.mx_EventTile_isEditing .mx_MessageTimestamp {
@@ -194,11 +243,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         padding-left: 2px;
         padding-right: 2px;
         cursor: pointer;
-    }
 
-    .mx_EventTile_searchHighlight a {
-        background-color: $accent;
-        color: $accent-fg-color;
+        a {
+            background-color: $accent;
+            color: $accent-fg-color;
+        }
     }
 
     &.mx_EventTile_contextual {
@@ -216,11 +265,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
            marker being in between. Content overflows. */
         height: 1px;
 
-        margin-right: 10px;
-    }
-
-    .mx_EventTile_msgOption a {
-        text-decoration: none;
+        a {
+            text-decoration: none;
+        }
     }
 
     /* De-zalgoing */
@@ -252,36 +299,19 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_MImageBody {
-        margin-right: 34px;
-
         .mx_MImageBody_thumbnail_container {
             justify-content: flex-start;
             min-height: $font-44px;
             min-width: $font-44px;
         }
     }
-
-    .mx_EventTile_e2eIcon {
-        position: absolute;
-        top: 6px;
-        left: 44px;
-        bottom: 0;
-        right: 0;
-    }
-
-    .mx_ReactionsRow {
-        margin: 0;
-        padding: 4px 64px;
-    }
 }
 
-.mx_GenericEventListSummary:not([data-layout=bubble]) {
-    .mx_EventTile_line {
-        padding-left: $left-gutter;
+.mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
+    padding-left: $left-gutter;
 
-        .mx_RedactedBody {
-            line-height: 1; // remove spacing between lines
-        }
+    .mx_RedactedBody {
+        line-height: 1; // remove spacing between lines
     }
 }
 
@@ -506,8 +536,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 }
 
-/* Various markdown overrides */
-
 .mx_EventTile_body {
     a:hover {
         text-decoration: underline;
@@ -515,6 +543,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     pre {
         border: 1px solid transparent;
+
+        .mx_EventTile:hover &,
+        .mx_EventTile.focus-visible:focus-within & {
+            border: 1px solid $tertiary-content;
+        }
     }
 
     // selector wrongly applies to pill avatars but those have explicit width/height passed at a higher specificity
@@ -522,15 +555,49 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         object-fit: contain;
         object-position: left top;
     }
-}
 
-.mx_EventTile_clamp {
-    .mx_EventTile_body {
+    .mx_EventTile_clamp & {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
+    }
+
+    .mx_EventTile_pre_container {
+        // For correct positioning of _copyButton (See TextualBody)
+        position: relative;
+
+        &:focus-within,
+        &:hover {
+            .mx_EventTile_button {
+                visibility: visible;
+            }
+        }
+
+        .mx_EventTile_collapsedCodeBlock {
+            max-height: 30vh;
+        }
+
+        // Inserted adjacent to <pre> blocks, (See TextualBody)
+        .mx_EventTile_button {
+            position: absolute;
+            top: $spacing-8;
+            right: $spacing-8;
+            width: 19px;
+            height: 19px;
+            visibility: hidden;
+            background-color: $message-action-bar-fg-color;
+
+            &.mx_EventTile_buttonBottom {
+                top: 33px;
+            }
+
+            &.mx_EventTile_collapseButton,
+            &.mx_EventTile_expandButton {
+                mask-size: 75%;
+            }
+        }
     }
 }
 
@@ -544,11 +611,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         display: block;
         padding-left: 1em;
     }
-}
-
-.mx_EventTile:hover .mx_EventTile_body pre,
-.mx_EventTile.focus-visible:focus-within .mx_EventTile_body pre {
-    border: 1px solid $tertiary-content;
 }
 
 .mx_EventTile_button {
@@ -573,44 +635,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 .mx_EventTile_expandButton {
     mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
 }
-
-.mx_EventTile_body .mx_EventTile_pre_container {
-    // For correct positioning of _copyButton (See TextualBody)
-    position: relative;
-
-    &:focus-within,
-    &:hover {
-        .mx_EventTile_button {
-            visibility: visible;
-        }
-    }
-
-    .mx_EventTile_collapsedCodeBlock {
-        max-height: 30vh;
-    }
-
-    // Inserted adjacent to <pre> blocks, (See TextualBody)
-    .mx_EventTile_button {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 19px;
-        height: 19px;
-        visibility: hidden;
-        background-color: $message-action-bar-fg-color;
-
-        &.mx_EventTile_buttonBottom {
-            top: 33px;
-        }
-
-        &.mx_EventTile_collapseButton,
-        &.mx_EventTile_expandButton {
-            mask-size: 75%;
-        }
-    }
-}
-
-/* end of overrides */
 
 .mx_EventTile_keyRequestInfo {
     font-size: $font-12px;
@@ -653,10 +677,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile_line {
         padding-left: 0;
         margin-right: 0;
-    }
 
-    .mx_EventTile_line span {
-        padding: 4px 8px;
+        span {
+            padding: $spacing-4 $spacing-8;
+        }
     }
 
     a {
@@ -789,7 +813,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_DisambiguatedProfile {
-        margin-right: $spacing-12;
+        margin-inline: 0 $spacing-12;
         display: inline-flex;
         flex: 1;
 
@@ -813,6 +837,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile_line {
         width: 100%;
         box-sizing: border-box;
+        padding-bottom: 0;
 
         .mx_ThreadPanel_replies {
             margin-top: $spacing-8;
@@ -835,6 +860,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_MessageTimestamp {
         max-width: 80px;
         width: auto;
+        position: initial;
     }
 }
 
@@ -963,7 +989,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 align-items: flex-end;
 
                 .mx_EventTile_line.mx_EventTile_mediaLine {
-                    margin: 0 var(--EventBubbleTile_line-margin-inline-end) 0 0; // align with normal messages
+                    margin: 0 var(--EventTile_bubble_line-margin-inline-end) 0 0; // align with normal messages
                 }
             }
         }
@@ -1041,6 +1067,90 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         &:not([data-layout=bubble]) > .mx_EventTile_line {
             padding-inline-start: var(--ThreadView_group_spacing-start); // align summary text with message text
             padding-inline-end: var(--ThreadView_group_spacing-end); // align summary text with message text
+        }
+    }
+}
+
+// Cascading - compact modern layout on the main timeline and the right panel
+.mx_MatrixChat_useCompactLayout {
+    .mx_EventTile {
+        // Override :not([data-layout="bubble"])
+        &[data-layout=group] {
+            padding-top: $spacing-4;
+
+            &.mx_EventTile_info {
+                padding-top: 0; // same as the padding for non-compact .mx_EventTile.mx_EventTile_info
+                font-size: $font-13px;
+
+                .mx_EventTile_avatar {
+                    top: $spacing-4;
+                }
+
+                .mx_EventTile_line,
+                .mx_EventTile_reply {
+                    line-height: $font-20px;
+                }
+            }
+
+            &.mx_EventTile_emote {
+                padding-top: $spacing-8; // add a bit more space for emotes so that avatars don't collide
+
+                &.mx_EventTile_continuation {
+                    padding-top: 0;
+
+                    .mx_EventTile_line,
+                    .mx_EventTile_reply {
+                        padding-top: 0;
+                        padding-bottom: 0;
+                    }
+                }
+
+                .mx_EventTile_avatar {
+                    top: 2px;
+                }
+
+                .mx_EventTile_line,
+                .mx_EventTile_reply {
+                    padding-top: 0;
+                    padding-bottom: 1px;
+                }
+            }
+
+            .mx_EventTile_avatar {
+                top: 2px;
+            }
+
+            .mx_EventTile_line,
+            .mx_EventTile_reply {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+
+            .mx_EventTile_e2eIcon {
+                top: 3px;
+            }
+
+            .mx_DisambiguatedProfile {
+                font-size: $font-13px;
+            }
+
+            .mx_ReadReceiptGroup {
+                // This aligns the avatar with the last line of the
+                // message. We want to move it one line up - 2rem
+                top: -2rem;
+            }
+
+            .mx_EventTile_content .markdown-body {
+                p,
+                ul,
+                ol,
+                dl,
+                blockquote,
+                pre,
+                table {
+                    margin-bottom: $spacing-4; // 1/4 of the non-compact margin-bottom
+                }
+            }
         }
     }
 }

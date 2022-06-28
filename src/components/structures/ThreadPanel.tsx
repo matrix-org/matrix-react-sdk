@@ -40,6 +40,7 @@ import { Action } from '../../dispatcher/actions';
 import { UserTab } from '../views/dialogs/UserTab';
 import dis from '../../dispatcher/dispatcher';
 import Spinner from "../views/elements/Spinner";
+import Heading from '../views/typography/Heading';
 
 interface IProps {
     roomId: string;
@@ -113,12 +114,12 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
         right={33}
         onFinished={closeMenu}
         chevronFace={ChevronFace.Top}
-        wrapperClassName="mx_ThreadPanel__header"
+        wrapperClassName="mx_BaseCard_header_title"
     >
         { contextMenuOptions }
     </ContextMenu> : null;
-    return <div className="mx_ThreadPanel__header">
-        <span>{ _t("Threads") }</span>
+    return <div className="mx_BaseCard_header_title">
+        <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Threads") }</Heading>
         { !empty && <>
             <ContextMenuButton
                 className="mx_ThreadPanel_dropdown"
@@ -297,7 +298,7 @@ const ThreadPanel: React.FC<IProps> = ({
                         hideThreadedMessages={false}
                         hidden={false}
                         showReactions={false}
-                        className="mx_RoomView_messagePanel mx_GroupLayout"
+                        className="mx_RoomView_messagePanel"
                         membersLoaded={true}
                         permalinkCreator={permalinkCreator}
                         disableGrouping={true}

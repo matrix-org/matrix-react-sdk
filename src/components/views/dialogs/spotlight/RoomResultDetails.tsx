@@ -14,19 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_CancelButton {
-    width: var(--size);
-    height: var(--size);
+import React from "react";
+import { Room } from "matrix-js-sdk/src/matrix";
 
-    box-sizing: border-box;
-    padding: calc(var(--size) / 4);
-    border-radius: 50%;
+import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
 
-    line-height: 0;
-    background: $quinary-content;
-
-    svg {
-        width: calc(var(--size) / 2);
-        color: $secondary-content;
+export const RoomResultDetails = ({ room }: { room: Room }) => {
+    const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
+    if (contextDetails) {
+        return <div className="mx_SpotlightDialog_result_details">
+            { contextDetails }
+        </div>;
     }
-}
+
+    return null;
+};
