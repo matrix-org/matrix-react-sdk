@@ -35,13 +35,13 @@ import { isBeaconWaitingToStart, useBeacon } from '../../../utils/beacon';
 import { isSelfLocation } from '../../../utils/location';
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
 import BeaconStatus from '../beacon/BeaconStatus';
+import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
 import Map from '../location/Map';
 import MapFallback from '../location/MapFallback';
 import SmartMarker from '../location/SmartMarker';
-import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
+import { GetRelationsForEvent } from '../rooms/EventTile';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
-import { GetRelationsForEvent } from '../rooms/EventTile';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
