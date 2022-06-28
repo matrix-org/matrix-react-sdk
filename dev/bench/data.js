@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656402041979,
+  "lastUpdate": 1656409789096,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103928,6 +103928,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5245,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e1d6356927bc93cbbbb3071426b8fc4e756bde97",
+          "message": "Remove tabindex from filter remove button (#8919)\n\nFilters can already be removed via backspace\r\nRemoving the tabindex ensures the search input is focused by default instead",
+          "timestamp": "2022-06-28T11:44:36+02:00",
+          "tree_id": "5c3745f62381bc6617c5c1470630199111119784",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e1d6356927bc93cbbbb3071426b8fc4e756bde97"
+        },
+        "date": 1656409776429,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4864.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 638.5,
             "unit": "ms",
             "extra": "type: measure"
           }
