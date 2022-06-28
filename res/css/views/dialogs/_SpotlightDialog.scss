@@ -427,7 +427,8 @@ limitations under the License.
             font-size: $font-12px;
             line-height: $font-15px;
             color: $tertiary-content;
-            border-radius: 6px;
+            border-top-right-radius: 6px;
+            border-top-left-radius: 6px;
             background-color: $quinary-content;
             margin: 0 $spacing-4 0 auto;
             display: none;
