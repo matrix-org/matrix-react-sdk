@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656410856714,
+  "lastUpdate": 1656421920202,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104000,6 +104000,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 703.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "257104248032bdd8ab589645ae7bd7853009f13c",
+          "message": "Move style rules of GenericEventListSummary from _EventBubbleTile.scss to _GenericEventListSummary.scss (#8713)\n\n* Move declarations of mx_GenericEventListSummary to _GenericEventListSummary.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move declarations of mx_GenericEventListSummary[data-expanded=false] to _GenericEventListSummary.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move declarations of mx_GenericEventListSummary[data-expanded=true] to _GenericEventListSummary.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* de-nestify style rules\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a padding declaration for _EventBubbleTile.scss to set correct cascading order\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* GenericEventListSummary_toggle for ':not([data-layout=bubble])'\r\n\r\nStop setting margin values as default ones\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* GenericEventListSummary_avatars for ':not([data-layout=bubble])'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Extract flexbox declarations into _GenericEventListSummary.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move declarations of '&[data-layout=bubble]' up\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Extract background color into _GenericEventListSummary.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Merge style rules of background of EventTile_bad\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move .mx_GenericEventListSummary_avatars block from _IRCLayout.scsss to _GenericEventListSummary.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* de-nestify style rules\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Stop using :not() pseudo class\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-28T15:05:19+02:00",
+          "tree_id": "4b932450819ba370e88c054e88946b74f5a905e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/257104248032bdd8ab589645ae7bd7853009f13c"
+        },
+        "date": 1656421900502,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4828,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2440.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5697.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
