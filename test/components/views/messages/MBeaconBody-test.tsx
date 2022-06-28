@@ -21,7 +21,13 @@ import maplibregl from 'maplibre-gl';
 import {
     BeaconEvent,
     getBeaconInfoIdentifier,
+    RelationType,
+    MatrixEventEvent,
+    MatrixEvent,
+    EventType,
 } from 'matrix-js-sdk/src/matrix';
+import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
 
 import MBeaconBody from '../../../../src/components/views/messages/MBeaconBody';
 import {
@@ -53,6 +59,7 @@ describe('<MBeaconBody />', () => {
         }),
         getUserId: jest.fn().mockReturnValue(aliceId),
         getRoom: jest.fn(),
+        redactEvent: jest.fn(),
     });
 
     const defaultEvent = makeBeaconInfoEvent(aliceId,
@@ -331,6 +338,113 @@ describe('<MBeaconBody />', () => {
 
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 52, lon: 42 });
             expect(mockMarker.setLngLat).toHaveBeenCalledWith({ lat: 52, lon: 42 });
+        });
+    });
+
+    describe('redaction', () => {
+        const aliceBeaconInfo = makeBeaconInfoEvent(
+            aliceId,
+            roomId,
+            { isLive: true },
+            '$alice-room1-1',
+        );
+
+        const location1 = makeBeaconEvent(
+            aliceId, { beaconInfoId: aliceBeaconInfo.getId(), geoUri: 'geo:51,41', timestamp: now + 1 },
+            roomId,
+        );
+        location1.event.event_id = '1';
+        const location2 = makeBeaconEvent(
+            aliceId, { beaconInfoId: aliceBeaconInfo.getId(), geoUri: 'geo:52,42', timestamp: now + 10000 },
+            roomId,
+        );
+        location2.event.event_id = '2';
+
+        const redactionEvent = new MatrixEvent({ type: EventType.RoomRedaction, content: { reason: 'test reason' } });
+
+        const setupRoomWithBeacon = (locationEvents: MatrixEvent[] = []) => {
+            const room = makeRoomWithStateEvents([aliceBeaconInfo], { roomId, mockClient });
+            const beaconInstance = room.currentState.beacons.get(getBeaconInfoIdentifier(aliceBeaconInfo));
+            beaconInstance.addLocations(locationEvents);
+        };
+        const mockGetRelationsForEvent = (locationEvents: MatrixEvent[] = []) => {
+            const relations = new Relations(RelationType.Reference, M_BEACON.name, mockClient);
+            jest.spyOn(relations, 'getRelations').mockReturnValue(locationEvents);
+
+            const getRelationsForEvent = jest.fn().mockReturnValue(relations);
+
+            return getRelationsForEvent;
+        };
+
+        it('does nothing when getRelationsForEvent is falsy', () => {
+            setupRoomWithBeacon([location1, location2]);
+
+            getComponent({ mxEvent: aliceBeaconInfo });
+
+            act(() => {
+                aliceBeaconInfo.emit(MatrixEventEvent.BeforeRedaction, aliceBeaconInfo, redactionEvent);
+            });
+
+            // no error, no redactions
+            expect(mockClient.redactEvent).not.toHaveBeenCalled();
+        });
+
+        it('cleans up redaction listener on unmount', () => {
+            setupRoomWithBeacon([location1, location2]);
+            const removeListenerSpy = jest.spyOn(aliceBeaconInfo, 'removeListener');
+
+            const component = getComponent({ mxEvent: aliceBeaconInfo });
+
+            act(() => {
+                component.unmount();
+            });
+
+            expect(removeListenerSpy).toHaveBeenCalled();
+        });
+
+        it('does nothing when beacon has no related locations', async () => {
+            // no locations
+            setupRoomWithBeacon();
+            const getRelationsForEvent = await mockGetRelationsForEvent();
+
+            getComponent({ mxEvent: aliceBeaconInfo, getRelationsForEvent });
+
+            act(() => {
+                aliceBeaconInfo.emit(MatrixEventEvent.BeforeRedaction, aliceBeaconInfo, redactionEvent);
+            });
+
+            expect(getRelationsForEvent).toHaveBeenCalledWith(
+                aliceBeaconInfo.getId(), RelationType.Reference, M_BEACON.name,
+            );
+            expect(mockClient.redactEvent).not.toHaveBeenCalled();
+        });
+
+        it('redacts related locations on beacon redaction', async () => {
+            setupRoomWithBeacon([location1, location2]);
+            const getRelationsForEvent = await mockGetRelationsForEvent([location1, location2]);
+
+            getComponent({ mxEvent: aliceBeaconInfo, getRelationsForEvent });
+
+            act(() => {
+                aliceBeaconInfo.emit(MatrixEventEvent.BeforeRedaction, aliceBeaconInfo, redactionEvent);
+            });
+
+            expect(getRelationsForEvent).toHaveBeenCalledWith(
+                aliceBeaconInfo.getId(), RelationType.Reference, M_BEACON.name,
+            );
+            expect(mockClient.redactEvent).toHaveBeenCalledTimes(2);
+            expect(mockClient.redactEvent).toHaveBeenCalledWith(
+                roomId,
+                location1.getId(),
+                undefined,
+                { reason: 'test reason' },
+            );
+            expect(mockClient.redactEvent).toHaveBeenCalledWith(
+                roomId,
+                location2.getId(),
+                undefined,
+                { reason: 'test reason' },
+            );
         });
     });
 });

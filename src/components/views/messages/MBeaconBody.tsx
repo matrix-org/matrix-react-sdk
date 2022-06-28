@@ -25,6 +25,7 @@ import {
 } from 'matrix-js-sdk/src/matrix';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
+import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
@@ -41,7 +42,6 @@ import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
 import { GetRelationsForEvent } from '../rooms/EventTile';
-import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -96,6 +96,7 @@ const useUniqueId = (eventId: string): string => {
     return id;
 };
 
+// remove related beacon locations on beacon redaction
 const useHandleBeaconRedaction = (
     event: MatrixEvent,
     getRelationsForEvent: GetRelationsForEvent,
@@ -105,8 +106,6 @@ const useHandleBeaconRedaction = (
         const relations = getRelationsForEvent ?
             getRelationsForEvent(event.getId(), RelationType.Reference, M_BEACON.name) :
             undefined;
-
-        console.log('hhh', { relations, event });
 
         relations?.getRelations()?.forEach(locationEvent => {
             cli.redactEvent(
