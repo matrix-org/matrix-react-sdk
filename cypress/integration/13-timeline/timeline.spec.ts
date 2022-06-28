@@ -20,9 +20,15 @@ import { MessageEvent } from "matrix-events-sdk";
 
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { EventType } from "matrix-js-sdk/src/@types/event";
+import type { MatrixClient } from "matrix-js-sdk/src/client";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import Chainable = Cypress.Chainable;
+
+// The avatar size used in the timeline
+const AVATAR_SIZE = 30;
+// The resize method used in the timeline
+const AVATAR_RESIZE_METHOD = "crop";
 
 const getEventTilesWithBodies = (): Chainable<JQuery> => {
     return cy.get(".mx_EventTile").filter((_i, e) => e.getElementsByClassName("mx_EventTile_body").length > 0);
@@ -30,6 +36,15 @@ const getEventTilesWithBodies = (): Chainable<JQuery> => {
 
 const expectDisplayName = (e: JQuery<HTMLElement>, displayName: string): void => {
     expect(e.find(".mx_DisambiguatedProfile_displayName").text()).to.equal(displayName);
+};
+
+const expectAvatar = (e: JQuery<HTMLElement>, avatarUrl: string): void => {
+    cy.getClient().then((cli: MatrixClient) => {
+        expect(e.find(".mx_BaseAvatar_image").attr("src")).to.equal(
+            // eslint-disable-next-line no-restricted-properties
+            cli.mxcUrlToHttp(avatarUrl, AVATAR_SIZE, AVATAR_SIZE, AVATAR_RESIZE_METHOD),
+        );
+    });
 };
 
 const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
@@ -44,8 +59,14 @@ const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
 describe("Timeline", () => {
     let synapse: SynapseInstance;
 
+    const oldAvatar = "avatar_image1";
+    const newAvatar = "avatar_image2";
+    let oldAvatarUrl: string;
+    let newAvatarUrl: string;
+
     const oldName = "Alan";
     const newName = "Alan (away)";
+
     const roomName = "Test room";
     let roomId: string;
 
@@ -59,7 +80,16 @@ describe("Timeline", () => {
                             roomId = _room1Id;
                         });
                     }),
-                );
+                ).then(() => {
+                    cy.uploadContent(oldAvatar).then((url) => {
+                        oldAvatarUrl = url;
+                        cy.setAvatarUrl(url);
+                    });
+                }).then(() => {
+                    cy.uploadContent(newAvatar).then((url) => {
+                        newAvatarUrl = url;
+                    });
+                });
             });
         });
 
@@ -71,6 +101,7 @@ describe("Timeline", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, false);
             sendEvent(roomId);
             cy.setDisplayName("Alan (away)");
+            cy.setAvatarUrl(newAvatarUrl);
             cy.wait(500);
             sendEvent(roomId);
             cy.viewRoomByName(roomName);
@@ -79,8 +110,13 @@ describe("Timeline", () => {
 
             events.should("have.length", 2);
             events.each((e, i) => {
-                if (i === 0) expectDisplayName(e, oldName);
-                else if (i === 1) expectDisplayName(e, newName);
+                if (i === 0) {
+                    expectDisplayName(e, oldName);
+                    expectAvatar(e, oldAvatarUrl);
+                } else if (i === 1) {
+                    expectDisplayName(e, newName);
+                    expectAvatar(e, newAvatarUrl);
+                }
             });
         });
 
@@ -88,6 +124,7 @@ describe("Timeline", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, true);
             sendEvent(roomId);
             cy.setDisplayName(newName);
+            cy.setAvatarUrl(newAvatarUrl);
             cy.wait(500);
             sendEvent(roomId);
             cy.viewRoomByName(roomName);
@@ -97,6 +134,7 @@ describe("Timeline", () => {
             events.should("have.length", 2);
             events.each((e) => {
                 expectDisplayName(e, newName);
+                expectAvatar(e, newAvatarUrl);
             });
         });
     });
