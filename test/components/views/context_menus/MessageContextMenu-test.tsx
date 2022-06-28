@@ -91,6 +91,7 @@ describe('MessageContextMenu', () => {
             const event = new MatrixEvent(eventContent.serialize());
 
             const room = makeDefaultRoom();
+            // mock permission to disallow adding pinned messages to room
             jest.spyOn(room.currentState, 'mayClientSendStateEvent').mockReturnValue(false);
 
             const menu = createMenu(event, {}, {}, undefined, room);
@@ -102,6 +103,7 @@ describe('MessageContextMenu', () => {
             const deadBeaconEvent = makeBeaconInfoEvent('@alice:server.org', roomId, { isLive: false });
 
             const room = makeDefaultRoom();
+            // mock permission to allow adding pinned messages to room
             jest.spyOn(room.currentState, 'mayClientSendStateEvent').mockReturnValue(true);
 
             const menu = createMenu(deadBeaconEvent, {}, {}, undefined, room);
@@ -114,6 +116,7 @@ describe('MessageContextMenu', () => {
             const pinnableEvent = new MatrixEvent({ ...eventContent.serialize(), room_id: roomId });
 
             const room = makeDefaultRoom();
+            // mock permission to allow adding pinned messages to room
             jest.spyOn(room.currentState, 'mayClientSendStateEvent').mockReturnValue(true);
             // disable pinning feature
             jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
@@ -128,6 +131,7 @@ describe('MessageContextMenu', () => {
             const pinnableEvent = new MatrixEvent({ ...eventContent.serialize(), room_id: roomId });
 
             const room = makeDefaultRoom();
+            // mock permission to allow adding pinned messages to room
             jest.spyOn(room.currentState, 'mayClientSendStateEvent').mockReturnValue(true);
 
             const menu = createMenu(pinnableEvent, {}, {}, undefined, room);
@@ -138,12 +142,16 @@ describe('MessageContextMenu', () => {
         it('pins event on pin option click', () => {
             const onFinished = jest.fn();
             const eventContent = MessageEvent.from("hello");
-            const pinsAccountData = new MatrixEvent({ content: { event_ids: ['!1', '!2'] } });
             const pinnableEvent = new MatrixEvent({ ...eventContent.serialize(), room_id: roomId });
             pinnableEvent.event.event_id = '!3';
             const client = MatrixClientPeg.get();
             const room = makeDefaultRoom();
+
+            // mock permission to allow adding pinned messages to room
             jest.spyOn(room.currentState, 'mayClientSendStateEvent').mockReturnValue(true);
+
+            // mock read pins account data
+            const pinsAccountData = new MatrixEvent({ content: { event_ids: ['!1', '!2'] } });
             jest.spyOn(room, 'getAccountData').mockReturnValue(pinsAccountData);
 
             const menu = createMenu(pinnableEvent, { onFinished }, {}, undefined, room);
@@ -173,12 +181,12 @@ describe('MessageContextMenu', () => {
 
         it('unpins event on pin option click when event is pinned', () => {
             const eventContent = MessageEvent.from("hello");
-            const pinsAccountData = new MatrixEvent({ content: { event_ids: ['!1', '!2'] } });
             const pinnableEvent = new MatrixEvent({ ...eventContent.serialize(), room_id: roomId });
             pinnableEvent.event.event_id = '!3';
             const client = MatrixClientPeg.get();
             const room = makeDefaultRoom();
 
+            // make the event already pinned in the room
             const pinEvent = new MatrixEvent({
                 type: EventType.RoomPinnedEvents,
                 room_id: roomId,
@@ -187,7 +195,11 @@ describe('MessageContextMenu', () => {
             });
             room.currentState.setStateEvents([pinEvent]);
 
+            // mock permission to allow adding pinned messages to room
             jest.spyOn(room.currentState, 'mayClientSendStateEvent').mockReturnValue(true);
+
+            // mock read pins account data
+            const pinsAccountData = new MatrixEvent({ content: { event_ids: ['!1', '!2'] } });
             jest.spyOn(room, 'getAccountData').mockReturnValue(pinsAccountData);
 
             const menu = createMenu(pinnableEvent, {}, {}, undefined, room);
