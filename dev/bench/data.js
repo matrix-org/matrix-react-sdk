@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656409789096,
+  "lastUpdate": 1656410856714,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103964,6 +103964,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 638.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8b841951db6e747fe42b09616055e3c0a6aafe1b",
+          "message": "Move New Search Experience out of beta (#8859)",
+          "timestamp": "2022-06-28T12:02:08+02:00",
+          "tree_id": "1b512acece8813a5ab794910cdca13e9af7f2efd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8b841951db6e747fe42b09616055e3c0a6aafe1b"
+        },
+        "date": 1656410844401,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5285.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 703.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
