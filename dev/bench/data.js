@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656400304563,
+  "lastUpdate": 1656402041979,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -103886,6 +103886,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 623.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9cf03a8d32243b6a349546befe14dcd022e4bc57",
+          "message": "Disable pointer events for replies to locations (#8918)\n\nPSD-283",
+          "timestamp": "2022-06-28T09:34:48+02:00",
+          "tree_id": "7e79897832a8b21c74bcb1f4d3c4e1c78b5d40af",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9cf03a8d32243b6a349546befe14dcd022e4bc57"
+        },
+        "date": 1656402027948,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5192.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2387.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5245,
             "unit": "ms",
             "extra": "type: measure"
           }
