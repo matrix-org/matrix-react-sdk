@@ -89,6 +89,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     &[data-layout=group] {
+        &.mx_EventTile_info {
+            .mx_EventTile_line {
+                padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon on modern layout
+            }
+        }
+
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
             margin-left: $left-gutter;
@@ -161,8 +167,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_EventTile_line {
-            padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon
-
             .mx_MessageTimestamp {
                 top: 0;
             }
