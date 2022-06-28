@@ -98,6 +98,17 @@ describe('MessageContextMenu', () => {
             expect(menu.find('div[aria-label="Pin"]')).toHaveLength(0);
         });
 
+        it('does not show pin option for beacon_info event', () => {
+            const deadBeaconEvent = makeBeaconInfoEvent('@alice:server.org', roomId, { isLive: false });
+
+            const room = makeDefaultRoom();
+            jest.spyOn(room.currentState, 'mayClientSendStateEvent').mockReturnValue(true);
+
+            const menu = createMenu(deadBeaconEvent, {}, {}, undefined, room);
+
+            expect(menu.find('div[aria-label="Pin"]')).toHaveLength(0);
+        });
+
         it('does not show pin option when pinning feature is disabled', () => {
             const eventContent = MessageEvent.from("hello");
             const pinnableEvent = new MatrixEvent({ ...eventContent.serialize(), room_id: roomId });
