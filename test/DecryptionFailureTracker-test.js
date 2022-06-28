@@ -30,8 +30,8 @@ function createFailedDecryptionEvent() {
     const event = new MatrixEvent({
         event_id: "event-id-" + Math.random().toString(16).slice(2),
         content: {
-            algorithm : "m.megolm.v1.aes-sha2"
-        }
+            algorithm: "m.megolm.v1.aes-sha2",
+        },
     });
     event.setClearData(event.badEncryptedMessage(":("));
     return event;

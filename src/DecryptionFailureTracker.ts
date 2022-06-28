@@ -11,7 +11,7 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.
+limitations under the License.yarn lint
 */
 
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
@@ -131,8 +131,8 @@ export class DecryptionFailureTracker {
 
     public eventDecrypted(e: MatrixEvent, err: DecryptionError): void {
         // for now we only track megolm decrytion failures
-        if (e.event.content?.algorithm != "m.megolm.v1.aes-sha2") {
-            return
+        if (e.getWireContent().algorithm != "m.megolm.v1.aes-sha2") {
+            return;
         }
         if (err) {
             this.addDecryptionFailure(new DecryptionFailure(e.getId(), err.code));

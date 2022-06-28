@@ -32,6 +32,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
 import 'focus-visible';
@@ -130,7 +131,6 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
-import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
 
 // legacy export
 export { default as Views } from "../../Views";
