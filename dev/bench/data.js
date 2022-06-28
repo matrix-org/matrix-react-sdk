@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656422621481,
+  "lastUpdate": 1656423328485,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104084,6 +104084,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5758.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60d3d4118406634521018c314415efdb9de7f9c6",
+          "message": "Improve timing safety of useLatestResult test (#8915)\n\nand fix contains to be equals instead, as it's *possible* we can accidentally punch in 20 or something and still have the test pass.",
+          "timestamp": "2022-06-28T15:29:01+02:00",
+          "tree_id": "8bc6f2d359fcf49e32fdbe74091657ad6aca3fb8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/60d3d4118406634521018c314415efdb9de7f9c6"
+        },
+        "date": 1656423314792,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6346.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2474.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5530.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
