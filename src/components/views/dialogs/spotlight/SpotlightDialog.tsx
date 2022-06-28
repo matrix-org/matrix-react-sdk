@@ -1019,6 +1019,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     })}>
                         <span>{ filterToLabel(filter) }</span>
                         <AccessibleButton
+                            tabIndex={-1}
                             alt={_t("Remove search filter for %(filter)s", {
                                 filter: filterToLabel(filter),
                             })}
