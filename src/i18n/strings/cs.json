@@ -3493,5 +3493,9 @@
     "Create new Room": "Vytvořit novou místnost",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Pokud nemůžete najít místnost, kterou hledáte, požádejte o pozvání nebo vytvořte novou místnost.",
     "Some results may be hidden": "Některé výsledky mohou být skryté",
-    "Copy invite link": "Kopírovat odkaz na pozvánku"
+    "Copy invite link": "Kopírovat odkaz na pozvánku",
+    "You cannot search for rooms that are neither a room nor a space": "Nelze vyhledávat místnosti, které nejsou ani místností, ani prostorem",
+    "Show spaces": "Zobrazit prostory",
+    "Show rooms": "Zobrazit místnosti",
+    "Explore public spaces in the new search dialog": "Prozkoumejte veřejné prostory v novém dialogu vyhledávání"
 }
