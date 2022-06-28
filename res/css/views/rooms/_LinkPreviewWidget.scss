@@ -27,7 +27,8 @@ limitations under the License.
         margin-bottom: 6px;
     }
 
-    .mx_LinkPreviewWidget_wrap {
+    // Exclude mx_LinkPreviewGroup_hide from wrapping
+    .mx_LinkPreviewWidget_wrapImageCaption {
         display: flex;
         flex-wrap: wrap;
         row-gap: $spacing-8;

@@ -120,7 +120,7 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
 
         return (
             <div className="mx_LinkPreviewWidget">
-                <div className="mx_LinkPreviewWidget_wrap">
+                <div className="mx_LinkPreviewWidget_wrapImageCaption">
                     { img }
                     <div className="mx_LinkPreviewWidget_caption">
                         <div className="mx_LinkPreviewWidget_title">
