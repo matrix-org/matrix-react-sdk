@@ -51,7 +51,6 @@ limitations under the License.
             }
 
             .mx_EventTile_avatar {
-                position: absolute; // for IRC layout
                 inset-inline-start: -3px;
             }
 
@@ -75,7 +74,6 @@ limitations under the License.
             }
 
             .mx_MessageTimestamp {
-                position: absolute;
                 inset-inline: auto 0;
             }
 
@@ -86,6 +84,13 @@ limitations under the License.
             .mx_ThreadSummary {
                 margin-inline-end: 0;
                 max-width: min(calc(100% - 36px), 600px);
+            }
+        }
+
+        &[data-layout=irc] {
+            .mx_EventTile_avatar,
+            .mx_MessageTimestamp {
+                position: absolute;
             }
         }
 
