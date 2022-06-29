@@ -40,7 +40,7 @@ const mockProps: React.ComponentProps<typeof MessageComposerButtons> = {
 };
 
 describe("MessageComposerButtons", () => {
-    it("Renders emoji and upload buttons in wide mode", () => {
+    it("Renders all buttons in wide mode", () => {
         const buttons = wrapAndRender(
             <MessageComposerButtons
                 isMenuOpen={false}
@@ -55,32 +55,10 @@ describe("MessageComposerButtons", () => {
         expect(buttonLabels(buttons)).toEqual([
             "Emoji",
             "Attachment",
-            "More options",
-        ]);
-    });
-
-    it("Renders other buttons in menu in wide mode", () => {
-        const buttons = wrapAndRender(
-            <MessageComposerButtons
-                isMenuOpen={true}
-                showLocationButton={true}
-                showPollsButton={true}
-                showStickersButton={true}
-                {...mockProps}
-            />,
-            false,
-        );
-
-        expect(buttonLabels(buttons)).toEqual([
-            "Emoji",
-            "Attachment",
-            "More options",
-            [
-                "Sticker",
-                "Voice Message",
-                "Poll",
-                "Location",
-            ],
+            "Sticker",
+            "Voice Message",
+            "Poll",
+            "Location",
         ]);
     });
 
