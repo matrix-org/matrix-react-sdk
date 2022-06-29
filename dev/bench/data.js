@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656512112439,
+  "lastUpdate": 1656520981884,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104456,6 +104456,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4584.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "68c94c6400938cca6f5d663574695dcb867713cc",
+          "message": "Update MSC3827 implementation to not change the default behaviour (#8936)",
+          "timestamp": "2022-06-29T16:37:23Z",
+          "tree_id": "24b78affcdb9eb1ce8a357a6401dadd3435d9e2b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/68c94c6400938cca6f5d663574695dcb867713cc"
+        },
+        "date": 1656520969695,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5590.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2186.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5108.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
