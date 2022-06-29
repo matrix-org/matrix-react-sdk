@@ -270,9 +270,16 @@ $left-gutter: 64px;
             padding-top: 0px !important;
         }
 
-        &.mx_EventTile_info .mx_EventTile_line {
-            padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon on modern layout
-            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+        &.mx_EventTile_info {
+            .mx_EventTile_avatar,
+            .mx_EventTile_e2eIcon {
+                margin: 3px 0 2px; // Align with mx_EventTile_line
+            }
+
+            .mx_EventTile_line {
+                padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon on modern layout
+                padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+            }
         }
     }
 
@@ -292,11 +299,6 @@ $left-gutter: 64px;
 
     &.mx_EventTile_info {
         padding-top: 0;
-
-        .mx_EventTile_avatar,
-        .mx_EventTile_e2eIcon {
-            margin: 3px 0 2px; // Align with mx_EventTile_line
-        }
 
         .mx_EventTile_e2eIcon {
             top: 0;
