@@ -156,12 +156,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             margin: $spacing-4 64px;
         }
     }
-
-    &[data-layout=bubble] {
-        .mx_ReplyTile .mx_EventTile_content {
-            line-height: var(--EventTile_bubble_line-line-height);
-        }
-    }
 }
 
 .mx_EventTile:not([data-layout=bubble]) {
