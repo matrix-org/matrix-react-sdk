@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656542557195,
+  "lastUpdate": 1656542718053,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104624,6 +104624,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4556.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2a4992c56aeab5a20ab31f5cd85fed9fc11b0c4d",
+          "message": "Move mx_DisambiguatedProfile out of mx_EventTile:not([data-layout=bubble]) (#8899)\n\n* Move mx_DisambiguatedProfile out of mx_EventTile:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove declarations which have not worked due to 'mx_EventTile:not([data-layout=bubble])'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a redundant declaration - inline-block\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include mx_DisambiguatedProfile\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include mx_DisambiguatedProfile:hover\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move mx_DisambiguatedProfile out of mx_EventTile:not([data-layout=bubble]) on TimelineCard\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove duplicate declarations on ReplyTile inherited from mx_EventTile .mx_DisambiguatedProfile\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant declarations - FilePanel\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-29T22:38:23Z",
+          "tree_id": "133486522b70f2add788615e5a8f407bbc059f29",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2a4992c56aeab5a20ab31f5cd85fed9fc11b0c4d"
+        },
+        "date": 1656542703326,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6173.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2317.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5481.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
