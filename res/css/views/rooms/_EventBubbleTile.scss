@@ -154,10 +154,6 @@ limitations under the License.
         font-size: $font-15px;
     }
 
-    .mx_ReplyTile .mx_EventTile_content {
-        line-height: var(--EventTile_bubble_line-line-height);
-    }
-
     .mx_MessageActionBar {
         top: -28px;
         z-index: 9; // above the avatar
