@@ -55,7 +55,6 @@ limitations under the License.
 .mx_EventTile[data-layout=bubble] {
     --EventTile_bubble-margin-inline-start: 49px;
     --EventTile_bubble-margin-inline-end: 60px;
-    --EventTile_bubble_line-line-height: $font-18px; // fixed line height to prevent emoji from being taller than text
     --EventTile_bubble_line-margin-inline-start: -9px;
     --EventTile_bubble_line-margin-inline-end: -12px;
     --EventTile_bubble_gap-inline: 5px;
@@ -122,7 +121,7 @@ limitations under the License.
 
         width: fit-content;
         max-width: var(--EventBubbleTile_line-max-width); // Align message bubble and displayName
-        line-height: var(--EventTile_bubble_line-line-height);
+        line-height: $font-18px; // fixed line height to prevent emoji from being taller than text
     }
 
     // other users profile on bubble layout
@@ -152,10 +151,6 @@ limitations under the License.
         top: -2px;
         left: 2px;
         font-size: $font-15px;
-    }
-
-    .mx_ReplyTile .mx_EventTile_content {
-        line-height: var(--EventTile_bubble_line-line-height);
     }
 
     .mx_MessageActionBar {
