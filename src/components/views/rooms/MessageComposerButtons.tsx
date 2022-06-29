@@ -74,10 +74,10 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
-            showStickersButton(props),
+            stickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
-            showLocationButton(props, room, roomId, matrixClient),
+            props.showLocationButton && locationButton(props, room, roomId, matrixClient),
         ];
     } else {
         mainButtons = [
@@ -85,10 +85,10 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
-            showStickersButton(props),
+            stickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
-            showLocationButton(props, room, roomId, matrixClient),
+            locationButton(props, room, roomId, matrixClient),
         ];
     }
 
@@ -265,7 +265,7 @@ const UploadButton = () => {
     />;
 };
 
-function showStickersButton(props: IProps): ReactElement {
+function stickersButton(props: IProps): ReactElement {
     return (
         props.showStickersButton
             ? <CollapsibleButton
@@ -357,22 +357,20 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
     }
 }
 
-function showLocationButton(
+function locationButton(
     props: IProps,
     room: Room,
     roomId: string,
     matrixClient: MatrixClient,
 ): ReactElement {
     return (
-        props.showLocationButton
-            ? <LocationButton
-                key="location"
-                roomId={roomId}
-                relation={props.relation}
-                sender={room.getMember(matrixClient.getUserId())}
-                menuPosition={props.menuPosition}
-            />
-            : null
+        <LocationButton
+            key="location"
+            roomId={roomId}
+            relation={props.relation}
+            sender={room.getMember(matrixClient.getUserId())}
+            menuPosition={props.menuPosition}
+        />
     );
 }
 
