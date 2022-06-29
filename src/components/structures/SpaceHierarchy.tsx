@@ -50,7 +50,7 @@ import TextWithTooltip from "../views/elements/TextWithTooltip";
 import { useStateToggle } from "../../hooks/useStateToggle";
 import { getChildOrder } from "../../stores/spaces/SpaceStore";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import { linkifyElement } from "../../HtmlUtils";
+import { linkifyElement, topicToHtml } from "../../HtmlUtils";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { Action } from "../../dispatcher/actions";
 import { IState, RovingTabIndexProvider, useRovingTabIndex } from "../../accessibility/RovingTabIndex";
@@ -65,6 +65,7 @@ import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPay
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { Alignment } from "../views/elements/Tooltip";
+import { getTopic } from "../../hooks/room/useTopic";
 
 interface IProps {
     space: Room;
@@ -186,9 +187,12 @@ const Tile: React.FC<ITileProps> = ({
         description += " · " + _t("%(count)s rooms", { count: numChildRooms });
     }
 
-    const topic = joinedRoom?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || room.topic;
-    if (topic) {
-        description += " · " + topic;
+    let topic;
+    if (joinedRoom) {
+        const topicObj = getTopic(joinedRoom);
+        topic = topicToHtml(topicObj?.text, topicObj?.html);
+    } else {
+        topic = room.topic;
     }
 
     let joinedSection;
@@ -226,6 +230,8 @@ const Tile: React.FC<ITileProps> = ({
                 }}
             >
                 { description }
+                { topic && " · " }
+                { topic && topic }
             </div>
         </div>
         <div className="mx_SpaceHierarchy_actions">
