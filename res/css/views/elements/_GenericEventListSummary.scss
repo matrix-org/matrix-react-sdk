@@ -103,11 +103,11 @@ limitations under the License.
     display: inline-block;
     margin-right: 8px;
     line-height: $font-12px;
-}
 
-.mx_GenericEventListSummary_avatars .mx_BaseAvatar {
+.mx_BaseAvatar {
     margin-right: -4px;
     cursor: pointer;
+}
 }
 
 .mx_GenericEventListSummary_line {
