@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656500642280,
+  "lastUpdate": 1656509867364,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104372,6 +104372,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 695.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2bbd542140da5962c345791879e541c6a816c1ff",
+          "message": "Remove unbin from widget kebab menu (#8924)",
+          "timestamp": "2022-06-29T15:30:44+02:00",
+          "tree_id": "eb797441074e3b357d4e50822bc84ff8faca8de4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2bbd542140da5962c345791879e541c6a816c1ff"
+        },
+        "date": 1656509851320,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5037.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2461.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5630.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
