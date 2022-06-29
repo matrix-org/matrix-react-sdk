@@ -242,16 +242,17 @@ $left-gutter: 64px;
         }
 
         .mx_RoomView_timeline_rr_enabled & {
+            $inline-end-margin: 80px; /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
+
             .mx_ThreadSummary,
             .mx_ThreadSummary_icon,
             .mx_EventTile_line {
-                /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
-                margin-right: 80px;
+                margin-right: $inline-end-margin;
                 min-height: $font-14px;
             }
 
             .mx_ThreadSummary {
-                max-width: min(calc(100% - $left-gutter - 80px), 600px); // leave space on both left & right gutters
+                max-width: min(calc(100% - $left-gutter - $inline-end-margin), 600px); // leave space on both left & right gutters
             }
 
             // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
