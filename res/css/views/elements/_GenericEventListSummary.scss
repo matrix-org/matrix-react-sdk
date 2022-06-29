@@ -17,17 +17,15 @@ limitations under the License.
 .mx_GenericEventListSummary {
     position: relative;
 
+    .mx_GenericEventListSummary_avatars {
+        margin-right: $spacing-8;
+    }
+
     &[data-layout=irc],
     &[data-layout=group] {
         .mx_GenericEventListSummary_toggle {
             float: right;
             margin: 8px 10px 0 0;
-        }
-    }
-
-    &[data-layout=irc] {
-        .mx_GenericEventListSummary_avatars {
-            margin: 0 9px 0 0;
         }
     }
 
@@ -98,7 +96,6 @@ limitations under the License.
 
 .mx_GenericEventListSummary_avatars {
     display: inline-block;
-    margin-right: 8px;
     line-height: $font-12px;
 
     .mx_BaseAvatar {
