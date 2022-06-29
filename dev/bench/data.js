@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656527815763,
+  "lastUpdate": 1656542557195,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104582,6 +104582,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4371.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "731776d189afcc0d3172d147f521226c895b26c0",
+          "message": "Improve link buttons and inline link buttons styling (#8238)\n\n* Set padding: 0 to both \"link\" and \"link_inline\"\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - _SpotlightDialog.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - JoinRuleSettings\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - _ViewSourceEvent.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - _RoomDirectory.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - _InviteDialog.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - ServerOfflineDialog\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - UpdateCheckButton\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - NonUrgentEchoFailureToast\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant settings - CallView\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove unused styles - _RoomSettingsDialogBridges.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Replace \"link\" with \"link_inline\" for inline links\r\n\r\n- src/components/structures/UserMenu.tsx\r\n- src/components/views/dialogs/BetaFeedbackDialog.tsx\r\n- src/components/views/dialogs/FeedbackDialog.tsx\r\n- src/components/views/rooms/NewRoomIntro.tsx\r\n- src/components/views/settings/tabs/room/NotificationSettingsTab.tsx\r\n- src/components/views/settings/tabs/user/PreferencesUserSettingsTab.tsx\r\n- src/components/views/spaces/SpaceCreateMenu.tsx\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Replace \"link_inline\" with \"link\" for links not inline\r\n\r\n- src/async-components/views/dialogs/security/CreateKeyBackupDialog.tsx\r\n- src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx\r\n- src/components/structures/auth/ForgotPassword.tsx\r\n- src/components/structures/auth/Registration.tsx\r\n- src/components/views/auth/InteractiveAuthEntryComponents.tsx\r\n- src/components/views/dialogs/security/AccessSecretStorageDialog.tsx\r\n- src/components/views/dialogs/security/RestoreKeyBackupDialog.tsx\r\n- src/components/views/messages/TileErrorBoundary.tsx\r\n- src/components/views/messages/ViewSourceEvent.tsx\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a redundant declaration - _SetupEncryptionBody.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a redundant declaration - _ReplyChain.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a redundant declaration - _EventTile.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove an obsolete style block - _RoomPreviewCard.scss\r\n\r\nThe block was transferred from _SpaceRoomView.scss with ec24dc661edb6979ba901936067e5bc731dafa59\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a redundant declaration - _SecurityUserSettingsTab.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove element='span' - NewRoomIntro.tsx\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant declarations - _ServerPicker.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Replace 'link' with 'link_inline' - AnalyticsToast.tsx\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-29T22:37:34Z",
+          "tree_id": "4b18e88dc7f6075ca47b54e769f1201c4fbd984c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/731776d189afcc0d3172d147f521226c895b26c0"
+        },
+        "date": 1656542545130,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5274.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2112.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4556.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
