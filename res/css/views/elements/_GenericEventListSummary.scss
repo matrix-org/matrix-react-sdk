@@ -104,10 +104,10 @@ limitations under the License.
     margin-right: 8px;
     line-height: $font-12px;
 
-.mx_BaseAvatar {
-    margin-right: -4px;
-    cursor: pointer;
-}
+    .mx_BaseAvatar {
+        margin-right: -4px;
+        cursor: pointer;
+    }
 }
 
 .mx_GenericEventListSummary_line {
@@ -124,13 +124,13 @@ limitations under the License.
             line-height: $font-20px;
         }
 
-    .mx_GenericEventListSummary_line {
-        line-height: $font-22px;
-    }
+        .mx_GenericEventListSummary_line {
+            line-height: $font-22px;
+        }
 
-    .mx_GenericEventListSummary_toggle {
-        margin-top: 3px;
-    }
+        .mx_GenericEventListSummary_toggle {
+            margin-top: 3px;
+        }
     }
 
     .mx_TextualEvent.mx_GenericEventListSummary_summary {
