@@ -125,7 +125,6 @@ describe("Spotlight", () => {
     let room2Id: string;
 
     beforeEach(() => {
-        cy.enableLabsFeature("feature_spotlight");
         cy.startSynapse("default").then(data => {
             synapse = data;
             cy.initTestUser(synapse, "Jim").then(() =>
@@ -282,21 +281,41 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type("b");
-            cy.spotlightResults().should("have.length", 2);
-            cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "true");
-            cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "false");
-            cy.spotlightSearch().type("{downArrow}");
-            cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "false");
-            cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "true");
-            cy.spotlightSearch().type("{downArrow}");
-            cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "false");
-            cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "false");
-            cy.spotlightSearch().type("{upArrow}");
-            cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "false");
-            cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "true");
-            cy.spotlightSearch().type("{upArrow}");
-            cy.spotlightResults().eq(0).should("have.attr", "aria-selected", "true");
-            cy.spotlightResults().eq(1).should("have.attr", "aria-selected", "false");
+            // our debouncing logic only starts the search after a short timeout,
+            // so we wait a few milliseconds.
+            cy.wait(300);
+            cy.get(".mx_Spinner").should("not.exist").then(() => {
+                cy.spotlightResults().should("have.length", 2).then(() => {
+                    cy.spotlightResults().eq(0)
+                        .should("have.attr", "aria-selected", "true");
+                    cy.spotlightResults().eq(1)
+                        .should("have.attr", "aria-selected", "false");
+                });
+                cy.spotlightSearch().type("{downArrow}").then(() => {
+                    cy.spotlightResults().eq(0)
+                        .should("have.attr", "aria-selected", "false");
+                    cy.spotlightResults().eq(1)
+                        .should("have.attr", "aria-selected", "true");
+                });
+                cy.spotlightSearch().type("{downArrow}").then(() => {
+                    cy.spotlightResults().eq(0)
+                        .should("have.attr", "aria-selected", "false");
+                    cy.spotlightResults().eq(1)
+                        .should("have.attr", "aria-selected", "false");
+                });
+                cy.spotlightSearch().type("{upArrow}").then(() => {
+                    cy.spotlightResults().eq(0)
+                        .should("have.attr", "aria-selected", "false");
+                    cy.spotlightResults().eq(1)
+                        .should("have.attr", "aria-selected", "true");
+                });
+                cy.spotlightSearch().type("{upArrow}").then(() => {
+                    cy.spotlightResults().eq(0)
+                        .should("have.attr", "aria-selected", "true");
+                    cy.spotlightResults().eq(1)
+                        .should("have.attr", "aria-selected", "false");
+                });
+            });
         });
     });
 });
