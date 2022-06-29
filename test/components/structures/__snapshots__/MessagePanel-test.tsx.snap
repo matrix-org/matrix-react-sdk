@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessagePanel should hide read-marker at the end of creation event summary 1`] = `
+Array [
+  "",
+  "mx_EventTile_bubbleContainer mx_EventTile mx_EventTile_continuation mx_EventTile_lastInSection",
+  "mx_EventTile_bubbleContainer mx_EventTile mx_EventTile_lastInSection",
+  "mx_NewRoomIntro",
+  "mx_GenericEventListSummary",
+  "mx_GenericEventListSummary",
+]
+`;
