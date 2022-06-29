@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656488295958,
+  "lastUpdate": 1656494008831,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104294,6 +104294,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4903,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4486509d881d8bc22654a459edfa9d7c89ebf017",
+          "message": "Live location share - redact related locations on beacon redaction (PSF-1151) (#8926)\n\n* redact beacon locations on redaction\r\n\r\n* redact beacon locations on beacon info redaction\r\n\r\n* fussy import ordering\r\n\r\n* use real fake redaction in beaconbody test",
+          "timestamp": "2022-06-29T09:07:36Z",
+          "tree_id": "77c2ba3fcf91b92f87dec63501df2808ede51af7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4486509d881d8bc22654a459edfa9d7c89ebf017"
+        },
+        "date": 1656493995204,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5272.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2366.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4886.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
