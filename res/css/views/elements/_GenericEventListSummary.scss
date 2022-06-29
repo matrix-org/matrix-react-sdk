@@ -27,7 +27,6 @@ limitations under the License.
 
     &[data-layout=irc] {
         .mx_GenericEventListSummary_avatars {
-            padding: 0;
             margin: 0 9px 0 0;
         }
     }
@@ -83,10 +82,6 @@ limitations under the License.
 
         .mx_GenericEventListSummary_line {
             display: none;
-        }
-
-        .mx_GenericEventListSummary_avatars {
-            padding-top: 0;
         }
     }
 }
