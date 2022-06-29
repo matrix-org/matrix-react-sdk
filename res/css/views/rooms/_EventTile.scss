@@ -271,13 +271,16 @@ $left-gutter: 64px;
         }
 
         &.mx_EventTile_info {
+            $spacing-block-start: 3px;
+            $spacing-block-end: 2px;
+
             .mx_EventTile_avatar,
             .mx_EventTile_e2eIcon {
-                margin: 3px 0 2px; // Align with mx_EventTile_line
+                margin: $spacing-block-start 0 $spacing-block-end;
             }
 
             .mx_EventTile_line {
-                padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon on modern layout
+                padding: $spacing-block-start 0 $spacing-block-end;
                 padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
             }
         }
