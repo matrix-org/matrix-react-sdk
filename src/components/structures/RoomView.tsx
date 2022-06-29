@@ -364,7 +364,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         ) {
             // hide chat in right panel when the widget is minimized
             RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
-            RightPanelStore.instance.togglePanel();
+            RightPanelStore.instance.togglePanel(this.state.roomId);
         }
         this.checkWidgets(this.state.room);
     };
@@ -1026,6 +1026,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updatePermissions(room);
         this.checkWidgets(room);
 
+        if (
+            this.getMainSplitContentType(room) !== MainSplitContentType.Timeline
+            && RoomNotificationStateStore.instance.getRoomState(room).isUnread
+        ) {
+            // Automatically open the chat panel to make unread messages easier to discover
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.Timeline }, true, room.roomId);
+        }
+
         this.setState({
             tombstone: this.getRoomTombstone(room),
             liveTimeline: room.getLiveTimeline(),
@@ -1403,7 +1411,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }, (error) => {
             logger.error("Search failed", error);
-            Modal.createTrackedDialog('Search failed', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Search failed"),
                 description: ((error && error.message) ? error.message :
                     _t("Server may be unavailable, overloaded, or search timed out :(")),
@@ -1528,7 +1536,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
-            Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to reject invite"),
                 description: msg,
             });
@@ -1561,7 +1569,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
-            Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to reject invite"),
                 description: msg,
             });
@@ -1750,7 +1758,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private get messagePanelClassNames(): string {
         return classNames("mx_RoomView_messagePanel", {
             mx_IRCLayout: this.state.layout === Layout.IRC,
-            mx_GroupLayout: this.state.layout === Layout.Group,
         });
     }
 

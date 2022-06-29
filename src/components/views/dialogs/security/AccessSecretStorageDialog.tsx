@@ -233,14 +233,11 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 const cli = MatrixClientPeg.get();
                 await cli.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest) => {
-                        const { finished } = Modal.createTrackedDialog(
-                            'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                            {
-                                title: _t("Setting up keys"),
-                                matrixClient: cli,
-                                makeRequest,
-                            },
-                        );
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                            title: _t("Setting up keys"),
+                            matrixClient: cli,
+                            makeRequest,
+                        });
                         const [confirmed] = await finished;
                         if (!confirmed) {
                             throw new Error("Cross-signing key upload auth canceled");
@@ -369,8 +366,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
             const feedbackClasses = classNames({
                 'mx_AccessSecretStorageDialog_recoveryKeyFeedback': true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback_valid': this.state.recoveryKeyCorrect === true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback_invalid': this.state.recoveryKeyCorrect === false,
+                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--valid': this.state.recoveryKeyCorrect === true,
+                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--invalid': this.state.recoveryKeyCorrect === false,
             });
             const recoveryKeyFeedback = <div className={feedbackClasses}>
                 { this.getKeyValidationText() }

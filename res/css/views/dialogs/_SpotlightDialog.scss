@@ -24,7 +24,7 @@ limitations under the License.
 
     #mx_SpotlightDialog_keyboardPrompt {
         position: absolute;
-        padding: 8px;
+        padding: $spacing-8;
         border-radius: 8px;
         background-color: $background;
         top: -60px; // relative to the top of the modal
@@ -36,8 +36,8 @@ limitations under the License.
 
         > span > div {
             display: inline-block;
-            padding: 2px 4px;
-            margin: 0 4px;
+            padding: 2px $spacing-4; // TODO: Use a spacing variable
+            margin: 0 $spacing-4;
             border-radius: 6px;
             background-color: $quinary-content;
             vertical-align: middle;
@@ -58,8 +58,71 @@ limitations under the License.
     .mx_SpotlightDialog_searchBox {
         margin: 0;
         border: none;
-        padding: 12px 16px;
+        padding: $spacing-12 $spacing-16;
         border-bottom: 1px solid $system;
+
+        > .mx_SpotlightDialog_filter {
+            display: flex;
+            align-content: center;
+            align-items: center;
+            border-radius: 8px;
+            margin-right: $spacing-8;
+            background-color: $quinary-content;
+            vertical-align: middle;
+            color: $primary-content;
+            position: relative;
+            padding: $spacing-4 $spacing-8 $spacing-4 37px; // TODO: Use a spacing variable
+
+            &::before {
+                background-color: $secondary-content;
+                content: "";
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-size: contain;
+                width: 18px;
+                height: 18px;
+                position: absolute;
+                left: $spacing-8;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            &.mx_SpotlightDialog_filterPeople::before {
+                mask-image: url('$(res)/img/element-icons/room/members.svg');
+            }
+
+            &.mx_SpotlightDialog_filterPublicRooms::before {
+                mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
+            }
+
+            .mx_SpotlightDialog_filter--close {
+                position: relative;
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                background: $system;
+                border-radius: 8px;
+                margin-left: $spacing-8;
+                text-align: center;
+                line-height: 16px;
+                color: $secondary-content;
+
+                &::before {
+                    background-color: $secondary-content;
+                    content: "";
+                    mask-repeat: no-repeat;
+                    mask-position: center;
+                    mask-size: contain;
+                    width: 8px;
+                    height: 8px;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    mask-image: url("$(res)/img/cancel-small.svg");
+                }
+            }
+        }
 
         > input {
             display: block;
@@ -73,25 +136,47 @@ limitations under the License.
             font-size: $font-15px;
             line-height: $font-24px;
         }
+
+        > .mx_Spinner {
+            flex-grow: 0;
+            width: unset;
+            height: unset;
+            margin-left: $spacing-16;
+        }
     }
 
     #mx_SpotlightDialog_content {
-        margin: 16px;
         height: 100%;
         overflow-y: auto;
+        padding: $spacing-16;
 
         .mx_SpotlightDialog_section {
-            > h4 {
+            > h4, > .mx_SpotlightDialog_sectionHeader > h4 {
                 font-weight: $font-semi-bold;
                 font-size: $font-12px;
                 line-height: $font-15px;
                 color: $secondary-content;
-                margin-top: 0;
-                margin-bottom: 8px;
+                margin: 0;
+            }
+
+            > h4 {
+                margin-bottom: $spacing-8;
+            }
+
+            .mx_SpotlightDialog_sectionHeader {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: $spacing-8;
+
+                .mx_SpotlightDialog_options {
+                    display: flex;
+                    gap: $spacing-4;
+                }
             }
 
             & + .mx_SpotlightDialog_section {
-                margin-top: 24px;
+                margin-top: $spacing-24;
             }
         }
 
@@ -103,9 +188,9 @@ limitations under the License.
                 margin-right: 1px; // occlude the 1px visible of the very next tile to prevent it looking broken
             }
 
-            .mx_AccessibleButton {
+            .mx_SpotlightDialog_option {
                 border-radius: 8px;
-                padding: 4px;
+                padding: $spacing-4;
                 color: $primary-content;
                 font-size: $font-12px;
                 line-height: $font-15px;
@@ -119,11 +204,11 @@ limitations under the License.
                 text-overflow: ellipsis;
 
                 .mx_DecoratedRoomAvatar {
-                    margin: 0 9px 4px; // maintain centering
+                    margin: 0 9px $spacing-4; // maintain centering
                 }
 
-                & + .mx_AccessibleButton {
-                    margin-left: 16px;
+                & + .mx_SpotlightDialog_option {
+                    margin-left: $spacing-16;
                 }
 
                 &:hover, &[aria-selected=true] {
@@ -134,9 +219,10 @@ limitations under the License.
 
         .mx_SpotlightDialog_results,
         .mx_SpotlightDialog_recentSearches,
-        .mx_SpotlightDialog_otherSearches {
-            .mx_AccessibleButton {
-                padding: 6px 4px;
+        .mx_SpotlightDialog_otherSearches,
+        .mx_SpotlightDialog_hiddenResults {
+            .mx_SpotlightDialog_option {
+                padding: 6px $spacing-4; // TODO: Use a spacing variable
                 border-radius: 8px;
                 font-size: $font-15px;
                 line-height: $font-24px;
@@ -148,10 +234,24 @@ limitations under the License.
                 text-overflow: ellipsis;
                 overflow: hidden;
 
+                &.mx_SpotlightDialog_result_multiline {
+                    align-items: start;
+
+                    .mx_AccessibleButton {
+                        padding: $spacing-4 $spacing-20;
+                        margin: 2px $spacing-4; // TODO: Use a spacing variable
+                    }
+
+                    .mx_SpotlightDialog_enterPrompt {
+                        margin-top: 9px; // TODO: Use a spacing variable
+                        margin-right: $spacing-8;
+                    }
+                }
+
                 > .mx_SpotlightDialog_metaspaceResult,
                 > .mx_DecoratedRoomAvatar,
                 > .mx_BaseAvatar {
-                    margin-right: 8px;
+                    margin-right: $spacing-8;
                     width: 24px;
                     height: 24px;
 
@@ -161,8 +261,47 @@ limitations under the License.
                     }
                 }
 
+                .mx_SpotlightDialog_result_publicRoomDetails {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                    min-width: 0;
+
+                    .mx_SpotlightDialog_result_publicRoomHeader {
+                        display: flex;
+                        flex-direction: row;
+                        line-height: $font-24px;
+                        margin-right: $spacing-8;
+
+                        .mx_SpotlightDialog_result_publicRoomName {
+                            color: $primary-content;
+                            font-size: $font-15px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        .mx_SpotlightDialog_result_publicRoomAlias {
+                            color: $tertiary-content;
+                            font-size: $font-12px;
+                            margin-left: $spacing-8;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                    .mx_SpotlightDialog_result_publicRoomDescription {
+                        color: $secondary-content;
+                        font-size: $font-12px;
+                        white-space: normal;
+                        word-wrap: break-word;
+                        line-height: $font-20px;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 3;
+                        overflow: hidden;
+                    }
+                }
+
                 .mx_NotificationBadge {
-                    margin-left: 8px;
+                    margin-left: $spacing-8;
                 }
 
                 &:hover, &[aria-selected=true] {
@@ -175,11 +314,44 @@ limitations under the License.
             }
         }
 
+        .mx_SpotlightDialog_inviteLink,
+        .mx_SpotlightDialog_createRoom {
+            margin-top: $spacing-8;
+
+            .mx_AccessibleButton {
+                position: relative;
+                margin: 0;
+                padding: 3px $spacing-8 3px $spacing-28; // TODO: Use a spacing variable
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    mask-repeat: no-repeat;
+                    mask-position: center;
+                    mask-size: contain;
+                    left: $spacing-8;
+                    width: 16px;
+                    height: 16px;
+                    background: $accent;
+                }
+            }
+        }
+
+        .mx_SpotlightDialog_inviteLink .mx_AccessibleButton::before {
+            mask-image: url("$(res)/img/element-icons/link.svg");
+        }
+
+        .mx_SpotlightDialog_createRoom .mx_AccessibleButton::before {
+            mask-image: url("$(res)/img/element-icons/roomlist/hash.svg");
+        }
+
         .mx_SpotlightDialog_otherSearches {
             .mx_SpotlightDialog_startChat,
             .mx_SpotlightDialog_joinRoomAlias,
-            .mx_SpotlightDialog_explorePublicRooms {
-                padding-left: 32px;
+            .mx_SpotlightDialog_explorePublicRooms,
+            .mx_SpotlightDialog_startGroupChat {
+                padding-left: $spacing-32;
                 position: relative;
 
                 &::before {
@@ -191,7 +363,7 @@ limitations under the License.
                     width: 24px;
                     height: 24px;
                     position: absolute;
-                    left: 4px;
+                    left: $spacing-4;
                     top: 50%;
                     transform: translateY(-50%);
                 }
@@ -207,6 +379,10 @@ limitations under the License.
 
             .mx_SpotlightDialog_explorePublicRooms::before {
                 mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
+            }
+
+            .mx_SpotlightDialog_startGroupChat::before {
+                mask-image: url('$(res)/img/element-icons/group-members.svg');
             }
 
             .mx_SpotlightDialog_otherSearches_messageSearchText {
@@ -228,8 +404,8 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_result_details {
-            margin-left: 8px;
-            margin-right: 8px;
+            margin-left: $spacing-8;
+            margin-right: $spacing-8;
             color: $tertiary-content;
             font-size: $font-12px;
             line-height: $font-15px;
@@ -247,13 +423,13 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_enterPrompt {
-            padding: 2px 4px;
+            padding: 2px $spacing-4; // TODO: Use a spacing variable
             font-size: $font-12px;
             line-height: $font-15px;
             color: $tertiary-content;
             border-radius: 6px;
             background-color: $quinary-content;
-            margin: 0 4px 0 auto;
+            margin: 0 $spacing-4 0 auto;
             display: none;
         }
 
@@ -285,15 +461,9 @@ limitations under the License.
         font-size: $font-12px;
         line-height: $font-15px;
         color: $secondary-content;
-        padding: 12px 16px 16px;
+        padding: $spacing-12 $spacing-16 $spacing-16;
         display: flex;
         border-top: 1px solid $quinary-content;
-
-        .mx_BetaCard_betaPill {
-            margin-right: 12px;
-            height: min-content;
-            align-self: center;
-        }
 
         > span {
             align-self: center;
@@ -304,7 +474,7 @@ limitations under the License.
         }
 
         .mx_AccessibleButton_kind_primary_outline {
-            padding: 4px 8px;
+            padding: $spacing-4 $spacing-8;
             border-color: $secondary-content;
             color: $secondary-content;
             margin-left: auto;

@@ -108,7 +108,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     }, [updateDeviceInfo]);
 
     const onVerifyClick = (): void => {
-        Modal.createTrackedDialog("Verify session", "Verify session", SetupEncryptionDialog, {
+        Modal.createDialog(SetupEncryptionDialog, {
             onFinished: updateDeviceInfo,
         });
     };
