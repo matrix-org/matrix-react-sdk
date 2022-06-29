@@ -103,7 +103,7 @@ function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
     return ref.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
-function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> | null {
+function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> {
     const roomTypes = new Set<RoomType | null>();
 
     if (showRooms) roomTypes.add(null);
