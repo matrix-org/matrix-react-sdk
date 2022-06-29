@@ -76,6 +76,9 @@ export const usePublicRoomDirectory = () => {
         query,
         roomTypes,
     }: IPublicRoomsOpts): Promise<boolean> => {
+        const exploringPublicSpacesSupported = MatrixClientPeg.get().doesServerSupportUnstableFeature(
+            "org.matrix.msc3827",
+        );
         const opts: IRoomDirectoryOptions = { limit };
 
         if (config?.roomServer != MatrixClientPeg.getHomeserverName()) {
@@ -91,7 +94,9 @@ export const usePublicRoomDirectory = () => {
         if (query || roomTypes) {
             opts.filter = {
                 "generic_search_term": query,
-                "org.matrix.msc3827.room_types": roomTypes ? Array.from<RoomType | null>(roomTypes) : null,
+                "org.matrix.msc3827.room_types": (roomTypes && exploringPublicSpacesSupported)
+                    ? Array.from<RoomType | null>(roomTypes)
+                    : null,
             };
         }
 
