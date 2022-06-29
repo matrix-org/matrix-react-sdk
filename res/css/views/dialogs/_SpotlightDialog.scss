@@ -58,6 +58,7 @@ limitations under the License.
     .mx_SpotlightDialog_searchBox {
         margin: 0;
         border: none;
+        border-radius: 8px 8px 0 0;
         padding: $spacing-12 $spacing-16;
         border-bottom: 1px solid $system;
 
@@ -464,12 +465,6 @@ limitations under the License.
         padding: $spacing-12 $spacing-16 $spacing-16;
         display: flex;
         border-top: 1px solid $quinary-content;
-
-        .mx_BetaCard_betaPill {
-            margin-right: 12px;
-            height: min-content;
-            align-self: center;
-        }
 
         > span {
             align-self: center;
