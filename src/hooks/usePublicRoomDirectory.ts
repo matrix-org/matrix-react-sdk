@@ -91,7 +91,7 @@ export const usePublicRoomDirectory = () => {
         if (query || roomTypes) {
             opts.filter = {
                 "generic_search_term": query,
-                "org.matrix.msc3827.room_types": MatrixClientPeg.get().doesServerSupportUnstableFeature(
+                "org.matrix.msc3827.room_types": await MatrixClientPeg.get().doesServerSupportUnstableFeature(
                     "org.matrix.msc3827",
                 ) ? Array.from<RoomType | null>(roomTypes) : null,
             };
