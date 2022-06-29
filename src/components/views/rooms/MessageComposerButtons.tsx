@@ -103,15 +103,11 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
 
     return <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
         { mainButtons }
-        { moreButtons.length > 0 &&
-            (narrow ?
-                <AccessibleTooltipButton
-                    className={moreOptionsClasses}
-                    onClick={props.toggleButtonMenu}
-                    title={_t("More options")}
-                /> : moreButtons
-            )
-        }
+        { moreButtons.length > 0 && <AccessibleTooltipButton
+            className={moreOptionsClasses}
+            onClick={props.toggleButtonMenu}
+            title={_t("More options")}
+        /> }
         { props.isMenuOpen && (
             <IconizedContextMenu
                 onFinished={props.toggleButtonMenu}
