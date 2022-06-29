@@ -86,6 +86,16 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_MImageBody {
             margin-right: 34px;
         }
+
+        .mx_EventTile_line,
+        .mx_EventTile_reply {
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .mx_EventTile_reply {
+            margin-right: 10px;
+        }
     }
 
     &[data-layout=group] {
@@ -113,6 +123,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_reply {
             padding-top: 1px;
             padding-bottom: 3px;
+            padding-left: $left-gutter;
             line-height: $font-22px;
         }
 
@@ -195,17 +206,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     &.mx_EventTile_continuation .mx_EventTile_line {
         clear: both;
-    }
-
-    .mx_EventTile_line,
-    .mx_EventTile_reply {
-        position: relative;
-        padding-left: $left-gutter;
-        border-radius: 8px;
-    }
-
-    .mx_EventTile_reply {
-        margin-right: 10px;
     }
 
     /* this is used for the tile for the event which is selected via the URL.
@@ -307,13 +307,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 }
 
-.mx_GenericEventListSummary:not([data-layout=bubble]) {
-    .mx_EventTile_line {
-        padding-left: $left-gutter;
+.mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
+    padding-left: $left-gutter;
 
-        .mx_RedactedBody {
-            line-height: 1; // remove spacing between lines
-        }
+    .mx_RedactedBody {
+        line-height: 1; // remove spacing between lines
     }
 }
 
@@ -784,10 +782,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     // Display notification dot
     &[data-notification]::before {
+        $notification-inset-block-start: 14px; // 14px: align the dot with the timestamp row
+
         width: $notification-dot-size;
         height: $notification-dot-size;
         border-radius: 50%;
-        inset: 14px $spacing-8 auto auto; // 14px: align the dot with the timestamp row
+        inset: $notification-inset-block-start $spacing-8 auto auto;
     }
 
     &[data-notification=total]::before {
@@ -1078,7 +1078,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile {
         // Override :not([data-layout="bubble"])
         &[data-layout=group] {
-            padding-top: $spacing-4;
+            --MatrixChat_useCompactLayout_group-padding-top: $spacing-4;
+
+            padding-top: var(--MatrixChat_useCompactLayout_group-padding-top);
 
             &.mx_EventTile_info {
                 padding-top: 0; // same as the padding for non-compact .mx_EventTile.mx_EventTile_info
@@ -1153,6 +1155,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                     margin-bottom: $spacing-4; // 1/4 of the non-compact margin-bottom
                 }
             }
+        }
+
+        &[data-shape=ThreadsList][data-notification]::before {
+            inset-block-start: calc($notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top));
         }
     }
 }
