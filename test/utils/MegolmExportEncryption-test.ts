@@ -76,7 +76,7 @@ describe('MegolmExportEncryption', function() {
         window.crypto = {
             subtle: webCrypto.subtle,
             getRandomValues,
-        };
+        } as Crypto;
         MegolmExportEncryption = require("../../src/utils/MegolmExportEncryption");
     });
 
