@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656509867364,
+  "lastUpdate": 1656512112439,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104414,6 +104414,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5630.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c14d93237f5e2ce2426919c9d2f2046f5f85ce9",
+          "message": "Reduce video rooms log spam (#8913)\n\n* Reduce video rooms log spam\r\n\r\nIf you forget to call preventDefault in widget action handlers,\r\nmatrix-widget-api logs a bunch of errors complaining that the action is\r\nunsupported/unhandled, even if it isn't.\r\n\r\n* Fix tests",
+          "timestamp": "2022-06-29T16:09:41+02:00",
+          "tree_id": "8ee34fb0832f0fa01c5b39891af710a7df632815",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c14d93237f5e2ce2426919c9d2f2046f5f85ce9"
+        },
+        "date": 1656512100474,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4798.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2146.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4584.5,
             "unit": "ms",
             "extra": "type: measure"
           }
