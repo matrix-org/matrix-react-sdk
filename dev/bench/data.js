@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656481630520,
+  "lastUpdate": 1656487068864,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104210,6 +104210,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4437.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eaf13d490e244cd31df74a18fced7c00be32a36b",
+          "message": "Live location share - disallow message pinning (PSF-1084) (#8928)\n\n* unmock isContentActionable\r\n\r\n* test message pinning\r\n\r\n* disallow pinning for beacon events\r\n\r\n* try to make tests more readable",
+          "timestamp": "2022-06-29T07:11:33Z",
+          "tree_id": "98bd4f3f431cad887be584bc89363482440bbab5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eaf13d490e244cd31df74a18fced7c00be32a36b"
+        },
+        "date": 1656487054432,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5382.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2516.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5602.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
