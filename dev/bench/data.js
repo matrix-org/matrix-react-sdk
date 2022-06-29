@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656520981884,
+  "lastUpdate": 1656527662136,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104498,6 +104498,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5108.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9c0d2080f2115c4e22bf9ae89dffdc7f1ae7986c",
+          "message": "Remove line-height declarations from _ReplyTile.scss (#8932)\n\n* Set line-height for ReplyTile on IRC, modern, and bubble layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move line-height style block to _EventTile.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move line-height style block to _EventTile.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Revert \"Move line-height style block to _EventTile.scss\"\r\n\r\nThis reverts commit 523a60b17afd849556296b43e60c6e02768e8d8f.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Revert \"Move line-height style block to _EventTile.scss\"\r\n\r\nThis reverts commit 0f832e19e8c6a42b885f38adb40caeb08361d0e7.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Revert \"Set line-height for ReplyTile on IRC, modern, and bubble layout\"\r\n\r\nThis reverts commit d3146ab49756a32b43f48d8ec3665eb74c955a01.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove line-height declarations to let inherited values used\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-29T18:28:47Z",
+          "tree_id": "063964c9ae7a382b8604f650a5b2d4bcd24eb9c6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9c0d2080f2115c4e22bf9ae89dffdc7f1ae7986c"
+        },
+        "date": 1656527647810,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4958.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2305.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5004.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
