@@ -117,6 +117,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &[data-layout=group] {
         --EventTile_group_line-line-height: $font-22px;
 
+        &.mx_EventTile_info .mx_EventTile_line {
+            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+        }
+
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
             margin-left: $left-gutter;
@@ -332,10 +336,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
         }
     }
-}
-
-.mx_EventTile[data-layout=group].mx_EventTile_info .mx_EventTile_line {
-    padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
 }
 
 .mx_EventTile_content {
