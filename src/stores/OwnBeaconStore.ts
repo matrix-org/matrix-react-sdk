@@ -392,6 +392,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         roomId: Room['roomId'],
         beaconInfoContent: MBeaconInfoEventContent,
     ): Promise<void> => {
+        // explicitly stop any live beacons this user has
+        // to ensure they remain stopped
+        // if the new replacing beacon is redacted
+        const existingLiveBeaconIdsForRoom = this.getLiveBeaconIds(roomId);
+        await Promise.all(existingLiveBeaconIdsForRoom?.map(beaconId => this.stopBeacon(beaconId)));
+
         // eslint-disable-next-line camelcase
         const { event_id } = await this.matrixClient.unstable_createLiveBeacon(
             roomId,
