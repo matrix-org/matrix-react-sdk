@@ -202,12 +202,6 @@ $left-gutter: 64px;
                 inset-inline-start: $left-gutter;
                 height: 14px;
             }
-
-            .mx_EventTile_line {
-                .mx_MessageTimestamp {
-                    top: 0;
-                }
-            }
         }
 
         &.mx_EventTile_continuation .mx_EventTile_line {
@@ -302,6 +296,10 @@ $left-gutter: 64px;
             .mx_EventTile_line {
                 padding: $spacing-block-start 0 $spacing-block-end;
                 padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+
+                .mx_MessageTimestamp {
+                    top: 0;
+                }
             }
         }
     }
