@@ -242,7 +242,7 @@ $left-gutter: 64px;
         }
 
         .mx_RoomView_timeline_rr_enabled & {
-            $inline-end-margin: 80px; /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
+            $inline-end-margin: 80px;
 
             .mx_ThreadSummary,
             .mx_ThreadSummary_icon,
