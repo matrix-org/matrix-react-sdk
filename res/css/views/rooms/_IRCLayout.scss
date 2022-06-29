@@ -16,12 +16,12 @@ limitations under the License.
 
 $icon-width: 14px;
 $right-padding: 5px;
-$irc-line-height: $font-18px;
 
 .mx_IRCLayout {
     --name-width: 70px;
+    --irc-line-height: $font-18px;
 
-    line-height: $irc-line-height !important;
+    line-height: var(--irc-line-height) !important;
 
     .mx_EventTile {
         // timestamps are links which shouldn't be underlined
@@ -44,7 +44,7 @@ $irc-line-height: $font-18px;
             flex-shrink: 0;
 
             .mx_ReadReceiptGroup {
-                top: -0.3rem; // ($irc-line-height - avatar height) / 2
+                top: -0.3rem; // (var(--irc-line-height) - avatar height) / 2
             }
         }
 
@@ -62,7 +62,7 @@ $irc-line-height: $font-18px;
             order: 1;
             position: relative;
             flex-shrink: 0;
-            height: $irc-line-height;
+            height: var(--irc-line-height);
             display: flex;
             align-items: center;
 
@@ -105,10 +105,6 @@ $irc-line-height: $font-18px;
             order: 4;
         }
 
-        .mx_ReplyTile .mx_EventTile_content {
-            line-height: $irc-line-height;
-        }
-
         .mx_EditMessageComposer_buttons {
             position: relative;
         }
@@ -139,7 +135,7 @@ $irc-line-height: $font-18px;
         }
 
         .mx_TextualEvent {
-            line-height: $irc-line-height;
+            line-height: var(--irc-line-height);
         }
     }
 

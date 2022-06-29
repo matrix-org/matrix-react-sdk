@@ -98,6 +98,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 
+    &[data-layout=irc] {
+        .mx_ReplyTile .mx_EventTile_content {
+            line-height: var(--irc-line-height);
+        }
+    }
+
     &[data-layout=group] {
         --EventTile_group_line-line-height: $font-22px;
 
