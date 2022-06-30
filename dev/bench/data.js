@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656606605948,
+  "lastUpdate": 1656608490425,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105266,6 +105266,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5439.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3329b35bd0d5285ae89142fc636e4f32261826a3",
+          "message": "Move mx_ThreadSummary style block out of mx_GenericEventListSummary on TimelineCard (#8938)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-30T16:56:03Z",
+          "tree_id": "034d0861d085d7f465160fc64850ad42bcdd6055",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3329b35bd0d5285ae89142fc636e4f32261826a3"
+        },
+        "date": 1656608476465,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4861.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 624,
             "unit": "ms",
             "extra": "type: measure"
           }
