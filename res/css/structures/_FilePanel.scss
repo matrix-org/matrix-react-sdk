@@ -55,10 +55,6 @@ limitations under the License.
     }
 }
 
-.mx_FilePanel .mx_EventTile .mx_MImageBody {
-    margin-right: 0px;
-}
-
 .mx_FilePanel .mx_EventTile .mx_MFileBody {
     line-height: 2.4rem;
 }
@@ -96,8 +92,6 @@ limitations under the License.
 .mx_FilePanel .mx_EventTile .mx_DisambiguatedProfile {
     flex: 1 1 auto;
     line-height: initial;
-    padding: 0px;
-    font-size: $font-14px;
     opacity: 1.0;
     color: $event-timestamp-color;
 }
@@ -109,7 +103,6 @@ limitations under the License.
     position: initial;
     font-size: $font-14px;
     opacity: 1.0;
-    color: $event-timestamp-color;
 }
 
 /* Overrides for the wrappers around the body tile */

@@ -47,7 +47,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
 
     const onDebugLogsLinkClick = (): void => {
         props.onFinished();
-        Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {});
+        Modal.createDialog(BugReportDialog, {});
     };
 
     const rageshakeUrl = SdkConfig.get().bug_report_endpoint_url;
@@ -58,7 +58,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 submitFeedback(rageshakeUrl, "feedback", comment, canContact);
             }
 
-            Modal.createTrackedDialog('Feedback sent', '', InfoDialog, {
+            Modal.createDialog(InfoDialog, {
                 title: _t('Feedback sent'),
                 description: _t('Thank you!'),
             });
@@ -102,7 +102,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 _t("PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> " +
                     "to help us track down the problem.", {}, {
                     debugLogsLink: sub => (
-                        <AccessibleButton kind="link" onClick={onDebugLogsLinkClick}>{ sub }</AccessibleButton>
+                        <AccessibleButton kind="link_inline" onClick={onDebugLogsLinkClick}>{ sub }</AccessibleButton>
                     ),
                 })
             }</p>

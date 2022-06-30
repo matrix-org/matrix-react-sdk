@@ -47,12 +47,34 @@ declare global {
              * @param userId the id of the user to invite
              */
             inviteUser(roomId: string, userId: string): Chainable<{}>;
+            /**
+             * Sets account data for the user.
+             * @param type The type of account data.
+             * @param data The data to store.
+             */
+            setAccountData(type: string, data: object): Chainable<{}>;
+            /**
+             * Gets the list of DMs with a given user
+             * @param userId The ID of the user
+             * @return the list of DMs with that user
+             */
+            getDmRooms(userId: string): Chainable<string[]>;
+            /**
+             * Boostraps cross-signing.
+             */
+            bootstrapCrossSigning(): Chainable<void>;
         }
     }
 }
 
 Cypress.Commands.add("getClient", (): Chainable<MatrixClient | undefined> => {
     return cy.window({ log: false }).then(win => win.mxMatrixClientPeg.matrixClient);
+});
+
+Cypress.Commands.add("getDmRooms", (userId: string): Chainable<string[]> => {
+    return cy.getClient()
+        .then(cli => cli.getAccountData("m.direct")?.getContent<Record<string, string[]>>())
+        .then(dmRoomMap => dmRoomMap[userId] ?? []);
 });
 
 Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
@@ -89,5 +111,19 @@ Cypress.Commands.add("createSpace", (options: ICreateRoomOpts): Chainable<string
 Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.invite(roomId, userId);
+    });
+});
+
+Cypress.Commands.add("setAccountData", (type: string, data: object): Chainable<{}> => {
+    return cy.getClient().then(async (cli: MatrixClient) => {
+        return cli.setAccountData(type, data);
+    });
+});
+
+Cypress.Commands.add("bootstrapCrossSigning", () => {
+    cy.window({ log: false }).then(win => {
+        win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
+            authUploadDeviceSigningKeys: async func => { await func({}); },
+        });
     });
 });

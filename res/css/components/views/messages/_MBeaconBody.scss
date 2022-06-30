@@ -17,7 +17,8 @@ limitations under the License.
 .mx_MBeaconBody {
     position: relative;
     height: 220px;
-    width: 325px;
+    max-width: 325px;
+    width: 100%;
 
     border-radius: $timeline-image-border-radius;
     overflow: hidden;
@@ -49,4 +50,9 @@ limitations under the License.
 .mx_EventTile[data-layout="bubble"] .mx_EventTile_line .mx_MBeaconBody {
     max-width: 100%;
     width: 450px;
+}
+
+.mx_ReplyTile .mx_MBeaconBody {
+    // Prevent clicking a beacon within a reply
+    pointer-events: none;
 }

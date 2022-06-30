@@ -75,7 +75,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         }
 
         const matrixClient = MatrixClientPeg.get();
-        const { finished } = Modal.createTrackedDialog('Edit restricted', '', ManageRestrictedJoinRuleDialog, {
+        const { finished } = Modal.createDialog(ManageRestrictedJoinRuleDialog, {
             matrixClient,
             room,
             selected,
@@ -163,8 +163,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         a: sub => <AccessibleButton
                             disabled={disabled}
                             onClick={onEditRestrictedClick}
-                            kind="link"
-                            className="mx_JoinRuleSettings_linkButton"
+                            kind="link_inline"
                         >
                             { sub }
                         </AccessibleButton>,
@@ -227,7 +226,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                     </b>;
                 }
 
-                Modal.createTrackedDialog('Restricted join rule upgrade', '', RoomUpgradeWarningDialog, {
+                Modal.createDialog(RoomUpgradeWarningDialog, {
                     roomId: room.roomId,
                     targetVersion,
                     description: <>
