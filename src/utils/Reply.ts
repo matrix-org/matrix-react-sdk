@@ -95,16 +95,13 @@ export function getNestedReplyText(
     const userLink = makeUserPermalink(ev.getSender());
     const mxid = ev.getSender();
 
-    switch (ev.getType()) {
-        case M_BEACON_INFO.stable:
-        case M_BEACON_INFO.unstable: {
-            const aTheir = isSelfLocation(ev.getContent()) ? "their" : "a";
-            return {
-                html: `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
-                + `<br>shared ${aTheir} live location.</blockquote></mx-reply>`,
-                body: `> <${mxid}> shared ${aTheir} live location.\n\n`,
-            };
-        }
+    if (M_BEACON_INFO.matches(ev.getType())) {
+        const aTheir = isSelfLocation(ev.getContent()) ? "their" : "a";
+        return {
+            html: `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
+            + `<br>shared ${aTheir} live location.</blockquote></mx-reply>`,
+            body: `> <${mxid}> shared ${aTheir} live location.\n\n`,
+        };
     }
 
     // This fallback contains text that is explicitly EN.
