@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656608490425,
+  "lastUpdate": 1656618045308,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105302,6 +105302,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 624,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "924865b315601f26a9ce917bcdc44424a60b87e4",
+          "message": "Add safety around missing topics and space settings (#8957)",
+          "timestamp": "2022-06-30T19:34:24Z",
+          "tree_id": "2f2bdfc79b4c54d20e7dcf67ca188f06b8157df0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/924865b315601f26a9ce917bcdc44424a60b87e4"
+        },
+        "date": 1656618030953,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6363.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2600.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5432.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
