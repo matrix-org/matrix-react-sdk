@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656593317580,
+  "lastUpdate": 1656596524932,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105026,6 +105026,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5576.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bb859d588649fdeccad82c2339e698ec89374316",
+          "message": "Fix wrong assertions that all media events have a mimetype (#8946)",
+          "timestamp": "2022-06-30T14:35:40+01:00",
+          "tree_id": "5b949ef6b45ae1abaaf50a646f38105e9ced5ce5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bb859d588649fdeccad82c2339e698ec89374316"
+        },
+        "date": 1656596509970,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5296.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2437.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5615.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
