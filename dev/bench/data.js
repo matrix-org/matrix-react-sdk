@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656600820047,
+  "lastUpdate": 1656602399666,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105146,6 +105146,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4557.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "328d7ea5ebb0af8056d77660545aa3d069cf0b2c",
+          "message": "Remove unused code left over from the old search (#8947)",
+          "timestamp": "2022-06-30T17:14:49+02:00",
+          "tree_id": "fb959bfcea77c7153c308263adc7d589c15ccf74",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/328d7ea5ebb0af8056d77660545aa3d069cf0b2c"
+        },
+        "date": 1656602386839,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4769.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 653.5,
             "unit": "ms",
             "extra": "type: measure"
           }
