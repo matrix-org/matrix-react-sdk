@@ -132,7 +132,7 @@ $roomtopic-color: $secondary-content;
 
 .mx_SpotlightDialog_wrapper .mx_Dialog {
     #mx_SpotlightDialog_keyboardPrompt {
-        > span > div {
+        kbd {
             color: $background !important;
         }
     }
@@ -220,7 +220,6 @@ $roomtopic-color: $secondary-content;
             &:hover {
                 background-color: $quinary-content !important;
                 color: $background !important;
-
 
                 &[aria-checked="true"]::before {
                     background-color: $background !important;
