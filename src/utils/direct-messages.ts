@@ -18,7 +18,7 @@ import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
 import { ClientEvent, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { KNOWN_SAFE_ROOM_VERSION, Room } from "matrix-js-sdk/src/models/room";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -118,8 +118,7 @@ export async function createDmLocalRoom(
         type: EventType.RoomCreate,
         content: {
             creator: userId,
-            // @todo MiW
-            room_version: "9",
+            room_version: KNOWN_SAFE_ROOM_VERSION,
         },
         state_key: "",
         user_id: userId,
