@@ -79,7 +79,7 @@ class FakeCall extends EventEmitter {
     roomId: string;
     callId = "fake call id";
 
-    constructor(roomId) {
+    constructor(roomId: string) {
         super();
 
         this.roomId = roomId;
@@ -104,7 +104,7 @@ function untilCallHandlerEvent(callHandler: CallHandler, event: CallHandlerEvent
 describe('CallHandler', () => {
     let dmRoomMap;
     let callHandler;
-    let audioElement;
+    let audioElement: HTMLAudioElement;
     let fakeCall;
 
     // what addresses the app has looked up via pstn and native lookup
@@ -151,7 +151,7 @@ describe('CallHandler', () => {
         };
 
         dmRoomMap = {
-            getUserIdForRoomId: roomId => {
+            getUserIdForRoomId: (roomId: string) => {
                 if (roomId === NATIVE_ROOM_ALICE) {
                     return NATIVE_ALICE;
                 } else if (roomId === NATIVE_ROOM_BOB) {
@@ -164,7 +164,7 @@ describe('CallHandler', () => {
                     return null;
                 }
             },
-            getDMRoomsForUserId: userId => {
+            getDMRoomsForUserId: (userId: string) => {
                 if (userId === NATIVE_ALICE) {
                     return [NATIVE_ROOM_ALICE];
                 } else if (userId === NATIVE_BOB) {
@@ -325,8 +325,8 @@ describe('CallHandler', () => {
 
 describe('CallHandler without third party protocols', () => {
     let dmRoomMap;
-    let callHandler;
-    let audioElement;
+    let callHandler: CallHandler;
+    let audioElement: HTMLAudioElement;
     let fakeCall;
 
     beforeEach(() => {
@@ -356,14 +356,14 @@ describe('CallHandler without third party protocols', () => {
         };
 
         dmRoomMap = {
-            getUserIdForRoomId: roomId => {
+            getUserIdForRoomId: (roomId: string) => {
                 if (roomId === NATIVE_ROOM_ALICE) {
                     return NATIVE_ALICE;
                 } else {
                     return null;
                 }
             },
-            getDMRoomsForUserId: userId => {
+            getDMRoomsForUserId: (userId: string) => {
                 if (userId === NATIVE_ALICE) {
                     return [NATIVE_ROOM_ALICE];
                 } else {
@@ -373,7 +373,7 @@ describe('CallHandler without third party protocols', () => {
         };
         DMRoomMap.setShared(dmRoomMap);
 
-        MatrixClientPeg.get().getThirdpartyUser = (proto, params) => {
+        MatrixClientPeg.get().getThirdpartyUser = (_proto, _params) => {
             throw new Error("Endpoint unsupported.");
         };
 

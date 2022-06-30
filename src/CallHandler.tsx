@@ -273,6 +273,7 @@ export default class CallHandler extends EventEmitter {
                 },
             );
         } catch (e) {
+            logger.log('Failed to lookup user from phone number', e);
             return Promise.resolve([]);
         }
     }
@@ -285,6 +286,7 @@ export default class CallHandler extends EventEmitter {
                 },
             );
         } catch (e) {
+            logger.log('Failed to query SIP identity for user', e);
             return Promise.resolve([]);
         }
     }
@@ -297,6 +299,7 @@ export default class CallHandler extends EventEmitter {
                 },
             );
         } catch (e) {
+            logger.log('Failed to query identity for SIP user', e);
             return Promise.resolve([]);
         }
     }
