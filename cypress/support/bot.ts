@@ -22,7 +22,7 @@ import type { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
-interface ICreateBotOpts {
+interface CreateBotOpts {
     /**
      * Whether the bot should automatically accept all invites.
      */
@@ -35,7 +35,7 @@ interface ICreateBotOpts {
 
 const defaultCreateBotOptions = {
     autoAcceptInvites: true,
-} as ICreateBotOpts;
+} as CreateBotOpts;
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -46,28 +46,24 @@ declare global {
              * @param synapse the instance on which to register the bot user
              * @param opts create bot options
              */
-            getBot(synapse: SynapseInstance, opts: ICreateBotOpts): Chainable<MatrixClient>;
-            botJoinRoom(bot: MatrixClient, roomId: string): Chainable<Room>;
-            botJoinRoomByName(bot: MatrixClient, roomName: string): Chainable<Room>;
+            getBot(synapse: SynapseInstance, opts: CreateBotOpts): Chainable<MatrixClient>;
+            /**
+             * Let a bot join a room
+             * @param cli The bot's MatrixClient
+             * @param roomId ID of the room to join
+             */
+            botJoinRoom(cli: MatrixClient, roomId: string): Chainable<Room>;
+            /**
+             * Let a bot join a room by name
+             * @param cli The bot's MatrixClient
+             * @param roomName Name of the room to join
+             */
+            botJoinRoomByName(cli: MatrixClient, roomName: string): Chainable<Room>;
         }
     }
 }
 
-Cypress.Commands.add("botJoinRoom", (bot: MatrixClient, roomId: string): Chainable<Room> => {
-    return cy.wrap(bot.joinRoom(roomId));
-});
-
-Cypress.Commands.add("botJoinRoomByName", (bot: MatrixClient, roomName: string): Chainable<Room> => {
-    const room = bot.getRooms().find((r) => r.getDefaultRoomName(bot.getUserId()) === roomName);
-
-    if (room) {
-        return cy.botJoinRoom(bot, room.roomId);
-    }
-
-    return cy.wrap(Promise.reject());
-});
-
-Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: ICreateBotOpts): Chainable<MatrixClient> => {
+Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: CreateBotOpts): Chainable<MatrixClient> => {
     opts = Object.assign({}, defaultCreateBotOptions, opts);
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
@@ -84,20 +80,37 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: ICreateBotOpts):
                 cryptoStore: new win.matrixcs.MemoryCryptoStore(),
             });
 
-            cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
-                if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                    if (opts.autoAcceptInvites) {
+            if (opts.autoAcceptInvites) {
+                cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+                    if (member.membership === "invite" && member.userId === cli.getUserId()) {
                         cli.joinRoom(member.roomId);
                     }
-                }
-            });
+                });
+            }
 
             return cy.wrap(
                 cli.initCrypto()
                     .then(() => cli.setGlobalErrorOnUnknownDevices(false))
                     .then(() => cli.startClient())
+                    .then(() => cli.bootstrapCrossSigning({
+                        authUploadDeviceSigningKeys: async func => { await func({}); },
+                    }))
                     .then(() => cli),
             );
         });
     });
+});
+
+Cypress.Commands.add("botJoinRoom", (cli: MatrixClient, roomId: string): Chainable<Room> => {
+    return cy.wrap(cli.joinRoom(roomId));
+});
+
+Cypress.Commands.add("botJoinRoomByName", (cli: MatrixClient, roomName: string): Chainable<Room> => {
+    const room = cli.getRooms().find((r) => r.getDefaultRoomName(cli.getUserId()) === roomName);
+
+    if (room) {
+        return cy.botJoinRoom(cli, room.roomId);
+    }
+
+    return cy.wrap(Promise.reject());
 });
