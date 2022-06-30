@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656598982581,
+  "lastUpdate": 1656600820047,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105104,6 +105104,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 659.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "424d33d4b04f925ff91cc16ea5c7727bf0949263",
+          "message": "Fix PlatformSettingsHandler always returning true due to returning a Promise (#8954)\n\n* Fix PlatformSettingsHandler always returning true due to returning a Promise\r\n\r\n* Improve typescript",
+          "timestamp": "2022-06-30T14:48:21Z",
+          "tree_id": "cf2a81ab00dbd55daf9a5761de956bfd3f462317",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/424d33d4b04f925ff91cc16ea5c7727bf0949263"
+        },
+        "date": 1656600806938,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5664.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2184.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4557.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
