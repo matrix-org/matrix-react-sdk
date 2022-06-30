@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656596524932,
+  "lastUpdate": 1656598982581,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105068,6 +105068,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5615.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c3f26d619efd2dbcf90bdeff4e67e297d0c7896a",
+          "message": "Improve high-contrast support for spotlight (#8948)",
+          "timestamp": "2022-06-30T16:17:30+02:00",
+          "tree_id": "4cb0e605c49483dc8bc055ed7f64b92dc388d132",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c3f26d619efd2dbcf90bdeff4e67e297d0c7896a"
+        },
+        "date": 1656598969630,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4809.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 659.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
