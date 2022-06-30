@@ -23,7 +23,14 @@ import sanitizeHtml from "sanitize-html";
 
 import SpotlightDialog, { Filter } from "../../../../src/components/views/dialogs/spotlight/SpotlightDialog";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import { stubClient } from "../../../test-utils";
+
+jest.mock("../../../../src/utils/direct-messages", () => ({
+    // @ts-ignore
+    ...jest.requireActual("../../../../src/utils/direct-messages"),
+    startDmOnFirstMessage: jest.fn(),
+}));
 
 interface IUserChunkMember {
     user_id: string;
@@ -110,10 +117,11 @@ describe("Spotlight Dialog", () => {
         guest_can_join: false,
     };
 
-    beforeEach(() => {
-        mockClient({ rooms: [testPublicRoom], users: [testPerson] });
-    });
+    let mockedClient: MatrixClient;
 
+    beforeEach(() => {
+        mockedClient = mockClient({ rooms: [testPublicRoom], users: [testPerson] });
+    });
     describe("should apply filters supplied via props", () => {
         it("without filter", async () => {
             const wrapper = mount(
@@ -288,5 +296,28 @@ describe("Spotlight Dialog", () => {
 
             wrapper.unmount();
         });
+    });
+
+    it("should start a DM when clicking a person", async () => {
+        const wrapper = mount(
+            <SpotlightDialog
+                initialFilter={Filter.People}
+                initialText={testPerson.display_name}
+                onFinished={() => null} />,
+        );
+
+        await act(async () => {
+            await sleep(200);
+        });
+        wrapper.update();
+
+        const options = wrapper.find("div.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(1);
+        expect(options.first().text()).toContain(testPerson.display_name);
+
+        options.first().simulate("click");
+        expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockedClient, [new DirectoryMember(testPerson)]);
+
+        wrapper.unmount();
     });
 });

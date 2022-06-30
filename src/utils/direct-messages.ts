@@ -304,7 +304,7 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
  *
  * @returns {Promise<string | null} Resolves to the room id.
  */
-export async function startDm(client: MatrixClient, targets: Member[]): Promise<string | null> {
+async function startDm(client: MatrixClient, targets: Member[]): Promise<string | null> {
     const targetIds = targets.map(t => t.userId);
 
     // Check if there is already a DM with these people and reuse it if possible.
