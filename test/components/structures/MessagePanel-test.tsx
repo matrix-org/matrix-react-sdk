@@ -402,7 +402,6 @@ describe('MessagePanel', function() {
         // now there should be two RM containers
         const readMarkers = container.getElementsByClassName('mx_RoomView_myReadMarker_container');
 
-        // const found = TestUtils.scryRenderedDOMComponentsWithClass(mp, 'mx_RoomView_myReadMarker_container');
         expect(readMarkers.length).toEqual(2);
 
         // the first should be the ghost
