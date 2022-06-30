@@ -150,6 +150,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
 
     const canCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
     const canExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
+    const canCreateSpaces = shouldShowComponent(UIComponent.CreateSpaces);
 
     // If the user can't do anything on the plus menu, don't show it. This aims to target the
     // plus menu shown on the Home tab primarily: the user has options to use the menu for
@@ -252,7 +253,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                     disabled={!canAddRooms}
                     tooltip={!canAddRooms && _t("You do not have permissions to add rooms to this space")}
                 />
-                <IconizedContextMenuOption
+                { canCreateSpaces && <IconizedContextMenuOption
                     label={_t("Add space")}
                     iconClassName="mx_RoomListHeader_iconPlus"
                     onClick={(e) => {
@@ -266,6 +267,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                 >
                     <BetaPill />
                 </IconizedContextMenuOption>
+                }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {
