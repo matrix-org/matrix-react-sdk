@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656579950262,
+  "lastUpdate": 1656582605225,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104900,6 +104900,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 640.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d4a4eeaf63e27ce8146dfc6ef783c819968cca4c",
+          "message": "Allow finding group DMs by members in spotlight (#8922)",
+          "timestamp": "2022-06-30T11:44:56+02:00",
+          "tree_id": "45a7da8086ca238994f828eee96ccc3d03d2ca5f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d4a4eeaf63e27ce8146dfc6ef783c819968cca4c"
+        },
+        "date": 1656582593822,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5029.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2150.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5010.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
