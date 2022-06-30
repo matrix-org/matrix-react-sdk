@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656576030239,
+  "lastUpdate": 1656577168615,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104786,6 +104786,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 669.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "35a4e981e38dcd5b8a699750e19728e2e39b5f3e",
+          "message": "Make invite dialogue fixed height (#8934)",
+          "timestamp": "2022-06-30T10:13:37+02:00",
+          "tree_id": "c63f3fe184eec1b861b0bb736678f6144aace2e0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/35a4e981e38dcd5b8a699750e19728e2e39b5f3e"
+        },
+        "date": 1656577156923,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5352.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 645.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
