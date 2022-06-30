@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656564828573,
+  "lastUpdate": 1656574750459,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104708,6 +104708,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5201.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4eab0deeb384470c933b77ab2a0d0d8184341338",
+          "message": "Live location share - explicitly stop beacons replaced beacons (PSG-544) (#8933)\n\n* explicitly stop beacons before creating new ones\r\n\r\n* remove unnecessary optional chain",
+          "timestamp": "2022-06-30T07:33:51Z",
+          "tree_id": "4cc537963915f1e28c7e40d8623d705a7a7b14cd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4eab0deeb384470c933b77ab2a0d0d8184341338"
+        },
+        "date": 1656574738178,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4768,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2139.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4692.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
