@@ -232,7 +232,7 @@ const Tile: React.FC<ITileProps> = ({
             >
                 { description }
                 { topic && " · " }
-                { topic && topic }
+                { topic }
             </div>
         </div>
         <div className="mx_SpaceHierarchy_actions">
