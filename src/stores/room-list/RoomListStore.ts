@@ -76,11 +76,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         new SpaceWatcher(this);
     }
 
-    public get unfilteredLists(): ITagMap {
-        if (!this.algorithm) return {}; // No tags yet.
-        return this.algorithm.getUnfilteredRooms();
-    }
-
     public get orderedLists(): ITagMap {
         if (!this.algorithm) return {}; // No tags yet.
         return this.algorithm.getOrderedRooms();
