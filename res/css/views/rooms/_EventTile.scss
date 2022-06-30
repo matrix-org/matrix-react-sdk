@@ -28,6 +28,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         color: $alert;
     }
 
+    &.mx_EventTile_isEditing .mx_MessageTimestamp {
+        visibility: hidden;
+    }
+
     .mx_EventTile_avatar {
         cursor: pointer;
         user-select: none;
@@ -212,10 +216,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     &.mx_EventTile_continuation {
         padding-top: 0px !important;
-    }
-
-    &.mx_EventTile_isEditing .mx_MessageTimestamp {
-        visibility: hidden;
     }
 
     .mx_MessageTimestamp {
