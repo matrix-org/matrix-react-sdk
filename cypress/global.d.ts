@@ -28,12 +28,13 @@ import type {
 } from "matrix-js-sdk/src/matrix";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
+import type SettingsStore from "../src/settings/SettingsStore";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface ApplicationWindow {
-            mxSettingsStore: any; // XXX: Importing SettingsStore causes a bunch of type lint errors
+            mxSettingsStore: typeof SettingsStore;
             mxMatrixClientPeg: {
                 matrixClient?: MatrixClient;
             };
