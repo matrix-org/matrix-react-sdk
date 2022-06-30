@@ -90,7 +90,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     .mx_MessageTimestamp {
         left: 0px;
-        text-align: center;
     }
 
     .mx_ReactionsRow {
@@ -190,6 +189,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_MessageTimestamp {
             position: absolute; // for modern layout
+            text-align: center;
         }
 
         .mx_EventTile_line,
