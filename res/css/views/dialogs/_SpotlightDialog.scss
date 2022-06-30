@@ -58,6 +58,7 @@ limitations under the License.
     .mx_SpotlightDialog_searchBox {
         margin: 0;
         border: none;
+        border-radius: 8px 8px 0 0;
         padding: $spacing-12 $spacing-16;
         border-bottom: 1px solid $system;
 
@@ -415,7 +416,6 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_recentSearches > h4 > .mx_AccessibleButton_kind_link {
-            padding: 0;
             float: right;
             font-size: $font-12px;
             line-height: $font-15px;
@@ -465,18 +465,8 @@ limitations under the License.
         display: flex;
         border-top: 1px solid $quinary-content;
 
-        .mx_BetaCard_betaPill {
-            margin-right: 12px;
-            height: min-content;
-            align-self: center;
-        }
-
         > span {
             align-self: center;
-
-            .mx_AccessibleButton_kind_link_inline {
-                padding: 0;
-            }
         }
 
         .mx_AccessibleButton_kind_primary_outline {
