@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656542718053,
+  "lastUpdate": 1656564828573,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104666,6 +104666,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5481.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d439871ea11b532b05f3de15d4f2be395faa9461",
+          "message": "Move mx_EventTile_highlight out of mx_EventTile:not([data-layout=bubble]) (#8940)\n\n* Move mx_EventTile_highlight etc. out of mx_EventTile:not([data-layout=bubble])\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Set highlight text color globally\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-30T06:47:35+02:00",
+          "tree_id": "db01bd8366b95ae9e46cbe517a7838545302de41",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d439871ea11b532b05f3de15d4f2be395faa9461"
+        },
+        "date": 1656564812467,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4744,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2275.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5201.5,
             "unit": "ms",
             "extra": "type: measure"
           }
