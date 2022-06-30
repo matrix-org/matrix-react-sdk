@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656589367937,
+  "lastUpdate": 1656593317580,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104984,6 +104984,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4440.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7a80ea4bbe95adec14abc79a5bb8206cda170e61",
+          "message": "Test typescriptification - MessagePanel (#8943)\n\n* mv test/components/structures/MessagePanel-test.js test/components/structures/MessagePanel-test.tsx\r\n\r\n* convert simpler messagepanel tests to rtl\r\n\r\n* add data-testid to eventlistsummary\r\n\r\n* convert read marker tests to rtl\r\n\r\n* formatting\r\n\r\n* remove commented",
+          "timestamp": "2022-06-30T14:41:53+02:00",
+          "tree_id": "bbfbddc8144c17255122b71e4c7a24e3b5ee2ba4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7a80ea4bbe95adec14abc79a5bb8206cda170e61"
+        },
+        "date": 1656593300896,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5070.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2456.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5576.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
