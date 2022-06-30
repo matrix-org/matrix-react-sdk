@@ -33,7 +33,6 @@ import { EffectiveMembership, getEffectiveMembership } from "../../utils/members
 import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
-import { NameFilterCondition } from "./filters/NameFilterCondition";
 import { RoomNotificationStateStore } from "../notifications/RoomNotificationStateStore";
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
@@ -606,20 +605,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         if (removed) {
             promise.then(() => this.updateFn.trigger());
         }
-    }
-
-    /**
-     * Gets the first (and ideally only) name filter condition. If one isn't present,
-     * this returns null.
-     * @returns The first name filter condition, or null if none.
-     */
-    public getFirstNameFilterCondition(): NameFilterCondition | null {
-        for (const filter of this.filterConditions) {
-            if (filter instanceof NameFilterCondition) {
-                return filter;
-            }
-        }
-        return null;
     }
 
     /**
