@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656574750459,
+  "lastUpdate": 1656576030239,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104750,6 +104750,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4692.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "valeref@matrix.org",
+            "name": "Valere",
+            "username": "BillCarsonFr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f137bf3fd39587bd7f0aa56351c593236e7e0456",
+          "message": "Fix all megolm error reported as unknown (#8916)\n\n* Fix all megolm error reported as unknown\n\n* code review\n\n* bad paste in comment",
+          "timestamp": "2022-06-30T08:55:05+01:00",
+          "tree_id": "dab3e9e30da282d7786c5cee639c578a4eeab0b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f137bf3fd39587bd7f0aa56351c593236e7e0456"
+        },
+        "date": 1656576016872,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4908.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 669.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
