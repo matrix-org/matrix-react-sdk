@@ -176,6 +176,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 
+    &[data-layout=irc] {
+        .mx_MessageTimestamp {
+            text-align: right;
+        }
+    }
+
     &[data-layout=group] {
         .mx_EventTile_avatar {
             top: 14px;
