@@ -88,6 +88,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         padding-top: 0px;
     }
 
+    .mx_MessageTimestamp {
+        left: 0px;
+        text-align: center;
+    }
+
     .mx_ReactionsRow {
         display: flex;
         flex-flow: wrap;
@@ -255,11 +260,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     &.mx_EventTile_continuation {
         padding-top: 0px !important;
-    }
-
-    .mx_MessageTimestamp {
-        left: 0px;
-        text-align: center;
     }
 
     &.mx_EventTile_continuation .mx_EventTile_line {
