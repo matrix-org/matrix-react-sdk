@@ -31,7 +31,6 @@ import type {
 } from "matrix-js-sdk/src/matrix";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
-import type SettingsStore from "../src/settings/SettingsStore";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -42,7 +41,6 @@ declare global {
             };
             mxDispatcher: MatrixDispatcher;
             mxPerformanceMonitor: PerformanceMonitor;
-            mxSettingsStore: SettingsStore; // to allow for adjusting settings in tests
             beforeReload?: boolean; // for detecting reloads
             // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
