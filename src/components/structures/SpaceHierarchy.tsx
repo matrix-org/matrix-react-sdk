@@ -18,6 +18,7 @@ import React, {
     Dispatch,
     KeyboardEvent,
     KeyboardEventHandler,
+    ReactElement,
     ReactNode,
     SetStateAction,
     useCallback,
@@ -123,7 +124,7 @@ const Tile: React.FC<ITileProps> = ({
         });
     };
 
-    let button;
+    let button: ReactElement;
     if (busy) {
         button = <AccessibleTooltipButton
             disabled={true}
@@ -155,7 +156,7 @@ const Tile: React.FC<ITileProps> = ({
         </AccessibleButton>;
     }
 
-    let checkbox;
+    let checkbox: ReactElement | undefined;
     if (onToggleClick) {
         if (hasPermissions) {
             checkbox = <StyledCheckbox checked={!!selected} onChange={onToggleClick} tabIndex={isActive ? 0 : -1} />;
@@ -169,7 +170,7 @@ const Tile: React.FC<ITileProps> = ({
         }
     }
 
-    let avatar;
+    let avatar: ReactElement;
     if (joinedRoom) {
         avatar = <RoomAvatar room={joinedRoom} width={20} height={20} />;
     } else {
@@ -187,7 +188,7 @@ const Tile: React.FC<ITileProps> = ({
         description += " · " + _t("%(count)s rooms", { count: numChildRooms });
     }
 
-    let topic;
+    let topic: ReactNode | string | null;
     if (joinedRoom) {
         const topicObj = getTopic(joinedRoom);
         topic = topicToHtml(topicObj?.text, topicObj?.html);
@@ -195,14 +196,14 @@ const Tile: React.FC<ITileProps> = ({
         topic = room.topic;
     }
 
-    let joinedSection;
+    let joinedSection: ReactElement | undefined;
     if (joinedRoom) {
         joinedSection = <div className="mx_SpaceHierarchy_roomTile_joined">
             { _t("Joined") }
         </div>;
     }
 
-    let suggestedSection;
+    let suggestedSection: ReactElement | undefined;
     if (suggested && (!joinedRoom || hasPermissions)) {
         suggestedSection = <InfoTooltip tooltip={_t("This room is suggested as a good one to join")}>
             { _t("Suggested") }
