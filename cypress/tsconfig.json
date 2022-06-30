@@ -10,7 +10,8 @@
         "types": ["cypress", "@percy/cypress"],
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "module": "commonjs"
     },
     "include": [
         "**/*.ts"
