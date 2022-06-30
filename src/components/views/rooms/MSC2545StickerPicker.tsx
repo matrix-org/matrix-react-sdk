@@ -92,6 +92,7 @@ export const MSC2545StickerPicker: React.FC<{
     if (!isStickerPickerOpen) return null;
 
     const evt = cli.getAccountData(USER_PACK_ROOMS_EVENT_TYPE);
+    // TODO: check if null
     const evtContent = evt.event.content as { rooms: { [roomId: string]: { [packName: string]: {} } } };
 
     const packs = Object.keys(evtContent.rooms)
@@ -99,6 +100,7 @@ export const MSC2545StickerPicker: React.FC<{
             const room = cli.getRoom(roomId);
             return Object.keys(evtContent.rooms[roomId])
                 .map(name => {
+                    // TODO: check if null
                     const pack = room.currentState.getStateEvents(PACK_ROOM_EVENT_TYPE, name)
                         .event.content as I2545Pack;
                     return { room, pack, packName: name };
