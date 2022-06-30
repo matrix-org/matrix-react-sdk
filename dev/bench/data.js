@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656603033994,
+  "lastUpdate": 1656606605948,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105224,6 +105224,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5787.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a5871206fac1f31bf10ac3a07ca423d329656fbc",
+          "message": "Add support for JSX in stuff we import in Cypress test code (#8738)\n\n* Add support for JSX in stuff we import in Cypress test code\r\n\r\nSpawning from:\r\n\r\n - https://github.com/matrix-org/matrix-react-sdk/pull/8354#discussion_r883260722\r\n - https://github.com/matrix-org/matrix-react-sdk/pull/8354#discussion_r878660677\r\n\r\n* Add problem import\r\n\r\n* Inherit from existing type definitions\r\n\r\nSee https://github.com/matrix-org/matrix-react-sdk/pull/8738#discussion_r887350469\r\n\r\n* Specify `commonjs`\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Remove `mxSettingsStore` as it's no longer needed\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\nCo-authored-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-06-30T16:23:45Z",
+          "tree_id": "314f99a53dc03592d0648d9daf0825bc7d3a5156",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a5871206fac1f31bf10ac3a07ca423d329656fbc"
+        },
+        "date": 1656606590400,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5578.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2417.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5439.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
