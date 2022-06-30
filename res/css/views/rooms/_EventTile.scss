@@ -88,10 +88,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         padding-top: 0px;
     }
 
-    .mx_MessageTimestamp {
-        left: 0px;
-    }
-
     .mx_ReactionsRow {
         display: flex;
         flex-flow: wrap;
@@ -189,6 +185,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_MessageTimestamp {
             position: absolute; // for modern layout
+            left: 0;
             text-align: center;
         }
 
