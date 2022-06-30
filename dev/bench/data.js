@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656582605225,
+  "lastUpdate": 1656589367937,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104942,6 +104942,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5010.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78a98415ebfc46ebc5c7d37eb1537eb1756f4f52",
+          "message": "Set common width, white-space, and display values to MessageTimestamp (#8818)\n\n* Add mx_MessageTimestamp to mx_PinnedEventTile_timestamp\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Apply display: block globally to enable the width declaration\n\n- Unset display and width value of timestamp on pinned messages card\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Apply nowrap globally\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* MessageTimestamp on ThreadsList - Remove width setting and add font-size setting\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove redundant font-size declaration from Threadview\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Fix timestamp position of timestamp on ThreadView in IRC layout\n\n- GroupLayout is modern layout, not IRC layout\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove redundant font-size declaration from IRC layout\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Remove redundant color setting from timestamp on file panel\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Cancel the default width to set a gap between the event tile line\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\n\n* Apply user-select: none globally\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-30T13:37:43+02:00",
+          "tree_id": "e774979b34dcb03ef2484bdfef5822a62fcfe05c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78a98415ebfc46ebc5c7d37eb1537eb1756f4f52"
+        },
+        "date": 1656589355730,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4832.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2064,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4440.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
