@@ -59,6 +59,10 @@ declare global {
              * @return the list of DMs with that user
              */
             getDmRooms(userId: string): Chainable<string[]>;
+            /**
+             * Boostraps cross-signing.
+             */
+            bootstrapCrossSigning(): Chainable<void>;
         }
     }
 }
@@ -113,5 +117,13 @@ Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{
 Cypress.Commands.add("setAccountData", (type: string, data: object): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setAccountData(type, data);
+    });
+});
+
+Cypress.Commands.add("bootstrapCrossSigning", () => {
+    cy.window({ log: false }).then(win => {
+        win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
+            authUploadDeviceSigningKeys: async func => { await func({}); },
+        });
     });
 });
