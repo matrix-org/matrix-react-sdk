@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656577168615,
+  "lastUpdate": 1656579945160,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -104822,6 +104822,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 645.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e47749ce2374b04b14e83ee631ac669e318269e",
+          "message": "Migrate crypto test to cypress (#8833)",
+          "timestamp": "2022-06-30T10:59:25+02:00",
+          "tree_id": "7be46bf946ba3534c33220afcf0c1e707e5062de",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e47749ce2374b04b14e83ee631ac669e318269e"
+        },
+        "date": 1656579929944,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4812,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2444.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5153.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
