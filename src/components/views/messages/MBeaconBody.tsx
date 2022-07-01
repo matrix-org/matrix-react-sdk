@@ -132,8 +132,8 @@ export const BeaconBodyFallbackContent: React.FC<{
     beacon?: Beacon;
     latestLocationState?: BeaconLocationState; isOwnBeacon?: boolean; displayStatus: BeaconDisplayStatus;
 }> = ({ beacon, latestLocationState, isOwnBeacon, displayStatus }) => {
-    const humanizedUpdateTime = humanizeTime(latestLocationState.timestamp);
     const shouldDisplayLocation = displayStatus === BeaconDisplayStatus.Active;
+    const humanizedUpdateTime = shouldDisplayLocation ? humanizeTime(latestLocationState?.timestamp) : '';
     return <div className='mx_MBeaconBody_withoutMapContent'>
         { isOwnBeacon ?
             <OwnBeaconStatus
