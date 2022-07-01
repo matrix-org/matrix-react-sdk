@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656668116150,
+  "lastUpdate": 1656673216335,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105584,6 +105584,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4734.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5fb9497edbbc4c126297008814cf55145c41eead",
+          "message": "Hopefully improve Cypress test reliability by increasing the default timeout (#8961)",
+          "timestamp": "2022-07-01T10:55:07Z",
+          "tree_id": "f4d5de8c75fa51fb5aa9190adfbf8843a7832bfd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5fb9497edbbc4c126297008814cf55145c41eead"
+        },
+        "date": 1656673203179,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4687.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 648.5,
             "unit": "ms",
             "extra": "type: measure"
           }
