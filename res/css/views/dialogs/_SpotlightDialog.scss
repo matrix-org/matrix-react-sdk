@@ -14,11 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_SpotlightDialog_wrapper {
+    overflow: visible;
+}
+
 .mx_SpotlightDialog_wrapper .mx_Dialog {
     border-radius: 8px;
     overflow-y: initial;
     position: relative;
-    height: 60%;
+    height: 60vh;
     padding: 0;
     contain: unset; // needed for #mx_SpotlightDialog_keyboardPrompt to not be culled
 

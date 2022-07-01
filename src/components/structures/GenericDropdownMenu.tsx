@@ -156,6 +156,7 @@ export function GenericDropdownMenu<T>(
         </>;
     }
     const contextMenu = menuDisplayed ? <ContextMenu
+        mountAsChild
         onFinished={closeMenu}
         chevronFace={ChevronFace.Top}
         wrapperClassName={classNames("mx_GenericDropdownMenu_wrapper", className)}
