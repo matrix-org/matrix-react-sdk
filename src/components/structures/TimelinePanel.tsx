@@ -1038,11 +1038,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
     public forgetReadMarker = (): void => {
         if (!this.props.manageReadMarkers) return;
 
+        // Find the read receipt - we will set the read marker to this
         const rmId = this.getCurrentReadReceipt();
 
-        // see if we know the timestamp for the rr event
+        // Look up the timestamp if we can find it
         const tl = this.props.timelineSet.getTimelineForEvent(rmId);
-        let rmTs;
+        let rmTs: number;
         if (tl) {
             const event = tl.getEvents().find((e) => { return e.getId() == rmId; });
             if (event) {
@@ -1050,7 +1051,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             }
         }
 
+        // Update the read marker to the values we found
         this.setReadMarker(rmId, rmTs);
+
+        // Send the receipts to the server immediately (don't wait for activity)
+        this.sendReadReceipt();
     };
 
     /* return true if the content is fully scrolled down and we are
@@ -1271,7 +1276,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 );
             }
 
-            Modal.createTrackedDialog('Failed to load timeline position', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to load timeline position"),
                 description,
                 onFinished,
