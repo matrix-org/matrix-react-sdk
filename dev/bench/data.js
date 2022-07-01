@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656618045308,
+  "lastUpdate": 1656655625836,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105344,6 +105344,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5432.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a2f31fdfb4cd8183fcdf51e5ec2d3a2e2ed37730",
+          "message": "Location (live) share replies now provide a fallback content (#8949)\n\n* Implement location share reply fallback content\r\n\r\n* Replace single condition switch with if",
+          "timestamp": "2022-07-01T08:01:22+02:00",
+          "tree_id": "c76459873758e92d151c18691dc7ef366f09a512",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a2f31fdfb4cd8183fcdf51e5ec2d3a2e2ed37730"
+        },
+        "date": 1656655609910,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4883.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2216.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4564.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
