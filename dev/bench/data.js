@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656663026243,
+  "lastUpdate": 1656666720053,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105506,6 +105506,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 628,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2468e5830b5b4cb52516ecc7f99221cf14d4aa70",
+          "message": "Apply padding values to event tiles on MessageEditHistoryDialog with variables (#8955)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-01T10:04:53+01:00",
+          "tree_id": "1130083974ccfe2b05525eea876b74cc4d710cac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2468e5830b5b4cb52516ecc7f99221cf14d4aa70"
+        },
+        "date": 1656666703751,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4862.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 766.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
