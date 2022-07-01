@@ -1132,6 +1132,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
             }
 
+            &.mx_EventTile_continuation {
+                padding-top: 0;
+            }
+
             .mx_EventTile_avatar {
                 top: 2px;
             }
