@@ -21,7 +21,6 @@ import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { IRelationsRequestOpts } from 'matrix-js-sdk/src/@types/requests';
-import classNames from "classnames";
 import { logger } from 'matrix-js-sdk/src/logger';
 
 import BaseCard from "../views/right_panel/BaseCard";
@@ -54,6 +53,7 @@ import { ButtonEvent } from "../views/elements/AccessibleButton";
 import { RoomViewStore } from '../../stores/RoomViewStore';
 import Spinner from "../views/elements/Spinner";
 import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
+import Heading from '../views/typography/Heading';
 
 interface IProps {
     room: Room;
@@ -298,8 +298,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
     }
 
     private renderThreadViewHeader = (): JSX.Element => {
-        return <div className="mx_ThreadPanel__header">
-            <span>{ _t("Thread") }</span>
+        return <div className="mx_BaseCard_header_title">
+            <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Thread") }</Heading>
             <ThreadListContextMenu
                 mxEvent={this.props.mxEvent}
                 permalinkCreator={this.props.permalinkCreator} />
@@ -312,10 +312,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
             : null;
 
         const threadRelation = this.threadRelation;
-
-        const messagePanelClassNames = classNames("mx_RoomView_messagePanel", {
-            "mx_GroupLayout": this.state.layout === Layout.Group,
-        });
 
         let timeline: JSX.Element;
         if (this.state.thread) {
@@ -344,7 +340,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     hideThreadedMessages={false}
                     hidden={false}
                     showReactions={true}
-                    className={messagePanelClassNames}
+                    className="mx_RoomView_messagePanel"
                     permalinkCreator={this.props.permalinkCreator}
                     membersLoaded={true}
                     editState={this.state.editState}
