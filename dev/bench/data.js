@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656673216335,
+  "lastUpdate": 1656675328235,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105620,6 +105620,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 648.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1ef11a162c66d9931c8ca049948a3403cfe34298",
+          "message": "Enable ReplyChain text to be expanded on IRC layout (#8959)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-01T11:28:57Z",
+          "tree_id": "37f4fc5199e1640f9231fca846c58bef6367d48d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1ef11a162c66d9931c8ca049948a3403cfe34298"
+        },
+        "date": 1656675309561,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5349.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1339.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
