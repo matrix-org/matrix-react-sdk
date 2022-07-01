@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656688394100,
+  "lastUpdate": 1656702409955,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105740,6 +105740,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4886.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "johannesm@element.io",
+            "name": "Johannes Marbach",
+            "username": "Johennes"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0d100cbbce0d3ea4b3c8e9503befd1a5837503c2",
+          "message": "Render HTML topics in rooms on space home (#8939)\n\n* Render HTML topics in rooms on space home\r\n\r\nSigned-off-by: Johannes Marbach <johannesm@element.io>\r\n\r\n* Add type annotations\r\n\r\nSigned-off-by: Johannes Marbach <johannesm@element.io>\r\n\r\n* Remove superfluous conditional check\r\n\r\nSigned-off-by: Johannes Marbach <johannesm@element.io>",
+          "timestamp": "2022-07-01T15:01:18-04:00",
+          "tree_id": "c87c193f63a4efdd7885d95e2120b754f4baafc4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0d100cbbce0d3ea4b3c8e9503befd1a5837503c2"
+        },
+        "date": 1656702396350,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5085.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2208.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4569.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
