@@ -195,6 +195,14 @@ $left-gutter: 64px;
         }
     }
 
+    &[data-layout=irc] {
+        .mx_EventTile_msgOption {
+            .mx_ReadReceiptGroup {
+                top: -0.3rem; // ($irc-line-height - avatar height) / 2
+            }
+        }
+    }
+
     &[data-layout=group] {
         .mx_EventTile_avatar {
             top: 14px;
