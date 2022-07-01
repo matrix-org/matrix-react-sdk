@@ -83,7 +83,6 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
 
         let preview: JSX.Element;
         let placeholder: JSX.Element;
-        console.log('hhh', this.props.file);
         if (this.mimeType.startsWith("image/")) {
             preview = (
                 <img
