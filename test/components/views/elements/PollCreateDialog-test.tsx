@@ -217,7 +217,10 @@ describe("PollCreateDialog", () => {
 
     it("displays a spinner after submitting", () => {
         const dialog = mount(
-            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: MatrixClientPeg.get() },
+            },
         );
         changeValue(dialog, "Question or topic", "Q");
         changeValue(dialog, "Option 1", "A1");
@@ -230,7 +233,10 @@ describe("PollCreateDialog", () => {
 
     it("sends a poll create event when submitted", () => {
         const dialog = mount(
-            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: MatrixClientPeg.get() },
+            },
         );
         changeValue(dialog, "Question or topic", "Q");
         changeValue(dialog, "Option 1", "A1");
@@ -282,7 +288,10 @@ describe("PollCreateDialog", () => {
                 room={createRoom()}
                 onFinished={jest.fn()}
                 editingMxEvent={previousEvent}
-            />,
+            />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: MatrixClientPeg.get() },
+            },
         );
 
         changeValue(dialog, "Question or topic", "Poll Q updated");

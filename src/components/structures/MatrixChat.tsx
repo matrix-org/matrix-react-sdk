@@ -130,6 +130,7 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
+import ModalContainer from './ModalContainer';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -2036,6 +2037,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         return <ErrorBoundary>
             { view }
+            <ModalContainer matrixClient={MatrixClientPeg.get()} />
         </ErrorBoundary>;
     }
 }

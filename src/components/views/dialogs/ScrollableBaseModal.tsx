@@ -17,13 +17,12 @@ limitations under the License.
 import React, { FormEvent } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { IDialogProps } from "./IDialogProps";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 export interface IScrollableBaseState {
     canSubmit: boolean;
@@ -36,12 +35,15 @@ export interface IScrollableBaseState {
  */
 export default abstract class ScrollableBaseModal<TProps extends IDialogProps, TState extends IScrollableBaseState>
     extends React.PureComponent<TProps, TState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     protected constructor(props: TProps) {
         super(props);
     }
 
     protected get matrixClient(): MatrixClient {
-        return MatrixClientPeg.get();
+        return this.context;
     }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
@@ -72,45 +74,43 @@ export default abstract class ScrollableBaseModal<TProps extends IDialogProps, T
 
     public render(): JSX.Element {
         return (
-            <MatrixClientContext.Provider value={this.matrixClient}>
-                <div
-                    onKeyDown={this.onKeyDown}
-                    role="dialog"
-                    aria-labelledby="mx_CompoundDialog_title"
-                    // Like BaseDialog, we'll just point this at the whole content
-                    aria-describedby="mx_CompoundDialog_content"
-                    className="mx_CompoundDialog mx_ScrollableBaseDialog"
-                >
-                    <div className="mx_CompoundDialog_header">
-                        <h1>{ this.state.title }</h1>
-                        <AccessibleButton
-                            onClick={this.onCancel}
-                            className="mx_CompoundDialog_cancelButton"
-                            aria-label={_t("Close dialog")}
-                        />
-                    </div>
-                    <form onSubmit={this.onSubmit}>
-                        <div className="mx_CompoundDialog_content">
-                            { this.renderContent() }
-                        </div>
-                        <div className="mx_CompoundDialog_footer">
-                            <AccessibleButton onClick={this.onCancel} kind="primary_outline">
-                                { _t("Cancel") }
-                            </AccessibleButton>
-                            <AccessibleButton
-                                onClick={this.onSubmit}
-                                kind="primary"
-                                disabled={!this.state.canSubmit}
-                                type="submit"
-                                element="button"
-                                className="mx_Dialog_nonDialogButton"
-                            >
-                                { this.state.actionLabel }
-                            </AccessibleButton>
-                        </div>
-                    </form>
+            <div
+                onKeyDown={this.onKeyDown}
+                role="dialog"
+                aria-labelledby="mx_CompoundDialog_title"
+                // Like BaseDialog, we'll just point this at the whole content
+                aria-describedby="mx_CompoundDialog_content"
+                className="mx_CompoundDialog mx_ScrollableBaseDialog"
+            >
+                <div className="mx_CompoundDialog_header">
+                    <h1>{ this.state.title }</h1>
+                    <AccessibleButton
+                        onClick={this.onCancel}
+                        className="mx_CompoundDialog_cancelButton"
+                        aria-label={_t("Close dialog")}
+                    />
                 </div>
-            </MatrixClientContext.Provider>
+                <form onSubmit={this.onSubmit}>
+                    <div className="mx_CompoundDialog_content">
+                        { this.renderContent() }
+                    </div>
+                    <div className="mx_CompoundDialog_footer">
+                        <AccessibleButton onClick={this.onCancel} kind="primary_outline">
+                            { _t("Cancel") }
+                        </AccessibleButton>
+                        <AccessibleButton
+                            onClick={this.onSubmit}
+                            kind="primary"
+                            disabled={!this.state.canSubmit}
+                            type="submit"
+                            element="button"
+                            className="mx_Dialog_nonDialogButton"
+                        >
+                            { this.state.actionLabel }
+                        </AccessibleButton>
+                    </div>
+                </form>
+            </div>
         );
     }
 }

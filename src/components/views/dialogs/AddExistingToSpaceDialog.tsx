@@ -431,41 +431,39 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, 
         onFinished={onFinished}
         fixedWidth={false}
     >
-        <MatrixClientContext.Provider value={space.client}>
-            <AddExistingToSpace
-                space={space}
-                onFinished={onFinished}
-                footerPrompt={<>
-                    <div>{ _t("Want to add a new room instead?") }</div>
+        <AddExistingToSpace
+            space={space}
+            onFinished={onFinished}
+            footerPrompt={<>
+                <div>{ _t("Want to add a new room instead?") }</div>
+                <AccessibleButton
+                    kind="link"
+                    onClick={(ev: ButtonEvent) => {
+                        onCreateRoomClick(ev);
+                        onFinished();
+                    }}
+                >
+                    { _t("Create a new room") }
+                </AccessibleButton>
+            </>}
+            filterPlaceholder={_t("Search for rooms")}
+            roomsRenderer={defaultRoomsRenderer}
+            spacesRenderer={() => (
+                <div className="mx_AddExistingToSpace_section">
+                    <h3>{ _t("Spaces") }</h3>
                     <AccessibleButton
                         kind="link"
-                        onClick={(ev: ButtonEvent) => {
-                            onCreateRoomClick(ev);
+                        onClick={() => {
+                            onAddSubspaceClick();
                             onFinished();
                         }}
                     >
-                        { _t("Create a new room") }
+                        { _t("Adding spaces has moved.") }
                     </AccessibleButton>
-                </>}
-                filterPlaceholder={_t("Search for rooms")}
-                roomsRenderer={defaultRoomsRenderer}
-                spacesRenderer={() => (
-                    <div className="mx_AddExistingToSpace_section">
-                        <h3>{ _t("Spaces") }</h3>
-                        <AccessibleButton
-                            kind="link"
-                            onClick={() => {
-                                onAddSubspaceClick();
-                                onFinished();
-                            }}
-                        >
-                            { _t("Adding spaces has moved.") }
-                        </AccessibleButton>
-                    </div>
-                )}
-                dmsRenderer={defaultDmsRenderer}
-            />
-        </MatrixClientContext.Provider>
+                </div>
+            )}
+            dmsRenderer={defaultDmsRenderer}
+        />
     </BaseDialog>;
 };
 

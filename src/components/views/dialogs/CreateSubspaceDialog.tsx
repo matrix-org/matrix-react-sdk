@@ -22,7 +22,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from '../../../languageHandler';
 import BaseDialog from "./BaseDialog";
 import AccessibleButton from "../elements/AccessibleButton";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
@@ -125,62 +124,60 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         onFinished={onFinished}
         fixedWidth={false}
     >
-        <MatrixClientContext.Provider value={space.client}>
-            <div className="mx_CreateSubspaceDialog_content">
-                <div className="mx_CreateSubspaceDialog_betaNotice">
-                    <BetaPill />
-                    { _t("Add a space to a space you manage.") }
-                </div>
+        <div className="mx_CreateSubspaceDialog_content">
+            <div className="mx_CreateSubspaceDialog_betaNotice">
+                <BetaPill />
+                { _t("Add a space to a space you manage.") }
+            </div>
 
-                <SpaceCreateForm
-                    busy={busy}
-                    onSubmit={onCreateSubspaceClick}
-                    setAvatar={setAvatar}
-                    name={name}
-                    setName={setName}
-                    nameFieldRef={spaceNameField}
-                    topic={topic}
-                    setTopic={setTopic}
-                    alias={alias}
-                    setAlias={setAlias}
-                    showAliasField={joinRule === JoinRule.Public}
-                    aliasFieldRef={spaceAliasField}
+            <SpaceCreateForm
+                busy={busy}
+                onSubmit={onCreateSubspaceClick}
+                setAvatar={setAvatar}
+                name={name}
+                setName={setName}
+                nameFieldRef={spaceNameField}
+                topic={topic}
+                setTopic={setTopic}
+                alias={alias}
+                setAlias={setAlias}
+                showAliasField={joinRule === JoinRule.Public}
+                aliasFieldRef={spaceAliasField}
+            >
+                <JoinRuleDropdown
+                    label={_t("Space visibility")}
+                    labelInvite={_t("Private space (invite only)")}
+                    labelPublic={_t("Public space")}
+                    labelRestricted={supportsRestricted ? _t("Visible to space members") : undefined}
+                    width={478}
+                    value={joinRule}
+                    onChange={setJoinRule}
+                />
+                { joinRuleMicrocopy }
+            </SpaceCreateForm>
+        </div>
+
+        <div className="mx_CreateSubspaceDialog_footer">
+            <div className="mx_CreateSubspaceDialog_footer_prompt">
+                <div>{ _t("Want to add an existing space instead?") }</div>
+                <AccessibleButton
+                    kind="link"
+                    onClick={() => {
+                        onAddExistingSpaceClick();
+                        onFinished();
+                    }}
                 >
-                    <JoinRuleDropdown
-                        label={_t("Space visibility")}
-                        labelInvite={_t("Private space (invite only)")}
-                        labelPublic={_t("Public space")}
-                        labelRestricted={supportsRestricted ? _t("Visible to space members") : undefined}
-                        width={478}
-                        value={joinRule}
-                        onChange={setJoinRule}
-                    />
-                    { joinRuleMicrocopy }
-                </SpaceCreateForm>
-            </div>
-
-            <div className="mx_CreateSubspaceDialog_footer">
-                <div className="mx_CreateSubspaceDialog_footer_prompt">
-                    <div>{ _t("Want to add an existing space instead?") }</div>
-                    <AccessibleButton
-                        kind="link"
-                        onClick={() => {
-                            onAddExistingSpaceClick();
-                            onFinished();
-                        }}
-                    >
-                        { _t("Add existing space") }
-                    </AccessibleButton>
-                </div>
-
-                <AccessibleButton kind="primary_outline" disabled={busy} onClick={() => onFinished(false)}>
-                    { _t("Cancel") }
-                </AccessibleButton>
-                <AccessibleButton kind="primary" disabled={busy} onClick={onCreateSubspaceClick}>
-                    { busy ? _t("Adding...") : _t("Add") }
+                    { _t("Add existing space") }
                 </AccessibleButton>
             </div>
-        </MatrixClientContext.Provider>
+
+            <AccessibleButton kind="primary_outline" disabled={busy} onClick={() => onFinished(false)}>
+                { _t("Cancel") }
+            </AccessibleButton>
+            <AccessibleButton kind="primary" disabled={busy} onClick={onCreateSubspaceClick}>
+                { busy ? _t("Adding...") : _t("Add") }
+            </AccessibleButton>
+        </div>
     </BaseDialog>;
 };
 

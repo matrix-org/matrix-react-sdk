@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useRef } from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React, { useState, useRef, useContext } from 'react';
 import {
     Beacon,
     Room,
@@ -41,7 +40,6 @@ import MapFallback from '../location/MapFallback';
 
 interface IProps extends IDialogProps {
     roomId: Room['roomId'];
-    matrixClient: MatrixClient;
     // open the map centered on this beacon's location
     focusBeacon?: Beacon;
 }
@@ -74,9 +72,9 @@ const useInitialMapPosition = (liveBeacons: Beacon[], focusBeacon?: Beacon): {
 const BeaconViewDialog: React.FC<IProps> = ({
     focusBeacon,
     roomId,
-    matrixClient,
     onFinished,
 }) => {
+    const matrixClient = useContext(MatrixClientContext);
     const liveBeacons = useLiveBeacons(roomId, matrixClient);
 
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -89,55 +87,53 @@ const BeaconViewDialog: React.FC<IProps> = ({
             onFinished={onFinished}
             fixedWidth={false}
         >
-            <MatrixClientContext.Provider value={matrixClient}>
-                { !!liveBeacons?.length ? <Map
-                    id='mx_BeaconViewDialog'
-                    bounds={bounds}
-                    centerGeoUri={centerGeoUri}
-                    interactive
-                    className="mx_BeaconViewDialog_map"
-                >
-                    {
-                        ({ map }: { map: maplibregl.Map}) =>
-                            <>
-                                { liveBeacons.map(beacon => <BeaconMarker
-                                    key={beacon.identifier}
-                                    map={map}
-                                    beacon={beacon}
-                                    tooltip={<BeaconStatusTooltip beacon={beacon} />}
-                                />) }
-                                <ZoomButtons map={map} />
-                            </>
-                    }
-                </Map> :
-                    <MapFallback
-                        data-test-id='beacon-view-dialog-map-fallback'
-                        className='mx_BeaconViewDialog_map'
-                    >
-                        <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t('No live locations') }</span>
-                        <AccessibleButton
-                            kind='primary'
-                            onClick={onFinished}
-                            data-test-id='beacon-view-dialog-fallback-close'
-                        >
-                            { _t('Close') }
-                        </AccessibleButton>
-                    </MapFallback>
+            { !!liveBeacons?.length ? <Map
+                id='mx_BeaconViewDialog'
+                bounds={bounds}
+                centerGeoUri={centerGeoUri}
+                interactive
+                className="mx_BeaconViewDialog_map"
+            >
+                {
+                    ({ map }: { map: maplibregl.Map}) =>
+                        <>
+                            { liveBeacons.map(beacon => <BeaconMarker
+                                key={beacon.identifier}
+                                map={map}
+                                beacon={beacon}
+                                tooltip={<BeaconStatusTooltip beacon={beacon} />}
+                            />) }
+                            <ZoomButtons map={map} />
+                        </>
                 }
-                { isSidebarOpen ?
-                    <DialogSidebar beacons={liveBeacons} requestClose={() => setSidebarOpen(false)} /> :
+            </Map> :
+                <MapFallback
+                    data-test-id='beacon-view-dialog-map-fallback'
+                    className='mx_BeaconViewDialog_map'
+                >
+                    <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t('No live locations') }</span>
                     <AccessibleButton
                         kind='primary'
-                        onClick={() => setSidebarOpen(true)}
-                        data-test-id='beacon-view-dialog-open-sidebar'
-                        className='mx_BeaconViewDialog_viewListButton'
+                        onClick={onFinished}
+                        data-test-id='beacon-view-dialog-fallback-close'
                     >
-                        <LiveLocationIcon height={12} />&nbsp;
-                        { _t('View list') }
+                        { _t('Close') }
                     </AccessibleButton>
-                }
-                <DialogOwnBeaconStatus roomId={roomId} />
-            </MatrixClientContext.Provider>
+                </MapFallback>
+            }
+            { isSidebarOpen ?
+                <DialogSidebar beacons={liveBeacons} requestClose={() => setSidebarOpen(false)} /> :
+                <AccessibleButton
+                    kind='primary'
+                    onClick={() => setSidebarOpen(true)}
+                    data-test-id='beacon-view-dialog-open-sidebar'
+                    className='mx_BeaconViewDialog_viewListButton'
+                >
+                    <LiveLocationIcon height={12} />&nbsp;
+                    { _t('View list') }
+                </AccessibleButton>
+            }
+            <DialogOwnBeaconStatus roomId={roomId} />
         </BaseDialog>
     );
 };

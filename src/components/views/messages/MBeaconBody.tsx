@@ -110,7 +110,6 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
             BeaconViewDialog,
             {
                 roomId: mxEvent.getRoomId(),
-                matrixClient,
                 focusBeacon: beacon,
             },
             "mx_BeaconViewDialog_wrapper",
