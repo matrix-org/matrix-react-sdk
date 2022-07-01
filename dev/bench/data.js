@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656675328235,
+  "lastUpdate": 1656679742369,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105656,6 +105656,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1339.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nicolas.werner@hotmail.de",
+            "name": "DeepBlueV7.X",
+            "username": "deepbluev7"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d8d4ade1b7707e6018b139c64ce509c95b28460e",
+          "message": "Fix calls on homeservers without the unstable thirdparty endpoints (#8931)\n\n* Fix calls on homeservers without the unstable thirdparty endpoints\r\n\r\nCalling that endpoint throws an error and aborts the entire call. We do\r\ncheck if an empty list or null is returned by that endpoint everywhere,\r\nso returning an empty list simulates the thirdparty stuff just not being\r\nfound.\r\n\r\nChecking for \"this.supportsSipNativeVirtual\" doesn't necessarily work,\r\nsince that might not be set yet and as such breaks calls that rely on\r\nthis functionality working.\r\n\r\nfixes https://github.com/vector-im/element-web/issues/21680\r\n\r\nSigned-off-by: Nicolas Werner <nicolas.werner@hotmail.de>\r\n\r\n* Address review comments\r\n\r\n* Make log message a warning\r\n\r\nSigned-off-by: Nicolas Werner <nicolas.werner@hotmail.de>",
+          "timestamp": "2022-07-01T12:43:42Z",
+          "tree_id": "4a90f31e7b43381a9006bd89ccfe5cb16a11ebec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d8d4ade1b7707e6018b139c64ce509c95b28460e"
+        },
+        "date": 1656679729334,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4749.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2239.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4661.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
