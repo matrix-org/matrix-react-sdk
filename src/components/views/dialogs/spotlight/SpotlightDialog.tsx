@@ -76,15 +76,13 @@ import { copyPlaintext } from "../../../../utils/strings";
 import BaseAvatar from "../../avatars/BaseAvatar";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { SearchResultAvatar } from "../../avatars/SearchResultAvatar";
-import { BetaPill } from "../../beta/BetaCard";
 import { NetworkDropdown } from "../../directory/NetworkDropdown";
 import AccessibleButton from "../../elements/AccessibleButton";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
 import BaseDialog from "../BaseDialog";
-import BetaFeedbackDialog from "../BetaFeedbackDialog";
+import FeedbackDialog from "../FeedbackDialog";
 import { IDialogProps } from "../IDialogProps";
-import { UserTab } from "../UserTab";
 import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultDetails } from "./RoomResultDetails";
@@ -105,11 +103,8 @@ function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
     return ref.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
-function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> | null {
+function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> {
     const roomTypes = new Set<RoomType | null>();
-
-    // This is what servers not implementing MSC3827 are expecting
-    if (showRooms && !showSpaces) return null;
 
     if (showRooms) roomTypes.add(null);
     if (showSpaces) roomTypes.add(RoomType.Space);
@@ -182,16 +177,20 @@ const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResul
 });
 
 const toRoomResult = (room: Room): IRoomResult => {
+    const myUserId = MatrixClientPeg.get().getUserId();
     const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+
     if (otherUserId) {
+        const otherMembers = room.getMembers().filter(it => it.userId !== myUserId);
+        const query = [
+            ...otherMembers.map(it => it.name.toLowerCase()),
+            ...otherMembers.map(it => it.userId.toLowerCase()),
+        ].filter(Boolean);
         return {
             room,
             section: Section.People,
             filter: [Filter.People],
-            query: [
-                otherUserId.toLowerCase(),
-                room.getMember(otherUserId)?.name.toLowerCase(),
-            ].filter(Boolean),
+            query,
         };
     } else if (room.isSpaceRoom()) {
         return {
@@ -988,9 +987,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     };
 
     const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
-        Modal.createDialog(BetaFeedbackDialog, {
-            featureId: "feature_spotlight",
-        });
+        Modal.createDialog(FeedbackDialog);
     } : null;
 
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
@@ -999,10 +996,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         <div id="mx_SpotlightDialog_keyboardPrompt">
             { _t("Use <arrows/> to scroll", {}, {
                 arrows: () => <>
-                    <div>↓</div>
-                    <div>↑</div>
-                    { !filter !== null && !query && <div>←</div> }
-                    { !filter !== null && !query && <div>→</div> }
+                    <kbd>↓</kbd>
+                    <kbd>↑</kbd>
+                    { !filter !== null && !query && <kbd>←</kbd> }
+                    { !filter !== null && !query && <kbd>→</kbd> }
                 </>,
             }) }
         </div>
@@ -1023,6 +1020,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     })}>
                         <span>{ filterToLabel(filter) }</span>
                         <AccessibleButton
+                            tabIndex={-1}
                             alt={_t("Remove search filter for %(filter)s", {
                                 filter: filterToLabel(filter),
                             })}
@@ -1061,13 +1059,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             </div>
 
             <div className="mx_SpotlightDialog_footer">
-                <BetaPill onClick={() => {
-                    defaultDispatcher.dispatch({
-                        action: Action.ViewUserSettings,
-                        initialTabId: UserTab.Labs,
-                    });
-                    onFinished();
-                }} />
                 { openFeedback && _t("Results not as expected? Please <a>give feedback</a>.", {}, {
                     a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
                         { sub }

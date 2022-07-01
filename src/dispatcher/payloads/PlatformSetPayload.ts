@@ -14,19 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_CancelButton {
-    width: var(--size);
-    height: var(--size);
+import { Action } from "../actions";
+import { ActionPayload } from "../payloads";
+import BasePlatform from "../../BasePlatform";
 
-    box-sizing: border-box;
-    padding: calc(var(--size) / 4);
-    border-radius: 50%;
-
-    line-height: 0;
-    background: $quinary-content;
-
-    svg {
-        width: calc(var(--size) / 2);
-        color: $secondary-content;
-    }
+export interface PlatformSetPayload extends ActionPayload {
+    action: Action.PlatformSet;
+    platform: BasePlatform;
 }
