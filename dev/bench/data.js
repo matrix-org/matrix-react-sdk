@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656662345716,
+  "lastUpdate": 1656663026243,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105470,6 +105470,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4506.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bf281c1b6bfafb523d61198ce6c6ea977338714f",
+          "message": "Move mx_EventTile_body out of mx_EventTile:not([data-layout=bubble]) (#8958)\n\n* Move mx_EventTile_body out of mx_EventTile:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Enable overflow scroll on expanded ReplyChain on bubble layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-01T10:04:33+02:00",
+          "tree_id": "8bfd9667dd6e9118da1063053ea704fd62c2275e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bf281c1b6bfafb523d61198ce6c6ea977338714f"
+        },
+        "date": 1656663012079,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5182.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 628,
             "unit": "ms",
             "extra": "type: measure"
           }
