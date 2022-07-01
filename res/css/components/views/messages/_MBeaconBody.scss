@@ -24,6 +24,28 @@ limitations under the License.
     overflow: hidden;
 }
 
+.mx_MBeaconBody.mx_MBeaconBody_withoutMap {
+    height: auto;
+
+    .mx_MBeaconBody_chin {
+        position: relative;
+        background-color: transparent;
+    }
+}
+
+.mx_MBeaconBody_withoutMapContent {
+    background-color: $overlay-background;
+    border-radius: 4px;
+}
+
+.mx_MBeaconBody_withoutMapInfoLastUpdated {
+    // 48px lines up with icon in BeaconStatus
+    padding: 0 $spacing-8 $spacing-8 48px;
+
+    color: $tertiary-content;
+    font-size: $font-10px;
+}
+
 .mx_MBeaconBody_map {
     height: 100%;
     width: 100%;
