@@ -22,7 +22,6 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
 
-import { Icon as WarningIcon } from '../../../../res/img/warning.svg';
 import MFileBody from './MFileBody';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
@@ -39,6 +38,7 @@ import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContex
 import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
 import { presentableTextForFile } from "../../../utils/FileUtils";
 import { createReconnectedListener } from '../../../utils/connection';
+import MediaProcessingError from './shared/MediaProcessingError';
 
 enum Placeholder {
     NoImage,
@@ -553,10 +553,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         if (this.state.error) {
             return (
-                <div className="mx_MImageBody">
-                    <WarningIcon width="16" height="16" />&nbsp;
+                <MediaProcessingError className="mx_MImageBody">
                     { _t("Error decrypting image") }
-                </div>
+                </MediaProcessingError>
             );
         }
 
