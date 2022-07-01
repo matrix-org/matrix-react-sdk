@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656666720053,
+  "lastUpdate": 1656668116150,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105542,6 +105542,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 766.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8e457f17ba834713de9beed1463987f5ecd77d2b",
+          "message": "Introduce new copy icon (#8942)\n\nPSG-110",
+          "timestamp": "2022-07-01T11:29:19+02:00",
+          "tree_id": "c0da5d4f80bfe0a60c64db92dbb3aec7371b51e0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8e457f17ba834713de9beed1463987f5ecd77d2b"
+        },
+        "date": 1656668103784,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4751.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2249.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4734.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
