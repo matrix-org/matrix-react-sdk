@@ -13,7 +13,6 @@ Object {
           height="16"
           width="16"
         />
-         
         Something went wrong
       </span>
     </div>
@@ -27,7 +26,6 @@ Object {
         height="16"
         width="16"
       />
-       
       Something went wrong
     </span>
   </div>,

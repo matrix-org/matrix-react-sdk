@@ -25,7 +25,7 @@ interface Props {
 
 const MediaProcessingError: React.FC<Props> = ({ className, children }) => (
     <span className={className}>
-        <WarningIcon className='mx_MediaProcessingError_Icon' width="16" height="16" />&nbsp;
+        <WarningIcon className='mx_MediaProcessingError_Icon' width="16" height="16" />
         { children }
     </span>
 );
