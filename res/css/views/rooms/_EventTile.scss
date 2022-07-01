@@ -198,7 +198,7 @@ $left-gutter: 64px;
     &[data-layout=irc] {
         .mx_EventTile_msgOption {
             .mx_ReadReceiptGroup {
-                top: -0.3rem; // ($irc-line-height - avatar height) / 2
+                inset-block-start: -0.3rem; // ($irc-line-height - avatar height) / 2
             }
         }
     }
@@ -226,14 +226,14 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_msgOption {
-            margin-right: 10px;
+            margin-inline-end: 10px;
         }
 
         .mx_ReadReceiptGroup {
             // This aligns the avatar with the last line of the
             // message. We want to move it one line up
             // See .mx_EventTile[data-layout=group] .mx_EventTile_line in _EventTile.scss
-            top: calc(-$font-22px - 3px);
+            inset-block-start: calc(-$font-22px - 3px);
         }
 
         .mx_ThreadSummary,
@@ -1161,7 +1161,7 @@ $left-gutter: 64px;
             .mx_ReadReceiptGroup {
                 // This aligns the avatar with the last line of the
                 // message. We want to move it one line up - 2rem
-                top: -2rem;
+                inset-block-start: -2rem;
             }
 
             .mx_EventTile_content .markdown-body {
