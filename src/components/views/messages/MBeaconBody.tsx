@@ -26,6 +26,7 @@ import {
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
 import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
+import classNames from 'classnames';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
@@ -42,7 +43,6 @@ import SmartMarker from '../location/SmartMarker';
 import { GetRelationsForEvent } from '../rooms/EventTile';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
-import classNames from 'classnames';
 import { humanizeTime } from '../../../utils/humanize';
 import ShareLatestLocation from '../beacon/ShareLatestLocation';
 
@@ -130,7 +130,7 @@ const useHandleBeaconRedaction = (
 
 export const BeaconBodyFallbackContent: React.FC<{
     beacon?: Beacon;
-    latestLocationState?: BeaconLocationState; isOwnBeacon?: boolean; displayStatus: BeaconDisplayStatus
+    latestLocationState?: BeaconLocationState; isOwnBeacon?: boolean; displayStatus: BeaconDisplayStatus;
 }> = ({ beacon, latestLocationState, isOwnBeacon, displayStatus }) => {
     const humanizedUpdateTime = humanizeTime(latestLocationState.timestamp);
     const shouldDisplayLocation = displayStatus === BeaconDisplayStatus.Active;
@@ -151,13 +151,13 @@ export const BeaconBodyFallbackContent: React.FC<{
                 label={_t('View live location')}
                 withIcon
             >
-                {shouldDisplayLocation && <ShareLatestLocation latestLocationState={latestLocationState} /> }
+                { shouldDisplayLocation && <ShareLatestLocation latestLocationState={latestLocationState} /> }
             </BeaconStatus>
         }
-        { displayStatus === BeaconDisplayStatus.Active && 
+        { displayStatus === BeaconDisplayStatus.Active &&
             <span className='mx_MBeaconBody_withoutMapInfoLastUpdated'>{ _t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime }) }</span>
-         }
-    </div>
+        }
+    </div>;
 };
 
 const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelationsForEvent }, ref) => {
@@ -174,7 +174,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
     const isMapDisplayError = error?.message === LocationShareError.MapStyleUrlNotConfigured ||
     error?.message === LocationShareError.MapStyleUrlNotReachable;
     const displayStatus = getBeaconDisplayStatus(
-        isLive, latestLocationState, isMapDisplayError ? undefined : error, waitingToStart
+        isLive, latestLocationState, isMapDisplayError ? undefined : error, waitingToStart,
     );
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
     const isOwnBeacon = beacon?.beaconInfoOwner === matrixClient.getUserId();

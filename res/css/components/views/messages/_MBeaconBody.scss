@@ -34,12 +34,13 @@ limitations under the License.
 }
 
 .mx_MBeaconBody_withoutMapContent {
-    background-color: $overlay-background;
+    background-color: $panels;
     border-radius: 4px;
 }
 
 .mx_MBeaconBody_withoutMapInfoLastUpdated {
     // 48px lines up with icon in BeaconStatus
+    margin-top: -$spacing-8;
     padding: 0 $spacing-8 $spacing-8 48px;
 
     color: $tertiary-content;
