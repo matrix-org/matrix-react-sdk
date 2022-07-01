@@ -31,6 +31,7 @@ import { isJoinedOrNearlyJoined } from "./membership";
 import dis from "../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "./rooms";
 import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
+import * as thisModule from "./direct-messages";
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
@@ -42,6 +43,8 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
         // that bots, assistants, etc will ruin a room's DM-ness, though this is a problem for
         // canonical DMs to solve.
         if (r && r.getMyMembership() === "join") {
+            if (r instanceof LocalRoom) return false;
+
             const members = r.currentState.getMembers();
             const joinedMembers = members.filter(m => isJoinedOrNearlyJoined(m.membership));
             const otherMember = joinedMembers.find(m => m.userId === userId);
@@ -57,15 +60,15 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
     }
 }
 
-function findDMRoom(client: MatrixClient, targets: Member[]): Room | null {
+export function findDMRoom(client: MatrixClient, targets: Member[]): Room | null {
     const targetIds = targets.map(t => t.userId);
     let existingRoom: Room;
     if (targetIds.length === 1) {
-        existingRoom = findDMForUser(client, targetIds[0]);
+        existingRoom = thisModule.findDMForUser(client, targetIds[0]);
     } else {
         existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
     }
-    if (existingRoom && !(existingRoom instanceof LocalRoom)) {
+    if (existingRoom) {
         return existingRoom;
     }
     return null;
