@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656660607694,
+  "lastUpdate": 1656662345716,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105428,6 +105428,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4341.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e72598e40bd291c19ab88e9497eaec9c3aee36f3",
+          "message": "Fix expand/collapse state wrong in metaspaces (#8952)",
+          "timestamp": "2022-07-01T08:53:47+01:00",
+          "tree_id": "391a45d31e1813b438927f08dac74200e66c0b4d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e72598e40bd291c19ab88e9497eaec9c3aee36f3"
+        },
+        "date": 1656662332107,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5002,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2218.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4506.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
