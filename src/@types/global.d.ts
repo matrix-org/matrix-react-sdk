@@ -179,7 +179,7 @@ declare global {
 
     interface HTMLDialogElement {
         readonly open: boolean;
-        readonly returnValue?: string;
+        returnValue?: string;
         oncancel?(ev: Event);
         show(): void;
         showModal(): void;

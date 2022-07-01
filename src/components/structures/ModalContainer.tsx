@@ -41,14 +41,14 @@ function onActiveModalClick(this: IModal<any>, ev: MouseEvent): void {
 }
 
 function onActiveModalRender(this: IModal<any>, onTop: boolean, elem: HTMLDialogElement): void {
-    if (!elem) return;
-    if (!onTop) {
-        elem.show();
-        return;
-    }
-
+    if (!elem || this.hidden || elem.open) return;
     elem.oncancel = this.close;
-    elem.showModal();
+
+    if (onTop) {
+        elem.showModal();
+    } else {
+        elem.show();
+    }
 }
 
 const ModalContainer: React.FC<IProps> = ({ matrixClient }) => {
@@ -59,7 +59,7 @@ const ModalContainer: React.FC<IProps> = ({ matrixClient }) => {
             <dialog
                 key={m.id}
                 className={classNames("mx_Dialog_wrapper", m.className)}
-                onClick={onActiveModalClick.bind(m)}
+                onClick={m === firstVisible ? onActiveModalClick.bind(m) : undefined}
                 ref={onActiveModalRender.bind(m, m === firstVisible)}
             >
                 <div className="mx_Dialog">
