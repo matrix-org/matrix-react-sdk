@@ -28,7 +28,7 @@ describe('<MediaProcessingError />', () => {
         render(<MediaProcessingError {...defaultProps} {...props} />);
 
     it('renders', () => {
-        const component = getComponent();
-        expect(component).toMatchSnapshot();
+        const { container } = getComponent();
+        expect(container).toMatchSnapshot();
     });
 });
