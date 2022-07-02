@@ -193,6 +193,20 @@ $left-gutter: 64px;
         &.mx_EventTile_continuation .mx_EventTile_line {
             clear: both;
         }
+
+        &:hover {
+            &.mx_EventTile_verified .mx_EventTile_line {
+                box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-verified-color;
+            }
+
+            &.mx_EventTile_unverified .mx_EventTile_line {
+                box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-unverified-color;
+            }
+
+            &.mx_EventTile_unknown .mx_EventTile_line {
+                box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-unknown-color;
+            }
+        }
     }
 
     &[data-layout=irc] {
@@ -347,18 +361,6 @@ $left-gutter: 64px;
             background-color: $accent;
             color: $accent-fg-color;
         }
-    }
-
-    &:hover.mx_EventTile_verified .mx_EventTile_line {
-        box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-verified-color;
-    }
-
-    &:hover.mx_EventTile_unverified .mx_EventTile_line {
-        box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-unverified-color;
-    }
-
-    &:hover.mx_EventTile_unknown .mx_EventTile_line {
-        box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-unknown-color;
     }
 
     &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
