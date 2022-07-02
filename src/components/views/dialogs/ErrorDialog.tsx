@@ -16,7 +16,7 @@ limitations under the License.
 
 /*
  * Usage:
- * Modal.createTrackedDialog('An Identifier', 'some detail', ErrorDialog, {
+ * Modal.createDialog(ErrorDialog, {
  *   title: "some text", (default: "Error")
  *   description: "some more text",
  *   button: "Button Text",
@@ -28,7 +28,6 @@ limitations under the License.
 import React from 'react';
 
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
 
 interface IProps {
@@ -44,7 +43,6 @@ interface IState {
     onFinished: (success: boolean) => void;
 }
 
-@replaceableComponent("views.dialogs.ErrorDialog")
 export default class ErrorDialog extends React.Component<IProps, IState> {
     public static defaultProps = {
         focus: true,

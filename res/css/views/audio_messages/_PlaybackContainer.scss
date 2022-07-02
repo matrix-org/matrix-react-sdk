@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ limitations under the License.
 
     contain: content;
 
+    // Waveforms are present in live recording only
     .mx_Waveform {
         .mx_Waveform_bar {
             background-color: $quaternary-content;
@@ -46,11 +47,62 @@ limitations under the License.
 
     .mx_Clock {
         width: $font-42px; // we're not using a monospace font, so fake it
+        min-width: $font-42px; // force sensible layouts in awkward flexboxes (file panel, for example)
         padding-right: 6px; // with the fixed width this ends up as a visual 8px most of the time, as intended.
         padding-left: 8px; // isolate from recording circle / play control
     }
 
-    &.mx_VoiceMessagePrimaryContainer_noWaveform {
-        max-width: 162px; // with all the padding this results in 185px wide
+    .mx_RecordingPlayback_timelineLayoutMiddle {
+        margin-left: 8px;
+        margin-right: 6px;
+        position: relative;
+        display: inline-block;
+        flex: 1;
+        height: 30px; // same height as mx_Waveform, needed for automatic vertical centering
+
+        .mx_Waveform {
+            left: 0;
+            top: 0;
+        }
+
+        .mx_SeekBar {
+            position: absolute;
+            left: 0;
+            height: 30px;
+            top: -2px; // visually vertically centered
+
+            // Hide the hairline progress bar since we're at 100% height. Need to have distinct rules
+            // because CSS is weird.
+            background: none;
+            &::before {
+                background: none;
+            }
+            &::-moz-range-progress {
+                background: none;
+            }
+
+            // Make the thumb easier to see. Like the SeekBar original styles, these need to be
+            // distinct. We make it transparent so it doesn't show up on the UI, but also larger
+            // so it's easier to grab by mouse users in some browsers. Most browsers let the user
+            // move and drag the thumb regardless of hitting the thumb, however.
+            &::-webkit-slider-thumb {
+                width: 10px;
+                height: 10px;
+                background-color: transparent;
+            }
+            &::-moz-range-thumb {
+                width: 10px;
+                height: 10px;
+                background-color: transparent;
+            }
+        }
+
+        // For timeline-rendered playback, the clock is on the other side of the waveform.
+        & + .mx_Clock {
+            text-align: right;
+
+            // Take the padding off the clock because it's accounted for by the `timelineLayoutMiddle`
+            padding: 0;
+        }
     }
 }

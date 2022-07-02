@@ -19,7 +19,6 @@ describe('linkify-matrix', () => {
     const linkTypesByInitialCharacter = {
         '#': 'roomalias',
         '@': 'userid',
-        '+': 'groupid',
     };
 
     /**
@@ -269,16 +268,12 @@ describe('linkify-matrix', () => {
         genTests('#');
     });
 
-    describe('groupid plugin', () => {
-        genTests('+');
-    });
-
     describe('userid plugin', () => {
         genTests('@');
     });
 
     describe('matrix uri', () => {
-        const AcceptedMatrixUris = [
+        const acceptedMatrixUris = [
             'matrix:u/foo_bar:server.uk',
             'matrix:r/foo-bar:server.uk',
             'matrix:roomid/somewhere:example.org?via=elsewhere.ca',
@@ -287,7 +282,7 @@ describe('linkify-matrix', () => {
             'matrix:roomid/somewhere:example.org/e/event?via=elsewhere.ca',
             'matrix:u/alice:example.org?action=chat',
         ];
-        for (const matrixUri of AcceptedMatrixUris) {
+        for (const matrixUri of acceptedMatrixUris) {
             it('accepts ' + matrixUri, () => {
                 const test = matrixUri;
                 const found = linkify.find(test);
@@ -296,6 +291,29 @@ describe('linkify-matrix', () => {
                     type: Type.URL,
                     value: matrixUri,
                     end: matrixUri.length,
+                    start: 0,
+                    isLink: true,
+                }]));
+            });
+        }
+    });
+
+    describe("matrix-prefixed domains", () => {
+        const acceptedDomains = [
+            'matrix.org',
+            'matrix.to',
+            'matrix-help.org',
+            'matrix123.org',
+        ];
+        for (const domain of acceptedDomains) {
+            it('accepts ' + domain, () => {
+                const test = domain;
+                const found = linkify.find(test);
+                expect(found).toEqual(([{
+                    href: `http://${domain}`,
+                    type: Type.URL,
+                    value: domain,
+                    end: domain.length,
                     start: 0,
                     isLink: true,
                 }]));

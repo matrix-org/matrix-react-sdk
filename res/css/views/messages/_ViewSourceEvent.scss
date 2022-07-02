@@ -19,8 +19,11 @@ limitations under the License.
     opacity: 0.6;
     font-size: $font-12px;
     width: 100%;
+    overflow-x: auto; // Cancel overflow setting of .mx_EventTile_content
+    line-height: normal; // Align with avatar and E2E icon
 
-    pre, code {
+    pre,
+    code {
         flex: 1;
     }
 
@@ -33,7 +36,6 @@ limitations under the License.
         visibility: hidden;
         // override styles from AccessibleButton
         border-radius: 0;
-        padding: 0;
         // icon
         mask-repeat: no-repeat;
         mask-position: 0 center;

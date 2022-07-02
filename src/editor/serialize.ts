@@ -17,6 +17,7 @@ limitations under the License.
 
 import { AllHtmlEntities } from 'html-entities';
 import cheerio from 'cheerio';
+import escapeHtml from "escape-html";
 
 import Markdown from '../Markdown';
 import { makeGenericPermalink } from "../utils/permalinks/Permalinks";
@@ -48,8 +49,24 @@ export function mdSerialize(model: EditorModel): string {
     }, "");
 }
 
-export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } = {}): string {
-    let md = mdSerialize(model);
+interface ISerializeOpts {
+    forceHTML?: boolean;
+    useMarkdown?: boolean;
+}
+
+export function htmlSerializeIfNeeded(
+    model: EditorModel,
+    { forceHTML = false, useMarkdown = true }: ISerializeOpts = {},
+): string {
+    if (!useMarkdown) {
+        return escapeHtml(textSerialize(model)).replace(/\n/g, '<br/>');
+    }
+
+    const md = mdSerialize(model);
+    return htmlSerializeFromMdIfNeeded(md, { forceHTML });
+}
+
+export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = {}): string {
     // copy of raw input to remove unwanted math later
     const orig = md;
 
@@ -95,7 +112,7 @@ export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } 
         patternNames.forEach(function(patternName) {
             patternTypes.forEach(function(patternType) {
                 // get the regex replace pattern from config or use the default
-                const pattern = (((SdkConfig.get()["latex_maths_delims"] ||
+                const pattern = (((SdkConfig.get("latex_maths_delims") ||
                     {})[patternType] || {})["pattern"] || {})[patternName] ||
                     patternDefaults[patternName][patternType];
 
@@ -181,7 +198,9 @@ export function textSerialize(model: EditorModel): string {
 }
 
 export function containsEmote(model: EditorModel): boolean {
-    return startsWith(model, "/me ", false) && model.parts[0]?.text?.length > 4;
+    const hasCommand = startsWith(model, "/me ", false);
+    const hasArgument = model.parts[0]?.text?.length > 4 || model.parts.length > 1;
+    return hasCommand && hasArgument;
 }
 
 export function startsWith(model: EditorModel, prefix: string, caseSensitive = true): boolean {

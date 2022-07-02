@@ -22,13 +22,13 @@ import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
 import Modal from './Modal';
 import { RightPanelPhases } from "./stores/right-panel/RightPanelStorePhases";
-import { findDMForUser } from './createRoom';
 import { accessSecretStorage } from './SecurityManager';
 import UntrustedDeviceDialog from "./components/views/dialogs/UntrustedDeviceDialog";
-import { GroupMember, IDevice } from "./components/views/right_panel/UserInfo";
+import { IDevice } from "./components/views/right_panel/UserInfo";
 import ManualDeviceKeyVerificationDialog from "./components/views/dialogs/ManualDeviceKeyVerificationDialog";
 import RightPanelStore from "./stores/right-panel/RightPanelStore";
 import { IRightPanelCardState } from "./stores/right-panel/RightPanelStoreIPanelState";
+import { findDMForUser } from "./utils/direct-messages";
 
 async function enable4SIfNeeded() {
     const cli = MatrixClientPeg.get();
@@ -57,7 +57,7 @@ export async function verifyDevice(user: User, device: IDevice) {
         }
     }
 
-    Modal.createTrackedDialog("Verification warning", "unverified session", UntrustedDeviceDialog, {
+    Modal.createDialog(UntrustedDeviceDialog, {
         user,
         device,
         onFinished: async (action) => {
@@ -69,13 +69,10 @@ export async function verifyDevice(user: User, device: IDevice) {
                 );
                 setRightPanel({ member: user, verificationRequestPromise });
             } else if (action === "legacy") {
-                Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
-                    ManualDeviceKeyVerificationDialog,
-                    {
-                        userId: user.userId,
-                        device,
-                    },
-                );
+                Modal.createDialog(ManualDeviceKeyVerificationDialog, {
+                    userId: user.userId,
+                    device,
+                });
             }
         },
     });
@@ -124,7 +121,7 @@ function setRightPanel(state: IRightPanelCardState) {
     }
 }
 
-export function pendingVerificationRequestForUser(user: User | RoomMember | GroupMember) {
+export function pendingVerificationRequestForUser(user: User | RoomMember) {
     const cli = MatrixClientPeg.get();
     const dmRoom = findDMForUser(cli, user.userId);
     if (dmRoom) {

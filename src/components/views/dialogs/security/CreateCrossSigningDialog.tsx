@@ -27,7 +27,6 @@ import DialogButtons from '../../elements/DialogButtons';
 import BaseDialog from '../BaseDialog';
 import Spinner from '../../elements/Spinner';
 import InteractiveAuthDialog from '../InteractiveAuthDialog';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
 
 interface IProps {
     accountPassword?: string;
@@ -46,7 +45,6 @@ interface IState {
  * cases, only a spinner is shown, but for more complex auth like SSO, the user
  * may need to complete some steps to proceed.
  */
-@replaceableComponent("views.dialogs.security.CreateCrossSigningDialog")
 export default class CreateCrossSigningDialog extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -93,7 +91,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         }
     }
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
+    private doBootstrapUIAuth = async (makeRequest: (authData: any) => Promise<{}>): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
                 type: 'm.login.password',
@@ -125,18 +123,15 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 },
             };
 
-            const { finished } = Modal.createTrackedDialog(
-                'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                {
-                    title: _t("Setting up keys"),
-                    matrixClient: MatrixClientPeg.get(),
-                    makeRequest,
-                    aestheticsForStagePhases: {
-                        [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
-                        [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
-                    },
+            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                title: _t("Setting up keys"),
+                matrixClient: MatrixClientPeg.get(),
+                makeRequest,
+                aestheticsForStagePhases: {
+                    [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
+                    [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                 },
-            );
+            });
             const [confirmed] = await finished;
             if (!confirmed) {
                 throw new Error("Cross-signing key upload auth canceled");

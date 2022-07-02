@@ -21,7 +21,6 @@ import { _t } from "../../../../../languageHandler";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
 import SettingsFlag from '../../../elements/SettingsFlag';
@@ -50,24 +49,31 @@ export class LabsSettingToggle extends React.Component<ILabsSettingToggleProps> 
 interface IState {
     showHiddenReadReceipts: boolean;
     showJumpToDate: boolean;
+    showExploringPublicSpaces: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.user.LabsUserSettingsTab")
 export default class LabsUserSettingsTab extends React.Component<{}, IState> {
     constructor(props: {}) {
         super(props);
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285").then((showHiddenReadReceipts) => {
+        const cli = MatrixClientPeg.get();
+
+        cli.doesServerSupportUnstableFeature("org.matrix.msc2285").then((showHiddenReadReceipts) => {
             this.setState({ showHiddenReadReceipts });
         });
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
+        cli.doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
             this.setState({ showJumpToDate });
+        });
+
+        cli.doesServerSupportUnstableFeature("org.matrix.msc3827").then((showExploringPublicSpaces) => {
+            this.setState({ showExploringPublicSpaces });
         });
 
         this.state = {
             showHiddenReadReceipts: false,
             showJumpToDate: false,
+            showExploringPublicSpaces: false,
         };
     }
 
@@ -85,8 +91,8 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             </div>;
         }
 
-        let labsSection;
-        if (SdkConfig.get()['showLabsSettings']) {
+        let labsSections;
+        if (SdkConfig.get("show_labs_settings")) {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
             labs.forEach(f => {
                 groups.getOrCreate(SettingsStore.getLabGroup(f), []).push(
@@ -94,31 +100,10 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 );
             });
 
-            groups.getOrCreate(LabGroup.Widgets, []).push(
-                <SettingsFlag
-                    key="enableWidgetScreenshots"
-                    name="enableWidgetScreenshots"
-                    level={SettingLevel.ACCOUNT}
-                />,
-            );
-
             groups.getOrCreate(LabGroup.Experimental, []).push(
                 <SettingsFlag
                     key="lowBandwidth"
                     name="lowBandwidth"
-                    level={SettingLevel.DEVICE}
-                />,
-            );
-
-            groups.getOrCreate(LabGroup.Developer, []).push(
-                <SettingsFlag
-                    key="developerMode"
-                    name="developerMode"
-                    level={SettingLevel.ACCOUNT}
-                />,
-                <SettingsFlag
-                    key="showHiddenEventsInTimeline"
-                    name="showHiddenEventsInTimeline"
                     level={SettingLevel.DEVICE}
                 />,
             );
@@ -156,14 +141,24 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 );
             }
 
-            labsSection = <div className="mx_SettingsTab_section">
+            if (this.state.showExploringPublicSpaces) {
+                groups.getOrCreate(LabGroup.Spaces, []).push(
+                    <SettingsFlag
+                        key="feature_exploring_public_spaces"
+                        name="feature_exploring_public_spaces"
+                        level={SettingLevel.DEVICE}
+                    />,
+                );
+            }
+
+            labsSections = <>
                 { sortBy(Array.from(groups.entries()), "0").map(([group, flags]) => (
-                    <div key={group}>
+                    <div className="mx_SettingsTab_section" key={group}>
                         <span className="mx_SettingsTab_subheading">{ _t(labGroupNames[group]) }</span>
                         { flags }
                     </div>
                 )) }
-            </div>;
+            </>;
         }
 
         return (
@@ -185,7 +180,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                     }
                 </div>
                 { betaSection }
-                { labsSection }
+                { labsSections }
             </div>
         );
     }

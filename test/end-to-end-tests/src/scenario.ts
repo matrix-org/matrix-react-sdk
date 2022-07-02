@@ -1,5 +1,6 @@
 /*
 Copyright 2018 New Vector Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,25 +18,24 @@ limitations under the License.
 import { range } from './util';
 import { signup } from './usecases/signup';
 import { toastScenarios } from './scenarios/toast';
-import { roomDirectoryScenarios } from './scenarios/directory';
 import { lazyLoadingScenarios } from './scenarios/lazy-loading';
 import { e2eEncryptionScenarios } from './scenarios/e2e-encryption';
 import { ElementSession } from "./session";
 import { RestSessionCreator } from "./rest/creator";
 import { RestMultiSession } from "./rest/multi";
-import { spacesScenarios } from './scenarios/spaces';
 import { RestSession } from "./rest/session";
 
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
     let firstUser = true;
-    async function createUser(username) {
+    async function createUser(username: string) {
         const session = await createSession(username);
         if (firstUser) {
             // only show browser version for first browser opened
             console.log(`running tests on ${await session.browser.version()} ...`);
             firstUser = false;
         }
+        // ported to cyprus (registration test)
         await signup(session, session.username, 'testsarefun!!!', session.hsUrl);
         return session;
     }
@@ -44,13 +44,10 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     const bob = await createUser("bob");
 
     await toastScenarios(alice, bob);
-    await roomDirectoryScenarios(alice, bob);
     await e2eEncryptionScenarios(alice, bob);
     console.log("create REST users:");
     const charlies = await createRestUsers(restCreator);
     await lazyLoadingScenarios(alice, bob, charlies);
-    // do spaces scenarios last as the rest of the tests may get confused by spaces
-    await spacesScenarios(alice, bob);
 }
 
 async function createRestUsers(restCreator: RestSessionCreator): Promise<RestMultiSession> {

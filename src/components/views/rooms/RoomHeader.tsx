@@ -18,11 +18,14 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
+import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { UserTab } from "../dialogs/UserTab";
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
@@ -30,7 +33,6 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
@@ -40,6 +42,9 @@ import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
+import RoomContext from "../../../contexts/RoomContext";
+import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
+import { BetaPill } from "../beta/BetaCard";
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -52,6 +57,7 @@ interface IProps {
     oobData?: IOOBData;
     inRoom: boolean;
     onSearchClick: () => void;
+    onInviteClick: () => void;
     onForgetClick: () => void;
     onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
@@ -65,13 +71,15 @@ interface IState {
     contextMenuPosition?: DOMRect;
 }
 
-@replaceableComponent("views.rooms.RoomHeader")
 export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
         inRoom: false,
         excludedRightPanelPhaseButtons: [],
     };
+
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     constructor(props, context) {
         super(props, context);
@@ -82,19 +90,19 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         const cli = MatrixClientPeg.get();
-        cli.on("RoomState.events", this.onRoomStateEvents);
+        cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     public componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener("RoomState.events", this.onRoomStateEvents);
+            cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
         const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
         notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
     }
 
-    private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
+    private onRoomStateEvents = (event: MatrixEvent) => {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }
@@ -182,11 +190,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             </ContextMenuTooltipButton>
         );
 
-        const topicElement = <RoomTopic room={this.props.room}>
-            { (topic, ref) => <div className="mx_RoomHeader_topic" ref={ref} title={topic} dir="auto">
-                { topic }
-            </div> }
-        </RoomTopic>;
+        const topicElement = <RoomTopic
+            room={this.props.room}
+            className="mx_RoomHeader_topic"
+        />;
 
         let roomAvatar;
         if (this.props.room) {
@@ -200,7 +207,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         const buttons: JSX.Element[] = [];
 
-        if (this.props.inRoom && SettingsStore.getValue("showCallButtonsInComposer")) {
+        if (this.props.inRoom &&
+            this.props.onCallPlaced &&
+            !this.context.tombstone &&
+            SettingsStore.getValue("showCallButtonsInComposer")
+        ) {
             const voiceCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
                 onClick={() => this.props.onCallPlaced(CallType.Voice)}
@@ -248,12 +259,31 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             buttons.push(searchButton);
         }
 
+        if (this.props.onInviteClick && this.props.inRoom) {
+            const inviteButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                onClick={this.props.onInviteClick}
+                title={_t("Invite")}
+                key="invite"
+            />;
+            buttons.push(inviteButton);
+        }
+
         const rightRow =
             <div className="mx_RoomHeader_buttons">
                 { buttons }
             </div>;
 
         const e2eIcon = this.props.e2eStatus ? <E2EIcon status={this.props.e2eStatus} /> : undefined;
+
+        const isVideoRoom = SettingsStore.getValue("feature_video_rooms") && this.props.room.isElementVideoRoom();
+        const viewLabs = () => defaultDispatcher.dispatch({
+            action: Action.ViewUserSettings,
+            initialTabId: UserTab.Labs,
+        });
+        const betaPill = isVideoRoom ? (
+            <BetaPill onClick={viewLabs} tooltipTitle={_t("Video rooms are a beta feature")} />
+        ) : null;
 
         return (
             <div className="mx_RoomHeader light-panel">
@@ -263,9 +293,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { name }
                     { searchStatus }
                     { topicElement }
+                    { betaPill }
                     { rightRow }
                     <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
+                <RoomLiveShareWarning roomId={this.props.room.roomId} />
             </div>
         );
     }

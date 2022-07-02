@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -47,7 +47,9 @@ export class MediaEventHelper implements IDestroyable {
     }
 
     public get fileName(): string {
-        return this.event.getContent<IMediaEventContent>().body || "download";
+        return this.event.getContent<IMediaEventContent>().filename
+            || this.event.getContent<IMediaEventContent>().body
+            || "download";
     }
 
     public destroy() {

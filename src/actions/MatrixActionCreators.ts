@@ -14,16 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import dis from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 
-// TODO: migrate from sync_state to MatrixActions.sync so that more js-sdk events
-//       become dispatches in the same place.
 /**
  * Create a MatrixActions.sync action that represents a MatrixClient `sync` event,
  * each parameter mapping to a key-value in the action.
@@ -160,7 +159,7 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
 }
 
 /**
- * @typedef RoomTimelineAction
+ * @typedef IRoomTimelineActionPayload
  * @type {Object}
  * @property {string} action 'MatrixActions.Room.timeline'.
  * @property {boolean} isLiveEvent whether the event was attached to a
@@ -169,6 +168,28 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
  * event was attached to a timeline in the set of unfiltered timelines.
  * @property {Room} room the Room whose tags changed.
  */
+export interface IRoomTimelineActionPayload extends Pick<ActionPayload, "action"> {
+    action: 'MatrixActions.Room.timeline';
+    event: MatrixEvent;
+    room: Room | null;
+    isLiveEvent?: boolean;
+    isLiveUnfilteredRoomTimelineEvent: boolean;
+}
+
+/**
+ * @typedef IRoomStateEventsActionPayload
+ * @type {Object}
+ * @property {string} action 'MatrixActions.RoomState.events'.
+ * @property {MatrixEvent} event the state event received
+ * @property {RoomState} state the room state into which the event was applied
+ * @property {MatrixEvent | null} lastStateEvent the previous value for this (event-type, state-key) tuple in room state
+ */
+export interface IRoomStateEventsActionPayload extends Pick<ActionPayload, "action"> {
+    action: 'MatrixActions.RoomState.events';
+    event: MatrixEvent;
+    state: RoomState;
+    lastStateEvent: MatrixEvent | null;
+}
 
 /**
  * Create a MatrixActions.Room.timeline action that represents a
@@ -177,7 +198,7 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
  *
  * @param {MatrixClient} matrixClient the matrix client.
  * @param {MatrixEvent} timelineEvent the event that was added/removed.
- * @param {Room} room the Room that was stored.
+ * @param {?Room} room the Room that was stored.
  * @param {boolean} toStartOfTimeline whether the event is being added
  * to the start (and not the end) of the timeline.
  * @param {boolean} removed whether the event was removed from the
@@ -186,25 +207,47 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
  * @param {boolean} data.liveEvent whether the event is a live event,
  * belonging to a live timeline.
  * @param {EventTimeline} data.timeline the timeline being altered.
- * @returns {RoomTimelineAction} an action of type `MatrixActions.Room.timeline`.
+ * @returns {IRoomTimelineActionPayload} an action of type `MatrixActions.Room.timeline`.
  */
 function createRoomTimelineAction(
     matrixClient: MatrixClient,
     timelineEvent: MatrixEvent,
-    room: Room,
+    room: Room | null,
     toStartOfTimeline: boolean,
     removed: boolean,
-    data: {
-        liveEvent: boolean;
-        timeline: EventTimeline;
-    },
-): ActionPayload {
+    data: IRoomTimelineData,
+): IRoomTimelineActionPayload {
     return {
         action: 'MatrixActions.Room.timeline',
         event: timelineEvent,
         isLiveEvent: data.liveEvent,
-        isLiveUnfilteredRoomTimelineEvent:
-            room && data.timeline.getTimelineSet() === room.getUnfilteredTimelineSet(),
+        isLiveUnfilteredRoomTimelineEvent: room && data.timeline.getTimelineSet() === room.getUnfilteredTimelineSet(),
+        room,
+    };
+}
+
+/**
+ * Create a MatrixActions.Room.timeline action that represents a
+ * MatrixClient `Room.timeline` matrix event, emitted when an event
+ * is added to or removed from a timeline of a room.
+ *
+ * @param {MatrixClient} matrixClient the matrix client.
+ * @param {MatrixEvent} event the state event received
+ * @param {RoomState} state the room state into which the event was applied
+ * @param {MatrixEvent | null} lastStateEvent the previous value for this (event-type, state-key) tuple in room state
+ * @returns {IRoomStateEventsActionPayload} an action of type `MatrixActions.RoomState.events`.
+ */
+function createRoomStateEventsAction(
+    matrixClient: MatrixClient,
+    event: MatrixEvent,
+    state: RoomState,
+    lastStateEvent: MatrixEvent | null,
+): IRoomStateEventsActionPayload {
+    return {
+        action: 'MatrixActions.RoomState.events',
+        event,
+        state,
+        lastStateEvent,
     };
 }
 
@@ -272,11 +315,16 @@ let matrixClientListenersStop: Listener[] = [];
  *                                 when given the MatrixClient as an argument as well as
  *                                 arguments emitted in the MatrixClient event.
  */
-function addMatrixClientListener(matrixClient: MatrixClient, eventName: string, actionCreator: ActionCreator): void {
+function addMatrixClientListener(
+    matrixClient: MatrixClient,
+    eventName: Parameters<MatrixClient["emit"]>[0],
+    actionCreator: ActionCreator,
+): void {
     const listener: Listener = (...args) => {
         const payload = actionCreator(matrixClient, ...args);
         if (payload) {
-            dis.dispatch(payload, true);
+            // Consumers shouldn't have to worry about calling js-sdk methods mid-dispatch, so make this dispatch async
+            dis.dispatch(payload, false);
         }
     };
     matrixClient.on(eventName, listener);
@@ -296,15 +344,16 @@ export default {
      * @param {MatrixClient} matrixClient the MatrixClient to listen to events from
      */
     start(matrixClient: MatrixClient) {
-        addMatrixClientListener(matrixClient, 'sync', createSyncAction);
-        addMatrixClientListener(matrixClient, 'accountData', createAccountDataAction);
-        addMatrixClientListener(matrixClient, 'Room.accountData', createRoomAccountDataAction);
-        addMatrixClientListener(matrixClient, 'Room', createRoomAction);
-        addMatrixClientListener(matrixClient, 'Room.tags', createRoomTagsAction);
-        addMatrixClientListener(matrixClient, 'Room.receipt', createRoomReceiptAction);
-        addMatrixClientListener(matrixClient, 'Room.timeline', createRoomTimelineAction);
-        addMatrixClientListener(matrixClient, 'Room.myMembership', createSelfMembershipAction);
-        addMatrixClientListener(matrixClient, 'Event.decrypted', createEventDecryptedAction);
+        addMatrixClientListener(matrixClient, ClientEvent.Sync, createSyncAction);
+        addMatrixClientListener(matrixClient, ClientEvent.AccountData, createAccountDataAction);
+        addMatrixClientListener(matrixClient, RoomEvent.AccountData, createRoomAccountDataAction);
+        addMatrixClientListener(matrixClient, ClientEvent.Room, createRoomAction);
+        addMatrixClientListener(matrixClient, RoomEvent.Tags, createRoomTagsAction);
+        addMatrixClientListener(matrixClient, RoomEvent.Receipt, createRoomReceiptAction);
+        addMatrixClientListener(matrixClient, RoomEvent.Timeline, createRoomTimelineAction);
+        addMatrixClientListener(matrixClient, RoomEvent.MyMembership, createSelfMembershipAction);
+        addMatrixClientListener(matrixClient, MatrixEventEvent.Decrypted, createEventDecryptedAction);
+        addMatrixClientListener(matrixClient, RoomStateEvent.Events, createRoomStateEventsAction);
     },
 
     /**

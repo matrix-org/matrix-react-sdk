@@ -17,17 +17,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
-import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
+import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import SdkConfig from './SdkConfig';
 import PlatformPeg from './PlatformPeg';
 import * as TextForEvent from './TextForEvent';
-import Analytics from './Analytics';
 import * as Avatar from './Avatar';
 import dis from './dispatcher/dispatcher';
 import { _t } from './languageHandler';
@@ -36,10 +36,12 @@ import SettingsStore from "./settings/SettingsStore";
 import { hideToast as hideNotificationsToast } from "./toasts/DesktopNotificationsToast";
 import { SettingLevel } from "./settings/SettingLevel";
 import { isPushNotifyDisabled } from "./settings/controllers/NotificationControllers";
-import RoomViewStore from "./stores/RoomViewStore";
+import { RoomViewStore } from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import CallHandler from "./CallHandler";
+import VoipUserMapper from "./VoipUserMapper";
 
 /*
  * Dispatches:
@@ -61,10 +63,10 @@ const msgTypeHandlers = {
         const name = (event.sender || {}).name;
         return _t("%(name)s is requesting verification", { name });
     },
-    [LOCATION_EVENT_TYPE.name]: (event: MatrixEvent) => {
+    [M_LOCATION.name]: (event: MatrixEvent) => {
         return TextForEvent.textForLocationEvent(event)();
     },
-    [LOCATION_EVENT_TYPE.altName]: (event: MatrixEvent) => {
+    [M_LOCATION.altName]: (event: MatrixEvent) => {
         return TextForEvent.textForLocationEvent(event)();
     },
 };
@@ -90,9 +92,6 @@ export const Notifier = {
             return;
         }
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
-            return;
-        }
-        if (global.document.hasFocus()) {
             return;
         }
 
@@ -199,20 +198,20 @@ export const Notifier = {
         this.boundOnRoomReceipt = this.boundOnRoomReceipt || this.onRoomReceipt.bind(this);
         this.boundOnEventDecrypted = this.boundOnEventDecrypted || this.onEventDecrypted.bind(this);
 
-        MatrixClientPeg.get().on('event', this.boundOnEvent);
-        MatrixClientPeg.get().on('Room.receipt', this.boundOnRoomReceipt);
-        MatrixClientPeg.get().on('Event.decrypted', this.boundOnEventDecrypted);
-        MatrixClientPeg.get().on("sync", this.boundOnSyncStateChange);
+        MatrixClientPeg.get().on(ClientEvent.Event, this.boundOnEvent);
+        MatrixClientPeg.get().on(RoomEvent.Receipt, this.boundOnRoomReceipt);
+        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.boundOnEventDecrypted);
+        MatrixClientPeg.get().on(ClientEvent.Sync, this.boundOnSyncStateChange);
         this.toolbarHidden = false;
         this.isSyncing = false;
     },
 
     stop: function() {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener('Event', this.boundOnEvent);
-            MatrixClientPeg.get().removeListener('Room.receipt', this.boundOnRoomReceipt);
-            MatrixClientPeg.get().removeListener('Event.decrypted', this.boundOnEventDecrypted);
-            MatrixClientPeg.get().removeListener('sync', this.boundOnSyncStateChange);
+            MatrixClientPeg.get().removeListener(ClientEvent.Event, this.boundOnEvent);
+            MatrixClientPeg.get().removeListener(RoomEvent.Receipt, this.boundOnRoomReceipt);
+            MatrixClientPeg.get().removeListener(MatrixEventEvent.Decrypted, this.boundOnEventDecrypted);
+            MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.boundOnSyncStateChange);
         }
         this.isSyncing = false;
     },
@@ -229,8 +228,6 @@ export const Notifier = {
         // Dev note: We don't set the "notificationsEnabled" setting to true here because it is a
         // calculated value. It is determined based upon whether or not the master rule is enabled
         // and other flags. Setting it here would cause a circular reference.
-
-        Analytics.trackEvent('Notifier', 'Set Enabled', String(enable));
 
         // make sure that we persist the current setting audio_enabled setting
         // before changing anything
@@ -249,7 +246,7 @@ export const Notifier = {
                         ? _t('%(brand)s does not have permission to send you notifications - ' +
                             'please check your browser settings', { brand })
                         : _t('%(brand)s was not given permission to send notifications - please try again', { brand });
-                    Modal.createTrackedDialog('Unable to enable Notifications', result, ErrorDialog, {
+                    Modal.createDialog(ErrorDialog, {
                         title: _t('Unable to enable Notifications'),
                         description,
                     });
@@ -297,8 +294,6 @@ export const Notifier = {
 
     setPromptHidden: function(hidden: boolean, persistent = true) {
         this.toolbarHidden = hidden;
-
-        Analytics.trackEvent('Notifier', 'Set Toolbar Hidden', String(hidden));
 
         hideNotificationsToast();
 
@@ -386,18 +381,23 @@ export const Notifier = {
     },
 
     _evaluateEvent: function(ev: MatrixEvent) {
-        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        let roomId = ev.getRoomId();
+        if (CallHandler.instance.getSupportsVirtualRooms()) {
+            // Attempt to translate a virtual room to a native one
+            const nativeRoomId = VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(roomId);
+            if (nativeRoomId) {
+                roomId = nativeRoomId;
+            }
+        }
+        const room = MatrixClientPeg.get().getRoom(roomId);
+
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions?.notify) {
-            if (RoomViewStore.getRoomId() === room.roomId &&
+            if (RoomViewStore.instance.getRoomId() === room.roomId &&
                 UserActivity.sharedInstance().userActiveRecently() &&
                 !Modal.hasDialogs()
             ) {
                 // don't bother notifying as user was recently active in this room
-                return;
-            }
-            if (SettingsStore.getValue("doNotDisturb")) {
-                // Don't bother the user if they didn't ask to be bothered
                 return;
             }
 

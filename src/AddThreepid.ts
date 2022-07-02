@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IRequestMsisdnTokenResponse, IRequestTokenResponse } from "matrix-js-sdk/src";
+import { IRequestMsisdnTokenResponse, IRequestTokenResponse } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -206,7 +206,7 @@ export default class AddThreepid {
                                 continueKind: "primary",
                             },
                         };
-                        const { finished } = Modal.createTrackedDialog('Add Email', '', InteractiveAuthDialog, {
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                             title: _t("Add Email Address"),
                             matrixClient: MatrixClientPeg.get(),
                             authData: e.data,
@@ -319,7 +319,7 @@ export default class AddThreepid {
                             continueKind: "primary",
                         },
                     };
-                    const { finished } = Modal.createTrackedDialog('Add MSISDN', '', InteractiveAuthDialog, {
+                    const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                         title: _t("Add Phone Number"),
                         matrixClient: MatrixClientPeg.get(),
                         authData: e.data,

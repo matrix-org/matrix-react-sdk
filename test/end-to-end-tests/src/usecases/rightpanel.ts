@@ -16,12 +16,37 @@ limitations under the License.
 
 import { ElementSession } from "../session";
 
+export async function closeRoomRightPanel(session: ElementSession): Promise<void> {
+    const button = await session.query(".mx_BaseCard_close");
+    await button.click();
+}
+
+export async function openThreadListPanel(session: ElementSession): Promise<void> {
+    await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Threads"]');
+    const button = await session.queryWithoutWaiting('.mx_RoomHeader .mx_AccessibleButton[aria-label="Threads"]' +
+        ':not(.mx_RightPanel_headerButton_highlight)');
+    await button?.click();
+}
+
+export async function assertThreadListHasUnreadIndicator(session: ElementSession): Promise<void> {
+    await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Threads"] ' +
+        '.mx_RightPanel_headerButton_unreadIndicator');
+}
+
+export async function clickLatestThreadInThreadListPanel(session: ElementSession): Promise<void> {
+    const threads = await session.queryAll(".mx_ThreadPanel .mx_EventTile");
+    await threads[threads.length - 1].click();
+}
+
 export async function openRoomRightPanel(session: ElementSession): Promise<void> {
-    try {
-        await session.query('.mx_RoomHeader .mx_RightPanel_headerButton_highlight[aria-label="Room Info"]');
-    } catch (e) {
+    // block until we have a roomSummaryButton
+    const roomSummaryButton = await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Room Info"]');
+    // check if it's highlighted
+    const highlightedRoomSummaryButton = await session.queryWithoutWaiting(
+        '.mx_RoomHeader .mx_RightPanel_headerButton_highlight[aria-label="Room Info"]',
+    );
+    if (!highlightedRoomSummaryButton) {
         // If the room summary is not yet open, open it
-        const roomSummaryButton = await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Room Info"]');
         await roomSummaryButton.click();
     }
 }

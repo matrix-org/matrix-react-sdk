@@ -20,7 +20,6 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import * as sdk from '../../../../index';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import Field from '../../elements/Field';
 import AccessibleButton from '../../elements/AccessibleButton';
@@ -28,6 +27,10 @@ import { _t } from '../../../../languageHandler';
 import { IDialogProps } from "../IDialogProps";
 import { accessSecretStorage } from "../../../../SecurityManager";
 import Modal from "../../../../Modal";
+import InteractiveAuthDialog from "../InteractiveAuthDialog";
+import DialogButtons from "../../elements/DialogButtons";
+import BaseDialog from "../BaseDialog";
+import { chromeFileInputFix } from "../../../../utils/BrowserWorkarounds";
 
 // Maximum acceptable size of a key file. It's 59 characters including the spaces we encode,
 // so this should be plenty and allow for people putting extra whitespace in the file because
@@ -172,7 +175,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         this.fileUpload.current.click();
     };
 
-    private onPassPhraseNext = async (ev: FormEvent<HTMLFormElement>) => {
+    private onPassPhraseNext = async (ev: FormEvent<HTMLFormElement> | React.MouseEvent) => {
         ev.preventDefault();
 
         if (this.state.passPhrase.length <= 0) return;
@@ -187,7 +190,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         }
     };
 
-    private onRecoveryKeyNext = async (ev: FormEvent<HTMLFormElement>) => {
+    private onRecoveryKeyNext = async (ev: FormEvent<HTMLFormElement> | React.MouseEvent) => {
         ev.preventDefault();
 
         if (!this.state.recoveryKeyValid) return;
@@ -230,16 +233,11 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 const cli = MatrixClientPeg.get();
                 await cli.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest) => {
-                        // XXX: Making this an import breaks the app.
-                        const InteractiveAuthDialog = sdk.getComponent("views.dialogs.InteractiveAuthDialog");
-                        const { finished } = Modal.createTrackedDialog(
-                            'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                            {
-                                title: _t("Setting up keys"),
-                                matrixClient: cli,
-                                makeRequest,
-                            },
-                        );
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                            title: _t("Setting up keys"),
+                            matrixClient: cli,
+                            makeRequest,
+                        });
                         const [confirmed] = await finished;
                         if (!confirmed) {
                             throw new Error("Cross-signing key upload auth canceled");
@@ -273,10 +271,6 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     }
 
     render() {
-        // Caution: Making these an import will break tests.
-        const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
-        const DialogButtons = sdk.getComponent("views.elements.DialogButtons");
-
         const hasPassphrase = (
             this.props.keyInfo &&
             this.props.keyInfo.passphrase &&
@@ -315,7 +309,6 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 />
             </div>;
         } else if (hasPassphrase && !this.state.forceRecoveryKey) {
-            const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
             title = _t("Security Phrase");
             titleClass = ['mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_securePhraseTitle'];
 
@@ -335,8 +328,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 <p>{ _t(
                     "Enter your Security Phrase or <button>use your Security Key</button> to continue.", {},
                     {
-                        button: s => <AccessibleButton className="mx_linkButton"
-                            element="span"
+                        button: s => <AccessibleButton
+                            kind="link_inline"
                             onClick={this.onUseRecoveryKeyClick}
                         >
                             { s }
@@ -373,8 +366,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
             const feedbackClasses = classNames({
                 'mx_AccessSecretStorageDialog_recoveryKeyFeedback': true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback_valid': this.state.recoveryKeyCorrect === true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback_invalid': this.state.recoveryKeyCorrect === false,
+                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--valid': this.state.recoveryKeyCorrect === true,
+                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--invalid': this.state.recoveryKeyCorrect === false,
             });
             const recoveryKeyFeedback = <div className={feedbackClasses}>
                 { this.getKeyValidationText() }
@@ -408,6 +401,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             <input type="file"
                                 className="mx_AccessSecretStorageDialog_recoveryKeyEntry_fileInput"
                                 ref={this.fileUpload}
+                                onClick={chromeFileInputFix}
                                 onChange={this.onRecoveryKeyFileChange}
                             />
                             <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>

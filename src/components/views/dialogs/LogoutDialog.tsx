@@ -1,6 +1,6 @@
 /*
 Copyright 2018, 2019 New Vector Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RestoreKeyBackupDialog from './security/RestoreKeyBackupDialog';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
@@ -41,7 +40,6 @@ interface IState {
     error?: string;
 }
 
-@replaceableComponent("views.dialogs.LogoutDialog")
 export default class LogoutDialog extends React.Component<IProps, IState> {
     static defaultProps = {
         onFinished: function() {},
@@ -81,13 +79,8 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         }
     }
 
-    private onSettingsLinkClick = (): void => {
-        // close dialog
-        this.props.onFinished(true);
-    };
-
     private onExportE2eKeysClicked = (): void => {
-        Modal.createTrackedDialogAsync('Export E2E Keys', '',
+        Modal.createDialogAsync(
             import(
                 '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
             ) as unknown as Promise<ComponentType<{}>>,
@@ -110,12 +103,9 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             // A key backup exists for this account, but the creating device is not
             // verified, so restore the backup which will give us the keys from it and
             // allow us to trust it (ie. upload keys to it)
-            Modal.createTrackedDialog(
-                'Restore Backup', '', RestoreKeyBackupDialog, null, null,
-                /* priority = */ false, /* static = */ true,
-            );
+            Modal.createDialog(RestoreKeyBackupDialog, null, null, /* priority = */ false, /* static = */ true);
         } else {
-            Modal.createTrackedDialogAsync("Key Backup", "Key Backup",
+            Modal.createDialogAsync(
                 import(
                     "../../../async-components/views/dialogs/security/CreateKeyBackupDialog"
                 ) as unknown as Promise<ComponentType<{}>>,
@@ -140,6 +130,12 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
                 <p>{ _t(
                     "Encrypted messages are secured with end-to-end encryption. " +
                     "Only you and the recipient(s) have the keys to read these messages.",
+                ) }</p>
+                <p>{ _t(
+                    "When you sign out, these keys will be deleted from this device, " +
+                    "which means you won't be able to read encrypted messages unless you " +
+                    "have the keys for them on your other devices, or backed them up to the " +
+                    "server.",
                 ) }</p>
                 <p>{ _t("Back up your keys before signing out to avoid losing them.") }</p>
             </div>;

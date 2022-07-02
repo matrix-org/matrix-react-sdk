@@ -26,6 +26,7 @@ import dis from './dispatcher/dispatcher';
 import Modal from './Modal';
 import { _t } from './languageHandler';
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
+import { Action } from "./dispatcher/actions";
 
 // Regex for what a "safe" or "Matrix-looking" localpart would be.
 // TODO: Update as needed for https://github.com/matrix-org/matrix-doc/issues/1514
@@ -48,7 +49,7 @@ export async function startAnyRegistrationFlow(
     options: { go_home_on_cancel?: boolean, go_welcome_on_cancel?: boolean, screen_after?: boolean},
 ): Promise<void> {
     if (options === undefined) options = {};
-    const modal = Modal.createTrackedDialog('Registration required', '', QuestionDialog, {
+    const modal = Modal.createDialog(QuestionDialog, {
         hasCancelButton: true,
         quitOnly: true,
         title: _t("Sign In or Create Account"),
@@ -69,7 +70,7 @@ export async function startAnyRegistrationFlow(
             if (proceed) {
                 dis.dispatch({ action: 'start_registration', screenAfterLogin: options.screen_after });
             } else if (options.go_home_on_cancel) {
-                dis.dispatch({ action: 'view_home_page' });
+                dis.dispatch({ action: Action.ViewHomePage });
             } else if (options.go_welcome_on_cancel) {
                 dis.dispatch({ action: 'view_welcome_page' });
             }

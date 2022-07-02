@@ -20,10 +20,10 @@ limitations under the License.
 import React from 'react';
 import { sortBy } from 'lodash';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import QueryMatcher from './QueryMatcher';
@@ -41,11 +41,6 @@ const USER_REGEX = /\B@\S*/g;
 // used when you hit 'tab' - we allow some separator chars at the beginning
 // to allow you to tab-complete /mat into /(matthew)
 const FORCED_USER_REGEX = /[^/,:; \t\n]\S*/g;
-
-interface IRoomTimelineData {
-    timeline: EventTimeline;
-    liveEvent?: boolean;
-}
 
 export default class UserProvider extends AutocompleteProvider {
     matcher: QueryMatcher<RoomMember>;
@@ -65,25 +60,25 @@ export default class UserProvider extends AutocompleteProvider {
             shouldMatchWordsOnly: false,
         });
 
-        MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
-        MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
+        MatrixClientPeg.get().on(RoomEvent.Timeline, this.onRoomTimeline);
+        MatrixClientPeg.get().on(RoomStateEvent.Update, this.onRoomStateUpdate);
     }
 
     destroy() {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
-            MatrixClientPeg.get().removeListener("RoomState.members", this.onRoomStateMember);
+            MatrixClientPeg.get().removeListener(RoomEvent.Timeline, this.onRoomTimeline);
+            MatrixClientPeg.get().removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
         }
     }
 
     private onRoomTimeline = (
         ev: MatrixEvent,
-        room: Room,
+        room: Room | null,
         toStartOfTimeline: boolean,
         removed: boolean,
         data: IRoomTimelineData,
     ) => {
-        if (!room) return;
+        if (!room) return; // notification timeline, we'll get this event again with a room specific timeline
         if (removed) return;
         if (room.roomId !== this.room.roomId) return;
 
@@ -98,11 +93,9 @@ export default class UserProvider extends AutocompleteProvider {
         this.onUserSpoke(ev.sender);
     };
 
-    private onRoomStateMember = (ev: MatrixEvent, state: RoomState, member: RoomMember) => {
-        // ignore members in other rooms
-        if (member.roomId !== this.room.roomId) {
-            return;
-        }
+    private onRoomStateUpdate = (state: RoomState) => {
+        // ignore updates in other rooms
+        if (state.roomId !== this.room.roomId) return;
 
         // blow away the users cache
         this.users = null;

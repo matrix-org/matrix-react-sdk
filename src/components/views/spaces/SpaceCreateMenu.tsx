@@ -18,7 +18,7 @@ import React, { ComponentProps, RefObject, SyntheticEvent, KeyboardEvent, useCon
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
-import { HistoryVisibility, Preset } from "matrix-js-sdk/src/@types/partials";
+import { HistoryVisibility, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -35,10 +35,9 @@ import SdkConfig from "../../../SdkConfig";
 import Modal from "../../../Modal";
 import GenericFeatureFeedbackDialog from "../dialogs/GenericFeatureFeedbackDialog";
 import SettingsStore from "../../../settings/SettingsStore";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { UserTab } from "../dialogs/UserSettingsDialog";
-import { Key } from "../../../Keyboard";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 export const createSpace = async (
     name: string,
@@ -53,12 +52,15 @@ export const createSpace = async (
         createOpts: {
             name,
             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
+            visibility: (isPublic && await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827"))
+                ? Visibility.Public
+                : Visibility.Private,
             power_level_content_override: {
                 // Only allow Admins to write to the timeline to prevent hidden sync spam
                 events_default: 100,
                 invite: isPublic ? 0 : 50,
             },
-            room_alias_name: isPublic && alias ? alias.substr(1, alias.indexOf(":") - 1) : undefined,
+            room_alias_name: isPublic && alias ? alias.substring(1, alias.indexOf(":")) : undefined,
             topic,
             ...createOpts,
         },
@@ -82,11 +84,6 @@ const SpaceCreateMenuType = ({ title, description, className, onClick }) => {
     );
 };
 
-enum Visibility {
-    Public,
-    Private,
-}
-
 const spaceNameValidator = withValidation({
     rules: [
         {
@@ -108,10 +105,10 @@ export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
     return <div className="mx_SpaceFeedbackPrompt">
         <span className="mx_SpaceFeedbackPrompt_text">{ _t("Spaces are a new feature.") }</span>
         <AccessibleButton
-            kind="link"
+            kind="link_inline"
             onClick={() => {
                 if (onClick) onClick();
-                Modal.createTrackedDialog("Spaces Feedback", "", GenericFeatureFeedbackDialog, {
+                Modal.createDialog(GenericFeatureFeedbackDialog, {
                     title: _t("Spaces feedback"),
                     subheading: _t("Thank you for trying Spaces. " +
                         "Your feedback will help inform the next versions."),
@@ -159,8 +156,11 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
     const domain = cli.getDomain();
 
     const onKeyDown = (ev: KeyboardEvent) => {
-        if (ev.key === Key.ENTER) {
-            onSubmit(ev);
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                onSubmit(ev);
+                break;
         }
     };
 
@@ -263,22 +263,11 @@ const SpaceCreateMenu = ({ onFinished }) => {
 
     let body;
     if (visibility === null) {
-        const onCreateSpaceFromCommunityClick = () => {
-            defaultDispatcher.dispatch({
-                action: Action.ViewUserSettings,
-                initialTabId: UserTab.Preferences,
-            });
-            onFinished();
-        };
-
         body = <React.Fragment>
             <h2>{ _t("Create a space") }</h2>
             <p>
-                { _t("Spaces are a new way to group rooms and people.") }
-                &nbsp;
-                { _t("What kind of Space do you want to create?") }
-                &nbsp;
-                { _t("You can change this later.") }
+                { _t("Spaces are a new way to group rooms and people. What kind of Space do you want to create? " +
+                  "You can change this later.") }
             </p>
 
             <SpaceCreateMenuType
@@ -295,12 +284,6 @@ const SpaceCreateMenu = ({ onFinished }) => {
             />
 
             <p>
-                { _t("You can also make Spaces from <a>communities</a>.", {}, {
-                    a: sub => <AccessibleButton kind="link" onClick={onCreateSpaceFromCommunityClick}>
-                        { sub }
-                    </AccessibleButton>,
-                }) }
-                <br />
                 { _t("To join a space you'll need an invite.") }
             </p>
 

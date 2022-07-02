@@ -28,6 +28,7 @@ import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import UIStore from "../../../stores/UIStore";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import Heading from '../typography/Heading';
 
 interface IProps {
     room: Room;
@@ -40,19 +41,19 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
 
     const apps = useWidgets(room);
     const app = apps.find(a => a.id === widgetId);
-    const isPinned = app && WidgetLayoutStore.instance.isInContainer(room, app, Container.Top);
+    const isRight = app && WidgetLayoutStore.instance.isInContainer(room, app, Container.Right);
 
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
 
     useEffect(() => {
-        if (!app || isPinned) {
+        if (!app || !isRight) {
             // stop showing this card
             RightPanelStore.instance.popCard();
         }
-    }, [app, isPinned]);
+    }, [app, isRight]);
 
     // Don't render anything as we are about to transition
-    if (!app || isPinned) return null;
+    if (!app || !isRight) return null;
 
     let contextMenu;
     if (menuDisplayed) {
@@ -68,18 +69,17 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
         );
     }
 
-    const header = <React.Fragment>
-        <h2>{ WidgetUtils.getWidgetName(app) }</h2>
+    const header = <div className="mx_BaseCard_header_title">
+        <Heading size="h4" className="mx_BaseCard_header_title_heading">{ WidgetUtils.getWidgetName(app) }</Heading>
         <ContextMenuButton
-            kind="secondary"
-            className="mx_WidgetCard_optionsButton"
+            className="mx_BaseCard_header_title_button--option"
             inputRef={handle}
             onClick={openMenu}
             isExpanded={menuDisplayed}
             label={_t("Options")}
         />
         { contextMenu }
-    </React.Fragment>;
+    </div>;
 
     return <BaseCard
         header={header}

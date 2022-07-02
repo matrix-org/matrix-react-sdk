@@ -22,7 +22,6 @@ import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t, _td } from "../../../languageHandler";
 import Field, { IInputProps } from "../elements/Field";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps extends Omit<IInputProps, "onValidate"> {
     autoFocus?: boolean;
@@ -41,7 +40,6 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     onValidate?(result: IValidationResult);
 }
 
-@replaceableComponent("views.auth.PassphraseField")
 class PassphraseField extends PureComponent<IProps> {
     static defaultProps = {
         label: _td("Password"),
@@ -73,7 +71,7 @@ class PassphraseField extends PureComponent<IProps> {
                         return false;
                     }
                     const safe = complexity.score >= this.props.minScore;
-                    const allowUnsafe = SdkConfig.get()["dangerously_allow_unsafe_and_insecure_passwords"];
+                    const allowUnsafe = SdkConfig.get("dangerously_allow_unsafe_and_insecure_passwords");
                     return allowUnsafe || safe;
                 },
                 valid: function(complexity) {

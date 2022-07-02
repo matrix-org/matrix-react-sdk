@@ -29,7 +29,6 @@ import {
     M_POLL_END,
     PollStartEvent,
 } from "matrix-events-sdk";
-import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -45,9 +44,18 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 import UserIdentifierCustomisations from './customisations/UserIdentifier';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { isLocationEvent } from './utils/EventUtils';
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
+}
+
+function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()): string {
+    const client = MatrixClientPeg.get();
+    const roomId = event.getRoomId();
+    const member = client.getRoom(roomId)?.getMember(userId);
+    return member?.rawDisplayName || userId || _t("Someone");
 }
 
 // These functions are frequently used just to check whether an event has
@@ -57,39 +65,27 @@ export function getSenderName(event: MatrixEvent): string {
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     const senderName = getSenderName(event);
     // FIXME: Find a better way to determine this from the event?
-    let isVoice = true;
-    if (event.getContent().offer && event.getContent().offer.sdp &&
-        event.getContent().offer.sdp.indexOf('m=video') !== -1) {
-        isVoice = false;
-    }
+    const isVoice = !event.getContent().offer?.sdp?.includes('m=video');
     const isSupported = MatrixClientPeg.get().supportsVoip();
 
     // This ladder could be reduced down to a couple string variables, however other languages
     // can have a hard time translating those strings. In an effort to make translations easier
     // and more accurate, we break out the string-based variables to a couple booleans.
     if (isVoice && isSupported) {
-        return () => _t("%(senderName)s placed a voice call.", {
-            senderName: senderName,
-        });
+        return () => _t("%(senderName)s placed a voice call.", { senderName });
     } else if (isVoice && !isSupported) {
-        return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
-            senderName: senderName,
-        });
+        return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", { senderName });
     } else if (!isVoice && isSupported) {
-        return () => _t("%(senderName)s placed a video call.", {
-            senderName: senderName,
-        });
+        return () => _t("%(senderName)s placed a video call.", { senderName });
     } else if (!isVoice && !isSupported) {
-        return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
-            senderName: senderName,
-        });
+        return () => _t("%(senderName)s placed a video call. (not supported by this browser)", { senderName });
     }
 }
 
 function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): () => string | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
-    const senderName = ev.sender ? ev.sender.name : ev.getSender();
-    const targetName = ev.target ? ev.target.name : ev.getStateKey();
+    const senderName = ev.sender?.name || getRoomMemberDisplayname(ev);
+    const targetName = ev.target?.name || getRoomMemberDisplayname(ev, ev.getStateKey());
     const prevContent = ev.getPrevContent();
     const content = ev.getContent();
     const reason = content.reason;
@@ -228,7 +224,7 @@ const onViewJoinRuleSettingsClick = () => {
     });
 };
 
-function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => Renderable {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     switch (ev.getContent().join_rule) {
         case JoinRule.Public:
@@ -278,36 +274,6 @@ function textForGuestAccessEvent(ev: MatrixEvent): () => string | null {
     }
 }
 
-function textForRelatedGroupsEvent(ev: MatrixEvent): () => string | null {
-    const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-    const groups = ev.getContent().groups || [];
-    const prevGroups = ev.getPrevContent().groups || [];
-    const added = groups.filter((g) => !prevGroups.includes(g));
-    const removed = prevGroups.filter((g) => !groups.includes(g));
-
-    if (added.length && !removed.length) {
-        return () => _t('%(senderDisplayName)s enabled flair for %(groups)s in this room.', {
-            senderDisplayName,
-            groups: added.join(', '),
-        });
-    } else if (!added.length && removed.length) {
-        return () => _t('%(senderDisplayName)s disabled flair for %(groups)s in this room.', {
-            senderDisplayName,
-            groups: removed.join(', '),
-        });
-    } else if (added.length && removed.length) {
-        return () => _t('%(senderDisplayName)s enabled flair for %(newGroups)s and disabled flair for ' +
-            '%(oldGroups)s in this room.', {
-            senderDisplayName,
-            newGroups: added.join(', '),
-            oldGroups: removed.join(', '),
-        });
-    } else {
-        // Don't bother rendering this change (because there were no changes)
-        return null;
-    }
-}
-
 function textForServerACLEvent(ev: MatrixEvent): () => string | null {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     const prevContent = ev.getPrevContent();
@@ -315,7 +281,7 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
     const prev = {
         deny: Array.isArray(prevContent.deny) ? prevContent.deny : [],
         allow: Array.isArray(prevContent.allow) ? prevContent.allow : [],
-        allow_ip_literals: !(prevContent.allow_ip_literals === false),
+        allow_ip_literals: prevContent.allow_ip_literals !== false,
     };
 
     let getText = null;
@@ -339,14 +305,7 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
-    const type = ev.getType();
-    const content = ev.getContent();
-    const msgtype = content.msgtype;
-
-    if (
-        (LOCATION_EVENT_TYPE.matches(type) || LOCATION_EVENT_TYPE.matches(msgtype)) &&
-        SettingsStore.getValue("feature_location_share")
-    ) {
+    if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
 
@@ -354,16 +313,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
         if (ev.isRedacted()) {
-            message = _t("Message deleted");
-            const unsigned = ev.getUnsigned();
-            const redactedBecauseUserId = unsigned?.redacted_because?.sender;
-            if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
-                const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
-                const sender = room?.getMember(redactedBecauseUserId);
-                message = _t("Message deleted by %(name)s", {
-                    name: sender?.name || redactedBecauseUserId,
-                });
-            }
+            message = textForRedactedPollAndMessageEvent(ev);
         }
 
         if (SettingsStore.isEnabled("feature_extensible_events")) {
@@ -392,7 +342,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
-    const senderName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
+    const senderName = getSenderName(ev);
     const oldAlias = ev.getPrevContent().alias;
     const oldAltAliases = ev.getPrevContent().alt_aliases || [];
     const newAlias = ev.getContent().alias;
@@ -403,42 +353,44 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
     if (!removedAltAliases.length && !addedAltAliases.length) {
         if (newAlias) {
             return () => _t('%(senderName)s set the main address for this room to %(address)s.', {
-                senderName: senderName,
+                senderName,
                 address: ev.getContent().alias,
             });
         } else if (oldAlias) {
             return () => _t('%(senderName)s removed the main address for this room.', {
-                senderName: senderName,
+                senderName,
             });
         }
     } else if (newAlias === oldAlias) {
         if (addedAltAliases.length && !removedAltAliases.length) {
             return () => _t('%(senderName)s added the alternative addresses %(addresses)s for this room.', {
-                senderName: senderName,
+                senderName,
                 addresses: addedAltAliases.join(", "),
                 count: addedAltAliases.length,
             });
-        } if (removedAltAliases.length && !addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && !addedAltAliases.length) {
             return () => _t('%(senderName)s removed the alternative addresses %(addresses)s for this room.', {
-                senderName: senderName,
+                senderName,
                 addresses: removedAltAliases.join(", "),
                 count: removedAltAliases.length,
             });
-        } if (removedAltAliases.length && addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && addedAltAliases.length) {
             return () => _t('%(senderName)s changed the alternative addresses for this room.', {
-                senderName: senderName,
+                senderName,
             });
         }
     } else {
         // both alias and alt_aliases where modified
         return () => _t('%(senderName)s changed the main and alternative addresses for this room.', {
-            senderName: senderName,
+            senderName,
         });
     }
     // in case there is no difference between the two events,
     // say something as we can't simply hide the tile from here
     return () => _t('%(senderName)s changed the addresses for this room.', {
-        senderName: senderName,
+        senderName,
     });
 }
 
@@ -537,11 +489,12 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
 }
 
 const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void => {
-    defaultDispatcher.dispatch({
+    defaultDispatcher.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,
         event_id: messageId,
         highlighted: true,
         room_id: roomId,
+        metricsTrigger: undefined, // room doesn't change
     });
 };
 
@@ -549,7 +502,7 @@ const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
-function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => Renderable {
     if (!SettingsStore.getValue("feature_pinning")) return null;
     const senderName = getSenderName(event);
     const roomId = event.getRoomId();
@@ -636,7 +589,7 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
 }
 
 function textForWidgetEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.getSender();
+    const senderName = getSenderName(event);
     const { name: prevName, type: prevType, url: prevUrl } = event.getPrevContent();
     const { name, type, url } = event.getContent() || {};
 
@@ -666,12 +619,12 @@ function textForWidgetEvent(event: MatrixEvent): () => string | null {
 }
 
 function textForWidgetLayoutEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender?.name || event.getSender();
+    const senderName = getSenderName(event);
     return () => _t("%(senderName)s has updated the room layout", { senderName });
 }
 
 function textForMjolnirEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.getSender();
+    const senderName = getSenderName(event);
     const { entity: prevEntity } = event.getPrevContent();
     const { entity, recommendation, reason } = event.getContent();
 
@@ -763,11 +716,38 @@ export function textForLocationEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+function textForRedactedPollAndMessageEvent(ev: MatrixEvent): string {
+    let message = _t("Message deleted");
+    const unsigned = ev.getUnsigned();
+    const redactedBecauseUserId = unsigned?.redacted_because?.sender;
+    if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
+        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const sender = room?.getMember(redactedBecauseUserId);
+        message = _t("Message deleted by %(name)s", {
+            name: sender?.name || redactedBecauseUserId,
+        });
+    }
+
+    return message;
+}
+
 function textForPollStartEvent(event: MatrixEvent): () => string | null {
-    return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
-        senderName: getSenderName(event),
-        pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
-    });
+    return () => {
+        let message = '';
+
+        if (event.isRedacted()) {
+            message = textForRedactedPollAndMessageEvent(event);
+            const senderDisplayName = event.sender?.name ?? event.getSender();
+            message = senderDisplayName + ': ' + message;
+        } else {
+            message = _t("%(senderName)s has started a poll - %(pollQuestion)s", {
+                senderName: getSenderName(event),
+                pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
+            });
+        }
+
+        return message;
+    };
 }
 
 function textForPollEndEvent(event: MatrixEvent): () => string | null {
@@ -776,10 +756,12 @@ function textForPollEndEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+type Renderable = string | JSX.Element | null;
+
 interface IHandlers {
     [type: string]:
         (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
-            (() => string | JSX.Element | null);
+            (() => Renderable);
 }
 
 const handlers: IHandlers = {
@@ -806,7 +788,6 @@ const stateHandlers: IHandlers = {
     [EventType.RoomTombstone]: textForTombstoneEvent,
     [EventType.RoomJoinRules]: textForJoinRulesEvent,
     [EventType.RoomGuestAccess]: textForGuestAccessEvent,
-    'm.room.related_groups': textForRelatedGroupsEvent,
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     'im.vector.modular.widgets': textForWidgetEvent,

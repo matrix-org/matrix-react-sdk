@@ -15,14 +15,16 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
+import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import AccessibleButton from "../elements/AccessibleButton";
 import AvatarSetting from "../settings/AvatarSetting";
+import { htmlSerializeFromMdIfNeeded } from '../../../editor/serialize';
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
     roomId: string;
@@ -43,7 +45,6 @@ interface IState {
 }
 
 // TODO: Merge with ProfileSettings?
-@replaceableComponent("views.room_settings.RoomProfileSettings")
 export default class RoomProfileSettings extends React.Component<IProps, IState> {
     private avatarUpload = createRef<HTMLInputElement>();
 
@@ -143,7 +144,8 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         }
 
         if (this.state.originalTopic !== this.state.topic) {
-            await client.setRoomTopic(this.props.roomId, this.state.topic);
+            const html = htmlSerializeFromMdIfNeeded(this.state.topic, { forceHTML: false });
+            await client.setRoomTopic(this.props.roomId, this.state.topic, html);
             newState.originalTopic = this.state.topic;
         }
 
@@ -248,17 +250,18 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                 onSubmit={this.saveProfile}
                 autoComplete="off"
                 noValidate={true}
-                className="mx_ProfileSettings_profileForm"
+                className="mx_ProfileSettings"
             >
                 <input
                     type="file"
                     ref={this.avatarUpload}
                     className="mx_ProfileSettings_avatarUpload"
+                    onClick={chromeFileInputFix}
                     onChange={this.onAvatarChanged}
                     accept="image/*"
                 />
                 <div className="mx_ProfileSettings_profile">
-                    <div className="mx_ProfileSettings_controls">
+                    <div className="mx_ProfileSettings_profile_controls">
                         <Field
                             label={_t("Room Name")}
                             type="text"
@@ -268,8 +271,11 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                             disabled={!this.state.canSetName}
                         />
                         <Field
-                            className="mx_ProfileSettings_controls_topic"
-                            id="profileTopic"
+                            className={classNames(
+                                "mx_ProfileSettings_profile_controls_topic",
+                                "mx_ProfileSettings_profile_controls_topic--room",
+                            )}
+                            id="profileTopic" // See: NewRoomIntro.tsx
                             label={_t("Room Topic")}
                             disabled={!this.state.canSetTopic}
                             type="text"

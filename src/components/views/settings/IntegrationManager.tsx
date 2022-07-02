@@ -18,10 +18,11 @@ import React from 'react';
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
-import { Key } from "../../../Keyboard";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ActionPayload } from '../../../dispatcher/payloads';
 import Spinner from "../elements/Spinner";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import Heading from '../typography/Heading';
 
 interface IProps {
     // false to display an error saying that we couldn't connect to the integration manager
@@ -41,7 +42,6 @@ interface IState {
     errored: boolean;
 }
 
-@replaceableComponent("views.settings.IntegrationManager")
 export default class IntegrationManager extends React.Component<IProps, IState> {
     private dispatcherRef: string;
 
@@ -65,10 +65,13 @@ export default class IntegrationManager extends React.Component<IProps, IState> 
     }
 
     private onKeyDown = (ev: KeyboardEvent): void => {
-        if (ev.key === Key.ESCAPE) {
-            ev.stopPropagation();
-            ev.preventDefault();
-            this.props.onFinished();
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Escape:
+                ev.stopPropagation();
+                ev.preventDefault();
+                this.props.onFinished();
+                break;
         }
     };
 
@@ -86,7 +89,7 @@ export default class IntegrationManager extends React.Component<IProps, IState> 
         if (this.props.loading) {
             return (
                 <div className='mx_IntegrationManager_loading'>
-                    <h3>{ _t("Connecting to integration manager...") }</h3>
+                    <Heading size="h3">{ _t("Connecting to integration manager...") }</Heading>
                     <Spinner />
                 </div>
             );
@@ -95,7 +98,7 @@ export default class IntegrationManager extends React.Component<IProps, IState> 
         if (!this.props.connected || this.state.errored) {
             return (
                 <div className='mx_IntegrationManager_error'>
-                    <h3>{ _t("Cannot connect to integration manager") }</h3>
+                    <Heading size="h3">{ _t("Cannot connect to integration manager") }</Heading>
                     <p>{ _t("The integration manager is offline or it cannot reach your homeserver.") }</p>
                 </div>
             );
