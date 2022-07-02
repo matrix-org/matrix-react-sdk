@@ -37,6 +37,20 @@ import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
 import { UserTab } from "./UserTab";
 
+/**
+ * Returns null if labs are disabled and no betas exist
+ */
+const getLabsTabLabel = (): string | null => {
+    const showLabs = SdkConfig.get("show_labs_settings");
+    const showBetas = SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k));
+
+    if (showBetas && showLabs) return _td("Betas & labs");
+    else if (showBetas) return _td("Betas");
+    else if (showLabs) return _td("Labs");
+
+    return null;
+};
+
 interface IProps extends IDialogProps {
     initialTabId?: UserTab;
 }
@@ -114,7 +128,6 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             <SidebarUserSettingsTab />,
             "UserSettingsSidebar",
         ));
-
         if (SettingsStore.getValue(UIFeature.Voip)) {
             tabs.push(new Tab(
                 UserTab.Voice,
@@ -124,7 +137,6 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 "UserSettingsVoiceVideo",
             ));
         }
-
         tabs.push(new Tab(
             UserTab.Security,
             _td("Security & Privacy"),
@@ -132,13 +144,10 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             <SecurityUserSettingsTab closeSettingsFn={this.props.onFinished} />,
             "UserSettingsSecurityPrivacy",
         ));
-        // Show the Labs tab if enabled or if there are any active betas
-        if (SdkConfig.get("show_labs_settings")
-            || SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k))
-        ) {
+        if (getLabsTabLabel()) {
             tabs.push(new Tab(
                 UserTab.Labs,
-                _td("Labs"),
+                getLabsTabLabel(),
                 "mx_UserSettingsDialog_labsIcon",
                 <LabsUserSettingsTab />,
                 "UserSettingsLabs",
