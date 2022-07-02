@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656758690375,
+  "lastUpdate": 1656777434394,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105824,6 +105824,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4662.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "37d8cfbc505bfba688b4101843cbb70a8c3de952",
+          "message": "Fix read receipts group position on TimelineCard in compact modern/group layout (#8971)",
+          "timestamp": "2022-07-02T15:51:57Z",
+          "tree_id": "6d7ef6c3414d976aff793c2f734bf4df2b6c0e0c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/37d8cfbc505bfba688b4101843cbb70a8c3de952"
+        },
+        "date": 1656777420480,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5030.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2230.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4665.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
