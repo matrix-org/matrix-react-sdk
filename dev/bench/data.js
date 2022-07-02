@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656702409955,
+  "lastUpdate": 1656758690375,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105782,6 +105782,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4569.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9328dca3fdd3fc01c25f870a9d680967dad4d5f5",
+          "message": "Consider cascading order of style rules on _EventTile.scss (#8968)",
+          "timestamp": "2022-07-02T12:39:33+02:00",
+          "tree_id": "5942b685b6d53cc8b4408910e19ae780c46d4714",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9328dca3fdd3fc01c25f870a9d680967dad4d5f5"
+        },
+        "date": 1656758678105,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5720.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2386.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4662.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
