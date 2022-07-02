@@ -48,7 +48,7 @@ describe("Threads", () => {
         markWindowBeforeReload();
 
         // Turn off
-        cy.openUserSettings("Labs").within(() => {
+        cy.openUserSettings("Betas").within(() => {
             // initially the new property is there
             cy.window().should("have.prop", "beforeReload", true);
 
@@ -61,7 +61,7 @@ describe("Threads", () => {
         markWindowBeforeReload();
 
         // Turn on
-        cy.openUserSettings("Labs").within(() => {
+        cy.openUserSettings("Betas").within(() => {
             // initially the new property is there
             cy.window().should("have.prop", "beforeReload", true);
 
