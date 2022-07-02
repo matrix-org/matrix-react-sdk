@@ -118,7 +118,8 @@ limitations under the License.
 
         &[data-layout=group] {
             // Read receipt group on compact modern layout
-            // mx_TimelineCard is wrapped by mx_MatrixChat_useCompactLayout
+            // This is required because mx_TimelineCard is a child element wrapped by mx_MatrixChat_useCompactLayout,
+            // which specifies the default position of mx_ReadReceiptGroup on compact modern layout.
             .mx_MatrixChat_useCompactLayout & .mx_ReadReceiptGroup {
                 top: var(--TimelineCard_ReadReceiptGroup-inset-block-start);
             }
