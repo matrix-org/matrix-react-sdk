@@ -44,7 +44,7 @@ const getLabsTabLabel = (): string | null => {
     const showLabs = SdkConfig.get("show_labs_settings");
     const showBetas = SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k));
 
-    if (showBetas && showLabs) return _td("Betas & labs");
+    if (showBetas && showLabs) return _td("Betas & Labs");
     else if (showBetas) return _td("Betas");
     else if (showLabs) return _td("Labs");
 
