@@ -195,16 +195,20 @@ $left-gutter: 64px;
         }
 
         &:hover {
+            // TODO: Adjust the values for IRC layout
+            --EventTile_hover_box-shadow-offset-x: calc(50px + $selected-message-border-width);
+            --EventTile_hover_box-shadow-spread-radius: -50px;
+
             &.mx_EventTile_verified .mx_EventTile_line {
-                box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-verified-color;
+                box-shadow: inset var(--EventTile_hover_box-shadow-offset-x) 0 0 var(--EventTile_hover_box-shadow-spread-radius) $e2e-verified-color;
             }
 
             &.mx_EventTile_unverified .mx_EventTile_line {
-                box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-unverified-color;
+                box-shadow: inset var(--EventTile_hover_box-shadow-offset-x) 0 0 var(--EventTile_hover_box-shadow-spread-radius) $e2e-unverified-color;
             }
 
             &.mx_EventTile_unknown .mx_EventTile_line {
-                box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-unknown-color;
+                box-shadow: inset var(--EventTile_hover_box-shadow-offset-x) 0 0 var(--EventTile_hover_box-shadow-spread-radius) $e2e-unknown-color;
             }
         }
     }
