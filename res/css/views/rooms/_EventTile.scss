@@ -184,7 +184,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_MessageTimestamp {
-            position: absolute; // for modern layout
+            position: absolute;
             left: 0;
             text-align: center;
         }
