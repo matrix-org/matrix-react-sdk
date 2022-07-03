@@ -22,11 +22,14 @@ limitations under the License.
         margin-right: $spacing-8;
     }
 
+    .mx_GenericEventListSummary_toggle {
+        margin-block: 0;
+    }
+
     &[data-layout=irc],
     &[data-layout=group] {
         .mx_GenericEventListSummary_toggle {
             float: right;
-            margin-block: 0;
             margin-inline: 0 10px;
         }
     }
