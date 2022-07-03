@@ -953,8 +953,7 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_line {
-            padding-top: var(--BaseCard_EventTile_line-padding-block);
-            padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+            padding-block: var(--BaseCard_EventTile_line-padding-block);
         }
 
         .mx_EventTile_line,
@@ -1060,8 +1059,7 @@ $left-gutter: 64px;
             padding-block-start: $spacing-16;
 
             .mx_EventTile_line {
-                padding-top: var(--BaseCard_EventTile_line-padding-block);
-                padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+                padding-block: var(--BaseCard_EventTile_line-padding-block);
 
                 .mx_EventTile_content {
                     &.mx_EditMessageComposer {
