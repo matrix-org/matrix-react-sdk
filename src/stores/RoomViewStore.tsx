@@ -453,8 +453,8 @@ export class RoomViewStore extends Store<ActionPayload> {
                 description = <div>
                     { _t("This Room ID (%(id)s) cannot be joined. Try to join using a Room " +
                          "Alias (#room:example.com) instead.", {
-                            id: this.state.roomId
-                         }) }<br /><br />
+                        id: this.state.roomId,
+                    }) }<br /><br />
 
                     <details>
                         <summary>{ _t("Why?") }</summary><br />
