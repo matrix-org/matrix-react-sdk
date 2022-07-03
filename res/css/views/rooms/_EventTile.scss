@@ -194,6 +194,18 @@ $left-gutter: 64px;
             }
         }
 
+        /* this is used for the tile for the event which is selected via the URL.
+         * TODO: ultimately we probably want some transition on here.
+         */
+        &.mx_EventTile_isEditing,
+        &.mx_EventTile_selected {
+            > .mx_EventTile_line {
+                // TODO: adjust values for IRC layout
+                box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $accent;
+                background-color: $event-selected-color;
+            }
+        }
+
         &.mx_EventTile_continuation .mx_EventTile_line {
             clear: both;
         }
@@ -371,15 +383,6 @@ $left-gutter: 64px;
                 top: 0;
             }
         }
-    }
-
-    /* this is used for the tile for the event which is selected via the URL.
-     * TODO: ultimately we probably want some transition on here.
-     */
-    &.mx_EventTile_isEditing > .mx_EventTile_line,
-    &.mx_EventTile_selected > .mx_EventTile_line {
-        box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $accent;
-        background-color: $event-selected-color;
     }
 
     &.mx_EventTile_selected.mx_EventTile_info .mx_EventTile_line {
