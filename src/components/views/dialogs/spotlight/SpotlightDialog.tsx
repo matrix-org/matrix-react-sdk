@@ -322,7 +322,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         () => {
             const roomMembers = findVisibleRoomMembers(cli);
             const roomMemberIds = new Set(roomMembers.map(item => item.userId));
-            return [
+            const results = [
                 ...SpaceStore.instance.enabledMetaSpaces.map(spaceKey => ({
                     section: Section.Spaces,
                     filter: [],
@@ -341,6 +341,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 ...(profile ? [new DirectoryMember(profile)] : []).map(toMemberResult),
                 ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
+            // Filter out any IMemberResults for which we have a room
+            return results.filter((m) => !results.find((r) => {
+                const userId = m["member"]?.userId;
+                const roomId = r["room"]?.roomId;
+                if (!roomId || !userId) return false;
+                return DMRoomMap.shared().getUserIdForRoomId(roomId) === userId;
+            }));
         },
         [cli, users, profile, publicRooms, filter],
     );
