@@ -1020,23 +1020,10 @@ $left-gutter: 64px;
         }
 
         &:not([data-layout=bubble]) {
-            padding-top: $spacing-16;
-
             &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
             &:hover.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
             &:hover.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
                 padding-inline-start: 0; // Override
-            }
-
-            .mx_EventTile_line {
-                padding-top: var(--BaseCard_EventTile_line-padding-block);
-                padding-bottom: var(--BaseCard_EventTile_line-padding-block);
-
-                .mx_EventTile_content {
-                    &.mx_EditMessageComposer {
-                        padding-inline-start: 0; // align start of first letter with that of the event body
-                    }
-                }
             }
         }
 
@@ -1064,6 +1051,22 @@ $left-gutter: 64px;
 
                 .mx_EventTile_line.mx_EventTile_mediaLine {
                     margin: 0 var(--EventTile_bubble_line-margin-inline-end) 0 0; // align with normal messages
+                }
+            }
+        }
+
+        &[data-layout=irc],
+        &[data-layout=group] {
+            padding-block-start: $spacing-16;
+
+            .mx_EventTile_line {
+                padding-top: var(--BaseCard_EventTile_line-padding-block);
+                padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+
+                .mx_EventTile_content {
+                    &.mx_EditMessageComposer {
+                        padding-inline-start: 0; // align start of first letter with that of the event body
+                    }
                 }
             }
         }
