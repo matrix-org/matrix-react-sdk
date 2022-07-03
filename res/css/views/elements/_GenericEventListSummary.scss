@@ -43,8 +43,8 @@ limitations under the License.
         &[data-expanded=false] {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding: 0 49px; // Align with left edge of bubble tiles
+            justify-content: space-between;
+            padding-inline-start: 49px; // Align with left edge of bubble tiles
         }
 
         // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
@@ -68,7 +68,6 @@ limitations under the License.
 
         .mx_GenericEventListSummary_toggle {
             margin-block: 0;
-            margin-inline-end: 55px;
 
             &[aria-expanded=false] {
                 order: 9;
@@ -77,6 +76,7 @@ limitations under the License.
 
             &[aria-expanded=true] {
                 margin-inline-start: auto; // reduce clickable area
+                margin-inline-end: 55px;
             }
         }
 
