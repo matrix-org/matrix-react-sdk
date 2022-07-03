@@ -1059,8 +1059,6 @@ $left-gutter: 64px;
             padding-block-start: $spacing-16;
 
             .mx_EventTile_line {
-                padding-block: var(--BaseCard_EventTile_line-padding-block);
-
                 .mx_EventTile_content {
                     &.mx_EditMessageComposer {
                         padding-inline-start: 0; // align start of first letter with that of the event body
