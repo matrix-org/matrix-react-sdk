@@ -20,12 +20,20 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_EventTile {
     --EventTile_content-margin-inline-end: 34px; // TODO: Use a spacing variable
+    --EventTile_group_line-spacing-block-start: 1px;
+    --EventTile_group_line-spacing-block-end: 3px;
+    --EventTile_group_line-spacing-inline-start: $left-gutter;
+    --EventTile_group_line-line-height: $font-22px;
 
     flex-shrink: 0;
 
     .mx_EventTile_avatar {
         cursor: pointer;
         user-select: none;
+    }
+
+    .mx_EventTile_body {
+        overflow-y: hidden;
     }
 
     .mx_EventTile_receiptSent,
@@ -87,6 +95,48 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         gap: $spacing-4;
     }
 
+    .mx_ReplyChain--expanded {
+        .mx_EventTile_body {
+            display: block;
+            overflow-y: scroll;
+        }
+
+        .mx_EventTile_collapsedCodeBlock {
+            display: block !important; // !important needed due to .mx_ReplyTile .mx_EventTile_content .mx_EventTile_pre_container > pre
+        }
+    }
+
+    &.mx_EventTile_highlight,
+    &.mx_EventTile_highlight .markdown-body {
+        color: $alert;
+    }
+
+    &.mx_EventTile_bubbleContainer {
+        display: grid;
+        grid-template-columns: 1fr 100px;
+
+        .mx_EventTile_line {
+            margin-right: 0;
+            grid-column: 1 / 3;
+            padding: 0 !important; // override default padding of mx_EventTile_line so that we can be centered
+        }
+
+        .mx_EventTile_msgOption {
+            grid-column: 2;
+        }
+
+        &:hover {
+            .mx_EventTile_line {
+                // To avoid bubble events being highlighted
+                background-color: inherit !important;
+            }
+        }
+    }
+
+    &.mx_EventTile_isEditing .mx_MessageTimestamp {
+        visibility: hidden;
+    }
+
     &[data-layout=irc],
     &[data-layout=group] {
         .mx_EventTile_e2eIcon {
@@ -112,26 +162,16 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_reply {
             margin-right: 10px;
         }
+
+        &.mx_EventTile_highlight,
+        &.mx_EventTile_highlight .markdown-body {
+            .mx_EventTile_line {
+                background-color: $event-highlight-bg-color;
+            }
+        }
     }
 
     &[data-layout=group] {
-        --EventTile_group_line-line-height: $font-22px;
-
-        &.mx_EventTile_info .mx_EventTile_line {
-            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
-        }
-
-        > .mx_DisambiguatedProfile {
-            line-height: $font-20px;
-            margin-left: $left-gutter;
-            max-width: calc(100% - $left-gutter);
-        }
-
-        > .mx_EventTile_avatar {
-            position: absolute;
-            z-index: 9;
-        }
-
         .mx_EventTile_avatar {
             top: 14px;
             left: $spacing-8;
@@ -143,9 +183,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_EventTile_line,
         .mx_EventTile_reply {
-            padding-top: 1px;
-            padding-bottom: 3px;
-            padding-left: $left-gutter;
+            padding-top: var(--EventTile_group_line-spacing-block-start);
+            padding-bottom: var(--EventTile_group_line-spacing-block-end);
+            padding-left: var(--EventTile_group_line-spacing-inline-start);
             line-height: var(--EventTile_group_line-line-height);
         }
 
@@ -164,6 +204,21 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_ReactionsRow {
             margin: $spacing-4 64px;
+        }
+
+        > .mx_DisambiguatedProfile {
+            line-height: $font-20px;
+            margin-left: $left-gutter;
+            max-width: calc(100% - $left-gutter);
+        }
+
+        > .mx_EventTile_avatar {
+            position: absolute;
+            z-index: 9;
+        }
+
+        &.mx_EventTile_info .mx_EventTile_line {
+            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
         }
     }
 }
@@ -206,16 +261,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         padding-top: 0px !important;
     }
 
-    &.mx_EventTile_isEditing .mx_MessageTimestamp {
-        visibility: hidden;
-    }
-
     .mx_MessageTimestamp {
-        display: block;
-        white-space: nowrap;
         left: 0px;
         text-align: center;
-        user-select: none;
     }
 
     &.mx_EventTile_continuation .mx_EventTile_line {
@@ -229,15 +277,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &.mx_EventTile_selected > .mx_EventTile_line {
         box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $accent;
         background-color: $event-selected-color;
-    }
-
-    &.mx_EventTile_highlight,
-    &.mx_EventTile_highlight .markdown-body {
-        color: $alert;
-
-        .mx_EventTile_line {
-            background-color: $event-highlight-bg-color;
-        }
     }
 
     &.mx_EventTile_selected.mx_EventTile_info .mx_EventTile_line {
@@ -282,11 +321,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         a {
             text-decoration: none;
         }
-    }
-
-    /* De-zalgoing */
-    .mx_EventTile_body {
-        overflow-y: hidden;
     }
 
     &:hover.mx_EventTile_verified .mx_EventTile_line {
@@ -483,29 +517,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
 }
 
-.mx_EventTile_bubbleContainer {
-    display: grid;
-    grid-template-columns: 1fr 100px;
-
-    .mx_EventTile_line {
-        margin-right: 0;
-        grid-column: 1 / 3;
-        // override default padding of mx_EventTile_line so that we can be centered
-        padding: 0 !important;
-    }
-
-    .mx_EventTile_msgOption {
-        grid-column: 2;
-    }
-
-    &:hover {
-        .mx_EventTile_line {
-            // To avoid bubble events being highlighted
-            background-color: inherit !important;
-        }
-    }
-}
-
 .mx_EventTile_bigEmoji {
     font-size: 48px;
     line-height: 57px;
@@ -620,6 +631,16 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 mask-size: 75%;
             }
         }
+
+        .mx_EventTile_copyButton {
+            height: 17px;
+            mask-image: url($copy-button-url);
+            mask-position: center center;
+            mask-repeat: no-repeat;
+            mask-size: contain;
+            right: 9px;
+            width: 17px;
+        }
     }
 }
 
@@ -638,10 +659,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 .mx_EventTile_button {
     display: inline-block;
     cursor: pointer;
-}
-
-.mx_EventTile_copyButton {
-    mask-image: url($copy-button-url);
 }
 
 .mx_EventTile_collapseButton,
@@ -878,8 +895,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_MessageTimestamp {
-        max-width: 80px;
-        width: auto;
+        font-size: $font-12px;
+        max-width: var(--MessageTimestamp-max-width);
         position: initial;
     }
 }
@@ -909,10 +926,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_ReactionsRow {
             padding-inline-end: 0;
-        }
-
-        .mx_MessageTimestamp {
-            font-size: $font-10px;
         }
 
         // handling for hidden events (e.g reactions) in the thread view
@@ -1059,6 +1072,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
             .mx_MessageTimestamp {
                 top: 2px; // Align with mx_EventTile_content
+                position: absolute; // for IRC layout
             }
 
             .mx_EventTile_senderDetails {
