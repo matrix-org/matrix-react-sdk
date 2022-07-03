@@ -452,10 +452,12 @@ export class RoomViewStore extends Store<ActionPayload> {
             if (roomId === this.state.roomId && !this.state.viaServers?.length) {
                 description = <div>
                     { _t("This Room ID (%(id)s) cannot be joined. Try to join using a Room " +
-                         "Alias (#room:example.com) instead.", { id: this.state.roomId } ) }<br /><br />
+                         "Alias (#room:example.com) instead.", {
+                            id: this.state.roomId
+                         }) }<br /><br />
 
                     <details>
-                        <summary>{ _t("Why?")}</summary><br />
+                        <summary>{ _t("Why?") }</summary><br />
 
                         { _t("A Room ID alone cannot be used to join a room unless your " +
                              "homeserver already participates in that room.") }<br /><br />
