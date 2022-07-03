@@ -341,13 +341,25 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 ...(profile ? [new DirectoryMember(profile)] : []).map(toMemberResult),
                 ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
-            // Filter out any IMemberResults for which we have a room
-            return results.filter((m) => !results.find((r) => {
-                const userId = m["member"]?.userId;
-                const roomId = r["room"]?.roomId;
-                if (!roomId || !userId) return false;
-                return DMRoomMap.shared().getUserIdForRoomId(roomId) === userId;
-            }));
+
+            // Find userIds with whom we have a DM
+            const hiddenUserIds = [...results].reduce((userIds, result) => {
+                const room: Room = result["room"];
+                if (!room) return userIds;
+                const userId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+                if (!userId) return userIds;
+                if (room.getJoinedMemberCount() > 2) return userIds;
+
+                userIds.add(userId);
+                return userIds;
+            }, new Set<string>());
+
+            // Filter out members with whom we have a DM
+            return results.filter((result) => {
+                const userId = result["member"]?.userId;
+                if (!userId) return true;
+                return !hiddenUserIds.has(userId);
+            });
         },
         [cli, users, profile, publicRooms, filter],
     );
