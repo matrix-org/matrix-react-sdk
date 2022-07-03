@@ -23,16 +23,12 @@ limitations under the License.
 
     &[data-layout=irc],
     &[data-layout=group] {
+        margin-top: $spacing-8;
+
         .mx_GenericEventListSummary_toggle {
             float: right;
             margin-block: 0;
             margin-inline: 0 10px;
-        }
-    }
-
-    &[data-layout=group] {
-        .mx_GenericEventListSummary_avatars {
-            padding-top: $spacing-8;
         }
     }
 
