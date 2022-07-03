@@ -28,7 +28,8 @@ limitations under the License.
     --gutterSize: 11px;
     --cornerRadius: 12px;
     --maxWidth: 70%;
-    margin-right: 60px;
+    --EventBubbleTile-margin-inline-end: 60px;
+    margin-right: var(--EventBubbleTile-margin-inline-end);
 }
 
 .mx_RoomView_searchResultsPanel {
