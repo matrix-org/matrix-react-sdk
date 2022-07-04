@@ -99,6 +99,8 @@
     "Ignored user": "Ignored user",
     "Stops ignoring a user, showing their messages going forward": "Stops ignoring a user, showing their messages going forward",
     "Ignores a user, hiding their messages from you": "Ignores a user, hiding their messages from you",
+    "Ignored room": "Ignored room",
+    "You are now ignoring %(roomId)s": "You are now ignoring %(roomId)s",
     "Leave room": "Leave room",
     "Publish this room to the public in %(domain)s's room directory?": "Publish this room to the public in %(domain)s's room directory?",
     "Logout": "Logout",

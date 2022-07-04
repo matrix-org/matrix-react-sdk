@@ -815,6 +815,28 @@ export const Commands = [
                         }),
                     );
                 }
+                const roomMatches = args.match(/^([!][^:]+:\S+)$/);
+                if (roomMatches) {
+                    const roomId = roomMatches[1];
+                    const ignoredInvites = cli.getIgnoredInvites();
+                    if (ignoredInvites.ignored_rooms === undefined) {
+                        ignoredInvites.ignored_rooms = [];
+                    }
+                    ignoredInvites.ignored_rooms.push({
+                        room_id: roomId,
+                        ts: Date.now(), // TODO: Check this is the timestamp we want?
+                    }); // TODO: figure out whether we're deduplicating or not https://github.com/matrix-org/matrix-js-sdk/pull/2483#discussion_r913013654
+                    return success(
+                        cli.setIgnoredInvites(ignoredInvites).then(() => {
+                            Modal.createDialog(InfoDialog, {
+                                title: _t('Ignored room'),
+                                description: <div>
+                                    <p>{ _t('You are now ignoring %(roomId)s', { roomId }) }</p>
+                                </div>,
+                            });
+                        }),
+                    );
+                }
             }
             return reject(this.getUsage());
         },
