@@ -44,6 +44,9 @@ interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
     // open the map centered on this beacon's location
     focusBeacon?: Beacon;
+    // when tile server is unvailable
+    // we may launch the dialog without ability to display map
+    isMapDisplayError?: boolean;
 }
 
 const getBoundsCenter = (bounds: Bounds): string | undefined => {
@@ -75,6 +78,7 @@ const BeaconViewDialog: React.FC<IProps> = ({
     focusBeacon,
     roomId,
     matrixClient,
+    isMapDisplayError,
     onFinished,
 }) => {
     const liveBeacons = useLiveBeacons(roomId, matrixClient);

@@ -44,6 +44,7 @@ import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
 import { humanizeTime } from '../../../utils/humanize';
 import ShareLatestLocation from '../beacon/ShareLatestLocation';
+import { MapError } from '../location/MapError';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -163,6 +164,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                 roomId: mxEvent.getRoomId(),
                 matrixClient,
                 focusBeacon: beacon,
+                isMapDisplayError,
             },
             "mx_BeaconViewDialog_wrapper",
             false, // isPriority
@@ -194,10 +196,17 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                             />
                     }
                 </Map>
-                : <MapFallback
-                    isLoading={displayStatus === BeaconDisplayStatus.Loading}
-                    className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'
-                />
+                : isMapDisplayError ?
+                    <MapError
+                        error={error.message as LocationShareError}
+                        onClick={onClick}
+                        className='mx_MBeaconBody_mapError'
+                        isMinimised
+                    /> :
+                    <MapFallback
+                        isLoading={displayStatus === BeaconDisplayStatus.Loading}
+                        className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'
+                    />
             }
             { isOwnBeacon ?
                 <OwnBeaconStatus
