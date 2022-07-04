@@ -348,7 +348,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
     },
     "useOnlyCurrentProfiles": {
-        supportedLevels: [SettingLevel.ACCOUNT],
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show current avatar and name for users in message history"),
         default: false,
     },
