@@ -55,6 +55,7 @@ declare global {
             roomHeaderName(
                 options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
             ): Chainable<JQuery<HTMLElement>>;
+            startDM(name: string): Chainable<void>;
         }
     }
 }
@@ -107,6 +108,16 @@ Cypress.Commands.add("roomHeaderName", (
     options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
 ): Chainable<JQuery<HTMLElement>> => {
     return cy.get(".mx_RoomHeader_nametext", options);
+});
+
+Cypress.Commands.add("startDM", (name: string) => {
+    cy.openSpotlightDialog().within(() => {
+        cy.spotlightFilter(Filter.People);
+        cy.spotlightSearch().clear().type(name);
+        cy.spotlightResults().eq(0).click();
+    });
+    // Opening a DM takes time...
+    cy.wait(3000);
 });
 
 describe("Spotlight", () => {
