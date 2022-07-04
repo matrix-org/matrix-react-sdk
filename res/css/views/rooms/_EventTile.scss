@@ -360,7 +360,16 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             padding-left: 0; // Override .mx_EventTile:not([data-layout="bubble"]).mx_EventTile_info .mx_EventTile_line
         }
 
-        .mx_EventTile_line {
+        .mx_EventTile_line .mx_RedactedBody {
+            padding-left: 24px; // 25px - 1px
+
+            &::before {
+                left: var(--right-padding);
+            }
+        }
+
+        // Apply only collapsed events block
+        > .mx_EventTile_line {
             padding-left: calc(var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 3 * var(--right-padding)); // 15 px of padding
         }
     }
