@@ -76,12 +76,12 @@ describe('getForwardableEvent()', () => {
             const locationEvent = makeBeaconEvent(userId, {
                 beaconInfoId: liveBeacon.getId(),
                 geoUri: 'geo:52,42',
-                // make sure its live
-                timestamp: Date.now() - 1,
+                // make sure its in live period
+                timestamp: Date.now() + 1,
             });
             makeRoomWithBeacons(roomId, client, [liveBeacon], [locationEvent]);
 
-            expect(getForwardableEvent(liveBeacon, client)).toBe(null);
+            expect(getForwardableEvent(liveBeacon, client)).toBe(locationEvent);
         });
     });
 });
