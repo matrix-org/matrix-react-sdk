@@ -330,6 +330,11 @@ describe("Spotlight", () => {
         });
     });
 
+    it("should close spotlight after starting a DM", () => {
+        cy.startDM(bot1Name);
+        cy.get(".mx_SpotlightDialog").should("have.length", 0);
+    });
+
     it("should be able to navigate results via keyboard", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
