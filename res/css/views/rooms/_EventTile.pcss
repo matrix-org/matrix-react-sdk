@@ -113,8 +113,6 @@ $left-gutter: 64px;
     }
 
     .mx_ReplyChain {
-        margin-bottom: $spacing-8;
-
         &.mx_ReplyChain--expanded {
             .mx_EventTile_body {
                 display: block;
@@ -271,6 +269,10 @@ $left-gutter: 64px;
         .mx_EventTileBubble {
             margin-inline: auto;
         }
+
+        .mx_ReplyChain {
+            margin-bottom: $spacing-8;
+        }
     }
 
     &[data-layout="irc"] {
@@ -293,6 +295,10 @@ $left-gutter: 64px;
             &.mx_cryptoEvent {
                 left: unset;
             }
+        }
+
+        .mx_ReplyChain {
+            margin: 0;
         }
 
         .mx_ReplyTile .mx_EventTileBubble {
