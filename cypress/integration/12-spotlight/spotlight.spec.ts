@@ -335,6 +335,19 @@ describe("Spotlight", () => {
         cy.get(".mx_SpotlightDialog").should("have.length", 0);
     });
 
+    it("should show the same user only once", () => {
+        cy.startDM(bot1Name);
+        cy.visit("/#/home");
+
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.People);
+            cy.spotlightSearch().clear().type(bot1Name);
+            // Sometimes it take a bit of time for all the results to show up
+            cy.wait(100);
+            cy.spotlightResults().should("have.length", 1);
+        });
+    });
+
     it("should be able to navigate results via keyboard", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
