@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656918995544,
+  "lastUpdate": 1656919006009,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106076,6 +106076,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5196,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6543f6a7d17326e92da3b5214486c19fea67580f",
+          "message": "Link to cypress tests rather than the old E2E tests (#8970)",
+          "timestamp": "2022-07-04T09:11:28+02:00",
+          "tree_id": "8d87880579cf4b677b19aba4d802ae9a87b56b1b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6543f6a7d17326e92da3b5214486c19fea67580f"
+        },
+        "date": 1656918992797,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5086.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2372.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5015.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
