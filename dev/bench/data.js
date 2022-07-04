@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656916352888,
+  "lastUpdate": 1656916962324,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -105992,6 +105992,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4393,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "352df7ddc7ed69311488545cb8aeb61d6b1f283b",
+          "message": "Move mx_EventTile_contextual out of mx_EventTile:not([data-layout=bubble]) (#8974)\n\n* Move mx_EventTile_contextual out of mx_EventTile:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Empty commit\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-04T08:37:31+02:00",
+          "tree_id": "527af04a1715e574f5275caf5572ba757cb380f8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/352df7ddc7ed69311488545cb8aeb61d6b1f283b"
+        },
+        "date": 1656916949748,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5620.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2251.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4653.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
