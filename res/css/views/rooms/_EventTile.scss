@@ -242,7 +242,7 @@ $left-gutter: 64px;
         }
 
         .mx_RoomView_timeline_rr_enabled & {
-            $inline-end-margin: 80px;
+            $inline-end-margin: 80px; // TODO: Use a spacing variable
 
             .mx_ThreadSummary,
             .mx_ThreadSummary_icon,
