@@ -180,7 +180,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                     }
                 </div>
                 { betaSection }
-                { SdkConfig.get("show_labs_settings") && <>
+                { labsSections && <>
                     <div className="mx_SettingsTab_heading">{ _t("Labs") }</div>
                     { labsSections }
                 </> }
