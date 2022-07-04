@@ -33,6 +33,13 @@ import { privateShouldBeEncrypted } from "./rooms";
 import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
 import * as thisModule from "./direct-messages";
 
+/**
+ * Tries to find a DM room with a specific user.
+ *
+ * @param {MatrixClient} client
+ * @param {string} userId ID of the user to find the DM for
+ * @returns {Room} Room if found
+ */
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
     const rooms = roomIds.map(id => client.getRoom(id));
@@ -60,6 +67,13 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
     }
 }
 
+/**
+ * Tries to find a DM room with some other users.
+ *
+ * @param {MatrixClient} client
+ * @param {Member[]} targets The Members to try to find the room for
+ * @returns {Room | null} Resolved so the room if found, else null
+ */
 export function findDMRoom(client: MatrixClient, targets: Member[]): Room | null {
     const targetIds = targets.map(t => t.userId);
     let existingRoom: Room;
@@ -78,7 +92,7 @@ export async function startDmOnFirstMessage(
     client: MatrixClient,
     targets: Member[],
 ): Promise<Room> {
-    const existingRoom = findDMRoom(client, targets);
+    const existingRoom = thisModule.findDMRoom(client, targets);
     if (existingRoom) {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
@@ -90,7 +104,7 @@ export async function startDmOnFirstMessage(
         return existingRoom;
     }
 
-    const room = await createDmLocalRoom(client, targets);
+    const room = await thisModule.createDmLocalRoom(client, targets);
     dis.dispatch({
         action: Action.ViewRoom,
         room_id: room.roomId,
@@ -100,10 +114,20 @@ export async function startDmOnFirstMessage(
     return room;
 }
 
+/**
+ * Create a DM local room. This room will not be send to the server and only exists inside the client.
+ * It sets up the local room with some artificial state events
+ * so that can be used in most components instead of a „real“ room.
+ *
+ * @async
+ * @param {MatrixClient} client
+ * @param {Member[]} targets DM partners
+ * @returns {Promise<LocalRoom>} Resolves to the new local room
+ */
 export async function createDmLocalRoom(
     client: MatrixClient,
     targets: Member[],
-): Promise<Room> {
+): Promise<LocalRoom> {
     const userId = client.getUserId();
 
     const localRoom = new LocalRoom(
@@ -127,7 +151,7 @@ export async function createDmLocalRoom(
         user_id: userId,
         sender: userId,
         room_id: localRoom.roomId,
-        origin_server_ts: new Date().getTime(),
+        origin_server_ts: Date.now(),
     }));
 
     if (await determineCreateRoomEncryptionOption(client, targets)) {
@@ -199,6 +223,14 @@ export async function createDmLocalRoom(
     return localRoom;
 }
 
+/**
+ * Detects whether a room should be encrypted.
+ *
+ * @async
+ * @param {MatrixClient} client
+ * @param {Member[]} targets The members to which run the check against
+ * @returns {Promise<boolean>}
+ */
 async function determineCreateRoomEncryptionOption(client: MatrixClient, targets: Member[]): Promise<boolean> {
     if (privateShouldBeEncrypted()) {
         // Check whether all users have uploaded device keys before.
@@ -216,10 +248,15 @@ async function determineCreateRoomEncryptionOption(client: MatrixClient, targets
     return false;
 }
 
-async function applyAfterCreateCallbacks(
-    localRoom: LocalRoom,
-    roomId: string,
-) {
+/**
+ * Applies the after-create callback of a local room.
+ *
+ * @async
+ * @param {LocalRoom} localRoom
+ * @param {string} roomId
+ * @returns {Promise<void>} Resolved after all callbacks have been called
+ */
+async function applyAfterCreateCallbacks(localRoom: LocalRoom, roomId: string): Promise<void> {
     for (const afterCreateCallback of localRoom.afterCreateCallbacks) {
         await afterCreateCallback(roomId);
     }
@@ -230,7 +267,7 @@ async function applyAfterCreateCallbacks(
 /**
  * Tests whether a room created based on a local room is ready.
  */
-function isRoomReady(
+export function isRoomReady(
     client: MatrixClient,
     localRoom: LocalRoom,
 ): boolean {
@@ -241,8 +278,8 @@ function isRoomReady(
     // not ready if the room does not exist
     if (!room) return false;
 
-    // not ready if not all targets have been invited
-    if (room.getInvitedMemberCount() !== localRoom.targets.length) return false;
+    // not ready if not all members joined/invited
+    if (room.getInvitedAndJoinedMemberCount() !== 1 + localRoom.targets?.length) return false;
 
     const roomHistoryVisibilityEvents = room.currentState.getStateEvents(EventType.RoomHistoryVisibility);
     // not ready if the room history has not been configured
@@ -255,7 +292,15 @@ function isRoomReady(
     return true;
 }
 
-export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: LocalRoom) {
+/**
+ * Starts a DM for a new local room.
+ *
+ * @async
+ * @param {MatrixClient} client
+ * @param {LocalRoom} localRoom
+ * @returns {Promise<string | void>} Resolves to the created room id
+ */
+export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: LocalRoom): Promise<string | void> {
     if (!localRoom.isNew) {
         // This action only makes sense for new local rooms.
         return;
@@ -264,41 +309,62 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
     localRoom.state = LocalRoomState.CREATING;
     client.emit(ClientEvent.Room, localRoom);
 
-    return new Promise<void>((resolve) => {
-        let checkRoomStateInterval: number;
-        let stopgapTimeoutHandle: number;
+    return thisModule.startDm(client, localRoom.targets).then(
+        (roomId) => {
+            localRoom.actualRoomId = roomId;
+            return thisModule.waitForRoomReadyAndApplyAfterCreateCallbacks(client, localRoom);
+        },
+        () => {
+            logger.warn(`Error creating DM for local room ${localRoom.roomId}`);
+            localRoom.state = LocalRoomState.ERROR;
+            client.emit(ClientEvent.Room, localRoom);
+        },
+    );
+}
+
+/**
+ * Waits until a room is ready and then applies the after-create local room callbacks.
+ * Also implements a stopgap timeout after that a room is assumed to be ready.
+ *
+ * @see isRoomReady
+ * @async
+ * @param {MatrixClient} client
+ * @param {LocalRoom} localRoom
+ * @returns {Promise<string>} Resolved to the actual room id
+ */
+export async function waitForRoomReadyAndApplyAfterCreateCallbacks(
+    client: MatrixClient,
+    localRoom: LocalRoom,
+): Promise<string> {
+    if (thisModule.isRoomReady(client, localRoom)) {
+        return applyAfterCreateCallbacks(localRoom, localRoom.actualRoomId).then(() => {
+            localRoom.state = LocalRoomState.CREATED;
+            client.emit(ClientEvent.Room, localRoom);
+            return Promise.resolve(localRoom.actualRoomId);
+        });
+    }
+
+    return new Promise((resolve) => {
+        const finish = () => {
+            if (checkRoomStateIntervalHandle) clearInterval(checkRoomStateIntervalHandle);
+            if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
+
+            applyAfterCreateCallbacks(localRoom, localRoom.actualRoomId).then(() => {
+                localRoom.state = LocalRoomState.CREATED;
+                client.emit(ClientEvent.Room, localRoom);
+                resolve(localRoom.actualRoomId);
+            });
+        };
 
         const stopgapFinish = () => {
             logger.warn(`Assuming local room ${localRoom.roomId} is ready after hitting timeout`);
             finish();
         };
 
-        const finish = () => {
-            if (checkRoomStateInterval) clearInterval(checkRoomStateInterval);
-            if (stopgapTimeoutHandle) clearTimeout(stopgapTimeoutHandle);
-
-            applyAfterCreateCallbacks(localRoom, localRoom.actualRoomId).then(() => {
-                localRoom.state = LocalRoomState.CREATED;
-                resolve();
-            });
-        };
-
-        startDm(client, localRoom.targets).then(
-            (roomId) => {
-                localRoom.actualRoomId = roomId;
-                if (isRoomReady(client, localRoom)) finish();
-                stopgapTimeoutHandle = setTimeout(stopgapFinish, 5000);
-                // polling the room state is not as beautiful as listening on the events, but it is more reliable
-                checkRoomStateInterval = setInterval(() => {
-                    if (isRoomReady(client, localRoom)) finish();
-                }, 500);
-            },
-            () => {
-                logger.warn(`Error creating DM for local room ${localRoom.roomId}`);
-                localRoom.state = LocalRoomState.ERROR;
-                client.emit(ClientEvent.Room, localRoom);
-            },
-        );
+        const checkRoomStateIntervalHandle = setInterval(() => {
+            if (thisModule.isRoomReady(client, localRoom)) finish();
+        }, 500);
+        const stopgapTimeoutHandle = setTimeout(stopgapFinish, 5000);
     });
 }
 
@@ -307,7 +373,7 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
  *
  * @returns {Promise<string | null} Resolves to the room id.
  */
-async function startDm(client: MatrixClient, targets: Member[]): Promise<string | null> {
+export async function startDm(client: MatrixClient, targets: Member[]): Promise<string | null> {
     const targetIds = targets.map(t => t.userId);
 
     // Check if there is already a DM with these people and reuse it if possible.

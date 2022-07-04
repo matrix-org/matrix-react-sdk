@@ -33,7 +33,7 @@ export enum LocalRoomState {
  */
 export class LocalRoom extends Room {
     /** Whether the actual room should be encrypted. */
-    encrypted: boolean;
+    encrypted = false;
     /** If the actual room has been created, this holds its ID. */
     actualRoomId: string;
     /** DM chat partner */
