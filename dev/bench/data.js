@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656919006009,
+  "lastUpdate": 1656926061755,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106118,6 +106118,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5015.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0026e0462b3f459b3ab75068d8254252039630c9",
+          "message": "Fix resizing room topic (#8966)",
+          "timestamp": "2022-07-04T11:09:08+02:00",
+          "tree_id": "d9d66a364b26e645a4b3c3af44c2bc23a10e1a7d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0026e0462b3f459b3ab75068d8254252039630c9"
+        },
+        "date": 1656926047945,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4838.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2118.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4499.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
