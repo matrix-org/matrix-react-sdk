@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656962070366,
+  "lastUpdate": 1656963779321,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106286,6 +106286,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5534.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "88afd552d866cf0d82eda52652a152b84f673189",
+          "message": "Delabs `Show current avatar and name for users in message history` (#8764)\n\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-07-04T19:37:48Z",
+          "tree_id": "514dee128f84cda21961b6f3e682c1f7bb79bf2d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/88afd552d866cf0d82eda52652a152b84f673189"
+        },
+        "date": 1656963766537,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5469.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2203.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4866,
             "unit": "ms",
             "extra": "type: measure"
           }
