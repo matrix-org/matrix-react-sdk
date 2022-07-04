@@ -26,14 +26,13 @@ import {
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
 import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
-import classNames from 'classnames';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import { isBeaconWaitingToStart, useBeacon } from '../../../utils/beacon';
-import { getLocationShareErrorMessage, isSelfLocation, LocationShareError } from '../../../utils/location';
+import { isSelfLocation, LocationShareError } from '../../../utils/location';
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
 import BeaconStatus from '../beacon/BeaconStatus';
 import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
@@ -128,38 +127,6 @@ const useHandleBeaconRedaction = (
     }, [event, onBeforeBeaconInfoRedaction]);
 };
 
-export const BeaconBodyFallbackContent: React.FC<{
-    beacon?: Beacon;
-    latestLocationState?: BeaconLocationState; isOwnBeacon?: boolean; displayStatus: BeaconDisplayStatus;
-}> = ({ beacon, latestLocationState, isOwnBeacon, displayStatus }) => {
-    const shouldDisplayLocation = displayStatus === BeaconDisplayStatus.Active;
-    const humanizedUpdateTime = shouldDisplayLocation ? humanizeTime(latestLocationState?.timestamp) : '';
-    return <div className='mx_MBeaconBody_withoutMapContent'>
-        { isOwnBeacon ?
-            <OwnBeaconStatus
-                className='mx_MBeaconBody_chin'
-                beacon={beacon}
-                displayStatus={displayStatus}
-                withIcon
-            >
-                { shouldDisplayLocation && <ShareLatestLocation latestLocationState={latestLocationState} /> }
-            </OwnBeaconStatus> :
-            <BeaconStatus
-                className='mx_MBeaconBody_chin'
-                beacon={beacon}
-                displayStatus={displayStatus}
-                label={_t('View live location')}
-                withIcon
-            >
-                { shouldDisplayLocation && <ShareLatestLocation latestLocationState={latestLocationState} /> }
-            </BeaconStatus>
-        }
-        { displayStatus === BeaconDisplayStatus.Active &&
-            <span className='mx_MBeaconBody_withoutMapInfoLastUpdated'>{ _t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime }) }</span>
-        }
-    </div>;
-};
-
 const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelationsForEvent }, ref) => {
     const {
         beacon,
@@ -172,9 +139,14 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
     const matrixClient = useContext(MatrixClientContext);
     const [error, setError] = useState<Error>();
     const isMapDisplayError = error?.message === LocationShareError.MapStyleUrlNotConfigured ||
-    error?.message === LocationShareError.MapStyleUrlNotReachable;
+        error?.message === LocationShareError.MapStyleUrlNotReachable;
     const displayStatus = getBeaconDisplayStatus(
-        isLive, latestLocationState, isMapDisplayError ? undefined : error, waitingToStart,
+        isLive,
+        latestLocationState,
+        // if we are unable to display maps because it is not configured for the server
+        // don't display an error
+        isMapDisplayError ? undefined : error,
+        waitingToStart,
     );
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
     const isOwnBeacon = beacon?.beaconInfoOwner === matrixClient.getUserId();
@@ -198,26 +170,12 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
         );
     };
 
-    if (isMapDisplayError) {
-        return <div
-            className='mx_MBeaconBody mx_MBeaconBody_withoutMap'
-            ref={ref}
-        >
-            <BeaconBodyFallbackContent
-                beacon={beacon}
-                isOwnBeacon={isOwnBeacon}
-                displayStatus={displayStatus}
-                latestLocationState={latestLocationState}
-            />
-        </div>;
-    }
-
     return (
         <div
             className='mx_MBeaconBody'
             ref={ref}
         >
-            { displayStatus === BeaconDisplayStatus.Active ?
+            { (displayStatus === BeaconDisplayStatus.Active && !isMapDisplayError) ?
                 <Map
                     id={mapId}
                     centerGeoUri={latestLocationState.uri}
