@@ -247,6 +247,12 @@ $left-gutter: 64px;
             padding-top: 0px !important;
         }
     }
+
+    &[data-layout=bubble] {
+        &.mx_EventTile_continuation {
+            margin-top: 2px;
+        }
+    }
 }
 
 .mx_EventTile:not([data-layout=bubble]) {
