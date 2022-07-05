@@ -191,8 +191,6 @@ $left-gutter: 64px;
         }
 
         &.mx_EventTile_info {
-            padding-top: 0;
-
             .mx_EventTile_e2eIcon {
                 top: 0;
             }
@@ -287,6 +285,8 @@ $left-gutter: 64px;
         &.mx_EventTile_info {
             $spacing-block-start: 3px;
             $spacing-block-end: 2px;
+
+            padding-top: 0;
 
             .mx_EventTile_avatar,
             .mx_EventTile_e2eIcon {
