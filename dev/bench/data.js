@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657016448508,
+  "lastUpdate": 1657019265617,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106412,6 +106412,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5534.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fd3d65993c9d8e56c79db8ef7b0153dd32ad67cd",
+          "message": "Improve mx_MatrixChat_useCompactLayout on _EventTile.scss (#8965)",
+          "timestamp": "2022-07-05T12:02:29+01:00",
+          "tree_id": "9ce003326fd1637977f151eeebec7252542c8121",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fd3d65993c9d8e56c79db8ef7b0153dd32ad67cd"
+        },
+        "date": 1657019252780,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4979.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2172,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4572.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
