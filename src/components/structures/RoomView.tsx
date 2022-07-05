@@ -905,6 +905,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         for (const watcher of this.settingWatchers) {
             SettingsStore.unwatchSetting(watcher);
         }
+
+        if (this.state.room instanceof LocalRoom) {
+            // clean up if this was a local room
+            this.props.mxClient.store.removeRoom(this.state.room.roomId);
+        }
     }
 
     private onRightPanelStoreUpdate = () => {

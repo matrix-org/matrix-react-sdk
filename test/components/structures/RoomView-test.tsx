@@ -36,6 +36,7 @@ import DMRoomMap from "../../../src/utils/DMRoomMap";
 import { NotificationState } from "../../../src/stores/notifications/NotificationState";
 import RightPanelStore from "../../../src/stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../src/stores/right-panel/RightPanelStorePhases";
+import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../src/models/LocalRoom";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -50,7 +51,7 @@ describe("RoomView", () => {
 
         room = new Room(`!${roomCount++}:example.org`, cli, "@alice:example.org");
         room.getPendingEvents = () => [];
-        cli.getRoom.mockReturnValue(room);
+        cli.getRoom.mockImplementation(() => room);
         // Re-emit certain events on the mocked client
         room.on(RoomEvent.Timeline, (...args) => cli.emit(RoomEvent.Timeline, ...args));
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
@@ -161,6 +162,19 @@ describe("RoomView", () => {
             await mountRoomView();
             expect(RightPanelStore.instance.isOpen).toEqual(true);
             expect(RightPanelStore.instance.currentCard.phase).toEqual(RightPanelPhases.Timeline);
+        });
+    });
+
+    describe("local rooms", () => {
+        beforeEach(() => {
+            room = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", cli, cli.getUserId());
+            cli.store.storeRoom(room);
+        });
+
+        it("should remove the room from the store on unmount", async () => {
+            const roomView = await mountRoomView();
+            roomView.unmount();
+            expect(cli.store.removeRoom).toHaveBeenCalledWith(room.roomId);
         });
     });
 });
