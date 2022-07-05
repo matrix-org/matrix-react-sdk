@@ -321,6 +321,7 @@ export enum Action {
      */
     OverwriteLogin = "overwrite_login",
 
+    /**
      * Fired when the PlatformPeg gets a new platform set upon it, should only happen once per app load lifecycle.
      * Fires with the PlatformSetPayload.
      */
