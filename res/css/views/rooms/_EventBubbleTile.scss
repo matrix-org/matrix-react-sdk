@@ -44,11 +44,6 @@ limitations under the License.
                 display: none;
             }
         }
-
-        // Mirror rough designs for "greyed out" text
-        &.mx_EventTile_contextual .mx_EventTile_line {
-            opacity: 0.4;
-        }
     }
 }
 
@@ -76,10 +71,6 @@ limitations under the License.
 
     .mx_EventTile_content {
         margin-right: 0;
-    }
-
-    &.mx_EventTile_continuation {
-        margin-top: 2px;
     }
 
     &.mx_EventTile_highlight {
