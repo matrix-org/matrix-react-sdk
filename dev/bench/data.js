@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657019265617,
+  "lastUpdate": 1657020150230,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106454,6 +106454,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4572.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "74a059b52067494c78b1cd3f6cb8d1c594362131",
+          "message": "Move mx_EventTile_continuation out of mx_EventTile:not([data-layout=bubble]) (#8941)\n\n* Move mx_EventTile_continuation out of mx_EventTile:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Manage mx_EventTile_continuation declarations on one file\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-05T11:17:11Z",
+          "tree_id": "0ef4ce7e88b5d666e079589bf031ff5d2e8719df",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/74a059b52067494c78b1cd3f6cb8d1c594362131"
+        },
+        "date": 1657020135753,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5326.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 617.5,
             "unit": "ms",
             "extra": "type: measure"
           }
