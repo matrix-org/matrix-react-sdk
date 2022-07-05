@@ -114,10 +114,14 @@ Cypress.Commands.add("startDM", (name: string) => {
     cy.openSpotlightDialog().within(() => {
         cy.spotlightFilter(Filter.People);
         cy.spotlightSearch().clear().type(name);
+        cy.get(".mx_Spinner").should("not.exist");
+        cy.spotlightResults().should("have.length", 1);
+        cy.spotlightResults().eq(0).should("contain", name);
         cy.spotlightResults().eq(0).click();
+    }).then(() => {
+        cy.roomHeaderName().should("contain", name);
+        cy.get(".mx_RoomSublist[aria-label=People]").should("contain", name);
     });
-    // Opening a DM takes time...
-    cy.wait(3000);
 });
 
 describe("Spotlight", () => {
@@ -342,8 +346,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot1Name);
-            // Sometimes it take a bit of time for all the results to show up
-            cy.wait(100);
+            cy.get(".mx_Spinner").should("not.exist");
             cy.spotlightResults().should("have.length", 1);
         });
     });
