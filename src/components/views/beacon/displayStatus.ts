@@ -16,14 +16,11 @@ limitations under the License.
 
 import { BeaconLocationState } from "matrix-js-sdk/src/content-helpers";
 
-import { LocationShareError } from "../../../utils/location";
-
 export enum BeaconDisplayStatus {
     Loading = 'Loading',
     Error = 'Error',
     Stopped = 'Stopped',
     Active = 'Active',
-    UseMapFallback = 'UseMapFallback',
 }
 export const getBeaconDisplayStatus = (
     isLive: boolean,
@@ -31,12 +28,6 @@ export const getBeaconDisplayStatus = (
     error?: Error,
     waitingToStart?: boolean,
 ): BeaconDisplayStatus => {
-    if (
-        error?.message === LocationShareError.MapStyleUrlNotConfigured ||
-        error?.message === LocationShareError.MapStyleUrlNotReachable
-    ) {
-        return BeaconDisplayStatus.UseMapFallback;
-    }
     if (error) {
         return BeaconDisplayStatus.Error;
     }

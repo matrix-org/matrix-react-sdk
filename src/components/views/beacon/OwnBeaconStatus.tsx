@@ -28,7 +28,6 @@ interface Props {
     className?: string;
     beacon?: Beacon;
     withIcon?: boolean;
-    children?: React.ReactNode;
 }
 
 /**
@@ -36,7 +35,7 @@ interface Props {
  * for errors and actions available for users own live beacons
  */
 const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
-    beacon, displayStatus, children, ...rest
+    beacon, displayStatus, ...rest
 }) => {
     const {
         hasLocationPublishError,
@@ -66,7 +65,6 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
         displayLiveTimeRemaining
         {...rest}
     >
-        { children }
         { ownDisplayStatus === BeaconDisplayStatus.Active && <AccessibleButton
             data-test-id='beacon-status-stop-beacon'
             kind='link'
