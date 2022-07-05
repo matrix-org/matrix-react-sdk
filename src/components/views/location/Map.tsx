@@ -22,11 +22,10 @@ import { logger } from 'matrix-js-sdk/src/logger';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import { LocationShareError, parseGeoUri } from '../../../utils/location';
+import { parseGeoUri } from '../../../utils/location';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import { useMap } from '../../../utils/location/useMap';
 import { Bounds } from '../../../utils/beacon/bounds';
-import LocationShareMenu from './LocationShareMenu';
 
 const useMapWithStyle = ({ id, centerGeoUri, onError, interactive, bounds }) => {
     const bodyId = `mx_Map_${id}`;
@@ -100,11 +99,6 @@ const Map: React.FC<MapProps> = ({
     interactive,
     onError, onClick,
 }) => {
-
-    useEffect(() => {
-        onError(new Error(LocationShareError.MapStyleUrlNotConfigured));
-    }, []);
-
     const { map, bodyId } = useMapWithStyle({ centerGeoUri, onError, id, interactive, bounds });
 
     const onMapClick = (

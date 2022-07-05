@@ -26,6 +26,7 @@ import {
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
 import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
+import classNames from 'classnames';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
@@ -43,7 +44,6 @@ import { GetRelationsForEvent } from '../rooms/EventTile';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
 import { MapError } from '../location/MapError';
-import classNames from 'classnames';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
