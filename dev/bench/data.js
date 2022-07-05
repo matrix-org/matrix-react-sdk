@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657037369262,
+  "lastUpdate": 1657040325780,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106712,6 +106712,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5782.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8311bdd2638f8576f287a42cc0d9339fe9b6be04",
+          "message": "Fix the size of the clickable area of images (#8987)",
+          "timestamp": "2022-07-05T18:53:18+02:00",
+          "tree_id": "9e1be2fad0a32b5e06ff2811e9a9820663d9c633",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8311bdd2638f8576f287a42cc0d9339fe9b6be04"
+        },
+        "date": 1657040310432,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5320.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2271.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4817,
             "unit": "ms",
             "extra": "type: measure"
           }
