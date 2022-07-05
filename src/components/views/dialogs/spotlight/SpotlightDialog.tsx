@@ -529,6 +529,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         key={`${Section[result.section]}-${result.member.userId}`}
                         onClick={() => {
                             startDmOnFirstMessage(cli, [result.member]);
+                            onFinished();
                         }}
                     >
                         <SearchResultAvatar user={result.member} size={AVATAR_SIZE} />
@@ -996,10 +997,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         <div id="mx_SpotlightDialog_keyboardPrompt">
             { _t("Use <arrows/> to scroll", {}, {
                 arrows: () => <>
-                    <div>↓</div>
-                    <div>↑</div>
-                    { !filter !== null && !query && <div>←</div> }
-                    { !filter !== null && !query && <div>→</div> }
+                    <kbd>↓</kbd>
+                    <kbd>↑</kbd>
+                    { !filter !== null && !query && <kbd>←</kbd> }
+                    { !filter !== null && !query && <kbd>→</kbd> }
                 </>,
             }) }
         </div>
