@@ -31,17 +31,6 @@ limitations under the License.
     margin-right: 60px;
 }
 
-.mx_RoomView_searchResultsPanel {
-    .mx_EventTile[data-layout=bubble] {
-        &[data-self=true] {
-            // The avatars end up overlapping, so just hide them
-            .mx_EventTile_avatar {
-                display: none;
-            }
-        }
-    }
-}
-
 .mx_EventTile[data-layout=bubble] {
     --EventTile_bubble-margin-inline-start: 49px;
     --EventTile_bubble-margin-inline-end: 60px;
