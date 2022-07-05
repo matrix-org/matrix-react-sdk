@@ -84,6 +84,26 @@ limitations under the License.
             }
         }
     }
+
+    .mx_MatrixChat_useCompactLayout & {
+        font-size: $font-13px;
+
+        .mx_EventTile_line {
+            line-height: $font-20px;
+        }
+
+        .mx_GenericEventListSummary_line {
+            line-height: $font-22px;
+        }
+
+        .mx_GenericEventListSummary_toggle {
+            margin-top: 3px;
+        }
+
+        .mx_TextualEvent.mx_GenericEventListSummary_summary {
+            font-size: $font-13px;
+        }
+    }
 }
 
 .mx_GenericEventListSummary_unstyledList {
@@ -110,26 +130,4 @@ limitations under the License.
     border-bottom: 1px solid $primary-hairline-color;
     margin-left: 63px;
     line-height: $font-30px;
-}
-
-.mx_MatrixChat_useCompactLayout {
-    .mx_GenericEventListSummary {
-        font-size: $font-13px;
-
-        .mx_EventTile_line {
-            line-height: $font-20px;
-        }
-
-        .mx_GenericEventListSummary_line {
-            line-height: $font-22px;
-        }
-
-        .mx_GenericEventListSummary_toggle {
-            margin-top: 3px;
-        }
-    }
-
-    .mx_TextualEvent.mx_GenericEventListSummary_summary {
-        font-size: $font-13px;
-    }
 }
