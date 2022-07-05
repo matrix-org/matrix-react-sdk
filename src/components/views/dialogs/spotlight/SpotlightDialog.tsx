@@ -103,11 +103,8 @@ function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
     return ref.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
-function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> | null {
+function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> {
     const roomTypes = new Set<RoomType | null>();
-
-    // This is what servers not implementing MSC3827 are expecting
-    if (showRooms && !showSpaces) return null;
 
     if (showRooms) roomTypes.add(null);
     if (showSpaces) roomTypes.add(RoomType.Space);
@@ -180,16 +177,20 @@ const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResul
 });
 
 const toRoomResult = (room: Room): IRoomResult => {
+    const myUserId = MatrixClientPeg.get().getUserId();
     const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+
     if (otherUserId) {
+        const otherMembers = room.getMembers().filter(it => it.userId !== myUserId);
+        const query = [
+            ...otherMembers.map(it => it.name.toLowerCase()),
+            ...otherMembers.map(it => it.userId.toLowerCase()),
+        ].filter(Boolean);
         return {
             room,
             section: Section.People,
             filter: [Filter.People],
-            query: [
-                otherUserId.toLowerCase(),
-                room.getMember(otherUserId)?.name.toLowerCase(),
-            ].filter(Boolean),
+            query,
         };
     } else if (room.isSpaceRoom()) {
         return {
@@ -528,6 +529,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         key={`${Section[result.section]}-${result.member.userId}`}
                         onClick={() => {
                             startDm(cli, [result.member]);
+                            onFinished();
                         }}
                     >
                         <SearchResultAvatar user={result.member} size={AVATAR_SIZE} />
@@ -995,10 +997,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         <div id="mx_SpotlightDialog_keyboardPrompt">
             { _t("Use <arrows/> to scroll", {}, {
                 arrows: () => <>
-                    <div>↓</div>
-                    <div>↑</div>
-                    { !filter !== null && !query && <div>←</div> }
-                    { !filter !== null && !query && <div>→</div> }
+                    <kbd>↓</kbd>
+                    <kbd>↑</kbd>
+                    { !filter !== null && !query && <kbd>←</kbd> }
+                    { !filter !== null && !query && <kbd>→</kbd> }
                 </>,
             }) }
         </div>

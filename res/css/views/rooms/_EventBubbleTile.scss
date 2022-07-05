@@ -44,11 +44,6 @@ limitations under the License.
                 display: none;
             }
         }
-
-        // Mirror rough designs for "greyed out" text
-        &.mx_EventTile_contextual .mx_EventTile_line {
-            opacity: 0.4;
-        }
     }
 }
 
@@ -64,6 +59,11 @@ limitations under the License.
     margin-left: var(--EventTile_bubble-margin-inline-start);
     font-size: $font-14px;
 
+    .mx_MessageTimestamp {
+        width: unset; // Cancel the default width
+        max-width: var(--MessageTimestamp-max-width);
+    }
+
     .mx_ThreadSummary {
         clear: both;
         width: fit-content;
@@ -73,16 +73,10 @@ limitations under the License.
         margin-right: 0;
     }
 
-    &.mx_EventTile_continuation {
-        margin-top: 2px;
-    }
-
     &.mx_EventTile_highlight {
         &::before {
             background-color: $event-highlight-bg-color;
         }
-
-        color: $alert;
     }
 
     /* For replies */
