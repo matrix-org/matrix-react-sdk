@@ -38,12 +38,12 @@ import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displaySt
 import BeaconStatus from '../beacon/BeaconStatus';
 import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
 import Map from '../location/Map';
+import { MapError } from '../location/MapError';
 import MapFallback from '../location/MapFallback';
 import SmartMarker from '../location/SmartMarker';
 import { GetRelationsForEvent } from '../rooms/EventTile';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
-import { MapError } from '../location/MapError';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
