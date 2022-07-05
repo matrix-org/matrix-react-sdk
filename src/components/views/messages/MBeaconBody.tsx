@@ -42,9 +42,8 @@ import SmartMarker from '../location/SmartMarker';
 import { GetRelationsForEvent } from '../rooms/EventTile';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
-import { humanizeTime } from '../../../utils/humanize';
-import ShareLatestLocation from '../beacon/ShareLatestLocation';
 import { MapError } from '../location/MapError';
+import classNames from 'classnames';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -200,7 +199,13 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                     <MapError
                         error={error.message as LocationShareError}
                         onClick={onClick}
-                        className='mx_MBeaconBody_mapError'
+                        className={classNames(
+                            'mx_MBeaconBody_mapError',
+                            // set interactive class when maximised map can be opened
+                            { 'mx_MBeaconBody_mapErrorInteractive':
+                                displayStatus === BeaconDisplayStatus.Active,
+                            },
+                        )}
                         isMinimised
                     /> :
                     <MapFallback

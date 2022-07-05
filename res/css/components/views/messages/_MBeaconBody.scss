@@ -63,6 +63,10 @@ limitations under the License.
     padding-bottom: 50px !important;
 }
 
+.mx_MBeaconBody_mapErrorInteractive {
+    cursor: pointer;
+}
+
 .mx_MBeaconBody_mapFallback {
     cursor: default;
 }
