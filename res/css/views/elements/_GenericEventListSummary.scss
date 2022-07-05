@@ -16,7 +16,6 @@ limitations under the License.
 
 .mx_GenericEventListSummary {
     position: relative;
-    margin-top: $spacing-8;
 
     .mx_GenericEventListSummary_avatars {
         margin-right: $spacing-8;
@@ -32,6 +31,10 @@ limitations under the License.
             float: right;
             margin-inline: 0 10px;
         }
+    }
+
+    &[data-layout=group] {
+        margin-top: $spacing-8;
     }
 
     &[data-layout=bubble] {
