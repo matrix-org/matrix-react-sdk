@@ -33,11 +33,6 @@ limitations under the License.
 
 .mx_RoomView_searchResultsPanel {
     .mx_EventTile[data-layout=bubble] {
-        .mx_SenderProfile {
-            // Group layout adds a 64px left margin, which we really don't want on search results
-            margin-left: 0;
-        }
-
         &[data-self=true] {
             // The avatars end up overlapping, so just hide them
             .mx_EventTile_avatar {
