@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657004786889,
+  "lastUpdate": 1657016448508,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106370,6 +106370,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4352.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "08c607718d268e37f8b5373473a7907bbee17511",
+          "message": "Attempt to set the language when setting up Cypress tests (#8964)",
+          "timestamp": "2022-07-05T11:14:24+01:00",
+          "tree_id": "531b8b892168180f0ca1c39ee27069120f933662",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/08c607718d268e37f8b5373473a7907bbee17511"
+        },
+        "date": 1657016432082,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4903.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2391.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5534.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
