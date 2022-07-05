@@ -171,7 +171,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                             '<a>Learn more</a>.', {}, {
                             'a': (sub) => {
                                 return <a
-                                    href="https://github.com/vector-im/element-web/blob/develop/docs/labs.md"
+                                    href="https://github.com/vector-im/element-web/blob/develop/docs/betas.md"
                                     rel='noreferrer noopener'
                                     target='_blank'
                                 >{ sub }</a>;
