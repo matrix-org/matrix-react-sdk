@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657031439590,
+  "lastUpdate": 1657037369262,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106670,6 +106670,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 684,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f10cd64042c27c2dab9c76d1c1a03a88b4eb12c",
+          "message": "Fix font size of MessageTimestamp on TimelineCard (#8950)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-05T12:02:55-04:00",
+          "tree_id": "833fffa3fbdd79f754bd7700ee23803865f56127",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6f10cd64042c27c2dab9c76d1c1a03a88b4eb12c"
+        },
+        "date": 1657037348640,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6261.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2253.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5782.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
