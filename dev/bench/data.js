@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657040325780,
+  "lastUpdate": 1657045679574,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106754,6 +106754,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4817,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2dd683a42ff3fe7648f1c6d504439f8c8b15ffd4",
+          "message": "Adjust encryption copy when creating a video room (#8989)\n\n* Adjust encryption copy when creating a video room\r\n\r\n* Adjust wording",
+          "timestamp": "2022-07-05T18:22:36Z",
+          "tree_id": "428c0d014111a63f3ad7fd589b4d8aaf1359671b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2dd683a42ff3fe7648f1c6d504439f8c8b15ffd4"
+        },
+        "date": 1657045666652,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5432.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2301.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4630.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
