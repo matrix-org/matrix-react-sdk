@@ -38,7 +38,7 @@ export const MapError: React.FC<Props> = ({
     onFinished,
     onClick,
 }) => (
-    <div data-test-id='location-picker-error'
+    <div data-test-id='map-rendering-error'
         className={classNames('mx_MapError', className, { 'mx_MapError_isMinimised': isMinimised })}
         onClick={onClick}
     >
