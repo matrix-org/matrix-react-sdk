@@ -90,7 +90,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
                     className="mx_UploadConfirmDialog_imagePreview"
                     src={this.objectUrl}
                     alt=""
-                    aria-describedby={fileId}
+                    aria-labelledby={fileId}
                 />
             );
         } else if (this.mimeType.startsWith("video/")) {
