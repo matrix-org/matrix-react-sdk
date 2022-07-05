@@ -320,9 +320,26 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     );
     const possibleResults = useMemo<Result[]>(
         () => {
-            const roomMembers = findVisibleRoomMembers(cli);
-            const roomMemberIds = new Set(roomMembers.map(item => item.userId));
-            const results = [
+            const roomResults = findVisibleRooms(cli).map(toRoomResult);
+            // If we already have a DM with the user we're looking for, we will
+            // show that DM instead of the user themselves
+            const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
+                const userId = DMRoomMap.shared().getUserIdForRoomId(result.room.roomId);
+                if (!userId) return userIds;
+                if (result.room.getJoinedMemberCount() > 2) return userIds;
+                userIds.add(userId);
+                return userIds;
+            }, new Set<string>());
+            const userResults = [...findVisibleRoomMembers(cli), ...users].reduce((userResults, user) => {
+                // Make sure we don't have any user more than once
+                if (alreadyAddedUserIds.has(user.userId)) return userResults;
+                alreadyAddedUserIds.add(user.userId);
+
+                userResults.push(toMemberResult(user));
+                return userResults;
+            }, []);
+
+            return [
                 ...SpaceStore.instance.enabledMetaSpaces.map(spaceKey => ({
                     section: Section.Spaces,
                     filter: [],
@@ -335,31 +352,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         SpaceStore.instance.setActiveSpace(spaceKey);
                     },
                 })),
-                ...findVisibleRooms(cli).map(toRoomResult),
-                ...roomMembers.map(toMemberResult),
-                ...users.filter(item => !roomMemberIds.has(item.userId)).map(toMemberResult),
+                ...roomResults,
+                ...userResults,
                 ...(profile ? [new DirectoryMember(profile)] : []).map(toMemberResult),
                 ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
-
-            // Find userIds with whom we have a DM
-            const hiddenUserIds = [...results].reduce((userIds, result) => {
-                const room: Room = result["room"];
-                if (!room) return userIds;
-                const userId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-                if (!userId) return userIds;
-                if (room.getJoinedMemberCount() > 2) return userIds;
-
-                userIds.add(userId);
-                return userIds;
-            }, new Set<string>());
-
-            // Filter out members with whom we have a DM
-            return results.filter((result) => {
-                const userId = result["member"]?.userId;
-                if (!userId) return true;
-                return !hiddenUserIds.has(userId);
-            });
         },
         [cli, users, profile, publicRooms, filter],
     );
