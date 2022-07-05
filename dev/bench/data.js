@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657020150230,
+  "lastUpdate": 1657021362108,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106490,6 +106490,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 617.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "4103710+sha-265@users.noreply.github.com",
+            "name": "sha-265",
+            "username": "sha-265"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a009f8001a65ff8462fd91ccc38396094949fe29",
+          "message": "Add bidirectonal isolation for pills (#8985)",
+          "timestamp": "2022-07-05T11:37:35Z",
+          "tree_id": "5cffcc745f6661e19ddd0eb37d48e9a3289f0d2d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a009f8001a65ff8462fd91ccc38396094949fe29"
+        },
+        "date": 1657021348542,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4817.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 648.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
