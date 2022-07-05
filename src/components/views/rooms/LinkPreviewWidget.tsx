@@ -125,20 +125,22 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
 
         return (
             <div className="mx_LinkPreviewWidget">
-                { img }
-                <div className="mx_LinkPreviewWidget_caption">
-                    <div className="mx_LinkPreviewWidget_title">
-                        { needsTooltip ? <LinkWithTooltip
-                            tooltip={new URL(this.props.link, window.location.href).toString()}
-                        >
-                            { anchor }
-                        </LinkWithTooltip> : anchor }
-                        { p["og:site_name"] && <span className="mx_LinkPreviewWidget_siteName">
-                            { (" - " + p["og:site_name"]) }
-                        </span> }
-                    </div>
-                    <div className="mx_LinkPreviewWidget_description" ref={this.description}>
-                        { description }
+                <div className="mx_LinkPreviewWidget_wrapImageCaption">
+                    { img }
+                    <div className="mx_LinkPreviewWidget_caption">
+                        <div className="mx_LinkPreviewWidget_title">
+                            { needsTooltip ? <LinkWithTooltip
+                                tooltip={new URL(this.props.link, window.location.href).toString()}
+                            >
+                                { anchor }
+                            </LinkWithTooltip> : anchor }
+                            { p["og:site_name"] && <span className="mx_LinkPreviewWidget_siteName">
+                                { (" - " + p["og:site_name"]) }
+                            </span> }
+                        </div>
+                        <div className="mx_LinkPreviewWidget_description" ref={this.description}>
+                            { description }
+                        </div>
                     </div>
                 </div>
                 { this.props.children }

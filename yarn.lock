@@ -57,6 +57,13 @@
   dependencies:
     "@babel/highlight" "^7.16.7"
 
+"@babel/code-frame@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.18.6.tgz#3b25d38c89600baa2dcc219edfa88a74eb2c427a"
+  integrity sha512-TDCmlK5eOvH+eH7cdAFlNXeVJqWIQ7gW9tY1GJIpUtFb6CmjVyq2VM3u71bOyR8CRihcCgMUYoDNyLXao3+70Q==
+  dependencies:
+    "@babel/highlight" "^7.18.6"
+
 "@babel/compat-data@^7.13.11", "@babel/compat-data@^7.17.10":
   version "7.17.10"
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.17.10.tgz#711dc726a492dfc8be8220028b1b92482362baab"
@@ -105,6 +112,15 @@
   integrity sha512-V49KtZiiiLjH/CnIW6OjJdrenrGoyh6AmKQ3k2AZFKozC1h846Q4NYlZ5nqAigPDUXfGzC88+LOUuG8yKd2kCw==
   dependencies:
     "@babel/types" "^7.17.12"
+    "@jridgewell/gen-mapping" "^0.3.0"
+    jsesc "^2.5.1"
+
+"@babel/generator@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.18.6.tgz#9ab2d46d3cbf631f0e80f72e72874a04c3fc12a9"
+  integrity sha512-AIwwoOS8axIC5MZbhNHRLKi3D+DMpvDf9XUcu3pIVAfOHFT45f4AoDAltRbHIQomCipkCZxrNkfpOEHhJz/VKw==
+  dependencies:
+    "@babel/types" "^7.18.6"
     "@jridgewell/gen-mapping" "^0.3.0"
     jsesc "^2.5.1"
 
@@ -175,6 +191,11 @@
   dependencies:
     "@babel/types" "^7.16.7"
 
+"@babel/helper-environment-visitor@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-environment-visitor/-/helper-environment-visitor-7.18.6.tgz#b7eee2b5b9d70602e59d1a6cad7dd24de7ca6cd7"
+  integrity sha512-8n6gSfn2baOY+qlp+VSzsosjCVGFqWKmDF0cCWOybh52Dw3SEyoWR1KrhMJASjLwIEkkAufZ0xvr+SxLHSpy2Q==
+
 "@babel/helper-explode-assignable-expression@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-explode-assignable-expression/-/helper-explode-assignable-expression-7.16.7.tgz#12a6d8522fdd834f194e868af6354e8650242b7a"
@@ -190,12 +211,27 @@
     "@babel/template" "^7.16.7"
     "@babel/types" "^7.17.0"
 
+"@babel/helper-function-name@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.18.6.tgz#8334fecb0afba66e6d87a7e8c6bb7fed79926b83"
+  integrity sha512-0mWMxV1aC97dhjCah5U5Ua7668r5ZmSC2DLfH2EZnf9c3/dHZKiFa5pRLMH5tjSl471tY6496ZWk/kjNONBxhw==
+  dependencies:
+    "@babel/template" "^7.18.6"
+    "@babel/types" "^7.18.6"
+
 "@babel/helper-hoist-variables@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-hoist-variables/-/helper-hoist-variables-7.16.7.tgz#86bcb19a77a509c7b77d0e22323ef588fa58c246"
   integrity sha512-m04d/0Op34H5v7pbZw6pSKP7weA6lsMvfiIAMeIvkY/R4xQtBSMFEigu9QTZ2qB/9l22vsxtM8a+Q8CzD255fg==
   dependencies:
     "@babel/types" "^7.16.7"
+
+"@babel/helper-hoist-variables@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-hoist-variables/-/helper-hoist-variables-7.18.6.tgz#d4d2c8fb4baeaa5c68b99cc8245c56554f926678"
+  integrity sha512-UlJQPkFqFULIcyW5sbzgbkxn2FKRgwWiRexcuaR8RNJRy8+LLveqPjwZV/bwrLZCN0eUHD/x8D0heK1ozuoo6Q==
+  dependencies:
+    "@babel/types" "^7.18.6"
 
 "@babel/helper-member-expression-to-functions@^7.16.7", "@babel/helper-member-expression-to-functions@^7.17.7":
   version "7.17.7"
@@ -278,10 +314,22 @@
   dependencies:
     "@babel/types" "^7.16.7"
 
+"@babel/helper-split-export-declaration@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.18.6.tgz#7367949bc75b20c6d5a5d4a97bba2824ae8ef075"
+  integrity sha512-bde1etTx6ZyTmobl9LLMMQsaizFVZrquTEHOqKeQESMKo4PlObf+8+JA25ZsIpZhT/WEd39+vOdLXAFG/nELpA==
+  dependencies:
+    "@babel/types" "^7.18.6"
+
 "@babel/helper-validator-identifier@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.16.7.tgz#e8c602438c4a8195751243da9031d1607d247cad"
   integrity sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==
+
+"@babel/helper-validator-identifier@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.18.6.tgz#9c97e30d31b2b8c72a1d08984f2ca9b574d7a076"
+  integrity sha512-MmetCkz9ej86nJQV+sFCxoGGrUbU3q02kgLciwkrt9QqEB7cP39oKEY0PakknEO0Gu20SskMRi+AYZ3b1TpN9g==
 
 "@babel/helper-validator-option@^7.16.7":
   version "7.16.7"
@@ -316,10 +364,24 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.1.0", "@babel/parser@^7.12.11", "@babel/parser@^7.13.16", "@babel/parser@^7.14.7", "@babel/parser@^7.16.7", "@babel/parser@^7.17.12":
+"@babel/highlight@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.18.6.tgz#81158601e93e2563795adcbfbdf5d64be3f2ecdf"
+  integrity sha512-u7stbOuYjaPezCuLj29hNW1v64M2Md2qupEKP1fHc7WdOA3DgLh37suiSrZYY7haUB7iBeQZ9P1uiRF359do3g==
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.18.6"
+    chalk "^2.0.0"
+    js-tokens "^4.0.0"
+
+"@babel/parser@^7.1.0", "@babel/parser@^7.12.11", "@babel/parser@^7.14.7", "@babel/parser@^7.16.7", "@babel/parser@^7.17.12":
   version "7.17.12"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.12.tgz#36c2ed06944e3691ba82735fc4cf62d12d491a23"
   integrity sha512-FLzHmN9V3AJIrWfOpvRlZCeVg/WLdicSnTMsLur6uDj9TT8ymUlG9XxURdW/XvuygK+2CW0poOJABdA4m/YKxA==
+
+"@babel/parser@^7.18.5", "@babel/parser@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.18.6.tgz#845338edecad65ebffef058d3be851f1d28a63bc"
+  integrity sha512-uQVSa9jJUe/G/304lXspfWVpKpK4euFLgGiMQFOCpM/bgcAdeoHwi/OQz23O9GK2osz26ZiXRRV9aV+Yl1O8tw==
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.17.12":
   version "7.17.12"
@@ -1049,6 +1111,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.17.9":
+  version "7.18.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.3.tgz#c7b654b57f6f63cf7f8b418ac9ca04408c4579f4"
+  integrity sha512-38Y8f7YUhce/K7RMwTp7m0uCumpv9hZkitCbBClqQIow1qSbCvGkcegKOXpEWCQLfWmevgRiWokZ1GkpfhbZug==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.16.7", "@babel/template@^7.3.3":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.16.7.tgz#8d126c8701fde4d66b264b3eba3d96f07666d155"
@@ -1058,7 +1127,16 @@
     "@babel/parser" "^7.16.7"
     "@babel/types" "^7.16.7"
 
-"@babel/traverse@^7.12.12", "@babel/traverse@^7.13.0", "@babel/traverse@^7.13.17", "@babel/traverse@^7.16.7", "@babel/traverse@^7.16.8", "@babel/traverse@^7.17.12", "@babel/traverse@^7.17.9", "@babel/traverse@^7.7.2":
+"@babel/template@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.18.6.tgz#1283f4993e00b929d6e2d3c72fdc9168a2977a31"
+  integrity sha512-JoDWzPe+wgBsTTgdnIma3iHNFC7YVJoPssVBDjiHfNlyt4YcunDtcDOUmfVDfCK5MfdsaIoX9PkijPhjH3nYUw==
+  dependencies:
+    "@babel/code-frame" "^7.18.6"
+    "@babel/parser" "^7.18.6"
+    "@babel/types" "^7.18.6"
+
+"@babel/traverse@^7.12.12", "@babel/traverse@^7.13.0", "@babel/traverse@^7.16.7", "@babel/traverse@^7.16.8", "@babel/traverse@^7.17.12", "@babel/traverse@^7.17.9", "@babel/traverse@^7.7.2":
   version "7.17.12"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.17.12.tgz#011874d2abbca0ccf1adbe38f6f7a4ff1747599c"
   integrity sha512-zULPs+TbCvOkIFd4FrG53xrpxvCBwLIgo6tO0tJorY7YV2IWFxUfS/lXDJbGgfyYt9ery/Gxj2niwttNnB0gIw==
@@ -1074,12 +1152,36 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
+"@babel/traverse@^7.18.5":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.18.6.tgz#a228562d2f46e89258efa4ddd0416942e2fd671d"
+  integrity sha512-zS/OKyqmD7lslOtFqbscH6gMLFYOfG1YPqCKfAW5KrTeolKqvB8UelR49Fpr6y93kYkW2Ik00mT1LOGiAGvizw==
+  dependencies:
+    "@babel/code-frame" "^7.18.6"
+    "@babel/generator" "^7.18.6"
+    "@babel/helper-environment-visitor" "^7.18.6"
+    "@babel/helper-function-name" "^7.18.6"
+    "@babel/helper-hoist-variables" "^7.18.6"
+    "@babel/helper-split-export-declaration" "^7.18.6"
+    "@babel/parser" "^7.18.6"
+    "@babel/types" "^7.18.6"
+    debug "^4.1.0"
+    globals "^11.1.0"
+
 "@babel/types@^7.0.0", "@babel/types@^7.16.0", "@babel/types@^7.16.7", "@babel/types@^7.16.8", "@babel/types@^7.17.0", "@babel/types@^7.17.12", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
   version "7.17.12"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.17.12.tgz#1210690a516489c0200f355d87619157fbbd69a0"
   integrity sha512-rH8i29wcZ6x9xjzI5ILHL/yZkbQnCERdHlogKuIb4PUr7do4iT8DPekrTbBLWTnRQm6U0GYABbTMSzijmEqlAg==
   dependencies:
     "@babel/helper-validator-identifier" "^7.16.7"
+    to-fast-properties "^2.0.0"
+
+"@babel/types@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.18.6.tgz#5d781dd10a3f0c9f1f931bd19de5eb26ec31acf0"
+  integrity sha512-NdBNzPDwed30fZdDQtVR7ZgaO4UKjuaQFH9VArS+HMnurlOY0JWN+4ROlu/iapMFwjRQU4pOG4StZfDmulEwGA==
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
 "@bcoe/v8-coverage@^0.2.3":
@@ -1468,9 +1570,21 @@
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
   integrity sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==
 
+"@matrix-org/analytics-events@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@matrix-org/analytics-events/-/analytics-events-0.1.1.tgz#ae95b0c1fb86a094c5f51d121f10e6a1b1ddca68"
+  integrity sha512-PIDkfYMNmph6x/rfgtIeQXUWj9hGzTLnOCFUYZFBnoTiS4UXkH73bz77Ho12uoUezUz4v40mxTXdrFxp8Zo6zA==
+
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz":
   version "3.2.8"
   resolved "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz#8d53636d045e1776e2a2ec6613e57330dd9ce856"
+
+"@matrix-org/react-sdk-module-api@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@matrix-org/react-sdk-module-api/-/react-sdk-module-api-0.0.3.tgz#a7ac1b18a72d18d08290b81fa33b0d8d00a77d2b"
+  integrity sha512-jQmLhVIanuX0g7Jx1OIqlzs0kp72PfSpv3umi55qVPYcAPQmO252AUs0vncatK8O4e013vohdnNhly19a/kmLQ==
+  dependencies:
+    "@babel/runtime" "^7.17.9"
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
@@ -1626,96 +1740,96 @@
     tslib "^2.4.0"
     webcrypto-core "^1.7.4"
 
-"@percy/cli-build@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/cli-build/-/cli-build-1.2.1.tgz#6e4e6af1bf664b14ed89c18d8b5599fc4ebf528c"
-  integrity sha512-Xs7N0Z2Yzj9/cZ5ii0jimO8HYtuKxSlj9/pR7n3IjtXhmW9oThNMCjYfNiOiQ/MigzVJgLMnnbgsyhm8/+9X3w==
+"@percy/cli-build@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/cli-build/-/cli-build-1.3.0.tgz#abfb8350cbd2c93688eb6e5340c521c346dca952"
+  integrity sha512-iq8aAE+PgQ7m8M37uOFTCj6a46c2eNZudxJLePN+qNtIwtWtoFa/UL+QyWEsxl1a+jEQ8qZZLPSvLPs8bofClw==
   dependencies:
-    "@percy/cli-command" "1.2.1"
+    "@percy/cli-command" "1.3.0"
 
-"@percy/cli-command@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/cli-command/-/cli-command-1.2.1.tgz#b526ce7861ba590fc605def3adc5707ba9cb1498"
-  integrity sha512-jW7p8MJ3+ZCXCbB0Pv2gUifAzGdY+RhS45a/1jpCj68VHXen6FynPX0XNNnzl1CbYDZ6wkqis3IMIuNdbsKSlw==
+"@percy/cli-command@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/cli-command/-/cli-command-1.3.0.tgz#d82c190f2f0a27e9e59d30415ed5de42ca836f7c"
+  integrity sha512-0mZ0s/HdVM/sfQA0wiRPKvPoZiG59/U3+oEYLjkz/4x7OymP1cGymTRSVypHT7ZmBGg1Q928gosgjpzWrzM5AA==
   dependencies:
-    "@percy/config" "1.2.1"
-    "@percy/core" "1.2.1"
-    "@percy/logger" "1.2.1"
+    "@percy/config" "1.3.0"
+    "@percy/core" "1.3.0"
+    "@percy/logger" "1.3.0"
 
-"@percy/cli-config@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/cli-config/-/cli-config-1.2.1.tgz#1e0d53c93b326d57a2f5651f26d3e163a6de169f"
-  integrity sha512-m2Kt6rSZgXw1t7hRLT11eyyCRXXD2xEATqVJH37Q1qMMid4VCCCY88AFaYH+E965UAgMkTVqVyk2ydsDb9gMAg==
+"@percy/cli-config@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/cli-config/-/cli-config-1.3.0.tgz#dbd6dcbb29100e796a0c45d38ee25d037a935b80"
+  integrity sha512-Ad3XMQldyu3U6KxJPjYmROoKyadRw9c/8doDjMEkPVcFdsHoHnqyYPL0BFmLBoWwJOaDgjOrsjdp17HLbNsOqQ==
   dependencies:
-    "@percy/cli-command" "1.2.1"
+    "@percy/cli-command" "1.3.0"
 
-"@percy/cli-exec@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/cli-exec/-/cli-exec-1.2.1.tgz#b24c07808aba00fab88146d6f8a5664548a2211e"
-  integrity sha512-7K6SOt/ORsr1PQ9hp16xkPWaR9IF0Z2bZfOjGw4dr3pqVYZu/sW9gCttiOH9ONG9fjA2faDuXuS91NW0EkABAQ==
+"@percy/cli-exec@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/cli-exec/-/cli-exec-1.3.0.tgz#4fbbe37939c81ceadfd3f3f853df494b3f3c13dd"
+  integrity sha512-dCI1ED/WbQcYrUFGYaCI54PHfOADOkAKeKLlE7WLDCmLJvjx2JIoO+a/VJE2EVh0+j1zOUItMq20ejzoRe6a/A==
   dependencies:
-    "@percy/cli-command" "1.2.1"
+    "@percy/cli-command" "1.3.0"
     cross-spawn "^7.0.3"
     which "^2.0.2"
 
-"@percy/cli-snapshot@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/cli-snapshot/-/cli-snapshot-1.2.1.tgz#63ebe11ac3b5485b1fdb1137d76dd72af0d347ba"
-  integrity sha512-cuem4pH6eEbaPIyOjsXM7BnfVe2sEVcRZOvhaA/P7d44TEWDgCQeTfHvCiDQM+aoXaqjJ7mq2Ezg+jxfWA19DQ==
+"@percy/cli-snapshot@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/cli-snapshot/-/cli-snapshot-1.3.0.tgz#24836b2a1cc7ead2533631dce70a5e22b76cdc2f"
+  integrity sha512-t2cu4stv5th94I2eeIku4KUn3YvI+Pzu2W0S0rCwT5wEaJUo7sBB+EptXKNrPyWrrZvFnZoly7DA41z5hyQP8w==
   dependencies:
-    "@percy/cli-command" "1.2.1"
+    "@percy/cli-command" "1.3.0"
     yaml "^2.0.0"
 
-"@percy/cli-upload@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/cli-upload/-/cli-upload-1.2.1.tgz#f8b6bf74bbe1161c580b66b9b0d288706f2bbb88"
-  integrity sha512-yJDqFDtm3if6Ggk+XP3nkfFM/vVzoVxzlD2Vjhz387fzKHKeMPVrhAeBTr8ng8Luxi50bHlNtBVzHeQf1BWfDg==
+"@percy/cli-upload@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/cli-upload/-/cli-upload-1.3.0.tgz#d828f768e79e028e2a9504b54dee4279e9f1cc7d"
+  integrity sha512-4MlZMDFIyXb53Yg3GdZSR29AlGQltM3jwlG3z7lr6rueBJjo5IflvWUPsfAQ8Lu+oEqYj3y2j8PZfSimHKuE4w==
   dependencies:
-    "@percy/cli-command" "1.2.1"
+    "@percy/cli-command" "1.3.0"
     fast-glob "^3.2.11"
     image-size "^1.0.0"
 
-"@percy/cli@^1.1.4":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/cli/-/cli-1.2.1.tgz#52bfb6551756594f2ed4b6756a051986eebf88e1"
-  integrity sha512-UClQXESfjQlfOsJ4pBrYF6nvOjIHvlRLWBfYj0SuLE2aRTO03Ehis+40dNlMUHVzbywdaXC0EAqyQqk6YBOTlg==
+"@percy/cli@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/cli/-/cli-1.3.0.tgz#bf9807809dc1192139a61ba4799cf1b5da1a2f19"
+  integrity sha512-33u8dGTG0APVQKOSZIq/uxA77xCcR65BZ2KhxRtEZCSKDUuF5WbSzBRspCj4dpvlnSlIQrTFJv8TEt22COI5EQ==
   dependencies:
-    "@percy/cli-build" "1.2.1"
-    "@percy/cli-command" "1.2.1"
-    "@percy/cli-config" "1.2.1"
-    "@percy/cli-exec" "1.2.1"
-    "@percy/cli-snapshot" "1.2.1"
-    "@percy/cli-upload" "1.2.1"
-    "@percy/client" "1.2.1"
-    "@percy/logger" "1.2.1"
+    "@percy/cli-build" "1.3.0"
+    "@percy/cli-command" "1.3.0"
+    "@percy/cli-config" "1.3.0"
+    "@percy/cli-exec" "1.3.0"
+    "@percy/cli-snapshot" "1.3.0"
+    "@percy/cli-upload" "1.3.0"
+    "@percy/client" "1.3.0"
+    "@percy/logger" "1.3.0"
 
-"@percy/client@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/client/-/client-1.2.1.tgz#c22193955599dd048cb1066f8c37b9fe25f8590a"
-  integrity sha512-YmpCgISEyiyGxeLKVuq0zPWn2SeHeg/pO2T17MKp2VxtEFxEtjul5mV/5qZ7QdN7EsWz47nzuENEBRWX0pDxxQ==
+"@percy/client@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/client/-/client-1.3.0.tgz#1cabc6787ebe7824b67dd82e710d4da84ff82598"
+  integrity sha512-qkXC183vyY9QhGrD1AbXwtYftor9D/T6I+BoO1dcxt3S4U+S4+FHhmPKFstLfGxzleEn2MhWVN3mMaMQYd0g5g==
   dependencies:
-    "@percy/env" "1.2.1"
-    "@percy/logger" "1.2.1"
+    "@percy/env" "1.3.0"
+    "@percy/logger" "1.3.0"
 
-"@percy/config@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/config/-/config-1.2.1.tgz#62cf97838a5e33116926007240fb33da267a159e"
-  integrity sha512-uv8tTMUFlFwQoYdV+Zxn6UoeuHXws9nfu8e7tQC7oQyg+AXYq06cqgxhFyHAyfGIhLZqyH5f4E+qCCCeTDJVqQ==
+"@percy/config@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/config/-/config-1.3.0.tgz#62879d915915b542a795f2919e1c9da6eb34419c"
+  integrity sha512-H1nVxinIg4yjOfXovNA0pbQ78ac/xdib2XkR7EwgDPrHbBdcTqkJ2EjPNImuL9b67QHkkz7U4lqR8cUUjyDqmA==
   dependencies:
-    "@percy/logger" "1.2.1"
+    "@percy/logger" "1.3.0"
     ajv "^8.6.2"
     cosmiconfig "^7.0.0"
     yaml "^2.0.0"
 
-"@percy/core@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/core/-/core-1.2.1.tgz#062843dbb9e2481ce13a2d052f45e790b80b3f46"
-  integrity sha512-jvSW+5O1Ijlvg8pJl9BRMhj7GHHrTCFlvH7A5hl750sdpqYVKI/blOJKjKIapYDIGbGKBp8KRRM/xqXVQM5k3g==
+"@percy/core@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/core/-/core-1.3.0.tgz#1c1503ba24d63e7678cddabc5dcbb98bb7503ddf"
+  integrity sha512-kCpJr9AT0qFOaVbrGhx14qJCZiOUvJVxejUOcqk02Vzj99Q+DGvLUyd/Cg/lw3fyJdlEhTytZzz2WuPYkNRQrg==
   dependencies:
-    "@percy/client" "1.2.1"
-    "@percy/config" "1.2.1"
-    "@percy/dom" "1.2.1"
-    "@percy/logger" "1.2.1"
+    "@percy/client" "1.3.0"
+    "@percy/config" "1.3.0"
+    "@percy/dom" "1.3.0"
+    "@percy/logger" "1.3.0"
     content-disposition "^0.5.4"
     cross-spawn "^7.0.3"
     extract-zip "^2.0.1"
@@ -1733,20 +1847,20 @@
   dependencies:
     "@percy/sdk-utils" "^1.0.0-beta.44"
 
-"@percy/dom@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/dom/-/dom-1.2.1.tgz#5b228c4242bf55b1502f611bed86dbf4ec109b9a"
-  integrity sha512-C3U95vTiJGDllGJFkKpKRyUC39acze0nUxY/BSZCVFPL2tYmW6QTUr+y0+HXbYUmglylzaWWHRsc5+HtDyMfTw==
+"@percy/dom@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/dom/-/dom-1.3.0.tgz#e928e526a5ebfc37b61c59b8409e920e6813e240"
+  integrity sha512-wY6nIXD8zhwfHXROOYYfU9qht9yWn5GgOdDWZAbcOe2qxpivfuKF4qOubKD9iwCgUZhFxRc5xUSciCGKdOm1TQ==
 
-"@percy/env@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/env/-/env-1.2.1.tgz#653dab920e5f478fbaa2c5aa11161caa1ca20225"
-  integrity sha512-vXBX0xKGzEaygGFAlQkuv9/IemiulDK/YTWtza53HTAoEfRsITpOsx5KGckbVrNd1l3zOh/bonDzAHneLaCDGw==
+"@percy/env@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/env/-/env-1.3.0.tgz#1413a1c4207d40418fbbc3f3367bc33835a2d970"
+  integrity sha512-sAOKdUGYEYPf2TRgCL8P5INqwXuqaczTWICQ2G90pLzUFV0mHo+5ih+XHGtAi5wdv1Tpz088nia+eXYXpwi4og==
 
-"@percy/logger@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@percy/logger/-/logger-1.2.1.tgz#c76f44bc0d647190772b69a43099c44c74acc584"
-  integrity sha512-Yo/Df6w1O+IV8mTMfcObk2DZK2BrNAC1yx3UBAcbPV/vGkg+vJa/lRVtJl2rGBO0yh3n5HSFlPjkhadrc/h7/g==
+"@percy/logger@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@percy/logger/-/logger-1.3.0.tgz#2453816f5463e9864eb0ae3c837e82d3b35bd598"
+  integrity sha512-fCuhFBXRuJruz9PNdeMZXgEhUODmhXt4hiMLBWAn1cpV8evQah3tXbHqwxEqWzLHGfbPYCKZmgk49NJvwHQKmw==
 
 "@percy/sdk-utils@^1.0.0-beta.44":
   version "1.2.1"
@@ -6851,10 +6965,6 @@ mathml-tag-names@^2.1.3:
   resolved "https://registry.yarnpkg.com/mathml-tag-names/-/mathml-tag-names-2.1.3.tgz#4ddadd67308e780cf16a47685878ee27b736a0a3"
   integrity sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==
 
-"matrix-analytics-events@github:matrix-org/matrix-analytics-events.git#a0687ca6fbdb7258543d49b99fb88b9201e900b0":
-  version "0.0.1"
-  resolved "https://codeload.github.com/matrix-org/matrix-analytics-events/tar.gz/a0687ca6fbdb7258543d49b99fb88b9201e900b0"
-
 matrix-encrypt-attachment@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/matrix-encrypt-attachment/-/matrix-encrypt-attachment-1.0.3.tgz#6e016587728c396549c833985f39cbf6c07ee97b"
@@ -6866,8 +6976,8 @@ matrix-events-sdk@^0.0.1-beta.7:
   integrity sha512-9jl4wtWanUFSy2sr2lCjErN/oC8KTAtaeaozJtrgot1JiQcEI4Rda9OLgQ7nLKaqb4Z/QUx/fR3XpDzm5Jy1JA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "18.0.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/2f540e31a5dd266a463f65c07eec19024bfc5762"
+  version "19.0.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/85a96c6467c24b031ee25d5fbb8d9fe62edbbe49"
   dependencies:
     "@babel/runtime" "^7.12.5"
     another-json "^0.2.0"
@@ -6893,14 +7003,14 @@ matrix-react-test-utils@^0.2.3:
   resolved "https://registry.yarnpkg.com/matrix-react-test-utils/-/matrix-react-test-utils-0.2.3.tgz#27653f9d6bbfddd1856e51860fad1503b039d617"
   integrity sha512-NKZDlMEQzDZDQhBYyKBUtqidRvpkww3n9/GmGICkxtU2D6NetyBIfvm1Lf9o7167KSkPHJUVvDS9dzaS55jUnA==
 
-matrix-web-i18n@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/matrix-web-i18n/-/matrix-web-i18n-1.2.0.tgz#3d6f90fa70f3add05e155787f88728c99cf9c01a"
-  integrity sha512-IQMSGnCX2meajxoSW81bWeniZjWTWaTdarc3A5F8wL5klclqLsfoaiNmTDKyJfd12Ph/0+llJ/itIztDUg9Wdg==
+matrix-web-i18n@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/matrix-web-i18n/-/matrix-web-i18n-1.3.0.tgz#d85052635215173541f56ea1af0cbefd6e09ecb3"
+  integrity sha512-4QumouFjd4//piyRCtkfr24kjMPHkzNQNz09B1oEX4W3d4gdd5F+lwErqcQrys7Yl09U0S0iKCD8xPBRV178qg==
   dependencies:
-    "@babel/parser" "^7.13.16"
-    "@babel/traverse" "^7.13.17"
-    walk "^2.3.14"
+    "@babel/parser" "^7.18.5"
+    "@babel/traverse" "^7.18.5"
+    walk "^2.3.15"
 
 matrix-widget-api@^0.1.0-beta.18:
   version "0.1.0-beta.18"
@@ -9560,7 +9670,7 @@ w3c-xmlserializer@^2.0.0:
   dependencies:
     xml-name-validator "^3.0.0"
 
-walk@^2.3.14:
+walk@^2.3.14, walk@^2.3.15:
   version "2.3.15"
   resolved "https://registry.yarnpkg.com/walk/-/walk-2.3.15.tgz#1b4611e959d656426bc521e2da5db3acecae2424"
   integrity sha512-4eRTBZljBfIISK1Vnt69Gvr2w/wc3U6Vtrw7qiN5iqYJPH7LElcYh/iU4XWhdCy2dZqv1ToMyYlybDylfG/5Vg==

@@ -165,7 +165,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     betaInfo?: {
         title: string; // _td
         caption: () => ReactNode;
-        disclaimer?: (enabled: boolean) => ReactNode;
+        faq?: (enabled: boolean) => ReactNode;
         image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
@@ -184,6 +184,47 @@ export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
 export type ISetting = IBaseSetting | IFeature;
 
 export const SETTINGS: {[setting: string]: ISetting} = {
+    "feature_video_rooms": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Video rooms"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        // Reload to ensure that the left panel etc. get remounted
+        controller: new ReloadOnChangeController(),
+        betaInfo: {
+            title: _td("Video rooms"),
+            caption: () => <>
+                <p>
+                    { _t("A new way to chat over voice and video in %(brand)s.", {
+                        brand: SdkConfig.get().brand,
+                    }) }
+                </p>
+                <p>
+                    { _t("Video rooms are always-on VoIP channels embedded within a room in %(brand)s.", {
+                        brand: SdkConfig.get().brand,
+                    }) }
+                </p>
+            </>,
+            faq: () =>
+                SdkConfig.get().bug_report_endpoint_url && <>
+                    <h4>{ _t("How can I create a video room?") }</h4>
+                    <p>{ _t("Use the “+” button in the room section of the left panel.") }</p>
+                    <h4>{ _t("Can I use text chat alongside the video call?") }</h4>
+                    <p>{ _t("Yes, the chat timeline is displayed alongside the video.") }</p>
+                </>,
+            feedbackLabel: "video-room-feedback",
+            feedbackSubheading: _td("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it."),
+            image: require("../../res/img/betas/video_rooms.png"),
+            requiresRefresh: true,
+        },
+    },
+    "feature_exploring_public_spaces": {
+        displayName: _td("Explore public spaces in the new search dialog"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -232,7 +273,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                     </a>,
                 }) }</p>
             </>,
-            disclaimer: () =>
+            faq: () =>
                 SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I start a thread?") }</h4>
                     <p>
@@ -254,15 +295,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             requiresRefresh: true,
         },
 
-    },
-    "feature_video_rooms": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        displayName: _td("Video rooms (under active development)"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        // Reload to ensure that the left panel etc. get remounted
-        controller: new ReloadOnChangeController(),
     },
     "feature_state_counters": {
         isFeature: true,
@@ -315,10 +347,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show extensible event representation of events"),
         default: false,
     },
-    "feature_use_only_current_profiles": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
+    "useOnlyCurrentProfiles": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show current avatar and name for users in message history"),
         default: false,
     },
@@ -329,6 +359,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "mjolnirPersonalRoom": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: null,
+    },
+    "feature_html_topic": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Show HTML representation of room topics"),
+        default: false,
     },
     "feature_bridge_state": {
         isFeature: true,
@@ -343,32 +380,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Use new room breadcrumbs"),
         default: false,
-    },
-    "feature_spotlight": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New search experience"),
-        default: false,
-        betaInfo: {
-            title: _td("The new search"),
-            caption: () => <>
-                <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
-                <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
-            </>,
-            disclaimer: () => <>
-                { SdkConfig.get().bug_report_endpoint_url && <>
-                    <h4>{ _t("How can I give feedback?") }</h4>
-                    <p>{ _t("To feedback, join the beta, start a search and click on feedback.") }</p>
-                </> }
-                <h4>{ _t("How can I leave the beta?") }</h4>
-                <p>{ _t("To leave, just return to this page or click on the beta badge when you search.") }</p>
-            </>,
-            feedbackLabel: "spotlight-feedback",
-            feedbackSubheading: _td("Thank you for trying the beta, " +
-                "please go into as much detail as you can so we can improve it."),
-            image: require("../../res/img/betas/new_search_experience.gif"),
-        },
     },
     "feature_right_panel_default_open": {
         isFeature: true,
@@ -677,14 +688,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevelsAreOrdered: true,
         default: {}, // none allowed
     },
+    // Legacy, kept around for transitionary purposes
     "analyticsOptIn": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Send analytics data'),
         default: false,
-    },
-    "showCookieBar": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: true,
     },
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
@@ -1006,6 +1013,34 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     [UIFeature.TimelineEnableRelativeDates]: {
         supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+
+    // Electron-specific settings, they are stored by Electron and set/read over an IPC.
+    // We store them over there are they are necessary to know before the renderer process launches.
+    "Electron.autoLaunch": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Start automatically after system login"),
+        default: false,
+    },
+    "Electron.warnBeforeExit": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Warn before quitting"),
+        default: true,
+    },
+    "Electron.alwaysShowMenuBar": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Always show the window menu bar"),
+        default: false,
+    },
+    "Electron.showTrayIcon": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Show tray icon and minimise window to it on close"),
+        default: true,
+    },
+    "Electron.enableHardwareAcceleration": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Enable hardware acceleration"),
         default: true,
     },
 };

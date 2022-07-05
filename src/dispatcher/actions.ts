@@ -226,19 +226,6 @@ export enum Action {
     PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
 
     /**
-     * The user accepted anonymous analytics (i.e. matomo, pre-posthog) from the toast
-     * (this action and its handler can be removed once posthog is rolled out)
-     * Payload: none
-     */
-    AnonymousAnalyticsAccept = "anonymous_analytics_accept",
-
-    /**
-     * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
-     * Payload: none
-     */
-    AnonymousAnalyticsReject = "anonymous_analytics_reject",
-
-    /**
      * Fires after crypto is setup if key backup is not enabled
      * Used to trigger auto rageshakes when configured
      */
@@ -328,4 +315,15 @@ export enum Action {
      * Fired when the client was logged in. No additional payload information required.
      */
     OnLoggedIn = "on_logged_in",
+
+    /**
+     * Overwrites the existing login with fresh session credentials. Use with a OverwriteLoginPayload.
+     */
+    OverwriteLogin = "overwrite_login",
+
+    /**
+     * Fired when the PlatformPeg gets a new platform set upon it, should only happen once per app load lifecycle.
+     * Fires with the PlatformSetPayload.
+     */
+    PlatformSet = "platform_set",
 }

@@ -21,6 +21,7 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { M_POLL_START } from "matrix-events-sdk";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
@@ -231,7 +232,10 @@ export async function fetchInitialEvent(
         initialEvent = null;
     }
 
-    if (initialEvent?.isThreadRelation && client.supportsExperimentalThreads() && !initialEvent.getThread()) {
+    if (client.supportsExperimentalThreads() &&
+        initialEvent?.isRelation(THREAD_RELATION_TYPE.name) &&
+        !initialEvent.getThread()
+    ) {
         const threadId = initialEvent.threadRootId;
         const room = client.getRoom(roomId);
         try {
@@ -277,14 +281,10 @@ export const isLocationEvent = (event: MatrixEvent): boolean => {
     );
 };
 
-export function canForward(event: MatrixEvent): boolean {
-    return !(
-        M_POLL_START.matches(event.getType()) ||
-        // disallow forwarding until psf-1044
-        M_BEACON_INFO.matches(event.getType())
-    );
-}
-
 export function hasThreadSummary(event: MatrixEvent): boolean {
     return event.isThreadRoot && event.getThread()?.length && !!event.getThread().replyToEvent;
+}
+
+export function canPinEvent(event: MatrixEvent): boolean {
+    return !M_BEACON_INFO.matches(event.getType());
 }

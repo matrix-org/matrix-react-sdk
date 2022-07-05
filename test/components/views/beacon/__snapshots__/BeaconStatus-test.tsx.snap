@@ -16,10 +16,10 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
       "_events": Object {},
       "_eventsCount": 0,
       "_isLive": undefined,
-      "_latestLocationState": undefined,
+      "_latestLocationEvent": undefined,
       "_maxListeners": undefined,
       "clearLatestLocation": [Function],
-      "livenessWatchInterval": undefined,
+      "livenessWatchTimeout": undefined,
       "roomId": "!room:server",
       "rootEvent": Object {
         "content": Object {
@@ -78,10 +78,10 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
             "_events": Object {},
             "_eventsCount": 0,
             "_isLive": undefined,
-            "_latestLocationState": undefined,
+            "_latestLocationEvent": undefined,
             "_maxListeners": undefined,
             "clearLatestLocation": [Function],
-            "livenessWatchInterval": undefined,
+            "livenessWatchTimeout": undefined,
             "roomId": "!room:server",
             "rootEvent": Object {
               "content": Object {

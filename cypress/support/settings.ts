@@ -17,11 +17,17 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
+import type { SettingLevel } from "../../src/settings/SettingLevel";
+import type SettingsStore from "../../src/settings/SettingsStore";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
+            /**
+             * Returns the SettingsStore
+             */
+            getSettingsStore(): Chainable<typeof SettingsStore | undefined>; // XXX: Importing SettingsStore causes a bunch of type lint errors
             /**
              * Open the top left user menu, returning a handle to the resulting context menu.
              */
@@ -34,15 +40,21 @@ declare global {
             openUserSettings(tab?: string): Chainable<JQuery<HTMLElement>>;
 
             /**
+             * Open room settings (via room header menu), returning a handle to the resulting dialog.
+             * @param tab the name of the tab to switch to after opening, optional.
+             */
+            openRoomSettings(tab?: string): Chainable<JQuery<HTMLElement>>;
+
+            /**
              * Switch settings tab to the one by the given name, ideally call this in the context of the dialog.
              * @param tab the name of the tab to switch to.
              */
-            switchTabUserSettings(tab: string): Chainable<JQuery<HTMLElement>>;
+            switchTab(tab: string): Chainable<JQuery<HTMLElement>>;
 
             /**
-             * Close user settings, ideally call this in the context of the dialog.
+             * Close dialog, ideally call this in the context of the dialog.
              */
-            closeUserSettings(): Chainable<JQuery<HTMLElement>>;
+            closeDialog(): Chainable<JQuery<HTMLElement>>;
 
             /**
              * Join the given beta, the `Labs` tab must already be opened,
@@ -57,9 +69,58 @@ declare global {
              * @param name the name of the beta to leave.
              */
             leaveBeta(name: string): Chainable<JQuery<HTMLElement>>;
+
+            /**
+             * Sets the value for a setting. The room ID is optional if the
+             * setting is not being set for a particular room, otherwise it
+             * should be supplied. The value may be null to indicate that the
+             * level should no longer have an override.
+             * @param {string} settingName The name of the setting to change.
+             * @param {String} roomId The room ID to change the value in, may be
+             * null.
+             * @param {SettingLevel} level The level to change the value at.
+             * @param {*} value The new value of the setting, may be null.
+             * @return {Promise} Resolves when the setting has been changed.
+             */
+            setSettingValue(name: string, roomId: string, level: SettingLevel, value: any): Chainable<void>;
+
+            /**
+             * Gets the value of a setting. The room ID is optional if the
+             * setting is not to be applied to any particular room, otherwise it
+             * should be supplied.
+             * @param {string} settingName The name of the setting to read the
+             * value of.
+             * @param {String} roomId The room ID to read the setting value in,
+             * may be null.
+             * @param {boolean} excludeDefault True to disable using the default
+             * value.
+             * @return {*} The value, or null if not found
+             */
+            getSettingValue<T>(name: string, roomId?: string): Chainable<T>;
         }
     }
 }
+
+Cypress.Commands.add("getSettingsStore", (): Chainable<typeof SettingsStore> => {
+    return cy.window({ log: false }).then(win => win.mxSettingsStore);
+});
+
+Cypress.Commands.add("setSettingValue", (
+    name: string,
+    roomId: string,
+    level: SettingLevel,
+    value: any,
+): Chainable<void> => {
+    return cy.getSettingsStore().then(async (store: typeof SettingsStore) => {
+        return store.setValue(name, roomId, level, value);
+    });
+});
+
+Cypress.Commands.add("getSettingValue", <T = any>(name: string, roomId?: string): Chainable<T> => {
+    return cy.getSettingsStore().then((store: typeof SettingsStore) => {
+        return store.getValue(name, roomId);
+    });
+});
 
 Cypress.Commands.add("openUserMenu", (): Chainable<JQuery<HTMLElement>> => {
     cy.get('[aria-label="User menu"]').click();
@@ -72,18 +133,30 @@ Cypress.Commands.add("openUserSettings", (tab?: string): Chainable<JQuery<HTMLEl
     });
     return cy.get(".mx_UserSettingsDialog").within(() => {
         if (tab) {
-            cy.switchTabUserSettings(tab);
+            cy.switchTab(tab);
         }
     });
 });
 
-Cypress.Commands.add("switchTabUserSettings", (tab: string): Chainable<JQuery<HTMLElement>> => {
+Cypress.Commands.add("openRoomSettings", (tab?: string): Chainable<JQuery<HTMLElement>> => {
+    cy.get(".mx_RoomHeader_name").click();
+    cy.get(".mx_RoomTile_contextMenu").within(() => {
+        cy.get('[aria-label="Settings"]').click();
+    });
+    return cy.get(".mx_RoomSettingsDialog").within(() => {
+        if (tab) {
+            cy.switchTab(tab);
+        }
+    });
+});
+
+Cypress.Commands.add("switchTab", (tab: string): Chainable<JQuery<HTMLElement>> => {
     return cy.get(".mx_TabbedView_tabLabels").within(() => {
         cy.get(".mx_TabbedView_tabLabel").contains(tab).click();
     });
 });
 
-Cypress.Commands.add("closeUserSettings", (): Chainable<JQuery<HTMLElement>> => {
+Cypress.Commands.add("closeDialog", (): Chainable<JQuery<HTMLElement>> => {
     return cy.get('[aria-label="Close dialog"]').click();
 });
 

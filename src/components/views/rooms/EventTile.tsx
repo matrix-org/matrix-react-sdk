@@ -518,7 +518,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         return <div className="mx_ThreadPanel_replies">
-            <span className="mx_ThreadPanel_ThreadsAmount">
+            <span className="mx_ThreadPanel_replies_amount">
                 { this.state.thread.length }
             </span>
             <ThreadMessagePreview thread={this.state.thread} />
@@ -533,14 +533,14 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
             if (this.props.highlightLink) {
                 return (
-                    <a className="mx_ThreadSummaryIcon" href={this.props.highlightLink}>
+                    <a className="mx_ThreadSummary_icon" href={this.props.highlightLink}>
                         { _t("From a thread") }
                     </a>
                 );
             }
 
             return (
-                <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
+                <p className="mx_ThreadSummary_icon">{ _t("From a thread") }</p>
             );
         }
     }
@@ -1121,9 +1121,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             || Boolean(this.state.contextMenu));
 
         // Thread panel shows the timestamp of the last reply in that thread
-        const ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
+        let ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
             ? this.props.mxEvent.getTs()
-            : this.state.thread?.replyToEvent.getTs();
+            : this.state.thread?.replyToEvent?.getTs();
+        if (typeof ts !== "number") {
+            // Fall back to something we can use
+            ts = this.props.mxEvent.getTs();
+        }
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
@@ -1372,13 +1376,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoom"
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoomButton"
                                 onClick={this.viewInRoom}
                                 title={_t("View in room")}
                                 key="view_in_room"
                             />
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkToThread"
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkButton"
                                 onClick={this.copyLinkToThread}
                                 title={_t("Copy link to thread")}
                                 key="copy_link_to_thread"

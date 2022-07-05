@@ -1,0 +1,148 @@
+# Triggers after the layered build has finished, taking the artifact and running cypress on it
+name: Cypress End to End Tests
+on:
+  workflow_run:
+    workflows: [ "Element Web - Build" ]
+    types:
+      - completed
+jobs:
+  # This job cannot have a pretty name due to https://github.com/haya14busa/action-workflow_run-status/issues/158
+  cypress:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      statuses: write
+      issues: read
+      pull-requests: read
+    environment: Cypress
+    steps:
+      # Wire up the status check for this workflow_run action
+      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0
+
+      - id: prdetails
+        if: github.event.workflow_run.event == 'pull_request'
+        uses: matrix-org/pr-details-action@v1.1
+        with:
+          owner: ${{ github.event.workflow_run.head_repository.owner.login }}
+          branch: ${{ github.event.workflow_run.head_branch }}
+
+      - uses: actions/checkout@v2
+        with:
+          # XXX: We're checking out untrusted code in a secure context
+          # We need to be careful to not trust anything this code outputs/may do
+          # We need to check this out to access the cypress tests which are on the head branch
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+
+      # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
+      # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
+      - name: 📥 Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: element-build-and-test.yaml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: previewbuild
+          path: webapp
+
+      - name: Get commit details
+        if: github.event.workflow_run.event == 'pull_request'
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const response = await github.rest.git.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: "${{ github.event.workflow_run.head_sha }}",
+            });
+            core.exportVariable("COMMIT_INFO_MESSAGE", response.data.message);
+            core.exportVariable("COMMIT_INFO_AUTHOR", response.data.author.name);
+            core.exportVariable("COMMIT_INFO_EMAIL", response.data.author.email);
+
+      # Only run Percy when it is demanded or on develop
+      - name: Disable Percy if not needed
+        if: |
+          github.event.workflow_run.event == 'pull_request' &&
+          !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+        run: |
+          echo "PERCY_ENABLE=0" >> $GITHUB_ENV
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          # The built-in Electron runner seems to grind to a halt trying
+          # to run the tests, so use chrome.
+          browser: chrome
+          start: npx serve -p 8080 webapp
+          wait-on: 'http://localhost:8080'
+          record: true
+          command-prefix: 'yarn percy exec --'
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # tell Cypress more details about the context of this run
+          COMMIT_INFO_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          COMMIT_INFO_SHA: ${{ github.event.workflow_run.head_sha }}
+          COMMIT_INFO_REMOTE: ${{ github.repositoryUrl }}
+
+          # pass the Percy token as an environment variable
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          # Use existing chromium rather than downloading another
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          PERCY_BROWSER_EXECUTABLE: /usr/bin/chromium-browser
+          # tell Percy more details about the context of this run
+          PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          PERCY_PULL_REQUEST: ${{ steps.prdetails.outputs.pr_id }}
+          # pass GitHub token to allow accurately detecting a build vs a re-run build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # make Node's os.tmpdir() return something where we actually have permissions
+          TMPDIR: ${{ runner.temp }}
+
+      - name: Upload Artifact
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-results
+          path: |
+            cypress/screenshots
+            cypress/videos
+            cypress/synapselogs
+
+      - name: Upload Benchmark
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-benchmark
+          path: cypress/performance/measurements.json
+          retention-days: 1
+
+  store-benchmark:
+    needs: cypress
+    runs-on: ubuntu-latest
+    if: |
+      github.event.workflow_run.event != 'pull_request' &&
+      github.event.workflow_run.head_branch == 'develop' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download benchmark result
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-benchmark
+
+      - name: Store benchmark result
+        uses: matrix-org/github-action-benchmark@jsperfentry-6
+        with:
+          name: Cypress measurements
+          tool: 'jsperformanceentry'
+          output-file-path: measurements.json
+          # The dashboard is available at https://matrix-org.github.io/matrix-react-sdk/cypress/bench/
+          benchmark-data-dir-path: cypress/bench
+          fail-on-alert: false
+          comment-on-alert: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: ${{ github.event.workflow_run.event != 'pull_request' }}

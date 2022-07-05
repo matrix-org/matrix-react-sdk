@@ -47,7 +47,6 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
-import Analytics from './Analytics';
 import { UIFeature } from "./settings/UIFeature";
 import { Action } from './dispatcher/actions';
 import VoipUserMapper from './VoipUserMapper';
@@ -266,28 +265,43 @@ export default class CallHandler extends EventEmitter {
         return this.supportsSipNativeVirtual;
     }
 
-    public pstnLookup(phoneNumber: string): Promise<ThirdpartyLookupResponse[]> {
-        return MatrixClientPeg.get().getThirdpartyUser(
-            this.pstnSupportPrefixed ? PROTOCOL_PSTN_PREFIXED : PROTOCOL_PSTN, {
-                'm.id.phone': phoneNumber,
-            },
-        );
+    public async pstnLookup(phoneNumber: string): Promise<ThirdpartyLookupResponse[]> {
+        try {
+            return await MatrixClientPeg.get().getThirdpartyUser(
+                this.pstnSupportPrefixed ? PROTOCOL_PSTN_PREFIXED : PROTOCOL_PSTN, {
+                    'm.id.phone': phoneNumber,
+                },
+            );
+        } catch (e) {
+            logger.warn('Failed to lookup user from phone number', e);
+            return Promise.resolve([]);
+        }
     }
 
-    public sipVirtualLookup(nativeMxid: string): Promise<ThirdpartyLookupResponse[]> {
-        return MatrixClientPeg.get().getThirdpartyUser(
-            PROTOCOL_SIP_VIRTUAL, {
-                'native_mxid': nativeMxid,
-            },
-        );
+    public async sipVirtualLookup(nativeMxid: string): Promise<ThirdpartyLookupResponse[]> {
+        try {
+            return await MatrixClientPeg.get().getThirdpartyUser(
+                PROTOCOL_SIP_VIRTUAL, {
+                    'native_mxid': nativeMxid,
+                },
+            );
+        } catch (e) {
+            logger.warn('Failed to query SIP identity for user', e);
+            return Promise.resolve([]);
+        }
     }
 
-    public sipNativeLookup(virtualMxid: string): Promise<ThirdpartyLookupResponse[]> {
-        return MatrixClientPeg.get().getThirdpartyUser(
-            PROTOCOL_SIP_NATIVE, {
-                'virtual_mxid': virtualMxid,
-            },
-        );
+    public async sipNativeLookup(virtualMxid: string): Promise<ThirdpartyLookupResponse[]> {
+        try {
+            return await MatrixClientPeg.get().getThirdpartyUser(
+                PROTOCOL_SIP_NATIVE, {
+                    'virtual_mxid': virtualMxid,
+                },
+            );
+        } catch (e) {
+            logger.warn('Failed to query identity for SIP user', e);
+            return Promise.resolve([]);
+        }
     }
 
     private onCallIncoming = (call: MatrixCall): void => {
@@ -305,7 +319,6 @@ export default class CallHandler extends EventEmitter {
             return;
         }
 
-        Analytics.trackEvent('voip', 'receiveCall', 'type', call.type);
         this.addCallForRoom(mappedRoomId, call);
         this.setCallListeners(call);
         // Explicitly handle first state change
@@ -375,6 +388,8 @@ export default class CallHandler extends EventEmitter {
     }
 
     public play(audioId: AudioID): void {
+        const logPrefix = `CallHandler.play(${audioId}):`;
+        logger.debug(`${logPrefix} beginning of function`);
         // TODO: Attach an invisible element for this instead
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
@@ -383,13 +398,15 @@ export default class CallHandler extends EventEmitter {
                 try {
                     // This still causes the chrome debugger to break on promise rejection if
                     // the promise is rejected, even though we're catching the exception.
+                    logger.debug(`${logPrefix} attempting to play audio`);
                     await audio.play();
+                    logger.debug(`${logPrefix} playing audio successfully`);
                 } catch (e) {
                     // This is usually because the user hasn't interacted with the document,
                     // or chrome doesn't think so and is denying the request. Not sure what
                     // we can really do here...
                     // https://github.com/vector-im/element-web/issues/7657
-                    logger.log("Unable to play audio clip", e);
+                    logger.warn(`${logPrefix} unable to play audio clip`, e);
                 }
             };
             if (this.audioPromises.has(audioId)) {
@@ -400,20 +417,30 @@ export default class CallHandler extends EventEmitter {
             } else {
                 this.audioPromises.set(audioId, playAudio());
             }
+        } else {
+            logger.warn(`${logPrefix} unable to find <audio> element for ${audioId}`);
         }
     }
 
     public pause(audioId: AudioID): void {
+        const logPrefix = `CallHandler.pause(${audioId}):`;
+        logger.debug(`${logPrefix} beginning of function`);
         // TODO: Attach an invisible element for this instead
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
+        const pauseAudio = () => {
+            logger.debug(`${logPrefix} pausing audio`);
+            // pause doesn't return a promise, so just do it
+            audio.pause();
+        };
         if (audio) {
             if (this.audioPromises.has(audioId)) {
-                this.audioPromises.set(audioId, this.audioPromises.get(audioId).then(() => audio.pause()));
+                this.audioPromises.set(audioId, this.audioPromises.get(audioId).then(pauseAudio));
             } else {
-                // pause doesn't return a promise, so just do it
-                audio.pause();
+                pauseAudio();
             }
+        } else {
+            logger.warn(`${logPrefix} unable to find <audio> element for ${audioId}`);
         }
     }
 
@@ -433,7 +460,6 @@ export default class CallHandler extends EventEmitter {
         call.on(CallEvent.Error, (err: CallError) => {
             if (!this.matchesCallForThisRoom(call)) return;
 
-            Analytics.trackEvent('voip', 'callError', 'error', err.toString());
             logger.error("Call error:", err);
 
             if (err.code === CallErrorCode.NoUserMedia) {
@@ -449,15 +475,13 @@ export default class CallHandler extends EventEmitter {
                 return;
             }
 
-            Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Call Failed'),
                 description: err.message,
             });
         });
         call.on(CallEvent.Hangup, () => {
             if (!this.matchesCallForThisRoom(call)) return;
-
-            Analytics.trackEvent('voip', 'callHangup');
 
             this.removeCallForRoom(mappedRoomId);
         });
@@ -570,7 +594,6 @@ export default class CallHandler extends EventEmitter {
             }
             case CallState.Ended: {
                 const hangupReason = call.hangupReason;
-                Analytics.trackEvent('voip', 'callEnded', 'hangupReason', hangupReason);
                 this.removeCallForRoom(mappedRoomId);
                 if (oldState === CallState.InviteSent && call.hangupParty === CallParty.Remote) {
                     this.play(AudioID.Busy);
@@ -589,13 +612,13 @@ export default class CallHandler extends EventEmitter {
                         description = _t("The call could not be established");
                     }
 
-                    Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
+                    Modal.createDialog(ErrorDialog, {
                         title, description,
                     });
                 } else if (
                     hangupReason === CallErrorCode.AnsweredElsewhere && oldState === CallState.Connecting
                 ) {
-                    Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
+                    Modal.createDialog(ErrorDialog, {
                         title: _t("Answered Elsewhere"),
                         description: _t("The call was answered on another device."),
                     });
@@ -695,7 +718,7 @@ export default class CallHandler extends EventEmitter {
     private showICEFallbackPrompt(): void {
         const cli = MatrixClientPeg.get();
         const code = sub => <code>{ sub }</code>;
-        Modal.createTrackedDialog('No TURN servers', '', QuestionDialog, {
+        Modal.createDialog(QuestionDialog, {
             title: _t("Call failed due to misconfigured server"),
             description: <div>
                 <p>{ _t(
@@ -745,14 +768,12 @@ export default class CallHandler extends EventEmitter {
             </div>;
         }
 
-        Modal.createTrackedDialog('Media capture failed', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title, description,
         }, null, true);
     }
 
     private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
-        Analytics.trackEvent('voip', 'placeCall', 'type', type);
-
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
 
@@ -775,7 +796,7 @@ export default class CallHandler extends EventEmitter {
         try {
             this.addCallForRoom(roomId, call);
         } catch (e) {
-            Modal.createTrackedDialog('Call Handler', 'Existing Call with user', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Already in call'),
                 description: _t("You're already in a call with this person."),
             });
@@ -807,7 +828,7 @@ export default class CallHandler extends EventEmitter {
 
         // if the runtime env doesn't do VoIP, whine.
         if (!MatrixClientPeg.get().supportsVoip()) {
-            Modal.createTrackedDialog('Call Handler', 'VoIP is unsupported', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Calls are unsupported'),
                 description: _t('You cannot place calls in this browser.'),
             });
@@ -815,7 +836,7 @@ export default class CallHandler extends EventEmitter {
         }
 
         if (MatrixClientPeg.get().getSyncState() === SyncState.Error) {
-            Modal.createTrackedDialog('Call Handler', 'Sync error', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Connectivity to the server has been lost'),
                 description: _t('You cannot place calls without a connection to the server.'),
             });
@@ -824,7 +845,7 @@ export default class CallHandler extends EventEmitter {
 
         // don't allow > 2 calls to be placed.
         if (this.getAllActiveCalls().length > 1) {
-            Modal.createTrackedDialog('Call Handler', 'Existing Call', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Too Many Calls'),
                 description: _t("You've reached the maximum number of simultaneous calls."),
             });
@@ -842,7 +863,7 @@ export default class CallHandler extends EventEmitter {
 
         const members = room.getJoinedMembers();
         if (members.length <= 1) {
-            Modal.createTrackedDialog('Call Handler', 'Cannot place call with self', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 description: _t('You cannot place a call with yourself.'),
             });
         } else if (members.length === 2) {
@@ -887,7 +908,7 @@ export default class CallHandler extends EventEmitter {
         if (!this.calls.has(roomId)) return;
 
         if (this.getAllActiveCalls().length > 1) {
-            Modal.createTrackedDialog('Call Handler', 'Existing Call', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Too Many Calls'),
                 description: _t("You've reached the maximum number of simultaneous calls."),
             });
@@ -912,7 +933,7 @@ export default class CallHandler extends EventEmitter {
     public async dialNumber(number: string, transferee?: MatrixCall): Promise<void> {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
-            Modal.createTrackedDialog('', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Unable to look up phone number"),
                 description: _t("There was an error looking up the phone number"),
             });
@@ -955,7 +976,7 @@ export default class CallHandler extends EventEmitter {
 
         const results = await this.pstnLookup(destination);
         if (!results || results.length === 0 || !results[0].userid) {
-            Modal.createTrackedDialog('', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Unable to transfer call"),
                 description: _t("There was an error looking up the phone number"),
             });
@@ -984,7 +1005,7 @@ export default class CallHandler extends EventEmitter {
                 await call.transfer(destination);
             } catch (e) {
                 logger.log("Failed to transfer call", e);
-                Modal.createTrackedDialog('Failed to transfer call', '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t('Transfer Failed'),
                     description: _t('Failed to transfer call'),
                 });
@@ -1022,7 +1043,6 @@ export default class CallHandler extends EventEmitter {
     private async placeJitsiCall(roomId: string, type: CallType): Promise<void> {
         const client = MatrixClientPeg.get();
         logger.info(`Place conference call in ${roomId}`);
-        Analytics.trackEvent('voip', 'placeConferenceCall');
 
         dis.dispatch({ action: 'appsDrawer', show: true });
 
@@ -1039,36 +1059,13 @@ export default class CallHandler extends EventEmitter {
             logger.log('Jitsi widget added');
         } catch (e) {
             if (e.errcode === 'M_FORBIDDEN') {
-                Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t('Permission Required'),
                     description: _t("You do not have permission to start a conference call in this room"),
                 });
             }
             logger.error(e);
         }
-    }
-
-    public terminateCallApp(roomId: string): void {
-        logger.info("Terminating conference call in " + roomId);
-
-        Modal.createTrackedDialog('Confirm Jitsi Terminate', '', QuestionDialog, {
-            hasCancelButton: true,
-            title: _t("End conference"),
-            description: _t("This will end the conference for everyone. Continue?"),
-            button: _t("End conference"),
-            onFinished: (proceed) => {
-                if (!proceed) return;
-
-                // We'll just obliterate them all. There should only ever be one, but might as well
-                // be safe.
-                const roomInfo = WidgetStore.instance.getRoom(roomId);
-                const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
-                jitsiWidgets.forEach(w => {
-                    // setting invalid content removes it
-                    WidgetUtils.setRoomWidget(roomId, w.id);
-                });
-            },
-        });
     }
 
     public hangupCallApp(roomId: string): void {
