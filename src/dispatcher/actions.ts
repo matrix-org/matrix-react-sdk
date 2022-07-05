@@ -320,4 +320,9 @@ export enum Action {
      * Overwrites the existing login with fresh session credentials. Use with a OverwriteLoginPayload.
      */
     OverwriteLogin = "overwrite_login",
+
+     * Fired when the PlatformPeg gets a new platform set upon it, should only happen once per app load lifecycle.
+     * Fires with the PlatformSetPayload.
+     */
+    PlatformSet = "platform_set",
 }
