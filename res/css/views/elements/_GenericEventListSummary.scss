@@ -87,6 +87,7 @@ limitations under the License.
 
     .mx_MatrixChat_useCompactLayout & {
         font-size: $font-13px;
+        margin-top: 3px;
 
         .mx_EventTile_line {
             line-height: $font-20px;
@@ -94,10 +95,6 @@ limitations under the License.
 
         .mx_GenericEventListSummary_line {
             line-height: $font-22px;
-        }
-
-        .mx_GenericEventListSummary_toggle {
-            margin-top: 3px;
         }
 
         .mx_TextualEvent.mx_GenericEventListSummary_summary {
