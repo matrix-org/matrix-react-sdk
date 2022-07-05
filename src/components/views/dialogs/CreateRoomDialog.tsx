@@ -280,7 +280,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             if (privateShouldBeEncrypted()) {
                 if (this.state.canChangeEncryption) {
                     microcopy = isVideoRoom
-                        ? _t("You can't disable this later. The room will be encrypted but the embedded call is not.")
+                        ? _t("You can't disable this later. The room will be encrypted but the embedded call will not.")
                         : _t("You can't disable this later. Bridges & most bots won't work yet.");
                 } else {
                     microcopy = _t("Your server requires encryption to be enabled in private rooms.");
