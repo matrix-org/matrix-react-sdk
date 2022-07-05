@@ -17,6 +17,7 @@ limitations under the License.
 .mx_MapError {
     padding: 100px $spacing-32 0;
     text-align: center;
+
     --mx-map-error-icon-color: $secondary-content;
     --mx-map-error-icon-size: 58px;
 }
@@ -41,7 +42,7 @@ limitations under the License.
         margin: 0;
         max-width: 275px;
     }
-    
+
     .mx_MapError_heading {
         padding-top: $spacing-8;
         // override h3 heading size

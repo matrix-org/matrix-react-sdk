@@ -109,7 +109,7 @@ describe('<MBeaconBody />', () => {
             const component = getComponent({ mxEvent: beaconInfoEvent });
             expect(component.text()).toEqual("Live location ended");
         });
-    
+
         it('renders stopped beacon UI for an expired beacon', () => {
             const beaconInfoEvent = makeBeaconInfoEvent(aliceId,
                 roomId,
@@ -121,7 +121,7 @@ describe('<MBeaconBody />', () => {
             const component = getComponent({ mxEvent: beaconInfoEvent });
             expect(component.text()).toEqual("Live location ended");
         });
-    
+
         it('renders loading beacon UI for a beacon that has not started yet', () => {
             const beaconInfoEvent = makeBeaconInfoEvent(
                 aliceId,
@@ -134,7 +134,7 @@ describe('<MBeaconBody />', () => {
             const component = getComponent({ mxEvent: beaconInfoEvent });
             expect(component.text()).toEqual("Loading live location...");
         });
-    
+
         it('does not open maximised map when on click when beacon is stopped', () => {
             const beaconInfoEvent = makeBeaconInfoEvent(aliceId,
                 roomId,
@@ -147,10 +147,10 @@ describe('<MBeaconBody />', () => {
             act(() => {
                 component.find('.mx_MBeaconBody_map').at(0).simulate('click');
             });
-    
+
             expect(modalSpy).not.toHaveBeenCalled();
         });
-    
+
         it('renders stopped UI when a beacon event is not the latest beacon for a user', () => {
             const aliceBeaconInfo1 = makeBeaconInfoEvent(
                 aliceId,
@@ -166,14 +166,14 @@ describe('<MBeaconBody />', () => {
                 { isLive: true },
                 '$alice-room1-2',
             );
-    
+
             makeRoomWithStateEvents([aliceBeaconInfo1, aliceBeaconInfo2], { roomId, mockClient });
-    
+
             const component = getComponent({ mxEvent: aliceBeaconInfo1 });
             // beacon1 has been superceded by beacon2
             expect(component.text()).toEqual("Live location ended");
         });
-    
+
         it('renders stopped UI when a beacon event is replaced', () => {
             const aliceBeaconInfo1 = makeBeaconInfoEvent(
                 aliceId,
@@ -189,19 +189,19 @@ describe('<MBeaconBody />', () => {
                 { isLive: true },
                 '$alice-room1-2',
             );
-    
+
             const room = makeRoomWithStateEvents([aliceBeaconInfo1], { roomId, mockClient });
             const component = getComponent({ mxEvent: aliceBeaconInfo1 });
-    
+
             const beaconInstance = room.currentState.beacons.get(getBeaconInfoIdentifier(aliceBeaconInfo1));
             // update alice's beacon with a new edition
             // beacon instance emits
             act(() => {
                 beaconInstance.update(aliceBeaconInfo2);
             });
-    
+
             component.setProps({});
-    
+
             // beacon1 has been superceded by beacon2
             expect(component.text()).toEqual("Live location ended");
         });
@@ -471,7 +471,7 @@ describe('<MBeaconBody />', () => {
         beforeEach(() => {
             // mock map utils to raise MapStyleUrlNotConfigured error
             jest.spyOn(mapUtilHooks, 'useMap').mockImplementation(
-                ({ onError}) => {
+                ({ onError }) => {
                     onError(new Error(LocationShareError.MapStyleUrlNotConfigured)); return mockMap;
                 });
         });
@@ -486,7 +486,7 @@ describe('<MBeaconBody />', () => {
                 aliceId, { beaconInfoId: beaconInfoEvent.getId(), geoUri: 'geo:51,41', timestamp: now + 1 },
             );
 
-            makeRoomWithBeacons(roomId, mockClient, [beaconInfoEvent], [location1])
+            makeRoomWithBeacons(roomId, mockClient, [beaconInfoEvent], [location1]);
 
             const component = getComponent({ mxEvent: beaconInfoEvent });
             expect(component.find(MapError)).toMatchSnapshot();
