@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657045679574,
+  "lastUpdate": 1657048527853,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106796,6 +106796,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4630.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7f5bb61a79b20c8642bb5aeec5869dc658bc5147",
+          "message": "Support a module API surface for custom functionality (#8246)\n\n* Early implementation of module API surface + functions for ILAG module\r\n\r\n* Wire up dialog functions and ILAG-needed surface\r\n\r\n* Ensure component renders for modules get overridden\r\n\r\n* Respond to changes from module API interface\r\n\r\n* Use a real module-api dependency\r\n\r\n* Update for new Dialogs interface\r\n\r\n* Add support for getConfigValue from module API\r\n\r\n* Update the remainder of the module API interface\r\n\r\n* Docs & cleanup\r\n\r\n* Add some unit tests around module stuff\r\n\r\nNeeds end-to-end tests still.\r\n\r\n* Appease early linters\r\n\r\n* Break import cycles by not directly depending on Lifecycle\r\n\r\n* Appease the linter\r\n\r\n* Fix bad merge",
+          "timestamp": "2022-07-05T12:26:44-06:00",
+          "tree_id": "24eb1c7e09b422326933b7b4e674df18cf2049af",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7f5bb61a79b20c8642bb5aeec5869dc658bc5147"
+        },
+        "date": 1657048514345,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4777.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 671.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
