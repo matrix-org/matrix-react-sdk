@@ -196,8 +196,6 @@ $left-gutter: 64px;
             }
 
             .mx_EventTile_avatar {
-                top: initial;
-                inset-inline-start: $left-gutter;
                 height: 14px;
             }
         }
@@ -291,6 +289,11 @@ $left-gutter: 64px;
             .mx_EventTile_avatar,
             .mx_EventTile_e2eIcon {
                 margin: $spacing-block-start 0 $spacing-block-end;
+            }
+
+            .mx_EventTile_avatar {
+                top: initial;
+                inset-inline-start: $left-gutter;
             }
 
             .mx_EventTile_line {
