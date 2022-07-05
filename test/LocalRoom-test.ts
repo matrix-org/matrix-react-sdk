@@ -17,6 +17,7 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../src/models/LocalRoom";
+import { createTestClient } from "./test-utils";
 
 const stateTestData = [
     {
@@ -51,13 +52,24 @@ const stateTestData = [
 
 describe("LocalRoom", () => {
     let room: LocalRoom;
+    let client: MatrixClient;
 
     beforeEach(() => {
-        room = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", {} as unknown as MatrixClient, "@test:localhost");
+        client = createTestClient();
+        room = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", client, "@test:localhost");
+    });
+
+    it("should not raise an error on getPendingEvents (implicitly check for pendingEventOrdering: detached)", () => {
+        room.getPendingEvents();
+        expect(true).toBe(true);
     });
 
     it("should not have after create callbacks", () => {
         expect(room.afterCreateCallbacks).toHaveLength(0);
+    });
+
+    it("should have a name", () => {
+        expect(room.name).toBe("Empty room");
     });
 
     stateTestData.forEach((stateTestDatum) => {

@@ -20,10 +20,7 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../../src/models/LocalRoom";
 import { doMaybeLocalRoomAction } from "../../src/utils/local-room";
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
-
-jest.mock("../../src/dispatcher/dispatcher", () => ({
-    dispatch: jest.fn(),
-}));
+import { createTestClient } from "../test-utils";
 
 describe("doMaybeLocalRoomAction", () => {
     let callback: jest.Mock;
@@ -33,9 +30,7 @@ describe("doMaybeLocalRoomAction", () => {
     beforeEach(() => {
         callback = jest.fn();
         callback.mockReturnValue(Promise.resolve());
-        client = {
-            getRoom: jest.fn(),
-        } as unknown as MatrixClient;
+        client = createTestClient();
         localRoom = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", client, "@test:example.com");
         localRoom.actualRoomId = "@new:example.com";
         mocked(client.getRoom).mockImplementation((roomId: string) => {
@@ -61,6 +56,7 @@ describe("doMaybeLocalRoomAction", () => {
         let prom;
 
         beforeEach(() => {
+            jest.spyOn(defaultDispatcher, "dispatch");
             prom = doMaybeLocalRoomAction(localRoom.roomId, callback, client);
         });
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
-import { ClientEvent, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { KNOWN_SAFE_ROOM_VERSION, Room } from "matrix-js-sdk/src/models/room";
@@ -130,14 +130,7 @@ export async function createDmLocalRoom(
 ): Promise<LocalRoom> {
     const userId = client.getUserId();
 
-    const localRoom = new LocalRoom(
-        LOCAL_ROOM_ID_PREFIX + client.makeTxnId(),
-        client,
-        userId,
-        {
-            pendingEventOrdering: PendingEventOrdering.Detached,
-        },
-    );
+    const localRoom = new LocalRoom(LOCAL_ROOM_ID_PREFIX + client.makeTxnId(), client, userId);
     const events = [];
 
     events.push(new MatrixEvent({
@@ -217,7 +210,6 @@ export async function createDmLocalRoom(
     localRoom.updateMyMembership("join");
     localRoom.addLiveEvents(events);
     localRoom.currentState.setStateEvents(events);
-    localRoom.name = localRoom.getDefaultRoomName(userId);
     client.store.storeRoom(localRoom);
 
     return localRoom;

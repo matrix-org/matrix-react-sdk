@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { VisibilityProvider } from "../../../../src/stores/room-list/filters/VisibilityProvider";
 import CallHandler from "../../../../src/CallHandler";
 import VoipUserMapper from "../../../../src/VoipUserMapper";
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoom";
 import { RoomListCustomisations } from "../../../../src/customisations/RoomList";
+import { createTestClient } from "../../../test-utils";
 
 jest.mock("../../../../src/VoipUserMapper", () => ({
     sharedInstance: jest.fn(),
@@ -46,7 +47,7 @@ const createRoom = (isSpaceRoom = false): Room => {
 };
 
 const createLocalRoom = (): LocalRoom => {
-    const room = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", {} as unknown as MatrixClient, "@test:example.com");
+    const room = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", createTestClient(), "@test:example.com");
     room.isSpaceRoom = () => false;
     return room;
 };

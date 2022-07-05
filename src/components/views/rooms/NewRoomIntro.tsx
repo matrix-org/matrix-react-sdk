@@ -43,6 +43,7 @@ import { LocalRoom } from "../../../models/LocalRoom";
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
     const isPublic: boolean = room.getJoinRule() === "public";
+    console.log(`isEncrypted: ${isEncrypted}`);
     return isPublic || !privateShouldBeEncrypted() || isEncrypted;
 }
 
@@ -51,7 +52,7 @@ const NewRoomIntro = () => {
     const { room, roomId } = useContext(RoomContext);
 
     const dmPartner = room instanceof LocalRoom
-        ? room.targets[0].userId
+        ? room.targets[0]?.userId
         : DMRoomMap.shared().getUserIdForRoomId(roomId);
 
     let body;

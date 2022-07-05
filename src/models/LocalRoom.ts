@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Room, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 
 import { Member } from "../utils/direct-messages";
 
@@ -37,10 +37,15 @@ export class LocalRoom extends Room {
     /** If the actual room has been created, this holds its ID. */
     actualRoomId: string;
     /** DM chat partner */
-    targets: Member[];
+    targets: Member[] = [];
     /** Callbacks that should be invoked after the actual room has been created. */
     afterCreateCallbacks: Function[] = [];
     state: LocalRoomState = LocalRoomState.NEW;
+
+    constructor(roomId: string, client: MatrixClient, myUserId: string) {
+        super(roomId, client, myUserId, { pendingEventOrdering: PendingEventOrdering.Detached });
+        this.name = this.getDefaultRoomName(myUserId);
+    }
 
     public get isNew(): boolean {
         return this.state === LocalRoomState.NEW;
