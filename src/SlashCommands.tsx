@@ -799,9 +799,9 @@ export const Commands = [
             if (args) {
                 const cli = MatrixClientPeg.get();
 
-                const matches = args.match(/^(@[^:]+:\S+)$/);
-                if (matches) {
-                    const userId = matches[1];
+                const userMatches = args.match(/^(@[^:]+:\S+)$/);
+                if (userMatches) {
+                    const userId = userMatches[1];
                     const ignoredUsers = cli.getIgnoredUsers();
                     ignoredUsers.push(userId); // de-duped internally in the js-sdk
                     return success(
@@ -822,10 +822,16 @@ export const Commands = [
                     if (ignoredInvites.ignored_rooms === undefined) {
                         ignoredInvites.ignored_rooms = [];
                     }
-                    ignoredInvites.ignored_rooms.push({
-                        room_id: roomId,
-                        ts: Date.now(), // TODO: Check this is the timestamp we want?
-                    }); // TODO: figure out whether we're deduplicating or not https://github.com/matrix-org/matrix-js-sdk/pull/2483#discussion_r913013654
+                    const isAlreadyIgnored = Boolean(ignoredInvites.ignored_rooms
+                        .find(ignoredRoom => ignoredRoom.room_id === roomId));
+                    // Doesn't feel right that we don't tell them it is already ignored
+                    // but that's what the user ignore does too so *shrug*
+                    if (!isAlreadyIgnored) {
+                        ignoredInvites.ignored_rooms.push({
+                            room_id: roomId,
+                            ts: Date.now(), // TODO: Check this is the timestamp we want?
+                        });
+                    }
                     return success(
                         cli.setIgnoredInvites(ignoredInvites).then(() => {
                             Modal.createDialog(InfoDialog, {
