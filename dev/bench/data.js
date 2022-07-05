@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1656963779321,
+  "lastUpdate": 1657004786889,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106328,6 +106328,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4866,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4b624fd58b029ae01b16998c86df4c49a3aed9ab",
+          "message": "Move mx_EventTile_msgOption out of mx_EventTile:not([data-layout=bubble]) (#8973)\n\n* Move mx_EventTile_msgOption out of mx_EventTile:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Decrease specificity on _IRCLayout.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-05T09:01:06+02:00",
+          "tree_id": "aaadbb9296422e23a25bba6a60cb83d5d1505341",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4b624fd58b029ae01b16998c86df4c49a3aed9ab"
+        },
+        "date": 1657004772451,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4939.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2227.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4352.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
