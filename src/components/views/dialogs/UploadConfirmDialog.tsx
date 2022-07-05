@@ -81,6 +81,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
             title = _t('Upload files');
         }
 
+        const fileId = `mx-uploadconfirmdialog-${this.props.file.name}`;
         let preview: JSX.Element;
         let placeholder: JSX.Element;
         if (this.mimeType.startsWith("image/")) {
@@ -88,7 +89,8 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
                 <img
                     className="mx_UploadConfirmDialog_imagePreview"
                     src={this.objectUrl}
-                    alt={this.props.file.name}
+                    alt=""
+                    aria-describedby={fileId}
                 />
             );
         } else if (this.mimeType.startsWith("video/")) {
@@ -124,7 +126,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
                     <div className="mx_UploadConfirmDialog_previewOuter">
                         <div className="mx_UploadConfirmDialog_previewInner">
                             { preview && <div>{ preview }</div> }
-                            <div>
+                            <div id={fileId}>
                                 { placeholder }
                                 { this.props.file.name } ({ filesize(this.props.file.size) })
                             </div>
