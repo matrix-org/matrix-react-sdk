@@ -279,16 +279,18 @@ $left-gutter: 64px;
     }
 
     &[data-layout=bubble] {
-        .mx_ReadReceiptGroup {
-            position: absolute;
-            inset-block-start: auto;
+        .mx_EventTile_msgOption {
+            .mx_ReadReceiptGroup {
+                position: absolute;
+                inset-block-start: auto;
 
-            // as close to right gutter without clipping as possible
-            inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end));
+                // as close to right gutter without clipping as possible
+                inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end));
 
-            // (EventTileLine.line-height - ReadReceiptGroup.height) / 2
-            // this centers the ReadReceiptGroup if we’ve got a single line
-            inset-block-end: calc(($font-18px - 24px) / 2);
+                // (EventTileLine.line-height - ReadReceiptGroup.height) / 2
+                // this centers the ReadReceiptGroup if we’ve got a single line
+                inset-block-end: calc(($font-18px - 24px) / 2);
+            }
         }
 
         &.mx_EventTile_continuation {
