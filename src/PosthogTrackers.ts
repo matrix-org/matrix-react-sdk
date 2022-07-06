@@ -29,6 +29,7 @@ const notLoggedInMap: Record<Exclude<Views, Views.LOGGED_IN>, ScreenName> = {
     [Views.LOADING]: "Loading",
     [Views.WELCOME]: "Welcome",
     [Views.LOGIN]: "Login",
+    [Views.ANALYTICS_OPTIN]: "Login",
     [Views.REGISTER]: "Register",
     [Views.FORGOT_PASSWORD]: "ForgotPassword",
     [Views.COMPLETE_SECURITY]: "CompleteSecurity",
