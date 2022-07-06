@@ -227,13 +227,13 @@ $left-gutter: 64px;
 
         .mx_EventTile_msgOption {
             margin-inline-end: 10px;
-        }
 
-        .mx_ReadReceiptGroup {
-            // This aligns the avatar with the last line of the
-            // message. We want to move it one line up
-            // See .mx_EventTile[data-layout=group] .mx_EventTile_line in _EventTile.scss
-            inset-block-start: calc(-$font-22px - 3px);
+            .mx_ReadReceiptGroup {
+                // This aligns the avatar with the last line of the
+                // message. We want to move it one line up
+                // See .mx_EventTile[data-layout=group] .mx_EventTile_line in _EventTile.scss
+                inset-block-start: calc(-$font-22px - 3px);
+            }
         }
 
         .mx_ThreadSummary,
@@ -1158,10 +1158,12 @@ $left-gutter: 64px;
                 font-size: $font-13px;
             }
 
-            .mx_ReadReceiptGroup {
-                // This aligns the avatar with the last line of the
-                // message. We want to move it one line up - 2rem
-                inset-block-start: -2rem;
+            .mx_EventTile_msgOption {
+                .mx_ReadReceiptGroup {
+                    // This aligns the avatar with the last line of the
+                    // message. We want to move it one line up - 2rem
+                    inset-block-start: -2rem;
+                }
             }
 
             .mx_EventTile_content .markdown-body {
