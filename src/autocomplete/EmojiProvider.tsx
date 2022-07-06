@@ -31,7 +31,6 @@ import { ICompletion, ISelectionRange } from './Autocompleter';
 import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji, getEmojiFromUnicode } from '../emoji';
 import { TimelineRenderingType } from '../contexts/RoomContext';
-
 import * as recent from '../emojipicker/recent';
 
 const LIMIT = 20;
