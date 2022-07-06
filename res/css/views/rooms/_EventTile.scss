@@ -209,6 +209,14 @@ $left-gutter: 64px;
         .mx_MessageTimestamp {
             text-align: right;
         }
+
+        &.mx_EventTile_info {
+            .mx_EventTile_avatar {
+                left: calc(var(--name-width) + 10px + var(--icon-width));
+                top: 0;
+                margin-right: var(--right-padding);
+            }
+        }
     }
 
     &[data-layout=group] {
