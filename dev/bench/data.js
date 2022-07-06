@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657104651612,
+  "lastUpdate": 1657104888325,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107120,6 +107120,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 603.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "afa8b01601b1c9288f907fcf60f2dd3179940d15",
+          "message": "Fix headings margin on security user settings tab (#8826)\n\n* Apply kind=link to 'Learn more' link on security user settings tab\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove specific margin setting from heading on security user settings tab\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-06T12:48:52+02:00",
+          "tree_id": "475d3d10525762b17da7ffa5c7f3cfcc58f5170b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/afa8b01601b1c9288f907fcf60f2dd3179940d15"
+        },
+        "date": 1657104871741,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5228.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2281,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5353.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
