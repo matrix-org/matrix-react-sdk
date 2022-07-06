@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657104888325,
+  "lastUpdate": 1657107271395,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107162,6 +107162,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5353.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7afc8c5869b303b6393c192b6a6c0396e7372391",
+          "message": "Task - replace img icons with svg components (#8963)\n\n* add role=presentation to backdrop panle image\r\n\r\n* replace img icons with svg components in InviteDialog\r\n\r\n* replace img icon with svg component\r\n\r\n* img icons to svg icons in MImageBody\r\n\r\n* remove log\r\n\r\n* img icon to svg in SecurityRoomSettingsTab\r\n\r\n* use shared error message for media message tiles\r\n\r\n* remove nbsp\r\n\r\n* dont snapshot test entire rtl render response\r\n\r\n* use aria-describedby for uploadconfirm preview\r\n\r\n* use aria-labelledby instead",
+          "timestamp": "2022-07-06T13:29:26+02:00",
+          "tree_id": "892d9b2c09b79b927f07b09fd5584c518f7df48a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7afc8c5869b303b6393c192b6a6c0396e7372391"
+        },
+        "date": 1657107257999,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5405.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2192,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4751.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
