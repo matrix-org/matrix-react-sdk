@@ -105,7 +105,7 @@ export default class EmojiProvider extends AutocompleteProvider {
 
         let completions = [];
         const { command, range } = this.getCurrentCommand(query, selection);
-        
+
         if (command && command[0].length > 2) {
             const matchedString = command[0];
             completions = this.matcher.match(matchedString, limit);
