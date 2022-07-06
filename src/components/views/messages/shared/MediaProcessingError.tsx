@@ -14,18 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_OwnBeaconStatus_button {
-    margin-left: $spacing-8;
+import React from 'react';
+
+import { Icon as WarningIcon } from '../../../../../res/img/warning.svg';
+
+interface Props {
+    className?: string;
+    children: React.ReactNode;
 }
 
-.mx_EventTile[data-layout="bubble"] .mx_OwnBeaconStatus_button {
-    // align to top to make room for timestamp
-    // in bubble view
-    align-self: start;
-}
+const MediaProcessingError: React.FC<Props> = ({ className, children }) => (
+    <span className={className}>
+        <WarningIcon className='mx_MediaProcessingError_Icon' width="16" height="16" />
+        { children }
+    </span>
+);
 
-.mx_OwnBeaconStatus_destructiveButton {
-    // override button link_inline styles
-    color: $alert !important;
-    font-weight: $font-semi-bold !important;
-}
+export default MediaProcessingError;
