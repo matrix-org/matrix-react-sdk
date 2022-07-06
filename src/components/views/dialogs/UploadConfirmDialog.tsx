@@ -89,7 +89,6 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
                 <img
                     className="mx_UploadConfirmDialog_imagePreview"
                     src={this.objectUrl}
-                    alt=""
                     aria-labelledby={fileId}
                 />
             );
