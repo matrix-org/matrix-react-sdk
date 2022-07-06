@@ -35,6 +35,7 @@ limitations under the License.
 
     &[data-layout=bubble] {
         --maxWidth: 70%;
+        display: flex;
         margin-left: calc(var(--avatarSize) + var(--gutterSize));
 
         .mx_GenericEventListSummary_toggle {
@@ -55,7 +56,6 @@ limitations under the License.
         }
 
         &[data-expanded=false] {
-            display: flex;
             align-items: center;
             justify-content: space-between;
             column-gap: 5px;
@@ -64,7 +64,6 @@ limitations under the License.
         // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
         // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
         &[data-expanded=true] {
-            display: flex;
             flex-direction: column;
             margin: 0;
         }
