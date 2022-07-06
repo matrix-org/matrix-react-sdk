@@ -45,6 +45,7 @@ limitations under the License.
             align-items: center;
             justify-content: space-between;
             padding-inline-start: 49px; // Align with left edge of bubble tiles
+            column-gap: 5px;
         }
 
         // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
@@ -71,7 +72,6 @@ limitations under the License.
 
             &[aria-expanded=false] {
                 order: 9;
-                margin-inline-start: 5px;
             }
 
             &[aria-expanded=true] {
