@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657107271395,
+  "lastUpdate": 1657109550805,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107204,6 +107204,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4751.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e65409861aac1b6d7b7d3f2d1eb7cfe16ea7bacd",
+          "message": "Don't show the same user twice in Spotlight (#8978)\n\nCo-authored-by: Janne Mareike Koschinski <janne@kuschku.de>",
+          "timestamp": "2022-07-06T12:07:10Z",
+          "tree_id": "e6faf74b41219ca71c776943ab9691fa6d7e3a1e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e65409861aac1b6d7b7d3f2d1eb7cfe16ea7bacd"
+        },
+        "date": 1657109537187,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5136.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2133,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4635.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
