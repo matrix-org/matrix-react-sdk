@@ -112,6 +112,8 @@ export interface IConfigOptions {
     };
     jitsi_widget?: {
         skip_built_in_welcome_screen?: boolean;
+        // sends "always on screen" directly via the widget API regardless if a conference has been joined or not
+        force_always_on_screen?: boolean;
     };
     voip?: {
         obey_asserted_identity?: boolean; // MSC3086
