@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SecurityRoomSettingsTab {
-    .mx_SettingsTab_showAdvanced {
-        margin-bottom: $spacing-16;
-    }
+import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
+import { IMatrixClientCreds } from "../../MatrixClientPeg";
 
-    .mx_SecurityRoomSettingsTab_warning {
-        display: flex;
-        align-items: center;
-        column-gap: $spacing-4;
-    }
+export interface OverwriteLoginPayload extends ActionPayload {
+    action: Action.OverwriteLogin;
+
+    credentials: IMatrixClientCreds;
 }
