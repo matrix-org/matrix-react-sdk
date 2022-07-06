@@ -199,6 +199,10 @@ $left-gutter: 64px;
             --EventTile_hover_box-shadow-offset-x: calc(50px + $selected-message-border-width);
             --EventTile_hover_box-shadow-spread-radius: -50px;
 
+            .mx_EventTile_line {
+                background-color: $event-selected-color;
+            }
+
             &.mx_EventTile_verified .mx_EventTile_line {
                 box-shadow: inset var(--EventTile_hover_box-shadow-offset-x) 0 0 var(--EventTile_hover_box-shadow-spread-radius) $e2e-verified-color;
             }
@@ -347,7 +351,6 @@ $left-gutter: 64px;
         padding-left: calc($left-gutter + 18px);
     }
 
-    &.mx_EventTile:hover .mx_EventTile_line,
     &.mx_EventTile.mx_EventTile_actionBarFocused .mx_EventTile_line,
     &.mx_EventTile.focus-visible:focus-within .mx_EventTile_line {
         background-color: $event-selected-color;
