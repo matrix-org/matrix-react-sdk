@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657100927298,
+  "lastUpdate": 1657102903326,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107000,6 +107000,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4767.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2706f14456ab78cbcef92af4654e6026b94e6582",
+          "message": "Remove 100% min-width hack from mx_GenericEventListSummary[data-layout=bubble][data-expanded=false] (#8992)",
+          "timestamp": "2022-07-06T11:16:24+01:00",
+          "tree_id": "dba9adb59ea85431e6005aa6e2d92e04d79e7f3d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2706f14456ab78cbcef92af4654e6026b94e6582"
+        },
+        "date": 1657102889390,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5638.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2223.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4540.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
