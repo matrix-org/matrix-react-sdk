@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657094013015,
+  "lastUpdate": 1657100927298,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106958,6 +106958,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5392.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "johannesm@element.io",
+            "name": "Johannes Marbach",
+            "username": "Johennes"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f21a155a4009b5aa8ddfe1cc7b397561ae756de",
+          "message": "Add option to display tooltip on link hover (#8394)\n\n* Add option to display tooltip on link hover\r\n\r\nThis makes it possible for platforms like Electron apps, which lack\r\na built-in URL preview in the status bar, to enable tooltip previews\r\nof links.\r\n\r\nRelates to: vector-im/element-web#6532\r\nSigned-off-by: Johannes Marbach <johannesm@element.io>\r\n\r\n* Gracefully handle missing platform\r\n\r\n* Use public access modifier\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\n* Use exact inequality\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\n* Document getAbsoluteUrl\r\n\r\n* Appease the linter\r\n\r\n* Clarify performance impact in comment\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\n* Use URL instead of anchor element hack\r\n\r\n* Wrap anchor in tooltip target and only allow focus on anchor\r\n\r\n* Use optional chaining\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* Use double quotes for consistency\r\n\r\n* Accumulate and unmount tooltips and extract tooltipify.tsx\r\n\r\n* Fix indentation\r\n\r\n* Blur tooltip target on click\r\n\r\n* Remove space\r\n\r\n* Mention platform flag in comment\r\n\r\n* Add (simplistic) tests\r\n\r\n* Fix lint errors\r\n\r\n* Fix lint errors ... for real\r\n\r\n* Replace snapshot tests with structural assertions\r\n\r\n* Add missing semicolon\r\n\r\n* Add tooltips in link previews\r\n\r\n* Fix copyright\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-07-06T09:43:30Z",
+          "tree_id": "5fe9f22bedc3ab553b4f4b196991a9fa0cdfbc60",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6f21a155a4009b5aa8ddfe1cc7b397561ae756de"
+        },
+        "date": 1657100914247,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5385.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2268.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4767.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
