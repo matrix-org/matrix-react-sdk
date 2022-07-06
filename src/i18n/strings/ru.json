@@ -1834,7 +1834,7 @@
     "Enter phone number": "Введите номер телефона",
     "Enter email address": "Введите адрес электронной почты",
     "The <b>%(capability)s</b> capability": "<b>%(capability)s</b> возможности",
-    "sends confetti": "отправить конфетти",
+    "sends confetti": "отправляет конфетти",
     "Invalid URL": "Неправильный URL-адрес",
     "Reason (optional)": "Причина (необязательно)",
     "Forgot password?": "Забыли пароль?",
