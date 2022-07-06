@@ -698,6 +698,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Send analytics data'),
         default: null,
     },
+    "ftueUseCaseSelection": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: null,
+    },
     "autocompleteDelay": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: 200,

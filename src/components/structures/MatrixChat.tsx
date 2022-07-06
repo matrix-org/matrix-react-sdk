@@ -129,6 +129,7 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
+import UseCaseSelection, { UseCase } from '../views/dialogs/UseCaseSelection';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -755,7 +756,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.state.view !== Views.LOGIN &&
                     this.state.view !== Views.REGISTER &&
                     this.state.view !== Views.COMPLETE_SECURITY &&
-                    this.state.view !== Views.E2E_SETUP
+                    this.state.view !== Views.E2E_SETUP &&
+                    this.state.view !== Views.USE_CASE_SELECTION
                 ) {
                     this.onLoggedIn();
                 }
@@ -1206,6 +1208,29 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private async onLoggedIn() {
         ThemeController.isLogin = false;
         this.themeWatcher.recheck();
+        StorageManager.tryPersistStorage();
+
+        if (SettingsStore.isLevelSupported(SettingLevel.ACCOUNT) &&
+            MatrixClientPeg.currentUserIsJustRegistered() &&
+            SettingsStore.getValue("ftueUseCaseSelection") === null) {
+            this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
+
+            SettingsStore.watchSetting("ftueUseCaseSelection", null,
+                (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+                    if (newValue !== null && this.state.view === Views.USE_CASE_SELECTION) {
+                        this.onShowPostLoginScreen();
+                    }
+                });
+        } else {
+            return this.onShowPostLoginScreen();
+        }
+    }
+
+    private async onShowPostLoginScreen(useCase?: UseCase) {
+        if (useCase) {
+            SettingsStore.setValue("ftueUseCaseSelection", null, SettingLevel.ACCOUNT, useCase);
+        }
+
         this.setStateForNewView({ view: Views.LOGGED_IN });
         // If a specific screen is set to be shown after login, show that above
         // all else, as it probably means the user clicked on something already.
@@ -1243,8 +1268,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.showScreenAfterLogin();
         }
 
-        StorageManager.tryPersistStorage();
-
+        // Will be moved to a pre-login flow as well
         if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
             this.initPosthogAnalyticsToast();
         }
@@ -2004,6 +2028,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onTokenLoginCompleted={this.props.onTokenLoginCompleted}
                     fragmentAfterLogin={fragmentAfterLogin}
                 />
+            );
+        } else if (this.state.view === Views.USE_CASE_SELECTION) {
+            view = (
+                <UseCaseSelection onFinished={this.onShowPostLoginScreen} />
             );
         } else {
             logger.error(`Unknown view ${this.state.view}`);
