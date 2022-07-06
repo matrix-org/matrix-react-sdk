@@ -815,34 +815,6 @@ export const Commands = [
                         }),
                     );
                 }
-                const roomMatches = args.match(/^([!][^:]+:\S+)$/);
-                if (roomMatches) {
-                    const roomId = roomMatches[1];
-                    const ignoredInvites = cli.getIgnoredInvites();
-                    if (ignoredInvites.ignored_rooms === undefined) {
-                        ignoredInvites.ignored_rooms = [];
-                    }
-                    const isAlreadyIgnored = Boolean(ignoredInvites.ignored_rooms
-                        .find(ignoredRoom => ignoredRoom.room_id === roomId));
-                    // Doesn't feel right that we don't tell them it is already ignored
-                    // but that's what the user ignore does too so *shrug*
-                    if (!isAlreadyIgnored) {
-                        ignoredInvites.ignored_rooms.push({
-                            room_id: roomId,
-                            ts: Date.now(), // TODO: Check this is the timestamp we want?
-                        });
-                    }
-                    return success(
-                        cli.setIgnoredInvites(ignoredInvites).then(() => {
-                            Modal.createDialog(InfoDialog, {
-                                title: _t('Ignored room'),
-                                description: <div>
-                                    <p>{ _t('You are now ignoring %(roomId)s', { roomId }) }</p>
-                                </div>,
-                            });
-                        }),
-                    );
-                }
             }
             return reject(this.getUsage());
         },
@@ -868,6 +840,80 @@ export const Commands = [
                                 title: _t('Unignored user'),
                                 description: <div>
                                     <p>{ _t('You are no longer ignoring %(userId)s', { userId }) }</p>
+                                </div>,
+                            });
+                        }),
+                    );
+                }
+            }
+            return reject(this.getUsage());
+        },
+        category: CommandCategories.actions,
+    }),
+    new Command({
+        command: 'ignore-invites',
+        args: '<"room"|room-id>',
+        description: _td('Ignores all invitations from the room going forward.'),
+        runFn: function(commandRoomId, args) {
+            const cli = MatrixClientPeg.get();
+            const roomMatches = args.match(/^([!][^:]+:\S+)$/);
+            let targetRoomId;
+            if (roomMatches) {
+                targetRoomId = roomMatches[1];
+            } else if (args === "room") {
+                targetRoomId = commandRoomId;
+            }
+            if (Boolean(targetRoomId)) {
+                const ignoredInvites = cli.getIgnoredInvites();
+                if (ignoredInvites.ignored_rooms === undefined) {
+                    ignoredInvites.ignored_rooms = [];
+                }
+                const isAlreadyIgnored = Boolean(ignoredInvites.ignored_rooms
+                    .find(ignoredRoom => ignoredRoom.room_id === targetRoomId));
+                // Doesn't feel right that we don't tell them it is already ignored
+                // but that's what the user ignore does too so *shrug*
+                if (!isAlreadyIgnored) {
+                    ignoredInvites.ignored_rooms.push({
+                        room_id: targetRoomId,
+                        ts: Date.now(), // TODO: Check this is the timestamp we want?
+                    });
+                }
+                return success(
+                    cli.setIgnoredInvites(ignoredInvites).then(() => {
+                        Modal.createDialog(InfoDialog, {
+                            title: _t('Ignored invitations from room'),
+                            description: <div>
+                                <p>{ _t('You are now ignoring invitations from %(roomId)s', { roomId: targetRoomId }) }</p>
+                            </div>,
+                        });
+                    }),
+                );
+            }
+        },
+        category: CommandCategories.actions,
+    }),
+    new Command({
+        command: 'unignore-invites',
+        args: '<room-id>',
+        description: _td('Stops ignoring a room, showing the invitations going forward'),
+        runFn: function(roomId, args) {
+            if (args) {
+                const cli = MatrixClientPeg.get();
+                const roomMatches = args.match(/^([!][^:]+:\S+)$/);
+                if (roomMatches) {
+                    const roomId = roomMatches[1];
+                    const ignoredInvites = cli.getIgnoredInvites();
+                    if (ignoredInvites.ignored_rooms === undefined) {
+                        ignoredInvites.ignored_rooms = [];
+                    }
+                    const index = ignoredInvites.ignored_rooms.findIndex(r => r.room_id === roomId);
+                    if (index !== -1) ignoredInvites.ignored_rooms.splice(index, 1);
+                    return success(
+                        cli.setIgnoredInvites(ignoredInvites).then(() => {
+                            Modal.createDialog(InfoDialog, {
+                                title: _t('No longer ignoring invitations from room'),
+                                description: <div>
+                                    <p>{ _t('You are no longer ignoring invitations from %(roomId)s', { roomId }) }</p>
                                 </div>,
                             });
                         }),
