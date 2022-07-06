@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657102903326,
+  "lastUpdate": 1657104570317,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107042,6 +107042,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4540.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5349f301da19b72dbc275d003fd25bc2dd985769",
+          "message": "Stop using :not() pseudo class for mx_GenericEventListSummary (#8944)\n\n* Stop using :not() pseudo class for mx_GenericEventListSummary\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use a CSS variable for mx_GenericEventListSummary on _EventTile.scss - icon-width\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use a CSS variable for mx_GenericEventListSummary on _EventTile.scss - right-padding\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move declarations for EventTile_line of GenericEventListSummary for IRC layout from _IRCLayout.scss to _EventTile.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move mx_EventTile_line out of mx_GenericEventListSummary:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move common style rules up\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set zero inline start padding to mx_EventTile_line of info tile of mx_GenericEventListSummary_unstyledList on IRC layout\r\n\r\nThere should not be spacing between avatars and info tile line on IRC Layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply the rule to group/modern layout only\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply the inline start padding to modern/group layout only\r\n\r\nOverriding $left-gutter is not necessary for IRC layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Merge the style block for mx_EventTile_info .mx_EventTile_line\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove padding from info event tile line from mx_GenericEventListSummary on IRC layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add spacing between avatar and a single info event tile line on IRC layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Stop using :not() pseudo class for mx_GenericEventListSummary on TimelineCard\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Fix padding of line with redacted body text\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-06T11:44:23+01:00",
+          "tree_id": "0ba4bd510b2170db5fe86776de0ba8e3c62f6df0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5349f301da19b72dbc275d003fd25bc2dd985769"
+        },
+        "date": 1657104557312,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5061,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2553.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4598,
             "unit": "ms",
             "extra": "type: measure"
           }
