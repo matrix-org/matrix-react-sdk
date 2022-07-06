@@ -804,7 +804,7 @@
     "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted room cannot be seen by the server, only by the participants of the room. Enabling encryption may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>": "После включения шифрования в комнате оно не может быть отключено. Сообщения, отправленные в шифрованной комнате, смогут прочитать только участники комнаты, но не сервер. Включенное шифрование может помешать корректной работе многим ботам и мостам. <a>Подробнее о шифровании.</a>",
     "Changes to who can read history will only apply to future messages in this room. The visibility of existing history will be unchanged.": "Изменения в том, кто может читать историю, будут применяться только к будущим сообщениям в этой комнате. Существующие истории останутся без изменений.",
     "Once enabled, encryption cannot be disabled.": "После включения, шифрование не может быть отключено.",
-    "This room has been replaced and is no longer active.": "Эта комната была замещена и больше не активна.",
+    "This room has been replaced and is no longer active.": "Эта комната заменена и более неактивна.",
     "Joining room …": "Вход в комнату …",
     "Loading …": "Загрузка…",
     "Rejecting invite …": "Отказ от приглашения …",
