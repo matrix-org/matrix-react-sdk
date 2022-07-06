@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657048527853,
+  "lastUpdate": 1657089542923,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106832,6 +106832,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 671.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "434f39fa0f05a054e51aea44a7aabbfe362295c0",
+          "message": "Fix text flow of thread summary content on threads list (#8991)",
+          "timestamp": "2022-07-06T08:33:40+02:00",
+          "tree_id": "169c7864aa42c4da1722e4f9883263087e660441",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/434f39fa0f05a054e51aea44a7aabbfe362295c0"
+        },
+        "date": 1657089529921,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5560.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2118.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4977.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
