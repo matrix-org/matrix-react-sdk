@@ -68,10 +68,6 @@ describe("LocalRoom", () => {
         expect(room.afterCreateCallbacks).toHaveLength(0);
     });
 
-    it("should have a name", () => {
-        expect(room.name).toBe("Empty room");
-    });
-
     stateTestData.forEach((stateTestDatum) => {
         describe(`in state ${stateTestDatum.name}`, () => {
             beforeEach(() => {

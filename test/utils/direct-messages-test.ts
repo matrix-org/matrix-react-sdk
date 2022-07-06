@@ -24,7 +24,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 
 import DMRoomMap from "../../src/utils/DMRoomMap";
-import { createTestClient, makeMembershipEvent, mkEvent } from "../test-utils";
+import { createTestClient, makeMembershipEvent } from "../test-utils";
 import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../../src/models/LocalRoom";
 import * as dmModule from "../../src/utils/direct-messages";
 import dis from "../../src/dispatcher/dispatcher";
@@ -33,6 +33,7 @@ import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { privateShouldBeEncrypted } from "../../src/utils/rooms";
 import { Member } from "../../src/utils/direct-messages";
 import { canEncryptToAllUsers } from "../../src/createRoom";
+import { waitForRoomReadyAndApplyAfterCreateCallbacks } from "../../src/utils/local-room";
 
 jest.mock("../../src/utils/rooms", () => ({
     ...(jest.requireActual("../../src/utils/rooms") as object),
@@ -44,8 +45,13 @@ jest.mock("../../src/createRoom", () => ({
     canEncryptToAllUsers: jest.fn(),
 }));
 
+jest.mock("../../src/utils/local-room", () => ({
+    waitForRoomReadyAndApplyAfterCreateCallbacks: jest.fn(),
+}));
+
 function assertLocalRoom(room: LocalRoom, targets: Member[], encrypted: boolean) {
     expect(room.roomId).toBe(LOCAL_ROOM_ID_PREFIX + "t1");
+    expect(room.name).toBe(targets.length ? targets[0].name : "Empty Room");
     expect(room.encrypted).toBe(encrypted);
     expect(room.targets).toEqual(targets);
     expect(room.getMyMembership()).toBe("join");
@@ -73,7 +79,6 @@ describe("direct-messages", () => {
     const member2 = new dmModule.ThreepidMember("user2");
     let room1: Room;
     let localRoom: LocalRoom;
-    let localRoomCallbackRoomId: string;
     let dmRoomMap: DMRoomMap;
     let mockClient: MatrixClient;
     let roomEvents: Room[];
@@ -92,10 +97,6 @@ describe("direct-messages", () => {
         room1.getMyMembership = () => "join";
 
         localRoom = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", mockClient, userId1);
-        localRoom.afterCreateCallbacks.push((roomId: string) => {
-            localRoomCallbackRoomId = roomId;
-            return Promise.resolve();
-        });
 
         dmRoomMap = {
             getDMRoomForIdentifiers: jest.fn(),
@@ -297,94 +298,6 @@ describe("direct-messages", () => {
         });
     });
 
-    describe("isRoomReady", () => {
-        beforeEach(() => {
-            localRoom.targets = [member1];
-        });
-
-        it("should return false if the room has no actual room id", () => {
-            expect(dmModule.isRoomReady(mockClient, localRoom)).toBe(false);
-        });
-
-        describe("for a room with an actual room id", () => {
-            beforeEach(() => {
-                localRoom.actualRoomId = room1.roomId;
-                mocked(mockClient.getRoom).mockReturnValue(null);
-            });
-
-            it("it should return false", () => {
-                expect(dmModule.isRoomReady(mockClient, localRoom)).toBe(false);
-            });
-
-            describe("and the room is known to the client", () => {
-                beforeEach(() => {
-                    mocked(mockClient.getRoom).mockImplementation((roomId: string) => {
-                        if (roomId === room1.roomId) return room1;
-                    });
-                });
-
-                it("it should return false", () => {
-                    expect(dmModule.isRoomReady(mockClient, localRoom)).toBe(false);
-                });
-
-                describe("and all members have been invited or joined", () => {
-                    beforeEach(() => {
-                        room1.currentState.setStateEvents([
-                            makeMembershipEvent(room1.roomId, userId1, "join"),
-                            makeMembershipEvent(room1.roomId, userId2, "invite"),
-                        ]);
-                    });
-
-                    it("it should return false", () => {
-                        expect(dmModule.isRoomReady(mockClient, localRoom)).toBe(false);
-                    });
-
-                    describe("and a RoomHistoryVisibility event", () => {
-                        beforeEach(() => {
-                            room1.currentState.setStateEvents([mkEvent({
-                                user: userId1,
-                                event: true,
-                                type: EventType.RoomHistoryVisibility,
-                                room: room1.roomId,
-                                content: {},
-                            })]);
-                        });
-
-                        it("it should return true", () => {
-                            expect(dmModule.isRoomReady(mockClient, localRoom)).toBe(true);
-                        });
-
-                        describe("and an encrypted room", () => {
-                            beforeEach(() => {
-                                localRoom.encrypted = true;
-                            });
-
-                            it("it should return false", () => {
-                                expect(dmModule.isRoomReady(mockClient, localRoom)).toBe(false);
-                            });
-
-                            describe("and a room encryption state event", () => {
-                                beforeEach(() => {
-                                    room1.currentState.setStateEvents([mkEvent({
-                                        user: userId1,
-                                        event: true,
-                                        type: EventType.RoomEncryption,
-                                        room: room1.roomId,
-                                        content: {},
-                                    })]);
-                                });
-
-                                it("it should return true", () => {
-                                    expect(dmModule.isRoomReady(mockClient, localRoom)).toBe(true);
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
-
     describe("createRoomFromLocalRoom", () => {
         beforeEach(() => {
             jest.spyOn(dmModule, "startDm");
@@ -412,7 +325,7 @@ describe("direct-messages", () => {
 
         describe("on startDm success", () => {
             beforeEach(() => {
-                jest.spyOn(dmModule, "waitForRoomReadyAndApplyAfterCreateCallbacks").mockResolvedValue(room1.roomId);
+                mocked(waitForRoomReadyAndApplyAfterCreateCallbacks).mockResolvedValue(room1.roomId);
                 mocked(dmModule.startDm).mockResolvedValue(room1.roomId);
             });
 
@@ -422,69 +335,12 @@ describe("direct-messages", () => {
                     const result = await dmModule.createRoomFromLocalRoom(mockClient, localRoom);
                     expect(result).toBe(room1.roomId);
                     expect(localRoom.state).toBe(LocalRoomState.CREATING);
-                    expect(dmModule.waitForRoomReadyAndApplyAfterCreateCallbacks).toHaveBeenCalledWith(
+                    expect(waitForRoomReadyAndApplyAfterCreateCallbacks).toHaveBeenCalledWith(
                         mockClient,
                         localRoom,
                     );
                 },
             );
-        });
-    });
-
-    describe("waitForRoomReadyAndApplyAfterCreateCallbacks", () => {
-        beforeEach(() => {
-            localRoom.actualRoomId = room1.roomId;
-            jest.useFakeTimers();
-        });
-
-        describe("for an immediate ready room", () => {
-            beforeEach(() => {
-                jest.spyOn(dmModule, "isRoomReady").mockReturnValue(true);
-            });
-
-            it("should invoke the callbacks, set the room state to created and return the actual room id", async () => {
-                const result = await dmModule.waitForRoomReadyAndApplyAfterCreateCallbacks(mockClient, localRoom);
-                expect(localRoom.state).toBe(LocalRoomState.CREATED);
-                expect(localRoomCallbackRoomId).toBe(room1.roomId);
-                expect(result).toBe(room1.roomId);
-            });
-        });
-
-        describe("for a room running into the create timeout", () => {
-            beforeEach(() => {
-                jest.spyOn(dmModule, "isRoomReady").mockReturnValue(false);
-            });
-
-            it("should invoke the callbacks, set the room state to created and return the actual room id", (done) => {
-                const prom = dmModule.waitForRoomReadyAndApplyAfterCreateCallbacks(mockClient, localRoom);
-                jest.advanceTimersByTime(5000);
-                prom.then((roomId: string) => {
-                    expect(localRoom.state).toBe(LocalRoomState.CREATED);
-                    expect(localRoomCallbackRoomId).toBe(room1.roomId);
-                    expect(roomId).toBe(room1.roomId);
-                    expect(jest.getTimerCount()).toBe(0);
-                    done();
-                });
-            });
-        });
-
-        describe("for a room that is ready after a while", () => {
-            beforeEach(() => {
-                jest.spyOn(dmModule, "isRoomReady").mockReturnValue(false);
-            });
-
-            it("should invoke the callbacks, set the room state to created and return the actual room id", (done) => {
-                const prom = dmModule.waitForRoomReadyAndApplyAfterCreateCallbacks(mockClient, localRoom);
-                jest.spyOn(dmModule, "isRoomReady").mockReturnValue(true);
-                jest.advanceTimersByTime(500);
-                prom.then((roomId: string) => {
-                    expect(localRoom.state).toBe(LocalRoomState.CREATED);
-                    expect(localRoomCallbackRoomId).toBe(room1.roomId);
-                    expect(roomId).toBe(room1.roomId);
-                    expect(jest.getTimerCount()).toBe(0);
-                    done();
-                });
-            });
         });
     });
 });
