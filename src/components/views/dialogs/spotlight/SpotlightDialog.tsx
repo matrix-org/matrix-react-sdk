@@ -330,14 +330,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 userIds.add(userId);
                 return userIds;
             }, new Set<string>());
-            const userResults = [...findVisibleRoomMembers(cli), ...users].reduce((userResults, user) => {
+            const userResults = [];
+            for (const user of [...findVisibleRoomMembers(cli), ...users]) {
                 // Make sure we don't have any user more than once
                 if (alreadyAddedUserIds.has(user.userId)) return userResults;
                 alreadyAddedUserIds.add(user.userId);
 
                 userResults.push(toMemberResult(user));
-                return userResults;
-            }, []);
+            }
 
             return [
                 ...SpaceStore.instance.enabledMetaSpaces.map(spaceKey => ({
