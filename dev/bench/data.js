@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657090068202,
+  "lastUpdate": 1657094013015,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -106916,6 +106916,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5001.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "530b51a5ac4d8b96fcf34b0608024f27c03d2062",
+          "message": "Remove obsolete style blocks - search results in bubble layout (#8990)\n\n* Remove an obsolete style block - mx_SenderProfile\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Display own avatars as they no longer overlap\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Empty commit\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-06T09:47:01+02:00",
+          "tree_id": "aaff7b8283aee4aec973f60e18a0917ca3d0cc9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/530b51a5ac4d8b96fcf34b0608024f27c03d2062"
+        },
+        "date": 1657093992654,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5550.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2221,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5392.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
