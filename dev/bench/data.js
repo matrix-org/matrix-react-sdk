@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657109550805,
+  "lastUpdate": 1657118387141,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107246,6 +107246,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4635.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60faf6d025a3a3e49bb997964936f90bdd88f1b0",
+          "message": "Live location share - tiles without tile server (PSG-591) (#8962)\n\n* live location without map POC\r\n\r\n* styles\r\n\r\n* force map tiles to show no map for test build\r\n\r\n* check latestlocationstate exists\r\n\r\n* just use loading style map fallback when cant display map\r\n\r\n* style map error for tile view\r\n\r\n* set pointer cursor when map error is clickable\r\n\r\n* test mbeaconbody with map display error, lint\r\n\r\n* lint more good\r\n\r\n* remove changes for first attempt tile\r\n\r\n* make maperror test id more accurate\r\n\r\n* fussy import ordering\r\n\r\n* PR tweaks",
+          "timestamp": "2022-07-06T14:34:33Z",
+          "tree_id": "6e16e3e8fbf6110a6f554f6627b3896675fdfe89",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/60faf6d025a3a3e49bb997964936f90bdd88f1b0"
+        },
+        "date": 1657118373795,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4971.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2316.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4692.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
