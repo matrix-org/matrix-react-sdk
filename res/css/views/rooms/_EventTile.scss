@@ -150,8 +150,6 @@ $left-gutter: 64px;
         }
 
         .mx_MImageBody {
-            margin-right: var(--EventTile_content-margin-inline-end);
-
             .mx_MImageBody_thumbnail_container {
                 justify-content: flex-start;
                 min-height: $font-44px;
@@ -197,14 +195,16 @@ $left-gutter: 64px;
         }
     }
 
+    &[data-layout=irc] {
+        .mx_MessageTimestamp {
+            text-align: right;
+        }
+    }
+
     &[data-layout=group] {
         .mx_EventTile_avatar {
             top: 14px;
             left: $spacing-8;
-        }
-
-        .mx_MessageTimestamp {
-            position: absolute; // for modern layout
         }
 
         .mx_EventTile_line,
@@ -221,6 +221,12 @@ $left-gutter: 64px;
 
         .mx_EventTile_msgOption {
             margin-right: 10px;
+        }
+
+        .mx_MessageTimestamp {
+            position: absolute;
+            left: 0;
+            text-align: center;
         }
 
         .mx_ThreadSummary,
@@ -243,8 +249,29 @@ $left-gutter: 64px;
             z-index: 9;
         }
 
+        .mx_RoomView_timeline_rr_enabled & {
+            $inline-end-margin: 80px; // TODO: Use a spacing variable
+
+            .mx_ThreadSummary,
+            .mx_ThreadSummary_icon,
+            .mx_EventTile_line {
+                margin-right: $inline-end-margin;
+                min-height: $font-14px;
+            }
+
+            .mx_ThreadSummary {
+                max-width: min(calc(100% - $left-gutter - $inline-end-margin), 600px); // leave space on both left & right gutters
+            }
+
+            // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
+        }
+
         &.mx_EventTile_continuation {
             padding-top: 0px !important;
+        }
+
+        &.mx_EventTile_info .mx_EventTile_line {
+            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
         }
     }
 
@@ -287,11 +314,6 @@ $left-gutter: 64px;
                 top: 0;
             }
         }
-    }
-
-    .mx_MessageTimestamp {
-        left: 0px;
-        text-align: center;
     }
 
     /* this is used for the tile for the event which is selected via the URL.
@@ -351,17 +373,42 @@ $left-gutter: 64px;
     }
 }
 
-.mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
-    padding-left: $left-gutter;
-
-    .mx_RedactedBody {
-        line-height: 1; // remove spacing between lines
+.mx_GenericEventListSummary {
+    &[data-layout=irc],
+    &[data-layout=group] {
+        .mx_EventTile_line .mx_RedactedBody {
+            line-height: 1; // remove spacing between lines
+        }
     }
-}
 
-.mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-    padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+    &[data-layout=irc] {
+        .mx_EventTile_info .mx_EventTile_line {
+            padding-left: 0; // Override .mx_EventTile:not([data-layout="bubble"]).mx_EventTile_info .mx_EventTile_line
+        }
+
+        .mx_EventTile_line .mx_RedactedBody {
+            padding-left: 24px; // 25px - 1px
+
+            &::before {
+                left: var(--right-padding);
+            }
+        }
+
+        // Apply only collapsed events block
+        > .mx_EventTile_line {
+            padding-left: calc(var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 3 * var(--right-padding)); // 15 px of padding
+        }
+    }
+
+    &[data-layout=group] {
+        .mx_EventTile_line {
+            padding-left: $left-gutter;
+        }
+
+        .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
+            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+        }
+    }
 }
 
 .mx_EventTile_content {
@@ -484,25 +531,6 @@ $left-gutter: 64px;
     &.visible > .mx_EventTile_spoiler_content {
         filter: none;
     }
-}
-
-.mx_RoomView_timeline_rr_enabled {
-    .mx_EventTile[data-layout=group] {
-
-        .mx_ThreadSummary,
-        .mx_ThreadSummary_icon,
-        .mx_EventTile_line {
-            /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
-            margin-right: 80px;
-            min-height: $font-14px;
-        }
-
-        .mx_ThreadSummary {
-            max-width: min(calc(100% - $left-gutter - 80px), 600px); // leave space on both left & right gutters
-        }
-    }
-
-    // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
 }
 
 .mx_EventTile_bigEmoji {
@@ -852,6 +880,12 @@ $left-gutter: 64px;
                 line-height: var(--EventTile_ThreadSummary-line-height);
                 font-size: $font-12px; // Same font size as the counter on the main panel
             }
+
+            .mx_ThreadSummary_content {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
         }
     }
 
@@ -926,11 +960,14 @@ $left-gutter: 64px;
                 }
             }
 
-            &:not([data-layout=bubble]) {
+            &[data-layout=irc],
+            &[data-layout=group] {
                 .mx_MessageTimestamp {
                     top: 2px; // Align with avatar
                 }
+            }
 
+            &:not([data-layout=bubble]) {
                 .mx_EventTile_avatar {
                     left: calc($MessageTimestamp_width + 14px - 4px); // 14px: avatar width, 4px: align with text
                     z-index: 9; // position above the hover styling
@@ -1036,11 +1073,6 @@ $left-gutter: 64px;
                 }
             }
 
-            .mx_MessageTimestamp {
-                top: 2px; // Align with mx_EventTile_content
-                position: absolute; // for IRC layout
-            }
-
             .mx_EventTile_senderDetails {
                 display: flex;
                 align-items: center;
@@ -1059,6 +1091,11 @@ $left-gutter: 64px;
                         flex: 1;
                     }
                 }
+            }
+
+            .mx_MessageTimestamp {
+                position: absolute; // for IRC layout
+                top: 2px; // Align with mx_EventTile_content
             }
         }
     }
