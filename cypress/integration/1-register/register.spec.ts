@@ -65,6 +65,12 @@ describe("Registration", () => {
         cy.startMeasuring("from-submit-to-home");
         cy.get(".mx_InteractiveAuthEntryComponents_termsSubmit").click();
 
+        cy.window().then(win => {
+            if (win.mxReactSdkConfig.posthog) {
+                cy.get(".mx_AnalyticsOptIn_content .mx_AccessibleButton_kind_primary").click();
+            }
+        });
+
         cy.url().should('contain', '/#/home');
         cy.stopMeasuring("from-submit-to-home");
 

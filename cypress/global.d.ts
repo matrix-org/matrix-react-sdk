@@ -31,6 +31,7 @@ import type {
 } from "matrix-js-sdk/src/matrix";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
+import type SdkConfig from "../src/SdkConfig";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -39,6 +40,7 @@ declare global {
             mxMatrixClientPeg: {
                 matrixClient?: MatrixClient;
             };
+            mxReactSdkConfig: SdkConfig;
             mxDispatcher: MatrixDispatcher;
             mxPerformanceMonitor: PerformanceMonitor;
             beforeReload?: boolean; // for detecting reloads
