@@ -472,7 +472,8 @@ describe('<MBeaconBody />', () => {
             // mock map utils to raise MapStyleUrlNotConfigured error
             jest.spyOn(mapUtilHooks, 'useMap').mockImplementation(
                 ({ onError }) => {
-                    onError(new Error(LocationShareError.MapStyleUrlNotConfigured)); return mockMap;
+                    onError(new Error(LocationShareError.MapStyleUrlNotConfigured));
+                    return mockMap;
                 });
         });
 

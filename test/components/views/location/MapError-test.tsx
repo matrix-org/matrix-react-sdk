@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 
-import { MapError } from '../../../../src/components/views/location/MapError';
+import { MapError, MapErrorProps } from '../../../../src/components/views/location/MapError';
 import { LocationShareError } from '../../../../src/utils/location';
 
 describe('<MapError />', () => {
@@ -26,7 +26,7 @@ describe('<MapError />', () => {
         error: LocationShareError.MapStyleUrlNotConfigured,
         className: 'test',
     };
-    const getComponent = (props = {}) =>
+    const getComponent = (props: Partial<MapErrorProps> = {}): RenderResult =>
         render(<MapError {...defaultProps} {...props} />);
 
     it('renders correctly for MapStyleUrlNotConfigured', () => {

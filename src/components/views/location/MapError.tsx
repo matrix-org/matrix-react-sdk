@@ -23,7 +23,7 @@ import { getLocationShareErrorMessage, LocationShareError } from '../../../utils
 import AccessibleButton from '../elements/AccessibleButton';
 import Heading from '../typography/Heading';
 
-interface Props {
+export interface MapErrorProps {
     error: LocationShareError;
     onFinished?: () => void;
     isMinimised?: boolean;
@@ -31,7 +31,7 @@ interface Props {
     onClick?: () => void;
 }
 
-export const MapError: React.FC<Props> = ({
+export const MapError: React.FC<MapErrorProps> = ({
     error,
     isMinimised,
     className,
