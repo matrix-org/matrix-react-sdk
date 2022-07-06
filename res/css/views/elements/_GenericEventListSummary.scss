@@ -44,7 +44,6 @@ limitations under the License.
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-inline-start: 49px; // Align with left edge of bubble tiles
             column-gap: 5px;
         }
 
@@ -76,7 +75,7 @@ limitations under the License.
 
             &[aria-expanded=true] {
                 margin-inline-start: auto; // reduce clickable area
-                margin-inline-end: var(--EventBubbleTile-margin-inline-end);
+                margin-inline-end: var(--EventTile_bubble-margin-inline-end);
             }
         }
 
