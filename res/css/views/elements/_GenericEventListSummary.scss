@@ -75,7 +75,7 @@ limitations under the License.
 
             &[aria-expanded=true] {
                 margin-inline-start: auto; // reduce clickable area
-                margin-inline-end: var(--EventTile_bubble-margin-inline-end);
+                margin-inline-end: var(--EventTile_bubble-margin-inline-end); // as the parent has zero margin
             }
         }
 
