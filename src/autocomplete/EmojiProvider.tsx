@@ -113,7 +113,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             // Do second match with shouldMatchWordsOnly in order to match against 'name'
             completions = completions.concat(this.nameMatcher.match(matchedString));
 
-            const sorters = [];
+            let sorters = [];
             // make sure that emoticons come first
             sorters.push(c => score(matchedString, c.emoji.emoticon || ""));
 
@@ -137,7 +137,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = completions.slice(0, LIMIT);
 
             // Do a second sort to place emoji matching with frequently used one on top
-            sorters.length = 0;
+            sorters = [];
             this.recentlyUsed.forEach(emoji => {
                 sorters.push(c => score(emoji.shortcodes[0], c.emoji.shortcodes[0]));
             });
