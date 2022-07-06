@@ -333,7 +333,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             const userResults = [];
             for (const user of [...findVisibleRoomMembers(cli), ...users]) {
                 // Make sure we don't have any user more than once
-                if (alreadyAddedUserIds.has(user.userId)) return userResults;
+                if (alreadyAddedUserIds.has(user.userId)) continue;
                 alreadyAddedUserIds.add(user.userId);
 
                 userResults.push(toMemberResult(user));
