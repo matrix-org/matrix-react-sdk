@@ -3170,6 +3170,8 @@
     "Decrypted event source": "Decrypted event source",
     "Original event source": "Original event source",
     "Event ID: %(eventId)s": "Event ID: %(eventId)s",
+    "Help improve %(brand)s": "Help improve %(brand)s",
+    "Would you like to send analytics data to help improve %(brand)s? We don't record or profile any personal data, and we don't share information with third parties. You can turn this off anytime. Read all our terms <a>here</a>.": "Would you like to send analytics data to help improve %(brand)s? We don't record or profile any personal data, and we don't share information with third parties. You can turn this off anytime. Read all our terms <a>here</a>.",
     "Unable to verify this device": "Unable to verify this device",
     "Verify this device": "Verify this device",
     "Device verified": "Device verified",

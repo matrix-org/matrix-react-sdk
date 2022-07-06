@@ -167,4 +167,13 @@ limitations under the License.
             mask-size: 80%;
         }
     }
+
+    &.mx_AccessibleButton_inline {
+        display: inline;
+    }
+
+    &.mx_AccessibleButton_block {
+        display: block;
+    }
 }
+

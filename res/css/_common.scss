@@ -267,6 +267,15 @@ legend {
     color: $secondary-accent-color;
 }
 
+.mx_CenteredContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 /* Expected z-indexes for dialogs:
     4000 - Default wrapper index
     4009 - Static dialog background

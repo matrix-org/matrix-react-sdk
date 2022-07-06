@@ -42,6 +42,9 @@ enum Views {
     // includes guests users as they too are logged in at the client level.
     LOGGED_IN,
 
+    // Showing an analytics opt-in screen
+    ANALYTICS_OPTIN,
+
     // We are logged out (invalid token) but have our local state again. The user
     // should log back in to rehydrate the client.
     SOFT_LOGOUT,

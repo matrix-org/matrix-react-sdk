@@ -129,6 +129,7 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
+import AnalyticsOptIn from './auth/AnalyticsOptIn';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -204,6 +205,7 @@ interface IState {
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props
+    analyticsPromiseResolver?: (accept: boolean) => void;
 }
 
 export default class MatrixChat extends React.PureComponent<IProps, IState> {
@@ -1245,7 +1247,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
+        if (this.canAskForAnalyticsOptIn) {
             this.initPosthogAnalyticsToast();
         }
 
@@ -1254,6 +1256,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // check if it has been dismissed before, etc.
             showMobileGuideToast();
         }
+    }
+
+    private get canAskForAnalyticsOptIn(): boolean {
+        return PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT);
     }
 
     private initPosthogAnalyticsToast() {
@@ -1862,6 +1868,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // Create and start the client
         await Lifecycle.setLoggedIn(credentials);
+
+        if (this.canAskForAnalyticsOptIn && MatrixClientPeg.userRegisteredWithinLastHours(1)) {
+            await this.askForAnalyticsConsent();
+        }
+
         await this.postLoginSetup();
 
         PerformanceMonitor.instance.stop(PerformanceEntryNames.LOGIN);
@@ -1883,6 +1894,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             fragmentAfterLogin = `/${initialScreenAfterLogin.screen}`;
         }
         return fragmentAfterLogin;
+    }
+
+    private askForAnalyticsConsent(): Promise<boolean> {
+        let promiseResolver: (accept: boolean) => void;
+        const analyticsConsentPromise = new Promise<boolean>((res) => {
+            promiseResolver = res;
+        });
+
+        this.setState({
+            view: Views.ANALYTICS_OPTIN,
+            analyticsPromiseResolver: promiseResolver,
+        });
+
+        return analyticsConsentPromise;
     }
 
     render() {
@@ -2004,6 +2029,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onTokenLoginCompleted={this.props.onTokenLoginCompleted}
                     fragmentAfterLogin={fragmentAfterLogin}
                 />
+            );
+        } else if (this.state.view === Views.ANALYTICS_OPTIN) {
+            view = (
+                <AnalyticsOptIn onFinished={(accept) => {
+                    this.state.analyticsPromiseResolver?.(accept);
+                }} />
             );
         } else {
             logger.error(`Unknown view ${this.state.view}`);
