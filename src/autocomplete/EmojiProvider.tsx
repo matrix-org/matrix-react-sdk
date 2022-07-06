@@ -105,9 +105,11 @@ export default class EmojiProvider extends AutocompleteProvider {
 
         let completions = [];
         const { command, range } = this.getCurrentCommand(query, selection);
+        
         if (command && command[0].length > 2) {
             const matchedString = command[0];
             completions = this.matcher.match(matchedString, limit);
+
             // Do second match with shouldMatchWordsOnly in order to match against 'name'
             completions = completions.concat(this.nameMatcher.match(matchedString));
 
@@ -134,7 +136,7 @@ export default class EmojiProvider extends AutocompleteProvider {
 
             completions = completions.slice(0, LIMIT);
 
-            //do a second sort to place emoji matching with frequently used one on top
+            // Do a second sort to place emoji matching with frequently used one on top
             sorters.length = 0;
             this.recentlyUsed.forEach(emoji => {
                 sorters.push(c => score(emoji.shortcodes[0], c.emoji.shortcodes[0]));
