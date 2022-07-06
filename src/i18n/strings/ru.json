@@ -2241,7 +2241,7 @@
     "Use app": "Использовать приложение",
     "Use app for a better experience": "Используйте приложение для лучшего опыта",
     "Converts the DM to a room": "Преобразовать ЛС в комнату",
-    "Converts the room to a DM": "Преобразовать комнату в ЛС",
+    "Converts the room to a DM": "Преобразовывает комнату в ЛС",
     "Your homeserver rejected your log in attempt. This could be due to things just taking too long. Please try again. If this continues, please contact your homeserver administrator.": "Ваш домашний сервер не позволил вам войти в систему. Это могло произойти из-за того, что вход занял слишком много времени. Пожалуйста, попробуйте снова через пару минут. Если ситуация по-прежнему не меняется, обратитесь к администратору домашнего сервера за дополнительной информацией.",
     "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Ваш домашний сервер был недоступен, и мы не смогли войти в систему. Пожалуйста, попробуйте снова через пару минут. Если ситуация по-прежнему не меняется, обратитесь к администратору домашнего сервера за дополнительной информацией.",
     "Try again": "Попробовать ещё раз",
