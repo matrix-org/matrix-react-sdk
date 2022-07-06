@@ -3414,5 +3414,8 @@
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Les salons vidéo sont des canaux VoIP toujours actifs embarqués dans un salon dans %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Une nouvelle façons de discuter avec la voix et la vidéo dans %(brand)s.",
     "Video rooms": "Salons vidéo",
-    "You cannot search for rooms that are neither a room nor a space": "Vous ne pouvez pas rechercher de salons qui ne soient ni des salons ni des espaces"
+    "You cannot search for rooms that are neither a room nor a space": "Vous ne pouvez pas rechercher de salons qui ne soient ni des salons ni des espaces",
+    "Show spaces": "Afficher les espaces",
+    "Show rooms": "Afficher les salons",
+    "Explore public spaces in the new search dialog": "Explorer les espaces publics dans la nouvelle fenêtre de recherche"
 }
