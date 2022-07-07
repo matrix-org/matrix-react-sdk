@@ -30,10 +30,8 @@ $irc-line-height: $font-18px;
         align-items: flex-start;
         padding-top: 0;
 
-        // timestamps are links which shouldn't be underlined
         > a {
-            text-decoration: none;
-            min-width: $MessageTimestamp_width;
+            min-width: $MessageTimestamp_width; // ensure space for EventTile without timestamp
         }
 
         > * {
