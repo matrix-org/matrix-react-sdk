@@ -10,32 +10,28 @@
         position: absolute;
         z-index: -1;
         opacity: 0.6;
-        background-color: #ffffff;
+        background-color: $background;
         /* Intermediate values generated compared to the original figma design to compensate for issues with
            gamma-incorrect gradient blending in browsers */
         background-image:
             radial-gradient(
                 53.85% 66.75% at 87.55% 0%,
                 hsla(250, 76%, 71%, 0.261) 0%,
-                hsla(251, 83%, 79%, 0.1305) 50%,
                 hsla(250, 100%, 88%, 0) 100%
             ),
             radial-gradient(
                 41.93% 41.93% at 0% 0%,
                 hsla(222, 29%, 20%, 0.28) 0%,
-                hsla(240, 17%, 53%, 0.14) 50%,
                 hsla(250, 100%, 88%, 0) 100%
             ),
             radial-gradient(
                 100% 100% at 0% 0%,
-                hsla(250, 100%, 88%, 0.2436) 0%,
-                hsla(318, 50%, 82%, 0.1218) 50%,
+                hsla(250, 100%, 88%, 0.174) 0%,
                 hsla(0, 100%, 86%, 0) 100%
             ),
             radial-gradient(
                 106.35% 96.26% at 100% 0%,
                 hsla(250, 100%, 88%, 0.4) 0%,
-                hsla(208, 67%, 85%, 0.2) 50%,
                 hsla(167, 76%, 82%, 0) 100%
             );
         /* Ugly hack to allow us to get rid of the color banding of the gradients */

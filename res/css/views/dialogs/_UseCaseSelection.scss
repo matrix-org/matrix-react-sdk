@@ -64,7 +64,7 @@
 
             .mx_UseCaseSelection_icon {
                 /* Values from design, not yet replaced with variables */
-                background: rgba(171, 59, 167, 0.15);
+                background: linear-gradient(0deg, rgba(172, 59, 168, 0.15), rgba(172, 59, 168, 0.15)), #FFFFFF;
                 border-radius: 14px;
                 padding: $spacing-8;
                 margin-bottom: $spacing-16;
