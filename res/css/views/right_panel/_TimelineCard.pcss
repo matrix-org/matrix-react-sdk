@@ -48,8 +48,8 @@ limitations under the License.
             }
         }
 
-        &[data-layout=irc],
-        &[data-layout=group] {
+        &[data-layout="irc"],
+        &[data-layout="group"] {
             --TimelineCard_ReadReceiptGroup-inset-block-start: -6px;
 
             &.mx_EventTile_info .mx_EventTile_line,
@@ -97,7 +97,8 @@ limitations under the License.
             }
 
             .mx_ReactionsRow {
-                margin-inline-end: $spacing-8; // See: var(--ThreadView_group_spacing-end) for ReactionsRow on _EventTile.pcss
+                // See: var(--ThreadView_group_spacing-end) for ReactionsRow on _EventTile.pcss
+                margin-inline-end: $spacing-8;
             }
 
             .mx_ReadReceiptGroup {
@@ -110,14 +111,14 @@ limitations under the License.
             }
         }
 
-        &[data-layout=irc] {
+        &[data-layout="irc"] {
             .mx_EventTile_avatar,
             .mx_MessageTimestamp {
                 position: absolute;
             }
         }
 
-        &[data-layout=group] {
+        &[data-layout="group"] {
             // Read receipt group on compact modern layout
             // This is required because mx_TimelineCard is a child element wrapped by mx_MatrixChat_useCompactLayout,
             // which specifies the default position of mx_ReadReceiptGroup on compact modern layout.
@@ -126,13 +127,14 @@ limitations under the License.
             }
         }
 
-        &[data-layout=bubble] {
+        &[data-layout="bubble"] {
             &::before {
                 z-index: auto; // enable background color on hover
             }
 
             &.mx_EventTile_info .mx_MessageActionBar {
-                inset-inline-end: calc($container-gap-width + var(--BaseCard_padding-inline) + 1px); // 1px: border width
+                // 1px: border width
+                inset-inline-end: calc($container-gap-width + var(--BaseCard_padding-inline) + 1px);
             }
 
             .mx_ReactionsRow {
@@ -150,8 +152,8 @@ limitations under the License.
     }
 
     .mx_GenericEventListSummary {
-        &[data-layout=irc],
-        &[data-layout=group] {
+        &[data-layout="irc"],
+        &[data-layout="group"] {
             .mx_EventTile_line,
             .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
                 padding-inline-start: var(--BaseCard_EventTile-spacing-inline);
@@ -170,10 +172,12 @@ limitations under the License.
 
     .mx_GenericEventListSummary_unstyledList, // RR next to a message on the event list summary
     .mx_RoomView_MessageList {                // RR next to a message on the messsge list
-        .mx_EventTile[data-layout=bubble] {
+        .mx_EventTile[data-layout="bubble"] {
             .mx_ReadReceiptGroup {
-                // 6px: scroll bar width (magic number)
-                inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end) + $container-gap-width + 6px);
+                /* stylelint-disable-next-line declaration-colon-space-after */
+                inset-inline-end:
+                    // 6px: scroll bar width (magic number)
+                    calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end) + $container-gap-width + 6px);
             }
 
             &.mx_EventTile_info {

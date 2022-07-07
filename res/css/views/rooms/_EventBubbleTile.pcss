@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_RoomView_body[data-layout=bubble] {
+.mx_RoomView_body[data-layout="bubble"] {
     .mx_RoomView_timeline, .mx_RoomView_statusArea, .mx_MessageComposer {
         width: 100%;
         max-width: 1200px;
@@ -22,8 +22,8 @@ limitations under the License.
     }
 }
 
-.mx_EventTile[data-layout=bubble],
-.mx_GenericEventListSummary[data-layout=bubble] {
+.mx_EventTile[data-layout="bubble"],
+.mx_GenericEventListSummary[data-layout="bubble"] {
     --avatarSize: 32px;
     --gutterSize: 11px;
     --cornerRadius: 12px;
@@ -37,7 +37,7 @@ limitations under the License.
     margin-inline-end: var(--EventTile_bubble-margin-inline-end);
 }
 
-.mx_EventTile[data-layout=bubble] {
+.mx_EventTile[data-layout="bubble"] {
     --EventTile_bubble_line-margin-inline-start: -9px;
     --EventTile_bubble_line-margin-inline-end: -12px;
     --EventTile_bubble_gap-inline: 5px;
@@ -120,7 +120,7 @@ limitations under the License.
         }
 
         .mx_DisambiguatedProfile_mxid {
-            margin-inline-start: 0; // Align mxid with truncated displayName inside mx_EventTile[data-layout=bubble]
+            margin-inline-start: 0; // Align mxid with truncated displayName inside mx_EventTile[data-layout="bubble"]
         }
     }
 
@@ -165,7 +165,7 @@ limitations under the License.
         margin-inline: var(--EventTile_bubble_line-margin-inline-start) var(--EventTile_bubble_line-margin-inline-end);
     }
 
-    &[data-self=false] {
+    &[data-self="false"] {
         .mx_EventTile_line {
             border-bottom-right-radius: var(--cornerRadius);
 
@@ -200,7 +200,7 @@ limitations under the License.
         --backgroundColor: $eventbubble-others-bg;
     }
 
-    &[data-self=true] {
+    &[data-self="true"] {
         .mx_EventTile_line {
             margin-inline-start: auto;
             border-bottom-left-radius: var(--cornerRadius);
@@ -360,7 +360,7 @@ limitations under the License.
         }
     }
 
-    &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {
+    &.mx_EventTile_continuation[data-self="false"] .mx_EventTile_line {
         border-top-left-radius: 0;
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
@@ -372,7 +372,7 @@ limitations under the License.
             border-top-left-radius: 0;
         }
     }
-    &.mx_EventTile_lastInSection[data-self=false] .mx_EventTile_line {
+    &.mx_EventTile_lastInSection[data-self="false"] .mx_EventTile_line {
         border-bottom-left-radius: var(--cornerRadius);
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
@@ -385,7 +385,7 @@ limitations under the License.
         }
     }
 
-    &.mx_EventTile_continuation[data-self=true] .mx_EventTile_line {
+    &.mx_EventTile_continuation[data-self="true"] .mx_EventTile_line {
         border-top-right-radius: 0;
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
@@ -397,7 +397,7 @@ limitations under the License.
             border-top-right-radius: 0;
         }
     }
-    &.mx_EventTile_lastInSection[data-self=true] .mx_EventTile_line {
+    &.mx_EventTile_lastInSection[data-self="true"] .mx_EventTile_line {
         border-bottom-right-radius: var(--cornerRadius);
 
         .mx_MImageBody .mx_MImageBody_thumbnail_container,
@@ -432,7 +432,7 @@ limitations under the License.
         line-height: 1;
     }
 
-    &[data-has-reply=true] {
+    &[data-has-reply="true"] {
         > .mx_EventTile_line {
             flex-direction: column;
         }
@@ -548,7 +548,7 @@ limitations under the License.
     }
 }
 
-.mx_EventTile.mx_EventTile_noBubble[data-layout=bubble] {
+.mx_EventTile.mx_EventTile_noBubble[data-layout="bubble"] {
     --backgroundColor: transparent;
 
     .mx_EventTile_line.mx_EventTile_emote {
@@ -568,17 +568,17 @@ limitations under the License.
     }
 }
 
-.mx_EventTile.mx_EventTile_bubbleContainer[data-layout=bubble],
-.mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout=bubble] {
+.mx_EventTile.mx_EventTile_bubbleContainer[data-layout="bubble"],
+.mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout="bubble"] {
     .mx_EventTile_line > a {
         // hide this timestamp as the tile will render its own
         display: none;
     }
 }
 
-.mx_EventTile.mx_EventTile_bubbleContainer[data-layout=bubble],
-.mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout=bubble],
-.mx_EventTile.mx_EventTile_info[data-layout=bubble] {
+.mx_EventTile.mx_EventTile_bubbleContainer[data-layout="bubble"],
+.mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout="bubble"],
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] {
     padding: 5px 0;
     display: flex;
     align-items: center;
@@ -592,10 +592,10 @@ limitations under the License.
     }
 }
 
-.mx_EventTile.mx_EventTile_bubbleContainer[data-layout=bubble],
-.mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout=bubble],
-.mx_EventTile.mx_EventTile_info[data-layout=bubble],
-.mx_GenericEventListSummary[data-layout=bubble][data-expanded=false] {
+.mx_EventTile.mx_EventTile_bubbleContainer[data-layout="bubble"],
+.mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout="bubble"],
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"],
+.mx_GenericEventListSummary[data-layout="bubble"][data-expanded="false"] {
     --backgroundColor: transparent;
     --gutterSize: 0;
 
@@ -625,7 +625,7 @@ limitations under the License.
     }
 }
 
-.mx_GenericEventListSummary[data-layout=bubble] {
+.mx_GenericEventListSummary[data-layout="bubble"] {
     .mx_EventTile.mx_EventTile_info .mx_EventTile_line {
         // Avoid overflow of event info by cancelling width settings
         width: 100%;
@@ -634,16 +634,17 @@ limitations under the License.
     }
 
     // increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
-    &[data-expanded=false] + .mx_EventTile[data-layout=bubble][data-self=true] {
+    &[data-expanded="false"] + .mx_EventTile[data-layout="bubble"][data-self="true"] {
         margin-top: 20px;
     }
 
-    &[data-expanded=true] .mx_EventTile_info {
+    &[data-expanded="true"] .mx_EventTile_info {
         padding: 2px 0;
         margin-right: 0;
 
         .mx_MessageActionBar {
-            inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
+            // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
+            inset-inline-start: initial;
             inset-inline-end: 48px; // align with that of right-column bubbles
         }
 
@@ -658,6 +659,6 @@ limitations under the License.
     }
 }
 
-.mx_EventTile_tileError[data-layout=bubble] .mx_EventTile_line {
+.mx_EventTile_tileError[data-layout="bubble"] .mx_EventTile_line {
     flex-direction: column; // restore the centering
 }

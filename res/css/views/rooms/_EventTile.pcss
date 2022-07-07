@@ -106,7 +106,8 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_collapsedCodeBlock {
-            display: block !important; // !important needed due to .mx_ReplyTile .mx_EventTile_content .mx_EventTile_pre_container > pre
+            // !important needed due to .mx_ReplyTile .mx_EventTile_content .mx_EventTile_pre_container > pre
+            display: block !important;
         }
     }
 
@@ -147,8 +148,8 @@ $left-gutter: 64px;
         visibility: hidden;
     }
 
-    &[data-layout=irc],
-    &[data-layout=group] {
+    &[data-layout="irc"],
+    &[data-layout="group"] {
         .mx_EventTile_e2eIcon {
             position: absolute;
         }
@@ -208,27 +209,33 @@ $left-gutter: 64px;
             }
 
             &.mx_EventTile_verified .mx_EventTile_line {
-                box-shadow: inset var(--EventTile_hover_box-shadow-offset-x) 0 0 var(--EventTile_hover_box-shadow-spread-radius) $e2e-verified-color;
+                box-shadow:
+                    inset var(--EventTile_hover_box-shadow-offset-x) 0 0
+                    var(--EventTile_hover_box-shadow-spread-radius) $e2e-verified-color;
             }
 
             &.mx_EventTile_unverified .mx_EventTile_line {
-                box-shadow: inset var(--EventTile_hover_box-shadow-offset-x) 0 0 var(--EventTile_hover_box-shadow-spread-radius) $e2e-unverified-color;
+                box-shadow:
+                    inset var(--EventTile_hover_box-shadow-offset-x) 0 0
+                    var(--EventTile_hover_box-shadow-spread-radius) $e2e-unverified-color;
             }
 
             &.mx_EventTile_unknown .mx_EventTile_line {
-                box-shadow: inset var(--EventTile_hover_box-shadow-offset-x) 0 0 var(--EventTile_hover_box-shadow-spread-radius) $e2e-unknown-color;
+                box-shadow:
+                    inset var(--EventTile_hover_box-shadow-offset-x) 0 0
+                    var(--EventTile_hover_box-shadow-spread-radius) $e2e-unknown-color;
             }
         }
     }
 
-    &[data-layout=bubble],
-    &[data-layout=group] {
+    &[data-layout="bubble"],
+    &[data-layout="group"] {
         .mx_EventTileBubble {
             margin-inline: auto;
         }
     }
 
-    &[data-layout=irc] {
+    &[data-layout="irc"] {
         --EventTile_irc_line_info-inset-inline-start: calc(var(--name-width) + 10px + var(--icon-width));
 
         .mx_MessageTimestamp {
@@ -245,7 +252,7 @@ $left-gutter: 64px;
         }
     }
 
-    &[data-layout=group] {
+    &[data-layout="group"] {
         .mx_EventTile_avatar {
             top: 14px;
             left: $spacing-8;
@@ -304,10 +311,12 @@ $left-gutter: 64px;
             }
 
             .mx_ThreadSummary {
-                max-width: min(calc(100% - $left-gutter - $inline-end-margin), 600px); // leave space on both left & right gutters
+                // leave space on both left & right gutters
+                max-width: min(calc(100% - $left-gutter - $inline-end-margin), 600px);
             }
 
-            // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
+            // on ELS we need the margin to allow interaction with the expand/collapse button
+            // which is normally in the RR gutter
         }
 
         &.mx_EventTile_continuation {
@@ -327,7 +336,7 @@ $left-gutter: 64px;
         }
     }
 
-    &[data-layout=bubble] {
+    &[data-layout="bubble"] {
         .mx_EventTileBubble {
             // Timestamps are inside the tile, so the width can be less constrained
             max-width: 600px;
@@ -339,7 +348,7 @@ $left-gutter: 64px;
     }
 }
 
-.mx_EventTile:not([data-layout=bubble]) {
+.mx_EventTile:not([data-layout="bubble"]) {
     max-width: 100%;
     clear: both;
     padding-top: 18px;
@@ -412,14 +421,14 @@ $left-gutter: 64px;
 }
 
 .mx_GenericEventListSummary {
-    &[data-layout=irc],
-    &[data-layout=group] {
+    &[data-layout="irc"],
+    &[data-layout="group"] {
         .mx_EventTile_line .mx_RedactedBody {
             line-height: 1; // remove spacing between lines
         }
     }
 
-    &[data-layout=irc] {
+    &[data-layout="irc"] {
         .mx_EventTile_info .mx_EventTile_line {
             padding-left: 0; // Override .mx_EventTile:not([data-layout="bubble"]).mx_EventTile_info .mx_EventTile_line
         }
@@ -434,11 +443,14 @@ $left-gutter: 64px;
 
         // Apply only collapsed events block
         > .mx_EventTile_line {
-            padding-left: calc(var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 3 * var(--right-padding)); // 15 px of padding
+            /* stylelint-disable-next-line declaration-colon-space-after */
+            padding-left:
+                // 15 px of padding
+                calc(var(--name-width) + var(--icon-width) + $MessageTimestamp_width + 3 * var(--right-padding));
         }
     }
 
-    &[data-layout=group] {
+    &[data-layout="group"] {
         .mx_EventTile_line {
             padding-left: $left-gutter;
         }
@@ -788,13 +800,13 @@ $left-gutter: 64px;
 // is less pretty, but is easier to target because otherwise we need to define the
 // animation for when it's shown which means duplicating the style definition in
 // multiple places.
-.mx_EventTile:not(:hover):not(.mx_EventTile_actionBarFocused):not([data-whatinput='keyboard'] :focus-within):not(.focus-visible:focus-within) {
-    .mx_MessageActionBar .mx_Indicator {
+.mx_EventTile:not(:hover):not(.mx_EventTile_actionBarFocused):not([data-whatinput='keyboard'] :focus-within) {
+    &:not(.focus-visible:focus-within) .mx_MessageActionBar .mx_Indicator {
         animation: none;
     }
 }
 
-.mx_EventTile[data-shape=ThreadsList] {
+.mx_EventTile[data-shape="ThreadsList"] {
     --topOffset: $spacing-12;
     --leftOffset: 48px;
     $borderRadius: 8px;
@@ -811,12 +823,12 @@ $left-gutter: 64px;
     align-items: center;
 
     &:hover,
-    // Override .mx_EventTile:not([data-layout=bubble]).mx_EventTile:hover .mx_EventTile_line
-    &:not([data-layout=bubble]):hover .mx_EventTile_line {
+    // Override .mx_EventTile:not([data-layout="bubble"]).mx_EventTile:hover .mx_EventTile_line
+    &:not([data-layout="bubble"]):hover .mx_EventTile_line {
         background-color: $system;
     }
 
-    &:not([data-layout=bubble]):hover .mx_EventTile_line {
+    &:not([data-layout="bubble"]):hover .mx_EventTile_line {
         box-shadow: none; // don't show the verification left stroke in the thread list
     }
 
@@ -852,11 +864,11 @@ $left-gutter: 64px;
         inset: $notification-inset-block-start $spacing-8 auto auto;
     }
 
-    &[data-notification=total]::before {
+    &[data-notification="total"]::before {
         background-color: $room-icon-unread-color;
     }
 
-    &[data-notification=highlight]::before {
+    &[data-notification="highlight"]::before {
         background-color: $alert;
     }
 
@@ -993,33 +1005,34 @@ $left-gutter: 64px;
                 .mx_EventTile_content,
                 .mx_RedactedBody {
                     width: auto;
-                    margin-inline-start: calc(var(--ThreadView_group_spacing-start) + 14px + 6px); // 14px: avatar width, 6px: 20px - 14px
+                    // 14px: avatar width, 6px: 20px - 14px
+                    margin-inline-start: calc(var(--ThreadView_group_spacing-start) + 14px + 6px);
                     font-size: $line-height;
                 }
             }
 
-            &[data-layout=irc],
-            &[data-layout=group] {
+            &[data-layout="irc"],
+            &[data-layout="group"] {
                 .mx_MessageTimestamp {
                     top: 2px; // Align with avatar
                 }
             }
 
-            &:not([data-layout=bubble]) {
+            &:not([data-layout="bubble"]) {
                 .mx_EventTile_avatar {
                     left: calc($MessageTimestamp_width + 14px - 4px); // 14px: avatar width, 4px: align with text
                     z-index: 9; // position above the hover styling
                 }
             }
 
-            &[data-layout=bubble] {
+            &[data-layout="bubble"] {
                 .mx_EventTile_avatar {
                     inset-inline-start: 0;
                 }
             }
         }
 
-        &:not([data-layout=bubble]) {
+        &:not([data-layout="bubble"]) {
             padding-top: $spacing-16;
 
             &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
@@ -1040,7 +1053,7 @@ $left-gutter: 64px;
             }
         }
 
-        &[data-layout=bubble] {
+        &[data-layout="bubble"] {
             margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
             margin-inline-end: var(--BaseCard_EventTile-spacing-inline);
 
@@ -1059,7 +1072,7 @@ $left-gutter: 64px;
                 max-width: var(--EventBubbleTile_line-max-width);
             }
 
-            &[data-self=true] {
+            &[data-self="true"] {
                 align-items: flex-end;
 
                 .mx_EventTile_line.mx_EventTile_mediaLine {
@@ -1068,7 +1081,7 @@ $left-gutter: 64px;
             }
         }
 
-        &[data-layout=group] {
+        &[data-layout="group"] {
             width: 100%;
 
             .mx_EventTile_content,
@@ -1139,7 +1152,7 @@ $left-gutter: 64px;
     }
 
     .mx_GenericEventListSummary {
-        &:not([data-layout=bubble]) > .mx_EventTile_line {
+        &:not([data-layout="bubble"]) > .mx_EventTile_line {
             padding-inline-start: var(--ThreadView_group_spacing-start); // align summary text with message text
             padding-inline-end: var(--ThreadView_group_spacing-end); // align summary text with message text
         }
@@ -1150,7 +1163,7 @@ $left-gutter: 64px;
 .mx_MatrixChat_useCompactLayout {
     .mx_EventTile {
         // Override :not([data-layout="bubble"])
-        &[data-layout=group] {
+        &[data-layout="group"] {
             --MatrixChat_useCompactLayout_group-padding-top: $spacing-4;
             --MatrixChat_useCompactLayout-top-avatar: 2px;
             --MatrixChat_useCompactLayout-top-e2eIcon: 3px;
@@ -1235,8 +1248,10 @@ $left-gutter: 64px;
             }
         }
 
-        &[data-shape=ThreadsList][data-notification]::before {
-            inset-block-start: calc($notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top));
+        &[data-shape="ThreadsList"][data-notification]::before {
+            /* stylelint-disable-next-line declaration-colon-space-after */
+            inset-block-start:
+                calc($notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top));
         }
     }
 }

@@ -21,19 +21,19 @@ limitations under the License.
         margin-right: $spacing-8;
     }
 
-    &[data-layout=irc],
-    &[data-layout=group] {
+    &[data-layout="irc"],
+    &[data-layout="group"] {
         .mx_GenericEventListSummary_toggle {
             float: right;
             margin-inline: 0 10px;
         }
     }
 
-    &[data-layout=group] {
+    &[data-layout="group"] {
         margin-top: $spacing-8;
     }
 
-    &[data-layout=bubble] {
+    &[data-layout="bubble"] {
         --maxWidth: 70%;
         display: flex;
         margin-left: calc(var(--avatarSize) + var(--gutterSize));
@@ -41,11 +41,11 @@ limitations under the License.
         .mx_GenericEventListSummary_toggle {
             margin-block: 0;
 
-            &[aria-expanded=false] {
+            &[aria-expanded="false"] {
                 order: 9; // TODO: Remove
             }
 
-            &[aria-expanded=true] {
+            &[aria-expanded="true"] {
                 margin-inline-start: auto; // reduce clickable area
                 margin-inline-end: var(--EventTile_bubble-margin-inline-end); // as the parent has zero margin
             }
@@ -55,7 +55,7 @@ limitations under the License.
             display: none;
         }
 
-        &[data-expanded=false] {
+        &[data-expanded="false"] {
             align-items: center;
             justify-content: space-between;
             column-gap: 5px;
@@ -63,7 +63,7 @@ limitations under the License.
 
         // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
         // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
-        &[data-expanded=true] {
+        &[data-expanded="true"] {
             flex-direction: column;
             margin: 0;
         }
