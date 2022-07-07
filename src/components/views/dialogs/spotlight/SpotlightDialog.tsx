@@ -608,6 +608,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             >
                                 { _t(clientRoom ? "View" : "Join") }
                             </AccessibleButton>}
+                        aria-labelledby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
+                        aria-describedby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_alias`}
+                        aria-details={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_details`}
                     >
                         <BaseAvatar
                             className="mx_SearchResultAvatar"
@@ -619,7 +622,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             width={AVATAR_SIZE}
                             height={AVATAR_SIZE}
                         />
-                        <PublicRoomResultDetails room={result.publicRoom} />
+                        <PublicRoomResultDetails
+                            room={result.publicRoom}
+                            labelId={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
+                            descriptionId={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_alias`}
+                            detailsId={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_details`}
+                        />
                     </Option>
                 );
             }
