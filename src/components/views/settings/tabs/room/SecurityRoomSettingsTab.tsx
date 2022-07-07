@@ -21,6 +21,7 @@ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { Icon as WarningIcon } from "../../../../../../res/img/warning.svg";
 import { _t } from "../../../../../languageHandler";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import Modal from "../../../../../Modal";
@@ -231,7 +232,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         if (room.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
             aliasWarning = (
                 <div className='mx_SecurityRoomSettingsTab_warning'>
-                    <img src={require("../../../../../../res/img/warning.svg").default} width={15} height={15} />
+                    <WarningIcon width={15} height={15} />
                     <span>
                         { _t("To link to this room, please add an address.") }
                     </span>
@@ -355,7 +356,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const state = client.getRoom(this.props.roomId).currentState;
         const canSetGuestAccess = state.mayClientSendStateEvent(EventType.RoomGuestAccess, client);
 
-        return <div className="mx_SettingsTab_section">
+        return <>
             <LabelledToggleSwitch
                 value={guestAccess === GuestAccess.CanJoin}
                 onChange={this.onGuestAccessChange}
@@ -366,7 +367,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 { _t("People with supported clients will be able to join " +
                     "the room without having a registered account.") }
             </p>
-        </div>;
+        </>;
     }
 
     render() {
@@ -391,7 +392,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         let advanced;
         if (room.getJoinRule() === JoinRule.Public) {
             advanced = (
-                <>
+                <div className="mx_SettingsTab_section">
                     <AccessibleButton
                         onClick={this.toggleAdvancedSection}
                         kind="link"
@@ -400,7 +401,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         { this.state.showAdvancedSection ? _t("Hide advanced") : _t("Show advanced") }
                     </AccessibleButton>
                     { this.state.showAdvancedSection && this.renderAdvanced() }
-                </>
+                </div>
             );
         }
 

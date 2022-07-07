@@ -55,6 +55,7 @@ declare global {
             roomHeaderName(
                 options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
             ): Chainable<JQuery<HTMLElement>>;
+            startDM(name: string): Chainable<void>;
         }
     }
 }
@@ -109,6 +110,20 @@ Cypress.Commands.add("roomHeaderName", (
     return cy.get(".mx_RoomHeader_nametext", options);
 });
 
+Cypress.Commands.add("startDM", (name: string) => {
+    cy.openSpotlightDialog().within(() => {
+        cy.spotlightFilter(Filter.People);
+        cy.spotlightSearch().clear().type(name);
+        cy.get(".mx_Spinner").should("not.exist");
+        cy.spotlightResults().should("have.length", 1);
+        cy.spotlightResults().eq(0).should("contain", name);
+        cy.spotlightResults().eq(0).click();
+    }).then(() => {
+        cy.roomHeaderName().should("contain", name);
+        cy.get(".mx_RoomSublist[aria-label=People]").should("contain", name);
+    });
+});
+
 describe("Spotlight", () => {
     let synapse: SynapseInstance;
 
@@ -125,15 +140,14 @@ describe("Spotlight", () => {
     let room2Id: string;
 
     beforeEach(() => {
-        cy.enableLabsFeature("feature_spotlight");
         cy.startSynapse("default").then(data => {
             synapse = data;
             cy.initTestUser(synapse, "Jim").then(() =>
-                cy.getBot(synapse, bot1Name).then(_bot1 => {
+                cy.getBot(synapse, { displayName: bot1Name }).then(_bot1 => {
                     bot1 = _bot1;
                 }),
             ).then(() =>
-                cy.getBot(synapse, bot2Name).then(_bot2 => {
+                cy.getBot(synapse, { displayName: bot2Name }).then(_bot2 => {
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     bot2 = _bot2;
                 }),
@@ -157,6 +171,7 @@ describe("Spotlight", () => {
     });
 
     afterEach(() => {
+        cy.visit("/#/home");
         cy.stopSynapse(synapse);
     });
 
@@ -265,6 +280,47 @@ describe("Spotlight", () => {
         });
     });
 
+    it("should find group DMs by usernames or user ids", () => {
+        // First we want to share a room with both bots to ensure we’ve got their usernames cached
+        cy.inviteUser(room1Id, bot2.getUserId());
+
+        // Starting a DM with ByteBot (will be turned into a group dm later)
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.People);
+            cy.spotlightSearch().clear().type(bot2Name);
+            cy.spotlightResults().should("have.length", 1);
+            cy.spotlightResults().eq(0).should("contain", bot2Name);
+            cy.spotlightResults().eq(0).click();
+        }).then(() => {
+            cy.roomHeaderName().should("contain", bot2Name);
+            cy.get(".mx_RoomSublist[aria-label=People]").should("contain", bot2Name);
+        });
+
+        // Invite BotBob into existing DM with ByteBot
+        cy.getDmRooms(bot2.getUserId()).then(dmRooms => dmRooms[0])
+            .then(groupDmId => cy.inviteUser(groupDmId, bot1.getUserId()))
+            .then(() => {
+                cy.roomHeaderName().should("contain", `${bot1Name} and ${bot2Name}`);
+                cy.get(".mx_RoomSublist[aria-label=People]").should("contain", `${bot1Name} and ${bot2Name}`);
+            });
+
+        // Search for BotBob by id, should return group DM and user
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.People);
+            cy.spotlightSearch().clear().type(bot1.getUserId());
+            cy.spotlightResults().should("have.length", 2);
+            cy.spotlightResults().eq(0).should("contain", `${bot1Name} and ${bot2Name}`);
+        });
+
+        // Search for ByteBot by id, should return group DM and user
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.People);
+            cy.spotlightSearch().clear().type(bot2.getUserId());
+            cy.spotlightResults().should("have.length", 2);
+            cy.spotlightResults().eq(0).should("contain", `${bot1Name} and ${bot2Name}`);
+        });
+    });
+
     it("should allow opening group chat dialog", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
@@ -275,6 +331,23 @@ describe("Spotlight", () => {
             cy.get(".mx_SpotlightDialog_startGroupChat").click();
         }).then(() => {
             cy.get('[role=dialog]').should("contain", "Direct Messages");
+        });
+    });
+
+    it("should close spotlight after starting a DM", () => {
+        cy.startDM(bot1Name);
+        cy.get(".mx_SpotlightDialog").should("have.length", 0);
+    });
+
+    it("should show the same user only once", () => {
+        cy.startDM(bot1Name);
+        cy.visit("/#/home");
+
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.People);
+            cy.spotlightSearch().clear().type(bot1Name);
+            cy.get(".mx_Spinner").should("not.exist");
+            cy.spotlightResults().should("have.length", 1);
         });
     });
 
