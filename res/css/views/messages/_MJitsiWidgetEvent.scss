@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_MJitsiWidgetEvent {
+.mx_EventTileBubble.mx_MJitsiWidgetEvent {
+    margin: var(--EventTileBubble_margin-block) auto;
+
     &::before {
         background-color: $header-panel-text-primary-color; // XXX: Variable abuse
         mask-image: url('$(res)/img/element-icons/call/video-call.svg');
