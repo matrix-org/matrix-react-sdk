@@ -19,10 +19,15 @@ import { Room } from "matrix-js-sdk/src/matrix";
 
 import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
 
-export const RoomResultDetails = ({ room }: { room: Room }) => {
+interface Props {
+    id: string;
+    room: Room;
+}
+
+export const RoomResultDetails = ({ room, id }: Props) => {
     const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
     if (contextDetails) {
-        return <div className="mx_SpotlightDialog_result_details">
+        return <div id={id} className="mx_SpotlightDialog_result_details">
             { contextDetails }
         </div>;
     }
