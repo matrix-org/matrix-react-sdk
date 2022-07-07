@@ -295,6 +295,14 @@ $left-gutter: 64px;
         &.mx_EventTile_info .mx_EventTile_line {
             padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
         }
+
+        &:hover {
+            &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
+            &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
+            &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
+                padding-left: calc($left-gutter + 18px + $selected-message-border-width);
+            }
+        }
     }
 
     &[data-layout=bubble] {
@@ -368,12 +376,6 @@ $left-gutter: 64px;
             background-color: $accent;
             color: $accent-fg-color;
         }
-    }
-
-    &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
-    &:hover.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
-    &:hover.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-        padding-left: calc($left-gutter + 18px + $selected-message-border-width);
     }
 
     /* End to end encryption stuff */
