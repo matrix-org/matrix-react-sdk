@@ -63,6 +63,7 @@ limitations under the License.
         font-weight: $font-semi-bold;
         color: $light-fg-color;
         margin-right: 6px;
+        white-space: nowrap;
     }
 
     &.mx_RoomSearch_minimized {
