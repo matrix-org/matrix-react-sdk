@@ -55,12 +55,8 @@ limitations under the License.
             align-self: center;
         }
 
-        &:hover {
-            background-color: $tertiary-content;
-
-            .mx_RoomSearch_icon {
-                background-color: $background;
-            }
+        .mx_RoomSearch_shortcutPrompt {
+            display: none;
         }
     }
 
