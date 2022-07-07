@@ -83,11 +83,20 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase().trim();
 
-    const [spacesContainingRoom, otherEntries] = useMemo(() => {
+    const [spacesContainingRoom, otherJoinedSpaces, otherEntries] = useMemo(() => {
         const parents = new Set<Room>();
+
+        // Add the known parents first so the user can see them more easily
         addAllParents(parents, room);
+
+        // Add all the other known spaces second. We cheat and rely on the Set not
+        // allowing duplicates here, which should maintain our insertion order from
+        // above.
+        // SpaceStore.instance.spacePanelSpaces.forEach(s => parents.add(s));
+
         return [
             Array.from(parents),
+            SpaceStore.instance.spacePanelSpaces.filter(s => !parents.has(s)),
             selected.map(roomId => {
                 const room = cli.getRoom(roomId);
                 if (!room) {
@@ -100,8 +109,9 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         ];
     }, [cli, selected, room]);
 
-    const [filteredSpacesContainingRoom, filteredOtherEntries] = useMemo(() => [
+    const [filteredSpacesContainingRoom, filteredOtherJoinedSpaces, filteredOtherEntries] = useMemo(() => [
         spacesContainingRoom.filter(r => r.name.toLowerCase().includes(lcQuery)),
+        otherJoinedSpaces.filter(r => r.name.toLowerCase().includes(lcQuery)),
         otherEntries.filter(r => r.name.toLowerCase().includes(lcQuery)),
     ], [spacesContainingRoom, otherEntries, lcQuery]);
 
@@ -121,6 +131,10 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         </div>;
     }
 
+    const totalResults =
+        filteredSpacesContainingRoom.length
+        + filteredOtherJoinedSpaces.length
+        + filteredOtherEntries.length;
     return <BaseDialog
         title={_t("Select spaces")}
         className="mx_ManageRestrictedJoinRuleDialog"
@@ -180,7 +194,23 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                     </div>
                 ) : null }
 
-                { filteredSpacesContainingRoom.length + filteredOtherEntries.length < 1
+                { filteredOtherJoinedSpaces.length > 0 ? (
+                    <div className="mx_ManageRestrictedJoinRuleDialog_section">
+                        <h3>{ _t("Other spaces you know") }</h3>
+                        { filteredOtherJoinedSpaces.map(space => {
+                            return <Entry
+                                key={space.roomId}
+                                room={space}
+                                checked={newSelected.has(space.roomId)}
+                                onChange={(checked: boolean) => {
+                                    onChange(checked, space);
+                                }}
+                            />;
+                        }) }
+                    </div>
+                ) : null }
+
+                { totalResults < 1
                     ? <span className="mx_ManageRestrictedJoinRuleDialog_noResults">
                         { _t("No results") }
                     </span>
