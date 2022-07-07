@@ -90,7 +90,8 @@ describe("RoomListHeader", () => {
         expect(items.at(2).text()).toBe("Preferences");
         expect(items.at(3).text()).toBe("Settings");
         expect(items.at(4).text()).toBe("Room");
-        expect(items.at(4).text()).toBe("Room");
+        // Look for label within the item, to ignore the text of the "Beta" pill if present.
+        expect(items.at(5).find(".mx_IconizedContextMenu_label").text()).toBe("Space");
     });
 
     it("closes menu if space changes from under it", async () => {
