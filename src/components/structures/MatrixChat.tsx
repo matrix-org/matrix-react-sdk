@@ -1228,6 +1228,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private async onShowPostLoginScreen(useCase?: UseCase) {
         if (useCase) {
+            PosthogAnalytics.instance.setProperty("ftueUseCaseSelection", useCase);
             SettingsStore.setValue("ftueUseCaseSelection", null, SettingLevel.ACCOUNT, useCase);
         }
 
