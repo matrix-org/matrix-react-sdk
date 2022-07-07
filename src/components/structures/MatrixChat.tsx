@@ -2031,7 +2031,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             );
         } else if (this.state.view === Views.USE_CASE_SELECTION) {
             view = (
-                <UseCaseSelection onFinished={this.onShowPostLoginScreen} />
+                <UseCaseSelection onFinished={useCase => this.onShowPostLoginScreen(useCase)} />
             );
         } else {
             logger.error(`Unknown view ${this.state.view}`);
