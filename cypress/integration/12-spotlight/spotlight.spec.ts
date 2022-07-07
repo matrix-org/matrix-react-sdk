@@ -118,10 +118,13 @@ Cypress.Commands.add("startDM", (name: string) => {
         cy.spotlightResults().should("have.length", 1);
         cy.spotlightResults().eq(0).should("contain", name);
         cy.spotlightResults().eq(0).click();
-    }).then(() => {
-        cy.roomHeaderName().should("contain", name);
-        cy.get(".mx_RoomSublist[aria-label=People]").should("contain", name);
     });
+    // send first message to start DM
+    cy.get(".mx_BasicMessageComposer_input")
+        .should("have.focus")
+        .type("Hey!{enter}");
+    cy.contains(".mx_EventTile_body", "Hey!");
+    cy.get(".mx_RoomSublist[aria-label=People]").should("contain", name);
 });
 
 describe("Spotlight", () => {
