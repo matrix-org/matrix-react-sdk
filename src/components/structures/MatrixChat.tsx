@@ -110,6 +110,7 @@ import PerformanceMonitor, { PerformanceEntryNames } from "../../performance";
 import UIStore, { UI_EVENTS } from "../../stores/UIStore";
 import SoftLogout from './auth/SoftLogout';
 import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
+import MatrixSchemePermalinkConstructor from "../../utils/permalinks/MatrixSchemePermalinkConstructor";
 import { copyPlaintext } from "../../utils/strings";
 import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
@@ -1245,6 +1246,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
+        navigator.registerProtocolHandler("matrix", "/#/%s");
+
         if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
             this.initPosthogAnalyticsToast();
         }
@@ -1726,6 +1729,39 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: 'view_legacy_group',
                 groupId: groupId,
             });
+        } else if (screen.indexOf('matrix:') === 0) {
+            try {
+                const permalink = new MatrixSchemePermalinkConstructor().parsePermalink(screen);
+
+                if (permalink.userId) {
+                    dis.dispatch({
+                        action: 'view_user_info',
+                        userId: permalink.userId,
+                    });
+                } else if (permalink.roomIdOrAlias) {
+                    const viewRoomPayload = {
+                        action: Action.ViewRoom,
+                        event_id: permalink.eventId,
+                        via_servers: permalink.viaServers,
+                        // If an event ID is given in the URL hash, notify RoomViewStore to mark
+                        // it as highlighted, which will propagate to RoomView and highlight the
+                        // associated EventTile.
+                        highlighted: Boolean(permalink.eventId),
+                        room_alias: undefined,
+                        room_id: undefined,
+                    };
+                    if (permalink.roomIdOrAlias[0] === '#') {
+                        viewRoomPayload.room_alias = permalink.roomIdOrAlias;
+                    } else {
+                        viewRoomPayload.room_id = permalink.roomIdOrAlias;
+                    }
+
+                    dis.dispatch(viewRoomPayload);
+                }
+            } catch {
+                logger.error("Invalid Matrix URI scheme permalink:", screen);
+                dis.dispatch({ action: 'view_last_screen' });
+            }
         } else {
             logger.info("Ignoring showScreen for '%s'", screen);
         }
