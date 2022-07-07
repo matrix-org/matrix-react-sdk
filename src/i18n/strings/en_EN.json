@@ -2790,6 +2790,7 @@
     "Remember this": "Remember this",
     "%(count)s Members|other": "%(count)s Members",
     "%(count)s Members|one": "%(count)s Member",
+    "In space %(space)s.": "In space %(space)s.",
     "Public rooms": "Public rooms",
     "Use \"%(query)s\" to search": "Use \"%(query)s\" to search",
     "Search for": "Search for",
