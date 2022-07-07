@@ -238,6 +238,10 @@ $left-gutter: 64px;
         .mx_EventTileBubble {
             position: relative;
             left: var(--EventTile_irc_line_info-inset-inline-start);
+
+            &.mx_cryptoEvent {
+                left: unset;
+            }
         }
 
         .mx_ReplyTile .mx_EventTileBubble {
