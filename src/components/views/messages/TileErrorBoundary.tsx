@@ -83,7 +83,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
 
             let viewSourceButton;
             if (mxEvent && SettingsStore.getValue("developerMode")) {
-                viewSourceButton = <AccessibleButton onClick={this.onViewSource} kind="link">
+                viewSourceButton = &nbsp;<AccessibleButton onClick={this.onViewSource} kind="link">
                     { _t("View Source") }
                 </AccessibleButton>;
             }
@@ -94,7 +94,6 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                         { _t("Can't load this message") }
                         { mxEvent && ` (${mxEvent.getType()})&nbsp;` }
                         { submitLogsButton }
-                        { `&nbsp;` }
                         { viewSourceButton }
                     </span>
                 </div>
