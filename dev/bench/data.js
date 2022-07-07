@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657181783681,
+  "lastUpdate": 1657186253681,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107414,6 +107414,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4997.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b1fb609ab3a413da30e06d8993c12dcf0f4cb660",
+          "message": "Specify spacing around EventTileBubble for each layout (#9001)\n\n* Apply margin to EventTileBubble on each layout\r\n\r\nUse a variable to ensure alignment of EventTileBubble on IRC layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Improve style rules\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply the same block margin to every layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-07T09:24:24Z",
+          "tree_id": "2eea233646770ddfb41846310c879e70b0a4ec7e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b1fb609ab3a413da30e06d8993c12dcf0f4cb660"
+        },
+        "date": 1657186237403,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5985.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2567.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5733.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
