@@ -139,5 +139,5 @@ Cypress.Commands.add("botSendMessage", (
     return cy.wrap(cli.sendMessage(roomId, {
         msgtype: "m.text",
         body: message,
-    }));
+    }), { log: false });
 });
