@@ -113,7 +113,7 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         spacesContainingRoom.filter(r => r.name.toLowerCase().includes(lcQuery)),
         otherJoinedSpaces.filter(r => r.name.toLowerCase().includes(lcQuery)),
         otherEntries.filter(r => r.name.toLowerCase().includes(lcQuery)),
-    ], [spacesContainingRoom, otherEntries, lcQuery]);
+    ], [spacesContainingRoom, otherJoinedSpaces, otherEntries, lcQuery]);
 
     const onChange = (checked: boolean, room: Room): void => {
         if (checked) {
