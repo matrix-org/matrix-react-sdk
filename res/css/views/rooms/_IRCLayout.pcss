@@ -30,10 +30,9 @@ $irc-line-height: $font-18px;
         align-items: flex-start;
         padding-top: 0;
 
-        /* timestamps are links which shouldn't be underlined */
         > a {
-            text-decoration: none;
-            min-width: $MessageTimestamp_width;
+            text-decoration: none; /* timestamps are links which shouldn't be underlined */
+            min-width: $MessageTimestamp_width; /* ensure space for EventTile without timestamp */
         }
 
         > * {
@@ -73,8 +72,7 @@ $irc-line-height: $font-18px;
 
             > .mx_DisambiguatedProfile_mxid {
                 visibility: collapse;
-                /* Override the inherited margin. */
-                margin-left: 0;
+                margin-left: 0; /* Override the inherited margin. */
                 padding: 0 5px; /* TODO: Use a spacing variable */
             }
 
