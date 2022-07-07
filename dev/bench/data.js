@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657180872633,
+  "lastUpdate": 1657181783681,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107372,6 +107372,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5456.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e3fda73b2b3b5e81452e4acc511e1e242d31d5ff",
+          "message": "Remove dead AddressSelector code (#8999)\n\n* remove unused AddressSelector\r\n\r\n* 18n",
+          "timestamp": "2022-07-07T08:11:12Z",
+          "tree_id": "c191daf7d8de312a9d25dbfdc68aaf454eddf95d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e3fda73b2b3b5e81452e4acc511e1e242d31d5ff"
+        },
+        "date": 1657181770536,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5549.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2194.5999999998603,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4997.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
