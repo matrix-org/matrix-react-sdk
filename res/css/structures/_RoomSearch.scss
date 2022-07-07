@@ -17,6 +17,7 @@ limitations under the License.
 // Note: this component expects to be contained within a flexbox
 .mx_RoomSearch {
     flex: 1;
+    min-width: 0;
     border-radius: 8px;
     background-color: $panel-actions;
     // keep border thickness consistent to prevent movement
@@ -27,6 +28,8 @@ limitations under the License.
     // Create a flexbox for the icons (easier to manage)
     display: flex;
     align-items: center;
+
+    cursor: pointer;
 
     .mx_RoomSearch_icon {
         width: 16px;
@@ -41,6 +44,25 @@ limitations under the License.
     .mx_RoomSearch_spotlightTriggerText {
         font-size: $font-12px;
         line-height: $font-16px;
+        color: $tertiary-content;
+        flex: 1;
+        min-width: 0;
+        // the following rules are to match that of a real input field
+        overflow: hidden;
+        margin: 9px;
+        font-weight: $font-semi-bold;
+    }
+
+    .mx_RoomSearch_shortcutPrompt {
+        border-radius: 6px;
+        background-color: $panel-actions;
+        padding: 2px 4px;
+        user-select: none;
+        font-size: $font-12px;
+        line-height: $font-15px;
+        font-weight: $font-semi-bold;
+        color: $light-fg-color;
+        margin-right: 6px;
     }
 
     &.mx_RoomSearch_minimized {
@@ -60,35 +82,20 @@ limitations under the License.
         }
     }
 
-    &.mx_RoomSearch_spotlightTrigger {
-        cursor: pointer;
-        min-width: 0;
+    &:hover {
+        background-color: $tertiary-content;
 
         .mx_RoomSearch_spotlightTriggerText {
-            color: $tertiary-content;
-            flex: 1;
-            min-width: 0;
-            // the following rules are to match that of a real input field
-            overflow: hidden;
-            margin: 9px;
-            font-weight: $font-semi-bold;
+            color: $background;
         }
 
-        &:hover {
-            background-color: $tertiary-content;
+        .mx_RoomSearch_shortcutPrompt {
+            background-color: $background;
+            color: $secondary-content;
+        }
 
-            .mx_RoomSearch_spotlightTriggerText {
-                color: $background;
-            }
-
-            .mx_RoomSearch_shortcutPrompt {
-                background-color: $background;
-                color: $secondary-content;
-            }
-
-            .mx_RoomSearch_icon {
-                background-color: $background;
-            }
+        .mx_RoomSearch_icon {
+            background-color: $background;
         }
     }
 }
