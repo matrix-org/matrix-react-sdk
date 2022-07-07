@@ -28,10 +28,6 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 
 interface IProps {
     isMinimized: boolean;
-    /**
-     * @returns true if a room has been selected and the search field should be cleared
-     */
-    onSelectRoom(): boolean;
 }
 
 export default class RoomSearch extends React.PureComponent<IProps> {
