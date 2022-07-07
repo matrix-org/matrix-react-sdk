@@ -22,6 +22,7 @@ import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { M_POLL_START } from "matrix-events-sdk";
+import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -58,6 +59,8 @@ import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenR
 import { createMapSiteLinkFromEvent } from '../../../utils/location';
 import { getForwardableEvent } from '../../../events/forward/getForwardableEvent';
 import { getShareableLocationEvent } from '../../../events/location/getShareableLocationEvent';
+import { showThread } from "../../../dispatcher/dispatch-actions/threads";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 interface IProps extends IPosition {
     chevronFace: ChevronFace;
@@ -278,6 +281,30 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             event: this.props.mxEvent,
             context: this.context.timelineRenderingType,
         });
+        this.closeMenu();
+    };
+
+    private onReplyInThreadClick = (): void => {
+        const { mxEvent } = this.props;
+
+        if (!localStorage.getItem("mx_seen_feature_thread")) {
+            localStorage.setItem("mx_seen_feature_thread", "true");
+        }
+
+        if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
+            showThread({
+                rootEvent: mxEvent.getThread().rootEvent,
+                initialEvent: mxEvent,
+                scroll_into_view: true,
+                highlighted: true,
+                push: RightPanelStore.instance.isOpen,
+            });
+        } else {
+            showThread({
+                rootEvent: mxEvent,
+                push: RightPanelStore.instance.isOpen,
+            });
+        }
         this.closeMenu();
     };
 
@@ -582,6 +609,23 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let replyInThreadButton: JSX.Element;
+        if (
+            rightClick &&
+            contentActionable &&
+            canSendMessages && SettingsStore.getValue("feature_thread") &&
+            Thread.hasServerSideSupport &&
+            timelineRenderingType !== TimelineRenderingType.Thread
+        ) {
+            replyInThreadButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconReplyInThread"
+                    label={_t("Reply in thread")}
+                    onClick={this.onReplyInThreadClick}
+                />
+            );
+        }
+
         let reactButton;
         if (rightClick && contentActionable && canReact) {
             reactButton = (
@@ -621,6 +665,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOptionList>
                     { reactButton }
                     { replyButton }
+                    { replyInThreadButton }
                     { editButton }
                 </IconizedContextMenuOptionList>
             );
