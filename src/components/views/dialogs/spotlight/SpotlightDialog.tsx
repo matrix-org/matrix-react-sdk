@@ -260,7 +260,7 @@ const findVisibleRoomMembers = (cli: MatrixClient, filterDMs = true) => {
     ).filter(it => it.userId !== cli.getUserId());
 };
 
-const roomAriaLabel = (room: Room, notification: RoomNotificationState) => {
+const roomAriaLabel = (room: Room, notification: RoomNotificationState): string => {
     if (notification.hasMentions) {
         return `${room.name} ${_t("%(count)s unread messages including mentions.", {
             count: notification.count,
