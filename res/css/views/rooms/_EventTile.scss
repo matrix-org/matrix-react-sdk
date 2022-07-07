@@ -73,6 +73,10 @@ $left-gutter: 64px;
         }
     }
 
+    .mx_EventTileBubble {
+        margin-block: 10px; // TODO: Use a spacing variable
+    }
+
     .mx_MImageBody {
         .mx_MImageBody_thumbnail_container {
             display: flex;
@@ -181,10 +185,6 @@ $left-gutter: 64px;
             a {
                 text-decoration: none;
             }
-        }
-
-        .mx_EventTileBubble {
-            margin-block: 10px; // TODO: Use a spacing variable
         }
 
         &.mx_EventTile_highlight,
