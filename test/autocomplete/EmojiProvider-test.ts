@@ -77,12 +77,10 @@ describe('EmojiProvider', function() {
         const emojiProvider = new EmojiProvider(null);
 
         let completionsList = await emojiProvider.getCompletions(":kis", {beginning: true, end: 3, start: 3});
-        console.debug(completionsList.map(emoji => emoji.completion));
         expect(completionsList[0].component.props.title).toEqual(":kissing_heart:");
         expect(completionsList[1].component.props.title).toEqual(":kissing_closed_eyes:");
     
         completionsList = await emojiProvider.getCompletions(":kissing_c", {beginning: true, end: 3, start: 3});
-        console.debug(completionsList.map(emoji => emoji.completion));
         expect(completionsList[0].component.props.title).toEqual(":kissing_closed_eyes:");
     
         completionsList = await emojiProvider.getCompletions(":so", {beginning: true, end: 2, start: 2});
