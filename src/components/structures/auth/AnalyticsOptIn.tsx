@@ -28,11 +28,11 @@ import AccessibleButton from '../../views/elements/AccessibleButton';
 import SplashPage from '../SplashPage';
 import { Icon as AnalyticsIcon } from "../../../../res/img/element-icons/analytics.svg";
 
-interface IProps {
+interface Props {
     onFinished?: (accepted: boolean) => void;
 }
 
-export default function AnalyticsOptIn({ onFinished }: IProps) {
+export default function AnalyticsOptIn({ onFinished }: Props) {
     const onAccept = () => {
         dis.dispatch({
             action: Action.PseudonymousAnalyticsAccept,
