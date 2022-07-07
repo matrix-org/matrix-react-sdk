@@ -36,14 +36,14 @@ interface Props {
 export default function UseCaseSelection({ onFinished }: Props) {
     return (
         <SplashPage className="mx_UseCaseSelection">
-            <div className="mx_UseCaseSelection_title mx_UseCaseSelection_fadeIn">
+            <div className="mx_UseCaseSelection_title mx_UseCaseSelection_slideIn">
                 <h1>{ _t("You’re in") }</h1>
             </div>
-            <div className="mx_UseCaseSelection_info mx_UseCaseSelection_slideIn">
+            <div className="mx_UseCaseSelection_info mx_UseCaseSelection_slideInDelayed">
                 <h2>{ _t("Who will you chat to the most?") }</h2>
                 <h4>{ _t("We’ll help you get connected.") }</h4>
             </div>
-            <div className="mx_UseCaseSelection_options mx_UseCaseSelection_slideIn">
+            <div className="mx_UseCaseSelection_options mx_UseCaseSelection_slideInDelayed">
                 <AccessibleButton className="mx_UseCaseSelection_option" onClick={() => onFinished(UseCase.PersonalMessaging)}>
                     <div className="mx_UseCaseSelection_icon mx_UseCaseSelection_icon_messaging" />
                     <span>{ _t("Friends and family") }</span>
@@ -57,7 +57,7 @@ export default function UseCaseSelection({ onFinished }: Props) {
                     <span>{ _t("Online community members") }</span>
                 </AccessibleButton>
             </div>
-            <div className="mx_UseCaseSelection_skip mx_UseCaseSelection_slideIn">
+            <div className="mx_UseCaseSelection_skip mx_UseCaseSelection_slideInDelayed">
                 <AccessibleButton kind="link" onClick={() => onFinished(UseCase.Skip)}>
                     { _t("Skip") }
                 </AccessibleButton>
