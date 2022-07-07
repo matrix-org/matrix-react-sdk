@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657176207389,
+  "lastUpdate": 1657180872633,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107330,6 +107330,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4599.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ff6f4dc8eb5b97aac787295fba62642e3b64be4b",
+          "message": "Move style rules of EventTile on hover out of mx_EventTile:not([data-layout=bubble]) (#8997)\n\n* Move ':hover.mx_EventTile_verified .mx_EventTile_line' etc out of mx_EventTile:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Merge mx_EventTile_line on hover\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply inline start padding effect on hovering info tile text line to modern/group layout only\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-07T09:54:56+02:00",
+          "tree_id": "46d4c6fa45db4212b6c2de0ecfa53be5c13ed620",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ff6f4dc8eb5b97aac787295fba62642e3b64be4b"
+        },
+        "date": 1657180855864,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6115.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2524.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5456.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
