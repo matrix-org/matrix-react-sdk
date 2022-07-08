@@ -116,6 +116,11 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
             </div>;
         }
 
+        // Don't show anything if we're about to render nothing
+        if (!img && !p["og:description"] && !p["og:title"]) {
+            return <React.Fragment />;
+        }
+
         // The description includes &-encoded HTML entities, we decode those as React treats the thing as an
         // opaque string. This does not allow any HTML to be injected into the DOM.
         const description = AllHtmlEntities.decode(p["og:description"] || "");
