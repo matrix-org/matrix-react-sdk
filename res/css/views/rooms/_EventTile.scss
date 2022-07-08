@@ -74,7 +74,7 @@ $left-gutter: 64px;
     }
 
     .mx_EventTileBubble {
-        margin-block: 10px; // TODO: Use a spacing variable
+        margin-block: var(--EventTileBubble_margin-block);
     }
 
     .mx_MImageBody {
@@ -238,6 +238,10 @@ $left-gutter: 64px;
         .mx_EventTileBubble {
             position: relative;
             left: var(--EventTile_irc_line_info-inset-inline-start);
+
+            &.mx_cryptoEvent {
+                left: unset;
+            }
         }
 
         .mx_ReplyTile .mx_EventTileBubble {
@@ -968,8 +972,6 @@ $left-gutter: 64px;
 
         // handling for hidden events (e.g reactions) in the thread view
         &.mx_EventTile_info {
-            padding-top: 0;
-
             .mx_EventTile_avatar {
                 position: absolute;
                 top: 1.5px; // Align with hidden event content
@@ -1000,6 +1002,8 @@ $left-gutter: 64px;
 
             &[data-layout=irc],
             &[data-layout=group] {
+                padding-top: 0;
+
                 .mx_MessageTimestamp {
                     top: 2px; // Align with avatar
                 }
