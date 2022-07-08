@@ -1018,34 +1018,6 @@ $left-gutter: 64px;
             }
         }
 
-        &[data-layout=bubble] {
-            margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
-            margin-inline-end: var(--BaseCard_EventTile-spacing-inline);
-
-            &::before {
-                inset-inline: calc(-1 * var(--BaseCard_EventTile-spacing-inline));
-                z-index: auto; // enable background color on hover
-            }
-
-            .mx_ReactionsRow {
-                position: relative; // display on hover
-            }
-
-            .mx_EventTile_line.mx_EventTile_mediaLine {
-                padding-block: 0;
-                padding-inline-start: 0;
-                max-width: var(--EventBubbleTile_line-max-width);
-            }
-
-            &[data-self=true] {
-                align-items: flex-end;
-
-                .mx_EventTile_line.mx_EventTile_mediaLine {
-                    margin: 0 var(--EventTile_bubble_line-margin-inline-end) 0 0; // align with normal messages
-                }
-            }
-        }
-
         &[data-layout=irc],
         &[data-layout=group] {
             padding-block-start: $spacing-16;
@@ -1132,6 +1104,34 @@ $left-gutter: 64px;
                 &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
                 &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
                     padding-inline-start: 0;
+                }
+            }
+        }
+
+        &[data-layout=bubble] {
+            margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
+            margin-inline-end: var(--BaseCard_EventTile-spacing-inline);
+
+            &::before {
+                inset-inline: calc(-1 * var(--BaseCard_EventTile-spacing-inline));
+                z-index: auto; // enable background color on hover
+            }
+
+            .mx_ReactionsRow {
+                position: relative; // display on hover
+            }
+
+            .mx_EventTile_line.mx_EventTile_mediaLine {
+                padding-block: 0;
+                padding-inline-start: 0;
+                max-width: var(--EventBubbleTile_line-max-width);
+            }
+
+            &[data-self=true] {
+                align-items: flex-end;
+
+                .mx_EventTile_line.mx_EventTile_mediaLine {
+                    margin: 0 var(--EventTile_bubble_line-margin-inline-end) 0 0; // align with normal messages
                 }
             }
         }
