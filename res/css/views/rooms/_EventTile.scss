@@ -928,12 +928,13 @@ $left-gutter: 64px;
         position: initial;
     }
 
+    // ThreadsList has always group layout
     &[data-layout=group] {
         &:hover {
             background-color: $system;
 
             .mx_EventTile_line {
-                background-color: $system;
+                background-color: $system; // override $event-selected-color
                 box-shadow: none; // don't show the verification left stroke in the thread list
             }
         }
