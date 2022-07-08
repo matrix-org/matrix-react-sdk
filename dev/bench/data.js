@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657199631017,
+  "lastUpdate": 1657262321109,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107540,6 +107540,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4713.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "644b8415912afb9c5eed54859a444a2ee7224117",
+          "message": "Replace MSC3244 support with in-client room version checking (#9018)\n\n* Replace MSC3244 support with in-client room version checking\r\n\r\n* Fix irrelevant ternary\r\n\r\n* It helps to use Jest correctly",
+          "timestamp": "2022-07-08T00:32:38-06:00",
+          "tree_id": "94e746c9a45c67ec54c56140528c967300ee7e03",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/644b8415912afb9c5eed54859a444a2ee7224117"
+        },
+        "date": 1657262305627,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4564.4000000003725,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2399.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5161.700000000186,
             "unit": "ms",
             "extra": "type: measure"
           }
