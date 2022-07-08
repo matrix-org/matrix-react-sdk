@@ -52,6 +52,9 @@
     "test": "jest",
     "test:cypress": "cypress run",
     "test:cypress:open": "cypress open",
+    "test:e2e": "./test/end-to-end-tests/run.sh --app-url http://localhost:8080",
+    "test:trafficlight": "node scripts/trafficlight.js run",
+    "test:trafficlight:open": "node scripts/trafficlight.js open",
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
