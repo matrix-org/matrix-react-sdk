@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657270514987,
+  "lastUpdate": 1657271038681,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107660,6 +107660,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 643.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b1f8d36a69413e09aeb24d3cef1b4d116491e51a",
+          "message": "Re-add margin to tiles based on EventTileBubble (#9015)\n\n* Re-add margin to HistoryTile, which is based on EventTileBubble\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Readd margin to the other tiles based on EventTileBubble\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Default margin is not required for mx_MJitsiWidgetEvent as it appears inside EventTile\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Cancel left value for cryptoEvent on IRC layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-08T09:58:49+01:00",
+          "tree_id": "bb23a566c89fa343bda1b1a257159dd96a3beda7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b1f8d36a69413e09aeb24d3cef1b4d116491e51a"
+        },
+        "date": 1657271024917,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5519,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2657.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4576.5,
             "unit": "ms",
             "extra": "type: measure"
           }
