@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657273455368,
+  "lastUpdate": 1657274198360,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107786,6 +107786,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4992.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "johannesm@element.io",
+            "name": "Johannes Marbach",
+            "username": "Johennes"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cc64e8eaceaa7b1c707af168afd6e7046a730bb7",
+          "message": "Unbreak URL preview for formatted links with tooltips (#9022)\n\n* Unbreak URL preview for formatted links with tooltips\r\n\r\nFixes: vector-im/element-web#22764\r\nSigned-off-by: Johannes Marbach <johannesm@element.io>\r\n\r\n* Flip back the flag default value 🤦",
+          "timestamp": "2022-07-08T09:51:37Z",
+          "tree_id": "9a7a21db9cd90280572241c6b42be608dd970446",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cc64e8eaceaa7b1c707af168afd6e7046a730bb7"
+        },
+        "date": 1657274184787,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4722,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2092.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4728.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
