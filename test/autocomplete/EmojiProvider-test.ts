@@ -47,7 +47,7 @@ describe('EmojiProvider', function() {
     const testRoom = mkStubRoom(undefined, undefined, undefined);
     stubClient();
     MatrixClientPeg.get();
-    
+
     it.each(EMOJI_SHORTCODES)('Returns consistent results after final colon %s', async function(emojiShortcode) {
         const ep = new EmojiProvider(testRoom);
         const range = { "beginning": true, "start": 0, "end": 3 };
@@ -76,15 +76,14 @@ describe('EmojiProvider', function() {
         add("😚"); //kissing_closed_eyes
         const emojiProvider = new EmojiProvider(null);
 
-        let completionsList = await emojiProvider.getCompletions(":kis", {beginning: true, end: 3, start: 3});
+        let completionsList = await emojiProvider.getCompletions(":kis", { beginning: true, end: 3, start: 3 });
         expect(completionsList[0].component.props.title).toEqual(":kissing_heart:");
         expect(completionsList[1].component.props.title).toEqual(":kissing_closed_eyes:");
-    
-        completionsList = await emojiProvider.getCompletions(":kissing_c", {beginning: true, end: 3, start: 3});
+
+        completionsList = await emojiProvider.getCompletions(":kissing_c", { beginning: true, end: 3, start: 3 });
         expect(completionsList[0].component.props.title).toEqual(":kissing_closed_eyes:");
-    
-        completionsList = await emojiProvider.getCompletions(":so", {beginning: true, end: 2, start: 2});
+
+        completionsList = await emojiProvider.getCompletions(":so", { beginning: true, end: 2, start: 2 });
         expect(completionsList[0].component.props.title).toEqual(":sob:");
     });
-
 });
