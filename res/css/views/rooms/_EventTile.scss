@@ -811,13 +811,13 @@ $left-gutter: 64px;
     align-items: center;
 
     &[data-layout=group] {
-        &:hover,
-        &:hover .mx_EventTile_line {
+        &:hover {
             background-color: $system;
-        }
 
-        &:hover .mx_EventTile_line {
-            box-shadow: none; // don't show the verification left stroke in the thread list
+            .mx_EventTile_line {
+                background-color: $system;
+                box-shadow: none; // don't show the verification left stroke in the thread list
+            }
         }
     }
 
