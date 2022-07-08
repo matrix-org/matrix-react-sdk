@@ -49,11 +49,6 @@ export const createMap = (
                 'NavigationControl.ResetBearing': _t('Reset bearing to north'),
                 'NavigationControl.ZoomIn': _t('Zoom in'),
                 'NavigationControl.ZoomOut': _t('Zoom out'),
-                'ScaleControl.Feet': _t('ft'),
-                'ScaleControl.Meters': _t('m'),
-                'ScaleControl.Kilometers': _t('km'),
-                'ScaleControl.Miles': _t('mi'),
-                'ScaleControl.NauticalMiles': _t('nm'),
             },
         });
         map.addControl(new maplibregl.AttributionControl(), 'top-right');
