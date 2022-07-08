@@ -322,7 +322,7 @@ $left-gutter: 64px;
             &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
             &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
             &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-                padding-left: calc($left-gutter + 18px + $selected-message-border-width);
+                padding-inline-start: calc($left-gutter + 18px + $selected-message-border-width);
             }
         }
     }
@@ -1018,14 +1018,6 @@ $left-gutter: 64px;
             }
         }
 
-        &:not([data-layout=bubble]) {
-            &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
-            &:hover.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
-            &:hover.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-                padding-inline-start: 0; // Override
-            }
-        }
-
         &[data-layout=bubble] {
             margin-inline-start: var(--BaseCard_EventTile-spacing-inline);
             margin-inline-end: var(--BaseCard_EventTile-spacing-inline);
@@ -1133,6 +1125,14 @@ $left-gutter: 64px;
             .mx_MessageTimestamp {
                 position: absolute; // for IRC layout
                 top: 2px; // Align with mx_EventTile_content
+            }
+
+            &:hover {
+                &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
+                &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
+                &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
+                    padding-inline-start: 0;
+                }
             }
         }
     }
