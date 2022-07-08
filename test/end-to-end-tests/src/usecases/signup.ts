@@ -77,6 +77,15 @@ export async function signup(
     const acceptButton = await session.query('.mx_InteractiveAuthEntryComponents_termsSubmit');
     await acceptButton.click();
 
+    const isPosthogEnabled = await session.page.evaluate((win) => {
+        return !!win.mxReactSdkConfig.posthog;
+    });
+
+    if (isPosthogEnabled) {
+        const analyticsOptInBtn = await session.query(".mx_AnalyticsOptIn_content .mx_AccessibleButton_kind_primary");
+        await analyticsOptInBtn.click();
+    }
+
     //wait for registration to finish so the hash gets set
     //onhashchange better?
 
