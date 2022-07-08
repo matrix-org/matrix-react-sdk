@@ -19,10 +19,10 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { _t } from "../../languageHandler";
 import { parseGeoUri } from "./parseGeoUri";
 import { findMapStyleUrl } from "./findMapStyleUrl";
 import { LocationShareError } from "./LocationShareErrors";
-import { _t } from "../../languageHandler";
 
 export const createMap = (
     interactive: boolean,
