@@ -1137,7 +1137,7 @@ $left-gutter: 64px;
     .mx_GenericEventListSummary {
         &[data-layout=irc],
         &[data-layout=group] {
-             > .mx_EventTile_line {
+            > .mx_EventTile_line {
                 padding-inline-start: var(--ThreadView_group_spacing-start); // align summary text with message text
                 padding-inline-end: var(--ThreadView_group_spacing-end); // align summary text with message text
             }
