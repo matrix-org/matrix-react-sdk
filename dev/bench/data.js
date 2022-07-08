@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657262321109,
+  "lastUpdate": 1657262669361,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107582,6 +107582,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5161.700000000186,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4844cc14bdb88c55b3b037f5fa6bd96940bc0012",
+          "message": "Remove padding from event info line for hidden events on ThreadView (#9019)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-08T08:39:20+02:00",
+          "tree_id": "6c2c9aa732c8232bce88e1be185d3428dac56c7d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4844cc14bdb88c55b3b037f5fa6bd96940bc0012"
+        },
+        "date": 1657262656369,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5793.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2263.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4765.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
