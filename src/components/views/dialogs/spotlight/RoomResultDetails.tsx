@@ -17,11 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
-import {
-    roomContextDetailsText,
-    spaceContextDetailsAccessibilityText,
-    spaceContextDetailsText,
-} from "../../../../utils/i18n-helpers";
+import { roomContextDetails } from "../../../../utils/i18n-helpers";
 
 interface Props {
     id: string;
@@ -29,21 +25,14 @@ interface Props {
 }
 
 export const RoomResultDetails = ({ room, id }: Props) => {
-    let contextDetails: string;
-    let ariaLabel: string;
-    if (room.isSpaceRoom()) {
-        contextDetails = spaceContextDetailsText(room);
-        ariaLabel = spaceContextDetailsAccessibilityText(room);
-    } else {
-        contextDetails = roomContextDetailsText(room);
-    }
+    const contextDetails = roomContextDetails(room);
     if (contextDetails) {
         return <div
             id={id}
             className="mx_SpotlightDialog_result_details"
-            aria-label={ariaLabel}
+            aria-label={contextDetails.ariaLabel}
         >
-            { contextDetails }
+            { contextDetails.details }
         </div>;
     }
 

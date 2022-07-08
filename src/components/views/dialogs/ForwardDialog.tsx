@@ -49,7 +49,7 @@ import BaseAvatar from "../avatars/BaseAvatar";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { ButtonEvent } from "../elements/AccessibleButton";
-import { roomContextDetailsText } from "../../../utils/i18n-helpers";
+import { roomContextDetails } from "../../../utils/i18n-helpers";
 import { isLocationEvent } from "../../../utils/EventUtils";
 import { isSelfLocation, locationEventGeoUri } from "../../../utils/location";
 
@@ -130,7 +130,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         />;
     }
 
-    const detailsText = roomContextDetailsText(room);
+    const contextDetails = roomContextDetails(room);
 
     return <div className="mx_ForwardList_entry">
         <AccessibleTooltipButton
@@ -141,8 +141,10 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         >
             <DecoratedRoomAvatar room={room} avatarSize={32} />
             <span className="mx_ForwardList_entry_name">{ room.name }</span>
-            { detailsText && <span className="mx_ForwardList_entry_detail">
-                { detailsText }
+            { contextDetails && <span
+                className="mx_ForwardList_entry_detail"
+                aria-label={contextDetails.ariaLabel}>
+                { contextDetails.details }
             </span> }
         </AccessibleTooltipButton>
         <AccessibleTooltipButton

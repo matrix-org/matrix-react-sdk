@@ -26,7 +26,7 @@ import InteractiveTooltip, { Direction } from "../elements/InteractiveTooltip";
 import { Action } from "../../../dispatcher/actions";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { roomContextDetailsText } from "../../../utils/i18n-helpers";
+import { roomContextDetails } from "../../../utils/i18n-helpers";
 import RoomAvatar from "../avatars/RoomAvatar";
 
 const RecentlyViewedButton = () => {
@@ -37,7 +37,7 @@ const RecentlyViewedButton = () => {
         <h4>{ _t("Recently viewed") }</h4>
         <div>
             { crumbs.map(crumb => {
-                const contextDetails = roomContextDetailsText(crumb);
+                const contextDetails = roomContextDetails(crumb);
 
                 return <MenuItem
                     key={crumb.roomId}
@@ -57,8 +57,10 @@ const RecentlyViewedButton = () => {
                     }
                     <span className="mx_RecentlyViewedButton_entry_label">
                         <div>{ crumb.name }</div>
-                        { contextDetails && <div className="mx_RecentlyViewedButton_entry_spaces">
-                            { contextDetails }
+                        { contextDetails && <div
+                            className="mx_RecentlyViewedButton_entry_spaces"
+                            aria-label={contextDetails.ariaLabel}>
+                            { contextDetails.details }
                         </div> }
                     </span>
                 </MenuItem>;
