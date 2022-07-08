@@ -14,11 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
 import { Room } from "matrix-js-sdk/src/matrix";
+import React from "react";
 
-import { _t } from "../../../../languageHandler";
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
+import {
+    roomContextDetailsText,
+    spaceContextDetailsAccessibilityText,
+    spaceContextDetailsText,
+} from "../../../../utils/i18n-helpers";
 
 interface Props {
     id: string;
@@ -30,9 +33,7 @@ export const RoomResultDetails = ({ room, id }: Props) => {
     let ariaLabel: string;
     if (room.isSpaceRoom()) {
         contextDetails = spaceContextDetailsText(room);
-        ariaLabel = _t("In space %(space)s.", {
-            space: contextDetails,
-        });
+        ariaLabel = spaceContextDetailsAccessibilityText(room);
     } else {
         contextDetails = roomContextDetailsText(room);
     }

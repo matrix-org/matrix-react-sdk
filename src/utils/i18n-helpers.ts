@@ -40,6 +40,28 @@ export function spaceContextDetailsText(space: Room): string {
     return space.getCanonicalAlias();
 }
 
+export function spaceContextDetailsAccessibilityText(space: Room): string {
+    if (!space.isSpaceRoom()) return undefined;
+
+    const [parent, secondParent, ...otherParents] = SpaceStore.instance.getKnownParents(space.roomId);
+    if (secondParent && !otherParents?.length) {
+        // exactly 2 edge case for improved i18n
+        return _t("In spaces %(space1Name)s and %(space2Name)s.", {
+            space1Name: space.client.getRoom(parent)?.name,
+            space2Name: space.client.getRoom(secondParent)?.name,
+        });
+    } else if (parent) {
+        return _t("In y%(spaceName)s and %(count)s other spaces.", {
+            spaceName: space.client.getRoom(parent)?.name,
+            count: otherParents.length,
+        });
+    }
+
+    return _t("In space %(spaceName)s.", {
+        spaceName: space.getCanonicalAlias(),
+    });
+}
+
 export function roomContextDetailsText(room: Room): string {
     if (room.isSpaceRoom()) return undefined;
 
