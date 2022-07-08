@@ -999,15 +999,13 @@ $left-gutter: 64px;
             &[data-layout=group] {
                 padding-top: 0;
 
-                .mx_MessageTimestamp {
-                    top: 2px; // Align with avatar
-                }
-            }
-
-            &:not([data-layout=bubble]) {
                 .mx_EventTile_avatar {
                     left: calc($MessageTimestamp_width + 14px - 4px); // 14px: avatar width, 4px: align with text
                     z-index: 9; // position above the hover styling
+                }
+
+                .mx_MessageTimestamp {
+                    top: 2px; // Align with avatar
                 }
             }
 
