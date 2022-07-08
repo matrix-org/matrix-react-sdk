@@ -81,10 +81,18 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
     private onClick = (e: React.MouseEvent): void => {
         const clickTarget = e.target as HTMLElement;
+        // Playling a voice message or changing the play position
+        // should not dispatch the `view_room` action
+        if (
+            clickTarget.classList.contains("mx_SeekBar") ||
+            clickTarget.getAttribute("data-test-id") == "play-pause-button"
+        ) {
+            e.preventDefault();
+        }
         // Following a link within a reply should not dispatch the `view_room` action
         // so that the browser can direct the user to the correct location
         // The exception being the link wrapping the reply
-        if (
+        else if (
             clickTarget.tagName.toLowerCase() !== "a" ||
             clickTarget.closest("a") === null ||
             clickTarget === this.anchorElement.current
