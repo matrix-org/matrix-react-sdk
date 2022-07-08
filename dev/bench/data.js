@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657262669361,
+  "lastUpdate": 1657270514987,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107624,6 +107624,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4765.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "39816f67e4c2079d6e3172eb07fdfcc86e692b99",
+          "message": "Fix Shortcut prompt for Search showing in minimized Roomlist (#9014)",
+          "timestamp": "2022-07-08T08:50:06Z",
+          "tree_id": "e666ef3a4f25be1135f0914398118bcc6e10ebe5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/39816f67e4c2079d6e3172eb07fdfcc86e692b99"
+        },
+        "date": 1657270501610,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4714.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 643.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
