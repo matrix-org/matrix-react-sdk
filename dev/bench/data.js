@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657282806514,
+  "lastUpdate": 1657293276767,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107870,6 +107870,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4808.40000000014,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cc8d78d971668f4ac1bf07ef538cf8664d97fb70",
+          "message": "Location sharing - add localised strings to map (#9025)\n\n* add localised strings to map\r\n\r\n* fussy import ordering\r\n\r\n* remove unused scale control strings from override",
+          "timestamp": "2022-07-08T15:08:05Z",
+          "tree_id": "16974e8278bb865eb331765363e557adbca74f32",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cc8d78d971668f4ac1bf07ef538cf8664d97fb70"
+        },
+        "date": 1657293258087,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5706.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2376.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5520.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
