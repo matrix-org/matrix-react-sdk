@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657274198360,
+  "lastUpdate": 1657282806514,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107828,6 +107828,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4728.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7fb48d24e4ea977e8c2aaf5ddd7c0010bdef7acd",
+          "message": "Upgrade to Cypress 10 (#9008)\n\n* Upgrade to Cypress 10\r\n\r\n* Remove stale comment",
+          "timestamp": "2022-07-08T13:14:13+01:00",
+          "tree_id": "cb7f941775ca8c28f7e88f956b9292fa0cbb3daf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7fb48d24e4ea977e8c2aaf5ddd7c0010bdef7acd"
+        },
+        "date": 1657282792462,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4822.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2229.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4808.40000000014,
             "unit": "ms",
             "extra": "type: measure"
           }
