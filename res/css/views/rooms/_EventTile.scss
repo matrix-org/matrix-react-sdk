@@ -810,17 +810,6 @@ $left-gutter: 64px;
     flex-flow: wrap;
     align-items: center;
 
-    &[data-layout=group] {
-        &:hover {
-            background-color: $system;
-
-            .mx_EventTile_line {
-                background-color: $system;
-                box-shadow: none; // don't show the verification left stroke in the thread list
-            }
-        }
-    }
-
     &::after,
     &::before {
         content: "";
@@ -937,6 +926,17 @@ $left-gutter: 64px;
         font-size: $font-12px;
         max-width: var(--MessageTimestamp-max-width);
         position: initial;
+    }
+
+    &[data-layout=group] {
+        &:hover {
+            background-color: $system;
+
+            .mx_EventTile_line {
+                background-color: $system;
+                box-shadow: none; // don't show the verification left stroke in the thread list
+            }
+        }
     }
 }
 
