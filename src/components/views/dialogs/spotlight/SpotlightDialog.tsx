@@ -103,11 +103,8 @@ function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
     return ref.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
-function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> | null {
+function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> {
     const roomTypes = new Set<RoomType | null>();
-
-    // This is what servers not implementing MSC3827 are expecting
-    if (showRooms && !showSpaces) return null;
 
     if (showRooms) roomTypes.add(null);
     if (showSpaces) roomTypes.add(RoomType.Space);
@@ -180,16 +177,20 @@ const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResul
 });
 
 const toRoomResult = (room: Room): IRoomResult => {
+    const myUserId = MatrixClientPeg.get().getUserId();
     const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+
     if (otherUserId) {
+        const otherMembers = room.getMembers().filter(it => it.userId !== myUserId);
+        const query = [
+            ...otherMembers.map(it => it.name.toLowerCase()),
+            ...otherMembers.map(it => it.userId.toLowerCase()),
+        ].filter(Boolean);
         return {
             room,
             section: Section.People,
             filter: [Filter.People],
-            query: [
-                otherUserId.toLowerCase(),
-                room.getMember(otherUserId)?.name.toLowerCase(),
-            ].filter(Boolean),
+            query,
         };
     } else if (room.isSpaceRoom()) {
         return {
@@ -319,8 +320,25 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     );
     const possibleResults = useMemo<Result[]>(
         () => {
-            const roomMembers = findVisibleRoomMembers(cli);
-            const roomMemberIds = new Set(roomMembers.map(item => item.userId));
+            const roomResults = findVisibleRooms(cli).map(toRoomResult);
+            // If we already have a DM with the user we're looking for, we will
+            // show that DM instead of the user themselves
+            const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
+                const userId = DMRoomMap.shared().getUserIdForRoomId(result.room.roomId);
+                if (!userId) return userIds;
+                if (result.room.getJoinedMemberCount() > 2) return userIds;
+                userIds.add(userId);
+                return userIds;
+            }, new Set<string>());
+            const userResults = [];
+            for (const user of [...findVisibleRoomMembers(cli), ...users]) {
+                // Make sure we don't have any user more than once
+                if (alreadyAddedUserIds.has(user.userId)) continue;
+                alreadyAddedUserIds.add(user.userId);
+
+                userResults.push(toMemberResult(user));
+            }
+
             return [
                 ...SpaceStore.instance.enabledMetaSpaces.map(spaceKey => ({
                     section: Section.Spaces,
@@ -334,9 +352,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         SpaceStore.instance.setActiveSpace(spaceKey);
                     },
                 })),
-                ...findVisibleRooms(cli).map(toRoomResult),
-                ...roomMembers.map(toMemberResult),
-                ...users.filter(item => !roomMemberIds.has(item.userId)).map(toMemberResult),
+                ...roomResults,
+                ...userResults,
                 ...(profile ? [new DirectoryMember(profile)] : []).map(toMemberResult),
                 ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
@@ -528,6 +545,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         key={`${Section[result.section]}-${result.member.userId}`}
                         onClick={() => {
                             startDm(cli, [result.member]);
+                            onFinished();
                         }}
                     >
                         <SearchResultAvatar user={result.member} size={AVATAR_SIZE} />
@@ -997,10 +1015,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         <div id="mx_SpotlightDialog_keyboardPrompt">
             { _t("Use <arrows/> to scroll", {}, {
                 arrows: () => <>
-                    <div>↓</div>
-                    <div>↑</div>
-                    { !filter !== null && !query && <div>←</div> }
-                    { !filter !== null && !query && <div>→</div> }
+                    <kbd>↓</kbd>
+                    <kbd>↑</kbd>
+                    { !filter !== null && !query && <kbd>←</kbd> }
+                    { !filter !== null && !query && <kbd>→</kbd> }
                 </>,
             }) }
         </div>
