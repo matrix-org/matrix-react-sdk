@@ -66,10 +66,10 @@ limitations under the License.
         > .mx_BaseAvatar {
             margin-right: 8px;
         }
-    }
 
-    .mx_EventTile_roomName a {
-        color: $primary-content;
+        a {
+            color: $primary-content;
+        }
     }
 
     .mx_EventTile_avatar {
