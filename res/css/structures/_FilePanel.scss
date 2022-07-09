@@ -87,28 +87,26 @@ limitations under the License.
             white-space: nowrap;
         }
 
-        .mx_DisambiguatedProfile {
-            flex: 1 1 auto;
-            line-height: initial;
-            opacity: 1.0;
-            color: $event-timestamp-color;
+        .mx_EventTile_senderDetails {
+            display: flex;
+            margin-top: -2px;
+
+            .mx_DisambiguatedProfile {
+                flex: 1 1 auto;
+                line-height: initial;
+                opacity: 1.0;
+                color: $event-timestamp-color;
+            }
+
+            .mx_MessageTimestamp {
+                flex: 1 0 0;
+                text-align: right;
+                visibility: visible;
+                position: initial;
+                font-size: $font-14px;
+                opacity: 1.0;
+            }
         }
-
-        .mx_MessageTimestamp {
-            flex: 1 0 0;
-            text-align: right;
-            visibility: visible;
-            position: initial;
-            font-size: $font-14px;
-            opacity: 1.0;
-        }
-    }
-
-    /* Overides for the sender details line */
-
-    .mx_EventTile_senderDetails {
-        display: flex;
-        margin-top: -2px;
     }
 
     .mx_EventTile_senderDetailsLink {
