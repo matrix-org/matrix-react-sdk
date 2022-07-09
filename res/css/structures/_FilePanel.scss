@@ -89,17 +89,16 @@ limitations under the License.
 
         .mx_EventTile_senderDetails {
             display: flex;
+            justify-content: space-between;
             margin-top: -2px;
 
             .mx_DisambiguatedProfile {
-                flex: 1 1 auto;
                 line-height: initial;
                 opacity: 1.0;
                 color: $event-timestamp-color;
             }
 
             .mx_MessageTimestamp {
-                flex: 1 0 0;
                 text-align: right;
                 visibility: visible;
                 position: initial;
