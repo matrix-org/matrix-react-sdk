@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657313165063,
+  "lastUpdate": 1657366488559,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107948,6 +107948,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 595.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "03ce8ae3237c03921c0eb6b4519f558a17b12814",
+          "message": "Enable search strings highlight on bubble layout (#9032)\n\n* Move mx_EventTile_searchHighlight out of mx_EventTile:not([data-layout=bubble]) to enable it on bubble layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use a logical property\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-09T13:29:45+02:00",
+          "tree_id": "60a99a72d587cda5dd5d4b56cb0f45f419cf7fb9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/03ce8ae3237c03921c0eb6b4519f558a17b12814"
+        },
+        "date": 1657366475618,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5445.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2207.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4541.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
