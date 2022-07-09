@@ -94,16 +94,12 @@ limitations under the License.
 
             .mx_DisambiguatedProfile {
                 line-height: initial;
-                opacity: 1.0;
                 color: $event-timestamp-color;
             }
 
             .mx_MessageTimestamp {
                 text-align: right;
-                visibility: visible;
-                position: initial;
                 font-size: $font-14px;
-                opacity: 1.0;
             }
         }
     }
