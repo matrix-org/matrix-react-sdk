@@ -131,6 +131,7 @@ $irc-line-height: $font-18px;
         .mx_EventTile_line {
             .mx_EventTile_e2eIcon,
             .mx_TextualEvent,
+            .mx_ViewSourceEvent,
             .mx_MTextBody {
                 display: inline-block;
                 // add a 1px padding top and bottom because our larger emoji font otherwise gets cropped by anti-zalgo
@@ -168,6 +169,7 @@ $irc-line-height: $font-18px;
             left: var(--EventTile_irc_line_info-inset-inline-start);
         }
 
+        .mx_ViewSourceEvent, // For hidden events
         .mx_TextualEvent {
             line-height: $irc-line-height;
         }
