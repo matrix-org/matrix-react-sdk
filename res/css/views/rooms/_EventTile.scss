@@ -354,7 +354,7 @@ $left-gutter: 64px;
 
             .mx_EventTile_line {
                 padding-block: $spacing-block-start $spacing-block-end;
-                padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+                padding-inline-start: calc(var(--EventTile_group_line-spacing-inline-start) + 20px); // 20px: avatar area
 
                 .mx_MessageTimestamp {
                     top: 0;
