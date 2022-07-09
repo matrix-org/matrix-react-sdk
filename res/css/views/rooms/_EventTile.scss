@@ -198,10 +198,6 @@ $left-gutter: 64px;
             .mx_EventTile_e2eIcon {
                 top: 0;
             }
-
-            .mx_EventTile_avatar {
-                height: 14px;
-            }
         }
 
         &.mx_EventTile_continuation .mx_EventTile_line {
@@ -263,6 +259,7 @@ $left-gutter: 64px;
                 left: var(--EventTile_irc_line_info-inset-inline-start);
                 top: 0;
                 margin-right: var(--right-padding);
+                padding-block: var(--EventTile_irc_line-padding-block);
             }
         }
     }
@@ -350,6 +347,7 @@ $left-gutter: 64px;
             .mx_EventTile_avatar {
                 top: initial;
                 inset-inline-start: $left-gutter;
+                height: 14px;
             }
 
             .mx_EventTile_line {
