@@ -256,6 +256,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_knocking": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Knocking"),
+        description: _td("Let users knock on a room to join it."),
+        default: false,
+    },
     "feature_thread": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
