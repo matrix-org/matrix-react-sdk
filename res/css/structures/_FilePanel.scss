@@ -87,28 +87,27 @@ limitations under the License.
             color: $light-fg-color;
         }
 
-        .mx_EventTile_senderDetails {
-            display: flex;
-            justify-content: space-between;
-            margin-top: -2px;
+        // anchor link as wrapper
+        .mx_EventTile_senderDetailsLink {
+            text-decoration: none;
 
-            .mx_DisambiguatedProfile {
-                line-height: initial;
-                color: $event-timestamp-color;
-            }
+            .mx_EventTile_senderDetails {
+                display: flex;
+                justify-content: space-between;
+                margin-top: -2px;
 
-            .mx_MessageTimestamp {
-                text-align: right;
-                font-size: $font-14px;
+                .mx_DisambiguatedProfile {
+                    line-height: initial;
+                    color: $event-timestamp-color;
+                }
+
+                .mx_MessageTimestamp {
+                    text-align: right;
+                    font-size: $font-14px;
+                }
             }
         }
     }
-
-    .mx_EventTile_senderDetailsLink {
-        text-decoration: none;
-    }
-
-    /* Overrides for the wrappers around the body tile */
 
     .mx_EventTile_line {
         margin-inline-end: 0;
