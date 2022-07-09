@@ -28,10 +28,10 @@ limitations under the License.
 
     .mx_RoomView_MessageList {
         width: 100%;
-    }
 
-    .mx_RoomView_MessageList h2 {
-        margin-left: 0px;
+        h2 {
+            margin-left: 0px;
+        }
     }
 
     /* FIXME: rather than having EventTile's default CSS be for MessagePanel,
