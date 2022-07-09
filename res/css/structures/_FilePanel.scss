@@ -71,20 +71,20 @@ limitations under the License.
         .mx_MFileBody_download {
             padding-top: $spacing-8;
             display: flex;
+            justify-content: space-between;
             font-size: $font-14px;
             color: $event-timestamp-color;
+
+            .mx_MImageBody_size {
+                font-size: $font-14px;
+                text-align: right;
+                white-space: nowrap;
+            }
         }
 
         .mx_MFileBody_downloadLink {
             flex: 1 1 auto;
             color: $light-fg-color;
-        }
-
-        .mx_MImageBody_size {
-            flex: 1 0 0;
-            font-size: $font-14px;
-            text-align: right;
-            white-space: nowrap;
         }
 
         .mx_EventTile_senderDetails {
