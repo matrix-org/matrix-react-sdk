@@ -77,8 +77,7 @@ $left-gutter: 64px;
         background-color: $accent;
         color: $accent-fg-color;
         border-radius: 5px;
-        padding-left: 2px;
-        padding-right: 2px;
+        padding-inline: 2px;
         cursor: pointer;
 
         a {
