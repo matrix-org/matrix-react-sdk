@@ -98,7 +98,11 @@ limitations under the License.
 
                 .mx_DisambiguatedProfile {
                     line-height: initial;
-                    color: $event-timestamp-color;
+
+                    .mx_DisambiguatedProfile_displayName,
+                    .mx_DisambiguatedProfile_mxid {
+                        color: $event-timestamp-color;
+                    }
                 }
 
                 .mx_MessageTimestamp {
