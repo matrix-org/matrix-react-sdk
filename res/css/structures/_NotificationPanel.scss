@@ -38,6 +38,10 @@ limitations under the License.
    we should make EventTile a base CSS class and customise it specifically
    for usage in {Message,File,Notification}Panel. */
 
+    .mx_EventTile_avatar {
+        display: none;
+    }
+
     .mx_EventTile {
         word-break: break-word;
         position: relative;
@@ -107,10 +111,6 @@ limitations under the License.
         a {
             color: $primary-content;
         }
-    }
-
-    .mx_EventTile_avatar {
-        display: none; // we don't need this in this view
     }
 
     .mx_EventTile_roomName a,
