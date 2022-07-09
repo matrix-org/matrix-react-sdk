@@ -96,13 +96,9 @@ limitations under the License.
                 justify-content: space-between;
                 margin-top: -2px;
 
-                .mx_DisambiguatedProfile {
-                    line-height: initial;
-
-                    .mx_DisambiguatedProfile_displayName,
-                    .mx_DisambiguatedProfile_mxid {
-                        color: $event-timestamp-color;
-                    }
+                .mx_DisambiguatedProfile_displayName,
+                .mx_DisambiguatedProfile_mxid {
+                    color: $event-timestamp-color;
                 }
 
                 .mx_MessageTimestamp {
