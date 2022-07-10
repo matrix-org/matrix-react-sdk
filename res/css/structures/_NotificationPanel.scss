@@ -30,7 +30,7 @@ limitations under the License.
         width: 100%;
 
         h2 {
-            margin-left: 0px;
+            margin-left: 0;
         }
     }
 
@@ -96,7 +96,7 @@ limitations under the License.
         }
 
         > .mx_BaseAvatar {
-            margin-right: 8px;
+            margin-right: $spacing-8;
         }
 
         a {
@@ -105,11 +105,11 @@ limitations under the License.
     }
 
     .mx_EventTile_selected .mx_EventTile_line {
-        padding-left: 0px;
+        padding-left: 0;
     }
 
     .mx_EventTile_content {
-        margin-right: 0px;
+        margin-right: 0;
     }
 }
 
