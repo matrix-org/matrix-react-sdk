@@ -81,11 +81,19 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
     private onClick = (e: React.MouseEvent): void => {
         const clickTarget = e.target as HTMLElement;
-        // Playling a voice message or changing the play position
+
+        // Clicking an image should open it and
         // should not dispatch the `view_room` action
         if (
+            clickTarget.tagName.toLowerCase() === "img"
+        ) {
+            e.preventDefault();
+        }
+        // Playling a voice message or changing the play position
+        // should not dispatch the `view_room` action
+        else if (
             clickTarget.classList.contains("mx_SeekBar") ||
-            clickTarget.getAttribute("data-test-id") == "play-pause-button"
+            clickTarget.getAttribute("data-test-id") === "play-pause-button"
         ) {
             e.preventDefault();
         }

@@ -26,13 +26,6 @@ import { _t } from "../../../languageHandler";
 const FORCED_IMAGE_HEIGHT = 44;
 
 export default class MImageReplyBody extends MImageBody {
-    public onClick = (ev: React.MouseEvent): void => {
-        ev.preventDefault();
-    };
-
-    public wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
-        return children;
-    }
 
     // Don't show "Download this_file.png ..."
     public getFileBody(): string {
