@@ -88,19 +88,17 @@ limitations under the License.
     }
 
     .mx_EventTile_roomName {
+        display: flex;
+        align-items: center;
+        column-gap: $spacing-8;
         font-weight: bold;
         font-size: $font-14px;
 
-        > * {
-            vertical-align: middle;
-        }
-
-        > .mx_BaseAvatar {
-            margin-right: $spacing-8;
-        }
-
         a {
             color: $primary-content;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
