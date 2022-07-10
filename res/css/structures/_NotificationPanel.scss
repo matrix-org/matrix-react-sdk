@@ -47,17 +47,17 @@ limitations under the License.
         position: relative;
         padding-bottom: 18px;
 
-        .mx_EventTile_senderDetails {
+        .mx_EventTile_senderDetails,
+        .mx_EventTile_line {
             padding-left: 36px; // align with the room name
+        }
+
+        .mx_EventTile_senderDetails {
             position: relative;
 
             a {
                 display: flex;
             }
-        }
-
-        .mx_EventTile_line {
-            padding: 0 0 0 36px; // align with the room name
         }
 
         .mx_DisambiguatedProfile,
