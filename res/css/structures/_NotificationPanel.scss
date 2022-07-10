@@ -55,10 +55,7 @@ limitations under the License.
         }
 
         .mx_MessageTimestamp {
-            visibility: visible;
-            position: initial;
-            display: inline;
-            padding-left: 5px;
+            padding-left: 5px; // TODO: Use a spacing variable
         }
 
         &:hover .mx_EventTile_line {
@@ -111,11 +108,6 @@ limitations under the License.
         a {
             color: $primary-content;
         }
-    }
-
-    .mx_EventTile_roomName a,
-    .mx_EventTile_senderDetails a {
-        text-decoration: none !important;
     }
 
     .mx_EventTile_selected .mx_EventTile_line {
