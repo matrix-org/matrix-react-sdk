@@ -14,18 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { defineConfig } from 'cypress';
 
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
-
-export const RoomResultDetails = ({ room }: { room: Room }) => {
-    const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
-    if (contextDetails) {
-        return <div className="mx_SpotlightDialog_result_details">
-            { contextDetails }
-        </div>;
-    }
-
-    return null;
-};
+export default defineConfig({
+    videoUploadOnPasses: false,
+    projectId: 'ppvnzg',
+    experimentalInteractiveRunEvents: true,
+    defaultCommandTimeout: 10000,
+    chromeWebSecurity: false,
+    e2e: {
+        setupNodeEvents(on, config) {
+            return require('./cypress/plugins/index.ts').default(on, config);
+        },
+        baseUrl: 'http://localhost:8080',
+        experimentalSessionAndOrigin: true,
+        specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    },
+});
