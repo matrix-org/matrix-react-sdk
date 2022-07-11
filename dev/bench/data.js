@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657517922416,
+  "lastUpdate": 1657518731427,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108032,6 +108032,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4704.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d1928d2cb3a19a18256eedc5e6f68bae0da1c670",
+          "message": "Remove obsolete opacity value for E2E icons (#8975)\n\n* Remove obsolete opacity value for E2E icons\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* The opacity declaration is not required after all\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-07-11T07:46:31+02:00",
+          "tree_id": "c17e1b01a01dc060242756226509d4a8e2f175d7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d1928d2cb3a19a18256eedc5e6f68bae0da1c670"
+        },
+        "date": 1657518716046,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5088.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2306.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5262.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
