@@ -1211,9 +1211,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.themeWatcher.recheck();
         StorageManager.tryPersistStorage();
 
-        if (SettingsStore.isLevelSupported(SettingLevel.ACCOUNT) &&
+        if (
             MatrixClientPeg.currentUserIsJustRegistered() &&
-            SettingsStore.getValue("ftueUseCaseSelection") === null) {
+            SettingsStore.getValue("ftueUseCaseSelection") === null
+        ) {
             this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
 
             SettingsStore.watchSetting("ftueUseCaseSelection", null,
