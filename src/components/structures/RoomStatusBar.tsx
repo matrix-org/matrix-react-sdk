@@ -419,7 +419,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     }
 
     private onBugReport = (): void => {
-        Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
+        Modal.createDialog(BugReportDialog, {
             error: this.state.refreshError,
             initialText: 'Error occured while refreshing the timeline',
         });
