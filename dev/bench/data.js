@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657565935635,
+  "lastUpdate": 1657567542193,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108434,6 +108434,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 663.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b6a50ee5a53d928790f0a70a0642005efe1db011",
+          "message": "Add a developer command to reset Megolm and Olm sessions (#9044)\n\nUseful when debugging crypto setup.",
+          "timestamp": "2022-07-11T13:18:50-06:00",
+          "tree_id": "92f727f844a4f199fdc0da1fc5910ff91f3384f7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b6a50ee5a53d928790f0a70a0642005efe1db011"
+        },
+        "date": 1657567522341,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4877.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 660.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
