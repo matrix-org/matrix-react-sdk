@@ -1213,11 +1213,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         if (
             MatrixClientPeg.currentUserIsJustRegistered() &&
-            SettingsStore.getValue("ftueUseCaseSelection") === null
+            SettingsStore.getValue("FTUE.useCaseSelection") === null
         ) {
             this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
 
-            SettingsStore.watchSetting("ftueUseCaseSelection", null,
+            SettingsStore.watchSetting("FTUE.useCaseSelection", null,
                 (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
                     if (newValue !== null && this.state.view === Views.USE_CASE_SELECTION) {
                         this.onShowPostLoginScreen();
@@ -1231,7 +1231,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private async onShowPostLoginScreen(useCase?: UseCase) {
         if (useCase) {
             PosthogAnalytics.instance.setProperty("ftueUseCaseSelection", useCase);
-            SettingsStore.setValue("ftueUseCaseSelection", null, SettingLevel.ACCOUNT, useCase);
+            SettingsStore.setValue("FTUE.useCaseSelection", null, SettingLevel.ACCOUNT, useCase);
         }
 
         this.setStateForNewView({ view: Views.LOGGED_IN });
