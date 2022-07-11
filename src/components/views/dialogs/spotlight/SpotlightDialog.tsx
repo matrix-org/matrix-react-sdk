@@ -545,7 +545,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 const unreadLabel = roomAriaUnreadLabel(result.room, notification);
                 const ariaProperties = {
                     "aria-label": unreadLabel ? `${result.room.name} ${unreadLabel}` : result.room.name,
-                    "aria-details": `mx_SpotlightDialog_button_result_${result.room.roomId}_details`,
+                    "aria-describedby": `mx_SpotlightDialog_button_result_${result.room.roomId}_details`,
                 };
                 return (
                     <Option
@@ -962,7 +962,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             const unreadLabel = roomAriaUnreadLabel(room, notification);
                             const ariaProperties = {
                                 "aria-label": unreadLabel ? `${room.name} ${unreadLabel}` : room.name,
-                                "aria-details": `mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`,
+                                "aria-describedby": `mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`,
                             };
                             return (
                                 <Option
