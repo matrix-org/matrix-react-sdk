@@ -68,6 +68,7 @@ import { FontWatcher } from '../../settings/watchers/FontWatcher';
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import ToastStore from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
+import { UseCase } from "../../settings/enums/UseCase";
 import type LoggedInViewType from "./LoggedInView";
 import LoggedInView from './LoggedInView';
 import { Action } from "../../dispatcher/actions";
@@ -129,7 +130,7 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
-import UseCaseSelection, { UseCase } from '../views/dialogs/UseCaseSelection';
+import UseCaseSelection from '../views/dialogs/UseCaseSelection';
 
 // legacy export
 export { default as Views } from "../../Views";

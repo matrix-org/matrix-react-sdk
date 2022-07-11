@@ -19,13 +19,7 @@ import React from 'react';
 import { _t } from "../../../languageHandler";
 import SplashPage from "../../structures/SplashPage";
 import AccessibleButton from "../elements/AccessibleButton";
-
-export enum UseCase {
-    PersonalMessaging = "PersonalMessaging",
-    WorkMessaging = "WorkMessaging",
-    CommunityMessaging = "CommunityMessaging",
-    Skip = "Skip"
-}
+import { UseCase } from "../../../settings/enums/UseCase";
 
 interface Props {
     onFinished: (useCase: UseCase) => void;
