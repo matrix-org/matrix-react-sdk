@@ -265,7 +265,7 @@ function setupRoomWithHistoricalMessagesAndMarker({
             name: "test-msc2716",
             room_version: "org.matrix.msc2716v3",
         });
-        cy.wrap(resp.room_id) .as('roomId');
+        cy.wrap(resp.room_id).as('roomId');
     });
 
     cy.get<string>("@roomId").then((roomId) => {
@@ -386,6 +386,7 @@ describe("MSC2716: Historical Import", () => {
 
             // Get a Matrix Client for the application service
             cy.newMatrixClient(synapse, {
+                baseUrl: synapse.baseUrl,
                 userId: '@gitter-badger:localhost',
                 accessToken: AS_TOKEN,
             }).then(matrixClient => {

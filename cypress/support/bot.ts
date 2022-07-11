@@ -18,15 +18,9 @@ limitations under the License.
 
 import request from "browser-request";
 
-import type { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import type { MatrixClient, Room, IMatrixClientCreateOpts } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
-
-interface INewMatrixClientOptions {
-    userId: string;
-    accessToken: string;
-    deviceId?: string;
-}
 
 interface CreateBotOpts {
     /**
@@ -60,7 +54,7 @@ declare global {
              * @param opts Options to pass when creating a new Matrix client
              *     like `userId` and `accessToken`
              */
-            newMatrixClient(synapse: SynapseInstance, opts: INewMatrixClientOptions): Chainable<MatrixClient>;
+            newMatrixClient(synapse: SynapseInstance, opts: IMatrixClientCreateOpts): Chainable<MatrixClient>;
             /**
              * Let a bot join a room
              * @param cli The bot's MatrixClient
@@ -79,15 +73,12 @@ declare global {
 
 Cypress.Commands.add("newMatrixClient", (
     synapse: SynapseInstance,
-    { userId, accessToken, deviceId }: INewMatrixClientOptions,
+    opts: IMatrixClientCreateOpts,
 ): Chainable<MatrixClient> => {
     return cy.window({ log: false }).then(win => {
         const cli = new win.matrixcs.MatrixClient({
-            baseUrl: synapse.baseUrl,
-            userId,
-            deviceId,
-            accessToken,
             request,
+            ...opts,
         });
 
         cli.startClient();
@@ -96,7 +87,6 @@ Cypress.Commands.add("newMatrixClient", (
     });
 });
 
-// TODO: Can we re-use `newMatrixClient` again here?
 Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: CreateBotOpts): Chainable<MatrixClient> => {
     opts = Object.assign({}, defaultCreateBotOptions, opts);
     const username = Cypress._.uniqueId("userId_");
