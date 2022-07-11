@@ -699,7 +699,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: null,
     },
     "ftueUseCaseSelection": {
-        supportedLevels: [SettingLevel.ACCOUNT],
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
     "autocompleteDelay": {
