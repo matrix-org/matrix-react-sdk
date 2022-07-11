@@ -14,18 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
+import React from 'react';
 
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
+import { Icon as WarningIcon } from '../../../../../res/img/warning.svg';
 
-export const RoomResultDetails = ({ room }: { room: Room }) => {
-    const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
-    if (contextDetails) {
-        return <div className="mx_SpotlightDialog_result_details">
-            { contextDetails }
-        </div>;
-    }
+interface Props {
+    className?: string;
+    children: React.ReactNode;
+}
 
-    return null;
-};
+const MediaProcessingError: React.FC<Props> = ({ className, children }) => (
+    <span className={className}>
+        <WarningIcon className='mx_MediaProcessingError_Icon' width="16" height="16" />
+        { children }
+    </span>
+);
+
+export default MediaProcessingError;
