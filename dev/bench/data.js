@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657519073676,
+  "lastUpdate": 1657526573741,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108116,6 +108116,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4837.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8c67984f50f985aa481df24778078030efa39001",
+          "message": "Remove `mock` from `KeyboardShortcuts.ts` (#9034)",
+          "timestamp": "2022-07-11T09:56:20+02:00",
+          "tree_id": "9da7c24718854ca5135e8fb154b41bb693711d95",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8c67984f50f985aa481df24778078030efa39001"
+        },
+        "date": 1657526554410,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5499.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2672.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5654.5,
             "unit": "ms",
             "extra": "type: measure"
           }
