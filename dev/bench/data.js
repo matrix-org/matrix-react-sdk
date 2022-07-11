@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657518731427,
+  "lastUpdate": 1657519073676,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108074,6 +108074,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5262.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "19e514d83cc107ae7ef9372e9b6782a312e45cbf",
+          "message": "Remove dead code (#9035)",
+          "timestamp": "2022-07-11T07:52:44+02:00",
+          "tree_id": "2ecff2b302f00b13f4a7f1b4a7bacd29cf58e1fd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/19e514d83cc107ae7ef9372e9b6782a312e45cbf"
+        },
+        "date": 1657519059222,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5613.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2635.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4837.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
