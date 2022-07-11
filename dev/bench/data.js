@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657526573741,
+  "lastUpdate": 1657534422727,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108158,6 +108158,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5654.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "32c008b3f06be10e2fad5c18f692c682272d7ab1",
+          "message": "Add additional metadata to feedback submitted through spotlight dialog (#9024)",
+          "timestamp": "2022-07-11T12:00:40+02:00",
+          "tree_id": "5ef197913516e5c4dcac8a2e34b9f8eae34e179d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/32c008b3f06be10e2fad5c18f692c682272d7ab1"
+        },
+        "date": 1657534404688,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4914.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1261.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
