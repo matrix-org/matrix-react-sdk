@@ -17,7 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/matrix";
 import React, { ComponentPropsWithoutRef, ElementType } from "react";
 
-import { roomContextDetails } from "../../../../utils/i18n-helpers";
+import { roomContextDetails } from "../../../utils/i18n-helpers";
 
 type Props<T extends ElementType> = ComponentPropsWithoutRef<T> & {
     component?: T;
