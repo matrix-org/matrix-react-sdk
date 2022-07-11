@@ -1037,28 +1037,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 break;
         }
 
+        let ref: RefObject<HTMLElement>;
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (accessibilityAction) {
             case KeyBindingAction.Escape:
                 ev.stopPropagation();
                 ev.preventDefault();
                 onFinished();
-                break;
-        }
-    };
-
-    const onKeyDown = (ev: KeyboardEvent) => {
-        let ref: RefObject<HTMLElement>;
-
-        const action = getKeyBindingsManager().getAccessibilityAction(ev);
-
-        switch (action) {
-            case KeyBindingAction.Backspace:
-                if (!query && filter !== null) {
-                    ev.stopPropagation();
-                    ev.preventDefault();
-                    setFilter(null);
-                }
                 break;
             case KeyBindingAction.ArrowUp:
             case KeyBindingAction.ArrowDown:
@@ -1078,7 +1063,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     }
 
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowUp ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1));
                 }
                 break;
 
@@ -1095,13 +1080,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowLeft ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1));
                 }
-                break;
-            case KeyBindingAction.Enter:
-                ev.stopPropagation();
-                ev.preventDefault();
-                rovingContext.state.activeRef?.current?.click();
                 break;
         }
 
@@ -1113,6 +1093,25 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             ref.current?.scrollIntoView({
                 block: "nearest",
             });
+        }
+    };
+
+    const onKeyDown = (ev: KeyboardEvent) => {
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        switch (action) {
+            case KeyBindingAction.Backspace:
+                if (!query && filter !== null) {
+                    ev.stopPropagation();
+                    ev.preventDefault();
+                    setFilter(null);
+                }
+                break;
+            case KeyBindingAction.Enter:
+                ev.stopPropagation();
+                ev.preventDefault();
+                rovingContext.state.activeRef?.current?.click();
+                break;
         }
     };
 
