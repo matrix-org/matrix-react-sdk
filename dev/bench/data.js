@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657366488559,
+  "lastUpdate": 1657517922416,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -107990,6 +107990,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4541.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8641a5210bc1c960e27e33a66fa36126b65beefa",
+          "message": "Add LocalRoom (#9023)",
+          "timestamp": "2022-07-11T07:33:37+02:00",
+          "tree_id": "7ac5adec471da4ba273b531d88859b50cfe92ddb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8641a5210bc1c960e27e33a66fa36126b65beefa"
+        },
+        "date": 1657517908905,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5435.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2138.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4704.5,
             "unit": "ms",
             "extra": "type: measure"
           }
