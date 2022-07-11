@@ -88,7 +88,7 @@ import FeedbackDialog from "../FeedbackDialog";
 import { IDialogProps } from "../IDialogProps";
 import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
-import { RoomResultDetails } from "./RoomResultDetails";
+import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
 
 const MAX_RECENT_SEARCHES = 10;
@@ -561,8 +561,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         />
                         { result.room.name }
                         <NotificationBadge notification={notification} />
-                        <RoomResultDetails
+                        <RoomContextDetails
                             id={`mx_SpotlightDialog_button_result_${result.room.roomId}_details`}
+                            className="mx_SpotlightDialog_result_details"
                             room={result.room}
                         />
                     </Option>
@@ -934,8 +935,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                     />
                                     { room.name }
                                     <NotificationBadge notification={notification} />
-                                    <RoomResultDetails
+                                    <RoomContextDetails
                                         id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`}
+                                        className="mx_SpotlightDialog_result_details"
                                         room={room}
                                     />
                                 </Option>
