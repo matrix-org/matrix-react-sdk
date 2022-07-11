@@ -26,10 +26,8 @@ limitations under the License.
         justify-content: end;
 
         h1 {
-            /* Values from design, not yet replaced with variables */
             font-weight: 600;
-            font-size: 32px;
-            line-height: 39px;
+            font-size: $font-32px;
             text-align: center;
         }
     }
@@ -41,20 +39,16 @@ limitations under the License.
         align-self: end;
 
         h2 {
-            /* Values from design, not yet replaced with variables */
             margin: 0;
             font-weight: 500;
-            font-size: 24px;
-            line-height: 32px;
+            font-size: $font-24px;
             text-align: center;
         }
 
         h4 {
-            /* Values from design, not yet replaced with variables */
             margin: 0;
             font-weight: 400;
-            font-size: 16px;
-            line-height: 19px;
+            font-size: $font-16px;
             color: $secondary-content;
             text-align: center;
         }
@@ -62,7 +56,6 @@ limitations under the License.
 
     .mx_UseCaseSelection_options {
         display: grid;
-        /* Values from design, not yet replaced with variables */
         grid-template-columns: repeat(auto-fit, 232px);
         gap: $spacing-32;
         align-self: stretch;
@@ -79,16 +72,17 @@ limitations under the License.
             text-align: center;
 
             .mx_UseCaseSelection_icon {
-                /* Values from design, not yet replaced with variables */
+                /* workaround: design expects a layering of two colors */
                 background: linear-gradient(0deg, rgba(172, 59, 168, 0.15), rgba(172, 59, 168, 0.15)), #FFFFFF;
                 border-radius: 14px;
                 padding: $spacing-8;
                 margin-bottom: $spacing-16;
 
                 &::before {
-                    /* Values from design, not yet replaced with variables */
                     content: "";
                     display: block;
+                    /* this has to remain the same color across all themes,
+                       as its background has a fixed color as well */
                     background: #1E1E1E;
                     mask-position: center;
                     mask-repeat: no-repeat;
@@ -119,7 +113,6 @@ limitations under the License.
     }
 }
 
-/* Animation duration, delay, and positioning not yet final */
 .mx_UseCaseSelection_slideIn {
     animation-delay: 800ms;
     animation-duration: 300ms;
