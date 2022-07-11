@@ -260,7 +260,7 @@ const findVisibleRoomMembers = (cli: MatrixClient, filterDMs = true) => {
     ).filter(it => it.userId !== cli.getUserId());
 };
 
-const roomAriaDescription = (room: Room, notification: RoomNotificationState): string | undefined => {
+const roomAriaUnreadLabel = (room: Room, notification: RoomNotificationState): string | undefined => {
     if (notification.hasMentions) {
         return _t("%(count)s unread messages including mentions.", {
             count: notification.count,
@@ -542,8 +542,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             if (isRoomResult(result)) {
                 const notification = RoomNotificationStateStore.instance.getRoomState(result.room);
                 const ariaProperties = {
-                    "aria-label": result.room.name,
-                    "aria-description": roomAriaDescription(result.room, notification),
+                    "aria-label": `${result.room.name} ${roomAriaUnreadLabel(result.room, notification)}`,
                     "aria-details": `mx_SpotlightDialog_button_result_${result.room.roomId}_details`,
                 };
                 return (
@@ -916,8 +915,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         { recentSearches.map(room => {
                             const notification = RoomNotificationStateStore.instance.getRoomState(room);
                             const ariaProperties = {
-                                "aria-label": room.name,
-                                "aria-description": roomAriaDescription(room, notification),
+                                "aria-label": `${room.name} ${roomAriaUnreadLabel(room, notification)}`,
                                 "aria-details": `mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`,
                             };
                             return (
