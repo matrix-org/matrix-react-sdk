@@ -21,11 +21,6 @@ limitations under the License.
     height: 38px;
     box-sizing: content-box;
     padding-top: $spacing-8;
-
-    // override copyable text style to make compact
-    .mx_CopyableText_copyButton {
-        margin-left: 0 !important;
-    }
 }
 
 .mx_BeaconStatusTooltip_inner {

@@ -254,7 +254,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
         logger.error("Failed to change password: " + errMsg);
-        Modal.createTrackedDialog('Failed to change password', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("Error"),
             description: errMsg,
         });
@@ -268,14 +268,14 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
         }
         // TODO: Figure out a design that doesn't involve replacing the current dialog
-        Modal.createTrackedDialog('Password changed', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("Success"),
             description,
         });
     };
 
     private onDeactivateClicked = (): void => {
-        Modal.createTrackedDialog('Deactivate Account', '', DeactivateAccountDialog, {
+        Modal.createDialog(DeactivateAccountDialog, {
             onFinished: (success) => {
                 if (success) this.props.closeSettingsFn();
             },
@@ -427,7 +427,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             <div className="mx_SettingsTab_section">
                 <span className="mx_SettingsTab_subheading">{ _t("Account management") }</span>
                 <span className="mx_SettingsTab_subsectionText">
-                    { _t("Deactivating your account is a permanent action - be careful!") }
+                    { _t("Deactivating your account is a permanent action — be careful!") }
                 </span>
                 <AccessibleButton onClick={this.onDeactivateClicked} kind="danger">
                     { _t("Deactivate Account") }

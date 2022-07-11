@@ -16,21 +16,10 @@ limitations under the License.
 
 .mx_PreferencesUserSettingsTab {
     .mx_Field {
-        @mixin mx_Settings_fullWidthField;
+        margin-inline-end: var(--SettingsTab_fullWidthField-margin-inline-end);
     }
 
     .mx_SettingsTab_section {
-        margin-bottom: 30px;
-
-        > details {
-            > summary {
-                cursor: pointer;
-                color: $primary-content;
-            }
-
-            & + .mx_SettingsFlag {
-                margin-top: 20px;
-            }
-        }
+        margin-bottom: var(--SettingsTab_section-margin-bottom-preferences-labs);
     }
 }

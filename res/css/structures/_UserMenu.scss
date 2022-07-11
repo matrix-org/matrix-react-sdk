@@ -22,10 +22,14 @@ limitations under the License.
     .mx_AccessibleButton {
         display: flex;
         align-items: center;
-    }
 
-    .mx_UserMenu_userAvatar {
-        position: relative;
+        .mx_UserMenu_userAvatar {
+            position: relative;
+
+            .mx_BaseAvatar {
+                pointer-events: none; // makes the avatar non-draggable
+            }
+        }
     }
 
     .mx_UserMenu_name {
@@ -33,13 +37,6 @@ limitations under the License.
         font-size: $font-15px;
         line-height: $font-24px;
         margin-left: 10px;
-    }
-
-    .mx_UserMenu_cutout .mx_BaseAvatar {
-        mask-image: url('$(res)/img/element-icons/roomlist/dnd-avatar-mask.svg');
-        mask-position: center;
-        mask-size: contain;
-        mask-repeat: no-repeat;
     }
 
     .mx_UserMenu_dndBadge {

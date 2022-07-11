@@ -37,7 +37,7 @@ $info-plinth-fg-color: #888;
 $spacePanel-bg-color: $base-color;
 $inverted-bg-color: $spacePanel-bg-color;
 
-// used by AddressSelector
+// used by Autocomplete
 $selected-color: $room-highlight-color;
 
 // selected for hoverover & selected event tiles
@@ -77,8 +77,6 @@ $lightbox-background-bg-color: #000;
 $lightbox-background-bg-opacity: 0.85;
 
 $settings-grey-fg-color: #a2a2a2;
-$settings-profile-overlay-placeholder-fg-color: #454545;
-$settings-profile-button-bg-color: #e7e7e7;
 $settings-subsection-fg-color: $text-secondary-color;
 
 $topleftmenu-color: $text-primary-color;

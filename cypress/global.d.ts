@@ -14,30 +14,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import "../src/@types/global";
+import "../src/@types/svg";
+import "../src/@types/raw-loader";
 import "matrix-js-sdk/src/@types/global";
-import type { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
-import type { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
-import type { Preset } from "matrix-js-sdk/src/@types/partials";
+import type {
+    MatrixClient,
+    ClientEvent,
+    MatrixScheduler,
+    MemoryCryptoStore,
+    MemoryStore,
+    Preset,
+    RoomStateEvent,
+    Visibility,
+    RoomMemberEvent,
+} from "matrix-js-sdk/src/matrix";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
-//import type SettingsStore from "../src/settings/SettingsStore";
+import type SettingsStore from "../src/settings/SettingsStore";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface ApplicationWindow {
+            mxSettingsStore: typeof SettingsStore;
             mxMatrixClientPeg: {
                 matrixClient?: MatrixClient;
             };
             mxDispatcher: MatrixDispatcher;
             mxPerformanceMonitor: PerformanceMonitor;
-            //mxSettingsStore: SettingsStore; // to allow for adjusting settings in tests
             beforeReload?: boolean; // for detecting reloads
             // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
                 MatrixClient: typeof MatrixClient;
                 ClientEvent: typeof ClientEvent;
                 RoomMemberEvent: typeof RoomMemberEvent;
+                RoomStateEvent: typeof RoomStateEvent;
+                MatrixScheduler: typeof MatrixScheduler;
+                MemoryStore: typeof MemoryStore;
+                MemoryCryptoStore: typeof MemoryCryptoStore;
+                Visibility: typeof Visibility;
                 Preset: typeof Preset;
             };
         }
@@ -49,8 +65,6 @@ declare global {
         // to appease the PerformanceMonitor import
         mxPerformanceMonitor: PerformanceMonitor;
         mxPerformanceEntryNames: any;
-        // to allow for adjusting settings in tests
-        //mxSettingsStore: SettingsStore;
     }
 }
 

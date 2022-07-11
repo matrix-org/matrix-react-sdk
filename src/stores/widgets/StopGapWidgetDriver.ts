@@ -46,10 +46,10 @@ import { WidgetType } from "../../widgets/WidgetType";
 import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
-import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permalinks";
 import SettingsStore from "../../settings/SettingsStore";
 import { RoomViewStore } from "../RoomViewStore";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
+import { navigateToPermalink } from "../../utils/permalinks/navigator";
 
 // TODO: Purge this from the universe
 
@@ -118,8 +118,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         let rememberApproved = false;
         if (missing.size > 0) {
             try {
-                const [result] = await Modal.createTrackedDialog(
-                    'Approve Widget Caps', '',
+                const [result] = await Modal.createDialog(
                     WidgetCapabilitiesPromptDialog,
                     {
                         requestedCapabilities: missing,
@@ -265,7 +264,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         observer.update({ state: OpenIDRequestState.PendingUserConfirmation });
 
-        Modal.createTrackedDialog("OpenID widget permissions", '', WidgetOpenIDPermissionsDialog, {
+        Modal.createDialog(WidgetOpenIDPermissionsDialog, {
             widget: this.forWidget,
             widgetKind: this.forWidgetKind,
             inRoomId: this.inRoomId,
@@ -281,10 +280,6 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async navigate(uri: string): Promise<void> {
-        const localUri = tryTransformPermalinkToLocalHref(uri);
-        if (!localUri || localUri === uri) { // parse failure can lead to an unmodified URL
-            throw new Error("Failed to transform URI");
-        }
-        window.location.hash = localUri; // it'll just be a fragment
+        navigateToPermalink(uri);
     }
 }
