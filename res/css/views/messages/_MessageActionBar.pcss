@@ -56,6 +56,9 @@ limitations under the License.
 
         .mx_GenericEventListSummary[data-layout="bubble"] .mx_GenericEventListSummary_toggle ~ .mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type & {
             // improve clickability of "collapse" link button on bubble layout by reducing width and height values
+            // mx_GenericEventListSummary_toggle ~: to apply rules to action bar when "collapse" button is available
+            // mx_EventTile_info:first-of-type: to apply rules to the info event tile just under "collapse" button
+            // TODO: use a new class name instead
             width: 100%;
             height: 100%;
             top: 0;
