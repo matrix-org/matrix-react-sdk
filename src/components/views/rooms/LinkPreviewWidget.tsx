@@ -118,7 +118,7 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
 
         // Don't show anything if we're about to render nothing
         if (!img && !p["og:description"] && !p["og:title"]) {
-            return <React.Fragment />;
+            return null;
         }
 
         // The description includes &-encoded HTML entities, we decode those as React treats the thing as an
