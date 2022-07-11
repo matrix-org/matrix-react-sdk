@@ -51,18 +51,21 @@ limitations under the License.
         text-decoration: underline;
     }
 
+    // Emulate mx_EventTile[data-layout=group]
     .mx_EventTile {
         padding-top: 0 !important; // Override mx_EventTile:not([data-layout=bubble])
 
         .mx_MessageTimestamp {
             position: absolute;
+            left: 0;
+            text-align: center;
         }
 
         .mx_EventTile_line {
-            padding-top: 1px;
-            padding-bottom: 3px;
-
-            line-height: $font-22px;
+            padding-top: var(--EventTile_group_line-spacing-block-start);
+            padding-bottom: var(--EventTile_group_line-spacing-block-end);
+            padding-left: var(--EventTile_group_line-spacing-inline-start);
+            line-height: var(--EventTile_group_line-line-height);
 
             .mx_EventTile_content {
                 margin-right: 0px;

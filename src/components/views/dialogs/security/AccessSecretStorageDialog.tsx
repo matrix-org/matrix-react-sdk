@@ -328,8 +328,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 <p>{ _t(
                     "Enter your Security Phrase or <button>use your Security Key</button> to continue.", {},
                     {
-                        button: s => <AccessibleButton className="mx_linkButton"
-                            element="span"
+                        button: s => <AccessibleButton
+                            kind="link_inline"
                             onClick={this.onUseRecoveryKeyClick}
                         >
                             { s }
@@ -366,8 +366,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
             const feedbackClasses = classNames({
                 'mx_AccessSecretStorageDialog_recoveryKeyFeedback': true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback_valid': this.state.recoveryKeyCorrect === true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback_invalid': this.state.recoveryKeyCorrect === false,
+                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--valid': this.state.recoveryKeyCorrect === true,
+                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--invalid': this.state.recoveryKeyCorrect === false,
             });
             const recoveryKeyFeedback = <div className={feedbackClasses}>
                 { this.getKeyValidationText() }

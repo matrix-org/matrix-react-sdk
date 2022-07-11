@@ -25,6 +25,7 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { ElementWidgetActions } from "./widgets/ElementWidgetActions";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "./widgets/WidgetMessagingStore";
+import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "./ActiveWidgetStore";
 import { STUCK_DEVICE_TIMEOUT_MS, getVideoChannel, addOurDevice, removeOurDevice } from "../utils/VideoChannelUtils";
 import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
@@ -109,7 +110,11 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         SettingsStore.setValue("videoInputMuted", null, SettingLevel.DEVICE, value);
     }
 
-    public connect = async (roomId: string, audioDevice: MediaDeviceInfo, videoDevice: MediaDeviceInfo) => {
+    public connect = async (
+        roomId: string,
+        audioDevice: MediaDeviceInfo | null,
+        videoDevice: MediaDeviceInfo | null,
+    ) => {
         if (this.activeChannel) await this.disconnect();
 
         const jitsi = getVideoChannel(roomId);
@@ -197,13 +202,14 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
             messaging,
             `action:${ElementWidgetActions.JoinCall}`,
             (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
                 this.ack(ev);
                 return true;
             },
         );
         messaging.transport.send(ElementWidgetActions.JoinCall, {
-            audioDevice: audioDevice?.label,
-            videoDevice: videoDevice?.label,
+            audioDevice: audioDevice?.label ?? null,
+            videoDevice: videoDevice?.label ?? null,
         });
         try {
             await Promise.race([waitForJoin, dontStopMessaging]);
@@ -230,6 +236,8 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         }
 
         this.connected = true;
+        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Dock, this.onDock);
+        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Undock, this.onUndock);
         this.room.on(RoomEvent.MyMembership, this.onMyMembership);
         window.addEventListener("beforeunload", this.setDisconnected);
 
@@ -260,8 +268,14 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         const roomId = this.roomId;
         const room = this.room;
 
-        this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
+        this.activeChannel.off(`action:${ElementWidgetActions.MuteAudio}`, this.onMuteAudio);
+        this.activeChannel.off(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
+        this.activeChannel.off(`action:${ElementWidgetActions.MuteVideo}`, this.onMuteVideo);
+        this.activeChannel.off(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
+        this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Dock, this.onDock);
+        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Undock, this.onUndock);
         room.off(RoomEvent.MyMembership, this.onMyMembership);
         window.removeEventListener("beforeunload", this.setDisconnected);
         clearInterval(this.resendDevicesTimer);
@@ -277,47 +291,65 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         await removeOurDevice(room);
     };
 
-    private ack = (ev: CustomEvent<IWidgetApiRequest>) => {
+    private ack = (ev: CustomEvent<IWidgetApiRequest>, messaging = this.activeChannel) => {
         // Even if we don't have a reply to a given widget action, we still need
         // to give the widget API something to acknowledge receipt
-        this.activeChannel.transport.reply(ev.detail, {});
+        messaging.transport.reply(ev.detail, {});
     };
 
     private onHangup = async (ev: CustomEvent<IWidgetApiRequest>) => {
-        this.ack(ev);
+        ev.preventDefault();
+        const messaging = this.activeChannel;
         // In case this hangup is caused by Jitsi Meet crashing at startup,
         // wait for the connection event in order to avoid racing
         if (!this.connected) await waitForEvent(this, VideoChannelEvent.Connect);
         await this.setDisconnected();
+        this.ack(ev, messaging);
     };
 
     private onParticipants = (ev: CustomEvent<IWidgetApiRequest>) => {
+        ev.preventDefault();
         this.participants = ev.detail.data.participants as IJitsiParticipant[];
         this.emit(VideoChannelEvent.Participants, this.roomId, ev.detail.data.participants);
         this.ack(ev);
     };
 
     private onMuteAudio = (ev: CustomEvent<IWidgetApiRequest>) => {
+        ev.preventDefault();
         this.audioMuted = true;
         this.ack(ev);
     };
 
     private onUnmuteAudio = (ev: CustomEvent<IWidgetApiRequest>) => {
+        ev.preventDefault();
         this.audioMuted = false;
         this.ack(ev);
     };
 
     private onMuteVideo = (ev: CustomEvent<IWidgetApiRequest>) => {
+        ev.preventDefault();
         this.videoMuted = true;
         this.ack(ev);
     };
 
     private onUnmuteVideo = (ev: CustomEvent<IWidgetApiRequest>) => {
+        ev.preventDefault();
         this.videoMuted = false;
         this.ack(ev);
     };
 
     private onMyMembership = (room: Room, membership: string) => {
         if (membership !== "join") this.setDisconnected();
+    };
+
+    private onDock = async () => {
+        // The widget is no longer a PiP, so let's restore the default layout
+        await this.activeChannel.transport.send(ElementWidgetActions.TileLayout, {});
+    };
+
+    private onUndock = async () => {
+        // The widget has become a PiP, so let's switch Jitsi to spotlight mode
+        // to only show the active speaker and economize on space
+        await this.activeChannel.transport.send(ElementWidgetActions.SpotlightLayout, {});
     };
 }

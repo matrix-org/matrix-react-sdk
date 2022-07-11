@@ -362,7 +362,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         ) {
             // hide chat in right panel when the widget is minimized
             RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
-            RightPanelStore.instance.togglePanel();
+            RightPanelStore.instance.togglePanel(this.state.roomId);
         }
         this.checkWidgets(this.state.room);
     };
@@ -1031,6 +1031,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
+
+        if (
+            this.getMainSplitContentType(room) !== MainSplitContentType.Timeline
+            && RoomNotificationStateStore.instance.getRoomState(room).isUnread
+        ) {
+            // Automatically open the chat panel to make unread messages easier to discover
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.Timeline }, true, room.roomId);
+        }
 
         this.setState({
             tombstone: this.getRoomTombstone(room),
@@ -1756,7 +1764,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private get messagePanelClassNames(): string {
         return classNames("mx_RoomView_messagePanel", {
             mx_IRCLayout: this.state.layout === Layout.IRC,
-            mx_GroupLayout: this.state.layout === Layout.Group,
         });
     }
 
