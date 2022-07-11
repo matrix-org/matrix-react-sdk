@@ -352,16 +352,14 @@ export default class ContentMessages {
         text: string,
         matrixClient: MatrixClient,
     ): Promise<ISendEventResponse> {
-        const prom = doMaybeLocalRoomAction(
+        return doMaybeLocalRoomAction(
             roomId,
             (actualRoomId: string) => matrixClient.sendStickerMessage(actualRoomId, threadId, url, info, text),
             matrixClient,
-        );
-        prom.catch((e) => {
+        ).catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
-        return prom;
     }
 
     public getUploadLimit(): number | null {

@@ -71,8 +71,6 @@ export function stubClient() {
  */
 export function createTestClient(): MatrixClient {
     const eventEmitter = new EventEmitter();
-    const sendMessage = jest.fn();
-    sendMessage.mockResolvedValue({});
     let txnId = 1;
 
     return {
@@ -129,7 +127,7 @@ export function createTestClient(): MatrixClient {
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
         sendTyping: jest.fn().mockResolvedValue({}),
-        sendMessage,
+        sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
         getSyncState: () => "SYNCING",
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
