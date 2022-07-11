@@ -541,8 +541,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         const resultMapper = (result: Result): JSX.Element => {
             if (isRoomResult(result)) {
                 const notification = RoomNotificationStateStore.instance.getRoomState(result.room);
+                const unreadLabel = roomAriaUnreadLabel(result.room, notification);
                 const ariaProperties = {
-                    "aria-label": `${result.room.name} ${roomAriaUnreadLabel(result.room, notification)}`,
+                    "aria-label": unreadLabel ? `${result.room.name} ${unreadLabel}` : result.room.name,
                     "aria-details": `mx_SpotlightDialog_button_result_${result.room.roomId}_details`,
                 };
                 return (
@@ -956,8 +957,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     <div>
                         { recentSearches.map(room => {
                             const notification = RoomNotificationStateStore.instance.getRoomState(room);
+                            const unreadLabel = roomAriaUnreadLabel(room, notification);
                             const ariaProperties = {
-                                "aria-label": `${room.name} ${roomAriaUnreadLabel(room, notification)}`,
+                                "aria-label": unreadLabel ? `${room.name} ${unreadLabel}` : room.name,
                                 "aria-details": `mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`,
                             };
                             return (
