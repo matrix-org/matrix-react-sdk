@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657553789722,
+  "lastUpdate": 1657565935635,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108398,6 +108398,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5203.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "62f3a9ae058a3c6157255171e0f7e5f112883758",
+          "message": "Safely grab the OpenGraph title out of the URL preview for link safety (#9028)",
+          "timestamp": "2022-07-11T12:53:45-06:00",
+          "tree_id": "40cea83974f6dbda5849d71ced2aeae825768f23",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/62f3a9ae058a3c6157255171e0f7e5f112883758"
+        },
+        "date": 1657565921150,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4860.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 663.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
