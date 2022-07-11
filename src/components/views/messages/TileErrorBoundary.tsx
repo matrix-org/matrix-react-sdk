@@ -76,9 +76,12 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
 
             let submitLogsButton;
             if (SdkConfig.get().bug_report_endpoint_url) {
-                submitLogsButton = <AccessibleButton kind="link" onClick={this.onBugReport}>
-                    { _t("Submit logs") }
-                </AccessibleButton>;
+                submitLogsButton = <>
+                    &nbsp;
+                    <AccessibleButton kind="link" onClick={this.onBugReport}>
+                        { _t("Submit logs") }
+                    </AccessibleButton>
+                </>;
             }
 
             let viewSourceButton;
@@ -95,7 +98,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                 <div className="mx_EventTile_line">
                     <span>
                         { _t("Can't load this message") }
-                        { mxEvent && ` (${mxEvent.getType()})` } &nbsp;
+                        { mxEvent && ` (${mxEvent.getType()})` }
                         { submitLogsButton }
                         { viewSourceButton }
                     </span>
