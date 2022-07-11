@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657539828297,
+  "lastUpdate": 1657542409414,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108272,6 +108272,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5532.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "2803622+HarHarLinks@users.noreply.github.com",
+            "name": "Kim Brose",
+            "username": "HarHarLinks"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3855c442998110772086ef336bf230e3ef7ffddf",
+          "message": "add spaces to TileErrorBoundary (#9012)",
+          "timestamp": "2022-07-11T12:20:36Z",
+          "tree_id": "02d0dce442ddcec167714dc40daecdbd040792f8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3855c442998110772086ef336bf230e3ef7ffddf"
+        },
+        "date": 1657542391217,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5342.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2494.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5132,
             "unit": "ms",
             "extra": "type: measure"
           }
