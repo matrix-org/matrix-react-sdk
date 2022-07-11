@@ -3378,7 +3378,7 @@
     "Check if you want to hide all current and future messages from this user.": "Označte, či chcete skryť všetky aktuálne a budúce správy od tohto používateľa.",
     "Ignore user": "Ignorovať používateľa",
     "View related event": "Zobraziť súvisiacu udalosť",
-    "Read receipts": "Prečítať potvrdenia",
+    "Read receipts": "Potvrdenia o prečítaní",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Povoliť hardvérovú akceleráciu (reštartujte %(appName)s, aby sa to prejavilo)",
     "Failed to set direct message tag": "Nepodarilo sa nastaviť značku priamej správy",
     "You were disconnected from the call. (Error: %(message)s)": "Boli ste odpojení od hovoru. (Chyba: %(message)s)",
