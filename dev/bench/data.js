@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657539133776,
+  "lastUpdate": 1657539828297,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108230,6 +108230,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 624.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a9d689650218ae11c00eef1000bbaedf14cc5002",
+          "message": "Correct accessibility labels for unread rooms in spotlight (#9003)\n\n* Correct accessibility labels for unread rooms in spotlight\r\n* Improve public room result accessibility\r\n* Improve room result accessibility",
+          "timestamp": "2022-07-11T11:34:23Z",
+          "tree_id": "d943e758261488efeee6d5558fc1e7accdb6808e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a9d689650218ae11c00eef1000bbaedf14cc5002"
+        },
+        "date": 1657539813728,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5361.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2667.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5532.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
