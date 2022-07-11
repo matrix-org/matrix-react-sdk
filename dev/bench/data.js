@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1657542409414,
+  "lastUpdate": 1657544960832,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -108314,6 +108314,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5132,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7f07443161105930321e2c73a1df9f1303f51e73",
+          "message": "Re-add `timeline.spec.ts` (#9040)",
+          "timestamp": "2022-07-11T12:58:20Z",
+          "tree_id": "3146a4b1da97b3e4b9cce53828f43a495c2188f0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7f07443161105930321e2c73a1df9f1303f51e73"
+        },
+        "date": 1657544943323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6145.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2484,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5322.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
