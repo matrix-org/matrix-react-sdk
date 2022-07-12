@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { normalize } from "matrix-js-sdk/src/utils";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import classNames from 'classnames';

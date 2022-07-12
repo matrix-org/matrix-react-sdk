@@ -45,7 +45,10 @@ limitations under the License.
  */
 
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
-import { MSC3575List, SlidingSync, SlidingSyncEvent, SlidingSyncState } from 'matrix-js-sdk/src/sliding-sync';
+import {
+    MSC3575List, MSC3575SlidingSyncResponse, SlidingSync,
+    SlidingSyncEvent, SlidingSyncState,
+} from 'matrix-js-sdk/src/sliding-sync';
 import { logger } from "matrix-js-sdk/src/logger";
 
 // how long to long poll for
@@ -68,12 +71,25 @@ const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
 export class SlidingSyncManager {
     slidingSync: SlidingSync;
     client: MatrixClient;
+    searchListIndex: number;
 
     constructor(client: MatrixClient, proxyUrl: string) {
         this.slidingSync = new SlidingSync(
             proxyUrl, [], DEFAULT_ROOM_SUBSCRIPTION_INFO, client, SLIDING_SYNC_TIMEOUT_MS,
         );
         this.client = client;
+    }
+
+    /**
+     * Allocate and return a list index for searching rooms. This ensures that 1 list only is allocated
+     * for searching rooms in sliding sync. This must be called after room list indexes have been allocated.
+     * @returns The list index for searching rooms
+     */
+    getSearchListIndex(): number {
+        if (!this.searchListIndex) {
+            this.searchListIndex = this.slidingSync.listLength();
+        }
+        return this.searchListIndex;
     }
 
     /**
@@ -120,8 +136,9 @@ export class SlidingSyncManager {
         }
 
         return new Promise((resolve, reject) => {
-            const resolveOnSubscribed = (state, resp, err) => {
-                if (state === SlidingSyncState.Complete) { // we processed a /sync response
+            const resolveOnSubscribed = (state: SlidingSyncState, resp: MSC3575SlidingSyncResponse, err: Error) => {
+                if (state === SlidingSyncState.Complete && resp.lists[listIndex]) { // we processed a /sync response
+                    console.log("resolving promise, data ", resp);
                     this.slidingSync.off(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
                     resolve(list);
                 }
