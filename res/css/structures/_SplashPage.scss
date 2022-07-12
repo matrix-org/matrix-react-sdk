@@ -19,14 +19,11 @@ limitations under the License.
     height: 100%;
 
     &::before {
-        /* Once we drop support for Firefox 102, remove this entire pseudo-element, move the background to the
-           .mx_MatrixChat_splash, and use backdrop-filter for the blur instead. */
         content: "";
         display: block;
         position: absolute;
         z-index: -1;
         opacity: 0.6;
-        background-color: $background;
         background-image:
             radial-gradient(
                 53.85% 66.75% at 87.55% 0%,
@@ -48,10 +45,19 @@ limitations under the License.
                 hsla(250, 100%, 88%, 0.4) 0%,
                 hsla(167, 76%, 82%, 0) 100%
             );
-        /* Ugly hack to allow us to get rid of the color banding of the gradients */
-        /* Can be replaced with backdrop-filter, replacing the hack below, after we stop supporting Firefox 102 */
+        /* blur to reduce color banding issues due to alpha-blending multiple gradients */
         filter: blur(8px);
-        /* Even uglier hack to prevent the blur filter from causing white fringing at the edges */
         inset: -9px;
+        /* mask to dither resulting combined gradient */
+        mask:
+            url("$(res)/img/noise.png"),
+            /* gradient to apply different amounts of dithering to different parts of the gradient */
+            linear-gradient(
+                to bottom,
+                /* 10% dithering at the top */
+                rgba(0,0,0,0.9) 20%,
+                /* 80% dithering at the bottom */
+                rgba(0,0,0,0.2) 100%
+            );
     }
 }
