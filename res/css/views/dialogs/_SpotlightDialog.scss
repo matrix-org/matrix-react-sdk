@@ -34,7 +34,7 @@ limitations under the License.
         line-height: $font-15px;
         color: $secondary-content;
 
-        > span > div {
+        kbd {
             display: inline-block;
             padding: 2px $spacing-4; // TODO: Use a spacing variable
             margin: 0 $spacing-4;
@@ -42,6 +42,10 @@ limitations under the License.
             background-color: $quinary-content;
             vertical-align: middle;
             color: $tertiary-content;
+            // To avoid any styling inherent with <kbd> elements
+            font-family: inherit;
+            font-weight: inherit;
+            font-size: inherit;
         }
     }
 }
@@ -58,6 +62,7 @@ limitations under the License.
     .mx_SpotlightDialog_searchBox {
         margin: 0;
         border: none;
+        border-radius: 8px 8px 0 0;
         padding: $spacing-12 $spacing-16;
         border-bottom: 1px solid $system;
 
@@ -415,7 +420,6 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_recentSearches > h4 > .mx_AccessibleButton_kind_link {
-            padding: 0;
             float: right;
             font-size: $font-12px;
             line-height: $font-15px;
@@ -424,6 +428,9 @@ limitations under the License.
 
         .mx_SpotlightDialog_enterPrompt {
             padding: 2px $spacing-4; // TODO: Use a spacing variable
+            // To avoid any styling inherent with <kbd> elements
+            font-family: inherit;
+            font-weight: inherit;
             font-size: $font-12px;
             line-height: $font-15px;
             color: $tertiary-content;
@@ -467,10 +474,6 @@ limitations under the License.
 
         > span {
             align-self: center;
-
-            .mx_AccessibleButton_kind_link_inline {
-                padding: 0;
-            }
         }
 
         .mx_AccessibleButton_kind_primary_outline {
