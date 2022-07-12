@@ -1217,6 +1217,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         ) {
             this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
 
+            // Listen to changes in settings and hide the use case screen if appropriate - this is necessary because
+            // account settings can still be changing at this point in app init (due to the initial sync being cached,
+            // then subsequent syncs being received from the server)
+            //
+            // This seems unlikely for something that should happen directly after registration, but if a user does
+            // their initial login on another device/browser than they registered on, we want to avoid asking this
+            // question twice
+            //
+            // initPosthogAnalyticsToast pioneered this technique, we’re just reusing it here.
             SettingsStore.watchSetting("FTUE.useCaseSelection", null,
                 (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
                     if (newValue !== null && this.state.view === Views.USE_CASE_SELECTION) {
