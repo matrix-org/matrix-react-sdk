@@ -39,11 +39,21 @@ $irc-line-height: $font-18px;
             margin-right: var(--right-padding);
         }
 
+        .mx_EventTile_avatar,
+        .mx_EventTile_e2eIcon {
+            height: $irc-line-height;
+        }
+
+        .mx_EventTile_avatar,
+        .mx_DisambiguatedProfile,
+        .mx_EventTile_e2eIcon,
+        .mx_EventTile_msgOption {
+            flex-shrink: 0;
+        }
+
         .mx_EventTile_avatar {
             order: 1;
             position: relative;
-            flex-shrink: 0;
-            height: $irc-line-height;
             display: flex;
             align-items: center;
 
@@ -61,7 +71,6 @@ $irc-line-height: $font-18px;
             width: var(--name-width);
             margin-inline-end: 0; /* override mx_EventTile > * */
             order: 2;
-            flex-shrink: 0;
 
             > .mx_DisambiguatedProfile_displayName {
                 width: 100%;
@@ -98,12 +107,7 @@ $irc-line-height: $font-18px;
 
         .mx_EventTile_e2eIcon {
             padding: 0;
-
-            flex-shrink: 0;
             flex-grow: 0;
-
-            height: $font-18px;
-
             background-position: center;
         }
 
@@ -141,7 +145,6 @@ $irc-line-height: $font-18px;
 
         .mx_EventTile_msgOption {
             order: 5;
-            flex-shrink: 0;
         }
 
         .mx_EditMessageComposer_buttons {
