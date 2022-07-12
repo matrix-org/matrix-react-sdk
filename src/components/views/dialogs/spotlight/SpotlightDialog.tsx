@@ -507,8 +507,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     let otherSearchesSection: JSX.Element;
     if (trimmedQuery || filter !== Filter.PublicRooms) {
         otherSearchesSection = (
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                <h4>
+            <div
+                className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches"
+                role="group"
+                aria-labelledby="mx_SpotlightDialog_section_otherSearches">
+                <h4 id="mx_SpotlightDialog_section_otherSearches">
                     { trimmedQuery
                         ? _t('Use "%(query)s" to search', { query })
                         : _t("Search for") }
@@ -950,8 +953,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     tabIndex={-1}
                     aria-labelledby="mx_SpotlightDialog_section_recentSearches"
                 >
-                    <h4 id="mx_SpotlightDialog_section_recentSearches">
-                        { _t("Recent searches") }
+                    <h4>
+                        <span id="mx_SpotlightDialog_section_recentSearches">
+                            { _t("Recent searches") }
+                        </span>
                         <AccessibleButton kind="link" onClick={clearRecentSearches}>
                             { _t("Clear") }
                         </AccessibleButton>
