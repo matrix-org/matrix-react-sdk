@@ -137,7 +137,6 @@
 @import "./views/dialogs/_TermsDialog.scss";
 @import "./views/dialogs/_UntrustedDeviceDialog.scss";
 @import "./views/dialogs/_UploadConfirmDialog.scss";
-@import "./views/dialogs/_UseCaseSelection.scss";
 @import "./views/dialogs/_UserSettingsDialog.scss";
 @import "./views/dialogs/_WidgetCapabilitiesPromptDialog.scss";
 @import "./views/dialogs/security/_AccessSecretStorageDialog.scss";
@@ -191,6 +190,8 @@
 @import "./views/elements/_ToggleSwitch.scss";
 @import "./views/elements/_Tooltip.scss";
 @import "./views/elements/_TooltipButton.scss";
+@import "./views/elements/_UseCaseSelection.scss";
+@import "./views/elements/_UseCaseSelectionButton.scss";
 @import "./views/elements/_Validation.scss";
 @import "./views/emojipicker/_EmojiPicker.scss";
 @import "./views/location/_LocationPicker.scss";
