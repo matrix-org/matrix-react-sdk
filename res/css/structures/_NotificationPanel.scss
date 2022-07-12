@@ -35,8 +35,8 @@ limitations under the License.
     }
 
     /* FIXME: rather than having EventTile's default CSS be for MessagePanel,
-   we should make EventTile a base CSS class and customise it specifically
-   for usage in {Message,File,Notification}Panel. */
+       we should make EventTile a base CSS class and customise it specifically
+       for usage in {Message,File,Notification}Panel. */
 
     .mx_EventTile_avatar {
         display: none;
