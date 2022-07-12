@@ -14,6 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { defineConfig } from 'cypress';
 
-export type ActionableEventTransformFunction = (event: MatrixEvent, cli: MatrixClient) => MatrixEvent | null;
+export default defineConfig({
+    videoUploadOnPasses: false,
+    projectId: 'ppvnzg',
+    experimentalInteractiveRunEvents: true,
+    defaultCommandTimeout: 10000,
+    chromeWebSecurity: false,
+    e2e: {
+        setupNodeEvents(on, config) {
+            return require('./cypress/plugins/index.ts').default(on, config);
+        },
+        baseUrl: 'http://localhost:8080',
+        experimentalSessionAndOrigin: true,
+        specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    },
+});
