@@ -77,8 +77,9 @@ export async function signup(
     const acceptButton = await session.query('.mx_InteractiveAuthEntryComponents_termsSubmit');
     await acceptButton.click();
 
-    const isPosthogEnabled = await session.page.evaluate((win) => {
-        return !!win.mxReactSdkConfig.posthog;
+    const isPosthogEnabled = await session.page.evaluate(() => {
+        // @ts-ignore
+        return !!mxReactSdkConfig?.posthog;
     });
 
     if (isPosthogEnabled) {
