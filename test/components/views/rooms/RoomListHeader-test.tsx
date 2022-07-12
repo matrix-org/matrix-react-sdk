@@ -48,7 +48,7 @@ const setupSpace = (client) => {
     return testSpace;
 };
 
-const setupMenu = async (client, testSpace) => {
+const setupMainMenu = async (client, testSpace) => {
     const getUserIdForRoomId = jest.fn();
     const getDMRoomsForUserId = jest.fn();
     // @ts-ignore
@@ -72,10 +72,40 @@ const setupMenu = async (client, testSpace) => {
     return wrapper;
 };
 
+const setupPlusMenu = async (client, testSpace) => {
+    const getUserIdForRoomId = jest.fn();
+    const getDMRoomsForUserId = jest.fn();
+    // @ts-ignore
+    DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
+
+    await testUtils.setupAsyncStoreWithClient(SpaceStore.instance, client);
+    act(() => {
+        SpaceStore.instance.setActiveSpace(testSpace.roomId);
+    });
+
+    const wrapper = mount(<MatrixClientContext.Provider value={client}>
+        <RoomListHeader />
+    </MatrixClientContext.Provider>);
+
+    expect(wrapper.text()).toBe("Test Space");
+    act(() => {
+        wrapper.find('[aria-label="Add"]').hostNodes().simulate("click");
+    });
+    wrapper.update();
+
+    return wrapper;
+};
+
+const checkIsDisabled = menuItem => {
+    expect(menuItem.props().disabled).toBeTruthy();
+    expect(menuItem.props()['aria-disabled']).toBeTruthy();
+};
+
 describe("RoomListHeader", () => {
     let client: MatrixClient;
 
     beforeEach(() => {
+        jest.resetAllMocks();
         client = createTestClient();
         mocked(shouldShowComponent).mockReturnValue(true); // show all UIComponents
     });
@@ -103,7 +133,7 @@ describe("RoomListHeader", () => {
 
     it("renders a main menu for spaces", async () => {
         const testSpace = setupSpace(client);
-        const wrapper = await setupMenu(client, testSpace);
+        const wrapper = await setupMainMenu(client, testSpace);
 
         const menu = wrapper.find(".mx_IconizedContextMenu");
         const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
@@ -124,7 +154,7 @@ describe("RoomListHeader", () => {
         });
 
         const testSpace = setupSpace(client);
-        const wrapper = await setupMenu(client, testSpace);
+        const wrapper = await setupMainMenu(client, testSpace);
 
         act(() => {
             SpaceStore.instance.setActiveSpace(MetaSpace.Favourites);
@@ -143,7 +173,7 @@ describe("RoomListHeader", () => {
             blockUIComponent(UIComponent.CreateSpaces);
 
             const testSpace = setupSpace(client);
-            const wrapper = await setupMenu(client, testSpace);
+            const wrapper = await setupMainMenu(client, testSpace);
 
             const menu = wrapper.find(".mx_IconizedContextMenu");
             const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
@@ -160,7 +190,7 @@ describe("RoomListHeader", () => {
             blockUIComponent(UIComponent.CreateRooms);
 
             const testSpace = setupSpace(client);
-            const wrapper = await setupMenu(client, testSpace);
+            const wrapper = await setupMainMenu(client, testSpace);
 
             const menu = wrapper.find(".mx_IconizedContextMenu");
             const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
@@ -175,13 +205,12 @@ describe("RoomListHeader", () => {
     });
 
     describe('adding children to space', () => {
-        it('if user cannot add children to space, buttons are disabled', async () => {
+        it('if user cannot add children to space, MainMenu buttons are hidden', async () => {
             const testSpace = setupSpace(client);
-            // mocked(testSpace.currentState.maySendStateEvent).mockReturnValue(false);
             mocked(testSpace.currentState.maySendStateEvent).mockImplementation(
                 (stateEventType, userId) => stateEventType !== EventType.SpaceChild);
 
-            const wrapper = await setupMenu(client, testSpace);
+            const wrapper = await setupMainMenu(client, testSpace);
 
             const menu = wrapper.find(".mx_IconizedContextMenu");
             const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
@@ -190,6 +219,24 @@ describe("RoomListHeader", () => {
             expect(items.at(1).text()).toBe("Explore rooms");
             expect(items.at(2).text()).toBe("Preferences");
             expect(items.at(3).text()).toBe("Settings");
+        });
+
+        it('if user cannot add children to space, PlusMenu buttons are disabled', async () => {
+            const testSpace = setupSpace(client);
+            mocked(testSpace.currentState.maySendStateEvent).mockImplementation(
+                (stateEventType, userId) => stateEventType !== EventType.SpaceChild);
+
+            const wrapper = await setupPlusMenu(client, testSpace);
+
+            const menu = wrapper.find(".mx_IconizedContextMenu");
+            const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
+            expect(items).toHaveLength(4);
+            expect(items.at(0).text()).toBe("New room");
+            expect(items.at(1).text()).toBe("Explore rooms");
+            expect(items.at(2).text()).toBe("Add existing room");
+            checkIsDisabled(items.at(2));
+            expect(items.at(3).find(".mx_IconizedContextMenu_label").text()).toBe("Add space");
+            checkIsDisabled(items.at(3));
         });
     });
 });
