@@ -21,13 +21,13 @@ import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { humanizeTime } from '../../../utils/humanize';
+import { preventDefaultWrapper } from '../../../utils/NativeEventUtils';
 import { _t } from '../../../languageHandler';
 import MemberAvatar from '../avatars/MemberAvatar';
 import BeaconStatus from './BeaconStatus';
 import { BeaconDisplayStatus } from './displayStatus';
 import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
 import ShareLatestLocation from './ShareLatestLocation';
-import { preventDefaultWrapper } from '../../../utils/NativeEventUtils';
 
 interface Props {
     beacon: Beacon;

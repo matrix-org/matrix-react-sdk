@@ -19,10 +19,10 @@ import React, { HTMLProps } from 'react';
 
 import { _t } from '../../../languageHandler';
 import { useOwnLiveBeacons } from '../../../utils/beacon';
+import { preventDefaultWrapper } from '../../../utils/NativeEventUtils';
 import BeaconStatus from './BeaconStatus';
 import { BeaconDisplayStatus } from './displayStatus';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { preventDefaultWrapper } from '../../../utils/NativeEventUtils';
 
 interface Props {
     displayStatus: BeaconDisplayStatus;
