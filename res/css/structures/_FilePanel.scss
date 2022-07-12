@@ -97,12 +97,7 @@ limitations under the License.
                 margin-top: -2px;
 
                 .mx_DisambiguatedProfile {
-                    color: $event-timestamp-color; // for ellipsis
-
-                    .mx_DisambiguatedProfile_displayName,
-                    .mx_DisambiguatedProfile_mxid {
-                        color: $event-timestamp-color;
-                    }
+                    color: $event-timestamp-color; // for ellipsis. Color of displayName and mxid is inherited
                 }
 
                 .mx_MessageTimestamp {
