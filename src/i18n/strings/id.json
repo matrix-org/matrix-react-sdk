@@ -3417,5 +3417,20 @@
     "You cannot search for rooms that are neither a room nor a space": "Anda tidak dapat mencari ruangan yang bukan sebuah ruangan atau sebuah space",
     "Show spaces": "Tampilkan space",
     "Show rooms": "Tampilkan ruangan",
-    "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru"
+    "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
+    "You can't disable this later. The room will be encrypted but the embedded call will not.": "Anda tidak menonaktifkan ini nanti. Ruangannya akan terenkripsi tetapi panggilan yang tersemat tidak.",
+    "Join the room to participate": "Bergabung dengan ruangan ini untuk berpartisipasi",
+    "Reset bearing to north": "Atur ulang bantalan ke utara",
+    "Mapbox logo": "Logo Mapbox",
+    "Location not available": "Lokasi tidak tersedia",
+    "Find my location": "Temukan lokasi saya",
+    "Exit fullscreen": "Keluar dari layar penuh",
+    "Enter fullscreen": "Masuki layar penuh",
+    "Map feedback": "Masukan peta",
+    "Toggle attribution": "Alih atribusi",
+    "In %(spaceName)s and %(count)s other spaces.|one": "Dalam %(spaceName)s dan %(count)s space lainnya.",
+    "In %(spaceName)s and %(count)s other spaces.|zero": "Dalam space %(spaceName)s.",
+    "In %(spaceName)s and %(count)s other spaces.|other": "Dalam %(spaceName)s dan %(count)s space lainnya.",
+    "In spaces %(space1Name)s and %(space2Name)s.": "Dalam space %(space1Name)s dan %(space2Name)s.",
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Perintah pengembang: Membuang sesi grup keluar saat ini dan menyiapkan sesi Olm baru"
 }
