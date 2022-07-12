@@ -2568,6 +2568,7 @@
     "Topic (optional)": "Topic (optional)",
     "Room visibility": "Room visibility",
     "Private room (invite only)": "Private room (invite only)",
+    "Anyone can knock to join" : "Anyone can knock to join",
     "Visible to space members": "Visible to space members",
     "Block anyone not part of %(serverName)s from ever joining this room.": "Block anyone not part of %(serverName)s from ever joining this room.",
     "Create video room": "Create video room",

@@ -24,6 +24,7 @@ interface IProps {
     label: string;
     width?: number;
     labelInvite: string;
+    labelKnock: string;
     labelPublic: string;
     labelRestricted?: string; // if omitted then this option will be hidden, e.g if unsupported
     onChange(value: JoinRule): void;
@@ -32,6 +33,7 @@ interface IProps {
 const JoinRuleDropdown = ({
     label,
     labelInvite,
+    labelKnock,
     labelPublic,
     labelRestricted,
     value,
@@ -41,6 +43,9 @@ const JoinRuleDropdown = ({
     const options = [
         <div key={JoinRule.Invite} className="mx_JoinRuleDropdown_invite">
             { labelInvite }
+        </div>,
+        <div key={JoinRule.Knock} className="mx_JoinRuleDropdown_knock">
+            { labelKnock }
         </div>,
         <div key={JoinRule.Public} className="mx_JoinRuleDropdown_public">
             { labelPublic }

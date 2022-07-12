@@ -265,9 +265,13 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             </p>;
         } else if (this.state.joinRule === JoinRule.Invite) {
             publicPrivateLabel = <p>
-                { _t(
-                    "Only people invited will be able to find and join this room.",
-                ) }
+                { _t("Only people invited will be able to find and join this room.") }
+                &nbsp;
+                { _t("You can change this at any time from room settings.") }
+            </p>;
+        } else if (this.state.joinRule === JoinRule.Knock) {
+            publicPrivateLabel = <p>
+                { _t("Anyone can knock on this room to join.") }
                 &nbsp;
                 { _t("You can change this at any time from room settings.") }
             </p>;
@@ -349,6 +353,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         <JoinRuleDropdown
                             label={_t("Room visibility")}
                             labelInvite={_t("Private room (invite only)")}
+                            labelKnock = {_t("Anyone can knock to join")}
                             labelPublic={_t("Public room")}
                             labelRestricted={this.supportsRestricted ? _t("Visible to space members") : undefined}
                             value={this.state.joinRule}
