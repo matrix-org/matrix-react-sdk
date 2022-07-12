@@ -28,6 +28,7 @@ import maplibregl from 'maplibre-gl';
 
 import BeaconViewDialog from '../../../../src/components/views/beacon/BeaconViewDialog';
 import {
+    findByAttr,
     findByTestId,
     getMockClientWithEventEmitter,
     makeBeaconEvent,
@@ -249,7 +250,7 @@ describe('<BeaconViewDialog />', () => {
 
             // now close it
             act(() => {
-                findByTestId(component, 'dialog-sidebar-close').at(0).simulate('click');
+                findByAttr('data-testid')(component, 'dialog-sidebar-close').at(0).simulate('click');
                 component.setProps({});
             });
 
