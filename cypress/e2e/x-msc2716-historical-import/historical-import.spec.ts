@@ -518,7 +518,7 @@ describe("MSC2716: Historical Import", () => {
         // Then make a `/sync` happen by sending a message and seeing that it
         // shows up (simulate a /sync naturally racing with us).
         cy.get<string>("@roomId").then(async (roomId) => {
-            const { event_id: eventIdWhileRefrshingTimeline } = await asMatrixClient.sendMessage(
+            const { event_id: eventIdWhileRefreshingTimeline } = await asMatrixClient.sendMessage(
                 roomId,
                 null, {
                     body: `live_event while trying to refresh timeline`,
@@ -531,9 +531,9 @@ describe("MSC2716: Historical Import", () => {
             // refreshing the timeline. We want to make sure the sync
             // pagination still works as expected after messing the refresh
             // timeline logic messes with the pagination tokens.
-            waitForEventIdsInClient([eventIdWhileRefrshingTimeline]);
+            waitForEventIdsInClient([eventIdWhileRefreshingTimeline]);
 
-            cy.wrap(eventIdWhileRefrshingTimeline).as('eventIdWhileRefrshingTimeline');
+            cy.wrap(eventIdWhileRefreshingTimeline).as('eventIdWhileRefreshingTimeline');
         }).then(() => {
             // Now we can resume the `/context` request
             resolveReq();
@@ -559,12 +559,12 @@ describe("MSC2716: Historical Import", () => {
         cy.all([
             cy.get<string[]>("@liveMessageEventIds"),
             cy.get<string[]>("@historicalEventIds"),
-            cy.get<string>("@eventIdWhileRefrshingTimeline"),
+            cy.get<string>("@eventIdWhileRefreshingTimeline"),
             cy.get<string>("@eventIdAfterRefresh"),
         ]).then(async ([
             liveMessageEventIds,
             historicalEventIds,
-            eventIdWhileRefrshingTimeline,
+            eventIdWhileRefreshingTimeline,
             eventIdAfterRefresh,
         ]) => {
             // FIXME: Assert that they appear in the correct order
@@ -573,7 +573,7 @@ describe("MSC2716: Historical Import", () => {
                 liveMessageEventIds[1],
                 ...historicalEventIds,
                 liveMessageEventIds[2],
-                eventIdWhileRefrshingTimeline,
+                eventIdWhileRefreshingTimeline,
                 eventIdAfterRefresh,
             ]);
         });
