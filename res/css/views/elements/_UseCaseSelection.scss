@@ -60,50 +60,6 @@ limitations under the License.
         gap: $spacing-32;
         align-self: stretch;
         justify-content: center;
-
-        .mx_UseCaseSelection_option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: $spacing-24 $spacing-16;
-            background: $background;
-            border: 1px solid $quinary-content;
-            border-radius: 8px;
-            text-align: center;
-
-            .mx_UseCaseSelection_icon {
-                /* workaround: design expects a layering of two colors */
-                background: linear-gradient(0deg, rgba(172, 59, 168, 0.15), rgba(172, 59, 168, 0.15)), #FFFFFF;
-                border-radius: 14px;
-                padding: $spacing-8;
-                margin-bottom: $spacing-16;
-
-                &::before {
-                    content: "";
-                    display: block;
-                    /* this has to remain the same color across all themes,
-                       as its background has a fixed color as well */
-                    background: #1E1E1E;
-                    mask-position: center;
-                    mask-repeat: no-repeat;
-                    mask-size: contain;
-                    width: 22px;
-                    height: 22px;
-                }
-
-                &.mx_UseCaseSelection_icon_messaging::before {
-                    mask-image: url('$(res)/img/element-icons/chat-bubble.svg');
-                }
-
-                &.mx_UseCaseSelection_icon_work::before {
-                    mask-image: url('$(res)/img/element-icons/view-community.svg');
-                }
-
-                &.mx_UseCaseSelection_icon_community::before {
-                    mask-image: url('$(res)/img/globe.svg');
-                }
-            }
-        }
     }
 
     .mx_UseCaseSelection_skip {
@@ -131,6 +87,16 @@ limitations under the License.
     will-change: transform, opacity;
 }
 
+.mx_UseCaseSelection_selected {
+    .mx_UseCaseSelection_slideIn, .mx_UseCaseSelection_slideInDelayed {
+        animation-delay: 800ms;
+        animation-duration: 300ms;
+        animation-fill-mode: forwards;
+        animation-name: mx_UseCaseSelection_fadeOut;
+        will-change: opacity;
+    }
+}
+
 @keyframes mx_UseCaseSelection_slideInLong {
     0% {
         transform: translate(0, 20px);
@@ -150,5 +116,14 @@ limitations under the License.
     100% {
         transform: translate(0, 0);
         opacity: 1;
+    }
+}
+
+@keyframes mx_UseCaseSelection_fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }

@@ -130,7 +130,7 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
-import UseCaseSelection from '../views/dialogs/UseCaseSelection';
+import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 
 // legacy export
 export { default as Views } from "../../Views";
