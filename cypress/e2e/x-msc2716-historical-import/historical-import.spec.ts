@@ -220,7 +220,7 @@ function sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient) {
         cy.get<string>("@roomId"),
         cy.get<string>("@baseInsertionEventId"),
     ]).then(async ([roomId, baseInsertionEventId]) => {
-        const { event_id: markeEventId } = await asMatrixClient.sendStateEvent(
+        const { event_id: markerEventId } = await asMatrixClient.sendStateEvent(
             roomId,
             'org.matrix.msc2716.marker', {
                 "org.matrix.msc2716.marker.insertion": baseInsertionEventId,
@@ -228,10 +228,10 @@ function sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient) {
             Cypress._.uniqueId("marker_state_key_"),
         );
 
-        cy.wrap(markeEventId).as('markeEventId');
+        cy.wrap(markerEventId).as('markerEventId');
 
         // Wait for the message to show up for the logged in user
-        waitForEventIdsInClient([markeEventId]);
+        waitForEventIdsInClient([markerEventId]);
     });
 
     // Ensure the "History import detected" notice is shown
@@ -488,11 +488,11 @@ describe("MSC2716: Historical Import", () => {
         let resolveReq;
         cy.all([
             cy.get<string>("@roomId"),
-            cy.get<string>("@markeEventId"),
-        ]).then(([roomId, markeEventId]) => {
-            // We're using `markeEventId` here because it's the latest event in the room
+            cy.get<string>("@markerEventId"),
+        ]).then(([roomId, markerEventId]) => {
+            // We're using `markerEventId` here because it's the latest event in the room
             const prefix = '/_matrix/client/r0';
-            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markeEventId)}`;
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markerEventId)}`;
             const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, async (req) => {
                 return new Cypress.Promise(resolve => {
@@ -591,11 +591,11 @@ describe("MSC2716: Historical Import", () => {
         // retry and recover.
         cy.all([
             cy.get<string>("@roomId"),
-            cy.get<string>("@markeEventId"),
-        ]).then(async ([roomId, markeEventId]) => {
-            // We're using `this.markeEventId` here because it's the latest event in the room
+            cy.get<string>("@markerEventId"),
+        ]).then(async ([roomId, markerEventId]) => {
+            // We're using `this.markerEventId` here because it's the latest event in the room
             const prefix = '/_matrix/client/r0';
-            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markeEventId)}`;
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markerEventId)}`;
             const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, {
                 statusCode: 500,
@@ -619,11 +619,11 @@ describe("MSC2716: Historical Import", () => {
         // Allow the requests to succeed now
         cy.all([
             cy.get<string>("@roomId"),
-            cy.get<string>("@markeEventId"),
-        ]).then(async ([roomId, markeEventId]) => {
-            // We're using `this.markeEventId` here because it's the latest event in the room
+            cy.get<string>("@markerEventId"),
+        ]).then(async ([roomId, markerEventId]) => {
+            // We're using `this.markerEventId` here because it's the latest event in the room
             const prefix = '/_matrix/client/r0';
-            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markeEventId)}`;
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markerEventId)}`;
             const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, async (req) => {
                 // Passthrough. We can't just omit this callback because the
