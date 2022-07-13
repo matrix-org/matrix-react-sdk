@@ -147,6 +147,21 @@ describe("RoomListHeader", () => {
         expect(items.at(5).find(".mx_IconizedContextMenu_label").text()).toBe("Space");
     });
 
+    it("renders a plus menu for spaces", async () => {
+        const testSpace = setupSpace(client);
+        const wrapper = await setupPlusMenu(client, testSpace);
+
+        const menu = wrapper.find(".mx_IconizedContextMenu");
+        const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
+
+        expect(items).toHaveLength(4);
+        expect(items.at(0).text()).toBe("New room");
+        expect(items.at(1).text()).toBe("Explore rooms");
+        expect(items.at(2).text()).toBe("Add existing room");
+        // Look for label within the item, to ignore the text of the "Beta" pill if present.
+        expect(items.at(3).find(".mx_IconizedContextMenu_label").text()).toBe("Add space");
+    });
+
     it("closes menu if space changes from under it", async () => {
         await SettingsStore.setValue("Spaces.enabledMetaSpaces", null, SettingLevel.DEVICE, {
             [MetaSpace.Home]: true,
@@ -168,39 +183,91 @@ describe("RoomListHeader", () => {
     });
 
     describe('UIComponents', () => {
-        it('does not render Add Space when user does not have permission to add spaces', async () => {
-            // User does not have permission to add spaces, anywhere
-            blockUIComponent(UIComponent.CreateSpaces);
+        describe('Main menu', () => {
+            it('does not render Add Space when user does not have permission to add spaces', async () => {
+                // User does not have permission to add spaces, anywhere
+                blockUIComponent(UIComponent.CreateSpaces);
 
-            const testSpace = setupSpace(client);
-            const wrapper = await setupMainMenu(client, testSpace);
+                const testSpace = setupSpace(client);
+                const wrapper = await setupMainMenu(client, testSpace);
 
-            const menu = wrapper.find(".mx_IconizedContextMenu");
-            const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
-            expect(items).toHaveLength(5);
-            expect(items.at(0).text()).toBe("Space home");
-            expect(items.at(1).text()).toBe("Manage & explore rooms");
-            expect(items.at(2).text()).toBe("Preferences");
-            expect(items.at(3).text()).toBe("Settings");
-            expect(items.at(4).text()).toBe("Room");
+                const menu = wrapper.find(".mx_IconizedContextMenu");
+                const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
+                expect(items).toHaveLength(5);
+                expect(items.at(0).text()).toBe("Space home");
+                expect(items.at(1).text()).toBe("Manage & explore rooms");
+                expect(items.at(2).text()).toBe("Preferences");
+                expect(items.at(3).text()).toBe("Settings");
+                expect(items.at(4).text()).toBe("Room");
+            });
+
+            it('does not render Add Room when user does not have permission to add rooms', async () => {
+                // User does not have permission to add rooms
+                blockUIComponent(UIComponent.CreateRooms);
+
+                const testSpace = setupSpace(client);
+                const wrapper = await setupMainMenu(client, testSpace);
+
+                const menu = wrapper.find(".mx_IconizedContextMenu");
+                const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
+                expect(items).toHaveLength(5);
+                expect(items.at(0).text()).toBe("Space home");
+                expect(items.at(1).text()).toBe("Explore rooms");
+                expect(items.at(2).text()).toBe("Preferences");
+                expect(items.at(3).text()).toBe("Settings");
+                // Look for label within the item, to ignore the text of the "Beta" pill if present.
+                expect(items.at(4).find(".mx_IconizedContextMenu_label").text()).toBe("Space");
+            });
         });
 
-        it('does not render Add Room when user does not have permission to add rooms', async () => {
-            // User does not have permission to add rooms
-            blockUIComponent(UIComponent.CreateRooms);
+        const checkMenuLabels = (items, labelArray) => {
+            expect(items).toHaveLength(labelArray.length);
 
-            const testSpace = setupSpace(client);
-            const wrapper = await setupMainMenu(client, testSpace);
+            const checkLabel = (item, label) => {
+                expect(item.find(".mx_IconizedContextMenu_label").text()).toBe(label);
+            };
 
-            const menu = wrapper.find(".mx_IconizedContextMenu");
-            const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
-            expect(items).toHaveLength(5);
-            expect(items.at(0).text()).toBe("Space home");
-            expect(items.at(1).text()).toBe("Explore rooms");
-            expect(items.at(2).text()).toBe("Preferences");
-            expect(items.at(3).text()).toBe("Settings");
-            // Look for label within the item, to ignore the text of the "Beta" pill if present.
-            expect(items.at(4).find(".mx_IconizedContextMenu_label").text()).toBe("Space");
+            labelArray.forEach((label, index) => {
+                console.log('index', index, 'label', label);
+                checkLabel(items.at(index), label);
+            });
+        };
+
+        describe('Plus menu', () => {
+            it('does not render Add Space when user does not have permission to add spaces', async () => {
+                // User does not have permission to add spaces, anywhere
+                blockUIComponent(UIComponent.CreateSpaces);
+
+                const testSpace = setupSpace(client);
+                const wrapper = await setupPlusMenu(client, testSpace);
+
+                const menu = wrapper.find(".mx_IconizedContextMenu");
+                const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
+
+                checkMenuLabels(items, [
+                    "New room",
+                    "Explore rooms",
+                    "Add existing room",
+                ]);
+            });
+
+            it('does not render Add Room when user does not have permission to add rooms', async () => {
+                // User does not have permission to add rooms
+                blockUIComponent(UIComponent.CreateRooms);
+
+                const testSpace = setupSpace(client);
+                const wrapper = await setupPlusMenu(client, testSpace);
+
+                const menu = wrapper.find(".mx_IconizedContextMenu");
+                const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
+
+                checkMenuLabels(items, [
+                    "New room",
+                    "Explore rooms",
+                    "Add existing room",
+                    "Add space",
+                ]);
+            });
         });
     });
 
