@@ -420,6 +420,10 @@ $left-gutter: 64px;
                     top: 0;
                 }
             }
+
+            &.mx_EventTile_selected .mx_EventTile_line {
+                padding-left: calc($left-gutter + 18px);
+            }
         }
 
         &:hover {
@@ -462,10 +466,6 @@ $left-gutter: 64px;
     padding-top: 18px;
     font-size: $font-14px;
     position: relative;
-
-    &.mx_EventTile_selected.mx_EventTile_info .mx_EventTile_line {
-        padding-left: calc($left-gutter + 18px);
-    }
 }
 
 .mx_GenericEventListSummary {
