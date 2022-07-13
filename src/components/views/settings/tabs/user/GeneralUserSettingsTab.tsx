@@ -130,8 +130,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     public async componentDidMount(): Promise<void> {
-        const spellCheckEnabled = await PlatformPeg.get().getSpellCheckEnabled();
-        const spellCheckLanguages = await PlatformPeg.get().getSpellCheckLanguages();
+        const plat = PlatformPeg.get();
+        const [spellCheckEnabled, spellCheckLanguages] = await Promise.all([
+            plat.getSpellCheckEnabled(),
+            plat.getSpellCheckLanguages(),
+        ]);
 
         if (spellCheckLanguages) {
             this.setState({
