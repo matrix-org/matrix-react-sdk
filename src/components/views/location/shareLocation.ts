@@ -49,9 +49,9 @@ const getPermissionsErrorParams = (shareType: LocationShareType): {
     errorMessage: string;
     modalParams: IQuestionDialogProps;
 } => {
-    const errorMessage = shareType === LocationShareType.Live ?
-        "Insufficient permissions to start sharing your live location" :
-        "Insufficient permissions to send your location";
+    const errorMessage = shareType === LocationShareType.Live
+        ? "Insufficient permissions to start sharing your live location"
+        : "Insufficient permissions to send your location";
 
     const modalParams = {
         title: _t("You don't have permission to share locations"),
@@ -67,9 +67,9 @@ const getDefaultErrorParams = (shareType: LocationShareType, openMenu: () => voi
     errorMessage: string;
     modalParams: IQuestionDialogProps;
 } => {
-    const errorMessage = shareType === LocationShareType.Live ?
-        "We couldn't start sharing your live location" :
-        "We couldn't send your location";
+    const errorMessage = shareType === LocationShareType.Live
+        ? "We couldn't start sharing your live location"
+        : "We couldn't send your location";
     const modalParams = {
         title: _t("We couldn't send your location"),
         description: _t("%(brand)s could not send your location. Please try again later.", {
