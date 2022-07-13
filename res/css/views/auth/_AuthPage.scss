@@ -28,10 +28,12 @@ limitations under the License.
     border-radius: 4px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.33);
     background-color: $authpage-modal-bg-color;
-}
 
-@media only screen and (max-width: 480px) {
-    .mx_AuthPage_modal {
+    @media only screen and (max-height: 768px) {
+        margin-top: 50px;
+    }
+
+    @media only screen and (max-width: 480px) {
         margin-top: 0;
     }
 }

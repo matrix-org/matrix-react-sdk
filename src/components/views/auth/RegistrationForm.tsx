@@ -126,7 +126,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
         if (this.state.email === '') {
             if (this.showEmail()) {
-                Modal.createTrackedDialog("Email prompt dialog", '', RegistrationEmailPromptDialog, {
+                Modal.createDialog(RegistrationEmailPromptDialog, {
                     onFinished: async (confirmed: boolean, email?: string) => {
                         if (confirmed) {
                             this.setState({
@@ -251,7 +251,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private onEmailChange = ev => {
         this.setState({
-            email: ev.target.value,
+            email: ev.target.value.trim(),
         });
     };
 

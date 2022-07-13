@@ -17,39 +17,57 @@ limitations under the License.
 .mx_MBeaconBody {
     position: relative;
     height: 220px;
-    width: 325px;
+    max-width: 325px;
+    width: 100%;
 
     border-radius: $timeline-image-border-radius;
     overflow: hidden;
 }
 
-.mx_MBeaconBody_map {
-    height: 100%;
-    width: 100%;
-    z-index: 0; // keeps the entire map under the message action bar
+.mx_MBeaconBody.mx_MBeaconBody_withoutMap {
+    height: auto;
 
-    &:not(.mx_MBeaconBody_mapFallback) {
-        cursor: pointer;
+    .mx_MBeaconBody_chin {
+        position: relative;
+        background-color: transparent;
     }
 }
 
-.mx_MBeaconBody_mapFallback {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    // pushes spinner/icon up
-    // to appear more centered with the footer
-    padding-bottom: 50px;
-
-    background: url('$(res)/img/location/map.svg');
-    background-size: cover;
+.mx_MBeaconBody_withoutMapContent {
+    background-color: $panels;
+    border-radius: 4px;
 }
 
-.mx_MBeaconBody_mapFallbackIcon {
-    width: 65px;
-    color: $quaternary-content;
+.mx_MBeaconBody_withoutMapInfoLastUpdated {
+    // 48px lines up with icon in BeaconStatus
+    margin-top: -$spacing-8;
+    padding: 0 $spacing-8 $spacing-8 48px;
+
+    color: $tertiary-content;
+    font-size: $font-10px;
+}
+
+.mx_MBeaconBody_map {
+    height: 100%;
+    width: 100%;
+    z-index: 0; // keeps the entire map under the message action bars
+
+    cursor: pointer;
+}
+
+.mx_MBeaconBody_mapFallback,
+.mx_MBeaconBody_mapError {
+    // pushes spinner/icon up
+    // to appear more centered with the footer
+    padding-bottom: 50px !important;
+}
+
+.mx_MBeaconBody_mapErrorInteractive {
+    cursor: pointer;
+}
+
+.mx_MBeaconBody_mapFallback {
+    cursor: default;
 }
 
 .mx_MBeaconBody_chin {
@@ -62,4 +80,9 @@ limitations under the License.
 .mx_EventTile[data-layout="bubble"] .mx_EventTile_line .mx_MBeaconBody {
     max-width: 100%;
     width: 450px;
+}
+
+.mx_ReplyTile .mx_MBeaconBody {
+    // Prevent clicking a beacon within a reply
+    pointer-events: none;
 }

@@ -28,6 +28,7 @@ import PlatformPeg from "./PlatformPeg";
 import { SettingLevel } from "./settings/SettingLevel";
 import { retry } from "./utils/promise";
 import SdkConfig from "./SdkConfig";
+import { ModuleRunner } from "./modules/ModuleRunner";
 
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
@@ -88,8 +89,25 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
  * */
 const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
     const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
-    if (!translated || /^missing translation:/.test(translated)) {
+    if (!translated || translated.startsWith("missing translation:")) {
         const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
+        if ((!fallbackTranslated || fallbackTranslated.startsWith("missing translation:"))
+            && process.env.NODE_ENV !== "development") {
+            // Even the translation via FALLBACK_LOCALE failed; this can happen if
+            //
+            // 1. The string isn't in the translations dictionary, usually because you're in develop
+            // and haven't run yarn i18n
+            // 2. Loading the translation resources over the network failed, which can happen due to
+            // to network or if the client tried to load a translation that's been removed from the
+            // server.
+            //
+            // At this point, its the lesser evil to show the untranslated text, which
+            // will be in English, so the user can still make out *something*, rather than an opaque
+            // "missing translation" error.
+            //
+            // Don't do this in develop so people remember to run yarn i18n.
+            return { translated: text, isFallback: true };
+        }
         return { translated: fallbackTranslated, isFallback: true };
     }
     return { translated };
@@ -539,27 +557,13 @@ function getLangsJson(): Promise<object> {
     });
 }
 
-function weblateToCounterpart(inTrs: object): object {
-    const outTrs = {};
-
-    for (const key of Object.keys(inTrs)) {
-        const keyParts = key.split('|', 2);
-        if (keyParts.length === 2) {
-            let obj = outTrs[keyParts[0]];
-            if (obj === undefined) {
-                obj = {};
-                outTrs[keyParts[0]] = obj;
-            }
-            obj[keyParts[1]] = inTrs[key];
-        } else {
-            outTrs[key] = inTrs[key];
-        }
-    }
-
-    return outTrs;
+interface ICounterpartTranslation {
+    [key: string]: string | {
+        [pluralisation: string]: string;
+    };
 }
 
-async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
+async function getLanguageRetry(langPath: string, num = 3): Promise<ICounterpartTranslation> {
     return retry(() => getLanguage(langPath), num, e => {
         logger.log("Failed to load i18n", langPath);
         logger.error(e);
@@ -567,7 +571,7 @@ async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
     });
 }
 
-function getLanguage(langPath: string): Promise<object> {
+function getLanguage(langPath: string): Promise<ICounterpartTranslation> {
     return new Promise((resolve, reject) => {
         request(
             { method: "GET", url: langPath },
@@ -580,7 +584,7 @@ function getLanguage(langPath: string): Promise<object> {
                     reject(new Error(`Failed to load ${langPath}, got ${response.status}`));
                     return;
                 }
-                resolve(weblateToCounterpart(JSON.parse(body)));
+                resolve(JSON.parse(body));
             },
         );
     });
@@ -606,15 +610,40 @@ export class CustomTranslationOptions {
     }
 }
 
+function doRegisterTranslations(customTranslations: ICustomTranslations) {
+    // We convert the operator-friendly version into something counterpart can
+    // consume.
+    const langs: {
+        // same structure, just flipped key order
+        [lang: string]: {
+            [str: string]: string;
+        };
+    } = {};
+    for (const [str, translations] of Object.entries(customTranslations)) {
+        for (const [lang, newStr] of Object.entries(translations)) {
+            if (!langs[lang]) langs[lang] = {};
+            langs[lang][str] = newStr;
+        }
+    }
+
+    // Finally, tell counterpart about our translations
+    for (const [lang, translations] of Object.entries(langs)) {
+        counterpart.registerTranslations(lang, translations);
+    }
+}
+
 /**
- * If a custom translations file is configured, it will be parsed and registered.
- * If no customization is made, or the file can't be parsed, no action will be
- * taken.
+ * Any custom modules with translations to load are parsed first, followed by an
+ * optionally defined translations file in the config. If no customization is made,
+ * or the file can't be parsed, no action will be taken.
  *
  * This function should be called *after* registering other translations data to
  * ensure it overrides strings properly.
  */
 export async function registerCustomTranslations() {
+    const moduleTranslations = ModuleRunner.instance.allTranslations;
+    doRegisterTranslations(moduleTranslations);
+
     const lookupUrl = SdkConfig.get().custom_translations_url;
     if (!lookupUrl) return; // easy - nothing to do
 
@@ -636,25 +665,8 @@ export async function registerCustomTranslations() {
         // If the (potentially cached) json is invalid, don't use it.
         if (!json) return;
 
-        // We convert the operator-friendly version into something counterpart can
-        // consume.
-        const langs: {
-            // same structure, just flipped key order
-            [lang: string]: {
-                [str: string]: string;
-            };
-        } = {};
-        for (const [str, translations] of Object.entries(json)) {
-            for (const [lang, newStr] of Object.entries(translations)) {
-                if (!langs[lang]) langs[lang] = {};
-                langs[lang][str] = newStr;
-            }
-        }
-
-        // Finally, tell counterpart about our translations
-        for (const [lang, translations] of Object.entries(langs)) {
-            counterpart.registerTranslations(lang, translations);
-        }
+        // Finally, register it.
+        doRegisterTranslations(json);
     } catch (e) {
         // We consume all exceptions because it's considered non-fatal for custom
         // translations to break. Most failures will be during initial development

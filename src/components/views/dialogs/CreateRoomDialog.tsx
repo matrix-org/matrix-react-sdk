@@ -30,7 +30,6 @@ import RoomAliasField from "../elements/RoomAliasField";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "../dialogs/BaseDialog";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -66,7 +65,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
 
-        this.supportsRestricted = this.props.parentSpace && !!SpaceStore.instance.restrictedJoinRuleSupport?.preferred;
+        this.supportsRestricted = !!this.props.parentSpace;
 
         let joinRule = JoinRule.Invite;
         if (this.props.defaultPublic) {
@@ -222,7 +221,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     render() {
         const isVideoRoom = this.props.type === RoomType.ElementVideo;
 
-        let aliasField;
+        let aliasField: JSX.Element;
         if (this.state.joinRule === JoinRule.Public) {
             const domain = MatrixClientPeg.get().getDomain();
             aliasField = (
@@ -274,12 +273,14 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             </p>;
         }
 
-        let e2eeSection;
+        let e2eeSection: JSX.Element;
         if (this.state.joinRule !== JoinRule.Public) {
-            let microcopy;
+            let microcopy: string;
             if (privateShouldBeEncrypted()) {
                 if (this.state.canChangeEncryption) {
-                    microcopy = _t("You can't disable this later. Bridges & most bots won't work yet.");
+                    microcopy = isVideoRoom
+                        ? _t("You can't disable this later. The room will be encrypted but the embedded call will not.")
+                        : _t("You can't disable this later. Bridges & most bots won't work yet.");
                 } else {
                     microcopy = _t("Your server requires encryption to be enabled in private rooms.");
                 }
@@ -312,7 +313,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let title;
+        let title: string;
         if (isVideoRoom) {
             title = _t("Create a video room");
         } else if (this.props.parentSpace) {

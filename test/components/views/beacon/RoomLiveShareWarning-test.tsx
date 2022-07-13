@@ -32,6 +32,8 @@ import {
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from '../../../test-utils';
+import defaultDispatcher from '../../../../src/dispatcher/dispatcher';
+import { Action } from '../../../../src/dispatcher/actions';
 
 jest.useFakeTimers();
 describe('<RoomLiveShareWarning />', () => {
@@ -117,6 +119,7 @@ describe('<RoomLiveShareWarning />', () => {
     afterAll(() => {
         jest.spyOn(global.Date, 'now').mockRestore();
         localStorageSpy.mockRestore();
+        jest.spyOn(defaultDispatcher, 'dispatch').mockRestore();
     });
 
     const getExpiryText = wrapper => findByTestId(wrapper, 'room-live-share-expiry').text();
@@ -263,6 +266,24 @@ describe('<RoomLiveShareWarning />', () => {
             expect(clearIntervalSpy).toHaveBeenCalled();
         });
 
+        it('navigates to beacon tile on click', () => {
+            const dispatcherSpy = jest.spyOn(defaultDispatcher, 'dispatch');
+            const component = getComponent({ roomId: room1Id });
+
+            act(() => {
+                component.simulate('click');
+            });
+
+            expect(dispatcherSpy).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                event_id: room1Beacon1.getId(),
+                room_id: room1Id,
+                highlighted: true,
+                scroll_into_view: true,
+                metricsTrigger: undefined,
+            });
+        });
+
         describe('stopping beacons', () => {
             it('stops beacon on stop sharing click', () => {
                 const component = getComponent({ roomId: room2Id });
@@ -359,7 +380,7 @@ describe('<RoomLiveShareWarning />', () => {
 
                     // renders wire error ui
                     expect(component.find('.mx_RoomLiveShareWarning_label').text()).toEqual(
-                        'An error occured whilst sharing your live location, please try again',
+                        'An error occurred whilst sharing your live location, please try again',
                     );
                     expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeTruthy();
                 });

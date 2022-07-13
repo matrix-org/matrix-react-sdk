@@ -21,7 +21,7 @@ import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { IRelationsRequestOpts } from 'matrix-js-sdk/src/@types/requests';
-import classNames from "classnames";
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
@@ -51,6 +51,9 @@ import Measured from '../views/elements/Measured';
 import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import { RoomViewStore } from '../../stores/RoomViewStore';
+import Spinner from "../views/elements/Spinner";
+import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
+import Heading from '../views/typography/Heading';
 
 interface IProps {
     room: Room;
@@ -134,6 +137,18 @@ export default class ThreadView extends React.Component<IProps, IState> {
             this.setupThread(payload.event);
         }
         switch (payload.action) {
+            case Action.ComposerInsert: {
+                if (payload.composerType) break;
+                if (payload.timelineRenderingType !== TimelineRenderingType.Thread) break;
+
+                // re-dispatch to the correct composer
+                dis.dispatch<ComposerInsertPayload>({
+                    ...(payload as ComposerInsertPayload),
+                    composerType: this.state.editState ? ComposerType.Edit : ComposerType.Send,
+                });
+                break;
+            }
+
             case Action.EditEvent:
                 // Quit early if it's not a thread context
                 if (payload.timelineRenderingType !== TimelineRenderingType.Thread) return;
@@ -283,8 +298,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
     }
 
     private renderThreadViewHeader = (): JSX.Element => {
-        return <div className="mx_ThreadPanel__header">
-            <span>{ _t("Thread") }</span>
+        return <div className="mx_BaseCard_header_title">
+            <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Thread") }</Heading>
             <ThreadListContextMenu
                 mxEvent={this.props.mxEvent}
                 permalinkCreator={this.props.permalinkCreator} />
@@ -298,11 +313,49 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         const threadRelation = this.threadRelation;
 
-        const messagePanelClassNames = classNames(
-            "mx_RoomView_messagePanel",
-            {
-                "mx_GroupLayout": this.state.layout === Layout.Group,
-            });
+        let timeline: JSX.Element;
+        if (this.state.thread) {
+            if (this.props.initialEvent && this.props.initialEvent.getRoomId() !== this.state.thread.roomId) {
+                logger.warn("ThreadView attempting to render TimelinePanel with mismatched initialEvent",
+                    this.state.thread.roomId,
+                    this.props.initialEvent.getRoomId(),
+                    this.props.initialEvent.getId(),
+                );
+            }
+
+            timeline = <>
+                <FileDropTarget parent={this.card.current} onFileDrop={this.onFileDrop} />
+                <TimelinePanel
+                    key={this.state.thread.id}
+                    ref={this.timelinePanel}
+                    showReadReceipts={false} // Hide the read receipts
+                    // until homeservers speak threads language
+                    manageReadReceipts={true}
+                    manageReadMarkers={true}
+                    sendReadReceiptOnLoad={true}
+                    timelineSet={this.state.thread.timelineSet}
+                    showUrlPreview={this.context.showUrlPreview}
+                    // ThreadView doesn't support IRC layout at this time
+                    layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
+                    hideThreadedMessages={false}
+                    hidden={false}
+                    showReactions={true}
+                    className="mx_RoomView_messagePanel"
+                    permalinkCreator={this.props.permalinkCreator}
+                    membersLoaded={true}
+                    editState={this.state.editState}
+                    eventId={this.props.initialEvent?.getId()}
+                    highlightedEventId={highlightedEventId}
+                    eventScrollIntoView={this.props.initialEventScrollIntoView}
+                    onEventScrolledIntoView={this.resetJumpToEvent}
+                    onPaginationRequest={this.onPaginationRequest}
+                />
+            </>;
+        } else {
+            timeline = <div className="mx_RoomView_messagePanelSpinner">
+                <Spinner />
+            </div>;
+        }
 
         return (
             <RoomContext.Provider value={{
@@ -327,40 +380,15 @@ export default class ThreadView extends React.Component<IProps, IState> {
                         sensor={this.card.current}
                         onMeasurement={this.onMeasurement}
                     />
-                    { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
-                        <FileDropTarget parent={this.card.current} onFileDrop={this.onFileDrop} />
-                        <TimelinePanel
-                            key={this.state?.thread?.id}
-                            ref={this.timelinePanel}
-                            showReadReceipts={false} // Hide the read receipts
-                            // until homeservers speak threads language
-                            manageReadReceipts={true}
-                            manageReadMarkers={true}
-                            sendReadReceiptOnLoad={true}
-                            timelineSet={this.state?.thread?.timelineSet}
-                            showUrlPreview={this.context.showUrlPreview}
-                            // ThreadView doesn't support IRC layout at this time
-                            layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
-                            hideThreadedMessages={false}
-                            hidden={false}
-                            showReactions={true}
-                            className={messagePanelClassNames}
-                            permalinkCreator={this.props.permalinkCreator}
-                            membersLoaded={true}
-                            editState={this.state.editState}
-                            eventId={this.props.initialEvent?.getId()}
-                            highlightedEventId={highlightedEventId}
-                            eventScrollIntoView={this.props.initialEventScrollIntoView}
-                            onEventScrolledIntoView={this.resetJumpToEvent}
-                            onPaginationRequest={this.onPaginationRequest}
-                        />
-                    </div> }
+                    <div className="mx_ThreadView_timelinePanelWrapper">
+                        { timeline }
+                    </div>
 
                     { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
                         <UploadBar room={this.props.room} relation={threadRelation} />
                     ) }
 
-                    { this.state?.thread?.timelineSet && (<MessageComposer
+                    { this.state.thread?.timelineSet && (<MessageComposer
                         room={this.props.room}
                         resizeNotifier={this.props.resizeNotifier}
                         relation={threadRelation}

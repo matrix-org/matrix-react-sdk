@@ -22,11 +22,12 @@ import { MenuItem } from "../../structures/ContextMenu";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
+import { RoomContextDetails } from "./RoomContextDetails";
 import InteractiveTooltip, { Direction } from "../elements/InteractiveTooltip";
 import { Action } from "../../../dispatcher/actions";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { roomContextDetailsText } from "../../../utils/i18n-helpers";
+import RoomAvatar from "../avatars/RoomAvatar";
 
 const RecentlyViewedButton = () => {
     const tooltipRef = useRef<InteractiveTooltip>();
@@ -36,8 +37,6 @@ const RecentlyViewedButton = () => {
         <h4>{ _t("Recently viewed") }</h4>
         <div>
             { crumbs.map(crumb => {
-                const contextDetails = roomContextDetailsText(crumb);
-
                 return <MenuItem
                     key={crumb.roomId}
                     onClick={(ev) => {
@@ -50,12 +49,13 @@ const RecentlyViewedButton = () => {
                         tooltipRef.current?.hideTooltip();
                     }}
                 >
-                    <DecoratedRoomAvatar room={crumb} avatarSize={24} tooltipProps={{ tabIndex: -1 }} />
+                    { crumb.isSpaceRoom()
+                        ? <RoomAvatar room={crumb} width={24} height={24} />
+                        : <DecoratedRoomAvatar room={crumb} avatarSize={24} tooltipProps={{ tabIndex: -1 }} />
+                    }
                     <span className="mx_RecentlyViewedButton_entry_label">
                         <div>{ crumb.name }</div>
-                        { contextDetails && <div className="mx_RecentlyViewedButton_entry_spaces">
-                            { contextDetails }
-                        </div> }
+                        <RoomContextDetails className="mx_RecentlyViewedButton_entry_spaces" room={crumb} />
                     </span>
                 </MenuItem>;
             }) }

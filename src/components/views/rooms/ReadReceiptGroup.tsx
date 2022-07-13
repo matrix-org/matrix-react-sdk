@@ -52,11 +52,11 @@ interface IAvatarPosition {
     position: number;
 }
 
-export function determineAvatarPosition(index: number, count: number, max: number): IAvatarPosition {
+export function determineAvatarPosition(index: number, max: number): IAvatarPosition {
     if (index < max) {
         return {
             hidden: false,
-            position: Math.min(count, max) - index - 1,
+            position: index,
         };
     } else {
         return {
@@ -133,7 +133,7 @@ export function ReadReceiptGroup(
     }
 
     const avatars = readReceipts.map((receipt, index) => {
-        const { hidden, position } = determineAvatarPosition(index, readReceipts.length, maxAvatars);
+        const { hidden, position } = determineAvatarPosition(index, maxAvatars);
 
         const userId = receipt.userId;
         let readReceiptInfo: IReadReceiptInfo;
@@ -199,10 +199,12 @@ export function ReadReceiptGroup(
 
     return (
         <div className="mx_EventTile_msgOption">
-            <div className="mx_ReadReceiptGroup">
+            <div className="mx_ReadReceiptGroup" role="group" aria-label={_t("Read receipts")}>
                 <AccessibleButton
                     className="mx_ReadReceiptGroup_button"
                     inputRef={button}
+                    aria-label={tooltipText}
+                    aria-haspopup="true"
                     onClick={openMenu}
                     onMouseOver={showTooltip}
                     onMouseLeave={hideTooltip}
@@ -233,7 +235,7 @@ interface ReadReceiptPersonProps extends IReadReceiptProps {
 
 function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick }: ReadReceiptPersonProps) {
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
-        alignment: Alignment.TopCenter,
+        alignment: Alignment.Top,
         tooltipClassName: "mx_ReadReceiptGroup_person--tooltip",
         label: (
             <>

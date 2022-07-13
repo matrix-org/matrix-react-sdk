@@ -17,11 +17,10 @@ limitations under the License.
 
 import React, { ComponentProps, createRef } from 'react';
 import { Blurhash } from "react-blurhash";
-import { SyncState } from 'matrix-js-sdk/src/sync';
 import classNames from 'classnames';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
 
 import MFileBody from './MFileBody';
 import Modal from '../../../Modal';
@@ -37,6 +36,9 @@ import { ImageSize, suggestedSize as suggestedImageSize } from "../../../setting
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
+import { presentableTextForFile } from "../../../utils/FileUtils";
+import { createReconnectedListener } from '../../../utils/connection';
+import MediaProcessingError from './shared/MediaProcessingError';
 
 enum Placeholder {
     NoImage,
@@ -67,9 +69,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private image = createRef<HTMLImageElement>();
     private timeout?: number;
     private sizeWatcher: string;
+    private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
     constructor(props: IBodyProps) {
         super(props);
+
+        this.reconnectedListener = createReconnectedListener(this.clearError);
 
         this.state = {
             imgError: false,
@@ -79,20 +84,6 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             placeholder: Placeholder.NoImage,
         };
     }
-
-    // FIXME: factor this out and apply it to MVideoBody and MAudioBody too!
-    private onClientSync = (syncState: SyncState, prevState: SyncState): void => {
-        if (this.unmounted) return;
-        // Consider the client reconnected if there is no error with syncing.
-        // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
-        const reconnected = syncState !== SyncState.Error && prevState !== syncState;
-        if (reconnected && this.state.imgError) {
-            // Load the image again
-            this.setState({
-                imgError: false,
-            });
-        }
-    };
 
     protected showImage(): void {
         localStorage.setItem("mx_ShowImage_" + this.props.mxEvent.getId(), "true");
@@ -158,11 +149,17 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         imgElement.src = this.state.thumbUrl ?? this.state.contentUrl;
     };
 
+    private clearError = () => {
+        MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
+        this.setState({ imgError: false });
+    };
+
     private onImageError = (): void => {
         this.clearBlurhashTimeout();
         this.setState({
             imgError: true,
         });
+        MatrixClientPeg.get().on(ClientEvent.Sync, this.reconnectedListener);
     };
 
     private onImageLoad = (): void => {
@@ -316,7 +313,6 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     componentDidMount() {
         this.unmounted = false;
-        MatrixClientPeg.get().on(ClientEvent.Sync, this.onClientSync);
 
         const showImage = this.state.showImage ||
             localStorage.getItem("mx_ShowImage_" + this.props.mxEvent.getId()) === "true";
@@ -346,12 +342,28 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     componentWillUnmount() {
         this.unmounted = true;
-        MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.onClientSync);
+        MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
         this.clearBlurhashTimeout();
         SettingsStore.unwatchSetting(this.sizeWatcher);
         if (this.state.isAnimated && this.state.thumbUrl) {
             URL.revokeObjectURL(this.state.thumbUrl);
         }
+    }
+
+    protected getBanner(content: IMediaEventContent): JSX.Element {
+        // Hide it for the threads list & the file panel where we show it as text anyway.
+        if ([
+            TimelineRenderingType.ThreadsList,
+            TimelineRenderingType.File,
+        ].includes(this.context.timelineRenderingType)) {
+            return null;
+        }
+
+        return (
+            <span className="mx_MImageBody_banner">
+                { presentableTextForFile(content, _t("Image"), true, true) }
+            </span>
+        );
     }
 
     protected messageContent(
@@ -369,7 +381,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
-            infoSvg = content.info.mimetype.startsWith("image/svg");
+            infoSvg = content.info.mimetype === "image/svg+xml";
         } else {
             // Whilst the image loads, display nothing. We also don't display a blurhash image
             // because we don't really know what size of image we'll end up with.
@@ -446,6 +458,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
+        let banner: JSX.Element;
+        if (this.state.showImage && this.state.hover) {
+            banner = this.getBanner(content);
+        }
+
         const classes = classNames({
             'mx_MImageBody_placeholder': true,
             'mx_MImageBody_placeholder--blurhash': this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
@@ -473,6 +490,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 <div style={sizing}>
                     { img }
                     { gifLabel }
+                    { banner }
                 </div>
 
                 { /* HACK: This div fills out space while the image loads, to prevent scroll jumps */ }
@@ -485,14 +503,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return this.wrapImage(contentUrl, thumbnail);
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
         return <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
             { children }
         </a>;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getPlaceholder(width: number, height: number): JSX.Element {
         const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
 
@@ -506,12 +524,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return <Spinner w={32} h={32} />;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getTooltip(): JSX.Element {
         return null;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getFileBody(): string | JSX.Element {
         if (this.props.forExport) return null;
         /*
@@ -535,10 +553,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         if (this.state.error) {
             return (
-                <div className="mx_MImageBody">
-                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
+                <MediaProcessingError className="mx_MImageBody">
                     { _t("Error decrypting image") }
-                </div>
+                </MediaProcessingError>
             );
         }
 
