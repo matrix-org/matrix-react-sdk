@@ -3432,5 +3432,6 @@
     "In %(spaceName)s and %(count)s other spaces.|zero": "V prostoru %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.|other": "V %(spaceName)s a %(count)s ostatních prostorech.",
     "In spaces %(space1Name)s and %(space2Name)s.": "V prostorech %(space1Name)s a %(space2Name)s.",
-    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Příkaz pro vývojáře: Zruší aktuální odchozí relaci skupiny a nastaví nové relace Olm"
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Příkaz pro vývojáře: Zruší aktuální odchozí relaci skupiny a nastaví nové relace Olm",
+    "Stop and close": "Zastavit a zavřít"
 }
