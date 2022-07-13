@@ -889,10 +889,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // If we are redirecting to a Room Alias and it is for the room we already showing then replace history item
         let replaceLast = presentedId[0] === "#" && roomInfo.room_id === this.state.currentRoomId;
 
-        if (
-            !roomInfo.room_id?.startsWith(LOCAL_ROOM_ID_PREFIX)
-            && this.state.currentRoomId?.startsWith(LOCAL_ROOM_ID_PREFIX)
-        ) {
+        if (this.state.currentRoomId?.startsWith(LOCAL_ROOM_ID_PREFIX)) {
             // Replace local room history items
             replaceLast = true;
         }

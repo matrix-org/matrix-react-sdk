@@ -409,7 +409,6 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                     key="setup"
                     kind="primary"
                     onClick={this.startNewBackup}
-                    data-test-id="set-up-secure-backup-button"
                 >
                     { _t("Set up") }
                 </AccessibleButton>,
