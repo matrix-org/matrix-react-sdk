@@ -3432,5 +3432,6 @@
     "In %(spaceName)s and %(count)s other spaces.|zero": "У просторі %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.|other": "У %(spaceName)s та %(count)s інших пристроях.",
     "In spaces %(space1Name)s and %(space2Name)s.": "У просторах %(space1Name)s і %(space2Name)s.",
-    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Команда розробника: відкликає поточний сеанс вихідної групи та встановлює нові сеанси Olm"
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Команда розробника: відкликає поточний сеанс вихідної групи та встановлює нові сеанси Olm",
+    "You don't have permission to share locations": "Ви не маєте дозволу ділитися місцем перебування"
 }
