@@ -3429,5 +3429,7 @@
     "In %(spaceName)s and %(count)s other spaces.|one": "Kogukonnas %(spaceName)s ja veel %(count)s's kogukonnas.",
     "In %(spaceName)s and %(count)s other spaces.|zero": "Kogukonnas %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.|other": "Kogukonnas %(spaceName)s ja %(count)s's muus kogukonnas.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Kogukondades %(space1Name)s ja %(space2Name)s."
+    "In spaces %(space1Name)s and %(space2Name)s.": "Kogukondades %(space1Name)s ja %(space2Name)s.",
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Arendaja toiming: Lõpetab kehtiva väljuva rühmasessiooni ja seadistab uue Olm sessiooni",
+    "Stop and close": "Peata ja sulge"
 }
