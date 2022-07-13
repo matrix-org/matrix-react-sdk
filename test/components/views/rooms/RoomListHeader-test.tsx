@@ -101,6 +101,19 @@ const checkIsDisabled = menuItem => {
     expect(menuItem.props()['aria-disabled']).toBeTruthy();
 };
 
+const checkMenuLabels = (items, labelArray) => {
+    expect(items).toHaveLength(labelArray.length);
+
+    const checkLabel = (item, label) => {
+        expect(item.find(".mx_IconizedContextMenu_label").text()).toBe(label);
+    };
+
+    labelArray.forEach((label, index) => {
+        console.log('index', index, 'label', label);
+        checkLabel(items.at(index), label);
+    });
+};
+
 describe("RoomListHeader", () => {
     let client: MatrixClient;
 
@@ -137,14 +150,15 @@ describe("RoomListHeader", () => {
 
         const menu = wrapper.find(".mx_IconizedContextMenu");
         const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
-        expect(items).toHaveLength(6);
-        expect(items.at(0).text()).toBe("Space home");
-        expect(items.at(1).text()).toBe("Manage & explore rooms");
-        expect(items.at(2).text()).toBe("Preferences");
-        expect(items.at(3).text()).toBe("Settings");
-        expect(items.at(4).text()).toBe("Room");
-        // Look for label within the item, to ignore the text of the "Beta" pill if present.
-        expect(items.at(5).find(".mx_IconizedContextMenu_label").text()).toBe("Space");
+
+        checkMenuLabels(items, [
+            "Space home",
+            "Manage & explore rooms",
+            "Preferences",
+            "Settings",
+            "Room",
+            "Space",
+        ]);
     });
 
     it("renders a plus menu for spaces", async () => {
@@ -154,12 +168,12 @@ describe("RoomListHeader", () => {
         const menu = wrapper.find(".mx_IconizedContextMenu");
         const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
 
-        expect(items).toHaveLength(4);
-        expect(items.at(0).text()).toBe("New room");
-        expect(items.at(1).text()).toBe("Explore rooms");
-        expect(items.at(2).text()).toBe("Add existing room");
-        // Look for label within the item, to ignore the text of the "Beta" pill if present.
-        expect(items.at(3).find(".mx_IconizedContextMenu_label").text()).toBe("Add space");
+        checkMenuLabels(items, [
+            "New room",
+            "Explore rooms",
+            "Add existing room",
+            "Add space",
+        ]);
     });
 
     it("closes menu if space changes from under it", async () => {
@@ -193,12 +207,14 @@ describe("RoomListHeader", () => {
 
                 const menu = wrapper.find(".mx_IconizedContextMenu");
                 const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
-                expect(items).toHaveLength(5);
-                expect(items.at(0).text()).toBe("Space home");
-                expect(items.at(1).text()).toBe("Manage & explore rooms");
-                expect(items.at(2).text()).toBe("Preferences");
-                expect(items.at(3).text()).toBe("Settings");
-                expect(items.at(4).text()).toBe("Room");
+                checkMenuLabels(items, [
+                    "Space home",
+                    "Manage & explore rooms",
+                    "Preferences",
+                    "Settings",
+                    "Room",
+                    // no add space
+                ]);
             });
 
             it('does not render Add Room when user does not have permission to add rooms', async () => {
@@ -210,28 +226,16 @@ describe("RoomListHeader", () => {
 
                 const menu = wrapper.find(".mx_IconizedContextMenu");
                 const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
-                expect(items).toHaveLength(5);
-                expect(items.at(0).text()).toBe("Space home");
-                expect(items.at(1).text()).toBe("Explore rooms");
-                expect(items.at(2).text()).toBe("Preferences");
-                expect(items.at(3).text()).toBe("Settings");
-                // Look for label within the item, to ignore the text of the "Beta" pill if present.
-                expect(items.at(4).find(".mx_IconizedContextMenu_label").text()).toBe("Space");
+                checkMenuLabels(items, [
+                    "Space home",
+                    "Explore rooms", // not Manage & explore rooms
+                    "Preferences",
+                    "Settings",
+                    // no add room
+                    "Space",
+                ]);
             });
         });
-
-        const checkMenuLabels = (items, labelArray) => {
-            expect(items).toHaveLength(labelArray.length);
-
-            const checkLabel = (item, label) => {
-                expect(item.find(".mx_IconizedContextMenu_label").text()).toBe(label);
-            };
-
-            labelArray.forEach((label, index) => {
-                console.log('index', index, 'label', label);
-                checkLabel(items.at(index), label);
-            });
-        };
 
         describe('Plus menu', () => {
             it('does not render Add Space when user does not have permission to add spaces', async () => {
@@ -248,10 +252,11 @@ describe("RoomListHeader", () => {
                     "New room",
                     "Explore rooms",
                     "Add existing room",
+                    // no Add space
                 ]);
             });
 
-            it('does not render Add Room when user does not have permission to add rooms', async () => {
+            it('disables Add Room when user does not have permission to add rooms', async () => {
                 // User does not have permission to add rooms
                 blockUIComponent(UIComponent.CreateRooms);
 
@@ -267,12 +272,15 @@ describe("RoomListHeader", () => {
                     "Add existing room",
                     "Add space",
                 ]);
+
+                // "Add existing room" is disabled
+                checkIsDisabled(items.at(2));
             });
         });
     });
 
     describe('adding children to space', () => {
-        it('if user cannot add children to space, MainMenu buttons are hidden', async () => {
+        it('if user cannot add children to space, MainMenu adding buttons are hidden', async () => {
             const testSpace = setupSpace(client);
             mocked(testSpace.currentState.maySendStateEvent).mockImplementation(
                 (stateEventType, userId) => stateEventType !== EventType.SpaceChild);
@@ -281,14 +289,17 @@ describe("RoomListHeader", () => {
 
             const menu = wrapper.find(".mx_IconizedContextMenu");
             const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
-            expect(items).toHaveLength(4);
-            expect(items.at(0).text()).toBe("Space home");
-            expect(items.at(1).text()).toBe("Explore rooms");
-            expect(items.at(2).text()).toBe("Preferences");
-            expect(items.at(3).text()).toBe("Settings");
+            checkMenuLabels(items, [
+                "Space home",
+                "Explore rooms", // not Manage & explore rooms
+                "Preferences",
+                "Settings",
+                // no add room
+                // no add space
+            ]);
         });
 
-        it('if user cannot add children to space, PlusMenu buttons are disabled', async () => {
+        it('if user cannot add children to space, PlusMenu add buttons are disabled', async () => {
             const testSpace = setupSpace(client);
             mocked(testSpace.currentState.maySendStateEvent).mockImplementation(
                 (stateEventType, userId) => stateEventType !== EventType.SpaceChild);
@@ -297,12 +308,17 @@ describe("RoomListHeader", () => {
 
             const menu = wrapper.find(".mx_IconizedContextMenu");
             const items = menu.find(".mx_IconizedContextMenu_item").hostNodes();
-            expect(items).toHaveLength(4);
-            expect(items.at(0).text()).toBe("New room");
-            expect(items.at(1).text()).toBe("Explore rooms");
-            expect(items.at(2).text()).toBe("Add existing room");
+
+            checkMenuLabels(items, [
+                "New room",
+                "Explore rooms",
+                "Add existing room",
+                "Add space",
+            ]);
+
+            // "Add existing room" is disabled
             checkIsDisabled(items.at(2));
-            expect(items.at(3).find(".mx_IconizedContextMenu_label").text()).toBe("Add space");
+            // "Add space" is disabled
             checkIsDisabled(items.at(3));
         });
     });
