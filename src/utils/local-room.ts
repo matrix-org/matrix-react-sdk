@@ -19,8 +19,9 @@ import { ClientEvent, EventType, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
+import { LocalRoom, LocalRoomState } from "../models/LocalRoom";
 import * as thisModule from "./local-room";
+import { isLocalRoom } from "./localRoom/isLocalRoom";
 
 /**
  * Does a room action:
@@ -40,7 +41,7 @@ export async function doMaybeLocalRoomAction<T>(
     fn: (actualRoomId: string) => Promise<T>,
     client?: MatrixClient,
 ): Promise<T> {
-    if (roomId.startsWith(LOCAL_ROOM_ID_PREFIX)) {
+    if (isLocalRoom(roomId)) {
         client = client ?? MatrixClientPeg.get();
         const room = client.getRoom(roomId) as LocalRoom;
 

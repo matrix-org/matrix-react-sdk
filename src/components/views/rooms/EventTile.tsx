@@ -80,7 +80,7 @@ import { haveRendererForEvent, isMessageEvent, renderTile } from "../../../event
 import ThreadSummary, { ThreadMessagePreview } from "./ThreadSummary";
 import { ReadReceiptGroup } from './ReadReceiptGroup';
 import { useTooltip } from "../../../utils/useTooltip";
-import { LOCAL_ROOM_ID_PREFIX } from '../../../models/LocalRoom';
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -768,7 +768,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         const ev = this.props.mxEvent;
 
         // no icon for local rooms
-        if (ev.getRoomId()?.startsWith(LOCAL_ROOM_ID_PREFIX)) {
+        if (isLocalRoom(ev.getRoomId())) {
             return;
         }
 

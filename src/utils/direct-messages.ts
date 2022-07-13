@@ -33,6 +33,7 @@ import { privateShouldBeEncrypted } from "./rooms";
 import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
 import * as thisModule from "./direct-messages";
 import { waitForRoomReadyAndApplyAfterCreateCallbacks } from "./local-room";
+import { isLocalRoom } from "./localRoom/isLocalRoom";
 
 /**
  * Tries to find a DM room with a specific user.
@@ -51,7 +52,7 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
         // that bots, assistants, etc will ruin a room's DM-ness, though this is a problem for
         // canonical DMs to solve.
         if (r && r.getMyMembership() === "join") {
-            if (r instanceof LocalRoom) return false;
+            if (isLocalRoom(r)) return false;
 
             const members = r.currentState.getMembers();
             const joinedMembers = members.filter(m => isJoinedOrNearlyJoined(m.membership));
@@ -287,7 +288,7 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
     } else {
         existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
     }
-    if (existingRoom && !(existingRoom instanceof LocalRoom)) {
+    if (existingRoom && !isLocalRoom(existingRoom)) {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: existingRoom.roomId,

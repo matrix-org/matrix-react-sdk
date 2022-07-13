@@ -117,6 +117,7 @@ import NewRoomIntro from '../views/rooms/NewRoomIntro';
 import EncryptionEvent from '../views/messages/EncryptionEvent';
 import { UnsentMessagesRoomStatusBar } from './UnsentMessagesRoomStatusBar';
 import { StaticNotificationState } from '../../stores/notifications/StaticNotificationState';
+import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -906,7 +907,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             SettingsStore.unwatchSetting(watcher);
         }
 
-        if (this.state.room instanceof LocalRoom) {
+        if (this.viewsLocalRoom) {
             // clean up if this was a local room
             this.props.mxClient.store.removeRoom(this.state.room.roomId);
         }
@@ -1924,7 +1925,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private get viewsLocalRoom(): boolean {
-        return this.state.room instanceof LocalRoom;
+        return isLocalRoom(this.state.room);
     }
 
     private get permalinkCreator(): RoomPermalinkCreator {

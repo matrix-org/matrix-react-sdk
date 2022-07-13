@@ -24,7 +24,7 @@ import EventTileBubble from "./EventTileBubble";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { objectHasDiff } from "../../../utils/objects";
-import { LocalRoom } from '../../../models/LocalRoom';
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -54,7 +54,7 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
             const displayName = room.getMember(dmPartner)?.rawDisplayName || dmPartner;
             subtitle = _t("Messages here are end-to-end encrypted. " +
                 "Verify %(displayName)s in their profile - tap on their avatar.", { displayName });
-        } else if (room instanceof LocalRoom) {
+        } else if (isLocalRoom(room)) {
             subtitle = _t("Messages in this chat will be end-to-end encrypted.");
         } else {
             subtitle = _t("Messages in this room are end-to-end encrypted. " +

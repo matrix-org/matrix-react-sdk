@@ -128,8 +128,8 @@ import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
-import { LOCAL_ROOM_ID_PREFIX } from '../../models/LocalRoom';
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
+import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -889,7 +889,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // If we are redirecting to a Room Alias and it is for the room we already showing then replace history item
         let replaceLast = presentedId[0] === "#" && roomInfo.room_id === this.state.currentRoomId;
 
-        if (this.state.currentRoomId?.startsWith(LOCAL_ROOM_ID_PREFIX)) {
+        if (isLocalRoom(this.state.currentRoomId)) {
             // Replace local room history items
             replaceLast = true;
         }

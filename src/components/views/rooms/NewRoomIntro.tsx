@@ -39,6 +39,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
 import { LocalRoom } from "../../../models/LocalRoom";
+import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -60,7 +61,7 @@ const NewRoomIntro = () => {
         let introMessage = "This is the beginning of your direct message history with <displayName/>.";
         let caption;
 
-        if (room instanceof LocalRoom) {
+        if (isLocalRoom(room)) {
             introMessage = "Send your first message to invite <displayName/> to chat";
         } else if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
             caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
@@ -211,7 +212,7 @@ const NewRoomIntro = () => {
     let subButton;
     if (
         room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get())
-        && !(room instanceof LocalRoom)
+        && !(isLocalRoom(room))
     ) {
         subButton = (
             <AccessibleButton kind='link_inline' onClick={openRoomSettings}>{ _t("Enable encryption in settings.") }</AccessibleButton>

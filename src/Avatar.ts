@@ -22,7 +22,7 @@ import { split } from "lodash";
 
 import DMRoomMap from './utils/DMRoomMap';
 import { mediaFromMxc } from "./customisations/Media";
-import { LocalRoom } from "./models/LocalRoom";
+import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
 export function avatarUrlForMember(
@@ -145,7 +145,7 @@ export function avatarUrlForRoom(room: Room, width: number, height: number, resi
     // If the room is not a DM don't fallback to a member avatar
     if (
         !DMRoomMap.shared().getUserIdForRoomId(room.roomId)
-        && !(room instanceof LocalRoom)
+        && !(isLocalRoom(room))
     ) {
         return null;
     }
