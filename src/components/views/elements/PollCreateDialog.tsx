@@ -164,7 +164,6 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     protected submit(): void {
         this.setState({ busy: true, canSubmit: false });
         const pollEvent = this.createEvent();
-
         doMaybeLocalRoomAction(
             this.props.room.roomId,
             (actualRoomId: string) => this.matrixClient.sendEvent(

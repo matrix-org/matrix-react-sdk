@@ -352,16 +352,14 @@ export default class ContentMessages {
         text: string,
         matrixClient: MatrixClient,
     ): Promise<ISendEventResponse> {
-        const prom = doMaybeLocalRoomAction(
+        return doMaybeLocalRoomAction(
             roomId,
             (actualRoomId: string) => matrixClient.sendStickerMessage(actualRoomId, threadId, url, info, text),
             matrixClient,
-        );
-        prom.catch((e) => {
+        ).catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
-        return prom;
     }
 
     public getUploadLimit(): number | null {
@@ -418,6 +416,8 @@ export default class ContentMessages {
         let promBefore: Promise<any> = Promise.resolve();
         for (let i = 0; i < okFiles.length; ++i) {
             const file = okFiles[i];
+            const loopPromiseBefore = promBefore;
+
             if (!uploadAll) {
                 const { finished } = Modal.createDialog<[boolean, boolean]>(UploadConfirmDialog, {
                     file,
@@ -431,7 +431,6 @@ export default class ContentMessages {
                 }
             }
 
-            const loopPromiseBefore = promBefore;
             promBefore = doMaybeLocalRoomAction(
                 roomId,
                 (actualRoomId) => this.sendContentToRoom(

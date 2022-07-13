@@ -53,8 +53,8 @@ describe("ContentMessages", () => {
             });
         });
 
-        it("should forward the call to doMaybeLocalRoomAction", () => {
-            const returnProm = contentMessages.sendStickerContentToRoom(
+        it("should forward the call to doMaybeLocalRoomAction", async () => {
+            await contentMessages.sendStickerContentToRoom(
                 stickerUrl,
                 roomId,
                 null,
@@ -62,7 +62,6 @@ describe("ContentMessages", () => {
                 text,
                 client,
             );
-            expect(returnProm).toBe(prom);
             expect(client.sendStickerMessage).toHaveBeenCalledWith(roomId, null, stickerUrl, imageInfo, text);
         });
     });
