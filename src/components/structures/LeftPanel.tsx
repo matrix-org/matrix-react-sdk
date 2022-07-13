@@ -24,6 +24,7 @@ import RoomList from "../views/rooms/RoomList";
 import CallHandler from "../../CallHandler";
 import { HEADER_HEIGHT } from "../views/rooms/RoomSublist";
 import { Action } from "../../dispatcher/actions";
+import { UserOnboardingElement } from "../views/rooms/UserOnboardingElement";
 import RoomSearch from "./RoomSearch";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
@@ -45,9 +46,11 @@ import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import PosthogTrackers from "../../PosthogTrackers";
+import PageType from "../../PageTypes";
 
 interface IProps {
     isMinimized: boolean;
+    pageType: PageType;
     resizeNotifier: ResizeNotifier;
 }
 
@@ -390,6 +393,10 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                             onVisibilityChange={this.refreshStickyHeaders}
                         />
                     ) }
+                    <UserOnboardingElement
+                        selected={this.props.pageType === PageType.HomePage}
+                        minimized={this.props.isMinimized}
+                    />
                     <div className="mx_LeftPanel_roomListWrapper">
                         <div
                             className={roomListClasses}

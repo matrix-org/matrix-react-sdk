@@ -42,6 +42,7 @@ interface IState {
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
     static ROOM_LIST_SETTINGS = [
         'breadcrumbs',
+        "FTUE.userOnboardingButton",
     ];
 
     static SPACES_SETTINGS = [
