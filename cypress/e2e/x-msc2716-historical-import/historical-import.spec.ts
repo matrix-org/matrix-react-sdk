@@ -678,7 +678,7 @@ describe("MSC2716: Historical Import", () => {
         });
     });
 
-    it.only("Perfectly resolves timelines when refresh fails and then another refresh causes `getLatestTimeline()` " +
+    it("Perfectly resolves timelines when refresh fails and then another refresh causes `getLatestTimeline()` " +
         "finds a threaded event", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
