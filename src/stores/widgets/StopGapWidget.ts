@@ -378,6 +378,7 @@ export class StopGapWidget extends EventEmitter {
         if (WidgetType.JITSI.matches(this.mockWidget.type)) {
             this.messaging.on(`action:${ElementWidgetActions.HangupCall}`,
                 (ev: CustomEvent<IHangupCallApiRequest>) => {
+                    ev.preventDefault();
                     if (ev.detail.data?.errorMessage) {
                         Modal.createDialog(ErrorDialog, {
                             title: _t("Connection lost"),
@@ -386,6 +387,7 @@ export class StopGapWidget extends EventEmitter {
                             }),
                         });
                     }
+                    this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
                 },
             );
         }
