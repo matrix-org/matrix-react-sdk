@@ -32,6 +32,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
 import 'focus-visible';
@@ -93,7 +94,6 @@ import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
 import UserSettingsDialog from '../views/dialogs/UserSettingsDialog';
-import { UserTab } from "../views/dialogs/UserTab";
 import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
 import RoomDirectory from './RoomDirectory';
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
@@ -118,7 +118,6 @@ import { showSpaceInvite } from "../../utils/space";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
-import GenericToast from '../views/toasts/GenericToast';
 import Views from '../../Views';
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { ViewHomePagePayload } from '../../dispatcher/payloads/ViewHomePagePayload';
@@ -738,9 +737,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.state.resizeNotifier.notifyLeftHandleResized();
                 });
                 break;
-            case 'focus_room_filter': // for CtrlOrCmd+K to work by expanding the left panel first
-                if (SettingsStore.getValue("feature_spotlight")) break; // don't expand if spotlight enabled
-                // fallthrough
             case 'show_left_panel':
                 this.setState({
                     collapseLhs: false,
@@ -1398,42 +1394,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 showNotificationsToast(false);
             }
 
-            if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {
-                setTimeout(() => {
-                    // Skip the toast if the beta is already enabled or the user has changed the setting from default
-                    if (SettingsStore.getValue("feature_spotlight") ||
-                        SettingsStore.getValue("feature_spotlight", null, true) !== null) {
-                        return;
-                    }
-
-                    const key = "BETA_SPOTLIGHT_TOAST";
-                    ToastStore.sharedInstance().addOrReplaceToast({
-                        key,
-                        title: _t("New search beta available"),
-                        props: {
-                            description: _t("We're testing a new search to make finding what you want quicker.\n"),
-                            acceptLabel: _t("Learn more"),
-                            onAccept: () => {
-                                dis.dispatch({
-                                    action: Action.ViewUserSettings,
-                                    initialTabId: UserTab.Labs,
-                                });
-                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
-                                ToastStore.sharedInstance().dismissToast(key);
-                            },
-                            rejectLabel: _t("Dismiss"),
-                            onReject: () => {
-                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
-                                ToastStore.sharedInstance().dismissToast(key);
-                            },
-                        },
-                        icon: "labs",
-                        component: GenericToast,
-                        priority: 9,
-                    });
-                }, 5 * 60 * 1000); // show after 5 minutes to not overload user with toasts on launch
-            }
-
             dis.fire(Action.FocusSendMessageComposer);
             this.setState({
                 ready: true,
@@ -1493,7 +1453,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // When logging out, stop tracking failures and destroy state
         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
-        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as MatrixError));
+        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
 
         cli.on(ClientEvent.Room, (room) => {
             if (MatrixClientPeg.get().isCryptoEnabled()) {

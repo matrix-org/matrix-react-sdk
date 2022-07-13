@@ -33,7 +33,9 @@ const existingIssuesUrl = "https://github.com/vector-im/element-web/issues" +
     "?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc";
 const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
 
-interface IProps extends IDialogProps {}
+interface IProps extends IDialogProps {
+    feature?: string;
+}
 
 const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
     const feedbackRef = useRef<Field>();
@@ -55,7 +57,8 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
     const onFinished = (sendFeedback: boolean): void => {
         if (hasFeedback && sendFeedback) {
             if (rageshakeUrl) {
-                submitFeedback(rageshakeUrl, "feedback", comment, canContact);
+                const label = props.feature ? `${props.feature}-feedback` : "feedback";
+                submitFeedback(rageshakeUrl, label, comment, canContact);
             }
 
             Modal.createDialog(InfoDialog, {
@@ -102,7 +105,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 _t("PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> " +
                     "to help us track down the problem.", {}, {
                     debugLogsLink: sub => (
-                        <AccessibleButton kind="link" onClick={onDebugLogsLinkClick}>{ sub }</AccessibleButton>
+                        <AccessibleButton kind="link_inline" onClick={onDebugLogsLinkClick}>{ sub }</AccessibleButton>
                     ),
                 })
             }</p>

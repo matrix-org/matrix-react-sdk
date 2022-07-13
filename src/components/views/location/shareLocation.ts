@@ -26,6 +26,7 @@ import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
 import { OwnBeaconStore } from "../../../stores/OwnBeaconStore";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 export enum LocationShareType {
     Own = 'Own',
@@ -95,25 +96,13 @@ export const shareLocation = (
     try {
         const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
         const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
-        await client.sendMessage(
+        const content = makeLocationContent(undefined, uri, timestamp, undefined, assetType);
+        await doMaybeLocalRoomAction(
             roomId,
-            threadId,
-            makeLocationContent(undefined, uri, timestamp, undefined, assetType),
+            (actualRoomId: string) => client.sendMessage(actualRoomId, threadId, content),
+            client,
         );
     } catch (error) {
         handleShareError(error, openMenu, shareType);
     }
 };
-
-export function textForLocation(
-    uri: string,
-    ts: number,
-    description: string | null,
-): string {
-    const date = new Date(ts).toISOString();
-    if (description) {
-        return `Location "${description}" ${uri} at ${date}`;
-    } else {
-        return `Location ${uri} at ${date}`;
-    }
-}
