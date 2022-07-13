@@ -341,7 +341,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             <AccessibleButton
                 onClick={this.onRefreshTimelineClick}
                 className="mx_RoomStatusBar_refreshTimelineBtn"
-                data-cy="refresh-timeline-button"
+                data-test-id="refresh-timeline-button"
             >
                 { _t("Refresh timeline") }
             </AccessibleButton>
@@ -382,7 +382,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
             errorContent = <>
                 <hr />
-                <div className="mx_RoomStatusBar_unsentDescription" data-cy="historical-import-detected-error-content">
+                <div className="mx_RoomStatusBar_unsentDescription" data-test-id="historical-import-detected-error-content">
                     { errorTextContent }
                     { " " }
                     { submitDebugLogsTextContent }
@@ -391,7 +391,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages" data-cy="historical-import-detected-status-bar">
+            <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages" data-test-id="historical-import-detected-status-bar">
                 <div role="alert">
                     <div className="mx_RoomStatusBar_unsentBadge">
                         <img

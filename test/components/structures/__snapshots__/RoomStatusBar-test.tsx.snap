@@ -2189,7 +2189,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should refres
 >
   <div
     className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages"
-    data-cy="historical-import-detected-status-bar"
+    data-test-id="historical-import-detected-status-bar"
   >
     <div
       role="alert"
@@ -2776,7 +2776,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
 >
   <div
     className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages"
-    data-cy="historical-import-detected-status-bar"
+    data-test-id="historical-import-detected-status-bar"
   >
     <div
       role="alert"
@@ -2805,7 +2805,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
         <hr />
         <div
           className="mx_RoomStatusBar_unsentDescription"
-          data-cy="historical-import-detected-error-content"
+          data-test-id="historical-import-detected-error-content"
         >
           An error occurred while trying to refresh the timeline.
            
@@ -2838,7 +2838,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
       >
         <AccessibleButton
           className="mx_RoomStatusBar_refreshTimelineBtn"
-          data-cy="refresh-timeline-button"
+          data-test-id="refresh-timeline-button"
           element="div"
           onClick={[Function]}
           role="button"
@@ -2846,7 +2846,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
         >
           <div
             className="mx_AccessibleButton mx_RoomStatusBar_refreshTimelineBtn"
-            data-cy="refresh-timeline-button"
+            data-test-id="refresh-timeline-button"
             onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
@@ -3391,7 +3391,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
 >
   <div
     className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages"
-    data-cy="historical-import-detected-status-bar"
+    data-test-id="historical-import-detected-status-bar"
   >
     <div
       role="alert"
@@ -3420,7 +3420,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
         <hr />
         <div
           className="mx_RoomStatusBar_unsentDescription"
-          data-cy="historical-import-detected-error-content"
+          data-test-id="historical-import-detected-error-content"
         >
           A network error occurred while trying to refresh the timeline. Your homeserver might be down or was just a temporary problem with your internet connection.
            
@@ -3431,7 +3431,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
       >
         <AccessibleButton
           className="mx_RoomStatusBar_refreshTimelineBtn"
-          data-cy="refresh-timeline-button"
+          data-test-id="refresh-timeline-button"
           element="div"
           onClick={[Function]}
           role="button"
@@ -3439,7 +3439,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show e
         >
           <div
             className="mx_AccessibleButton mx_RoomStatusBar_refreshTimelineBtn"
-            data-cy="refresh-timeline-button"
+            data-test-id="refresh-timeline-button"
             onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
@@ -3984,7 +3984,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show t
 >
   <div
     className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages"
-    data-cy="historical-import-detected-status-bar"
+    data-test-id="historical-import-detected-status-bar"
   >
     <div
       role="alert"
@@ -4016,7 +4016,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show t
       >
         <AccessibleButton
           className="mx_RoomStatusBar_refreshTimelineBtn"
-          data-cy="refresh-timeline-button"
+          data-test-id="refresh-timeline-button"
           element="div"
           onClick={[Function]}
           role="button"
@@ -4024,7 +4024,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show t
         >
           <div
             className="mx_AccessibleButton mx_RoomStatusBar_refreshTimelineBtn"
-            data-cy="refresh-timeline-button"
+            data-test-id="refresh-timeline-button"
             onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}

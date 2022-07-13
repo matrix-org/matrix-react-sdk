@@ -49,6 +49,7 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
     return (
         <AccessibleButton
             className="mx_ThreadSummary"
+            data-test-id="thread-summary"
             onClick={(ev: ButtonEvent) => {
                 showThread({
                     rootEvent: mxEvent,

@@ -235,7 +235,7 @@ function sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient) {
     });
 
     // Ensure the "History import detected" notice is shown
-    cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("exist");
+    cy.get(`[data-test-id="historical-import-detected-status-bar"]`).should("exist");
 }
 
 /**
@@ -361,6 +361,9 @@ describe("MSC2716: Historical Import", () => {
     const AS_TOKEN = 'as_token123';
 
     beforeEach(() => {
+        // Default threads to ON for this spec
+        cy.enableLabsFeature("feature_thread");
+
         cy.window().then(win => {
             // Collapse left panel for these tests (get more space in the area we care about)
             win.localStorage.setItem("mx_lhs_size", "0");
@@ -409,7 +412,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
 
         // Ensure historical messages are now shown
         cy.all([
@@ -434,7 +437,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
 
         // Ensure historical messages are now shown
         cy.all([
@@ -456,7 +459,7 @@ describe("MSC2716: Historical Import", () => {
         sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient);
 
         // Press "Refresh timeline"
-        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
 
         // Ensure all of the messages still show afterwards
         cy.all([
@@ -508,11 +511,11 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
 
         // Wait for the timeline to go blank (meaning it was reset)
         // and in the middle of the refrsehing timeline function.
-        cy.get('[data-cy="message-list"] [data-event-id]')
+        cy.get('[data-test-id="message-list"] [data-event-id]')
             .should('not.exist');
 
         // Then make a `/sync` happen by sending a message and seeing that it
@@ -608,13 +611,13 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
 
         // Make sure the request was intercepted and thew an error
         cy.wait('@contextRequestThatWillTryToMakeNewTimeline').its('response.statusCode').should('eq', 500);
 
         // Make sure we tell the user that an error happened
-        cy.get(`[data-cy="historical-import-detected-error-content"]`).should("exist");
+        cy.get(`[data-test-id="historical-import-detected-error-content"]`).should("exist");
 
         // Allow the requests to succeed now
         cy.all([
@@ -633,7 +636,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline" again, this time the network request should succeed
-        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
 
         // Make sure the request was intercepted and succeeded
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
@@ -670,6 +673,124 @@ describe("MSC2716: Historical Import", () => {
                 liveMessageEventIds[1],
                 ...historicalEventIds,
                 liveMessageEventIds[2],
+                eventIdAfterRefresh,
+            ]);
+        });
+    });
+
+    it.only("Perfectly resolves timelines when refresh fails and then another refresh causes `getLatestTimeline()` " +
+        "finds a threaded event", () => {
+        setupRoomWithHistoricalMessagesAndMarker({
+            synapse,
+            asMatrixClient,
+            virtualUserIDs,
+        });
+
+        // Send a threaded message so it's the latest message in the room
+        cy.get<string>("@roomId").then(async (roomId) => {
+            const { event_id: eventIdToThreadFrom } = await asMatrixClient.sendMessage(roomId, null, {
+                body: `event to thread from (root)`,
+                msgtype: "m.text",
+            });
+            const { event_id: eventIdThreadedMessage } = await asMatrixClient.sendMessage(roomId, null, {
+                "body": `threaded message1`,
+                "msgtype": "m.text",
+                "m.relates_to": {
+                    "rel_type": "m.thread",
+                    "event_id": eventIdToThreadFrom,
+                    "is_falling_back": true,
+                    "m.in_reply_to": {
+                        "event_id": eventIdToThreadFrom,
+                    },
+                },
+            });
+
+            // Wait for the message to show up for the logged in user
+            waitForEventIdsInClient([eventIdToThreadFrom]);
+            cy.wrap(eventIdToThreadFrom).as('eventIdToThreadFrom');
+            // We don't wait for this event in the client because it will be
+            // hidden away in a thread.
+            cy.wrap(eventIdThreadedMessage).as('eventIdThreadedMessage');
+
+            // Wait for the thread summary to appear which indicates that
+            // `eventIdThreadedMessage` made it to the client
+            cy.get(`[data-event-id="${eventIdToThreadFrom}"] [data-test-id="thread-summary"]`);
+        });
+
+        // Make the `/context` fail when we try to refresh the timeline. We want
+        // to make sure that we are resilient to this type of failure and can
+        // retry and recover.
+        cy.all([
+            cy.get<string>("@roomId"),
+            cy.get<string>("@eventIdToThreadFrom"),
+        ]).then(async ([roomId, eventIdToThreadFrom]) => {
+            // We're using `eventIdToThreadFrom` here because it's the latest
+            // event in the rooms main timeline which the refresh timeline logic
+            // will use if available.
+            const prefix = '/_matrix/client/r0';
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(eventIdToThreadFrom)}`;
+            const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
+            cy.intercept(contextUrl, {
+                statusCode: 500,
+                body: {
+                    errcode: 'CYPRESS_FAKE_ERROR',
+                    error: 'We purposely intercepted this /context request to make it fail ' +
+                             'in order to test whether the refresh timeline code is resilient',
+                },
+            }).as('contextRequestThatWillTryToMakeNewTimeline');
+        });
+
+        // Press "Refresh timeline"
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+
+        // Make sure the request was intercepted and thew an error
+        cy.wait('@contextRequestThatWillTryToMakeNewTimeline').its('response.statusCode').should('eq', 500);
+
+        // Wait for the timeline to go blank (meaning it was reset)
+        // and refreshing the timeline failed.
+        cy.get('[data-test-id="message-list"] [data-event-id]')
+            .should('not.exist');
+
+        // Press "Refresh timeline" again, this time the network request should succeed.
+        //
+        // Since the timeline is now blank, we have no most recent event to
+        // draw from locally. So `MatrixClient::getLatestTimeline` will
+        // fetch the latest from `/messages` which will return
+        // `eventIdThreadedMessage` as the latest event in the room.
+        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+
+        // Make sure sync pagination still works by seeing a new message show up
+        cy.get<string>("@roomId").then(async (roomId) => {
+            const { event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(roomId, null, {
+                body: `live_event after refresh`,
+                msgtype: "m.text",
+            });
+
+            // Wait for the message to show up for the logged in user
+            waitForEventIdsInClient([eventIdAfterRefresh]);
+
+            cy.wrap(eventIdAfterRefresh).as('eventIdAfterRefresh');
+        });
+
+        // Ensure historical messages are now shown
+        cy.all([
+            cy.get<string[]>("@liveMessageEventIds"),
+            cy.get<string[]>("@historicalEventIds"),
+            cy.get<string>("@eventIdToThreadFrom"),
+            cy.get<string>("@eventIdAfterRefresh"),
+        ]).then(async ([
+            liveMessageEventIds,
+            historicalEventIds,
+            eventIdToThreadFrom,
+            eventIdAfterRefresh,
+        ]) => {
+            // FIXME: Assert that they appear in the correct order
+            waitForEventIdsInClient([
+                liveMessageEventIds[0],
+                liveMessageEventIds[1],
+                ...historicalEventIds,
+                liveMessageEventIds[2],
+                eventIdToThreadFrom,
                 eventIdAfterRefresh,
             ]);
         });
