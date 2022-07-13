@@ -3417,5 +3417,21 @@
     "You cannot search for rooms that are neither a room nor a space": "Ви не можете шукати кімнати, які не є ні кімнатою, ні простором",
     "Show spaces": "Показати простори",
     "Show rooms": "Показати кімнати",
-    "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку"
+    "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку",
+    "You can't disable this later. The room will be encrypted but the embedded call will not.": "Ви не зможете вимкнути це пізніше. Кімната буде зашифрована, але вбудований виклик – ні.",
+    "Join the room to participate": "Приєднуйтеся до кімнати, щоб взяти участь",
+    "Reset bearing to north": "Повернути орієнтацію на північ",
+    "Mapbox logo": "Логотип Mapbox",
+    "Location not available": "Місце перебування недоступне",
+    "Find my location": "Знайти моє місце перебування",
+    "Exit fullscreen": "Вийти з повноекранного режиму",
+    "Enter fullscreen": "Перейти у повноекранний режим",
+    "Map feedback": "Карта відгуку",
+    "Toggle attribution": "Перемкнути атрибуцію",
+    "In %(spaceName)s and %(count)s other spaces.|one": "У %(spaceName)s та %(count)s іншому просторі.",
+    "In %(spaceName)s and %(count)s other spaces.|zero": "У просторі %(spaceName)s.",
+    "In %(spaceName)s and %(count)s other spaces.|other": "У %(spaceName)s та %(count)s інших пристроях.",
+    "In spaces %(space1Name)s and %(space2Name)s.": "У просторах %(space1Name)s і %(space2Name)s.",
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Команда розробника: відкликає поточний сеанс вихідної групи та встановлює нові сеанси Olm",
+    "You don't have permission to share locations": "Ви не маєте дозволу ділитися місцем перебування"
 }
