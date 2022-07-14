@@ -58,6 +58,7 @@ import { getSlidingSyncManager } from "../../../SlidingSyncManager";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import NotificationBadge from "./NotificationBadge";
 import RoomTile from "./RoomTile";
+import { logger } from "matrix-js-sdk/src/logger";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -315,7 +316,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             }
             return rid;
         });
-        console.log(
+        logger.debug(
             "onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:",
             orderedRoomIds.length < 10 ? orderedRoomIds : orderedRoomIds.length,
         );
@@ -484,10 +485,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     );
                     break;
                 case SortAlgorithm.Manual:
-                    console.error("cannot enable manual sort in sliding sync mode");
+                    logger.error("cannot enable manual sort in sliding sync mode");
                     break;
                 default:
-                    console.error("unknown sort mode: ", sort);
+                    logger.error("unknown sort mode: ", sort);
             }
             // no need for forceUpdate here as the /sync response will fire onSlidingSyncListUpdate
             return;
@@ -953,6 +954,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 'mx_RoomSublist_resizerHandles': true,
                 'mx_RoomSublist_resizerHandles_showNButton': !!showNButton,
             });
+
             content = (
                 <React.Fragment>
                     <Resizable

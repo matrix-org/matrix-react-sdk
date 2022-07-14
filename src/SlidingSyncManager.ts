@@ -101,7 +101,7 @@ export class SlidingSyncManager {
     async ensureListRegistered(
         listIndex: number, updateArgs: { filters?: object, sort?: string[], ranges?: number[][] },
     ): Promise<MSC3575List> {
-        console.log("ensureListRegistered", listIndex, updateArgs);
+        logger.debug("ensureListRegistered", listIndex, updateArgs);
         let list = this.slidingSync.getList(listIndex);
         if (!list) {
             list = {
@@ -123,7 +123,7 @@ export class SlidingSyncManager {
         } else {
             const updatedList = Object.assign({}, list, updateArgs);
             if (JSON.stringify(list) === JSON.stringify(updatedList)) {
-                console.log("list matches, not sending, update => ", updateArgs);
+                logger.debug("list matches, not sending, update => ", updateArgs);
                 return list;
             }
             list = updatedList;
@@ -135,7 +135,7 @@ export class SlidingSyncManager {
             this.slidingSync.setList(listIndex, list);
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const resolveOnSubscribed = (state: SlidingSyncState, resp: MSC3575SlidingSyncResponse, err: Error) => {
                 if (state === SlidingSyncState.Complete && resp.lists[listIndex]) { // we processed a /sync response
                     this.slidingSync.off(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
@@ -157,7 +157,7 @@ export class SlidingSyncManager {
         logger.log("SlidingSync setRoomVisible:", roomId, visible);
         this.slidingSync.modifyRoomSubscriptions(subscriptions);
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (this.client.getRoom(roomId)) {
                 resolve(roomId); // we have data already for this room, show immediately e.g it's in a list
                 return;
