@@ -3353,7 +3353,7 @@
     "Open room": "Raum öffnen",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, außer du hast die Schlüssel auf einem anderen Gerät oder ein Backup der Schlüssel auf dem Server.",
     "Ignore user": "Nutzer ignorieren",
-    "Show rooms": "Zeige Räume",
+    "Show rooms": "Räume zeigen",
     "Search for": "Suche nach",
     "%(count)s Members|one": "%(count)s Mitglied",
     "%(count)s Members|other": "%(count)s Mitglieder",
