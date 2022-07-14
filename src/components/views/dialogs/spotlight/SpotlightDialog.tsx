@@ -608,7 +608,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     viewRoom({
                         roomAlias: publicRoom.canonical_alias || publicRoom.aliases?.[0],
                         roomId: publicRoom.room_id,
-                    }, false, ev.type !== "click");
+                    }, true, ev.type !== "click");
                 };
                 return (
                     <Option
