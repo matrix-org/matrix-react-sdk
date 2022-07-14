@@ -3342,5 +3342,6 @@
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Beachte bitte: Dies ist eine Laborfunktion, die eine temporäre Implementierung nutzt. Das bedeutet du kannst deine Standortverlauf nicht löschen und erweiterte Nutzer werden deine Standortgeschichte sehen können, selbst nachdem du aufgehört hast deinen Live-Standort mit diesem Raum zu teilen.",
     "Video room": "Videoraum",
     "Video rooms are a beta feature": "Videoräume sind eine Betafunktion",
-    "Minimise": "Minimiere"
+    "Minimise": "Minimiere",
+    "Edit topic": "Bearbeite das Thema"
 }
