@@ -20,6 +20,7 @@ import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { MessageEvent } from 'matrix-events-sdk';
 import { EventTimelineSet, MatrixEvent, PendingEventOrdering, Room } from 'matrix-js-sdk/src/matrix';
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 
 import TimelinePanel from "../../../src/components/structures/TimelinePanel";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
@@ -126,9 +127,9 @@ describe("TimelinePanel", () => {
 const newReceipt = (eventId: string, userId: string, readTs: number, fullyReadTs: number): MatrixEvent => {
     const receiptContent = {
         [eventId]: {
-            "m.read": { [userId]: { ts: readTs } },
-            "org.matrix.msc2285.read.private": { [userId]: { ts: readTs } },
-            "m.fully_read": { [userId]: { ts: fullyReadTs } },
+            [ReceiptType.Read]: { [userId]: { ts: readTs } },
+            [ReceiptType.ReadPrivate]: { [userId]: { ts: readTs } },
+            [ReceiptType.FullyRead]: { [userId]: { ts: fullyReadTs } },
         },
     };
     return new MatrixEvent({ content: receiptContent, type: "m.receipt" });
