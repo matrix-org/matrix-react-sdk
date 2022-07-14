@@ -32,6 +32,8 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../views/elements/MiniAvatarUploader";
 import PosthogTrackers from "../../PosthogTrackers";
 import EmbeddedPage from "./EmbeddedPage";
+import { OpenSpotlightPayload } from "../../dispatcher/payloads/OpenSpotlightPayload";
+import { Filter } from "../views/dialogs/spotlight/SpotlightDialog";
 
 const onClickSendDm = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebHomeCreateChatButton", ev);
@@ -40,7 +42,10 @@ const onClickSendDm = (ev: ButtonEvent) => {
 
 const onClickExplore = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebHomeExploreRoomsButton", ev);
-    dis.fire(Action.ViewRoomDirectory);
+    dis.dispatch<OpenSpotlightPayload>({
+        action: Action.OpenSpotlight,
+        initialFilter: Filter.PublicRooms,
+    });
 };
 
 const onClickNewRoom = (ev: ButtonEvent) => {

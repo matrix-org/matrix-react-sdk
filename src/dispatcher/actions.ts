@@ -41,9 +41,9 @@ export enum Action {
     ViewUserSettings = "view_user_settings",
 
     /**
-     * Opens the room directory. No additional payload information required.
+     * Opens the spotlight search. Can be used with a OpenSpotlightPayload
      */
-    ViewRoomDirectory = "view_room_directory",
+    OpenSpotlight = "open_spotlight",
 
     /**
      * Fires when viewing room by room_alias fails to find room

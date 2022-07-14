@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2018, 2020, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2015-2018, 2020-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,8 +23,10 @@ import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../..
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { Action } from "../../../dispatcher/actions";
+import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { OpenSpotlightPayload } from "../../../dispatcher/payloads/OpenSpotlightPayload";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -58,6 +60,7 @@ import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
+import { Filter } from "../dialogs/spotlight/SpotlightDialog";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
@@ -313,7 +316,10 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.stopPropagation();
                     closeMenu();
                     PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
-                    defaultDispatcher.fire(Action.ViewRoomDirectory);
+                    dis.dispatch<OpenSpotlightPayload>({
+                        action: Action.OpenSpotlight,
+                        initialFilter: Filter.PublicRooms,
+                    });
                 }}
             />
         </IconizedContextMenuOptionList>;

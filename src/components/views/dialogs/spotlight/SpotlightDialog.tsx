@@ -97,7 +97,7 @@ const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
 const AVATAR_SIZE = 24;
 
-interface IProps extends IDialogProps {
+interface SpotlightProps {
     initialText?: string;
     initialFilter?: Filter;
 }
@@ -286,7 +286,9 @@ interface IDirectoryOpts {
     query: string;
 }
 
-const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
+const SpotlightDialog: React.FC<IDialogProps & SpotlightProps> = (
+    { initialText = "", initialFilter = null, onFinished },
+) => {
     const inputRef = useRef<HTMLInputElement>();
     const scrollContainerRef = useRef<HTMLDivElement>();
     const cli = MatrixClientPeg.get();
@@ -1240,7 +1242,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     </>;
 };
 
-const RovingSpotlightDialog: React.FC<IProps> = (props) => {
+const RovingSpotlightDialog: React.FC<IDialogProps & SpotlightProps> = (props) => {
     return <RovingTabIndexProvider>
         { () => <SpotlightDialog {...props} /> }
     </RovingTabIndexProvider>;

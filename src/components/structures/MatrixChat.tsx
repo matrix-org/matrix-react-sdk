@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -96,7 +96,6 @@ import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
 import UserSettingsDialog from '../views/dialogs/UserSettingsDialog';
 import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
-import RoomDirectory from './RoomDirectory';
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import CompleteSecurity from "./auth/CompleteSecurity";
@@ -135,6 +134,8 @@ import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
+import SpotlightDialog, { Filter } from '../views/dialogs/spotlight/SpotlightDialog';
+import { OpenSpotlightPayload } from '../../dispatcher/payloads/OpenSpotlightPayload';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 
@@ -698,10 +699,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
                 break;
-            case Action.ViewRoomDirectory: {
-                Modal.createDialog(RoomDirectory, {
+            case Action.OpenSpotlight: {
+                Modal.createDialog(SpotlightDialog, {
                     initialText: payload.initialText,
-                }, 'mx_RoomDirectory_dialogWrapper', false, true);
+                    initialFilter: payload.initialFilter,
+                }, "mx_SpotlightDialog_wrapper", false, true);
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
@@ -1710,7 +1712,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: 'require_registration',
             });
         } else if (screen === 'directory') {
-            dis.fire(Action.ViewRoomDirectory);
+            dis.dispatch<OpenSpotlightPayload>({
+                action: Action.OpenSpotlight,
+                initialFilter: Filter.PublicRooms,
+            });
         } else if (screen === "start_sso" || screen === "start_cas") {
             let cli = MatrixClientPeg.get();
             if (!cli) {

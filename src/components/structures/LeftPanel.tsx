@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020, 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,9 @@ import { createRef } from "react";
 import classNames from "classnames";
 
 import dis from "../../dispatcher/dispatcher";
+import { OpenSpotlightPayload } from "../../dispatcher/payloads/OpenSpotlightPayload";
 import { _t } from "../../languageHandler";
+import { Filter } from "../views/dialogs/spotlight/SpotlightDialog";
 import RoomList from "../views/rooms/RoomList";
 import CallHandler from "../../CallHandler";
 import { HEADER_HEIGHT } from "../views/rooms/RoomSublist";
@@ -121,8 +123,11 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     };
 
     private onExplore = (ev: ButtonEvent) => {
-        dis.fire(Action.ViewRoomDirectory);
         PosthogTrackers.trackInteraction("WebLeftPanelExploreRoomsButton", ev);
+        dis.dispatch<OpenSpotlightPayload>({
+            action: Action.OpenSpotlight,
+            initialFilter: Filter.PublicRooms,
+        });
     };
 
     private refreshStickyHeaders = () => {

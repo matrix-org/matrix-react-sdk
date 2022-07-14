@@ -39,6 +39,7 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 import { HistoryVisibility } from 'matrix-js-sdk/src/@types/partials';
 
+import { OpenSpotlightPayload } from "../../dispatcher/payloads/OpenSpotlightPayload";
 import shouldHideEvent from '../../shouldHideEvent';
 import { _t } from '../../languageHandler';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
@@ -49,6 +50,7 @@ import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import dis, { defaultDispatcher } from '../../dispatcher/dispatcher';
 import * as Rooms from '../../Rooms';
 import eventSearch, { searchPagination } from '../../Searching';
+import { Filter } from "../views/dialogs/spotlight/SpotlightDialog";
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
 import { RoomViewStore } from '../../stores/RoomViewStore';
@@ -1735,7 +1737,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // using /leave rather than /join. In the short term though, we
         // just ignore them.
         // https://github.com/vector-im/vector-web/issues/1134
-        dis.fire(Action.ViewRoomDirectory);
+        dis.dispatch<OpenSpotlightPayload>({
+            action: Action.OpenSpotlight,
+            initialFilter: Filter.PublicRooms,
+        });
     };
 
     private onSearchClick = () => {

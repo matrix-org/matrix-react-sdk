@@ -22,7 +22,9 @@ import React, { useContext, useEffect, useState } from "react";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { Action } from "../../../dispatcher/actions";
+import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { OpenSpotlightPayload } from "../../../dispatcher/payloads/OpenSpotlightPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { useEventEmitterState, useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -52,6 +54,7 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
+import { Filter } from "../dialogs/spotlight/SpotlightDialog";
 import InlineSpinner from "../elements/InlineSpinner";
 import TooltipTarget from "../elements/TooltipTarget";
 import { HomeButtonContextMenu } from "../spaces/SpacePanel";
@@ -328,8 +331,11 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
                         PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);
+                        dis.dispatch<OpenSpotlightPayload>({
+                            action: Action.OpenSpotlight,
+                            initialFilter: Filter.PublicRooms,
+                        });
                         closePlusMenu();
                     }}
                 />
