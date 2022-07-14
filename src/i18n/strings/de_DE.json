@@ -3360,5 +3360,6 @@
     "Check if you want to hide all current and future messages from this user.": "Prüfe, ob du alle aktuellen und zukünftigen Nachrichten dieses Nutzers verstecken willst.",
     "Show spaces": "Spaces zeigen",
     "You cannot search for rooms that are neither a room nor a space": "Du kannst nicht nach Räumen suchen, die kein Raum oder Space sind",
-    "Some results may be hidden for privacy": "Einige Ergebnisse könnten aus Datenschutzgründen versteckt sein"
+    "Some results may be hidden for privacy": "Einige Ergebnisse könnten aus Datenschutzgründen versteckt sein",
+    "Copy invite link": "Kopiere Einladungslink"
 }
