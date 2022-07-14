@@ -3349,5 +3349,6 @@
     "Add new server…": "Neuen Server hinzufügen…",
     "Show: %(instance)s rooms (%(server)s)": "%(instance)s Räume zeigen (%(server)s)",
     "Show: Matrix rooms": "Zeige: Matrixräume",
-    "Create a video room": "Erstelle ein Videoraum"
+    "Create a video room": "Erstelle ein Videoraum",
+    "Open room": "Öffne Raum"
 }
