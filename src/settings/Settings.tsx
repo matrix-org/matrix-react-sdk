@@ -407,6 +407,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Don't send read receipts"),
         default: false,
     },
+    "feature_sliding_sync": {
+        isFeature: true,
+        labsGroup: LabGroup.Developer,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td('Sliding Sync mode (under active development)'),
+        default: true, // XXX: overrides for testing sliding sync on netlify, do not commit this to main!
+        controller: new SlidingSyncController(),
+    },
     "feature_message_right_click_context_menu": {
         isFeature: true,
         supportedLevels: LEVELS_FEATURE,
@@ -804,12 +812,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Low bandwidth mode (requires compatible homeserver)'),
         default: false,
         controller: new ReloadOnChangeController(),
-    },
-    "slidingSync": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Sliding Sync mode (requires proxy, set via "sliding_sync_proxy_url" in config.json)'),
-        default: false,
-        controller: new SlidingSyncController(),
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,

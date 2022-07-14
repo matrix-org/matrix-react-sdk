@@ -223,7 +223,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
         opts.experimentalThreadSupport = SettingsStore.getValue("feature_thread");
 
-        if (SdkConfig.get().sliding_sync_proxy_url && SettingsStore.getValue("slidingSync")) {
+        if (SdkConfig.get().sliding_sync_proxy_url && SettingsStore.getValue("feature_sliding_sync")) {
             logger.log("Activating sliding sync using proxy at ", SdkConfig.get().sliding_sync_proxy_url);
             opts.slidingSync = SlidingSyncManager.create(
                 this.matrixClient, SdkConfig.get().sliding_sync_proxy_url,

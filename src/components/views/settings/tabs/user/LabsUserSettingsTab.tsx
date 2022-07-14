@@ -108,14 +108,6 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 />,
             );
 
-            groups.getOrCreate(LabGroup.Experimental, []).push(
-                <SettingsFlag
-                    key="slidingSync"
-                    name="slidingSync"
-                    level={SettingLevel.DEVICE}
-                />,
-            );
-
             groups.getOrCreate(LabGroup.Analytics, []).push(
                 <SettingsFlag
                     key="automaticErrorReporting"

@@ -407,7 +407,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const roomId = RoomViewStore.instance.getRoomId();
 
-        if (initial && SettingsStore.getValue("slidingSync")) {
+        if (initial && SettingsStore.getValue("feature_sliding_sync")) {
             // set this room as the room subscription. We need to await for it as this will fetch
             // all room state for this room, which is required before we get the state below.
             await getSlidingSyncManager().setRoomVisible(roomId, true);
@@ -724,7 +724,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             this.context.stopPeeking();
         }
 
-        if (SettingsStore.getValue("slidingSync")) {
+        if (SettingsStore.getValue("feature_sliding_sync")) {
             // unsubscribe from this room, but don't await it as we don't care when this gets done.
             getSlidingSyncManager().setRoomVisible(this.state.roomId, false);
         }

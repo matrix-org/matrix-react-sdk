@@ -37,7 +37,7 @@ export default class SlidingSyncController extends SettingController {
                 console.error(err);
                 // force the value to false, this is a bit ew, it would be nice if we could return
                 // a bool as to whether to go through with the change or not.
-                SettingsStore.setValue("slidingSync", roomId, level, false);
+                SettingsStore.setValue("feature_sliding_sync", roomId, level, false);
                 return;
             }
         }

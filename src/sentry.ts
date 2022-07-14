@@ -35,7 +35,6 @@ type UserContext = {
     username: string;
     enabled_labs: string;
     low_bandwidth: string;
-    sliding_sync: string;
 };
 
 type CryptoContext = {
@@ -104,7 +103,6 @@ function getUserContext(client: MatrixClient): UserContext {
         "username": client.credentials.userId,
         "enabled_labs": getEnabledLabs(),
         "low_bandwidth": SettingsStore.getValue("lowBandwidth") ? "enabled" : "disabled",
-        "sliding_sync": SettingsStore.getValue("slidingSync") ? "enabled" : "disabled",
     };
 }
 

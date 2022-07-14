@@ -92,13 +92,6 @@ export default class SdkConfig {
         }
         // XXX overrides for testing sliding sync on netlify, do not commit this to main!
         cfg.show_labs_settings = true;
-        cfg.setting_defaults = Object.assign(cfg.setting_defaults || {}, {
-            slidingSync: true,
-            features: {
-                // disable spotlight search as sliding sync searches on the server for room names
-                feature_spotlight: false,
-            },
-        });
         SdkConfig.setInstance(cfg);
     }
 

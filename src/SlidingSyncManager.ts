@@ -138,7 +138,6 @@ export class SlidingSyncManager {
         return new Promise((resolve, reject) => {
             const resolveOnSubscribed = (state: SlidingSyncState, resp: MSC3575SlidingSyncResponse, err: Error) => {
                 if (state === SlidingSyncState.Complete && resp.lists[listIndex]) { // we processed a /sync response
-                    console.log("resolving promise, data ", resp);
                     this.slidingSync.off(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
                     resolve(list);
                 }

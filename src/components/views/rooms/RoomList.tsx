@@ -547,7 +547,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     }
 
     private renderSublists(): React.ReactElement[] {
-        if (SettingsStore.getValue("slidingSync")) {
+        if (SettingsStore.getValue("feature_sliding_sync")) {
             return this.renderSlidingSyncLists();
         }
         // show a skeleton UI if the user is in no rooms and they are not filtering and have no suggested rooms

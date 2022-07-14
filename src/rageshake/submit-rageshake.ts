@@ -137,8 +137,9 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
         body.append("lowBandwidth", "enabled");
     }
 
-    if (SettingsStore.getValue("slidingSync")) {
-        body.append("slidingSync", "enabled");
+    // if sliding sync mode is enabled, say so over rageshake, since it's a huge change and can cause issues
+    if (SettingsStore.getValue("feature_sliding_sync")) {
+        body.append("feature_sliding_sync", "enabled");
     }
 
     // add storage persistence/quota information
