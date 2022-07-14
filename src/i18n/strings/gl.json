@@ -3432,5 +3432,14 @@
     "In %(spaceName)s and %(count)s other spaces.|zero": "No espazo %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.|other": "No espazo %(spaceName)s e %(count)s outros espazos.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Nos espazos %(space1Name)s e %(space2Name)s.",
-    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Comando de desenvolvemento: descarta a actual sesión en grupo e crea novas sesións Olm"
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Comando de desenvolvemento: descarta a actual sesión en grupo e crea novas sesións Olm",
+    "Stop and close": "Deter e pechar",
+    "Online community members": "Membros de comunidades en liña",
+    "Coworkers and teams": "Persoas e equipos do traballo",
+    "We'll help you get connected.": "Axudarémosche a atopalos.",
+    "Friends and family": "Amizades e familia",
+    "Who will you chat to the most?": "Con quen vas falar máis a miúdo?",
+    "You're in": "Estás dentro",
+    "You need to have the right permissions in order to share locations in this room.": "Tes que ter os permisos axeitados para poder compartir a localización nesta sala.",
+    "You don't have permission to share locations": "Non tes permiso para compartir localizacións"
 }
