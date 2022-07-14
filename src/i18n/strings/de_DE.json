@@ -3326,5 +3326,8 @@
     "<a>Give feedback</a>": "<a>Feedback geben</a>",
     "Threads are a beta feature": "Threads sind ein Beta-Feature",
     "Threads help keep your conversations on-topic and easy to track.": "Threads helfen dabei, dass deine Konversationen beim Thema und leicht nachverfolgbar bleiben.",
-    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heimserver von dessen Administrator gesperrt wurde. Bitte <a>kontaktiere deinen Dienstadministrator</a> um den Dienst weiterzunutzen."
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heimserver von dessen Administrator gesperrt wurde. Bitte <a>kontaktiere deinen Dienstadministrator</a> um den Dienst weiterzunutzen.",
+    "Video rooms": "Video Räume",
+    "You were disconnected from the call. (Error: %(message)s)": "Du wurdest vom Anruf getrennt. (Error: %(message)s)",
+    "Connection lost": "Verbindung verloren"
 }
