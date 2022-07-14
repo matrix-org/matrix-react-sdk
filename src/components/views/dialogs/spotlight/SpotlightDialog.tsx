@@ -91,7 +91,6 @@ import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultContextMenus } from "./RoomResultContextMenus";
 import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
-import { getDisplayAliasForAliasSet } from "../../../../Rooms";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -481,15 +480,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         // eslint-disable-next-line
     }, [results, filter]);
 
-    const viewRoom = (room: {room_id: string}|{room_alias: string}, persist = false, viaKeyboard = false) => {
+    const viewRoom = (room: {roomId: string, roomAlias?: string}, persist = false, viaKeyboard = false) => {
         if (persist) {
-            if ('room_alias' in room) {
-                throw Error('Cannot persist room if room_alias is given');
-            }
             const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
             // remove & add the room to put it at the end
-            recents.delete(room.room_id);
-            recents.add(room.room_id);
+            recents.delete(room.roomId);
+            recents.add(room.roomId);
 
             SettingsStore.setValue(
                 "SpotlightSearch.recentSearches",
@@ -503,7 +499,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             action: Action.ViewRoom,
             metricsTrigger: "WebUnifiedSearch",
             metricsViaKeyboard: viaKeyboard,
-            ...room,
+            room_id: room.roomAlias ? undefined : room.roomId,
+            room_alias: room.roomAlias,
         });
         onFinished();
     };
@@ -559,7 +556,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.room.roomId}`}
                         key={`${Section[result.section]}-${result.room.roomId}`}
                         onClick={(ev) => {
-                            viewRoom({ room_id: result.room.roomId }, true, ev?.type !== "click");
+                            viewRoom({ roomId: result.room.roomId }, true, ev?.type !== "click");
                         }}
                         endAdornment={<RoomResultContextMenus room={result.room} />}
                         {...ariaProperties}
@@ -608,12 +605,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 const clientRoom = cli.getRoom(result.publicRoom.room_id);
                 const listener = (ev) => {
                     const { publicRoom } = result;
-                    const alias = getDisplayAliasForAliasSet(publicRoom.canonical_alias, publicRoom.aliases);
-                    viewRoom(alias ? {
-                        room_alias: alias
-                    } : {
-                        room_id: publicRoom.room_id
-                    }, true, ev.type !== "click");
+                    viewRoom({
+                        roomAlias: publicRoom.canonical_alias || publicRoom.aliases?.[0],
+                        roomId: publicRoom.room_id,
+                    }, false, ev.type !== "click");
                 };
                 return (
                     <Option
@@ -792,7 +787,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 id={`mx_SpotlightDialog_button_result_${room.room_id}`}
                                 key={room.room_id}
                                 onClick={(ev) => {
-                                    viewRoom({ room_id: room.room_id }, true, ev?.type !== "click");
+                                    viewRoom({ roomId: room.room_id }, true, ev?.type !== "click");
                                 }}
                             >
                                 <BaseAvatar
@@ -984,7 +979,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                     id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}`}
                                     key={room.roomId}
                                     onClick={(ev) => {
-                                        viewRoom({ room_id: room.roomId }, true, ev?.type !== "click");
+                                        viewRoom({ roomId: room.roomId }, true, ev?.type !== "click");
                                     }}
                                     endAdornment={<RoomResultContextMenus room={room} />}
                                     {...ariaProperties}
@@ -1026,7 +1021,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 title={room.name}
                                 key={room.roomId}
                                 onClick={(ev) => {
-                                    viewRoom({ room_id: room.roomId }, false, ev.type !== "click");
+                                    viewRoom({ roomId: room.roomId }, false, ev.type !== "click");
                                 }}
                             >
                                 <DecoratedRoomAvatar room={room} avatarSize={32} tooltipProps={{ tabIndex: -1 }} />
