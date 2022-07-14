@@ -559,7 +559,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.room.roomId}`}
                         key={`${Section[result.section]}-${result.room.roomId}`}
                         onClick={(ev) => {
-                            viewRoom({room_id: result.room.roomId}, true, ev?.type !== "click");
+                            viewRoom({ room_id: result.room.roomId }, true, ev?.type !== "click");
                         }}
                         endAdornment={<RoomResultContextMenus room={result.room} />}
                         {...ariaProperties}
@@ -609,7 +609,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 const listener = (ev) => {
                     const { publicRoom } = result;
                     const alias = getDisplayAliasForAliasSet(publicRoom.canonical_alias, publicRoom.aliases);
-                    viewRoom(alias ? { room_alias: alias } : { room_id: publicRoom.room_id }, true, ev.type !== "click");
+                    viewRoom(alias ? {
+                        room_alias: alias
+                    } : {
+                        room_id: publicRoom.room_id
+                    }, true, ev.type !== "click");
                 };
                 return (
                     <Option
@@ -788,7 +792,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 id={`mx_SpotlightDialog_button_result_${room.room_id}`}
                                 key={room.room_id}
                                 onClick={(ev) => {
-                                    viewRoom({room_id: room.room_id}, true, ev?.type !== "click");
+                                    viewRoom({ room_id: room.room_id }, true, ev?.type !== "click");
                                 }}
                             >
                                 <BaseAvatar
@@ -980,7 +984,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                     id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}`}
                                     key={room.roomId}
                                     onClick={(ev) => {
-                                        viewRoom({room_id: room.roomId}, true, ev?.type !== "click");
+                                        viewRoom({ room_id: room.roomId }, true, ev?.type !== "click");
                                     }}
                                     endAdornment={<RoomResultContextMenus room={room} />}
                                     {...ariaProperties}
@@ -1022,7 +1026,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 title={room.name}
                                 key={room.roomId}
                                 onClick={(ev) => {
-                                    viewRoom({room_id: room.roomId}, false, ev.type !== "click");
+                                    viewRoom({ room_id: room.roomId }, false, ev.type !== "click");
                                 }}
                             >
                                 <DecoratedRoomAvatar room={room} avatarSize={32} tooltipProps={{ tabIndex: -1 }} />
