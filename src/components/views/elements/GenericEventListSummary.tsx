@@ -43,6 +43,7 @@ interface IProps {
     onToggle?(): void;
     // The layout currently used
     layout?: Layout;
+    'data-testid'?: string;
 }
 
 const GenericEventListSummary: React.FC<IProps> = ({
@@ -54,6 +55,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
     summaryMembers = [],
     summaryText,
     layout = Layout.Group,
+    'data-testid': testId,
 }) => {
     const [expanded, toggleExpanded] = useStateToggle(startExpanded);
 
@@ -110,8 +112,19 @@ const GenericEventListSummary: React.FC<IProps> = ({
     }
 
     return (
-        <li className="mx_GenericEventListSummary" data-scroll-tokens={eventIds} data-expanded={expanded + ""} data-layout={layout}>
-            <AccessibleButton className="mx_GenericEventListSummary_toggle" onClick={toggleExpanded} aria-expanded={expanded}>
+        <li
+            className="mx_GenericEventListSummary"
+            data-scroll-tokens={eventIds}
+            data-expanded={expanded + ""}
+            data-layout={layout}
+            data-testid={testId}
+        >
+            <AccessibleButton
+                kind="link_inline"
+                className="mx_GenericEventListSummary_toggle"
+                onClick={toggleExpanded}
+                aria-expanded={expanded}
+            >
                 { expanded ? _t('collapse') : _t('expand') }
             </AccessibleButton>
             { body }
