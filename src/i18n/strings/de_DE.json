@@ -290,7 +290,7 @@
     "Enable automatic language detection for syntax highlighting": "Automatische Spracherkennung für die Syntaxhervorhebung",
     "Unable to create widget.": "Widget kann nicht erstellt werden.",
     "You are not in this room.": "Du bist nicht in diesem Raum.",
-    "You do not have permission to do that in this room.": "Du hast dafür keine Berechtigung in diesem Raum.",
+    "You do not have permission to do that in this room.": "Du hast dafür keine Berechtigung.",
     "Create": "Erstellen",
     "Automatically replace plain text Emoji": "Klartext-Emoji automatisch ersetzen",
     "AM": "a. m.",
