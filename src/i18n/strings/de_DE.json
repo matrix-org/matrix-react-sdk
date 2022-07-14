@@ -3347,6 +3347,6 @@
     "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
     "Click to read topic": "Klicke, um das Thema zu lesen",
     "Add new server…": "Neuen Server hinzufügen…",
-    "Show: %(instance)s rooms (%(server)s)": "Zeige: %(instance)s Räume (%(server)s)",
+    "Show: %(instance)s rooms (%(server)s)": "%(instance)s Räume zeigen (%(server)s)",
     "Show: Matrix rooms": "Zeige: Matrixräume"
 }
