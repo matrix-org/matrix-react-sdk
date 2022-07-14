@@ -499,7 +499,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             action: Action.ViewRoom,
             metricsTrigger: "WebUnifiedSearch",
             metricsViaKeyboard: viaKeyboard,
-            room_id: room.roomAlias ? undefined : room.roomId,
+            room_id: room.roomId,
             room_alias: room.roomAlias,
         });
         onFinished();
