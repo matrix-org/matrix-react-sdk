@@ -3357,5 +3357,6 @@
     "Search for": "Suche nach",
     "%(count)s Members|one": "%(count)s Mitglied",
     "%(count)s Members|other": "%(count)s Mitglieder",
-    "Check if you want to hide all current and future messages from this user.": "Prüfe, ob du alle aktuellen und zukünftigen Nachrichten dieses Nutzers verstecken willst."
+    "Check if you want to hide all current and future messages from this user.": "Prüfe, ob du alle aktuellen und zukünftigen Nachrichten dieses Nutzers verstecken willst.",
+    "Show spaces": "Zeige Spaces"
 }
