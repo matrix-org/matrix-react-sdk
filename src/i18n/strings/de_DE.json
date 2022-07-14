@@ -3334,5 +3334,9 @@
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion.",
     "Yes, the chat timeline is displayed alongside the video.": "Ja, der Chatverlauf wird neben dem Video angezeigt.",
     "Can I use text chat alongside the video call?": "Kann ich neben Videoanrufen auch Textnachrichten verschicken?",
-    "How can I create a video room?": "Wie kann ich einen Videoraum erstellen?"
+    "How can I create a video room?": "Wie kann ich einen Videoraum erstellen?",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Aktiviere die Hardwarebeschleunigung (Neustart von %(appName)s  erforderlich)",
+    "%(count)s people joined|one": "%(count)s Person hat teilgenommen",
+    "%(count)s people joined|other": "%(count)s Personen haben teilgenommen",
+    "Enable hardware acceleration": "Aktiviere die Hardwarebeschleunigung"
 }
