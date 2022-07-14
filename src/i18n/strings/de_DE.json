@@ -3386,5 +3386,9 @@
     "An error occurred whilst sharing your live location": "Ein Fehler ist während des Teilens deines Live-Standorts aufgetreten",
     "An error occurred while stopping your live location": "Ein Fehler ist beim Stoppen des Live-Standorts aufgetreten",
     "An error occurred while stopping your live location, please try again": "Ein Fehler ist beim Stoppen des Live-Standorts aufgetreten. Bitte versuche es noch einmal.",
-    "Check your email to continue": "Prüfe deine E-Mails zum weitermachen"
+    "Check your email to continue": "Prüfe deine E-Mails zum weitermachen",
+    "Failed to set direct message tag": "Fehler beim Setzen der Nachrichtenmarkierung",
+    "Resent!": "Verschickt!",
+    "Did not receive it? <a>Resend it</a>": "Nicht angekommen? <a>Erneut senden</a>",
+    "Unread email icon": "Ungelesene E-Mail Symbol"
 }
