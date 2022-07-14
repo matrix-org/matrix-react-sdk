@@ -25,11 +25,11 @@ import Modal from "../../../Modal";
 import SdkConfig from "../../../SdkConfig";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import SettingsStore from "../../../settings/SettingsStore";
-import { Protocols } from "../../../utils/DirectoryUtils";
 import { GenericDropdownMenu, GenericDropdownMenuItem } from "../../structures/GenericDropdownMenu";
 import TextInputDialog from "../dialogs/TextInputDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import withValidation from "../elements/Validation";
+import { Protocols } from "../../../utils/rooms";
 
 const SETTING_NAME = "room_directory_servers";
 

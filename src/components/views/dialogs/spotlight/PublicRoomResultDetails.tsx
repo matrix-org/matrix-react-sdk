@@ -19,7 +19,7 @@ import { IPublicRoomsChunkRoom } from "matrix-js-sdk/src/matrix";
 
 import { linkifyAndSanitizeHtml } from "../../../../HtmlUtils";
 import { _t } from "../../../../languageHandler";
-import { getDisplayAliasForRoom } from "../../../structures/RoomDirectory";
+import { getDisplayAliasForRoom } from "../../../../utils/rooms";
 
 const MAX_NAME_LENGTH = 80;
 const MAX_TOPIC_LENGTH = 800;

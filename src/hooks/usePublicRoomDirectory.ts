@@ -23,7 +23,7 @@ import { IPublicRoomDirectoryConfig } from "../components/views/directory/Networ
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import SdkConfig from "../SdkConfig";
 import SettingsStore from "../settings/SettingsStore";
-import { Protocols } from "../utils/DirectoryUtils";
+import { Protocols } from "../utils/rooms";
 import { useLatestResult } from "./useLatestResult";
 
 export const ALL_ROOMS = "ALL_ROOMS";

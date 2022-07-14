@@ -27,6 +27,8 @@ import { instanceForInstanceId, protocolNameForInstanceId, ALL_ROOMS, Protocols 
 import SdkConfig from "../SdkConfig";
 import { GenericError } from "./error";
 
+export type Protocols = Record<string, IProtocol>;
+
 export function privateShouldBeEncrypted(): boolean {
     const e2eeWellKnown = getE2EEWellKnown();
     if (e2eeWellKnown) {
@@ -177,4 +179,10 @@ export function getFieldsForThirdPartyLocation(
     }
     fields[requiredFields[requiredFields.length - 1]] = userInput;
     return fields;
+}
+
+// Similar to matrix-react-sdk's MatrixTools.getDisplayAliasForRoom
+// but works with the objects we get from the public room list
+export function getDisplayAliasForRoom(room: IPublicRoomsChunkRoom) {
+    return getDisplayAliasForAliasSet(room.canonical_alias, room.aliases);
 }
