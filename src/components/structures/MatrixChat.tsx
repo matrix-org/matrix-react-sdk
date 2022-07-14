@@ -68,6 +68,7 @@ import { FontWatcher } from '../../settings/watchers/FontWatcher';
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import ToastStore from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
+import { UseCase } from "../../settings/enums/UseCase";
 import type LoggedInViewType from "./LoggedInView";
 import LoggedInView from './LoggedInView';
 import { Action } from "../../dispatcher/actions";
@@ -133,6 +134,7 @@ import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { TimelineRenderingType } from "../../contexts/RoomContext";
+import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -759,7 +761,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.state.view !== Views.LOGIN &&
                     this.state.view !== Views.REGISTER &&
                     this.state.view !== Views.COMPLETE_SECURITY &&
-                    this.state.view !== Views.E2E_SETUP
+                    this.state.view !== Views.E2E_SETUP &&
+                    this.state.view !== Views.USE_CASE_SELECTION
                 ) {
                     this.onLoggedIn();
                 }
@@ -1245,6 +1248,40 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private async onLoggedIn() {
         ThemeController.isLogin = false;
         this.themeWatcher.recheck();
+        StorageManager.tryPersistStorage();
+
+        if (
+            MatrixClientPeg.currentUserIsJustRegistered() &&
+            SettingsStore.getValue("FTUE.useCaseSelection") === null
+        ) {
+            this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
+
+            // Listen to changes in settings and hide the use case screen if appropriate - this is necessary because
+            // account settings can still be changing at this point in app init (due to the initial sync being cached,
+            // then subsequent syncs being received from the server)
+            //
+            // This seems unlikely for something that should happen directly after registration, but if a user does
+            // their initial login on another device/browser than they registered on, we want to avoid asking this
+            // question twice
+            //
+            // initPosthogAnalyticsToast pioneered this technique, we’re just reusing it here.
+            SettingsStore.watchSetting("FTUE.useCaseSelection", null,
+                (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+                    if (newValue !== null && this.state.view === Views.USE_CASE_SELECTION) {
+                        this.onShowPostLoginScreen();
+                    }
+                });
+        } else {
+            return this.onShowPostLoginScreen();
+        }
+    }
+
+    private async onShowPostLoginScreen(useCase?: UseCase) {
+        if (useCase) {
+            PosthogAnalytics.instance.setProperty("ftueUseCaseSelection", useCase);
+            SettingsStore.setValue("FTUE.useCaseSelection", null, SettingLevel.ACCOUNT, useCase);
+        }
+
         this.setStateForNewView({ view: Views.LOGGED_IN });
         // If a specific screen is set to be shown after login, show that above
         // all else, as it probably means the user clicked on something already.
@@ -1282,8 +1319,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.showScreenAfterLogin();
         }
 
-        StorageManager.tryPersistStorage();
-
+        // Will be moved to a pre-login flow as well
         if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
             this.initPosthogAnalyticsToast();
         }
@@ -2043,6 +2079,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onTokenLoginCompleted={this.props.onTokenLoginCompleted}
                     fragmentAfterLogin={fragmentAfterLogin}
                 />
+            );
+        } else if (this.state.view === Views.USE_CASE_SELECTION) {
+            view = (
+                <UseCaseSelection onFinished={useCase => this.onShowPostLoginScreen(useCase)} />
             );
         } else {
             logger.error(`Unknown view ${this.state.view}`);
