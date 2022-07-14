@@ -167,5 +167,39 @@ describe("Timeline", () => {
             // Make sure "collapse" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]");
         });
+
+        it("should select a hidden event line on IRC layout", () => {
+            cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, false);
+
+            // Enable hidden events and IRC layout
+            cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+            cy.visit("/#/room/" + roomId);
+
+            // Wait until configuration is finished
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_summary")
+                .should("contain", "created and configured the room.");
+
+            // User sends message
+            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello{enter}");
+
+            // Wait for message to send
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "Hello")
+
+            // Edit message
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Hello").within(() => {
+                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
+                cy.get(".mx_BasicMessageComposer_input").type(" Edit{enter}");
+            });
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Hello Edit")
+
+            // Click timestamp to select the hidden event line
+            cy.get(".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp").click();
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp { visibility: hidden !important; }";
+            cy.percySnapshot("Hidden event on IRC layout", { percyCSS });
+        });
     });
 });
