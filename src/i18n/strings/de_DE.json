@@ -3346,6 +3346,6 @@
     "Edit topic": "Thema bearbeiten",
     "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
     "Click to read topic": "Klicke, um das Thema zu lesen",
-    "Add new server…": "Füge neuen Server hinzu…",
+    "Add new server…": "Neuen Server hinzufügen…",
     "Show: %(instance)s rooms (%(server)s)": "Zeige: %(instance)s Räume (%(server)s)"
 }
