@@ -3352,5 +3352,10 @@
     "Create a video room": "Videoraum erstellen",
     "Open room": "Raum öffnen",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, außer du hast die Schlüssel auf einem anderen Gerät oder ein Backup der Schlüssel auf dem Server.",
-    "Ignore user": "Ignoriere Nutzer"
+    "Ignore user": "Ignoriere Nutzer",
+    "Show rooms": "Zeige Räume",
+    "Search for": "Suche nach",
+    "%(count)s Members|one": "%(count)s Mitglied",
+    "%(count)s Members|other": "%(count)s Mitglieder",
+    "Check if you want to hide all current and future messages from this user.": "Prüfe, ob du alle aktuellen und zukünftigen Nachrichten dieses Nutzers verstecken willst."
 }
