@@ -3380,5 +3380,9 @@
     "Capabilities": "Fähigkeiten",
     "Doesn't look like valid JSON.": "Scheint kein gültiges JSON zu sein.",
     "Other options": "Andere Optionen",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Falls du den Raum nicht findest, frag nach einer Einladung oder erstelle einen neuen Raum."
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Falls du den Raum nicht findest, frag nach einer Einladung oder erstelle einen neuen Raum.",
+    "An error occurred whilst sharing your live location, please try again": "Ein Fehler ist während des Teilens deines Live-Standorts aufgetreten. Bitte probier es noch einmal.",
+    "Live location enabled": "Live-Standort aktiviert",
+    "An error occurred whilst sharing your live location": "Ein Fehler ist während des Teilens deines Live-Standorts aufgetreten",
+    "An error occurred while stopping your live location": "Ein Fehler ist beim Stoppen des Live-Standorts aufgetreten"
 }
