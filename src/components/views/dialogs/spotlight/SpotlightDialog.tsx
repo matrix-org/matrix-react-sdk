@@ -603,7 +603,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             if (isPublicRoomResult(result)) {
                 const clientRoom = cli.getRoom(result.publicRoom.room_id);
                 const listener = (ev) => {
-                    viewRoom(result.publicRoom.room_id, true, ev.type !== "click");
+                    viewRoom(result.publicRoom.canonical_alias ?? result.publicRoom.room_id, true, ev.type !== "click");
                 };
                 return (
                     <Option
