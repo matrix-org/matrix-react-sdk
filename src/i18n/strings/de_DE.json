@@ -3343,5 +3343,7 @@
     "Video room": "Videoraum",
     "Video rooms are a beta feature": "Videoräume sind eine Betafunktion",
     "Minimise": "Minimieren",
-    "Edit topic": "Bearbeite das Thema"
+    "Edit topic": "Bearbeite das Thema",
+    "Remove server “%(roomServer)s”": "Entferne Server “%(roomServer)s”",
+    "Click to read topic": "Klicke, um das Thema zu lesen"
 }
