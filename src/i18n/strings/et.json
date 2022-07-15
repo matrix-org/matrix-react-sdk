@@ -3431,5 +3431,12 @@
     "In %(spaceName)s and %(count)s other spaces.|other": "Kogukonnas %(spaceName)s ja %(count)s's muus kogukonnas.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Arendaja toiming: Lõpetab kehtiva väljuva rühmasessiooni ja seadistab uue Olm sessiooni",
-    "Stop and close": "Peata ja sulge"
+    "Stop and close": "Peata ja sulge",
+    "Online community members": "Võrgupõhise kogukonna liikmed",
+    "Coworkers and teams": "Kolleegid ja töörühmad",
+    "Friends and family": "Perekond ja sõbrad",
+    "We'll help you get connected.": "Me aitame sind Matrix'i võrgu kasutamisel.",
+    "Who will you chat to the most?": "Kellega sa kõige rohkem vestled?",
+    "You don't have permission to share locations": "Sul pole vajalikke õigusi asukoha jagamiseks",
+    "You need to have the right permissions in order to share locations in this room.": "Selles jututoas asukoha jagamiseks peavad sul olema vastavad õigused."
 }
