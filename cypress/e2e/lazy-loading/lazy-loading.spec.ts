@@ -134,7 +134,7 @@ describe("Lazy Loading", () => {
     }
 
     function joinCharliesWhileAliceIsOffline(charlies: Charly[]) {
-        // cy.goOffline();
+        cy.goOffline();
 
         cy.get<string>("@roomId").then(async roomId => {
             for (const charly of charlies) {
@@ -145,9 +145,8 @@ describe("Lazy Loading", () => {
             }
         });
 
-        // cy.intercept("**/sync**").as("sync");
-        // cy.goOnline();
-        // cy.wait("@sync", { timeout: 20000 });
+        cy.goOnline();
+        cy.wait(1000); // Ideally we'd await a /sync here but intercepts step on each other from going offline/online
     }
 
     it("should handle lazy loading properly even when offline", () => {

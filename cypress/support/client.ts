@@ -124,7 +124,10 @@ declare global {
              * Boostraps cross-signing.
              */
             bootstrapCrossSigning(): Chainable<void>;
-            // TODO
+            /**
+             * Joins the given room by alias or ID
+             * @param roomIdOrAlias the id or alias of the room to join
+             */
             joinRoom(roomIdOrAlias: string): Chainable<Room>;
         }
     }
