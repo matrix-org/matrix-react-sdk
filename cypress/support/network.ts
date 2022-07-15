@@ -20,7 +20,7 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
-            // Intercept all /_matrix/ networking requests and fail them
+            // Intercept all /_matrix/ networking requests for the logged in user and fail them
             goOffline(): void;
             // Remove intercept on all /_matrix/ networking requests
             goOnline(): void;
@@ -32,14 +32,29 @@ declare global {
 // the browser under test from the Cypress runner, so can cause issues.
 
 Cypress.Commands.add("goOffline", (): void => {
-    cy.intercept("**/_matrix/**", req => {
-        req.destroy();
+    cy.log("Going offline");
+    cy.window({ log: false }).then(win => {
+        cy.intercept("**/_matrix/**", {
+            headers: {
+                "Authorization": "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+            },
+        }, req => {
+            req.destroy();
+        });
     });
 });
 
 Cypress.Commands.add("goOnline", (): void => {
-    cy.intercept("**/_matrix/**", req => {
-        req.continue();
+    cy.log("Going online");
+    cy.window({ log: false }).then(win => {
+        cy.intercept("**/_matrix/**", {
+            headers: {
+                "Authorization": "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+            },
+        }, req => {
+            req.continue();
+        });
+        win.dispatchEvent(new Event("online"));
     });
 });
 

@@ -31,6 +31,10 @@ describe("Lazy Loading", () => {
     const charlies: Charly[] = [];
 
     beforeEach(() => {
+        cy.window().then(win => {
+            win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
+        });
+
         cy.startSynapse("default").then(data => {
             synapse = data;
 
@@ -98,42 +102,39 @@ describe("Lazy Loading", () => {
 
     function checkPaginatedDisplayNames(charlies: Charly[]) {
         cy.scrollToTop();
-        charlies.forEach((charly, i) => {
+        for (const charly of charlies) {
             cy.findEventTile(charly.displayName, charlyMsg1).should("exist");
             cy.findEventTile(charly.displayName, charlyMsg2).should("exist");
-        });
+        }
     }
 
-    function getMembersInMemberlist(): Chainable<string[]> {
+    function openMemberlist(): void {
         cy.get('.mx_HeaderButtons [aria-label="Room Info"]').click();
         cy.get(".mx_RoomSummaryCard").within(() => {
             cy.get(".mx_RoomSummaryCard_icon_people").click();
         });
+    }
 
-        return cy.get(".mx_MemberList .mx_EntityTile_name").then(names => Cypress._.map(names, "textContent"));
+    function getMembersInMemberlist(): Chainable<JQuery> {
+        return cy.get(".mx_MemberList .mx_EntityTile_name");
     }
 
     function checkMemberList(charlies: Charly[]) {
-        getMembersInMemberlist().then(displayNames => {
-            expect(displayNames).includes("alice");
-            expect(displayNames).includes("bob");
-            charlies.forEach(charly => {
-                expect(displayNames).includes(charly.displayName);
-            });
+        getMembersInMemberlist().contains("Alice").should("exist");
+        getMembersInMemberlist().contains("Bob").should("exist");
+        charlies.forEach(charly => {
+            getMembersInMemberlist().contains(charly.displayName).should("exist");
         });
     }
 
     function checkMemberListLacksCharlies(charlies: Charly[]) {
-        getMembersInMemberlist().then(displayNames => {
-            charlies.forEach(charly => {
-                expect(displayNames).not.includes(charly.displayName);
-            });
+        charlies.forEach(charly => {
+            getMembersInMemberlist().contains(charly.displayName).should("not.exist");
         });
     }
 
     function joinCharliesWhileAliceIsOffline(charlies: Charly[]) {
         // cy.goOffline();
-        cy.wait(1000); // TODO
 
         cy.get<string>("@roomId").then(async roomId => {
             for (const charly of charlies) {
@@ -144,10 +145,9 @@ describe("Lazy Loading", () => {
             }
         });
 
-        // cy.intercept("/sync").as("sync");
+        // cy.intercept("**/sync**").as("sync");
         // cy.goOnline();
-        // cy.wait("@sync");
-        cy.wait(2000); // TODO
+        // cy.wait("@sync", { timeout: 20000 });
     }
 
     it("should handle lazy loading properly even when offline", () => {
@@ -159,17 +159,17 @@ describe("Lazy Loading", () => {
         // Alice should see 2 messages from every charly with the correct display name
         checkPaginatedDisplayNames(charly1to5);
 
+        openMemberlist();
         checkMemberList(charly1to5);
         joinCharliesWhileAliceIsOffline(charly6to10);
         checkMemberList(charly6to10);
 
         cy.get<string>("@roomId").then(async roomId => {
             for (const charly of charlies) {
-                await charly.client.leaveRoomChain(roomId);
+                await charly.client.leave(roomId);
             }
         });
 
-        cy.wait(1000); // TODO
         checkMemberListLacksCharlies(charlies);
     });
 });

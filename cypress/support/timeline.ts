@@ -38,24 +38,30 @@ export interface Message {
 }
 
 Cypress.Commands.add("scrollToTop", (): void => {
-    let done = false;
-    // set scrollTop to 0 in a loop and check every 50ms if content became available (scrollTop not being 0 anymore)
-    // assume everything is loaded after 3s
-    do {
-        cy.get(".mx_RoomView_timeline .mx_ScrollPanel").scrollTo("top", { duration: 100 });
-        cy.wait(100);
-        cy.get(".mx_RoomView_timeline .mx_ScrollPanel").then(ref => {
-            if (ref.scrollTop() === 0) {
-                done = true;
-            }
-        });
-    } while (!done);
+    cy.get(".mx_RoomView_timeline .mx_ScrollPanel").scrollTo("top", { duration: 100 }).then(ref => {
+        if (ref.scrollTop() > 0) {
+            return cy.scrollToTop();
+        }
+    });
 });
 
 Cypress.Commands.add("findEventTile", (sender: string, body: string): Chainable<JQuery> => {
-    return cy.get(".mx_RoomView_MessageList .mx_EventTile")
-        .contains(".mx_DisambiguatedProfile_displayName", sender).closest(".mx_EventTile")
-        .contains("mx_EventTile_body", body).closest(".mx_EventTile");
+    // We can't just use a bunch of `.contains` here due to continuations meaning that the events don't
+    // have their own rendered sender displayname so we have to walk the list to keep track of the sender.
+    return cy.get(".mx_RoomView_MessageList .mx_EventTile").then(refs => {
+        let latestSender: string;
+        for (let i = 0; i < refs.length; i++) {
+            const ref = refs.eq(i);
+            const displayName = ref.find(".mx_DisambiguatedProfile_displayName");
+            if (displayName) {
+                latestSender = displayName.text();
+            }
+
+            if (latestSender === sender && ref.find(".mx_EventTile_body").text() === body) {
+                return ref;
+            }
+        }
+    });
 });
 
 // Needed to make this file a module
