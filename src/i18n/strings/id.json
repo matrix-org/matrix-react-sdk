@@ -3432,5 +3432,14 @@
     "In %(spaceName)s and %(count)s other spaces.|zero": "Dalam space %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.|other": "Dalam %(spaceName)s dan %(count)s space lainnya.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Dalam space %(space1Name)s dan %(space2Name)s.",
-    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Perintah pengembang: Membuang sesi grup keluar saat ini dan menyiapkan sesi Olm baru"
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Perintah pengembang: Membuang sesi grup keluar saat ini dan menyiapkan sesi Olm baru",
+    "Stop and close": "Berhenti dan tutup",
+    "Online community members": "Anggota komunitas daring",
+    "Coworkers and teams": "Teman kerja dan tim",
+    "Friends and family": "Teman dan keluarga",
+    "We'll help you get connected.": "Kami akan membantu Anda untuk terhubung.",
+    "Who will you chat to the most?": "Siapa saja yang sering Anda chat?",
+    "You're in": "Anda dalam",
+    "You need to have the right permissions in order to share locations in this room.": "Anda harus mempunyai izin yang diperlukan untuk membagikan lokasi di ruangan ini.",
+    "You don't have permission to share locations": "Anda tidak memiliki izin untuk membagikan lokasi"
 }
