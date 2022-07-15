@@ -16,8 +16,7 @@ limitations under the License.
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { ListenerMap, TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
-
-import type { EventEmitter } from "events";
+import { EventEmitter } from "events";
 
 type Handler = (...args: any[]) => void;
 
@@ -34,7 +33,22 @@ export function useTypedEventEmitter<
 
 // Hook to wrap event emitter on and removeListener in hook lifecycle
 export function useEventEmitter(
+    emitter: EventTarget | undefined,
+    eventName: string,
+    handler: Handler,
+): void;
+export function useEventEmitter(
     emitter: EventEmitter | undefined,
+    eventName: string | symbol,
+    handler: Handler,
+): void;
+export function useEventEmitter(
+    emitter: EventEmitter | EventTarget | undefined,
+    eventName: string | symbol,
+    handler: Handler,
+): void;
+export function useEventEmitter(
+    emitter: EventEmitter | EventTarget | undefined,
     eventName: string | symbol,
     handler: Handler,
 ): void {
@@ -55,11 +69,19 @@ export function useEventEmitter(
             const eventListener = (...args) => savedHandler.current(...args);
 
             // Add event listener
-            emitter.on(eventName, eventListener);
+            if (emitter instanceof EventTarget && typeof eventName === "string") {
+                emitter.addEventListener(eventName, eventListener);
+            } else if (emitter instanceof EventEmitter) {
+                emitter.on(eventName, eventListener);
+            }
 
             // Remove event listener on cleanup
             return () => {
-                emitter.removeListener(eventName, eventListener);
+                if (emitter instanceof EventTarget && typeof eventName === "string") {
+                    emitter.removeEventListener(eventName, eventListener);
+                } else if (emitter instanceof EventEmitter) {
+                    emitter.off(eventName, eventListener);
+                }
             };
         },
         [eventName, emitter], // Re-run if eventName or emitter changes
@@ -81,7 +103,17 @@ export function useTypedEventEmitterState<
 }
 
 export function useEventEmitterState<T>(
+    emitter: EventTarget | undefined,
+    eventName: string,
+    fn: Mapper<T>,
+): T;
+export function useEventEmitterState<T>(
     emitter: EventEmitter | undefined,
+    eventName: string | symbol,
+    fn: Mapper<T>,
+): T;
+export function useEventEmitterState<T>(
+    emitter: EventEmitter | EventTarget | undefined,
     eventName: string | symbol,
     fn: Mapper<T>,
 ): T {
