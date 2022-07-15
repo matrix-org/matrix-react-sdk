@@ -151,6 +151,32 @@ describe("Timeline", () => {
             cy.percySnapshot("Configured room on IRC layout");
         });
 
+        it("should add inline start margin to an event line on IRC layout", () => {
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+            // Wait until configuration is finished
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc]")
+                .contains(".mx_GenericEventListSummary_summary", "created and configured the room.");
+
+            // Click "expand" link button
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+
+            // Check the event line has margin instead of inset property
+            // cf. _EventTile.pcss
+            //  --EventTile_irc_line_info-margin-inline-start
+            //  = calc(var(--name-width) + 10px + var(--icon-width))
+            //  = 80 + 10 + 14 = 104px
+            cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
+                .should('have.css', "margin-inline-start", "104px")
+                .should('have.css', "inset-inline-start", "0px");
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp "
+                + "{ visibility: hidden !important; }";
+            cy.percySnapshot("Event line with inline start margin on IRC layout", { percyCSS });
+        });
+
         it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
