@@ -72,32 +72,4 @@ describe("Room Directory", () => {
             expect(resp.chunk[0].room_id).to.equal(roomId);
         });
     });
-
-    it("should allow finding published rooms in directory", () => {
-        const name = "This is a public room";
-        cy.all([
-            cy.window({ log: false }),
-            cy.get<MatrixClient>("@bot"),
-        ]).then(([win, bot]) => {
-            bot.createRoom({
-                visibility: win.matrixcs.Visibility.Public,
-                name,
-                room_alias_name: "test1234",
-            });
-        });
-
-        cy.get('[role="button"][aria-label="Explore rooms"]').click();
-
-        cy.get('.mx_RoomDirectory_dialogWrapper [name="dirsearch"]').type("Unknown Room");
-        cy.get(".mx_RoomDirectory_dialogWrapper h5").should("contain", 'No results for "Unknown Room"');
-        cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered no results");
-
-        cy.get('.mx_RoomDirectory_dialogWrapper [name="dirsearch"]').type("{selectAll}{backspace}test1234");
-        cy.get(".mx_RoomDirectory_dialogWrapper").contains(".mx_RoomDirectory_listItem", name)
-            .should("exist").as("resultRow");
-        cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered one result");
-        cy.get("@resultRow").find(".mx_AccessibleButton").contains("Join").click();
-
-        cy.url().should('contain', `/#/room/#test1234:localhost`);
-    });
 });
