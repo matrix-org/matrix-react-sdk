@@ -14,18 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
+export class ValidatedServerConfig {
+    hsUrl: string;
+    hsName: string;
+    hsNameIsDifferent: string;
 
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
+    isUrl: string;
 
-export const RoomResultDetails = ({ room }: { room: Room }) => {
-    const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
-    if (contextDetails) {
-        return <div className="mx_SpotlightDialog_result_details">
-            { contextDetails }
-        </div>;
-    }
+    isDefault: boolean;
+    // when the server config is based on static URLs the hsName is not resolvable and things may wish to use hsUrl
+    isNameResolvable: boolean;
 
-    return null;
-};
+    warning: string;
+}

@@ -73,6 +73,19 @@ $left-gutter: 64px;
         }
     }
 
+    .mx_EventTile_searchHighlight {
+        background-color: $accent;
+        color: $accent-fg-color;
+        border-radius: 5px;
+        padding-inline: 2px;
+        cursor: pointer;
+
+        a {
+            background-color: $accent;
+            color: $accent-fg-color;
+        }
+    }
+
     .mx_EventTileBubble {
         margin-block: var(--EventTileBubble_margin-block);
     }
@@ -150,6 +163,9 @@ $left-gutter: 64px;
 
     &[data-layout="irc"],
     &[data-layout="group"] {
+        // TODO: adjust the values for IRC layout
+        --EventTile-box-shadow-offset-x: calc(50px + $selected-message-border-width);
+        --EventTile-box-shadow-spread-radius: -50px;
         .mx_EventTile_e2eIcon {
             position: absolute;
         }
@@ -195,35 +211,57 @@ $left-gutter: 64px;
             }
         }
 
+        &.focus-visible:focus-within,
+        &.mx_EventTile_actionBarFocused,
+        &.mx_EventTile_isEditing,
+        &.mx_EventTile_selected {
+            .mx_EventTile_line {
+                background-color: $event-selected-color;
+            }
+        }
+
+        // this is used for the tile for the event which is selected via the URL.
+        &.mx_EventTile_isEditing,
+        &.mx_EventTile_selected {
+            > .mx_EventTile_line {
+                // TODO: ultimately we probably want some transition on here.
+                box-shadow:
+                    inset var(--EventTile-box-shadow-offset-x) 0 0
+                    var(--EventTile-box-shadow-spread-radius) $accent;
+            }
+        }
+
+        &.mx_EventTile_info {
+            .mx_EventTile_e2eIcon {
+                top: 0;
+            }
+        }
+
         &.mx_EventTile_continuation .mx_EventTile_line {
             clear: both;
         }
 
         &:hover {
-            // TODO: Adjust the values for IRC layout
-            --EventTile_hover_box-shadow-offset-x: calc(50px + $selected-message-border-width);
-            --EventTile_hover_box-shadow-spread-radius: -50px;
-
             .mx_EventTile_line {
                 background-color: $event-selected-color;
             }
 
             &.mx_EventTile_verified .mx_EventTile_line {
                 box-shadow:
-                    inset var(--EventTile_hover_box-shadow-offset-x) 0 0
-                    var(--EventTile_hover_box-shadow-spread-radius) $e2e-verified-color;
+                    inset var(--EventTile-box-shadow-offset-x) 0 0
+                    var(--EventTile-box-shadow-spread-radius) $e2e-verified-color;
             }
 
             &.mx_EventTile_unverified .mx_EventTile_line {
                 box-shadow:
-                    inset var(--EventTile_hover_box-shadow-offset-x) 0 0
-                    var(--EventTile_hover_box-shadow-spread-radius) $e2e-unverified-color;
+                    inset var(--EventTile-box-shadow-offset-x) 0 0
+                    var(--EventTile-box-shadow-spread-radius) $e2e-unverified-color;
             }
 
             &.mx_EventTile_unknown .mx_EventTile_line {
                 box-shadow:
-                    inset var(--EventTile_hover_box-shadow-offset-x) 0 0
-                    var(--EventTile_hover_box-shadow-spread-radius) $e2e-unknown-color;
+                    inset var(--EventTile-box-shadow-offset-x) 0 0
+                    var(--EventTile-box-shadow-spread-radius) $e2e-unknown-color;
             }
         }
     }
@@ -237,6 +275,12 @@ $left-gutter: 64px;
 
     &[data-layout="irc"] {
         --EventTile_irc_line_info-inset-inline-start: calc(var(--name-width) + 10px + var(--icon-width));
+
+        .mx_EventTile_msgOption {
+            .mx_ReadReceiptGroup {
+                inset-block-start: -0.3rem; // ($irc-line-height - avatar height) / 2
+            }
+        }
 
         .mx_MessageTimestamp {
             text-align: right;
@@ -253,6 +297,22 @@ $left-gutter: 64px;
 
         .mx_ReplyTile .mx_EventTileBubble {
             left: unset; // Cancel the value specified above for the tile inside ReplyTile
+        }
+
+        &.mx_EventTile_isEditing > .mx_EventTile_line {
+            .mx_EditMessageComposer {
+                // add space for the stroke on box-shadow
+                padding-inline-start: calc($selected-message-border-width + var(--EditMessageComposer-padding-inline));
+            }
+        }
+
+        &.mx_EventTile_info {
+            .mx_EventTile_avatar {
+                left: var(--EventTile_irc_line_info-inset-inline-start);
+                top: 0;
+                margin-right: var(--right-padding);
+                padding-block: var(--EventTile_irc_line-padding-block);
+            }
         }
     }
 
@@ -275,7 +335,14 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_msgOption {
-            margin-right: 10px;
+            margin-inline-end: 10px;
+
+            .mx_ReadReceiptGroup {
+                // This aligns the avatar with the last line of the
+                // message. We want to move it one line up
+                // See .mx_EventTile[data-layout=group] .mx_EventTile_line in _EventTile.scss
+                inset-block-start: calc(-$font-22px - 3px);
+            }
         }
 
         .mx_MessageTimestamp {
@@ -327,8 +394,32 @@ $left-gutter: 64px;
             padding-top: 0px !important;
         }
 
-        &.mx_EventTile_info .mx_EventTile_line {
-            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+        &.mx_EventTile_info {
+            $spacing-block-start: 3px;
+            $spacing-block-end: 2px;
+
+            padding-top: 0;
+
+            .mx_EventTile_avatar,
+            .mx_EventTile_e2eIcon {
+                margin: $spacing-block-start 0 $spacing-block-end;
+            }
+
+            .mx_EventTile_avatar {
+                top: initial;
+                inset-inline-start: $left-gutter;
+                height: 14px;
+            }
+
+            .mx_EventTile_line {
+                padding-block: $spacing-block-start $spacing-block-end;
+                // 20px: avatar area
+                padding-inline-start: calc(var(--EventTile_group_line-spacing-inline-start) + 20px);
+
+                .mx_MessageTimestamp {
+                    top: 0;
+                }
+            }
         }
 
         &:hover {
@@ -341,6 +432,19 @@ $left-gutter: 64px;
     }
 
     &[data-layout="bubble"] {
+        .mx_EventTile_msgOption {
+            .mx_ReadReceiptGroup {
+                position: absolute;
+                inset-block-start: auto;
+
+                // as close to right gutter without clipping as possible
+                inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end));
+
+                // (EventTileLine.line-height - ReadReceiptGroup.height) / 2
+                // this centers the ReadReceiptGroup if we’ve got a single line
+                inset-block-end: calc(($font-18px - 24px) / 2);
+            }
+        }
         .mx_EventTileBubble {
             // Timestamps are inside the tile, so the width can be less constrained
             max-width: 600px;
@@ -359,68 +463,8 @@ $left-gutter: 64px;
     font-size: $font-14px;
     position: relative;
 
-    &.mx_EventTile_info {
-        padding-top: 0;
-
-        .mx_EventTile_avatar,
-        .mx_EventTile_e2eIcon {
-            margin: 3px 0 2px; // Align with mx_EventTile_line
-        }
-
-        .mx_EventTile_e2eIcon {
-            top: 0;
-        }
-
-        .mx_EventTile_avatar {
-            top: initial;
-            inset-inline-start: $left-gutter;
-            height: 14px;
-        }
-
-        .mx_EventTile_line {
-            padding-block: 3px 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon
-
-            .mx_MessageTimestamp {
-                top: 0;
-            }
-        }
-    }
-
-    /* this is used for the tile for the event which is selected via the URL.
-     * TODO: ultimately we probably want some transition on here.
-     */
-    &.mx_EventTile_isEditing > .mx_EventTile_line,
-    &.mx_EventTile_selected > .mx_EventTile_line {
-        box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $accent;
-        background-color: $event-selected-color;
-    }
-
     &.mx_EventTile_selected.mx_EventTile_info .mx_EventTile_line {
         padding-left: calc($left-gutter + 18px);
-    }
-
-    &.mx_EventTile.mx_EventTile_actionBarFocused .mx_EventTile_line,
-    &.mx_EventTile.focus-visible:focus-within .mx_EventTile_line {
-        background-color: $event-selected-color;
-    }
-
-    .mx_EventTile_searchHighlight {
-        background-color: $accent;
-        color: $accent-fg-color;
-        border-radius: 5px;
-        padding-left: 2px;
-        padding-right: 2px;
-        cursor: pointer;
-
-        a {
-            background-color: $accent;
-            color: $accent-fg-color;
-        }
-    }
-
-    /* End to end encryption stuff */
-    &:hover .mx_EventTile_e2eIcon {
-        opacity: 1;
     }
 }
 
@@ -433,10 +477,6 @@ $left-gutter: 64px;
     }
 
     &[data-layout="irc"] {
-        .mx_EventTile_info .mx_EventTile_line {
-            padding-left: 0; // Override .mx_EventTile:not([data-layout="bubble"]).mx_EventTile_info .mx_EventTile_line
-        }
-
         .mx_EventTile_line .mx_RedactedBody {
             padding-left: 24px; // 25px - 1px
 
@@ -601,7 +641,6 @@ $left-gutter: 64px;
     width: 14px;
     height: 14px;
     display: block;
-    opacity: 0.2;
     background-repeat: no-repeat;
     background-size: contain;
 
@@ -621,11 +660,6 @@ $left-gutter: 64px;
 
     &::before {
         mask-size: 80%;
-    }
-
-    &.mx_EventTile_e2eIcon_warning,
-    &.mx_EventTile_e2eIcon_normal {
-        opacity: 1;
     }
 
     &.mx_EventTile_e2eIcon_warning::after {
@@ -826,16 +860,6 @@ $left-gutter: 64px;
     flex-flow: wrap;
     align-items: center;
 
-    &:hover,
-    // Override .mx_EventTile:not([data-layout="bubble"]).mx_EventTile:hover .mx_EventTile_line
-    &:not([data-layout="bubble"]):hover .mx_EventTile_line {
-        background-color: $system;
-    }
-
-    &:not([data-layout="bubble"]):hover .mx_EventTile_line {
-        box-shadow: none; // don't show the verification left stroke in the thread list
-    }
-
     &::after,
     &::before {
         content: "";
@@ -952,6 +976,18 @@ $left-gutter: 64px;
         font-size: $font-12px;
         max-width: var(--MessageTimestamp-max-width);
         position: initial;
+    }
+
+    &:hover {
+        background-color: $system;
+    }
+
+    // ThreadsList has always group layout
+    &[data-layout="group"]:hover {
+        .mx_EventTile_line {
+            background-color: $system; // override $event-selected-color
+            box-shadow: none; // don't show the verification left stroke in the thread list
+        }
     }
 }
 
@@ -1232,10 +1268,12 @@ $left-gutter: 64px;
                 font-size: $font-13px;
             }
 
-            .mx_ReadReceiptGroup {
-                // This aligns the avatar with the last line of the
-                // message. We want to move it one line up - 2rem
-                top: -2rem;
+            .mx_EventTile_msgOption {
+                .mx_ReadReceiptGroup {
+                    // This aligns the avatar with the last line of the
+                    // message. We want to move it one line up - 2rem
+                    inset-block-start: -2rem;
+                }
             }
 
             .mx_EventTile_content .markdown-body {
