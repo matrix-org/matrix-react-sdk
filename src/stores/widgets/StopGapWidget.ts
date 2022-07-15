@@ -454,7 +454,7 @@ export class StopGapWidget extends EventEmitter {
     private onToDeviceEvent = async (ev: MatrixEvent) => {
         await MatrixClientPeg.get().decryptEventIfNeeded(ev);
         if (ev.isDecryptionFailure()) return;
-        this.messaging.feedToDevice(ev.getEffectiveEvent());
+        this.messaging.feedToDevice(ev.getEffectiveEvent(), ev.isEncrypted());
     };
 
     private feedEvent(ev: MatrixEvent) {

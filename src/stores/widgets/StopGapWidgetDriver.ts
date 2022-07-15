@@ -185,9 +185,14 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
     public async sendToDevice(
         eventType: string,
+        encrypt: boolean,
         contentMap: { [userId: string]: { [deviceId: string]: unknown } },
     ): Promise<void> {
-        await MatrixClientPeg.get().sendToDevice(eventType, contentMap);
+        if (encrypt) {
+            throw new Error("Encrypted to-device events not supported yet");
+        } else {
+            await MatrixClientPeg.get().sendToDevice(eventType, contentMap);
+        }
     }
 
     private pickRooms(roomIds: (string | Symbols.AnyRoom)[] = null): Room[] {
@@ -205,7 +210,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         msgtype: string | undefined,
         limitPerRoom: number,
         roomIds: (string | Symbols.AnyRoom)[] = null,
-    ): Promise<object[]> {
+    ): Promise<IRoomEvent[]> {
         limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
 
         const rooms = this.pickRooms(roomIds);
@@ -232,7 +237,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         stateKey: string | undefined,
         limitPerRoom: number,
         roomIds: (string | Symbols.AnyRoom)[] = null,
-    ): Promise<object[]> {
+    ): Promise<IRoomEvent[]> {
         limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
 
         const rooms = this.pickRooms(roomIds);
