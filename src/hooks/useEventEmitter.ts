@@ -68,19 +68,21 @@ export function useEventEmitter(
             // Create event listener that calls handler function stored in ref
             const eventListener = (...args) => savedHandler.current(...args);
 
+            // XXX: We cannot use instanceof as that would break tests
             // Add event listener
-            if (emitter instanceof EventTarget && typeof eventName === "string") {
-                emitter.addEventListener(eventName, eventListener);
-            } else if (emitter instanceof EventEmitter) {
-                emitter.on(eventName, eventListener);
+            if ((emitter as EventTarget).addEventListener && typeof eventName === "string") {
+                (emitter as EventTarget).addEventListener(eventName as string, eventListener);
+            } else if ((emitter as EventEmitter).on) {
+                (emitter as EventEmitter).on(eventName, eventListener);
             }
 
+            // XXX: We cannot use instanceof as that would break tests
             // Remove event listener on cleanup
             return () => {
-                if (emitter instanceof EventTarget && typeof eventName === "string") {
-                    emitter.removeEventListener(eventName, eventListener);
-                } else if (emitter instanceof EventEmitter) {
-                    emitter.off(eventName, eventListener);
+                if ((emitter as EventTarget).removeEventListener && typeof eventName === "string") {
+                    (emitter as EventTarget).removeEventListener(eventName, eventListener);
+                } else if ((emitter as EventEmitter).off) {
+                    (emitter as EventEmitter).off(eventName, eventListener);
                 }
             };
         },
