@@ -422,7 +422,8 @@ $left-gutter: 64px;
             }
 
             &.mx_EventTile_selected .mx_EventTile_line {
-                padding-left: calc($left-gutter + 18px);
+                // TODO: check if this would be necessary
+                padding-inline-start: calc(var(--EventTile_group_line-spacing-inline-start) + 20px);
             }
         }
 
@@ -500,7 +501,8 @@ $left-gutter: 64px;
         }
 
         .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-            padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
+            // override padding-left $left-gutter
+            padding-inline-start: calc(var(--EventTile_group_line-spacing-inline-start) + 20px);
         }
     }
 }

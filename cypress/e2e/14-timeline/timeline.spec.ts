@@ -181,6 +181,37 @@ describe("Timeline", () => {
             cy.percySnapshot("Hidden event line with zero padding on IRC layout", { percyCSS });
         });
 
+        // Tests for modern=group layout
+
+        it("should add inline start padding to a hidden event line on modern=group layout", () => {
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+            cy.contains(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=group] " +
+                ".mx_GenericEventListSummary_summary", "created and configured the room.");
+            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello{enter}");
+
+            // Wait for message to send
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "Hello");
+
+            // Edit message
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Hello").within(() => {
+                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
+                cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
+            });
+
+            // Check inline start padding of the hidden event line
+            cy.get(".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp").click();
+            cy.get(".mx_EventTile[data-layout=group].mx_EventTile_info .mx_EventTile_line")
+                // calc(var(--EventTile_group_line-spacing-inline-start) + 20px) = 64 + 20 = 84px
+                .should('have.css', 'padding-inline-start', '84px');
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_RoomView_body.mx_EventTile[data-layout=group] .mx_MessageTimestamp "
+                + "{ visibility: hidden !important; }";
+            cy.percySnapshot("Hidden event line with padding on modern=group layout", { percyCSS });
+        });
+
         // Tests for bubble message layout
 
         it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
