@@ -152,7 +152,7 @@
     "We couldn't log you in": "نتوانستیم شما را وارد کنیم",
     "Trust": "اعتماد کن",
     "Only continue if you trust the owner of the server.": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید.",
-    "Identity server has no terms of service": "سرور هویت‌سنجی، شرایط استفاده از خدمت (terms of service) را مشخص نکرده‌است",
+    "Identity server has no terms of service": "سرور هویت هیچگونه شرایط خدمات ندارد",
     "Unnamed Room": "اتاق بدون نام",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s.%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s",
