@@ -143,29 +143,14 @@ describe("Timeline", () => {
             });
         });
 
+        // Tests for IRC layout
+
         it("should create and configure a room on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.contains(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] " +
                 ".mx_GenericEventListSummary_summary", "created and configured the room.");
             cy.percySnapshot("Configured room on IRC layout");
-        });
-
-        it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
-            cy.visit("/#/room/" + roomId);
-            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            cy.contains(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
-                ".mx_GenericEventListSummary_summary", "created and configured the room.");
-
-            // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
-
-            // Click "collapse" link button on the first hovered info event line
-            cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type").realHover()
-                .get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").click({ force: false });
-
-            // Make sure "collapse" link button worked
-            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]");
         });
 
         it("should not add inline start padding to a hidden event line on IRC layout", () => {
@@ -195,5 +180,25 @@ describe("Timeline", () => {
                 + "{ visibility: hidden !important; }";
             cy.percySnapshot("Hidden event line with zero padding on IRC layout", { percyCSS });
         });
+
+        // Tests for bubble message layout
+
+        it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
+            cy.contains(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
+                ".mx_GenericEventListSummary_summary", "created and configured the room.");
+
+            // Click "expand" link button
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+
+            // Click "collapse" link button on the first hovered info event line
+            cy.get(".mx_GenericEventListSummary_unstyledList .mx_EventTile_info:first-of-type").realHover()
+                .get(".mx_GenericEventListSummary_toggle[aria-expanded=true]").click({ force: false });
+
+            // Make sure "collapse" link button worked
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]");
+        });
+
     });
 });
