@@ -16,9 +16,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
-
 import { MatrixClient } from "../../global";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
@@ -172,10 +169,10 @@ describe("Spotlight", () => {
                     bot2.createRoom({
                         name: room3Name,
                         visibility: Visibility.Public, initial_state: [{
-                            type: EventType.RoomHistoryVisibility,
+                            type: "m.room.history_visibility",
                             state_key: "",
                             content: {
-                                history_visibility: HistoryVisibility.WorldReadable,
+                                history_visibility: "world_readable",
                             },
                         }],
                     }).then(({ room_id: _room3Id }) => {
