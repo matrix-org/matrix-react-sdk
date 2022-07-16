@@ -199,6 +199,5 @@ describe("Timeline", () => {
             // Make sure "collapse" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]");
         });
-
     });
 });
