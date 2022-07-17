@@ -151,6 +151,31 @@ describe("Timeline", () => {
             cy.percySnapshot("Configured room on IRC layout");
         });
 
+        it("should click view source toggle on IRC layout", () => {
+            sendEvent(roomId);
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+            cy.contains(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] " +
+                ".mx_GenericEventListSummary_summary", "created and configured the room.");
+
+            // Edit message
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Message").within(() => {
+                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
+                cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
+            });
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit");
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp "
+                + "{ visibility: hidden !important; }";
+
+            // Click view source event toggle
+            cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line").realHover()
+                .percySnapshot("Hovered hidden event line", { percyCSS })
+                .get(".mx_ViewSourceEvent_toggle").click({ force: false });
+        });
+
         it("should click 'collapse' link button on the first hovered info event line on bubble layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
