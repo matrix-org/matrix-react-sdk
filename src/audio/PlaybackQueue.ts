@@ -97,6 +97,12 @@ export class PlaybackQueue {
     }
 
     private onPlaybackStateChange(playback: Playback, mxEvent: MatrixEvent, newState: PlaybackState) {
+        
+        // If voice message in a reply don't do anything
+        if (playback.inReplyInfo) {
+            return;
+        }
+
         // Remember where the user got to in playback
         const wasLastPlaying = this.currentPlaybackId === mxEvent.getId();
         if (newState === PlaybackState.Stopped && this.clockStates.has(mxEvent.getId()) && !wasLastPlaying) {
