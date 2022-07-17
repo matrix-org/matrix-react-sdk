@@ -143,6 +143,37 @@ describe("Timeline", () => {
             });
         });
 
+        it("should set size and position to event toggle on expanded view source event", () => {
+            sendEvent(roomId);
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
+            cy.contains(".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
+                "created and configured the room.");
+
+            // Edit message
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Message").within(() => {
+                cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
+                cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
+            });
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit");
+
+            // Expand
+            cy.get(".mx_EventTile.mx_EventTile_info:first-of-type .mx_EventTile_line").realHover()
+                .get(".mx_ViewSourceEvent_toggle").click();
+
+            // Exclude timestamp and event content from snapshot
+            const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp, " +
+                ".mx_EventTile_content.mx_ViewSourceEvent pre { visibility: hidden !important; }";
+
+            // Check size and position of toggle on expanded view source event
+            // cf. _ViewSourceEvent.pcss
+            cy.get(".mx_ViewSourceEvent.mx_EventTile_content.mx_ViewSourceEvent_expanded").realHover()
+                .percySnapshot("ViewSourceEvent_toggle", { percyCSS })
+                .get(".mx_ViewSourceEvent_toggle")
+                .should('have.css', 'height', '12px') // --ViewSourceEvent_toggle-size
+                .should('have.css', 'align-self', 'flex-end');
+        });
+
         it("should create and configure a room on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
