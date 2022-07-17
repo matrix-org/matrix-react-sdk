@@ -157,7 +157,7 @@
     "Unknown for %(duration)s": "Descoñecido desde %(duration)s",
     "Online": "En liña",
     "Idle": "En pausa",
-    "Offline": "Fóra de liña",
+    "Offline": "Sen conexión",
     "Unknown": "Descoñecido",
     "Replying": "Respondendo",
     "Unnamed room": "Sala sen nome",
@@ -3441,5 +3441,6 @@
     "Who will you chat to the most?": "Con quen vas falar máis a miúdo?",
     "You're in": "Estás dentro",
     "You need to have the right permissions in order to share locations in this room.": "Tes que ter os permisos axeitados para poder compartir a localización nesta sala.",
-    "You don't have permission to share locations": "Non tes permiso para compartir localizacións"
+    "You don't have permission to share locations": "Non tes permiso para compartir localizacións",
+    "Favourite Messages (under active development)": "Mensaxes Favoritas (en desenvolvemento activo)"
 }
