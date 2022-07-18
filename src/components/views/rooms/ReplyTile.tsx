@@ -99,7 +99,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             // Following a link within a reply should not dispatch the `view_room` action
             // so that the browser can direct the user to the correct location
             // The exception being the link wrapping the reply
-            
+
             // This allows the permalink to be opened in a new tab/window or copied as
             // matrix.to, but also for it to enable routing within Riot when clicked.
             e.preventDefault();
