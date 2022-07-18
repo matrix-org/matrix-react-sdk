@@ -44,7 +44,7 @@ describe('eventTriggersUnreadCount()', () => {
         sender: aliceId,
         content: {
             msgtype: MsgType.Text,
-            body: 'Hello from Bob',
+            body: 'Hello from Alice',
         },
     });
 
