@@ -35,6 +35,7 @@ import dis from "../../../dispatcher/dispatcher";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { doesRoomVersionSupport, PreferredRoomVersions } from "../../../utils/PreferredRoomVersions";
 
 interface IProps {
     room: Room;
@@ -48,11 +49,9 @@ interface IProps {
 const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeChange, closeSettingsFn }: IProps) => {
     const cli = room.client;
 
-    const restrictedRoomCapabilities = SpaceStore.instance.restrictedJoinRuleSupport;
-    const roomSupportsRestricted = Array.isArray(restrictedRoomCapabilities?.support)
-        && restrictedRoomCapabilities.support.includes(room.getVersion());
+    const roomSupportsRestricted = doesRoomVersionSupport(room.getVersion(), PreferredRoomVersions.RestrictedRooms);
     const preferredRestrictionVersion = !roomSupportsRestricted && promptUpgrade
-        ? restrictedRoomCapabilities?.preferred
+        ? PreferredRoomVersions.RestrictedRooms
         : undefined;
 
     const disabled = !room.currentState.mayClientSendStateEvent(EventType.RoomJoinRules, cli);
@@ -163,8 +162,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         a: sub => <AccessibleButton
                             disabled={disabled}
                             onClick={onEditRestrictedClick}
-                            kind="link"
-                            className="mx_JoinRuleSettings_linkButton"
+                            kind="link_inline"
                         >
                             { sub }
                         </AccessibleButton>,

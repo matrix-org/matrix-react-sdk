@@ -220,6 +220,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             requiresRefresh: true,
         },
     },
+    "feature_exploring_public_spaces": {
+        displayName: _td("Explore public spaces in the new search dialog"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -342,10 +347,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show extensible event representation of events"),
         default: false,
     },
-    "feature_use_only_current_profiles": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
+    "useOnlyCurrentProfiles": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show current avatar and name for users in message history"),
         default: false,
     },
@@ -377,32 +380,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Use new room breadcrumbs"),
         default: false,
-    },
-    "feature_spotlight": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New search experience"),
-        default: false,
-        betaInfo: {
-            title: _td("The new search"),
-            caption: () => <>
-                <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
-                <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
-            </>,
-            faq: () => <>
-                { SdkConfig.get().bug_report_endpoint_url && <>
-                    <h4>{ _t("How can I give feedback?") }</h4>
-                    <p>{ _t("To feedback, join the beta, start a search and click on feedback.") }</p>
-                </> }
-                <h4>{ _t("How can I leave the beta?") }</h4>
-                <p>{ _t("To leave, just return to this page or click on the beta badge when you search.") }</p>
-            </>,
-            feedbackLabel: "spotlight-feedback",
-            feedbackSubheading: _td("Thank you for trying the beta, " +
-                "please go into as much detail as you can so we can improve it."),
-            image: require("../../res/img/betas/new_search_experience.gif"),
-        },
     },
     "feature_right_panel_default_open": {
         isFeature: true,
@@ -450,6 +427,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td(
             "Live Location Sharing (temporary implementation: locations persist in room history)",
         ),
+        default: false,
+    },
+    "feature_favourite_messages": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Favourite Messages (under active development)"),
         default: false,
     },
     "baseFontSize": {
@@ -719,6 +703,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
+        default: null,
+    },
+    "FTUE.useCaseSelection": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
     "autocompleteDelay": {
