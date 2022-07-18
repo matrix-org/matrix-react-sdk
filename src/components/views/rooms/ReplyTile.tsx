@@ -84,27 +84,24 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         // Clicking an image should open it and
         // should not dispatch the `view_room` action
-        if (
-            clickTarget.tagName.toLowerCase() === "img"
-        ) {
+        if (clickTarget.tagName.toLowerCase() === "img") {
             e.preventDefault();
-        }
-        // Playling a voice message or changing the play position
-        // should not dispatch the `view_room` action
-        else if (
+        } else if (
             clickTarget.classList.contains("mx_SeekBar") ||
             clickTarget.getAttribute("data-test-id") === "play-pause-button"
         ) {
+            // Playing a voice message or changing the play position
+            // should not dispatch the `view_room` action
             e.preventDefault();
-        }
-        // Following a link within a reply should not dispatch the `view_room` action
-        // so that the browser can direct the user to the correct location
-        // The exception being the link wrapping the reply
-        else if (
+        } else if (
             clickTarget.tagName.toLowerCase() !== "a" ||
             clickTarget.closest("a") === null ||
             clickTarget === this.anchorElement.current
         ) {
+            // Following a link within a reply should not dispatch the `view_room` action
+            // so that the browser can direct the user to the correct location
+            // The exception being the link wrapping the reply
+            
             // This allows the permalink to be opened in a new tab/window or copied as
             // matrix.to, but also for it to enable routing within Riot when clicked.
             e.preventDefault();

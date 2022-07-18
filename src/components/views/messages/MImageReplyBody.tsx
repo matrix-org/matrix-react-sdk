@@ -26,7 +26,6 @@ import { _t } from "../../../languageHandler";
 const FORCED_IMAGE_HEIGHT = 44;
 
 export default class MImageReplyBody extends MImageBody {
-
     // Don't show "Download this_file.png ..."
     public getFileBody(): string {
         const sticker = this.props.mxEvent.getType() === EventType.Sticker;

@@ -15,16 +15,16 @@ limitations under the License.
 */
 
 import React from "react";
+
 import MFileBody from "./MFileBody";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import { presentableTextForFile } from "../../../utils/FileUtils";
 
 export default class MFileReplyBody extends MFileBody {
-
     protected onPlaceholderClick = async () => {
         return;
-    }
+    };
 
     render() {
         const contentUrl = this.getContentUrl();

@@ -120,7 +120,7 @@ export class Playback extends EventEmitter implements IDestroyable {
     public setIsInReply(): void {
         this.isInReply = true;
     }
-    
+
     public emit(event: PlaybackState, ...args: any[]): boolean {
         this.state = event;
         super.emit(event, ...args);
