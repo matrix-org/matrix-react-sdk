@@ -25,6 +25,7 @@ import {
 } from 'matrix-js-sdk/src/matrix';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
+import { span } from 'matrix-js-sdk/src/utils';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
@@ -252,7 +253,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.loggedInView = createRef();
 
         SdkConfig.put(this.props.config);
-
+        span("MatrixChat_firstSync");
         // Used by _viewRoom before getting state from sync
         this.firstSyncComplete = false;
         this.firstSyncPromise = defer();
@@ -1426,6 +1427,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             this.firstSyncComplete = true;
             this.firstSyncPromise.resolve();
+            span("MatrixChat_firstSync", true);
 
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);

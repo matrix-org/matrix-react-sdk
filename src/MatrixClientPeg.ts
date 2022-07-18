@@ -229,11 +229,14 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public async start(): Promise<any> {
+        utils.span("MatrixClientPeg_start");
         const opts = await this.assign();
 
         logger.log(`MatrixClientPeg: really starting MatrixClient`);
+
         await this.get().startClient(opts);
         logger.log(`MatrixClientPeg: MatrixClient started`);
+        utils.span("MatrixClientPeg_start", true);
     }
 
     public getCredentials(): IMatrixClientCreds {

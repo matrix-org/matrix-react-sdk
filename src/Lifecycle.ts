@@ -21,7 +21,7 @@ import { createClient } from 'matrix-js-sdk/src/matrix';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
-import { QueryDict } from 'matrix-js-sdk/src/utils';
+import { QueryDict, span } from 'matrix-js-sdk/src/utils';
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
@@ -791,6 +791,7 @@ export function isLoggingOut(): boolean {
  */
 async function startMatrixClient(startSyncing = true): Promise<void> {
     logger.log(`Lifecycle: Starting MatrixClient`);
+    span("Lifecycle_start");
 
     // dispatch this before starting the matrix client: it's used
     // to add listeners for the 'sync' event so otherwise we'd have
@@ -849,6 +850,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     if (isSoftLogout()) {
         softLogout();
     }
+    span("Lifecycle_start", true);
 }
 
 /*
