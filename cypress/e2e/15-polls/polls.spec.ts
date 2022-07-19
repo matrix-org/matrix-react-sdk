@@ -52,7 +52,7 @@ describe("Polls", () => {
     };
 
     const getPollTile = (pollId: string): Chainable<JQuery> => {
-        return cy.get(`.mx_RoomView_body .mx_EventTile[data-scroll-tokens="${pollId}"`);
+        return cy.get(`.mx_EventTile[data-scroll-tokens="${pollId}"]`);
     };
 
     const getPollOption = (pollId: string, optionText: string): Chainable<JQuery> => {
@@ -79,6 +79,7 @@ describe("Polls", () => {
     };
 
     beforeEach(() => {
+        cy.enableLabsFeature("feature_thread");
         cy.window().then(win => {
             win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
@@ -153,6 +154,96 @@ describe("Polls", () => {
             expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
             // 0 for maybe
             expectPollOptionVoteCount(pollId, pollParams.options[2], 0);
+        });
+    });
+
+    it("displays polls correctly in thread panel", () => {
+        let botBob: MatrixClient;
+        let botCharlie: MatrixClient;
+        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
+            botBob = _bot;
+        });
+        cy.getBot(synapse, { displayName: "BotCharlie" }).then(_bot => {
+            botCharlie = _bot;
+        });
+
+        let roomId: string;
+        cy.createRoom({}).then(_roomId => {
+            roomId = _roomId;
+            cy.inviteUser(roomId, botBob.getUserId());
+            cy.inviteUser(roomId, botCharlie.getUserId());
+            cy.visit('/#/room/' + roomId);
+        });
+
+        cy.openMessageComposerOptions().within(() => {
+            cy.get('[aria-label="Poll"]').click();
+        });
+
+        const pollParams = {
+            title: 'Does the polls feature work?',
+            options: ['Yes', 'No', 'Maybe'],
+        };
+        createPoll(pollParams);
+
+        // Wait for message to send, get its ID and save as @pollId
+        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", pollParams.title)
+            .invoke("attr", "data-scroll-tokens").as("pollId");
+
+        cy.get<string>("@pollId").then(pollId => {
+            // Bob starts thread on the poll
+            botBob.sendMessage(roomId, pollId, {
+                body: "Hello there",
+                msgtype: "m.text",
+            });
+
+            // open the thread summary
+            cy.get(".mx_RoomView_body .mx_ThreadSummary").click();
+
+            // Bob votes 'Maybe' in the poll
+            botVoteForOption(botBob, roomId, pollId, pollParams.options[2]);
+            // Charlie votes 'No'
+            botVoteForOption(botCharlie, roomId, pollId, pollParams.options[1]);
+
+            // no votes shown until I vote, check votes have arrived in main tl
+            cy.get('.mx_RoomView_body .mx_MPollBody_totalVotes').should('contain', '2 votes cast');
+            // and thread view
+            cy.get('.mx_ThreadView .mx_MPollBody_totalVotes').should('contain', '2 votes cast');
+
+            cy.get('.mx_RoomView_body').within(() => {
+                // vote 'Maybe' in the main timeline poll
+                getPollOption(pollId, pollParams.options[2]).click('topLeft');
+                // both me and bot have voted Maybe
+                expectPollOptionVoteCount(pollId, pollParams.options[2], 2);
+            });
+
+            cy.get('.mx_ThreadView').within(() => {
+                // votes updated in thread view too
+                expectPollOptionVoteCount(pollId, pollParams.options[2], 2);
+                // change my vote to 'Yes'
+                getPollOption(pollId, pollParams.options[0]).click('topLeft');
+            });
+
+            // Bob updates vote to 'No'
+            botVoteForOption(botBob, roomId, pollId, pollParams.options[1]);
+
+            // me: yes, bob: no, charlie: no
+            const expectVoteCounts = () => {
+                // I voted yes
+                expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
+                // Bob and Charlie voted no
+                expectPollOptionVoteCount(pollId, pollParams.options[1], 2);
+                // 0 for maybe
+                expectPollOptionVoteCount(pollId, pollParams.options[2], 0);
+            };
+
+            // check counts are correct in main timeline tile
+            cy.get('.mx_RoomView_body').within(() => {
+                expectVoteCounts();
+            });
+            // and in thread view tile
+            cy.get('.mx_ThreadView').within(() => {
+                expectVoteCounts();
+            });
         });
     });
 });
