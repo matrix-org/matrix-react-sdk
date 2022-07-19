@@ -405,7 +405,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 }
             }
         } catch (err) {
-            logger.error(`Failed to get the actual event ID's in the DOM`, err);
+            logger.error(`onDumpDebugLogs: Failed to get the actual event ID's in the DOM`, err);
         }
 
         // Get the list of events and threads for the room as seen by the
@@ -422,7 +422,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
                 serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
             } catch (err) {
-                logger.error(`Failed to serialize event IDs from timelinesets`, err);
+                logger.error(`onDumpDebugLogs: Failed to serialize event IDs from timelinesets`, err);
             }
 
             try {
@@ -439,7 +439,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     };
                 });
             } catch (err) {
-                logger.error(`Failed to serialize event IDs from the threads`, err);
+                logger.error(`onDumpDebugLogs: Failed to serialize event IDs from the threads`, err);
             }
         }
 
@@ -447,13 +447,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
         try {
             timelineWindowEventIds = this.timelineWindow.getEvents().map(ev => ev.getId());
         } catch (err) {
-            logger.error(`Failed to get event IDs from the timelineWindow`, err);
+            logger.error(`onDumpDebugLogs: Failed to get event IDs from the timelineWindow`, err);
         }
         let pendingEventIds: string[];
         try {
             pendingEventIds = this.props.timelineSet.getPendingEvents().map(ev => ev.getId());
         } catch (err) {
-            logger.error(`Failed to get pending event IDs`, err);
+            logger.error(`onDumpDebugLogs: Failed to get pending event IDs`, err);
         }
 
         logger.debug(
