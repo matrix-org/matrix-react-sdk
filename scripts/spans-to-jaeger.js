@@ -116,6 +116,7 @@ let startTimestamp = 0;
 contents.split(/\r?\n/).forEach(line =>  {
     const segments = line.split(" ");
     // SPAN START id desc
+    
     // SPAN END id desc
     if (segments[0] !== "SPAN") {
         return;
