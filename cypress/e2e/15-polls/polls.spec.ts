@@ -141,7 +141,7 @@ describe("Polls", () => {
 
             // 1 vote for yes
             expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
-            // and one for maybe
+            // 1 vote for maybe
             expectPollOptionVoteCount(pollId, pollParams.options[2], 1);
 
             // Bot updates vote to 'No'
@@ -151,7 +151,7 @@ describe("Polls", () => {
             expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
             // 1 vote for no
             expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
-            // 1 for maybe
+            // 0 for maybe
             expectPollOptionVoteCount(pollId, pollParams.options[2], 0);
         });
     });
