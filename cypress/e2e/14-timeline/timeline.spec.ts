@@ -156,8 +156,8 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc]")
-                .contains(".mx_GenericEventListSummary_summary", "created and configured the room.");
+            cy.contains(".mx_RoomView_body .mx_GenericEventListSummary " +
+                ".mx_GenericEventListSummary_summary", "created and configured the room.");
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
@@ -185,11 +185,11 @@ describe("Timeline", () => {
                 ".mx_GenericEventListSummary_summary", "created and configured the room.");
 
             // Edit message
-            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Message").within(() => {
+            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
                 cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
                 cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
             });
-            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit");
+            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit");
 
             // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
             cy.get(".mx_EventTile .mx_ViewSourceEvent").realHover()
