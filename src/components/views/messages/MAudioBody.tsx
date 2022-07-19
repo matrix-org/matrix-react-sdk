@@ -74,7 +74,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         playback.clockInfo.populatePlaceholdersFrom(this.props.mxEvent);
         this.setState({ playback });
 
-        if (isVoiceMessage(this.props.mxEvent)) {
+        if (isVoiceMessage(this.props.mxEvent) && !this.props.inReply) {
             PlaybackQueue.forRoom(this.props.mxEvent.getRoomId()).unsortedEnqueue(this.props.mxEvent, playback);
         }
 

@@ -61,7 +61,6 @@ export class Playback extends EventEmitter implements IDestroyable {
     private waveformObservable = new SimpleObservable<number[]>();
     private readonly clock: PlaybackClock;
     private readonly fileSize: number;
-    private isInReply: boolean;
 
     /**
      * Creates a new playback instance from a buffer.
@@ -78,7 +77,6 @@ export class Playback extends EventEmitter implements IDestroyable {
         this.thumbnailWaveform = arrayFastResample(seedWaveform ?? DEFAULT_WAVEFORM, THUMBNAIL_WAVEFORM_SAMPLES);
         this.waveformObservable.update(this.resampledWaveform);
         this.clock = new PlaybackClock(this.context);
-        this.isInReply = false;
     }
 
     /**
@@ -111,14 +109,6 @@ export class Playback extends EventEmitter implements IDestroyable {
 
     public get isPlaying(): boolean {
         return this.currentState === PlaybackState.Playing;
-    }
-
-    public get inReplyInfo(): boolean {
-        return this.isInReply;
-    }
-
-    public setIsInReply(): void {
-        this.isInReply = true;
     }
 
     public emit(event: PlaybackState, ...args: any[]): boolean {

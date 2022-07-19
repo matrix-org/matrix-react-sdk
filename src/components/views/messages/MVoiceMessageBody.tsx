@@ -41,11 +41,7 @@ export default class MVoiceMessageBody extends MAudioBody {
                 </span>
             );
         }
-        
-        if (this.props.inReply) {
-            this.state.playback.setIsInReply();
-        }
-
+       
         // At this point we should have a playable state
         return (
             <span className="mx_MVoiceMessageBody">
