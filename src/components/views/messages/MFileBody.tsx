@@ -124,12 +124,12 @@ export default class MFileBody extends React.Component<IProps, IState> {
         this.state = {};
     }
 
-    protected getContentUrl(): string | null {
+    private getContentUrl(): string | null {
         if (this.props.forExport) return null;
         const media = mediaFromContent(this.props.mxEvent.getContent());
         return media.srcHttp;
     }
-    protected get content(): IMediaEventContent {
+    private get content(): IMediaEventContent {
         return this.props.mxEvent.getContent<IMediaEventContent>();
     }
 
@@ -137,7 +137,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
         return this.content.body && this.content.body.length > 0 ? this.content.body : _t("Attachment");
     }
 
-    protected get linkText(): string {
+    private get linkText(): string {
         return presentableTextForFile(this.content);
     }
 
@@ -179,7 +179,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
         }
     };
 
-    protected onPlaceholderClick = async () => {
+    private onPlaceholderClick = async () => {
         if (this.props.inReply) {
             return;
         }
