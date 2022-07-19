@@ -41,7 +41,7 @@ export default class MVoiceMessageBody extends MAudioBody {
                 </span>
             );
         }
-       
+
         // At this point we should have a playable state
         return (
             <span className="mx_MVoiceMessageBody">
