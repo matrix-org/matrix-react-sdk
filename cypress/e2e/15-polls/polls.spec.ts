@@ -79,7 +79,6 @@ describe("Polls", () => {
     };
 
     beforeEach(() => {
-        // Default threads to ON for this spec
         cy.window().then(win => {
             win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
@@ -94,7 +93,7 @@ describe("Polls", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("Open polls work as expected", () => {
+    it("Open polls can be created and voted in", () => {
         let bot: MatrixClient;
         cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
             bot = _bot;
