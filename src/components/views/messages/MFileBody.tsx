@@ -180,6 +180,9 @@ export default class MFileBody extends React.Component<IProps, IState> {
     };
 
     protected onPlaceholderClick = async () => {
+        if (this.props.inReply) {
+            return;
+        }
         const mediaHelper = this.props.mediaEventHelper;
         if (mediaHelper?.media.isEncrypted) {
             await this.decryptFile();

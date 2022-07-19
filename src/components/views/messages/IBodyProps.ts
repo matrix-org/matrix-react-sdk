@@ -36,6 +36,7 @@ export interface IBodyProps {
 
     showUrlPreview?: boolean;
     forExport?: boolean;
+    inReply?: boolean;
     maxImageHeight?: number;
     replacingEventId?: string;
     editState?: EditorStateTransfer;

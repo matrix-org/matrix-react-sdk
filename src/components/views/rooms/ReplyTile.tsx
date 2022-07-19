@@ -27,12 +27,12 @@ import { Action } from '../../../dispatcher/actions';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import SenderProfile from "../messages/SenderProfile";
 import MImageReplyBody from "../messages/MImageReplyBody";
+import MFileBody from '../messages/MFileBody';
+import MVoiceMessageBody from '../messages/MVoiceMessageBody';
 import { isVoiceMessage } from '../../../utils/EventUtils';
 import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
-import MFileReplyBody from '../messages/MFileReplyBody';
-import MVoiceMessageReplyBody from '../messages/MVoiceMessageReplyBody';
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -86,7 +86,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             e.preventDefault();
         } else if (
             clickTarget.classList.contains("mx_SeekBar") ||
-            clickTarget.getAttribute("data-test-id") === "play-pause-button"
+            clickTarget.classList.contains("mx_PlayPauseButton")
         ) {
             // Playing a voice message or changing the play position
             // should not dispatch the `view_room` action
@@ -164,9 +164,9 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         const msgtypeOverrides: Record<string, typeof React.Component> = {
             [MsgType.Image]: MImageReplyBody,
             // Override file body (including audio and video) with reply file body. We also hide the download/decrypt button using CSS
-            [MsgType.Audio]: isVoiceMessage(mxEvent) ? MVoiceMessageReplyBody : MFileReplyBody,
-            [MsgType.Video]: MFileReplyBody,
-            [MsgType.File]: MFileReplyBody,
+            [MsgType.Audio]: isVoiceMessage(mxEvent) ? MVoiceMessageBody : MFileBody,
+            [MsgType.Video]: MFileBody,
+            [MsgType.File]: MFileBody,
         };
         const evOverrides: Record<string, typeof React.Component> = {
             // Use MImageReplyBody so that the sticker isn't taking up a lot of space
