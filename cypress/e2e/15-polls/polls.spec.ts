@@ -212,7 +212,7 @@ describe("Polls", () => {
             cy.get('.mx_RoomView_body').within(() => {
                 // vote 'Maybe' in the main timeline poll
                 getPollOption(pollId, pollParams.options[2]).click('topLeft');
-                // both me and bot have voted Maybe
+                // both me and bob have voted Maybe
                 expectPollOptionVoteCount(pollId, pollParams.options[2], 2);
             });
 
