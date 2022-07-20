@@ -3442,5 +3442,7 @@
     "You're in": "Ste v",
     "You need to have the right permissions in order to share locations in this room.": "Na zdieľanie polôh v tejto miestnosti musíte mať príslušné oprávnenia.",
     "You don't have permission to share locations": "Nemáte oprávnenie na zdieľanie polôh",
-    "Favourite Messages (under active development)": "Obľúbené správy (v procese aktívneho vývoja)"
+    "Favourite Messages (under active development)": "Obľúbené správy (v procese aktívneho vývoja)",
+    "Messages in this chat will be end-to-end encrypted.": "Správy v tejto konverzácii sú šifrované od vás až k príjemcovi.",
+    "Send your first message to invite <displayName/> to chat": "Odošlite svoju prvú správu a pozvite <displayName/> do konverzácie"
 }
