@@ -22,9 +22,11 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
-            // Scroll to the top of the timeline
+            // Get the composer element
+            // selects main timeline composer by default
+            // set `isRightPanel` true to select right panel composer
             getComposer(isRightPanel?: boolean): Chainable<JQuery>;
-            // Find the event tile matching the given sender & body
+            // Open the message composer kebab menu
             openMessageComposerOptions(isRightPanel?: boolean): Chainable<JQuery>;
         }
     }
@@ -36,11 +38,10 @@ Cypress.Commands.add("getComposer", (isRightPanel?: boolean): Chainable<JQuery> 
 });
 
 Cypress.Commands.add("openMessageComposerOptions", (isRightPanel?: boolean): Chainable<JQuery> => {
-    return cy.getComposer(isRightPanel).within(() => {
+    cy.getComposer(isRightPanel).within(() => {
         cy.get('[aria-label="More options"]').click();
-    }).then(() => {
-        return cy.get('.mx_MessageComposer_Menu');
     });
+    return cy.get('.mx_MessageComposer_Menu');
 });
 
 // Needed to make this file a module
