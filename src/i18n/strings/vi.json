@@ -3013,5 +3013,12 @@
     "Command error: Unable to find rendering type (%(renderingType)s)": "Lỗi khi thực hiện lệnh: Không tìm thấy kiểu dữ liệu (%(renderingType)s)",
     "Command error: Unable to handle slash command.": "Lỗi khi thực hiện lệnh: Không thể xử lý lệnh slash.",
     "Show join/leave messages (invites/removes/bans unaffected)": "Hiển thị các tin nhắn tham gia / rời khỏi (các tin nhắn mời / xóa / cấm không bị ảnh hưởng)",
-    "Insert a trailing colon after user mentions at the start of a message": "Chèn dấu hai chấm phía sau các đề cập người dùng ở đầu một tin nhắn"
+    "Insert a trailing colon after user mentions at the start of a message": "Chèn dấu hai chấm phía sau các đề cập người dùng ở đầu một tin nhắn",
+    "Failed to invite users to %(roomName)s": "Mời người dùng vào %(roomName)s thất bại",
+    "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Bạn đang cố truy cập vào một đường dẫn Cộng đồng (%(groupId)s).<br/> Các Cộng đồng không còn được hỗ trợ và được thay thế bằng các Space.<br2/><a>Tìm hiểu thêm về Space ở đây.</a>",
+    "That link is no longer supported": "Đường dẫn đó không còn được hỗ trợ",
+    "%(value)ss": "%(value)ss",
+    "%(value)sm": "%(value)sm",
+    "%(value)sh": "%(value)sh",
+    "%(value)sd": "%(value)sd"
 }
