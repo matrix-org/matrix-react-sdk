@@ -17,7 +17,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 import { mockGetCurrentPosition } from "../../support/location";
 
