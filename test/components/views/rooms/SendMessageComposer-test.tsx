@@ -317,7 +317,7 @@ describe('<SendMessageComposer/>', () => {
             mocked(doMaybeLocalRoomAction).mockImplementation((
                 roomId: string,
                 fn: (actualRoomId: string) => Promise<ISendEventResponse>,
-                client?: MatrixClient,
+                _client?: MatrixClient,
             ) => {
                 return fn(roomId);
             });
