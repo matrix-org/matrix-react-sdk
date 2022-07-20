@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount, ReactWrapper } from "enzyme";
 import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { render, screen } from '@testing-library/react';
 
 import EncryptionEvent from "../../../../src/components/views/messages/EncryptionEvent";
 import { createTestClient, mkMessage } from "../../../test-utils";
@@ -26,15 +26,15 @@ import { LocalRoom } from '../../../../src/models/LocalRoom';
 import DMRoomMap from '../../../../src/utils/DMRoomMap';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 
-const makeEncryptionEvent = (client: MatrixClient, event: MatrixEvent): ReactWrapper => {
-    return mount(<MatrixClientContext.Provider value={client}>
+const renderEncryptionEvent = (client: MatrixClient, event: MatrixEvent) => {
+    render(<MatrixClientContext.Provider value={client}>
         <EncryptionEvent mxEvent={event} />
     </MatrixClientContext.Provider>);
 };
 
-const checkTexts = (wrapper: ReactWrapper, title: string, subTitle: string) => {
-    expect(wrapper.find(".mx_EventTileBubble_title").text()).toBe(title);
-    expect(wrapper.find(".mx_EventTileBubble_subtitle").text()).toBe(subTitle);
+const checkTexts = (title: string, subTitle: string) => {
+    screen.getByText(title);
+    screen.getByText(subTitle);
 };
 
 describe("EncryptionEvent", () => {
@@ -42,7 +42,6 @@ describe("EncryptionEvent", () => {
     const algorithm = "m.megolm.v1.aes-sha2";
     let client: MatrixClient;
     let event: MatrixEvent;
-    let wrapper: ReactWrapper;
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -67,9 +66,8 @@ describe("EncryptionEvent", () => {
         });
 
         it("should show the expected texts", () => {
-            wrapper = makeEncryptionEvent(client, event);
+            renderEncryptionEvent(client, event);
             checkTexts(
-                wrapper,
                 "Encryption enabled",
                 "Messages in this room are end-to-end encrypted. "
                 + "When people join, you can verify them in their profile, just tap on their avatar.",
@@ -84,9 +82,8 @@ describe("EncryptionEvent", () => {
             });
 
             it("should show the expected texts", () => {
-                wrapper = makeEncryptionEvent(client, event);
+                renderEncryptionEvent(client, event);
                 checkTexts(
-                    wrapper,
                     "Encryption enabled",
                     "Some encryption parameters have been changed.",
                 );
@@ -99,8 +96,8 @@ describe("EncryptionEvent", () => {
             });
 
             it("should show the expected texts", () => {
-                wrapper = makeEncryptionEvent(client, event);
-                checkTexts(wrapper, "Encryption enabled", "Ignored attempt to disable encryption");
+                renderEncryptionEvent(client, event);
+                checkTexts("Encryption enabled", "Ignored attempt to disable encryption");
             });
         });
     });
@@ -108,12 +105,12 @@ describe("EncryptionEvent", () => {
     describe("for an unencrypted room", () => {
         beforeEach(() => {
             mocked(client.isRoomEncrypted).mockReturnValue(false);
-            wrapper = makeEncryptionEvent(client, event);
+            renderEncryptionEvent(client, event);
         });
 
         it("should show the expected texts", () => {
             expect(client.isRoomEncrypted).toHaveBeenCalledWith(roomId);
-            checkTexts(wrapper, "Encryption not enabled", "The encryption used by this room isn't supported.");
+            checkTexts("Encryption not enabled", "The encryption used by this room isn't supported.");
         });
     });
 
@@ -123,12 +120,12 @@ describe("EncryptionEvent", () => {
             mocked(client.isRoomEncrypted).mockReturnValue(true);
             const localRoom = new LocalRoom(roomId, client, client.getUserId());
             mocked(client.getRoom).mockReturnValue(localRoom);
-            wrapper = makeEncryptionEvent(client, event);
+            renderEncryptionEvent(client, event);
         });
 
         it("should show the expected texts", () => {
             expect(client.isRoomEncrypted).toHaveBeenCalledWith(roomId);
-            checkTexts(wrapper, "Encryption enabled", "Messages in this chat will be end-to-end encrypted.");
+            checkTexts("Encryption enabled", "Messages in this chat will be end-to-end encrypted.");
         });
     });
 });
