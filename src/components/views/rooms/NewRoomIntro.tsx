@@ -44,7 +44,6 @@ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
     const isPublic: boolean = room.getJoinRule() === "public";
-    console.log(`isEncrypted: ${isEncrypted}`);
     return isPublic || !privateShouldBeEncrypted() || isEncrypted;
 }
 
