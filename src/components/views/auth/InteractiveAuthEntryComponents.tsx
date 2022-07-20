@@ -150,7 +150,6 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                     className="mx_Dialog_primary"
                     disabled={!this.state.password}
                     value={_t("Continue")}
-                    data-test-id="submit-password-button"
                 />
             );
         }

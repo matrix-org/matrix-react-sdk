@@ -1194,7 +1194,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             onClick={goButtonFn}
             className='mx_InviteDialog_goButton'
             disabled={this.state.busy || !hasSelection}
-            data-test-id="invite-dialog-go-button"
         >
             { buttonText }
         </AccessibleButton>;

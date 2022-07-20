@@ -789,7 +789,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 aria-activedescendant={activeDescendant}
                 dir="auto"
                 aria-disabled={this.props.disabled}
-                data-test-id="basic-message-composer-input"
             />
         </div>);
     }

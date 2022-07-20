@@ -263,7 +263,6 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 title={_t('Room Info')}
                 isHighlighted={this.isPhase(ROOM_INFO_PHASES)}
                 onClick={this.onRoomSummaryClicked}
-                data-test-id="room-info-button"
             />,
         );
 
