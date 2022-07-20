@@ -768,9 +768,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         const ev = this.props.mxEvent;
 
         // no icon for local rooms
-        if (isLocalRoom(ev.getRoomId())) {
-            return;
-        }
+        if (isLocalRoom(ev.getRoomId())) return;
 
         // event could not be decrypted
         if (ev.getContent().msgtype === 'm.bad.encrypted') {

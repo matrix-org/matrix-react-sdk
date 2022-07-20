@@ -28,7 +28,7 @@ import { StaticNotificationState } from "../../stores/notifications/StaticNotifi
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { UnsentMessagesRoomStatusBar } from './UnsentMessagesRoomStatusBar';
+import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -252,7 +252,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             </>;
         }
 
-        return <UnsentMessagesRoomStatusBar
+        return <RoomStatusBarUnsentMessages
             title={title}
             description={_t("You can select all or individual messages to retry or delete")}
             notificationState={StaticNotificationState.RED_EXCLAMATION}
