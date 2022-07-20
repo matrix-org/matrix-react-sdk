@@ -347,10 +347,6 @@ describe("Spotlight Dialog", () => {
         });
     });
 
-    it("searching for rooms should display Rooms but not LocalRooms", async () => {
-
-    });
-
     it("should start a DM when clicking a person", async () => {
         const wrapper = mount(
             <SpotlightDialog

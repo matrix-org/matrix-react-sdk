@@ -244,8 +244,9 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
 
 const findVisibleRooms = (cli: MatrixClient) => {
     return cli.getVisibleRooms().filter(room => {
-        // Do not show local room
+        // Do not show local rooms
         if (isLocalRoom(room)) return false;
+
         // TODO we may want to put invites in their own list
         return room.getMyMembership() === "join" || room.getMyMembership() == "invite";
     });

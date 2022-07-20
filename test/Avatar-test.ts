@@ -29,7 +29,7 @@ const roomId = "!room:example.com";
 const avatarUrl1 = "https://example.com/avatar1";
 const avatarUrl2 = "https://example.com/avatar2";
 
-describe("avatarUrlForRoom should return", () => {
+describe("avatarUrlForRoom", () => {
     let getThumbnailOfSourceHttp: jest.Mock;
     let room: Room;
     let roomMember: RoomMember;
@@ -57,41 +57,41 @@ describe("avatarUrlForRoom should return", () => {
         } as unknown as RoomMember;
     });
 
-    it("null for a null room", () => {
+    it("should return null for a null room", () => {
         expect(avatarUrlForRoom(null, 128, 128)).toBeNull();
     });
 
-    it("the HTTP source if the room provides a MXC url", () => {
+    it("should return the HTTP source if the room provides a MXC url", () => {
         mocked(room.getMxcAvatarUrl).mockReturnValue(avatarUrl1);
         getThumbnailOfSourceHttp.mockReturnValue(avatarUrl2);
         expect(avatarUrlForRoom(room, 128, 256, "crop")).toEqual(avatarUrl2);
         expect(getThumbnailOfSourceHttp).toHaveBeenCalledWith(128, 256, "crop");
     });
 
-    it("null for a space room", () => {
+    it("should return null for a space room", () => {
         mocked(room.isSpaceRoom).mockReturnValue(true);
         expect(avatarUrlForRoom(room, 128, 128)).toBeNull();
     });
 
-    it("null if the room is not a DM", () => {
+    it("should return null if the room is not a DM", () => {
         mocked(dmRoomMap).getUserIdForRoomId.mockReturnValue(null);
         expect(avatarUrlForRoom(room, 128, 128)).toBeNull();
         expect(dmRoomMap.getUserIdForRoomId).toHaveBeenCalledWith(roomId);
     });
 
-    it("null if there is no other member in the room", () => {
+    it("should return null if there is no other member in the room", () => {
         mocked(dmRoomMap).getUserIdForRoomId.mockReturnValue("@user:example.com");
         mocked(room.getAvatarFallbackMember).mockReturnValue(null);
         expect(avatarUrlForRoom(room, 128, 128)).toBeNull();
     });
 
-    it("null if the other member has no avatar URL", () => {
+    it("should return null if the other member has no avatar URL", () => {
         mocked(dmRoomMap).getUserIdForRoomId.mockReturnValue("@user:example.com");
         mocked(room.getAvatarFallbackMember).mockReturnValue(roomMember);
         expect(avatarUrlForRoom(room, 128, 128)).toBeNull();
     });
 
-    it("the other member's avatar URL", () => {
+    it("should return the other member's avatar URL", () => {
         mocked(dmRoomMap).getUserIdForRoomId.mockReturnValue("@user:example.com");
         mocked(room.getAvatarFallbackMember).mockReturnValue(roomMember);
         mocked(roomMember.getMxcAvatarUrl).mockReturnValue(avatarUrl2);
