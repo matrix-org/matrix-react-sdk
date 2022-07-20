@@ -3439,5 +3439,6 @@
     "Who will you chat to the most?": "Kellega sa kõige rohkem vestled?",
     "You don't have permission to share locations": "Sul pole vajalikke õigusi asukoha jagamiseks",
     "You need to have the right permissions in order to share locations in this room.": "Selles jututoas asukoha jagamiseks peavad sul olema vastavad õigused.",
-    "Favourite Messages (under active development)": "Lemmiksõnumid (aktiivselt arendamisel)"
+    "Favourite Messages (under active development)": "Lemmiksõnumid (aktiivselt arendamisel)",
+    "Messages in this chat will be end-to-end encrypted.": "Sõnumid siin vestluses on läbivalt krüptitud."
 }
