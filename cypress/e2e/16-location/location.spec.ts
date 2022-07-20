@@ -18,7 +18,6 @@ limitations under the License.
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
-import { mockGetCurrentPosition } from "../../support/location";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 
 describe("Location sharing", () => {
@@ -32,10 +31,7 @@ describe("Location sharing", () => {
         cy.get('[data-test-id="location-picker-submit-button"]').click();
     };
 
-    const mockLocation = { latitude: 50.6090986, longitude: 165.9688683 };
-
     beforeEach(() => {
-        mockGetCurrentPosition(mockLocation.latitude, mockLocation.longitude);
         cy.window().then(win => {
             win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
@@ -80,39 +76,6 @@ describe("Location sharing", () => {
         cy.get('[aria-label="Close dialog"]').click();
 
         cy.get('.mx_Marker')
-            .should('exist');
-    });
-
-    it("sends and displays user current location message successfully", () => {
-        let roomId: string;
-        cy.createRoom({}).then(_roomId => {
-            roomId = _roomId;
-            cy.visit('/#/room/' + roomId);
-        });
-
-        cy.openMessageComposerOptions().within(() => {
-            cy.get('[aria-label="Location"]').click();
-        });
-
-        selectLocationShareTypeOption('Own').click();
-
-        // wait for geolocation to occur and enable submission
-        cy.get('[data-test-id="location-picker-submit-button"][disabled]').should('not.exist');
-        cy.get('.mx_Marker').should('exist');
-
-        submitShareLocation();
-
-        cy.get(".mx_RoomView_body .mx_EventTile .mx_MLocationBody", { timeout: 10000 })
-            .should('exist')
-            .click();
-
-        // clicking location tile opens maximised map
-        cy.get('.mx_LocationViewDialog_wrapper').should('exist');
-
-        cy.get('[aria-label="Close dialog"]').click();
-
-        // uses avatar marker for own location
-        cy.get('.mx_Marker .mx_BaseAvatar')
             .should('exist');
     });
 });
