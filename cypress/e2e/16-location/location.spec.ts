@@ -51,15 +51,9 @@ describe("Location sharing", () => {
     });
 
     it("sends and displays pin drop location message successfully", () => {
-        let bot: MatrixClient;
-        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
-            bot = _bot;
-        });
-
         let roomId: string;
         cy.createRoom({}).then(_roomId => {
             roomId = _roomId;
-            cy.inviteUser(roomId, bot.getUserId());
             cy.visit('/#/room/' + roomId);
         });
 
@@ -87,15 +81,9 @@ describe("Location sharing", () => {
     });
 
     it("sends and displays user current location message successfully", () => {
-        let bot: MatrixClient;
-        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
-            bot = _bot;
-        });
-
         let roomId: string;
         cy.createRoom({}).then(_roomId => {
             roomId = _roomId;
-            cy.inviteUser(roomId, bot.getUserId());
             cy.visit('/#/room/' + roomId);
         });
 
