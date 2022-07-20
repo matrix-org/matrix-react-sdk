@@ -3443,5 +3443,6 @@
     "Friends and family": "Přátelé a rodina",
     "We'll help you get connected.": "Pomůžeme vám připojit se.",
     "Favourite Messages (under active development)": "Oblíbené zprávy (v aktivním vývoji)",
-    "Messages in this chat will be end-to-end encrypted.": "Zprávy v této místnosti budou koncově šifrovány."
+    "Messages in this chat will be end-to-end encrypted.": "Zprávy v této místnosti budou koncově šifrovány.",
+    "Send your first message to invite <displayName/> to chat": "Odesláním první zprávy pozvete <displayName/> do chatu"
 }
