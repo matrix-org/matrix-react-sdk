@@ -21,6 +21,7 @@ import PlatformPeg from "../../PlatformPeg";
 import { SettingLevel } from "../SettingLevel";
 import SdkConfig from "../../SdkConfig";
 import SettingsStore from "../SettingsStore";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export default class SlidingSyncController extends SettingController {
     public async onChange(level: SettingLevel, roomId: string, newValue: any) {
@@ -32,9 +33,9 @@ export default class SlidingSyncController extends SettingController {
                 return;
             }
             try {
-                await proxyHealthCheck(url);
+                await proxyHealthCheck(url, MatrixClientPeg.get().baseUrl);
             } catch (err) {
-                console.error(err);
+                logger.error("sliding sync proxy not ok: " + err);
                 // force the value to false, this is a bit ew, it would be nice if we could return
                 // a bool as to whether to go through with the change or not.
                 SettingsStore.setValue("feature_sliding_sync", roomId, level, false);
@@ -53,32 +54,23 @@ export default class SlidingSyncController extends SettingController {
  * Check that the proxy url is in fact a sliding sync proxy endpoint and it is up.
  * @param endpoint The proxy endpoint url
  * @param hsUrl The homeserver url of the logged in user.
- * @returns True if the proxy is valid, else throws.
+ * @throws if the proxy server is unreachable or not configured to the given homeserver
  */
-function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<boolean> {
+async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<any> {
     // TODO: when HSes natively support sliding sync, we should just hit the /sync endpoint to see
     // if it 200 OKs.
-    return new Promise<boolean>((resolve, reject) => {
-        const req = new XMLHttpRequest();
-        req.open("GET", endpoint + "/client/server.json");
-        req.responseType = "json";
-        req.timeout = 10 * 1000;
-        req.onreadystatechange = function() {
-            if (req.readyState !== XMLHttpRequest.DONE) {
-                return;
-            }
-            if (req.status !== 200) {
-                reject(new Error(`HTTP ${req.status}`));
-                return;
-            }
-            // The proxy is hard-coded on startup to talk to a single HS. Make sure that HS matches
-            // the client's HS else we might give an access_token to a different homeserver!
-            if (hsUrl && hsUrl !== req.response.server) {
-                reject(new Error("homeserver mismatch: client="+hsUrl+" proxy="+req.response.server));
-                return;
-            }
-            resolve(true);
-        };
-        req.send();
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 10 * 1000); // 10s
+    const res = await fetch(endpoint + "/client/server.json", {
+        signal: controller.signal,
     });
+    clearTimeout(id);
+    if (res.status != 200) {
+        throw new Error(`proxyHealthCheck: proxy server returned HTTP ${res.status}`);
+    }
+    const body = await res.json();
+    if (body.server !== hsUrl) {
+        throw new Error(`proxyHealthCheck: client using ${hsUrl} but server is as ${body.server}`);
+    }
+    logger.info("sliding sync proxy is OK");
 }

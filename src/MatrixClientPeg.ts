@@ -37,7 +37,7 @@ import IdentityAuthClient from './IdentityAuthClient';
 import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from './SecurityManager';
 import SecurityCustomisations from "./customisations/Security";
 import SdkConfig from './SdkConfig';
-import * as SlidingSyncManager from './SlidingSyncManager';
+import { SlidingSyncManager } from './SlidingSyncManager';
 import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 
 export interface IMatrixClientCreds {
@@ -225,7 +225,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         if (SdkConfig.get().sliding_sync_proxy_url && SettingsStore.getValue("feature_sliding_sync")) {
             logger.log("Activating sliding sync using proxy at ", SdkConfig.get().sliding_sync_proxy_url);
-            opts.slidingSync = SlidingSyncManager.create(
+            opts.slidingSync = SlidingSyncManager.instance.configure(
                 this.matrixClient, SdkConfig.get().sliding_sync_proxy_url,
             );
         }

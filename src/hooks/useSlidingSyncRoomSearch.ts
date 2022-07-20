@@ -19,7 +19,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { useLatestResult } from "./useLatestResult";
-import { getSlidingSyncManager } from "../SlidingSyncManager";
+import { SlidingSyncManager } from "../SlidingSyncManager";
 
 export interface ISlidingSyncRoomSearchOpts {
     limit: number;
@@ -30,7 +30,7 @@ export const useSlidingSyncRoomSearch = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
 
     const [loading, setLoading] = useState(false);
-    const listIndex = getSlidingSyncManager().getSearchListIndex();
+    const listIndex = SlidingSyncManager.instance.getSearchListIndex();
 
     const [updateQuery, updateResult] = useLatestResult<{ term: string, limit?: number }, Room[]>(setRooms);
 
@@ -48,14 +48,14 @@ export const useSlidingSyncRoomSearch = () => {
 
         try {
             setLoading(true);
-            await getSlidingSyncManager().ensureListRegistered(listIndex, {
+            await SlidingSyncManager.instance.ensureListRegistered(listIndex, {
                 ranges: [[0, limit]],
                 filters: {
                     room_name_like: term,
                 },
             });
             const rooms = [];
-            const { roomIndexToRoomId } = getSlidingSyncManager().slidingSync.getListData(listIndex);
+            const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(listIndex);
             let i = 0;
             while (roomIndexToRoomId[i]) {
                 const roomId = roomIndexToRoomId[i];

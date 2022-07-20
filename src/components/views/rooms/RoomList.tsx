@@ -17,6 +17,7 @@ limitations under the License.
 import * as fbEmitter from "fbemitter";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { MSC3575Filter } from "matrix-js-sdk/src/sliding-sync";
 import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
@@ -607,13 +608,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     }
 
     private renderSlidingSyncLists(): React.ReactElement[] {
+        // TODO: Currently sliding sync does not support Favourites, Low Priority or Server Notice groupings.
         const tagOrder = [
             DefaultTagID.Invite,
             // DefaultTagID.Favourite,
             DefaultTagID.DM,
             DefaultTagID.Untagged,
         ];
-        const tagToSlidingSyncFilters = {
+        const tagToSlidingSyncFilters: Record<string,MSC3575Filter> = {
             [DefaultTagID.Invite]: {
                 is_invite: true,
             },

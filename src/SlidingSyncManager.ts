@@ -45,7 +45,9 @@ limitations under the License.
  */
 
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 import {
+    MSC3575Filter,
     MSC3575List, MSC3575SlidingSyncResponse, SlidingSync,
     SlidingSyncEvent, SlidingSyncState,
 } from 'matrix-js-sdk/src/sliding-sync';
@@ -62,6 +64,8 @@ const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
     ],
 };
 
+export type PartialSlidingSyncRequest ={ filters?: MSC3575Filter, sort?: string[], ranges?: number[][] };
+
 /**
  * This class manages the entirety of sliding sync at a high UI/UX level. It controls the placement
  * of placeholders in lists, controls updating sliding window ranges, and controls which events
@@ -69,15 +73,25 @@ const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
  * sync options and code.
  */
 export class SlidingSyncManager {
-    slidingSync: SlidingSync;
-    client: MatrixClient;
-    searchListIndex: number;
+    private static internalInstance = new SlidingSyncManager();
 
-    constructor(client: MatrixClient, proxyUrl: string) {
+    public slidingSync: SlidingSync;
+    private client: MatrixClient;
+    private searchListIndex: number;
+
+    constructor(){}
+
+    public static get instance(): SlidingSyncManager {
+        return SlidingSyncManager.internalInstance;
+    }
+
+    public configure(client: MatrixClient, proxyUrl: string): SlidingSync {
         this.slidingSync = new SlidingSync(
             proxyUrl, [], DEFAULT_ROOM_SUBSCRIPTION_INFO, client, SLIDING_SYNC_TIMEOUT_MS,
         );
         this.client = client;
+        this.searchListIndex = undefined;
+        return this.slidingSync;
     }
 
     /**
@@ -99,7 +113,7 @@ export class SlidingSyncManager {
      * @returns The complete list request params
      */
     async ensureListRegistered(
-        listIndex: number, updateArgs: { filters?: object, sort?: string[], ranges?: number[][] },
+        listIndex: number, updateArgs: PartialSlidingSyncRequest,
     ): Promise<MSC3575List> {
         logger.debug("ensureListRegistered", listIndex, updateArgs);
         let list = this.slidingSync.getList(listIndex);
@@ -111,17 +125,18 @@ export class SlidingSyncManager {
                 ],
                 timeline_limit: 1, // most recent message display: though this seems to only be needed for favourites?
                 required_state: [
-                    ["m.room.join_rules", ""], // the public icon on the room list
-                    ["m.room.avatar", ""], // any room avatar
-                    ["m.room.tombstone", ""], // lets JS SDK hide rooms which are dead
-                    ["m.room.encryption", ""], // lets rooms be configured for E2EE correctly
-                    ["m.room.create", ""], // for isSpaceRoom checks
-                    ["m.room.member", this.client.getUserId()], // lets the client calculate that we are in fact in the room
+                    [EventType.RoomJoinRules, ""], // the public icon on the room list
+                    [EventType.RoomAvatar, ""], // any room avatar
+                    [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
+                    [EventType.RoomEncryption, ""], // lets rooms be configured for E2EE correctly
+                    [EventType.RoomCreate, ""], // for isSpaceRoom checks
+                    [EventType.RoomMember, this.client.getUserId()], // lets the client calculate that we are in fact in the room
                 ],
             };
             list = Object.assign(list, updateArgs);
         } else {
             const updatedList = Object.assign({}, list, updateArgs);
+            // cannot use objectHasDiff as we need to do deep diff checking
             if (JSON.stringify(list) === JSON.stringify(updatedList)) {
                 logger.debug("list matches, not sending, update => ", updateArgs);
                 return list;
@@ -173,13 +188,4 @@ export class SlidingSyncManager {
             this.slidingSync.on(SlidingSyncEvent.RoomData, resolveOnSubscribed);
         });
     }
-}
-
-let manager = null;
-export function getSlidingSyncManager(): SlidingSyncManager {
-    return manager;
-}
-export function create(client: MatrixClient, proxyUrl: string): SlidingSync {
-    manager = new SlidingSyncManager(client, proxyUrl);
-    return manager.slidingSync;
 }

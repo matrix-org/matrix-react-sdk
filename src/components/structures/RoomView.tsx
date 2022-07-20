@@ -110,7 +110,7 @@ import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyn
 import FileDropTarget from './FileDropTarget';
 import Measured from '../views/elements/Measured';
 import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
-import { getSlidingSyncManager } from '../../SlidingSyncManager';
+import { SlidingSyncManager } from '../../SlidingSyncManager';
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 const DEBUG = false;
@@ -410,7 +410,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (initial && SettingsStore.getValue("feature_sliding_sync")) {
             // set this room as the room subscription. We need to await for it as this will fetch
             // all room state for this room, which is required before we get the state below.
-            await getSlidingSyncManager().setRoomVisible(roomId, true);
+            await SlidingSyncManager.instance.setRoomVisible(roomId, true);
         }
 
         // This convoluted type signature ensures we get IntelliSense *and* correct typing
@@ -726,7 +726,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
             // unsubscribe from this room, but don't await it as we don't care when this gets done.
-            getSlidingSyncManager().setRoomVisible(this.state.roomId, false);
+            SlidingSyncManager.instance.setRoomVisible(this.state.roomId, false);
         }
 
         // stop tracking room changes to format permalinks
