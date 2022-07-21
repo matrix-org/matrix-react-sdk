@@ -125,7 +125,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private notificationState: ListNotificationState;
 
     private slidingSyncMode: boolean;
-    private slidingSyncInit: Promise<any>;
+    private slidingSyncInit: Promise<any>; // we don't care about the resulting list, hence 'any'
 
     constructor(props: IProps) {
         super(props);
