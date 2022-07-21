@@ -216,62 +216,68 @@ export default class MultiInviter {
 
                 let errorText: string;
                 let fatal = false;
-                switch (err.errcode) {
-                    case "M_FORBIDDEN":
-                        if (isSpace) {
-                            errorText = _t('You do not have permission to invite people to this space.');
-                        } else {
-                            errorText = _t('You do not have permission to invite people to this room.');
-                        }
-                        fatal = true;
+                for (const errcode of [err.unstableErrcode, err.errcode]) {
+                    if (errorText) {
                         break;
-                    case USER_ALREADY_INVITED:
-                        if (isSpace) {
-                            errorText = _t("User is already invited to the space");
-                        } else {
-                            errorText = _t("User is already invited to the room");
-                        }
-                        break;
-                    case USER_ALREADY_JOINED:
-                        if (isSpace) {
-                            errorText = _t("User is already in the space");
-                        } else {
-                            errorText = _t("User is already in the room");
-                        }
-                        break;
-                    case "M_LIMIT_EXCEEDED":
-                        // we're being throttled so wait a bit & try again
-                        setTimeout(() => {
-                            this.doInvite(address, ignoreProfile).then(resolve, reject);
-                        }, 5000);
-                        return;
-                    case "M_NOT_FOUND":
-                    case "M_USER_NOT_FOUND":
-                        errorText = _t("User does not exist");
-                        break;
-                    case "M_PROFILE_UNDISCLOSED":
-                        errorText = _t("User may or may not exist");
-                        break;
-                    case "M_PROFILE_NOT_FOUND":
-                        if (!ignoreProfile) {
-                            // Invite without the profile check
-                            logger.warn(`User ${address} does not have a profile - inviting anyways automatically`);
-                            this.doInvite(address, true).then(resolve, reject);
+                    }
+                    switch (errcode) {
+                        case "ORG.MATRIX.MSC3848.INSUFFICIENT_POWER":
+                        case "M_FORBIDDEN":
+                            if (isSpace) {
+                                errorText = _t('You do not have permission to invite people to this space.');
+                            } else {
+                                errorText = _t('You do not have permission to invite people to this room.');
+                            }
+                            fatal = true;
+                            break;
+                        case USER_ALREADY_INVITED:
+                            if (isSpace) {
+                                errorText = _t("User is already invited to the space");
+                            } else {
+                                errorText = _t("User is already invited to the room");
+                            }
+                            break;
+                        case "ORG.MATRIX.MSC3848.ALREADY_JOINED":
+                        case USER_ALREADY_JOINED:
+                            if (isSpace) {
+                                errorText = _t("User is already in the space");
+                            } else {
+                                errorText = _t("User is already in the room");
+                            }
+                            break;
+                        case "M_LIMIT_EXCEEDED":
+                            // we're being throttled so wait a bit & try again
+                            setTimeout(() => {
+                                this.doInvite(address, ignoreProfile).then(resolve, reject);
+                            }, 5000);
                             return;
-                        }
-                        break;
-                    case "M_BAD_STATE":
-                        errorText = _t("The user must be unbanned before they can be invited.");
-                        break;
-                    case "M_UNSUPPORTED_ROOM_VERSION":
-                        if (isSpace) {
-                            errorText = _t("The user's homeserver does not support the version of the space.");
-                        } else {
-                            errorText = _t("The user's homeserver does not support the version of the room.");
-                        }
-                        break;
+                        case "M_NOT_FOUND":
+                        case "M_USER_NOT_FOUND":
+                            errorText = _t("User does not exist");
+                            break;
+                        case "M_PROFILE_UNDISCLOSED":
+                            errorText = _t("User may or may not exist");
+                            break;
+                        case "M_PROFILE_NOT_FOUND":
+                            if (!ignoreProfile) {
+                                // Invite without the profile check
+                                logger.warn(`User ${address} does not have a profile - inviting anyways automatically`);
+                                this.doInvite(address, true).then(resolve, reject);
+                                return;
+                            }
+                            break;
+                        case "M_BAD_STATE":
+                            errorText = _t("The user must be unbanned before they can be invited.");
+                            break;
+                        case "M_UNSUPPORTED_ROOM_VERSION":
+                            if (isSpace) {
+                                errorText = _t("The user's homeserver does not support the version of the space.");
+                            } else {
+                                errorText = _t("The user's homeserver does not support the version of the room.");
+                            }
+                            break;
+                    }
                 }
-
                 if (!errorText) {
                     errorText = _t('Unknown server error');
                 }
