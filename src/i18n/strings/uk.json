@@ -3444,5 +3444,6 @@
     "You need to have the right permissions in order to share locations in this room.": "Вам потрібно мати відповідні дозволи, щоб ділитися геоданими в цій кімнаті.",
     "Favourite Messages (under active development)": "Вибрані повідомлення (в активній розробці)",
     "Messages in this chat will be end-to-end encrypted.": "Повідомлення в цій бесіді будуть захищені наскрізним шифруванням.",
-    "Send your first message to invite <displayName/> to chat": "Надішліть своє перше повідомлення, щоб запросити <displayName/> до бесіди"
+    "Send your first message to invite <displayName/> to chat": "Надішліть своє перше повідомлення, щоб запросити <displayName/> до бесіди",
+    "Saved Items": "Збережені елементи"
 }
