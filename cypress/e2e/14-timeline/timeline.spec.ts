@@ -151,7 +151,7 @@ describe("Timeline", () => {
                 "created and configured the room.");
 
             // Edit message
-            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Message").within(() => {
+            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
                 cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
                 cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
             });
