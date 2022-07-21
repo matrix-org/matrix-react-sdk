@@ -53,7 +53,7 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
             const href = node.getAttribute("href");
 
             const tooltip = <LinkWithTooltip tooltip={new URL(href, window.location.href).toString()}>
-                {node.innerHTML}
+                { node.innerHTML }
             </LinkWithTooltip>;
 
             ReactDOM.render(tooltip, container);
