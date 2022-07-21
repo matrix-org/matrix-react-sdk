@@ -3442,5 +3442,7 @@
     "In %(spaceName)s and %(count)s other spaces.|zero": "Téren: %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.|other": "Itt: %(spaceName)s és %(count)s másik tér.",
     "In spaces %(space1Name)s and %(space2Name)s.": "A téren: %(space1Name)s és %(space2Name)s.",
-    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Fejlesztői parancs: Eldobja a jelenlegi kimenő csoport kapcsolatot és új Olm kapcsolatot hoz létre"
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Fejlesztői parancs: Eldobja a jelenlegi kimenő csoport kapcsolatot és új Olm kapcsolatot hoz létre",
+    "Send your first message to invite <displayName/> to chat": "Az első üzeneteddel hívd meg ide őt: <displayName/>",
+    "Messages in this chat will be end-to-end encrypted.": "Az üzenetek a beszélgetésben végponttól végpontig titkosítottak."
 }
