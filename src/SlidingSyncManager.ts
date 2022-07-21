@@ -79,7 +79,14 @@ export class SlidingSyncManager {
     private client: MatrixClient;
     private searchListIndex: number;
 
-    constructor(){}
+    private configurePromise: Promise<void>;
+    private configureResolve: Function;
+
+    constructor(){
+        this.configurePromise = new Promise((resolve) => {
+            this.configureResolve = resolve;
+        });
+    }
 
     public static get instance(): SlidingSyncManager {
         return SlidingSyncManager.internalInstance;
@@ -91,6 +98,7 @@ export class SlidingSyncManager {
         );
         this.client = client;
         this.searchListIndex = undefined;
+        this.configureResolve();
         return this.slidingSync;
     }
 
@@ -116,6 +124,7 @@ export class SlidingSyncManager {
         listIndex: number, updateArgs: PartialSlidingSyncRequest,
     ): Promise<MSC3575List> {
         logger.debug("ensureListRegistered", listIndex, updateArgs);
+        await this.configurePromise;
         let list = this.slidingSync.getList(listIndex);
         if (!list) {
             list = {
@@ -162,7 +171,8 @@ export class SlidingSyncManager {
         });
     }
 
-    setRoomVisible(roomId: string, visible: boolean): Promise<string> {
+    async setRoomVisible(roomId: string, visible: boolean): Promise<string> {
+        await this.configurePromise;
         const subscriptions = this.slidingSync.getRoomSubscriptions();
         if (visible) {
             subscriptions.add(roomId);

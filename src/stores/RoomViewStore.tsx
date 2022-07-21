@@ -48,6 +48,8 @@ import { JoinRoomErrorPayload } from "../dispatcher/payloads/JoinRoomErrorPayloa
 import { ViewRoomErrorPayload } from "../dispatcher/payloads/ViewRoomErrorPayload";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
+import SettingsStore from "../settings/SettingsStore";
+import { SlidingSyncManager } from "../SlidingSyncManager";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -289,6 +291,33 @@ export class RoomViewStore extends Store<ActionPayload> {
                     activeSpace,
                 });
             }
+            if (SettingsStore.getValue("feature_sliding_sync") && this.state.roomId !== payload.room_id) {
+                if (this.state.roomId) {
+                    // unsubscribe from this room, but don't await it as we don't care when this gets done.
+                    SlidingSyncManager.instance.setRoomVisible(this.state.roomId, false);
+                }
+                this.setState({
+                    roomId: payload.room_id,
+                    initialEventId: null,
+                    initialEventPixelOffset: null,
+                    isInitialEventHighlighted: null,
+                    initialEventScrollIntoView: true,
+                    roomAlias: null,
+                    roomLoading: true,
+                    roomLoadError: null,
+                    viaServers: payload.via_servers,
+                    wasContextSwitch: payload.context_switch,
+                });
+                // set this room as the room subscription. We need to await for it as this will fetch
+                // all room state for this room, which is required before we get the state below.
+                await SlidingSyncManager.instance.setRoomVisible(payload.room_id, true);
+                // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
+                dis.dispatch({
+                    ...payload,
+                });
+                return;
+            }
+
 
             const newState = {
                 roomId: payload.room_id,
