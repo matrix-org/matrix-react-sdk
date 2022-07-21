@@ -3441,5 +3441,8 @@
     "Who will you chat to the most?": "Siapa saja yang sering Anda chat?",
     "You're in": "Anda dalam",
     "You need to have the right permissions in order to share locations in this room.": "Anda harus mempunyai izin yang diperlukan untuk membagikan lokasi di ruangan ini.",
-    "You don't have permission to share locations": "Anda tidak memiliki izin untuk membagikan lokasi"
+    "You don't have permission to share locations": "Anda tidak memiliki izin untuk membagikan lokasi",
+    "Messages in this chat will be end-to-end encrypted.": "Pesan di obrolan ini akan dienkripsi secara ujung-ke-ujung.",
+    "Send your first message to invite <displayName/> to chat": "Kirim pesan pertama Anda untuk mengundang <displayName/> ke obrolan",
+    "Favourite Messages (under active development)": "Pesan Favorit (dalam pengembangan aktif)"
 }
