@@ -171,7 +171,7 @@ const PinnedMessagesCard = ({ room, onClose, permalinkCreator }: IProps) => {
                     <div className="mx_MessageActionBar_iconButton">
                         <ReplyIcon />
                     </div>
-                    <div className="mx_MessageActionBar_iconButton">
+                    <div className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton">
                         <ContextMenuIcon />
                     </div>
                 </div>
