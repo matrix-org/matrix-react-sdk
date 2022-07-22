@@ -169,7 +169,7 @@ describe("Timeline", () => {
             cy.get(".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp").click();
 
             // Exclude timestamp from snapshot
-            const percyCSS = ".mx_RoomView_body.mx_EventTile .mx_MessageTimestamp "
+            const percyCSS = ".mx_RoomView_body .mx_EventTile .mx_MessageTimestamp "
                 + "{ visibility: hidden !important; }";
 
             // should not add inline start padding to a hidden event line on IRC layout
