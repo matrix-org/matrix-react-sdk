@@ -3444,5 +3444,6 @@
     "You don't have permission to share locations": "Non hai l'autorizzazione di condividere la posizione",
     "Favourite Messages (under active development)": "Messaggi preferiti (in sviluppo attivo)",
     "Messages in this chat will be end-to-end encrypted.": "I messaggi in questa conversazione saranno cifrati end-to-end.",
-    "Send your first message to invite <displayName/> to chat": "Invia il primo messaggio per invitare <displayName/> a parlare"
+    "Send your first message to invite <displayName/> to chat": "Invia il primo messaggio per invitare <displayName/> a parlare",
+    "Saved Items": "Elementi salvati"
 }
