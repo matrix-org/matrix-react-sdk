@@ -47,8 +47,11 @@ describe("User Onboarding (new user)", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("page is shown", () => {
+    it("page is shown and preference exists", () => {
         cy.get('.mx_UserOnboardingPage').should('exist');
+        cy.get('.mx_UserOnboardingButton').should('exist');
+        cy.openUserSettings("Preferences");
+        cy.contains("Show shortcut to welcome page above the room list").should("exist");
         cy.percySnapshot("User onboarding page");
     });
 
