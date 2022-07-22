@@ -285,7 +285,7 @@
     "Delete widget": "Supprimer le widget",
     "Define the power level of a user": "Définir le rang d’un utilisateur",
     "Edit": "Modifier",
-    "Enable automatic language detection for syntax highlighting": "Activer la détection automatique de la langue pour la correction orthographique",
+    "Enable automatic language detection for syntax highlighting": "Activer la détection automatique du langage pour la coloration syntaxique",
     "Unable to create widget.": "Impossible de créer le widget.",
     "You are not in this room.": "Vous n’êtes pas dans ce salon.",
     "You do not have permission to do that in this room.": "Vous n’avez pas l’autorisation d’effectuer cette action dans ce salon.",
@@ -1787,7 +1787,7 @@
     "%(senderName)s ended the call": "%(senderName)s a terminé l’appel",
     "You ended the call": "Vous avez terminé l’appel",
     "%(creator)s created this DM.": "%(creator)s a créé cette conversation privée.",
-    "Now, let's help you get started": "Maintenant, initions vous",
+    "Now, let's help you get started": "Maintenant, laissez-nous vous aider à démarrer",
     "Welcome %(name)s": "Bienvenue %(name)s",
     "Got an account? <a>Sign in</a>": "Vous avez un compte ? <a>Connectez-vous</a>",
     "New here? <a>Create an account</a>": "Nouveau ici ? <a>Créez un compte</a>",
@@ -2343,7 +2343,7 @@
     "Make sure the right people have access. You can invite more later.": "Assurez-vous que les accès soient accordés aux bonnes personnes. Vous pourrez en inviter d’autres plus tard.",
     "A private space to organise your rooms": "Un espace privé pour organiser vos salons",
     "Just me": "Seulement moi",
-    "Make sure the right people have access to %(name)s": "Assurez-vous que les bonnes personnes ont accès à %(name)s",
+    "Make sure the right people have access to %(name)s": "Assurez-vous que les bonnes personnes aient accès à %(name)s",
     "It's just you at the moment, it will be even better with others.": "Vous êtes seul pour l’instant, ce sera plus agréable avec de la compagnie.",
     "Share %(name)s": "Partager %(name)s",
     "Private space": "Espace privé",
@@ -3442,5 +3442,8 @@
     "You're in": "Vous y êtes",
     "You need to have the right permissions in order to share locations in this room.": "Vous avez besoin d’une autorisation pour partager des positions dans ce salon.",
     "You don't have permission to share locations": "Vous n’avez pas l’autorisation de partager des positions",
-    "Favourite Messages (under active development)": "Messages favoris (en cours de développement)"
+    "Favourite Messages (under active development)": "Messages favoris (en cours de développement)",
+    "Messages in this chat will be end-to-end encrypted.": "Les messages de cette conversation seront chiffrés de bout en bout.",
+    "Saved Items": "Éléments sauvegardés",
+    "Send your first message to invite <displayName/> to chat": "Envoyez votre premier message pour inviter <displayName/> à discuter"
 }
