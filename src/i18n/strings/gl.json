@@ -3442,5 +3442,8 @@
     "You're in": "Estás dentro",
     "You need to have the right permissions in order to share locations in this room.": "Tes que ter os permisos axeitados para poder compartir a localización nesta sala.",
     "You don't have permission to share locations": "Non tes permiso para compartir localizacións",
-    "Favourite Messages (under active development)": "Mensaxes Favoritas (en desenvolvemento activo)"
+    "Favourite Messages (under active development)": "Mensaxes Favoritas (en desenvolvemento activo)",
+    "Messages in this chat will be end-to-end encrypted.": "As mensaxes deste chat van estar cifrados de extremo-a-extremo.",
+    "Saved Items": "Elementos gardados",
+    "Send your first message to invite <displayName/> to chat": "Envía a túa primeira mensaxe para convidar a <displayName/> ao chat"
 }
