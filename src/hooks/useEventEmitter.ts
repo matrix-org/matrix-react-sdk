@@ -49,11 +49,6 @@ export function useEventEmitter(
     emitter: EventEmitter | EventTarget | undefined,
     eventName: string | symbol,
     handler: Handler,
-): void;
-export function useEventEmitter(
-    emitter: EventEmitter | EventTarget | undefined,
-    eventName: string | symbol,
-    handler: Handler,
 ): void {
     // Create a ref that stores handler
     const savedHandler = useRef(handler);
@@ -108,18 +103,23 @@ export function useTypedEventEmitterState<
 }
 
 export function useEventEmitterState<T>(
-    emitter: EventTarget | undefined,
-    eventName: string,
-    fn: Mapper<T>,
-): T;
-export function useEventEmitterState<T>(
     emitter: EventEmitter | undefined,
     eventName: string | symbol,
     fn: Mapper<T>,
-): T;
-export function useEventEmitterState<T>(
-    emitter: EventEmitter | EventTarget | undefined,
-    eventName: string | symbol,
+): T {
+    const [value, setValue] = useState<T>(fn());
+    const handler = useCallback((...args: any[]) => {
+        setValue(fn(...args));
+    }, [fn]);
+    // re-run when the emitter changes
+    useEffect(handler, [emitter]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEventEmitter(emitter, eventName, handler);
+    return value;
+}
+
+export function useEventTargetState<T>(
+    emitter: EventTarget | undefined,
+    eventName: string,
     fn: Mapper<T>,
 ): T {
     const [value, setValue] = useState<T>(fn());
