@@ -165,7 +165,7 @@ describe("Timeline", () => {
             });
             cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit");
 
-            // Check inline start padding of the hidden event line
+            // Click timestamp to highlight hidden event line
             cy.get(".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp").click();
 
             // Exclude timestamp from snapshot
