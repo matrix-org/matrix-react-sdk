@@ -48,6 +48,7 @@ import { UserTab } from '../dialogs/UserTab';
 import { Action } from '../../../dispatcher/actions';
 import SdkConfig from "../../../SdkConfig";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -239,6 +240,26 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
     </RovingAccessibleTooltipButton>;
 };
 
+interface IFavouriteButtonProp {
+    mxEvent: MatrixEvent;
+}
+
+const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
+    const { isFavourite, toggleFavourite } = useFavouriteMessages();
+
+    const eventId = mxEvent.getId();
+    const classes = classNames("mx_MessageActionBar_maskButton mx_MessageActionBar_favouriteButton", {
+        'mx_MessageActionBar_favouriteButton_fillstar': isFavourite(eventId),
+    });
+
+    return <RovingAccessibleTooltipButton
+        className={classes}
+        title={_t("Favourite")}
+        onClick={() => toggleFavourite(eventId)}
+        data-testid={eventId}
+    />;
+};
+
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
     reactions?: Relations;
@@ -423,6 +444,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // Like the resend button, the react and reply buttons need to appear before the edit.
                 // The only catch is we do the reply button first so that we can make sure the react
                 // button is the very first button without having to do length checks for `splice()`.
+
                 if (this.context.canSendMessages) {
                     if (this.showReplyInThreadAction) {
                         toolbarOpts.splice(0, 0, threadTooltipButton);
@@ -443,6 +465,11 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         onFocusChange={this.onFocusChange}
                         key="react"
                     />);
+                }
+                if (SettingsStore.getValue("feature_favourite_messages")) {
+                    toolbarOpts.splice(-1, 0, (
+                        <FavouriteButton key="favourite" mxEvent={this.props.mxEvent} />
+                    ));
                 }
 
                 // XXX: Assuming that the underlying tile will be a media event if it is eligible media.
