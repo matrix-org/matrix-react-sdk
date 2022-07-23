@@ -3417,5 +3417,10 @@
     "How can I create a video room?": "Hur skapar jag ett videorum?",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videorum är ständigt aktiva VoIP-kanaler inbäddade i ett rum i %(brand)s.",
     "A new way to chat over voice and video in %(brand)s.": "Ett nytt sätt att chatta över röst och video i %(brand)s.",
-    "Video rooms": "Videorum"
+    "Video rooms": "Videorum",
+    "In %(spaceName)s and %(count)s other spaces.|one": "I %(spaceName)s och %(count)s annat utrymme.",
+    "In %(spaceName)s and %(count)s other spaces.|zero": "I utrymmet %(spaceName)s.",
+    "In %(spaceName)s and %(count)s other spaces.|other": "I %(spaceName)s och %(count)s andra utrymmen.",
+    "In spaces %(space1Name)s and %(space2Name)s.": "I utrymmena %(space1Name)s och %(space2Name)s.",
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Utvecklarkommando: Slänger den nuvarande utgående gruppsessionen och sätter upp nya Olm-sessioner"
 }
