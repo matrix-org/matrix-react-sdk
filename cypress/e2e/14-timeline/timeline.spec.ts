@@ -191,7 +191,7 @@ describe("Timeline", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
             cy.contains(".mx_RoomView_body .mx_GenericEventListSummary " +
-            ".mx_GenericEventListSummary_summary", "created and configured the room.");
+                ".mx_GenericEventListSummary_summary", "created and configured the room.");
 
             // Edit message
             cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
