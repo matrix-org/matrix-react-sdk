@@ -44,9 +44,6 @@ const JoinRuleDropdown = ({
         <div key={JoinRule.Invite} className="mx_JoinRuleDropdown_invite">
             { labelInvite }
         </div>,
-        <div key={JoinRule.Knock} className="mx_JoinRuleDropdown_knock">
-            { labelKnock }
-        </div>,
         <div key={JoinRule.Public} className="mx_JoinRuleDropdown_public">
             { labelPublic }
         </div>,
@@ -55,6 +52,10 @@ const JoinRuleDropdown = ({
     if (labelRestricted) {
         options.unshift(<div key={JoinRule.Restricted} className="mx_JoinRuleDropdown_restricted">
             { labelRestricted }
+        </div>);
+    } else if (labelKnock) {
+        options.unshift(<div key={JoinRule.Knock} className="mx_JoinRuleDropdown_knock">
+            { labelKnock }
         </div>);
     }
 
