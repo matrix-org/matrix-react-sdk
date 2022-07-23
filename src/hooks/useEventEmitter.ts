@@ -31,7 +31,10 @@ export function useTypedEventEmitter<
     useEventEmitter(emitter, eventName, handler);
 }
 
-// Hook to wrap event emitter on and removeListener in hook lifecycle
+/**
+ * Hook to wrap an EventEmitter/EventTarget on/addEventListener and
+ * off/removeEventListener in hook lifecycle
+ */
 export function useEventEmitter(
     emitter: EventTarget | undefined,
     eventName: string,
