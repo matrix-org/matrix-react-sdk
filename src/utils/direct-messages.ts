@@ -52,7 +52,7 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
     }
 }
 
-export async function startDm(client: MatrixClient, targets: Member[]): Promise<void> {
+export async function startDm(client: MatrixClient, targets: Member[], favourite?: boolean): Promise<void> {
     const targetIds = targets.map(t => t.userId);
 
     // Check if there is already a DM with these people and reuse it if possible.
@@ -73,7 +73,7 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
         return;
     }
 
-    const createRoomOptions = { inlineErrors: true } as any; // XXX: Type out `createRoomOptions`
+    const createRoomOptions = { inlineErrors: true, favourite } as any; // XXX: Type out `createRoomOptions`
 
     if (privateShouldBeEncrypted()) {
         // Check whether all users have uploaded device keys before.

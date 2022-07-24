@@ -692,8 +692,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewSomethingBehindModal();
                 break;
             }
-            case 'view_create_room':
-                this.createRoom(payload.public, payload.defaultName, payload.type);
+            case Action.ViewCreateRoom:
+                this.createRoom(payload.public, payload.defaultName, payload.type, payload.favourite);
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
@@ -716,8 +716,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case Action.ViewStartChatOrReuse:
                 this.chatCreateOrReuse(payload.user_id);
                 break;
-            case 'view_create_chat':
-                showStartChatInviteDialog(payload.initialText || "");
+            case Action.ViewCreateChat:
+                showStartChatInviteDialog(payload.initialText || "", payload.favourite);
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
@@ -1033,7 +1033,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setPage(PageType.LegacyGroupView);
     }
 
-    private async createRoom(defaultPublic = false, defaultName?: string, type?: RoomType) {
+    private async createRoom(defaultPublic = false, defaultName?: string, type?: RoomType, favourite?: boolean) {
         const modal = Modal.createDialog(CreateRoomDialog, {
             type,
             defaultPublic,
@@ -1042,7 +1042,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
-            createRoom(opts);
+            createRoom({ ...opts, favourite });
         }
     }
 

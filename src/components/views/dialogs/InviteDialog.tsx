@@ -255,6 +255,9 @@ interface IInviteDialogProps {
 
     // Initial value to populate the filter with
     initialText: string;
+
+    // Whether or not the room should be added to favourites after creation
+    favourite?: boolean;
 }
 
 interface IInviteDialogState {
@@ -449,7 +452,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         try {
             const cli = MatrixClientPeg.get();
             const targets = this.convertFilter();
-            await startDm(cli, targets);
+            await startDm(cli, targets, this.props.favourite);
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);

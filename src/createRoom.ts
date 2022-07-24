@@ -46,6 +46,7 @@ import { findDMForUser } from "./utils/direct-messages";
 import { privateShouldBeEncrypted } from "./utils/rooms";
 import { waitForMember } from "./utils/membership";
 import { PreferredRoomVersions } from "./utils/PreferredRoomVersions";
+import { DefaultTagID } from "./stores/room-list/models";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -65,6 +66,7 @@ export interface IOpts {
     // contextually only makes sense if parentSpace is specified, if true then will be added to parentSpace as suggested
     suggested?: boolean;
     joinRule?: JoinRule;
+    favourite?: boolean;
 }
 
 /**
@@ -274,6 +276,10 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             const room = client.getRoom(roomId);
             const plEvent = room?.currentState.getStateEvents(EventType.RoomPowerLevels, "");
             await client.setPowerLevel(roomId, client.getUserId(), 100, plEvent);
+        }
+    }).then(() => {
+        if (opts.favourite) {
+            client.setRoomTag(roomId, DefaultTagID.Favourite, {} as any);
         }
     }).then(function() {
         // NB createRoom doesn't block on the client seeing the echo that the

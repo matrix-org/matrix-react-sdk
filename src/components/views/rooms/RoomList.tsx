@@ -25,9 +25,11 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { ViewCreateChatPayload } from "../../../dispatcher/payloads/ViewCreateChatPayload";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -118,19 +120,24 @@ const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>) => {
     };
 };
 
-const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonProps) => {
+const DmFavAuxButton = ({ tabIndex, tagId, dispatcher = defaultDispatcher }: IAuxButtonProps) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
-    const activeSpace: Room = useEventEmitterState(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
-        return SpaceStore.instance.activeSpaceRoom;
-    });
+    const [spaceKey, activeSpace] = useEventEmitterState<[SpaceKey, Room | null]>(
+        SpaceStore.instance,
+        UPDATE_SELECTED_SPACE,
+        () => [SpaceStore.instance.activeSpace, SpaceStore.instance.activeSpaceRoom],
+    );
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
 
     const showCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
-    const showInviteUsers = shouldShowComponent(UIComponent.InviteUsers);
+    const showInviteUsers = activeSpace && shouldShowComponent(UIComponent.InviteUsers);
+    const favourite = tagId === DefaultTagID.Favourite;
+    const peopleMetaSpace = spaceKey === MetaSpace.People;
 
-    if (activeSpace && (showCreateRooms || showInviteUsers)) {
+    if (!peopleMetaSpace && (activeSpace || favourite) && (showCreateRooms || showInviteUsers)) {
         let contextMenu: JSX.Element;
         if (menuDisplayed) {
-            const canInvite = shouldShowSpaceInvite(activeSpace);
+            const canInvite = showInviteUsers ? shouldShowSpaceInvite(activeSpace) : undefined;
 
             contextMenu = <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
                 <IconizedContextMenuOptionList first>
@@ -141,10 +148,38 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
                             e.preventDefault();
                             e.stopPropagation();
                             closeMenu();
-                            defaultDispatcher.dispatch({ action: "view_create_chat" });
+                            defaultDispatcher.dispatch<ViewCreateChatPayload>({
+                                action: Action.ViewCreateChat,
+                                favourite,
+                            });
                             PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
                         }}
                     /> }
+                    { showCreateRooms && <IconizedContextMenuOption
+                        iconClassName="mx_RoomListHeader_iconNewRoom"
+                        label={_t("New room")}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            showCreateNewRoom(activeSpace, undefined, favourite);
+                            PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
+                        }}
+                    /> }
+                    { showCreateRooms && videoRoomsEnabled && (
+                        <IconizedContextMenuOption
+                            iconClassName="mx_RoomListHeader_iconNewVideoRoom"
+                            label={_t("New video room")}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                closeMenu();
+                                showCreateNewRoom(activeSpace, RoomType.ElementVideo, favourite);
+                            }}
+                        >
+                            <BetaPill />
+                        </IconizedContextMenuOption>
+                    ) }
                     { showInviteUsers && <IconizedContextMenuOption
                         label={_t("Invite to space")}
                         iconClassName="mx_RoomList_iconInvite"
@@ -352,6 +387,7 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
         sectionLabel: _td("Favourites"),
         isInvite: false,
         defaultHidden: false,
+        AuxButtonComponent: DmFavAuxButton,
     },
     [DefaultTagID.SavedItems]: {
         sectionLabel: _td("Saved Items"),
@@ -362,7 +398,7 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
         sectionLabel: _td("People"),
         isInvite: false,
         defaultHidden: false,
-        AuxButtonComponent: DmAuxButton,
+        AuxButtonComponent: DmFavAuxButton,
     },
     [DefaultTagID.Untagged]: {
         sectionLabel: _td("Rooms"),

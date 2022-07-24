@@ -59,10 +59,10 @@ export function inviteMultipleToRoom(
         .then(states => Promise.resolve({ states, inviter }));
 }
 
-export function showStartChatInviteDialog(initialText = ""): void {
+export function showStartChatInviteDialog(initialText = "", favourite?: boolean): void {
     // This dialog handles the room creation internally - we don't need to worry about it.
     Modal.createDialog(
-        InviteDialog, { kind: KIND_DM, initialText },
+        InviteDialog, { kind: KIND_DM, initialText, favourite },
         /*className=*/"mx_InviteDialog_flexWrapper", /*isPriority=*/false, /*isStatic=*/true,
     );
 }

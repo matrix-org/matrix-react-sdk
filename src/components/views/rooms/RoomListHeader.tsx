@@ -23,6 +23,8 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { ViewCreateChatPayload } from "../../../dispatcher/payloads/ViewCreateChatPayload";
+import { ViewCreateRoomPayload } from "../../../dispatcher/payloads/ViewCreateRoomPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { useEventEmitterState, useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -280,7 +282,10 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: "view_create_chat" });
+                        defaultDispatcher.dispatch<ViewCreateChatPayload>({
+                            action: Action.ViewCreateChat,
+                            favourite: spaceKey === MetaSpace.Favourites,
+                        });
                         PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateChatItem", e);
                         closePlusMenu();
                     }}
@@ -291,7 +296,10 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: "view_create_room" });
+                        defaultDispatcher.dispatch<ViewCreateRoomPayload>({
+                            action: Action.ViewCreateRoom,
+                            favourite: spaceKey === MetaSpace.Favourites,
+                        });
                         PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                         closePlusMenu();
                     }}
@@ -303,9 +311,10 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            defaultDispatcher.dispatch({
-                                action: "view_create_room",
+                            defaultDispatcher.dispatch<ViewCreateRoomPayload>({
+                                action: Action.ViewCreateRoom,
                                 type: RoomType.ElementVideo,
+                                favourite: spaceKey === MetaSpace.Favourites,
                             });
                             closePlusMenu();
                         }}
@@ -384,10 +393,17 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             null }
         { canShowPlusMenu && <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
-            onClick={openPlusMenu}
+            onClick={spaceKey === MetaSpace.People
+                ? (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    defaultDispatcher.dispatch<ViewCreateChatPayload>({ action: Action.ViewCreateChat });
+                    PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateChatItem", e);
+                }
+                : openPlusMenu}
             isExpanded={plusMenuDisplayed}
             className="mx_RoomListHeader_plusButton"
-            title={_t("Add")}
+            title={spaceKey === MetaSpace.People ? _t("Start chat") : _t("Add")}
         /> }
 
         { contextMenu }
