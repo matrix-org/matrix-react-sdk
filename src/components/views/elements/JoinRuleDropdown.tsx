@@ -24,7 +24,7 @@ interface IProps {
     label: string;
     width?: number;
     labelInvite: string;
-    labelKnock: string;
+    labelKnock?: string;
     labelPublic: string;
     labelRestricted?: string; // if omitted then this option will be hidden, e.g if unsupported
     onChange(value: JoinRule): void;

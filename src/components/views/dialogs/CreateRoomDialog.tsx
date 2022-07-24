@@ -75,8 +75,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             joinRule = JoinRule.Public;
         } else if (this.supportsRestricted) {
             joinRule = JoinRule.Restricted;
-        } else if (this.knockingEnabled) {
-            joinRule = JoinRule.Knock;
         }
 
         this.state = {
@@ -276,7 +274,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             </p>;
         } else if (this.state.joinRule === JoinRule.Knock && this.knockingEnabled) {
             publicPrivateLabel = <p>
-                { _t("Anyone can knock on this room to join.") }
+                { _t("This room type requires users to be granted access in order to join.") }
                 &nbsp;
                 { _t("You can change this at any time from room settings.") }
             </p>;
@@ -358,7 +356,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         <JoinRuleDropdown
                             label={_t("Room visibility")}
                             labelInvite={_t("Private room (invite only)")}
-                            labelKnock={this.knockingEnabled ? _t("Anyone can knock to join") : undefined}
+                            labelKnock={this.knockingEnabled ? _t("Ask to join (Anyone can knock to join)") : undefined}
                             labelPublic={_t("Public room")}
                             labelRestricted={this.supportsRestricted ? _t("Visible to space members") : undefined}
                             value={this.state.joinRule}
