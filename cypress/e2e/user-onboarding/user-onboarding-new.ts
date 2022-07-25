@@ -51,4 +51,16 @@ describe("User Onboarding (new user)", () => {
     it("page is shown", () => {
         cy.get('.mx_UserOnboardingPage').should('exist');
     });
+
+    it("using find friends action should increase progress", () => {
+        cy.get(".mx_ProgressBar").invoke("val").should("eq", 3);
+
+        const findPeopleAction = cy.contains(".mx_UserOnboardingTask_action", "Find friends");
+        expect(findPeopleAction).to.exist;
+        findPeopleAction.click();
+        cy.get(".mx_InviteDialog_editor input").type(bot1.getUserId());
+        cy.get(".mx_InviteDialog_buttonAndSpinner").click();
+
+        cy.get(".mx_ProgressBar").invoke("val").should("eq", 4);
+    });
 });
