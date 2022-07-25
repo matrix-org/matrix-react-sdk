@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import React, { HTMLProps, InputHTMLAttributes, ReactHTML, ReactNode } from 'react';
+import React, { HTMLAttributes, InputHTMLAttributes, ReactHTML, ReactNode } from 'react';
 import classnames from 'classnames';
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -44,7 +44,7 @@ type AccessibleButtonKind = | 'primary'
  * To remain compatible with existing code, we’ll continue to support InputHTMLAttributes<Element>
  */
 type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
-    JSX.IntrinsicElements[T] extends HTMLProps<any> ? DynamicElementProps<T> : DynamicElementProps<"div">;
+    JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
 type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
     Partial<Omit<JSX.IntrinsicElements[T], 'ref' | 'onClick' | 'onMouseDown' | 'onKeyUp' | 'onKeyDown'>>
     & Omit<InputHTMLAttributes<Element>, 'onClick'>;
