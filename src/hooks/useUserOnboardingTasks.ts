@@ -33,7 +33,7 @@ export interface UserOnboardingTask {
     relevant?: UseCase[];
     action?: {
         label: string;
-        onClick?: (index: number, ev?: ButtonEvent) => void;
+        onClick?: (ev?: ButtonEvent) => void;
         href?: string;
         hideOnComplete?: boolean;
     };
@@ -45,8 +45,8 @@ interface InternalUserOnboardingTask extends UserOnboardingTask {
 
 const hasOpenDMs = (ctx: UserOnboardingContext) => Boolean(Object.entries(ctx.dmRooms).length);
 
-const onClickStartDm = (index: number, ev: ButtonEvent) => {
-    PosthogTrackers.trackInteraction("WebUserOnboardingTaskSendDm", ev, index);
+const onClickStartDm = (ev: ButtonEvent) => {
+    PosthogTrackers.trackInteraction("WebUserOnboardingTaskSendDm", ev);
     defaultDispatcher.dispatch({ action: 'view_create_chat' });
 };
 
@@ -95,8 +95,8 @@ const tasks: InternalUserOnboardingTask[] = [
         action: {
             label: _t("Download apps"),
             href: "https://element.io/get-started#download",
-            onClick: (index: number, ev: ButtonEvent) => {
-                PosthogTrackers.trackInteraction("WebUserOnboardingTaskDownloadApps", ev, index);
+            onClick: (ev: ButtonEvent) => {
+                PosthogTrackers.trackInteraction("WebUserOnboardingTaskDownloadApps", ev);
             },
         },
     },
@@ -106,8 +106,8 @@ const tasks: InternalUserOnboardingTask[] = [
         completed: (info: UserOnboardingContext) => Boolean(info.avatar),
         action: {
             label: _t("Your profile"),
-            onClick: (index: number, ev: ButtonEvent) => {
-                PosthogTrackers.trackInteraction("WebUserOnboardingTaskSetupProfile", ev, index);
+            onClick: (ev: ButtonEvent) => {
+                PosthogTrackers.trackInteraction("WebUserOnboardingTaskSetupProfile", ev);
                 defaultDispatcher.dispatch({
                     action: Action.ViewUserSettings,
                     initialTabId: UserTab.General,
@@ -121,8 +121,8 @@ const tasks: InternalUserOnboardingTask[] = [
         completed: () => Notifier.isPossible(),
         action: {
             label: _t("Enable notifications"),
-            onClick: (index: number, ev: ButtonEvent) => {
-                PosthogTrackers.trackInteraction("WebUserOnboardingTaskEnableNotifications", ev, index);
+            onClick: (ev: ButtonEvent) => {
+                PosthogTrackers.trackInteraction("WebUserOnboardingTaskEnableNotifications", ev);
                 Notifier.setEnabled(true);
             },
             hideOnComplete: true,

@@ -18,6 +18,7 @@ limitations under the License.
     display: contents;
 
     .mx_UserOnboardingTask_number {
+        counter-increment: user-onboarding;
         grid-column: 1;
         color: $secondary-content;
         width: 32px;
@@ -28,6 +29,10 @@ limitations under the License.
         line-height: 32px;
         align-self: center;
         position: relative;
+
+        &:before {
+            content: counter(user-onboarding);
+        }
     }
 
     .mx_UserOnboardingTask_content {

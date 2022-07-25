@@ -15,32 +15,23 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { useCallback } from "react";
 import * as React from "react";
 
 import { UserOnboardingTask as Task } from "../../../hooks/useUserOnboardingTasks";
-import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
+import AccessibleButton from "../../views/elements/AccessibleButton";
 import Heading from "../../views/typography/Heading";
 
 interface Props {
     task: Task;
     completed?: boolean;
-    index: number;
 }
 
-export function UserOnboardingTask({ task, completed = false, index }: Props) {
-    const onClick = useCallback(
-        (ev: ButtonEvent) => task.action.onClick(index, ev),
-        [task, index],
-    );
-
+export function UserOnboardingTask({ task, completed = false }: Props) {
     return (
         <li className={classNames("mx_UserOnboardingTask", {
             "mx_UserOnboardingTask_completed": completed,
         })}>
-            <div className="mx_UserOnboardingTask_number">
-                { index }
-            </div>
+            <div className="mx_UserOnboardingTask_number" />
             <div className="mx_UserOnboardingTask_content">
                 <Heading size="h4" className="mx_UserOnboardingTask_title">
                     { task.title }
@@ -56,7 +47,7 @@ export function UserOnboardingTask({ task, completed = false, index }: Props) {
                     kind="primary_outline"
                     href={task.action.href}
                     target="_blank"
-                    onClick={onClick}>
+                    onClick={task.action.onClick}>
                     { task.action.label }
                 </AccessibleButton>
             ) }

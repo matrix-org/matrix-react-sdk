@@ -51,8 +51,8 @@ export function UserOnboardingList() {
                 <ProgressBar value={completed} max={total} animated />
             </div>
             <ol className="mx_UserOnboardingList_list">
-                { tasks.map(([task, completed], index) => (
-                    <UserOnboardingTask key={task.title} completed={completed} index={index+1} task={task} />
+                { tasks.map(([task, completed]) => (
+                    <UserOnboardingTask key={task.title} completed={completed} task={task} />
                 )) }
             </ol>
         </div>
