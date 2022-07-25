@@ -31,8 +31,16 @@ export function UserOnboardingTask({ task, completed = false }: Props) {
         <li className={classNames("mx_UserOnboardingTask", {
             "mx_UserOnboardingTask_completed": completed,
         })}>
-            <div className="mx_UserOnboardingTask_number" />
-            <div className="mx_UserOnboardingTask_content">
+            <div
+                className="mx_UserOnboardingTask_number"
+                role="checkbox"
+                aria-disabled="true"
+                aria-checked={completed}
+                aria-labelledby={`mx_UserOnboardingTask_${task.id}`}
+            />
+            <div
+                id={`mx_UserOnboardingTask_${task.id}`}
+                className="mx_UserOnboardingTask_content">
                 <Heading size="h4" className="mx_UserOnboardingTask_title">
                     { task.title }
                 </Heading>

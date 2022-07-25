@@ -28,6 +28,7 @@ import { useSettingValue } from "./useSettings";
 import { UserOnboardingContext, useUserOnboardingContext } from "./useUserOnboardingContext";
 
 export interface UserOnboardingTask {
+    id: string;
     title: string;
     description: string;
     relevant?: UseCase[];
@@ -52,11 +53,13 @@ const onClickStartDm = (ev: ButtonEvent) => {
 
 const tasks: InternalUserOnboardingTask[] = [
     {
+        id: "create-account",
         title: _t("Create account"),
         description: _t("You made it!"),
         completed: () => true,
     },
     {
+        id: "find-friends",
         title: _t("Find and invite your friends"),
         description: _t("It’s what you’re here for, so lets get to it"),
         completed: hasOpenDMs,
@@ -67,6 +70,7 @@ const tasks: InternalUserOnboardingTask[] = [
         },
     },
     {
+        id: "find-coworkers",
         title: _t("Find and invite your co-workers"),
         description: _t("Get stuff done by finding your teammates"),
         completed: hasOpenDMs,
@@ -77,6 +81,7 @@ const tasks: InternalUserOnboardingTask[] = [
         },
     },
     {
+        id: "find-community-members",
         title: _t("Find and invite your community members"),
         description: _t("Get stuff done by finding your teammates"),
         completed: hasOpenDMs,
@@ -87,6 +92,7 @@ const tasks: InternalUserOnboardingTask[] = [
         },
     },
     {
+        id: "download-apps",
         title: _t("Download Element"),
         description: _t("Don’t miss a thing by taking Element with you"),
         completed: (ctx: UserOnboardingContext) => {
@@ -101,6 +107,7 @@ const tasks: InternalUserOnboardingTask[] = [
         },
     },
     {
+        id: "setup-profile",
         title: _t("Set up your profile"),
         description: _t("Make sure people know it’s really you"),
         completed: (info: UserOnboardingContext) => Boolean(info.avatar),
@@ -116,6 +123,7 @@ const tasks: InternalUserOnboardingTask[] = [
         },
     },
     {
+        id: "permission-notifications",
         title: _t("Turn on notifications"),
         description: _t("Don’t miss a reply or important message"),
         completed: () => Notifier.isPossible(),
