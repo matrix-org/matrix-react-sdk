@@ -24,7 +24,7 @@ import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleBu
 import Heading from "../../views/typography/Heading";
 
 const onClickSendDm = (ev: ButtonEvent) => {
-    PosthogTrackers.trackInteraction("WebUserOnboardingHeaderSendDM", ev);
+    PosthogTrackers.trackInteraction("WebUserOnboardingHeaderSendDm", ev);
     defaultDispatcher.dispatch({ action: 'view_create_chat' });
 };
 
@@ -36,6 +36,7 @@ export function UserOnboardingHeader({ useCase }: Props) {
     let title: string;
     let description: string;
     let image;
+    let actionLabel: string;
 
     switch (useCase) {
         case UseCase.PersonalMessaging:
@@ -43,24 +44,28 @@ export function UserOnboardingHeader({ useCase }: Props) {
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls, " +
                 "Element is a great way to stay in touch.");
             image = require("../../../../res/img/user-onboarding/PersonalMessaging.png");
+            actionLabel = _t("Start your first chat");
             break;
         case UseCase.WorkMessaging:
             title = _t("Secure messaging for work.");
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls," +
                 " Element is a great way to stay in touch.");
             image = require("../../../../res/img/user-onboarding/WorkMessaging.png");
+            actionLabel = _t("Find your co-workers");
             break;
         case UseCase.CommunityMessaging:
             title = _t("Community ownership.");
             description = _t("Keep ownership and control of community discussion.\n" +
                 "Scale to support millions, with powerful moderation and interoperability.");
             image = require("../../../../res/img/user-onboarding/CommunityMessaging.png");
+            actionLabel = _t("Find your people");
             break;
         default:
             title = _t("Welcome to Element.");
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls," +
                 " Element is a great way to stay in touch.");
             image = require("../../../../res/img/user-onboarding/PersonalMessaging.png");
+            actionLabel = _t("Start your first chat");
             break;
     }
 
@@ -74,7 +79,7 @@ export function UserOnboardingHeader({ useCase }: Props) {
                     { description }
                 </p>
                 <AccessibleButton onClick={onClickSendDm} kind="primary">
-                    { _t("Start your first chat") }
+                    { actionLabel }
                 </AccessibleButton>
             </div>
             <img className="mx_UserOnboardingHeader_image" src={image} alt="" />

@@ -16,13 +16,11 @@ limitations under the License.
 
 import { useMemo } from "react";
 
-import SpotlightDialog, { Filter } from "../components/views/dialogs/spotlight/SpotlightDialog";
 import { UserTab } from "../components/views/dialogs/UserTab";
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import { Action } from "../dispatcher/actions";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { _t } from "../languageHandler";
-import Modal from "../Modal";
 import { Notifier } from "../Notifier";
 import PosthogTrackers from "../PosthogTrackers";
 import { UseCase } from "../settings/enums/UseCase";
@@ -47,15 +45,9 @@ interface InternalUserOnboardingTask extends UserOnboardingTask {
 
 const hasOpenDMs = (ctx: UserOnboardingContext) => Boolean(Object.entries(ctx.dmRooms).length);
 
-const onClickFindPeople = (index: number, ev: ButtonEvent) => {
-    PosthogTrackers.trackInteraction("WebUserOnboardingTaskFindPeople", ev, index);
-    Modal.createDialog(
-        SpotlightDialog,
-        { initialFilter: Filter.People },
-        "mx_SpotlightDialog_wrapper",
-        false,
-        true,
-    );
+const onClickStartDm = (index: number, ev: ButtonEvent) => {
+    PosthogTrackers.trackInteraction("WebUserOnboardingTaskSendDm", ev, index);
+    defaultDispatcher.dispatch({ action: 'view_create_chat' });
 };
 
 const tasks: InternalUserOnboardingTask[] = [
@@ -71,7 +63,7 @@ const tasks: InternalUserOnboardingTask[] = [
         relevant: [UseCase.PersonalMessaging, UseCase.Skip],
         action: {
             label: _t("Find friends"),
-            onClick: onClickFindPeople,
+            onClick: onClickStartDm,
         },
     },
     {
@@ -81,7 +73,7 @@ const tasks: InternalUserOnboardingTask[] = [
         relevant: [UseCase.WorkMessaging],
         action: {
             label: _t("Find people"),
-            onClick: onClickFindPeople,
+            onClick: onClickStartDm,
         },
     },
     {
@@ -91,7 +83,7 @@ const tasks: InternalUserOnboardingTask[] = [
         relevant: [UseCase.CommunityMessaging],
         action: {
             label: _t("Find people"),
-            onClick: onClickFindPeople,
+            onClick: onClickStartDm,
         },
     },
     {
