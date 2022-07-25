@@ -117,7 +117,6 @@ import EncryptionEvent from '../views/messages/EncryptionEvent';
 import { StaticNotificationState } from '../../stores/notifications/StaticNotificationState';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
-import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -270,7 +269,7 @@ function LocalRoomView(props: ILocalRoomViewProps): ReactElement {
             </AccessibleButton>
         );
 
-        statusBar = <RoomStatusBarUnsentMessages
+        statusBar = <RoomUnse
             title={_t("Some of your messages have not been sent")}
             notificationState={StaticNotificationState.RED_EXCLAMATION}
             buttons={buttons}
