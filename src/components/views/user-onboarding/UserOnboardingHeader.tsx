@@ -19,6 +19,7 @@ import * as React from "react";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { _t } from "../../../languageHandler";
 import PosthogTrackers from "../../../PosthogTrackers";
+import SdkConfig from "../../../SdkConfig";
 import { UseCase } from "../../../settings/enums/UseCase";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import Heading from "../../views/typography/Heading";
@@ -42,14 +43,18 @@ export function UserOnboardingHeader({ useCase }: Props) {
         case UseCase.PersonalMessaging:
             title = _t("Secure messaging for friends and family.");
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls, " +
-                "Element is a great way to stay in touch.");
+                "%(brand)s is a great way to stay in touch.", {
+                brand: SdkConfig.get("brand"),
+            });
             image = require("../../../../res/img/user-onboarding/PersonalMessaging.png");
             actionLabel = _t("Start your first chat");
             break;
         case UseCase.WorkMessaging:
             title = _t("Secure messaging for work.");
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls," +
-                " Element is a great way to stay in touch.");
+                " %(brand)s is a great way to stay in touch.", {
+                brand: SdkConfig.get("brand"),
+            });
             image = require("../../../../res/img/user-onboarding/WorkMessaging.png");
             actionLabel = _t("Find your co-workers");
             break;
@@ -61,9 +66,13 @@ export function UserOnboardingHeader({ useCase }: Props) {
             actionLabel = _t("Find your people");
             break;
         default:
-            title = _t("Welcome to Element.");
+            title = _t("Welcome to %(brand)s.", {
+                brand: SdkConfig.get("brand"),
+            });
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls," +
-                " Element is a great way to stay in touch.");
+                " %(brand)s is a great way to stay in touch.", {
+                brand: SdkConfig.get("brand"),
+            });
             image = require("../../../../res/img/user-onboarding/PersonalMessaging.png");
             actionLabel = _t("Start your first chat");
             break;

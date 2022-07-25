@@ -19,6 +19,7 @@ import { useMemo } from "react";
 
 import { UserOnboardingTask as Task, useUserOnboardingTasks } from "../../../hooks/useUserOnboardingTasks";
 import { _t } from "../../../languageHandler";
+import SdkConfig from "../../../SdkConfig";
 import ProgressBar from "../../views/elements/ProgressBar";
 import Heading from "../../views/typography/Heading";
 import { UserOnboardingTask } from "./UserOnboardingTask";
@@ -44,7 +45,9 @@ export function UserOnboardingList() {
                     }) : _t("You did it!") }
                 </Heading>
                 <div className="mx_UserOnboardingList_hint">
-                    { _t("Complete these to get the most out of Element") }
+                    { _t("Complete these to get the most out of %(brand)s", {
+                        brand: SdkConfig.get("brand"),
+                    }) }
                 </div>
             </div>
             <div className="mx_UserOnboardingList_progress">
