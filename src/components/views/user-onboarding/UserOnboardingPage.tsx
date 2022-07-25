@@ -32,18 +32,22 @@ interface Props {
     justRegistered?: boolean;
 }
 
-// 2022-07-01 00:00 UTC
+// We decided to only show the new user onboarding page to new users
+// For now, that means we set the cutoff at 2022-07-01 00:00 UTC
 const USER_ONBOARDING_CUTOFF_DATE = new Date(1_656_633_600);
+export function showUserOnboardingPage(useCase: UseCase): boolean {
+    return useCase !== null || MatrixClientPeg.userRegisteredAfter(USER_ONBOARDING_CUTOFF_DATE);
+}
 
 export function UserOnboardingPage({ justRegistered = false }: Props) {
     const config = SdkConfig.get();
     const pageUrl = getHomePageUrl(config);
 
-    const useCase = useSettingValue("FTUE.useCaseSelection") as UseCase | null;
+    const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
     const initialSyncComplete = useInitialSyncComplete();
 
     // Only show new onboarding list to users who registered after a given date or have chosen a use case
-    if (useCase === null && !MatrixClientPeg.userRegisteredAfter(USER_ONBOARDING_CUTOFF_DATE)) {
+    if (!showUserOnboardingPage(useCase)) {
         return <HomePage justRegistered={justRegistered} />;
     }
 
