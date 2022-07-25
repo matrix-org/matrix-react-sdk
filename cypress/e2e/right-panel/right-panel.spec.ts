@@ -31,14 +31,13 @@ const goBack = (): Chainable<JQuery<HTMLElement>> => {
     return cy.get(".mx_BaseCard_back").click();
 };
 
-const viewRoomSummeryByName = (name: string): Chainable<JQuery<HTMLElement>> => {
+const viewRoomSummaryByName = (name: string): Chainable<JQuery<HTMLElement>> => {
     cy.viewRoomByName(name);
     cy.get(".mx_RightPanel_roomSummaryButton").click();
-    cy.get(".mx_RoomSummaryCard").should("have.length", 1);
-    return cy.get(".mx_BaseCard_header").should("contain", ROOM_NAME);
+    return checkRoomSummaryCard(name);
 };
 
-const checkRoomSummeryCard = (name: string): Chainable<JQuery<HTMLElement>> => {
+const checkRoomSummaryCard = (name: string): Chainable<JQuery<HTMLElement>> => {
     cy.get(".mx_RoomSummaryCard").should("have.length", 1);
     return cy.get(".mx_BaseCard_header").should("contain", name);
 };
@@ -64,28 +63,28 @@ describe("RightPanel", () => {
 
     describe("in rooms", () => {
         it("should handle clicking add widgets", () => {
-            viewRoomSummeryByName(ROOM_NAME);
+            viewRoomSummaryByName(ROOM_NAME);
 
             cy.get(".mx_RoomSummaryCard_appsGroup .mx_AccessibleButton").click();
             cy.get(".mx_IntegrationManager").should("have.length", 1);
         });
 
         it("should handle viewing export chat", () => {
-            viewRoomSummeryByName(ROOM_NAME);
+            viewRoomSummaryByName(ROOM_NAME);
 
             cy.get(".mx_RoomSummaryCard_icon_export").click();
             cy.get(".mx_ExportDialog").should("have.length", 1);
         });
 
         it("should handle viewing share room", () => {
-            viewRoomSummeryByName(ROOM_NAME);
+            viewRoomSummaryByName(ROOM_NAME);
 
             cy.get(".mx_RoomSummaryCard_icon_share").click();
             cy.get(".mx_ShareDialog").should("have.length", 1);
         });
 
         it("should handle viewing room settings", () => {
-            viewRoomSummeryByName(ROOM_NAME);
+            viewRoomSummaryByName(ROOM_NAME);
 
             cy.get(".mx_RoomSummaryCard_icon_settings").click();
             cy.get(".mx_RoomSettingsDialog").should("have.length", 1);
@@ -93,18 +92,18 @@ describe("RightPanel", () => {
         });
 
         it("should handle viewing files", () => {
-            viewRoomSummeryByName(ROOM_NAME);
+            viewRoomSummaryByName(ROOM_NAME);
 
             cy.get(".mx_RoomSummaryCard_icon_files").click();
             cy.get(".mx_FilePanel").should("have.length", 1);
             cy.get(".mx_FilePanel_empty").should("have.length", 1);
 
             goBack();
-            checkRoomSummeryCard(ROOM_NAME);
+            checkRoomSummaryCard(ROOM_NAME);
         });
 
         it("should handle viewing room member", () => {
-            viewRoomSummeryByName(ROOM_NAME);
+            viewRoomSummaryByName(ROOM_NAME);
 
             cy.get(".mx_RoomSummaryCard_icon_people").click();
             cy.get(".mx_MemberList").should("have.length", 1);
@@ -117,7 +116,7 @@ describe("RightPanel", () => {
             cy.get(".mx_MemberList").should("have.length", 1);
 
             goBack();
-            checkRoomSummeryCard(ROOM_NAME);
+            checkRoomSummaryCard(ROOM_NAME);
         });
     });
 
