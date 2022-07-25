@@ -97,7 +97,6 @@ import RoomStatusBar from "./RoomStatusBar";
 import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
-import { showThread } from '../../dispatcher/dispatch-actions/threads';
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
@@ -118,6 +117,7 @@ import EncryptionEvent from '../views/messages/EncryptionEvent';
 import { UnsentMessagesRoomStatusBar } from './UnsentMessagesRoomStatusBar';
 import { StaticNotificationState } from '../../stores/notifications/StaticNotificationState';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -595,7 +595,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
             const thread = initialEvent?.getThread();
             if (thread && !initialEvent?.isThreadRoot) {
-                showThread({
+                dis.dispatch<ShowThreadPayload>({
+                    action: Action.ShowThread,
                     rootEvent: thread.rootEvent,
                     initialEvent,
                     highlighted: RoomViewStore.instance.isInitialEventHighlighted(),
@@ -607,7 +608,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 newState.initialEventScrollIntoView = RoomViewStore.instance.initialEventScrollIntoView();
 
                 if (thread && initialEvent?.isThreadRoot) {
-                    showThread({
+                    dis.dispatch<ShowThreadPayload>({
+                        action: Action.ShowThread,
                         rootEvent: thread.rootEvent,
                         initialEvent,
                         highlighted: RoomViewStore.instance.isInitialEventHighlighted(),

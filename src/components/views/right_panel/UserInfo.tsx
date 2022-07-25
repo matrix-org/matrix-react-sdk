@@ -77,7 +77,7 @@ import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStor
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
+import { DirectoryMember, startDmOnFirstMessage } from '../../../utils/direct-messages';
 
 export interface IDevice {
     deviceId: string;

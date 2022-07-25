@@ -39,7 +39,8 @@ import { NotificationState } from "../../../src/stores/notifications/Notificatio
 import RightPanelStore from "../../../src/stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../src/stores/right-panel/RightPanelStorePhases";
 import { LocalRoom, LocalRoomState } from "../../../src/models/LocalRoom";
-import { createDmLocalRoom, DirectoryMember } from "../../../src/utils/direct-messages";
+import { DirectoryMember } from "../../../src/utils/direct-messages";
+import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
