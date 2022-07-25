@@ -31,7 +31,12 @@ import createRoom from "../../createRoom";
  *
  * @returns {Promise<string | null} Resolves to the room id.
  */
-export async function startDm(client: MatrixClient, targets: Member[], showSpinner = true): Promise<string | null> {
+export async function startDm(
+    client: MatrixClient,
+    targets: Member[],
+    showSpinner = true,
+    favourite?: boolean,
+): Promise<string | null> {
     const targetIds = targets.map(t => t.userId);
 
     // Check if there is already a DM with these people and reuse it if possible.
@@ -52,7 +57,7 @@ export async function startDm(client: MatrixClient, targets: Member[], showSpinn
         return Promise.resolve(existingRoom.roomId);
     }
 
-    const createRoomOptions = { inlineErrors: true } as any; // XXX: Type out `createRoomOptions`
+    const createRoomOptions = { inlineErrors: true, favourite } as any; // XXX: Type out `createRoomOptions`
 
     if (await determineCreateRoomEncryptionOption(client, targets)) {
         createRoomOptions.encryption = true;

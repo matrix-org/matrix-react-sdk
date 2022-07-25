@@ -453,7 +453,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         try {
             const cli = MatrixClientPeg.get();
             const targets = this.convertFilter();
-            await startDm(cli, targets, this.props.favourite);
+            await startDm(cli, targets, undefined, this.props.favourite);
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);

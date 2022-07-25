@@ -19,6 +19,7 @@ import { EventType, KNOWN_SAFE_ROOM_VERSION, MatrixClient, MatrixEvent } from "m
 
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../src/models/LocalRoom";
 import { determineCreateRoomEncryptionOption, Member } from "../../../src/utils/direct-messages";
+import { DefaultTagID } from "../../stores/room-list/models";
 
 /**
  * Create a DM local room. This room will not be send to the server and only exists inside the client.
@@ -33,6 +34,7 @@ import { determineCreateRoomEncryptionOption, Member } from "../../../src/utils/
 export async function createDmLocalRoom(
     client: MatrixClient,
     targets: Member[],
+    favourite?: boolean,
 ): Promise<LocalRoom> {
     const userId = client.getUserId();
 
@@ -111,6 +113,10 @@ export async function createDmLocalRoom(
             room_id: localRoom.roomId,
         }));
     });
+
+    if (favourite) {
+        localRoom.tags[DefaultTagID.Favourite] = {};
+    }
 
     localRoom.targets = targets;
     localRoom.updateMyMembership("join");
