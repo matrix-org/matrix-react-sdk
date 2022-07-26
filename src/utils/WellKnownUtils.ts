@@ -16,10 +16,13 @@ limitations under the License.
 
 import { IClientWellKnown } from 'matrix-js-sdk/src/client';
 import { UnstableValue } from 'matrix-js-sdk/src/NamespacedValue';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
+import { UseCase } from '../settings/enums/UseCase';
 
 const CALL_BEHAVIOUR_WK_KEY = "io.element.call_behaviour";
+const DEFAULT_USE_CASE = "io.element.default_use_case";
 const E2EE_WK_KEY = "io.element.e2ee";
 const E2EE_WK_KEY_DEPRECATED = "im.vector.riot.e2ee";
 export const TILE_SERVER_WK_KEY = new UnstableValue(
@@ -112,4 +115,19 @@ export function getSecureBackupSetupMethods(): SecureBackupSetupMethod[] {
         ];
     }
     return wellKnown["secure_backup_setup_methods"];
+}
+
+export function getDefaultUseCase(): UseCase | undefined {
+    return defaultUseCaseFromWellKnown(MatrixClientPeg.get().getClientWellKnown());
+}
+
+export function defaultUseCaseFromWellKnown(
+    clientWellKnown?: IClientWellKnown | undefined,
+): UseCase {
+    const useCase = clientWellKnown?.[DEFAULT_USE_CASE]
+    if (useCase !== undefined && !Object.values(UseCase).includes(useCase)) {
+        logger.warn(`.well-known use case '${useCase} isn't a valid use case.'`);
+        return undefined;
+    }
+    return useCase;
 }

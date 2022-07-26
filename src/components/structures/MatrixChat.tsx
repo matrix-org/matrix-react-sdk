@@ -137,6 +137,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import { getDefaultUseCase } from '../../utils/WellKnownUtils';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1261,7 +1262,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             MatrixClientPeg.currentUserIsJustRegistered() &&
             SettingsStore.getValue("FTUE.useCaseSelection") === null
         ) {
-            this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
+            const defaultUseCase = getDefaultUseCase();
+            if (defaultUseCase) {
+                // Skip presenting selection
+                this.onShowPostLoginScreen(defaultUseCase);
+            } else {
+                this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
+            }
 
             // Listen to changes in settings and hide the use case screen if appropriate - this is necessary because
             // account settings can still be changing at this point in app init (due to the initial sync being cached,
