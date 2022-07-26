@@ -59,6 +59,8 @@ describe("User Onboarding (new user)", () => {
             findPeopleAction.click();
             cy.get(".mx_InviteDialog_editor input").type(bot1.getUserId());
             cy.get(".mx_InviteDialog_buttonAndSpinner").click();
+            cy.get(".mx_InviteDialog_buttonAndSpinner").should("not.exist");
+            cy.visit("/#/home");
 
             cy.get(".mx_ProgressBar").invoke("val").should("be.greaterThan", oldProgress);
         });
