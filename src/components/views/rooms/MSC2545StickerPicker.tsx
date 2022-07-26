@@ -36,17 +36,20 @@ const PACK_ROOM_EVENT_TYPE = "im.ponies.room_emotes";
 const cc = (thing: string) => "mx_2545Stickers_" + thing;
 
 interface I2545Image {
-    body: string;
-    info: IImageInfo;
     url: string; // mxc
-    usage: ("sticker" | "emoticon")[];
+    body?: string;
+    info?: IImageInfo;
+    // 2545: If present and non-empty, this overrides the usage defined at pack level for this particular image
+    usage?: ("sticker" | "emoticon")[];
 }
 
 interface I2545Pack {
     pack: {
-        attribution: string;
-        avatar_url: string;
-        display_name: string;
+        attribution?: string;
+        // 2545: If the usage is absent or empty, a usage for all possible usage types is to be assumed.
+        usage?: ("emoticon" | "sticker")[];
+        avatar_url?: string;
+        display_name?: string;
     };
     images: {
         [id: string]: I2545Image;
@@ -121,12 +124,13 @@ export const MSC2545StickerPicker: React.FC<{
     const renderedPacks = packs.map(({ pack, packName }, packIdx) => {
         const lcFilter = searchFilter.toLowerCase().trim(); // filter is case insensitive
         const images = Object.values(pack.images)
-            .filter(im => im.body.toLowerCase().includes(lcFilter));
+            .filter(im => (im.body || "").toLowerCase().includes(lcFilter));
 
         if (images.length == 0) return;
 
+        const progressiveDisplayName = pack.pack.display_name || packName;
         return <div key={"pack-" + packName}>
-            <h3 className={cc("label")}>{pack.pack.display_name}</h3>
+            <h3 className={cc("label")}>{progressiveDisplayName}</h3>
             <div className={cc("grid")}>
                 {images.map((im, idx) => <PackImage
                     innerRef={(!packIdx && !idx) ? topStickerRef : null}
