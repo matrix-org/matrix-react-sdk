@@ -3067,7 +3067,7 @@
     "You can't see earlier messages": "您看不到更早的訊息",
     "Encrypted messages before this point are unavailable.": "在此之前的加密訊息不可用。",
     "You don't have permission to view messages from before you joined.": "您無權檢視加入前的訊息。",
-    "You don't have permission to view messages from before you were invited.": "在您被邀請前，您沒有檢視訊息的權限。",
+    "You don't have permission to view messages from before you were invited.": "您沒有權限檢視您被邀請前的訊息。",
     "Internal room ID": "內部聊天室 ID",
     "Group all your rooms that aren't part of a space in one place.": "將所有不屬於某個空間的聊天室集中在同一個地方。",
     "Group all your people in one place.": "將您所有的夥伴集中在同一個地方。",
