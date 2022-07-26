@@ -229,7 +229,7 @@ export interface IRoomState {
     narrow: boolean;
 }
 
-interface ILocalRoomViewProps {
+interface LocalRoomViewProps {
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
     roomView: RefObject<HTMLElement>;
@@ -239,10 +239,10 @@ interface ILocalRoomViewProps {
 /**
  * Local room view. Uses only the bits necessary to display a local room view like room header or composer.
  *
- * @param {ILocalRoomViewProps} props Room view props
+ * @param {LocalRoomViewProps} props Room view props
  * @returns {ReactElement}
  */
-function LocalRoomView(props: ILocalRoomViewProps): ReactElement {
+function LocalRoomView(props: LocalRoomViewProps): ReactElement {
     const context = useContext(RoomContext);
     const room = context.room as LocalRoom;
     const encryptionEvent = context.room.currentState.getStateEvents(EventType.RoomEncryption)[0];
