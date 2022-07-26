@@ -53,14 +53,14 @@ describe("User Onboarding (new user)", () => {
     });
 
     it("using find friends action should increase progress", () => {
-        cy.get(".mx_ProgressBar").invoke("val").should("eq", 3);
+        cy.get(".mx_ProgressBar").invoke("val").then((oldProgress) => {
+            const findPeopleAction = cy.contains(".mx_UserOnboardingTask_action", "Find friends");
+            expect(findPeopleAction).to.exist;
+            findPeopleAction.click();
+            cy.get(".mx_InviteDialog_editor input").type(bot1.getUserId());
+            cy.get(".mx_InviteDialog_buttonAndSpinner").click();
 
-        const findPeopleAction = cy.contains(".mx_UserOnboardingTask_action", "Find friends");
-        expect(findPeopleAction).to.exist;
-        findPeopleAction.click();
-        cy.get(".mx_InviteDialog_editor input").type(bot1.getUserId());
-        cy.get(".mx_InviteDialog_buttonAndSpinner").click();
-
-        cy.get(".mx_ProgressBar").invoke("val").should("eq", 4);
+            cy.get(".mx_ProgressBar").invoke("val").should("be.greaterThan", oldProgress);
+        });
     });
 });
