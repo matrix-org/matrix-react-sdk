@@ -32,10 +32,10 @@ import { ReactAnyComponent } from "../../../@types/common";
 import { IBodyProps } from "./IBodyProps";
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import TextualBody from "./TextualBody";
-import MImageBody from "./MImageBody";
-import MFileBody from "./MFileBody";
-import MVoiceOrAudioBody from "./MVoiceOrAudioBody";
-import MVideoBody from "./MVideoBody";
+import MImageBodyWrapper from '../../../customisations/components/views/messages/MImageBodyWrapper';
+import MVoiceOrAudioBody from './MVoiceOrAudioBody';
+import MFileBodyWrapper from '../../../customisations/components/views/messages/MFileBodyWrapper';
+import MVideoBodyWrapper from '../../../customisations/components/views/messages/MVideoBodyWrapper';
 import MStickerBody from "./MStickerBody";
 import MPollBody from "./MPollBody";
 import MLocationBody from "./MLocationBody";
@@ -95,10 +95,10 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             [MsgType.Text]: TextualBody,
             [MsgType.Notice]: TextualBody,
             [MsgType.Emote]: TextualBody,
-            [MsgType.Image]: MImageBody,
-            [MsgType.File]: MFileBody,
+            [MsgType.Image]: MImageBodyWrapper,
+            [MsgType.File]: MFileBodyWrapper,
             [MsgType.Audio]: MVoiceOrAudioBody,
-            [MsgType.Video]: MVideoBody,
+            [MsgType.Video]: MVideoBodyWrapper,
 
             ...(this.props.overrideBodyTypes || {}),
         };
