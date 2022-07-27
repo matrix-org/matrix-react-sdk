@@ -23,7 +23,7 @@ import * as fse from "fs-extra";
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 
-// A cypress plugins to run docker commands
+// A cypress plugin to run docker commands
 
 export function dockerRun(args: {
     image: string;
