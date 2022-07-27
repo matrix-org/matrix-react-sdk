@@ -18,6 +18,7 @@ limitations under the License.
 
 import "@percy/cypress";
 import "cypress-real-events";
+import "cypress-axe";
 
 import "./performance";
 import "./synapse";

@@ -146,6 +146,10 @@ describe("Timeline", () => {
     });
 
     describe("message displaying", () => {
+        beforeEach(() => {
+            cy.injectAxe();
+        });
+
         it("should create and configure a room on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
@@ -178,6 +182,7 @@ describe("Timeline", () => {
             const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp "
                 + "{ visibility: hidden !important; }";
             cy.percySnapshot("Event line with inline start margin on IRC layout", { percyCSS });
+            cy.checkA11y();
         });
 
         it("should click top left of view source event toggle", () => {
