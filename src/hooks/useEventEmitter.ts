@@ -21,6 +21,24 @@ import type { EventEmitter } from "events";
 
 type Handler = (...args: any[]) => void;
 
+// XXX: We cannot use instanceof as that would break tests
+function isEventEmitter(emitter: EventEmitter | EventTarget): emitter is EventEmitter {
+    emitter = emitter as EventEmitter;
+
+    return (
+        emitter.on !== undefined &&
+        emitter.off !== undefined
+    );
+}
+function isEventTarget(target: EventEmitter | EventTarget): target is EventTarget {
+    target = target as EventTarget;
+
+    return (
+        target.addEventListener !== undefined &&
+        target.removeEventListener !== undefined
+    );
+}
+
 export function useTypedEventEmitter<
     Events extends string,
     Arguments extends ListenerMap<Events>,
@@ -67,21 +85,19 @@ export function useEventEmitter(
             // Create event listener that calls handler function stored in ref
             const eventListener = (...args) => savedHandler.current(...args);
 
-            // XXX: We cannot use instanceof as that would break tests
             // Add event listener
-            if ((emitter as EventTarget).addEventListener && typeof eventName === "string") {
-                (emitter as EventTarget).addEventListener(eventName as string, eventListener);
-            } else if ((emitter as EventEmitter).on) {
-                (emitter as EventEmitter).on(eventName, eventListener);
+            if (isEventTarget(emitter) && typeof eventName === "string") {
+                emitter.addEventListener(eventName as string, eventListener);
+            } else if (isEventEmitter(emitter)) {
+                emitter.on(eventName, eventListener);
             }
 
-            // XXX: We cannot use instanceof as that would break tests
             // Remove event listener on cleanup
             return () => {
-                if ((emitter as EventTarget).removeEventListener && typeof eventName === "string") {
-                    (emitter as EventTarget).removeEventListener(eventName, eventListener);
-                } else if ((emitter as EventEmitter).off) {
-                    (emitter as EventEmitter).off(eventName, eventListener);
+                if (isEventTarget(emitter) && typeof eventName === "string") {
+                    emitter.removeEventListener(eventName, eventListener);
+                } else if (isEventEmitter(emitter)) {
+                    emitter.off(eventName, eventListener);
                 }
             };
         },
