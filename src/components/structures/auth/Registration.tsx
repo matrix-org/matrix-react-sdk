@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
-import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
+import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
@@ -39,6 +39,7 @@ import Spinner from "../../views/elements/Spinner";
 import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
 import { AuthHeaderProvider } from './header/AuthHeaderProvider';
 import SettingsStore from '../../../settings/SettingsStore';
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 
 const debuglog = (...args: any[]) => {
     if (SettingsStore.getValue("debug_registration")) {
@@ -381,7 +382,8 @@ export default class Registration extends React.Component<IProps, IState> {
         const hasEmail = Boolean(this.state.formVals.email);
         const hasAccessToken = Boolean(response.access_token);
         debuglog("Registration: ui auth finished:", { hasEmail, hasAccessToken });
-        if (!hasEmail && hasAccessToken) {
+        // don’t log in if we found a session for a different user
+        if (!hasEmail && hasAccessToken && !newState.differentLoggedInUserId) {
             // we'll only try logging in if we either have no email to verify at all or we're the client that verified
             // the email, not the client that started the registration flow
             await this.props.onLoggedIn({
@@ -580,7 +582,7 @@ export default class Registration extends React.Component<IProps, IState> {
         let goBack;
         if (this.state.doingUIAuth) {
             goBack = <AccessibleButton
-                kind='link_inline'
+                kind='link'
                 className="mx_AuthBody_changeFlow"
                 onClick={this.onGoToFormClicked}
             >
@@ -601,8 +603,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         },
                     ) }</p>
                     <p><AccessibleButton
-                        element="span"
-                        className="mx_linkButton"
+                        kind="link_inline"
                         onClick={async event => {
                             const sessionLoaded = await this.onLoginClickWithCheck(event);
                             if (sessionLoaded) {
@@ -620,8 +621,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     "<a>Log in</a> to your new account.", {},
                     {
                         a: (sub) => <AccessibleButton
-                            element="span"
-                            className="mx_linkButton"
+                            kind="link_inline"
                             onClick={async event => {
                                 const sessionLoaded = await this.onLoginClickWithCheck(event);
                                 if (sessionLoaded) {

@@ -42,9 +42,10 @@ import { Action } from "./dispatcher/actions";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import Spinner from "./components/views/elements/Spinner";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
-import { findDMForUser } from "./utils/direct-messages";
+import { findDMForUser } from "./utils/dm/findDMForUser";
 import { privateShouldBeEncrypted } from "./utils/rooms";
 import { waitForMember } from "./utils/membership";
+import { PreferredRoomVersions } from "./utils/PreferredRoomVersions";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -132,6 +133,8 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 events: {
                     // Allow all users to send video member updates
                     [VIDEO_CHANNEL_MEMBER]: 0,
+                    // Make widgets immutable, even to admins
+                    "im.vector.modular.widgets": 200,
                     // Annoyingly, we have to reiterate all the defaults here
                     [EventType.RoomName]: 50,
                     [EventType.RoomAvatar]: 50,
@@ -141,6 +144,10 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                     [EventType.RoomTombstone]: 100,
                     [EventType.RoomServerAcl]: 100,
                     [EventType.RoomEncryption]: 100,
+                },
+                users: {
+                    // Temporarily give ourselves the power to set up a widget
+                    [client.getUserId()]: 200,
                 },
             };
         }
@@ -185,20 +192,18 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         }
 
         if (opts.joinRule === JoinRule.Restricted) {
-            if (SpaceStore.instance.restrictedJoinRuleSupport?.preferred) {
-                createOpts.room_version = SpaceStore.instance.restrictedJoinRuleSupport.preferred;
+            createOpts.room_version = PreferredRoomVersions.RestrictedRooms;
 
-                createOpts.initial_state.push({
-                    type: EventType.RoomJoinRules,
-                    content: {
-                        "join_rule": JoinRule.Restricted,
-                        "allow": [{
-                            "type": RestrictedAllowType.RoomMembership,
-                            "room_id": opts.parentSpace.roomId,
-                        }],
-                    },
-                });
-            }
+            createOpts.initial_state.push({
+                type: EventType.RoomJoinRules,
+                content: {
+                    "join_rule": JoinRule.Restricted,
+                    "allow": [{
+                        "type": RestrictedAllowType.RoomMembership,
+                        "room_id": opts.parentSpace.roomId,
+                    }],
+                },
+            });
         }
     }
 
@@ -264,6 +269,11 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         if (opts.roomType === RoomType.ElementVideo) {
             // Set up video rooms with a Jitsi widget
             await addVideoChannel(roomId, createOpts.name);
+
+            // Reset our power level back to admin so that the widget becomes immutable
+            const room = client.getRoom(roomId);
+            const plEvent = room?.currentState.getStateEvents(EventType.RoomPowerLevels, "");
+            await client.setPowerLevel(roomId, client.getUserId(), 100, plEvent);
         }
     }).then(function() {
         // NB createRoom doesn't block on the client seeing the echo that the
@@ -304,7 +314,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             // the error to the user for if/when the UI is available.
             description = _t("The server does not support the room version specified.");
         }
-        Modal.createTrackedDialog('Failure to create room', '', ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("Failure to create room"),
             description,
         });

@@ -19,6 +19,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
@@ -28,7 +29,7 @@ import LiveRecordingWaveform from "../audio_messages/LiveRecordingWaveform";
 import LiveRecordingClock from "../audio_messages/LiveRecordingClock";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import RecordingPlayback from "../audio_messages/RecordingPlayback";
+import RecordingPlayback, { PlaybackLayout } from "../audio_messages/RecordingPlayback";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
@@ -37,9 +38,18 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { attachRelation } from "./SendMessageComposer";
+import { addReplyToMessageContent } from "../../../utils/Reply";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import RoomContext from "../../../contexts/RoomContext";
 
 interface IProps {
     room: Room;
+    permalinkCreator?: RoomPermalinkCreator;
+    relation?: IEventRelation;
+    replyToEvent?: MatrixEvent;
 }
 
 interface IState {
@@ -52,7 +62,10 @@ interface IState {
  * Container tile for rendering the voice message recorder in the composer.
  */
 export default class VoiceRecordComposerTile extends React.PureComponent<IProps, IState> {
-    public constructor(props) {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -87,6 +100,8 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             throw new Error("No recording started - cannot send anything");
         }
 
+        const { replyToEvent, relation, permalinkCreator } = this.props;
+
         await this.state.recorder.stop();
 
         let upload: IUpload;
@@ -103,7 +118,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         try {
             // noinspection ES6MissingAwait - we don't care if it fails, it'll get queued.
-            MatrixClientPeg.get().sendMessage(this.props.room.roomId, {
+            const content = {
                 "body": "Voice message",
                 //"msgtype": "org.matrix.msc2516.voice",
                 "msgtype": MsgType.Audio,
@@ -132,7 +147,27 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                     waveform: this.state.recorder.getPlayback().thumbnailWaveform.map(v => Math.round(v * 1024)),
                 },
                 "org.matrix.msc3245.voice": {}, // No content, this is a rendering hint
-            });
+            };
+
+            attachRelation(content, relation);
+            if (replyToEvent) {
+                addReplyToMessageContent(content, replyToEvent, {
+                    permalinkCreator,
+                    includeLegacyFallback: true,
+                });
+                // Clear reply_to_event as we put the message into the queue
+                // if the send fails, retry will handle resending.
+                defaultDispatcher.dispatch({
+                    action: 'reply_to_event',
+                    event: null,
+                    context: this.context.timelineRenderingType,
+                });
+            }
+
+            doMaybeLocalRoomAction(
+                this.props.room.roomId,
+                (actualRoomId: string) => MatrixClientPeg.get().sendMessage(actualRoomId, content),
+            );
         } catch (e) {
             logger.error("Error sending voice message:", e);
 
@@ -162,7 +197,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         // The "microphone access error" dialogs are used a lot, so let's functionify them
         const accessError = () => {
-            Modal.createTrackedDialog('Microphone Access Error', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Unable to access your microphone"),
                 description: <>
                     <p>{ _t(
@@ -177,7 +212,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         try {
             const devices = await MediaDeviceHandler.getDevices();
             if (!devices?.[MediaDeviceKindEnum.AudioInput]?.length) {
-                Modal.createTrackedDialog('No Microphone Error', '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t("No microphone found"),
                     description: <>
                         <p>{ _t(
@@ -231,7 +266,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         if (!this.state.recorder) return null; // no recorder means we're not recording: no waveform
 
         if (this.state.recordingPhase !== RecordingState.Started) {
-            return <RecordingPlayback playback={this.state.recorder.getPlayback()} withWaveform={true} />;
+            return <RecordingPlayback
+                playback={this.state.recorder.getPlayback()}
+                layout={PlaybackLayout.Composer}
+            />;
         }
 
         // only other UI is the recording-in-progress UI

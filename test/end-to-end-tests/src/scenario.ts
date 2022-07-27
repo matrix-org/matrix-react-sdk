@@ -15,20 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { range } from './util';
 import { signup } from './usecases/signup';
 import { toastScenarios } from './scenarios/toast';
-import { roomDirectoryScenarios } from './scenarios/directory';
-import { lazyLoadingScenarios } from './scenarios/lazy-loading';
-import { e2eEncryptionScenarios } from './scenarios/e2e-encryption';
 import { ElementSession } from "./session";
-import { RestSessionCreator } from "./rest/creator";
-import { RestMultiSession } from "./rest/multi";
-import { RestSession } from "./rest/session";
-import { stickerScenarios } from './scenarios/sticker';
 
-export async function scenario(createSession: (s: string) => Promise<ElementSession>,
-    restCreator: RestSessionCreator): Promise<void> {
+export async function scenario(createSession: (s: string) => Promise<ElementSession>): Promise<void> {
     let firstUser = true;
     async function createUser(username: string) {
         const session = await createSession(username);
@@ -46,25 +37,4 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     const bob = await createUser("bob");
 
     await toastScenarios(alice, bob);
-    await roomDirectoryScenarios(alice, bob);
-    await e2eEncryptionScenarios(alice, bob);
-    console.log("create REST users:");
-    const charlies = await createRestUsers(restCreator);
-    await lazyLoadingScenarios(alice, bob, charlies);
-
-    // we spawn another session for stickers, partially because it involves injecting
-    // a custom sticker picker widget for the account, although mostly because for these
-    // tests to scale, they probably need to be split up more, which means running each
-    // scenario with it's own session (and will make it easier to find relevant logs),
-    // so lets move in this direction (although at some point we'll also need to start
-    // closing them as we go rather than leaving them all open until the end).
-    const stickerSession = await createSession("sally");
-    await stickerScenarios("sally", "ilikestickers", stickerSession, restCreator);
-}
-
-async function createRestUsers(restCreator: RestSessionCreator): Promise<RestMultiSession> {
-    const usernames = range(1, 10).map((i) => `charly-${i}`);
-    const charlies = await restCreator.createSessionRange(usernames, "testtest", "charly-1..10");
-    await charlies.setDisplayName((s: RestSession) => `Charly #${s.userName().split('-')[1]}`);
-    return charlies;
 }

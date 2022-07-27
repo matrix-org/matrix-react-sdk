@@ -23,7 +23,7 @@ import * as fse from "fs-extra";
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 
-// A cypress plugins to run docker commands
+// A cypress plugin to run docker commands
 
 export function dockerRun(args: {
     image: string;
@@ -61,7 +61,7 @@ export function dockerExec(args: {
         childProcess.execFile("docker", [
             "exec", args.containerId,
             ...args.params,
-        ], { encoding: 'utf8' }, (err, stdout) => {
+        ], { encoding: 'utf8' }, err => {
             if (err) reject(err);
             else resolve();
         });

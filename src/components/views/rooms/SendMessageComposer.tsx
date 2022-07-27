@@ -58,6 +58,7 @@ import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } fr
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from '../../../utils/Reply';
+import { doMaybeLocalRoomAction } from '../../../utils/local-room';
 
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
@@ -351,21 +352,22 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     ? this.props.relation?.event_id
                     : null;
 
-                if (cmd.category === CommandCategories.messages) {
-                    content = await runSlashCommand(cmd, args, this.props.room.roomId, threadId);
-                    if (!content) {
-                        return; // errored
-                    }
+                let commandSuccessful: boolean;
+                [content, commandSuccessful] = await runSlashCommand(cmd, args, this.props.room.roomId, threadId);
+                if (!commandSuccessful) {
+                    return; // errored
+                }
 
+                if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
                     attachRelation(content, this.props.relation);
                     if (replyToEvent) {
                         addReplyToMessageContent(content, replyToEvent, {
                             permalinkCreator: this.props.permalinkCreator,
-                            includeLegacyFallback: true,
+                            // Exclude the legacy fallback for custom event types such as those used by /fireworks
+                            includeLegacyFallback: content.msgtype?.startsWith("m.") ?? true,
                         });
                     }
                 } else {
-                    runSlashCommand(cmd, args, this.props.room.roomId, threadId);
                     shouldSend = false;
                 }
             } else if (!await shouldSendAnyway(commandText)) {
@@ -401,7 +403,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 ? this.props.relation.event_id
                 : null;
 
-            const prom = this.props.mxClient.sendMessage(roomId, threadId, content);
+            const prom = doMaybeLocalRoomAction(
+                roomId,
+                (actualRoomId: string) => this.props.mxClient.sendMessage(actualRoomId, threadId, content),
+                this.props.mxClient,
+            );
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.

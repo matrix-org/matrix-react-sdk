@@ -22,7 +22,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import Analytics from "../../../../../Analytics";
 import dis from "../../../../../dispatcher/dispatcher";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SecureBackupPanel from "../../SecureBackupPanel";
@@ -109,10 +108,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         dis.unregister(this.dispatcherRef);
         MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
-
-    private updateAnalytics = (checked: boolean): void => {
-        checked ? Analytics.enable() : Analytics.disable();
-    };
 
     private onMyMembership = (room: Room, membership: string): void => {
         if (room.isSpaceRoom()) {
@@ -295,16 +290,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         let privacySection;
-        if (Analytics.canEnable() || PosthogAnalytics.instance.isEnabled()) {
+        if (PosthogAnalytics.instance.isEnabled()) {
             const onClickAnalyticsLearnMore = () => {
-                if (PosthogAnalytics.instance.isEnabled()) {
-                    showAnalyticsLearnMoreDialog({
-                        primaryButton: _t("Okay"),
-                        hasCancel: false,
-                    });
-                } else {
-                    Analytics.showDetailsModal();
-                }
+                showAnalyticsLearnMoreDialog({
+                    primaryButton: _t("Okay"),
+                    hasCancel: false,
+                });
             };
             privacySection = <React.Fragment>
                 <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
@@ -315,21 +306,18 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                             { _t("Share anonymous data to help us identify issues. Nothing personal. " +
                                  "No third parties.") }
                         </p>
-                        <p>
-                            <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
-                                { _t("Learn more") }
-                            </AccessibleButton>
-                        </p>
+                        <AccessibleButton
+                            kind="link"
+                            onClick={onClickAnalyticsLearnMore}
+                        >
+                            { _t("Learn more") }
+                        </AccessibleButton>
                     </div>
-                    {
-                        PosthogAnalytics.instance.isEnabled() ?
-                            <SettingsFlag name="pseudonymousAnalyticsOptIn"
-                                level={SettingLevel.ACCOUNT}
-                                onChange={this.updateAnalytics} /> :
-                            <SettingsFlag name="analyticsOptIn"
-                                level={SettingLevel.DEVICE}
-                                onChange={this.updateAnalytics} />
-                    }
+                    { PosthogAnalytics.instance.isEnabled() && (
+                        <SettingsFlag
+                            name="pseudonymousAnalyticsOptIn"
+                            level={SettingLevel.ACCOUNT} />
+                    ) }
                 </div>
             </React.Fragment>;
         }
@@ -357,7 +345,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 { warning }
                 <div className="mx_SettingsTab_heading">{ _t("Where you're signed in") }</div>
                 <div className="mx_SettingsTab_section">
-                    <span>
+                    <span className="mx_SettingsTab_subsectionText">
                         { _t(
                             "Manage your signed-in devices below. " +
                             "A device's name is visible to people you communicate with.",
