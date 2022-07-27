@@ -31,11 +31,12 @@ import {
     IEventRelation,
     IUnsigned,
 } from 'matrix-js-sdk/src/matrix';
+import { normalize } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
 import { makeType } from "../../src/utils/TypeUtils";
-import { ValidatedServerConfig } from "../../src/utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
@@ -71,20 +72,23 @@ export function stubClient() {
  */
 export function createTestClient(): MatrixClient {
     const eventEmitter = new EventEmitter();
+    let txnId = 1;
 
     return {
         getHomeserverUrl: jest.fn(),
         getIdentityServerUrl: jest.fn(),
-        getDomain: jest.fn().mockReturnValue("matrix.rog"),
-        getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
+        getDomain: jest.fn().mockReturnValue("matrix.org"),
+        getUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
-        credentials: { userId: "@userId:matrix.rog" },
+        credentials: { userId: "@userId:matrix.org" },
 
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
             setPendingEvents: jest.fn().mockResolvedValue(undefined),
+            storeRoom: jest.fn(),
+            removeRoom: jest.fn(),
         },
 
         getPushActionsForEvent: jest.fn(),
@@ -124,7 +128,7 @@ export function createTestClient(): MatrixClient {
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
         sendTyping: jest.fn().mockResolvedValue({}),
-        sendMessage: () => jest.fn().mockResolvedValue({}),
+        sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
         getSyncState: () => "SYNCING",
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
@@ -157,6 +161,7 @@ export function createTestClient(): MatrixClient {
         isInitialSyncComplete: jest.fn().mockReturnValue(true),
         downloadKeys: jest.fn(),
         fetchRoomEvent: jest.fn(),
+        makeTxnId: jest.fn().mockImplementation(() => `t${txnId++}`),
     } as unknown as MatrixClient;
 }
 
@@ -385,6 +390,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         removeListener: jest.fn(),
         getDMInviter: jest.fn(),
         name,
+        normalizedName: normalize(name || ""),
         getAvatarUrl: () => 'mxc://avatar.url/room.png',
         getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
         isSpaceRoom: jest.fn().mockReturnValue(false),
