@@ -122,6 +122,21 @@ export function dockerRm(args: {
     });
 }
 
+export function dockerIp(args: {
+    containerId: string;
+}): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        childProcess.execFile('docker', [
+            "inspect",
+            "-f", "{{ .NetworkSettings.IPAddress }}",
+            args.containerId,
+        ], (err, stdout) => {
+            if (err) reject(err);
+            else resolve(stdout);
+        });
+    });
+}
+
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -132,5 +147,6 @@ export function docker(on: PluginEvents, config: PluginConfigOptions) {
         dockerLogs,
         dockerStop,
         dockerRm,
+        dockerIp,
     });
 }
