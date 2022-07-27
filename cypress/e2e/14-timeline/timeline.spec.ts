@@ -71,26 +71,27 @@ describe("Timeline", () => {
     let oldAvatarUrl: string;
     let newAvatarUrl: string;
 
+    beforeEach(() => {
+        cy.startSynapse("default").then(data => {
+            synapse = data;
+            cy.initTestUser(synapse, OLD_NAME).then(() =>
+                cy.window({ log: false }).then(() => {
+                    cy.createRoom({ name: ROOM_NAME }).then(_room1Id => {
+                        roomId = _room1Id;
+                    });
+                }),
+            );
+        });
+    });
+
     describe("useOnlyCurrentProfiles", () => {
         beforeEach(() => {
-            cy.startSynapse("default").then(data => {
-                synapse = data;
-                cy.initTestUser(synapse, OLD_NAME).then(() =>
-                    cy.window({ log: false }).then(() => {
-                        cy.createRoom({ name: ROOM_NAME }).then(_room1Id => {
-                            roomId = _room1Id;
-                        });
-                    }),
-                ).then(() => {
-                    cy.uploadContent(OLD_AVATAR).then((url) => {
-                        oldAvatarUrl = url;
-                        cy.setAvatarUrl(url);
-                    });
-                }).then(() => {
-                    cy.uploadContent(NEW_AVATAR).then((url) => {
-                        newAvatarUrl = url;
-                    });
-                });
+            cy.uploadContent(OLD_AVATAR).then((url) => {
+                oldAvatarUrl = url;
+                cy.setAvatarUrl(url);
+            });
+            cy.uploadContent(NEW_AVATAR).then((url) => {
+                newAvatarUrl = url;
             });
         });
 
@@ -142,13 +143,41 @@ describe("Timeline", () => {
                 expectAvatar(e, newAvatarUrl);
             });
         });
+    });
 
+    describe("message displaying", () => {
         it("should create and configure a room on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.contains(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] " +
                 ".mx_GenericEventListSummary_summary", "created and configured the room.");
             cy.percySnapshot("Configured room on IRC layout");
+        });
+
+        it("should add inline start margin to an event line on IRC layout", () => {
+            cy.visit("/#/room/" + roomId);
+            cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+
+            // Wait until configuration is finished
+            cy.contains(".mx_RoomView_body .mx_GenericEventListSummary " +
+                ".mx_GenericEventListSummary_summary", "created and configured the room.");
+
+            // Click "expand" link button
+            cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+
+            // Check the event line has margin instead of inset property
+            // cf. _EventTile.pcss
+            //  --EventTile_irc_line_info-margin-inline-start
+            //  = calc(var(--name-width) + 10px + var(--icon-width))
+            //  = 80 + 10 + 14 = 104px
+            cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
+                .should('have.css', "margin-inline-start", "104px")
+                .should('have.css', "inset-inline-start", "0px");
+
+            // Exclude timestamp from snapshot
+            const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp "
+                + "{ visibility: hidden !important; }";
+            cy.percySnapshot("Event line with inline start margin on IRC layout", { percyCSS });
         });
 
         it("should click top left of view source event toggle", () => {
@@ -159,11 +188,11 @@ describe("Timeline", () => {
                 ".mx_GenericEventListSummary_summary", "created and configured the room.");
 
             // Edit message
-            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Message").within(() => {
+            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message").within(() => {
                 cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
                 cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
             });
-            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "MessageEdit");
+            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit");
 
             // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
             cy.get(".mx_EventTile .mx_ViewSourceEvent").realHover()
@@ -188,6 +217,47 @@ describe("Timeline", () => {
 
             // Make sure "collapse" link button worked
             cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]");
+        });
+    });
+
+    describe("message sending", () => {
+        const MESSAGE = "Hello world";
+        const viewRoomSendMessageAndSetupReply = () => {
+            // View room
+            cy.visit("/#/room/" + roomId);
+
+            // Send a message
+            cy.getComposer().type(`${MESSAGE}{enter}`);
+
+            // Reply to the message
+            cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile_line", "Hello world").within(() => {
+                cy.get('[aria-label="Reply"]').click({ force: true }); // Cypress has no ability to hover
+            });
+        };
+
+        it("can reply with a text message", () => {
+            const reply = "Reply";
+            viewRoomSendMessageAndSetupReply();
+
+            cy.getComposer().type(`${reply}{enter}`);
+
+            cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line").find(".mx_ReplyTile .mx_MTextBody")
+                .should("contain", MESSAGE);
+            cy.get(".mx_RoomView_body .mx_EventTile > .mx_EventTile_line > .mx_MTextBody").contains(reply)
+                .should("have.length", 1);
+        });
+
+        xit("can reply with a voice message", () => {
+            viewRoomSendMessageAndSetupReply();
+
+            cy.openMessageComposerOptions().find(`[aria-label="Voice Message"]`).click();
+            cy.wait(3000);
+            cy.getComposer().find(".mx_MessageComposer_sendMessage").click();
+
+            cy.get(".mx_RoomView_body .mx_EventTile .mx_EventTile_line").find(".mx_ReplyTile .mx_MTextBody")
+                .should("contain", MESSAGE);
+            cy.get(".mx_RoomView_body .mx_EventTile > .mx_EventTile_line > .mx_MVoiceMessageBody")
+                .should("have.length", 1);
         });
     });
 });
