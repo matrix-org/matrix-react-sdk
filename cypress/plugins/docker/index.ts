@@ -132,7 +132,7 @@ export function dockerIp(args: {
             args.containerId,
         ], (err, stdout) => {
             if (err) reject(err);
-            else resolve(stdout);
+            else resolve(stdout.trim());
         });
     });
 }

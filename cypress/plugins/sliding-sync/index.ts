@@ -32,7 +32,7 @@ export interface ProxyInstance {
 
 const instances = new Map<string, ProxyInstance>();
 
-const POSTGRES_PASSWORD = "p4S5w0rD";
+const PG_PASSWORD = "p4S5w0rD";
 
 async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
     console.log("Starting sliding sync proxy...");
@@ -42,11 +42,12 @@ async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
         containerName: "react-sdk-cypress-sliding-sync-postgres",
         params: [
             "--rm",
-            "-e", `POSTGRES_PASSWORD=${POSTGRES_PASSWORD}`,
+            "-e", `POSTGRES_PASSWORD=${PG_PASSWORD}`,
         ],
     });
 
-    const ip = await dockerIp({ containerId: postgresId });
+    const postgresIp = await dockerIp({ containerId: postgresId });
+    const synapseIp = await dockerIp({ containerId: synapse.synapseId });
 
     await new Promise(resolve => setTimeout(resolve, 5000));
 
@@ -57,8 +58,8 @@ async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
         params: [
             "--rm",
             "-p", `${port}:8008/tcp`,
-            "-e", `SYNCV3_SERVER=172.17.0.1:${synapse.port}`,
-            "-e", `SYNCV3_DB=user=postgres dbname=postgres password=${POSTGRES_PASSWORD} host=${ip} sslmode=disable`,
+            "-e", `SYNCV3_SERVER=http://${synapseIp}:8008`,
+            "-e", `SYNCV3_DB=user=postgres dbname=postgres password=${PG_PASSWORD} host=${postgresIp} sslmode=disable`,
         ],
     });
 
