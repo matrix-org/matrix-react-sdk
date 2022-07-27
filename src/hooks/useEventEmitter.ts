@@ -16,7 +16,8 @@ limitations under the License.
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { ListenerMap, TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
-import { EventEmitter } from "events";
+
+import type { EventEmitter } from "events";
 
 type Handler = (...args: any[]) => void;
 
