@@ -313,7 +313,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         ) : null;
 
         return (
-            <div className="mx_RoomHeader light-panel">
+            <header className="mx_RoomHeader light-panel">
                 <div className="mx_RoomHeader_wrapper" aria-owns="mx_RightPanel">
                     <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
                     <div className="mx_RoomHeader_e2eIcon">{ e2eIcon }</div>
@@ -324,7 +324,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { buttons }
                 </div>
                 <RoomLiveShareWarning roomId={this.props.room.roomId} />
-            </div>
+            </header>
         );
     }
 }
