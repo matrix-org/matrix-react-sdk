@@ -21,12 +21,14 @@ import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { performance } from "./performance";
 import { synapseDocker } from "./synapsedocker";
 import { webserver } from "./webserver";
+import { docker } from "./docker";
 import { axe } from "./axe";
 
 /**
  * @type {Cypress.PluginConfig}
  */
 export default function(on: PluginEvents, config: PluginConfigOptions) {
+    docker(on, config);
     performance(on, config);
     synapseDocker(on, config);
     webserver(on, config);
