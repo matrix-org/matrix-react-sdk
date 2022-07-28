@@ -23,10 +23,6 @@ import { default as OriginalMVideoBody } from "../../../../components/views/mess
  * This component wraps MVideoBody so that it can be customised with access to the original.
  */
 export default class MVideoBodyWrapper extends React.Component<IBodyProps> {
-    public constructor(props: IBodyProps) {
-        super(props);
-    }
-
     render(): React.ReactNode {
         return <OriginalMVideoBody {...this.props} />;
     }

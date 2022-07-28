@@ -45,7 +45,7 @@ import MessageContextMenu from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
-import DownloadActionButton from "./DownloadActionButton";
+import DownloadActionButtonWrapper from '../../../customisations/components/views/messages/DownloadActionButtonWrapper';
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
@@ -497,7 +497,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
                 // XXX: Assuming that the underlying tile will be a media event if it is eligible media.
                 if (MediaEventHelper.isEligible(this.props.mxEvent)) {
-                    toolbarOpts.splice(0, 0, <DownloadActionButton
+                    toolbarOpts.splice(0, 0, <DownloadActionButtonWrapper
                         mxEvent={this.props.mxEvent}
                         mediaEventHelperGet={() => this.props.getTile?.().getMediaHelper?.()}
                         key="download"

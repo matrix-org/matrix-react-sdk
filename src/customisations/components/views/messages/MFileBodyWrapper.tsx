@@ -23,10 +23,6 @@ import { default as OriginalMFileBody } from "../../../../components/views/messa
  * This component wraps MFileBody so that it can be customised with access to the original.
  */
 export default class MFileBodyWrapper extends React.Component<IBodyProps> {
-    public constructor(props: IBodyProps) {
-        super(props);
-    }
-
     render(): React.ReactNode {
         return <OriginalMFileBody {...this.props} />;
     }

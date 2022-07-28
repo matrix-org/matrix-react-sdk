@@ -14,16 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { Component, ComponentProps, ReactNode } from "react";
 
-import { IBodyProps } from "../../../../components/views/messages/IBodyProps";
-import { default as OriginalMStickerBody } from "../../../../components/views/messages/MStickerBody";
+import DownloadActionButton from "../../../../components/views/messages/DownloadActionButton";
 
 /**
- * This component wraps MStickerBody so that it can be customised with access to the original.
+ * This component wraps DownloadActionButton so that it can be customised with access to the original.
  */
-export default class MStickerBodyWrapper extends React.Component<IBodyProps> {
-    render(): React.ReactNode {
-        return <OriginalMStickerBody {...this.props} />;
+export default class DownloadActionButtonWrapper extends Component<ComponentProps<typeof DownloadActionButton>> {
+    render(): ReactNode {
+        return <DownloadActionButton {...this.props} />;
     }
 }

@@ -23,10 +23,6 @@ import { default as OriginalMAudioBody } from "../../../../components/views/mess
  * This component wraps MAudioBody so that it can be customised with access to the original.
  */
 export default class MAudioBodyWrapper extends React.Component<IBodyProps> {
-    public constructor(props: IBodyProps) {
-        super(props);
-    }
-
     render(): React.ReactNode {
         return <OriginalMAudioBody {...this.props} />;
     }
