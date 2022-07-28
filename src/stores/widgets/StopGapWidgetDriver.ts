@@ -63,6 +63,12 @@ function setRememberedCapabilitiesForWidget(widget: Widget, caps: Capability[]) 
     localStorage.setItem(`widget_${widget.id}_approved_caps`, JSON.stringify(caps));
 }
 
+const normalizeTurnServer = ({ urls, username, credential }: IClientTurnServer): ITurnServer => ({
+    uris: urls,
+    username,
+    password: credential,
+});
+
 export class StopGapWidgetDriver extends WidgetDriver {
     private allowedCapabilities: Set<Capability>;
 
@@ -287,25 +293,23 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
     public async* getTurnServers(): AsyncGenerator<ITurnServer> {
         const client = MatrixClientPeg.get();
-        if (!client.pollingTurnServers) return;
+        if (!client.pollingTurnServers || !client.getTurnServers().length) return;
 
         let setTurnServer: (server: ITurnServer) => void;
         let setError: (error: Error) => void;
 
-        const onTurnServers = ([server]: IClientTurnServer[]) =>
-            setTurnServer({
-                uris: server.urls,
-                username: server.username,
-                password: server.credential,
-            });
+        const onTurnServers = ([server]: IClientTurnServer[]) => setTurnServer(normalizeTurnServer(server));
         const onTurnServersError = (error: Error, fatal: boolean) => { if (fatal) setError(error); };
 
         client.on(ClientEvent.TurnServers, onTurnServers);
         client.on(ClientEvent.TurnServersError, onTurnServersError);
 
-        // Repeatedly listen for new TURN servers until an error occurs or the
-        // caller stops this generator
         try {
+            const initialTurnServer = client.getTurnServers()[0];
+            yield normalizeTurnServer(initialTurnServer);
+
+            // Repeatedly listen for new TURN servers until an error occurs or
+            // the caller stops this generator
             while (true) {
                 yield await new Promise<ITurnServer>((resolve, reject) => {
                     setTurnServer = resolve;
