@@ -118,6 +118,7 @@ import { StaticNotificationState } from '../../stores/notifications/StaticNotifi
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
+import { LargeLoader } from './LargeLoader';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -353,12 +354,7 @@ function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement
                     enableRoomOptionsMenu={false}
                 />
                 <div className="mx_RoomView_body">
-                    <div className="mx_RoomView_LocalRoomLoader">
-                        <Spinner w={45} h={45} />
-                        <div className="mx_RoomView_LocalRoomLoader_text">
-                            { text }
-                        </div>
-                    </div>
+                    <LargeLoader text={text} />
                 </div>
             </ErrorBoundary>
         </div>
