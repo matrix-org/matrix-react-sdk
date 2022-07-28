@@ -67,7 +67,6 @@ polyfillTouchEvent();
 export interface IAuxButtonProps {
     tabIndex: number;
     dispatcher?: Dispatcher<ActionPayload>;
-    tagId?: TagID;
 }
 
 interface IProps {
@@ -633,7 +632,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     let addRoomButton = null;
                     if (this.props.AuxButtonComponent) {
                         const AuxButtonComponent = this.props.AuxButtonComponent;
-                        addRoomButton = <AuxButtonComponent tabIndex={tabIndex} tagId={this.props.tagId} />;
+                        addRoomButton = <AuxButtonComponent tabIndex={tabIndex} />;
                     }
 
                     const collapseClasses = classNames({
