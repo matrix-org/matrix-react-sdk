@@ -50,6 +50,7 @@ describe("User Onboarding (new user)", () => {
 
     it("page is shown", () => {
         cy.get('.mx_UserOnboardingPage').should('exist');
+        cy.percySnapshot("User onboarding page");
     });
 
     it("using find friends action should increase progress", () => {
