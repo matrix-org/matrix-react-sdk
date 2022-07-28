@@ -230,7 +230,9 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const roomName = <RoomName room={this.props.room}>
             { (name) => {
                 const roomName = name || oobName;
-                return <div dir="auto" className={textClasses} title={roomName}>{ roomName }</div>;
+                return <div dir="auto" className={textClasses} title={roomName} role="heading" aria-level={1}>
+                    { roomName }
+                </div>;
             } }
         </RoomName>;
 
