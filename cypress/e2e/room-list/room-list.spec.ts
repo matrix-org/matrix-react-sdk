@@ -21,6 +21,7 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 
 const ROOM_NAME1 = "Test room";
 const ROOM_NAME2 = "New test room";
+const SPACE_NAME = "Test space";
 const NAME = "Alan";
 const BOT_NAME1 = "BotBob";
 const BOT_NAME2 = "BotAlice";
@@ -50,6 +51,7 @@ describe("RoomList", () => {
                             roomId = _room1Id;
                             cy.getClient().then((cli) => cli.setRoomTag(roomId, "m.favourite", {} as any));
                         });
+                        cy.createSpace({ name: SPACE_NAME });
                     }),
                 ).then(() => {
                     cy.getBot(synapse, { displayName: BOT_NAME1 }).then(_bot1 => {
@@ -143,6 +145,26 @@ describe("RoomList", () => {
 
             it("should show invite dialog when clicking favourites room-sublist header plus button", () => {
                 cy.get('[aria-label="Favourites"] .mx_RoomSublist_auxButton').click();
+                cy.get(".mx_InviteDialog_other").should("have.length", 1);
+            });
+        });
+
+        describe("In a space", () => {
+            beforeEach(() => {
+                cy.viewSpaceByName(SPACE_NAME);
+            });
+
+            it("should show plus button context menu", () => {
+                cy.get(".mx_RoomListHeader_plusButton").click();
+                cy.get('[aria-label="Invite"]').should("have.length", 1);
+                cy.get('[aria-label="New room"]').should("have.length", 1);
+                cy.get('[aria-label="Explore rooms"]').should("have.length", 1);
+                cy.get('[aria-label="Add existing room"]').should("have.length", 1);
+                cy.get('[aria-label="Add space"]').should("have.length", 1);
+            });
+
+            it("should show invite dialog when clicking people room-sublist header plus button", () => {
+                cy.get('[aria-label="People"] .mx_RoomSublist_auxButton').click();
                 cy.get(".mx_InviteDialog_other").should("have.length", 1);
             });
         });
