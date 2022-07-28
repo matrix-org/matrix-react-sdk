@@ -129,16 +129,23 @@ const DmFavAuxButton = ({ tabIndex, tagId, dispatcher = defaultDispatcher }: IAu
     );
     const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
 
-    const showCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
-    const showInviteUsers = activeSpace && shouldShowComponent(UIComponent.InviteUsers);
+    const people = tagId === DefaultTagID.DM;
     const favourite = tagId === DefaultTagID.Favourite;
     const peopleMetaSpace = spaceKey === MetaSpace.People;
 
-    if (!peopleMetaSpace && (activeSpace || favourite) && (showCreateRooms || showInviteUsers)) {
+    const showCreateRooms = (
+        shouldShowComponent(UIComponent.CreateRooms)
+    );
+    const showInviteUsers = activeSpace && shouldShowComponent(UIComponent.InviteUsers);
+    const canInvite = showInviteUsers ? shouldShowSpaceInvite(activeSpace) : undefined;
+
+    if (
+        !peopleMetaSpace &&
+        ((activeSpace && !people && !favourite) || (!activeSpace && favourite)) &&
+        (showCreateRooms || showInviteUsers)
+    ) {
         let contextMenu: JSX.Element;
         if (menuDisplayed) {
-            const canInvite = showInviteUsers ? shouldShowSpaceInvite(activeSpace) : undefined;
-
             contextMenu = <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
                 <IconizedContextMenuOptionList first>
                     { showCreateRooms && <IconizedContextMenuOption
@@ -197,14 +204,15 @@ const DmFavAuxButton = ({ tabIndex, tagId, dispatcher = defaultDispatcher }: IAu
             </IconizedContextMenu>;
         }
 
+        const label = (favourite && !peopleMetaSpace) ? _t("Add") : _t("Add people");
         return <>
             <ContextMenuTooltipButton
                 tabIndex={tabIndex}
                 onClick={openMenu}
                 className="mx_RoomSublist_auxButton"
                 tooltipClassName="mx_RoomSublist_addRoomTooltip"
-                aria-label={_t("Add people")}
-                title={_t("Add people")}
+                aria-label={label}
+                title={label}
                 isExpanded={menuDisplayed}
                 inputRef={handle}
             />
@@ -222,6 +230,23 @@ const DmFavAuxButton = ({ tabIndex, tagId, dispatcher = defaultDispatcher }: IAu
             tooltipClassName="mx_RoomSublist_addRoomTooltip"
             aria-label={_t("Start chat")}
             title={_t("Start chat")}
+        />;
+    } else if ((activeSpace && !favourite) && showInviteUsers) {
+        return <AccessibleTooltipButton
+            tabIndex={tabIndex}
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
+                showSpaceInvite(activeSpace);
+            }}
+            className="mx_RoomSublist_auxButton"
+            tooltipClassName="mx_RoomSublist_addRoomTooltip"
+            aria-label={_t("Invite to space")}
+            title={_t("Invite to space")}
+            disabled={!canInvite}
+            tooltip={canInvite ? undefined
+                : _t("You do not have permissions to invite people to this space")}
         />;
     }
 
