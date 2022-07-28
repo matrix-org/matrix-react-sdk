@@ -159,6 +159,7 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.contains(".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] " +
                 ".mx_GenericEventListSummary_summary", "created and configured the room.");
+            cy.get(".mx_Spinner").should("not.exist");
             cy.percySnapshot("Configured room on IRC layout");
         });
 
@@ -182,6 +183,7 @@ describe("Timeline", () => {
                 .should('have.css', "margin-inline-start", "104px")
                 .should('have.css', "inset-inline-start", "0px");
 
+            cy.get(".mx_Spinner").should("not.exist");
             // Exclude timestamp from snapshot
             const percyCSS = ".mx_RoomView_body .mx_EventTile_info .mx_MessageTimestamp "
                 + "{ visibility: hidden !important; }";
