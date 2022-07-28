@@ -185,13 +185,37 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
     public async sendToDevice(
         eventType: string,
-        encrypt: boolean,
+        encrypted: boolean,
         contentMap: { [userId: string]: { [deviceId: string]: unknown } },
     ): Promise<void> {
-        if (encrypt) {
-            throw new Error("Encrypted to-device events not supported yet");
+        const client = MatrixClientPeg.get();
+
+        if (encrypted) {
+            const deviceInfoMap = await client.crypto.deviceList.downloadKeys(Object.keys(contentMap), false);
+
+            await Promise.all(
+                Object.entries(contentMap).flatMap(([userId, userContentMap]) =>
+                    Object.entries(userContentMap).map(async ([deviceId, content]) => {
+                        if (deviceId === "*") {
+                            // Send the message to all devices we have keys for
+                            await client.encryptAndSendToDevices(
+                                Object.values(deviceInfoMap[userId]).map(deviceInfo => ({
+                                    userId, deviceInfo,
+                                })),
+                                content,
+                            );
+                        } else {
+                            // Send the message to a specific device
+                            await client.encryptAndSendToDevices(
+                                [{ userId, deviceInfo: deviceInfoMap[userId][deviceId] }],
+                                content,
+                            );
+                        }
+                    }),
+                ),
+            );
         } else {
-            await MatrixClientPeg.get().sendToDevice(eventType, contentMap);
+            await client.sendToDevice(eventType, contentMap);
         }
     }
 
