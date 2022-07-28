@@ -21,6 +21,7 @@ import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { performance } from "./performance";
 import { synapseDocker } from "./synapsedocker";
 import { webserver } from "./webserver";
+import { axe } from "./axe";
 
 /**
  * @type {Cypress.PluginConfig}
@@ -29,4 +30,5 @@ export default function(on: PluginEvents, config: PluginConfigOptions) {
     performance(on, config);
     synapseDocker(on, config);
     webserver(on, config);
+    axe(on, config);
 }
