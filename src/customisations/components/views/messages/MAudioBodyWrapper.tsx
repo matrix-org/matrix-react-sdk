@@ -20,7 +20,7 @@ import { IBodyProps } from "../../../../components/views/messages/IBodyProps";
 import { default as OriginalMAudioBody } from "../../../../components/views/messages/MAudioBody";
 
 /**
- * This component wraps MAudioBody to provide a stable customisation entry point.
+ * This component wraps MAudioBody so that it can be customised with access to the original.
  */
 export default class MAudioBodyWrapper extends React.Component<IBodyProps> {
     public constructor(props: IBodyProps) {

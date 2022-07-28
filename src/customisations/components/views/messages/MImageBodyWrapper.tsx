@@ -20,7 +20,7 @@ import { IBodyProps } from "../../../../components/views/messages/IBodyProps";
 import { default as OriginalMImageBody } from "../../../../components/views/messages/MImageBody";
 
 /**
- * This component wraps MImageBody to provide a stable customisation entry point.
+ * This component wraps MImageBody so that it can be customised with access to the original.
  */
 export default class MImageBodyWrapper extends React.Component<IBodyProps> {
     public constructor(props: IBodyProps) {

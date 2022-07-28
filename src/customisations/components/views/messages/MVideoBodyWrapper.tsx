@@ -20,7 +20,7 @@ import { IBodyProps } from "../../../../components/views/messages/IBodyProps";
 import { default as OriginalMVideoBody } from "../../../../components/views/messages/MVideoBody";
 
 /**
- * This component wraps MVideoBody to provide a stable customisation entry point.
+ * This component wraps MVideoBody so that it can be customised with access to the original.
  */
 export default class MVideoBodyWrapper extends React.Component<IBodyProps> {
     public constructor(props: IBodyProps) {

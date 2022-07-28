@@ -20,7 +20,7 @@ import { IBodyProps } from "../../../../components/views/messages/IBodyProps";
 import { default as OriginalMVoiceMessageBody } from "../../../../components/views/messages/MVoiceMessageBody";
 
 /**
- * This component wraps MVoiceMessageBody to provide a stable customisation entry point.
+ * This component wraps MVoiceMessageBody so that it can be customised with access to the original.
  */
 export default class MVoiceMessageBodyWrapper extends React.Component<IBodyProps> {
     public constructor(props: IBodyProps) {

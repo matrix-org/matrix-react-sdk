@@ -20,7 +20,7 @@ import { IBodyProps } from "../../../../components/views/messages/IBodyProps";
 import { default as OriginalMFileBody } from "../../../../components/views/messages/MFileBody";
 
 /**
- * This component wraps MFileBody to provide a stable customisation entry point.
+ * This component wraps MFileBody so that it can be customised with access to the original.
  */
 export default class MFileBodyWrapper extends React.Component<IBodyProps> {
     public constructor(props: IBodyProps) {
