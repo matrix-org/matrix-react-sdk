@@ -71,7 +71,7 @@ export const showAddExistingRooms = (space: Room): void => {
     });
 };
 
-export const showCreateNewRoom = async (space: Room, type?: RoomType, favourite?: boolean): Promise<boolean> => {
+export const showCreateNewRoom = async (space?: Room, type?: RoomType, favourite?: boolean): Promise<boolean> => {
     const modal = Modal.createDialog<[boolean, IOpts]>(CreateRoomDialog, {
         type,
         defaultPublic: space? space.getJoinRule() === JoinRule.Public : undefined,
