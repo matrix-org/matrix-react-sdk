@@ -87,7 +87,7 @@ export function useEventEmitter(
 
             // Add event listener
             if (isEventTarget(emitter) && typeof eventName === "string") {
-                emitter.addEventListener(eventName as string, eventListener);
+                emitter.addEventListener(eventName, eventListener);
             } else if (isEventEmitter(emitter)) {
                 emitter.on(eventName, eventListener);
             }
