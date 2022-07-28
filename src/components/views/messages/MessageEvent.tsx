@@ -36,7 +36,7 @@ import MImageBodyWrapper from '../../../customisations/components/views/messages
 import MVoiceOrAudioBody from './MVoiceOrAudioBody';
 import MFileBodyWrapper from '../../../customisations/components/views/messages/MFileBodyWrapper';
 import MVideoBodyWrapper from '../../../customisations/components/views/messages/MVideoBodyWrapper';
-import MStickerBody from "./MStickerBody";
+import MStickerBodyWrapper from '../../../customisations/components/views/messages/MStickerBodyWrapper';
 import MPollBody from "./MPollBody";
 import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
@@ -106,7 +106,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
 
     private get evTypes(): Record<string, React.ComponentType<Partial<IBodyProps>>> {
         return {
-            [EventType.Sticker]: MStickerBody,
+            [EventType.Sticker]: MStickerBodyWrapper,
             [M_POLL_START.name]: MPollBody,
             [M_POLL_START.altName]: MPollBody,
             [M_BEACON_INFO.name]: MBeaconBody,
