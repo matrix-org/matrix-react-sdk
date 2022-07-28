@@ -99,10 +99,6 @@ describe("Timeline", () => {
             });
         });
 
-        afterEach(() => {
-            cy.stopSynapse(synapse);
-        });
-
         it("should show historical profiles if disabled", () => {
             cy.setSettingValue("useOnlyCurrentProfiles", null, SettingLevel.ACCOUNT, false);
             sendEvent(roomId);
