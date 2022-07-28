@@ -26,9 +26,14 @@ import BeaconListItem from './BeaconListItem';
 interface Props {
     beacons: Beacon[];
     requestClose: () => void;
+    onBeaconClick: (beacon: Beacon) => void;
 }
 
-const DialogSidebar: React.FC<Props> = ({ beacons, requestClose }) => {
+const DialogSidebar: React.FC<Props> = ({
+    beacons,
+    onBeaconClick,
+    requestClose,
+}) => {
     return <div className='mx_DialogSidebar'>
         <div className='mx_DialogSidebar_header'>
             <Heading size='h4'>{ _t('View List') }</Heading>
@@ -36,14 +41,23 @@ const DialogSidebar: React.FC<Props> = ({ beacons, requestClose }) => {
                 className='mx_DialogSidebar_closeButton'
                 onClick={requestClose}
                 title={_t('Close sidebar')}
-                data-test-id='dialog-sidebar-close'
+                data-testid='dialog-sidebar-close'
             >
                 <CloseIcon className='mx_DialogSidebar_closeButtonIcon' />
             </AccessibleButton>
         </div>
-        <ol className='mx_DialogSidebar_list'>
-            { beacons.map((beacon) => <BeaconListItem key={beacon.identifier} beacon={beacon} />) }
-        </ol>
+        { beacons?.length
+            ? <ol className='mx_DialogSidebar_list'>
+                { beacons.map((beacon) => <BeaconListItem
+                    key={beacon.identifier}
+                    beacon={beacon}
+                    onClick={() => onBeaconClick(beacon)}
+                />) }
+            </ol>
+            : <div className='mx_DialogSidebar_noResults'>
+                { _t('No live locations') }
+            </div>
+        }
     </div>;
 };
 

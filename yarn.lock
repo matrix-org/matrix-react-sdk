@@ -3539,7 +3539,7 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.0.tgz#4ddcac3718d787cf9df0d1b7d15033925c8f29f2"
   integrity sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==
 
-cypress-real-events@^1.7.0:
+cypress-real-events@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.1.tgz#8f430d67c29ea4f05b9c5b0311780120cbc9b935"
   integrity sha512-/Bg15RgJ0SYsuXc6lPqH08x19z6j2vmhWN4wXfJqm3z8BTAFiK2MvipZPzxT8Z0jJP0q7kuniWrLIvz/i/8lCQ==
@@ -6756,18 +6756,19 @@ matrix-events-sdk@^0.0.1-beta.7:
   resolved "https://registry.yarnpkg.com/matrix-events-sdk/-/matrix-events-sdk-0.0.1-beta.7.tgz#5ffe45eba1f67cc8d7c2377736c728b322524934"
   integrity sha512-9jl4wtWanUFSy2sr2lCjErN/oC8KTAtaeaozJtrgot1JiQcEI4Rda9OLgQ7nLKaqb4Z/QUx/fR3XpDzm5Jy1JA==
 
-"matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "19.0.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/08ab51eeac2419d9a10e6df4f9ca020db6e6f025"
+matrix-js-sdk@19.2.0-rc.1:
+  version "19.2.0-rc.1"
+  resolved "https://registry.yarnpkg.com/matrix-js-sdk/-/matrix-js-sdk-19.2.0-rc.1.tgz#6ee0d405e118972bb2e78a4e1e13cdbe1ce5c137"
+  integrity sha512-diwL/V+lAnkU3mE7qYVjRxZnXHAIznFG186ftcebSTfVEgkyfyPBEwG/xMchxUx+cOjC1Ume6gu0u3AzRgMIMg==
   dependencies:
     "@babel/runtime" "^7.12.5"
     another-json "^0.2.0"
     browser-request "^0.3.3"
-    bs58 "^4.0.1"
+    bs58 "^5.0.0"
     content-type "^1.0.4"
     loglevel "^1.7.1"
     matrix-events-sdk "^0.0.1-beta.7"
-    p-retry "^4.5.0"
+    p-retry "4"
     qs "^6.9.6"
     request "^2.88.2"
     unhomoglyph "^1.0.6"
