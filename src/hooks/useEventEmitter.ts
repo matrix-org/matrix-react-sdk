@@ -21,24 +21,6 @@ import type { EventEmitter } from "events";
 
 type Handler = (...args: any[]) => void;
 
-// XXX: We cannot use instanceof as that would break tests
-function isEventEmitter(emitter: EventEmitter | EventTarget): emitter is EventEmitter {
-    emitter = emitter as EventEmitter;
-
-    return (
-        emitter.on !== undefined &&
-        emitter.off !== undefined
-    );
-}
-function isEventTarget(target: EventEmitter | EventTarget): target is EventTarget {
-    target = target as EventTarget;
-
-    return (
-        target.addEventListener !== undefined &&
-        target.removeEventListener !== undefined
-    );
-}
-
 export function useTypedEventEmitter<
     Events extends string,
     Arguments extends ListenerMap<Events>,
@@ -51,21 +33,10 @@ export function useTypedEventEmitter<
 }
 
 /**
- * Hook to wrap an EventEmitter/EventTarget on/addEventListener and
- * off/removeEventListener in hook lifecycle
+ * Hook to wrap an EventEmitter on and off in hook lifecycle
  */
 export function useEventEmitter(
-    emitter: EventTarget | undefined,
-    eventName: string,
-    handler: Handler,
-): void;
-export function useEventEmitter(
     emitter: EventEmitter | undefined,
-    eventName: string | symbol,
-    handler: Handler,
-): void;
-export function useEventEmitter(
-    emitter: EventEmitter | EventTarget | undefined,
     eventName: string | symbol,
     handler: Handler,
 ): void {
@@ -86,19 +57,48 @@ export function useEventEmitter(
             const eventListener = (...args) => savedHandler.current(...args);
 
             // Add event listener
-            if (isEventTarget(emitter) && typeof eventName === "string") {
-                emitter.addEventListener(eventName, eventListener);
-            } else if (isEventEmitter(emitter)) {
-                emitter.on(eventName, eventListener);
-            }
+            emitter.on(eventName, eventListener);
 
             // Remove event listener on cleanup
             return () => {
-                if (isEventTarget(emitter) && typeof eventName === "string") {
-                    emitter.removeEventListener(eventName, eventListener);
-                } else if (isEventEmitter(emitter)) {
-                    emitter.off(eventName, eventListener);
-                }
+                emitter.off(eventName, eventListener);
+            };
+        },
+        [eventName, emitter], // Re-run if eventName or emitter changes
+    );
+}
+
+/**
+ * Hook to wrap an EventTarget addEventListener and removeEventListener in hook
+ * lifecycle
+ */
+export function useEventTarget(
+    emitter: EventTarget | undefined,
+    eventName: string,
+    handler: Handler,
+): void {
+    // Create a ref that stores handler
+    const savedHandler = useRef(handler);
+
+    // Update ref.current value if handler changes.
+    useEffect(() => {
+        savedHandler.current = handler;
+    }, [handler]);
+
+    useEffect(
+        () => {
+            // allow disabling this hook by passing a falsy emitter
+            if (!emitter) return;
+
+            // Create event listener that calls handler function stored in ref
+            const eventListener = (...args) => savedHandler.current(...args);
+
+            // Add event listener
+            emitter.addEventListener(eventName, eventListener);
+
+            // Remove event listener on cleanup
+            return () => {
+                emitter.removeEventListener(eventName, eventListener);
             };
         },
         [eventName, emitter], // Re-run if eventName or emitter changes
@@ -135,7 +135,7 @@ export function useEventEmitterState<T>(
 }
 
 export function useEventTargetState<T>(
-    emitter: EventTarget | undefined,
+    target: EventTarget | undefined,
     eventName: string,
     fn: Mapper<T>,
 ): T {
@@ -144,7 +144,7 @@ export function useEventTargetState<T>(
         setValue(fn(...args));
     }, [fn]);
     // re-run when the emitter changes
-    useEffect(handler, [emitter]); // eslint-disable-line react-hooks/exhaustive-deps
-    useEventEmitter(emitter, eventName, handler);
+    useEffect(handler, [target]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEventTarget(target, eventName, handler);
     return value;
 }
