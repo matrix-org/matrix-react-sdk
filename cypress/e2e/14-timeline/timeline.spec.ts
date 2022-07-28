@@ -84,6 +84,10 @@ describe("Timeline", () => {
         });
     });
 
+    afterEach(() => {
+        cy.stopSynapse(synapse);
+    });
+
     describe("useOnlyCurrentProfiles", () => {
         beforeEach(() => {
             cy.uploadContent(OLD_AVATAR).then((url) => {
