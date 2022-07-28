@@ -45,6 +45,8 @@ import { NotificationStateEvents } from '../../../stores/notifications/Notificat
 import RoomContext from "../../../contexts/RoomContext";
 import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
 import { BetaPill } from "../beta/BetaCard";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -71,6 +73,7 @@ interface IProps {
 
 interface IState {
     contextMenuPosition?: DOMRect;
+    rightPanelOpen: boolean;
 }
 
 export default class RoomHeader extends React.Component<IProps, IState> {
@@ -89,22 +92,28 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         super(props, context);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
         notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
-        this.state = {};
+        this.state = {
+            rightPanelOpen: RightPanelStore.instance.isOpen,
+        };
     }
 
     public componentDidMount() {
         const cli = MatrixClientPeg.get();
         cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
 
     public componentWillUnmount() {
         const cli = MatrixClientPeg.get();
-        if (cli) {
-            cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
-        }
+        cli?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
         notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
+
+    private onRightPanelStoreUpdate = () => {
+        this.setState({ rightPanelOpen: RightPanelStore.instance.isOpen });
+    };
 
     private onRoomStateEvents = (event: MatrixEvent) => {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
@@ -314,7 +323,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         return (
             <header className="mx_RoomHeader light-panel">
-                <div className="mx_RoomHeader_wrapper" aria-owns="mx_RightPanel">
+                <div
+                    className="mx_RoomHeader_wrapper"
+                    aria-owns={this.state.rightPanelOpen ? "mx_RightPanel" : undefined}
+                >
                     <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
                     <div className="mx_RoomHeader_e2eIcon">{ e2eIcon }</div>
                     { name }
