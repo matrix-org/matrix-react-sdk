@@ -19,7 +19,7 @@ limitations under the License.
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 
-export function axe(on: PluginEvents, config: PluginConfigOptions) {
+export function log(on: PluginEvents, config: PluginConfigOptions) {
     on("task", {
         log(message: string) {
             console.log(message);

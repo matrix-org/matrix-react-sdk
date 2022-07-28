@@ -22,7 +22,7 @@ import { performance } from "./performance";
 import { synapseDocker } from "./synapsedocker";
 import { webserver } from "./webserver";
 import { docker } from "./docker";
-import { axe } from "./axe";
+import { log } from "./log";
 
 /**
  * @type {Cypress.PluginConfig}
@@ -32,5 +32,5 @@ export default function(on: PluginEvents, config: PluginConfigOptions) {
     performance(on, config);
     synapseDocker(on, config);
     webserver(on, config);
-    axe(on, config);
+    log(on, config);
 }
