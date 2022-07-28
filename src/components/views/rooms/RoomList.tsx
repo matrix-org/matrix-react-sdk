@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import * as fbEmitter from "fbemitter";
+import { Dispatcher } from "flux";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
@@ -25,7 +26,6 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import { ViewCreateChatPayload } from "../../../dispatcher/payloads/ViewCreateChatPayload";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -120,6 +120,108 @@ const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>) => {
     };
 };
 
+interface IStartChatButtonProps {
+    favourite?: boolean;
+    tabIndex: number;
+    dispatcher?: Dispatcher<ActionPayload>;
+
+}
+
+const StartChatButton = ({ favourite, tabIndex, dispatcher }: IStartChatButtonProps) => {
+    return <AccessibleTooltipButton
+        tabIndex={tabIndex}
+        onClick={(e) => {
+            dispatcher.dispatch({
+                action: Action.ViewCreateChat,
+                favourite: true,
+            });
+            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
+        }}
+        className="mx_RoomSublist_auxButton"
+        tooltipClassName="mx_RoomSublist_addRoomTooltip"
+        aria-label={_t("Start chat")}
+        title={_t("Start chat")}
+    />;
+};
+
+interface IAuxButtonContextMenuProps {
+    showCreateRooms?: boolean;
+    showInviteUsers?: boolean;
+    favourite?: boolean;
+    activeSpace?: Room;
+    handle: React.RefObject<HTMLDivElement>;
+    dispatcher: Dispatcher<ActionPayload>;
+
+    closeMenu: () => void;
+}
+
+const AuxButtonContextMenu = ({
+    showCreateRooms,
+    showInviteUsers,
+    favourite,
+    activeSpace,
+    handle,
+    closeMenu,
+    dispatcher,
+}: IAuxButtonContextMenuProps) => {
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
+    const canInvite = showInviteUsers ? shouldShowSpaceInvite(activeSpace) : undefined;
+
+    return <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
+        <IconizedContextMenuOptionList first>
+            { showCreateRooms && <IconizedContextMenuOption
+                label={_t("Start new chat")}
+                iconClassName="mx_RoomList_iconStartChat"
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeMenu();
+                    dispatcher.dispatch({ action: Action.ViewCreateChat, favourite });
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
+                }}
+            /> }
+            { showCreateRooms && <IconizedContextMenuOption
+                iconClassName="mx_RoomListHeader_iconNewRoom"
+                label={_t("New room")}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeMenu();
+                    showCreateNewRoom(activeSpace, undefined, favourite);
+                    PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
+                }}
+            /> }
+            { showCreateRooms && videoRoomsEnabled && (
+                <IconizedContextMenuOption
+                    iconClassName="mx_RoomListHeader_iconNewVideoRoom"
+                    label={_t("New video room")}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                        showCreateNewRoom(activeSpace, RoomType.ElementVideo, favourite);
+                    }}
+                >
+                    <BetaPill />
+                </IconizedContextMenuOption>
+            ) }
+            { showInviteUsers && <IconizedContextMenuOption
+                label={_t("Invite to space")}
+                iconClassName="mx_RoomList_iconInvite"
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeMenu();
+                    showSpaceInvite(activeSpace);
+                }}
+                disabled={!canInvite}
+                tooltip={canInvite ? undefined
+                    : _t("You do not have permissions to invite people to this space")}
+            /> }
+        </IconizedContextMenuOptionList>
+    </IconizedContextMenu>;
+};
+
 const FavouriteAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonProps) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
     const [spaceKey, activeSpace] = useEventEmitterState<[SpaceKey, Room | null]>(
@@ -127,76 +229,23 @@ const FavouriteAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxBu
         UPDATE_SELECTED_SPACE,
         () => [SpaceStore.instance.activeSpace, SpaceStore.instance.activeSpaceRoom],
     );
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const peopleMetaSpace = spaceKey === MetaSpace.People;
 
     if (!shouldShowComponent(UIComponent.CreateRooms)) return null;
     if (activeSpace) return null;
 
-    if (peopleMetaSpace) {
-        return <AccessibleTooltipButton
-            tabIndex={tabIndex}
-            onClick={(e) => {
-                dispatcher.dispatch({
-                    action: Action.ViewCreateChat,
-                    favourite: true,
-                });
-                PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
-            }}
-            className="mx_RoomSublist_auxButton"
-            tooltipClassName="mx_RoomSublist_addRoomTooltip"
-            aria-label={_t("Start chat")}
-            title={_t("Start chat")}
-        />;
-    }
+    if (peopleMetaSpace) return <StartChatButton favourite tabIndex={tabIndex} dispatcher={dispatcher} />;
 
     const label = peopleMetaSpace ? _t("Add people") : _t("Add");
     let contextMenu: JSX.Element;
     if (menuDisplayed) {
-        contextMenu = <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
-            <IconizedContextMenuOptionList first>
-                <IconizedContextMenuOption
-                    label={_t("Start new chat")}
-                    iconClassName="mx_RoomList_iconStartChat"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        dispatcher.dispatch({
-                            action: Action.ViewCreateChat,
-                            favourite: true,
-                        });
-                        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
-                    }}
-                />
-                <IconizedContextMenuOption
-                    iconClassName="mx_RoomListHeader_iconNewRoom"
-                    label={_t("New room")}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        showCreateNewRoom(activeSpace, undefined, true);
-                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
-                    }}
-                />
-                { videoRoomsEnabled && (
-                    <IconizedContextMenuOption
-                        iconClassName="mx_RoomListHeader_iconNewVideoRoom"
-                        label={_t("New video room")}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            closeMenu();
-                            showCreateNewRoom(activeSpace, RoomType.ElementVideo, true);
-                        }}
-                    >
-                        <BetaPill />
-                    </IconizedContextMenuOption>
-                ) }
-
-            </IconizedContextMenuOptionList>
-        </IconizedContextMenu>;
+        contextMenu = <AuxButtonContextMenu
+            favourite
+            showCreateRooms
+            handle={handle}
+            closeMenu={closeMenu}
+            dispatcher={dispatcher}
+        />;
     }
     return <>
         <ContextMenuTooltipButton
@@ -221,25 +270,12 @@ const PeopleAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButto
         UPDATE_SELECTED_SPACE,
         () => SpaceStore.instance.activeSpaceRoom,
     );
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
 
     const showCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
     const showInviteUsers = activeSpace && shouldShowComponent(UIComponent.InviteUsers);
     const canInvite = showInviteUsers ? shouldShowSpaceInvite(activeSpace) : undefined;
 
-    if (!activeSpace && showCreateRooms) {
-        return <AccessibleTooltipButton
-            tabIndex={tabIndex}
-            onClick={(e) => {
-                dispatcher.dispatch({ action: 'view_create_chat' });
-                PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
-            }}
-            className="mx_RoomSublist_auxButton"
-            tooltipClassName="mx_RoomSublist_addRoomTooltip"
-            aria-label={_t("Start chat")}
-            title={_t("Start chat")}
-        />;
-    }
+    if (!activeSpace && showCreateRooms) return <StartChatButton tabIndex={tabIndex} dispatcher={dispatcher} />;
     if (activeSpace && showInviteUsers) {
         return <AccessibleTooltipButton
             tabIndex={tabIndex}
@@ -264,59 +300,13 @@ const PeopleAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButto
 
     let contextMenu: JSX.Element;
     if (menuDisplayed) {
-        contextMenu = <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
-            <IconizedContextMenuOptionList first>
-                { showCreateRooms && <IconizedContextMenuOption
-                    label={_t("Start new chat")}
-                    iconClassName="mx_RoomList_iconStartChat"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        defaultDispatcher.dispatch<ViewCreateChatPayload>({ action: Action.ViewCreateChat });
-                        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
-                    }}
-                /> }
-                { showCreateRooms && <IconizedContextMenuOption
-                    iconClassName="mx_RoomListHeader_iconNewRoom"
-                    label={_t("New room")}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        showCreateNewRoom(activeSpace, undefined, false);
-                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
-                    }}
-                /> }
-                { showCreateRooms && videoRoomsEnabled && (
-                    <IconizedContextMenuOption
-                        iconClassName="mx_RoomListHeader_iconNewVideoRoom"
-                        label={_t("New video room")}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            closeMenu();
-                            showCreateNewRoom(activeSpace, RoomType.ElementVideo, false);
-                        }}
-                    >
-                        <BetaPill />
-                    </IconizedContextMenuOption>
-                ) }
-                { showInviteUsers && <IconizedContextMenuOption
-                    label={_t("Invite to space")}
-                    iconClassName="mx_RoomList_iconInvite"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        showSpaceInvite(activeSpace);
-                    }}
-                    disabled={!canInvite}
-                    tooltip={canInvite ? undefined
-                        : _t("You do not have permissions to invite people to this space")}
-                /> }
-            </IconizedContextMenuOptionList>
-        </IconizedContextMenu>;
+        contextMenu = <AuxButtonContextMenu
+            showCreateRooms={showCreateRooms}
+            showInviteUsers={showInviteUsers}
+            handle={handle}
+            closeMenu={closeMenu}
+            dispatcher={dispatcher}
+        />;
     }
     return <>
         <ContextMenuTooltipButton
