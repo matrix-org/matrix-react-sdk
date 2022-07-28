@@ -760,7 +760,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         const { completionIndex } = this.state;
         const hasAutocomplete = Boolean(this.state.autoComplete);
-        let activeDescendant;
+        let activeDescendant: string;
         if (hasAutocomplete && completionIndex >= 0) {
             activeDescendant = generateCompletionDomId(completionIndex);
         }
