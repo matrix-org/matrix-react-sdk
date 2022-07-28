@@ -44,7 +44,6 @@ describe("User Onboarding (new user)", () => {
     });
 
     afterEach(() => {
-        cy.visit("/#/home");
         cy.stopSynapse(synapse);
     });
 
