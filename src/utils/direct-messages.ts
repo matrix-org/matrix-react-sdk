@@ -81,7 +81,7 @@ export async function createRoomFromLocalRoom(
     return startDm(
         client,
         localRoom.targets,
-        undefined,
+        false,
         Object.keys(localRoom.tags).includes(DefaultTagID.Favourite),
     ).then(
         (roomId) => {
