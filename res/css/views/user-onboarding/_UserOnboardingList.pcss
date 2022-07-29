@@ -19,18 +19,17 @@ limitations under the License.
     flex-direction: column;
     margin: 0 $spacing-32;
 
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    animation-name: mx_UserOnboardingList_slideIn;
+    animation-fill-mode: backwards;
+    will-change: opacity;
+
     .mx_UserOnboardingList_header {
         display: flex;
         flex-direction: row;
         gap: 12px;
         align-items: center;
-
-        animation-duration: 300ms;
-        animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
-        animation-name: mx_UserOnboardingList_slideIn;
-        animation-fill-mode: backwards;
-        will-change: opacity;
-        animation-delay: 800ms;
 
         .mx_UserOnboardingList_hint {
             color: $secondary-content;
@@ -41,13 +40,6 @@ limitations under the License.
         display: flex;
         flex-direction: column;
         counter-reset: user-onboarding;
-
-        animation-duration: 300ms;
-        animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
-        animation-name: mx_UserOnboardingList_slideIn;
-        animation-fill-mode: backwards;
-        will-change: opacity;
-        animation-delay: 1500ms;
 
         .mx_ProgressBar {
             width: auto;
@@ -72,22 +64,7 @@ limitations under the License.
         padding: 0;
 
         grid-gap: $spacing-24;
-
-        animation-duration: 300ms;
-        animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
-        animation-name: mx_UserOnboardingList_slideIn;
-        animation-fill-mode: backwards;
-        will-change: opacity;
-        animation-delay: 2200ms;
     }
-}
-
-.mx_UserOnboardingList_slideIn {
-    animation-duration: 300ms;
-    animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
-    animation-name: mx_UserOnboardingList_slideIn;
-    animation-fill-mode: backwards;
-    will-change: opacity;
 }
 
 @keyframes mx_UserOnboardingList_slideIn {

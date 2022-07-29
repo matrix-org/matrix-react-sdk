@@ -22,6 +22,13 @@ limitations under the License.
     background: $system;
     gap: $spacing-64;
 
+    animation-delay: 1500ms;
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    animation-name: mx_UserOnboardingHeader_slideIn;
+    animation-fill-mode: backwards;
+    will-change: opacity, transform;
+
     @media (max-width: 1280px) {
         margin: $spacing-32;
     }
@@ -55,5 +62,33 @@ limitations under the License.
         min-height: 0;
         margin-top: -$spacing-64;
         margin-bottom: -$spacing-64;
+
+        animation-delay: 1500ms;
+        animation-duration: 300ms;
+        animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+        animation-name: mx_UserOnboardingHeader_slideInLong;
+        animation-fill-mode: backwards;
+        will-change: opacity, transform;
+    }
+}
+
+@keyframes mx_UserOnboardingHeader_slideIn {
+    0% {
+        transform: translate(0, 8px);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+
+@keyframes mx_UserOnboardingHeader_slideInLong {
+    0% {
+        transform: translate(0, 32px);
+    }
+    100% {
+        transform: translate(0, 0);
     }
 }
