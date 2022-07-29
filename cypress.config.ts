@@ -29,5 +29,6 @@ export default defineConfig({
         baseUrl: 'http://localhost:8080',
         experimentalSessionAndOrigin: true,
         specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+        ignoreTestFiles: "**/trafficlight/*.ts",
     },
 });

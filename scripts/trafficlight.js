@@ -50,6 +50,7 @@ function trafficlight(trafficlight_url, uuid) {
            "openMode": 0,
            "runMode": 0,
         },
+        ignoreTestFiles: [],
         videosFolder: "cypress/videos/trafficlight/"+uuid+"/",
       },
       quiet: false,
@@ -79,6 +80,7 @@ function trafficlight_oneshot(trafficlight_url, uuid) {
            "runMode": 0,
         },
         videosFolder: "cypress/videos/trafficlight/"+uuid+"/",
+        ignoreTestFiles: [],
       },
       quiet: false,
     })
