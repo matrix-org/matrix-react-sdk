@@ -3445,5 +3445,7 @@
     "Favourite Messages (under active development)": "Вибрані повідомлення (в активній розробці)",
     "Messages in this chat will be end-to-end encrypted.": "Повідомлення в цій бесіді будуть захищені наскрізним шифруванням.",
     "Send your first message to invite <displayName/> to chat": "Надішліть своє перше повідомлення, щоб запросити <displayName/> до бесіди",
-    "Saved Items": "Збережені елементи"
+    "Saved Items": "Збережені елементи",
+    "Choose a locale": "Вибрати локаль",
+    "Spell check": "Перевірка правопису"
 }
