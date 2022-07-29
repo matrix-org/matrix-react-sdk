@@ -20,11 +20,9 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { formatDate } from '../../../DateUtils';
 import StyledCheckbox, { CheckboxStyle } from '../elements/StyledCheckbox';
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
-import TextWithTooltip from "../elements/TextWithTooltip";
 import Modal from "../../../Modal";
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
@@ -115,7 +113,6 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        const device = this.props.device;
         const myDeviceClass = this.props.isOwnDevice ? " mx_DevicesPanel_myDevice" : '';
 
         let iconClass = '';
