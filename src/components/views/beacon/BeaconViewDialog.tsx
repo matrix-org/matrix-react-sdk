@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Beacon,
     Room,
@@ -136,7 +136,8 @@ const BeaconViewDialog: React.FC<IProps> = ({
                 id='mx_BeaconViewDialog'
                 bounds={bounds}
                 centerGeoUri={centerGeoUri}
-                interactiveonError={setMapDisplayError}
+                interactive
+                onError={setMapDisplayError}
                 className="mx_BeaconViewDialog_map"
             >
                 {
@@ -152,26 +153,25 @@ const BeaconViewDialog: React.FC<IProps> = ({
                         </>
                 }
             </Map> }
-                { mapDisplayError &&
-                    <MapError
-                        error={mapDisplayError.message as LocationShareError}
-                        isMinimised
-                    />
-                }
-                { !centerGeoUri && !mapDisplayError &&<MapFallback
-                    data-test-id='beacon-view-dialog-map-fallback'
-                    className='mx_BeaconViewDialog_map'
-                >
-                    <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t('No live locations') }</span>
-                    <AccessibleButton
-                        kind='primary'
-                        onClick={onFinished}
-                        data-test-id='beacon-view-dialog-fallback-close'
-                    >
-                        { _t('Close') }
-                    </AccessibleButton>
-                </MapFallback>
+            { mapDisplayError &&
+                <MapError
+                    error={mapDisplayError.message as LocationShareError}
+                    isMinimised
+                />
             }
+            { !centerGeoUri && !mapDisplayError && <MapFallback
+                data-test-id='beacon-view-dialog-map-fallback'
+                className='mx_BeaconViewDialog_map'
+            >
+                <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t('No live locations') }</span>
+                <AccessibleButton
+                    kind='primary'
+                    onClick={onFinished}
+                    data-test-id='beacon-view-dialog-fallback-close'
+                >
+                    { _t('Close') }
+                </AccessibleButton>
+            </MapFallback> }
             { isSidebarOpen ?
                 <DialogSidebar beacons={liveBeacons} onBeaconClick={onBeaconListItemClick}requestClose={() => setSidebarOpen(false)} /> :
                 <AccessibleButton

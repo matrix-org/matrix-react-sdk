@@ -174,12 +174,7 @@ declare global {
     }
 
     interface HTMLDialogElement {
-        readonly open: boolean;
-        returnValue?: string;
         oncancel?(ev: Event);
-        show(): void;
-        showModal(): void;
-        close(returnValue?: string): void;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour
