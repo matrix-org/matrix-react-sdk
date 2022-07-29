@@ -689,7 +689,7 @@
     "Folder": "文件夹",
     "Pin": "别针",
     "Yes": "是",
-    "No": "拒绝",
+    "No": "不",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "我们已向你发送了一封电子邮件，以验证你的地址。 请按照里面的说明操作，然后单击下面的按钮。",
     "Email Address": "电子邮箱地址",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "你确定吗？如果密钥没有正确地备份你将失去你的加密消息。",
@@ -2195,7 +2195,7 @@
     "Confirm your Security Phrase": "确认你的安全短语",
     "Continue with %(ssoButtons)s": "使用 %(ssoButtons)s 继续",
     "There was a problem communicating with the homeserver, please try again later.": "与主服务器通讯时出现问题，请稍后再试。",
-    "Decrypted event source": "解密事件源码",
+    "Decrypted event source": "解密的事件源码",
     "Original event source": "原始事件源码",
     "Invite by username": "按照用户名邀请",
     "Inviting...": "正在邀请…",
@@ -3328,5 +3328,7 @@
     "<%(count)s spaces>|other": "<%(count)s个空间>",
     "Failed to send event!": "发送事件失败！",
     "Doesn't look like valid JSON.": "看起来不像有效的JSON。",
-    "Send custom room account data event": "发送自定义房间账户资料事件"
+    "Send custom room account data event": "发送自定义房间账户资料事件",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "你的消息未被发送，因为此主服务器已被其管理员屏蔽。请<a>联系你的服务管理员</a>以继续使用服务。",
+    "Spell check": "拼写检查"
 }
