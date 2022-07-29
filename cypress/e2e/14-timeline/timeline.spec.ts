@@ -46,10 +46,14 @@ const expectDisplayName = (e: JQuery<HTMLElement>, displayName: string): void =>
 };
 
 const expectAvatar = (e: JQuery<HTMLElement>, avatarUrl: string): void => {
-    cy.getClient().then((cli: MatrixClient) => {
+    cy.all([
+        cy.window({ log: false }),
+        cy.getClient(),
+    ]).then(([win, cli]) => {
+        const size = AVATAR_SIZE * win.devicePixelRatio;
         expect(e.find(".mx_BaseAvatar_image").attr("src")).to.equal(
             // eslint-disable-next-line no-restricted-properties
-            cli.mxcUrlToHttp(avatarUrl, AVATAR_SIZE, AVATAR_SIZE, AVATAR_RESIZE_METHOD),
+            cli.mxcUrlToHttp(avatarUrl, size, size, AVATAR_RESIZE_METHOD),
         );
     });
 };
