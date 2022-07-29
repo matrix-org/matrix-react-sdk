@@ -149,7 +149,8 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 _td("Sessions"),
                 "mx_UserSettingsDialog_securityIcon",
                 <SessionManagerTab />,
-                "UserSettingsSessionManager",
+                // don't track with posthog while under construction
+                undefined,
             ));
         }
         // Show the Labs tab if enabled or if there are any active betas
