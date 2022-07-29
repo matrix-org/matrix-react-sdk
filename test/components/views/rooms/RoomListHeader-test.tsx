@@ -24,15 +24,17 @@ import { mocked } from 'jest-mock';
 
 import SpaceStore from "../../../../src/stores/spaces/SpaceStore";
 import { MetaSpace } from "../../../../src/stores/spaces";
-import RoomListHeader from "../../../../src/components/views/rooms/RoomListHeader";
+import _RoomListHeader from "../../../../src/components/views/rooms/RoomListHeader";
 import * as testUtils from "../../../test-utils";
-import { createTestClient, mkSpace } from "../../../test-utils";
+import { stubClient, mkSpace } from "../../../test-utils";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import { shouldShowComponent } from '../../../../src/customisations/helpers/UIComponents';
 import { UIComponent } from '../../../../src/settings/UIFeature';
+
+const RoomListHeader = testUtils.wrapInMatrixClientContext(_RoomListHeader);
 
 jest.mock('../../../../src/customisations/helpers/UIComponents', () => ({
     shouldShowComponent: jest.fn(),
@@ -55,9 +57,7 @@ const setupMainMenu = async (client: MatrixClient, testSpace: Room): Promise<Rea
         SpaceStore.instance.setActiveSpace(testSpace.roomId);
     });
 
-    const wrapper = mount(<MatrixClientContext.Provider value={client}>
-        <RoomListHeader />
-    </MatrixClientContext.Provider>);
+    const wrapper = mount(<RoomListHeader />);
 
     expect(wrapper.text()).toBe("Test Space");
     act(() => {
@@ -74,9 +74,7 @@ const setupPlusMenu = async (client: MatrixClient, testSpace: Room): Promise<Rea
         SpaceStore.instance.setActiveSpace(testSpace.roomId);
     });
 
-    const wrapper = mount(<MatrixClientContext.Provider value={client}>
-        <RoomListHeader />
-    </MatrixClientContext.Provider>);
+    const wrapper = mount(<RoomListHeader />);
 
     expect(wrapper.text()).toBe("Test Space");
     act(() => {
@@ -116,7 +114,8 @@ describe("RoomListHeader", () => {
             getDMRoomsForUserId: jest.fn(),
         } as unknown as DMRoomMap;
         DMRoomMap.setShared(dmRoomMap);
-        client = createTestClient();
+        stubClient();
+        client = MatrixClientPeg.get();
         mocked(shouldShowComponent).mockReturnValue(true); // show all UIComponents
     });
 
@@ -125,9 +124,7 @@ describe("RoomListHeader", () => {
             SpaceStore.instance.setActiveSpace(MetaSpace.Home);
         });
 
-        const wrapper = mount(<MatrixClientContext.Provider value={client}>
-            <RoomListHeader />
-        </MatrixClientContext.Provider>);
+        const wrapper = mount(<RoomListHeader />);
 
         expect(wrapper.text()).toBe("Home");
         act(() => {
