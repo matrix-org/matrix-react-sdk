@@ -37,6 +37,7 @@ import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
 import SessionManagerTab from '../settings/tabs/user/SessionManagerTab';
 import { UserTab } from "./UserTab";
+import SessionManagerTab from '../settings/tabs/user/SessionManagerTab';
 
 interface IProps extends IDialogProps {
     initialTabId?: UserTab;
