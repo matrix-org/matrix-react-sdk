@@ -486,7 +486,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     }, [results, filter]);
 
     const viewRoom = (
-        room: {roomId: string, roomAlias?: string, autoJoin?: boolean},
+        room: { roomId: string, roomAlias?: string, autoJoin?: boolean, shouldPeek?: boolean},
         persist = false,
         viaKeyboard = false,
     ) => {
@@ -511,6 +511,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             room_id: room.roomId,
             room_alias: room.roomAlias,
             auto_join: room.autoJoin,
+            should_peek: room.shouldPeek,
         });
         onFinished();
     };
@@ -629,6 +630,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         roomAlias: publicRoom.canonical_alias || publicRoom.aliases?.[0],
                         roomId: publicRoom.room_id,
                         autoJoin: !result.publicRoom.world_readable && !cli.isGuest(),
+                        shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
                     }, true, ev.type !== "click");
                 };
                 return (
