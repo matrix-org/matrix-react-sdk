@@ -2844,6 +2844,7 @@
     "Upload %(count)s other files|one": "Upload %(count)s other file",
     "Cancel All": "Cancel All",
     "Upload Error": "Upload Error",
+    "Sessions": "Sessions",
     "Verify other device": "Verify other device",
     "Verification Request": "Verification Request",
     "Approve widget permissions": "Approve widget permissions",
