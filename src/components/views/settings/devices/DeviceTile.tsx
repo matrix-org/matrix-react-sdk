@@ -45,9 +45,8 @@ const DeviceTileName: React.FC<{ device: IMyDevice }> = ({ device }) => {
 };
 
 const MS_6_DAYS = 6 * 24 * 60 * 60 * 1000;
-const formatLastActivity = (timestamp: number, now = Date.now()): string => {
+const formatLastActivity = (timestamp: number, now = new Date().getTime()): string => {
     // less than a week ago
-    console.log(timestamp, now, timestamp + MS_6_DAYS >= now);
     if (timestamp + MS_6_DAYS >= now) {
         const date = new Date(timestamp);
         // Tue 20:15

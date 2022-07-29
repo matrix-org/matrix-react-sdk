@@ -31,25 +31,11 @@ describe('<DeviceTile />', () => {
     );
     // 14.03.2022 16:15
     const now = 1647270879403;
-    const RealDate = global.Date;
-    class MockDate extends Date {
-        constructor(date?: any) {
-            super(date || now);
-        }
 
-        now() {
-            return now;
-        }
-    }
+    jest.useFakeTimers();
 
     beforeEach(() => {
-        // @ts-ignore need Date constructor and now()
-        // to be equally mocked
-        global.Date = MockDate;
-    });
-    
-    afterAll(() => {
-        global.Date = RealDate;
+        jest.setSystemTime(now);
     });
 
     it('renders a device with no metadata', () => {
@@ -88,14 +74,34 @@ describe('<DeviceTile />', () => {
 
     describe('Last activity', () => {
         const MS_DAY = 24 * 60 * 60 * 1000;
-        fit('renders with short date format when last activity is less than 6 days ago', () => {
+        it('renders with day of week and time when last activity is less than 6 days ago', () => {
             const device: IMyDevice = {
                 device_id: '123',
                 last_seen_ip: '1.2.3.4',
                 last_seen_ts: now - (MS_DAY * 3),
             };
             const { getByTestId } = render(getComponent({ device }));
-            expect(getByTestId('device-metadata-lastActivity').textContent).toEqual('Last activity Mar 11');
+            expect(getByTestId('device-metadata-lastActivity').textContent).toEqual('Last activity Fri 15:14');
+        });
+
+        it('renders with month and date when last activity is more than 6 days ago', () => {
+            const device: IMyDevice = {
+                device_id: '123',
+                last_seen_ip: '1.2.3.4',
+                last_seen_ts: now - (MS_DAY * 8),
+            };
+            const { getByTestId } = render(getComponent({ device }));
+            expect(getByTestId('device-metadata-lastActivity').textContent).toEqual('Last activity Mar 6');
+        });
+
+        it('renders with month, date, year when activity is in a different calendar year', () => {
+            const device: IMyDevice = {
+                device_id: '123',
+                last_seen_ip: '1.2.3.4',
+                last_seen_ts: new Date('2021-12-29').getTime(),
+            };
+            const { getByTestId } = render(getComponent({ device }));
+            expect(getByTestId('device-metadata-lastActivity').textContent).toEqual('Last activity Dec 29, 2021');
         });
     });
 });

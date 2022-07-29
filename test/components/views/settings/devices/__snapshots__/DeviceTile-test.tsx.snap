@@ -75,7 +75,7 @@ exports[`<DeviceTile /> separates metadata with a dot 1`] = `
         <span
           data-testid="device-metadata-lastActivity"
         >
-          Last activity Mon, Mar 14 15:13
+          Last activity 15:13
         </span>
          · 
         <span
