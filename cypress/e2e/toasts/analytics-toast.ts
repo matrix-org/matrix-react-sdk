@@ -42,25 +42,44 @@ function rejectToast(expectedTitle: string): void {
 describe("Analytics Toast", () => {
     let synapse: SynapseInstance;
 
-    beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
-            cy.initTestUser(synapse, "Tod");
-        });
-    });
-
     afterEach(() => {
         cy.stopSynapse(synapse);
     });
 
     it("should not show an analytics toast if config has nothing about posthog", () => {
+        cy.intercept("/config.json?cachebuster=*", req => {
+            req.continue(res => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { posthog, ...body } = res.body;
+                res.send(200, body);
+            });
+        });
+
+        cy.startSynapse("default").then(data => {
+            synapse = data;
+            cy.initTestUser(synapse, "Tod");
+        });
+
         assertNoToasts();
     });
 
     describe("with posthog enabled", () => {
         beforeEach(() => {
-            cy.tweakConfig({
-                posthog: {},
+            cy.intercept("/config.json?cachebuster=*", req => {
+                req.continue(res => {
+                    res.send(200, {
+                        ...res.body,
+                        posthog: {
+                            project_api_key: "foo",
+                            api_host: "bar",
+                        },
+                    });
+                });
+            });
+
+            cy.startSynapse("default").then(data => {
+                synapse = data;
+                cy.initTestUser(synapse, "Tod");
             });
         });
 

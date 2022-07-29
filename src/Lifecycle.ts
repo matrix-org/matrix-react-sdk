@@ -634,9 +634,11 @@ async function doSetLoggedIn(
         logger.warn("No local storage available: can't persist session!");
     }
 
+    await startMatrixClient(/*startSyncing=*/!softLogout);
+    // Fire this after starting the client otherwise various bits of the app will be split-brained
+    // on whether or not a MatrixClient is available and thus race
     dis.fire(Action.OnLoggedIn);
 
-    await startMatrixClient(/*startSyncing=*/!softLogout);
     return client;
 }
 
