@@ -3445,5 +3445,7 @@
     "Favourite Messages (under active development)": "Messages favoris (en cours de développement)",
     "Messages in this chat will be end-to-end encrypted.": "Les messages de cette conversation seront chiffrés de bout en bout.",
     "Saved Items": "Éléments sauvegardés",
-    "Send your first message to invite <displayName/> to chat": "Envoyez votre premier message pour inviter <displayName/> à discuter"
+    "Send your first message to invite <displayName/> to chat": "Envoyez votre premier message pour inviter <displayName/> à discuter",
+    "Choose a locale": "Choisir une langue",
+    "Spell check": "Vérificateur orthographique"
 }
