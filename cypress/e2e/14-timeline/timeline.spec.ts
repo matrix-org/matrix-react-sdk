@@ -20,7 +20,6 @@ import { MessageEvent } from "matrix-events-sdk";
 
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { EventType } from "matrix-js-sdk/src/@types/event";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
