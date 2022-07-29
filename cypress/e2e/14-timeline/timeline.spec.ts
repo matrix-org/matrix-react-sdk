@@ -78,10 +78,8 @@ describe("Timeline", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
             cy.initTestUser(synapse, OLD_NAME).then(() =>
-                cy.window({ log: false }).then(() => {
-                    cy.createRoom({ name: ROOM_NAME }).then(_room1Id => {
-                        roomId = _room1Id;
-                    });
+                cy.createRoom({ name: ROOM_NAME }).then(_room1Id => {
+                    roomId = _room1Id;
                 }),
             );
         });
