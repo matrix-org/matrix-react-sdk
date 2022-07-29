@@ -6,7 +6,8 @@ on:
     types:
       - completed
 jobs:
-  prepare:
+  # This job cannot have a pretty name due to https://github.com/haya14busa/action-workflow_run-status/issues/158
+  cypress:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
@@ -21,6 +22,9 @@ jobs:
       commit_email: ${{ steps.commit.outputs.email }}
       percy_enable: ${{ steps.percy.outputs.value || '1' }}
     steps:
+      # Wire up the status check for this workflow_run action
+      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0
+
       - id: prdetails
         if: github.event.workflow_run.event == 'pull_request'
         uses: matrix-org/pr-details-action@v1.1
@@ -42,7 +46,7 @@ jobs:
             core.setOutput("message", response.data.message);
             core.setOutput("author", response.data.author.name);
             core.setOutput("email", response.data.author.email);
-            
+
       # Only run Percy when it is demanded or on develop
       - name: Disable Percy if not needed
         id: percy
@@ -50,14 +54,14 @@ jobs:
           github.event.workflow_run.event == 'pull_request' &&
           !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
         run: echo "::set-output name=value::0
-          
+
       - name: Generate unique ID 💎
         id: uuid
         run: echo "::set-output name=value::sha-$GITHUB_SHA-time-$(date +"%s")"
 
-  # This job cannot have a pretty name due to https://github.com/haya14busa/action-workflow_run-status/issues/158
-  cypress:
-    needs: prepare
+  tests:
+    name: "Run Tests"
+    needs: cypress
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -71,9 +75,6 @@ jobs:
         # Run 3 instances in Parallel
         containers: [1, 2, 3]
     steps:
-      # Wire up the status check for this workflow_run action
-      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0
-
       - uses: actions/checkout@v2
         with:
           # XXX: We're checking out untrusted code in a secure context
@@ -103,12 +104,12 @@ jobs:
           wait-on: 'http://localhost:8080'
           record: true
           parallel: true
-          command-prefix: 'yarn percy exec --'
-          ci-build-id: ${{ needs.prepare.outputs.uuid }}
+          command-prefix: 'yarn percy exec --parallel --'
+          ci-build-id: ${{ needs.cypress.outputs.uuid }}
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          
+
           # Use existing chromium rather than downloading another
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
@@ -122,18 +123,18 @@ jobs:
           COMMIT_INFO_BRANCH: ${{ github.event.workflow_run.head_branch }}
           COMMIT_INFO_SHA: ${{ github.event.workflow_run.head_sha }}
           COMMIT_INFO_REMOTE: ${{ github.repositoryUrl }}
-          COMMIT_INFO_MESSAGE: ${{ needs.prepare.outputs.commit_message }}
-          COMMIT_INFO_AUTHOR: ${{ needs.prepare.outputs.commit_author }}
-          COMMIT_INFO_EMAIL: ${{ needs.prepare.outputs.commit_email }}
+          COMMIT_INFO_MESSAGE: ${{ needs.cypress.outputs.commit_message }}
+          COMMIT_INFO_AUTHOR: ${{ needs.cypress.outputs.commit_author }}
+          COMMIT_INFO_EMAIL: ${{ needs.cypress.outputs.commit_email }}
 
           # pass the Percy token as an environment variable
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          PERCY_ENABLE: ${{ needs.prepare.outputs.percy_enable }}
+          PERCY_ENABLE: ${{ needs.cypress.outputs.percy_enable }}
           PERCY_BROWSER_EXECUTABLE: /usr/bin/chromium-browser
           # tell Percy more details about the context of this run
           PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
           PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
-          PERCY_PULL_REQUEST: ${{ needs.prepare.outputs.pr_id }}
+          PERCY_PULL_REQUEST: ${{ needs.cypress.outputs.pr_id }}
 
       - name: Upload Artifact
         if: failure()
@@ -152,8 +153,17 @@ jobs:
           path: cypress/performance/measurements.json
           retention-days: 1
 
+  finalise-percy:
+    name: "Finalise Percy"
+    needs: tests
+    runs-on: ubuntu-latest
+    if: needs.cypress.outputs.percy_enable
+    permissions: { }
+    steps:
+      - run: npx percy build:finalize
+
   store-benchmark:
-    needs: cypress
+    needs: tests
     runs-on: ubuntu-latest
     if: |
       github.event.workflow_run.event != 'pull_request' &&
