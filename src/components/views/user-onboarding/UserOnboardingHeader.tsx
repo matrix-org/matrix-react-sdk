@@ -41,7 +41,7 @@ export function UserOnboardingHeader({ useCase }: Props) {
 
     switch (useCase) {
         case UseCase.PersonalMessaging:
-            title = _t("Secure messaging for friends and family.");
+            title = _t("Secure messaging for friends and family");
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls, " +
                 "%(brand)s is a great way to stay in touch.", {
                 brand: SdkConfig.get("brand"),
@@ -50,7 +50,7 @@ export function UserOnboardingHeader({ useCase }: Props) {
             actionLabel = _t("Start your first chat");
             break;
         case UseCase.WorkMessaging:
-            title = _t("Secure messaging for work.");
+            title = _t("Secure messaging for work");
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls," +
                 " %(brand)s is a great way to stay in touch.", {
                 brand: SdkConfig.get("brand"),
@@ -59,14 +59,14 @@ export function UserOnboardingHeader({ useCase }: Props) {
             actionLabel = _t("Find your co-workers");
             break;
         case UseCase.CommunityMessaging:
-            title = _t("Community ownership.");
+            title = _t("Community ownership");
             description = _t("Keep ownership and control of community discussion.\n" +
                 "Scale to support millions, with powerful moderation and interoperability.");
             image = require("../../../../res/img/user-onboarding/CommunityMessaging.png");
             actionLabel = _t("Find your people");
             break;
         default:
-            title = _t("Welcome to %(brand)s.", {
+            title = _t("Welcome to %(brand)s", {
                 brand: SdkConfig.get("brand"),
             });
             description = _t("With free end-to-end encrypted messaging, and unlimited voice and video calls," +
@@ -83,6 +83,7 @@ export function UserOnboardingHeader({ useCase }: Props) {
             <div className="mx_UserOnboardingHeader_content">
                 <Heading size="h1">
                     { title }
+                    <span className="mx_UserOnboardingHeader_dot">.</span>
                 </Heading>
                 <p>
                     { description }
