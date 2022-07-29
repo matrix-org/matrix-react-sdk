@@ -3445,5 +3445,7 @@
     "Favourite Messages (under active development)": "Oblíbené zprávy (v aktivním vývoji)",
     "Messages in this chat will be end-to-end encrypted.": "Zprávy v této místnosti budou koncově šifrovány.",
     "Send your first message to invite <displayName/> to chat": "Odesláním první zprávy pozvete <displayName/> do chatu",
-    "Saved Items": "Uložené položky"
+    "Saved Items": "Uložené položky",
+    "Choose a locale": "Zvolte jazyk",
+    "Spell check": "Kontrola pravopisu"
 }
