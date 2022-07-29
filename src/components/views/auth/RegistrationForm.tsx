@@ -26,7 +26,7 @@ import { _t, _td } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 import withValidation, { IValidationResult } from '../elements/Validation';
-import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 import EmailField from "./EmailField";
 import PassphraseField from "./PassphraseField";
 import Field from '../elements/Field';
@@ -251,7 +251,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private onEmailChange = ev => {
         this.setState({
-            email: ev.target.value,
+            email: ev.target.value.trim(),
         });
     };
 

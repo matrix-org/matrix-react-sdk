@@ -36,10 +36,11 @@ import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { canEditContent } from "../../../../src/utils/EventUtils";
 import { copyPlaintext, getSelectedText } from "../../../../src/utils/strings";
 import MessageContextMenu from "../../../../src/components/views/context_menus/MessageContextMenu";
-import { makeBeaconEvent, makeBeaconInfoEvent, stubClient } from '../../../test-utils';
+import { makeBeaconEvent, makeBeaconInfoEvent, makeLocationEvent, stubClient } from '../../../test-utils';
 import dispatcher from '../../../../src/dispatcher/dispatcher';
 import SettingsStore from '../../../../src/settings/SettingsStore';
 import { ReadPinsEventId } from '../../../../src/components/views/right_panel/types';
+import { Action } from "../../../../src/dispatcher/actions";
 
 jest.mock("../../../../src/utils/strings", () => ({
     copyPlaintext: jest.fn(),
@@ -50,6 +51,7 @@ jest.mock("../../../../src/utils/EventUtils", () => ({
     ...jest.requireActual("../../../../src/utils/EventUtils"),
     canEditContent: jest.fn(),
 }));
+jest.mock('../../../../src/dispatcher/dispatcher');
 
 const roomId = 'roomid';
 
@@ -308,6 +310,49 @@ describe('MessageContextMenu', () => {
         });
     });
 
+    describe('open as map link', () => {
+        it('does not allow opening a plain message in open street maps', () => {
+            const eventContent = MessageEvent.from("hello");
+            const menu = createMenuWithContent(eventContent);
+            expect(menu.find('a[aria-label="Open in OpenStreetMap"]')).toHaveLength(0);
+        });
+
+        it('does not allow opening a beacon that does not have a shareable location event', () => {
+            const deadBeaconEvent = makeBeaconInfoEvent('@alice', roomId, { isLive: false });
+            const beacon = new Beacon(deadBeaconEvent);
+            const beacons = new Map<BeaconIdentifier, Beacon>();
+            beacons.set(getBeaconInfoIdentifier(deadBeaconEvent), beacon);
+            const menu = createMenu(deadBeaconEvent, {}, {}, beacons);
+            expect(menu.find('a[aria-label="Open in OpenStreetMap"]')).toHaveLength(0);
+        });
+
+        it('allows opening a location event in open street map', () => {
+            const locationEvent = makeLocationEvent('geo:50,50');
+            const menu = createMenu(locationEvent);
+            // exists with a href with the lat/lon from the location event
+            expect(
+                menu.find('a[aria-label="Open in OpenStreetMap"]').at(0).props().href,
+            ).toEqual('https://www.openstreetmap.org/?mlat=50&mlon=50#map=16/50/50');
+        });
+
+        it('allows opening a beacon that has a shareable location event', () => {
+            const liveBeaconEvent = makeBeaconInfoEvent('@alice', roomId, { isLive: true });
+            const beaconLocation = makeBeaconEvent(
+                '@alice', { beaconInfoId: liveBeaconEvent.getId(), geoUri: 'geo:51,41' },
+            );
+            const beacon = new Beacon(liveBeaconEvent);
+            // @ts-ignore illegally set private prop
+            beacon._latestLocationEvent = beaconLocation;
+            const beacons = new Map<BeaconIdentifier, Beacon>();
+            beacons.set(getBeaconInfoIdentifier(liveBeaconEvent), beacon);
+            const menu = createMenu(liveBeaconEvent, {}, {}, beacons);
+            // exists with a href with the lat/lon from the location event
+            expect(
+                menu.find('a[aria-label="Open in OpenStreetMap"]').at(0).props().href,
+            ).toEqual('https://www.openstreetmap.org/?mlat=51&mlon=41#map=16/51/41');
+        });
+    });
+
     describe("right click", () => {
         it('copy button does work as expected', () => {
             const text = "hello";
@@ -418,6 +463,29 @@ describe('MessageContextMenu', () => {
             const reactButton = menu.find('div[aria-label="View in room"]');
             expect(reactButton).toHaveLength(0);
         });
+
+        it('creates a new thread on reply in thread click', () => {
+            const eventContent = MessageEvent.from("hello");
+            const mxEvent = new MatrixEvent(eventContent.serialize());
+
+            Thread.hasServerSideSupport = true;
+            const context = {
+                canSendMessages: true,
+            };
+            jest.spyOn(SettingsStore, 'getValue').mockReturnValue(true);
+
+            const menu = createRightClickMenu(mxEvent, context);
+
+            const replyInThreadButton = menu.find('div[aria-label="Reply in thread"]');
+            expect(replyInThreadButton).toHaveLength(1);
+            replyInThreadButton.simulate("click");
+
+            expect(dispatcher.dispatch).toHaveBeenCalledWith({
+                action: Action.ShowThread,
+                rootEvent: mxEvent,
+                push: false,
+            });
+        });
     });
 });
 
@@ -426,6 +494,10 @@ function createRightClickMenuWithContent(
     context?: Partial<IRoomState>,
 ): ReactWrapper {
     return createMenuWithContent(eventContent, { rightClick: true }, context);
+}
+
+function createRightClickMenu(mxEvent: MatrixEvent, context?: Partial<IRoomState>): ReactWrapper {
+    return createMenu(mxEvent, { rightClick: true }, context);
 }
 
 function createMenuWithContent(

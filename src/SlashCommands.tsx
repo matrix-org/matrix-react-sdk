@@ -39,7 +39,7 @@ import WidgetUtils from "./utils/WidgetUtils";
 import { textToHtmlRainbow } from "./utils/colour";
 import { AddressType, getAddressType } from './UserAddress';
 import { abbreviateUrl } from './utils/UrlUtils';
-import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/IdentityServerUtils';
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from './utils/IdentityServerUtils';
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import { WidgetType } from "./widgets/WidgetType";
 import { Jitsi } from "./widgets/Jitsi";
@@ -544,7 +544,7 @@ export const Commands = [
 
                             prom = finished.then(([useDefault]) => {
                                 if (useDefault) {
-                                    useDefaultIdentityServer();
+                                    setToDefaultIdentityServer();
                                     return;
                                 }
                                 throw newTranslatableError(
@@ -1071,6 +1071,28 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
+        command: 'remakeolm',
+        description: _td('Developer command: Discards the current outbound group session and sets up new Olm sessions'),
+        isEnabled: () => {
+            return SettingsStore.getValue("developerMode");
+        },
+        runFn: (roomId) => {
+            try {
+                const room = MatrixClientPeg.get().getRoom(roomId);
+
+                MatrixClientPeg.get().forceDiscardSession(roomId);
+
+                // noinspection JSIgnoredPromiseFromCall
+                MatrixClientPeg.get().crypto.ensureOlmSessionsForUsers(room.getMembers().map(m => m.userId), true);
+            } catch (e) {
+                return reject(e.message);
+            }
+            return success();
+        },
+        category: CommandCategories.advanced,
+        renderingTypes: [TimelineRenderingType.Room],
+    }),
+    new Command({
         command: "rainbow",
         description: _td("Sends the given message coloured as a rainbow"),
         args: '<message>',
@@ -1283,19 +1305,17 @@ export const Commands = [
             description: effect.description(),
             args: '<message>',
             runFn: function(roomId, args) {
-                return success((async () => {
-                    if (!args) {
-                        args = effect.fallbackMessage();
-                        MatrixClientPeg.get().sendEmoteMessage(roomId, args);
-                    } else {
-                        const content = {
-                            msgtype: effect.msgType,
-                            body: args,
-                        };
-                        MatrixClientPeg.get().sendMessage(roomId, content);
-                    }
-                    dis.dispatch({ action: `effects.${effect.command}` });
-                })());
+                let content: IContent;
+                if (!args) {
+                    content = ContentHelpers.makeEmoteMessage(effect.fallbackMessage());
+                } else {
+                    content = {
+                        msgtype: effect.msgType,
+                        body: args,
+                    };
+                }
+                dis.dispatch({ action: `effects.${effect.command}` });
+                return successSync(content);
             },
             category: CommandCategories.effects,
             renderingTypes: [TimelineRenderingType.Room],

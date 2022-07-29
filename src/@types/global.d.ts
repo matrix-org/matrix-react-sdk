@@ -173,10 +173,6 @@ declare global {
         setSinkId(outputId: string): void;
     }
 
-    interface HTMLStyleElement {
-        disabled: boolean;
-    }
-
     interface HTMLDialogElement {
         readonly open: boolean;
         returnValue?: string;

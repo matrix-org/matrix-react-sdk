@@ -21,13 +21,15 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
+import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
-import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
 import { abbreviateUrl } from "../../../utils/UrlUtils";
 import IdentityAuthClient from "../../../IdentityAuthClient";
@@ -60,10 +62,11 @@ import CopyableText from "../elements/CopyableText";
 import { ScreenName } from '../../../PosthogTrackers';
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { DirectoryMember, IDMUserTileProps, Member, startDm, ThreepidMember } from "../../../utils/direct-messages";
+import { DirectoryMember, IDMUserTileProps, Member, ThreepidMember } from "../../../utils/direct-messages";
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
 import Modal from '../../../Modal';
 import dis from "../../../dispatcher/dispatcher";
+import { startDm } from '../../../utils/dm/startDm';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -186,8 +189,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 
         const avatarSize = 36;
         const avatar = (this.props.member as ThreepidMember).isEmail
-            ? <img
-                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
+            ? <EmailPillAvatarIcon
                 width={avatarSize}
                 height={avatarSize}
             />
@@ -813,7 +815,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         // Update the IS in account data. Actually using it may trigger terms.
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        useDefaultIdentityServer();
+        setToDefaultIdentityServer();
         this.setState({ canUseIdentityServer: true, tryingIdentityServer: false });
     };
 
@@ -1152,10 +1154,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 if (visibility === "world_readable" || visibility === "shared") {
                     keySharingWarning =
                         <p className='mx_InviteDialog_helpText'>
-                            <img
-                                src={require("../../../../res/img/element-icons/info.svg").default}
-                                width={14}
-                                height={14} />
+                            <InfoIcon height={14} width={14} />
                             { " " + _t("Invited people will be able to read old messages.") }
                         </p>;
                 }

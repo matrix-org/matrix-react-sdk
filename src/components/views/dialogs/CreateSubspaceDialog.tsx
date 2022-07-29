@@ -25,7 +25,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { createSpace, SpaceCreateForm } from "../spaces/SpaceCreateMenu";
 import { SubspaceSelector } from "./AddExistingToSpaceDialog";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
@@ -47,14 +46,10 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
     const [avatar, setAvatar] = useState<File>(null);
     const [topic, setTopic] = useState<string>("");
 
-    const supportsRestricted = !!SpaceStore.instance.restrictedJoinRuleSupport?.preferred;
-
     const spaceJoinRule = space.getJoinRule();
-    let defaultJoinRule = JoinRule.Invite;
+    let defaultJoinRule = JoinRule.Restricted;
     if (spaceJoinRule === JoinRule.Public) {
         defaultJoinRule = JoinRule.Public;
-    } else if (supportsRestricted) {
-        defaultJoinRule = JoinRule.Restricted;
     }
     const [joinRule, setJoinRule] = useState<JoinRule>(defaultJoinRule);
 
@@ -148,7 +143,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                     label={_t("Space visibility")}
                     labelInvite={_t("Private space (invite only)")}
                     labelPublic={_t("Public space")}
-                    labelRestricted={supportsRestricted ? _t("Visible to space members") : undefined}
+                    labelRestricted={_t("Visible to space members")}
                     width={478}
                     value={joinRule}
                     onChange={setJoinRule}

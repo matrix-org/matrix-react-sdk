@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent, MouseEvent } from 'react';
+import React, { createRef, SyntheticEvent, MouseEvent, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import highlight from 'highlight.js';
 import { MsgType } from "matrix-js-sdk/src/@types/event";
@@ -29,6 +29,7 @@ import * as ContextMenu from '../../structures/ContextMenu';
 import { ChevronFace, toRightOf } from '../../structures/ContextMenu';
 import SettingsStore from "../../../settings/SettingsStore";
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
+import { tooltipifyLinks, unmountTooltips } from '../../../utils/tooltipify';
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
@@ -63,6 +64,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
     private unmounted = false;
     private pills: Element[] = [];
+    private tooltips: Element[] = [];
 
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -91,7 +93,13 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         // we should be pillify them here by doing the linkifying BEFORE the pillifying.
         pillifyLinks([this.contentRef.current], this.props.mxEvent, this.pills);
         HtmlUtils.linkifyElement(this.contentRef.current);
+
         this.calculateUrlPreview();
+
+        // tooltipifyLinks AFTER calculateUrlPreview because the DOM inside the tooltip
+        // container is empty before the internal component has mounted so calculateUrlPreview
+        // won't find any anchors
+        tooltipifyLinks([this.contentRef.current], this.pills, this.tooltips);
 
         if (this.props.mxEvent.getContent().format === "org.matrix.custom.html") {
             // Handle expansion and add buttons
@@ -283,6 +291,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     componentWillUnmount() {
         this.unmounted = true;
         unmountPills(this.pills);
+        unmountTooltips(this.tooltips);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -556,7 +565,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
-        let body;
+        let body: ReactNode;
         if (SettingsStore.isEnabled("feature_extensible_events")) {
             const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
             if (extev?.isEquivalentTo(M_MESSAGE)) {
