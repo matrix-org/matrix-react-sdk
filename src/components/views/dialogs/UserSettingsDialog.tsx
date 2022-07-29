@@ -35,8 +35,8 @@ import BaseDialog from "./BaseDialog";
 import { IDialogProps } from "./IDialogProps";
 import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab";
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
-import { UserTab } from "./UserTab";
 import SessionManagerTab from '../settings/tabs/user/SessionManagerTab';
+import { UserTab } from "./UserTab";
 
 interface IProps extends IDialogProps {
     initialTabId?: UserTab;
