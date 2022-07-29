@@ -52,6 +52,11 @@ limitations under the License.
     .mx_UserOnboardingTask_action.mx_AccessibleButton {
         grid-column: 3;
         min-width: 180px;
+
+        @media (max-width: 800px) {
+            grid-column: 2;
+            margin-top: -16px;
+        }
     }
 
     &.mx_UserOnboardingTask_completed {
