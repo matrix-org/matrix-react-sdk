@@ -145,7 +145,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         ));
         if (this.state.newSessionManagerEnabled) {
             tabs.push(new Tab(
-                UserTab.Security,
+                UserTab.SessionManager,
                 _td("Sessions"),
                 "mx_UserSettingsDialog_securityIcon",
                 <SessionManagerTab />,
