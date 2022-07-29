@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { useEffect, useState } from "react";
 import * as React from "react";
 
 import { useInitialSyncComplete } from "../../../hooks/useIsInitialSyncComplete";
 import { useSettingValue } from "../../../hooks/useSettings";
+import { useUserOnboardingTasks } from "../../../hooks/useUserOnboardingTasks";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SdkConfig from "../../../SdkConfig";
 import { UseCase } from "../../../settings/enums/UseCase";
@@ -39,12 +41,30 @@ export function showUserOnboardingPage(useCase: UseCase): boolean {
     return useCase !== null || MatrixClientPeg.userRegisteredAfter(USER_ONBOARDING_CUTOFF_DATE);
 }
 
+const ANIMATION_DURATION = 2800;
 export function UserOnboardingPage({ justRegistered = false }: Props) {
     const config = SdkConfig.get();
     const pageUrl = getHomePageUrl(config);
 
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
+    const [completedTasks, waitingTasks] = useUserOnboardingTasks();
+
     const initialSyncComplete = useInitialSyncComplete();
+    const [showList, setShowList] = useState<boolean>(false);
+    useEffect(() => {
+        if (initialSyncComplete) {
+            let handler: number | null = setTimeout(() => {
+                handler = null;
+                setShowList(true);
+            }, ANIMATION_DURATION);
+            return () => {
+                clearTimeout(handler);
+                handler = null;
+            };
+        } else {
+            setShowList(false);
+        }
+    }, [initialSyncComplete, setShowList]);
 
     // Only show new onboarding list to users who registered after a given date or have chosen a use case
     if (!showUserOnboardingPage(useCase)) {
@@ -57,8 +77,8 @@ export function UserOnboardingPage({ justRegistered = false }: Props) {
 
     return <AutoHideScrollbar className="mx_UserOnboardingPage">
         <UserOnboardingHeader useCase={useCase} />
-        { initialSyncComplete && (
-            <UserOnboardingList />
+        { showList && (
+            <UserOnboardingList completedTasks={completedTasks} waitingTasks={waitingTasks} />
         ) }
     </AutoHideScrollbar>;
 }

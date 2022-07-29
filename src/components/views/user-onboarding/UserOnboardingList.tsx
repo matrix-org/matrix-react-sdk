@@ -17,16 +17,19 @@ limitations under the License.
 import * as React from "react";
 import { useMemo } from "react";
 
-import { UserOnboardingTask as Task, useUserOnboardingTasks } from "../../../hooks/useUserOnboardingTasks";
+import { UserOnboardingTask as Task } from "../../../hooks/useUserOnboardingTasks";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import ProgressBar from "../../views/elements/ProgressBar";
 import Heading from "../../views/typography/Heading";
 import { UserOnboardingTask } from "./UserOnboardingTask";
 
-export function UserOnboardingList() {
-    const [completedTasks, waitingTasks] = useUserOnboardingTasks();
+interface Props {
+    completedTasks: Task[];
+    waitingTasks: Task[];
+}
 
+export function UserOnboardingList({ completedTasks, waitingTasks }: Props) {
     const completed = completedTasks.length;
     const waiting = waitingTasks.length;
     const total = completed + waiting;
