@@ -40,7 +40,7 @@ function setup(trafficlight_url, uuid) {
 function trafficlight(trafficlight_url, uuid) {
   cypress
     .run({
-      spec: './cypress/integration/trafficlight/*.ts',
+      spec: './cypress/e2e/trafficlight/*.ts',
       env: {
         "TRAFFICLIGHT_URL": trafficlight_url,
         "TRAFFICLIGHT_UUID": uuid,
@@ -50,7 +50,9 @@ function trafficlight(trafficlight_url, uuid) {
            "openMode": 0,
            "runMode": 0,
         },
-        ignoreTestFiles: [],
+        e2e: {
+          excludeSpecPattern: [],
+        },
         videosFolder: "cypress/videos/trafficlight/"+uuid+"/",
       },
       quiet: false,
@@ -69,7 +71,7 @@ function trafficlight(trafficlight_url, uuid) {
 function trafficlight_oneshot(trafficlight_url, uuid) {
   cypress
     .open({
-      spec: './cypress/integration/trafficlight/*.ts',
+      spec: './cypress/e2e/trafficlight/*.ts',
       env: {
         "TRAFFICLIGHT_URL": trafficlight_url,
         "TRAFFICLIGHT_UUID": uuid,
@@ -80,7 +82,9 @@ function trafficlight_oneshot(trafficlight_url, uuid) {
            "runMode": 0,
         },
         videosFolder: "cypress/videos/trafficlight/"+uuid+"/",
-        ignoreTestFiles: [],
+        e2e: {
+          excludeSpecPattern: [],
+        },
       },
       quiet: false,
     })
