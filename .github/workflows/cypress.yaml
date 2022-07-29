@@ -135,6 +135,8 @@ jobs:
           PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
           PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
           PERCY_PULL_REQUEST: ${{ needs.cypress.outputs.pr_id }}
+          PERCY_PARALLEL_TOTAL: ${{ strategy.job-total }}
+          PERCY_PARALLEL_NONCE: ${{ needs.cypress.outputs.uuid }}
 
       - name: Upload Artifact
         if: failure()
@@ -152,15 +154,6 @@ jobs:
           name: cypress-benchmark
           path: cypress/performance/measurements.json
           retention-days: 1
-
-  finalise-percy:
-    name: "Finalise Percy"
-    needs: tests
-    runs-on: ubuntu-latest
-    if: needs.cypress.outputs.percy_enable
-    permissions: { }
-    steps:
-      - run: npx percy build:finalize
 
   store-benchmark:
     needs: tests
