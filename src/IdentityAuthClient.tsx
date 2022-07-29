@@ -26,8 +26,7 @@ import { Service, startTermsFlow, TermsNotSignedError } from './Terms';
 import {
     doesAccountDataHaveIdentityServer,
     doesIdentityServerHaveTerms,
-    // Renamed because otherwise eslint & sonarqube think the function is a hook call
-    useDefaultIdentityServer as _useDefaultIdentityServer,
+    setToDefaultIdentityServer,
 } from './utils/IdentityServerUtils';
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import { abbreviateUrl } from "./utils/UrlUtils";
@@ -165,7 +164,7 @@ export default class IdentityAuthClient {
             });
             const [confirmed] = await finished;
             if (confirmed) {
-                _useDefaultIdentityServer();
+                setToDefaultIdentityServer();
             } else {
                 throw new AbortedIdentityActionError(
                     "User aborted identity server action without terms",
