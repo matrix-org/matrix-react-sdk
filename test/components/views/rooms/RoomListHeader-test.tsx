@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper, HTMLAttributes } from 'enzyme';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { Room } from 'matrix-js-sdk/src/matrix';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { act } from "react-dom/test-utils";
 import { mocked } from 'jest-mock';
@@ -37,23 +38,18 @@ jest.mock('../../../../src/customisations/helpers/UIComponents', () => ({
     shouldShowComponent: jest.fn(),
 }));
 
-const blockUIComponent = component => {
+const blockUIComponent = (component: UIComponent): void => {
     mocked(shouldShowComponent).mockImplementation(feature => feature !== component);
 };
 
-const setupSpace = (client) => {
-    const testSpace = mkSpace(client, "!space:server");
+const setupSpace = (client: MatrixClient): Room => {
+    const testSpace: Room = mkSpace(client, "!space:server");
     testSpace.name = "Test Space";
     client.getRoom = () => testSpace;
     return testSpace;
 };
 
-const setupMainMenu = async (client, testSpace) => {
-    const getUserIdForRoomId = jest.fn();
-    const getDMRoomsForUserId = jest.fn();
-    // @ts-ignore
-    DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
-
+const setupMainMenu = async (client: MatrixClient, testSpace: Room): Promise<ReactWrapper> => {
     await testUtils.setupAsyncStoreWithClient(SpaceStore.instance, client);
     act(() => {
         SpaceStore.instance.setActiveSpace(testSpace.roomId);
@@ -72,12 +68,7 @@ const setupMainMenu = async (client, testSpace) => {
     return wrapper;
 };
 
-const setupPlusMenu = async (client, testSpace) => {
-    const getUserIdForRoomId = jest.fn();
-    const getDMRoomsForUserId = jest.fn();
-    // @ts-ignore
-    DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
-
+const setupPlusMenu = async (client: MatrixClient, testSpace: Room): Promise<ReactWrapper> => {
     await testUtils.setupAsyncStoreWithClient(SpaceStore.instance, client);
     act(() => {
         SpaceStore.instance.setActiveSpace(testSpace.roomId);
@@ -96,15 +87,15 @@ const setupPlusMenu = async (client, testSpace) => {
     return wrapper;
 };
 
-const checkIsDisabled = menuItem => {
+const checkIsDisabled = (menuItem: ReactWrapper<HTMLAttributes>): void => {
     expect(menuItem.props().disabled).toBeTruthy();
     expect(menuItem.props()['aria-disabled']).toBeTruthy();
 };
 
-const checkMenuLabels = (items, labelArray) => {
+const checkMenuLabels = (items: ReactWrapper<HTMLAttributes>, labelArray: Array<string>) => {
     expect(items).toHaveLength(labelArray.length);
 
-    const checkLabel = (item, label) => {
+    const checkLabel = (item: ReactWrapper<HTMLAttributes>, label: string) => {
         expect(item.find(".mx_IconizedContextMenu_label").text()).toBe(label);
     };
 
@@ -119,6 +110,12 @@ describe("RoomListHeader", () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
+
+        const dmRoomMap = {
+            getUserIdForRoomId: jest.fn(),
+            getDMRoomsForUserId: jest.fn(),
+        } as unknown as DMRoomMap;
+        DMRoomMap.setShared(dmRoomMap);
         client = createTestClient();
         mocked(shouldShowComponent).mockReturnValue(true); // show all UIComponents
     });
