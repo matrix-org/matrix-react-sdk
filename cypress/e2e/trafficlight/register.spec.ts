@@ -43,7 +43,8 @@ function recurse() {
                 cy.get("#mx_RegistrationForm_password").type(data['password']);
                 cy.get("#mx_RegistrationForm_passwordConfirm").type(data['password']);
                 cy.get(".mx_Login_submit").click();
-        
+                cy.get('.mx_UseCaseSelection_skip > .mx_AccessibleButton').click();
+
                 cy.request('POST', respond_url,{ response: "registered" }).then((response) => {
                   expect(response.status).to.eq(200);
                 })
