@@ -60,6 +60,7 @@ describe("Analytics Toast", () => {
             cy.initTestUser(synapse, "Tod");
         });
 
+        rejectToast("Notifications");
         assertNoToasts();
     });
 
@@ -80,6 +81,7 @@ describe("Analytics Toast", () => {
             cy.startSynapse("default").then(data => {
                 synapse = data;
                 cy.initTestUser(synapse, "Tod");
+                rejectToast("Notifications");
             });
         });
 
