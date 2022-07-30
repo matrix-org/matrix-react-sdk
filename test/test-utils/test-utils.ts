@@ -31,11 +31,12 @@ import {
     IEventRelation,
     IUnsigned,
 } from 'matrix-js-sdk/src/matrix';
+import { normalize } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
 import { makeType } from "../../src/utils/TypeUtils";
-import { ValidatedServerConfig } from "../../src/utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
@@ -384,6 +385,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
             members: {},
             getJoinRule: jest.fn().mockReturnValue(JoinRule.Invite),
             on: jest.fn(),
+            off: jest.fn(),
         } as unknown as RoomState,
         tags: {},
         setBlacklistUnverifiedDevices: jest.fn(),
@@ -392,6 +394,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         removeListener: jest.fn(),
         getDMInviter: jest.fn(),
         name,
+        normalizedName: normalize(name || ""),
         getAvatarUrl: () => 'mxc://avatar.url/room.png',
         getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
         isSpaceRoom: jest.fn().mockReturnValue(false),

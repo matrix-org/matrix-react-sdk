@@ -29,7 +29,7 @@ import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/
 import DMRoomMap from "../../../utils/DMRoomMap";
 import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
-import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
 import { abbreviateUrl } from "../../../utils/UrlUtils";
 import IdentityAuthClient from "../../../IdentityAuthClient";
@@ -62,10 +62,11 @@ import CopyableText from "../elements/CopyableText";
 import { ScreenName } from '../../../PosthogTrackers';
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { DirectoryMember, IDMUserTileProps, Member, startDm, ThreepidMember } from "../../../utils/direct-messages";
+import { DirectoryMember, IDMUserTileProps, Member, ThreepidMember } from "../../../utils/direct-messages";
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
 import Modal from '../../../Modal';
 import dis from "../../../dispatcher/dispatcher";
+import { startDm } from '../../../utils/dm/startDm';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -814,7 +815,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         // Update the IS in account data. Actually using it may trigger terms.
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        useDefaultIdentityServer();
+        setToDefaultIdentityServer();
         this.setState({ canUseIdentityServer: true, tryingIdentityServer: false });
     };
 
