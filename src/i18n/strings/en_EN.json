@@ -1328,6 +1328,8 @@
     "Integration manager": "Integration manager",
     "Private (invite only)": "Private (invite only)",
     "Only invited people can join.": "Only invited people can join.",
+    "Ask to join": "Ask to join",
+    "Requires users to be granted access in order to join": "Requires users to be granted access in order to join",
     "Anyone can find and join.": "Anyone can find and join.",
     "Upgrade required": "Upgrade required",
     "& %(count)s more|other": "& %(count)s more",

@@ -24,6 +24,7 @@ import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import RoomAvatar from "../avatars/RoomAvatar";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
+import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import ManageRestrictedJoinRuleDialog from "../dialogs/ManageRestrictedJoinRuleDialog";
@@ -49,12 +50,16 @@ interface IProps {
 const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeChange, closeSettingsFn }: IProps) => {
     const cli = room.client;
 
+    const roomSupportsKnocking = doesRoomVersionSupport(room.getVersion(), PreferredRoomVersions.KnockingRooms);
+
     const roomSupportsRestricted = doesRoomVersionSupport(room.getVersion(), PreferredRoomVersions.RestrictedRooms);
     const preferredRestrictionVersion = !roomSupportsRestricted && promptUpgrade
         ? PreferredRoomVersions.RestrictedRooms
         : undefined;
 
     const disabled = !room.currentState.mayClientSendStateEvent(EventType.RoomJoinRules, cli);
+
+    const knockingEnabled = SettingsStore.getValue("feature_knocking");
 
     const [content, setContent] = useLocalEcho<IJoinRuleEventContent>(
         () => room.currentState.getStateEvents(EventType.RoomJoinRules, "")?.getContent(),
@@ -90,6 +95,11 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         description: _t("Only invited people can join."),
         checked: joinRule === JoinRule.Invite || (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length),
     }, {
+        value: JoinRule.Knock,
+        label: _t("Ask to join"),
+        description: _t("Requires users to be granted access in order to join"),
+        checked: joinRule === JoinRule.Knock && knockingEnabled && roomSupportsKnocking,
+    }, {
         value: JoinRule.Public,
         label: _t("Public"),
         description: <>
@@ -97,6 +107,11 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
             { aliasWarning }
         </>,
     }];
+
+    if (!knockingEnabled || !roomSupportsKnocking) {
+        definitions.splice(1, 1); // removes the knock option if the room isn't compatible for the same
+        definitions[0].checked = true; //makes invite only room as default
+    }
 
     if (roomSupportsRestricted || preferredRestrictionVersion || joinRule === JoinRule.Restricted) {
         let upgradeRequiredPill;
