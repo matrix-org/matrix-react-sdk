@@ -16,11 +16,11 @@ limitations under the License.
 
 import { useMemo } from "react";
 
-import { UserTab } from "../components/views/dialogs/UserTab";
+import { ProfileSetupDialog } from "../components/views/dialogs/ProfileSetupDialog";
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
-import { Action } from "../dispatcher/actions";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { _t } from "../languageHandler";
+import Modal from "../Modal";
 import { Notifier } from "../Notifier";
 import PosthogTrackers from "../PosthogTrackers";
 import { UseCase } from "../settings/enums/UseCase";
@@ -115,10 +115,7 @@ const tasks: InternalUserOnboardingTask[] = [
             label: _t("Your profile"),
             onClick: (ev: ButtonEvent) => {
                 PosthogTrackers.trackInteraction("WebUserOnboardingTaskSetupProfile", ev);
-                defaultDispatcher.dispatch({
-                    action: Action.ViewUserSettings,
-                    initialTabId: UserTab.General,
-                });
+                Modal.createDialog(ProfileSetupDialog, {}, "mx_ProfileSetupDialog_wrapper", false, true);
             },
         },
     },

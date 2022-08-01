@@ -1,0 +1,69 @@
+.mx_ProfileSetupDialog {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-16;
+    color: $primary-content;
+    width: 600px;
+
+    .mx_Field {
+        margin: 0;
+
+        label {
+            color: $secondary-content;
+        }
+    }
+
+    .mx_ProfileSetupDialog_header {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: $spacing-24;
+        gap: $spacing-24;
+        align-items: center;
+
+        .mx_ProfileSetupDialog_name {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-12;
+            flex-grow: 1;
+            justify-content: center;
+
+            .mx_Field {
+                max-width: 400px;
+            }
+
+            .mx_ProfileSetupDialog_id {
+                color: $secondary-content;
+            }
+        }
+    }
+
+    .mx_ProfileSetupDialog_tip {
+        display: flex;
+        flex-direction: column;
+        padding: $spacing-16;
+        gap: $spacing-12;
+        border-radius: 12px;
+        background: $system;
+        align-items: start;
+    }
+
+    .mx_ProfileSetupDialog_optionIcon {
+        width: 16px;
+        height: 16px;
+        vertical-align: top;
+        margin-right: 4px;
+        fill: $secondary-content;
+    }
+
+    .mx_ProfileSetupDialog_optionTitle {
+        color: $primary-content;
+    }
+
+    .mx_ProfileSetupDialog_optionDescription {
+        color: $secondary-content;
+    }
+
+    .mx_ProfileDiscoveryForm {
+        display: contents;
+    }
+}
