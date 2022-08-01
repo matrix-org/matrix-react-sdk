@@ -210,8 +210,6 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
     };
     if (opts.skey !== undefined) {
         event.state_key = opts.skey;
-        // @ts-ignore
-        event.isState = () => opts.skey !== undefined;
     } else if ([
         "m.room.name", "m.room.topic", "m.room.create", "m.room.join_rules",
         "m.room.power_levels", "m.room.topic", "m.room.history_visibility",
@@ -220,15 +218,6 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
     ].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
-
-    // @ts-ignore
-    event.getRoomId = () => opts.room;
-    // @ts-ignore
-    event.getType = () => opts.type;
-    // @ts-ignore
-    event.getStateKey = () => opts.skey;
-    // @ts-ignore
-    event.getContent = () => opts.content;
 
     const mxEvent = opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
     if (!mxEvent.sender && opts.user && opts.room) {

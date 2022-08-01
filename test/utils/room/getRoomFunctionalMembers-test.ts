@@ -29,6 +29,7 @@ describe("getRoomFunctionalMembers", () => {
 
     it("should return an empty array if functional members state event does not have a service_members field", () => {
         room.currentState.setStateEvents([mkEvent({
+            event: true,
             type: UNSTABLE_ELEMENT_FUNCTIONAL_USERS.name,
             user: "@user:example.com)",
             room: room.roomId,
@@ -40,6 +41,7 @@ describe("getRoomFunctionalMembers", () => {
 
     it("should return service_members field of the functional users state event", () => {
         room.currentState.setStateEvents([mkEvent({
+            event: true,
             type: UNSTABLE_ELEMENT_FUNCTIONAL_USERS.name,
             user: "@user:example.com)",
             room: room.roomId,
