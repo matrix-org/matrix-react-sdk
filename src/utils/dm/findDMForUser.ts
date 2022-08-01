@@ -45,7 +45,7 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
             const joinedMembers = members.filter(
                 m => !functionalUsers.includes(m.userId) && isJoinedOrNearlyJoined(m.membership),
             );
-            const otherMember = joinedMembers.find(m => !functionalUsers.includes(m.userId) && m.userId === userId);
+            const otherMember = joinedMembers.find(m => m.userId === userId);
             return otherMember && joinedMembers.length === 2;
         }
         return false;
