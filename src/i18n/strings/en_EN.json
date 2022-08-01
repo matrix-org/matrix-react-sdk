@@ -1300,7 +1300,6 @@
     "You aren't signed into any other devices.": "You aren't signed into any other devices.",
     "This device": "This device",
     "Failed to set display name": "Failed to set display name",
-    "Last seen %(date)s at %(ip)s": "Last seen %(date)s at %(ip)s",
     "Sign Out": "Sign Out",
     "Display Name": "Display Name",
     "Rename": "Rename",
