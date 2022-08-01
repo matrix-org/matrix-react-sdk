@@ -14,23 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference types="cypress" />
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
-import PluginEvents = Cypress.PluginEvents;
-import PluginConfigOptions = Cypress.PluginConfigOptions;
-import { performance } from "./performance";
-import { synapseDocker } from "./synapsedocker";
-import { webserver } from "./webserver";
-import { docker } from "./docker";
-import { log } from "./log";
+import { getFunctionalMembers } from "./getFunctionalMembers";
 
 /**
- * @type {Cypress.PluginConfig}
+ * Returns all room members that are non-functional (bots etc.).
  */
-export default function(on: PluginEvents, config: PluginConfigOptions) {
-    docker(on, config);
-    performance(on, config);
-    synapseDocker(on, config);
-    webserver(on, config);
-    log(on, config);
-}
+export const getJoinedNonFunctionalMembers = (room: Room): RoomMember[] => {
+    const functionalMembers = getFunctionalMembers(room);
+    return room.getJoinedMembers().filter(m => !functionalMembers.includes(m.userId));
+};

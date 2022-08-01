@@ -14,23 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference types="cypress" />
+import { Room, UNSTABLE_ELEMENT_FUNCTIONAL_USERS } from "matrix-js-sdk/src/matrix";
 
-import PluginEvents = Cypress.PluginEvents;
-import PluginConfigOptions = Cypress.PluginConfigOptions;
-import { performance } from "./performance";
-import { synapseDocker } from "./synapsedocker";
-import { webserver } from "./webserver";
-import { docker } from "./docker";
-import { log } from "./log";
+export const getFunctionalMembers = (room: Room): string[] => {
+    const [functionalUsersStateEvent] = room.currentState.getStateEvents(UNSTABLE_ELEMENT_FUNCTIONAL_USERS.name);
 
-/**
- * @type {Cypress.PluginConfig}
- */
-export default function(on: PluginEvents, config: PluginConfigOptions) {
-    docker(on, config);
-    performance(on, config);
-    synapseDocker(on, config);
-    webserver(on, config);
-    log(on, config);
-}
+    if (Array.isArray(functionalUsersStateEvent?.getContent().service_members)) {
+        return functionalUsersStateEvent.getContent().service_members;
+    }
+
+    return [];
+};

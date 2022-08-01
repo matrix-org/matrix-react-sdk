@@ -14,23 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference types="cypress" />
+.mx_UserOnboardingFeedback {
+    display: flex;
+    flex-direction: row;
+    padding: $spacing-32;
+    border-radius: 8px;
+    background: $system;
+    gap: $spacing-64;
 
-import PluginEvents = Cypress.PluginEvents;
-import PluginConfigOptions = Cypress.PluginConfigOptions;
-import { performance } from "./performance";
-import { synapseDocker } from "./synapsedocker";
-import { webserver } from "./webserver";
-import { docker } from "./docker";
-import { log } from "./log";
+    .mx_UserOnboardingFeedback_content {
+        display: flex;
+        flex-direction: column;
+        margin-right: auto;
+        gap: 6px;
 
-/**
- * @type {Cypress.PluginConfig}
- */
-export default function(on: PluginEvents, config: PluginConfigOptions) {
-    docker(on, config);
-    performance(on, config);
-    synapseDocker(on, config);
-    webserver(on, config);
-    log(on, config);
+        .mx_UserOnboardingFeedback_text {
+            color: $secondary-content;
+        }
+    }
+
+    .mx_UserOnboardingFeedback_action.mx_AccessibleButton {
+        background: transparent;
+        min-width: 180px;
+        align-self: center;
+    }
 }
