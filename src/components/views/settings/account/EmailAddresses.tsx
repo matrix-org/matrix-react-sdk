@@ -243,8 +243,11 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
         );
         if (this.state.verifying) {
             addButton = (
-                <div>
-                    <div>{ _t("We've sent you an email to verify your address. Please follow the instructions there and then click the button below.") }</div>
+                <div className="mx_EmailAddresses_verification">
+                    <div className="mx_EmailAddresses_verificationInfo">
+                        { _t("We've sent you an email to verify your address. " +
+                            "Please follow the instructions there and then click the button below.") }
+                    </div>
                     <AccessibleButton
                         onClick={this.onContinueClick}
                         kind="primary"

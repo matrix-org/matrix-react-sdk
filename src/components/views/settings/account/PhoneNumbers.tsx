@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
@@ -250,14 +250,18 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         if (this.state.verifying) {
             const msisdn = this.state.verifyMsisdn;
             addVerifySection = (
-                <div>
-                    <div>
+                <div className="mx_PhoneNumbers_verification">
+                    <div className="mx_PhoneNumbers_verificationInfo">
                         { _t("A text message has been sent to +%(msisdn)s. " +
                             "Please enter the verification code it contains.", { msisdn: msisdn }) }
                         <br />
                         { this.state.verifyError }
                     </div>
-                    <form onSubmit={this.onContinueClick} autoComplete="off" noValidate={true}>
+                    <form
+                        className="mx_PhoneNumbers_verificationForm"
+                        onSubmit={this.onContinueClick}
+                        autoComplete="off"
+                        noValidate={true}>
                         <Field
                             type="text"
                             label={_t("Verification code")}
