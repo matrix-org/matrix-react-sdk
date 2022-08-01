@@ -22,10 +22,11 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { useUserOnboardingTasks } from "../../../hooks/useUserOnboardingTasks";
 import { _t } from "../../../languageHandler";
+import PosthogTrackers from "../../../PosthogTrackers";
 import { UseCase } from "../../../settings/enums/UseCase";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from "../../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import ProgressBar from "../../views/elements/ProgressBar";
 import Heading from "../../views/typography/Heading";
 import { showUserOnboardingPage } from "./UserOnboardingPage";
@@ -48,8 +49,14 @@ export function UserOnboardingButton({ selected, minimized }: Props) {
 
     const progress = waiting ? completed / total : 1;
 
-    const onDismiss = useCallback(() => {
+    const onDismiss = useCallback((ev: ButtonEvent) => {
+        PosthogTrackers.trackInteraction("WebRoomListUserOnboardingIgnoreButton", ev);
         SettingsStore.setValue("FTUE.userOnboardingButton", null, SettingLevel.ACCOUNT, false);
+    }, []);
+
+    const onClick = useCallback((ev: ButtonEvent) => {
+        PosthogTrackers.trackInteraction("WebRoomListUserOnboardingButton", ev);
+        defaultDispatcher.fire(Action.ViewHomePage);
     }, []);
 
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
@@ -65,7 +72,7 @@ export function UserOnboardingButton({ selected, minimized }: Props) {
                 "mx_UserOnboardingButton_minimized": minimized,
                 "mx_UserOnboardingButton_completed": !waiting,
             })}
-            onClick={() => defaultDispatcher.fire(Action.ViewHomePage)}>
+            onClick={onClick}>
             { !minimized && (
                 <>
                     <div className="mx_UserOnboardingButton_content">
