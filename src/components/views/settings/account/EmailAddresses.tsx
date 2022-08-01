@@ -1,6 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019,2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
@@ -27,6 +27,7 @@ import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
 import Modal from '../../../../Modal';
 import ErrorDialog from "../../dialogs/ErrorDialog";
+import { PartialThreepid } from '../../../../models/PartialThreepid';
 
 /*
 TODO: Improve the UX for everything in here.
@@ -41,8 +42,8 @@ that is available.
  */
 
 interface IExistingEmailAddressProps {
-    email: IThreepid;
-    onRemoved: (emails: IThreepid) => void;
+    email: PartialThreepid;
+    onRemoved: (emails: PartialThreepid) => void;
 }
 
 interface IExistingEmailAddressState {
@@ -124,13 +125,13 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
 }
 
 interface IProps {
-    emails: IThreepid[];
-    onEmailsChange: (emails: Partial<IThreepid>[]) => void;
+    emails: PartialThreepid[];
+    onEmailsChange: (emails: PartialThreepid[]) => void;
 }
 
 interface IState {
     verifying: boolean;
-    addTask: any; // FIXME: When AddThreepid is TSfied
+    addTask: AddThreepid;
     continueDisabled: boolean;
     newEmailAddress: string;
 }
@@ -147,7 +148,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
         };
     }
 
-    private onRemoved = (address): void => {
+    private onRemoved = (address: PartialThreepid): void => {
         const emails = this.props.emails.filter((e) => e !== address);
         this.props.onEmailsChange(emails);
     };

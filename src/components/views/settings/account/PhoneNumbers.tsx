@@ -1,6 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019,2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import { PartialThreepid } from "../../../../models/PartialThreepid";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import AddThreepid from "../../../../AddThreepid";
@@ -37,8 +38,8 @@ This is a copy/paste of EmailAddresses, mostly.
 // TODO: Combine EmailAddresses and PhoneNumbers to be 3pid agnostic
 
 interface IExistingPhoneNumberProps {
-    msisdn: IThreepid;
-    onRemoved: (phoneNumber: IThreepid) => void;
+    msisdn: PartialThreepid;
+    onRemoved: (phoneNumber: PartialThreepid) => void;
 }
 
 interface IExistingPhoneNumberState {
@@ -120,15 +121,15 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
 }
 
 interface IProps {
-    msisdns: IThreepid[];
-    onMsisdnsChange: (phoneNumbers: Partial<IThreepid>[]) => void;
+    msisdns: PartialThreepid[];
+    onMsisdnsChange: (phoneNumbers: PartialThreepid[]) => void;
 }
 
 interface IState {
     verifying: boolean;
     verifyError: string;
     verifyMsisdn: string;
-    addTask: any; // FIXME: When AddThreepid is TSfied
+    addTask: AddThreepid;
     continueDisabled: boolean;
     phoneCountry: string;
     newPhoneNumber: string;
@@ -151,7 +152,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         };
     }
 
-    private onRemoved = (address: IThreepid): void => {
+    private onRemoved = (address: PartialThreepid): void => {
         const msisdns = this.props.msisdns.filter((e) => e !== address);
         this.props.onMsisdnsChange(msisdns);
     };
