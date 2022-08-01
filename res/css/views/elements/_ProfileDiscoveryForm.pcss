@@ -1,0 +1,80 @@
+.mx_ProfileDiscoveryForm {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-16;
+    color: $primary-content;
+
+    .mx_EmailAddresses, .mx_PhoneNumbers {
+        display: grid;
+        grid-template-columns: 1fr max-content max-content;
+        grid-gap: $spacing-4;
+
+        .mx_ExistingEmailAddress,
+        .mx_EmailAddresses_new,
+        .mx_ExistingPhoneNumber,
+        .mx_PhoneNumbers_new {
+            display: contents;
+            margin: 0;
+
+            .mx_ExistingEmailAddress_email,
+            .mx_ExistingEmailAddress_promptText,
+            .mx_Field,
+            .mx_PhoneNumbers_input {
+                grid-column-start: 1;
+                margin: 0;
+            }
+        }
+
+        .mx_EmailAddresses_new .mx_Field,
+        .mx_PhoneNumbers_new .mx_PhoneNumbers_input {
+            grid-column-end: 3;
+        }
+
+        .mx_ExistingEmailAddress > .mx_AccessibleButton,
+        .mx_EmailAddresses_new > .mx_AccessibleButton,
+        .mx_ExistingPhoneNumber > .mx_AccessibleButton,
+        > .mx_AccessibleButton {
+            /* Same padding as .mx_AccessibleButton_kind_danger_sm */
+            padding: 5px 12px;
+            margin: 0;
+            align-self: center;
+
+            &:not(.mx_ExistingEmailAddress_confirmBtn):not(.mx_ExistingPhoneNumber_confirmBtn) {
+                grid-column-start: 3;
+            }
+        }
+
+        .mx_PhoneNumbers_verification,
+        .mx_EmailAddresses_verification {
+            display: contents;
+
+            .mx_PhoneNumbers_verificationInfo,
+            .mx_EmailAddresses_verificationInfo {
+                grid-column-start: 1;
+                grid-column-end: 3;
+
+                margin: $spacing-4 0;
+            }
+
+            .mx_PhoneNumbers_verificationForm {
+                display: contents;
+
+                .mx_Field {
+                    grid-column-start: 1;
+                    grid-column-end: 3;
+                }
+            }
+
+            .mx_AccessibleButton {
+                /* Same padding as .mx_AccessibleButton_kind_danger_sm */
+                padding: 5px 12px;
+                align-self: center;
+            }
+        }
+    }
+
+    .mx_ProfileDiscoveryForm_info {
+        color: $secondary-content;
+        font-size: $font-12px;
+    }
+}
