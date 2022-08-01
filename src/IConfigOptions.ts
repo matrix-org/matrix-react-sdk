@@ -162,6 +162,8 @@ export interface IConfigOptions {
 
     terms_and_conditions_links?: { url: string, text: string }[];
 
+    is_tor_server?: boolean;
+
     latex_maths_delims?: {
         inline?: {
             left?: string;

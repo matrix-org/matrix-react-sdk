@@ -32,12 +32,13 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 interface IProps {
     title?: string;
     serverConfig: ValidatedServerConfig;
-    onFinished(config?: ValidatedServerConfig): void;
+    onFinished(config?: ValidatedServerConfig & {isTorServer: boolean}): void;
 }
 
 interface IState {
     defaultChosen: boolean;
     otherHomeserver: string;
+    isTorServer: boolean;
 }
 
 export default class ServerPickerDialog extends React.PureComponent<IProps, IState> {
@@ -64,6 +65,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         this.state = {
             defaultChosen: serverConfig.isDefault,
             otherHomeserver,
+            isTorServer: false,
         };
     }
 
@@ -159,7 +161,10 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
             return;
         }
 
-        this.props.onFinished(this.state.defaultChosen ? this.defaultServer : this.validatedConf);
+        this.props.onFinished({
+            ...(this.state.defaultChosen ? this.defaultServer : this.validatedConf),
+            isTorServer: this.state.isTorServer,
+        });
     };
 
     public render() {
@@ -223,6 +228,10 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                         id="mx_homeserverInput"
                     />
                 </StyledRadioButton>
+                <div className="mx_ServerPickerDialog_torServer">
+                    <input type="checkbox" onChange={() => {this.setState(({ isTorServer }) => ({ isTorServer: !isTorServer }));}} checked={this.state.isTorServer} />
+                    <span>Connect to tor server</span>
+                </div>
                 <p>
                     { _t("Use your preferred Matrix homeserver if you have one, or host your own.") }
                 </p>

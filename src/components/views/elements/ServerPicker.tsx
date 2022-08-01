@@ -35,7 +35,7 @@ interface IProps {
 const showPickerDialog = (
     title: string,
     serverConfig: ValidatedServerConfig,
-    onFinished: (config: ValidatedServerConfig) => void,
+    onFinished: (config: ValidatedServerConfig & {isTorServer: boolean}) => void,
 ) => {
     Modal.createDialog(ServerPickerDialog, { title, serverConfig, onFinished });
 };
@@ -59,7 +59,7 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
     let editBtn;
     if (!disableCustomUrls && onServerConfigChange) {
         const onClick = () => {
-            showPickerDialog(dialogTitle, serverConfig, (config?: ValidatedServerConfig) => {
+            showPickerDialog(dialogTitle, serverConfig, (config?: ValidatedServerConfig & {isTorServer: boolean}) => {
                 if (config) {
                     onServerConfigChange(config);
                 }

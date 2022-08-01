@@ -1916,7 +1916,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setPageSubtitle();
     };
 
-    private onServerConfigChange = (serverConfig: ValidatedServerConfig) => {
+    private onServerConfigChange = (serverConfig: ValidatedServerConfig & {isTorServer: boolean}) => {
+        SdkConfig.put({ ...this.props.config, is_tor_server: serverConfig.isTorServer });
         this.setState({ serverConfig });
     };
 
