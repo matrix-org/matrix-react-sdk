@@ -16,7 +16,7 @@ limitations under the License.
 
 import classNames from 'classnames';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
-import React, { useContext, useRef, useState, MouseEvent } from 'react';
+import React, { useContext, useRef, useState, MouseEvent, MutableRefObject } from 'react';
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
@@ -35,10 +35,18 @@ interface IProps {
     setAvatarUrl(url: string): Promise<unknown>;
     isUserAvatar?: boolean;
     onClick?(ev: MouseEvent<HTMLInputElement>): void;
+    uploadRef?: MutableRefObject<HTMLInputElement>;
 }
 
 const MiniAvatarUploader: React.FC<IProps> = ({
-    hasAvatar, hasAvatarLabel, noAvatarLabel, setAvatarUrl, isUserAvatar, children, onClick,
+    hasAvatar,
+    hasAvatarLabel,
+    noAvatarLabel,
+    setAvatarUrl,
+    isUserAvatar,
+    children,
+    onClick,
+    uploadRef: externalUploadRef,
 }) => {
     const cli = useContext(MatrixClientContext);
     const [busy, setBusy] = useState(false);
@@ -52,7 +60,8 @@ const MiniAvatarUploader: React.FC<IProps> = ({
         setShow(false);
     }, 13000); // hide after being shown for 10 seconds
 
-    const uploadRef = useRef<HTMLInputElement>();
+    const internalUploadRef = useRef<HTMLInputElement>();
+    const uploadRef = externalUploadRef ?? internalUploadRef;
 
     const label = (hasAvatar || busy) ? hasAvatarLabel : noAvatarLabel;
 
