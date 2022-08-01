@@ -17,13 +17,10 @@ limitations under the License.
 import { Room, UNSTABLE_ELEMENT_FUNCTIONAL_USERS } from "matrix-js-sdk/src/matrix";
 
 export const getFunctionalMembers = (room: Room): string[] => {
-    const functionalUsersStateEvents = room.currentState.getStateEvents(UNSTABLE_ELEMENT_FUNCTIONAL_USERS.name);
+    const [functionalUsersStateEvent] = room.currentState.getStateEvents(UNSTABLE_ELEMENT_FUNCTIONAL_USERS.name);
 
-    if (functionalUsersStateEvents.length > 0) {
-        const functionalUsersStateEvent = functionalUsersStateEvents.shift();
-        if (Array.isArray(functionalUsersStateEvent.getContent().service_members)) {
-            return functionalUsersStateEvent.getContent().service_members;
-        }
+    if (Array.isArray(functionalUsersStateEvent?.getContent().service_members)) {
+        return functionalUsersStateEvent.getContent().service_members;
     }
 
     return [];
