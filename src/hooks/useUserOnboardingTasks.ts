@@ -17,6 +17,7 @@ limitations under the License.
 import { useMemo } from "react";
 
 import { ProfileSetupDialog } from "../components/views/dialogs/ProfileSetupDialog";
+import { AppDownloadDialog } from "../components/views/dialogs/AppDownloadDialog";
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { _t } from "../languageHandler";
@@ -100,9 +101,9 @@ const tasks: InternalUserOnboardingTask[] = [
         },
         action: {
             label: _t("Download apps"),
-            href: "https://element.io/get-started#download",
             onClick: (ev: ButtonEvent) => {
                 PosthogTrackers.trackInteraction("WebUserOnboardingTaskDownloadApps", ev);
+                Modal.createDialog(AppDownloadDialog, {}, "mx_AppDownloadDialog_wrapper", false, true);
             },
         },
     },
