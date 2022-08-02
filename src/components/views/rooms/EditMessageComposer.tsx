@@ -334,7 +334,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                         return; // errored
                     }
 
-                    if (cmd.category === CommandCategories.messages) {
+                    if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
                         editContent["m.new_content"] = content;
                     } else {
                         shouldSend = false;
