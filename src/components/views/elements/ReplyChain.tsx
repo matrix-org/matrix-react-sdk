@@ -31,8 +31,8 @@ import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import { Action } from "../../../dispatcher/actions";
 import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
-import Pill from './Pill';
-import { ButtonEvent } from './AccessibleButton';
+import Pill, { PillType } from './Pill';
+import AccessibleButton, { ButtonEvent } from './AccessibleButton';
 import { getParentEventId, shouldDisplayReply } from '../../../utils/Reply';
 import RoomContext from "../../../contexts/RoomContext";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -167,7 +167,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             await this.matrixClient.getEventTimeline(this.room.getUnfilteredTimelineSet(), eventId);
         } catch (e) {
             // if it fails catch the error and return early, there's no point trying to find the event in this case.
-            // Return null as it is falsey and thus should be treated as an error (as the event cannot be resolved).
+            // Return null as it is falsy and thus should be treated as an error (as the event cannot be resolved).
             return null;
         }
         return this.room.findEventById(eventId);
@@ -217,13 +217,17 @@ export default class ReplyChain extends React.Component<IProps, IState> {
                 {
                     _t('<a>In reply to</a> <pill>', {}, {
                         'a': (sub) => (
-                            <button onClick={this.onQuoteClick} className="mx_ReplyChain_show">
+                            <AccessibleButton
+                                kind="link_inline"
+                                className="mx_ReplyChain_show"
+                                onClick={this.onQuoteClick}
+                            >
                                 { sub }
-                            </button>
+                            </AccessibleButton>
                         ),
                         'pill': (
                             <Pill
-                                type={Pill.TYPE_USER_MENTION}
+                                type={PillType.UserMention}
                                 room={room}
                                 url={makeUserPermalink(ev.getSender())}
                                 shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}

@@ -21,13 +21,16 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
+import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
-import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
+import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
 import { abbreviateUrl } from "../../../utils/UrlUtils";
 import IdentityAuthClient from "../../../IdentityAuthClient";
 import { humanizeTime } from "../../../utils/humanize";
@@ -43,8 +46,9 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from '../avatars/BaseAvatar';
+import { SearchResultAvatar } from "../avatars/SearchResultAvatar";
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { compare, selectText } from '../../../utils/strings';
+import { selectText } from '../../../utils/strings';
 import Field from '../elements/Field';
 import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
 import Dialpad from '../voip/DialPad';
@@ -58,10 +62,11 @@ import CopyableText from "../elements/CopyableText";
 import { ScreenName } from '../../../PosthogTrackers';
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { DirectoryMember, IDMUserTileProps, Member, startDm, ThreepidMember } from "../../../utils/direct-messages";
+import { DirectoryMember, IDMUserTileProps, Member, ThreepidMember } from "../../../utils/direct-messages";
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
 import Modal from '../../../Modal';
 import dis from "../../../dispatcher/dispatcher";
+import { startDm } from '../../../utils/dm/startDm';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -91,22 +96,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
 
     render() {
         const avatarSize = 20;
-        const avatar = (this.props.member as ThreepidMember).isEmail
-            ? <img
-                className='mx_InviteDialog_userTile_avatar mx_InviteDialog_userTile_threepidAvatar'
-                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
-                width={avatarSize}
-                height={avatarSize}
-            />
-            : <BaseAvatar
-                className='mx_InviteDialog_userTile_avatar'
-                url={this.props.member.getMxcAvatarUrl()
-                    ? mediaFromMxc(this.props.member.getMxcAvatarUrl()).getSquareThumbnailHttp(avatarSize)
-                    : null}
-                name={this.props.member.name}
-                idName={this.props.member.userId}
-                width={avatarSize}
-                height={avatarSize} />;
+        const avatar = <SearchResultAvatar user={this.props.member} size={avatarSize} />;
 
         let closeButton;
         if (this.props.onRemove) {
@@ -178,7 +168,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 
             // Highlight the word the user entered
             const substr = str.substring(i, filterStr.length + i);
-            result.push(<span className='mx_InviteDialog_roomTile_highlight' key={i + 'bold'}>{ substr }</span>);
+            result.push(<span className='mx_InviteDialog_tile--room_highlight' key={i + 'bold'}>{ substr }</span>);
             i += substr.length;
         }
 
@@ -194,13 +184,12 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         let timestamp = null;
         if (this.props.lastActiveTs) {
             const humanTs = humanizeTime(this.props.lastActiveTs);
-            timestamp = <span className='mx_InviteDialog_roomTile_time'>{ humanTs }</span>;
+            timestamp = <span className='mx_InviteDialog_tile--room_time'>{ humanTs }</span>;
         }
 
         const avatarSize = 36;
         const avatar = (this.props.member as ThreepidMember).isEmail
-            ? <img
-                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
+            ? <EmailPillAvatarIcon
                 width={avatarSize}
                 height={avatarSize}
             />
@@ -216,13 +205,13 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         let checkmark = null;
         if (this.props.isSelected) {
             // To reduce flickering we put the 'selected' room tile above the real avatar
-            checkmark = <div className='mx_InviteDialog_roomTile_selected' />;
+            checkmark = <div className='mx_InviteDialog_tile--room_selected' />;
         }
 
         // To reduce flickering we put the checkmark on top of the actual avatar (prevents
         // the browser from reloading the image source when the avatar remounts).
         const stackedAvatar = (
-            <span className='mx_InviteDialog_roomTile_avatarStack'>
+            <span className='mx_InviteDialog_tile_avatarStack'>
                 { avatar }
                 { checkmark }
             </span>
@@ -237,11 +226,11 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             : this.highlightName(userIdentifier);
 
         return (
-            <div className='mx_InviteDialog_roomTile' onClick={this.onClick}>
+            <div className='mx_InviteDialog_tile mx_InviteDialog_tile--room' onClick={this.onClick}>
                 { stackedAvatar }
-                <span className="mx_InviteDialog_roomTile_nameStack">
-                    <div className='mx_InviteDialog_roomTile_name'>{ this.highlightName(this.props.member.name) }</div>
-                    <div className='mx_InviteDialog_roomTile_userId'>{ caption }</div>
+                <span className="mx_InviteDialog_tile_nameStack">
+                    <div className='mx_InviteDialog_tile_nameStack_name'>{ this.highlightName(this.props.member.name) }</div>
+                    <div className='mx_InviteDialog_tile_nameStack_userId'>{ caption }</div>
                 </span>
                 { timestamp }
             </div>
@@ -422,121 +411,15 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     }
 
     private buildSuggestions(excludedTargetIds: Set<string>): {userId: string, user: RoomMember}[] {
-        const maxConsideredMembers = 200;
-        const joinedRooms = MatrixClientPeg.get().getRooms()
-            .filter(r => r.getMyMembership() === 'join' && r.getJoinedMemberCount() <= maxConsideredMembers);
+        const cli = MatrixClientPeg.get();
+        const activityScores = buildActivityScores(cli);
+        const memberScores = buildMemberScores(cli);
+        const memberComparator = compareMembers(activityScores, memberScores);
 
-        // Generates { userId: {member, rooms[]} }
-        const memberRooms = joinedRooms.reduce((members, room) => {
-            // Filter out DMs (we'll handle these in the recents section)
-            if (DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
-                return members; // Do nothing
-            }
-
-            const joinedMembers = room.getJoinedMembers().filter(u => !excludedTargetIds.has(u.userId));
-            for (const member of joinedMembers) {
-                // Filter out user IDs that are already in the room / should be excluded
-                if (excludedTargetIds.has(member.userId)) {
-                    continue;
-                }
-
-                if (!members[member.userId]) {
-                    members[member.userId] = {
-                        member: member,
-                        // Track the room size of the 'picked' member so we can use the profile of
-                        // the smallest room (likely a DM).
-                        pickedMemberRoomSize: room.getJoinedMemberCount(),
-                        rooms: [],
-                    };
-                }
-
-                members[member.userId].rooms.push(room);
-
-                if (room.getJoinedMemberCount() < members[member.userId].pickedMemberRoomSize) {
-                    members[member.userId].member = member;
-                    members[member.userId].pickedMemberRoomSize = room.getJoinedMemberCount();
-                }
-            }
-            return members;
-        }, {});
-
-        // Generates { userId: {member, numRooms, score} }
-        const memberScores = Object.values(memberRooms).reduce((scores, entry: {member: RoomMember, rooms: Room[]}) => {
-            const numMembersTotal = entry.rooms.reduce((c, r) => c + r.getJoinedMemberCount(), 0);
-            const maxRange = maxConsideredMembers * entry.rooms.length;
-            scores[entry.member.userId] = {
-                member: entry.member,
-                numRooms: entry.rooms.length,
-                score: Math.max(0, Math.pow(1 - (numMembersTotal / maxRange), 5)),
-            };
-            return scores;
-        }, {});
-
-        // Now that we have scores for being in rooms, boost those people who have sent messages
-        // recently, as a way to improve the quality of suggestions. We do this by checking every
-        // room to see who has sent a message in the last few hours, and giving them a score
-        // which correlates to the freshness of their message. In theory, this results in suggestions
-        // which are closer to "continue this conversation" rather than "this person exists".
-        const trueJoinedRooms = MatrixClientPeg.get().getRooms().filter(r => r.getMyMembership() === 'join');
-        const now = (new Date()).getTime();
-        const earliestAgeConsidered = now - (60 * 60 * 1000); // 1 hour ago
-        const maxMessagesConsidered = 50; // so we don't iterate over a huge amount of traffic
-        const lastSpoke = {}; // userId: timestamp
-        const lastSpokeMembers = {}; // userId: room member
-        for (const room of trueJoinedRooms) {
-            // Skip low priority rooms and DMs
-            const isDm = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-            if (Object.keys(room.tags).includes("m.lowpriority") || isDm) {
-                continue;
-            }
-
-            const events = room.getLiveTimeline().getEvents(); // timelines are most recent last
-            for (let i = events.length - 1; i >= Math.max(0, events.length - maxMessagesConsidered); i--) {
-                const ev = events[i];
-                if (excludedTargetIds.has(ev.getSender())) {
-                    continue;
-                }
-                if (ev.getTs() <= earliestAgeConsidered) {
-                    break; // give up: all events from here on out are too old
-                }
-
-                if (!lastSpoke[ev.getSender()] || lastSpoke[ev.getSender()] < ev.getTs()) {
-                    lastSpoke[ev.getSender()] = ev.getTs();
-                    lastSpokeMembers[ev.getSender()] = room.getMember(ev.getSender());
-                }
-            }
-        }
-        for (const userId in lastSpoke) {
-            const ts = lastSpoke[userId];
-            const member = lastSpokeMembers[userId];
-            if (!member) continue; // skip people we somehow don't have profiles for
-
-            // Scores from being in a room give a 'good' score of about 1.0-1.5, so for our
-            // boost we'll try and award at least +1.0 for making the list, with +4.0 being
-            // an approximate maximum for being selected.
-            const distanceFromNow = Math.abs(now - ts); // abs to account for slight future messages
-            const inverseTime = (now - earliestAgeConsidered) - distanceFromNow;
-            const scoreBoost = Math.max(1, inverseTime / (15 * 60 * 1000)); // 15min segments to keep scores sane
-
-            let record = memberScores[userId];
-            if (!record) record = memberScores[userId] = { score: 0 };
-            record.member = member;
-            record.score += scoreBoost;
-        }
-
-        const members = Object.values(memberScores);
-        members.sort((a, b) => {
-            if (a.score === b.score) {
-                if (a.numRooms === b.numRooms) {
-                    return compare(a.member.userId, b.member.userId);
-                }
-
-                return b.numRooms - a.numRooms;
-            }
-            return b.score - a.score;
-        });
-
-        return members.map(m => ({ userId: m.member.userId, user: m.member }));
+        return Object.values(memberScores).map(({ member }) => member)
+            .filter(member => !excludedTargetIds.has(member.userId))
+            .sort(memberComparator)
+            .map(member => ({ userId: member.userId, user: member }));
     }
 
     private shouldAbortAfterInviteError(result: IInviteResult, room: Room): boolean {
@@ -904,7 +787,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         if (this.unmounted) return;
 
         if (failed.length > 0) {
-            Modal.createTrackedDialog('Invite Paste Fail', '', QuestionDialog, {
+            Modal.createDialog(QuestionDialog, {
                 title: _t('Failed to find the following users'),
                 description: _t(
                     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s",
@@ -932,7 +815,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         // Update the IS in account data. Actually using it may trigger terms.
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        useDefaultIdentityServer();
+        setToDefaultIdentityServer();
         this.setState({ canUseIdentityServer: true, tryingIdentityServer: false });
     };
 
@@ -1055,6 +938,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 disabled={this.state.busy || (this.props.kind == KIND_CALL_TRANSFER && this.state.targets.length > 0)}
                 autoComplete="off"
                 placeholder={hasPlaceholder ? _t("Search") : null}
+                data-test-id="invite-dialog-input"
             />
         );
         return (
@@ -1270,10 +1154,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 if (visibility === "world_readable" || visibility === "shared") {
                     keySharingWarning =
                         <p className='mx_InviteDialog_helpText'>
-                            <img
-                                src={require("../../../../res/img/element-icons/info.svg").default}
-                                width={14}
-                                height={14} />
+                            <InfoIcon height={14} width={14} />
                             { " " + _t("Invited people will be able to read old messages.") }
                         </p>;
                 }

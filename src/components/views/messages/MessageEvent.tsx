@@ -20,13 +20,13 @@ import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { M_LOCATION } from 'matrix-js-sdk/src/@types/location';
 import { M_POLL_START } from "matrix-events-sdk";
+import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import { Mjolnir } from "../../../mjolnir/Mjolnir";
 import RedactedBody from "./RedactedBody";
 import UnknownBody from "./UnknownBody";
 import { IMediaBody } from "./IMediaBody";
-import { IOperableEventTile } from "../context_menus/MessageContextMenu";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { ReactAnyComponent } from "../../../@types/common";
 import { IBodyProps } from "./IBodyProps";
@@ -41,6 +41,7 @@ import MPollBody from "./MPollBody";
 import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
+import { IEventTileOps } from "../rooms/EventTile";
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
@@ -54,6 +55,10 @@ interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper
     isSeeingThroughMessageHiddenForModeration?: boolean;
 }
 
+export interface IOperableEventTile {
+    getEventTileOps(): IEventTileOps;
+}
+
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
     private body: React.RefObject<React.Component | IOperableEventTile> = createRef();
     private mediaHelper: MediaEventHelper;
@@ -62,14 +67,19 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
     public context!: React.ContextType<typeof MatrixClientContext>;
 
     public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props);
+        super(props, context);
 
         if (MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
         }
     }
 
+    public componentDidMount(): void {
+        this.props.mxEvent.addListener(MatrixEventEvent.Decrypted, this.onDecrypted);
+    }
+
     public componentWillUnmount() {
+        this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         this.mediaHelper?.destroy();
     }
 
@@ -113,6 +123,14 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
     public getMediaHelper() {
         return this.mediaHelper;
     }
+
+    private onDecrypted = (): void => {
+        // Recheck MediaEventHelper eligibility as it can change when the event gets decrypted
+        if (MediaEventHelper.isEligible(this.props.mxEvent)) {
+            this.mediaHelper?.destroy();
+            this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+        }
+    };
 
     private onTileUpdate = () => {
         this.forceUpdate();

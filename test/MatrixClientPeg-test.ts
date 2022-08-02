@@ -17,22 +17,24 @@ limitations under the License.
 import { advanceDateAndTime, stubClient } from "./test-utils";
 import { MatrixClientPeg as peg } from "../src/MatrixClientPeg";
 
+jest.useFakeTimers();
+
 describe("MatrixClientPeg", () => {
     afterEach(() => {
         localStorage.clear();
-        advanceDateAndTime(0);
+        jest.restoreAllMocks();
     });
 
     it("setJustRegisteredUserId", () => {
         stubClient();
         (peg as any).matrixClient = peg.get();
-        peg.setJustRegisteredUserId("@userId:matrix.rog");
-        expect(peg.get().credentials.userId).toBe("@userId:matrix.rog");
+        peg.setJustRegisteredUserId("@userId:matrix.org");
+        expect(peg.get().credentials.userId).toBe("@userId:matrix.org");
         expect(peg.currentUserIsJustRegistered()).toBe(true);
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(true);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(true);
-        advanceDateAndTime(1 * 60 * 60 * 1000);
+        advanceDateAndTime(1 * 60 * 60 * 1000 + 1);
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(true);
@@ -50,7 +52,7 @@ describe("MatrixClientPeg", () => {
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(false);
-        advanceDateAndTime(1 * 60 * 60 * 1000);
+        advanceDateAndTime(1 * 60 * 60 * 1000 + 1);
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(false);

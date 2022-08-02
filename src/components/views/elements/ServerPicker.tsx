@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 
 import AccessibleButton from "./AccessibleButton";
-import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 import { _t } from "../../../languageHandler";
 import TextWithTooltip from "./TextWithTooltip";
 import SdkConfig from "../../../SdkConfig";
@@ -37,12 +37,12 @@ const showPickerDialog = (
     serverConfig: ValidatedServerConfig,
     onFinished: (config: ValidatedServerConfig) => void,
 ) => {
-    Modal.createTrackedDialog("Server Picker", "", ServerPickerDialog, { title, serverConfig, onFinished });
+    Modal.createDialog(ServerPickerDialog, { title, serverConfig, onFinished });
 };
 
 const onHelpClick = () => {
     const brand = SdkConfig.get().brand;
-    Modal.createTrackedDialog('Custom Server Dialog', '', InfoDialog, {
+    Modal.createDialog(InfoDialog, {
         title: _t("Server Options"),
         description: _t("You can use the custom server options to sign into other Matrix servers by specifying " +
             "a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on " +
@@ -85,8 +85,13 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
     }
 
     return <div className="mx_ServerPicker">
-        <h3>{ title || _t("Homeserver") }</h3>
-        { !disableCustomUrls ? <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} /> : null }
+        <h2>{ title || _t("Homeserver") }</h2>
+        { !disableCustomUrls ? (
+            <AccessibleButton
+                className="mx_ServerPicker_help"
+                onClick={onHelpClick}
+                aria-label={_t("Help")}
+            />): null }
         <span className="mx_ServerPicker_server" title={typeof serverName === "string" ? serverName : undefined}>
             { serverName }
         </span>

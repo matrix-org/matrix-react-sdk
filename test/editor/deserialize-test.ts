@@ -20,7 +20,7 @@ import { createPartCreator } from "./mock";
 
 const FOUR_SPACES = " ".repeat(4);
 
-function htmlMessage(formattedBody, msgtype = "m.text") {
+function htmlMessage(formattedBody: string, msgtype = "m.text") {
     return {
         getContent() {
             return {
@@ -32,7 +32,7 @@ function htmlMessage(formattedBody, msgtype = "m.text") {
     } as unknown as MatrixEvent;
 }
 
-function textMessage(body, msgtype = "m.text") {
+function textMessage(body: string, msgtype = "m.text") {
     return {
         getContent() {
             return {
@@ -40,6 +40,13 @@ function textMessage(body, msgtype = "m.text") {
                 body,
             };
         },
+    } as unknown as MatrixEvent;
+}
+
+function textMessageReply(body: string, msgtype = "m.text") {
+    return {
+        ...textMessage(body, msgtype),
+        replyEventId: "!foo:bar",
     } as unknown as MatrixEvent;
 }
 
@@ -329,6 +336,89 @@ describe('editor/deserialize', function() {
             const html = "> \\<del>no formatting here\\</del>";
             const parts = normalize(parseEvent(htmlMessage(html), createPartCreator()));
             expect(parts).toMatchSnapshot();
+        });
+    });
+    describe('plaintext messages', function() {
+        it('turns html tags back into markdown', function() {
+            const html = "<strong>bold</strong> and <em>emphasized</em> text <a href=\"http://example.com/\">this</a>!";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "**bold** and _emphasized_ text [this](http://example.com/)!",
+            });
+        });
+        it('keeps backticks unescaped', () => {
+            const html = "this → ` is a backtick and here are 3 of them:\n```";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "this → ` is a backtick and here are 3 of them:\n```",
+            });
+        });
+        it('keeps backticks outside of code blocks', () => {
+            const html = "some `backticks`";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "some `backticks`",
+            });
+        });
+        it('keeps backslashes', () => {
+            const html = "C:\\My Documents";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "C:\\My Documents",
+            });
+        });
+        it('keeps asterisks', () => {
+            const html = "*hello*";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "*hello*",
+            });
+        });
+        it('keeps underscores', () => {
+            const html = "__emphasis__";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "__emphasis__",
+            });
+        });
+        it('keeps square brackets', () => {
+            const html = "[not an actual link](https://example.org)";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "[not an actual link](https://example.org)",
+            });
+        });
+        it('escapes angle brackets', () => {
+            const html = "> &lt;del&gt;no formatting here&lt;/del&gt;";
+            const parts = normalize(parseEvent(htmlMessage(html), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "> <del>no formatting here</del>",
+            });
+        });
+        it("it strips plaintext replies", () => {
+            const body = "> Sender: foo\n\nMessage";
+            const parts = normalize(parseEvent(textMessageReply(body), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "Message",
+            });
         });
     });
 });

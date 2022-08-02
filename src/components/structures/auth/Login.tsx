@@ -23,7 +23,7 @@ import { _t, _td } from '../../../languageHandler';
 import Login, { ISSOFlow, LoginFlow } from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
-import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
+import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import AuthPage from "../../views/auth/AuthPage";
 import PlatformPeg from '../../../PlatformPeg';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -37,6 +37,7 @@ import ServerPicker from "../../views/elements/ServerPicker";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton from '../../views/elements/AccessibleButton';
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -135,7 +136,9 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             'm.login.password': this.renderPasswordStep,
 
             // CAS and SSO are the same thing, modulo the url we link to
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.cas': () => this.renderSsoStep("cas"),
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.sso': () => this.renderSsoStep("sso"),
         };
     }
@@ -220,7 +223,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                             "This homeserver has hit its Monthly Active User limit.",
                         ),
                         'hs_blocked': _td(
-                            "This homeserver has been blocked by it's administrator.",
+                            "This homeserver has been blocked by its administrator.",
                         ),
                         '': _td(
                             "This homeserver has exceeded one of its resource limits.",
@@ -597,10 +600,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
-                    <h2>
+                    <h1>
                         { _t('Sign in') }
                         { loader }
-                    </h2>
+                    </h1>
                     { errorTextSection }
                     { serverDeadSection }
                     <ServerPicker

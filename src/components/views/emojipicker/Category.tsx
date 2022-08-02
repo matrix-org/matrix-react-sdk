@@ -45,6 +45,7 @@ interface IProps {
     onClick(emoji: IEmoji): void;
     onMouseEnter(emoji: IEmoji): void;
     onMouseLeave(emoji: IEmoji): void;
+    isEmojiDisabled?: (unicode: string) => boolean;
 }
 
 class Category extends React.PureComponent<IProps> {
@@ -52,7 +53,7 @@ class Category extends React.PureComponent<IProps> {
         const { onClick, onMouseEnter, onMouseLeave, selectedEmojis, emojis } = this.props;
         const emojisForRow = emojis.slice(rowIndex * 8, (rowIndex + 1) * 8);
         return (<div key={rowIndex}>{
-            emojisForRow.map(emoji => ((
+            emojisForRow.map(emoji => (
                 <Emoji
                     key={emoji.hexcode}
                     emoji={emoji}
@@ -60,8 +61,9 @@ class Category extends React.PureComponent<IProps> {
                     onClick={onClick}
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
+                    disabled={this.props.isEmojiDisabled?.(emoji.unicode)}
                 />
-            )))
+            ))
         }</div>);
     };
 

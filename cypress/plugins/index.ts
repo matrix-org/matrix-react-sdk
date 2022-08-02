@@ -16,8 +16,21 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { synapseDocker } from "./synapsedocker/index";
+import PluginEvents = Cypress.PluginEvents;
+import PluginConfigOptions = Cypress.PluginConfigOptions;
+import { performance } from "./performance";
+import { synapseDocker } from "./synapsedocker";
+import { webserver } from "./webserver";
+import { docker } from "./docker";
+import { log } from "./log";
 
-export default function(on, config) {
+/**
+ * @type {Cypress.PluginConfig}
+ */
+export default function(on: PluginEvents, config: PluginConfigOptions) {
+    docker(on, config);
+    performance(on, config);
     synapseDocker(on, config);
+    webserver(on, config);
+    log(on, config);
 }

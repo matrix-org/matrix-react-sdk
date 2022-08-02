@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { ReactNode, useContext, useEffect } from 'react';
 import classNames from 'classnames';
+import maplibregl from 'maplibre-gl';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
@@ -24,8 +25,9 @@ import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { parseGeoUri } from '../../../utils/location';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import { useMap } from '../../../utils/location/useMap';
+import { Bounds } from '../../../utils/beacon/bounds';
 
-const useMapWithStyle = ({ id, centerGeoUri, onError, interactive }) => {
+const useMapWithStyle = ({ id, centerGeoUri, onError, interactive, bounds }) => {
     const bodyId = `mx_Map_${id}`;
 
     // style config
@@ -49,11 +51,25 @@ const useMapWithStyle = ({ id, centerGeoUri, onError, interactive }) => {
             try {
                 const coords = parseGeoUri(centerGeoUri);
                 map.setCenter({ lon: coords.longitude, lat: coords.latitude });
-            } catch (error) {
-                logger.error('Could not set map center', centerGeoUri);
+            } catch (_error) {
+                logger.error('Could not set map center');
             }
         }
     }, [map, centerGeoUri]);
+
+    useEffect(() => {
+        if (map && bounds) {
+            try {
+                const lngLatBounds = new maplibregl.LngLatBounds(
+                    [bounds.west, bounds.south],
+                    [bounds.east, bounds.north],
+                );
+                map.fitBounds(lngLatBounds, { padding: 100, maxZoom: 15 });
+            } catch (_error) {
+                logger.error('Invalid map bounds');
+            }
+        }
+    }, [map, bounds]);
 
     return {
         map,
@@ -64,7 +80,15 @@ const useMapWithStyle = ({ id, centerGeoUri, onError, interactive }) => {
 interface MapProps {
     id: string;
     interactive?: boolean;
+    /**
+     * set map center to geoUri coords
+     * Center will only be set to valid geoUri
+     * this prop is only simply diffed by useEffect, so to trigger *recentering* of the same geoUri
+     * append the uri with a var not used by the geoUri spec
+     * eg a timestamp: `geo:54,42;mxTs=123`
+     */
     centerGeoUri?: string;
+    bounds?: Bounds;
     className?: string;
     onClick?: () => void;
     onError?: (error: Error) => void;
@@ -74,9 +98,15 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = ({
-    centerGeoUri, className, id, onError, onClick, children, interactive,
+    bounds,
+    centerGeoUri,
+    children,
+    className,
+    id,
+    interactive,
+    onError, onClick,
 }) => {
-    const { map, bodyId } = useMapWithStyle({ centerGeoUri, onError, id, interactive });
+    const { map, bodyId } = useMapWithStyle({ centerGeoUri, onError, id, interactive, bounds });
 
     const onMapClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,

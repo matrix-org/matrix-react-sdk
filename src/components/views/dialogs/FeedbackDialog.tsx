@@ -33,7 +33,9 @@ const existingIssuesUrl = "https://github.com/vector-im/element-web/issues" +
     "?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc";
 const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
 
-interface IProps extends IDialogProps {}
+interface IProps extends IDialogProps {
+    feature?: string;
+}
 
 const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
     const feedbackRef = useRef<Field>();
@@ -47,7 +49,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
 
     const onDebugLogsLinkClick = (): void => {
         props.onFinished();
-        Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {});
+        Modal.createDialog(BugReportDialog, {});
     };
 
     const rageshakeUrl = SdkConfig.get().bug_report_endpoint_url;
@@ -55,10 +57,11 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
     const onFinished = (sendFeedback: boolean): void => {
         if (hasFeedback && sendFeedback) {
             if (rageshakeUrl) {
-                submitFeedback(rageshakeUrl, "feedback", comment, canContact);
+                const label = props.feature ? `${props.feature}-feedback` : "feedback";
+                submitFeedback(rageshakeUrl, label, comment, canContact);
             }
 
-            Modal.createTrackedDialog('Feedback sent', '', InfoDialog, {
+            Modal.createDialog(InfoDialog, {
                 title: _t('Feedback sent'),
                 description: _t('Thank you!'),
             });
@@ -102,7 +105,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 _t("PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> " +
                     "to help us track down the problem.", {}, {
                     debugLogsLink: sub => (
-                        <AccessibleButton kind="link" onClick={onDebugLogsLinkClick}>{ sub }</AccessibleButton>
+                        <AccessibleButton kind="link_inline" onClick={onDebugLogsLinkClick}>{ sub }</AccessibleButton>
                     ),
                 })
             }</p>

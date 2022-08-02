@@ -26,13 +26,14 @@ import { _t, _td } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 import withValidation, { IValidationResult } from '../elements/Validation';
-import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 import EmailField from "./EmailField";
 import PassphraseField from "./PassphraseField";
 import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
 import CountryDropdown from "./CountryDropdown";
 import PassphraseConfirmField from "./PassphraseConfirmField";
+import { PosthogAnalytics } from '../../../PosthogAnalytics';
 
 enum RegistrationField {
     Email = "field_email",
@@ -125,7 +126,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
         if (this.state.email === '') {
             if (this.showEmail()) {
-                Modal.createTrackedDialog("Email prompt dialog", '', RegistrationEmailPromptDialog, {
+                Modal.createDialog(RegistrationEmailPromptDialog, {
                     onFinished: async (confirmed: boolean, email?: string) => {
                         if (confirmed) {
                             this.setState({
@@ -147,6 +148,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private doSubmit(ev) {
+        PosthogAnalytics.instance.setAuthenticationType("Password");
+
         const email = this.state.email.trim();
 
         const promise = this.props.onRegisterClick({
@@ -248,7 +251,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private onEmailChange = ev => {
         this.setState({
-            email: ev.target.value,
+            email: ev.target.value.trim(),
         });
     };
 

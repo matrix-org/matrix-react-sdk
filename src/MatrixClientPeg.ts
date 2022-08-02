@@ -49,6 +49,12 @@ export interface IMatrixClientCreds {
     freshLogin?: boolean;
 }
 
+/**
+ * Holds the current instance of the `MatrixClient` to use across the codebase.
+ * Looking for an `MatrixClient`? Just look for the `MatrixClientPeg` on the peg
+ * board. "Peg" is the literal meaning of something you hang something on. So
+ * you'll find a `MatrixClient` hanging on the `MatrixClientPeg`.
+ */
 export interface IMatrixClientPeg {
     opts: IStartClientOpts;
 
@@ -72,11 +78,11 @@ export interface IMatrixClientPeg {
      * If we've registered a user ID we set this to the ID of the
      * user we've just registered. If they then go & log in, we
      * can send them to the welcome user (obviously this doesn't
-     * guarentee they'll get a chat with the welcome user).
+     * guarantee they'll get a chat with the welcome user).
      *
      * @param {string} uid The user ID of the user we've just registered
      */
-    setJustRegisteredUserId(uid: string): void;
+    setJustRegisteredUserId(uid: string | null): void;
 
     /**
      * Returns true if the current user has just been registered by this
@@ -91,6 +97,12 @@ export interface IMatrixClientPeg {
      * returns a boolean of whether it was within the last N hours given.
      */
     userRegisteredWithinLastHours(hours: number): boolean;
+
+    /**
+     * If the current user has been registered by this device then this
+     * returns a boolean of whether it was after a given timestamp.
+     */
+    userRegisteredAfter(date: Date): boolean;
 
     /**
      * Replace this MatrixClientPeg's client with a client instance that has
@@ -123,9 +135,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     // used if we tear it down & recreate it with a different store
     private currentClientCreds: IMatrixClientCreds;
 
-    constructor() {
-    }
-
     public get(): MatrixClient {
         return this.matrixClient;
     }
@@ -139,7 +148,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     public setJustRegisteredUserId(uid: string | null): void {
         this.justRegisteredUserId = uid;
         if (uid) {
-            window.localStorage.setItem("mx_registration_time", String(new Date().getTime()));
+            const registrationTime = Date.now().toString();
+            window.localStorage.setItem("mx_registration_time", registrationTime);
         }
     }
 
@@ -156,9 +166,18 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
 
         try {
-            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"));
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
             const diff = Date.now() - registrationTime;
             return (diff / 36e5) <= hours;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    public userRegisteredAfter(timestamp: Date): boolean {
+        try {
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            return timestamp.getTime() <= registrationTime;
         } catch (e) {
             return false;
         }
@@ -188,8 +207,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 }
             }
         }
-
-        StorageManager.trackStores(this.matrixClient);
 
         // try to initialise e2e on the new client
         try {
@@ -281,7 +298,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 SHOW_QR_CODE_METHOD,
                 verificationMethods.RECIPROCATE_QR_CODE,
             ],
-            unstableClientRelationAggregation: true,
             identityServer: new IdentityAuthClient(),
             cryptoCallbacks: {},
         };
@@ -313,6 +329,10 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 }
 
+/**
+ * Note: You should be using a React context with access to a client rather than
+ * using this, as in a multi-account world this will not exist!
+ */
 export const MatrixClientPeg: IMatrixClientPeg = new MatrixClientPegClass();
 
 if (!window.mxMatrixClientPeg) {

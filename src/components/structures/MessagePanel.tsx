@@ -23,6 +23,8 @@ import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
+import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -54,10 +56,11 @@ import { getEventDisplayInfo } from "../../utils/EventRenderingUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
+import { hasThreadSummary } from "../../utils/EventUtils";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
-const groupedEvents = [
+const groupedStateEvents = [
     EventType.RoomMember,
     EventType.RoomThirdPartyInvite,
     EventType.RoomServerAcl,
@@ -92,9 +95,13 @@ export function shouldFormContinuation(
         mxEvent.sender.name !== prevEvent.sender.name ||
         mxEvent.sender.getMxcAvatarUrl() !== prevEvent.sender.getMxcAvatarUrl()) return false;
 
-    // Thread summaries in the main timeline should break up a continuation
-    if (threadsEnabled && prevEvent.isThreadRoot &&
-        timelineRenderingType !== TimelineRenderingType.Thread) return false;
+    // Thread summaries in the main timeline should break up a continuation on both sides
+    if (threadsEnabled &&
+        (hasThreadSummary(mxEvent) || hasThreadSummary(prevEvent)) &&
+        timelineRenderingType !== TimelineRenderingType.Thread
+    ) {
+        return false;
+    }
 
     // if we don't have tile for previous event then it was shown by showHiddenEvents and has no SenderProfile
     if (!haveRendererForEvent(prevEvent, showHiddenEvents)) return false;
@@ -452,14 +459,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
     }
 
-    /* check the scroll state and send out pagination requests if necessary.
-     */
-    public checkFillState(): void {
-        if (this.scrollPanel.current) {
-            this.scrollPanel.current.checkFillState();
-        }
-    }
-
     private isUnmounting = (): boolean => {
         return !this.isMounted;
     };
@@ -470,12 +469,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // TODO: Implement granular (per-room) hide options
     public shouldShowEvent(mxEv: MatrixEvent, forceHideEvents = false): boolean {
-        if (this.props.hideThreadedMessages && this.threadsEnabled) {
-            if (mxEv.isThreadRelation) {
-                return false;
-            }
-
-            if (this.shouldLiveInThreadOnly(mxEv)) {
+        if (this.props.hideThreadedMessages && this.threadsEnabled && this.props.room) {
+            const { shouldLiveInRoom } = this.props.room.eventShouldLiveIn(mxEv, this.props.events);
+            if (!shouldLiveInRoom) {
                 return false;
             }
         }
@@ -496,24 +492,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         if (this.props.highlightedEventId === mxEv.getId()) return true;
 
         return !shouldHideEvent(mxEv, this.context);
-    }
-
-    private shouldLiveInThreadOnly(event: MatrixEvent): boolean {
-        const associatedId = event.getAssociatedId();
-
-        const targetsThreadRoot = event.threadRootId === associatedId;
-        if (event.isThreadRoot || targetsThreadRoot || !event.isThreadRelation) {
-            return false;
-        }
-
-        // If this is a reply, then we use the associated event to decide whether
-        // this should be thread only or not
-        const parentEvent = this.props.room.findEventById(associatedId);
-        if (parentEvent) {
-            return this.shouldLiveInThreadOnly(parentEvent);
-        } else {
-            return true;
-        }
     }
 
     public readMarkerForEvent(eventId: string, isLastEvent: boolean): ReactNode {
@@ -850,7 +828,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
         const receipts: IReadReceiptProps[] = [];
         room.getReceiptsForEvent(event).forEach((r) => {
-            if (!r.userId || r.type !== "m.read" || r.userId === myUserId) {
+            if (!r.userId || ![ReceiptType.Read, ReceiptType.ReadPrivate].includes(r.type) || r.userId === myUserId) {
                 return; // ignore non-read receipts and receipts from self.
             }
             if (MatrixClientPeg.get().isUserIgnored(r.userId)) {
@@ -1083,7 +1061,7 @@ abstract class BaseGrouper {
 
 // Wrap initial room creation events into a GenericEventListSummary
 // Grouping only events sent by the same user that sent the `m.room.create` and only until
-// the first non-state event or membership event which is not regarding the sender of the `m.room.create` event
+// the first non-state event, beacon_info event or membership event which is not regarding the sender of the `m.room.create` event
 class CreationGrouper extends BaseGrouper {
     static canStartGroup = function(panel: MessagePanel, ev: MatrixEvent): boolean {
         return ev.getType() === EventType.RoomCreate;
@@ -1102,9 +1080,15 @@ class CreationGrouper extends BaseGrouper {
             && (ev.getStateKey() !== createEvent.getSender() || ev.getContent()["membership"] !== "join")) {
             return false;
         }
+        // beacons are not part of room creation configuration
+        // should be shown in timeline
+        if (M_BEACON_INFO.matches(ev.getType())) {
+            return false;
+        }
         if (ev.isState() && ev.getSender() === createEvent.getSender()) {
             return true;
         }
+
         return false;
     }
 
@@ -1206,7 +1190,7 @@ class MainGrouper extends BaseGrouper {
     static canStartGroup = function(panel: MessagePanel, ev: MatrixEvent): boolean {
         if (!panel.shouldShowEvent(ev)) return false;
 
-        if (groupedEvents.includes(ev.getType() as EventType)) {
+        if (ev.isState() && groupedStateEvents.includes(ev.getType() as EventType)) {
             return true;
         }
 
@@ -1241,7 +1225,7 @@ class MainGrouper extends BaseGrouper {
         if (this.panel.wantsDateSeparator(this.events[0], ev.getDate())) {
             return false;
         }
-        if (groupedEvents.includes(ev.getType() as EventType)) {
+        if (ev.isState() && groupedStateEvents.includes(ev.getType() as EventType)) {
             return true;
         }
         if (ev.isRedacted()) {
@@ -1329,6 +1313,7 @@ class MainGrouper extends BaseGrouper {
         ret.push(
             <EventListSummary
                 key={key}
+                data-testid={key}
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInSummary}

@@ -21,7 +21,6 @@ import linkifyElement from 'linkify-element';
 import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
-import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
@@ -144,11 +143,6 @@ export const ELEMENT_URL_PATTERN =
         "(?:app|beta|staging|develop)\\.element\\.io/" +
     ")(#.*)";
 
-export const MATRIXTO_URL_PATTERN = "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
-export const MATRIXTO_MD_LINK_PATTERN =
-    '\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
-export const MATRIXTO_BASE_URL= baseUrl;
-
 export const options = {
     events: function(href: string, type: Type | string): Partial<GlobalEventHandlers> {
         switch (type) {
@@ -224,6 +218,8 @@ export const options = {
     attributes: {
         rel: 'noreferrer noopener',
     },
+
+    ignoreTags: ['pre', 'code'],
 
     className: 'linkified',
 

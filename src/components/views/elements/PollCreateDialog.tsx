@@ -35,6 +35,7 @@ import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 import Spinner from "./Spinner";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 interface IProps extends IDialogProps {
     room: Room;
@@ -163,34 +164,33 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     protected submit(): void {
         this.setState({ busy: true, canSubmit: false });
         const pollEvent = this.createEvent();
-        this.matrixClient.sendEvent(
+        doMaybeLocalRoomAction(
             this.props.room.roomId,
-            this.props.threadId,
-            pollEvent.type,
-            pollEvent.content,
+            (actualRoomId: string) => this.matrixClient.sendEvent(
+                actualRoomId,
+                this.props.threadId,
+                pollEvent.type,
+                pollEvent.content,
+            ),
+            this.matrixClient,
         ).then(
             () => this.props.onFinished(true),
         ).catch(e => {
             console.error("Failed to post poll:", e);
-            Modal.createTrackedDialog(
-                'Failed to post poll',
-                '',
-                QuestionDialog,
-                {
-                    title: _t("Failed to post poll"),
-                    description: _t(
-                        "Sorry, the poll you tried to create was not posted."),
-                    button: _t('Try again'),
-                    cancelButton: _t('Cancel'),
-                    onFinished: (tryAgain: boolean) => {
-                        if (!tryAgain) {
-                            this.cancel();
-                        } else {
-                            this.setState({ busy: false, canSubmit: true });
-                        }
-                    },
+            Modal.createDialog(QuestionDialog, {
+                title: _t("Failed to post poll"),
+                description: _t(
+                    "Sorry, the poll you tried to create was not posted."),
+                button: _t('Try again'),
+                cancelButton: _t('Cancel'),
+                onFinished: (tryAgain: boolean) => {
+                    if (!tryAgain) {
+                        this.cancel();
+                    } else {
+                        this.setState({ busy: false, canSubmit: true });
+                    }
                 },
-            );
+            });
         });
     }
 

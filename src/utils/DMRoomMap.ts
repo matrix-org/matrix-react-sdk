@@ -20,6 +20,7 @@ import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 
@@ -141,7 +142,7 @@ export default class DMRoomMap {
     /**
      * Gets the DM room which the given IDs share, if any.
      * @param {string[]} ids The identifiers (user IDs and email addresses) to look for.
-     * @returns {Room} The DM room which all IDs given share, or falsey if no common room.
+     * @returns {Room} The DM room which all IDs given share, or falsy if no common room.
      */
     public getDMRoomForIdentifiers(ids: string[]): Room {
         // TODO: [Canonical DMs] Handle lookups for email addresses.
@@ -159,7 +160,7 @@ export default class DMRoomMap {
         return joinedRooms[0];
     }
 
-    public getUserIdForRoomId(roomId: string) {
+    public getUserIdForRoomId(roomId: string): Optional<string> {
         if (this.roomToUser == null) {
             // we lazily populate roomToUser so you can use
             // this class just to call getDMRoomsForUserId

@@ -26,14 +26,13 @@ import { IListOrderingMap, ITagMap, ITagSortingMap, ListAlgorithm, SortAlgorithm
 import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
-import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./filters/IFilterCondition";
+import { FILTER_CHANGED, IFilterCondition } from "./filters/IFilterCondition";
 import { RoomViewStore } from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
-import { NameFilterCondition } from "./filters/NameFilterCondition";
 import { RoomNotificationStateStore } from "../notifications/RoomNotificationStateStore";
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
@@ -58,7 +57,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
     private initialListsGenerated = false;
     private algorithm = new Algorithm();
-    private filterConditions: IFilterCondition[] = [];
     private prefilterConditions: IFilterCondition[] = [];
     private updateFn = new MarkedExecution(() => {
         for (const tagId of Object.keys(this.orderedLists)) {
@@ -70,16 +68,12 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     constructor() {
         super(defaultDispatcher);
         this.setMaxListeners(20); // RoomList + LeftPanel + 8xRoomSubList + spares
+        this.algorithm.start();
     }
 
     private setupWatchers() {
         // TODO: Maybe destroy this if this class supports destruction
         new SpaceWatcher(this);
-    }
-
-    public get unfilteredLists(): ITagMap {
-        if (!this.algorithm) return {}; // No tags yet.
-        return this.algorithm.getUnfilteredRooms();
     }
 
     public get orderedLists(): ITagMap {
@@ -90,12 +84,12 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     // Intended for test usage
     public async resetStore() {
         await this.reset();
-        this.filterConditions = [];
         this.prefilterConditions = [];
         this.initialListsGenerated = false;
 
         this.algorithm.off(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.off(FILTER_CHANGED, this.onAlgorithmListUpdated);
+        this.algorithm.stop();
         this.algorithm = new Algorithm();
         this.algorithm.on(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.on(FILTER_CHANGED, this.onAlgorithmListUpdated);
@@ -479,8 +473,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         }
     }
 
-    private onAlgorithmListUpdated = () => {
+    private onAlgorithmListUpdated = (forceUpdate: boolean) => {
         this.updateFn.mark();
+        if (forceUpdate) this.updateFn.trigger();
     };
 
     private onAlgorithmFilterUpdated = () => {
@@ -499,9 +494,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         let rooms = this.matrixClient.getVisibleRooms().filter(r => VisibilityProvider.instance.isRoomVisible(r));
 
-        // if spaces are enabled only consider the prefilter conditions when there are no runtime conditions
-        // for the search all spaces feature
-        if (this.prefilterConditions.length > 0 && !this.filterConditions.length) {
+        if (this.prefilterConditions.length > 0) {
             rooms = rooms.filter(r => {
                 for (const filter of this.prefilterConditions) {
                     if (!filter.isVisible(r)) {
@@ -553,20 +546,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
      */
     public async addFilter(filter: IFilterCondition): Promise<void> {
         let promise = Promise.resolve();
-        if (filter.kind === FilterKind.Prefilter) {
-            filter.on(FILTER_CHANGED, this.onPrefilterUpdated);
-            this.prefilterConditions.push(filter);
-            promise = this.recalculatePrefiltering();
-        } else {
-            this.filterConditions.push(filter);
-            // Runtime filters with spaces disable prefiltering for the search all spaces feature.
-            // this has to be awaited so that `setKnownRooms` is called in time for the `addFilterCondition` below
-            // this way the runtime filters are only evaluated on one dataset and not both.
-            await this.recalculatePrefiltering();
-            if (this.algorithm) {
-                this.algorithm.addFilterCondition(filter);
-            }
-        }
+        filter.on(FILTER_CHANGED, this.onPrefilterUpdated);
+        this.prefilterConditions.push(filter);
+        promise = this.recalculatePrefiltering();
         promise.then(() => this.updateFn.trigger());
     }
 
@@ -579,20 +561,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
      */
     public removeFilter(filter: IFilterCondition): void {
         let promise = Promise.resolve();
-        let idx = this.filterConditions.indexOf(filter);
         let removed = false;
-        if (idx >= 0) {
-            this.filterConditions.splice(idx, 1);
-
-            if (this.algorithm) {
-                this.algorithm.removeFilterCondition(filter);
-            }
-            // Runtime filters with spaces disable prefiltering for the search all spaces feature
-            promise = this.recalculatePrefiltering();
-            removed = true;
-        }
-
-        idx = this.prefilterConditions.indexOf(filter);
+        const idx = this.prefilterConditions.indexOf(filter);
         if (idx >= 0) {
             filter.off(FILTER_CHANGED, this.onPrefilterUpdated);
             this.prefilterConditions.splice(idx, 1);
@@ -603,20 +573,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         if (removed) {
             promise.then(() => this.updateFn.trigger());
         }
-    }
-
-    /**
-     * Gets the first (and ideally only) name filter condition. If one isn't present,
-     * this returns null.
-     * @returns The first name filter condition, or null if none.
-     */
-    public getFirstNameFilterCondition(): NameFilterCondition | null {
-        for (const filter of this.filterConditions) {
-            if (filter instanceof NameFilterCondition) {
-                return filter;
-            }
-        }
-        return null;
     }
 
     /**

@@ -18,6 +18,7 @@ import React, {
     Dispatch,
     KeyboardEvent,
     KeyboardEventHandler,
+    ReactElement,
     ReactNode,
     SetStateAction,
     useCallback,
@@ -36,7 +37,6 @@ import classNames from "classnames";
 import { sortBy, uniqBy } from "lodash";
 import { GuestAccess, HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
 
-import dis from "../../dispatcher/dispatcher";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
@@ -51,7 +51,7 @@ import TextWithTooltip from "../views/elements/TextWithTooltip";
 import { useStateToggle } from "../../hooks/useStateToggle";
 import { getChildOrder } from "../../stores/spaces/SpaceStore";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import { linkifyElement } from "../../HtmlUtils";
+import { linkifyElement, topicToHtml } from "../../HtmlUtils";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { Action } from "../../dispatcher/actions";
 import { IState, RovingTabIndexProvider, useRovingTabIndex } from "../../accessibility/RovingTabIndex";
@@ -65,6 +65,8 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { Alignment } from "../views/elements/Tooltip";
+import { getTopic } from "../../hooks/room/useTopic";
 
 interface IProps {
     space: Room;
@@ -122,7 +124,7 @@ const Tile: React.FC<ITileProps> = ({
         });
     };
 
-    let button;
+    let button: ReactElement;
     if (busy) {
         button = <AccessibleTooltipButton
             disabled={true}
@@ -154,7 +156,7 @@ const Tile: React.FC<ITileProps> = ({
         </AccessibleButton>;
     }
 
-    let checkbox;
+    let checkbox: ReactElement | undefined;
     if (onToggleClick) {
         if (hasPermissions) {
             checkbox = <StyledCheckbox checked={!!selected} onChange={onToggleClick} tabIndex={isActive ? 0 : -1} />;
@@ -168,7 +170,7 @@ const Tile: React.FC<ITileProps> = ({
         }
     }
 
-    let avatar;
+    let avatar: ReactElement;
     if (joinedRoom) {
         avatar = <RoomAvatar room={joinedRoom} width={20} height={20} />;
     } else {
@@ -186,19 +188,22 @@ const Tile: React.FC<ITileProps> = ({
         description += " · " + _t("%(count)s rooms", { count: numChildRooms });
     }
 
-    const topic = joinedRoom?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || room.topic;
-    if (topic) {
-        description += " · " + topic;
+    let topic: ReactNode | string | null;
+    if (joinedRoom) {
+        const topicObj = getTopic(joinedRoom);
+        topic = topicToHtml(topicObj?.text, topicObj?.html);
+    } else {
+        topic = room.topic;
     }
 
-    let joinedSection;
+    let joinedSection: ReactElement | undefined;
     if (joinedRoom) {
         joinedSection = <div className="mx_SpaceHierarchy_roomTile_joined">
             { _t("Joined") }
         </div>;
     }
 
-    let suggestedSection;
+    let suggestedSection: ReactElement | undefined;
     if (suggested && (!joinedRoom || hasPermissions)) {
         suggestedSection = <InfoTooltip tooltip={_t("This room is suggested as a good one to join")}>
             { _t("Suggested") }
@@ -226,6 +231,8 @@ const Tile: React.FC<ITileProps> = ({
                 }}
             >
                 { description }
+                { topic && " · " }
+                { topic }
             </div>
         </div>
         <div className="mx_SpaceHierarchy_actions">
@@ -330,13 +337,13 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
     // fail earlier so they don't have to click back to the directory.
     if (cli.isGuest()) {
         if (!room.world_readable && !room.guest_can_join) {
-            dis.dispatch({ action: "require_registration" });
+            defaultDispatcher.dispatch({ action: "require_registration" });
             return;
         }
     }
 
     const roomAlias = getDisplayAliasForRoom(room) || undefined;
-    dis.dispatch<ViewRoomPayload>({
+    defaultDispatcher.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,
         should_peek: true,
         room_alias: roomAlias,
@@ -356,7 +363,7 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
     // Don't let the user view a room they won't be able to either peek or join:
     // fail earlier so they don't have to click back to the directory.
     if (cli.isGuest()) {
-        dis.dispatch({ action: "require_registration" });
+        defaultDispatcher.dispatch({ action: "require_registration" });
         return;
     }
 
@@ -365,7 +372,7 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
     });
 
     prom.then(() => {
-        dis.dispatch<JoinRoomReadyPayload>({
+        defaultDispatcher.dispatch<JoinRoomReadyPayload>({
             action: Action.JoinRoomReady,
             roomId,
             metricsTrigger: "SpaceHierarchy",
@@ -524,8 +531,13 @@ export const useRoomHierarchy = (space: Room): {
         setRooms(hierarchy.rooms);
     }, [error, hierarchy]);
 
-    const loading = hierarchy?.loading ?? true;
-    return { loading, rooms, hierarchy, loadMore, error };
+    return {
+        loading: hierarchy?.loading ?? true,
+        rooms,
+        hierarchy: hierarchy?.root === space ? hierarchy : undefined,
+        loadMore,
+        error,
+    };
 };
 
 const useIntersectionObserver = (callback: () => void) => {
@@ -569,7 +581,7 @@ const ManageButtons = ({ hierarchy, selected, setSelected, setError }: IManageBu
     const selectedRelations = Array.from(selected.keys()).flatMap(parentId => {
         return [
             ...selected.get(parentId).values(),
-        ].map(childId => [parentId, childId]) as [string, string][];
+        ].map(childId => [parentId, childId]);
     });
 
     const selectionAllSuggested = selectedRelations.every(([parentId, childId]) => {
@@ -584,7 +596,7 @@ const ManageButtons = ({ hierarchy, selected, setSelected, setError }: IManageBu
         Button = AccessibleTooltipButton;
         props = {
             tooltip: _t("Select a room below first"),
-            yOffset: -40,
+            alignment: Alignment.Top,
         };
     }
 

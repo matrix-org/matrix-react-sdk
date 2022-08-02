@@ -99,7 +99,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
         });
 
         // default value here too, otherwise we need to handle null / undefined;
-        // values between mounting and the initial value propgating
+        // values between mounting and the initial value propagating
         let language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
         let value = null;
         if (language) {
@@ -116,7 +116,9 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
             onSearchChange={this.onSearchChange}
             searchEnabled={true}
             value={value}
-            label={_t("Language Dropdown")}>
+            label={_t("Language Dropdown")}
+            placeholder={_t("Choose a locale")}
+        >
             { options }
         </Dropdown>;
     }

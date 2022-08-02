@@ -23,7 +23,6 @@ import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
 } from "./controllers/NotificationControllers";
-import CustomStatusController from "./controllers/CustomStatusController";
 import ThemeController from './controllers/ThemeController';
 import PushToMatrixClientController from './controllers/PushToMatrixClientController';
 import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
@@ -32,7 +31,7 @@ import SystemFontController from './controllers/SystemFontController';
 import UseSystemFontController from './controllers/UseSystemFontController';
 import { SettingLevel } from "./SettingLevel";
 import SettingController from "./controllers/SettingController";
-import { isMac } from '../Keyboard';
+import { IS_MAC } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
@@ -43,6 +42,7 @@ import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
 import ThreadBetaController from './controllers/ThreadBetaController';
+import { FontWatcher } from "./watchers/FontWatcher";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -133,7 +133,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     };
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string;
+    description?: string | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
@@ -165,7 +165,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     betaInfo?: {
         title: string; // _td
         caption: () => ReactNode;
-        disclaimer?: (enabled: boolean) => ReactNode;
+        faq?: (enabled: boolean) => ReactNode;
         image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
@@ -184,6 +184,47 @@ export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
 export type ISetting = IBaseSetting | IFeature;
 
 export const SETTINGS: {[setting: string]: ISetting} = {
+    "feature_video_rooms": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Video rooms"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        // Reload to ensure that the left panel etc. get remounted
+        controller: new ReloadOnChangeController(),
+        betaInfo: {
+            title: _td("Video rooms"),
+            caption: () => <>
+                <p>
+                    { _t("A new way to chat over voice and video in %(brand)s.", {
+                        brand: SdkConfig.get().brand,
+                    }) }
+                </p>
+                <p>
+                    { _t("Video rooms are always-on VoIP channels embedded within a room in %(brand)s.", {
+                        brand: SdkConfig.get().brand,
+                    }) }
+                </p>
+            </>,
+            faq: () =>
+                SdkConfig.get().bug_report_endpoint_url && <>
+                    <h4>{ _t("How can I create a video room?") }</h4>
+                    <p>{ _t("Use the “+” button in the room section of the left panel.") }</p>
+                    <h4>{ _t("Can I use text chat alongside the video call?") }</h4>
+                    <p>{ _t("Yes, the chat timeline is displayed alongside the video.") }</p>
+                </>,
+            feedbackLabel: "video-room-feedback",
+            feedbackSubheading: _td("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it."),
+            image: require("../../res/img/betas/video_rooms.png"),
+            requiresRefresh: true,
+        },
+    },
+    "feature_exploring_public_spaces": {
+        displayName: _td("Explore public spaces in the new search dialog"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -198,13 +239,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         labsGroup: LabGroup.Moderation,
         displayName: _td("Report to moderators prototype. " +
             "In rooms that support moderation, the `report` button will let you report abuse to room moderators"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
-    "feature_dnd": {
-        isFeature: true,
-        labsGroup: LabGroup.Profile,
-        displayName: _td("Show options to enable 'Do not disturb' mode"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -239,12 +273,20 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                     </a>,
                 }) }</p>
             </>,
-            disclaimer: () =>
+            faq: () =>
                 SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I start a thread?") }</h4>
-                    <p>{ _t("Use \"Reply in thread\" when hovering over a message.") }</p>
+                    <p>
+                        { _t("Use “%(replyInThread)s” when hovering over a message.", {
+                            replyInThread: _t("Reply in thread"),
+                        }) }
+                    </p>
                     <h4>{ _t("How can I leave the beta?") }</h4>
-                    <p>{ _t("To leave, return to this page and use the “Leave the beta” button.") }</p>
+                    <p>
+                        { _t("To leave, return to this page and use the “%(leaveTheBeta)s” button.", {
+                            leaveTheBeta: _t("Leave the beta"),
+                        }) }
+                    </p>
                 </>,
             feedbackLabel: "thread-feedback",
             feedbackSubheading: _td("Thank you for trying the beta, " +
@@ -254,34 +296,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         },
 
     },
-    "feature_custom_status": {
-        isFeature: true,
-        labsGroup: LabGroup.Profile,
-        displayName: _td("Custom user status messages"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new CustomStatusController(),
-    },
-    "feature_video_rooms": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        displayName: _td("Video rooms (under active development)"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        // Reload to ensure that the left panel etc. get remounted
-        controller: new ReloadOnChangeController(),
-    },
     "feature_state_counters": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         displayName: _td("Render simple counters in room header"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
-    "feature_many_integration_managers": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        displayName: _td("Multiple integration managers (requires manual setup)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -329,17 +347,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show extensible event representation of events"),
         default: false,
     },
-    "feature_use_only_current_profiles": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
+    "useOnlyCurrentProfiles": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show current avatar and name for users in message history"),
         default: false,
-    },
-    "doNotDisturb": {
-        supportedLevels: [SettingLevel.DEVICE],
-        default: false,
-        controller: new IncompatibleController("feature_dnd", false, false),
     },
     "mjolnirRooms": {
         supportedLevels: [SettingLevel.ACCOUNT],
@@ -348,6 +359,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "mjolnirPersonalRoom": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: null,
+    },
+    "feature_html_topic": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Show HTML representation of room topics"),
+        default: false,
     },
     "feature_bridge_state": {
         isFeature: true,
@@ -362,32 +380,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Use new room breadcrumbs"),
         default: false,
-    },
-    "feature_spotlight": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New search experience"),
-        default: false,
-        betaInfo: {
-            title: _td("The new search"),
-            caption: () => <>
-                <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
-                <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
-            </>,
-            disclaimer: () => <>
-                { SdkConfig.get().bug_report_endpoint_url && <>
-                    <h4>{ _t("How can I give feedback?") }</h4>
-                    <p>{ _t("To feedback, join the beta, start a search and click on feedback.") }</p>
-                </> }
-                <h4>{ _t("How can I leave the beta?") }</h4>
-                <p>{ _t("To leave, just return to this page or click on the beta badge when you search.") }</p>
-            </>,
-            feedbackLabel: "spotlight-feedback",
-            feedbackSubheading: _td("Thank you for trying the beta, " +
-                "please go into as much detail as you can so we can improve it."),
-            image: require("../../res/img/betas/new_search_experience.gif"),
-        },
     },
     "feature_right_panel_default_open": {
         isFeature: true,
@@ -425,7 +417,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Location sharing - pin drop (under active development)"),
+        displayName: _td("Location sharing - pin drop"),
         default: false,
     },
     "feature_location_share_live": {
@@ -433,15 +425,21 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td(
-            `Live location sharing - share current location ` +
-            `(active development, and temporarily, locations persist in room history)`,
+            "Live Location Sharing (temporary implementation: locations persist in room history)",
         ),
+        default: false,
+    },
+    "feature_favourite_messages": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Favourite Messages (under active development)"),
         default: false,
     },
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: 10,
+        default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
     },
     "useCustomFontSize": {
@@ -585,12 +583,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "ctrlFForSearch": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: isMac ? _td("Use Command + F to search timeline") : _td("Use Ctrl + F to search timeline"),
+        displayName: IS_MAC ? _td("Use Command + F to search timeline") : _td("Use Ctrl + F to search timeline"),
         default: false,
     },
     "MessageComposerInput.ctrlEnterToSend": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: isMac ? _td("Use Command + Enter to send a message") : _td("Use Ctrl + Enter to send a message"),
+        displayName: IS_MAC ? _td("Use Command + Enter to send a message") : _td("Use Ctrl + Enter to send a message"),
         default: false,
     },
     "MessageComposerInput.surroundWith": {
@@ -602,6 +600,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Automatically replace plain text Emoji'),
         default: false,
+    },
+    "MessageComposerInput.useMarkdown": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Enable Markdown'),
+        description: () => _t(
+            "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
+            {},
+            { code: (sub) => <code>{ sub }</code> },
+        ),
+        default: true,
     },
     "VideoView.flipVideoHorizontally": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -645,15 +653,15 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "webrtc_audiooutput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: "default",
     },
     "webrtc_audioinput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: "default",
     },
     "webrtc_videoinput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: "default",
     },
     "language": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -687,18 +695,18 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevelsAreOrdered: true,
         default: {}, // none allowed
     },
+    // Legacy, kept around for transitionary purposes
     "analyticsOptIn": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Send analytics data'),
         default: false,
-    },
-    "showCookieBar": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: true,
     },
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
+        default: null,
+    },
+    "FTUE.useCaseSelection": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
     "autocompleteDelay": {
@@ -932,6 +940,34 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
+    "debug_scroll_panel": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_timeline_panel": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_registration": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_animation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "audioInputMuted": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "videoInputMuted": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "videoChannelRoomId": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: null,
+    },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
@@ -992,6 +1028,34 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     [UIFeature.TimelineEnableRelativeDates]: {
         supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+
+    // Electron-specific settings, they are stored by Electron and set/read over an IPC.
+    // We store them over there are they are necessary to know before the renderer process launches.
+    "Electron.autoLaunch": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Start automatically after system login"),
+        default: false,
+    },
+    "Electron.warnBeforeExit": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Warn before quitting"),
+        default: true,
+    },
+    "Electron.alwaysShowMenuBar": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Always show the window menu bar"),
+        default: false,
+    },
+    "Electron.showTrayIcon": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Show tray icon and minimise window to it on close"),
+        default: true,
+    },
+    "Electron.enableHardwareAcceleration": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("Enable hardware acceleration"),
         default: true,
     },
 };

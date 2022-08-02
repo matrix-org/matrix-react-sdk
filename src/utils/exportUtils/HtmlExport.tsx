@@ -34,8 +34,7 @@ import * as Avatar from "../../Avatar";
 import EventTile from "../../components/views/rooms/EventTile";
 import DateSeparator from "../../components/views/messages/DateSeparator";
 import BaseAvatar from "../../components/views/avatars/BaseAvatar";
-import { ExportType } from "./exportUtils";
-import { IExportOptions } from "./exportUtils";
+import { ExportType, IExportOptions } from "./exportUtils";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import getExportCSS from "./exportCSS";
 import { textForEvent } from "../../TextForEvent";
@@ -186,7 +185,6 @@ export default class HTMLExporter extends Exporter {
                                 mx_AutoHideScrollbar
                                 mx_ScrollPanel
                                 mx_RoomView_messagePanel
-                                mx_GroupLayout
                                 "
                             >
                                 <div class="mx_RoomView_messageListWrapper">
@@ -417,7 +415,7 @@ export default class HTMLExporter extends Exporter {
             content += body;
             prevEvent = event;
         }
-        return await this.wrapHTML(content);
+        return this.wrapHTML(content);
     }
 
     public async export() {
@@ -465,4 +463,3 @@ export default class HTMLExporter extends Exporter {
         this.cleanUp();
     }
 }
-

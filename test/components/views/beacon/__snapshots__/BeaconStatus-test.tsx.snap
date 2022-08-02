@@ -16,10 +16,10 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
       "_events": Object {},
       "_eventsCount": 0,
       "_isLive": undefined,
-      "_latestLocationState": undefined,
+      "_latestLocationEvent": undefined,
       "_maxListeners": undefined,
       "clearLatestLocation": [Function],
-      "livenessWatchInterval": undefined,
+      "livenessWatchTimeout": undefined,
       "roomId": "!room:server",
       "rootEvent": Object {
         "content": Object {
@@ -43,6 +43,7 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
   }
   displayStatus="Active"
   label="test label"
+  withIcon={true}
 >
   <div
     className="mx_BeaconStatus mx_BeaconStatus_Active"
@@ -59,7 +60,11 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
     <div
       className="mx_BeaconStatus_description"
     >
-      test label
+      <span
+        className="mx_BeaconStatus_label"
+      >
+        test label
+      </span>
       <BeaconExpiryTime
         beacon={
           Beacon {
@@ -73,10 +78,10 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
             "_events": Object {},
             "_eventsCount": 0,
             "_isLive": undefined,
-            "_latestLocationState": undefined,
+            "_latestLocationEvent": undefined,
             "_maxListeners": undefined,
             "clearLatestLocation": [Function],
-            "livenessWatchInterval": undefined,
+            "livenessWatchTimeout": undefined,
             "roomId": "!room:server",
             "rootEvent": Object {
               "content": Object {
@@ -114,6 +119,7 @@ exports[`<BeaconStatus /> renders loading state 1`] = `
 <BeaconStatus
   displayStatus="Loading"
   label="test label"
+  withIcon={true}
 >
   <div
     className="mx_BeaconStatus mx_BeaconStatus_Loading"
@@ -130,7 +136,9 @@ exports[`<BeaconStatus /> renders loading state 1`] = `
     <div
       className="mx_BeaconStatus_description"
     >
-      <span>
+      <span
+        className="mx_BeaconStatus_description_status"
+      >
         Loading live location...
       </span>
     </div>
@@ -142,6 +150,7 @@ exports[`<BeaconStatus /> renders stopped state 1`] = `
 <BeaconStatus
   displayStatus="Stopped"
   label="test label"
+  withIcon={true}
 >
   <div
     className="mx_BeaconStatus mx_BeaconStatus_Stopped"
@@ -158,7 +167,9 @@ exports[`<BeaconStatus /> renders stopped state 1`] = `
     <div
       className="mx_BeaconStatus_description"
     >
-      <span>
+      <span
+        className="mx_BeaconStatus_description_status"
+      >
         Live location ended
       </span>
     </div>

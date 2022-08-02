@@ -172,7 +172,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             });
         } catch (err) {
             logger.warn("Unable to decrypt attachment: ", err);
-            Modal.createTrackedDialog('Error decrypting attachment', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Error"),
                 description: _t("Error decrypting attachment"),
             });
@@ -344,7 +344,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                         </a>
                         { this.context.timelineRenderingType === TimelineRenderingType.File && (
                             <div className="mx_MImageBody_size">
-                                { this.content.info && this.content.info.size ? filesize(this.content.info.size) : "" }
+                                { this.content.info?.size ? filesize(this.content.info.size) : "" }
                             </div>
                         ) }
                     </div> }

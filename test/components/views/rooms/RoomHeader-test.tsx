@@ -1,3 +1,19 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { Room, PendingEventOrdering, MatrixEvent, MatrixClient } from 'matrix-js-sdk/src/matrix';
@@ -111,7 +127,7 @@ describe('RoomHeader', () => {
 
     it("hides call buttons when the room is tombstoned", () => {
         const room = createRoom({ name: "Room", isDm: false, userIds: [] });
-        const wrapper = render(room, {
+        const wrapper = render(room, {}, {
             tombstone: mkEvent({
                 event: true,
                 type: "m.room.tombstone",
@@ -125,6 +141,30 @@ describe('RoomHeader', () => {
 
         expect(wrapper.find('[aria-label="Voice call"]').hostNodes()).toHaveLength(0);
         expect(wrapper.find('[aria-label="Video call"]').hostNodes()).toHaveLength(0);
+    });
+
+    it("should render buttons if not passing showButtons (default true)", () => {
+        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+        const wrapper = render(room);
+        expect(wrapper.find(".mx_RoomHeader_buttons")).toHaveLength(1);
+    });
+
+    it("should not render buttons if passing showButtons = false", () => {
+        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+        const wrapper = render(room, { showButtons: false });
+        expect(wrapper.find(".mx_RoomHeader_buttons")).toHaveLength(0);
+    });
+
+    it("should render the room options context menu if not passing enableRoomOptionsMenu (default true)", () => {
+        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+        const wrapper = render(room);
+        expect(wrapper.find(".mx_RoomHeader_name.mx_AccessibleButton")).toHaveLength(1);
+    });
+
+    it("should not render the room options context menu if passing enableRoomOptionsMenu = false", () => {
+        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+        const wrapper = render(room, { enableRoomOptionsMenu: false });
+        expect(wrapper.find(".mx_RoomHeader_name.mx_AccessibleButton")).toHaveLength(0);
     });
 });
 
@@ -169,24 +209,28 @@ function createRoom(info: IRoomCreationInfo) {
     return room;
 }
 
-function render(room: Room, roomContext?: Partial<IRoomState>): ReactWrapper {
+function render(room: Room, propsOverride = {}, roomContext?: Partial<IRoomState>): ReactWrapper {
+    const props = {
+        room,
+        inRoom: true,
+        onSearchClick: () => {},
+        onInviteClick: null,
+        onForgetClick: () => {},
+        onCallPlaced: (_type) => { },
+        onAppsClick: () => {},
+        e2eStatus: E2EStatus.Normal,
+        appsShown: true,
+        searchInfo: {
+            searchTerm: "",
+            searchScope: SearchScope.Room,
+            searchCount: 0,
+        },
+        ...propsOverride,
+    };
+
     return mount((
         <RoomContext.Provider value={{ ...roomContext, room } as IRoomState}>
-            <RoomHeader
-                room={room}
-                inRoom={true}
-                onSearchClick={() => {}}
-                onForgetClick={() => {}}
-                onCallPlaced={(_type) => { }}
-                onAppsClick={() => {}}
-                e2eStatus={E2EStatus.Normal}
-                appsShown={true}
-                searchInfo={{
-                    searchTerm: "",
-                    searchScope: SearchScope.Room,
-                    searchCount: 0,
-                }}
-            />
+            <RoomHeader {...props} />
         </RoomContext.Provider>
     ));
 }

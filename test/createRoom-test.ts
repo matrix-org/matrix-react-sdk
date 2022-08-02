@@ -19,19 +19,23 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { IDevice } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 
-import { stubClient, setupAsyncStoreWithClient } from "./test-utils";
+import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import WidgetStore from "../src/stores/WidgetStore";
 import WidgetUtils from "../src/utils/WidgetUtils";
-import { VIDEO_CHANNEL, VIDEO_CHANNEL_MEMBER } from "../src/utils/VideoChannelUtils";
+import { VIDEO_CHANNEL_MEMBER } from "../src/utils/VideoChannelUtils";
 import createRoom, { canEncryptToAllUsers } from '../src/createRoom';
 
 describe("createRoom", () => {
+    mockPlatformPeg();
+
     let client: MatrixClient;
     beforeEach(() => {
         stubClient();
         client = MatrixClientPeg.get();
     });
+
+    afterEach(() => jest.clearAllMocks());
 
     it("sets up video rooms correctly", async () => {
         setupAsyncStoreWithClient(WidgetStore.instance, client);
@@ -50,15 +54,14 @@ describe("createRoom", () => {
                     [VIDEO_CHANNEL_MEMBER]: videoMemberPower,
                 },
             },
-        }]] = mocked(client.createRoom).mock.calls as any;
-        const [[widgetRoomId, widgetStateKey, , widgetId]] = mocked(client.sendStateEvent).mock.calls;
+        }]] = mocked(client.createRoom).mock.calls as any; // no good type
+        const [[widgetRoomId, widgetStateKey]] = mocked(client.sendStateEvent).mock.calls;
 
         // We should have had enough power to be able to set up the Jitsi widget
         expect(userPower).toBeGreaterThanOrEqual(widgetPower);
         // and should have actually set it up
         expect(widgetRoomId).toEqual(roomId);
         expect(widgetStateKey).toEqual("im.vector.modular.widgets");
-        expect(widgetId).toEqual(VIDEO_CHANNEL);
 
         // All members should be able to update their connected devices
         expect(videoMemberPower).toEqual(0);

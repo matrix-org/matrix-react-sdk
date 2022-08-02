@@ -16,11 +16,17 @@ limitations under the License.
 
 import { MockedObject } from "jest-mock";
 import { makeBeaconInfoContent, makeBeaconContent } from "matrix-js-sdk/src/content-helpers";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixClient,
+    MatrixEvent,
+    Beacon,
+    getBeaconInfoIdentifier,
+} from "matrix-js-sdk/src/matrix";
 import { M_BEACON, M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
 import { getMockGeolocationPositionError } from "./location";
+import { makeRoomWithStateEvents } from "./room";
 
 type InfoContentProps = {
     timeout: number;
@@ -91,6 +97,7 @@ const DEFAULT_CONTENT_PROPS: ContentProps = {
 export const makeBeaconEvent = (
     sender: string,
     contentProps: Partial<ContentProps> = {},
+    roomId?: string,
 ): MatrixEvent => {
     const { geoUri, timestamp, beaconInfoId, description } = {
         ...DEFAULT_CONTENT_PROPS,
@@ -99,6 +106,7 @@ export const makeBeaconEvent = (
 
     return new MatrixEvent({
         type: M_BEACON.name,
+        room_id: roomId,
         sender,
         content: makeBeaconContent(geoUri, timestamp, beaconInfoId, description),
     });
@@ -181,4 +189,27 @@ export const watchPositionMockImplementation = (delays: number[], errorCodes: nu
             return timeout;
         });
     };
+};
+
+/**
+ * Creates a room with beacon events
+ * sets given locations on beacons
+ * returns beacons
+ */
+export const makeRoomWithBeacons = (
+    roomId: string,
+    mockClient: MockedObject<MatrixClient>,
+    beaconInfoEvents: MatrixEvent[],
+    locationEvents?: MatrixEvent[],
+): Beacon[] => {
+    const room = makeRoomWithStateEvents(beaconInfoEvents, { roomId, mockClient });
+    const beacons = beaconInfoEvents.map(event => room.currentState.beacons.get(getBeaconInfoIdentifier(event)));
+    if (locationEvents) {
+        beacons.forEach(beacon => {
+            // this filtering happens in roomState, which is bypassed here
+            const validLocationEvents = locationEvents?.filter(event => event.getSender() === beacon.beaconInfoOwner);
+            beacon.addLocations(validLocationEvents);
+        });
+    }
+    return beacons;
 };
