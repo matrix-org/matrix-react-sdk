@@ -54,6 +54,8 @@ describe("MessageComposerButtons", () => {
 
         expect(buttonLabels(buttons)).toEqual([
             "Emoji",
+            "Sticker",
+            "Voice Message",
             "Attachment",
             "More options",
         ]);
@@ -73,11 +75,11 @@ describe("MessageComposerButtons", () => {
 
         expect(buttonLabels(buttons)).toEqual([
             "Emoji",
+            "Sticker",
+            "Voice Message",
             "Attachment",
             "More options",
             [
-                "Sticker",
-                "Voice Message",
                 "Poll",
                 "Location",
             ],
