@@ -215,10 +215,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
         if (this.slidingSyncMode && !utils.deepCompare(prevProps.slidingSyncFilter.spaces, this.props.slidingSyncFilter.spaces)) {
             // spaces filter has changed, update the registration
+            const filters = this.props.slidingSyncFilter;
+            filters.spaces = this.props.slidingSyncFilter.spaces;
             SlidingSyncManager.instance.ensureListRegistered(
                 SlidingSyncManager.instance.getOrAllocateListIndex(this.props.slidingSyncId),
                 {
-                    spaces: this.props.slidingSyncFilter.spaces,
+                    filters: filters,
                 },
             )
         }
@@ -324,7 +326,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         const orderedRoomIds = orderedRoomIndexes.map((i) => {
             const rid = roomIndexToRoomId[i];
             if (!rid) {
-                throw new Error("index " + i + " has no room ID");
+                throw new Error("index " + i + " has no room ID: Map => " + JSON.stringify(roomIndexToRoomId));
             }
             return rid;
         });
