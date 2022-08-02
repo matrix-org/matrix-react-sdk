@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import * as utils from "matrix-js-sdk/src/utils";
 import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import classNames from 'classnames';
 import { Dispatcher } from "flux";
@@ -211,6 +212,15 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         // the amount of available rooms to cap the amount of requested visible rooms by the layout
         if (RoomSublist.calcNumTiles(prevState.rooms, prevExtraTiles) !== this.numTiles) {
             this.setState({ height: this.calculateInitialHeight() });
+        }
+        if (this.slidingSyncMode && !utils.deepCompare(prevProps.slidingSyncFilter.spaces, this.props.slidingSyncFilter.spaces)) {
+            // spaces filter has changed, update the registration
+            SlidingSyncManager.instance.ensureListRegistered(
+                SlidingSyncManager.instance.getOrAllocateListIndex(this.props.slidingSyncId),
+                {
+                    spaces: this.props.slidingSyncFilter.spaces,
+                },
+            )
         }
     }
 

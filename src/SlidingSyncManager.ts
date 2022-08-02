@@ -64,7 +64,7 @@ const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
     ],
 };
 
-export type PartialSlidingSyncRequest ={ filters?: MSC3575Filter, sort?: string[], ranges?: number[][] };
+export type PartialSlidingSyncRequest ={ filters?: MSC3575Filter, sort?: string[], ranges?: number[][], spaces?: string[] };
 
 /**
  * This class manages the entirety of sliding sync at a high UI/UX level. It controls the placement
