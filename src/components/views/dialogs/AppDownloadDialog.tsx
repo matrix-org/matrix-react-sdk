@@ -16,6 +16,9 @@ limitations under the License.
 
 import React, { FC } from "react";
 
+import { Icon as FDroidBadge } from "../../../../res/img/badges/f-droid.svg";
+import { Icon as GooglePlayBadge } from "../../../../res/img/badges/google-play.svg";
+import { Icon as IOSBadge } from "../../../../res/img/badges/ios.svg";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -23,9 +26,6 @@ import QRCode from "../elements/QRCode";
 import Heading from "../typography/Heading";
 import BaseDialog from "./BaseDialog";
 import { IDialogProps } from "./IDialogProps";
-import { Icon as IOSBadge } from "../../../../res/img/badges/ios.svg";
-import { Icon as GooglePlayBadge } from "../../../../res/img/badges/google-play.svg";
-import { Icon as FDroidBadge } from "../../../../res/img/badges/f-droid.svg";
 
 const fallbackAppStore = "https://apps.apple.com/app/vector/id1083446067";
 const fallbackGooglePlay = "https://play.google.com/store/apps/details?id=im.vector.app";
@@ -53,7 +53,8 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
                         kind="primary"
                         element="a"
                         href={desktopBuilds?.get("url")}
-                        target="_blank">
+                        target="_blank"
+                        onClick={() => {}}>
                         { _t("Download %(brand)s Desktop", { brand }) }
                     </AccessibleButton>
                 </div>
@@ -70,7 +71,8 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
                             element="a"
                             href={urlAppStore}
                             target="_blank"
-                            aria-label={_t("Download on the App Store")}>
+                            aria-label={_t("Download on the App Store")}
+                            onClick={() => {}}>
                             <IOSBadge />
                         </AccessibleButton>
                     </div>
@@ -86,14 +88,16 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
                             element="a"
                             href={urlGooglePlay}
                             target="_blank"
-                            aria-label={_t("Get it on Google Play")}>
+                            aria-label={_t("Get it on Google Play")}
+                            onClick={() => {}}>
                             <GooglePlayBadge />
                         </AccessibleButton>
                         <AccessibleButton
                             element="a"
                             href={urlFDroid}
                             target="_blank"
-                            aria-label={_t("Get it on F-Droid")}>
+                            aria-label={_t("Get it on F-Droid")}
+                            onClick={() => {}}>
                             <FDroidBadge />
                         </AccessibleButton>
                     </div>
