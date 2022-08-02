@@ -678,7 +678,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 tagId={tag}
                 forRooms={true}
                 slidingSyncFilter={tagToSlidingSyncFilters[tag]}
-                slidingSyncIndex={index}
+                slidingSyncId={"list_"+index}
                 startAsHidden={aesthetics.defaultHidden}
                 label={aesthetics.sectionLabelRaw ? aesthetics.sectionLabelRaw : _t(aesthetics.sectionLabel)}
                 AuxButtonComponent={aesthetics.AuxButtonComponent}

@@ -30,7 +30,7 @@ export const useSlidingSyncRoomSearch = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
 
     const [loading, setLoading] = useState(false);
-    const listIndex = SlidingSyncManager.instance.getSearchListIndex();
+    const listIndex = SlidingSyncManager.instance.getOrAllocateListIndex(SlidingSyncManager.ListSearch);
 
     const [updateQuery, updateResult] = useLatestResult<{ term: string, limit?: number }, Room[]>(setRooms);
 

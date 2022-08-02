@@ -73,16 +73,19 @@ export type PartialSlidingSyncRequest ={ filters?: MSC3575Filter, sort?: string[
  * sync options and code.
  */
 export class SlidingSyncManager {
+    public static ListSpaces = "space_list";
+    public static ListSearch = "search_list";
     private static internalInstance = new SlidingSyncManager();
 
     public slidingSync: SlidingSync;
     private client: MatrixClient;
-    private searchListIndex: number;
+    private listIdToIndex: Record<string,number>;
 
     private configurePromise: Promise<void>;
     private configureResolve: Function;
 
     constructor(){
+        this.listIdToIndex = {};
         this.configurePromise = new Promise((resolve) => {
             this.configureResolve = resolve;
         });
@@ -93,25 +96,57 @@ export class SlidingSyncManager {
     }
 
     public configure(client: MatrixClient, proxyUrl: string): SlidingSync {
+        this.client = client;
+        this.listIdToIndex = {};
         this.slidingSync = new SlidingSync(
             proxyUrl, [], DEFAULT_ROOM_SUBSCRIPTION_INFO, client, SLIDING_SYNC_TIMEOUT_MS,
         );
-        this.client = client;
-        this.searchListIndex = undefined;
+        // set the space list
+        this.slidingSync.setList(this.getOrAllocateListIndex(SlidingSyncManager.ListSpaces), {
+            ranges: [[0, 20]],
+            sort: [
+                "by_name",
+            ],
+            slow_get_all_rooms: true,
+            timeline_limit: 0,
+            required_state: [
+                [EventType.RoomJoinRules, ""], // the public icon on the room list
+                [EventType.RoomAvatar, ""], // any room avatar
+                [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
+                [EventType.RoomEncryption, ""], // lets rooms be configured for E2EE correctly
+                [EventType.RoomCreate, ""], // for isSpaceRoom checks
+                [EventType.SpaceChild, "*"], // all space children
+                [EventType.SpaceParent, "*"], // all space parents
+                [EventType.RoomMember, this.client.getUserId()], // lets the client calculate that we are in fact in the room
+            ],
+            filters: {
+              room_types: ["m.space"],
+            }
+        });
         this.configureResolve();
         return this.slidingSync;
     }
 
     /**
-     * Allocate and return a list index for searching rooms. This ensures that 1 list only is allocated
-     * for searching rooms in sliding sync. This must be called after room list indexes have been allocated.
-     * @returns The list index for searching rooms
+     * Allocate or retrieve the list index for an arbitrary list ID. For example SlidingSyncManager.ListSpaces
+     * @param listId A string which represents the list.
+     * @returns The index to use when registering lists or listening for callbacks.
      */
-    getSearchListIndex(): number {
-        if (!this.searchListIndex) {
-            this.searchListIndex = this.slidingSync.listLength();
+    public getOrAllocateListIndex(listId: string): number {
+        let index = this.listIdToIndex[listId];
+        if (index === undefined) {
+            // assign next highest index
+            index = -1;
+            for (const id in this.listIdToIndex) {
+                const listIndex = this.listIdToIndex[id];
+                if (listIndex > index) {
+                    index = listIndex;
+                }
+            }
+            index++;
+            this.listIdToIndex[listId] = index;
         }
-        return this.searchListIndex;
+        return index;
     }
 
     /**
