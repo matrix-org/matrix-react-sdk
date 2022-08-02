@@ -27,13 +27,21 @@ import { Icon as IOSBadge } from "../../../../res/img/badges/ios.svg";
 import { Icon as GooglePlayBadge } from "../../../../res/img/badges/google-play.svg";
 import { Icon as FDroidBadge } from "../../../../res/img/badges/f-droid.svg";
 
-const urlAppStore = "https://apps.apple.com/app/vector/id1083446067";
-const urlGooglePlay = "https://play.google.com/store/apps/details?id=im.vector.app";
-const urlFDroid = "https://f-droid.org/repository/browse/?fdid=im.vector.app";
+const fallbackAppStore = "https://apps.apple.com/app/vector/id1083446067";
+const fallbackGooglePlay = "https://play.google.com/store/apps/details?id=im.vector.app";
+const fallbackFDroid = "https://f-droid.org/repository/browse/?fdid=im.vector.app";
 
 export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps) => {
     const brand = SdkConfig.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
+    const mobileBuilds = SdkConfig.getObject("mobile_builds");
+
+    const urlAppStore = mobileBuilds.get("ios") ?? fallbackAppStore;
+
+    const urlAndroid = mobileBuilds.get("android") ?? mobileBuilds.get("fdroid") ?? fallbackGooglePlay;
+    const urlGooglePlay = mobileBuilds.get("android") ?? fallbackGooglePlay;
+    const urlFDroid = mobileBuilds.get("fdroid") ?? fallbackFDroid;
+
     return (
         <BaseDialog title={_t("Download %(brand)s", { brand })} className="mx_AppDownloadDialog" onFinished={onFinished}>
             { desktopBuilds?.get("available") && (
@@ -71,7 +79,7 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
                     <Heading size="h3">
                         { _t("Android") }
                     </Heading>
-                    <QRCode data={urlGooglePlay} margin={0} width={172} />
+                    <QRCode data={urlAndroid} margin={0} width={172} />
                     <div className="mx_AppDownloadDialog_info">or</div>
                     <div className="mx_AppDownloadDialog_links">
                         <AccessibleButton
