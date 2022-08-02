@@ -36,11 +36,11 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
     const mobileBuilds = SdkConfig.getObject("mobile_builds");
 
-    const urlAppStore = mobileBuilds.get("ios") ?? fallbackAppStore;
+    const urlAppStore = mobileBuilds?.get("ios") ?? fallbackAppStore;
 
-    const urlAndroid = mobileBuilds.get("android") ?? mobileBuilds.get("fdroid") ?? fallbackGooglePlay;
-    const urlGooglePlay = mobileBuilds.get("android") ?? fallbackGooglePlay;
-    const urlFDroid = mobileBuilds.get("fdroid") ?? fallbackFDroid;
+    const urlAndroid = mobileBuilds?.get("android") ?? mobileBuilds?.get("fdroid") ?? fallbackGooglePlay;
+    const urlGooglePlay = mobileBuilds?.get("android") ?? fallbackGooglePlay;
+    const urlFDroid = mobileBuilds?.get("fdroid") ?? fallbackFDroid;
 
     return (
         <BaseDialog title={_t("Download %(brand)s", { brand })} className="mx_AppDownloadDialog" onFinished={onFinished}>
