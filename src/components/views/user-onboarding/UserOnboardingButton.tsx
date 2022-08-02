@@ -20,6 +20,7 @@ import React, { useCallback } from "react";
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { useSettingValue } from "../../../hooks/useSettings";
+import { useUserOnboardingContext } from "../../../hooks/useUserOnboardingContext";
 import { useUserOnboardingTasks } from "../../../hooks/useUserOnboardingTasks";
 import { _t } from "../../../languageHandler";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -41,13 +42,17 @@ interface Props {
 }
 
 export function UserOnboardingButton({ selected, minimized }: Props) {
-    const [completedTasks, waitingTasks] = useUserOnboardingTasks();
+    const context = useUserOnboardingContext();
+    const [completedTasks, waitingTasks] = useUserOnboardingTasks(context);
 
     const completed = completedTasks.length;
     const waiting = waitingTasks.length;
     const total = completed + waiting;
 
-    const progress = waiting ? completed / total : 1;
+    let progress = 1;
+    if (context && waiting) {
+        progress = completed / total;
+    }
 
     const onDismiss = useCallback((ev: ButtonEvent) => {
         PosthogTrackers.trackInteraction("WebRoomListUserOnboardingIgnoreButton", ev);
@@ -70,7 +75,7 @@ export function UserOnboardingButton({ selected, minimized }: Props) {
             className={classNames("mx_UserOnboardingButton", {
                 "mx_UserOnboardingButton_selected": selected,
                 "mx_UserOnboardingButton_minimized": minimized,
-                "mx_UserOnboardingButton_completed": !waiting,
+                "mx_UserOnboardingButton_completed": !waiting || !context,
             })}
             onClick={onClick}>
             { !minimized && (
@@ -79,7 +84,7 @@ export function UserOnboardingButton({ selected, minimized }: Props) {
                         <Heading size="h4" className="mx_Heading_h4">
                             { _t("Welcome") }
                         </Heading>
-                        { !completed && (
+                        { context && !completed && (
                             <div className="mx_UserOnboardingButton_percentage">
                                 { toPercentage(progress) }%
                             </div>
