@@ -346,7 +346,7 @@
     "%(oneUser)sleft and rejoined %(count)s times|one": "%(oneUser)sвышел(-ла) и снова вошёл(-ла)",
     "were invited %(count)s times|other": "приглашены %(count)s раз(а)",
     "were invited %(count)s times|one": "приглашены",
-    "was invited %(count)s times|other": "приглашен(а) %(count)s раз",
+    "was invited %(count)s times|other": "приглашен(а) %(count)s раз(а)",
     "was invited %(count)s times|one": "приглашен(а)",
     "were banned %(count)s times|other": "заблокированы %(count)s раз(а)",
     "were banned %(count)s times|one": "заблокированы",
@@ -3433,5 +3433,14 @@
     "Find my location": "Найти моё местоположение",
     "Map feedback": "Карта отзывов",
     "In %(spaceName)s and %(count)s other spaces.|zero": "В пространстве %(spaceName)s.",
-    "Favourite Messages (under active development)": "Избранные сообщения (в активной разработке)"
+    "Favourite Messages (under active development)": "Избранные сообщения (в активной разработке)",
+    "Stop and close": "Остановить и закрыть",
+    "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
+    "Saved Items": "Сохранённые объекты",
+    "Mapbox logo": "Логотип Mapbox",
+    "Enter fullscreen": "Перейти в полноэкранный режим",
+    "Exit fullscreen": "Выйти из полноэкранного режима",
+    "In %(spaceName)s and %(count)s other spaces.|one": "В %(spaceName)s и %(count)s другом пространстве.",
+    "In %(spaceName)s and %(count)s other spaces.|other": "В %(spaceName)s и %(count)s других пространствах.",
+    "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s."
 }
