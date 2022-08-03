@@ -58,7 +58,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
 
         const cli = MatrixClientPeg.get();
 
-        cli.doesServerSupportUnstableFeature("org.matrix.msc2285").then((showHiddenReadReceipts) => {
+        cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable").then((showHiddenReadReceipts) => {
             this.setState({ showHiddenReadReceipts });
         });
 
