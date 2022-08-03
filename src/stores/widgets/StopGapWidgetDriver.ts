@@ -215,7 +215,14 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 ),
             );
         } else {
-            await client.sendToDevice(eventType, contentMap);
+            await client.queueToDevice({
+                eventType,
+                batch: Object.entries(contentMap).flatMap(([userId, userContentMap]) =>
+                    Object.entries(userContentMap).map(([deviceId, content]) =>
+                        ({ userId, deviceId, payload: content }),
+                    ),
+                ),
+            });
         }
     }
 
