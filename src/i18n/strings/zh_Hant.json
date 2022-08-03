@@ -3480,5 +3480,14 @@
     "You made it!": "您做到了！",
     "Help": "說明",
     "We’d appreciate any feedback on how you’re finding Element.": "對於您如何找到 Element 的任何回饋，我們將不勝感激。",
-    "How are you finding Element so far?": "您是如何找到 Element 的？"
+    "How are you finding Element so far?": "您是如何找到 Element 的？",
+    "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play 與 Google Play logo 是 Google 公司的商標。",
+    "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store® 與 Apple logo® 是蘋果公司的商標。",
+    "Get it on F-Droid": "在 F-Droid 上取得",
+    "Get it on Google Play": "在 Google Play 上取得",
+    "Android": "Android",
+    "Download on the App Store": "在 App Store 上下載",
+    "iOS": "iOS",
+    "Download %(brand)s Desktop": "下載 %(brand)s 桌面版",
+    "Download %(brand)s": "下載 %(brand)s"
 }
