@@ -18,6 +18,9 @@ import React from "react";
 import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -398,13 +401,22 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     };
 
     private onClearNotificationsClicked = () => {
-        MatrixClientPeg.get().getRooms().forEach(r => {
-            if (r.getUnreadNotificationCount() > 0) {
-                const events = r.getLiveTimeline().getEvents();
+        const client: MatrixClient = MatrixClientPeg.get();
+        client.getRooms().forEach((room: Room) => {
+            if (room.getUnreadNotificationCount() > 0) {
+                const events = room.getLiveTimeline().getEvents();
                 if (events.length) {
                     // noinspection JSIgnoredPromiseFromCall
-                    MatrixClientPeg.get().sendReadReceipt(events[events.length - 1]);
+                    client.sendReadReceipt(events[events.length - 1]);
                 }
+
+                room.getThreads().forEach((thread: Thread) => {
+                    // Need to optimise this and send a read receipt only
+                    // for threads that have unread content
+                    // This will be done when integrating with MSC3773
+                    const events = thread.liveTimeline.getEvents();
+                    client.sendReadReceipt(events[events.length - 1]);
+                });
             }
         });
     };
