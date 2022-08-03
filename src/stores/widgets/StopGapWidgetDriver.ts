@@ -186,7 +186,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
     public async sendToDevice(
         eventType: string,
         encrypted: boolean,
-        contentMap: { [userId: string]: { [deviceId: string]: unknown } },
+        contentMap: { [userId: string]: { [deviceId: string]: object } },
     ): Promise<void> {
         const client = MatrixClientPeg.get();
 
