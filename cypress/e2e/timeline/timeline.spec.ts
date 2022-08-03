@@ -271,7 +271,7 @@ describe("Timeline", () => {
             cy.get(".mx_SearchBar_input input").type("Message{enter}");
 
             cy.get(".mx_EventTile:not(.mx_EventTile_contextual)").find(".mx_EventTile_searchHighlight").should("exist");
-            cy.get(".mx_RoomView_MessageList").percySnapshotElement("Highlighted search results");
+            cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
         });
     });
 
