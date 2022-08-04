@@ -3479,5 +3479,14 @@
     "You made it!": "Vous avez réussi !",
     "Help": "Aide",
     "We’d appreciate any feedback on how you’re finding Element.": "Nous apprécierions toutes vos remarques sur Element.",
-    "How are you finding Element so far?": "Comment trouvez-vous Element jusque-là ?"
+    "How are you finding Element so far?": "Comment trouvez-vous Element jusque-là ?",
+    "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play et le logo Google Play sont des marques déposées de Google LLC.",
+    "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store® et le logo Apple® sont des marques déposées de Apple Inc.",
+    "Get it on F-Droid": "Récupérez-le sur F-Droid",
+    "Get it on Google Play": "Récupérez-le sur Google Play",
+    "Android": "Android",
+    "Download on the App Store": "Télécharger sur l’App Store",
+    "iOS": "iOS",
+    "Download %(brand)s Desktop": "Télécharger %(brand)s Desktop",
+    "Download %(brand)s": "Télécharger %(brand)s"
 }
