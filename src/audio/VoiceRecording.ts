@@ -229,7 +229,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         // go horribly over the limit. We also emit a warning state if needed.
         //
         // We use the recorder's perspective of time to make sure we don't cut off the last
-        // frame of audio, otherwise we end up with a 1:59 clip (119.68 seconds). This extra
+        // frame of audio, otherwise we end up with a 14:59 clip (899.68 seconds). This extra
         // safety can allow us to overshoot the target a bit, but at least when we say 2min
         // maximum we actually mean it.
         //
