@@ -63,7 +63,6 @@ describe("User Onboarding (new user)", () => {
             .contains("#mx_BaseDialog_title", "Download Element")
             .should("exist");
         cy.get('[role=dialog]')
-            .contains("#mx_BaseDialog_title", "Download Element")
             .percySnapshotElement("App download dialog");
     });
 
