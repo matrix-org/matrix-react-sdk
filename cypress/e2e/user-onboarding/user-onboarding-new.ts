@@ -49,9 +49,12 @@ describe("User Onboarding (new user)", () => {
 
     it("page is shown", () => {
         cy.get('.mx_UserOnboardingPage').should('exist');
-        cy.get('.mx_UserOnboardingList').should('exist');
-        // Wait for animation to finish
-        cy.wait(5_000);
+        cy.get('.mx_UserOnboardingList')
+            .should('exist')
+            .should(($list) => {
+                const list = $list.get(0);
+                expect(getComputedStyle(list).opacity).to.be.eq("1");
+            });
         cy.get('.mx_UserOnboardingPage')
             .percySnapshotElement("User onboarding page");
     });
