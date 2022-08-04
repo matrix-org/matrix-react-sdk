@@ -49,7 +49,11 @@ describe("User Onboarding (new user)", () => {
 
     it("page is shown", () => {
         cy.get('.mx_UserOnboardingPage').should('exist');
-        cy.percySnapshot("User onboarding page");
+        cy.get('.mx_UserOnboardingList').should('exist');
+        // Wait for animation to finish
+        cy.wait(5_000);
+        cy.get('.mx_UserOnboardingPage')
+            .percySnapshotElement("User onboarding page");
     });
 
     it("app download dialog", () => {
@@ -58,7 +62,9 @@ describe("User Onboarding (new user)", () => {
         cy.get('[role=dialog]')
             .contains("#mx_BaseDialog_title", "Download Element")
             .should("exist");
-        cy.percySnapshot("App download dialog");
+        cy.get('[role=dialog]')
+            .contains("#mx_BaseDialog_title", "Download Element")
+            .percySnapshotElement("App download dialog");
     });
 
     it("using find friends action should increase progress", () => {
