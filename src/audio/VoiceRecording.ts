@@ -230,7 +230,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         //
         // We use the recorder's perspective of time to make sure we don't cut off the last
         // frame of audio, otherwise we end up with a 14:59 clip (899.68 seconds). This extra
-        // safety can allow us to overshoot the target a bit, but at least when we say 2min
+        // safety can allow us to overshoot the target a bit, but at least when we say 15min
         // maximum we actually mean it.
         //
         // In testing, recorder time and worker time lag by about 400ms, which is roughly the
