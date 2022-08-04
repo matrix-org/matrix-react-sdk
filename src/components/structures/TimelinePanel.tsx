@@ -30,6 +30,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
+import { getPrivateReadReceiptField } from "matrix-js-sdk/src/utils";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -979,12 +980,15 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 this.state.readMarkerEventId,
                 sendRRs ? lastReadEvent : null, // Public read receipt (could be null)
                 lastReadEvent, // Private read receipt (could be null)
-            ).catch((e) => {
+            ).catch(async (e) => {
                 // /read_markers API is not implemented on this HS, fallback to just RR
                 if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
+                    const privateField = await getPrivateReadReceiptField(MatrixClientPeg.get());
+                    if (!sendRRs && !privateField) return;
+
                     return MatrixClientPeg.get().sendReadReceipt(
                         lastReadEvent,
-                        sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
+                        sendRRs ? ReceiptType.Read : privateField,
                     ).catch((e) => {
                         logger.error(e);
                         this.lastRRSentEventId = undefined;
