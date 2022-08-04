@@ -66,7 +66,9 @@ describe("User Onboarding (new user)", () => {
             .contains("#mx_BaseDialog_title", "Download Element")
             .should("exist");
         cy.get('[role=dialog]')
-            .percySnapshotElement("App download dialog");
+            .percySnapshotElement("App download dialog", {
+                widths: [1024],
+            });
     });
 
     it("using find friends action should increase progress", () => {
