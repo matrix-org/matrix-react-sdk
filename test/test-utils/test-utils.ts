@@ -128,7 +128,6 @@ export function createTestClient(): MatrixClient {
         setRoomAccountData: jest.fn(),
         setRoomReadMarkers: jest.fn().mockResolvedValue({}),
         setRoomTopic: jest.fn(),
-        setRoomReadMarkers: jest.fn().mockResolvedValue({}),
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
