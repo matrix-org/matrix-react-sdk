@@ -62,7 +62,7 @@ const sendEvent = (roomId: string, html = false): Chainable<ISendEventResponse> 
         roomId,
         null,
         "m.room.message" as EventType,
-        MessageEvent.from("Message", html ? "<b>Message</u>" : undefined).serialize().content,
+        MessageEvent.from("Message", html ? "<b>Message</b>" : undefined).serialize().content,
     );
 };
 
