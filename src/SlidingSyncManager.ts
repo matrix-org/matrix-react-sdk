@@ -158,7 +158,7 @@ export class SlidingSyncManager {
     async ensureListRegistered(
         listIndex: number, updateArgs: PartialSlidingSyncRequest,
     ): Promise<MSC3575List> {
-        logger.debug("ensureListRegistered", listIndex, updateArgs);
+        logger.debug("ensureListRegistered:::", listIndex, updateArgs);
         await this.configurePromise;
         let list = this.slidingSync.getList(listIndex);
         if (!list) {
@@ -187,23 +187,14 @@ export class SlidingSyncManager {
             }
             list = updatedList;
         }
+
         // if we only have range changes then call a different function so we don't nuke the list from before
         if (updateArgs.ranges && Object.keys(updateArgs).length === 1) {
-            this.slidingSync.setListRanges(listIndex, updateArgs.ranges);
+            await this.slidingSync.setListRanges(listIndex, updateArgs.ranges);
         } else {
-            this.slidingSync.setList(listIndex, list);
+            await this.slidingSync.setList(listIndex, list);
         }
-
-        return new Promise((resolve) => {
-            const resolveOnSubscribed = (state: SlidingSyncState, resp: MSC3575SlidingSyncResponse, err: Error) => {
-                if (state === SlidingSyncState.Complete && resp.lists[listIndex]) { // we processed a /sync response
-                    this.slidingSync.off(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
-                    resolve(list);
-                }
-            };
-            // wait until the next sync before returning as RoomView may need to know the current state
-            this.slidingSync.on(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
-        });
+        return this.slidingSync.getList(listIndex);
     }
 
     async setRoomVisible(roomId: string, visible: boolean): Promise<string> {
