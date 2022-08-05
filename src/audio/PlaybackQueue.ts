@@ -149,6 +149,7 @@ export class PlaybackQueue {
                                 break; // Stop automatic playback: next useful event is not a voice message
                             }
 
+
                             const havePlayback = this.playbacks.has(event.getId());
                             const isRecentlyCompleted = this.recentFullPlays.has(event.getId());
                             if (havePlayback && !isRecentlyCompleted) {
@@ -183,13 +184,12 @@ export class PlaybackQueue {
         }
 
         if (newState === PlaybackState.Playing) {
-            const order = this.playbackIdOrder;
+            let order = this.playbackIdOrder;
             if (this.currentPlaybackId !== mxEvent.getId() && !!this.currentPlaybackId) {
                 if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
                     const lastInstance = this.playbacks.get(this.currentPlaybackId);
                     if (
                         lastInstance.currentState === PlaybackState.Playing
-                        || lastInstance.currentState === PlaybackState.Paused
                     ) {
                         order.push(this.currentPlaybackId);
                     }
@@ -198,7 +198,7 @@ export class PlaybackQueue {
 
             this.currentPlaybackId = mxEvent.getId();
             if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
-                order.push(this.currentPlaybackId);
+                order = [this.currentPlaybackId]
             }
         }
 
