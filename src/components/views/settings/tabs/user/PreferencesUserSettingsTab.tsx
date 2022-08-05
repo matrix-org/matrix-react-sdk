@@ -208,7 +208,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Presence") }</span>
                     <span className="mx_SettingsTab_subsectionText">
-                        { _t("Choose what others can see from your presence.") }
+                        { _t("Share your activity and status with others.") }
                     </span>
                     <SettingsFlag
                         disabled={!this.state.disablingReadReceiptsSupported}
