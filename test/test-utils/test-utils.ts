@@ -91,6 +91,12 @@ export function createTestClient(): MatrixClient {
             removeRoom: jest.fn(),
         },
 
+        crypto: {
+            deviceList: {
+                downloadKeys: jest.fn(),
+            },
+        },
+
         getPushActionsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation(mkStubRoom),
         getRooms: jest.fn().mockReturnValue([]),
@@ -127,6 +133,7 @@ export function createTestClient(): MatrixClient {
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
+        setRoomReadMarkers: jest.fn().mockResolvedValue({}),
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
@@ -162,6 +169,9 @@ export function createTestClient(): MatrixClient {
         downloadKeys: jest.fn(),
         fetchRoomEvent: jest.fn(),
         makeTxnId: jest.fn().mockImplementation(() => `t${txnId++}`),
+        sendToDevice: jest.fn().mockResolvedValue(undefined),
+        queueToDevice: jest.fn().mockResolvedValue(undefined),
+        encryptAndSendToDevices: jest.fn().mockResolvedValue(undefined),
     } as unknown as MatrixClient;
 }
 
@@ -175,7 +185,7 @@ type MakeEventPassThruProps = {
 type MakeEventProps = MakeEventPassThruProps & {
     type: string;
     content: IContent;
-    room: Room["roomId"];
+    room?: Room["roomId"]; // to-device messages are roomless
     // eslint-disable-next-line camelcase
     prev_content?: IContent;
     unsigned?: IUnsigned;
@@ -361,6 +371,8 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getMembersWithMembership: jest.fn().mockReturnValue([]),
         getJoinedMembers: jest.fn().mockReturnValue([]),
         getJoinedMemberCount: jest.fn().mockReturnValue(1),
+        getInvitedAndJoinedMemberCount: jest.fn().mockReturnValue(1),
+        setUnreadNotificationCount: jest.fn(),
         getMembers: jest.fn().mockReturnValue([]),
         getPendingEvents: () => [],
         getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
@@ -382,6 +394,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
             members: {},
             getJoinRule: jest.fn().mockReturnValue(JoinRule.Invite),
             on: jest.fn(),
+            off: jest.fn(),
         } as unknown as RoomState,
         tags: {},
         setBlacklistUnverifiedDevices: jest.fn(),
@@ -406,6 +419,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         myUserId: client?.getUserId(),
         canInvite: jest.fn(),
         getThreads: jest.fn().mockReturnValue([]),
+        eventShouldLiveIn: jest.fn().mockReturnValue({}),
     } as unknown as Room;
 }
 
