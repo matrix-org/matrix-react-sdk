@@ -116,14 +116,12 @@ Cypress.Commands.add("setSettingValue", (
     });
 });
 
-Cypress.Commands.add(
-    "getSettingValue",
-    <T = any>(name: string, roomId?: string, excludeDefault?: boolean): Chainable<T> => {
-        return cy.getSettingsStore().then((store: typeof SettingsStore) => {
-            return store.getValue(name, roomId, excludeDefault);
-        });
-    },
-);
+// eslint-disable-next-line max-len
+Cypress.Commands.add("getSettingValue", <T = any>(name: string, roomId?: string, excludeDefault?: boolean): Chainable<T> => {
+    return cy.getSettingsStore().then((store: typeof SettingsStore) => {
+        return store.getValue(name, roomId, excludeDefault);
+    });
+});
 
 Cypress.Commands.add("openUserMenu", (): Chainable<JQuery<HTMLElement>> => {
     cy.get('[aria-label="User menu"]').click();

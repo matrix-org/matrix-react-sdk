@@ -37,11 +37,16 @@ declare global {
              * @param displayName the displayName to give the test user
              * @param prelaunchFn optional function to run before the app is visited
              */
-            initTestUser(synapse: SynapseInstance, displayName: string, prelaunchFn?: () => void): Chainable<UserCredentials>;
+            initTestUser(
+                synapse: SynapseInstance,
+                displayName: string,
+                prelaunchFn?: () => void,
+            ): Chainable<UserCredentials>;
         }
     }
 }
 
+// eslint-disable-next-line max-len
 Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: string, prelaunchFn?: () => void): Chainable<UserCredentials> => {
     // XXX: work around Cypress not clearing IDB between tests
     cy.window({ log: false }).then(win => {

@@ -37,6 +37,7 @@ import { Action } from "../dispatcher/actions";
 import PlatformSettingsHandler from "./handlers/PlatformSettingsHandler";
 import dispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 const defaultWatchManager = new WatchManager();
 
@@ -578,6 +579,8 @@ export default class SettingsStore {
     }
 
     private static migrateHiddenReadReceipts() {
+        if (MatrixClientPeg.get().isGuest()) return; // not worth it
+
         // We wait for the first sync to ensure that the user's existing account data has loaded, as otherwise
         // getValue() for an account-level setting like sendReadReceipts will return `null`.
         const disRef = dispatcher.register((payload: ActionPayload) => {
