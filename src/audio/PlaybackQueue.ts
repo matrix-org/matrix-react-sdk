@@ -97,6 +97,8 @@ export class PlaybackQueue {
     }
 
     private onPlaybackStateChange(playback: Playback, mxEvent: MatrixEvent, newState: PlaybackState) {
+        console.debug(newState)
+        console.debug(this.playbackIdOrder)
         // Remember where the user got to in playback
         const wasLastPlaying = this.currentPlaybackId === mxEvent.getId();
         if (newState === PlaybackState.Stopped && this.clockStates.has(mxEvent.getId()) && !wasLastPlaying) {
@@ -132,7 +134,7 @@ export class PlaybackQueue {
                         // else no explicit next event, so find an event we haven't played that comes next. The live
                         // timeline is already most recent last, so we can iterate down that.
                         const timeline = arrayFastClone(this.room.getLiveTimeline().getEvents());
-                        const cli = MatrixClientPeg.get();
+                        const cliID = MatrixClientPeg.get().getUserId();
                         let scanForVoiceMessage = false;
                         let nextEv: MatrixEvent;
                         for (const event of timeline) {
@@ -150,8 +152,8 @@ export class PlaybackQueue {
                                 break; // Stop automatic playback: next useful event is not a voice message
                             }
 
-                            const isOwnVoiceMessage = cli.getUserId() == event.sender.userId;
-                            if (!isOwnVoiceMessage) {
+                            const isOwnVoiceMessage = cliID == event.sender.userId;
+                            if (isOwnVoiceMessage) {
                                 break;
                             }
 
@@ -186,6 +188,8 @@ export class PlaybackQueue {
                     );
                 }
             }
+        } else if (newState == PlaybackState.Paused) {
+            this.playbackIdOrder.pop();
         }
 
         if (newState === PlaybackState.Playing) {
@@ -203,7 +207,7 @@ export class PlaybackQueue {
 
             this.currentPlaybackId = mxEvent.getId();
             if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
-                order = [this.currentPlaybackId]
+                order.push(this.currentPlaybackId);
             }
         }
 
