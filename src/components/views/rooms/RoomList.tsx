@@ -669,6 +669,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 is_dm: false,
                 is_invite: false,
                 is_tombstoned: false,
+                not_room_types: ["m.space"],
                 spaces: SpaceStore.instance.activeSpaceRoom ? [SpaceStore.instance.activeSpaceRoom.roomId] : undefined,
             },
         };
