@@ -58,7 +58,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
     private static PRESENCE_SETTINGS = [
         "sendTypingNotifications",
-        // sendReadReceipts
+        // sendReadReceipts - handled specially due to server needing support
     ];
 
     private static COMPOSER_SETTINGS = [
