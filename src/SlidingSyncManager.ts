@@ -188,11 +188,15 @@ export class SlidingSyncManager {
             list = updatedList;
         }
 
-        // if we only have range changes then call a different function so we don't nuke the list from before
-        if (updateArgs.ranges && Object.keys(updateArgs).length === 1) {
-            await this.slidingSync.setListRanges(listIndex, updateArgs.ranges);
-        } else {
-            await this.slidingSync.setList(listIndex, list);
+        try {
+            // if we only have range changes then call a different function so we don't nuke the list from before
+            if (updateArgs.ranges && Object.keys(updateArgs).length === 1) {
+                await this.slidingSync.setListRanges(listIndex, updateArgs.ranges);
+            } else {
+                await this.slidingSync.setList(listIndex, list);
+            }
+        } catch (err) {
+            logger.debug("ensureListRegistered: update failed txn_id=", err);
         }
         return this.slidingSync.getList(listIndex);
     }
