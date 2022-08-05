@@ -184,7 +184,7 @@ type MakeEventPassThruProps = {
 type MakeEventProps = MakeEventPassThruProps & {
     type: string;
     content: IContent;
-    room: Room["roomId"];
+    room?: Room["roomId"]; // to-device messages are roomless
     // eslint-disable-next-line camelcase
     prev_content?: IContent;
     unsigned?: IUnsigned;
