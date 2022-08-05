@@ -3489,5 +3489,6 @@
     "Download on the App Store": "Scarica dall'App Store",
     "iOS": "iOS",
     "Download %(brand)s Desktop": "Scarica %(brand)s Desktop",
-    "Download %(brand)s": "Scarica %(brand)s"
+    "Download %(brand)s": "Scarica %(brand)s",
+    "We're creating a room with %(names)s": "Stiamo creando una stanza con %(names)s"
 }
