@@ -67,7 +67,7 @@ describe("User Onboarding (new user)", () => {
             .should("exist");
         cy.get('[role=dialog]')
             .percySnapshotElement("App download dialog", {
-                widths: [1024],
+                widths: [640],
             });
     });
 
