@@ -986,13 +986,15 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     const privateField = await getPrivateReadReceiptField(MatrixClientPeg.get());
                     if (!sendRRs && !privateField) return;
 
-                    return MatrixClientPeg.get().sendReadReceipt(
-                        lastReadEvent,
-                        sendRRs ? ReceiptType.Read : privateField,
-                    ).catch((e) => {
+                    try {
+                        return await MatrixClientPeg.get().sendReadReceipt(
+                            lastReadEvent,
+                            sendRRs ? ReceiptType.Read : privateField,
+                        );
+                    } catch (error) {
                         logger.error(e);
                         this.lastRRSentEventId = undefined;
-                    });
+                    }
                 } else {
                     logger.error(e);
                 }
