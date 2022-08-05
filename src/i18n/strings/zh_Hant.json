@@ -3489,5 +3489,6 @@
     "Download on the App Store": "在 App Store 上下載",
     "iOS": "iOS",
     "Download %(brand)s Desktop": "下載 %(brand)s 桌面版",
-    "Download %(brand)s": "下載 %(brand)s"
+    "Download %(brand)s": "下載 %(brand)s",
+    "We're creating a room with %(names)s": "我們正在建立一個包含 %(names)s 的聊天室"
 }
