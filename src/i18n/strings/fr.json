@@ -3488,5 +3488,6 @@
     "Download on the App Store": "Télécharger sur l’App Store",
     "iOS": "iOS",
     "Download %(brand)s Desktop": "Télécharger %(brand)s Desktop",
-    "Download %(brand)s": "Télécharger %(brand)s"
+    "Download %(brand)s": "Télécharger %(brand)s",
+    "We're creating a room with %(names)s": "Nous créons un salon avec %(names)s"
 }
