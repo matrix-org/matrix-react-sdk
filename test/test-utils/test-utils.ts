@@ -126,7 +126,6 @@ export function createTestClient(): MatrixClient {
         mxcUrlToHttp: (mxc) => `http://this.is.a.url/${mxc.substring(6)}`,
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
-        setRoomReadMarkers: jest.fn().mockResolvedValue({}),
         setRoomTopic: jest.fn(),
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: jest.fn().mockResolvedValue({}),
