@@ -114,6 +114,7 @@ interface IState {
     rooms: Room[];
     filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
     slidingSyncJoinedCount?: number;
+    slidingSyncLoading: boolean;
 }
 
 export default class RoomSublist extends React.Component<IProps, IState> {
@@ -153,6 +154,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 this.slidingSyncMode ? [] : arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || [])
             ),
             slidingSyncJoinedCount: 0,
+            slidingSyncLoading: false,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
         this.state = Object.assign(this.state, { height: this.calculateInitialHeight() });
@@ -217,12 +219,19 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // spaces filter has changed, update the registration
             const filters = this.props.slidingSyncFilter;
             filters.spaces = this.props.slidingSyncFilter.spaces;
+            this.setState({
+                slidingSyncLoading: true,
+            });
             SlidingSyncManager.instance.ensureListRegistered(
                 SlidingSyncManager.instance.getOrAllocateListIndex(this.props.slidingSyncId),
                 {
                     filters: filters,
                 },
-            )
+            ).then(() => {
+                this.setState({
+                    slidingSyncLoading: false,
+                });
+            });
         }
     }
 
@@ -863,7 +872,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         });
 
         let content = null;
-        if (visibleTiles.length > 0 && this.props.forceExpanded) {
+        if (this.state.slidingSyncLoading) {
+            content = <div className="mx_RoomSublist_skeletonUI" />;
+        } else if (visibleTiles.length > 0 && this.props.forceExpanded) {
             content = <div className="mx_RoomSublist_resizeBox mx_RoomSublist_resizeBox_forceExpanded">
                 <div className="mx_RoomSublist_tiles" ref={this.tilesRef}>
                     { visibleTiles }
