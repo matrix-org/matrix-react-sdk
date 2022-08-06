@@ -3490,5 +3490,9 @@
     "Download on the App Store": "Descargar na App Store",
     "iOS": "iOS",
     "Download %(brand)s Desktop": "Descargar %(brand)s Desktop",
-    "Download %(brand)s": "Descargar %(brand)s"
+    "Download %(brand)s": "Descargar %(brand)s",
+    "Your server doesn't support disabling sending read receipts.": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
+    "Share your activity and status with others.": "Comparte a túa actividade e estado con outras persoas.",
+    "Presence": "Presenza",
+    "Send read receipts": "Enviar resgardos de lectura"
 }
