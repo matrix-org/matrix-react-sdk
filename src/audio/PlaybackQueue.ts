@@ -97,8 +97,6 @@ export class PlaybackQueue {
     }
 
     private onPlaybackStateChange(playback: Playback, mxEvent: MatrixEvent, newState: PlaybackState) {
-        console.debug(newState)
-        console.debug(this.playbackIdOrder)
         // Remember where the user got to in playback
         const wasLastPlaying = this.currentPlaybackId === mxEvent.getId();
         if (newState === PlaybackState.Stopped && this.clockStates.has(mxEvent.getId()) && !wasLastPlaying) {
@@ -193,7 +191,7 @@ export class PlaybackQueue {
         }
 
         if (newState === PlaybackState.Playing) {
-            let order = this.playbackIdOrder;
+            const order = this.playbackIdOrder;
             if (this.currentPlaybackId !== mxEvent.getId() && !!this.currentPlaybackId) {
                 if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
                     const lastInstance = this.playbacks.get(this.currentPlaybackId);
