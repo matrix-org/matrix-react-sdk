@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+// eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -209,7 +210,7 @@ function createRoomState(room: Room, narrow: boolean): IRoomState {
         shouldPeek: true,
         membersLoaded: false,
         numUnreadMessages: 0,
-        guestsCanJoin: false,
+        canSelfRedact: false,
         canPeek: false,
         showApps: false,
         isPeeking: false,

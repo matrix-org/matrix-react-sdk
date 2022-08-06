@@ -154,7 +154,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             // detached queue and we show the room status bar to allow retry
             if (typeof code !== "undefined") {
                 // display error message stating you couldn't delete this.
-                Modal.createTrackedDialog('Unable to find event at that date', '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t('Error'),
                     description: _t('Unable to find event at that date. (%(code)s)', { code }),
                 });
@@ -223,7 +223,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 isExpanded={!!this.state.contextMenuPosition}
                 title={_t("Jump to date")}
             >
-                <div aria-hidden="true">{ this.getLabel() }</div>
+                <h2 aria-hidden="true">{ this.getLabel() }</h2>
                 <div className="mx_DateSeparator_chevron" />
                 { contextMenu }
             </ContextMenuTooltipButton>
@@ -237,15 +237,15 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         if (this.state.jumpToDateEnabled) {
             dateHeaderContent = this.renderJumpToDateMenu();
         } else {
-            dateHeaderContent = <div aria-hidden="true">{ label }</div>;
+            dateHeaderContent = <h2 aria-hidden="true">{ label }</h2>;
         }
 
         // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one
         // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
-        return <h2 className="mx_DateSeparator" role="separator" tabIndex={-1} aria-label={label}>
+        return <div className="mx_DateSeparator" role="separator" tabIndex={-1} aria-label={label}>
             <hr role="none" />
             { dateHeaderContent }
             <hr role="none" />
-        </h2>;
+        </div>;
     }
 }

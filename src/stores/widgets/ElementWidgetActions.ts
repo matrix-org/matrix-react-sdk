@@ -19,20 +19,33 @@ import { IWidgetApiRequest } from "matrix-widget-api";
 export enum ElementWidgetActions {
     ClientReady = "im.vector.ready",
     WidgetReady = "io.element.widget_ready",
+
+    // All of these actions are currently specific to Jitsi
     JoinCall = "io.element.join",
     HangupCall = "im.vector.hangup",
+    ForceHangupCall = "io.element.force_hangup",
     CallParticipants = "io.element.participants",
     MuteAudio = "io.element.mute_audio",
     UnmuteAudio = "io.element.unmute_audio",
     MuteVideo = "io.element.mute_video",
     UnmuteVideo = "io.element.unmute_video",
     StartLiveStream = "im.vector.start_live_stream",
+    // Actions for switching layouts
+    TileLayout = "io.element.tile_layout",
+    SpotlightLayout = "io.element.spotlight_layout",
+
     OpenIntegrationManager = "integration_manager_open",
 
     /**
      * @deprecated Use MSC2931 instead
      */
     ViewRoom = "io.element.view_room",
+}
+
+export interface IHangupCallApiRequest extends IWidgetApiRequest {
+    data: {
+        errorMessage?: string;
+    };
 }
 
 /**

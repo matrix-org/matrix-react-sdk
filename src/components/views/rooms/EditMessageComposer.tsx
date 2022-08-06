@@ -20,7 +20,7 @@ import { EventStatus, IContent, MatrixEvent } from 'matrix-js-sdk/src/models/eve
 import { MsgType } from 'matrix-js-sdk/src/@types/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { logger } from "matrix-js-sdk/src/logger";
-import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
+import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -213,6 +213,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     };
 
     private endEdit(): void {
+        localStorage.removeItem(this.editorRoomKey);
+        localStorage.removeItem(this.editorStateKey);
+
         // close the event editing and focus composer
         dis.dispatch({
             action: Action.EditEvent,
@@ -241,7 +244,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private cancelEdit = (): void => {
-        this.clearStoredEditorState();
         this.endEdit();
     };
 
@@ -260,11 +262,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 logger.error("Error parsing editing state: ", e);
             }
         }
-    }
-
-    private clearStoredEditorState(): void {
-        localStorage.removeItem(this.editorRoomKey);
-        localStorage.removeItem(this.editorStateKey);
     }
 
     private clearPreviousEdit(): void {
@@ -332,13 +329,14 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
                     const threadId = editedEvent?.getThread()?.id || null;
-                    if (cmd.category === CommandCategories.messages) {
-                        editContent["m.new_content"] = await runSlashCommand(cmd, args, roomId, threadId);
-                        if (!editContent["m.new_content"]) {
-                            return; // errored
-                        }
+                    const [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId);
+                    if (!commandSuccessful) {
+                        return; // errored
+                    }
+
+                    if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
+                        editContent["m.new_content"] = content;
                     } else {
-                        runSlashCommand(cmd, args, roomId, threadId);
                         shouldSend = false;
                     }
                 } else if (!await shouldSendAnyway(commandText)) {
@@ -353,7 +351,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const threadId = event.threadRootId || null;
 
                 this.props.mxClient.sendMessage(roomId, threadId, editContent);
-                this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
             }
         }

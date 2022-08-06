@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+// eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 import { mocked } from "jest-mock";
@@ -92,7 +93,7 @@ describe("VideoLobby", () => {
 
             // Only Alice should display as connected
             const memberText = lobby.find(".mx_VideoLobby_connectedMembers").children().at(0).text();
-            expect(memberText).toEqual("1 person connected");
+            expect(memberText).toEqual("1 person joined");
             expect(lobby.find(FacePile).find(MemberAvatar).props().member.userId).toEqual("@alice:example.org");
         });
 
