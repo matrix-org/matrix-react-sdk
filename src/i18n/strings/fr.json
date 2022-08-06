@@ -3454,7 +3454,7 @@
     "Only %(count)s steps to go|other": "Plus que %(count)s étapes",
     "Welcome to %(brand)s": "Bienvenue sur %(brand)s",
     "Find your people": "Trouvez vos contacts",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Gardez le contrôle sur la discussion de votre communauté.\nPrend en charge des millions de messages, avec une interopérabilité et une modération efficaces.",
+    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Gardez le contrôle sur la discussion de votre communauté.\nPrend en charge des millions de messages, avec une interopérabilité et une modération efficace.",
     "Find your co-workers": "Trouver vos collègues",
     "Secure messaging for work": "Messagerie sécurisée pour le travail",
     "Start your first chat": "Démarrer votre première conversation",
@@ -3489,5 +3489,6 @@
     "iOS": "iOS",
     "Download %(brand)s Desktop": "Télécharger %(brand)s Desktop",
     "Download %(brand)s": "Télécharger %(brand)s",
-    "We're creating a room with %(names)s": "Nous créons un salon avec %(names)s"
+    "We're creating a room with %(names)s": "Nous créons un salon avec %(names)s",
+    "Community ownership": "Propriété de la communauté"
 }
