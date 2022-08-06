@@ -3365,5 +3365,8 @@
     "How are you finding Element so far?": "你是如何发现Element的？",
     "Download %(brand)s": "下载%(brand)s",
     "Download %(brand)s Desktop": "下载%(brand)s桌面版",
-    "Download on the App Store": "在App Store下载"
+    "Download on the App Store": "在App Store下载",
+    "Send read receipts": "发送已读回执",
+    "Share your activity and status with others.": "与别人分享你的活动和状态。",
+    "Your server doesn't support disabling sending read receipts.": "你的服务器不支持禁用发送已读回执。"
 }
