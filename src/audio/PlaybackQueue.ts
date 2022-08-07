@@ -150,8 +150,7 @@ export class PlaybackQueue {
                                 break; // Stop automatic playback: next useful event is not a voice message
                             }
 
-                            const isOwnVoiceMessage = cliID == event.sender.userId;
-                            if (isOwnVoiceMessage) {
+                            if (cliID === event.sender.userId) {
                                 break;
                             }
 
@@ -186,7 +185,7 @@ export class PlaybackQueue {
                     );
                 }
             }
-        } else if (newState == PlaybackState.Paused) {
+        } else if (newState === PlaybackState.Paused) {
             this.playbackIdOrder.pop();
         }
 
