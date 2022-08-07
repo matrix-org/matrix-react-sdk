@@ -132,7 +132,7 @@ export class PlaybackQueue {
                         // else no explicit next event, so find an event we haven't played that comes next. The live
                         // timeline is already most recent last, so we can iterate down that.
                         const timeline = arrayFastClone(this.room.getLiveTimeline().getEvents());
-                        const cliID = MatrixClientPeg.get().getUserId();
+                        const myUserId = MatrixClientPeg.get().getUserId();
                         let scanForVoiceMessage = false;
                         let nextEv: MatrixEvent;
                         for (const event of timeline) {
@@ -150,7 +150,7 @@ export class PlaybackQueue {
                                 break; // Stop automatic playback: next useful event is not a voice message
                             }
 
-                            if (cliID === event.sender.userId) {
+                            if (myUserId === event.sender.userId) {
                                 break;
                             }
 
