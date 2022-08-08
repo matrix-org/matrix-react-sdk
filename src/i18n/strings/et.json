@@ -3490,5 +3490,8 @@
     "Your server doesn't support disabling sending read receipts.": "Sinu koduserver ei võimalda lugemisteatiste keelamist.",
     "Share your activity and status with others.": "Jaga teistega oma olekut ja tegevusi.",
     "Presence": "Olek võrgus",
-    "Send read receipts": "Saada lugemisteatiseid"
+    "Send read receipts": "Saada lugemisteatiseid",
+    "Last activity": "Viimased tegevused",
+    "Sessions": "Sessionid",
+    "Use new session manager (under active development)": "Uus sessioonihaldur (aktiivselt arendamisel)"
 }
