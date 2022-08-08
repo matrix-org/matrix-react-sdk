@@ -233,8 +233,8 @@ describe("Spaces", () => {
             cy.viewSpaceHomeByName(spaceName);
         });
         cy.get(".mx_SpaceRoomView .mx_SpaceHierarchy_list").within(() => {
-            cy.get(".mx_SpaceHierarchy_list").contains(".mx_SpaceHierarchy_roomTile", "Music").should("exist");
-            cy.get(".mx_SpaceHierarchy_list").contains(".mx_SpaceHierarchy_roomTile", "Gaming").should("exist");
+            cy.contains(".mx_SpaceHierarchy_roomTile", "Music").should("exist");
+            cy.contains(".mx_SpaceHierarchy_roomTile", "Gaming").should("exist");
         });
     });
 });
