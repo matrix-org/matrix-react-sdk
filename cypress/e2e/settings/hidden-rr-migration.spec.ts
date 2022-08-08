@@ -18,7 +18,7 @@ limitations under the License.
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
-function seedLabs(synapse: SynapseInstance, labsVal: boolean | null) {
+function seedLabs(synapse: SynapseInstance, labsVal: boolean | null): void {
     cy.initTestUser(synapse, "Sally", () => {
         // seed labs flag
         cy.window({ log: false }).then(win => {
@@ -30,7 +30,7 @@ function seedLabs(synapse: SynapseInstance, labsVal: boolean | null) {
     });
 }
 
-function testForVal(settingVal: boolean | null) {
+function testForVal(settingVal: boolean | null): void {
     const testRoomName = "READ RECEIPTS";
     cy.createRoom({ name: testRoomName }).as("roomId");
     cy.all([cy.get<string>("@roomId")]).then(() => {

@@ -571,14 +571,14 @@ export default class SettingsStore {
     /**
      * Runs or queues any setting migrations needed.
      */
-    public static runMigrations() {
+    public static runMigrations(): void {
         // Dev notes: to add your migration, just add a new `migrateMyFeature` function, call it, and
         // add a comment to note when it can be removed.
 
         SettingsStore.migrateHiddenReadReceipts(); // Can be removed after October 2022.
     }
 
-    private static migrateHiddenReadReceipts() {
+    private static migrateHiddenReadReceipts(): void {
         if (MatrixClientPeg.get().isGuest()) return; // not worth it
 
         // We wait for the first sync to ensure that the user's existing account data has loaded, as otherwise
