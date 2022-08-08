@@ -37,6 +37,7 @@ import { RoomNotificationStateStore } from "../notifications/RoomNotificationSta
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
 import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
+import { RoomListStore as Interface } from "./Interface";
 
 interface IState {
     // state is tracked in underlying classes
@@ -48,7 +49,7 @@ interface IState {
  */
 export const LISTS_UPDATE_EVENT = "lists_update";
 
-export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
+export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     /**
      * Set to true if you're running tests on the store. Should not be touched in
      * any other environment.
@@ -365,7 +366,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         this.algorithm.updatesInhibited = false;
     }
 
-    public async setTagSorting(tagId: TagID, sort: SortAlgorithm) {
+    public setTagSorting(tagId: TagID, sort: SortAlgorithm) {
         this.setAndPersistTagSorting(tagId, sort);
         this.updateFn.trigger();
     }
