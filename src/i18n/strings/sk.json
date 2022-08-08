@@ -3495,5 +3495,7 @@
     "We’d appreciate any feedback on how you’re finding Element.": "Budeme vďační za akúkoľvek spätnú väzbu o tom, ako sa vám Element osvedčil.",
     "How are you finding Element so far?": "Ako sa vám zatiaľ páči Element?",
     "Send read receipts": "Odosielať potvrdenia o prečítaní",
-    "Last activity": "Posledná aktivita"
+    "Last activity": "Posledná aktivita",
+    "Sessions": "Relácie",
+    "Use new session manager (under active development)": "Použiť nového správcu relácií (v štádiu aktívneho vývoja)"
 }
