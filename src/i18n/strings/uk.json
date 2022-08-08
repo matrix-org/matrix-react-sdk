@@ -3495,5 +3495,7 @@
     "Share your activity and status with others.": "Діліться своєю активністю та станом з іншими.",
     "Presence": "Присутність",
     "Send read receipts": "Надсилати підтвердження прочитання",
-    "Last activity": "Остання активність"
+    "Last activity": "Остання активність",
+    "Sessions": "Сеанси",
+    "Use new session manager (under active development)": "Використовувати новий менеджер сеансів (в активній розробці)"
 }
