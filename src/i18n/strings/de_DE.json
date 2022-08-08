@@ -3390,5 +3390,14 @@
     "Failed to set direct message tag": "Fehler beim Setzen der Nachrichtenmarkierung",
     "Resent!": "Verschickt!",
     "Did not receive it? <a>Resend it</a>": "Nicht angekommen? <a>Erneut senden</a>",
-    "Unread email icon": "Ungelesene E-Mail Symbol"
+    "Unread email icon": "Ungelesene E-Mail Symbol",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videoräume sind dauerhaft aktive VoIP-Kanäle, die in einem Raum in %(brand)s eingebettet sind.",
+    "A new way to chat over voice and video in %(brand)s.": "Eine neue Art in %(brand)s über Audio und Video zu kommunizieren.",
+    "Coworkers and teams": "Kollegen und Gruppen",
+    "Friends and family": "Freunde und Familie",
+    "iOS": "iOS",
+    "Android": "Android",
+    "You can't disable this later. The room will be encrypted but the embedded call will not.": "Dies kann später nicht deaktiviert werden. Der Raum wird verschlüsselt sein, nicht aber der eingebettete Anruf.",
+    "You need to have the right permissions in order to share locations in this room.": "Du brauchst du richtigen Berechtigungen, um deinen Live-Standort in diesem Raum zu teilen.",
+    "Who will you chat to the most?": "Mit wem wirst du am meisten chatten?"
 }
