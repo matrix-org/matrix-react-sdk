@@ -101,7 +101,7 @@ export const useConnectedMembers = (client: MatrixClient, callEvent: MatrixEvent
  * Removes a list of devices from a call.
  * Only works for the current user's devices.
  */
-const removeDevices = async (client: MatrixClient, callEvent: MatrixEvent, deviceIds: string[]) => {
+const removeDevices = async (client: MatrixClient, callEvent: MatrixEvent, deviceIds: string[]): Promise<void> => {
     if (!CALL_STATE_EVENT_TYPE.matches(callEvent.getType())) return;
 
     const roomId = callEvent.getRoomId();
@@ -111,7 +111,12 @@ const removeDevices = async (client: MatrixClient, callEvent: MatrixEvent, devic
     const callMemberEvent = roomState.getStateEvents(CALL_MEMBER_STATE_EVENT_TYPE.name, client.getUserId())
         ?? roomState.getStateEvents(CALL_MEMBER_STATE_EVENT_TYPE.altName, client.getUserId());
     const callMemberEventContent = callMemberEvent?.getContent<MCallMemberContent>();
-    if (!Array.isArray(callMemberEventContent?.["m.calls"])) return;
+    if (
+        !Array.isArray(callMemberEventContent?.["m.calls"])
+        || callMemberEventContent?.["m.calls"].length === 0
+    ) {
+        return;
+    }
 
     // copy the content to prevent mutations
     const newContent = deepCopy(callMemberEventContent);

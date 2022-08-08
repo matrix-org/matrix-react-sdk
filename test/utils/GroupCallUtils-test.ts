@@ -233,7 +233,7 @@ import { createTestClient, mkEvent } from "../test-utils";
 
                         beforeEach(() => {
                             jest.useFakeTimers()
-                            .setSystemTime(now);
+                                .setSystemTime(now);
 
                             expectedEvent1 = mkEvent({
                                 event: true,
@@ -407,7 +407,7 @@ import { createTestClient, mkEvent } from "../test-utils";
                     describe("and a call member state event", () => {
                         beforeEach(() => {
                             jest.useFakeTimers()
-                            .setSystemTime(now);
+                                .setSystemTime(now);
 
                             const callMemberEvent = mkEvent({
                                 event: true,
@@ -487,7 +487,7 @@ import { createTestClient, mkEvent } from "../test-utils";
 
             beforeEach(() => {
                 jest.useFakeTimers()
-                .setSystemTime(now);
+                    .setSystemTime(now);
 
                 thisDevice = { device_id: "ABCDEFGHI", last_seen_ts: now - STUCK_DEVICE_TIMEOUT_MS - 100 };
                 otherDevice = { device_id: "ABCDEFGHJ", last_seen_ts: now };
