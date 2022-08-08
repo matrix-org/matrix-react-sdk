@@ -3490,5 +3490,9 @@
     "iOS": "iOS",
     "Download %(brand)s Desktop": "下載 %(brand)s 桌面版",
     "Download %(brand)s": "下載 %(brand)s",
-    "We're creating a room with %(names)s": "我們正在建立一個包含 %(names)s 的聊天室"
+    "We're creating a room with %(names)s": "我們正在建立一個包含 %(names)s 的聊天室",
+    "Your server doesn't support disabling sending read receipts.": "您的伺服器不支援停用傳送讀取回條。",
+    "Share your activity and status with others.": "與他人分享您的活動與狀態。",
+    "Presence": "在場",
+    "Send read receipts": "傳送讀取回條"
 }
