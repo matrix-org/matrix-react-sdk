@@ -3391,6 +3391,6 @@
     "Resent!": "Verschickt!",
     "Did not receive it? <a>Resend it</a>": "Nicht angekommen? <a>Erneut senden</a>",
     "Unread email icon": "Ungelesene E-Mail Symbol",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videoräume in %(brand)s sind VoIP-Kanäle, die in einem Raum eingebettet sind.",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videoräume sind dauerhaft aktive VoIP-Kanäle, die in einem Raum in %(brand)s eingebettet sind.",
     "A new way to chat over voice and video in %(brand)s.": "Eine neue Art in %(brand)s über Audio und Video zu kommunizieren."
 }
