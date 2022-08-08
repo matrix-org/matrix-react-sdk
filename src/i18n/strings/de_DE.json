@@ -3390,5 +3390,6 @@
     "Failed to set direct message tag": "Fehler beim Setzen der Nachrichtenmarkierung",
     "Resent!": "Verschickt!",
     "Did not receive it? <a>Resend it</a>": "Nicht angekommen? <a>Erneut senden</a>",
-    "Unread email icon": "Ungelesene E-Mail Symbol"
+    "Unread email icon": "Ungelesene E-Mail Symbol",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videoräume in %(brand)s sind VoIP-Kanäle, die in einem Raum eingebettet sind."
 }
