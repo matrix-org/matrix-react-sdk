@@ -34,7 +34,7 @@ describe("Sliding Sync", () => {
             cy.enableLabsFeature("feature_sliding_sync");
 
             cy.intercept("/config.json?cachebuster=*", req => {
-                req.continue(res => {
+                return req.continue(res => {
                     res.send(200, {
                         ...res.body,
                         sliding_sync_proxy_url: `http://localhost:${proxy.port}`,
@@ -42,16 +42,16 @@ describe("Sliding Sync", () => {
                 });
             });
 
-            cy.initTestUser(synapse, "Sloth").then(() =>
-                cy.window({ log: false }).then(() => {
+            cy.initTestUser(synapse, "Sloth").then(() => {
+                return cy.window({ log: false }).then(() => {
                     cy.createRoom({ name: "Test Room" }).as("roomId");
-                }),
-            );
+                });
+            });
         });
     });
 
     it("should correctly render expected messages", () => {
-        cy.get<string>("@room").then(roomId => cy.visit("/#/room/" + roomId));
+        cy.get<string>("@roomId").then(roomId => cy.visit("/#/room/" + roomId));
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
         // Wait until configuration is finished

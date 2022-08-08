@@ -48,20 +48,24 @@ async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
 
     const postgresIp = await dockerIp({ containerId: postgresId });
     const synapseIp = await dockerIp({ containerId: synapse.synapseId });
+    console.log("postgres container up");
 
     await new Promise(resolve => setTimeout(resolve, 5000));
 
     const port = await getFreePort();
+    console.log("starting proxy container...");
     const containerId = await dockerRun({
         image: "ghcr.io/matrix-org/sliding-sync-proxy:v0.2.0",
         containerName: "react-sdk-cypress-sliding-sync-proxy",
         params: [
             "--rm",
             "-p", `${port}:8008/tcp`,
+            "-e", "SYNCV3_SECRET=bwahahaha",
             "-e", `SYNCV3_SERVER=http://${synapseIp}:8008`,
             "-e", `SYNCV3_DB=user=postgres dbname=postgres password=${PG_PASSWORD} host=${postgresIp} sslmode=disable`,
         ],
     });
+    console.log("started!");
 
     const instance: ProxyInstance = { containerId, postgresId, port };
     instances.set(containerId, instance);
