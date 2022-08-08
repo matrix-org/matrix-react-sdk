@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import { EventTimeline, MatrixClient, MatrixEvent, RoomState } from "matrix-js-sdk/src/matrix";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 import { deepCopy } from "matrix-js-sdk/src/utils";
 
 export const STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-const CALL_STATE_EVENT_TYPE = "org.matrix.msc3401.call";
-const CALL_MEMBER_STATE_EVENT_TYPE = "org.matrix.msc3401.call.member";
+export const CALL_STATE_EVENT_TYPE = new UnstableValue("m.call", "org.matrix.msc3401.call");
+export const CALL_MEMBER_STATE_EVENT_TYPE = new UnstableValue("m.call.member", "org.matrix.msc3401.call.member");
 const CALL_STATE_EVENT_TERMINATED = "m.terminated";
 
 interface MDevice {
@@ -44,11 +45,27 @@ const getRoomState = (client: MatrixClient, roomId: string): RoomState => {
 };
 
 /**
+ * Returns all room state events for the stable and unstable type value.
+ */
+const getRoomStateEvents = (
+    client: MatrixClient,
+    roomId: string,
+    type: UnstableValue<string, string>,
+): MatrixEvent[] => {
+    const roomState = getRoomState(client, roomId);
+    if (!roomState) return [];
+
+    return [
+        ...roomState.getStateEvents(type.name),
+        ...roomState.getStateEvents(type.altName),
+    ];
+};
+
+/**
  * Finds the latest, non-terminated call state event.
  */
 export const getGroupCall = (client: MatrixClient, roomId: string): MatrixEvent => {
-    return getRoomState(client, roomId)
-        ?.getStateEvents(CALL_STATE_EVENT_TYPE)
+    return getRoomStateEvents(client, roomId, CALL_STATE_EVENT_TYPE)
         .sort((a: MatrixEvent, b: MatrixEvent) => b.getTs() - a.getTs())
         .find((event: MatrixEvent) => {
             return !(CALL_STATE_EVENT_TERMINATED in event.getContent());
@@ -61,12 +78,12 @@ export const getGroupCall = (client: MatrixClient, roomId: string): MatrixEvent 
  * @returns {MatrixEvent[]} non-expired "m.call.member" events for the call
  */
 export const useConnectedMembers = (client: MatrixClient, callEvent: MatrixEvent): MatrixEvent[] => {
-    if (callEvent.getType() !== CALL_STATE_EVENT_TYPE) return [];
+    if (!CALL_STATE_EVENT_TYPE.matches(callEvent.getType())) return [];
 
     const callId = callEvent.getStateKey();
     const now = Date.now();
-    return getRoomState(client, callEvent.getRoomId())
-        ?.getStateEvents(CALL_MEMBER_STATE_EVENT_TYPE)
+
+    return getRoomStateEvents(client, callEvent.getRoomId(), CALL_MEMBER_STATE_EVENT_TYPE)
         .filter((callMemberEvent: MatrixEvent): boolean => {
             const {
                 ["m.expires_ts"]: expiresTs,
@@ -85,11 +102,14 @@ export const useConnectedMembers = (client: MatrixClient, callEvent: MatrixEvent
  * Only works for the current user's devices.
  */
 const removeDevices = async (client: MatrixClient, callEvent: MatrixEvent, deviceIds: string[]) => {
-    if (callEvent.getType() !== CALL_STATE_EVENT_TYPE) return;
+    if (!CALL_STATE_EVENT_TYPE.matches(callEvent.getType())) return;
 
     const roomId = callEvent.getRoomId();
-    const callMemberEvent = getRoomState(client, roomId)
-        ?.getStateEvents(CALL_MEMBER_STATE_EVENT_TYPE, client.getUserId());
+    const roomState = getRoomState(client, roomId);
+    if (!roomState) return;
+
+    const callMemberEvent = roomState.getStateEvents(CALL_MEMBER_STATE_EVENT_TYPE.name, client.getUserId())
+        ?? roomState.getStateEvents(CALL_MEMBER_STATE_EVENT_TYPE.altName, client.getUserId());
     const callMemberEventContent = callMemberEvent?.getContent<MCallMemberContent>();
     if (!Array.isArray(callMemberEventContent?.["m.calls"])) return;
 
@@ -117,7 +137,7 @@ const removeDevices = async (client: MatrixClient, callEvent: MatrixEvent, devic
         newContent["m.expires_ts"] = Date.now() + STUCK_DEVICE_TIMEOUT_MS;
         await client.sendStateEvent(
             roomId,
-            CALL_MEMBER_STATE_EVENT_TYPE,
+            CALL_MEMBER_STATE_EVENT_TYPE.name,
             newContent,
             client.getUserId(),
         );
