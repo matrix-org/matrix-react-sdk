@@ -3397,5 +3397,7 @@
     "Friends and family": "Freunde und Familie",
     "iOS": "iOS",
     "Android": "Android",
-    "You can't disable this later. The room will be encrypted but the embedded call will not.": "Dies kann später nicht deaktiviert werden. Der Raum wird verschlüsselt sein, nicht aber der eingebettete Anruf."
+    "You can't disable this later. The room will be encrypted but the embedded call will not.": "Dies kann später nicht deaktiviert werden. Der Raum wird verschlüsselt sein, nicht aber der eingebettete Anruf.",
+    "You need to have the right permissions in order to share locations in this room.": "Du brauchst du richtigen Berechtigungen, um deinen Live-Standort in diesem Raum zu teilen.",
+    "Who will you chat to the most?": "Mit wem wirst du am meisten chatten?"
 }
