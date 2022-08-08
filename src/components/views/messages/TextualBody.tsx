@@ -432,11 +432,16 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
      * to start with (e.g. pills, links in the content).
      */
     private onBodyLinkClick = (e: MouseEvent): void => {
-        const target = e.target as Element;
-        if (target.nodeName !== "A" || target.classList.contains(linkifyOpts.className)) return;
-        const { href } = target as HTMLLinkElement;
-        const localHref = tryTransformPermalinkToLocalHref(href);
-        if (localHref !== href) {
+        let target = e.target as HTMLLinkElement;
+        if (target.classList.contains(linkifyOpts.className)) return; // let the rewritten URL
+        if (target.nodeName !== "A") {
+            // Jump to parent as the `<a>` may contain children, e.g. an anchor wrapping an inline code section
+            target = target.closest<HTMLLinkElement>("a");
+        }
+        if (!target) return;
+
+        const localHref = tryTransformPermalinkToLocalHref(target.href);
+        if (localHref !== target.href) {
             // it could be converted to a localHref -> therefore handle locally
             e.preventDefault();
             window.location.hash = localHref;
