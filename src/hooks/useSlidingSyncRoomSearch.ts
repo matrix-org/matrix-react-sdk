@@ -52,6 +52,7 @@ export const useSlidingSyncRoomSearch = () => {
                 ranges: [[0, limit]],
                 filters: {
                     room_name_like: term,
+                    is_tombstoned: false,
                 },
             });
             const rooms = [];
