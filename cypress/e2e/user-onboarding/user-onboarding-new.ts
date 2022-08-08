@@ -50,9 +50,16 @@ describe("User Onboarding (new user)", () => {
     it("page is shown and preference exists", () => {
         cy.get('.mx_UserOnboardingPage').should('exist');
         cy.get('.mx_UserOnboardingButton').should('exist');
+        cy.get('.mx_UserOnboardingList')
+            .should('exist')
+            .should(($list) => {
+                const list = $list.get(0);
+                expect(getComputedStyle(list).opacity).to.be.eq("1");
+            });
+        cy.get('.mx_UserOnboardingPage')
+            .percySnapshotElement("User onboarding page");
         cy.openUserSettings("Preferences");
         cy.contains("Show shortcut to welcome page above the room list").should("exist");
-        cy.percySnapshot("User onboarding page");
     });
 
     it("app download dialog", () => {
@@ -61,7 +68,10 @@ describe("User Onboarding (new user)", () => {
         cy.get('[role=dialog]')
             .contains("#mx_BaseDialog_title", "Download Element")
             .should("exist");
-        cy.percySnapshot("App download dialog");
+        cy.get('[role=dialog]')
+            .percySnapshotElement("App download dialog", {
+                widths: [640],
+            });
     });
 
     it("using find friends action should increase progress", () => {
