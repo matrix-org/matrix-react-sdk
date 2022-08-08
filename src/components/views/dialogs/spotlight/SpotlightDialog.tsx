@@ -70,7 +70,7 @@ import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sor
 import { RoomViewStore } from "../../../../stores/RoomViewStore";
 import { getMetaSpaceName } from "../../../../stores/spaces";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
-import { DirectoryMember, Member } from "../../../../utils/direct-messages";
+import { DirectoryMember, Member, startDmOnFirstMessage } from "../../../../utils/direct-messages";
 import DMRoomMap from "../../../../utils/DMRoomMap";
 import { makeUserPermalink } from "../../../../utils/permalinks/Permalinks";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../../utils/SortMembers";
@@ -506,7 +506,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         // eslint-disable-next-line
     }, [results, filter]);
 
-    const viewRoom = (room: {roomId: string, roomAlias?: string}, persist = false, viaKeyboard = false) => {
+    const viewRoom = (
+        room: { roomId: string, roomAlias?: string, autoJoin?: boolean, shouldPeek?: boolean},
+        persist = false,
+        viaKeyboard = false,
+    ) => {
         if (persist) {
             const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
             // remove & add the room to put it at the end
@@ -527,6 +531,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             metricsViaKeyboard: viaKeyboard,
             room_id: room.roomId,
             room_alias: room.roomAlias,
+            auto_join: room.autoJoin,
+            should_peek: room.shouldPeek,
         });
         onFinished();
     };
@@ -608,7 +614,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.member.userId}`}
                         key={`${Section[result.section]}-${result.member.userId}`}
                         onClick={() => {
-                            startDm(cli, [result.member]);
+                            startDmOnFirstMessage(cli, [result.member]);
                             onFinished();
                         }}
                         aria-label={result.member instanceof RoomMember
@@ -644,6 +650,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     viewRoom({
                         roomAlias: publicRoom.canonical_alias || publicRoom.aliases?.[0],
                         roomId: publicRoom.room_id,
+                        autoJoin: !result.publicRoom.world_readable && !cli.isGuest(),
+                        shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
                     }, true, ev.type !== "click");
                 };
                 return (

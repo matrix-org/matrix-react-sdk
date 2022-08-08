@@ -37,3 +37,4 @@ import "./timeline";
 import "./network";
 import "./composer";
 import "./proxy";
+import "./axe";

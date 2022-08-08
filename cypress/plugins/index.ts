@@ -23,6 +23,7 @@ import { synapseDocker } from "./synapsedocker";
 import { slidingSyncProxyDocker } from "./sliding-sync";
 import { webserver } from "./webserver";
 import { docker } from "./docker";
+import { log } from "./log";
 
 /**
  * @type {Cypress.PluginConfig}
@@ -33,4 +34,5 @@ export default function(on: PluginEvents, config: PluginConfigOptions) {
     synapseDocker(on, config);
     slidingSyncProxyDocker(on, config);
     webserver(on, config);
+    log(on, config);
 }

@@ -32,9 +32,9 @@ const TIMEOUT = 1500;
 export function UseCaseSelection({ onFinished }: Props) {
     const [selection, setSelected] = useState<UseCase | null>(null);
 
+    // Call onFinished 1.5s after `selection` becomes truthy, to give time for the animation to run
     useEffect(() => {
         if (selection) {
-            setSelected(selection);
             let handler: number | null = setTimeout(() => {
                 handler = null;
                 onFinished(selection);
@@ -57,7 +57,7 @@ export function UseCaseSelection({ onFinished }: Props) {
             </div>
             <div className="mx_UseCaseSelection_info mx_UseCaseSelection_slideInDelayed">
                 <h2>{ _t("Who will you chat to the most?") }</h2>
-                <h4>{ _t("We'll help you get connected.") }</h4>
+                <h3>{ _t("We'll help you get connected.") }</h3>
             </div>
             <div className="mx_UseCaseSelection_options mx_UseCaseSelection_slideInDelayed">
                 <UseCaseSelectionButton
