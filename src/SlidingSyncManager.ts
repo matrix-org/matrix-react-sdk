@@ -48,8 +48,8 @@ import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import {
     MSC3575Filter,
-    MSC3575List, MSC3575SlidingSyncResponse, SlidingSync,
-    SlidingSyncEvent, SlidingSyncState,
+    MSC3575List, SlidingSync,
+    SlidingSyncEvent,
 } from 'matrix-js-sdk/src/sliding-sync';
 import { logger } from "matrix-js-sdk/src/logger";
 
