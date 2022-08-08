@@ -55,6 +55,11 @@ export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
 }
 
 export function doesRoomHaveUnreadMessages(room: Room): boolean {
+    // if there is no timeline at all, e.g. by message retention
+    if (room.timeline.length === 0) {
+        return false;
+    }
+
     const myUserId = MatrixClientPeg.get().getUserId();
 
     // get the most recent read receipt sent by our account.
