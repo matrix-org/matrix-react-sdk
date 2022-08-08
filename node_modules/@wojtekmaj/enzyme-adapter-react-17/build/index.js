@@ -1,0 +1,5 @@
+"use strict";
+
+module.exports = require('./ReactSeventeenAdapter');
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9pbmRleC5qcyJdLCJuYW1lcyI6WyJtb2R1bGUiLCJleHBvcnRzIiwicmVxdWlyZSJdLCJtYXBwaW5ncyI6Ijs7QUFBQUEsTUFBTSxDQUFDQyxPQUFQLEdBQWlCQyxPQUFPLENBQUMseUJBQUQsQ0FBeEIiLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoJy4vUmVhY3RTZXZlbnRlZW5BZGFwdGVyJyk7XG4iXX0=
+//# sourceMappingURL=index.js.map

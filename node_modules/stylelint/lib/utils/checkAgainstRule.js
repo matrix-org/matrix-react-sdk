@@ -1,0 +1,54 @@
+'use strict';
+
+const normalizeRuleSettings = require('../normalizeRuleSettings');
+const Result = require('postcss/lib/result');
+const rules = require('../rules');
+
+/**
+ * Useful for third-party code (e.g. plugins) to run a PostCSS Root
+ * against a specific rule and do something with the warnings
+ * @template T
+ * @template {Object} O
+ * @param {{
+		ruleName: string,
+		ruleSettings: import('stylelint').ConfigRuleSettings<T, O>,
+		root: import('postcss').Root,
+	}} options
+ * @param {(warning: import('postcss').Warning) => void} callback
+ * @returns {void}
+ */
+function checkAgainstRule(options, callback) {
+	if (!options)
+		throw new Error(
+			"checkAgainstRule requires an options object with 'ruleName', 'ruleSettings', and 'root' properties",
+		);
+
+	if (!callback) throw new Error('checkAgainstRule requires a callback');
+
+	if (!options.ruleName) throw new Error("checkAgainstRule requires a 'ruleName' option");
+
+	const rule = rules[options.ruleName];
+
+	if (!rule) throw new Error(`Rule '${options.ruleName}' does not exist`);
+
+	if (!options.ruleSettings) throw new Error("checkAgainstRule requires a 'ruleSettings' option");
+
+	if (!options.root) throw new Error("checkAgainstRule requires a 'root' option");
+
+	const settings = normalizeRuleSettings(options.ruleSettings, options.ruleName);
+
+	if (!settings) {
+		return;
+	}
+
+	// @ts-expect-error - this error should not occur with PostCSS 8
+	const tmpPostcssResult = new Result();
+
+	rule(settings[0], /** @type {O} */ (settings[1]), {})(options.root, tmpPostcssResult);
+
+	for (const warning of tmpPostcssResult.warnings()) callback(warning);
+}
+
+module.exports = /** @type {typeof import('stylelint').utils.checkAgainstRule} */ (
+	checkAgainstRule
+);

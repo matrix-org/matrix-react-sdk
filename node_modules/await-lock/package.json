@@ -1,0 +1,58 @@
+{
+  "name": "await-lock",
+  "version": "2.2.2",
+  "description": "Mutex locks for async functions",
+  "main": "build/AwaitLock.js",
+  "types": "build/AwaitLock.d.ts",
+  "files": [
+    "build",
+    "src",
+    "!build/**/__tests__",
+    "!src/**/__tests__"
+  ],
+  "scripts": {
+    "clean": "rm -rf build",
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "prepare": "npm run clean && npm run build",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ide/await-lock.git"
+  },
+  "keywords": [
+    "async",
+    "await",
+    "lock",
+    "es2017",
+    "co",
+    "yield",
+    "generator",
+    "promise"
+  ],
+  "author": "James Ide",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ide/await-lock/issues"
+  },
+  "homepage": "https://github.com/ide/await-lock",
+  "jest": {
+    "coverageDirectory": "<rootDir>/..",
+    "rootDir": "src"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/co": "^4.6.2",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.13",
+    "babel-jest": "^27.0.6",
+    "co": "^4.6.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "typescript": "^4.6.3"
+  }
+}

@@ -1,0 +1,6 @@
+import "./result.proto";
+import "./other_result.proto";
+
+message SearchResponse {
+  repeated Result result = 1;
+}

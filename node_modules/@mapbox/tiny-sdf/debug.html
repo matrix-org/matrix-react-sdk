@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SDF test</title>
+<style>
+
+</style>
+</head>
+<body>
+<canvas id="canvas" width="512" height="512"></canvas>
+<script>module = {};</script>
+<script src="index.js"></script>
+<script>
+
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var width = 512;
+var height = 512;
+
+// ctx.fillStyle = 'black';
+// ctx.fillRect(0, 0, 512, 512);
+
+ctx.beginPath();
+ctx.lineWidth = 100;
+ctx.arc(256, 256, 200, 0, 2 * Math.PI, false);
+ctx.stroke();
+
+// ctx.fillStyle = 'black';
+// ctx.font = '512px sans-serif';
+// ctx.textBaseline = 'middle';
+// ctx.fillText('了', 0, 256);
+
+// ctx.moveTo(width / 2, 200);
+// ctx.lineTo(200, height - 200);
+// ctx.lineTo(width - 200, height - 200);
+// ctx.closePath();
+// ctx.strokeStyle = 'black';
+// ctx.stroke();
+// ctx.arc(width / 2, height / 2, 50, 0, Math.PI * 2, false);
+// ctx.fillStyle = 'black';
+// ctx.fill();
+// ctx.font = '64px serif';
+// ctx.fillStyle = 'black';
+// ctx.fillText('Hello world', 100, 100);
+
+var imgData = ctx.getImageData(0, 0, width, height);
+
+console.time('sdf total');
+
+console.time('init grids');
+var grid1 = new Float64Array(width * height);
+var grid2 = new Float64Array(width * height);
+for (var i = 0; i < width * height; i++) {
+    var a = imgData.data[i * 4 + 3] / 255;
+    grid1[i] = a === 1 ? 0 : a === 0 ? INF : Math.pow(Math.max(0, 0.5 - a), 2);
+    grid2[i] = a === 1 ? INF : a === 0 ? 0 : Math.pow(Math.max(0, a - 0.5), 2);
+}
+console.timeEnd('init grids');
+
+var size = Math.max(width, height);
+var f = new Float64Array(size);
+var z = new Float64Array(size + 1);
+var v = new Int16Array(size);
+
+console.time('sdf outer pass');
+edt(grid1, width, height, f, v, z);
+console.timeEnd('sdf outer pass');
+
+console.time('sdf inner pass');
+edt(grid2, width, height, f, v, z);
+console.timeEnd('sdf inner pass');
+
+console.timeEnd('sdf total');
+
+var result = new Float64Array(width * height);
+for (i = 0; i < width * height; i++) {
+    var d = Math.sqrt(grid1[i]) - Math.sqrt(grid2[i]);
+    result[i] = Math.round(50 + d);
+}
+
+displayGrid(result);
+
+function displayGrid(grid) {
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, width, height);
+    for (var y = 0; y < height; y++) {
+        for (var x = 0; x < width; x++) {
+            var k = y * width + x;
+            var d = grid[k];
+            var c = Math.max(Math.min(255, Math.round(d)), 0); //d % 10 < 5 ? 0 : 255
+            imgData.data[4 * k + 3] = c;
+        }
+    }
+    ctx.putImageData(imgData, 0, 0);
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "name": "matrix-encrypt-attachment",
+  "version": "1.0.3",
+  "description": "JS/TS library for encrypting and decrypting file attachments in Matrix",
+  "browser": "lib/browser-encrypt-attachment.js",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "README.md",
+    "CHANGELOG.md",
+    "package.json",
+    "yarn.lock",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepublishOnly": "yarn build",
+    "build": "yarn build:node && yarn build:browser",
+    "build:node": "tsc",
+    "build:browser": "browserify --standalone MatrixEncryptAttachment -d src/webcrypto.ts -p [ tsify -p ./tsconfig.json ] | exorcist lib/browser-encrypt-attachment.js.map > lib/browser-encrypt-attachment.js",
+    "test": "yarn lint && yarn build && yarn test:nodejs && yarn test:browser",
+    "test:browser": "karma start $KARMAFLAGS",
+    "test:nodejs": "mocha --require ./test/nodeHelper.js",
+    "lint": "yarn lint:style",
+    "lint:style": "eslint src test",
+    "release": "yarn semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matrix-org/matrix-encrypt-attachment"
+  },
+  "keywords": [
+    "matrix-org"
+  ],
+  "author": "The Matrix.org Foundation C.I.C.",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/matrix-org/matrix-encrypt-attachment/issues"
+  },
+  "homepage": "https://github.com/matrix-org/matrix-encrypt-attachment#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^16.0.2",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "browserify": "^17.0.0",
+    "eslint": "^8.2.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-matrix-org": "github:matrix-org/eslint-plugin-matrix-org",
+    "exorcist": "^2.0.0",
+    "husky": "^7.0.4",
+    "karma": "^6.3.8",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-firefox-launcher": "^2.1.2",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^9.2.0",
+    "semantic-release": "^19.0.2",
+    "tsify": "^5.0.4",
+    "typescript": "^4.4.4"
+  },
+  "engines": {
+    "node": ">=12.0"
+  }
+}

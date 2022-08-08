@@ -1,0 +1,53 @@
+{
+  "name": "jest-sonar-reporter",
+  "version": "2.0.0",
+  "description": "A Sonar test reporter for Jest.",
+  "keywords": [
+    "sonar",
+    "sonarqube",
+    "jest",
+    "results",
+    "processor"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf reports* coverage",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:debug": "DEBUG=true jest",
+    "preversion": "npm run clean && npm run test:coverage",
+    "version": "./version.sh $npm_package_version && git add sonar-project.properties"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3dmind/jest-sonar-reporter.git"
+  },
+  "author": "Christian Wlatschiha <c.wlatschiha@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/3dmind/jest-sonar-reporter/issues"
+  },
+  "homepage": "https://github.com/3dmind/jest-sonar-reporter#readme",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "xml": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.0",
+    "@types/node": "^9.4.7",
+    "jest": "^22.4.2",
+    "rimraf": "^2.6.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testResultsProcessor": "<rootDir>/index.js"
+  },
+  "jestSonar": {
+    "reportPath": "reports",
+    "reportFile": "test-report.xml",
+    "indent": 4
+  }
+}

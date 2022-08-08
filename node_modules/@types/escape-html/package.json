@@ -1,0 +1,25 @@
+{
+    "name": "@types/escape-html",
+    "version": "1.0.2",
+    "description": "TypeScript definitions for escape-html",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/escape-html",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Piotr Błażejewicz",
+            "url": "https://github.com/peterblazejewicz",
+            "githubUsername": "peterblazejewicz"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/escape-html"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "ce9fac1c85eb8788476313b1ad416a29f65fde36ce5793166b861f3a26d4ebaf",
+    "typeScriptVersion": "3.9"
+}

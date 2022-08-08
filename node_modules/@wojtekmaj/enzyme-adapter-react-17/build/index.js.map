@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/index.js"],"names":["module","exports","require"],"mappings":";;AAAAA,MAAM,CAACC,OAAP,GAAiBC,OAAO,CAAC,yBAAD,CAAxB","sourcesContent":["module.exports = require('./ReactSeventeenAdapter');\n"],"file":"index.js"}

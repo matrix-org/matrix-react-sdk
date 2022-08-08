@@ -1,0 +1,28 @@
+{
+  "name": "another-json",
+  "version": "0.2.0",
+  "description": "Encode compact, canonical JSON.",
+  "main": "another-json.js",
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "jshint": "^2.8.0"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "jasmine-node spec/ --verbose --junitreport --forceexit --captureExceptions",
+    "lint": "jshint -c .jshint *.js spec && gjslint --unix_mode --max_line_length 80 -r spec/ *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NegativeMjark/another-json.git"
+  },
+  "keywords": [
+    "json"
+  ],
+  "author": "Mark Haines",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/NegativeMjark/another-json/issues"
+  },
+  "homepage": "https://github.com/NegativeMjark/another-json#readme"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "postcss-scss",
+  "version": "4.0.4",
+  "description": "SCSS parser for PostCSS",
+  "keywords": [
+    "css",
+    "postcss",
+    "postcss-syntax",
+    "parser",
+    "scss",
+    "sass"
+  ],
+  "author": "Andrey Sitnik <andrey@sitnik.ru>",
+  "license": "MIT",
+  "repository": "postcss/postcss-scss",
+  "engines": {
+    "node": ">=12.0"
+  },
+  "main": "lib/scss-syntax",
+  "types": "lib/scss-syntax.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/scss-syntax.js",
+      "import": "./lib/scss-syntax.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/postcss/"
+  },
+  "peerDependencies": {
+    "postcss": "^8.3.3"
+  }
+}

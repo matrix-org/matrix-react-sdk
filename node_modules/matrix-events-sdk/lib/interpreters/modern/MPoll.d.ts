@@ -1,0 +1,10 @@
+import { IPartialEvent } from "../../IPartialEvent";
+import { Optional } from "../../types";
+import { M_POLL_END_EVENT_CONTENT, M_POLL_RESPONSE_EVENT_CONTENT, M_POLL_START_EVENT_CONTENT } from "../../events/poll_types";
+import { PollStartEvent } from "../../events/PollStartEvent";
+import { PollResponseEvent } from "../../events/PollResponseEvent";
+import { PollEndEvent } from "../../events/PollEndEvent";
+declare type PollContent = M_POLL_START_EVENT_CONTENT | M_POLL_RESPONSE_EVENT_CONTENT | M_POLL_END_EVENT_CONTENT;
+declare type PollEvent = PollStartEvent | PollResponseEvent | PollEndEvent;
+export declare function parseMPoll(wireEvent: IPartialEvent<PollContent>): Optional<PollEvent>;
+export {};

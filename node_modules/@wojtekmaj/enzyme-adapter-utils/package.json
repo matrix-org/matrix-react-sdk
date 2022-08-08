@@ -1,0 +1,73 @@
+{
+  "name": "@wojtekmaj/enzyme-adapter-utils",
+  "version": "0.1.4",
+  "description": "JavaScript Testing utilities for React",
+  "homepage": "https://enzymejs.github.io/enzyme/",
+  "main": "build",
+  "scripts": {
+    "build": "babel --source-maps=both src -d build",
+    "clean": "rimraf build",
+    "lint": "eslint --ext js,jsx .",
+    "prepack": "yarn clean && yarn build",
+    "test": "yarn lint",
+    "watch": "yarn build -w"
+  },
+  "keywords": [
+    "javascript",
+    "shallow rendering",
+    "shallowRender",
+    "test",
+    "reactjs",
+    "react",
+    "flux",
+    "testing",
+    "test utils",
+    "assertion helpers",
+    "tdd",
+    "mocha"
+  ],
+  "author": "Jordan Harband <ljharb@gmail.com>",
+  "contributors": [
+    "Wojciech Maj <kontakt@wojtekmaj.pl>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "function.prototype.name": "^1.1.0",
+    "has": "^1.0.0",
+    "object.fromentries": "^2.0.0",
+    "prop-types": "^15.7.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.0",
+    "@babel/core": "^7.12.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.15.0",
+    "@babel/runtime": "^7.12.0",
+    "eslint": "^8.5.0",
+    "eslint-config-wojtekmaj": "^0.6.5",
+    "husky": "^7.0.0",
+    "prettier": "^2.5.0",
+    "pretty-quick": "^3.1.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "rimraf": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0-0"
+  },
+  "resolutions": {
+    "semver@7.0.0": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wojtekmaj/enzyme-adapter-utils.git"
+  },
+  "packageManager": "yarn@3.1.0"
+}

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jest-raw-loader works as expected 1`] = `"module.exports = \\"\\\\n      # Markdown Test\\\\n      \\\\n      This is how a valid Markdown file would look.\\\\n    \\""`;

@@ -1,0 +1,12 @@
+{
+  "extends": "./types/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./types",
+    "paths": {
+      "jest-fetch-mock": [
+        "./"
+      ]
+    }
+  }
+}

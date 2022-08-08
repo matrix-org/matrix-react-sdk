@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KeyboardShortcut doesn't render + if last 1`] = `
+<KeyboardKey
+  last={true}
+  name="a"
+>
+  <kbd>
+     
+    a
+     
+  </kbd>
+</KeyboardKey>
+`;
+
+exports[`KeyboardShortcut doesn't render same modifier twice 1`] = `
+<KeyboardShortcut
+  value={
+    Object {
+      "ctrlOrCmdKey": true,
+      "key": "a",
+      "metaKey": true,
+    }
+  }
+>
+  <div
+    className="mx_KeyboardShortcut"
+  >
+    <KeyboardKey
+      key="ctrlOrCmdKey"
+      name="Control"
+    >
+      <kbd>
+         
+        Ctrl
+         
+      </kbd>
+      +
+    </KeyboardKey>
+    <KeyboardKey
+      last={true}
+      name="a"
+    >
+      <kbd>
+         
+        a
+         
+      </kbd>
+    </KeyboardKey>
+  </div>
+</KeyboardShortcut>
+`;
+
+exports[`KeyboardShortcut doesn't render same modifier twice 2`] = `
+<KeyboardShortcut
+  value={
+    Object {
+      "ctrlKey": true,
+      "ctrlOrCmdKey": true,
+      "key": "a",
+    }
+  }
+>
+  <div
+    className="mx_KeyboardShortcut"
+  >
+    <KeyboardKey
+      key="ctrlOrCmdKey"
+      name="Control"
+    >
+      <kbd>
+         
+        Ctrl
+         
+      </kbd>
+      +
+    </KeyboardKey>
+    <KeyboardKey
+      last={true}
+      name="a"
+    >
+      <kbd>
+         
+        a
+         
+      </kbd>
+    </KeyboardKey>
+  </div>
+</KeyboardShortcut>
+`;
+
+exports[`KeyboardShortcut renders alternative key name 1`] = `
+<KeyboardKey
+  name="PageDown"
+>
+  <kbd>
+     
+    Page Down
+     
+  </kbd>
+  +
+</KeyboardKey>
+`;
+
+exports[`KeyboardShortcut renders key icon 1`] = `
+<KeyboardKey
+  name="ArrowDown"
+>
+  <kbd>
+     
+    ↓
+     
+  </kbd>
+  +
+</KeyboardKey>
+`;

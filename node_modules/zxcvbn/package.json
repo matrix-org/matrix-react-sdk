@@ -1,0 +1,49 @@
+{
+  "name": "zxcvbn",
+  "version": "4.4.2",
+  "description": "realistic password strength estimation",
+  "author": "Dan Wheeler",
+  "license": "MIT",
+  "main": "lib/main.js",
+  "repository": "dropbox/zxcvbn",
+  "scripts": {
+    "test": "coffeetape test/*.coffee | faucet",
+    "test-saucelabs": "zuul -- test/*.coffee",
+    "build": "npm run build-lib ; npm run build-dist",
+    "watch": "npm run watch-lib & npm run watch-dist",
+    "build-lib": "coffee -o lib --compile --bare --map src/*.coffee",
+    "watch-lib": "coffee -o lib --compile --bare --map --watch src/*.coffee",
+    "build-dist": "browserify --debug  --standalone zxcvbn -t coffeeify --extension='.coffee' -t uglifyify src/main.coffee |   exorcist --base . dist/zxcvbn.js.map >| dist/zxcvbn.js",
+    "watch-dist": "watchify --debug -v --standalone zxcvbn -t coffeeify --extension='.coffee' -t uglifyify src/main.coffee -o 'exorcist --base . dist/zxcvbn.js.map >| dist/zxcvbn.js'",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "coffee-coverage": "^0.6.3",
+    "coffee-script": "^1.10.0",
+    "coffeeify": "^1.1.0",
+    "coffeetape": "^1.0.1",
+    "exorcist": "^0.4.0",
+    "faucet": "^0.0.1",
+    "istanbul": "^0.3.18",
+    "tape": "^4.2.0",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.3.1",
+    "zuul": "^3.4.0"
+  },
+  "keywords": [
+    "password",
+    "passphrase",
+    "security",
+    "authentication",
+    "strength",
+    "meter",
+    "quality",
+    "estimation",
+    "pattern",
+    "cracking",
+    "scoring",
+    "entropy",
+    "bruteforce"
+  ]
+}

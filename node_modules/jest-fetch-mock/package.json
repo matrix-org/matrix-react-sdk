@@ -1,0 +1,65 @@
+{
+  "name": "jest-fetch-mock",
+  "version": "3.0.3",
+  "description": "fetch mock for jest",
+  "main": "src/index.js",
+  "types": "types",
+  "scripts": {
+    "test": "jest && yarn tsc && yarn dtslint",
+    "dtslint": "dtslint types",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jefflau/jest-fetch-mock.git"
+  },
+  "keywords": [
+    "jest",
+    "mock",
+    "fetch"
+  ],
+  "author": "Jeff Lau <jeff-lau@live.com> (http://jefflau.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jefflau/jest-fetch-mock/issues"
+  },
+  "homepage": "https://github.com/jefflau/jest-fetch-mock#readme",
+  "dependencies": {
+    "cross-fetch": "^3.0.4",
+    "promise-polyfill": "^8.1.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.14",
+    "@types/node": "^10.17.8",
+    "dtslint": "^2.0.2",
+    "jest": "^23.6.0",
+    "prettier": "^1.19.1",
+    "regenerator-runtime": "^0.13.3",
+    "typescript": "^3.7.3"
+  },
+  "prettier": {
+    "semi": false,
+    "editor.formatOnSave": true,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "**/*.ts",
+        "options": {
+          "semi": true,
+          "tabWidth": 4,
+          "singleQuote": false,
+          "printWidth": 120
+        }
+      }
+    ]
+  },
+  "jest": {
+    "automock": false,
+    "testPathIgnorePatterns": [
+      "types"
+    ],
+    "setupFiles": [
+      "./setupJest.js"
+    ]
+  }
+}

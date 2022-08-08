@@ -1,0 +1,78 @@
+{
+  "name": "@wojtekmaj/enzyme-adapter-react-17",
+  "version": "0.6.7",
+  "description": "JavaScript Testing utilities for React",
+  "homepage": "https://enzymejs.github.io/enzyme/",
+  "main": "build",
+  "scripts": {
+    "build": "babel --source-maps=both src -d build",
+    "clean": "rimraf build",
+    "lint": "eslint src/ --ext .jsx,.js",
+    "prepack": "yarn clean && yarn build",
+    "test": "yarn lint"
+  },
+  "keywords": [
+    "javascript",
+    "shallow rendering",
+    "shallowRender",
+    "test",
+    "reactjs",
+    "react",
+    "flux",
+    "testing",
+    "test utils",
+    "assertion helpers",
+    "tdd",
+    "mocha"
+  ],
+  "author": "Jordan Harband <ljharb@gmail.com>",
+  "contributors": [
+    "Wojciech Maj <kontakt@wojtekmaj.pl>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@wojtekmaj/enzyme-adapter-utils": "^0.1.4",
+    "enzyme-shallow-equal": "^1.0.0",
+    "has": "^1.0.0",
+    "prop-types": "^15.7.0",
+    "react-is": "^17.0.0",
+    "react-test-renderer": "^17.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.0",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.15.0",
+    "@babel/runtime": "^7.15.0",
+    "enzyme": "^3.0.0",
+    "eslint": "^8.5.0",
+    "eslint-config-wojtekmaj": "^0.6.5",
+    "husky": "^7.0.0",
+    "prettier": "^2.5.0",
+    "pretty-quick": "^3.1.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "rimraf": "^3.0.0"
+  },
+  "peerDependencies": {
+    "enzyme": "^3.0.0",
+    "react": "^17.0.0-0",
+    "react-dom": "^17.0.0-0"
+  },
+  "resolutions": {
+    "semver@7.0.0": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build",
+    "src",
+    "index.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wojtekmaj/enzyme-adapter-react-17.git"
+  },
+  "packageManager": "yarn@3.1.0"
+}

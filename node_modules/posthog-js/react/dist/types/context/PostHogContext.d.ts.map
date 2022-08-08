@@ -1,0 +1,1 @@
+{"version":3,"file":"PostHogContext.d.ts","sourceRoot":"","sources":["../../../src/context/PostHogContext.ts"],"names":[],"mappings":"AAAA,OAAO,KAAqB,MAAM,OAAO,CAAA;AACzC,OAAO,EAAE,oBAAoB,EAAE,MAAM,mBAAmB,CAAA;AAUxD,wBAAgB,iBAAiB,IAAI,KAAK,CAAC,OAAO,CAAC,GAAG,CAAC,CAOtD;AAMD,wBAAgB,iBAAiB,IAAI,oBAAoB,CASxD"}

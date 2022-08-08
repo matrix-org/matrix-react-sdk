@@ -1,0 +1,13 @@
+{
+    "name": "@types/classnames",
+    "version": "2.3.1",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for classnames, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "classnames": "*"
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "author": "",
+  "name": "tar-example",
+  "engines": {
+    "node": "~0.4.7"
+  },
+  "main": "./main.js",
+  "dependencies": {
+  }
+}

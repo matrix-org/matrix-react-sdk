@@ -1,0 +1,35 @@
+{
+  "name": "date-names",
+  "version": "0.1.13",
+  "description": "Repository of localized month and day names",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martinandert/date-names.git"
+  },
+  "keywords": [
+    "localization",
+    "translation",
+    "translate",
+    "localize",
+    "month",
+    "weekday",
+    "day",
+    "names",
+    "i18n",
+    "l10n"
+  ],
+  "author": {
+    "name": "Martin Andert",
+    "email": "mandert@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/martinandert/date-names/issues"
+  },
+  "homepage": "https://github.com/martinandert/date-names",
+  "devDependencies": {
+    "jshint": "^2.5.10",
+    "mocha": "^2.0.1"
+  }
+}
