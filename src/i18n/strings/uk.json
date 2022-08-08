@@ -3494,5 +3494,6 @@
     "Your server doesn't support disabling sending read receipts.": "Ваш сервер не підтримує вимкнення надсилання сповіщень про прочитання.",
     "Share your activity and status with others.": "Діліться своєю активністю та станом з іншими.",
     "Presence": "Присутність",
-    "Send read receipts": "Надсилати підтвердження прочитання"
+    "Send read receipts": "Надсилати підтвердження прочитання",
+    "Last activity": "Остання активність"
 }
