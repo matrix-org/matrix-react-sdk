@@ -122,7 +122,6 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                         ReactDOM.render(pill, pillContainer);
                         roomNotifTextNode.parentNode.replaceChild(pillContainer, roomNotifTextNode);
                         pills.push(pillContainer);
-                        pillified = true;
                     }
                     // Nothing else to do for a text node (and we don't need to advance
                     // the loop pointer because we did it above)
