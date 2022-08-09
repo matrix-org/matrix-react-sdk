@@ -3494,5 +3494,9 @@
     "Your server doesn't support disabling sending read receipts.": "Votre serveur ne supporte pas la désactivation de l’envoi des accusés de réception.",
     "Share your activity and status with others.": "Partager votre activité et votre statut avec les autres.",
     "Presence": "Présence",
-    "Send read receipts": "Envoyer les accusés de réception"
+    "Send read receipts": "Envoyer les accusés de réception",
+    "Last activity": "Dernière activité",
+    "Current session": "Cette session",
+    "Sessions": "Sessions",
+    "Use new session manager (under active development)": "Utiliser un nouveau gestionnaire de session (en cours de développement)"
 }
