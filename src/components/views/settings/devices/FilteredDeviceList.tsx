@@ -14,43 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import DeviceTile from './DeviceTile';
 import { DevicesDictionary, DeviceWithVerification } from './useOwnDevices';
-
-export enum DeviceSortOrder {
-    LatestActivity = 'LatestActivity',
-}
 
 interface Props {
     devices: DevicesDictionary;
 }
 
+// devices without timestamp metadata should be sorted last
 const sortDevicesByLatestActivity = (left: DeviceWithVerification, right: DeviceWithVerification) =>
-    left.last_seen_ts - right.last_seen_ts;
+    (right.last_seen_ts || 0) - (left.last_seen_ts || 0);
 
-const getSortedDeviceIds = (devices: DevicesDictionary) =>
-    Object.values(devices).sort(sortDevicesByLatestActivity).map(device => device.device_id);
+const getSortedDevices = (devices: DevicesDictionary) =>
+    Object.values(devices).sort(sortDevicesByLatestActivity);
 
+/**
+ * Filtered list of devices
+ * Sorted by latest activity descending
+ * TODO(kerrya) Filtering to added as part of PSG-648
+ */
 const FilteredDeviceList: React.FC<Props> = ({ devices }) => {
-    const [sortedIds, setSortedIds] = useState([]);
-
-    useEffect(() => {
-        setSortedIds(getSortedDeviceIds(devices));
-    }, [devices]);
+    const sortedDevices = getSortedDevices(devices);
 
     return <ol className='mx_FilteredDeviceList'>
-        { sortedIds.map((deviceId) =>
-        <li key={deviceId}>
+        { sortedDevices.map((device) =>
+            <li key={device.device_id}>
+                <DeviceTile
+                    device={device}
+                />
+            </li>,
 
-            <DeviceTile
-                
-                device={devices[deviceId]}
-            />
-        </li>
-
-        )}
+        ) }
     </ol>;
 };
 
