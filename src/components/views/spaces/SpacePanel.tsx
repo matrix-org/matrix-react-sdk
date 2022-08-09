@@ -132,6 +132,7 @@ const MetaSpaceButton = ({ selected, isPanelCollapsed, ...props }: IMetaSpaceBut
             "collapsed": isPanelCollapsed,
         })}
         role="treeitem"
+        aria-selected={selected}
     >
         <SpaceButton {...props} selected={selected} isNarrow={isPanelCollapsed} />
     </li>;
