@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+// eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from 'enzyme';
 import { mocked } from 'jest-mock';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
@@ -212,8 +213,6 @@ describe('<LocationShareMenu />', () => {
     });
 
     describe('with pin drop share type enabled', () => {
-        beforeEach(() => enableSettings(["feature_location_share_pin_drop"]));
-
         it('renders share type switch with own and pin drop options', () => {
             const component = getComponent();
             expect(component.find('LocationPicker').length).toBe(0);

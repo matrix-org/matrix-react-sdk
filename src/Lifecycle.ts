@@ -635,8 +635,8 @@ async function doSetLoggedIn(
     }
 
     dis.fire(Action.OnLoggedIn);
-
     await startMatrixClient(/*startSyncing=*/!softLogout);
+
     return client;
 }
 
@@ -825,6 +825,9 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
         logger.warn("Caller requested only auxiliary services be started");
         await MatrixClientPeg.assign();
     }
+
+    // Run the migrations after the MatrixClientPeg has been assigned
+    SettingsStore.runMigrations();
 
     // This needs to be started after crypto is set up
     DeviceListener.sharedInstance().start();
