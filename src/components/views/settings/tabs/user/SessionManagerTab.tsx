@@ -22,7 +22,7 @@ import { useOwnDevices } from '../../devices/useOwnDevices';
 import DeviceTile from '../../devices/DeviceTile';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import SettingsTab from '../SettingsTab';
-import SortedDeviceList, { DeviceSortOrder } from '../../devices/SortedDeviceList';
+import FilteredDeviceList, { DeviceSortOrder } from '../../devices/FilteredDeviceList';
 
 const SessionManagerTab: React.FC = () => {
     const { devices, currentDeviceId, isLoading } = useOwnDevices();
@@ -49,7 +49,7 @@ const SessionManagerTab: React.FC = () => {
                     `from any session that you don't recognize or use anymore.`
                 )}
             >
-                <SortedDeviceList devices={devices} sortOrder={DeviceSortOrder.LatestActivity} />
+                <FilteredDeviceList devices={devices} sortOrder={DeviceSortOrder.LatestActivity} />
             </SettingsSubsection>
         }
     </SettingsTab>;

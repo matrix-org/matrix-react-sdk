@@ -33,14 +33,14 @@ const sortDevicesByLatestActivity = (left: DeviceWithVerification, right: Device
 const getSortedDeviceIds = (devices: DevicesDictionary) =>
     Object.values(devices).sort(sortDevicesByLatestActivity).map(device => device.device_id);
 
-const SortedDeviceList: React.FC<Props> = ({ devices }) => {
+const FilteredDeviceList: React.FC<Props> = ({ devices }) => {
     const [sortedIds, setSortedIds] = useState([]);
 
     useEffect(() => {
         setSortedIds(getSortedDeviceIds(devices));
     }, [devices]);
 
-    return <ol className='mx_SortedDeviceList'>
+    return <ol className='mx_FilteredDeviceList'>
         { sortedIds.map((deviceId) =>
         <li key={deviceId}>
 
@@ -54,4 +54,4 @@ const SortedDeviceList: React.FC<Props> = ({ devices }) => {
     </ol>;
 };
 
-export default SortedDeviceList;
+export default FilteredDeviceList;
