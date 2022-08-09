@@ -3494,5 +3494,8 @@
     "Your server doesn't support disabling sending read receipts.": "您的伺服器不支援停用傳送讀取回條。",
     "Share your activity and status with others.": "與他人分享您的活動與狀態。",
     "Presence": "在場",
-    "Send read receipts": "傳送讀取回條"
+    "Send read receipts": "傳送讀取回條",
+    "Last activity": "上次活動",
+    "Sessions": "工作階段",
+    "Use new session manager (under active development)": "使用新的工作階段管理程式（正在積極開發中）"
 }
