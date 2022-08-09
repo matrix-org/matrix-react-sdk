@@ -20,11 +20,11 @@ const crypto = require('crypto');
 const http = require('http');
 
 function setup(trafficlightUrl, uuid) {
-    console.log("Setting up trafficlight client");
+    console.log('Setting up trafficlight client');
 
     const data = JSON.stringify({
-        type: "element-web",
-        version: "0.15.0",
+        type: 'element-web',
+        version: '0.15.0',
     });
 
     const options = {
@@ -58,18 +58,18 @@ function trafficlight(trafficlightUrl, uuid) {
         .run({
             spec: './cypress/e2e/trafficlight/*.ts',
             env: {
-                "TRAFFICLIGHT_URL": trafficlightUrl,
-                "TRAFFICLIGHT_UUID": uuid,
+                'TRAFFICLIGHT_URL': trafficlightUrl,
+                'TRAFFICLIGHT_UUID': uuid,
             },
             config: {
                 retries: { // Override cypress.json - we want to run exactly once.
-                    "openMode": 0,
-                    "runMode": 0,
+                    'openMode': 0,
+                    'runMode': 0,
                 },
                 e2e: {
                     excludeSpecPattern: [],
                 },
-                videosFolder: "cypress/videos/trafficlight/"+uuid+"/",
+                videosFolder: 'cypress/videos/trafficlight/'+uuid+'/',
             },
             quiet: false,
         })
@@ -89,15 +89,15 @@ function trafficlightOneshot(trafficlightUrl, uuid) {
         .open({
             spec: './cypress/e2e/trafficlight/*.ts',
             env: {
-                "TRAFFICLIGHT_URL": trafficlightUrl,
-                "TRAFFICLIGHT_UUID": uuid,
+                'TRAFFICLIGHT_URL': trafficlightUrl,
+                'TRAFFICLIGHT_UUID': uuid,
             },
             config: {
                 retries: { // Override cypress.json - we want to run exactly once.
-                    "openMode": 0,
-                    "runMode": 0,
+                    'openMode': 0,
+                    'runMode': 0,
                 },
-                videosFolder: "cypress/videos/trafficlight/"+uuid+"/",
+                videosFolder: 'cypress/videos/trafficlight/'+uuid+'/',
                 e2e: {
                     excludeSpecPattern: [],
                 },
@@ -112,18 +112,18 @@ function trafficlightOneshot(trafficlightUrl, uuid) {
         });
 }
 
-const trafficlightUrl = "http://localhost:5000";
+const trafficlightUrl = 'http://localhost:5000';
 
 const args = process.argv.slice(2);
-if (args[0] == "run") {
+if (args[0] == 'run') {
     let uuid = crypto.randomUUID();
     setup(trafficlightUrl, uuid);
     trafficlight(trafficlightUrl, uuid);
-} else if (args[0] == "open") {
+} else if (args[0] == 'open') {
     uuid = crypto.randomUUID();
     setup(trafficlightUrl, uuid);
     trafficlightOneshot(trafficlightUrl, uuid);
 } else {
-    console.error("No idea what " + args[0] + "means");
+    console.error('No idea what ' + args[0] + 'means');
     process.exit(1);
 }
