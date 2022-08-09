@@ -918,7 +918,7 @@
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Diese Handlung erfordert es, auf den Standardidentitätsserver <server /> zuzugreifen, um eine E-Mail-Adresse oder Telefonnummer zu validieren, aber der Server hat keine Nutzungsbedingungen.",
     "Only continue if you trust the owner of the server.": "Fahre nur fort, wenn du den Betreibern des Servers vertraust.",
     "Trust": "Vertrauen",
-    "Custom (%(level)s)": "Selbstdefiniert (%(level)s)",
+    "Custom (%(level)s)": "Benutzerdefiniert (%(level)s)",
     "Sends a message as plain text, without interpreting it as markdown": "Verschickt eine Nachricht in Rohtext, ohne sie als Markdown darzustellen",
     "Use an identity server to invite by email. Manage in Settings.": "Mit einem Identitätsserver kannst du über E-Mail Einladungen zu verschicken. Verwalte ihn in den Einstellungen.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
