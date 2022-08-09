@@ -3399,5 +3399,8 @@
     "Android": "Android",
     "You can't disable this later. The room will be encrypted but the embedded call will not.": "Dies kann später nicht deaktiviert werden. Der Raum wird verschlüsselt sein, nicht aber der eingebettete Anruf.",
     "You need to have the right permissions in order to share locations in this room.": "Du brauchst du richtigen Berechtigungen, um deinen Live-Standort in diesem Raum zu teilen.",
-    "Who will you chat to the most?": "Mit wem wirst du am meisten chatten?"
+    "Who will you chat to the most?": "Mit wem wirst du am meisten chatten?",
+    "We're creating a room with %(names)s": "Wir erstellen einen Raum mit %(names)s",
+    "Messages in this chat will be end-to-end encrypted.": "Nachrichten in dieser Konversation werden Ende-zu-Ende verschlüsselt.",
+    "Send your first message to invite <displayName/> to chat": "Schreibe die erste Nachricht, um <displayName/> zur Konversation einzuladen"
 }
