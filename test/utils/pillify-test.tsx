@@ -60,10 +60,7 @@ describe("pillify", () => {
             ],
         };
 
-        const getUserIdForRoomId = jest.fn();
-        const getDMRoomsForUserId = jest.fn();
-        // @ts-ignore
-        DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
+        DMRoomMap.makeShared();
     });
 
     it("should do nothing for empty element", () => {
