@@ -100,8 +100,6 @@ describe('<SessionManagerTab />', () => {
             await flushPromisesWithFakeTimers();
         });
         expect(container.getElementsByClassName('mx_Spinner').length).toBeFalsy();
-
-        // TODO when UI is done, check for error UI
     });
 
     it('does not fail when checking device verification fails', async () => {
@@ -119,7 +117,6 @@ describe('<SessionManagerTab />', () => {
         expect(mockClient.getStoredDevice).toHaveBeenCalledWith(aliceId, alicesDevice.device_id);
         expect(mockClient.getStoredDevice).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
         expect(logSpy).toHaveBeenCalledWith('Error getting device cross-signing info', noCryptoError);
-        // TODO when UI is done, check for error UI
     });
 
     it('sets device verification status correctly', async () => {
