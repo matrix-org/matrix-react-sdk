@@ -99,7 +99,7 @@ function recurse() {
 }
 
 describe("traffic light cycle", () => {
-    it("run trafficlight client", () => {
+    it("runs a trafficlight client", () => {
         cy.log("Beginning recursion");
         recurse();
     });
