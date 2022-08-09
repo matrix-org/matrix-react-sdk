@@ -14,11 +14,12 @@
  limitations under the License.
  */
 
-import React, { HTMLAttributes, InputHTMLAttributes, ReactHTML, ReactNode } from 'react';
+import React, { ReactHTML, ReactNode } from 'react';
 import classnames from 'classnames';
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { DynamicHtmlElementProps } from "../../../@types/common";
 
 export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element> | React.FormEvent<Element>;
 
@@ -34,20 +35,6 @@ type AccessibleButtonKind = | 'primary'
     | 'link_sm'
     | 'confirm_sm'
     | 'cancel_sm';
-
-/**
- * This type construct allows us to specifically pass those props down to the element we’re creating that the element
- * actually supports.
- *
- * e.g., if element is set to "a", we’ll support href and target, if it’s set to "input", we support type.
- *
- * To remain compatible with existing code, we’ll continue to support InputHTMLAttributes<Element>
- */
-type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
-    JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
-type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
-    Partial<Omit<JSX.IntrinsicElements[T], 'ref' | 'onClick' | 'onMouseDown' | 'onKeyUp' | 'onKeyDown'>>
-    & Omit<InputHTMLAttributes<Element>, 'onClick'>;
 
 /**
  * children: React's magic prop. Represents all children given to the element.
