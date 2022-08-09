@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 
 import { _t } from "../../../../../languageHandler";
-import DeviceSecurityCard, { DeviceSecurityVariation } from '../../devices/DeviceSecurityCard';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import SettingsTab from '../SettingsTab';
 
