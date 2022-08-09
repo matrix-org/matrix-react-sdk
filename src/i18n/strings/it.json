@@ -3490,5 +3490,13 @@
     "iOS": "iOS",
     "Download %(brand)s Desktop": "Scarica %(brand)s Desktop",
     "Download %(brand)s": "Scarica %(brand)s",
-    "We're creating a room with %(names)s": "Stiamo creando una stanza con %(names)s"
+    "We're creating a room with %(names)s": "Stiamo creando una stanza con %(names)s",
+    "Last activity": "Ultima attività",
+    "Current session": "Sessione attuale",
+    "Sessions": "Sessioni",
+    "Your server doesn't support disabling sending read receipts.": "Il tuo server non supporta la disattivazione delle conferme di lettura.",
+    "Share your activity and status with others.": "Condividi la tua attività e lo stato con gli altri.",
+    "Presence": "Presenza",
+    "Use new session manager (under active development)": "Usa il nuovo gestore di sessioni (in sviluppo attivo)",
+    "Send read receipts": "Invia le conferme di lettura"
 }
