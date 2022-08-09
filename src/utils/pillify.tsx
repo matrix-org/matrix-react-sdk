@@ -44,8 +44,8 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
     while (node) {
         let pillified = false;
 
-        if (node.tagName === "PRE" || node.tagName === "CODE") {
-            // Skip code blocks
+        if (node.tagName === "PRE" || node.tagName === "CODE" || pills.includes(node)) {
+            // Skip code blocks and existing pills
             node = node.nextSibling as Element;
             continue;
         } else if (node.tagName === "A" && node.getAttribute("href")) {
@@ -122,6 +122,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                         ReactDOM.render(pill, pillContainer);
                         roomNotifTextNode.parentNode.replaceChild(pillContainer, roomNotifTextNode);
                         pills.push(pillContainer);
+                        pillified = true;
                     }
                     // Nothing else to do for a text node (and we don't need to advance
                     // the loop pointer because we did it above)
