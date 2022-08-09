@@ -124,5 +124,6 @@ if (args[0] == "run") {
     setup(trafficlightUrl, uuid);
     trafficlightOneshot(trafficlightUrl, uuid);
 } else {
-    console.log("No idea what " + args[0] + "means");
+    console.error("No idea what " + args[0] + "means");
+    process.exit(1);
 }
