@@ -433,7 +433,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
      */
     private onBodyLinkClick = (e: MouseEvent): void => {
         let target = e.target as HTMLLinkElement;
-        if (target.classList.contains(linkifyOpts.className)) return; // let the rewritten URL
+        // links processed by linkifyjs have their own handler so don't handle those here
+        if (target.classList.contains(linkifyOpts.className)) return;
         if (target.nodeName !== "A") {
             // Jump to parent as the `<a>` may contain children, e.g. an anchor wrapping an inline code section
             target = target.closest<HTMLLinkElement>("a");
