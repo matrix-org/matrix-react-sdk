@@ -3497,5 +3497,6 @@
     "Send read receipts": "Kirim laporan dibaca",
     "Last activity": "Aktivitas terakhir",
     "Sessions": "Sesi",
-    "Use new session manager (under active development)": "Gunakan pengelola sesi baru (dalam pengembangan aktif)"
+    "Use new session manager (under active development)": "Gunakan pengelola sesi baru (dalam pengembangan aktif)",
+    "Current session": "Sesi saat ini"
 }
