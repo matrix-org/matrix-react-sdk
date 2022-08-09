@@ -28,6 +28,7 @@ function recurse() {
         cy.log("... got ", action, data);
         switch (action) {
             case "register":
+                cy.visit("/#/register");
                 cy.get(".mx_ServerPicker_change", { timeout: 15000 }).click();
                 cy.get(".mx_ServerPickerDialog_continue").should("be.visible");
                 cy.get(".mx_ServerPickerDialog_otherHomeserver").type(data['homeserver_url']['local']);
@@ -46,7 +47,7 @@ function recurse() {
                 });
                 break;
             case "login":
-                cy.visit("http://localhost:8083/#/login");
+                cy.visit("/#/login");
                 cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
                 cy.get(".mx_ServerPicker_change").click();
                 cy.get(".mx_ServerPickerDialog_otherHomeserver").type(data['homeserver_url']['local']);
@@ -99,7 +100,6 @@ function recurse() {
 
 describe("traffic light cycle", () => {
     it("run trafficlight client", () => {
-        cy.visit("http://localhost:8083/#/register");
         cy.log("Beginning recursion");
         recurse();
     });
