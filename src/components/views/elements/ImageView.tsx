@@ -518,19 +518,19 @@ export default class ImageView extends React.Component<IProps, IState> {
         }
 
         const zoomOutButton = (
-                <AccessibleTooltipButton
-                    className="mx_ImageView_button mx_ImageView_button_zoomOut"
-                    title={_t("Zoom out")}
-                    onClick={this.onZoomOutClick}
-                />
-            );
+            <AccessibleTooltipButton
+                className="mx_ImageView_button mx_ImageView_button_zoomOut"
+                title={_t("Zoom out")}
+                onClick={this.onZoomOutClick}
+            />
+        );
         const zoomInButton = (
-                <AccessibleTooltipButton
-                    className="mx_ImageView_button mx_ImageView_button_zoomIn"
-                    title={_t("Zoom in")}
-                    onClick={this.onZoomInClick}
-                />
-            );
+            <AccessibleTooltipButton
+                className="mx_ImageView_button mx_ImageView_button_zoomIn"
+                title={_t("Zoom in")}
+                onClick={this.onZoomInClick}
+            />
+        );
 
         let title: JSX.Element;
         if (this.props.mxEvent?.getContent()) {
