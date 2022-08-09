@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 
 import { _t } from "../../../../../languageHandler";
+import DeviceSecurityCard, { DeviceSecurityVariation } from '../../devices/DeviceSecurityCard';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import SettingsTab from '../SettingsTab';
 
@@ -26,7 +27,23 @@ const SessionManagerTab: React.FC = () => {
             heading={_t('Current session')}
             // TODO session content coming here
             // in next PR
-        />
+        >
+            <DeviceSecurityCard
+                variation={DeviceSecurityVariation.Verified}
+                heading={_t('Verified session')}
+                description={_t('This session is ready for secure messaging.')}
+            />
+            <DeviceSecurityCard
+                variation={DeviceSecurityVariation.Unverified}
+                heading={_t('Verified session')}
+                description={_t('This session is ready for secure messaging.')}
+            />
+            <DeviceSecurityCard
+                variation={DeviceSecurityVariation.Inactive}
+                heading={_t('Verified session')}
+                description={_t('This session is ready for secure messaging.')}
+            />
+        </SettingsSubsection>
     </SettingsTab>;
 };
 
