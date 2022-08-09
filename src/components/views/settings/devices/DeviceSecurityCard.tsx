@@ -19,6 +19,7 @@ import React from 'react';
 
 import { Icon as VerifiedIcon } from '../../../../../res/img/e2e/verified.svg';
 import { Icon as UnverifiedIcon } from '../../../../../res/img/e2e/warning.svg';
+import { Icon as InactiveIcon } from '../../../../../res/img/element-icons/settings/inactive.svg';
 
 export enum DeviceSecurityVariation {
     Verified = 'Verified',
@@ -33,7 +34,7 @@ interface Props {
 }
 
 const VariationIcon: Record<DeviceSecurityVariation, React.FC<React.SVGProps<SVGSVGElement>>> = {
-    [DeviceSecurityVariation.Inactive]: VerifiedIcon,
+    [DeviceSecurityVariation.Inactive]: InactiveIcon,
     [DeviceSecurityVariation.Verified]: VerifiedIcon,
     [DeviceSecurityVariation.Unverified]: UnverifiedIcon,
 };

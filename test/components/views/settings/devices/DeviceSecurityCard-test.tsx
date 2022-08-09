@@ -17,15 +17,29 @@ limitations under the License.
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import DeviceSecurityCard from '../../../../../src/components/views/settings/devices/DeviceSecurityCard';
+import DeviceSecurityCard, {
+    DeviceSecurityVariation,
+} from '../../../../../src/components/views/settings/devices/DeviceSecurityCard';
 
 describe('<DeviceSecurityCard />', () => {
-    const defaultProps = {};
-    const getComponent = (props = {}) =>
-        render(<DeviceSecurityCard {...defaultProps} {...props} />);
+    const defaultProps = {
+        variation: DeviceSecurityVariation.Verified,
+        heading: 'Verified session',
+        description: 'nice',
+    };
+    const getComponent = (props = {}): React.ReactElement =>
+        <DeviceSecurityCard {...defaultProps} {...props} />;
 
-    it('renders', () => {
-        const component = getComponent();
-        expect(component).toBeTruthy();
+    it('renders basic card', () => {
+        const { container } = render(getComponent());
+        expect(container).toMatchSnapshot();
+    });
+
+    it('renders with children', () => {
+        const { container } = render(getComponent({
+            children: <div>hey</div>,
+            variation: DeviceSecurityVariation.Unverified,
+        }));
+        expect(container).toMatchSnapshot();
     });
 });

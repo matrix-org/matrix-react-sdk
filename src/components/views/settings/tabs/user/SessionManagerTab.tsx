@@ -27,23 +27,7 @@ const SessionManagerTab: React.FC = () => {
             heading={_t('Current session')}
             // TODO session content coming here
             // in next PR
-        >
-            <DeviceSecurityCard
-                variation={DeviceSecurityVariation.Verified}
-                heading={_t('Verified session')}
-                description={_t('This session is ready for secure messaging.')}
-            />
-            <DeviceSecurityCard
-                variation={DeviceSecurityVariation.Unverified}
-                heading={_t('Verified session')}
-                description={_t('This session is ready for secure messaging.')}
-            />
-            <DeviceSecurityCard
-                variation={DeviceSecurityVariation.Inactive}
-                heading={_t('Verified session')}
-                description={_t('This session is ready for secure messaging.')}
-            />
-        </SettingsSubsection>
+        />
     </SettingsTab>;
 };
 
