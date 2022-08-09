@@ -16,38 +16,63 @@ limitations under the License.
 
 import React from 'react';
 import classnames from 'classnames';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    inputRef?: React.RefObject<HTMLInputElement>;
     outlined?: boolean;
+    // If true (default), the children will be contained within a <label> element
+    // If false, they'll be in a div. Putting interactive components that have labels
+    // themselves in labels can cause strange bugs like https://github.com/vector-im/element-web/issues/18031
+    childrenInLabel?: boolean;
 }
 
 interface IState {
 }
 
-@replaceableComponent("views.elements.StyledRadioButton")
 export default class StyledRadioButton extends React.PureComponent<IProps, IState> {
     public static readonly defaultProps = {
         className: '',
+        childrenInLabel: true,
     };
 
     public render() {
-        const { children, className, disabled, outlined, ...otherProps } = this.props;
+        const { children, className, disabled, outlined, childrenInLabel, inputRef, ...otherProps } = this.props;
         const _className = classnames(
-            'mx_RadioButton',
+            'mx_StyledRadioButton',
             className,
             {
-                "mx_RadioButton_disabled": disabled,
-                "mx_RadioButton_enabled": !disabled,
-                "mx_RadioButton_checked": this.props.checked,
-                "mx_RadioButton_outlined": outlined,
+                "mx_StyledRadioButton_disabled": disabled,
+                "mx_StyledRadioButton_enabled": !disabled,
+                "mx_StyledRadioButton_checked": this.props.checked,
+                "mx_StyledRadioButton_outlined": outlined,
             });
-        return <label className={_className}>
-            <input type='radio' disabled={disabled} {...otherProps} />
-            {/* Used to render the radio button circle */}
+
+        const radioButton = <React.Fragment>
+            <input
+                // Pass through the ref - used for keyboard shortcut access to some buttons
+                ref={inputRef}
+                type='radio'
+                disabled={disabled}
+                {...otherProps}
+            />
+            { /* Used to render the radio button circle */ }
             <div><div /></div>
-            <div className="mx_RadioButton_content">{children}</div>
-            <div className="mx_RadioButton_spacer" />
-        </label>;
+        </React.Fragment>;
+
+        if (childrenInLabel) {
+            return <label className={_className}>
+                { radioButton }
+                <div className="mx_StyledRadioButton_content">{ children }</div>
+                <div className="mx_StyledRadioButton_spacer" />
+            </label>;
+        } else {
+            return <div className={_className}>
+                <label className="mx_StyledRadioButton_innerLabel">
+                    { radioButton }
+                </label>
+                <div className="mx_StyledRadioButton_content">{ children }</div>
+                <div className="mx_StyledRadioButton_spacer" />
+            </div>;
+        }
     }
 }

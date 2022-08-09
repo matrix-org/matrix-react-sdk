@@ -17,27 +17,23 @@ limitations under the License.
 */
 
 import pako from 'pako';
+import Tar from "tar-js";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import {MatrixClientPeg} from '../MatrixClientPeg';
+import { MatrixClientPeg } from '../MatrixClientPeg';
 import PlatformPeg from '../PlatformPeg';
 import { _t } from '../languageHandler';
-import Tar from "tar-js";
-
 import * as rageshake from './rageshake';
-
-// polyfill textencoder if necessary
-import * as TextEncodingUtf8 from 'text-encoding-utf-8';
 import SettingsStore from "../settings/SettingsStore";
-let TextEncoder = window.TextEncoder;
-if (!TextEncoder) {
-    TextEncoder = TextEncodingUtf8.TextEncoder;
-}
+import SdkConfig from "../SdkConfig";
 
 interface IOpts {
-    label?: string;
+    labels?: string[];
     userText?: string;
     sendLogs?: boolean;
-    progressCallback?: (string) => void;
+    progressCallback?: (s: string) => void;
+    customApp?: string;
+    customFields?: Record<string, string>;
 }
 
 async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
@@ -68,15 +64,21 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
 
     const client = MatrixClientPeg.get();
 
-    console.log("Sending bug report.");
+    logger.log("Sending bug report.");
 
     const body = new FormData();
     body.append('text', opts.userText || "User did not supply any additional text.");
-    body.append('app', 'element-web');
+    body.append('app', opts.customApp || 'element-web');
     body.append('version', version);
     body.append('user_agent', userAgent);
     body.append('installed_pwa', installedPWA);
     body.append('touch_input', touchInput);
+
+    if (opts.customFields) {
+        for (const key in opts.customFields) {
+            body.append(key, opts.customFields[key]);
+        }
+    }
 
     if (client) {
         body.append('user_id', client.credentials.userId);
@@ -91,36 +93,38 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
             body.append('cross_signing_key', client.getCrossSigningId());
 
             // add cross-signing status information
-            const crossSigning = client._crypto._crossSigningInfo;
-            const secretStorage = client._crypto._secretStorage;
+            const crossSigning = client.crypto.crossSigningInfo;
+            const secretStorage = client.crypto.secretStorage;
 
             body.append("cross_signing_ready", String(await client.isCrossSigningReady()));
             body.append("cross_signing_supported_by_hs",
                 String(await client.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")));
             body.append("cross_signing_key", crossSigning.getId());
-            body.append("cross_signing_pk_in_secret_storage",
+            body.append("cross_signing_privkey_in_secret_storage",
                 String(!!(await crossSigning.isStoredInSecretStorage(secretStorage))));
 
             const pkCache = client.getCrossSigningCacheCallbacks();
-            body.append("cross_signing_master_pk_cached",
-                String(!!(pkCache && await pkCache.getCrossSigningKeyCache("master"))));
-            body.append("cross_signing_self_signing_pk_cached",
-                String(!!(pkCache && await pkCache.getCrossSigningKeyCache("self_signing"))));
-            body.append("cross_signing_user_signing_pk_cached",
-                String(!!(pkCache && await pkCache.getCrossSigningKeyCache("user_signing"))));
+            body.append("cross_signing_master_privkey_cached",
+                String(!!(pkCache && (await pkCache.getCrossSigningKeyCache("master")))));
+            body.append("cross_signing_self_signing_privkey_cached",
+                String(!!(pkCache && (await pkCache.getCrossSigningKeyCache("self_signing")))));
+            body.append("cross_signing_user_signing_privkey_cached",
+                String(!!(pkCache && (await pkCache.getCrossSigningKeyCache("user_signing")))));
 
             body.append("secret_storage_ready", String(await client.isSecretStorageReady()));
             body.append("secret_storage_key_in_account", String(!!(await secretStorage.hasKey())));
 
             body.append("session_backup_key_in_secret_storage", String(!!(await client.isKeyBackupKeyStored())));
-            const sessionBackupKeyFromCache = await client._crypto.getSessionBackupPrivateKey();
+            const sessionBackupKeyFromCache = await client.crypto.getSessionBackupPrivateKey();
             body.append("session_backup_key_cached", String(!!sessionBackupKeyFromCache));
             body.append("session_backup_key_well_formed", String(sessionBackupKeyFromCache instanceof Uint8Array));
         }
     }
 
-    if (opts.label) {
-        body.append('label', opts.label);
+    if (opts.labels) {
+        for (const label of opts.labels) {
+            body.append('label', label);
+        }
     }
 
     // add labs options
@@ -197,9 +201,9 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
  *
  * @param {function(string)} opts.progressCallback Callback to call with progress updates
  *
- * @return {Promise} Resolved when the bug report is sent.
+ * @return {Promise<string>} URL returned by the rageshake server
  */
-export default async function sendBugReport(bugReportEndpoint: string, opts: IOpts = {}) {
+export default async function sendBugReport(bugReportEndpoint: string, opts: IOpts = {}): Promise<string> {
     if (!bugReportEndpoint) {
         throw new Error("No bug report endpoint has been set.");
     }
@@ -208,7 +212,7 @@ export default async function sendBugReport(bugReportEndpoint: string, opts: IOp
     const body = await collectBugReport(opts);
 
     progressCallback(_t("Uploading logs"));
-    await _submitReport(bugReportEndpoint, body, progressCallback);
+    return submitReport(bugReportEndpoint, body, progressCallback);
 }
 
 /**
@@ -268,10 +272,40 @@ function uint8ToString(buf: Buffer) {
     return out;
 }
 
-function _submitReport(endpoint: string, body: FormData, progressCallback: (string) => void) {
-    return new Promise<void>((resolve, reject) => {
+export async function submitFeedback(
+    endpoint: string,
+    label: string,
+    comment: string,
+    canContact = false,
+    extraData: Record<string, string> = {},
+) {
+    let version = "UNKNOWN";
+    try {
+        version = await PlatformPeg.get().getAppVersion();
+    } catch (err) {} // PlatformPeg already logs this.
+
+    const body = new FormData();
+    body.append("label", label);
+    body.append("text", comment);
+    body.append("can_contact", canContact ? "yes" : "no");
+
+    body.append("app", "element-web");
+    body.append("version", version);
+    body.append("platform", PlatformPeg.get().getHumanReadableName());
+    body.append("user_id", MatrixClientPeg.get()?.getUserId());
+
+    for (const k in extraData) {
+        body.append(k, JSON.stringify(extraData[k]));
+    }
+
+    await submitReport(SdkConfig.get().bug_report_endpoint_url, body, () => {});
+}
+
+function submitReport(endpoint: string, body: FormData, progressCallback: (str: string) => void): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
         const req = new XMLHttpRequest();
         req.open("POST", endpoint);
+        req.responseType = "json";
         req.timeout = 5 * 60 * 1000;
         req.onreadystatechange = function() {
             if (req.readyState === XMLHttpRequest.LOADING) {
@@ -282,7 +316,7 @@ function _submitReport(endpoint: string, body: FormData, progressCallback: (stri
                     reject(new Error(`HTTP ${req.status}`));
                     return;
                 }
-                resolve();
+                resolve(req.response.report_url || "");
             }
         };
         req.send(body);

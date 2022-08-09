@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {PureComponent, RefCallback, RefObject} from "react";
+import React, { PureComponent, RefCallback, RefObject } from "react";
 import classNames from "classnames";
 import zxcvbn from "zxcvbn";
 
 import SdkConfig from "../../../SdkConfig";
-import withValidation, {IFieldState, IValidationResult} from "../elements/Validation";
-import {_t, _td} from "../../../languageHandler";
-import Field, {IInputProps} from "../elements/Field";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
+import { _t, _td } from "../../../languageHandler";
+import Field, { IInputProps } from "../elements/Field";
 
 interface IProps extends Omit<IInputProps, "onValidate"> {
     autoFocus?: boolean;
@@ -38,10 +37,9 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     labelAllowedButUnsafe?: string;
 
     onChange(ev: React.FormEvent<HTMLElement>);
-    onValidate(result: IValidationResult);
+    onValidate?(result: IValidationResult);
 }
 
-@replaceableComponent("views.auth.PassphraseField")
 class PassphraseField extends PureComponent<IProps> {
     static defaultProps = {
         label: _td("Password"),
@@ -73,7 +71,7 @@ class PassphraseField extends PureComponent<IProps> {
                         return false;
                     }
                     const safe = complexity.score >= this.props.minScore;
-                    const allowUnsafe = SdkConfig.get()["dangerously_allow_unsafe_and_insecure_passwords"];
+                    const allowUnsafe = SdkConfig.get("dangerously_allow_unsafe_and_insecure_passwords");
                     return allowUnsafe || safe;
                 },
                 valid: function(complexity) {
@@ -98,7 +96,9 @@ class PassphraseField extends PureComponent<IProps> {
 
     onValidate = async (fieldState: IFieldState) => {
         const result = await this.validate(fieldState);
-        this.props.onValidate(result);
+        if (this.props.onValidate) {
+            this.props.onValidate(result);
+        }
         return result;
     };
 

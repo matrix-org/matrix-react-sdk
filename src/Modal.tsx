@@ -15,14 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
+import { defer, sleep } from "matrix-js-sdk/src/utils";
 
-import Analytics from './Analytics';
 import dis from './dispatcher/dispatcher';
-import {defer} from './utils/promise';
 import AsyncWrapper from './AsyncWrapper';
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
@@ -104,24 +102,6 @@ export class ModalManager {
         return this.priorityModal || this.staticModal || this.modals.length > 0;
     }
 
-    public createTrackedDialog<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["createDialog"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.createDialog<T>(...rest);
-    }
-
-    public appendTrackedDialog<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["appendDialog"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.appendDialog<T>(...rest);
-    }
-
     public createDialog<T extends any[]>(
         Element: React.ComponentType,
         ...rest: ParametersWithoutFirst<ModalManager["createDialogAsync"]>
@@ -134,24 +114,6 @@ export class ModalManager {
         ...rest: ParametersWithoutFirst<ModalManager["appendDialogAsync"]>
     ) {
         return this.appendDialogAsync<T>(Promise.resolve(Element), ...rest);
-    }
-
-    public createTrackedDialogAsync<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["createDialogAsync"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.createDialogAsync<T>(...rest);
-    }
-
-    public appendTrackedDialogAsync<T extends any[]>(
-        analyticsAction: string,
-        analyticsInfo: string,
-        ...rest: Parameters<ModalManager["appendDialogAsync"]>
-    ) {
-        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
-        return this.appendDialogAsync<T>(...rest);
     }
 
     public closeCurrentModal(reason: string) {
@@ -193,7 +155,7 @@ export class ModalManager {
         modal.elem = <AsyncWrapper key={modalCount} prom={prom} {...props} onFinished={closeDialog} />;
         modal.close = closeDialog;
 
-        return {modal, closeDialog, onFinishedProm};
+        return { modal, closeDialog, onFinishedProm };
     }
 
     private getCloseFn<T extends any[]>(
@@ -274,7 +236,7 @@ export class ModalManager {
      * @param {onBeforeClose} options.onBeforeClose a callback to decide whether to close the dialog
      * @returns {object} Object with 'close' parameter being a function that will close the dialog
      */
-    private createDialogAsync<T extends any[]>(
+    public createDialogAsync<T extends any[]>(
         prom: Promise<React.ComponentType>,
         props?: IProps<T>,
         className?: string,
@@ -282,7 +244,7 @@ export class ModalManager {
         isStaticModal = false,
         options: IOptions<T> = {},
     ): IHandle<T> {
-        const {modal, closeDialog, onFinishedProm} = this.buildModal<T>(prom, props, className, options);
+        const { modal, closeDialog, onFinishedProm } = this.buildModal<T>(prom, props, className, options);
         if (isPriorityModal) {
             // XXX: This is destructive
             this.priorityModal = modal;
@@ -305,7 +267,7 @@ export class ModalManager {
         props?: IProps<T>,
         className?: string,
     ): IHandle<T> {
-        const {modal, closeDialog, onFinishedProm} = this.buildModal<T>(prom, props, className, {});
+        const { modal, closeDialog, onFinishedProm } = this.buildModal<T>(prom, props, className, {});
 
         this.modals.push(modal);
         this.reRender();
@@ -333,7 +295,10 @@ export class ModalManager {
         return this.priorityModal ? this.priorityModal : (this.modals[0] || this.staticModal);
     }
 
-    private reRender() {
+    private async reRender() {
+        // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
+        await sleep(0);
+
         if (this.modals.length === 0 && !this.priorityModal && !this.staticModal) {
             // If there is no modal to render, make all of Element available
             // to screen reader users again
@@ -379,13 +344,13 @@ export class ModalManager {
             const dialog = (
                 <div className={classes}>
                     <div className="mx_Dialog">
-                        {modal.elem}
+                        { modal.elem }
                     </div>
                     <div className="mx_Dialog_background" onClick={this.onBackgroundClick} />
                 </div>
             );
 
-            ReactDOM.render(dialog, ModalManager.getOrCreateContainer());
+            setImmediate(() => ReactDOM.render(dialog, ModalManager.getOrCreateContainer()));
         } else {
             // This is safe to call repeatedly if we happen to do that
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());

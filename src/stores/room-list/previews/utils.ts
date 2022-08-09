@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { DefaultTagID, TagID } from "../models";
 
@@ -24,11 +25,6 @@ export function isSelf(event: MatrixEvent): boolean {
         return event.getStateKey() === selfUserId;
     }
     return event.getSender() === selfUserId;
-}
-
-export function isSelfTarget(event: MatrixEvent): boolean {
-    const selfUserId = MatrixClientPeg.get().getUserId();
-    return event.getStateKey() === selfUserId;
 }
 
 export function shouldPrefixMessagesIn(roomId: string, tagId: TagID): boolean {
@@ -42,8 +38,4 @@ export function shouldPrefixMessagesIn(roomId: string, tagId: TagID): boolean {
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender ? event.sender.name : event.getSender();
-}
-
-export function getTargetName(event: MatrixEvent): string {
-    return event.target ? event.target.name : event.getStateKey();
 }

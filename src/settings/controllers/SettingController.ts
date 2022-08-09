@@ -47,6 +47,17 @@ export default abstract class SettingController {
     }
 
     /**
+     * Called before the setting value has been changed, can abort the change.
+     * @param {string} level The level at which the setting has been modified.
+     * @param {String} roomId The room ID, may be null.
+     * @param {*} newValue The new value for the setting, may be null.
+     * @return {boolean} Whether the settings change should be accepted.
+     */
+    public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
+        return true;
+    }
+
+    /**
      * Called when the setting value has been changed.
      * @param {string} level The level at which the setting has been modified.
      * @param {String} roomId The room ID, may be null.
@@ -54,6 +65,8 @@ export default abstract class SettingController {
      */
     public onChange(level: SettingLevel, roomId: string, newValue: any) {
         // do nothing by default
+
+        // FIXME: force a fresh on the RoomView for the roomId in question
     }
 
     /**

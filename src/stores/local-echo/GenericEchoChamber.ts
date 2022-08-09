@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EchoContext } from "./EchoContext";
-import { EchoTransaction, RunFn, TransactionStatus } from "./EchoTransaction";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { EventEmitter } from "events";
+
+import { EchoContext } from "./EchoContext";
+import { EchoTransaction, RunFn, TransactionStatus } from "./EchoTransaction";
 
 export async function implicitlyReverted() {
     // do nothing :D
@@ -53,7 +54,7 @@ export abstract class GenericEchoChamber<C extends EchoContext, K, V> extends Ev
     }
 
     private cacheVal(key: K, val: V, txn: EchoTransaction) {
-        this.cache.set(key, {txn, val});
+        this.cache.set(key, { txn, val });
         this.emit(PROPERTY_UPDATED, key);
     }
 

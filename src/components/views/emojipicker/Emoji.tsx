@@ -17,9 +17,8 @@ limitations under the License.
 
 import React from 'react';
 
-import {MenuItem} from "../../structures/ContextMenu";
-import {IEmoji} from "../../../emoji";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { MenuItem } from "../../structures/ContextMenu";
+import { IEmoji } from "../../../emoji";
 
 interface IProps {
     emoji: IEmoji;
@@ -27,9 +26,9 @@ interface IProps {
     onClick(emoji: IEmoji): void;
     onMouseEnter(emoji: IEmoji): void;
     onMouseLeave(emoji: IEmoji): void;
+    disabled?: boolean;
 }
 
-@replaceableComponent("views.emojipicker.Emoji")
 class Emoji extends React.PureComponent<IProps> {
     render() {
         const { onClick, onMouseEnter, onMouseLeave, emoji, selectedEmojis } = this.props;
@@ -42,9 +41,10 @@ class Emoji extends React.PureComponent<IProps> {
                 onMouseLeave={() => onMouseLeave(emoji)}
                 className="mx_EmojiPicker_item_wrapper"
                 label={emoji.unicode}
+                disabled={this.props.disabled}
             >
                 <div className={`mx_EmojiPicker_item ${isSelected ? 'mx_EmojiPicker_item_selected' : ''}`}>
-                    {emoji.unicode}
+                    { emoji.unicode }
                 </div>
             </MenuItem>
         );

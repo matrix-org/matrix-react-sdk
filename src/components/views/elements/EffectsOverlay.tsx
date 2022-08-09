@@ -15,9 +15,12 @@
  limitations under the License.
  */
 import React, { FunctionComponent, useEffect, useRef } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import dis from '../../../dispatcher/dispatcher';
 import ICanvasEffect from '../../../effects/ICanvasEffect';
-import {CHAT_EFFECTS} from '../../../effects'
+import { CHAT_EFFECTS } from '../../../effects';
+import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
 
 interface IProps {
     roomWidth: number;
@@ -31,13 +34,13 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
         if (!name) return null;
         let effect: ICanvasEffect | null = effectsRef.current[name] || null;
         if (effect === null) {
-            const options = CHAT_EFFECTS.find((e) => e.command === name)?.options
+            const options = CHAT_EFFECTS.find((e) => e.command === name)?.options;
             try {
                 const { default: Effect } = await import(`../../../effects/${name}`);
                 effect = new Effect(options);
                 effectsRef.current[name] = effect;
             } catch (err) {
-                console.warn('Unable to load effect module at \'../../../effects/${name}\'.', err);
+                logger.warn(`Unable to load effect module at '../../../effects/${name}.`, err);
             }
         }
         return effect;
@@ -45,25 +48,25 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
 
     useEffect(() => {
         const resize = () => {
-            if (canvasRef.current) {
-                canvasRef.current.height = window.innerHeight;
+            if (canvasRef.current && canvasRef.current?.height !== UIStore.instance.windowHeight) {
+                canvasRef.current.height = UIStore.instance.windowHeight;
             }
         };
         const onAction = (payload: { action: string }) => {
             const actionPrefix = 'effects.';
             if (payload.action.indexOf(actionPrefix) === 0) {
-                const effect = payload.action.substr(actionPrefix.length);
+                const effect = payload.action.slice(actionPrefix.length);
                 lazyLoadEffectModule(effect).then((module) => module?.start(canvasRef.current));
             }
-        }
+        };
         const dispatcherRef = dis.register(onAction);
         const canvas = canvasRef.current;
-        canvas.height = window.innerHeight;
-        window.addEventListener('resize', resize, true);
+        canvas.height = UIStore.instance.windowHeight;
+        UIStore.instance.on(UI_EVENTS.Resize, resize);
 
         return () => {
             dis.unregister(dispatcherRef);
-            window.removeEventListener('resize', resize);
+            UIStore.instance.off(UI_EVENTS.Resize, resize);
             // eslint-disable-next-line react-hooks/exhaustive-deps
             const currentEffects = effectsRef.current; // this is not a react node ref, warning can be safely ignored
             for (const effect in currentEffects) {
@@ -88,7 +91,7 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
                 right: 0,
             }}
         />
-    )
-}
+    );
+};
 
 export default EffectsOverlay;

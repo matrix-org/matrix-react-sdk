@@ -15,8 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {CARET_NODE_CHAR, isCaretNode} from "./render";
+import { CARET_NODE_CHAR, isCaretNode } from "./render";
 import DocumentOffset from "./offset";
+import EditorModel from "./model";
+import Range from "./range";
 
 type Predicate = (node: Node) => boolean;
 type Callback = (node: Node) => void;
@@ -44,8 +46,8 @@ export function walkDOMDepthFirst(rootNode: Node, enterNodeCallback: Predicate, 
 }
 
 export function getCaretOffsetAndText(editor: HTMLDivElement, sel: Selection) {
-    const {offset, text} = getSelectionOffsetAndText(editor, sel.focusNode, sel.focusOffset);
-    return {caret: offset, text};
+    const { offset, text } = getSelectionOffsetAndText(editor, sel.focusNode, sel.focusOffset);
+    return { caret: offset, text };
 }
 
 function tryReduceSelectionToTextNode(selectionNode: Node, selectionOffset: number) {
@@ -86,10 +88,10 @@ function tryReduceSelectionToTextNode(selectionNode: Node, selectionOffset: numb
 }
 
 function getSelectionOffsetAndText(editor: HTMLDivElement, selectionNode: Node, selectionOffset: number) {
-    const {node, characterOffset} = tryReduceSelectionToTextNode(selectionNode, selectionOffset);
-    const {text, offsetToNode} = getTextAndOffsetToNode(editor, node);
+    const { node, characterOffset } = tryReduceSelectionToTextNode(selectionNode, selectionOffset);
+    const { text, offsetToNode } = getTextAndOffsetToNode(editor, node);
     const offset = getCaret(node, offsetToNode, characterOffset);
-    return {offset, text};
+    return { offset, text };
 }
 
 // gets the caret position details, ignoring and adjusting to
@@ -122,7 +124,7 @@ function getTextAndOffsetToNode(editor: HTMLDivElement, selectionNode: Node) {
     let foundNode = false;
     let text = "";
 
-    function enterNodeCallback(node) {
+    function enterNodeCallback(node: HTMLElement) {
         if (!foundNode) {
             if (node === selectionNode) {
                 foundNode = true;
@@ -148,12 +150,12 @@ function getTextAndOffsetToNode(editor: HTMLDivElement, selectionNode: Node) {
         return true;
     }
 
-    function leaveNodeCallback(node) {
+    function leaveNodeCallback(node: HTMLElement) {
         // if this is not the last DIV (which are only used as line containers atm)
         // we don't just check if there is a nextSibling because sometimes the caret ends up
         // after the last DIV and it creates a newline if you type then,
         // whereas you just want it to be appended to the current line
-        if (node.tagName === "DIV" && node.nextSibling && node.nextSibling.tagName === "DIV") {
+        if (node.tagName === "DIV" && (<HTMLElement>node.nextSibling)?.tagName === "DIV") {
             text += "\n";
             if (!foundNode) {
                 offsetToNode += 1;
@@ -163,11 +165,11 @@ function getTextAndOffsetToNode(editor: HTMLDivElement, selectionNode: Node) {
 
     walkDOMDepthFirst(editor, enterNodeCallback, leaveNodeCallback);
 
-    return {text, offsetToNode};
+    return { text, offsetToNode };
 }
 
 // get text value of text node, ignoring ZWS if it's a caret node
-function getTextNodeValue(node) {
+function getTextNodeValue(node: Node): string {
     const nodeText = node.nodeValue;
     // filter out ZWS for caret nodes
     if (isCaretNode(node.parentElement)) {
@@ -176,7 +178,7 @@ function getTextNodeValue(node) {
         if (nodeText.length !== 1) {
             return nodeText.replace(CARET_NODE_CHAR, "");
         } else {
-            // only contains ZWS, which is ignored, so return emtpy string
+            // only contains ZWS, which is ignored, so return empty string
             return "";
         }
     } else {
@@ -184,7 +186,7 @@ function getTextNodeValue(node) {
     }
 }
 
-export function getRangeForSelection(editor, model, selection) {
+export function getRangeForSelection(editor: HTMLDivElement, model: EditorModel, selection: Selection): Range {
     const focusOffset = getSelectionOffsetAndText(
         editor,
         selection.focusNode,

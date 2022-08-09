@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { GenericEchoChamber } from "./GenericEchoChamber";
 import { Room } from "matrix-js-sdk/src/models/room";
+
+import { GenericEchoChamber } from "./GenericEchoChamber";
 import { RoomEchoChamber } from "./RoomEchoChamber";
 import { RoomEchoContext } from "./RoomEchoContext";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -77,10 +78,10 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
 
         if (hasOrHadError && !this.state.toastRef) {
             const ref = NonUrgentToastStore.instance.addToast(NonUrgentEchoFailureToast);
-            await this.updateState({toastRef: ref});
+            await this.updateState({ toastRef: ref });
         } else if (!hasOrHadError && this.state.toastRef) {
             NonUrgentToastStore.instance.removeToast(this.state.toastRef);
-            await this.updateState({toastRef: null});
+            await this.updateState({ toastRef: null });
         }
     }
 
@@ -97,8 +98,6 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
         }
     }
 
-    protected async onAction(payload: ActionPayload): Promise<any> {
-        // We have nothing to actually listen for
-        return Promise.resolve();
+    protected async onAction(payload: ActionPayload): Promise<void> {
     }
 }

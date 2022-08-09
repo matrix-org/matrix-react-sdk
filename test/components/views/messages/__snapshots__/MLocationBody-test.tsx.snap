@@ -1,0 +1,216 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MLocationBody <MLocationBody> with error displays correct fallback content when map_style_url is misconfigured 1`] = `
+<div
+  className="mx_EventTile_body mx_MLocationBody"
+>
+  <span
+    className="mx_EventTile_tileError"
+  >
+    Unable to load map: This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.
+  </span>
+  <br />
+  Shared a location: Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000
+</div>
+`;
+
+exports[`MLocationBody <MLocationBody> with error displays correct fallback content without error style when map_style_url is not configured 1`] = `
+<div
+  className="mx_EventTile_body mx_MLocationBody"
+>
+  <span
+    className=""
+  >
+    Unable to load map: This homeserver is not configured to display maps.
+  </span>
+  <br />
+  Shared a location: Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000
+</div>
+`;
+
+exports[`MLocationBody <MLocationBody> without error renders map correctly 1`] = `
+<MLocationBody
+  highlightLink=""
+  highlights={Array []}
+  mediaEventHelper={Object {}}
+  mxEvent={
+    Object {
+      "content": Object {
+        "body": "Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000",
+        "geo_uri": "geo:51.5076,-0.1276",
+        "msgtype": "m.location",
+        "org.matrix.msc1767.text": "Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000",
+        "org.matrix.msc3488.asset": Object {
+          "type": "m.pin",
+        },
+        "org.matrix.msc3488.location": Object {
+          "description": "Human-readable label",
+          "uri": "geo:51.5076,-0.1276",
+        },
+        "org.matrix.msc3488.ts": 252523,
+      },
+      "event_id": "$2",
+      "type": "org.matrix.msc3488.location",
+    }
+  }
+  onHeightChanged={[MockFunction]}
+  onMessageAllowed={[MockFunction]}
+  permalinkCreator={Object {}}
+>
+  <LocationBodyContent
+    mapId="mx_MLocationBody_$2_HHHHHHHH"
+    mxEvent={
+      Object {
+        "content": Object {
+          "body": "Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000",
+          "geo_uri": "geo:51.5076,-0.1276",
+          "msgtype": "m.location",
+          "org.matrix.msc1767.text": "Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000",
+          "org.matrix.msc3488.asset": Object {
+            "type": "m.pin",
+          },
+          "org.matrix.msc3488.location": Object {
+            "description": "Human-readable label",
+            "uri": "geo:51.5076,-0.1276",
+          },
+          "org.matrix.msc3488.ts": 252523,
+        },
+        "event_id": "$2",
+        "type": "org.matrix.msc3488.location",
+      }
+    }
+    onClick={[Function]}
+    onError={[Function]}
+    tooltip="Expand map"
+  >
+    <div
+      className="mx_MLocationBody"
+    >
+      <TooltipTarget
+        alignment={5}
+        label="Expand map"
+        maxParentWidth={450}
+      >
+        <div
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseMove={[Function]}
+          onMouseOver={[Function]}
+          tabIndex={0}
+        >
+          <Map
+            centerGeoUri="geo:51.5076,-0.1276"
+            className="mx_MLocationBody_map"
+            id="mx_MLocationBody_$2_HHHHHHHH"
+            onClick={[Function]}
+            onError={[Function]}
+          >
+            <div
+              className="mx_Map mx_MLocationBody_map"
+              id="mx_Map_mx_MLocationBody_$2_HHHHHHHH"
+              onClick={[Function]}
+            >
+              <SmartMarker
+                geoUri="geo:51.5076,-0.1276"
+                id="mx_MLocationBody_$2_HHHHHHHH-marker"
+                map={
+                  MockMap {
+                    "_events": Object {
+                      "error": Array [
+                        [Function],
+                        [Function],
+                        [Function],
+                        [Function],
+                        [Function],
+                        [Function],
+                      ],
+                    },
+                    "_eventsCount": 1,
+                    "_maxListeners": undefined,
+                    "addControl": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          mockConstructor {},
+                          "top-right",
+                        ],
+                        Array [
+                          mockConstructor {},
+                          "top-right",
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                      ],
+                    },
+                    "fitBounds": [MockFunction],
+                    "removeControl": [MockFunction],
+                    "setCenter": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          Object {
+                            "lat": 51.5076,
+                            "lon": -0.1276,
+                          },
+                        ],
+                        Array [
+                          Object {
+                            "lat": 51.5076,
+                            "lon": -0.1276,
+                          },
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                      ],
+                    },
+                    "setStyle": [MockFunction],
+                    "zoomIn": [MockFunction],
+                    "zoomOut": [MockFunction],
+                    Symbol(kCapture): false,
+                  }
+                }
+              >
+                <span>
+                  <ForwardRef
+                    id="mx_MLocationBody_$2_HHHHHHHH-marker"
+                  >
+                    <div
+                      className="mx_Marker mx_Marker_defaultColor"
+                      id="mx_MLocationBody_$2_HHHHHHHH-marker"
+                    >
+                      <OptionalTooltip>
+                        <div
+                          className="mx_Marker_border"
+                        >
+                          <div
+                            className="mx_Marker_icon"
+                          />
+                        </div>
+                      </OptionalTooltip>
+                    </div>
+                  </ForwardRef>
+                </span>
+              </SmartMarker>
+            </div>
+          </Map>
+        </div>
+      </TooltipTarget>
+    </div>
+  </LocationBodyContent>
+</MLocationBody>
+`;

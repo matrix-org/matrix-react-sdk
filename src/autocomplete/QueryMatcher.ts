@@ -16,15 +16,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {at, uniq} from 'lodash';
-import {removeHiddenChars} from "matrix-js-sdk/src/utils";
+import { at, uniq } from 'lodash';
+import { removeHiddenChars } from "matrix-js-sdk/src/utils";
+
+import { TimelineRenderingType } from '../contexts/RoomContext';
+import { Leaves } from "../@types/common";
 
 interface IOptions<T extends {}> {
-    keys: Array<string | keyof T>;
-    funcs?: Array<(T) => string>;
+    keys: Array<Leaves<T>>;
+    funcs?: Array<(o: T) => string | string[]>;
     shouldMatchWordsOnly?: boolean;
     // whether to apply unhomoglyph and strip diacritics to fuzz up the search. Defaults to true
     fuzzy?: boolean;
+    context?: TimelineRenderingType;
 }
 
 /**
@@ -69,7 +73,12 @@ export default class QueryMatcher<T extends Object> {
 
             if (this._options.funcs) {
                 for (const f of this._options.funcs) {
-                    keyValues.push(f(object));
+                    const v = f(object);
+                    if (Array.isArray(v)) {
+                        keyValues.push(...v);
+                    } else {
+                        keyValues.push(v);
+                    }
                 }
             }
 
@@ -87,7 +96,7 @@ export default class QueryMatcher<T extends Object> {
         }
     }
 
-    match(query: string): T[] {
+    match(query: string, limit = -1): T[] {
         query = this.processQuery(query);
         if (this._options.shouldMatchWordsOnly) {
             query = query.replace(/[^\w]/g, '');
@@ -107,7 +116,7 @@ export default class QueryMatcher<T extends Object> {
             const index = resultKey.indexOf(query);
             if (index !== -1) {
                 matches.push(
-                    ...candidates.map((candidate) => ({index, ...candidate})),
+                    ...candidates.map((candidate) => ({ index, ...candidate })),
                 );
             }
         }
@@ -129,7 +138,10 @@ export default class QueryMatcher<T extends Object> {
         });
 
         // Now map the keys to the result objects. Also remove any duplicates.
-        return uniq(matches.map((match) => match.object));
+        const dedupped = uniq(matches.map((match) => match.object));
+        const maxLength = limit === -1 ? dedupped.length : limit;
+
+        return dedupped.slice(0, maxLength);
     }
 
     private processQuery(query: string): string {

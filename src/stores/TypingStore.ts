@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClientPeg} from "../MatrixClientPeg";
+import { MatrixClientPeg } from "../MatrixClientPeg";
 import SettingsStore from "../settings/SettingsStore";
+import { isLocalRoom } from "../utils/localRoom/isLocalRoom";
 import Timer from "../utils/Timer";
 
 const TYPING_USER_TIMEOUT = 10000;
@@ -27,17 +28,17 @@ const TYPING_SERVER_TIMEOUT = 30000;
 export default class TypingStore {
     private typingStates: {
         [roomId: string]: {
-            isTyping: boolean,
-            userTimer: Timer,
-            serverTimer: Timer,
-        },
+            isTyping: boolean;
+            userTimer: Timer;
+            serverTimer: Timer;
+        };
     };
 
     constructor() {
         this.reset();
     }
 
-    static sharedInstance(): TypingStore {
+    public static sharedInstance(): TypingStore {
         if (window.mxTypingStore === undefined) {
             window.mxTypingStore = new TypingStore();
         }
@@ -48,7 +49,7 @@ export default class TypingStore {
      * Clears all cached typing states. Intended to be called when the
      * MatrixClientPeg client changes.
      */
-    reset() {
+    public reset() {
         this.typingStates = {
             // "roomId": {
             //     isTyping: bool,     // Whether the user is typing or not
@@ -63,9 +64,15 @@ export default class TypingStore {
      * @param {string} roomId The room ID to set the typing state in.
      * @param {boolean} isTyping Whether the user is typing or not.
      */
-    setSelfTyping(roomId: string, isTyping: boolean): void {
+    public setSelfTyping(roomId: string, threadId: string | null, isTyping: boolean): void {
+        // No typing notifications for local rooms
+        if (isLocalRoom(roomId)) return;
+
         if (!SettingsStore.getValue('sendTypingNotifications')) return;
         if (SettingsStore.getValue('lowBandwidth')) return;
+        // Disable typing notification for threads for the initial launch
+        // before we figure out a better user experience for them
+        if (SettingsStore.getValue("feature_thread") && threadId) return;
 
         let currentTyping = this.typingStates[roomId];
         if ((!isTyping && !currentTyping) || (currentTyping && currentTyping.isTyping === isTyping)) {
@@ -96,7 +103,7 @@ export default class TypingStore {
 
             if (!currentTyping.userTimer.isRunning()) {
                 currentTyping.userTimer.restart().finished().then(() => {
-                    this.setSelfTyping(roomId, false);
+                    this.setSelfTyping(roomId, threadId, false);
                 });
             } else currentTyping.userTimer.restart();
         }

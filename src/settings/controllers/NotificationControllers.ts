@@ -15,12 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingController from "./SettingController";
-import {MatrixClientPeg} from '../../MatrixClientPeg';
-import { SettingLevel } from "../SettingLevel";
-
+import { logger } from "matrix-js-sdk/src/logger";
 // XXX: This feels wrong.
-import {PushProcessor} from "matrix-js-sdk/src/pushprocessor";
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
+import { PushRuleActionName } from "matrix-js-sdk/src/@types/PushRules";
+
+import SettingController from "./SettingController";
+import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { SettingLevel } from "../SettingLevel";
 
 // .m.rule.master being enabled means all events match that push rule
 // default action on this rule is dont_notify, but it could be something else
@@ -30,12 +32,12 @@ export function isPushNotifyDisabled(): boolean {
     const masterRule = processor.getPushRuleById(".m.rule.master");
 
     if (!masterRule) {
-        console.warn("No master push rule! Notifications are disabled for this user.");
+        logger.warn("No master push rule! Notifications are disabled for this user.");
         return true;
     }
 
     // If the rule is enabled then check it does not notify on everything
-    return masterRule.enabled && !masterRule.actions.includes("notify");
+    return masterRule.enabled && !masterRule.actions.includes(PushRuleActionName.Notify);
 }
 
 function getNotifier(): any { // TODO: [TS] Formal type that doesn't cause a cyclical reference.

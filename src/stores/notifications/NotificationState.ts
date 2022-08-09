@@ -14,14 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventEmitter } from "events";
+import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
 
-export const NOTIFICATION_STATE_UPDATE = "update";
+export interface INotificationStateSnapshotParams {
+    symbol: string | null;
+    count: number;
+    color: NotificationColor;
+}
 
-export abstract class NotificationState extends EventEmitter implements IDestroyable {
-    protected _symbol: string;
+export enum NotificationStateEvents {
+    Update = "update",
+}
+
+type EventHandlerMap = {
+    [NotificationStateEvents.Update]: () => void;
+};
+
+export abstract class NotificationState
+    extends TypedEventEmitter<NotificationStateEvents, EventHandlerMap>
+    implements INotificationStateSnapshotParams, IDestroyable {
+    //
+    protected _symbol: string | null;
     protected _count: number;
     protected _color: NotificationColor;
 
@@ -55,7 +71,7 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
 
     protected emitIfUpdated(snapshot: NotificationStateSnapshot) {
         if (snapshot.isDifferentFrom(this)) {
-            this.emit(NOTIFICATION_STATE_UPDATE);
+            this.emit(NotificationStateEvents.Update);
         }
     }
 
@@ -64,7 +80,7 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
     }
 
     public destroy(): void {
-        this.removeAllListeners(NOTIFICATION_STATE_UPDATE);
+        this.removeAllListeners(NotificationStateEvents.Update);
     }
 }
 
@@ -73,15 +89,15 @@ export class NotificationStateSnapshot {
     private readonly count: number;
     private readonly color: NotificationColor;
 
-    constructor(state: NotificationState) {
+    constructor(state: INotificationStateSnapshotParams) {
         this.symbol = state.symbol;
         this.count = state.count;
         this.color = state.color;
     }
 
-    public isDifferentFrom(other: NotificationState): boolean {
-        const before = {count: this.count, symbol: this.symbol, color: this.color};
-        const after = {count: other.count, symbol: other.symbol, color: other.color};
+    public isDifferentFrom(other: INotificationStateSnapshotParams): boolean {
+        const before = { count: this.count, symbol: this.symbol, color: this.color };
+        const after = { count: other.count, symbol: other.symbol, color: other.color };
         return JSON.stringify(before) !== JSON.stringify(after);
     }
 }

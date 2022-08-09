@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-import {MatrixClientPeg} from "../MatrixClientPeg";
-import {IMediaEventContent, IPreparedMedia, prepEventContentAsMedia} from "./models/IMediaEventContent";
-import {ResizeMethod} from "../Avatar";
-import {MatrixClient} from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { Optional } from "matrix-events-sdk";
+
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { IMediaEventContent, IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
 
 // Populate this class with the details of your customisations when copying it.
 
@@ -59,7 +61,7 @@ export class Media {
      * The MXC URI of the thumbnail media, if a thumbnail is recorded. Null/undefined
      * otherwise.
      */
-    public get thumbnailMxc(): string | undefined | null {
+    public get thumbnailMxc(): Optional<string> {
         return this.prepared.thumbnail?.mxc;
     }
 
@@ -74,6 +76,7 @@ export class Media {
      * The HTTP URL for the source media.
      */
     public get srcHttp(): string {
+        // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.srcMxc);
     }
 
@@ -83,6 +86,7 @@ export class Media {
      */
     public get thumbnailHttp(): string | undefined | null {
         if (!this.hasThumbnail) return null;
+        // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.thumbnailMxc);
     }
 
@@ -99,6 +103,7 @@ export class Media {
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
+        // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.thumbnailMxc, width, height, mode);
     }
 
@@ -113,6 +118,7 @@ export class Media {
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
+        // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode);
     }
 
@@ -156,5 +162,5 @@ export function mediaFromContent(content: IMediaEventContent, client?: MatrixCli
  * @returns {Media} The media object.
  */
 export function mediaFromMxc(mxc: string, client?: MatrixClient): Media {
-    return mediaFromContent({url: mxc}, client);
+    return mediaFromContent({ url: mxc }, client);
 }

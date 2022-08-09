@@ -572,11 +572,11 @@ uploads_path: "{{SYNAPSE_ROOT}}uploads"
 ## Captcha ##
 # See docs/CAPTCHA_SETUP for full details of configuring this.
 
-# This Home Server's ReCAPTCHA public key.
+# This homeserver's ReCAPTCHA public key.
 #
 #recaptcha_public_key: "YOUR_PUBLIC_KEY"
 
-# This Home Server's ReCAPTCHA private key.
+# This homeserver's ReCAPTCHA private key.
 #
 #recaptcha_private_key: "YOUR_PRIVATE_KEY"
 
@@ -633,6 +633,12 @@ uploads_path: "{{SYNAPSE_ROOT}}uploads"
 #
 enable_registration: true
 
+# Enable registration without email or captcha verification. Note: this option is *not* recommended,
+# as registration without verification is a known vector for spam and abuse. Defaults to false. Has no effect
+# unless `enable_registration` is also enabled.
+#
+enable_registration_without_verification: true
+
 # The user must provide all of the below types of 3PID when registering.
 #
 #registrations_require_3pid:
@@ -685,7 +691,7 @@ registration_shared_secret: "{{REGISTRATION_SHARED_SECRET}}"
 # The list of identity servers trusted to verify third party
 # identifiers by this server.
 #
-# Also defines the ID server which will be called when an account is
+# Also defines the identity server which will be called when an account is
 # deactivated (one will be picked arbitrarily).
 #
 #trusted_third_party_id_servers:
@@ -792,13 +798,50 @@ signing_key_path: "{{SYNAPSE_ROOT}}localhost.signing.key"
 
 # The trusted servers to download signing keys from.
 #
-#perspectives:
-#  servers:
-#    "matrix.org":
-#      verify_keys:
-#        "ed25519:auto":
-#          key: "Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw"
+# When we need to fetch a signing key, each server is tried in parallel.
+#
+# Normally, the connection to the key server is validated via TLS certificates.
+# Additional security can be provided by configuring a `verify key`, which
+# will make synapse check that the response is signed by that key.
+#
+# This setting supercedes an older setting named `perspectives`. The old format
+# is still supported for backwards-compatibility, but it is deprecated.
+#
+# 'trusted_key_servers' defaults to matrix.org, but using it will generate a
+# warning on start-up. To suppress this warning, set
+# 'suppress_key_server_warning' to true.
+#
+# Options for each entry in the list include:
+#
+#    server_name: the name of the server. required.
+#
+#    verify_keys: an optional map from key id to base64-encoded public key.
+#       If specified, we will check that the response is signed by at least
+#       one of the given keys.
+#
+#    accept_keys_insecurely: a boolean. Normally, if `verify_keys` is unset,
+#       and federation_verify_certificates is not `true`, synapse will refuse
+#       to start, because this would allow anyone who can spoof DNS responses
+#       to masquerade as the trusted key server. If you know what you are doing
+#       and are sure that your network environment provides a secure connection
+#       to the key server, you can set this to `true` to override this
+#       behaviour.
+#
+# An example configuration might look like:
+#
+#trusted_key_servers:
+#  - server_name: "my_trusted_server.example.com"
+#    verify_keys:
+#      "ed25519:auto": "abcdefghijklmnopqrstuvwxyzabcdefghijklmopqr"
+#  - server_name: "my_other_trusted_server.example.com"
+#
+trusted_key_servers:
+    - server_name: "matrix.org"
 
+# Uncomment the following to disable the warning that is emitted when the
+# trusted_key_servers include 'matrix.org'. See above.
+#
+suppress_key_server_warning: true
 
 # Enable SAML2 for registration and login. Uses pysaml2.
 #
@@ -889,7 +932,7 @@ email:
    smtp_user: "exampleusername"
    smtp_pass: "examplepassword"
    require_transport_security: False
-   notif_from: "Your Friendly %(app)s Home Server <noreply@example.com>"
+   notif_from: "Your Friendly %(app)s homeserver <noreply@example.com>"
    app_name: Matrix
    # if template_dir is unset, uses the example templates that are part of
    # the Synapse distribution.

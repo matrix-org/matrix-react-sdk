@@ -15,17 +15,21 @@ limitations under the License.
 */
 
 import React from 'react';
-import {MatrixClientPeg} from "../../../MatrixClientPeg";
-import {MatrixEvent} from "matrix-js-sdk/src/models/event";
-import {Room} from "matrix-js-sdk/src/models/room";
-import {_t} from "../../../languageHandler";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
-import * as sdk from "../../../index";
 import Modal from "../../../Modal";
-import {isValid3pidInvite} from "../../../RoomInvite";
+import { isValid3pidInvite } from "../../../RoomInvite";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import ErrorDialog from '../dialogs/ErrorDialog';
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface IProps {
     event: MatrixEvent;
@@ -40,7 +44,6 @@ interface IState {
     senderName: string;
 }
 
-@replaceableComponent("views.rooms.ThirdPartyMemberInfo")
 export default class ThirdPartyMemberInfo extends React.Component<IProps, IState> {
     private room: Room;
 
@@ -67,22 +70,22 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
     }
 
     componentDidMount(): void {
-        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
+        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     componentWillUnmount(): void {
         const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("RoomState.events", this.onRoomStateEvents);
+            client.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
-    onRoomStateEvents = (ev) => {
-        if (ev.getType() === "m.room.third_party_invite" && ev.getStateKey() === this.state.stateKey) {
+    onRoomStateEvents = (ev: MatrixEvent) => {
+        if (ev.getType() === EventType.RoomThirdPartyInvite && ev.getStateKey() === this.state.stateKey) {
             const newDisplayName = ev.getContent().display_name;
             const isInvited = isValid3pidInvite(ev);
 
-            const newState = {invited: isInvited};
+            const newState = { invited: isInvited };
             if (newDisplayName) newState['displayName'] = newDisplayName;
             this.setState(newState);
         }
@@ -98,13 +101,12 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
     onKickClick = () => {
         MatrixClientPeg.get().sendStateEvent(this.state.roomId, "m.room.third_party_invite", {}, this.state.stateKey)
             .catch((err) => {
-                console.error(err);
+                logger.error(err);
 
                 // Revert echo because of error
-                this.setState({invited: true});
+                this.setState({ invited: true });
 
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createTrackedDialog('Revoke 3pid invite failed', '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t("Failed to revoke invite"),
                     description: _t(
                         "Could not revoke the invite. The server may be experiencing a temporary problem or " +
@@ -114,20 +116,18 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
             });
 
         // Local echo
-        this.setState({invited: false});
+        this.setState({ invited: false });
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
-
         let adminTools = null;
         if (this.state.canKick && this.state.invited) {
             adminTools = (
                 <div className="mx_MemberInfo_container">
-                    <h3>{_t("Admin Tools")}</h3>
+                    <h3>{ _t("Admin Tools") }</h3>
                     <div className="mx_MemberInfo_buttons">
                         <AccessibleButton className="mx_MemberInfo_field" onClick={this.onKickClick}>
-                            {_t("Revoke invite")}
+                            { _t("Revoke invite") }
                         </AccessibleButton>
                     </div>
                 </div>
@@ -151,16 +151,16 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
                         onClick={this.onCancel}
                         title={_t('Close')}
                     />
-                    <h2>{this.state.displayName}</h2>
+                    <h2>{ this.state.displayName }</h2>
                 </div>
                 <div className="mx_MemberInfo_container">
                     <div className="mx_MemberInfo_profile">
                         <div className="mx_MemberInfo_profileField">
-                            {_t("Invited by %(sender)s", {sender: this.state.senderName})}
+                            { _t("Invited by %(sender)s", { sender: this.state.senderName }) }
                         </div>
                     </div>
                 </div>
-                {adminTools}
+                { adminTools }
             </div>
         );
     }

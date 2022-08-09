@@ -15,7 +15,10 @@ limitations under the License.
 */
 
 import "matrix-js-sdk/src/@types/global"; // load matrix-js-sdk's type extensions first
-import * as ModernizrStatic from "modernizr";
+// Load types for the WG CSS Font Loading APIs https://github.com/Microsoft/TypeScript/issues/13569
+import "@types/css-font-loading-module";
+import "@types/modernizr";
+
 import ContentMessages from "../ContentMessages";
 import { IMatrixClientPeg } from "../MatrixClientPeg";
 import ToastStore from "../stores/ToastStore";
@@ -23,33 +26,54 @@ import DeviceListener from "../DeviceListener";
 import { RoomListStoreClass } from "../stores/room-list/RoomListStore";
 import { PlatformPeg } from "../PlatformPeg";
 import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
-import {IntegrationManagers} from "../integrations/IntegrationManagers";
-import {ModalManager} from "../Modal";
+import { IntegrationManagers } from "../integrations/IntegrationManagers";
+import { ModalManager } from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
-import {ActiveRoomObserver} from "../ActiveRoomObserver";
-import {Notifier} from "../Notifier";
-import type {Renderer} from "react-dom";
-import RightPanelStore from "../stores/RightPanelStore";
+import { Notifier } from "../Notifier";
+import type { Renderer } from "react-dom";
+import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
 import CallHandler from "../CallHandler";
-import {Analytics} from "../Analytics";
-import CountlyAnalytics from "../CountlyAnalytics";
 import UserActivity from "../UserActivity";
-import {ModalWidgetStore} from "../stores/ModalWidgetStore";
+import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 import VoipUserMapper from "../VoipUserMapper";
-import {SpaceStoreClass} from "../stores/SpaceStore";
+import { SpaceStoreClass } from "../stores/spaces/SpaceStore";
 import TypingStore from "../stores/TypingStore";
 import { EventIndexPeg } from "../indexing/EventIndexPeg";
-import {VoiceRecordingStore} from "../stores/VoiceRecordingStore";
+import { VoiceRecordingStore } from "../stores/VoiceRecordingStore";
+import PerformanceMonitor from "../performance";
+import UIStore from "../stores/UIStore";
+import { SetupEncryptionStore } from "../stores/SetupEncryptionStore";
+import { RoomScrollStateStore } from "../stores/RoomScrollStateStore";
+import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
+import ActiveWidgetStore from "../stores/ActiveWidgetStore";
+import AutoRageshakeStore from "../stores/AutoRageshakeStore";
+import { IConfigOptions } from "../IConfigOptions";
+import { MatrixDispatcher } from "../dispatcher/dispatcher";
+
+/* eslint-disable @typescript-eslint/naming-convention */
 
 declare global {
     interface Window {
-        Modernizr: ModernizrStatic;
         matrixChat: ReturnType<Renderer>;
         mxMatrixClientPeg: IMatrixClientPeg;
         Olm: {
             init: () => Promise<void>;
+        };
+        mxReactSdkConfig: IConfigOptions;
+
+        // Needed for Safari, unknown to TypeScript
+        webkitAudioContext: typeof AudioContext;
+
+        // https://docs.microsoft.com/en-us/previous-versions/hh772328(v=vs.85)
+        // we only ever check for its existence, so we can ignore its actual type
+        MSStream?: unknown;
+
+        // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-869224737
+        // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
+        OffscreenCanvas?: {
+            new(width: number, height: number): OffscreenCanvas;
         };
 
         mxContentMessages: ContentMessages;
@@ -57,7 +81,6 @@ declare global {
         mxDeviceListener: DeviceListener;
         mxRoomListStore: RoomListStoreClass;
         mxRoomListLayoutStore: RoomListLayoutStore;
-        mxActiveRoomObserver: ActiveRoomObserver;
         mxPlatformPeg: PlatformPeg;
         mxIntegrationManagers: typeof IntegrationManagers;
         singletonModalManager: ModalManager;
@@ -67,8 +90,6 @@ declare global {
         mxWidgetStore: WidgetStore;
         mxWidgetLayoutStore: WidgetLayoutStore;
         mxCallHandler: CallHandler;
-        mxAnalytics: Analytics;
-        mxCountlyAnalytics: typeof CountlyAnalytics;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -76,14 +97,40 @@ declare global {
         mxVoiceRecordingStore: VoiceRecordingStore;
         mxTypingStore: TypingStore;
         mxEventIndexPeg: EventIndexPeg;
+        mxPerformanceMonitor: PerformanceMonitor;
+        mxPerformanceEntryNames: any;
+        mxUIStore: UIStore;
+        mxSetupEncryptionStore?: SetupEncryptionStore;
+        mxRoomScrollStateStore?: RoomScrollStateStore;
+        mxActiveWidgetStore?: ActiveWidgetStore;
+        mxOnRecaptchaLoaded?: () => void;
+        electron?: Electron;
+        mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
+        mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
+        mxAutoRageshakeStore?: AutoRageshakeStore;
+        mxDispatcher: MatrixDispatcher;
+    }
+
+    interface Electron {
+        // will be extended by element-web downstream
+    }
+
+    interface DesktopCapturerSource {
+        id: string;
+        name: string;
+        thumbnailURL: string;
+    }
+
+    interface GetSourcesOptions {
+        types: Array<string>;
+        thumbnailSize?: {
+            height: number;
+            width: number;
+        };
+        fetchWindowIcons?: boolean;
     }
 
     interface Document {
-        // https://developer.mozilla.org/en-US/docs/Web/API/Document/hasStorageAccess
-        hasStorageAccess?: () => Promise<boolean>;
-        // https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess
-        requestStorageAccess?: () => Promise<undefined>;
-
         // Safari & IE11 only have this prefixed: we used prefixed versions
         // previously so let's continue to support them for now
         webkitExitFullscreen(): Promise<void>;
@@ -94,30 +141,48 @@ declare global {
 
     interface Navigator {
         userLanguage?: string;
-        // https://github.com/Microsoft/TypeScript/issues/19473
-        // https://developer.mozilla.org/en-US/docs/Web/API/MediaSession
-        mediaSession: any;
     }
 
     interface StorageEstimate {
-        usageDetails?: {[key: string]: number};
+        usageDetails?: { [key: string]: number };
     }
 
-    export interface ISettledFulfilled<T> {
-        status: "fulfilled";
-        value: T;
-    }
-    export interface ISettledRejected {
-        status: "rejected";
-        reason: any;
-    }
-
-    interface PromiseConstructor {
-        allSettled<T>(promises: Promise<T>[]): Promise<Array<ISettledFulfilled<T> | ISettledRejected>>;
+    // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
+    interface OffscreenCanvas {
+        height: number;
+        width: number;
+        getContext: HTMLCanvasElement["getContext"];
+        convertToBlob(opts?: {
+            type?: string;
+            quality?: number;
+        }): Promise<Blob>;
+        transferToImageBitmap(): ImageBitmap;
     }
 
     interface HTMLAudioElement {
         type?: string;
+        // sinkId & setSinkId are experimental and typescript doesn't know about them
+        sinkId: string;
+        setSinkId(outputId: string): void;
+    }
+
+    interface HTMLVideoElement {
+        type?: string;
+        // sinkId & setSinkId are experimental and typescript doesn't know about them
+        sinkId: string;
+        setSinkId(outputId: string): void;
+    }
+
+    // Add Chrome-specific `instant` ScrollBehaviour
+    type _ScrollBehavior = ScrollBehavior | "instant";
+
+    interface _ScrollOptions {
+        behavior?: _ScrollBehavior;
+    }
+
+    interface _ScrollIntoViewOptions extends _ScrollOptions {
+        block?: ScrollLogicalPosition;
+        inline?: ScrollLogicalPosition;
     }
 
     interface Element {
@@ -125,6 +190,7 @@ declare global {
         // previously so let's continue to support them for now
         webkitRequestFullScreen(options?: FullscreenOptions): Promise<void>;
         msRequestFullscreen(options?: FullscreenOptions): Promise<void>;
+        scrollIntoView(arg?: boolean | _ScrollIntoViewOptions): void;
     }
 
     interface Error {
@@ -152,6 +218,11 @@ declare global {
         new (options?: AudioWorkletNodeOptions): AudioWorkletProcessor;
     };
 
+    // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-881509595
+    interface AudioParamDescriptor {
+        readonly port: MessagePort;
+    }
+
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     function registerProcessor(
         name: string,
@@ -161,4 +232,30 @@ declare global {
             parameterDescriptors?: AudioParamDescriptor[];
         }
     );
+
+    // eslint-disable-next-line no-var
+    var grecaptcha:
+        | undefined
+        | {
+              reset: (id: string) => void;
+              render: (
+                  divId: string,
+                  options: {
+                      sitekey: string;
+                      callback: (response: string) => void;
+                  },
+              ) => string;
+              isReady: () => boolean;
+          };
+
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_logger: ConsoleLogger;
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_initPromise: Promise<void>;
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_initStoragePromise: Promise<void>;
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_store: IndexedDBLogStore;
 }
+
+/* eslint-enable @typescript-eslint/naming-convention */
