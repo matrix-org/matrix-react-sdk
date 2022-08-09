@@ -26,7 +26,10 @@ import GeneralRoomSettingsTab from "../settings/tabs/room/GeneralRoomSettingsTab
 import SecurityRoomSettingsTab from "../settings/tabs/room/SecurityRoomSettingsTab";
 import NotificationSettingsTab from "../settings/tabs/room/NotificationSettingsTab";
 import BridgeSettingsTab from "../settings/tabs/room/BridgeSettingsTab";
+<<<<<<< HEAD
 import EmoteSettingsTab from "../settings/tabs/room/EmoteSettingsTab";
+=======
+>>>>>>> 7eaed1a3f870eac582c66f0fc2949dc5663bad79
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -39,7 +42,10 @@ export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
 export const ROOM_ROLES_TAB = "ROOM_ROLES_TAB";
 export const ROOM_NOTIFICATIONS_TAB = "ROOM_NOTIFICATIONS_TAB";
 export const ROOM_BRIDGES_TAB = "ROOM_BRIDGES_TAB";
+<<<<<<< HEAD
 export const ROOM_EMOTES_TAB = "ROOM_EMOTES_TAB";
+=======
+>>>>>>> 7eaed1a3f870eac582c66f0fc2949dc5663bad79
 export const ROOM_ADVANCED_TAB = "ROOM_ADVANCED_TAB";
 
 interface IProps {
@@ -122,6 +128,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
             <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
             "RoomSettingsNotifications",
         ));
+<<<<<<< HEAD
         tabs.push(new Tab(
             ROOM_NOTIFICATIONS_TAB,
             _td("Emotes"),
@@ -129,6 +136,9 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
             <EmoteSettingsTab roomId={this.props.roomId} />,
             "RoomSettingsNotifications",
         ));
+=======
+
+>>>>>>> 7eaed1a3f870eac582c66f0fc2949dc5663bad79
         if (SettingsStore.getValue("feature_bridge_state")) {
             tabs.push(new Tab(
                 ROOM_BRIDGES_TAB,
