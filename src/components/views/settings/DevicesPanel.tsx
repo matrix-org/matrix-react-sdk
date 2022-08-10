@@ -176,6 +176,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     };
 
     private onDeleteClick = async (): Promise<void> => {
+        console.log('ondete', this.state.selectedDevices);
         if (this.state.selectedDevices.length === 0) { return; }
 
         this.setState({
@@ -200,6 +201,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                 },
             );
         } catch (error) {
+            console.log('eeee', error);
             logger.error("Error deleting sessions", error);
             this.setState({
                 deleting: false,
@@ -248,6 +250,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
 
         const myDeviceId = MatrixClientPeg.get().getDeviceId();
         const myDevice = devices.find((device) => (device.device_id === myDeviceId));
+
         if (!myDevice) {
             return loadError;
         }
@@ -332,6 +335,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                 onClick={this.onDeleteClick}
                 kind="danger_outline"
                 disabled={this.state.selectedDevices.length === 0}
+                data-testid='sign-out-devices-btn'
             >
                 { _t("Sign out %(count)s selected devices", { count: this.state.selectedDevices.length }) }
             </AccessibleButton>;
