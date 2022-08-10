@@ -3368,5 +3368,12 @@
     "Download on the App Store": "在App Store下载",
     "Send read receipts": "发送已读回执",
     "Share your activity and status with others.": "与别人分享你的活动和状态。",
-    "Your server doesn't support disabling sending read receipts.": "你的服务器不支持禁用发送已读回执。"
+    "Your server doesn't support disabling sending read receipts.": "你的服务器不支持禁用发送已读回执。",
+    "Complete these to get the most out of %(brand)s": "完成这些步骤以充分利用%(brand)s",
+    "iOS": "iOS",
+    "Android": "Android",
+    "We're creating a room with %(names)s": "正在创建房间%(names)s",
+    "Use new session manager (under active development)": "使用新的会话管理器（正在积极开发）",
+    "Sessions": "会话",
+    "Current session": "当前会话"
 }

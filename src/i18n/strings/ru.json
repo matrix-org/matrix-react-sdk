@@ -3442,5 +3442,6 @@
     "Exit fullscreen": "Выйти из полноэкранного режима",
     "In %(spaceName)s and %(count)s other spaces.|one": "В %(spaceName)s и %(count)s другом пространстве.",
     "In %(spaceName)s and %(count)s other spaces.|other": "В %(spaceName)s и %(count)s других пространствах.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s."
+    "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s.",
+    "Use new session manager (under active development)": "Использовать новый менеджер сессий (в активной разработке)"
 }
