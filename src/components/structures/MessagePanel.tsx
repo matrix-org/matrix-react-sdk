@@ -18,7 +18,7 @@ import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from 'rea
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
+import { EventType} from 'matrix-js-sdk/src/@types/event';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
@@ -58,9 +58,6 @@ import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
 import { hasThreadSummary } from "../../utils/EventUtils";
-import { mediaFromMxc } from "../../customisations/Media";
-import { mockStateEventImplementation } from '../../../test/test-utils';
-
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -289,12 +286,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         this.showTypingNotificationsWatcherRef =
             SettingsStore.watchSetting("showTypingNotifications", null, this.onShowTypingNotificationsChange);
         
-            let emotesEvent=this.props.room.currentState.getStateEvents("m.room.emotes", "");
-            let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-            let finalEmotes = {};
-            for (let key in rawEmotes) {
-                this.state.emotes[":"+key+":"] = "<img src="+mediaFromMxc(rawEmotes[key]).srcHttp+"/>";
-            }
             
     }
 
@@ -784,45 +775,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const callEventGrouper = this.props.callEventGroupers.get(mxEv.getContent().call_id);
         
         // use txnId as key if available so that we don't remount during sending
-        if(mxEv.getType()==="m.room.message"){
-            let messageText = mxEv.getContent().body;
-            //console.log(messageText);
-            let editedMessageText = messageText.replace(/:[\w+-]+:/, m => this.state.emotes[m] ? this.state.emotes[m] : m);
-            let m=[{body:messageText,
-                mimetype:"text/plain",
-            },
-            {
-                body:editedMessageText,
-                mimetype:"text/html",
-            }
-        ];
-        //     if(mxEv.clearEvent){
-        //         console.log("clearevent",mxEv.getRoomId());
-        //     mxEv.clearEvent.content={
-        //         "format":"org.matrix.custom.html",
-        //         "formatted_body":editedMessageText,
-        //         "body":messageText,
-        //         "msgtype":"m.text",
-        //         "org.matrix.msc1767.message":m
-        //     }
-        // }
-        //     else{
-        //         console.log("no clearevent",mxEv);
-        //         mxEv.content={
-        //             "format":"org.matrix.custom.html",
-        //         "formatted_body":editedMessageText,
-        //         "body":messageText,
-        //         "msgtype":"m.text",
-        //         "org.matrix.msc1767.message":m
-        //         }
-        //     }
-        
-            //mxEv.getContent().formatted_body = messageText;
-            //mxEv.clearEvent.content["org.matrix.msc1767.text"] = "";
-            //mxEv.getContent().formatted_body = (<span>hi</span>);
-            //mxEv.getContent().format = "org.matrix.custom.html";
-            
-        }
         ret.push(
             <EventTile
             key={mxEv.getTxnId() || eventId}
