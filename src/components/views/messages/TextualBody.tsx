@@ -48,7 +48,8 @@ import RoomContext from "../../../contexts/RoomContext";
 import AccessibleButton from '../elements/AccessibleButton';
 import { options as linkifyOpts } from "../../../linkify-matrix";
 import { getParentEventId } from '../../../utils/Reply';
-
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { mediaFromMxc } from "../../../customisations/Media";
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
 interface IState {
@@ -568,16 +569,23 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const content = mxEvent.getContent();
         let isNotice = false;
         let isEmote = false;
-
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         let body: ReactNode;
+        const client = MatrixClientPeg.get();
+        const room = client.getRoom(mxEvent.getRoomId());
+        let emotesEvent=room.currentState.getStateEvents("m.room.emotes", "");
+            let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+            let finalEmotes = {};
+            for (let key in rawEmotes) {
+                finalEmotes[":"+key+":"] = "<img class='mx_Emote' src="+mediaFromMxc(rawEmotes[key]).srcHttp+"/>";
+            }
         if (SettingsStore.isEnabled("feature_extensible_events")) {
             const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
             if (extev?.isEquivalentTo(M_MESSAGE)) {
                 isEmote = isEventLike(extev.wireFormat, LegacyMsgType.Emote);
                 isNotice = isEventLike(extev.wireFormat, LegacyMsgType.Notice);
-                body = HtmlUtils.bodyToHtml({
+                body = (HtmlUtils.bodyToHtml({
                     body: extev.text,
                     format: extev.html ? "org.matrix.custom.html" : undefined,
                     formatted_body: extev.html,
@@ -589,21 +597,25 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                     stripReplyFallback: stripReply,
                     ref: this.contentRef,
                     returnString: false,
-                });
+                    emotes: finalEmotes,
+                }));
             }
         }
         if (!body) {
             isEmote = content.msgtype === MsgType.Emote;
             isNotice = content.msgtype === MsgType.Notice;
-            body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
+            body = (HtmlUtils.bodyToHtml(content, this.props.highlights, {
                 disableBigEmoji: isEmote
                     || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
                 // Part of Replies fallback support
                 stripReplyFallback: stripReply,
                 ref: this.contentRef,
                 returnString: false,
-            });
+            })as any).replace(/:[\w+-]+:/, m => finalEmotes[m] ? finalEmotes[m] : m);
+           
         }
+        //console.log(body);
+        //body.replace(/:[\w+-]+:/, m => finalEmotes[m] ? finalEmotes[m] : m)
         if (this.props.replacingEventId) {
             body = <>
                 { body }
@@ -640,6 +652,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             />;
         }
 
+        //console.log(body.props.children);
+       //.replace(/:[\w+-]+:/, m => finalEmotes[m] ? finalEmotes[m] : m)
         if (isEmote) {
             return (
                 <div className="mx_MEmoteBody mx_EventTile_content"
@@ -668,6 +682,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 </div>
             );
         }
+        //console.log(body)
         return (
             <div className="mx_MTextBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
                 { body }
