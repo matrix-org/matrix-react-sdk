@@ -130,6 +130,8 @@ describe('<DevicesPanel />', () => {
             // modal rendering has some weird sleeps
             await sleep(10);
 
+            expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith([device2.device_id], undefined);
+
             const modal = document.getElementsByClassName('mx_Dialog');
             expect(modal).toMatchSnapshot();
 
@@ -141,6 +143,12 @@ describe('<DevicesPanel />', () => {
 
             await flushPromises();
 
+            // called again with auth
+            expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith([device2.device_id],
+                { identifier: {
+                    type: "m.id.user", user: userId,
+                }, password: "", type: "m.login.password", user: userId,
+                });
             // devices refreshed
             expect(mockClient.getDevices).toHaveBeenCalled();
             // and rerendered
