@@ -3498,5 +3498,7 @@
     "Last activity": "Posledná aktivita",
     "Sessions": "Relácie",
     "Use new session manager (under active development)": "Použiť nového správcu relácií (v štádiu aktívneho vývoja)",
-    "Current session": "Aktuálna relácia"
+    "Current session": "Aktuálna relácia",
+    "Unverified": "Neoverené",
+    "Verified": "Overený"
 }
