@@ -237,4 +237,36 @@ describe("Spaces", () => {
             cy.contains(".mx_SpaceHierarchy_roomTile", "Gaming").should("exist");
         });
     });
+
+    it("should render subspaces in the space panel only when expanded", () => {
+        cy.injectAxe();
+
+        cy.createSpace({
+            name: "Child Space",
+            initial_state: [],
+        }).then(spaceId => {
+            cy.createSpace({
+                name: "Root Space",
+                initial_state: [
+                    spaceChildInitialState(spaceId),
+                ],
+            }).as("spaceId");
+        });
+        cy.get('.mx_SpacePanel .mx_SpaceButton[aria-label="Root Space"]').should("exist");
+        cy.get('.mx_SpacePanel .mx_SpaceButton[aria-label="Child Space"]').should("not.exist");
+
+        cy.checkA11y();
+        cy.get(".mx_SpacePanel").percySnapshotElement("Space panel collapsed", { widths: [68] });
+
+        cy.get(".mx_SpacePanel_toggleCollapse").click({ force: true }); // button shows only on hover
+        cy.get(".mx_SpacePanel:not(.collapsed)").should("exist");
+
+        cy.contains(".mx_SpaceButton", "Root Space").should("exist")
+            .contains(".mx_SpaceButton", "Child Space").should("exist");
+
+        cy.checkA11y();
+        cy.get(".mx_SpacePanel").invoke("width").then(width => {
+            cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [width] });
+        });
+    });
 });
