@@ -159,7 +159,7 @@
     "Someone": "Кто-то",
     "Submit": "Отправить",
     "Success": "Успех",
-    "This email address is already in use": "Этот email уже используется",
+    "This email address is already in use": "Этот адрес электронной почты уже используется",
     "This email address was not found": "Этот адрес электронной почты не найден",
     "The email address linked to your account must be entered.": "Введите адрес электронной почты, связанный с вашей учётной записью.",
     "This room has no local addresses": "У этой комнаты нет адресов на вашем сервере",
@@ -584,7 +584,7 @@
     "Encrypted messages in group chats": "Зашифрованные сообщения в групповых чатах",
     "The other party cancelled the verification.": "Другая сторона отменила проверку.",
     "Verified!": "Верифицировано!",
-    "You've successfully verified this user.": "Вы успешно верифицировали этого пользователя.",
+    "You've successfully verified this user.": "Вы успешно подтвердили этого пользователя.",
     "Got It": "Понятно",
     "Verify this user by confirming the following number appears on their screen.": "Подтвердите пользователя, убедившись, что на его экране отображается следующее число.",
     "Yes": "Да",
@@ -3442,5 +3442,6 @@
     "Exit fullscreen": "Выйти из полноэкранного режима",
     "In %(spaceName)s and %(count)s other spaces.|one": "В %(spaceName)s и %(count)s другом пространстве.",
     "In %(spaceName)s and %(count)s other spaces.|other": "В %(spaceName)s и %(count)s других пространствах.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s."
+    "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s.",
+    "Use new session manager (under active development)": "Использовать новый менеджер сессий (в активной разработке)"
 }

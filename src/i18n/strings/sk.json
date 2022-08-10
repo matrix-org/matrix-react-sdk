@@ -3497,5 +3497,6 @@
     "Send read receipts": "Odosielať potvrdenia o prečítaní",
     "Last activity": "Posledná aktivita",
     "Sessions": "Relácie",
-    "Use new session manager (under active development)": "Použiť nového správcu relácií (v štádiu aktívneho vývoja)"
+    "Use new session manager (under active development)": "Použiť nového správcu relácií (v štádiu aktívneho vývoja)",
+    "Current session": "Aktuálna relácia"
 }
