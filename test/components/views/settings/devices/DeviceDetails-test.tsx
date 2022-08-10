@@ -15,17 +15,17 @@ limitations under the License.
 */
 
 import React from 'react';
+import { mount } from 'enzyme';
 
-import { _t } from "../../../../../languageHandler";
-import SettingsSubsection from '../../shared/SettingsSubsection';
-import SettingsTab from '../SettingsTab';
+import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
 
-const SessionManagerTab: React.FC = () => {
-    return <SettingsTab heading={_t('Sessions')}>
-        <SettingsSubsection
-            heading={_t('Current session')}
-        />
-    </SettingsTab>;
-};
+describe('<DeviceDetails />', () => {
+    const defaultProps = {};
+    const getComponent = (props = {}) =>
+        mount(<DeviceDetails {...defaultProps} {...props} />);
 
-export default SessionManagerTab;
+    it('renders', () => {
+        const component = getComponent();
+        expect(component).toBeTruthy();
+    });
+});

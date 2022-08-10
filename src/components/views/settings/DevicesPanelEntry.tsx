@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { IMyDevice } from 'matrix-js-sdk/src/client';
 import { logger } from "matrix-js-sdk/src/logger";
+import classNames from 'classnames';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -28,6 +29,7 @@ import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDi
 import LogoutDialog from '../dialogs/LogoutDialog';
 import DeviceTile from './devices/DeviceTile';
 import SelectableDeviceTile from './devices/SelectableDeviceTile';
+import DeviceDetails from './devices/DeviceDetails';
 
 interface IProps {
     device: IMyDevice;
@@ -113,8 +115,6 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        const myDeviceClass = this.props.isOwnDevice ? " mx_DevicesPanel_myDevice" : '';
-
         let iconClass = '';
         let verifyButton: JSX.Element;
         if (this.props.verified !== null) {
@@ -155,18 +155,19 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
             </React.Fragment>;
 
         if (this.props.isOwnDevice) {
-            return <div className={"mx_DevicesPanel_device" + myDeviceClass}>
+            return <div className={classNames("mx_DevicesPanel_device", "mx_DevicesPanel_myDevice")}>
                 <div className="mx_DevicesPanel_deviceTrust">
                     <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
                 </div>
                 <DeviceTile device={this.props.device}>
                     { buttons }
                 </DeviceTile>
+                <DeviceDetails device={this.props.device} />
             </div>;
         }
 
         return (
-            <div className={"mx_DevicesPanel_device" + myDeviceClass}>
+            <div className="mx_DevicesPanel_device">
                 <SelectableDeviceTile device={this.props.device} onClick={this.onDeviceToggled} isSelected={this.props.selected}>
                     { buttons }
                 </SelectableDeviceTile>
