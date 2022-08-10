@@ -27,14 +27,14 @@ interface Props {
 
 interface MetadataTable {
     heading?: string;
-    values: { label: string, value: string | React.ReactNode }[];
+    values: { label: string, value?: string | React.ReactNode }[];
 }
 
 const DeviceDetails: React.FC<Props> = ({ device }) => {
     const metadata: MetadataTable[] = [
         { values: [
             { label: _t('Session ID'), value: device.device_id },
-            { label: _t('Last activity'), value: formatDate(new Date(device.last_seen_ts)) },
+            { label: _t('Last activity'), value: device.last_seen_ts && formatDate(new Date(device.last_seen_ts)) },
         ],
         },
         {
