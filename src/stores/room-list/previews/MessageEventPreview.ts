@@ -65,7 +65,7 @@ export class MessageEventPreview implements IPreview {
             // run it through DOMParser to fixup encoded html entities
             body = new DOMParser().parseFromString(sanitised, "text/html").documentElement.textContent;
         }
-
+        
         body = sanitizeForTranslation(body);
 
         if (msgtype === MsgType.Emote) {
