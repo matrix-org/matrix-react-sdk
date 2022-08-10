@@ -20,7 +20,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import StyledCheckbox, { CheckboxStyle } from '../elements/StyledCheckbox';
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import Modal from "../../../Modal";
@@ -28,6 +27,7 @@ import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
 import LogoutDialog from '../dialogs/LogoutDialog';
 import DeviceTile from './devices/DeviceTile';
+import SelectableDeviceTile from './devices/SelectableDeviceTile';
 
 interface IProps {
     device: IMyDevice;
@@ -133,14 +133,6 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
             </AccessibleButton>;
         }
 
-        const left = this.props.isOwnDevice ?
-            <div className="mx_DevicesPanel_deviceTrust">
-                <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
-            </div> :
-            <div className="mx_DevicesPanel_checkbox">
-                <StyledCheckbox kind={CheckboxStyle.Outline} onChange={this.onDeviceToggled} checked={this.props.selected} />
-            </div>;
-
         const buttons = this.state.renaming ?
             <form className="mx_DevicesPanel_renameForm" onSubmit={this.onRenameSubmit}>
                 <Field
@@ -162,12 +154,27 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
                 </AccessibleButton>
             </React.Fragment>;
 
-        return (
-            <div className={"mx_DevicesPanel_device" + myDeviceClass}>
-                { left }
-                <DeviceTile device={this.props.device}>
+        const deviceWithVerification = {
+            ...this.props.device,
+            isVerified: this.props.verified,
+        };
+
+        if (this.props.isOwnDevice) {
+            return <div className={"mx_DevicesPanel_device" + myDeviceClass}>
+                <div className="mx_DevicesPanel_deviceTrust">
+                    <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
+                </div>
+                <DeviceTile device={deviceWithVerification}>
                     { buttons }
                 </DeviceTile>
+            </div>;
+        }
+
+        return (
+            <div className={"mx_DevicesPanel_device" + myDeviceClass}>
+                <SelectableDeviceTile device={deviceWithVerification} onClick={this.onDeviceToggled} isSelected={this.props.selected}>
+                    { buttons }
+                </SelectableDeviceTile>
             </div>
         );
     }

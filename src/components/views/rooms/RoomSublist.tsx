@@ -492,7 +492,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onTagSortChanged = async (sort: SortAlgorithm) => {
-        if (this.slidingSyncMode) {
+	if (this.slidingSyncMode) {
             const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(this.props.slidingSyncId);
             switch (sort) {
                 case SortAlgorithm.Alphabetic:
@@ -518,7 +518,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // no need for forceUpdate here as the /sync response will fire onSlidingSyncListUpdate
             return;
         }
-        await RoomListStore.instance.setTagSorting(this.props.tagId, sort);
+        RoomListStore.instance.setTagSorting(this.props.tagId, sort);
         this.forceUpdate();
     };
 
