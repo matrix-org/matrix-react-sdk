@@ -50,6 +50,12 @@ describe("Sliding Sync", () => {
         });
     });
 
+    afterEach(() => {
+        cy.get<SynapseInstance>("@synapse").then(cy.stopSynapse);
+        cy.get<ProxyInstance>("@proxy").then(cy.stopProxy);
+    });
+
+    // sanity check everything works
     it("should correctly render expected messages", () => {
         cy.get<string>("@roomId").then(roomId => cy.visit("/#/room/" + roomId));
         cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
@@ -62,7 +68,14 @@ describe("Sliding Sync", () => {
 
         // Click "expand" link button
         cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
+    });
 
-        cy.pause();
+    it.only("should render rooms in reverse chronological order", () => {
+        // create rooms and check room names are correct
+        cy.createRoom({ name: "Apple" }).as("roomApple").then(()=>cy.contains(".mx_RoomSublist", "Apple"));
+        cy.createRoom({ name: "Pineapple" }).as("roomPineapple").then(()=>cy.contains(".mx_RoomSublist", "Pineapple"));
+        cy.createRoom({ name: "Orange" }).as("roomOrange").then(()=>cy.contains(".mx_RoomSublist", "Orange"));
+        // check the rooms are in the right order
+        cy.get(".mx_RoomTile").should('have.length', 4); // due to the Test Room in beforeEach
     });
 });
