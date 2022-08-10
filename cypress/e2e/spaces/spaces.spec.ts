@@ -238,7 +238,7 @@ describe("Spaces", () => {
         });
     });
 
-    it.only("should render subspaces in the space panel only when expanded", () => {
+    it("should render subspaces in the space panel only when expanded", () => {
         cy.injectAxe();
 
         cy.createSpace({
