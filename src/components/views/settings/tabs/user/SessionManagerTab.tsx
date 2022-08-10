@@ -47,7 +47,7 @@ const SessionManagerTab: React.FC = () => {
                 <DeviceTile
                     device={currentDevice}
                 />
-                <br/>
+                <br />
                 <DeviceSecurityCard
                     {...securityCardProps}
                 />
