@@ -261,8 +261,8 @@ describe("Spaces", () => {
         cy.get(".mx_SpacePanel_toggleCollapse").click({ force: true }); // button shows only on hover
         cy.get(".mx_SpacePanel:not(.collapsed)").should("exist");
 
-        cy.contains(".mx_SpaceButton", "Root Space").should("exist")
-            .contains(".mx_SpaceButton", "Child Space").should("exist");
+        cy.contains(".mx_SpaceItem", "Root Space").should("exist")
+            .contains(".mx_SpaceItem", "Child Space").should("exist");
 
         cy.checkA11y();
         cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [258] });
