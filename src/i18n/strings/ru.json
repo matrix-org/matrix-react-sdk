@@ -1792,7 +1792,7 @@
     "<a>Add a topic</a> to help people know what it is about.": "<a>Добавьте тему</a>, чтобы люди знали, о чём комната.",
     "Topic: %(topic)s ": "Тема: %(topic)s ",
     "Topic: %(topic)s (<a>edit</a>)": "Тема: %(topic)s (<a>изменить</a>)",
-    "This is the beginning of your direct message history with <displayName/>.": "Это начало вашей переписки с <displayName/>.",
+    "This is the beginning of your direct message history with <displayName/>.": "Это начало вашей беседы с <displayName/>.",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "В этом разговоре только вы двое, если только кто-нибудь из вас не пригласит кого-нибудь присоединиться.",
     "Takes the call in the current room off hold": "Прекратить удержание вызова в текущей комнате",
     "Places the call in the current room on hold": "Перевести вызов в текущей комнате на удержание",
