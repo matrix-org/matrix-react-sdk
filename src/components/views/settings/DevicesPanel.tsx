@@ -79,7 +79,6 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                         crossSigningInfo: crossSigningInfo,
                     };
                 });
-                console.log(this.state);
             },
             (error) => {
                 if (this.unmounted) { return; }

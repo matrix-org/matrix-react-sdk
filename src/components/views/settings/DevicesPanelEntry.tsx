@@ -29,7 +29,6 @@ import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDi
 import LogoutDialog from '../dialogs/LogoutDialog';
 import DeviceTile from './devices/DeviceTile';
 import SelectableDeviceTile from './devices/SelectableDeviceTile';
-import DeviceDetails from './devices/DeviceDetails';
 
 interface IProps {
     device: IMyDevice;
@@ -162,7 +161,6 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
                 <DeviceTile device={this.props.device}>
                     { buttons }
                 </DeviceTile>
-                <DeviceDetails device={this.props.device} />
             </div>;
         }
 
