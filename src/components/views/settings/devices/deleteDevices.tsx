@@ -25,8 +25,8 @@ import { InteractiveAuthCallback } from "../../../structures/InteractiveAuth";
 
 const makeDeleteRequest = (
     matrixClient: MatrixClient, deviceIds: string[],
-) => async (auth?: IAuthData): Promise<IAuthData> => {
-    return await matrixClient.deleteMultipleDevices(deviceIds, auth);
+) => async (auth?: IAuthData): Promise<void> => {
+    await matrixClient.deleteMultipleDevices(deviceIds, auth);
 };
 
 export const deleteDevicesWithInteractiveAuth = async (
@@ -41,6 +41,7 @@ export const deleteDevicesWithInteractiveAuth = async (
         onFinished(true, undefined);
     } catch (error) {
         if (error.httpStatus !== 401 || !error.data?.flows) {
+            // throw new Error('dfksd')
             // doesn't look like an interactive-auth failure
             throw error;
         }
