@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 const cypress = require('cypress');
-const process = require('process');
-const crypto = require('crypto');
+const the_process = require('process');
+const the_crypto = require('crypto');
 const http = require('http');
 
 function setup(trafficlightUrl, uuid) {
@@ -120,7 +120,7 @@ if (args[0] == 'run') {
     setup(trafficlightUrl, uuid);
     trafficlight(trafficlightUrl, uuid);
 } else if (args[0] == 'open') {
-    uuid = crypto.randomUUID();
+    let uuid = crypto.randomUUID();
     setup(trafficlightUrl, uuid);
     trafficlightOneshot(trafficlightUrl, uuid);
 } else {
