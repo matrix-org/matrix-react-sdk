@@ -64,7 +64,7 @@ export default class EmoteRoomSettingsTab extends React.Component<IProps, IState
         return (
             <div className="mx_SettingsTab mx_EmoteRoomSettingsTab">
 
-                <div className="mx_SettingsTab_heading">{ _t("Emote") }</div>
+                <div className="mx_SettingsTab_heading">{_t("Emotes")}</div>
                 <div className='mx_SettingsTab_section mx_EmoteRoomSettingsTab_profileSection'>
                     <RoomEmoteSettings roomId={this.props.roomId} />
                 </div>

@@ -34,21 +34,21 @@ interface IProps {
 interface IState {
     emotes: Dictionary<string>;
     EmoteFieldsTouched: Record<string, string>;
-    newEmoteFileAdded:boolean,
-    newEmoteCodeAdded:boolean,
-    newEmoteCode:string,
-    newEmoteFile:File,
+    newEmoteFileAdded: boolean,
+    newEmoteCodeAdded: boolean,
+    newEmoteCode: string,
+    newEmoteFile: File,
     canAddEmote: boolean;
     deleted: boolean;
-    deletedItems:Dictionary<string>;
+    deletedItems: Dictionary<string>;
     value: Dictionary<string>;
 }
 
 // TODO: Merge with EmoteSettings?
 export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private emoteUpload = createRef<HTMLInputElement>();
-    private emoteCodeUpload= createRef<HTMLInputElement>();
-    private emoteUploadImage= createRef<HTMLImageElement>();
+    private emoteCodeUpload = createRef<HTMLInputElement>();
+    private emoteUploadImage = createRef<HTMLImageElement>();
     constructor(props: IProps) {
         super(props);
 
@@ -57,30 +57,32 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
 
         let emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
+        console.log(room.currentState);
         let emotes: Dictionary<string>;
         emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        let value={};
-        for(let emote in emotes) {
+        let value = {};
+        for (let emote in emotes) {
             value[emote] = emote;
         }
         //TODO: Decrypt the shortcodes and emotes if they are encrypted
-    //     if (emotes) {
-    //         console.log(Object.keys(emotes));
-    //         console.log(emotes);
-    // }
+            if (emotes) {
+                console.log(room.roomId);
+                console.log(room.name);
+                console.log(emotes);
+        }
         //if (avatarUrl) avatarUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(96);
-    //emotes={}
+        //emotes={}
         this.state = {
             emotes: emotes,
             EmoteFieldsTouched: {},
-            newEmoteFileAdded:false,
-            newEmoteCodeAdded:false,
+            newEmoteFileAdded: false,
+            newEmoteCodeAdded: false,
             newEmoteCode: "",
             newEmoteFile: null,
-            deleted:false,
-            deletedItems:{},
+            deleted: false,
+            deletedItems: {},
             canAddEmote: room.currentState.maySendStateEvent('m.room.emotes', client.getUserId()),
-            value:value,
+            value: value,
         };
     }
 
@@ -90,59 +92,59 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
 
     private isSaveEnabled = () => {
-        return Boolean(Object.values(this.state.EmoteFieldsTouched).length) || (this.state.newEmoteCodeAdded && this.state.newEmoteFileAdded)||this.state.deleted;
+        return Boolean(Object.values(this.state.EmoteFieldsTouched).length) || (this.state.newEmoteCodeAdded && this.state.newEmoteFileAdded) || this.state.deleted;
     };
 
     private cancelEmoteChanges = async (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
-        let value={};
-       if(this.state.deleted){
-       for(let key in this.state.deletedItems){
-        this.state.emotes[key]=this.state.deletedItems[key];
-        value[key]=key;
+        let value = {};
+        if (this.state.deleted) {
+            for (let key in this.state.deletedItems) {
+                this.state.emotes[key] = this.state.deletedItems[key];
+                value[key] = key;
+            }
         }
-    }
-    document.querySelectorAll(".mx_EmoteSettings_existingEmoteCode").forEach(field => {
-        value[(field as HTMLInputElement).id]= (field as HTMLInputElement).id;
-   })
+        document.querySelectorAll(".mx_EmoteSettings_existingEmoteCode").forEach(field => {
+            value[(field as HTMLInputElement).id] = (field as HTMLInputElement).id;
+        })
         if (!this.isSaveEnabled()) return;
         this.setState({
             EmoteFieldsTouched: {},
-            newEmoteFileAdded:false,
-            newEmoteCodeAdded:false,
-            deleted:false,
-            deletedItems:{},
-            value:value,
+            newEmoteFileAdded: false,
+            newEmoteCodeAdded: false,
+            deleted: false,
+            deletedItems: {},
+            value: value,
         });
-      
-       this.emoteUpload.current.value = "";
-       this.emoteCodeUpload.current.value = "";
+
+        this.emoteUpload.current.value = "";
+        this.emoteCodeUpload.current.value = "";
 
     };
     private deleteEmote = (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
-        let cleanemotes={}
-        let deletedItems={}
-        let value={}
+        let cleanemotes = {}
+        let deletedItems = this.state.deletedItems;
+        let value = {}
         //console.log(e.currentTarget.getAttribute("name"));
-        let id=e.currentTarget.getAttribute("id")
+        let id = e.currentTarget.getAttribute("id")
         for (let emote in this.state.emotes) {
             if (emote != id) {
-                cleanemotes[emote]=this.state.emotes[emote]
-                value[emote]=emote
+                cleanemotes[emote] = this.state.emotes[emote]
+                value[emote] = emote
             }
-            else{
-                deletedItems[emote]=this.state.emotes[emote]
+            else {
+                deletedItems[emote] = this.state.emotes[emote]
             }
         }
 
-        this.setState({deleted:true, emotes:cleanemotes, deletedItems:deletedItems, value:value})
-    //     document.querySelectorAll(".mx_EmoteSettings_existingEmoteCode").forEach(field => {
-    //         field.setAttribute("value",(field as HTMLInputElement).id);
-    //         field.setAttribute("defaultValue",(field as HTMLInputElement).id);
-    //    })
+        this.setState({ deleted: true, emotes: cleanemotes, deletedItems: deletedItems, value: value })
+        //     document.querySelectorAll(".mx_EmoteSettings_existingEmoteCode").forEach(field => {
+        //         field.setAttribute("value",(field as HTMLInputElement).id);
+        //         field.setAttribute("defaultValue",(field as HTMLInputElement).id);
+        //    })
         // for(let DOMid in this.state.emotes){
         //     document.getElementById(DOMid).setAttribute("value",DOMid);
         // }
@@ -156,53 +158,53 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!this.isSaveEnabled()) return;
         const client = MatrixClientPeg.get();
         const newState: Partial<IState> = {};
-        const emotesMxcs= {};
-        let value={};
+        const emotesMxcs = {};
+        let value = {};
         // TODO: What do we do about errors?
 
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
             //const emotes = await client.uploadContent(this.state.emotes);
             //TODO: Encrypt the shortcode and the image data before uploading
-            if(this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded){
+            if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
                 const newEmote = await client.uploadContent(this.state.newEmoteFile);
                 emotesMxcs[this.state.newEmoteCode] = newEmote;
-                value[this.state.newEmoteCode]=this.state.newEmoteCode;
+                value[this.state.newEmoteCode] = this.state.newEmoteCode;
             }
-            if(this.state.emotes){
-                for(let shortcode in this.state.emotes){
-                    if((this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)&&(shortcode===this.state.newEmoteCode)){
+            if (this.state.emotes) {
+                for (let shortcode in this.state.emotes) {
+                    if ((this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) && (shortcode === this.state.newEmoteCode)) {
                         continue;
                     }
-                    if(this.state.EmoteFieldsTouched.hasOwnProperty(shortcode)){
+                    if (this.state.EmoteFieldsTouched.hasOwnProperty(shortcode)) {
                         emotesMxcs[this.state.EmoteFieldsTouched[shortcode]] = this.state.emotes[shortcode];
-                        value[this.state.EmoteFieldsTouched[shortcode]]=this.state.EmoteFieldsTouched[shortcode];
+                        value[this.state.EmoteFieldsTouched[shortcode]] = this.state.EmoteFieldsTouched[shortcode];
 
-                    //     document.querySelectorAll(".mx_EmoteSettings_existingEmoteCode").forEach(field => {
-                    //         if((field as HTMLInputElement).name===shortcode){
-                    //         (field as HTMLInputElement).name= this.state.EmoteFieldsTouched[shortcode];
-                    //         }
-                    //    })
-                     }
-
-                    else{
-                        emotesMxcs[shortcode] = this.state.emotes[shortcode];
-                        value[shortcode]=shortcode;
+                        //     document.querySelectorAll(".mx_EmoteSettings_existingEmoteCode").forEach(field => {
+                        //         if((field as HTMLInputElement).name===shortcode){
+                        //         (field as HTMLInputElement).name= this.state.EmoteFieldsTouched[shortcode];
+                        //         }
+                        //    })
                     }
-                    
+
+                    else {
+                        emotesMxcs[shortcode] = this.state.emotes[shortcode];
+                        value[shortcode] = shortcode;
+                    }
+
                 };
             }
             //console.log(emotesMxcs);
-            newState.value=value;
+            newState.value = value;
             await client.sendStateEvent(this.props.roomId, 'm.room.emotes', emotesMxcs, "");
             this.emoteUpload.current.value = "";
             this.emoteCodeUpload.current.value = "";
             newState.newEmoteFileAdded = false;
             newState.newEmoteCodeAdded = false;
             newState.EmoteFieldsTouched = {};
-            newState.emotes=emotesMxcs;
-            newState.deleted=false;
-            newState.deletedItems={};
-            
+            newState.emotes = emotesMxcs;
+            newState.deleted = false;
+            newState.deletedItems = {};
+
             /*newState.avatarUrl = mediaFromMxc(uri).getSquareThumbnailHttp(96);
             newState.originalAvatarUrl = newState.avatarUrl;
             newState.avatarFile = null;*/
@@ -213,14 +215,14 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     };
 
 
-   private onEmoteChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    private onEmoteChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const id = e.target.getAttribute("id");
         //e.target.setAttribute("value", e.target.value);
         //const newEmotes = { ...this.state.emotes, [value]: value };
         //let newState=this.state.emotes;
-        let b=this.state.value
-        b[id]=e.target.value;
-        this.setState({value:b ,EmoteFieldsTouched: { ...this.state.EmoteFieldsTouched, [id]: e.target.value } });
+        let b = this.state.value
+        b[id] = e.target.value;
+        this.setState({ value: b, EmoteFieldsTouched: { ...this.state.EmoteFieldsTouched, [id]: e.target.value } });
     }
 
     private onEmoteFileAdd = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -249,7 +251,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         reader.readAsDataURL(file);
     };
     private onEmoteCodeAdd = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if(e.target.value.length > 0){
+        if (e.target.value.length > 0) {
             this.setState({
                 newEmoteCodeAdded: true,
                 newEmoteCode: e.target.value,
@@ -258,11 +260,11 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 },
             });
         }
-        else{
-        this.setState({
-            newEmoteCodeAdded: false,
-        });
-    }
+        else {
+            this.setState({
+                newEmoteCodeAdded: false,
+            });
+        }
     }
 
     public render(): JSX.Element {
@@ -277,23 +279,23 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         kind="link"
                         disabled={!this.isSaveEnabled()}
                     >
-                        { _t("Cancel") }
+                        {_t("Cancel")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.saveEmote}
                         kind="primary"
                         disabled={!this.isSaveEnabled()}
                     >
-                        { _t("Save") }
+                        {_t("Save")}
                     </AccessibleButton>
                 </div>
             );
         }
 
-        let existingEmotes=[];
+        let existingEmotes = [];
         if (this.state.emotes) {
-                for(let emotecode in this.state.emotes) {
-                    existingEmotes.push(
+            for (let emotecode in this.state.emotes) {
+                existingEmotes.push(
                     <li className='mx_EmoteSettings_addEmoteField'>
                         <input
                             type="text"
@@ -303,26 +305,26 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                             className="mx_EmoteSettings_existingEmoteCode"
 
                         />
-                        <img className="mx_EmoteSettings_uploadedEmoteImage" src={ 
+                        <img className="mx_EmoteSettings_uploadedEmoteImage" src={
                             mediaFromMxc(this.state.emotes[emotecode]).srcHttp//.getSquareThumbnailHttp(96)
                         } />
                         <div className="mx_EmoteSettings_uploadButton">
-                        <AccessibleButton
-                        onClick={this.deleteEmote}
-                        className=""
-                        kind="danger_outline"
-                        aria-label="Close"
-                        id={emotecode}
-                    >
-                        { _t("Delete") }
-                    </AccessibleButton>
+                            <AccessibleButton
+                                onClick={this.deleteEmote}
+                                className=""
+                                kind="danger_outline"
+                                aria-label="Close"
+                                id={emotecode}
+                            >
+                                {_t("Delete")}
+                            </AccessibleButton>
                         </div>
                     </li>
-                    )
-                }
-
-            
+                )
             }
+
+
+        }
 
 
         let emoteUploadButton;
@@ -333,15 +335,15 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         onClick={this.uploadEmoteClick}
                         kind="primary"
                     >
-                        { _t("Upload Emote") }
-                    </AccessibleButton> 
+                        {_t("Upload Emote")}
+                    </AccessibleButton>
                 </div>
             );
         }
 
 
         return (
-            
+
             <form
                 onSubmit={this.saveEmote}
                 autoComplete="off"
@@ -357,29 +359,29 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     accept="image/*"
                 />
                 <li className='mx_EmoteSettings_addEmoteField'>
-                <input
-                            ref={this.emoteCodeUpload}
-                            type="text"
-                            autoComplete="off"
-                            placeholder=':emote:'
-                            className="mx_EmoteSettings_emoteField"
-                            onChange={this.onEmoteCodeAdd}
-                />
-                {
-                    this.state.newEmoteFileAdded ?
-                <img 
-                src=""
-                ref={this.emoteUploadImage} 
-                className="mx_EmoteSettings_uploadedEmoteImage" 
-                />: null
-                }
+                    <input
+                        ref={this.emoteCodeUpload}
+                        type="text"
+                        autoComplete="off"
+                        placeholder=':emote:'
+                        className="mx_EmoteSettings_emoteField"
+                        onChange={this.onEmoteCodeAdd}
+                    />
+                    {
+                        this.state.newEmoteFileAdded ?
+                            <img
+                                src=""
+                                ref={this.emoteUploadImage}
+                                className="mx_EmoteSettings_uploadedEmoteImage"
+                            /> : null
+                    }
 
-                {emoteUploadButton}
+                    {emoteUploadButton}
                 </li>
                 {
-                  existingEmotes  
+                    existingEmotes
                 }
-                { emoteSettingsButtons }
+                {emoteSettingsButtons}
             </form>
         );
     }

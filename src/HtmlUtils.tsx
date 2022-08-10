@@ -396,6 +396,7 @@ interface IOpts {
     returnString?: boolean;
     forComposerQuote?: boolean;
     ref?: React.Ref<HTMLSpanElement>;
+    emotes?: Dictionary<string>;
 }
 
 export interface IOptsReturnNode extends IOpts {
@@ -468,8 +469,8 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     if (opts.forComposerQuote) {
         sanitizeParams = composerSanitizeHtmlParams;
     }
-
     let strippedBody: string;
+    
     let safeBody: string; // safe, sanitised HTML, preferred over `strippedBody` which is fully plaintext
 
     try {
@@ -486,11 +487,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         if (opts.stripReplyFallback && formattedBody) formattedBody = stripHTMLReply(formattedBody);
         strippedBody = opts.stripReplyFallback ? stripPlainReply(plainBody) : plainBody;
         bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
-
         const highlighter = safeHighlights?.length
             ? new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink)
             : null;
-
         if (isFormattedBody) {
             if (highlighter) {
                 // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying
@@ -498,8 +497,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
                 // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
                 // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
+            
                 sanitizeParams.textFilter = function(safeText) {
-                    return highlighter.applyHighlights(safeText, safeHighlights).join('');
+                    return highlighter.applyHighlights(safeText, safeHighlights).join('').replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
                 };
             }
 
@@ -524,7 +524,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                             // @ts-ignore - `e` can be an Element, not just a Node
                             displayMode: e.name == 'div',
                             output: "htmlAndMathml",
-                        });
+                        })
                 });
                 safeBody = phtml.html();
             }
@@ -538,11 +538,12 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         delete sanitizeParams.textFilter;
     }
 
-    const contentBody = safeBody ?? strippedBody;
+    let contentBody = safeBody ?? strippedBody;
+    contentBody=contentBody.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
     if (opts.returnString) {
         return contentBody;
     }
-
+    
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
         let contentBodyTrimmed = contentBody !== undefined ? contentBody.trim() : '';
@@ -574,12 +575,17 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         'mx_EventTile_bigEmoji': emojiBody,
         'markdown-body': isHtmlMessage && !emojiBody,
     });
-
+    let tmp=strippedBody?.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+    if(tmp!=strippedBody){
+        safeBody=tmp;
+    }
+    
+    
     let emojiBodyElements: JSX.Element[];
     if (!safeBody && bodyHasEmoji) {
         emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
     }
-
+    
     return safeBody ?
         <span
             key="body"
