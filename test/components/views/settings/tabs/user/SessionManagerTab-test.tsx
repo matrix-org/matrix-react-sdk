@@ -137,10 +137,24 @@ describe('<SessionManagerTab />', () => {
         expect(getByTestId(`device-tile-${alicesDevice.device_id}`)).toMatchSnapshot();
     });
 
-    it('renders current session section', async () => {
+    it('renders current session section with an unverified session', async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         const noCryptoError = new Error("End-to-end encryption disabled");
         mockClient.getStoredDevice.mockImplementation(() => { throw noCryptoError; });
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        expect(getByTestId('current-session-section')).toMatchSnapshot();
+    });
+
+    it('renders current session section with a verified session', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+        mockClient.getStoredDevice.mockImplementation(() => new DeviceInfo(alicesDevice.device_id));
+        mockCrossSigningInfo.checkDeviceTrust
+            .mockReturnValue(new DeviceTrustLevel(true, true, false, false));
         const { getByTestId } = render(getComponent());
 
         await act(async () => {

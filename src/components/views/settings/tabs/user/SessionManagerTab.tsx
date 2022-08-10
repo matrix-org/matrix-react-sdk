@@ -28,15 +28,31 @@ const SessionManagerTab: React.FC = () => {
     const { devices, currentDeviceId, isLoading } = useOwnDevices();
 
     const currentDevice = devices[currentDeviceId];
+    const securityCardProps = currentDevice?.isVerified ? {
+        variation: DeviceSecurityVariation.Verified,
+        heading: _t('Verified session'),
+        description: _t('This session is ready for secure messaging.'),
+    } : {
+        variation: DeviceSecurityVariation.Unverified,
+        heading: _t('Unverified session'),
+        description: _t('Verify or sign out from this session for best security and reliability.'),
+    };
     return <SettingsTab heading={_t('Sessions')}>
         <SettingsSubsection
             heading={_t('Current session')}
             data-testid='current-session-section'
         >
             { isLoading && <Spinner /> }
-            { !!currentDevice && <DeviceTile
-                device={currentDevice}
-            /> }
+            { !!currentDevice && <>
+                <DeviceTile
+                    device={currentDevice}
+                />
+                <br/>
+                <DeviceSecurityCard
+                    {...securityCardProps}
+                />
+            </>
+            }
         </SettingsSubsection>
     </SettingsTab>;
 };
