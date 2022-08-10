@@ -109,7 +109,13 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     }];
 
     if (!knockingEnabled || !roomSupportsKnocking) {
-        definitions.splice(1, 1); // removes the knock option if the room isn't compatible for the same
+        // removes the knock option if the room isn't compatible for the same
+        for (let i = 0; i < definitions.length; i++) {
+            if (definitions[i].value === JoinRule.Knock) {
+                definitions.splice(i, 1);
+                break;
+            }
+        }
         definitions[0].checked = true; //makes invite only room as default
     }
 
