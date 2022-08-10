@@ -16,11 +16,13 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { ReactHTML, WheelEvent } from "react";
+import React, { HTMLAttributes, ReactHTML, WheelEvent } from "react";
 
-import { DynamicHtmlElementProps } from "../../@types/common";
+type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
+    JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
+type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<Omit<JSX.IntrinsicElements[T], 'ref'>>;
 
-type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
+export type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     element?: T;
     className?: string;
     onScroll?: (event: Event) => void;

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes, InputHTMLAttributes, JSXElementConstructor } from "react";
+import React, { JSXElementConstructor } from "react";
 
 // Based on https://stackoverflow.com/a/53229857/3532235
 export type Without<T, U> = {[P in Exclude<keyof T, keyof U>]?: never};
@@ -49,17 +49,3 @@ export type KeysWithObjectShape<Input> = {
         ? (Input[P] extends Array<unknown> ? never : P)
         : never;
 }[keyof Input];
-
-/**
- * This type construct allows us to specifically pass those props down to the element we’re creating that the element
- * actually supports.
- *
- * e.g., if element is set to "a", we’ll support href and target, if it’s set to "input", we support type.
- *
- * To remain compatible with existing code, we’ll continue to support InputHTMLAttributes<Element>
- */
-export type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
-    JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
-export type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
-    Partial<Omit<JSX.IntrinsicElements[T], 'ref' | 'onClick' | 'onMouseDown' | 'onKeyUp' | 'onKeyDown'>>
-    & Omit<InputHTMLAttributes<Element>, 'onClick'>;
