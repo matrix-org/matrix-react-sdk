@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 const cypress = require('cypress');
-const the_process = require('process');
-const the_crypto = require('crypto');
 const http = require('http');
 
 function setup(trafficlightUrl, uuid) {
