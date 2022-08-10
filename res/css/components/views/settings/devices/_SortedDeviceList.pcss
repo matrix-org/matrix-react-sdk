@@ -14,29 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DeviceTile {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 $spacing-8;
-
-    width: 100%;
-}
-
-.mx_DeviceTile_info {
-    flex: 1 1 0;
-}
-
-.mx_DeviceTile_metadata {
-    margin-top: 2px;
-    font-size: $font-12px;
-    color: $secondary-content;
-}
-
-.mx_DeviceTile_actions {
+.mx_SortedDeviceList {
+    list-style-type: none;
     display: grid;
-    grid-gap: $spacing-8;
-    grid-auto-flow: column;
-
-    margin-left: $spacing-8;
+    grid-gap: $spacing-16;
+    margin: 0;
+    padding: 0;
 }

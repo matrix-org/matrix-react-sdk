@@ -22,11 +22,14 @@ import { useOwnDevices } from '../../devices/useOwnDevices';
 import DeviceTile from '../../devices/DeviceTile';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import SettingsTab from '../SettingsTab';
+import SortedDeviceList, { DeviceSortOrder } from '../../devices/SortedDeviceList';
 
 const SessionManagerTab: React.FC = () => {
     const { devices, currentDeviceId, isLoading } = useOwnDevices();
 
     const currentDevice = devices[currentDeviceId];
+    const shouldShowOtherSessions = Object.keys(devices).length > 1;
+
     return <SettingsTab heading={_t('Sessions')}>
         <SettingsSubsection
             heading={_t('Current session')}
@@ -37,6 +40,18 @@ const SessionManagerTab: React.FC = () => {
                 device={currentDevice}
             /> }
         </SettingsSubsection>
+        {
+            shouldShowOtherSessions &&
+            <SettingsSubsection
+                heading={_t('Other sessions')}
+                description={_t(
+                    `For best security, verify your sessions and sign out` +
+                    `from any session that you don't recognize or use anymore.`
+                )}
+            >
+                <SortedDeviceList devices={devices} sortOrder={DeviceSortOrder.LatestActivity} />
+            </SettingsSubsection>
+        }
     </SettingsTab>;
 };
 
