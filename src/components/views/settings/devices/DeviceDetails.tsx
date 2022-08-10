@@ -34,7 +34,10 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
     const metadata: MetadataTable[] = [
         { values: [
             { label: _t('Session ID'), value: device.device_id },
-            { label: _t('Last activity'), value: device.last_seen_ts && formatDate(new Date(device.last_seen_ts)) },
+            {
+                label: _t('Last activity'),
+                value: device.last_seen_ts && formatDate(new Date(device.last_seen_ts)),
+            },
         ],
         },
         {
@@ -54,8 +57,11 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
                 className='mxDeviceDetails_metadataTable'
                 key={index}
             >
-                { heading && <thead>
-                    <tr><th>{ heading }</th></tr></thead> }
+                { heading &&
+                    <thead>
+                        <tr><th>{ heading }</th></tr>
+                    </thead>
+                }
                 <tbody>
 
                     { values.map(({ label, value }) => <tr key={label}>
