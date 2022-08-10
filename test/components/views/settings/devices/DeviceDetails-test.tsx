@@ -15,17 +15,39 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
 
 describe('<DeviceDetails />', () => {
-    const defaultProps = {};
-    const getComponent = (props = {}) =>
-        mount(<DeviceDetails {...defaultProps} {...props} />);
+    const baseDevice = {
+        device_id: 'my-device',
+    };
+    const defaultProps = {
+        device: baseDevice,
+    };
+    const getComponent = (props = {}) => <DeviceDetails {...defaultProps} {...props} />;
+    // 14.03.2022 16:15
+    const now = 1647270879403;
+    jest.useFakeTimers();
 
-    it('renders', () => {
-        const component = getComponent();
-        expect(component).toBeTruthy();
+    beforeEach(() => {
+        jest.setSystemTime(now);
+    });
+
+    it('renders device without metadata', () => {
+        const { container } = render(getComponent());
+        expect(container).toMatchSnapshot();
+    });
+
+    it('renders device with metadata', () => {
+        const device = {
+            ...baseDevice,
+            display_name: 'My Device',
+            last_seen_ip: '123.456.789',
+            last_seen_ts: now - 60000000,
+        };
+        const { container } = render(getComponent({ device }));
+        expect(container).toMatchSnapshot();
     });
 });
