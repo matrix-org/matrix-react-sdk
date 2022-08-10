@@ -79,6 +79,10 @@ function trafficlight(trafficlightUrl, uuid) {
         })
         .catch((err) => {
             console.error(err);
+            // an error has occurred but other trafficlight tests may succeed. Continue looping for more requests.
+            uuid = crypto.randomUUID();
+            setup(trafficlightUrl, uuid);
+            trafficlight(trafficlightUrl, uuid);
         });
 }
 
@@ -104,9 +108,6 @@ function trafficlightOneshot(trafficlightUrl, uuid) {
         })
         .then((results) => {
             console.log(results);
-        })
-        .catch((err) => {
-            console.error(err);
         });
 }
 
@@ -122,6 +123,6 @@ if (args[0] == 'run') {
     setup(trafficlightUrl, uuid);
     trafficlightOneshot(trafficlightUrl, uuid);
 } else {
-    console.error('No idea what ' + args[0] + 'means');
+    console.error('No idea what ' + args[0] + 'means (i understand "run" to run continually, "open" to launch the cypress UI)');
     process.exit(1);
 }
