@@ -265,8 +265,6 @@ describe("Spaces", () => {
             .contains(".mx_SpaceButton", "Child Space").should("exist");
 
         cy.checkA11y();
-        cy.get(".mx_SpacePanel").invoke("width").then(width => {
-            cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [width] });
-        });
+        cy.get(".mx_SpacePanel").percySnapshotElement("Space panel expanded", { widths: [258] });
     });
 });
