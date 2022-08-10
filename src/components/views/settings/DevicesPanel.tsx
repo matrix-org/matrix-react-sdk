@@ -176,7 +176,6 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     };
 
     private onDeleteClick = async (): Promise<void> => {
-        console.log('ondete', this.state.selectedDevices);
         if (this.state.selectedDevices.length === 0) { return; }
 
         this.setState({
@@ -201,7 +200,6 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                 },
             );
         } catch (error) {
-            console.log('eeee', error);
             logger.error("Error deleting sessions", error);
             this.setState({
                 deleting: false,

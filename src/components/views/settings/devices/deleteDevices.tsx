@@ -18,10 +18,10 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { IAuthData } from "matrix-js-sdk/src/interactive-auth";
 
 import { _t } from "../../../../languageHandler";
-import { SSOAuthEntry } from "../../auth/InteractiveAuthEntryComponents";
 import Modal from "../../../../Modal";
-import InteractiveAuthDialog from "../../dialogs/InteractiveAuthDialog";
 import { InteractiveAuthCallback } from "../../../structures/InteractiveAuth";
+import { SSOAuthEntry } from "../../auth/InteractiveAuthEntryComponents";
+import InteractiveAuthDialog from "../../dialogs/InteractiveAuthDialog";
 
 const makeDeleteRequest = (
     matrixClient: MatrixClient, deviceIds: string[],
@@ -37,13 +37,10 @@ export const deleteDevicesWithInteractiveAuth = async (
     }
     try {
         await makeDeleteRequest(matrixClient, deviceIds)();
-        console.log('HUH!!');
         // no interactive auth needed
         onFinished(true, undefined);
     } catch (error) {
-        console.log('err', error);
         if (error.httpStatus !== 401 || !error.data?.flows) {
-            // throw new Error('dfksd')
             // doesn't look like an interactive-auth failure
             throw error;
         }
