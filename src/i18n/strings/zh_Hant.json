@@ -3497,5 +3497,8 @@
     "Send read receipts": "傳送讀取回條",
     "Last activity": "上次活動",
     "Sessions": "工作階段",
-    "Use new session manager (under active development)": "使用新的工作階段管理程式（正在積極開發中）"
+    "Use new session manager (under active development)": "使用新的工作階段管理程式（正在積極開發中）",
+    "Current session": "目前的工作階段",
+    "Unverified": "未驗證",
+    "Verified": "已驗證"
 }
