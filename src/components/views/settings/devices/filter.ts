@@ -25,13 +25,15 @@ export enum DeviceSecurityVariation {
 
 type DeviceFilterCondition = (device: DeviceWithVerification) => boolean;
 
-const INACTIVE_SESSION_AGE = 7.776e+9; // 90 days
+export const INACTIVE_DEVICE_AGE_MS = 7.776e+9; // 90 days
+
+export const isDeviceInactive: DeviceFilterCondition = device => !!device.last_seen_ts &&
+device.last_seen_ts < Date.now() - INACTIVE_DEVICE_AGE_MS;
 
 const filters: Record<DeviceSecurityVariation, DeviceFilterCondition> = {
     [DeviceSecurityVariation.Verified]: device => !!device.isVerified,
     [DeviceSecurityVariation.Unverified]: device => !device.isVerified,
-    [DeviceSecurityVariation.Inactive]: device => !!device.last_seen_ts &&
-        device.last_seen_ts < Date.now() - INACTIVE_SESSION_AGE,
+    [DeviceSecurityVariation.Inactive]: isDeviceInactive,
 };
 
 export const filterDevicesBySecurityRecommendation = (
