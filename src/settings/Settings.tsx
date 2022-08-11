@@ -799,7 +799,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "FTUE.userOnboardingButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show shortcut to welcome page above the room list"),
+        displayName: _td("Show shortcut to welcome checklist above the room list"),
         default: true,
     },
     "showHiddenEventsInTimeline": {
