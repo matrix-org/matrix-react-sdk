@@ -20,7 +20,7 @@ limitations under the License.
 import { IWidget } from "matrix-widget-api/src/interfaces/IWidget";
 import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
-import type { MatrixClient, MatrixEvent} from "matrix-js-sdk/src/matrix";
+import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { UserCredentials } from "../../support/login";
 
