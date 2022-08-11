@@ -39,6 +39,7 @@ import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -74,7 +75,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
-            showStickersButton(props),
+            showStickersButton(props, room),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
@@ -85,7 +86,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
-            showStickersButton(props),
+            showStickersButton(props, room),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
@@ -265,9 +266,9 @@ const UploadButton = () => {
     />;
 };
 
-function showStickersButton(props: IProps): ReactElement {
+function showStickersButton(props: IProps, room: Room): ReactElement {
     return (
-        props.showStickersButton
+        !isLocalRoom(room) && props.showStickersButton
             ? <CollapsibleButton
                 id='stickersButton'
                 key="controls_stickers"
