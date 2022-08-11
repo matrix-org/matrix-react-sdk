@@ -57,7 +57,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
 
         let emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
-        console.log(room.currentState);
+        //console.log(room.currentState);
         let emotes: Dictionary<string>;
         emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         let value = {};
@@ -65,11 +65,11 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             value[emote] = emote;
         }
         //TODO: Decrypt the shortcodes and emotes if they are encrypted
-            if (emotes) {
-                console.log(room.roomId);
-                console.log(room.name);
-                console.log(emotes);
-        }
+        //     if (emotes) {
+        //         console.log(room.roomId);
+        //         console.log(room.name);
+        //         console.log(emotes);
+        // }
         //if (avatarUrl) avatarUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(96);
         //emotes={}
         this.state = {
