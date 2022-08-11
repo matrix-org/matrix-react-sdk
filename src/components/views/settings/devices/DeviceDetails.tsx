@@ -32,13 +32,14 @@ interface MetadataTable {
 
 const DeviceDetails: React.FC<Props> = ({ device }) => {
     const metadata: MetadataTable[] = [
-        { values: [
-            { label: _t('Session ID'), value: device.device_id },
-            {
-                label: _t('Last activity'),
-                value: device.last_seen_ts && formatDate(new Date(device.last_seen_ts)),
-            },
-        ],
+        {
+            values: [
+                { label: _t('Session ID'), value: device.device_id },
+                {
+                    label: _t('Last activity'),
+                    value: device.last_seen_ts && formatDate(new Date(device.last_seen_ts)),
+                },
+            ],
         },
         {
             heading: _t('Device'),
