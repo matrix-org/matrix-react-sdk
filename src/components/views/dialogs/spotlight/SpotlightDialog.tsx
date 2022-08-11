@@ -356,7 +356,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         () => {
             const userResults = [];
             let roomResults;
-            if (isSlidingSyncEnabled && slidingSyncRooms.length > 0) {
+            if (isSlidingSyncEnabled) {
                 // use the rooms sliding sync returned as the server has already worked it out for us
                 roomResults = slidingSyncRooms.map(toRoomResult);
             } else {
