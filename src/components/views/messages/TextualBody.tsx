@@ -582,12 +582,12 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         let body: ReactNode;
         const client = MatrixClientPeg.get();
         const room = client.getRoom(mxEvent.getRoomId());
-        let emotesEvent=room.currentState.getStateEvents("m.room.emotes", "");
-            let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-            let finalEmotes = {};
-            for (let key in rawEmotes) {
-                finalEmotes[":"+key+":"] = "<img class='mx_Emote' src="+mediaFromMxc(rawEmotes[key]).srcHttp+"/>";
-            }
+        let emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
+        let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+        let finalEmotes = {};
+        for (let key in rawEmotes) {
+            finalEmotes[":" + key + ":"] = "<img class='mx_Emote' title=':"+key+ ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
+        }
         if (SettingsStore.isEnabled("feature_extensible_events")) {
             const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
             if (extev?.isEquivalentTo(M_MESSAGE)) {
@@ -612,14 +612,14 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         if (!body) {
             isEmote = content.msgtype === MsgType.Emote;
             isNotice = content.msgtype === MsgType.Notice;
-            body = (HtmlUtils.bodyToHtml(content, this.props.highlights, {
+            body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
                 disableBigEmoji: isEmote
                     || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
                 // Part of Replies fallback support
                 stripReplyFallback: stripReply,
                 ref: this.contentRef,
                 returnString: false,
-            })as any).replace(/:[\w+-]+:/, m => finalEmotes[m] ? finalEmotes[m] : m);
+            });
            
         }
         //console.log(body);
