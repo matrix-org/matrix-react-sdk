@@ -19,7 +19,6 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { mocked } from "jest-mock";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { Layout } from "../../../../src/settings/enums/Layout";
@@ -28,11 +27,6 @@ import { createTestClient } from "../../../test-utils";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MessageComposerButtons from "../../../../src/components/views/rooms/MessageComposerButtons";
-import { isLocalRoom } from "../../../../src/utils/localRoom/isLocalRoom";
-
-jest.mock("../../../../src/utils/localRoom/isLocalRoom", () => ({
-    isLocalRoom: jest.fn(),
-}));
 
 // @ts-ignore - we're deliberately not implementing the whole interface here, but
 // can't use Partial<> for types because it'll annoy TS more than it helps.
@@ -182,35 +176,9 @@ describe("MessageComposerButtons", () => {
             ]);
         });
     });
-
-    describe("stickers button", () => {
-        it("should not be rendered for local rooms", () => {
-            const buttons = wrapAndRender(
-                <MessageComposerButtons
-                    isMenuOpen={true}
-                    showLocationButton={true}
-                    showPollsButton={true}
-                    showStickersButton={true}
-                    {...mockProps}
-                />,
-                true,
-                true,
-            );
-
-            expect(buttonLabels(buttons)).toEqual([
-                "Emoji",
-                "More options",
-                [
-                    "Attachment",
-                    "Poll",
-                    "Location",
-                ],
-            ]);
-        });
-    });
 });
 
-function wrapAndRender(component: React.ReactElement, narrow: boolean, localRoom = false): ReactWrapper {
+function wrapAndRender(component: React.ReactElement, narrow: boolean): ReactWrapper {
     const mockClient = createTestClient();
     jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
     const roomId = "myroomid";
@@ -223,7 +191,6 @@ function wrapAndRender(component: React.ReactElement, narrow: boolean, localRoom
         },
     };
     const roomState = createRoomState(mockRoom, narrow);
-    mocked(isLocalRoom).mockReturnValue(localRoom);
 
     return mount(
         <MatrixClientContext.Provider value={mockClient}>
