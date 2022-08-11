@@ -23,11 +23,14 @@ import DeviceTile from '../../devices/DeviceTile';
 import DeviceSecurityCard, { DeviceSecurityVariation } from '../../devices/DeviceSecurityCard';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import SettingsTab from '../SettingsTab';
+import FilteredDeviceList from '../../devices/FilteredDeviceList';
 
 const SessionManagerTab: React.FC = () => {
     const { devices, currentDeviceId, isLoading } = useOwnDevices();
 
-    const currentDevice = devices[currentDeviceId];
+    const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
+    const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
+
     const securityCardProps = currentDevice?.isVerified ? {
         variation: DeviceSecurityVariation.Verified,
         heading: _t('Verified session'),
@@ -37,6 +40,7 @@ const SessionManagerTab: React.FC = () => {
         heading: _t('Unverified session'),
         description: _t('Verify or sign out from this session for best security and reliability.'),
     };
+
     return <SettingsTab heading={_t('Sessions')}>
         <SettingsSubsection
             heading={_t('Current session')}
@@ -54,6 +58,19 @@ const SessionManagerTab: React.FC = () => {
             </>
             }
         </SettingsSubsection>
+        {
+            shouldShowOtherSessions &&
+            <SettingsSubsection
+                heading={_t('Other sessions')}
+                description={_t(
+                    `For best security, verify your sessions and sign out ` +
+                    `from any session that you don't recognize or use anymore.`,
+                )}
+                data-testid='other-sessions-section'
+            >
+                <FilteredDeviceList devices={otherDevices} />
+            </SettingsSubsection>
+        }
     </SettingsTab>;
 };
 

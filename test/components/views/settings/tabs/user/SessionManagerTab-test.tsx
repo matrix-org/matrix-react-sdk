@@ -40,6 +40,12 @@ describe('<SessionManagerTab />', () => {
     };
     const alicesMobileDevice = {
         device_id: 'alices_mobile_device',
+        last_seen_ts: Date.now(),
+    };
+
+    const alicesOlderMobileDevice = {
+        device_id: 'alices_older_mobile_device',
+        last_seen_ts: Date.now() - 600000,
     };
 
     const mockCrossSigningInfo = {
@@ -139,8 +145,6 @@ describe('<SessionManagerTab />', () => {
 
     it('renders current session section with an unverified session', async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
-        const noCryptoError = new Error("End-to-end encryption disabled");
-        mockClient.getStoredDevice.mockImplementation(() => { throw noCryptoError; });
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
@@ -155,6 +159,7 @@ describe('<SessionManagerTab />', () => {
         mockClient.getStoredDevice.mockImplementation(() => new DeviceInfo(alicesDevice.device_id));
         mockCrossSigningInfo.checkDeviceTrust
             .mockReturnValue(new DeviceTrustLevel(true, true, false, false));
+
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
@@ -162,5 +167,29 @@ describe('<SessionManagerTab />', () => {
         });
 
         expect(getByTestId('current-session-section')).toMatchSnapshot();
+    });
+
+    it('does not render other sessions section when user has only one device', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice] });
+        const { queryByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        expect(queryByTestId('other-sessions-section')).toBeFalsy();
+    });
+
+    it('renders other sessions section when user has more than one device', async () => {
+        mockClient.getDevices.mockResolvedValue({
+            devices: [alicesDevice, alicesOlderMobileDevice, alicesMobileDevice],
+        });
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        expect(getByTestId('other-sessions-section')).toBeTruthy();
     });
 });
