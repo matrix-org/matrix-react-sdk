@@ -15,23 +15,24 @@ limitations under the License.
 */
 
 import React, { Fragment } from "react";
-import { IMyDevice } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import { formatDate, formatRelativeTime } from "../../../../DateUtils";
 import TooltipTarget from "../../elements/TooltipTarget";
 import { Alignment } from "../../elements/Tooltip";
 import Heading from "../../typography/Heading";
+import { DeviceWithVerification } from "./useOwnDevices";
 
-interface Props {
-    device: IMyDevice;
+export interface DeviceTileProps {
+    device: DeviceWithVerification;
     children?: React.ReactNode;
+    onClick?: () => void;
 }
 
-const DeviceTileName: React.FC<{ device: IMyDevice }> = ({ device }) => {
+const DeviceTileName: React.FC<{ device: DeviceWithVerification }> = ({ device }) => {
     if (device.display_name) {
         return <TooltipTarget
-            alignment={Alignment.Left}
+            alignment={Alignment.Top}
             label={`${device.display_name} (${device.device_id})`}
         >
             <Heading size='h4'>
@@ -59,15 +60,17 @@ const DeviceMetadata: React.FC<{ value: string, id: string }> = ({ value, id }) 
     value ? <span data-testid={`device-metadata-${id}`}>{ value }</span> : null
 );
 
-const DeviceTile: React.FC<Props> = ({ device, children }) => {
+const DeviceTile: React.FC<DeviceTileProps> = ({ device, children, onClick }) => {
     const lastActivity = device.last_seen_ts && `${_t('Last activity')} ${formatLastActivity(device.last_seen_ts)}`;
+    const verificationStatus = device.isVerified ? _t('Verified') : _t('Unverified');
     const metadata = [
+        { id: 'isVerified', value: verificationStatus },
         { id: 'lastActivity', value: lastActivity },
         { id: 'lastSeenIp', value: device.last_seen_ip },
     ];
 
-    return <div className="mx_DeviceTile">
-        <div className="mx_DeviceTile_info">
+    return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
+        <div className="mx_DeviceTile_info" onClick={onClick}>
             <DeviceTileName device={device} />
             <div className="mx_DeviceTile_metadata">
                 { metadata.map(({ id, value }, index) =>
