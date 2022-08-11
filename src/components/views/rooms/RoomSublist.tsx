@@ -332,8 +332,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }).sort((a, b) => {
             return a-b;
         });
+        const seenRoomIds = new Set<string>();
         const orderedRoomIds = orderedRoomIndexes.map((i) => {
             const rid = roomIndexToRoomId[i];
+            if (seenRoomIds.has(rid)) {
+                logger.error("room " + rid + " already has an index position: duplicate room!");
+            }
+            seenRoomIds.add(rid);
             if (!rid) {
                 throw new Error("index " + i + " has no room ID: Map => " + JSON.stringify(roomIndexToRoomId));
             }
@@ -341,7 +346,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         });
         logger.debug(
             "onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:",
-            orderedRoomIds.length < 10 ? orderedRoomIds : orderedRoomIds.length,
+            orderedRoomIds.length < 30 ? orderedRoomIds : orderedRoomIds.length,
         );
         // now set the rooms
         this.setState({
