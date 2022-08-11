@@ -6,10 +6,16 @@ JavaScript/TypeScript SDK for widgets & clients to communicate.
 
 For help and support, visit [#matrix-widgets:matrix.org](https://matrix.to/#/#matrix-widgets:matrix.org) on Matrix.
 
-## Not yet ready for usage
+*Disclaimer: Widgets are not yet in the Matrix spec, so this library may not work with other implementations.*
 
-This is currently not validated and thus should not be relied upon until this notice goes away. Installation
-instructions will take this notice's place.
+## Building
+
+To transpile this project to JavaScript, run:
+
+```
+yarn install
+yarn build
+```
 
 ## Using the API without a bundler
 

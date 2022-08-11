@@ -17,6 +17,7 @@
 import { IWidgetApiRequest, IWidgetApiRequestData } from "./IWidgetApiRequest";
 import { WidgetApiFromWidgetAction } from "./WidgetApiAction";
 import { IWidgetApiResponseData } from "./IWidgetApiResponse";
+import { IRoomEvent } from "./IRoomEvent";
 import { Symbols } from "../Symbols";
 
 export interface IReadEventFromWidgetRequestData extends IWidgetApiRequestData {
@@ -33,7 +34,7 @@ export interface IReadEventFromWidgetActionRequest extends IWidgetApiRequest {
 }
 
 export interface IReadEventFromWidgetResponseData extends IWidgetApiResponseData {
-    events: unknown[];
+    events: IRoomEvent[];
 }
 
 export interface IReadEventFromWidgetActionResponse extends IReadEventFromWidgetActionRequest {
