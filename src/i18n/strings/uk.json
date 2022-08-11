@@ -2086,7 +2086,7 @@
     "Sign Out": "Вийти",
     "Sign out %(count)s selected devices|one": "Вийти з %(count)s вибраного пристрою",
     "Sign out %(count)s selected devices|other": "Вийти з %(count)s вибраних пристроїв",
-    "Sign out devices|one": "Вийти з притрою",
+    "Sign out devices|one": "Вийти з пристрою",
     "Sign out devices|other": "Вийти з пристроїв",
     "Click the button below to confirm signing out these devices.|other": "Клацніть кнопку внизу, щоб підтвердити вихід із цих пристроїв.",
     "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "Підтвердьте вихід із цих пристроїв за допомогою єдиного входу, щоб довести вашу справжність.",
