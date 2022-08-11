@@ -16,15 +16,14 @@ limitations under the License.
 
 import React, { Fragment } from "react";
 
-import { Icon as InactiveIcon } from "../../../../../res/img/external-link.svg";
+import { Icon as InactiveIcon } from '../../../../../res/img/element-icons/settings/inactive.svg';
 import { _t } from "../../../../languageHandler";
 import { formatDate, formatRelativeTime } from "../../../../DateUtils";
 import TooltipTarget from "../../elements/TooltipTarget";
 import { Alignment } from "../../elements/Tooltip";
 import Heading from "../../typography/Heading";
-import { DeviceWithVerification } from "./useOwnDevices";
 import { INACTIVE_DEVICE_AGE_MS, isDeviceInactive } from "./filter";
-
+import { DeviceWithVerification } from "./useOwnDevices";
 export interface DeviceTileProps {
     device: DeviceWithVerification;
     children?: React.ReactNode;

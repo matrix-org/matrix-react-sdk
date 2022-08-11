@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<DeviceTile /> Last activity renders with inactive notice when last activity was more than 90 days ago 1`] = `"Inactive for 90+ days (Dec 4, 2021)"`;
-
 exports[`<DeviceTile /> renders a device with no metadata 1`] = `
 <div>
   <div
