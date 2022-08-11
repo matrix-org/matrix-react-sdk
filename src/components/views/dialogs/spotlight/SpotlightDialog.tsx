@@ -92,7 +92,6 @@ import { RoomResultContextMenus } from "./RoomResultContextMenus";
 import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
 import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
-import { startDm } from "../../../../utils/dm/startDm";
 import { useSlidingSyncRoomSearch } from "../../../../hooks/useSlidingSyncRoomSearch";
 
 const MAX_RECENT_SEARCHES = 10;
