@@ -16,7 +16,6 @@ limitations under the License.
 
 import { DeviceWithVerification } from "./useOwnDevices";
 
-// TODO put somewhere good when security card is merged
 export enum DeviceSecurityVariation {
     Verified = 'Verified',
     Unverified = 'Unverified',
@@ -27,8 +26,8 @@ type DeviceFilterCondition = (device: DeviceWithVerification) => boolean;
 
 export const INACTIVE_DEVICE_AGE_MS = 7.776e+9; // 90 days
 
-export const isDeviceInactive: DeviceFilterCondition = device => !!device.last_seen_ts &&
-device.last_seen_ts < Date.now() - INACTIVE_DEVICE_AGE_MS;
+export const isDeviceInactive: DeviceFilterCondition = device =>
+    !!device.last_seen_ts && device.last_seen_ts < Date.now() - INACTIVE_DEVICE_AGE_MS;
 
 const filters: Record<DeviceSecurityVariation, DeviceFilterCondition> = {
     [DeviceSecurityVariation.Verified]: device => !!device.isVerified,
