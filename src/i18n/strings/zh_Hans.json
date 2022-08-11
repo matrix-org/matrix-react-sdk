@@ -3120,8 +3120,8 @@
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "空间是将房间和人分组的方式。除了你所在的空间，你也可以使用预建的空间。",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "启用硬件加速（重启%(appName)s以使其生效）",
     "Keyboard": "键盘",
-    "Debug logs contain application usage data including your username, the IDs or aliases of the rooms you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.": "debug日志包含应用使用数据，其中包括你的用户名、你访问过的房间的别名或ID、你上次与哪些UI元素互动、还有其它用户的用户名。但不包含消息。",
-    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "若你通过GitHub提交bug，则debug日志能帮助我们追踪问题。 ",
+    "Debug logs contain application usage data including your username, the IDs or aliases of the rooms you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.": "调试日志包含应用使用数据，其中包括你的用户名、你访问过的房间的别名或ID、你上次与哪些UI元素互动、还有其它用户的用户名。但不包含消息。",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "若你通过GitHub提交bug，则调试日志能帮助我们追踪问题。 ",
     "Deactivating your account is a permanent action — be careful!": "停用你的账户是永久性动作——小心！",
     "You will not receive push notifications on other devices until you sign back in to them.": "在你重新登录其他设备之前，你将不会在这些设备上收到推送通知。",
     "Your password was successfully changed.": "你的密码已成功更改。",
@@ -3375,5 +3375,7 @@
     "We're creating a room with %(names)s": "正在创建房间%(names)s",
     "Use new session manager (under active development)": "使用新的会话管理器（正在积极开发）",
     "Sessions": "会话",
-    "Current session": "当前会话"
+    "Current session": "当前会话",
+    "Verified": "已验证",
+    "Unverified": "未验证"
 }
