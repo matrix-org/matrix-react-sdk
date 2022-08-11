@@ -3500,5 +3500,14 @@
     "Use new session manager (under active development)": "Використовувати новий менеджер сеансів (в активній розробці)",
     "Current session": "Поточний сеанс",
     "Unverified": "Не звірений",
-    "Verified": "Звірений"
+    "Verified": "Звірений",
+    "Session details": "Подробиці сеансу",
+    "IP address": "IP-адреса",
+    "Device": "Пристрій",
+    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для кращої безпеки звірте свої сеанси та вийдіть з усіх невикористовуваних або нерозпізнаних сеансів.",
+    "Other sessions": "Інші сеанси",
+    "Verify or sign out from this session for best security and reliability.": "Звірте цей сеанс або вийдіть із нього для поліпшення безпеки та надійності.",
+    "Unverified session": "Не звірений сеанс",
+    "This session is ready for secure messaging.": "Цей сеанс готовий для безпечного обміну повідомленнями.",
+    "Verified session": "Звірений сеанс"
 }
