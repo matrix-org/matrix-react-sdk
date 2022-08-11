@@ -376,7 +376,7 @@ describe("Spotlight", () => {
     });
 
     // Test against https://github.com/vector-im/element-web/issues/22851
-    it("should not regress by showing the same person result multiple times", () => {
+    it("should show each person result only once", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
 
