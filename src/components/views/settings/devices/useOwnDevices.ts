@@ -20,7 +20,7 @@ import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
-import { DevicesDictionary, DeviceWithVerification } from "./types";
+import { DevicesDictionary } from "./types";
 
 const isDeviceVerified = (
     matrixClient: MatrixClient,

@@ -23,7 +23,7 @@ import DeviceTile from '../../devices/DeviceTile';
 import DeviceSecurityCard from '../../devices/DeviceSecurityCard';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import FilteredDeviceList from '../../devices/FilteredDeviceList';
-import { DeviceSecurityVariation } from '../../devices/filter';
+import { DeviceSecurityVariation } from '../../devices/types';
 import SettingsTab from '../SettingsTab';
 
 const SessionManagerTab: React.FC = () => {
