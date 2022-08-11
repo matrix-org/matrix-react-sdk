@@ -1,16 +1,72 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import SecurityRecommendations from '../../../../../src/components/views/settings/devices/SecurityRecommendations';
 
+const MS_DAY = 86400000;
 describe('<SecurityRecommendations />', () => {
-    const defaultProps = {};
-    const getComponent = (props = {}) =>
-        mount(<SecurityRecommendations {...defaultProps} {...props} />);
+    const unverifiedNoMetadata = { device_id: 'unverified-no-metadata', isVerified: false };
+    const verifiedNoMetadata = { device_id: 'verified-no-metadata', isVerified: true };
+    const hundredDaysOld = { device_id: '100-days-old', isVerified: true, last_seen_ts: Date.now() - (MS_DAY * 100) };
+    const hundredDaysOldUnverified = {
+        device_id: 'unverified-100-days-old',
+        isVerified: false,
+        last_seen_ts: Date.now() - (MS_DAY * 100),
+    };
 
-    it('renders', () => {
-        const component = getComponent();
-        expect(component).toBeTruthy();
+    const defaultProps = {
+        devices: {},
+    };
+    const getComponent = (props = {}) =>
+        (<SecurityRecommendations {...defaultProps} {...props} />);
+
+    it('renders null when no devices', () => {
+        const { container } = render(getComponent());
+        expect(container.firstChild).toBeNull();
+    });
+
+    it('renders unverified devices section when user has unverified devices', () => {
+        const devices = {
+            [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
+            [verifiedNoMetadata.device_id]: verifiedNoMetadata,
+            [hundredDaysOldUnverified.device_id]: hundredDaysOldUnverified,
+        };
+        const { container } = render(getComponent({ devices }));
+        expect(container).toMatchSnapshot();
+    });
+
+    it('renders inactive devices section when user has inactive devices', () => {
+        const devices = {
+            [verifiedNoMetadata.device_id]: verifiedNoMetadata,
+            [hundredDaysOldUnverified.device_id]: hundredDaysOldUnverified,
+        };
+        const { container } = render(getComponent({ devices }));
+        expect(container).toMatchSnapshot();
+    });
+
+    it('renders both cards when user has both unverified and inactive devices', () => {
+        const devices = {
+            [verifiedNoMetadata.device_id]: verifiedNoMetadata,
+            [hundredDaysOld.device_id]: hundredDaysOld,
+            [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
+        };
+        const { container } = render(getComponent({ devices }));
+        expect(container).toMatchSnapshot();
     });
 });
