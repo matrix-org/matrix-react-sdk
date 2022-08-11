@@ -18,8 +18,9 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { IWidget } from "matrix-widget-api/src/interfaces/IWidget";
-import { MatrixClient, MatrixEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
+import type { MatrixClient, MatrixEvent} from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { UserCredentials } from "../../support/login";
 
