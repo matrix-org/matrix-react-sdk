@@ -19,7 +19,7 @@ import { DeviceWithVerification, DeviceSecurityVariation } from "./types";
 type DeviceFilterCondition = (device: DeviceWithVerification) => boolean;
 
 // export const INACTIVE_DEVICE_AGE_MS = 7.776e+9; // 90 days
-export const INACTIVE_DEVICE_AGE_MS = 7.776e+9 / 90; // 90 days
+export const INACTIVE_DEVICE_AGE_MS = 7.776e+9; // 90 days
 
 export const isDeviceInactive: DeviceFilterCondition = device =>
     !!device.last_seen_ts && device.last_seen_ts < Date.now() - INACTIVE_DEVICE_AGE_MS;
