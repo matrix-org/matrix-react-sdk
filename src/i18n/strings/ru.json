@@ -3443,5 +3443,15 @@
     "In %(spaceName)s and %(count)s other spaces.|one": "В %(spaceName)s и %(count)s другом пространстве.",
     "In %(spaceName)s and %(count)s other spaces.|other": "В %(spaceName)s и %(count)s других пространствах.",
     "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s.",
-    "Use new session manager (under active development)": "Использовать новый менеджер сессий (в активной разработке)"
+    "Use new session manager (under active development)": "Использовать новый менеджер сессий (в активной разработке)",
+    "Unverified": "Не подтверждено",
+    "Verified": "Подтверждено",
+    "IP address": "IP-адрес",
+    "Device": "Устройство",
+    "Last activity": "Последняя активность",
+    "Other sessions": "Другие сессии",
+    "Current session": "Текущая сессия",
+    "Sessions": "Сессии",
+    "Unverified session": "Неподтверждённая сессия",
+    "Verified session": "Подтверждённая сессия"
 }
