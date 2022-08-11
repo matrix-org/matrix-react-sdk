@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { _t } from '../../../../languageHandler';
+import AccessibleButton from '../../elements/AccessibleButton';
 import SettingsSubsection from '../shared/SettingsSubsection';
 import DeviceSecurityCard from './DeviceSecurityCard';
 import { filterDevicesBySecurityRecommendation, INACTIVE_DEVICE_AGE_MS } from './filter';
-
 import { DevicesDictionary, DeviceSecurityVariation } from './types';
 
 interface Props {
@@ -45,6 +46,9 @@ const SecurityRecommendations: React.FC<Props> = ({ devices }) => {
 
     const inactiveAgeDays = INACTIVE_DEVICE_AGE_MS / MS_DAY;
 
+    // TODO(kerrya) stubbed until PSG-640/652
+    const noop = () => {};
+
     return <SettingsSubsection
         heading={_t('Security recommendations')}
         description={_t('Improve your account security by following these recommendations')}
@@ -57,22 +61,40 @@ const SecurityRecommendations: React.FC<Props> = ({ devices }) => {
                 heading={_t('Unverified sessions')}
                 description={_t(
                     `Verify your sessions for enhanced secure messaging` +
-                    ` or sign out from those you don't recognize or use anymore.`
+                    ` or sign out from those you don't recognize or use anymore.`,
                 )}
-            />
+            >
+                <AccessibleButton
+                    kind='link_inline'
+                    onClick={noop}
+                >
+                    { _t('View all') + ` (${unverifiedDevicesCount})` }
+                </AccessibleButton>
+            </DeviceSecurityCard>
         }
         {
             !!inactiveDevicesCount &&
-            <DeviceSecurityCard
-                variation={DeviceSecurityVariation.Inactive}
-                heading={_t('Inactive sessions')}
-                description={_t(
-                    `Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore`,
-                    { inactiveAgeDays },
-                )}
-            />
+            <>
+                { !!unverifiedDevicesCount && <br /> }
+                <DeviceSecurityCard
+                    variation={DeviceSecurityVariation.Inactive}
+                    heading={_t('Inactive sessions')}
+                    description={_t(
+                        `Consider signing out from old sessions ` +
+                        `(%(inactiveAgeDays)s days or older) you don't use anymore`,
+                        { inactiveAgeDays },
+                    )}
+                >
+                    <AccessibleButton
+                        kind='link_inline'
+                        onClick={noop}
+                    >
+                        { _t('View all') + ` (${inactiveDevicesCount})` }
+                    </AccessibleButton>
+                </DeviceSecurityCard>
+            </>
         }
-    </SettingsSubsection>
+    </SettingsSubsection>;
 };
 
 export default SecurityRecommendations;
