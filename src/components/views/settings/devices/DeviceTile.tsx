@@ -24,7 +24,6 @@ import { Alignment } from "../../elements/Tooltip";
 import Heading from "../../typography/Heading";
 import { INACTIVE_DEVICE_AGE_MS, isDeviceInactive } from "./filter";
 import { DeviceWithVerification } from "./useOwnDevices";
-
 export interface DeviceTileProps {
     device: DeviceWithVerification;
     children?: React.ReactNode;
