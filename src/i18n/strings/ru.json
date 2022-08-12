@@ -3511,5 +3511,7 @@
     "Send read receipts": "Отправлять уведомления о прочтении",
     "Reset bearing to north": "Сбросить пеленг на север",
     "Toggle attribution": "Переключить атрибуцию",
-    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Команда разработчика: Отменить текущий сеанс исходящей группы и настроить новые сеансы Olm"
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Команда разработчика: Отменить текущий сеанс исходящей группы и настроить новые сеансы Olm",
+    "Set up your profile": "Настройте свой профиль",
+    "Welcome": "Добро пожаловать"
 }
