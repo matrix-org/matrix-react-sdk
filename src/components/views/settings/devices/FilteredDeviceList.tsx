@@ -112,7 +112,13 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) =>
             !!filter &&
             <>
                 &nbsp;
-                <AccessibleButton kind='link_inline' onClick={clearFilter}>{ _t('Show all') }</AccessibleButton>
+                <AccessibleButton
+                    kind='link_inline'
+                    onClick={clearFilter}
+                    data-testid='devices-clear-filter-btn'
+                >
+                    { _t('Show all') }
+                </AccessibleButton>
             </>
         }
     </div>;
@@ -157,11 +163,11 @@ const FilteredDeviceList: React.FC<Props> = ({ devices, filter, onFilterChange }
             </span>
             <Dropdown
                 id='device-list-filter'
-                label={_t('Show')}
+                label={_t('Filter devices')}
                 value={filter || ALL_FILTER_ID}
                 onOptionChange={onFilterOptionChange}
             >
-                { options.map(({ id, label, description }) =>
+                { options.map(({ id, label }) =>
                     <div data-test-id={`device-filter-option-${id}`} key={id}>{ label }</div>,
                 ) }
             </Dropdown>
