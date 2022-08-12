@@ -3510,5 +3510,7 @@
     "Unverified session": "Не звірений сеанс",
     "This session is ready for secure messaging.": "Цей сеанс готовий для безпечного обміну повідомленнями.",
     "Verified session": "Звірений сеанс",
-    "Inactive for %(inactiveAgeDays)s+ days": "Неактивний %(inactiveAgeDays)s+ днів"
+    "Inactive for %(inactiveAgeDays)s+ days": "Неактивний %(inactiveAgeDays)s+ днів",
+    "Welcome": "Вітаємо",
+    "Show shortcut to welcome checklist above the room list": "Показати ярлик контрольного списку привітання над списком кімнат"
 }
