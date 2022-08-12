@@ -18,7 +18,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { IWidget } from "matrix-widget-api/src/interfaces/IWidget";
-import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
+// import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
@@ -79,12 +79,14 @@ function waitForRoomWidget(matrixClient: MatrixClient, widgetId: string, roomId:
             const currentWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
 
             if (eventsInIntendedState(currentWidgetEvents)) {
-                matrixClient.removeListener(RoomStateEvent.Events, onRoomStateEvents);
+                // @ts-ignore
+                matrixClient.removeListener('RoomState.events', onRoomStateEvents);
                 resolve();
             }
         }
 
-        matrixClient.on(RoomStateEvent.Events, onRoomStateEvents);
+        // @ts-ignore
+        matrixClient.on('RoomState.events', onRoomStateEvents);
     });
 }
 
