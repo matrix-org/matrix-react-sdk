@@ -582,6 +582,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         let body: ReactNode;
         const client = MatrixClientPeg.get();
         const room = client.getRoom(mxEvent.getRoomId());
+        //TODO: Decrypt emotes if encryption is added
         let emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
         let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         let finalEmotes = {};
@@ -622,8 +623,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             });
            
         }
-        //console.log(body);
-        //body.replace(/:[\w+-]+:/, m => finalEmotes[m] ? finalEmotes[m] : m)
         if (this.props.replacingEventId) {
             body = (
                 <>
@@ -666,8 +665,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             );
         }
 
-        //console.log(body.props.children);
-       //.replace(/:[\w+-]+:/, m => finalEmotes[m] ? finalEmotes[m] : m)
         if (isEmote) {
             return (
                 <div className="mx_MEmoteBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
