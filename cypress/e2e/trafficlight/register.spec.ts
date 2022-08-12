@@ -70,7 +70,7 @@ function recurse() {
             case 'accept_crosssign':
                 // Can we please tag some buttons :)
                 // Click 'Verify' when it comes up
-                cy.get('.mx_AccessibleButton_kind_primary').click();
+                cy.get('.mx_Toast_buttons > .mx_AccessibleButton_kind_primary').click();
                 // Click to move to emoji verification
                 cy.get('.mx_VerificationPanel_QRPhase_startOption > .mx_AccessibleButton').click();
                 cy.request('POST', respondUrl, { response: 'accepted_crosssign' }).then((response) => {
