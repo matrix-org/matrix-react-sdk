@@ -3509,5 +3509,6 @@
     "Verify or sign out from this session for best security and reliability.": "V záujme čo najvyššej bezpečnosti a spoľahlivosti túto reláciu overte alebo sa z nej odhláste.",
     "Unverified session": "Neoverená relácia",
     "This session is ready for secure messaging.": "Táto relácia je pripravená na bezpečné zasielanie správ.",
-    "Verified session": "Overená relácia"
+    "Verified session": "Overená relácia",
+    "Inactive for %(inactiveAgeDays)s+ days": "Neaktívny počas %(inactiveAgeDays)s+ dní"
 }
