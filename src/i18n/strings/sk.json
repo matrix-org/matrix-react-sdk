@@ -3510,5 +3510,7 @@
     "Unverified session": "Neoverená relácia",
     "This session is ready for secure messaging.": "Táto relácia je pripravená na bezpečné zasielanie správ.",
     "Verified session": "Overená relácia",
-    "Inactive for %(inactiveAgeDays)s+ days": "Neaktívny počas %(inactiveAgeDays)s+ dní"
+    "Inactive for %(inactiveAgeDays)s+ days": "Neaktívny počas %(inactiveAgeDays)s+ dní",
+    "Welcome": "Vitajte",
+    "Show shortcut to welcome checklist above the room list": "Zobraziť skratku na uvítací kontrolný zoznam nad zoznamom miestností"
 }
