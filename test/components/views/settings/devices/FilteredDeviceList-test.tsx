@@ -30,6 +30,7 @@ describe('<FilteredDeviceList />', () => {
         isVerified: true,
     };
     const defaultProps = {
+        onFilterChange: jest.fn(),
         devices: {
             [noMetaDevice.device_id]: noMetaDevice,
             [oldDevice.device_id]: oldDevice,
