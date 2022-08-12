@@ -24,7 +24,7 @@ function setupPromise(trafficlightUrl, uuid) {
 
     const data = JSON.stringify({
         type: 'element-web',
-        version: '0.15.0',
+        version: 'UNKNOWN', // at some point we need to know this, but for now it's hard to determine.
     });
     const target = trafficlightUrl + '/client/' + uuid + '/register';
     const promise = fetch(target, { method: 'POST', body: data, headers: { 'Content-Type': 'application/json' } })
