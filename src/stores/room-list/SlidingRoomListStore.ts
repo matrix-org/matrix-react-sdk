@@ -38,7 +38,6 @@ import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
 import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
 import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
-import { SlidingRoomListStoreClass } from "./SlidingRoomListStore";
 
 interface IState {
     // state is tracked in underlying classes
@@ -46,7 +45,7 @@ interface IState {
 
 export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
 
-export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
+export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     /**
      * Set to true if you're running tests on the store. Should not be touched in
      * any other environment.
@@ -159,13 +158,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         // when the timer fires.
         const logicallyReady = this.matrixClient && this.initialListsGenerated;
         if (!logicallyReady) return;
-
-        // When we're running tests we can't reliably use setImmediate out of timing concerns.
-        // As such, we use a more synchronous model.
-        if (RoomListStoreClass.TEST_MODE) {
-            await this.onDispatchAsync(payload);
-            return;
-        }
 
         // We do this to intentionally break out of the current event loop task, allowing
         // us to instead wait for a more convenient time to run our updates.
@@ -604,22 +596,3 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         this.updateFn.trigger();
     }
 }
-
-export default class RoomListStore {
-    private static internalInstance: Interface;
-
-    public static get instance(): Interface {
-        if (!RoomListStore.internalInstance) {
-            if (SettingsStore.getValue("feature_sliding_sync")) {
-                logger.info("using SlidingRoomListStoreClass");
-                RoomListStore.internalInstance = new SlidingRoomListStoreClass();
-            } else {
-                RoomListStore.internalInstance = new RoomListStoreClass();
-            }
-        }
-
-        return RoomListStore.internalInstance;
-    }
-}
-
-window.mxRoomListStore = RoomListStore.instance;
