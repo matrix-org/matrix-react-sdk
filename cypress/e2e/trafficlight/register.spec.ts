@@ -98,8 +98,8 @@ function recurse() {
     });
 }
 
-describe('traffic light cycle', () => {
-    it('runs a trafficlight client', () => {
+describe('traffic light client', () => {
+    it('runs a trafficlight client once', () => {
         cy.log('Beginning recursion');
         recurse();
     });
