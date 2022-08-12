@@ -1,3 +1,7 @@
+Added ability to upload room-specific custom emotes in Room Settings. These show up in the room's messages when the shortcode is in the message.
+The file fixes were a local issue in which I had to copy the correct version of the files from another folder. Not a part of the emote feature.
+Currently emotes are not encrypted and do not show up in autocomplete or the right side emoji panel. I think this could be a start for fully implementing custom emotes.
+
 Changes in [3.51.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.51.0) (2022-08-02)
 =====================================================================================================
 
