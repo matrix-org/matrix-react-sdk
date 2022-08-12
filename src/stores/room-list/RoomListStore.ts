@@ -125,9 +125,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
      */
     private handleRVSUpdate({ trigger = true }) {
         if (!this.matrixClient) return; // We assume there won't be RVS updates without a client
-        if (SettingsStore.getValue("feature_sliding_sync")) {
-            return; // we don't need any of this in sliding sync mode.
-        }
 
         const activeRoomId = RoomViewStore.instance.getRoomId();
         if (!activeRoomId && this.algorithm.stickyRoom) {
@@ -176,9 +173,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         // Everything here requires a MatrixClient or some sort of logical readiness.
         const logicallyReady = this.matrixClient && this.initialListsGenerated;
         if (!logicallyReady) return;
-        if (SettingsStore.getValue("feature_sliding_sync")) {
-            return; // we don't need any of this in sliding sync mode.
-        }
 
         if (!this.algorithm) {
             // This shouldn't happen because `initialListsGenerated` implies we have an algorithm.
