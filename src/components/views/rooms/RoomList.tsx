@@ -17,7 +17,6 @@ limitations under the License.
 import * as fbEmitter from "fbemitter";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MSC3575Filter } from "matrix-js-sdk/src/sliding-sync";
 import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
@@ -463,7 +462,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     private getRoomDelta = (roomId: string, delta: number, unread = false) => {
         const lists = RoomListStore.instance.orderedLists;
         const rooms: Room[] = [];
-        TAG_ORDER.forEach(t => {
+        ALWAYS_VISIBLE_TAGS.forEach(t => { // FIXME: read from store?
             let listRooms = lists[t];
 
             if (unread) {
@@ -584,14 +583,11 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     }
 
     private renderSublists(): React.ReactElement[] {
-        if (SettingsStore.getValue("feature_sliding_sync")) {
-            return this.renderSlidingSyncLists();
-        }
         // show a skeleton UI if the user is in no rooms and they are not filtering and have no suggested rooms
         const showSkeleton = !this.state.suggestedRooms?.length &&
             Object.values(RoomListStore.instance.orderedLists).every(list => !list?.length);
 
-        return TAG_ORDER
+        return ALWAYS_VISIBLE_TAGS // FIXME: read from store?
             .map(orderedTagId => {
                 let extraTiles = null;
                 if (orderedTagId === DefaultTagID.Suggested) {
@@ -646,52 +642,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     forceExpanded={forceExpanded}
                 />;
             });
-    }
-
-    private renderSlidingSyncLists(): React.ReactElement[] {
-        // TODO: Currently sliding sync does not support Favourites, Low Priority or Server Notice groupings.
-        const tagOrder = [
-            DefaultTagID.Invite,
-            // DefaultTagID.Favourite,
-            DefaultTagID.DM,
-            DefaultTagID.Untagged,
-        ];
-        const tagToSlidingSyncFilters: Record<string,MSC3575Filter> = {
-            [DefaultTagID.Invite]: {
-                is_invite: true,
-            },
-            [DefaultTagID.DM]: {
-                is_dm: true,
-                is_invite: false,
-                is_tombstoned: false,
-            },
-            [DefaultTagID.Untagged]: {
-                is_dm: false,
-                is_invite: false,
-                is_tombstoned: false,
-                not_room_types: ["m.space"],
-                spaces: SpaceStore.instance.activeSpaceRoom ? [SpaceStore.instance.activeSpaceRoom.roomId] : undefined,
-            },
-        };
-        return tagOrder.map((tag, index) => {
-            const aesthetics = TAG_AESTHETICS[tag];
-            return <RoomSublist
-                key={`sublist-${tag}`}
-                tagId={tag}
-                forRooms={true}
-                slidingSyncFilter={tagToSlidingSyncFilters[tag]}
-                slidingSyncId={"list_"+index}
-                startAsHidden={aesthetics.defaultHidden}
-                label={aesthetics.sectionLabelRaw ? aesthetics.sectionLabelRaw : _t(aesthetics.sectionLabel)}
-                AuxButtonComponent={aesthetics.AuxButtonComponent}
-                isMinimized={this.props.isMinimized}
-                extraTiles={null}
-                resizeNotifier={this.props.resizeNotifier}
-                alwaysVisible={false}
-                onListCollapse={this.props.onListCollapse}
-                forceExpanded={false}
-            />;
-        });
     }
 
     public focus(): void {

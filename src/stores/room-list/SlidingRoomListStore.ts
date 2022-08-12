@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomUpdateCause, TagID } from "./models";
+import { RoomUpdateCause, TagID, OrderedDefaultTagIDs, DefaultTagID } from "./models";
 import { ITagMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
 import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -25,6 +24,9 @@ import { IFilterCondition } from "./filters/IFilterCondition";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
 import { SlidingSyncManager } from "../../SlidingSyncManager";
+import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
+import SpaceStore from "../spaces/SpaceStore";
+import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
 
 interface IState {
     // state is tracked in underlying classes
@@ -36,10 +38,37 @@ export const SlidingSyncSortToFilter: Record<SortAlgorithm, string[]> = {
     [SortAlgorithm.Manual]: ["by_recency"],
 };
 
+const filterConditions: Record<TagID, MSC3575Filter> = {
+    [DefaultTagID.Invite]: {
+        is_invite: true,
+    },
+    // TODO
+    // DefaultTagID.Favourite,
+    // DefaultTagID.SavedItems,
+    [DefaultTagID.DM]: {
+        is_dm: true,
+        is_invite: false,
+        is_tombstoned: false,
+    },
+    [DefaultTagID.Untagged]: {
+        is_dm: false,
+        is_invite: false,
+        is_tombstoned: false,
+        not_room_types: ["m.space"],
+        // spaces filter added dynamically
+    },
+    // TODO
+    // DefaultTagID.LowPriority,
+    // DefaultTagID.ServerNotice,
+    // DefaultTagID.Suggested,
+    // DefaultTagID.Archived,
+};
+
 export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
 
 export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     private tagIdToSortAlgo: Record<TagID,SortAlgorithm> = {};
+    private tagMap: ITagMap = {};
 
     constructor() {
         super(defaultDispatcher);
@@ -47,6 +76,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     public async setTagSorting(tagId: TagID, sort: SortAlgorithm) {
+        console.log("SlidingRoomListStore.setTagSorting ", tagId, sort);
         this.tagIdToSortAlgo[tagId] = sort;
         const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
         switch (sort) {
@@ -151,32 +181,93 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     public get orderedLists(): ITagMap {
-        const tagMap: ITagMap = {};
-        for (let tagId in this.tagIdToSortAlgo) {
-            const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
-            let { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(index);
-            const rooms = [];
-            for (let roomIndex in roomIndexToRoomId) {
-                const roomId = roomIndexToRoomId[roomIndex];
-                const r = this.matrixClient.getRoom(roomId);
-                if (r) {
-                    rooms.push(r);
-                }
+        return this.tagMap;
+    }
+
+    private refreshOrderedLists(listIndex: number, joinCount: number, roomIndexToRoomId: Record<number, string>): void {
+        const tagMap = this.tagMap;
+        const tagId = SlidingSyncManager.instance.listIdForIndex(listIndex);
+        // order from low to high
+        const orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
+            return Number(numStr);
+        }).sort((a, b) => {
+            return a-b;
+        });
+        const seenRoomIds = new Set<string>();
+        const orderedRoomIds = orderedRoomIndexes.map((i) => {
+            const rid = roomIndexToRoomId[i];
+            if (seenRoomIds.has(rid)) {
+                logger.error("room " + rid + " already has an index position: duplicate room!");
             }
-            tagMap[tagId] = rooms;
+            seenRoomIds.add(rid);
+            if (!rid) {
+                throw new Error("index " + i + " has no room ID: Map => " + JSON.stringify(roomIndexToRoomId));
+            }
+            return rid;
+        });
+        logger.debug(
+            "SlidingRoomListStore.refreshOrderedLists", listIndex, "join=", joinCount, " rooms:",
+            orderedRoomIds.length < 30 ? orderedRoomIds : orderedRoomIds.length,
+        );
+        // now set the rooms
+        const rooms = orderedRoomIds.map((roomId) => {
+            return this.matrixClient.getRoom(roomId);
+        })
+        tagMap[tagId] = rooms;
+        this.tagMap = tagMap;
+    }
+
+    private onSlidingSyncListUpdate(listIndex: number, joinCount: number, roomIndexToRoomId: Record<number, string>) {
+        this.refreshOrderedLists(listIndex, joinCount, roomIndexToRoomId);
+        // let the UI update
+        this.emit(LISTS_UPDATE_EVENT);
+    }
+
+    protected async onReady(): Promise<any> {
+        console.log("SlidingRoomListStore.onReady");
+        // permanent listener, we never get destroyed. Could be an issue if we want to test this in isolation.
+        SlidingSyncManager.instance.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
+        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated.bind(this));
+        if (SpaceStore.instance.activeSpace) {
+            this.onSelectedSpaceUpdated(SpaceStore.instance.activeSpace, false);
         }
-        console.log("SlidingRoomListStore.orderedLists", tagMap);
-        return tagMap;
+
+        // sliding sync has an initial response for spaces. Now request all the lists.
+        // We do the spaces list _first_ to avoid potential flickering on DefaultTagID.Untagged list
+        // which would be caused by initially having no `spaces` filter set, and then suddenly setting one.
+        OrderedDefaultTagIDs.forEach((tagId) => {
+            const filter = filterConditions[tagId];
+            if (!filter) {
+                console.log("SlidingRoomListStore.onReady unsupported list ", tagId);
+                return; // we do not support this list yet.
+            }
+            const sort = SortAlgorithm.Recent; // default to recency sort, TODO: read from config
+            this.tagIdToSortAlgo[tagId] = sort;
+            // don't bother waiting, it'll happen eventually and then we'll update it via callbacks on slidingSync
+            SlidingSyncManager.instance.ensureListRegistered(SlidingSyncManager.instance.getOrAllocateListIndex(tagId), {
+                filters: filter,
+                sort: SlidingSyncSortToFilter[sort],
+            });
+        });
+    }
+
+    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome: boolean) => {
+        console.log("SlidingRoomListStore.onSelectedSpaceUpdated", activeSpace);
+        // update the untagged filter
+        const tagID = DefaultTagID.Untagged;
+        const filters = filterConditions[tagID];
+        filters.spaces = (activeSpace && activeSpace != MetaSpace.Home) ? [activeSpace] : undefined;
+        SlidingSyncManager.instance.ensureListRegistered(
+            SlidingSyncManager.instance.getOrAllocateListIndex(tagID),
+            {
+                filters: filters,
+            },
+        );
     }
 
 
     // Intended for test usage
     public async resetStore() {
-        // Test function
-    }
-
-    // Public for test usage. Do not call this.
-    public async makeReady(forcedClient?: MatrixClient) {
         // Test function
     }
 
@@ -190,10 +281,6 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
      */
     public regenerateAllLists({ trigger = true }) {
         // Test function
-    }
-
-    protected async onReady(): Promise<any> {
-        await this.makeReady();
     }
 
     protected async onNotReady(): Promise<any> {

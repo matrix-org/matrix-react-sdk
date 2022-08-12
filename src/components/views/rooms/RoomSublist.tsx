@@ -17,8 +17,6 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
-import * as utils from "matrix-js-sdk/src/utils";
-import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import classNames from 'classnames';
 import { Dispatcher } from "flux";
 import { Enable, Resizable } from "re-resizable";
@@ -56,11 +54,8 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SlidingSyncManager } from "../../../SlidingSyncManager";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import NotificationBadge from "./NotificationBadge";
 import RoomTile from "./RoomTile";
-import { logger } from "matrix-js-sdk/src/logger";
-import { SlidingSyncSortToFilter } from "../../../stores/room-list/SlidingRoomListStore";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -88,7 +83,6 @@ interface IProps {
     forceExpanded?: boolean;
     resizeNotifier: ResizeNotifier;
     extraTiles?: ReactComponentElement<typeof ExtraTile>[];
-    slidingSyncFilter?: MSC3575Filter; // request JSON for the 'filters' object.
     onListCollapse?: (isExpanded: boolean) => void;
 }
 
@@ -121,19 +115,11 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private notificationState: ListNotificationState;
 
     private slidingSyncMode: boolean;
-    private slidingSyncInit: Promise<unknown>; // we don't care about the resulting list
 
     constructor(props: IProps) {
         super(props);
         // when this setting is toggled it restarts the app so it's safe to not watch this.
         this.slidingSyncMode = SettingsStore.getValue("feature_sliding_sync");
-        if (this.slidingSyncMode) {
-            this.onSlidingSyncListUpdate = this.onSlidingSyncListUpdate.bind(this);
-            this.slidingSyncInit = SlidingSyncManager.instance.ensureListRegistered(SlidingSyncManager.instance.getOrAllocateListIndex(this.props.tagId), {
-                filters: this.props.slidingSyncFilter,
-                sort: SlidingSyncSortToFilter[SortAlgorithm.Recent], // default to recency sort
-            });
-        }
 
         this.layout = RoomListLayoutStore.instance.getLayoutFor(this.props.tagId);
         this.heightAtStart = 0;
@@ -208,24 +194,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         if (RoomSublist.calcNumTiles(prevState.rooms, prevExtraTiles) !== this.numTiles) {
             this.setState({ height: this.calculateInitialHeight() });
         }
-        if (this.slidingSyncMode && !utils.deepCompare(prevProps.slidingSyncFilter.spaces, this.props.slidingSyncFilter.spaces)) {
-            // spaces filter has changed, update the registration
-            const filters = this.props.slidingSyncFilter;
-            filters.spaces = this.props.slidingSyncFilter.spaces;
-            this.setState({
-                slidingSyncLoading: true,
-            });
-            SlidingSyncManager.instance.ensureListRegistered(
-                SlidingSyncManager.instance.getOrAllocateListIndex(this.props.tagId),
-                {
-                    filters: filters,
-                },
-            ).then(() => {
-                this.setState({
-                    slidingSyncLoading: false,
-                });
-            });
-        }
     }
 
     public shouldComponentUpdate(nextProps: Readonly<IProps>, nextState: Readonly<IState>): boolean {
@@ -285,20 +253,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     public async componentDidMount() {
-        if (this.slidingSyncMode) {
-            await this.slidingSyncInit;
-        }
-
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
-        if (this.slidingSyncMode) {
-            // listen for updates to this list
-            SlidingSyncManager.instance.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate);
-            // fire the list data for the initial render
-            const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(this.props.tagId);
-            const listData = SlidingSyncManager.instance.slidingSync.getListData(slidingSyncIndex);
-            this.onSlidingSyncListUpdate(slidingSyncIndex, listData.joinedCount, listData.roomIndexToRoomId);
-        }
 
         // Using the passive option to not block the main thread
         // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
@@ -307,57 +263,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
-        if (this.slidingSyncMode) {
-            SlidingSyncManager.instance.slidingSync.off(SlidingSyncEvent.List, this.onSlidingSyncListUpdate);
-        }
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onListsUpdated);
         this.tilesRef.current?.removeEventListener("scroll", this.onScrollPrevent);
-    }
-
-    private onSlidingSyncListUpdate(listIndex: number, joinCount: number, roomIndexToRoomId: Record<number, string>) {
-        const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(this.props.tagId);
-        if (listIndex !== slidingSyncIndex) {
-            return;
-        }
-
-        const orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
-            return Number(numStr);
-        }).sort((a, b) => {
-            return a-b;
-        });
-        const seenRoomIds = new Set<string>();
-        const orderedRoomIds = orderedRoomIndexes.map((i) => {
-            const rid = roomIndexToRoomId[i];
-            if (seenRoomIds.has(rid)) {
-                logger.error("room " + rid + " already has an index position: duplicate room!");
-            }
-            seenRoomIds.add(rid);
-            if (!rid) {
-                throw new Error("index " + i + " has no room ID: Map => " + JSON.stringify(roomIndexToRoomId));
-            }
-            return rid;
-        });
-        logger.debug(
-            "onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:",
-            orderedRoomIds.length < 30 ? orderedRoomIds : orderedRoomIds.length,
-        );
-        // now set the rooms
-        this.setState({
-            rooms: orderedRoomIds.map((roomId, index) => {
-                const r = MatrixClientPeg.get().getRoom(roomId);
-                return r;
-            }),
-            slidingSyncJoinedCount: joinCount,
-        });
-
-        if (this.props.forceExpanded && orderedRoomIds.length < joinCount) {
-            // expand the range for this list as we are forcibly showing everything
-            SlidingSyncManager.instance.ensureListRegistered(slidingSyncIndex, {
-                ranges: [
-                    [0, joinCount-1],
-                ],
-            });
-        }
     }
 
     private onListsUpdated = () => {

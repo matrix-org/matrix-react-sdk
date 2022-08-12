@@ -127,6 +127,15 @@ export class SlidingSyncManager {
         return this.slidingSync;
     }
 
+    public listIdForIndex(index: number): string | null {
+        for (const listId in this.listIdToIndex) {
+            if (this.listIdToIndex[listId] === index) {
+                return listId;
+            }
+        }
+        return null;
+    }
+
     /**
      * Allocate or retrieve the list index for an arbitrary list ID. For example SlidingSyncManager.ListSpaces
      * @param listId A string which represents the list.
