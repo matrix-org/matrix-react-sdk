@@ -150,7 +150,7 @@ const FilteredDeviceList: React.FC<Props> = ({ devices, filter, onFilterChange }
         onFilterChange(filterId === ALL_FILTER_ID ? undefined : filterId as DeviceSecurityVariation);
     };
 
-    return <div>
+    return <div className='mx_FilteredDeviceList'>
         <div className='mx_FilteredDeviceList_header'>
             <span className='mx_FilteredDeviceList_headerLabel'>
                 { _t('Sessions') }
