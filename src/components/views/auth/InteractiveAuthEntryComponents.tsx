@@ -721,8 +721,8 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
             submitButtonOrSpinner = (
                 <AccessibleButton
                     onClick={this.onSubmit}
-                    kind={this.props.continueKind || 'primary'}
-                >{ this.props.continueText || _t("Continue") }</AccessibleButton>
+                    kind='primary'
+                >{ _t("Continue") }</AccessibleButton>
             );
         }
 
