@@ -1418,7 +1418,7 @@
     "Looks good": "В порядке",
     "All rooms": "Все комнаты",
     "Your server": "Ваш сервер",
-    "Matrix": "Матрикс",
+    "Matrix": "Matrix",
     "Add a new server": "Добавить сервер",
     "Server name": "Имя сервера",
     "Destroy cross-signing keys?": "Уничтожить ключи кросс-подписи?",
@@ -3453,5 +3453,11 @@
     "Current session": "Текущая сессия",
     "Sessions": "Сессии",
     "Unverified session": "Неподтверждённая сессия",
-    "Verified session": "Подтверждённая сессия"
+    "Verified session": "Подтверждённая сессия",
+    "Android": "Android",
+    "iOS": "iOS",
+    "We'll help you get connected.": "Мы поможем вам подключиться.",
+    "Join the room to participate": "Присоединяйтесь к комнате для участия",
+    "This session is ready for secure messaging.": "Эта сессия готова к безопасному обмену сообщениями.",
+    "Start your first chat": "Начните свою первую беседу"
 }
