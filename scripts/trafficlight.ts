@@ -102,11 +102,11 @@ const trafficlightUrl = 'http://localhost:5000';
 const args = pprocess.argv.slice(2);
 if (args[0] == 'run') {
     runRepeatedly(trafficlightUrl).then((result) => {
-        console.error("Finished looping forever(?), got " + result);
+        console.log('Finished looping forever(?), got ' + result);
     });
 } else if (args[0] == 'open') {
     runOnce(trafficlightUrl).then((result) => {
-        console.error("Finished one-shot, got " + result);
+        console.log('Finished one-shot, got ' + result);
     });
 } else {
     console.error('No idea what ' + args[0] + 'means (i understand "run" to run continually, "open" to launch the UI)');
