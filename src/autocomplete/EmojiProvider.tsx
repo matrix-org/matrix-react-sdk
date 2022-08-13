@@ -33,6 +33,7 @@ import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
 import { filterBoolean } from "../utils/arrays";
+import { mediaFromMxc } from "../customisations/Media";
 
 const LIMIT = 20;
 
@@ -80,9 +81,15 @@ export default class EmojiProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<ISortedEmoji>;
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
-
-    public constructor(room: Room, renderingType?: TimelineRenderingType) {
+    emotes:Dictionary<string>;
+    constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
+        let emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
+        let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+        this.emotes = {};
+        for (let key in rawEmotes) {
+            this.emotes[key] = "<img class='mx_Emote' title=':"+key+ ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
+        }
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
             funcs: [(o) => o.emoji.shortcodes.map((s) => `:${s}:`)],
@@ -107,8 +114,21 @@ export default class EmojiProvider extends AutocompleteProvider {
         if (!SettingsStore.getValue("MessageComposerInput.suggestEmoji")) {
             return []; // don't give any suggestions if the user doesn't want them
         }
+        let emojisAndEmotes=[...SORTED_EMOJI];
+        for(let key in this.emotes){
+            emojisAndEmotes.push({
+                emoji:{label:key,
+                    shortcodes:[this.emotes[key]],
+                    hexcode:"",
+                    unicode:":"+key+":",
 
-        let completions: ISortedEmoji[] = [];
+                },
+                _orderBy:0
+            })
+        }
+        this.matcher.setObjects(emojisAndEmotes);
+        this.nameMatcher.setObjects(emojisAndEmotes);
+        let completions = [];
         const { command, range } = this.getCurrentCommand(query, selection);
 
         if (command && command[0].length > 2) {
@@ -165,8 +185,8 @@ export default class EmojiProvider extends AutocompleteProvider {
             return completions.map((c) => ({
                 completion: c.emoji.unicode,
                 component: (
-                    <PillCompletion title={`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
-                        <span>{c.emoji.unicode}</span>
+                    <PillCompletion title={c.emoji.shortcodes[0]} aria-label={c.emoji.unicode}>
+                        <span>{ this.emotes[c.emoji.shortcodes[0]]? this.emotes[c.emoji.shortcodes[0]]:c.emoji.unicode }</span>
                     </PillCompletion>
                 ),
                 range: range!,
