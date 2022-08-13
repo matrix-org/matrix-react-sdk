@@ -753,7 +753,7 @@
     "Profile picture": "Аватар",
     "Accept all %(invitedRooms)s invites": "Принять все приглашения (%(invitedRooms)s)",
     "Missing media permissions, click the button below to request.": "Отсутствуют разрешения для доступа к камере/микрофону. Нажмите кнопку ниже, чтобы запросить их.",
-    "Request media permissions": "Запросить доступ к медиа носителю",
+    "Request media permissions": "Запросить доступ к медиа устройству",
     "Change room name": "Изменить название комнаты",
     "For help with using %(brand)s, click <a>here</a>.": "Для получения помощи по использованию %(brand)s, нажмите <a>здесь</a>.",
     "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Для получения помощи по использованию %(brand)s, нажмите <a>здесь</a> или начните чат с нашим ботом с помощью кнопки ниже.",
