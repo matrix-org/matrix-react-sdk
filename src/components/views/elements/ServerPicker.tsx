@@ -24,6 +24,7 @@ import SdkConfig from "../../../SdkConfig";
 import Modal from "../../../Modal";
 import ServerPickerDialog from "../dialogs/ServerPickerDialog";
 import InfoDialog from "../dialogs/InfoDialog";
+import StyledCheckbox from './StyledCheckbox';
 
 interface IProps {
     title?: string;
@@ -97,6 +98,13 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
         </span>
         { editBtn }
         { desc }
+        <StyledCheckbox
+            className="mx_ServerPicker_tor"
+            checked={serverConfig.isTorConnect}
+            onChange={(e) => onServerConfigChange({ ...serverConfig, isTorConnect: e.target.checked })}
+        >
+            { _t('Connect to tor server') }
+        </StyledCheckbox>
     </div>;
 };
 

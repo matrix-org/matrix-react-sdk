@@ -252,6 +252,7 @@ export default class AutoDiscoveryUtils {
             isDefault: false,
             warning: hsResult.error,
             isNameResolvable: !isSynthetic,
+            isTorConnect: false,
         });
     }
 }

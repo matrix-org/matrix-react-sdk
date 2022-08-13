@@ -24,6 +24,7 @@ export class ValidatedServerConfig {
     isDefault: boolean;
     // when the server config is based on static URLs the hsName is not resolvable and things may wish to use hsUrl
     isNameResolvable: boolean;
+    isTorConnect: boolean;
 
     warning: string;
 }
