@@ -46,7 +46,7 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
 
     /**
      * Gets the active recording instance, if any.
-     * @param {string} voiceRecordingId The room ID to get the recording in.
+     * @param {string} voiceRecordingId The room ID (with optionnaly the thread ID if in one) to get the recording in.
      * @returns {Optional<VoiceRecording>} The recording, if any.
      */
     public getActiveRecording(voiceRecordingId: string): Optional<VoiceRecording> {
@@ -57,7 +57,7 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
      * Starts a new recording if one isn't already in progress. Note that this simply
      * creates a recording instance - whether or not recording is actively in progress
      * can be seen via the VoiceRecording class.
-     * @param {string} voiceRecordingId The room ID to start recording in.
+     * @param {string} voiceRecordingId The room ID (with optionnaly the thread ID if in one) to start recording in.
      * @returns {VoiceRecording} The recording.
      */
     public startRecording(voiceRecordingId: string): VoiceRecording {
@@ -75,7 +75,7 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
 
     /**
      * Disposes of the current recording, no matter the state of it.
-     * @param {string} voiceRecordingId The room ID to dispose of the recording in.
+     * @param {string} voiceRecordingId The room ID (with optionnaly the thread ID if in one) to dispose of the recording in.
      * @returns {Promise<void>} Resolves when complete.
      */
     public disposeRecording(voiceRecordingId: string): Promise<void> {
