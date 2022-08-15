@@ -20,9 +20,11 @@ import { IMyDevice } from 'matrix-js-sdk/src/matrix';
 import { formatDate } from '../../../../DateUtils';
 import { _t } from '../../../../languageHandler';
 import Heading from '../../typography/Heading';
+import DeviceVerificationStatusCard from './DeviceVerificationStatusCard';
+import { DeviceWithVerification } from './types';
 
 interface Props {
-    device: IMyDevice;
+    device: DeviceWithVerification;
 }
 
 interface MetadataTable {
@@ -51,6 +53,9 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
     return <div className='mx_DeviceDetails'>
         <section className='mx_DeviceDetails_section'>
             <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
+        </section>
+        <section className='mx_DeviceDetails_section'>
+            <DeviceVerificationStatusCard device={device} />
         </section>
         <section className='mx_DeviceDetails_section'>
             <p className='mx_DeviceDetails_sectionHeading'>{ _t('Session details') }</p>
