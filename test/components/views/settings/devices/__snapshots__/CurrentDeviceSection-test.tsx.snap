@@ -13,10 +13,6 @@ HTMLCollection [
       >
         alices_device
       </h3>
-    </section>
-    <section
-      class="mx_DeviceDetails_section"
-    >
       <div
         class="mx_DeviceSecurityCard"
       >
