@@ -52,7 +52,9 @@ exports[`<SecurityRecommendations /> renders both cards when user has both unver
           </div>
         </div>
       </div>
-      <br />
+      <div
+        class="mx_SecurityRecommendations_spacing"
+      />
       <div
         class="mx_DeviceSecurityCard"
       >
@@ -143,7 +145,9 @@ exports[`<SecurityRecommendations /> renders inactive devices section when user 
           </div>
         </div>
       </div>
-      <br />
+      <div
+        class="mx_SecurityRecommendations_spacing"
+      />
       <div
         class="mx_DeviceSecurityCard"
       >
@@ -234,7 +238,9 @@ exports[`<SecurityRecommendations /> renders unverified devices section when use
           </div>
         </div>
       </div>
-      <br />
+      <div
+        class="mx_SecurityRecommendations_spacing"
+      />
       <div
         class="mx_DeviceSecurityCard"
       >

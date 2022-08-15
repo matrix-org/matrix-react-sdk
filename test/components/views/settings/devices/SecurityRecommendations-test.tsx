@@ -19,7 +19,7 @@ import { render } from '@testing-library/react';
 
 import SecurityRecommendations from '../../../../../src/components/views/settings/devices/SecurityRecommendations';
 
-const MS_DAY = 86400000;
+const MS_DAY = 24 * 60 * 60 * 1000;
 describe('<SecurityRecommendations />', () => {
     const unverifiedNoMetadata = { device_id: 'unverified-no-metadata', isVerified: false };
     const verifiedNoMetadata = { device_id: 'verified-no-metadata', isVerified: true };

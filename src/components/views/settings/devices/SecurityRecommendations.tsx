@@ -75,7 +75,7 @@ const SecurityRecommendations: React.FC<Props> = ({ devices }) => {
         {
             !!inactiveDevicesCount &&
             <>
-                { !!unverifiedDevicesCount && <br /> }
+                { !!unverifiedDevicesCount && <div className='mx_SecurityRecommendations_spacing' /> }
                 <DeviceSecurityCard
                     variation={DeviceSecurityVariation.Inactive}
                     heading={_t('Inactive sessions')}
