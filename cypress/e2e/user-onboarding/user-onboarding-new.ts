@@ -40,6 +40,13 @@ describe("User Onboarding (new user)", () => {
                 bot1 = _bot1;
             });
             cy.get('.mx_UserOnboardingPage').should('exist');
+            cy.get('.mx_UserOnboardingButton').should('exist');
+            cy.get('.mx_UserOnboardingList')
+                .should('exist')
+                .should(($list) => {
+                    const list = $list.get(0);
+                    expect(getComputedStyle(list).opacity).to.be.eq("1");
+                });
         });
     });
 
@@ -47,18 +54,22 @@ describe("User Onboarding (new user)", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("page is shown", () => {
-        cy.get('.mx_UserOnboardingPage').should('exist');
-        cy.percySnapshot("User onboarding page");
+    it("page is shown and preference exists", () => {
+        cy.get('.mx_UserOnboardingPage')
+            .percySnapshotElement("User onboarding page");
+        cy.openUserSettings("Preferences");
+        cy.contains("Show shortcut to welcome checklist above the room list").should("exist");
     });
 
     it("app download dialog", () => {
-        cy.get('.mx_UserOnboardingPage').should('exist');
         cy.contains(".mx_UserOnboardingTask_action", "Download apps").click();
         cy.get('[role=dialog]')
             .contains("#mx_BaseDialog_title", "Download Element")
             .should("exist");
-        cy.percySnapshot("App download dialog");
+        cy.get('[role=dialog]')
+            .percySnapshotElement("App download dialog", {
+                widths: [640],
+            });
     });
 
     it("using find friends action should increase progress", () => {
@@ -69,8 +80,7 @@ describe("User Onboarding (new user)", () => {
             cy.get(".mx_InviteDialog_editor input").type(bot1.getUserId());
             cy.get(".mx_InviteDialog_buttonAndSpinner").click();
             cy.get(".mx_InviteDialog_buttonAndSpinner").should("not.exist");
-            cy.visit("/#/home");
-
+            cy.get(".mx_SendMessageComposer").type("Hi!{enter}");
             cy.get(".mx_ProgressBar").invoke("val").should("be.greaterThan", oldProgress);
         });
     });
