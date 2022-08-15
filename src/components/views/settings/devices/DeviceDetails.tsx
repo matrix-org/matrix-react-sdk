@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { IMyDevice } from 'matrix-js-sdk/src/matrix';
 
 import { formatDate } from '../../../../DateUtils';
 import { _t } from '../../../../languageHandler';
