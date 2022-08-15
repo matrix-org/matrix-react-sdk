@@ -39,10 +39,6 @@ describe('<CurrentDeviceSection />', () => {
     const getComponent = (props = {}): React.ReactElement =>
         (<CurrentDeviceSection {...defaultProps} {...props} />);
 
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
-
     it('renders spinner while device is loading', () => {
         const { container } = render(getComponent({ device: undefined, isLoading: true }));
         expect(container.getElementsByClassName('mx_Spinner').length).toBeTruthy();
