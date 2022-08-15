@@ -3510,5 +3510,7 @@
     "Verify or sign out from this session for best security and reliability.": "驗證或登出此工作階段以取得最佳安全性與可靠程度。",
     "Unverified session": "未經驗證的工作階段",
     "This session is ready for secure messaging.": "此工作階段已準備好進行安全通訊。",
-    "Verified session": "已驗證的工作階段"
+    "Verified session": "已驗證的工作階段",
+    "Welcome": "歡迎",
+    "Show shortcut to welcome checklist above the room list": "在聊天室清單上方顯示歡迎清單的捷徑"
 }
