@@ -23,8 +23,10 @@ import DeviceDetails from './DeviceDetails';
 import DeviceExpandDetailsButton from './DeviceExpandDetailsButton';
 import DeviceSecurityCard from './DeviceSecurityCard';
 import DeviceTile from './DeviceTile';
-import { DeviceSecurityVariation } from './filter';
-import { DeviceWithVerification } from './useOwnDevices';
+import {
+    DeviceSecurityVariation,
+    DeviceWithVerification,
+ } from './types';
 
 interface Props {
     device?: DeviceWithVerification;
