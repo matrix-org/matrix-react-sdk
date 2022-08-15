@@ -3512,5 +3512,12 @@
     "Verified session": "Звірений сеанс",
     "Inactive for %(inactiveAgeDays)s+ days": "Неактивний %(inactiveAgeDays)s+ днів",
     "Welcome": "Вітаємо",
-    "Show shortcut to welcome checklist above the room list": "Показати ярлик контрольного списку привітання над списком кімнат"
+    "Show shortcut to welcome checklist above the room list": "Показати ярлик контрольного списку привітання над списком кімнат",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore": "Ви можете вийти зі старих сеансів (%(inactiveAgeDays)s днів або давніших), якими ви більше не користуєтеся",
+    "Inactive sessions": "Неактивні сеанси",
+    "View all": "Переглянути всі",
+    "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Звірте свої сеанси для покращеного безпечного обміну повідомленнями або вийдіть із тих, які ви не розпізнаєте або не використовуєте.",
+    "Unverified sessions": "Не звірені сеанси",
+    "Improve your account security by following these recommendations": "Удоскональте безпеку свого облікового запису, дотримуючись цих порад",
+    "Security recommendations": "Поради щодо безпеки"
 }
