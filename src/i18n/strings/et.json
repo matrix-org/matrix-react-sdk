@@ -3508,5 +3508,12 @@
     "IP address": "IP-aadress",
     "Device": "Seade",
     "Unverified": "Verifitseerimata",
-    "Verified": "Verifitseeritud"
+    "Verified": "Verifitseeritud",
+    "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Turvalise sõnumvahetuse nimel verifitseeri kõik oma sessioonid ning logi neist välja, mida sa enam ei kasuta või ei tunne enam ära.",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore": "Kui sa ei kasuta oma vanu sessioone (vanemad kui %(inactiveAgeDays)s päeva), siis logi need võrgust välja",
+    "Inactive sessions": "Mitteaktiivsed sessioonid",
+    "View all": "Näita kõiki",
+    "Unverified sessions": "Verifitseerimata sessioonid",
+    "Improve your account security by following these recommendations": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust",
+    "Security recommendations": "Turvalisusega seotud soovitused"
 }
