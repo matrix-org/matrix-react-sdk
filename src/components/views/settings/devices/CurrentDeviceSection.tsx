@@ -54,11 +54,12 @@ const CurrentDeviceSection: React.FC<Props> = ({
                 device={device}
             >
                 <DeviceExpandDetailsButton
+                    data-testid='current-session-toggle-details'
                     isExpanded={isExpanded}
                     onClick={() => setIsExpanded(!isExpanded)}
                 />
             </DeviceTile>
-            { isExpanded && <DeviceDetails device={device} />}
+            { isExpanded && <DeviceDetails device={device} /> }
             <br />
             <DeviceSecurityCard
                 {...securityCardProps}

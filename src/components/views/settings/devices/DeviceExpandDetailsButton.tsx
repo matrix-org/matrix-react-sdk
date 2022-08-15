@@ -15,21 +15,20 @@ limitations under the License.
 */
 
 import classNames from 'classnames';
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 
 import { Icon as CaretIcon } from '../../../../../res/img/feather-customised/dropdown-arrow.svg';
 import AccessibleButton from '../../elements/AccessibleButton';
 
-interface Props extends Omit<HTMLAttributes<HTMLButtonElement>, 'className'> {
+interface Props {
     isExpanded: boolean;
     onClick: () => void;
 }
 
 const DeviceExpandDetailsButton: React.FC<Props> = ({ isExpanded, onClick, ...rest }) => {
-    return <AccessibleButton<HTMLButtonElement>
+    return <AccessibleButton
         {...rest}
         kind='icon'
-        element='button'
         className={classNames('mx_DeviceExpandDetailsButton', {
             mx_DeviceExpandDetailsButton_expanded: isExpanded,
         })}

@@ -14,18 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render } from '@testing-library/react';
 import React from 'react';
+import { fireEvent, render } from '@testing-library/react';
 
 import DeviceExpandDetailsButton from '../../../../../src/components/views/settings/devices/DeviceExpandDetailsButton';
 
 describe('<DeviceExpandDetailsButton />', () => {
-    const defaultProps = {};
+    const defaultProps = {
+        isExpanded: false,
+        onClick: jest.fn(),
+    };
     const getComponent = (props = {}) =>
         <DeviceExpandDetailsButton {...defaultProps} {...props} />;
 
-    it('renders', () => {
+    it('renders when not expanded', () => {
         const { container } = render(getComponent());
-        expect({ container }).toBeTruthy();
+        expect({ container }).toMatchSnapshot();
+    });
+
+    it('renders when expanded', () => {
+        const { container } = render(getComponent({ isExpanded: true }));
+        expect({ container }).toMatchSnapshot();
+    });
+
+    it('calls onClick', () => {
+        const onClick = jest.fn();
+        const { getByTestId } = render(getComponent({ 'data-testid': 'test', onClick }));
+        fireEvent.click(getByTestId('test'));
+
+        expect(onClick).toHaveBeenCalled();
     });
 });
