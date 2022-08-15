@@ -52,8 +52,6 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
     return <div className='mx_DeviceDetails'>
         <section className='mx_DeviceDetails_section'>
             <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
-        </section>
-        <section className='mx_DeviceDetails_section'>
             <DeviceVerificationStatusCard device={device} />
         </section>
         <section className='mx_DeviceDetails_section'>
