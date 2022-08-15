@@ -22,6 +22,7 @@ import SettingsSubsection from '../../shared/SettingsSubsection';
 import FilteredDeviceList from '../../devices/FilteredDeviceList';
 import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
 import SecurityRecommendations from '../../devices/SecurityRecommendations';
+import { DeviceSecurityVariation } from '../../devices/types';
 import SettingsTab from '../SettingsTab';
 
 const SessionManagerTab: React.FC = () => {
