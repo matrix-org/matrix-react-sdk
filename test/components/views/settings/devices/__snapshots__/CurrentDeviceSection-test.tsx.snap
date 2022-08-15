@@ -17,6 +17,36 @@ HTMLCollection [
     <section
       class="mx_DeviceDetails_section"
     >
+      <div
+        class="mx_DeviceSecurityCard"
+      >
+        <div
+          class="mx_DeviceSecurityCard_icon Unverified"
+        >
+          <div
+            height="16"
+            width="16"
+          />
+        </div>
+        <div
+          class="mx_DeviceSecurityCard_content"
+        >
+          <p
+            class="mx_DeviceSecurityCard_heading"
+          >
+            Unverified session
+          </p>
+          <p
+            class="mx_DeviceSecurityCard_description"
+          >
+            Verify or sign out from this session for best security and reliability.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="mx_DeviceDetails_section"
+    >
       <p
         class="mx_DeviceDetails_sectionHeading"
       >
