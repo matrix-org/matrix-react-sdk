@@ -112,26 +112,27 @@ describe("Widget PIP", () => {
             }).as('powerLevelsChanged');
 
             // bot joins the room
-            cy.botJoinRoom(bot, roomId).as('botJoined');
+            cy.botJoinRoom(bot, roomId).then(async () => {
+                // wait for bot to join the room, otherwise sometimes widget event is not found
+                // setup widget via state event
+                cy.getClient().then(async matrixClient => {
+                    const content: IWidget = {
+                        id: DEMO_WIDGET_ID,
+                        creatorUserId: 'somebody',
+                        type: DEMO_WIDGET_TYPE,
+                        name: DEMO_WIDGET_NAME,
+                        url: demoWidgetUrl,
+                    };
+                    await matrixClient.sendStateEvent(roomId, 'im.vector.modular.widgets', content, DEMO_WIDGET_ID);
+                });
+            }).as('botJoinedWidgetEventSent');
 
             // open the room
             cy.viewRoomByName(ROOM_NAME);
 
-            // setup widget via state event
-            cy.getClient().then(matrixClient => {
-                const content: IWidget = {
-                    id: DEMO_WIDGET_ID,
-                    creatorUserId: 'somebody',
-                    type: DEMO_WIDGET_TYPE,
-                    name: DEMO_WIDGET_NAME,
-                    url: demoWidgetUrl,
-                };
-                matrixClient.sendStateEvent(roomId, 'im.vector.modular.widgets', content, DEMO_WIDGET_ID);
-            });
-
             cy.all([
                 cy.get<string>("@powerLevelsChanged"),
-                cy.get<string>("@botJoined"),
+                cy.get<string>("@botJoinedWidgetEventSent"),
             ]).then(() => {
                 cy.window().then(async win => {
                     // wait for widget state event
@@ -146,21 +147,24 @@ describe("Widget PIP", () => {
                     // checks that widget is opened in pip
                     cy.accessIframe(`iframe[title="${DEMO_WIDGET_NAME}"]`).within({}, () => {
                         cy.get("#demo").should('exist');
+                    }).then(async () => {
+                        const userId = user.userId;
+                        if (userRemove == 'leave') {
+                            cy.getClient().then(async matrixClient => {
+                                await matrixClient.leave(roomId);
+                            });
+                        } else if (userRemove == 'kick') {
+                            // wait, otherwise sometimes not work
+                            cy.wait(500).then(async () => {
+                                await bot.kick(roomId, userId);
+                            });
+                        } else if (userRemove == 'ban') {
+                            await bot.ban(roomId, userId);
+                        }
+
+                        // checks that pip window is closed
+                        cy.get(".mx_CallView_pip").should("not.exist");
                     });
-
-                    const userId = user.userId;
-                    if (userRemove == 'leave') {
-                        cy.getClient().then(async matrixClient => {
-                            await matrixClient.leave(roomId);
-                        });
-                    } else if (userRemove == 'kick') {
-                        await bot.kick(roomId, userId);
-                    } else if (userRemove == 'ban') {
-                        await bot.ban(roomId, userId);
-                    }
-
-                    // checks that pip window is closed
-                    cy.get(".mx_CallView_pip").should("not.exist");
                 });
             });
         });
@@ -173,7 +177,7 @@ describe("Widget PIP", () => {
             cy.initTestUser(synapse, "Mike").then(_user => {
                 user = _user;
             });
-            cy.getBot(synapse, { displayName: "Bot" }).then(_bot => {
+            cy.getBot(synapse, { displayName: "Bot", autoAcceptInvites: false }).then(_bot => {
                 bot = _bot;
             });
         });
