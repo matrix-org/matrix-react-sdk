@@ -26,7 +26,7 @@ import DeviceTile from './DeviceTile';
 import {
     DeviceSecurityVariation,
     DeviceWithVerification,
- } from './types';
+} from './types';
 
 interface Props {
     device?: DeviceWithVerification;

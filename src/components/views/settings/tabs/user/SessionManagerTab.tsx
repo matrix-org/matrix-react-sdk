@@ -20,7 +20,6 @@ import { _t } from "../../../../../languageHandler";
 import { useOwnDevices } from '../../devices/useOwnDevices';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import FilteredDeviceList from '../../devices/FilteredDeviceList';
-import { DeviceSecurityVariation } from '../../devices/types';
 import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
 import SecurityRecommendations from '../../devices/SecurityRecommendations';
 import SettingsTab from '../SettingsTab';
