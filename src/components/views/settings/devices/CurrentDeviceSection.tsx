@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { _t } from '../../../../languageHandler';
 import Spinner from '../../elements/Spinner';
 import SettingsSubsection from '../shared/SettingsSubsection';
+import DeviceDetails from './DeviceDetails';
+import DeviceExpandDetailsButton from './DeviceExpandDetailsButton';
 import DeviceSecurityCard from './DeviceSecurityCard';
 import DeviceTile from './DeviceTile';
 import { DeviceSecurityVariation } from './filter';
@@ -32,6 +34,7 @@ interface Props {
 const CurrentDeviceSection: React.FC<Props> = ({
     device, isLoading,
 }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
     const securityCardProps = device?.isVerified ? {
         variation: DeviceSecurityVariation.Verified,
         heading: _t('Verified session'),
@@ -49,7 +52,13 @@ const CurrentDeviceSection: React.FC<Props> = ({
         { !!device && <>
             <DeviceTile
                 device={device}
-            />
+            >
+                <DeviceExpandDetailsButton
+                    isExpanded={isExpanded}
+                    onClick={() => setIsExpanded(!isExpanded)}
+                />
+            </DeviceTile>
+            { isExpanded && <DeviceDetails device={device} />}
             <br />
             <DeviceSecurityCard
                 {...securityCardProps}
