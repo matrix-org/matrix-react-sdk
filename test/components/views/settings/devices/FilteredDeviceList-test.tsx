@@ -18,7 +18,7 @@ import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 
 import FilteredDeviceList from '../../../../../src/components/views/settings/devices/FilteredDeviceList';
-import { DeviceSecurityVariation } from '../../../../../src/components/views/settings/devices/filter';
+import { DeviceSecurityVariation } from '../../../../../src/components/views/settings/devices/types';
 import { flushPromises, mockPlatformPeg } from '../../../../test-utils';
 
 mockPlatformPeg();
