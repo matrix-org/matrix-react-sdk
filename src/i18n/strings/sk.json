@@ -3497,5 +3497,20 @@
     "Send read receipts": "Odosielať potvrdenia o prečítaní",
     "Last activity": "Posledná aktivita",
     "Sessions": "Relácie",
-    "Use new session manager (under active development)": "Použiť nového správcu relácií (v štádiu aktívneho vývoja)"
+    "Use new session manager (under active development)": "Použiť nového správcu relácií (v štádiu aktívneho vývoja)",
+    "Current session": "Aktuálna relácia",
+    "Unverified": "Neoverené",
+    "Verified": "Overený",
+    "Session details": "Podrobnosti o relácii",
+    "IP address": "IP adresa",
+    "Device": "Zariadenie",
+    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "V záujme čo najlepšieho zabezpečenia overte svoje relácie a odhláste sa z každej relácie, ktorú už nepoznáte alebo nepoužívate.",
+    "Other sessions": "Iné relácie",
+    "Verify or sign out from this session for best security and reliability.": "V záujme čo najvyššej bezpečnosti a spoľahlivosti túto reláciu overte alebo sa z nej odhláste.",
+    "Unverified session": "Neoverená relácia",
+    "This session is ready for secure messaging.": "Táto relácia je pripravená na bezpečné zasielanie správ.",
+    "Verified session": "Overená relácia",
+    "Inactive for %(inactiveAgeDays)s+ days": "Neaktívny počas %(inactiveAgeDays)s+ dní",
+    "Welcome": "Vitajte",
+    "Show shortcut to welcome checklist above the room list": "Zobraziť skratku na uvítací kontrolný zoznam nad zoznamom miestností"
 }
