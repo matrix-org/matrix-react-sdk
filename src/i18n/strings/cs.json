@@ -3512,5 +3512,12 @@
     "Welcome": "Vítejte",
     "Show shortcut to welcome checklist above the room list": "Zobrazit zástupce na uvítací kontrolní seznam nad seznamem místností",
     "Use new session manager (under active development)": "Použít nový správce relací (v aktivním vývoji)",
-    "Send read receipts": "Odesílat potvrzení o přečtení"
+    "Send read receipts": "Odesílat potvrzení o přečtení",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore": "Zvažte odhlášení ze starých relací (%(inactiveAgeDays)s dní nebo starších), které již nepoužíváte",
+    "Inactive sessions": "Neaktivní relace",
+    "View all": "Zobrazit všechny",
+    "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Ověřte své relace pro bezpečné zasílání zpráv nebo se odhlaste z těch, které již nepoznáváte nebo nepoužíváte.",
+    "Unverified sessions": "Neověřené relace",
+    "Improve your account security by following these recommendations": "Zlepšete zabezpečení svého účtu dodržováním těchto doporučení",
+    "Security recommendations": "Bezpečnostní doporučení"
 }
