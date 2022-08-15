@@ -3498,5 +3498,19 @@
     "Share your activity and status with others.": "Ossza meg a tevékenységét és állapotát másokkal.",
     "Presence": "Állapot",
     "Spell check": "Helyesírás ellenőrzés",
-    "Complete these to get the most out of %(brand)s": "Ezen lépések befejezésével hozhatod ki a legtöbbet %(brand)s alkalmazásból"
+    "Complete these to get the most out of %(brand)s": "Ezen lépések befejezésével hozhatod ki a legtöbbet %(brand)s alkalmazásból",
+    "Unverified": "Ellenőrizetlen",
+    "Verified": "Ellenőrizve",
+    "Inactive for %(inactiveAgeDays)s+ days": "Utolsó használat %(inactiveAgeDays)s+ napja",
+    "Session details": "Munkamenet információk",
+    "IP address": "IP cím",
+    "Device": "Eszköz",
+    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "A legjobb biztonság érdekében ellenőrizze a munkameneteit és jelentkezzen ki azokból amiket nem ismer fel vagy már nem használ.",
+    "Other sessions": "Más munkamenetek",
+    "Verify or sign out from this session for best security and reliability.": "A jobb biztonság vagy megbízhatóság érdekében ellenőrizze vagy jelentkezzen ki ebből a munkamenetből.",
+    "Unverified session": "Ellenőrizetlen munkamenet",
+    "This session is ready for secure messaging.": "Ez a munkamenet beállítva a biztonságos üzenetküldéshez.",
+    "Verified session": "Munkamenet hitelesítve",
+    "Welcome": "Üdv",
+    "Show shortcut to welcome checklist above the room list": "Kezdő lépések elvégzéséhez való hivatkozás megjelenítése a szobalista fölött"
 }
