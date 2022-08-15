@@ -108,6 +108,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
 <div>
   <div
     class="mx_DeviceDetails"
+    data-testid="device-detail-my-device"
   >
     <section
       class="mx_DeviceDetails_section"
@@ -216,6 +217,7 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
 <div>
   <div
     class="mx_DeviceDetails"
+    data-testid="device-detail-my-device"
   >
     <section
       class="mx_DeviceDetails_section"

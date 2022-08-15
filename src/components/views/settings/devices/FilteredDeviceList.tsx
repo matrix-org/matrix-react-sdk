@@ -137,7 +137,10 @@ const DeviceListItem: React.FC<{
     <DeviceTile
         device={device}
     >
-        <DeviceExpandDetailsButton isExpanded={isExpanded} onClick={onDeviceExpandToggle} />
+        <DeviceExpandDetailsButton
+            isExpanded={isExpanded}
+            onClick={onDeviceExpandToggle}
+        />
     </DeviceTile>
     { isExpanded && <DeviceDetails device={device} /> }
 </li>;

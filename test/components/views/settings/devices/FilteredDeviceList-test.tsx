@@ -181,4 +181,27 @@ describe('<FilteredDeviceList />', () => {
             expect(onFilterChange).toHaveBeenCalledWith(undefined);
         });
     });
+
+    describe('device details', () => {
+        it('renders expanded devices with device details', () => {
+            const expandedDeviceIds = [newDevice.device_id, hundredDaysOld.device_id];
+            const { container, getByTestId } = render(getComponent({ expandedDeviceIds }));
+            expect(container.getElementsByClassName('mx_DeviceDetails').length).toBeTruthy();
+            expect(getByTestId(`device-detail-${newDevice.device_id}`)).toBeTruthy();
+            expect(getByTestId(`device-detail-${hundredDaysOld.device_id}`)).toBeTruthy();
+        });
+
+        it('clicking toggle calls onDeviceExpandToggle', () => {
+            const onDeviceExpandToggle = jest.fn();
+            const { getByTestId } = render(getComponent({ onDeviceExpandToggle }));
+
+            act(() => {
+                const tile = getByTestId(`device-tile-${hundredDaysOld.device_id}`);
+                const toggle = tile.querySelector('[aria-label="Toggle device details"]');
+                fireEvent.click(toggle);
+            });
+
+            expect(onDeviceExpandToggle).toHaveBeenCalledWith(hundredDaysOld.device_id);
+        });
+    });
 });
