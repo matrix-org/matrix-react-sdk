@@ -2538,8 +2538,8 @@
     "Call back": "Перезвонить",
     "Call declined": "Вызов отклонён",
     "Pinned messages": "Закреплённые сообщения",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Если у вас есть разрешения, откройте меню на любом сообщении и выберите <b>Прикрепить</b>, чтобы поместить их сюда.",
-    "Nothing pinned, yet": "Пока ничего не прикреплено",
+    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Если у вас есть разрешения, откройте меню на любом сообщении и выберите <b>Закрепить</b>, чтобы поместить их сюда.",
+    "Nothing pinned, yet": "Пока ничего не закреплено",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Установите адреса для этого пространства, чтобы пользователи могли найти это пространство через ваш домашний сервер (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Чтобы опубликовать адрес, его сначала нужно установить как локальный адрес.",
     "Published addresses can be used by anyone on any server to join your room.": "Опубликованные адреса могут быть использованы любым человеком на любом сервере, чтобы присоединиться к вашей комнате.",
@@ -3513,5 +3513,9 @@
     "Toggle attribution": "Переключить атрибуцию",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Команда разработчика: Отменить текущий сеанс исходящей группы и настроить новые сеансы Olm",
     "Set up your profile": "Настройте свой профиль",
-    "Welcome": "Добро пожаловать"
+    "Welcome": "Добро пожаловать",
+    "Improve your account security by following these recommendations": "Повысьте безопасность учётной записи, следуя этим рекомендациям",
+    "Security recommendations": "Рекомендации по безопасности",
+    "Inactive sessions": "Неактивные сессии",
+    "Unverified sessions": "Неподтверждённые сессии"
 }
