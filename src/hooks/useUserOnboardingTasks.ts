@@ -46,8 +46,6 @@ interface InternalUserOnboardingTask extends UserOnboardingTask {
     completed: (ctx: UserOnboardingContext) => boolean;
 }
 
-const hasOpenDMs = (ctx: UserOnboardingContext) => Boolean(Object.entries(ctx.dmRooms).length);
-
 const onClickStartDm = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebUserOnboardingTaskSendDm", ev);
     defaultDispatcher.dispatch({ action: 'view_create_chat' });
@@ -64,7 +62,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "find-friends",
         title: _t("Find and invite your friends"),
         description: _t("It’s what you’re here for, so lets get to it"),
-        completed: hasOpenDMs,
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
         relevant: [UseCase.PersonalMessaging, UseCase.Skip],
         action: {
             label: _t("Find friends"),
@@ -75,7 +73,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "find-coworkers",
         title: _t("Find and invite your co-workers"),
         description: _t("Get stuff done by finding your teammates"),
-        completed: hasOpenDMs,
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
         relevant: [UseCase.WorkMessaging],
         action: {
             label: _t("Find people"),
@@ -86,7 +84,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "find-community-members",
         title: _t("Find and invite your community members"),
         description: _t("Get stuff done by finding your teammates"),
-        completed: hasOpenDMs,
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
         relevant: [UseCase.CommunityMessaging],
         action: {
             label: _t("Find people"),
@@ -97,9 +95,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "download-apps",
         title: _t("Download Element"),
         description: _t("Don’t miss a thing by taking Element with you"),
-        completed: (ctx: UserOnboardingContext) => {
-            return Boolean(ctx.devices.filter(it => it.device_id !== ctx.myDevice).length);
-        },
+        completed: (ctx: UserOnboardingContext) => ctx.hasDevices,
         action: {
             label: _t("Download apps"),
             onClick: (ev: ButtonEvent) => {
@@ -112,7 +108,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "setup-profile",
         title: _t("Set up your profile"),
         description: _t("Make sure people know it’s really you"),
-        completed: (info: UserOnboardingContext) => Boolean(info.avatar),
+        completed: (ctx: UserOnboardingContext) => ctx.hasAvatar,
         action: {
             label: _t("Your profile"),
             onClick: (ev: ButtonEvent) => {
@@ -128,7 +124,7 @@ const tasks: InternalUserOnboardingTask[] = [
         id: "permission-notifications",
         title: _t("Turn on notifications"),
         description: _t("Don’t miss a reply or important message"),
-        completed: () => Notifier.isPossible(),
+        completed: (ctx: UserOnboardingContext) => ctx.hasNotificationsEnabled,
         action: {
             label: _t("Enable notifications"),
             onClick: (ev: ButtonEvent) => {

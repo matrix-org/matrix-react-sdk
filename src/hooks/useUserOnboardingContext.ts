@@ -15,54 +15,86 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, IMyDevice, Room } from "matrix-js-sdk/src/matrix";
-import { useCallback, useEffect, useState } from "react";
+import { ClientEvent } from "matrix-js-sdk/src/matrix";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
+import { Notifier } from "../Notifier";
 import DMRoomMap from "../utils/DMRoomMap";
-import { useEventEmitter } from "./useEventEmitter";
 
 export interface UserOnboardingContext {
-    avatar: string | null;
-    myDevice: string;
-    devices: IMyDevice[];
-    dmRooms: {[userId: string]: Room};
+    hasAvatar: boolean;
+    hasDevices: boolean;
+    hasDmRooms: boolean;
+    hasNotificationsEnabled: boolean;
+}
+
+const USER_ONBOARDING_CONTEXT_INTERVAL = 5000;
+
+function useRefOf<T extends [], R>(value: (...values: T) => R): (...values: T) => R {
+    const ref = useRef(value);
+    ref.current = value;
+    return useCallback(
+        (...values: T) => ref.current(...values),
+        [],
+    );
 }
 
 export function useUserOnboardingContext(): UserOnboardingContext | null {
     const [context, setContext] = useState<UserOnboardingContext | null>(null);
 
     const cli = MatrixClientPeg.get();
-    const handler = useCallback(async () => {
-        try {
-            const profile = await cli.getProfileInfo(cli.getUserId());
+    const handler = useRefOf(
+        useCallback(async () => {
+            try {
+                let hasAvatar = context?.hasAvatar;
+                if (!hasAvatar) {
+                    const profile = await cli.getProfileInfo(cli.getUserId());
+                    hasAvatar = Boolean(profile?.avatar_url);
+                }
 
-            const myDevice = cli.getDeviceId();
-            const devices = await cli.getDevices();
+                let hasDevices = context?.hasDevices;
+                if (!hasDevices) {
+                    const myDevice = cli.getDeviceId();
+                    const devices = await cli.getDevices();
+                    hasDevices = Boolean(devices.devices.find(device => device.device_id !== myDevice));
+                }
 
-            const dmRooms = DMRoomMap.shared().getUniqueRoomsWithIndividuals() ?? {};
-            setContext({
-                avatar: profile?.avatar_url ?? null,
-                myDevice,
-                devices: devices.devices,
-                dmRooms: dmRooms,
-            });
-        } catch (e) {
-            logger.warn("Could not load context for user onboarding task list: ", e);
-            setContext(null);
-        }
-    }, [cli]);
+                let hasDmRooms = context?.hasDmRooms;
+                if (!hasDmRooms) {
+                    const dmRooms = DMRoomMap.shared().getUniqueRoomsWithIndividuals() ?? {};
+                    hasDmRooms = Boolean(Object.keys(dmRooms).length);
+                }
 
-    useEventEmitter(cli, ClientEvent.AccountData, handler);
+                let hasNotificationsEnabled = context?.hasNotificationsEnabled;
+                if (!hasNotificationsEnabled) {
+                    hasNotificationsEnabled = Notifier.isPossible();
+                }
+
+                if (hasAvatar !== context?.hasAvatar
+                    || hasDevices !== context?.hasDevices
+                    || hasDmRooms !== context?.hasDmRooms
+                    || hasNotificationsEnabled !== context?.hasNotificationsEnabled) {
+                    setContext({ hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled });
+                }
+            } catch (e) {
+                logger.warn("Could not load context for user onboarding task list: ", e);
+                setContext(null);
+            }
+        }, [context, cli]),
+    );
+
     useEffect(() => {
-        const handle = setInterval(handler, 2000);
+        cli.on(ClientEvent.AccountData, handler);
+        const handle = setInterval(handler, USER_ONBOARDING_CONTEXT_INTERVAL);
         handler();
         return () => {
+            cli.off(ClientEvent.AccountData, handler);
             if (handle) {
                 clearInterval(handle);
             }
         };
-    }, [handler]);
+    }, [cli, handler]);
 
     return context;
 }
