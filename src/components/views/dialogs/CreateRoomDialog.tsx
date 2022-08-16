@@ -123,6 +123,9 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             opts.joinRule = JoinRule.Restricted;
         }
 
+        if (this.state.joinRule === JoinRule.Knock) {
+            opts.joinRule = JoinRule.Knock;
+        }
         return opts;
     }
 

@@ -14,7 +14,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
@@ -54,19 +53,24 @@ describe("Knocking", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // Change room settings
+        // The room settings initially are set to Ask to join
         cy.openRoomSettings("Security & Privacy");
-        cy.get(".mx_StyledRadioButton_content").contains("Ask to join").click();
         cy.closeDialog();
 
         //Check if the room settings are visible if labs flag is disabled
         cy.openUserSettings("Labs").within(() => {
             //disables labs flag feature
             cy.get("[aria-label='Knocking']").click();
+            // cy.disableLabsFeature("feature_knocking");
         });
         cy.closeDialog();
-        //the default joinRule is set to Private (invite only)
+
+        //the default joinRule is set to Private (invite only) when the labs flag is disabled
         cy.openRoomSettings("Security & Privacy");
+        cy.closeDialog();
+
+        // Click the expand link button to get more detailed view
+        cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click();
 
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);

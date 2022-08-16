@@ -28,6 +28,7 @@ declare global {
              * @param feature labsFeature to enable (e.g. "feature_spotlight")
              */
             enableLabsFeature(feature: string): Chainable<null>;
+            disableLabsFeature(feature: string): Chainable<null>;
         }
     }
 }
@@ -35,6 +36,13 @@ declare global {
 Cypress.Commands.add("enableLabsFeature", (feature: string): Chainable<null> => {
     return cy.window({ log: false }).then(win => {
         win.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
+    }).then(() => null);
+});
+
+Cypress.Commands.add("disableLabsFeature", (feature: string): Chainable<null> => {
+    return cy.window({ log: false }).then(win => {
+        win.localStorage.removeItem(`mx_labs_feature_${feature}`);
+        win.localStorage.setItem(`mx_labs_feature_${feature}`, "false");
     }).then(() => null);
 });
 

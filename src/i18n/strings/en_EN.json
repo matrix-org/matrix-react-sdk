@@ -504,6 +504,7 @@
     "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s upgraded this room.",
     "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s made the room public to whoever knows the link.",
     "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s made the room invite only.",
+    "%(senderDisplayName)s made the room knock only.": "%(senderDisplayName)s made the room knock only.",
     "%(senderDisplayName)s changed who can join this room. <a>View settings</a>.": "%(senderDisplayName)s changed who can join this room. <a>View settings</a>.",
     "%(senderDisplayName)s changed who can join this room.": "%(senderDisplayName)s changed who can join this room.",
     "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s changed the join rule to %(rule)s",

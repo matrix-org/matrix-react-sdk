@@ -235,6 +235,10 @@ function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => Render
             return () => _t('%(senderDisplayName)s made the room invite only.', {
                 senderDisplayName,
             });
+        case JoinRule.Knock:
+            return () => _t('%(senderDisplayName)s made the room knock only.', {
+                senderDisplayName,
+            });
         case JoinRule.Restricted:
             if (allowJSX) {
                 return () => <span>
