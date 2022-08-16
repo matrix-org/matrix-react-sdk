@@ -3377,5 +3377,10 @@
     "Sessions": "会话",
     "Current session": "当前会话",
     "Verified": "已验证",
-    "Unverified": "未验证"
+    "Unverified": "未验证",
+    "Verified session": "已验证的会话",
+    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "为了最佳的安全，请验证会话，登出任何不认识或不再使用的会话。",
+    "Other sessions": "其他会话",
+    "Welcome": "欢迎",
+    "Show shortcut to welcome checklist above the room list": "在房间列表上方显示欢迎清单的捷径"
 }
