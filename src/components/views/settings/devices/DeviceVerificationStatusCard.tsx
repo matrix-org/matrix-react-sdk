@@ -27,7 +27,7 @@ interface Props {
     device: DeviceWithVerification;
 }
 
-const DeviceVerificationStatusCard: React.FC<Props> = ({
+export const DeviceVerificationStatusCard: React.FC<Props> = ({
     device,
 }) => {
     const securityCardProps = device?.isVerified ? {
@@ -43,5 +43,3 @@ const DeviceVerificationStatusCard: React.FC<Props> = ({
         {...securityCardProps}
     />;
 };
-
-export default DeviceVerificationStatusCard;

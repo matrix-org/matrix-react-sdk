@@ -22,7 +22,7 @@ import SettingsSubsection from '../shared/SettingsSubsection';
 import DeviceDetails from './DeviceDetails';
 import DeviceExpandDetailsButton from './DeviceExpandDetailsButton';
 import DeviceTile from './DeviceTile';
-import DeviceVerificationStatusCard from './DeviceVerificationStatusCard';
+import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
 import { DeviceWithVerification } from './types';
 
 interface Props {

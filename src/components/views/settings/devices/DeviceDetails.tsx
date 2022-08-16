@@ -19,7 +19,7 @@ import React from 'react';
 import { formatDate } from '../../../../DateUtils';
 import { _t } from '../../../../languageHandler';
 import Heading from '../../typography/Heading';
-import DeviceVerificationStatusCard from './DeviceVerificationStatusCard';
+import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
 import { DeviceWithVerification } from './types';
 
 interface Props {
