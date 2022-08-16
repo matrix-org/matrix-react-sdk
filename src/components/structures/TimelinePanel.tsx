@@ -949,7 +949,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // the current RR event.
             lastReadEventIndex > currentRREventIndex &&
             // Only send a RR if the last RR set != the one we would send
-            this.lastRRSentEventId != lastReadEvent.getId();
+            this.lastRRSentEventId !== lastReadEvent.getId();
 
         // Only send a RM if the last RM sent != the one we would send
         const shouldSendRM =
@@ -975,33 +975,42 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 `prr=${lastReadEvent?.getId()}`,
 
             );
-            MatrixClientPeg.get().setRoomReadMarkers(
-                roomId,
-                this.state.readMarkerEventId,
-                sendRRs ? lastReadEvent : null, // Public read receipt (could be null)
-                lastReadEvent, // Private read receipt (could be null)
-            ).catch(async (e) => {
-                // /read_markers API is not implemented on this HS, fallback to just RR
-                if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
-                    const privateField = await getPrivateReadReceiptField(MatrixClientPeg.get());
-                    if (!sendRRs && !privateField) return;
 
-                    try {
-                        return await MatrixClientPeg.get().sendReadReceipt(
-                            lastReadEvent,
-                            sendRRs ? ReceiptType.Read : privateField,
-                        );
-                    } catch (error) {
+            // Not a final solution, but here we go!
+            if (this.props.timelineSet.thread && sendRRs) {
+                cli.sendReadReceipt(
+                    lastReadEvent,
+                    sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
+                );
+            } else {
+                cli.setRoomReadMarkers(
+                    roomId,
+                    this.state.readMarkerEventId,
+                    sendRRs ? lastReadEvent : null, // Public read receipt (could be null)
+                    lastReadEvent, // Private read receipt (could be null)
+                ).catch(async (e) => {
+                    // /read_markers API is not implemented on this HS, fallback to just RR
+                    if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
+                        const privateField = await getPrivateReadReceiptField(cli);
+                        if (!sendRRs && !privateField) return;
+
+                        try {
+                            return await cli.sendReadReceipt(
+                                lastReadEvent,
+                                sendRRs ? ReceiptType.Read : privateField,
+                            );
+                        } catch (error) {
+                            logger.error(e);
+                            this.lastRRSentEventId = undefined;
+                        }
+                    } else {
                         logger.error(e);
-                        this.lastRRSentEventId = undefined;
                     }
-                } else {
-                    logger.error(e);
-                }
-                // it failed, so allow retries next time the user is active
-                this.lastRRSentEventId = undefined;
-                this.lastRMSentEventId = undefined;
-            });
+                    // it failed, so allow retries next time the user is active
+                    this.lastRRSentEventId = undefined;
+                    this.lastRMSentEventId = undefined;
+                });
+            }
 
             // do a quick-reset of our unreadNotificationCount to avoid having
             // to wait from the remote echo from the homeserver.
@@ -1654,7 +1663,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      *                                    SDK.
      * @return {String} the event ID
      */
-    private getCurrentReadReceipt(ignoreSynthesized = false): string {
+    private getCurrentReadReceipt(ignoreSynthesized = false): string | null {
         const client = MatrixClientPeg.get();
         // the client can be null on logout
         if (client == null) {
@@ -1662,7 +1671,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         const myUserId = client.credentials.userId;
-        return this.props.timelineSet.room.getEventReadUpTo(myUserId, ignoreSynthesized);
+
+        const receipt = this.props.timelineSet.thread ?? this.props.timelineSet.room;
+        return receipt.getEventReadUpTo(myUserId, ignoreSynthesized);
     }
 
     private setReadMarker(eventId: string, eventTs: number, inhibitSetState = false): void {
