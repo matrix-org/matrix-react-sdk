@@ -152,7 +152,7 @@ const FilteredDeviceList: React.FC<Props> = ({ devices, filter, onFilterChange }
         },
     ];
 
-    const onFilterOptionChange = (filterId: DeviceSecurityVariation | string) => {
+    const onFilterOptionChange = (filterId: DeviceSecurityVariation | typeof ALL_FILTER_ID) => {
         onFilterChange(filterId === ALL_FILTER_ID ? undefined : filterId as DeviceSecurityVariation);
     };
 
