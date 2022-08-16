@@ -406,7 +406,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Send read receipts"),
         default: true,
     },
-    "feature_location_share_pin_drop": {
+    "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
