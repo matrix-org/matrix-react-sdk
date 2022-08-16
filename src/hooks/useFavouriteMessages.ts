@@ -1,4 +1,3 @@
-
 /*
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
@@ -15,20 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { useState } from "react";
 
-const favouriteMessageIds = JSON.parse(
-    localStorage?.getItem("io_element_favouriteMessages")?? "[]") as string[];
+interface IButtonProp {
+    mxEvent: MatrixEvent;
+}
 
-export default function useFavouriteMessages() {
+const favouriteMessageIds = JSON.parse(
+    localStorage?.getItem("io_element_favouriteMessages")?? "[]") as any[];
+
+export default function useFavouriteMessages({ mxEvent }: IButtonProp) {
     const [, setX] = useState<string[]>();
+    const eventId = mxEvent.getId();
+    const roomId = mxEvent.getRoomId();
 
     //checks if an id already exist
-    const isFavourite = (eventId: string): boolean => favouriteMessageIds.includes(eventId);
+    const isFavourite = (): boolean => {
+        return favouriteMessageIds.some(val => val.eventId === eventId);
+    };
 
-    const toggleFavourite = (eventId: string) => {
-        isFavourite(eventId) ? favouriteMessageIds.splice(favouriteMessageIds.indexOf(eventId), 1)
-            : favouriteMessageIds.push(eventId);
+    const toggleFavourite = () => {
+        isFavourite() ? favouriteMessageIds.splice(favouriteMessageIds.findIndex(val => val.eventId === eventId), 1)
+            : favouriteMessageIds.push({ eventId, roomId });
 
         //update the local storage
         localStorage.setItem('io_element_favouriteMessages', JSON.stringify(favouriteMessageIds));

@@ -81,6 +81,7 @@ const INITIAL_STATE = {
     viaServers: [] as string[],
 
     wasContextSwitch: false,
+
 };
 
 type Listener = (isActive: boolean) => void;
@@ -181,6 +182,12 @@ export class RoomViewStore extends Store<ActionPayload> {
                     roomAlias: null,
                     viaServers: [],
                     wasContextSwitch: false,
+                });
+                break;
+            case Action.ViewFavouriteMessages:
+                this.setState({
+                    roomId: null,
+                    roomAlias: null,
                 });
                 break;
             case Action.ViewRoomError:

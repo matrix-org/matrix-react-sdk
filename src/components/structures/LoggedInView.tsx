@@ -71,6 +71,7 @@ import LegacyGroupView from "./LegacyGroupView";
 import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 import { UserOnboardingPage } from '../views/user-onboarding/UserOnboardingPage';
+import FavouriteMessagesView from './FavouriteMessagesView';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -644,6 +645,10 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             case PageTypes.LegacyGroupView:
                 pageElement = <LegacyGroupView groupId={this.props.currentGroupId} />;
+                break;
+
+            case PageTypes.FavouriteMessagesView:
+                pageElement = <FavouriteMessagesView />;
                 break;
         }
 

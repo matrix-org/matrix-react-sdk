@@ -30,6 +30,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import PageType from "../../../PageTypes";
 import PosthogTrackers from "../../../PosthogTrackers";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIComponent } from "../../../settings/UIFeature";
@@ -71,6 +72,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     isMinimized: boolean;
     activeSpace: SpaceKey;
+    pageType: PageType;
 }
 
 interface IState {
@@ -570,15 +572,20 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 resizeMethod="crop"
             />);
 
+        const onFavouriteClicked = () => {
+            defaultDispatcher.dispatch({ action: Action.ViewFavouriteMessages });
+        };
+
         return [
             <ExtraTile
                 isMinimized={this.props.isMinimized}
-                isSelected={false}
+                isSelected={this.props.pageType === PageType.FavouriteMessagesView}
                 displayName="Favourite Messages"
                 avatar={avatar}
-                onClick={() => ""}
+                onClick={onFavouriteClicked}
                 key="favMessagesTile_key"
             />,
+
         ];
     }
 

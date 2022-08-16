@@ -258,18 +258,17 @@ interface IFavouriteButtonProp {
 }
 
 const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
-    const { isFavourite, toggleFavourite } = useFavouriteMessages();
+    const { isFavourite, toggleFavourite } = useFavouriteMessages({ mxEvent });
 
-    const eventId = mxEvent.getId();
-    const classes = classNames("mx_MessageActionBar_iconButton mx_MessageActionBar_favouriteButton", {
-        'mx_MessageActionBar_favouriteButton_fillstar': isFavourite(eventId),
+    const classes = classNames("mx_MessageActionBar_iconButton", {
+        'mx_MessageActionBar_favouriteButton_fillstar': isFavourite(),
     });
 
     return <RovingAccessibleTooltipButton
         className={classes}
         title={_t("Favourite")}
-        onClick={() => toggleFavourite(eventId)}
-        data-testid={eventId}
+        onClick={() => toggleFavourite()}
+        data-testid={mxEvent.getId()}
     >
         <StarIcon />
     </RovingAccessibleTooltipButton>;

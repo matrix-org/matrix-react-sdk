@@ -21,6 +21,7 @@ enum PageType {
     RoomView = "room_view",
     UserView = "user_view",
     LegacyGroupView = "legacy_group_view",
+    FavouriteMessagesView = "favourite_messages_view"
 }
 
 export default PageType;
