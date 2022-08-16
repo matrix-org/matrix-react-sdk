@@ -14,7 +14,6 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
       >
         my-device
       </h3>
-      <br />
       <div
         class="mx_DeviceSecurityCard"
       >
@@ -120,7 +119,6 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
       >
         My Device
       </h3>
-      <br />
       <div
         class="mx_DeviceSecurityCard"
       >
@@ -230,7 +228,6 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
       >
         my-device
       </h3>
-      <br />
       <div
         class="mx_DeviceSecurityCard"
       >
