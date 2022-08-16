@@ -81,7 +81,6 @@ const INITIAL_STATE = {
     viaServers: [] as string[],
 
     wasContextSwitch: false,
-
 };
 
 type Listener = (isActive: boolean) => void;
@@ -177,17 +176,12 @@ export class RoomViewStore extends Store<ActionPayload> {
             // for these events blank out the roomId as we are no longer in the RoomView
             case 'view_welcome_page':
             case Action.ViewHomePage:
+            case Action.ViewFavouriteMessages:
                 this.setState({
                     roomId: null,
                     roomAlias: null,
                     viaServers: [],
                     wasContextSwitch: false,
-                });
-                break;
-            case Action.ViewFavouriteMessages:
-                this.setState({
-                    roomId: null,
-                    roomAlias: null,
                 });
                 break;
             case Action.ViewRoomError:

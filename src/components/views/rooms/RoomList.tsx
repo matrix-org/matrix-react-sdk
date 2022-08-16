@@ -585,7 +585,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 onClick={onFavouriteClicked}
                 key="favMessagesTile_key"
             />,
-
         ];
     }
 
