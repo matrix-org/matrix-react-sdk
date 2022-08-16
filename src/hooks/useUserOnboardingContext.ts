@@ -85,13 +85,26 @@ export function useUserOnboardingContext(): UserOnboardingContext | null {
     );
 
     useEffect(() => {
-        cli.on(ClientEvent.AccountData, handler);
-        const handle = setInterval(handler, USER_ONBOARDING_CONTEXT_INTERVAL);
-        handler();
-        return () => {
-            cli.off(ClientEvent.AccountData, handler);
+        let handle;
+        let enabled = true;
+        const repeater = async () => {
             if (handle) {
-                clearInterval(handle);
+                clearTimeout(handle);
+                handle = null;
+            }
+            await handler();
+            if (enabled) {
+                handle = setTimeout(repeater, USER_ONBOARDING_CONTEXT_INTERVAL);
+            }
+        };
+        repeater().catch(err => logger.warn("could not update user onboarding context", err));
+        cli.on(ClientEvent.AccountData, repeater);
+        return () => {
+            enabled = false;
+            cli.off(ClientEvent.AccountData, repeater);
+            if (handle) {
+                clearTimeout(handle);
+                handle = null;
             }
         };
     }, [cli, handler]);
