@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { WebSearch as WebSearchEvent } from "@matrix-org/analytics-events/types/typescript/WebSearch";
 import classNames from "classnames";
 import { capitalize, sum } from "lodash";
-import { WebSearch as WebSearchEvent } from "@matrix-org/analytics-events/types/typescript/WebSearch";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -50,6 +50,7 @@ import { useDebouncedCallback } from "../../../../hooks/spotlight/useDebouncedCa
 import { useRecentSearches } from "../../../../hooks/spotlight/useRecentSearches";
 import { useProfileInfo } from "../../../../hooks/useProfileInfo";
 import { usePublicRoomDirectory } from "../../../../hooks/usePublicRoomDirectory";
+import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { useSpaceResults } from "../../../../hooks/useSpaceResults";
 import { useUserDirectory } from "../../../../hooks/useUserDirectory";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
@@ -63,12 +64,13 @@ import SdkConfig from "../../../../SdkConfig";
 import { SettingLevel } from "../../../../settings/SettingLevel";
 import SettingsStore from "../../../../settings/SettingsStore";
 import { BreadcrumbsStore } from "../../../../stores/BreadcrumbsStore";
+import { RoomNotificationState } from "../../../../stores/notifications/RoomNotificationState";
 import { RoomNotificationStateStore } from "../../../../stores/notifications/RoomNotificationStateStore";
 import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
 import { RoomViewStore } from "../../../../stores/RoomViewStore";
 import { getMetaSpaceName } from "../../../../stores/spaces";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
-import { DirectoryMember, Member, startDm } from "../../../../utils/direct-messages";
+import { DirectoryMember, Member, startDmOnFirstMessage } from "../../../../utils/direct-messages";
 import DMRoomMap from "../../../../utils/DMRoomMap";
 import { makeUserPermalink } from "../../../../utils/permalinks/Permalinks";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../../utils/SortMembers";
@@ -78,6 +80,7 @@ import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { SearchResultAvatar } from "../../avatars/SearchResultAvatar";
 import { NetworkDropdown } from "../../directory/NetworkDropdown";
 import AccessibleButton from "../../elements/AccessibleButton";
+import LabelledCheckbox from "../../elements/LabelledCheckbox";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
 import BaseDialog from "../BaseDialog";
@@ -85,10 +88,10 @@ import FeedbackDialog from "../FeedbackDialog";
 import { IDialogProps } from "../IDialogProps";
 import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
-import { RoomResultDetails } from "./RoomResultDetails";
+import { RoomResultContextMenus } from "./RoomResultContextMenus";
+import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
-import LabelledCheckbox from "../../elements/LabelledCheckbox";
-import { useFeatureEnabled } from "../../../../hooks/useSettings";
+import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -241,6 +244,9 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
 
 const findVisibleRooms = (cli: MatrixClient) => {
     return cli.getVisibleRooms().filter(room => {
+        // Do not show local rooms
+        if (isLocalRoom(room)) return false;
+
         // TODO we may want to put invites in their own list
         return room.getMyMembership() === "join" || room.getMyMembership() == "invite";
     });
@@ -257,6 +263,22 @@ const findVisibleRoomMembers = (cli: MatrixClient, filterDMs = true) => {
                 return members;
             }, {} as Record<string, RoomMember>),
     ).filter(it => it.userId !== cli.getUserId());
+};
+
+const roomAriaUnreadLabel = (room: Room, notification: RoomNotificationState): string | undefined => {
+    if (notification.hasMentions) {
+        return _t("%(count)s unread messages including mentions.", {
+            count: notification.count,
+        });
+    } else if (notification.hasUnreadCount) {
+        return _t("%(count)s unread messages.", {
+            count: notification.count,
+        });
+    } else if (notification.isUnread) {
+        return _t("Unread messages.");
+    } else {
+        return undefined;
+    }
 };
 
 interface IDirectoryOpts {
@@ -320,8 +342,25 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     );
     const possibleResults = useMemo<Result[]>(
         () => {
-            const roomMembers = findVisibleRoomMembers(cli);
-            const roomMemberIds = new Set(roomMembers.map(item => item.userId));
+            const roomResults = findVisibleRooms(cli).map(toRoomResult);
+            // If we already have a DM with the user we're looking for, we will
+            // show that DM instead of the user themselves
+            const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
+                const userId = DMRoomMap.shared().getUserIdForRoomId(result.room.roomId);
+                if (!userId) return userIds;
+                if (result.room.getJoinedMemberCount() > 2) return userIds;
+                userIds.add(userId);
+                return userIds;
+            }, new Set<string>());
+            const userResults = [];
+            for (const user of [...findVisibleRoomMembers(cli), ...users]) {
+                // Make sure we don't have any user more than once
+                if (alreadyAddedUserIds.has(user.userId)) continue;
+                alreadyAddedUserIds.add(user.userId);
+
+                userResults.push(toMemberResult(user));
+            }
+
             return [
                 ...SpaceStore.instance.enabledMetaSpaces.map(spaceKey => ({
                     section: Section.Spaces,
@@ -335,10 +374,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         SpaceStore.instance.setActiveSpace(spaceKey);
                     },
                 })),
-                ...findVisibleRooms(cli).map(toRoomResult),
-                ...roomMembers.map(toMemberResult),
-                ...users.filter(item => !roomMemberIds.has(item.userId)).map(toMemberResult),
-                ...(profile ? [new DirectoryMember(profile)] : []).map(toMemberResult),
+                ...roomResults,
+                ...userResults,
+                ...(profile && !alreadyAddedUserIds.has(profile.user_id)
+                    ? [new DirectoryMember(profile)]
+                    : []).map(toMemberResult),
                 ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
         },
@@ -361,7 +401,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
             possibleResults.forEach(entry => {
                 if (isRoomResult(entry)) {
-                    if (!entry.room.normalizedName.includes(normalizedQuery) &&
+                    if (!entry.room.normalizedName?.includes(normalizedQuery) &&
                         !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
                         !entry.query?.some(q => q.includes(lcQuery))
                     ) return; // bail, does not match query
@@ -446,12 +486,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         // eslint-disable-next-line
     }, [results, filter]);
 
-    const viewRoom = (roomId: string, persist = false, viaKeyboard = false) => {
+    const viewRoom = (
+        room: { roomId: string, roomAlias?: string, autoJoin?: boolean, shouldPeek?: boolean},
+        persist = false,
+        viaKeyboard = false,
+    ) => {
         if (persist) {
             const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
             // remove & add the room to put it at the end
-            recents.delete(roomId);
-            recents.add(roomId);
+            recents.delete(room.roomId);
+            recents.add(room.roomId);
 
             SettingsStore.setValue(
                 "SpotlightSearch.recentSearches",
@@ -463,9 +507,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
-            room_id: roomId,
             metricsTrigger: "WebUnifiedSearch",
             metricsViaKeyboard: viaKeyboard,
+            room_id: room.roomId,
+            room_alias: room.roomAlias,
+            auto_join: room.autoJoin,
+            should_peek: room.shouldPeek,
         });
         onFinished();
     };
@@ -473,8 +520,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     let otherSearchesSection: JSX.Element;
     if (trimmedQuery || filter !== Filter.PublicRooms) {
         otherSearchesSection = (
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                <h4>
+            <div
+                className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches"
+                role="group"
+                aria-labelledby="mx_SpotlightDialog_section_otherSearches">
+                <h4 id="mx_SpotlightDialog_section_otherSearches">
                     { trimmedQuery
                         ? _t('Use "%(query)s" to search', { query })
                         : _t("Search for") }
@@ -507,18 +557,34 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     if (trimmedQuery || filter !== null) {
         const resultMapper = (result: Result): JSX.Element => {
             if (isRoomResult(result)) {
+                const notification = RoomNotificationStateStore.instance.getRoomState(result.room);
+                const unreadLabel = roomAriaUnreadLabel(result.room, notification);
+                const ariaProperties = {
+                    "aria-label": unreadLabel ? `${result.room.name} ${unreadLabel}` : result.room.name,
+                    "aria-describedby": `mx_SpotlightDialog_button_result_${result.room.roomId}_details`,
+                };
                 return (
                     <Option
                         id={`mx_SpotlightDialog_button_result_${result.room.roomId}`}
                         key={`${Section[result.section]}-${result.room.roomId}`}
                         onClick={(ev) => {
-                            viewRoom(result.room.roomId, true, ev?.type !== "click");
+                            viewRoom({ roomId: result.room.roomId }, true, ev?.type !== "click");
                         }}
+                        endAdornment={<RoomResultContextMenus room={result.room} />}
+                        {...ariaProperties}
                     >
-                        <DecoratedRoomAvatar room={result.room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
+                        <DecoratedRoomAvatar
+                            room={result.room}
+                            avatarSize={AVATAR_SIZE}
+                            tooltipProps={{ tabIndex: -1 }}
+                        />
                         { result.room.name }
-                        <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(result.room)} />
-                        <RoomResultDetails room={result.room} />
+                        <NotificationBadge notification={notification} />
+                        <RoomContextDetails
+                            id={`mx_SpotlightDialog_button_result_${result.room.roomId}_details`}
+                            className="mx_SpotlightDialog_result_details"
+                            room={result.room}
+                        />
                     </Option>
                 );
             }
@@ -528,13 +594,20 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.member.userId}`}
                         key={`${Section[result.section]}-${result.member.userId}`}
                         onClick={() => {
-                            startDm(cli, [result.member]);
+                            startDmOnFirstMessage(cli, [result.member]);
                             onFinished();
                         }}
+                        aria-label={result.member instanceof RoomMember
+                            ? result.member.rawDisplayName
+                            : result.member.name}
+                        aria-describedby={`mx_SpotlightDialog_button_result_${result.member.userId}_details`}
                     >
                         <SearchResultAvatar user={result.member} size={AVATAR_SIZE} />
                         { result.member instanceof RoomMember ? result.member.rawDisplayName : result.member.name }
-                        <div className="mx_SpotlightDialog_result_details">
+                        <div
+                            id={`mx_SpotlightDialog_button_result_${result.member.userId}_details`}
+                            className="mx_SpotlightDialog_result_details"
+                        >
                             { result.member.userId }
                         </div>
                     </Option>
@@ -542,8 +615,24 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             }
             if (isPublicRoomResult(result)) {
                 const clientRoom = cli.getRoom(result.publicRoom.room_id);
+                // Element Web currently does not allow guests to join rooms, so we
+                // instead show them view buttons for all rooms. If the room is not
+                // world readable, a modal will appear asking you to register first. If
+                // it is readable, the preview appears as normal.
+                const showViewButton = (
+                    clientRoom?.getMyMembership() === "join" ||
+                    result.publicRoom.world_readable ||
+                    cli.isGuest()
+                );
+
                 const listener = (ev) => {
-                    viewRoom(result.publicRoom.room_id, true, ev.type !== "click");
+                    const { publicRoom } = result;
+                    viewRoom({
+                        roomAlias: publicRoom.canonical_alias || publicRoom.aliases?.[0],
+                        roomId: publicRoom.room_id,
+                        autoJoin: !result.publicRoom.world_readable && !cli.isGuest(),
+                        shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
+                    }, true, ev.type !== "click");
                 };
                 return (
                     <Option
@@ -553,12 +642,15 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         onClick={listener}
                         endAdornment={
                             <AccessibleButton
-                                kind={clientRoom ? "primary" : "primary_outline"}
+                                kind={showViewButton ? "primary_outline" : "primary"}
                                 onClick={listener}
                                 tabIndex={-1}
                             >
-                                { _t(clientRoom ? "View" : "Join") }
+                                { showViewButton ? _t("View") : _t("Join") }
                             </AccessibleButton>}
+                        aria-labelledby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
+                        aria-describedby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_alias`}
+                        aria-details={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_details`}
                     >
                         <BaseAvatar
                             className="mx_SearchResultAvatar"
@@ -570,7 +662,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             width={AVATAR_SIZE}
                             height={AVATAR_SIZE}
                         />
-                        <PublicRoomResultDetails room={result.publicRoom} />
+                        <PublicRoomResultDetails
+                            room={result.publicRoom}
+                            labelId={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
+                            descriptionId={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_alias`}
+                            detailsId={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_details`}
+                        />
                     </Option>
                 );
             }
@@ -592,8 +689,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let peopleSection: JSX.Element;
         if (results[Section.People].length) {
             peopleSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                    <h4>{ _t("Recent Conversations") }</h4>
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_results"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_people">
+                    <h4 id="mx_SpotlightDialog_section_people">
+                        { _t("Recent Conversations") }
+                    </h4>
                     <div>
                         { results[Section.People].slice(0, SECTION_LIMIT).map(resultMapper) }
                     </div>
@@ -604,8 +706,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let suggestionsSection: JSX.Element;
         if (results[Section.Suggestions].length && filter === Filter.People) {
             suggestionsSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                    <h4>{ _t("Suggestions") }</h4>
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_results"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_suggestions">
+                    <h4 id="mx_SpotlightDialog_section_suggestions">
+                        { _t("Suggestions") }
+                    </h4>
                     <div>
                         { results[Section.Suggestions].slice(0, SECTION_LIMIT).map(resultMapper) }
                     </div>
@@ -616,8 +723,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let roomsSection: JSX.Element;
         if (results[Section.Rooms].length) {
             roomsSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                    <h4>{ _t("Rooms") }</h4>
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_results"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_rooms">
+                    <h4 id="mx_SpotlightDialog_section_rooms">
+                        { _t("Rooms") }
+                    </h4>
                     <div>
                         { results[Section.Rooms].slice(0, SECTION_LIMIT).map(resultMapper) }
                     </div>
@@ -628,8 +740,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let spacesSection: JSX.Element;
         if (results[Section.Spaces].length) {
             spacesSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                    <h4>{ _t("Spaces you're in") }</h4>
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_results"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_spaces">
+                    <h4 id="mx_SpotlightDialog_section_spaces">
+                        { _t("Spaces you're in") }
+                    </h4>
                     <div>
                         { results[Section.Spaces].slice(0, SECTION_LIMIT).map(resultMapper) }
                     </div>
@@ -640,9 +757,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let publicRoomsSection: JSX.Element;
         if (filter === Filter.PublicRooms) {
             publicRoomsSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_results"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_publicRooms">
                     <div className="mx_SpotlightDialog_sectionHeader">
-                        <h4>{ _t("Suggestions") }</h4>
+                        <h4 id="mx_SpotlightDialog_section_publicRooms">
+                            { _t("Suggestions") }
+                        </h4>
                         <div className="mx_SpotlightDialog_options">
                             { exploringPublicSpacesEnabled && <>
                                 <LabelledCheckbox
@@ -676,15 +798,20 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let spaceRoomsSection: JSX.Element;
         if (spaceResults.length && activeSpace && filter === null) {
             spaceRoomsSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                    <h4>{ _t("Other rooms in %(spaceName)s", { spaceName: activeSpace.name }) }</h4>
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_results"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_spaceRooms">
+                    <h4 id="mx_SpotlightDialog_section_spaceRooms">
+                        { _t("Other rooms in %(spaceName)s", { spaceName: activeSpace.name }) }
+                    </h4>
                     <div>
                         { spaceResults.slice(0, SECTION_LIMIT).map((room: IHierarchyRoom): JSX.Element => (
                             <Option
                                 id={`mx_SpotlightDialog_button_result_${room.room_id}`}
                                 key={room.room_id}
                                 onClick={(ev) => {
-                                    viewRoom(room.room_id, true, ev?.type !== "click");
+                                    viewRoom({ roomId: room.room_id }, true, ev?.type !== "click");
                                 }}
                             >
                                 <BaseAvatar
@@ -791,8 +918,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let groupChatSection: JSX.Element;
         if (filter === Filter.People) {
             groupChatSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                    <h4>{ _t('Other options') }</h4>
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_groupChat">
+                    <h4 id="mx_SpotlightDialog_section_groupChat">
+                        { _t('Other options') }
+                    </h4>
                     <Option
                         id="mx_SpotlightDialog_button_startGroupChat"
                         className="mx_SpotlightDialog_startGroupChat"
@@ -807,8 +939,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         let messageSearchSection: JSX.Element;
         if (filter === null) {
             messageSearchSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                    <h4>{ _t("Other searches") }</h4>
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches"
+                    role="group"
+                    aria-labelledby="mx_SpotlightDialog_section_messageSearch">
+                    <h4 id="mx_SpotlightDialog_section_messageSearch">
+                        { _t("Other searches") }
+                    </h4>
                     <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
                         { _t(
                             "To search messages, look for this icon at the top of a room <icon/>",
@@ -843,36 +980,62 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     // Firefox sometimes makes this element focusable due to overflow,
                     // so force it out of tab order by default.
                     tabIndex={-1}
+                    aria-labelledby="mx_SpotlightDialog_section_recentSearches"
                 >
                     <h4>
-                        { _t("Recent searches") }
+                        <span id="mx_SpotlightDialog_section_recentSearches">
+                            { _t("Recent searches") }
+                        </span>
                         <AccessibleButton kind="link" onClick={clearRecentSearches}>
                             { _t("Clear") }
                         </AccessibleButton>
                     </h4>
                     <div>
-                        { recentSearches.map(room => (
-                            <Option
-                                id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}`}
-                                key={room.roomId}
-                                onClick={(ev) => {
-                                    viewRoom(room.roomId, true, ev?.type !== "click");
-                                }}
-                            >
-                                <DecoratedRoomAvatar room={room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
-                                { room.name }
-                                <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
-                                <RoomResultDetails room={room} />
-                            </Option>
-                        )) }
+                        { recentSearches.map(room => {
+                            const notification = RoomNotificationStateStore.instance.getRoomState(room);
+                            const unreadLabel = roomAriaUnreadLabel(room, notification);
+                            const ariaProperties = {
+                                "aria-label": unreadLabel ? `${room.name} ${unreadLabel}` : room.name,
+                                "aria-describedby": `mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`,
+                            };
+                            return (
+                                <Option
+                                    id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}`}
+                                    key={room.roomId}
+                                    onClick={(ev) => {
+                                        viewRoom({ roomId: room.roomId }, true, ev?.type !== "click");
+                                    }}
+                                    endAdornment={<RoomResultContextMenus room={room} />}
+                                    {...ariaProperties}
+                                >
+                                    <DecoratedRoomAvatar
+                                        room={room}
+                                        avatarSize={AVATAR_SIZE}
+                                        tooltipProps={{ tabIndex: -1 }}
+                                    />
+                                    { room.name }
+                                    <NotificationBadge notification={notification} />
+                                    <RoomContextDetails
+                                        id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`}
+                                        className="mx_SpotlightDialog_result_details"
+                                        room={room}
+                                    />
+                                </Option>
+                            );
+                        }) }
                     </div>
                 </div>
             );
         }
 
         content = <>
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentlyViewed" role="group">
-                <h4>{ _t("Recently viewed") }</h4>
+            <div
+                className="mx_SpotlightDialog_section mx_SpotlightDialog_recentlyViewed"
+                role="group"
+                aria-labelledby="mx_SpotlightDialog_section_recentlyViewed">
+                <h4 id="mx_SpotlightDialog_section_recentlyViewed">
+                    { _t("Recently viewed") }
+                </h4>
                 <div>
                     { BreadcrumbsStore.instance.rooms
                         .filter(r => r.roomId !== RoomViewStore.instance.getRoomId())
@@ -882,7 +1045,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 title={room.name}
                                 key={room.roomId}
                                 onClick={(ev) => {
-                                    viewRoom(room.roomId, false, ev.type !== "click");
+                                    viewRoom({ roomId: room.roomId }, false, ev.type !== "click");
                                 }}
                             >
                                 <DecoratedRoomAvatar room={room} avatarSize={32} tooltipProps={{ tabIndex: -1 }} />
@@ -908,28 +1071,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 break;
         }
 
+        let ref: RefObject<HTMLElement>;
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (accessibilityAction) {
             case KeyBindingAction.Escape:
                 ev.stopPropagation();
                 ev.preventDefault();
                 onFinished();
-                break;
-        }
-    };
-
-    const onKeyDown = (ev: KeyboardEvent) => {
-        let ref: RefObject<HTMLElement>;
-
-        const action = getKeyBindingsManager().getAccessibilityAction(ev);
-
-        switch (action) {
-            case KeyBindingAction.Backspace:
-                if (!query && filter !== null) {
-                    ev.stopPropagation();
-                    ev.preventDefault();
-                    setFilter(null);
-                }
                 break;
             case KeyBindingAction.ArrowUp:
             case KeyBindingAction.ArrowDown:
@@ -949,7 +1097,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     }
 
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowUp ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1));
                 }
                 break;
 
@@ -966,13 +1114,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowLeft ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1));
                 }
-                break;
-            case KeyBindingAction.Enter:
-                ev.stopPropagation();
-                ev.preventDefault();
-                rovingContext.state.activeRef?.current?.click();
                 break;
         }
 
@@ -987,8 +1130,29 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
     };
 
+    const onKeyDown = (ev: KeyboardEvent) => {
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        switch (action) {
+            case KeyBindingAction.Backspace:
+                if (!query && filter !== null) {
+                    ev.stopPropagation();
+                    ev.preventDefault();
+                    setFilter(null);
+                }
+                break;
+            case KeyBindingAction.Enter:
+                ev.stopPropagation();
+                ev.preventDefault();
+                rovingContext.state.activeRef?.current?.click();
+                break;
+        }
+    };
+
     const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
-        Modal.createDialog(FeedbackDialog);
+        Modal.createDialog(FeedbackDialog, {
+            feature: "spotlight",
+        });
     } : null;
 
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
