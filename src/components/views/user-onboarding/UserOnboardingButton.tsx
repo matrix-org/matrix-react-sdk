@@ -42,18 +42,19 @@ interface Props {
 }
 
 export function UserOnboardingButton({ selected, minimized }: Props) {
-    const context = useUserOnboardingContext();
-    const [completedTasks, waitingTasks] = useUserOnboardingTasks(context);
+    const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
+    const visible = useSettingValue<boolean>("FTUE.userOnboardingButton");
 
-    const completed = completedTasks.length;
-    const waiting = waitingTasks.length;
-    const total = completed + waiting;
-
-    let progress = 1;
-    if (context && waiting) {
-        progress = completed / total;
+    if (!visible || minimized || !showUserOnboardingPage(useCase)) {
+        return null;
     }
 
+    return (
+        <UserOnboardingButtonInternal selected={selected} minimized={minimized} />
+    );
+}
+
+function UserOnboardingButtonInternal({ selected, minimized }: Props) {
     const onDismiss = useCallback((ev: ButtonEvent) => {
         PosthogTrackers.trackInteraction("WebRoomListUserOnboardingIgnoreButton", ev);
         SettingsStore.setValue("FTUE.userOnboardingButton", null, SettingLevel.ACCOUNT, false);
@@ -63,12 +64,6 @@ export function UserOnboardingButton({ selected, minimized }: Props) {
         PosthogTrackers.trackInteraction("WebRoomListUserOnboardingButton", ev);
         defaultDispatcher.fire(Action.ViewHomePage);
     }, []);
-
-    const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
-    const visible = useSettingValue<boolean>("FTUE.userOnboardingButton");
-    if (!visible || minimized || !showUserOnboardingPage(useCase)) {
-        return null;
-    }
 
     return (
         <AccessibleButton
