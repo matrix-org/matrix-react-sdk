@@ -3512,5 +3512,12 @@
     "This session is ready for secure messaging.": "此工作階段已準備好進行安全通訊。",
     "Verified session": "已驗證的工作階段",
     "Welcome": "歡迎",
-    "Show shortcut to welcome checklist above the room list": "在聊天室清單上方顯示歡迎清單的捷徑"
+    "Show shortcut to welcome checklist above the room list": "在聊天室清單上方顯示歡迎清單的捷徑",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore": "考慮登出您不再使用的舊工作階段（%(inactiveAgeDays)s天或更舊）",
+    "Inactive sessions": "不活躍的工作階段",
+    "View all": "檢視全部",
+    "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "驗證您的工作階段以強化安全通訊，或從您無法識別或不再使用的工作階段登出。",
+    "Unverified sessions": "未驗證的工作階段",
+    "Improve your account security by following these recommendations": "按照這些建議提昇您的帳號安全性",
+    "Security recommendations": "安全建議"
 }
