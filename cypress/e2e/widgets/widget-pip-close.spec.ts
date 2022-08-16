@@ -18,7 +18,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { IWidget } from "matrix-widget-api/src/interfaces/IWidget";
-// import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
@@ -52,7 +51,9 @@ const DEMO_WIDGET_HTML = `
 `;
 
 // mostly copied from src/utils/WidgetUtils.waitForRoomWidget with small modifications
-function waitForRoomWidget(matrixClient: MatrixClient, widgetId: string, roomId: string, add: boolean): Promise<void> {
+function waitForRoomWidget(win: Cypress.AUTWindow, widgetId: string, roomId: string, add: boolean): Promise<void> {
+    const matrixClient = win.mxMatrixClientPeg.get();
+
     return new Promise((resolve, reject) => {
         function eventsInIntendedState(evList) {
             const widgetPresent = evList.some((ev) => {
@@ -79,14 +80,12 @@ function waitForRoomWidget(matrixClient: MatrixClient, widgetId: string, roomId:
             const currentWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
 
             if (eventsInIntendedState(currentWidgetEvents)) {
-                // @ts-ignore
-                matrixClient.removeListener('RoomState.events', onRoomStateEvents);
+                matrixClient.removeListener(win.matrixcs.RoomStateEvent.Events, onRoomStateEvents);
                 resolve();
             }
         }
 
-        // @ts-ignore
-        matrixClient.on('RoomState.events', onRoomStateEvents);
+        matrixClient.on(win.matrixcs.RoomStateEvent.Events, onRoomStateEvents);
     });
 }
 
@@ -136,7 +135,7 @@ describe("Widget PIP", () => {
             ]).then(() => {
                 cy.window().then(async win => {
                     // wait for widget state event
-                    await waitForRoomWidget(win.mxMatrixClientPeg.get(), DEMO_WIDGET_ID, roomId, true);
+                    await waitForRoomWidget(win, DEMO_WIDGET_ID, roomId, true);
 
                     // activate widget in pip mode
                     win.mxActiveWidgetStore.setWidgetPersistence(DEMO_WIDGET_ID, roomId, true);
