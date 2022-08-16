@@ -209,10 +209,9 @@ export class RoomViewStore extends Store<ActionPayload> {
                     this.setState({ shouldPeek: false });
                 }
 
-                const cli = MatrixClientPeg.get();
+                const updateMetrics = (room: Room) => {
+                    if (room.roomId !== payload.roomId) return; // not the room we're interested in
 
-                const updateMetrics = () => {
-                    const room = cli.getRoom(payload.roomId);
                     const numMembers = room.getJoinedMemberCount();
                     const roomSize = numMembers > 1000 ? "MoreThanAThousand"
                         : numMembers > 100 ? "OneHundredAndOneToAThousand"
@@ -232,8 +231,10 @@ export class RoomViewStore extends Store<ActionPayload> {
                     cli.off(ClientEvent.Room, updateMetrics);
                 };
 
-                if (cli.getRoom(payload.roomId)) {
-                    updateMetrics();
+                const cli = MatrixClientPeg.get();
+                const room = cli.getRoom(payload.roomId);
+                if (room) {
+                    updateMetrics(room);
                 } else {
                     cli.on(ClientEvent.Room, updateMetrics);
                 }
