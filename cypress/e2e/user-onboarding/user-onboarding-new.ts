@@ -81,6 +81,15 @@ describe("User Onboarding (new user)", () => {
             cy.get(".mx_InviteDialog_buttonAndSpinner").click();
             cy.get(".mx_InviteDialog_buttonAndSpinner").should("not.exist");
             cy.get(".mx_SendMessageComposer").type("Hi!{enter}");
+            cy.visit("/#/home");
+            cy.get('.mx_UserOnboardingPage').should('exist');
+            cy.get('.mx_UserOnboardingButton').should('exist');
+            cy.get('.mx_UserOnboardingList')
+                .should('exist')
+                .should(($list) => {
+                    const list = $list.get(0);
+                    expect(getComputedStyle(list).opacity).to.be.eq("1");
+                });
             cy.get(".mx_ProgressBar").invoke("val").should("be.greaterThan", oldProgress);
         });
     });
