@@ -85,10 +85,10 @@ export function useUserOnboardingContext(): UserOnboardingContext | null {
     );
 
     useEffect(() => {
-        let handle;
+        let handle: number | null;
         let enabled = true;
         const repeater = async () => {
-            if (handle) {
+            if (handle !== null) {
                 clearTimeout(handle);
                 handle = null;
             }
@@ -102,7 +102,7 @@ export function useUserOnboardingContext(): UserOnboardingContext | null {
         return () => {
             enabled = false;
             cli.off(ClientEvent.AccountData, repeater);
-            if (handle) {
+            if (handle !== null) {
                 clearTimeout(handle);
                 handle = null;
             }
