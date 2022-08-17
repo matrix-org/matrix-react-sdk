@@ -80,7 +80,9 @@ describe("User Onboarding (new user)", () => {
             cy.get(".mx_InviteDialog_editor input").type(bot1.getUserId());
             cy.get(".mx_InviteDialog_buttonAndSpinner").click();
             cy.get(".mx_InviteDialog_buttonAndSpinner").should("not.exist");
-            cy.get(".mx_SendMessageComposer").type("Hi!{enter}");
+            const message = "Hi!";
+            cy.get(".mx_SendMessageComposer").type(`${message}!{enter}`);
+            cy.contains(".mx_MTextBody.mx_EventTile_content", message);
             cy.visit("/#/home");
             cy.get('.mx_UserOnboardingPage').should('exist');
             cy.get('.mx_UserOnboardingButton').should('exist');
