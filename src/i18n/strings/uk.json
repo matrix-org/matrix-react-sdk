@@ -3531,5 +3531,8 @@
     "No unverified sessions found.": "Не знайдено не звірених сеансів.",
     "No verified sessions found.": "Не знайдено звірених сеансів.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Для кращої безпеки виходьте з усіх сеансів, які ви не розпізнаєте або більше не використовуєте.",
-    "Verified sessions": "Звірені сеанси"
+    "Verified sessions": "Звірені сеанси",
+    "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
+    "Manually verify by text": "Звірити вручну за допомогою тексту",
+    "Toggle device details": "Перемикнути відомості про пристрій"
 }
