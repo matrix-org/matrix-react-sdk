@@ -31,6 +31,14 @@ export interface UserOnboardingContext {
 
 const USER_ONBOARDING_CONTEXT_INTERVAL = 5000;
 
+/**
+ * Returns a persistent, non-changing reference to a function
+ * This function proxies all its calls to the current value of the given input callback
+ *
+ * This allows you to use the current value of e.g., a state in a callback that’s used by e.g., a useEventEmitter or
+ * similar hook without re-registering the hook when the state changes
+ * @param value changing callback
+ */
 function useRefOf<T extends [], R>(value: (...values: T) => R): (...values: T) => R {
     const ref = useRef(value);
     ref.current = value;
