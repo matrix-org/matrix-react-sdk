@@ -3071,7 +3071,7 @@
     "Room ID: %(roomId)s": "房间ID: %(roomId)s",
     "Are you sure you're at the right place?": "你确定你位于正确的地方?",
     "Show Labs settings": "显示实验室设置",
-    "Show HTML representation of room topics": "以HTML的表现形式显示房间标题",
+    "Show HTML representation of room topics": "显示房间话题的HTML表现形式",
     "Show join/leave messages (invites/removes/bans unaffected)": "显示加入/退出消息 (邀请/删除/踢出 不受影响)",
     "Show current avatar and name for users in message history": "在消息历史中显示当前用户使用的头像和名字",
     "Add new server…": "添加新的服务器…",
