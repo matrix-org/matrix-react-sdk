@@ -17,57 +17,47 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import React, { useContext, useRef } from 'react';
+import { MatrixClient, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import { logger } from 'matrix-js-sdk/src/logger';
 
-import MatrixClientContext from '../../contexts/MatrixClientContext';
 import { _t } from '../../languageHandler';
-import FavouriteMessageTile from '../views/rooms/FavouriteMessageTile';
 import ScrollPanel from './ScrollPanel';
-
-function getFavouriteMessagesTiles(cli: MatrixClient, favouriteMessageEvents) {
-    const ret = [];
-    let lastRoomId: string;
-
-    for (let i = (favouriteMessageEvents?.length || 0) - 1; i >= 0; i--) {
-        const timeline = [] as MatrixEvent[];
-        const resultObj = favouriteMessageEvents[i];
-        const roomId = resultObj.roomId;
-        const room = cli.getRoom(roomId);
-        const mxEvent = room.findEventById(resultObj.eventId);
-        timeline.push(mxEvent);
-
-        if (roomId !== lastRoomId) {
-            ret.push(<li key={mxEvent?.getId() + "-room"}>
-                <h2>{ _t("Room") }: { room.name }</h2>
-            </li>);
-            lastRoomId = roomId;
-        }
-
-        const resultLink = "#/room/"+roomId+"/"+mxEvent.getId();
-
-        ret.push(
-            <FavouriteMessageTile
-                key={mxEvent.getId()}
-                result={mxEvent}
-                resultLink={resultLink}
-                timeline={timeline}
-            />,
-        );
-    }
-    return ret;
-}
-
-let favouriteMessagesPanel;
+import FavouriteMessagesTilesList from './FavouriteMessagesTilesList';
+import MatrixClientContext from '../../contexts/MatrixClientContext';
+import { useAsyncMemo } from '../../hooks/useAsyncMemo';
 
 const FavouriteMessagesView = () => {
-    const favouriteMessageEvents= JSON.parse(
+    const favouriteMessagesIds= JSON.parse(
         localStorage?.getItem("io_element_favouriteMessages") ?? "[]") as any[];
 
     const favouriteMessagesPanelRef = useRef<ScrollPanel>();
     const cli = useContext<MatrixClient>(MatrixClientContext);
 
-    if (favouriteMessageEvents?.length === 0) {
+    const favouriteMessageEvents = useAsyncMemo(() => {
+        const promises = favouriteMessagesIds.map(async (resultObj) => {
+            try {
+                const [evJson] = await Promise.all([
+                    cli.fetchRoomEvent(resultObj.roomId, resultObj.eventId),
+                ]);
+                const event = new MatrixEvent(evJson);
+
+                if (event.isEncrypted()) {
+                    await cli.decryptEventIfNeeded(event);
+                }
+                return event;
+            } catch (err) {
+                logger.error(err);
+            }
+            return null;
+        });
+
+        return Promise.all(promises);
+    }, [cli, favouriteMessagesIds], null);
+
+    let favouriteMessagesPanel;
+
+    if (favouriteMessagesIds?.length === 0) {
         favouriteMessagesPanel = (<h2 className="mx_RoomView_topMarker">{ _t("No Saved Messages") }</h2>);
     } else {
         favouriteMessagesPanel = (
@@ -75,7 +65,7 @@ const FavouriteMessagesView = () => {
                 ref={favouriteMessagesPanelRef}
                 className="mx_RoomView_searchResultsPanel "
             >
-                { getFavouriteMessagesTiles(cli, favouriteMessageEvents) }
+                <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} />
             </ScrollPanel>
         );
     }
