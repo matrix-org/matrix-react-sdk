@@ -3519,5 +3519,20 @@
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Overte si relácie pre vylepšené bezpečné zasielanie správ alebo sa odhláste z tých, ktoré už nepoznáte alebo nepoužívate.",
     "Unverified sessions": "Neoverené relácie",
     "Improve your account security by following these recommendations": "Zlepšite zabezpečenie svojho účtu dodržiavaním týchto odporúčaní",
-    "Security recommendations": "Bezpečnostné odporúčania"
+    "Security recommendations": "Bezpečnostné odporúčania",
+    "Interactively verify by emoji": "Interaktívne overte pomocou emotikonov",
+    "Manually verify by text": "Manuálne overte pomocou textu",
+    "Filter devices": "Filtrovať zariadenia",
+    "Inactive for %(inactiveAgeDays)s days or longer": "Neaktívny %(inactiveAgeDays)s dní alebo dlhšie",
+    "Inactive": "Neaktívne",
+    "Not ready for secure messaging": "Nie je pripravené na bezpečné zasielanie správ",
+    "Ready for secure messaging": "Pripravené na bezpečné zasielanie správ",
+    "All": "Všetky",
+    "No sessions found.": "Nenašli sa žiadne relácie.",
+    "No inactive sessions found.": "Nenašli sa žiadne neaktívne relácie.",
+    "No unverified sessions found.": "Nenašli sa žiadne neoverené relácie.",
+    "No verified sessions found.": "Nenašli sa žiadne overené relácie.",
+    "For best security, sign out from any session that you don't recognize or use anymore.": "V záujme čo najlepšieho zabezpečenia sa odhláste z každej relácie, ktorú už nepoznáte alebo nepoužívate.",
+    "Verified sessions": "Overené relácie",
+    "Toggle device details": "Prepínanie údajov o zariadení"
 }
