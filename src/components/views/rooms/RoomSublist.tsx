@@ -101,7 +101,6 @@ interface IState {
     height: number;
     rooms: Room[];
     filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
-    slidingSyncJoinedCount?: number;
     slidingSyncLoading: boolean;
 }
 
@@ -132,7 +131,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             rooms: (
                 arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || [])
             ),
-            slidingSyncJoinedCount: 0,
             slidingSyncLoading: false,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
@@ -335,9 +333,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private onShowAllClick = async () => {
         if (this.slidingSyncMode) {
             const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(this.props.tagId);
+            const count = RoomListStore.instance.getCount(this.props.tagId);
             await SlidingSyncManager.instance.ensureListRegistered(slidingSyncIndex, {
                 ranges: [
-                    [0, this.state.slidingSyncJoinedCount-1],
+                    [0, count],
                 ],
             });
         }
@@ -776,7 +775,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // tiles visible, it becomes 'show less'.
             let showNButton = null;
             const hasMoreSlidingSync = (
-                this.slidingSyncMode && (this.state.slidingSyncJoinedCount > this.state.rooms.length)
+                this.slidingSyncMode && (RoomListStore.instance.getCount(this.props.tagId) > this.state.rooms.length)
             );
 
             if ((maxTilesPx > this.state.height) || hasMoreSlidingSync) {
@@ -785,7 +784,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 const amountFullyShown = Math.floor(nonPaddedHeight / this.layout.tileHeight);
                 let numMissing = this.numTiles - amountFullyShown;
                 if (this.slidingSyncMode) {
-                    numMissing = this.state.slidingSyncJoinedCount - amountFullyShown;
+                    numMissing = RoomListStore.instance.getCount(this.props.tagId) - amountFullyShown;
                 }
                 const label = _t("Show %(count)s more", { count: numMissing });
                 let showMoreText = (

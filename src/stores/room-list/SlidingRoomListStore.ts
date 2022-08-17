@@ -69,6 +69,7 @@ export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
 export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     private tagIdToSortAlgo: Record<TagID,SortAlgorithm> = {};
     private tagMap: ITagMap = {};
+    private counts: Record<TagID, number> = {};
 
     constructor() {
         super(defaultDispatcher);
@@ -109,6 +110,10 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             algo = SortAlgorithm.Recent; // why not, we have to do something..
         }
         return algo;
+    }
+
+    public getCount(tagId: TagID): number {
+        return this.counts[tagId] || 0;
     }
 
 
@@ -184,9 +189,8 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         return this.tagMap;
     }
 
-    private refreshOrderedLists(listIndex: number, joinCount: number, roomIndexToRoomId: Record<number, string>): void {
+    private refreshOrderedLists(tagId: string, roomIndexToRoomId: Record<number, string>): void {
         const tagMap = this.tagMap;
-        const tagId = SlidingSyncManager.instance.listIdForIndex(listIndex);
         // order from low to high
         const orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
             return Number(numStr);
@@ -206,7 +210,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             return rid;
         });
         logger.debug(
-            "SlidingRoomListStore.refreshOrderedLists", listIndex, "join=", joinCount, " rooms:",
+            "SlidingRoomListStore.refreshOrderedLists ", tagId, " rooms:",
             orderedRoomIds.length < 30 ? orderedRoomIds : orderedRoomIds.length,
         );
         // now set the rooms
@@ -218,7 +222,9 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     private onSlidingSyncListUpdate(listIndex: number, joinCount: number, roomIndexToRoomId: Record<number, string>) {
-        this.refreshOrderedLists(listIndex, joinCount, roomIndexToRoomId);
+        const tagId = SlidingSyncManager.instance.listIdForIndex(listIndex);
+        this.counts[tagId]= joinCount;
+        this.refreshOrderedLists(tagId, roomIndexToRoomId);
         // let the UI update
         this.emit(LISTS_UPDATE_EVENT);
     }

@@ -34,6 +34,15 @@ export interface RoomListStore extends EventEmitter {
     get orderedLists(): ITagMap;
 
     /**
+     * Return the total number of rooms in this list. Prefer this method to
+     * RoomListStore.orderedLists[tagId].length because the client may not
+     * be aware of all the rooms in this list (e.g in Sliding Sync).
+     * @param tagId the tag to get the room count for.
+     * @returns the number of rooms in this list, or 0 if the list is unknown.
+     */
+    getCount(tagId: TagID): number;
+
+    /**
      * Set the sort algorithm for the specified tag.
      * @param tagId the tag to set the algorithm for
      * @param sort the sort algorithm to set to

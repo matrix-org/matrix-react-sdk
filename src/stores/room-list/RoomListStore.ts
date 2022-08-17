@@ -586,6 +586,11 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         return algorithmTags;
     }
 
+    public getCount(tagId: TagID): number {
+        // The room list store knows about all the rooms, so just return the length.
+        return this.orderedLists[tagId].length || 0;
+    }
+
     /**
      * Manually update a room with a given cause. This should only be used if the
      * room list store would otherwise be incapable of doing the update itself. Note
