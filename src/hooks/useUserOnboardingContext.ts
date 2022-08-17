@@ -85,7 +85,7 @@ export function useUserOnboardingContext(): UserOnboardingContext | null {
     );
 
     useEffect(() => {
-        let handle: number | null;
+        let handle: number | null = null;
         let enabled = true;
         const repeater = async () => {
             if (handle !== null) {
