@@ -134,7 +134,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
             isEmojiDisabled={this.isEmojiDisabled}
             selectedEmojis={this.state.selectedEmojis}
             showQuickReactions={true}
-            data-testid='mx_ReactionPicker'
+
         />;
     }
 }

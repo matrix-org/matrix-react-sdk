@@ -240,11 +240,11 @@ describe('<MessageActionBar />', () => {
         });
 
         it('opens message context menu on click', () => {
-            const { findByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            const { getByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
                 fireEvent.click(queryByLabelText('Options'));
             });
-            expect(findByTestId('mx_MessageContextMenu')).toBeTruthy();
+            expect(getByTestId('mx_MessageContextMenu')).toBeTruthy();
         });
     });
 
@@ -310,11 +310,11 @@ describe('<MessageActionBar />', () => {
         });
 
         it('opens reaction picker on click', () => {
-            const { queryByLabelText, findByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByLabelText, getByTestId } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
                 fireEvent.click(queryByLabelText('React'));
             });
-            expect(findByTestId('mx_ReactionPicker')).toBeTruthy();
+            expect(getByTestId('mx_EmojiPicker')).toBeTruthy();
         });
     });
 
