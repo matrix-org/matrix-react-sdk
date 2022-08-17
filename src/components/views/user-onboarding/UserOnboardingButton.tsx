@@ -49,11 +49,17 @@ export function UserOnboardingButton({ selected, minimized }: Props) {
 
 function UserOnboardingButtonInternal({ selected, minimized }: Props) {
     const onDismiss = useCallback((ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
         PosthogTrackers.trackInteraction("WebRoomListUserOnboardingIgnoreButton", ev);
         SettingsStore.setValue("FTUE.userOnboardingButton", null, SettingLevel.ACCOUNT, false);
     }, []);
 
     const onClick = useCallback((ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
         PosthogTrackers.trackInteraction("WebRoomListUserOnboardingButton", ev);
         defaultDispatcher.fire(Action.ViewHomePage);
     }, []);
