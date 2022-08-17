@@ -121,6 +121,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
             title={_t("Options")}
             onClick={onOptionsClick}
+            onContextMenu={onOptionsClick}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -170,6 +171,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
             className="mx_MessageActionBar_iconButton"
             title={_t("React")}
             onClick={onClick}
+            onContextMenu={onClick}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -255,6 +257,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
             : _t("Can't create a thread from an event with an existing relation")}
 
         onClick={onClick}
+        onContextMenu={onClick}
     >
         <ThreadIcon />
         { firstTimeSeeingThreads && !threadsEnabled && (
@@ -287,6 +290,7 @@ const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
         className={classes}
         title={_t("Favourite")}
         onClick={onClick}
+        onContextMenu={onClick}
         data-testid={eventId}
     >
         <StarIcon />
@@ -432,6 +436,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     }
 
     private onResendClick = (ev: React.MouseEvent): void => {
+        // Don't open the regular browser or our context menu on right-click
+        ev.preventDefault();
+        ev.stopPropagation();
+
         this.runActionOnFailedEv((tarEv) => Resend.resend(tarEv));
     };
 
@@ -449,6 +457,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 className="mx_MessageActionBar_iconButton"
                 title={_t("Edit")}
                 onClick={this.onEditClick}
+                onContextMenu={this.onEditClick}
                 key="edit"
             >
                 <EditIcon />
@@ -459,6 +468,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             className="mx_MessageActionBar_iconButton"
             title={_t("Delete")}
             onClick={this.onCancelClick}
+            onContextMenu={this.onCancelClick}
             key="cancel"
         >
             <TrashcanIcon />
@@ -479,6 +489,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 className="mx_MessageActionBar_iconButton"
                 title={_t("Retry")}
                 onClick={this.onResendClick}
+                onContextMenu={this.onResendClick}
                 key="resend"
             >
                 <ResendIcon />
@@ -501,6 +512,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             className="mx_MessageActionBar_iconButton"
                             title={_t("Reply")}
                             onClick={this.onReplyClick}
+                            onContextMenu={this.onReplyClick}
                             key="reply"
                         >
                             <ReplyIcon />
