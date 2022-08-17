@@ -318,7 +318,6 @@ export class RoomViewStore extends Store<ActionPayload> {
                 return;
             }
 
-
             const newState = {
                 roomId: payload.room_id,
                 roomAlias: payload.room_alias,

@@ -275,7 +275,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         this.setState({
             roomsLoading: isLoading,
         });
-    }
+    };
 
     private onListsUpdated = () => {
         const stateUpdates: IState & any = {}; // &any is to avoid a cast on the initializer

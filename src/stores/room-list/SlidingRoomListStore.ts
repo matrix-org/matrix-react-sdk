@@ -16,6 +16,8 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
+
 import { RoomUpdateCause, TagID, OrderedDefaultTagIDs, DefaultTagID } from "./models";
 import { ITagMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -24,7 +26,6 @@ import { IFilterCondition } from "./filters/IFilterCondition";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
 import { SlidingSyncManager } from "../../SlidingSyncManager";
-import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
 import { LISTS_LOADING_EVENT } from "./RoomListStore";
@@ -68,7 +69,7 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
 export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
 
 export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
-    private tagIdToSortAlgo: Record<TagID,SortAlgorithm> = {};
+    private tagIdToSortAlgo: Record<TagID, SortAlgorithm> = {};
     private tagMap: ITagMap = {};
     private counts: Record<TagID, number> = {};
 
@@ -117,11 +118,9 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         return this.counts[tagId] || 0;
     }
 
-
     public setListOrder(tagId: TagID, order: ListAlgorithm) {
         // TODO?
     }
-
 
     public getListOrder(tagId: TagID): ListAlgorithm {
         // TODO: handle unread msgs first?
@@ -160,10 +159,10 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     public getTagsForRoom(room: Room): TagID[] {
         // check all lists for each tag we know about and see if the room is there
         const tags = [];
-        for (let tagId in this.tagIdToSortAlgo) {
+        for (const tagId in this.tagIdToSortAlgo) {
             const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
-            let { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(index);
-            for (let roomIndex in roomIndexToRoomId) {
+            const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(index);
+            for (const roomIndex in roomIndexToRoomId) {
                 const roomId = roomIndexToRoomId[roomIndex];
                 if (roomId === room.roomId) {
                     tags.push(tagId);
@@ -217,7 +216,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         // now set the rooms
         const rooms = orderedRoomIds.map((roomId) => {
             return this.matrixClient.getRoom(roomId);
-        })
+        });
         tagMap[tagId] = rooms;
         this.tagMap = tagMap;
     }
@@ -251,7 +250,8 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             const sort = SortAlgorithm.Recent; // default to recency sort, TODO: read from config
             this.tagIdToSortAlgo[tagId] = sort;
             this.emit(LISTS_LOADING_EVENT, tagId, true);
-            SlidingSyncManager.instance.ensureListRegistered(SlidingSyncManager.instance.getOrAllocateListIndex(tagId), {
+            const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
+            SlidingSyncManager.instance.ensureListRegistered(index, {
                 filters: filter,
                 sort: SlidingSyncSortToFilter[sort],
             }).then(() => {
@@ -278,8 +278,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
                 this.emit(LISTS_LOADING_EVENT, tagId, false);
             });
         }
-    }
-
+    };
 
     // Intended for test usage
     public async resetStore() {

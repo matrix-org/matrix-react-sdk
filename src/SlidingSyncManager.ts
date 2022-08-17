@@ -79,12 +79,12 @@ export class SlidingSyncManager {
 
     public slidingSync: SlidingSync;
     private client: MatrixClient;
-    private listIdToIndex: Record<string,number>;
+    private listIdToIndex: Record<string, number>;
 
     private configurePromise: Promise<void>;
     private configureResolve: Function;
 
-    constructor(){
+    constructor() {
         this.listIdToIndex = {};
         this.configurePromise = new Promise((resolve) => {
             this.configureResolve = resolve;
@@ -120,8 +120,8 @@ export class SlidingSyncManager {
                 [EventType.RoomMember, this.client.getUserId()], // lets the client calculate that we are in fact in the room
             ],
             filters: {
-              room_types: ["m.space"],
-            }
+                room_types: ["m.space"],
+            },
         });
         this.configureResolve();
         return this.slidingSync;
