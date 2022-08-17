@@ -576,10 +576,19 @@ describe('<MessageActionBar />', () => {
         // For favourite button
         jest.spyOn(SettingsStore, 'getValue').mockReturnValue(true);
 
+        const event = new MouseEvent("contextmenu", {
+            bubbles: true,
+            cancelable: true,
+        });
+        event.stopPropagation = jest.fn();
+        event.preventDefault = jest.fn();
+
         const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
         act(() => {
-            fireEvent.contextMenu(queryByLabelText(buttonLabel));
+            fireEvent(queryByLabelText(buttonLabel), event);
         });
+        expect(event.stopPropagation).toHaveBeenCalled();
+        expect(event.preventDefault).toHaveBeenCalled();
         expect(queryByTestId("mx_MessageContextMenu")).toBeFalsy();
     });
 
