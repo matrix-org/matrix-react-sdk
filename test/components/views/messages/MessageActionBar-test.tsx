@@ -565,4 +565,29 @@ describe('<MessageActionBar />', () => {
             });
         });
     });
+
+    it.each([
+        ["React"],
+        ["Reply"],
+        ["Reply in thread"],
+        ["Favourite"],
+        ["Edit"],
+    ])("does not show context menu when right-clicking", (buttonLabel: string) => {
+        // For favourite button
+        jest.spyOn(SettingsStore, 'getValue').mockReturnValue(true);
+
+        const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+        act(() => {
+            fireEvent.contextMenu(queryByLabelText(buttonLabel));
+        });
+        expect(queryByTestId("mx_MessageContextMenu")).toBeFalsy();
+    });
+
+    it("does shows context menu when right-clicking options", () => {
+        const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+        act(() => {
+            fireEvent.contextMenu(queryByLabelText("Options"));
+        });
+        expect(queryByTestId("mx_MessageContextMenu")).toBeTruthy();
+    });
 });
