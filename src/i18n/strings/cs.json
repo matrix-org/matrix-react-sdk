@@ -3519,5 +3519,17 @@
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Ověřte své relace pro bezpečné zasílání zpráv nebo se odhlaste z těch, které již nepoznáváte nebo nepoužíváte.",
     "Unverified sessions": "Neověřené relace",
     "Improve your account security by following these recommendations": "Zlepšete zabezpečení svého účtu dodržováním těchto doporučení",
-    "Security recommendations": "Bezpečnostní doporučení"
+    "Security recommendations": "Bezpečnostní doporučení",
+    "Filter devices": "Filtrovat zařízení",
+    "Inactive for %(inactiveAgeDays)s days or longer": "Neaktivní po dobu %(inactiveAgeDays)s dní nebo déle",
+    "Inactive": "Neaktivní",
+    "Not ready for secure messaging": "Není připraveno na bezpečné zasílání zpráv",
+    "Ready for secure messaging": "Připraveno na bezpečné zasílání zpráv",
+    "All": "Všechny",
+    "No sessions found.": "Nebyly nalezeny žádné relace.",
+    "No inactive sessions found.": "Nebyly nalezeny žádné neaktivní relace.",
+    "No unverified sessions found.": "Nebyly nalezeny žádné neověřené relace.",
+    "No verified sessions found.": "Nebyly nalezeny žádné ověřené relace.",
+    "For best security, sign out from any session that you don't recognize or use anymore.": "Pro nejlepší zabezpečení se odhlaste z každé relace, kterou již nepoznáváte nebo nepoužíváte.",
+    "Verified sessions": "Ověřené relace"
 }
