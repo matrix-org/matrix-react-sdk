@@ -14,33 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DeviceTile {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-}
+import { IMyDevice } from "matrix-js-sdk/src/matrix";
 
-.mx_DeviceTile_info {
-    flex: 1 1 0;
-}
+export type DeviceWithVerification = IMyDevice & { isVerified: boolean | null };
+export type DevicesDictionary = Record<DeviceWithVerification['device_id'], DeviceWithVerification>;
 
-.mx_DeviceTile_metadata {
-    margin-top: $spacing-4;
-    font-size: $font-12px;
-    color: $secondary-content;
-    line-height: $font-14px;
-}
-
-.mx_DeviceTile_inactiveIcon {
-    height: 14px;
-    margin-right: $spacing-8;
-    vertical-align: middle;
-}
-
-.mx_DeviceTile_actions {
-    display: grid;
-    grid-gap: $spacing-8;
-    grid-auto-flow: column;
-    margin-left: $spacing-8;
+export enum DeviceSecurityVariation {
+    Verified = 'Verified',
+    Unverified = 'Unverified',
+    Inactive = 'Inactive',
 }

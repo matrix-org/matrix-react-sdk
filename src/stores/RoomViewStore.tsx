@@ -24,7 +24,6 @@ import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/ty
 import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { ClientEvent } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
@@ -50,6 +49,7 @@ import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
 import SettingsStore from "../settings/SettingsStore";
 import { SlidingSyncManager } from "../SlidingSyncManager";
+import { awaitRoomDownSync } from "../utils/RoomUpgrade";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -211,10 +211,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                     this.setState({ shouldPeek: false });
                 }
 
-                const cli = MatrixClientPeg.get();
-
-                const updateMetrics = () => {
-                    const room = cli.getRoom(payload.roomId);
+                awaitRoomDownSync(MatrixClientPeg.get(), payload.roomId).then(room => {
                     const numMembers = room.getJoinedMemberCount();
                     const roomSize = numMembers > 1000 ? "MoreThanAThousand"
                         : numMembers > 100 ? "OneHundredAndOneToAThousand"
@@ -230,15 +227,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                         isDM: !!DMRoomMap.shared().getUserIdForRoomId(room.roomId),
                         isSpace: room.isSpaceRoom(),
                     });
-
-                    cli.off(ClientEvent.Room, updateMetrics);
-                };
-
-                if (cli.getRoom(payload.roomId)) {
-                    updateMetrics();
-                } else {
-                    cli.on(ClientEvent.Room, updateMetrics);
-                }
+                });
 
                 break;
             }
