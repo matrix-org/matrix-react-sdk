@@ -27,6 +27,7 @@ import { SlidingSyncManager } from "../../SlidingSyncManager";
 import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
+import { LISTS_LOADING_EVENT } from "./RoomListStore";
 
 interface IState {
     // state is tracked in underlying classes
@@ -249,10 +250,12 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             }
             const sort = SortAlgorithm.Recent; // default to recency sort, TODO: read from config
             this.tagIdToSortAlgo[tagId] = sort;
-            // don't bother waiting, it'll happen eventually and then we'll update it via callbacks on slidingSync
+            this.emit(LISTS_LOADING_EVENT, tagId, true);
             SlidingSyncManager.instance.ensureListRegistered(SlidingSyncManager.instance.getOrAllocateListIndex(tagId), {
                 filters: filter,
                 sort: SlidingSyncSortToFilter[sort],
+            }).then(() => {
+                this.emit(LISTS_LOADING_EVENT, tagId, false);
             });
         });
     }
@@ -260,15 +263,21 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome: boolean) => {
         console.log("SlidingRoomListStore.onSelectedSpaceUpdated", activeSpace);
         // update the untagged filter
-        const tagID = DefaultTagID.Untagged;
-        const filters = filterConditions[tagID];
+        const tagId = DefaultTagID.Untagged;
+        const filters = filterConditions[tagId];
+        const oldSpace = filters.spaces?.[0];
         filters.spaces = (activeSpace && activeSpace != MetaSpace.Home) ? [activeSpace] : undefined;
-        SlidingSyncManager.instance.ensureListRegistered(
-            SlidingSyncManager.instance.getOrAllocateListIndex(tagID),
-            {
-                filters: filters,
-            },
-        );
+        if (oldSpace !== activeSpace) {
+            this.emit(LISTS_LOADING_EVENT, tagId, true);
+            SlidingSyncManager.instance.ensureListRegistered(
+                SlidingSyncManager.instance.getOrAllocateListIndex(tagId),
+                {
+                    filters: filters,
+                },
+            ).then(() => {
+                this.emit(LISTS_LOADING_EVENT, tagId, false);
+            });
+        }
     }
 
 

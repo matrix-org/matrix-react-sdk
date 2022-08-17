@@ -45,6 +45,7 @@ interface IState {
 }
 
 export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
+export const LISTS_LOADING_EVENT = RoomListStoreEvent.ListsLoading; // unused; used by SlidingRoomListStore
 
 export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     /**

@@ -39,7 +39,7 @@ import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorith
 import { ListLayout } from "../../../stores/room-list/ListLayout";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListLayoutStore from "../../../stores/room-list/RoomListLayoutStore";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
+import RoomListStore, { LISTS_UPDATE_EVENT, LISTS_LOADING_EVENT } from "../../../stores/room-list/RoomListStore";
 import { arrayFastClone, arrayHasOrderChange } from "../../../utils/arrays";
 import { objectExcluding, objectHasDiff } from "../../../utils/objects";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
@@ -101,7 +101,7 @@ interface IState {
     height: number;
     rooms: Room[];
     filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
-    slidingSyncLoading: boolean;
+    roomsLoading: boolean;
 }
 
 export default class RoomSublist extends React.Component<IProps, IState> {
@@ -131,7 +131,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             rooms: (
                 arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || [])
             ),
-            slidingSyncLoading: false,
+            roomsLoading: false,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
         this.state = Object.assign(this.state, { height: this.calculateInitialHeight() });
@@ -253,6 +253,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     public async componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
+        RoomListStore.instance.on(LISTS_LOADING_EVENT, this.onListsLoading);
 
         // Using the passive option to not block the main thread
         // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
@@ -262,7 +263,18 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onListsUpdated);
+        RoomListStore.instance.off(LISTS_LOADING_EVENT, this.onListsLoading);
         this.tilesRef.current?.removeEventListener("scroll", this.onScrollPrevent);
+    }
+
+    private onListsLoading = (tagId: TagID, isLoading: boolean) => {
+        if (this.props.tagId !== tagId) {
+            return;
+        }
+        console.log("sliding onListsLoading ", tagId, isLoading);
+        this.setState({
+            roomsLoading: isLoading,
+        });
     }
 
     private onListsUpdated = () => {
@@ -750,7 +762,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         });
 
         let content = null;
-        if (this.state.slidingSyncLoading) {
+        if (this.state.roomsLoading) {
             content = <div className="mx_RoomSublist_skeletonUI" />;
         } else if (visibleTiles.length > 0 && this.props.forceExpanded) {
             content = <div className="mx_RoomSublist_resizeBox mx_RoomSublist_resizeBox_forceExpanded">
