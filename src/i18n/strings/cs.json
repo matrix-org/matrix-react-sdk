@@ -3531,5 +3531,6 @@
     "No unverified sessions found.": "Nebyly nalezeny žádné neověřené relace.",
     "No verified sessions found.": "Nebyly nalezeny žádné ověřené relace.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Pro nejlepší zabezpečení se odhlaste z každé relace, kterou již nepoznáváte nebo nepoužíváte.",
-    "Verified sessions": "Ověřené relace"
+    "Verified sessions": "Ověřené relace",
+    "Toggle device details": "Přepnutí zobrazení podrobností o zařízení"
 }
