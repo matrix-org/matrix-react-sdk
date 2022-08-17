@@ -3532,5 +3532,7 @@
     "No verified sessions found.": "Nebyly nalezeny žádné ověřené relace.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Pro nejlepší zabezpečení se odhlaste z každé relace, kterou již nepoznáváte nebo nepoužíváte.",
     "Verified sessions": "Ověřené relace",
-    "Toggle device details": "Přepnutí zobrazení podrobností o zařízení"
+    "Toggle device details": "Přepnutí zobrazení podrobností o zařízení",
+    "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
+    "Manually verify by text": "Ruční ověření pomocí textu"
 }
