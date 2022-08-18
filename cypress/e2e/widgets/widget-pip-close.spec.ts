@@ -111,27 +111,27 @@ describe("Widget PIP", () => {
             }).as('powerLevelsChanged');
 
             // bot joins the room
-            cy.botJoinRoom(bot, roomId).then(async () => {
-                // wait for bot to join the room, otherwise sometimes widget event is not found
-                // setup widget via state event
-                cy.getClient().then(async matrixClient => {
-                    const content: IWidget = {
-                        id: DEMO_WIDGET_ID,
-                        creatorUserId: 'somebody',
-                        type: DEMO_WIDGET_TYPE,
-                        name: DEMO_WIDGET_NAME,
-                        url: demoWidgetUrl,
-                    };
-                    await matrixClient.sendStateEvent(roomId, 'im.vector.modular.widgets', content, DEMO_WIDGET_ID);
-                });
-            }).as('botJoinedWidgetEventSent');
+            cy.botJoinRoom(bot, roomId).as('botJoined');
+
+            // setup widget via state event
+            cy.getClient().then(async matrixClient => {
+                const content: IWidget = {
+                    id: DEMO_WIDGET_ID,
+                    creatorUserId: 'somebody',
+                    type: DEMO_WIDGET_TYPE,
+                    name: DEMO_WIDGET_NAME,
+                    url: demoWidgetUrl,
+                };
+                await matrixClient.sendStateEvent(roomId, 'im.vector.modular.widgets', content, DEMO_WIDGET_ID);
+            }).as('widgetEventSent');
 
             // open the room
             cy.viewRoomByName(ROOM_NAME);
 
             cy.all([
                 cy.get<string>("@powerLevelsChanged"),
-                cy.get<string>("@botJoinedWidgetEventSent"),
+                cy.get<string>("@botJoined"),
+                cy.get<string>("@widgetEventSent"),
             ]).then(() => {
                 cy.window().then(async win => {
                     // wait for widget state event
@@ -145,24 +145,22 @@ describe("Widget PIP", () => {
 
                     // checks that widget is opened in pip
                     cy.accessIframe(`iframe[title="${DEMO_WIDGET_NAME}"]`).within({}, () => {
-                        cy.get("#demo").should('exist');
-                    }).then(async () => {
-                        const userId = user.userId;
-                        if (userRemove == 'leave') {
-                            cy.getClient().then(async matrixClient => {
-                                await matrixClient.leave(roomId);
-                            });
-                        } else if (userRemove == 'kick') {
-                            // wait, otherwise sometimes not work
-                            cy.wait(500).then(async () => {
+                        cy.get("#demo").should('exist').then(async () => {
+                            const userId = user.userId;
+                            if (userRemove == 'leave') {
+                                cy.getClient().then(async matrixClient => {
+                                    await matrixClient.leave(roomId);
+                                });
+                            } else if (userRemove == 'kick') {
+                                // wait, otherwise sometimes not work
                                 await bot.kick(roomId, userId);
-                            });
-                        } else if (userRemove == 'ban') {
-                            await bot.ban(roomId, userId);
-                        }
+                            } else if (userRemove == 'ban') {
+                                await bot.ban(roomId, userId);
+                            }
 
-                        // checks that pip window is closed
-                        cy.get(".mx_CallView_pip").should("not.exist");
+                            // checks that pip window is closed
+                            cy.get(".mx_CallView_pip").should("not.exist");
+                        });
                     });
                 });
             });
