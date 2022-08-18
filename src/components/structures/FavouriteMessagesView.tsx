@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React, { useContext, useRef } from 'react';
-import { MatrixClient, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import { MatrixClient, MatrixEvent, RelationType } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
 import { _t } from '../../languageHandler';
@@ -37,15 +37,28 @@ const FavouriteMessagesView = () => {
     const favouriteMessageEvents = useAsyncMemo(() => {
         const promises = favouriteMessagesIds.map(async (resultObj) => {
             try {
-                const [evJson] = await Promise.all([
+                // Fetch the events and latest edit in parallel
+                const [evJson, { events: [edit] }] = await Promise.all([
                     cli.fetchRoomEvent(resultObj.roomId, resultObj.eventId),
+                    cli.relations(resultObj.roomId, resultObj.eventId, RelationType.Replace, null, { limit: 1 }),
                 ]);
                 const event = new MatrixEvent(evJson);
+                const roomId = event.getRoomId();
+                const room = cli.getRoom(roomId);
 
                 if (event.isEncrypted()) {
                     await cli.decryptEventIfNeeded(event);
                 }
-                return event;
+
+                if (event) {
+                    // Inject sender information
+                    event.sender = room.getMember(event.getSender());
+
+                    // Also inject any edits found
+                    if (edit) event.makeReplaced(edit);
+
+                    return event;
+                }
             } catch (err) {
                 logger.error(err);
             }
@@ -61,12 +74,22 @@ const FavouriteMessagesView = () => {
         favouriteMessagesPanel = (<h2 className="mx_RoomView_topMarker">{ _t("No Saved Messages") }</h2>);
     } else {
         favouriteMessagesPanel = (
-            <ScrollPanel
-                ref={favouriteMessagesPanelRef}
-                className="mx_RoomView_searchResultsPanel "
-            >
-                <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} />
-            </ScrollPanel>
+            <>
+                { /* <RoomAvatar
+                    oobData={{
+                        name: "Favourites",
+                    }}
+                    width={32}
+                    height={32}
+                    resizeMethod="crop"
+                /> */ }
+                <ScrollPanel
+                    ref={favouriteMessagesPanelRef}
+                    className="mx_RoomView_searchResultsPanel "
+                >
+                    <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} />
+                </ScrollPanel>
+            </>
         );
     }
 

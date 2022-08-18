@@ -417,7 +417,9 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     public render(): JSX.Element {
         const toolbarOpts = [];
-        if (canEditContent(this.props.mxEvent)) {
+        const isFavouritePageCheck = window.location.href.split("/").pop() === "favourite_messages";
+
+        if (canEditContent(this.props.mxEvent) && !isFavouritePageCheck) {
             toolbarOpts.push(<RovingAccessibleTooltipButton
                 className="mx_MessageActionBar_iconButton"
                 title={_t("Edit")}
