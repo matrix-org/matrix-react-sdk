@@ -14,70 +14,108 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { ClientEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 
 import { IDestroyable } from "../../utils/IDestroyable";
-import { NotificationState, NotificationStateEvents } from "./NotificationState";
-import { ThreadNotificationState } from "./ThreadNotificationState";
+import { NotificationState } from "./NotificationState";
 import { NotificationColor } from "./NotificationColor";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
+import * as RoomNotifs from '../../RoomNotifs';
+import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 
 export class ThreadsRoomNotificationState extends NotificationState implements IDestroyable {
-    public readonly threadsState = new Map<Thread, ThreadNotificationState>();
-
-    protected _symbol = null;
-    protected _count = 0;
-    protected _color = NotificationColor.None;
-
     constructor(public readonly room: Room) {
         super();
-        for (const thread of this.room.getThreads()) {
-            this.onNewThread(thread);
-        }
-        this.room.on(ThreadEvent.New, this.onNewThread);
+        this.room.on(RoomEvent.Receipt, this.handleReadReceipt);
+        this.room.on(RoomEvent.Timeline, this.handleRoomEventUpdate);
+        this.room.on(RoomEvent.Redaction, this.handleRoomEventUpdate);
+        this.room.on(RoomEvent.MyMembership, this.handleMembershipUpdate);
+        this.room.on(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
+        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        MatrixClientPeg.get().on(ClientEvent.AccountData, this.handleAccountDataUpdate);
+        this.updateNotificationState();
     }
 
     public destroy(): void {
         super.destroy();
-        this.room.off(ThreadEvent.New, this.onNewThread);
-        for (const [, notificationState] of this.threadsState) {
-            notificationState.off(NotificationStateEvents.Update, this.onThreadUpdate);
+        this.room.removeListener(RoomEvent.Receipt, this.handleReadReceipt);
+        this.room.removeListener(RoomEvent.Timeline, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvent.Redaction, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvent.MyMembership, this.handleMembershipUpdate);
+        this.room.removeListener(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
+        if (MatrixClientPeg.get()) {
+            MatrixClientPeg.get().removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+            MatrixClientPeg.get().removeListener(ClientEvent.AccountData, this.handleAccountDataUpdate);
         }
     }
-
-    public getThreadRoomState(thread: Thread): ThreadNotificationState {
-        if (!this.threadsState.has(thread)) {
-            this.threadsState.set(thread, new ThreadNotificationState(thread));
-        }
-        return this.threadsState.get(thread);
-    }
-
-    private onNewThread = (thread: Thread): void => {
-        const notificationState = new ThreadNotificationState(thread);
-        this.threadsState.set(
-            thread,
-            notificationState,
-        );
-        notificationState.on(NotificationStateEvents.Update, this.onThreadUpdate);
+    private handleLocalEchoUpdated = () => {
+        this.updateNotificationState();
     };
 
-    private onThreadUpdate = (): void => {
-        let color = NotificationColor.None;
-        for (const [, notificationState] of this.threadsState) {
-            if (notificationState.color === NotificationColor.Red) {
-                color = NotificationColor.Red;
-                break;
-            } else if (notificationState.color === NotificationColor.Grey) {
-                color = NotificationColor.Grey;
+    private handleReadReceipt = (event: MatrixEvent, room: Room) => {
+        if (!readReceiptChangeIsFor(event, MatrixClientPeg.get())) return; // not our own - ignore
+        if (room.roomId !== this.room.roomId) return; // not for us - ignore
+        this.updateNotificationState();
+    };
+
+    private handleMembershipUpdate = () => {
+        this.updateNotificationState();
+    };
+
+    private onEventDecrypted = (event: MatrixEvent) => {
+        if (event.getRoomId() !== this.room.roomId) return; // ignore - not for us or notifications timeline
+
+        this.updateNotificationState();
+    };
+
+    private handleRoomEventUpdate = (event: MatrixEvent, room: Room | null) => {
+        if (room?.roomId !== this.room.roomId) return; // ignore - not for us or notifications timeline
+
+        this.updateNotificationState();
+    };
+
+    private handleAccountDataUpdate = (ev: MatrixEvent) => {
+        if (ev.getType() === "m.push_rules") {
+            this.updateNotificationState();
+        }
+    };
+
+    private updateNotificationState() {
+        const snapshot = this.snapshot();
+
+        if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.RoomNotifState.Mute) {
+            // When muted we suppress all notification states, even if we have context on them.
+            this._color = NotificationColor.None;
+            this._symbol = null;
+            this._count = 0;
+        } else {
+            const redNotifs = this.room.getTotalThreadsUnreadNotificationCount(NotificationCountType.Highlight);
+            const greyNotifs = this.room.getTotalThreadsUnreadNotificationCount(NotificationCountType.Total);
+
+            // For a 'true count' we pick the grey notifications first because they include the
+            // red notifications. If we don't have a grey count for some reason we use the red
+            // count. If that count is broken for some reason, assume zero. This avoids us showing
+            // a badge for 'NaN' (which formats as 'NaNB' for NaN Billion).
+            const trueCount = greyNotifs ? greyNotifs : (redNotifs ? redNotifs : 0);
+
+            // Note: we only set the symbol if we have an actual count. We don't want to show
+            // zero on badges.
+
+            if (redNotifs > 0) {
+                this._color = NotificationColor.Red;
+                this._count = trueCount;
+                this._symbol = null; // symbol calculated by component
+            } else if (greyNotifs > 0) {
+                this._color = NotificationColor.Grey;
+                this._count = trueCount;
+                this._symbol = null; // symbol calculated by component
             }
         }
-        this.updateNotificationState(color);
-    };
 
-    private updateNotificationState(color: NotificationColor): void {
-        const snapshot = this.snapshot();
-        this._color = color;
         // finally, publish an update if needed
         this.emitIfUpdated(snapshot);
     }
 }
+
