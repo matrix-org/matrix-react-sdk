@@ -356,6 +356,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         () => {
             const userResults = [];
             let roomResults;
+            let alreadyAddedUserIds;
             if (isSlidingSyncEnabled) {
                 // use the rooms sliding sync returned as the server has already worked it out for us
                 roomResults = slidingSyncRooms.map(toRoomResult);
@@ -363,7 +364,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 roomResults = findVisibleRooms(cli).map(toRoomResult);
                 // If we already have a DM with the user we're looking for, we will
                 // show that DM instead of the user themselves
-                const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
+                alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
                     const userId = DMRoomMap.shared().getUserIdForRoomId(result.room.roomId);
                     if (!userId) return userIds;
                     if (result.room.getJoinedMemberCount() > 2) return userIds;
