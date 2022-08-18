@@ -1,7 +1,6 @@
 /*
 Copyright 2022 grimhilt <grimhilt@users.noreply.github.com>
 
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -17,7 +16,6 @@ limitations under the License.
 
 import { mocked } from 'jest-mock';
 import { logger } from 'matrix-js-sdk/src/logger';
-
 import { EventTimeline, MatrixEvent, Room } from 'matrix-js-sdk/src/matrix';
 
 import { createAudioContext, decodeOgg } from '../../src/audio/compat';
@@ -25,10 +23,8 @@ import { PlaybackState } from "../../src/audio/Playback";
 import { PlaybackManager } from '../../src/audio/PlaybackManager';
 import { PlaybackQueue } from '../../src/audio/PlaybackQueue';
 import { MatrixClientPeg } from '../../src/MatrixClientPeg';
-
 import { mkEvent, stubClient } from '../test-utils';
 import { UPDATE_EVENT } from '../../src/stores/AsyncStore';
-
 
 jest.mock('../../src/audio/compat', () => ({
     createAudioContext: jest.fn(),
