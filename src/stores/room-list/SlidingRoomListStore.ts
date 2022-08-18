@@ -29,6 +29,7 @@ import { SlidingSyncManager } from "../../SlidingSyncManager";
 import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
 import { LISTS_LOADING_EVENT } from "./RoomListStore";
+import { RoomViewStore } from "../RoomViewStore";
 
 interface IState {
     // state is tracked in underlying classes
@@ -72,6 +73,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     private tagIdToSortAlgo: Record<TagID, SortAlgorithm> = {};
     private tagMap: ITagMap = {};
     private counts: Record<TagID, number> = {};
+    private stickyRoomId: string | null;
 
     constructor() {
         super(defaultDispatcher);
@@ -191,6 +193,15 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
 
     private refreshOrderedLists(tagId: string, roomIndexToRoomId: Record<number, string>): void {
         const tagMap = this.tagMap;
+
+        // this room will not move due to it being viewed: it is sticky. This can be null to indicate
+        // no sticky room if you aren't viewing a room.
+        this.stickyRoomId = RoomViewStore.instance.getRoomId();
+        let stickyRoomNewIndex = -1;
+        let stickyRoomOldIndex = (tagMap[tagId] || []).findIndex((room) => {
+            return room.roomId === this.stickyRoomId;
+        });
+
         // order from low to high
         const orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
             return Number(numStr);
@@ -207,12 +218,32 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             if (!rid) {
                 throw new Error("index " + i + " has no room ID: Map => " + JSON.stringify(roomIndexToRoomId));
             }
+            if (rid === this.stickyRoomId) {
+                stickyRoomNewIndex = i;
+            }
             return rid;
         });
         logger.debug(
-            "SlidingRoomListStore.refreshOrderedLists ", tagId, " rooms:",
+            `SlidingRoomListStore.refreshOrderedLists ${tagId} sticky: ${this.stickyRoomId}`,
+            `${stickyRoomOldIndex} -> ${stickyRoomNewIndex}`,
+            "rooms:",
             orderedRoomIds.length < 30 ? orderedRoomIds : orderedRoomIds.length,
         );
+
+        if (this.stickyRoomId && stickyRoomOldIndex >= 0 && stickyRoomNewIndex >= 0) {
+            // this update will move this sticky room from old to new, which we do not want.
+            // Instead, keep the sticky room ID index position as it is, swap it with
+            // whatever was in its place.
+            // Some scenarios with sticky room S and bump room B (other letters unimportant):
+            // A, S, C, B                                  S, A, B
+            // B, A, S, C  <---- without sticky rooms ---> B, S, A
+            // B, S, A, C  <- with sticky rooms applied -> S, B, A
+            // In other words, we need to swap positions to keep it locked in place.
+            const inWayRoomId = orderedRoomIds[stickyRoomOldIndex];
+            orderedRoomIds[stickyRoomOldIndex] = this.stickyRoomId;
+            orderedRoomIds[stickyRoomNewIndex] = inWayRoomId;
+        }
+
         // now set the rooms
         const rooms = orderedRoomIds.map((roomId) => {
             return this.matrixClient.getRoom(roomId);
@@ -229,10 +260,50 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         this.emit(LISTS_UPDATE_EVENT);
     }
 
+    private onRoomViewStoreUpdated() {
+        // we only care about this to know when the user has clicked on a room to set the stickiness value
+        if (RoomViewStore.instance.getRoomId() === this.stickyRoomId) {
+            return;
+        }
+
+        let hasUpdatedAnyList = false;
+
+        // every list with the OLD sticky room ID needs to be resorted because it now needs to take
+        // its proper place as it is no longer sticky. The newly sticky room can remain the same though,
+        // as we only actually care about its sticky status when we get list updates.
+        const oldStickyRoom = this.stickyRoomId;
+        // it's not safe to check the data in slidingSync as it is tracking the server's view of the
+        // room list. There's an edge case whereby the sticky room has gone outside the window and so
+        // would not be present in the roomIndexToRoomId map anymore, and hence clicking away from it
+        // will make it disappear eventually. We need to check orderedLists as that is the actual
+        // sorted renderable list of rooms which sticky rooms apply to.
+        for (const tagId in this.orderedLists) {
+            const list = this.orderedLists[tagId];
+            const room = list.find((room) => {
+                return room.roomId === oldStickyRoom;
+            });
+            if (room) {
+                // resort it based on the slidingSync view of the list. This may cause this old sticky
+                // room to cease to exist.
+                const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
+                const {roomIndexToRoomId} = SlidingSyncManager.instance.slidingSync.getListData(index);
+                this.refreshOrderedLists(tagId, roomIndexToRoomId);
+                hasUpdatedAnyList = true;
+            }
+        }
+        // in the event we didn't call refreshOrderedLists, it helps to still remember the sticky room ID.
+        this.stickyRoomId = RoomViewStore.instance.getRoomId();
+
+        if (hasUpdatedAnyList) {
+            this.emit(LISTS_UPDATE_EVENT);
+        }
+    }
+
     protected async onReady(): Promise<any> {
         console.log("SlidingRoomListStore.onReady");
-        // permanent listener, we never get destroyed. Could be an issue if we want to test this in isolation.
+        // permanent listeners: never get destroyed. Could be an issue if we want to test this in isolation.
         SlidingSyncManager.instance.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
+        RoomViewStore.instance.addListener(this.onRoomViewStoreUpdated.bind(this));
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated.bind(this));
         if (SpaceStore.instance.activeSpace) {
             this.onSelectedSpaceUpdated(SpaceStore.instance.activeSpace, false);
