@@ -296,6 +296,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         },
 
     },
+    "feature_thread_read_receipts": {
+        displayName: _td("Server support for threads notifications and read receipts"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_state_counters": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
