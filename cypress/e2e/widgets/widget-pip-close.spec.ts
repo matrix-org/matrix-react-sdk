@@ -152,7 +152,6 @@ describe("Widget PIP", () => {
                                     await matrixClient.leave(roomId);
                                 });
                             } else if (userRemove == 'kick') {
-                                // wait, otherwise sometimes not work
                                 await bot.kick(roomId, userId);
                             } else if (userRemove == 'ban') {
                                 await bot.ban(roomId, userId);
