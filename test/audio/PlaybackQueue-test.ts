@@ -18,12 +18,14 @@ limitations under the License.
 import { mocked } from 'jest-mock';
 import { logger } from 'matrix-js-sdk/src/logger';
 
+import { EventTimeline, MatrixEvent, Room } from 'matrix-js-sdk/src/matrix';
+
 import { createAudioContext, decodeOgg } from '../../src/audio/compat';
 import { PlaybackState } from "../../src/audio/Playback";
 import { PlaybackManager } from '../../src/audio/PlaybackManager';
 import { PlaybackQueue } from '../../src/audio/PlaybackQueue';
 import { MatrixClientPeg } from '../../src/MatrixClientPeg';
-import { EventTimeline, MatrixEvent, Room } from 'matrix-js-sdk/src/matrix';
+
 import { mkEvent, stubClient } from '../test-utils';
 import { UPDATE_EVENT } from '../../src/stores/AsyncStore';
 
@@ -34,19 +36,19 @@ jest.mock('../../src/audio/compat', () => ({
 }));
 
 describe('PlaybackQueue', () => {
-    stubClient()
+    stubClient();
     const cli = MatrixClientPeg.get();
     const buffer = new ArrayBuffer(8);
     const waveform = null;
 
-    const updateCli = (events:MatrixEvent[], roomId:string): void => {
+    const updateCli = (events: MatrixEvent[], roomId: string): void => {
         cli.getRoom = () => ({
             roomId: roomId,
             getLiveTimeline: () => ({
                 getEvents: () => events,
-            } as unknown as EventTimeline)
+            } as unknown as EventTimeline),
         } as unknown as Room);
-    }
+    };
 
     const mockAudioBufferSourceNode = {
         addEventListener: jest.fn(),
@@ -78,7 +80,6 @@ describe('PlaybackQueue', () => {
         mocked(decodeOgg).mockClear().mockResolvedValue(new ArrayBuffer(1));
         mocked(createAudioContext).mockReturnValue(mockAudioContext as unknown as AudioContext);
     });
-
 
     it('two consecutive voice messages are played', async () => {
         const roomIdTest = '!room0:server';
@@ -114,7 +115,7 @@ describe('PlaybackQueue', () => {
 
         await playback0.toggle();
         await playback0.stop();
-        
+
         let needToBeTested = true;
         playback1.on(UPDATE_EVENT, (state) => {
             if (needToBeTested) {
@@ -168,7 +169,7 @@ describe('PlaybackQueue', () => {
         await playback0.stop();
 
         playback1.on(UPDATE_EVENT, (state) => {
-            expect(state).toBe(PlaybackState.Stopped)
+            expect(state).toBe(PlaybackState.Stopped);
         });
     });
 
