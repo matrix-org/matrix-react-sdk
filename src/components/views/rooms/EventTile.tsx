@@ -1294,6 +1294,17 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 ]);
             }
             case TimelineRenderingType.ThreadsList: {
+                const evt = this.props.mxEvent;
+                const room = MatrixClientPeg.get().getRoom(evt.getRoomId());
+
+                const color = room.getThreadUnreadNotificationCount(
+                    evt.threadRootId, NotificationCountType.Highlight,
+                ) > 0
+                    ? NotificationCountType.Highlight
+                    : room.getThreadUnreadNotificationCount(evt.threadRootId, NotificationCountType.Total) > 0
+                        ? NotificationCountType.Total
+                        : undefined;
+
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
                     React.createElement(this.props.as || "li", {
@@ -1307,7 +1318,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "data-shape": this.context.timelineRenderingType,
                         "data-self": isOwnEvent,
                         "data-has-reply": !!replyChain,
-                        "data-notification": this.state.threadNotification,
+                        "data-notification": color,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
