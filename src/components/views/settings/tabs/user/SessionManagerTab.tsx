@@ -14,51 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { _t } from "../../../../../languageHandler";
-import Spinner from '../../../elements/Spinner';
 import { useOwnDevices } from '../../devices/useOwnDevices';
-import DeviceTile from '../../devices/DeviceTile';
-import DeviceSecurityCard from '../../devices/DeviceSecurityCard';
 import SettingsSubsection from '../../shared/SettingsSubsection';
 import FilteredDeviceList from '../../devices/FilteredDeviceList';
-import { DeviceSecurityVariation } from '../../devices/filter';
+import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
+import SecurityRecommendations from '../../devices/SecurityRecommendations';
+import { DeviceSecurityVariation, DeviceWithVerification } from '../../devices/types';
 import SettingsTab from '../SettingsTab';
 
 const SessionManagerTab: React.FC = () => {
     const { devices, currentDeviceId, isLoading } = useOwnDevices();
+    const [filter, setFilter] = useState<DeviceSecurityVariation>();
+    const [expandedDeviceIds, setExpandedDeviceIds] = useState([]);
+
+    const onDeviceExpandToggle = (deviceId: DeviceWithVerification['device_id']): void => {
+        if (expandedDeviceIds.includes(deviceId)) {
+            setExpandedDeviceIds(expandedDeviceIds.filter(id => id !== deviceId));
+        } else {
+            setExpandedDeviceIds([...expandedDeviceIds, deviceId]);
+        }
+    };
 
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
     const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
 
-    const securityCardProps = currentDevice?.isVerified ? {
-        variation: DeviceSecurityVariation.Verified,
-        heading: _t('Verified session'),
-        description: _t('This session is ready for secure messaging.'),
-    } : {
-        variation: DeviceSecurityVariation.Unverified,
-        heading: _t('Unverified session'),
-        description: _t('Verify or sign out from this session for best security and reliability.'),
-    };
-
     return <SettingsTab heading={_t('Sessions')}>
-        <SettingsSubsection
-            heading={_t('Current session')}
-            data-testid='current-session-section'
-        >
-            { isLoading && <Spinner /> }
-            { !!currentDevice && <>
-                <DeviceTile
-                    device={currentDevice}
-                />
-                <br />
-                <DeviceSecurityCard
-                    {...securityCardProps}
-                />
-            </>
-            }
-        </SettingsSubsection>
+        <SecurityRecommendations devices={devices} />
+        <CurrentDeviceSection
+            device={currentDevice}
+            isLoading={isLoading}
+        />
         {
             shouldShowOtherSessions &&
             <SettingsSubsection
@@ -69,7 +57,13 @@ const SessionManagerTab: React.FC = () => {
                 )}
                 data-testid='other-sessions-section'
             >
-                <FilteredDeviceList devices={otherDevices} />
+                <FilteredDeviceList
+                    devices={otherDevices}
+                    filter={filter}
+                    expandedDeviceIds={expandedDeviceIds}
+                    onFilterChange={setFilter}
+                    onDeviceExpandToggle={onDeviceExpandToggle}
+                />
             </SettingsSubsection>
         }
     </SettingsTab>;

@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, useContext, useEffect } from 'react';
+import React, { ReactElement, useCallback, useContext, useEffect } from 'react';
 import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
@@ -88,7 +88,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
 
-    const onOptionsClick = (e: React.MouseEvent): void => {
+    const onOptionsClick = useCallback((e: React.MouseEvent): void => {
         // Don't open the regular browser or our context menu on right-click
         e.preventDefault();
         e.stopPropagation();
@@ -97,7 +97,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
         // position in the page even when someone is clicking around.
         onFocus();
-    };
+    }, [openMenu, onFocus]);
 
     let contextMenu: ReactElement | null;
     if (menuDisplayed) {
@@ -121,6 +121,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
             title={_t("Options")}
             onClick={onOptionsClick}
+            onContextMenu={onOptionsClick}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -153,17 +154,24 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
         </ContextMenu>;
     }
 
+    const onClick = useCallback((e: React.MouseEvent) => {
+        // Don't open the regular browser or our context menu on right-click
+        e.preventDefault();
+        e.stopPropagation();
+
+        openMenu();
+        // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
+        // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
+        // position in the page even when someone is clicking around.
+        onFocus();
+    }, [openMenu, onFocus]);
+
     return <React.Fragment>
         <ContextMenuTooltipButton
             className="mx_MessageActionBar_iconButton"
             title={_t("React")}
-            onClick={() => {
-                openMenu();
-                // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
-                // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
-                // position in the page even when someone is clicking around.
-                onFocus();
-            }}
+            onClick={onClick}
+            onContextMenu={onClick}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -193,7 +201,11 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
         return null;
     }
 
-    const onClick = (): void => {
+    const onClick = (e: React.MouseEvent): void => {
+        // Don't open the regular browser or our context menu on right-click
+        e.preventDefault();
+        e.stopPropagation();
+
         if (firstTimeSeeingThreads) {
             localStorage.setItem("mx_seen_feature_thread", "true");
         }
@@ -245,6 +257,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
             : _t("Can't create a thread from an event with an existing relation")}
 
         onClick={onClick}
+        onContextMenu={onClick}
     >
         <ThreadIcon />
         { firstTimeSeeingThreads && !threadsEnabled && (
@@ -259,16 +272,25 @@ interface IFavouriteButtonProp {
 
 const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
     const { isFavourite, toggleFavourite } = useFavouriteMessages({ mxEvent });
-
+    const eventId = mxEvent.getId();
     const classes = classNames("mx_MessageActionBar_iconButton", {
         'mx_MessageActionBar_favouriteButton_fillstar': isFavourite(),
     });
 
+    const onClick = useCallback((e: React.MouseEvent) => {
+        // Don't open the regular browser or our context menu on right-click
+        e.preventDefault();
+        e.stopPropagation();
+
+        toggleFavourite();
+    }, [toggleFavourite]);
+
     return <RovingAccessibleTooltipButton
         className={classes}
         title={_t("Favourite")}
-        onClick={() => toggleFavourite()}
-        data-testid={mxEvent.getId()}
+        onClick={onClick}
+        onContextMenu={onClick}
+        data-testid={eventId}
     >
         <StarIcon />
     </RovingAccessibleTooltipButton>;
@@ -334,7 +356,11 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         this.props.onFocusChange?.(focused);
     };
 
-    private onReplyClick = (ev: React.MouseEvent): void => {
+    private onReplyClick = (e: React.MouseEvent): void => {
+        // Don't open the regular browser or our context menu on right-click
+        e.preventDefault();
+        e.stopPropagation();
+
         dis.dispatch({
             action: 'reply_to_event',
             event: this.props.mxEvent,
@@ -342,7 +368,11 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         });
     };
 
-    private onEditClick = (): void => {
+    private onEditClick = (e: React.MouseEvent): void => {
+        // Don't open the regular browser or our context menu on right-click
+        e.preventDefault();
+        e.stopPropagation();
+
         editEvent(this.props.mxEvent, this.context.timelineRenderingType, this.props.getRelationsForEvent);
     };
 
@@ -405,6 +435,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     }
 
     private onResendClick = (ev: React.MouseEvent): void => {
+        // Don't open the regular browser or our context menu on right-click
+        ev.preventDefault();
+        ev.stopPropagation();
+
         this.runActionOnFailedEv((tarEv) => Resend.resend(tarEv));
     };
 
@@ -424,6 +458,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 className="mx_MessageActionBar_iconButton"
                 title={_t("Edit")}
                 onClick={this.onEditClick}
+                onContextMenu={this.onEditClick}
                 key="edit"
             >
                 <EditIcon />
@@ -434,6 +469,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             className="mx_MessageActionBar_iconButton"
             title={_t("Delete")}
             onClick={this.onCancelClick}
+            onContextMenu={this.onCancelClick}
             key="cancel"
         >
             <TrashcanIcon />
@@ -454,6 +490,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 className="mx_MessageActionBar_iconButton"
                 title={_t("Retry")}
                 onClick={this.onResendClick}
+                onContextMenu={this.onResendClick}
                 key="resend"
             >
                 <ResendIcon />
@@ -476,6 +513,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             className="mx_MessageActionBar_iconButton"
                             title={_t("Reply")}
                             onClick={this.onReplyClick}
+                            onContextMenu={this.onReplyClick}
                             key="reply"
                         >
                             <ReplyIcon />

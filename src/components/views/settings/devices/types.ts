@@ -14,27 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_LabelledCheckbox {
-    display: flex;
-    gap: 8px;
-    flex-direction: row;
+import { IMyDevice } from "matrix-js-sdk/src/matrix";
 
-    .mx_Checkbox {
-        margin-top: 3px; /* visually align with label text */
-    }
+export type DeviceWithVerification = IMyDevice & { isVerified: boolean | null };
+export type DevicesDictionary = Record<DeviceWithVerification['device_id'], DeviceWithVerification>;
 
-    .mx_LabelledCheckbox_labels {
-        flex: 1;
-
-        .mx_LabelledCheckbox_label {
-            vertical-align: middle;
-        }
-
-        .mx_LabelledCheckbox_byline {
-            display: block;
-            padding-top: $spacing-4;
-            color: $muted-fg-color;
-            font-size: $font-11px;
-        }
-    }
+export enum DeviceSecurityVariation {
+    Verified = 'Verified',
+    Unverified = 'Unverified',
+    Inactive = 'Inactive',
 }
