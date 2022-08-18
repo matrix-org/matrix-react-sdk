@@ -192,7 +192,7 @@ describe("Sliding Sync", () => {
         ]);
     });
 
-    it.only("should show the right unread notifications", () => {
+    it("should show the right unread notifications", () => {
         createAndJoinBob();
 
         // send a message in the test room: unread notif count shoould increment
@@ -216,7 +216,7 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_RoomTile", "Test Room").should("not.have.class", "mx_NotificationBadge_count");
     });
 
-    it("should not show unread indicators", () => {
+    it.only("should not show unread indicators", () => { // TODO: for now. Later we should.
         createAndJoinBob();
 
         // disable notifs in this room (TODO: CS API call?)
@@ -239,6 +239,6 @@ describe("Sliding Sync", () => {
             "Test Room", "Dummy",
         ]);
 
-        cy.contains(".mx_RoomTile", "Test Room").find(".mx_NotificationBadge").should("not.have.class", "mx_NotificationBadge_dot");
+        cy.contains(".mx_RoomTile", "Test Room").get(".mx_NotificationBadge").should("not.exist");
     });
 });
