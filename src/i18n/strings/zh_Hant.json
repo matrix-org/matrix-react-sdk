@@ -3531,5 +3531,8 @@
     "No unverified sessions found.": "找不到未驗證的工作階段。",
     "No verified sessions found.": "找不到已驗證的工作階段。",
     "For best security, sign out from any session that you don't recognize or use anymore.": "為了取得最佳安全性，請從任何您無法識別或不再使用的工作階段登出。",
-    "Verified sessions": "已驗證的工作階段"
+    "Verified sessions": "已驗證的工作階段",
+    "Interactively verify by emoji": "透過表情符號互動式驗證",
+    "Manually verify by text": "透過文字手動驗證",
+    "Toggle device details": "切換裝置詳細資訊"
 }
