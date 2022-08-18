@@ -20,7 +20,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from '../../../languageHandler';
 import HeaderButton from './HeaderButton';
@@ -129,29 +129,10 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         RightPanelPhases.ThreadPanel,
         RightPanelPhases.ThreadView,
     ];
-    private threadNotificationState: ThreadsRoomNotificationState;
 
     constructor(props: IProps) {
         super(props, HeaderKind.Room);
-
-        this.threadNotificationState = RoomNotificationStateStore.instance.getThreadsRoomState(this.props.room);
     }
-
-    public componentDidMount(): void {
-        super.componentDidMount();
-        this.threadNotificationState.on(NotificationStateEvents.Update, this.onThreadNotification);
-    }
-
-    public componentWillUnmount(): void {
-        super.componentWillUnmount();
-        this.threadNotificationState.off(NotificationStateEvents.Update, this.onThreadNotification);
-    }
-
-    private onThreadNotification = (): void => {
-        this.setState({
-            threadNotificationColor: this.threadNotificationState.color,
-        });
-    };
 
     protected onAction(payload: ActionPayload) {
         if (payload.action === Action.ViewUser) {
@@ -233,6 +214,18 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 isHighlighted={this.isPhase(RightPanelPhases.Timeline)}
                 onClick={this.onTimelineCardClicked} />,
         );
+
+        const unreadCount = this.props.room?.getTotalUnreadNotificationCount(NotificationCountType.Total)
+            ?? this.props.room?.getTotalUnreadNotificationCount(NotificationCountType.Highlight)
+            ?? 0;
+
+        // Nested ternary, niiice 😏
+        const color = this.props.room?.getTotalUnreadNotificationCount(NotificationCountType.Highlight) > 0
+            ? NotificationColor.Red
+            : this.props.room?.getTotalUnreadNotificationCount(NotificationCountType.Total) > 0
+                ? NotificationColor.Grey
+                : NotificationColor.None;
+
         rightPanelPhaseButtons.set(RightPanelPhases.ThreadPanel,
             SettingsStore.getValue("feature_thread")
                 ? <HeaderButton
@@ -241,9 +234,9 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                     title={_t("Threads")}
                     onClick={this.onThreadsPanelClicked}
                     isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
-                    isUnread={this.threadNotificationState.color > 0}
+                    isUnread={unreadCount > 0}
                 >
-                    <UnreadIndicator color={this.threadNotificationState.color} />
+                    <UnreadIndicator color={color} />
                 </HeaderButton>
                 : null,
         );
