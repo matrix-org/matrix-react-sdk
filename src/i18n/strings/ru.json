@@ -1114,7 +1114,7 @@
     "Objects": "Объекты",
     "Symbols": "Символы",
     "Flags": "Флаги",
-    "React": "Реакция",
+    "React": "Отреагировать",
     "Cancel search": "Отменить поиск",
     "Room %(name)s": "Комната %(name)s",
     "Jump to first unread room.": "Перейти в первую непрочитанную комнату.",
@@ -3517,5 +3517,7 @@
     "Improve your account security by following these recommendations": "Повысьте безопасность учётной записи, следуя этим рекомендациям",
     "Security recommendations": "Рекомендации по безопасности",
     "Inactive sessions": "Неактивные сессии",
-    "Unverified sessions": "Неподтверждённые сессии"
+    "Unverified sessions": "Неподтверждённые сессии",
+    "All": "Все",
+    "Verified sessions": "Подтверждённые сессии"
 }
