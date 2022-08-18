@@ -20,10 +20,10 @@ limitations under the License.
 import { MatrixClient, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import React, { useContext } from 'react';
 
-import MatrixClientContext from '../../contexts/MatrixClientContext';
-import { _t } from '../../languageHandler';
-import Spinner from '../views/elements/Spinner';
-import FavouriteMessageTile from '../views/rooms/FavouriteMessageTile';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import { _t } from '../../../languageHandler';
+import Spinner from '../../views/elements/Spinner';
+import FavouriteMessageTile from './FavouriteMessageTile';
 
 interface IProps{
     favouriteMessageEvents: MatrixEvent[];

@@ -71,7 +71,7 @@ import LegacyGroupView from "./LegacyGroupView";
 import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 import { UserOnboardingPage } from '../views/user-onboarding/UserOnboardingPage';
-import FavouriteMessagesView from './FavouriteMessagesView';
+import FavouriteMessagesView from './FavouriteMessagesView/FavouriteMessagesView';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.

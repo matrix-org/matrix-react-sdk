@@ -21,11 +21,12 @@ import React, { useContext, useRef } from 'react';
 import { MatrixClient, MatrixEvent, RelationType } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
-import { _t } from '../../languageHandler';
-import ScrollPanel from './ScrollPanel';
+import { _t } from '../../../languageHandler';
+import ScrollPanel from '../ScrollPanel';
 import FavouriteMessagesTilesList from './FavouriteMessagesTilesList';
-import MatrixClientContext from '../../contexts/MatrixClientContext';
-import { useAsyncMemo } from '../../hooks/useAsyncMemo';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
+import FavouriteMessagesHeader from './FavouriteMessagesHeader';
 
 const FavouriteMessagesView = () => {
     const favouriteMessagesIds= JSON.parse(
@@ -74,22 +75,15 @@ const FavouriteMessagesView = () => {
         favouriteMessagesPanel = (<h2 className="mx_RoomView_topMarker">{ _t("No Saved Messages") }</h2>);
     } else {
         favouriteMessagesPanel = (
-            <>
-                { /* <RoomAvatar
-                    oobData={{
-                        name: "Favourites",
-                    }}
-                    width={32}
-                    height={32}
-                    resizeMethod="crop"
-                /> */ }
+            <React.Fragment>
+                <FavouriteMessagesHeader />
                 <ScrollPanel
                     ref={favouriteMessagesPanelRef}
                     className="mx_RoomView_searchResultsPanel "
                 >
                     <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} />
                 </ScrollPanel>
-            </>
+            </React.Fragment>
         );
     }
 

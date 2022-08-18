@@ -1,0 +1,43 @@
+/*
+Copyright 2019 New Vector Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_FavMessagesHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    flex:  0 0 50px;
+    border-bottom: 1px solid $primary-hairline-color;
+    background-color: $background;
+    z-index: 999;
+}
+
+.mx_FavMessagesHeader_Wrapper{
+    height: 44px;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    margin: 0 20px 0 16px;
+    padding-top: 8px;
+    border-bottom: 1px solid $system;
+}
+
+.mx_FavMessagesHeader_Wrapper > span {
+    color: $primary-content;
+    font-weight: $font-semi-bold;
+    font-size: $font-18px;
+    margin: 0 8px;
+}

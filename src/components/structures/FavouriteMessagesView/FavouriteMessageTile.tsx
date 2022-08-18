@@ -21,9 +21,9 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import RoomContext from "../../../contexts/RoomContext";
 import SettingsStore from "../../../settings/SettingsStore";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import DateSeparator from "../messages/DateSeparator";
-import EventTile from "./EventTile";
-import { shouldFormContinuation } from "../../structures/MessagePanel";
+import DateSeparator from "../../views/messages/DateSeparator";
+import EventTile from "../../views/rooms/EventTile";
+import { shouldFormContinuation } from "../MessagePanel";
 import { wantsDateSeparator } from "../../../DateUtils";
 import { haveRendererForEvent } from "../../../events/EventTileFactory";
 
