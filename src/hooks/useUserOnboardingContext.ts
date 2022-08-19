@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent } from "matrix-js-sdk/src/matrix";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { Notifier } from "../Notifier";
@@ -39,7 +39,7 @@ const USER_ONBOARDING_CONTEXT_INTERVAL = 5000;
  * similar hook without re-registering the hook when the state changes
  * @param value changing callback
  */
-function useRefOf<T extends [], R>(value: (...values: T) => R): (...values: T) => R {
+function useRefOf<T extends any[], R>(value: (...values: T) => R): (...values: T) => R {
     const ref = useRef(value);
     ref.current = value;
     return useCallback(
@@ -48,51 +48,17 @@ function useRefOf<T extends [], R>(value: (...values: T) => R): (...values: T) =
     );
 }
 
-export function useUserOnboardingContext(): UserOnboardingContext | null {
-    const [context, setContext] = useState<UserOnboardingContext | null>(null);
-
+function useUserOnboardingContextValue<T>(defaultValue: T, callback: (cli: MatrixClient) => Promise<T>): T {
+    const [value, setValue] = useState<T>(defaultValue);
     const cli = MatrixClientPeg.get();
-    const handler = useRefOf(
-        useCallback(async () => {
-            try {
-                let hasAvatar = context?.hasAvatar;
-                if (!hasAvatar) {
-                    const profile = await cli.getProfileInfo(cli.getUserId());
-                    hasAvatar = Boolean(profile?.avatar_url);
-                }
 
-                let hasDevices = context?.hasDevices;
-                if (!hasDevices) {
-                    const myDevice = cli.getDeviceId();
-                    const devices = await cli.getDevices();
-                    hasDevices = Boolean(devices.devices.find(device => device.device_id !== myDevice));
-                }
-
-                let hasDmRooms = context?.hasDmRooms;
-                if (!hasDmRooms) {
-                    const dmRooms = DMRoomMap.shared().getUniqueRoomsWithIndividuals() ?? {};
-                    hasDmRooms = Boolean(Object.keys(dmRooms).length);
-                }
-
-                let hasNotificationsEnabled = context?.hasNotificationsEnabled;
-                if (!hasNotificationsEnabled) {
-                    hasNotificationsEnabled = Notifier.isPossible();
-                }
-
-                if (hasAvatar !== context?.hasAvatar
-                    || hasDevices !== context?.hasDevices
-                    || hasDmRooms !== context?.hasDmRooms
-                    || hasNotificationsEnabled !== context?.hasNotificationsEnabled) {
-                    setContext({ hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled });
-                }
-            } catch (e) {
-                logger.warn("Could not load context for user onboarding task list: ", e);
-                setContext(null);
-            }
-        }, [context, cli]),
-    );
+    const handler = useRefOf(callback);
 
     useEffect(() => {
+        if (value) {
+            return;
+        }
+
         let handle: number | null = null;
         let enabled = true;
         const repeater = async () => {
@@ -100,7 +66,7 @@ export function useUserOnboardingContext(): UserOnboardingContext | null {
                 clearTimeout(handle);
                 handle = null;
             }
-            await handler();
+            setValue(await handler(cli));
             if (enabled) {
                 handle = setTimeout(repeater, USER_ONBOARDING_CONTEXT_INTERVAL);
             }
@@ -115,7 +81,30 @@ export function useUserOnboardingContext(): UserOnboardingContext | null {
                 handle = null;
             }
         };
-    }, [cli, handler]);
+    }, [cli, handler, value]);
+    return value;
+}
 
-    return context;
+export function useUserOnboardingContext(): UserOnboardingContext | null {
+    const hasAvatar = useUserOnboardingContextValue(false, async (cli) => {
+        const profile = await cli.getProfileInfo(cli.getUserId());
+        return Boolean(profile?.avatar_url);
+    });
+    const hasDevices = useUserOnboardingContextValue(false, async (cli) => {
+        const myDevice = cli.getDeviceId();
+        const devices = await cli.getDevices();
+        return Boolean(devices.devices.find(device => device.device_id !== myDevice));
+    });
+    const hasDmRooms = useUserOnboardingContextValue(false, async () => {
+        const dmRooms = DMRoomMap.shared().getUniqueRoomsWithIndividuals() ?? {};
+        return Boolean(Object.keys(dmRooms).length);
+    });
+    const hasNotificationsEnabled = useUserOnboardingContextValue(false, async () => {
+        return Notifier.isPossible();
+    });
+
+    return useMemo(
+        () => ({ hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled }),
+        [hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled],
+    );
 }
