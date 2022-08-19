@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
 import { Mjolnir } from "../../../../../mjolnir/Mjolnir";
@@ -22,7 +24,6 @@ import { ListRule } from "../../../../../mjolnir/ListRule";
 import { BanList, RULE_SERVER, RULE_USER } from "../../../../../mjolnir/BanList";
 import Modal from "../../../../../Modal";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import AccessibleButton from "../../../elements/AccessibleButton";
@@ -34,7 +35,6 @@ interface IState {
     newList: string;
 }
 
-@replaceableComponent("views.settings.tabs.user.MjolnirUserSettingsTab")
 export default class MjolnirUserSettingsTab extends React.Component<{}, IState> {
     constructor(props) {
         super(props);
@@ -69,9 +69,9 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             await list.banEntity(kind, this.state.newPersonalRule, _t("Ignored/Blocked"));
             this.setState({ newPersonalRule: "" }); // this will also cause the new rule to be rendered
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            Modal.createTrackedDialog('Failed to add Mjolnir rule', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Error adding ignored user/server'),
                 description: _t('Something went wrong. Please try again or view your console for hints.'),
             });
@@ -90,9 +90,9 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             await Mjolnir.sharedInstance().subscribeToList(room.roomId);
             this.setState({ newList: "" }); // this will also cause the new rule to be rendered
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            Modal.createTrackedDialog('Failed to subscribe to Mjolnir list', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Error subscribing to list'),
                 description: _t('Please verify the room ID or address and try again.'),
             });
@@ -107,9 +107,9 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             const list = Mjolnir.sharedInstance().getPersonalList();
             await list.unbanEntity(rule.kind, rule.entity);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            Modal.createTrackedDialog('Failed to remove Mjolnir rule', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Error removing ignored user/server'),
                 description: _t('Something went wrong. Please try again or view your console for hints.'),
             });
@@ -124,9 +124,9 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             await Mjolnir.sharedInstance().unsubscribeFromList(list.roomId);
             await MatrixClientPeg.get().leave(list.roomId);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
 
-            Modal.createTrackedDialog('Failed to unsubscribe from Mjolnir list', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Error unsubscribing from list'),
                 description: _t('Please try again or view your console for hints.'),
             });
@@ -149,7 +149,7 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             return <ul>{ tiles }</ul>;
         };
 
-        Modal.createTrackedDialog('View Mjolnir list rules', '', QuestionDialog, {
+        Modal.createDialog(QuestionDialog, {
             title: _t("Ban list rules - %(roomName)s", { roomName: name }),
             description: (
                 <div>

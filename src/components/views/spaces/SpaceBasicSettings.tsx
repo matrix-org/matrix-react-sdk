@@ -19,6 +19,7 @@ import React, { useRef, useState } from "react";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
     avatarUrl?: string;
@@ -65,6 +66,7 @@ export const SpaceAvatar = ({
                     }}
                     kind="link"
                     className="mx_SpaceBasicSettings_avatar_remove"
+                    aria-label={_t("Delete avatar")}
                 >
                     { _t("Delete") }
                 </AccessibleButton>
@@ -72,7 +74,11 @@ export const SpaceAvatar = ({
         } else {
             avatarSection = <React.Fragment>
                 <div className="mx_SpaceBasicSettings_avatar" onClick={() => avatarUploadRef.current?.click()} />
-                <AccessibleButton onClick={() => avatarUploadRef.current?.click()} kind="link">
+                <AccessibleButton
+                    onClick={() => avatarUploadRef.current?.click()}
+                    kind="link"
+                    aria-label={_t("Upload avatar")}
+                >
                     { _t("Upload") }
                 </AccessibleButton>
             </React.Fragment>;
@@ -84,6 +90,7 @@ export const SpaceAvatar = ({
         <input
             type="file"
             ref={avatarUploadRef}
+            onClick={chromeFileInputFix}
             onChange={(e) => {
                 if (!e.target.files?.length) return;
                 const file = e.target.files[0];

@@ -21,7 +21,6 @@ import { CATEGORY_HEADER_HEIGHT, EMOJI_HEIGHT, EMOJIS_PER_ROW } from "./EmojiPic
 import LazyRenderList from "../elements/LazyRenderList";
 import { DATA_BY_CATEGORY, IEmoji } from "../../../emoji";
 import Emoji from './Emoji';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 const OVERFLOW_ROWS = 3;
 
@@ -46,15 +45,15 @@ interface IProps {
     onClick(emoji: IEmoji): void;
     onMouseEnter(emoji: IEmoji): void;
     onMouseLeave(emoji: IEmoji): void;
+    isEmojiDisabled?: (unicode: string) => boolean;
 }
 
-@replaceableComponent("views.emojipicker.Category")
 class Category extends React.PureComponent<IProps> {
     private renderEmojiRow = (rowIndex: number) => {
         const { onClick, onMouseEnter, onMouseLeave, selectedEmojis, emojis } = this.props;
         const emojisForRow = emojis.slice(rowIndex * 8, (rowIndex + 1) * 8);
         return (<div key={rowIndex}>{
-            emojisForRow.map(emoji => ((
+            emojisForRow.map(emoji => (
                 <Emoji
                     key={emoji.hexcode}
                     emoji={emoji}
@@ -62,8 +61,9 @@ class Category extends React.PureComponent<IProps> {
                     onClick={onClick}
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
+                    disabled={this.props.isEmojiDisabled?.(emoji.unicode)}
                 />
-            )))
+            ))
         }</div>);
     };
 

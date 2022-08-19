@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import { LocalStorageCryptoStore } from 'matrix-js-sdk/src/crypto/store/localStorage-crypto-store';
-import Analytics from '../Analytics';
 import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
 import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
+import { logger } from "matrix-js-sdk/src/logger";
 
 const localStorage = window.localStorage;
 
 // just *accessing* indexedDB throws an exception in firefox with
 // indexeddb disabled.
-let indexedDB;
+let indexedDB: IDBFactory;
 try {
     indexedDB = window.indexedDB;
 } catch (e) {}
@@ -33,29 +33,25 @@ const SYNC_STORE_NAME = "riot-web-sync";
 const CRYPTO_STORE_NAME = "matrix-js-sdk:crypto";
 
 function log(msg: string) {
-    console.log(`StorageManager: ${msg}`);
+    logger.log(`StorageManager: ${msg}`);
 }
 
 function error(msg: string, ...args: string[]) {
-    console.error(`StorageManager: ${msg}`, ...args);
-}
-
-function track(action: string) {
-    Analytics.trackEvent("StorageManager", action);
+    logger.error(`StorageManager: ${msg}`, ...args);
 }
 
 export function tryPersistStorage() {
     if (navigator.storage && navigator.storage.persist) {
         navigator.storage.persist().then(persistent => {
-            console.log("StorageManager: Persistent?", persistent);
+            logger.log("StorageManager: Persistent?", persistent);
         });
     } else if (document.requestStorageAccess) { // Safari
         document.requestStorageAccess().then(
-            () => console.log("StorageManager: Persistent?", true),
-            () => console.log("StorageManager: Persistent?", false),
+            () => logger.log("StorageManager: Persistent?", true),
+            () => logger.log("StorageManager: Persistent?", false),
         );
     } else {
-        console.log("StorageManager: Persistence unsupported");
+        logger.log("StorageManager: Persistence unsupported");
     }
 }
 
@@ -78,7 +74,6 @@ export async function checkConsistency() {
     } else {
         healthy = false;
         error("Local storage cannot be used on this browser");
-        track("Local storage disabled");
     }
 
     if (indexedDB && localStorage) {
@@ -89,7 +84,6 @@ export async function checkConsistency() {
     } else {
         healthy = false;
         error("Sync store cannot be used on this browser");
-        track("Sync store disabled");
     }
 
     if (indexedDB) {
@@ -101,7 +95,6 @@ export async function checkConsistency() {
     } else {
         healthy = false;
         error("Crypto store cannot be used on this browser");
-        track("Crypto store disabled");
     }
 
     if (dataInLocalStorage && cryptoInited && !dataInCryptoStore) {
@@ -111,15 +104,12 @@ export async function checkConsistency() {
             " but no data found in crypto store. " +
             "IndexedDB storage has likely been evicted by the browser!",
         );
-        track("Crypto store evicted");
     }
 
     if (healthy) {
         log("Storage consistency checks passed");
-        track("Consistency checks passed");
     } else {
         error("Storage consistency checks failed");
-        track("Consistency checks failed");
     }
 
     return {
@@ -140,7 +130,6 @@ async function checkSyncStore() {
         return { exists, healthy: true };
     } catch (e) {
         error("Sync store using IndexedDB inaccessible", e);
-        track("Sync store using IndexedDB inaccessible");
     }
     log("Sync store using memory only");
     return { exists, healthy: false };
@@ -156,26 +145,16 @@ async function checkCryptoStore() {
         return { exists, healthy: true };
     } catch (e) {
         error("Crypto store using IndexedDB inaccessible", e);
-        track("Crypto store using IndexedDB inaccessible");
     }
     try {
-        exists = await LocalStorageCryptoStore.exists(localStorage);
+        exists = LocalStorageCryptoStore.exists(localStorage);
         log(`Crypto store using local storage contains data? ${exists}`);
         return { exists, healthy: true };
     } catch (e) {
         error("Crypto store using local storage inaccessible", e);
-        track("Crypto store using local storage inaccessible");
     }
     log("Crypto store using memory only");
     return { exists, healthy: false };
-}
-
-export function trackStores(client) {
-    if (client.store && client.store.on) {
-        client.store.on("degraded", () => {
-            track("Sync store using IndexedDB degraded to memory");
-        });
-    }
 }
 
 /**
@@ -186,16 +165,16 @@ export function trackStores(client) {
  * and if it is true and not crypto data is found, an error is
  * presented to the user.
  *
- * @param {bool} cryptoInited True if crypto has been set up
+ * @param {boolean} cryptoInited True if crypto has been set up
  */
-export function setCryptoInitialised(cryptoInited) {
-    localStorage.setItem("mx_crypto_initialised", cryptoInited);
+export function setCryptoInitialised(cryptoInited: boolean) {
+    localStorage.setItem("mx_crypto_initialised", String(cryptoInited));
 }
 
 /* Simple wrapper functions around IndexedDB.
  */
 
-let idb = null;
+let idb: IDBDatabase = null;
 
 async function idbInit(): Promise<void> {
     if (!indexedDB) {
@@ -204,8 +183,8 @@ async function idbInit(): Promise<void> {
     idb = await new Promise((resolve, reject) => {
         const request = indexedDB.open("matrix-react-sdk", 1);
         request.onerror = reject;
-        request.onsuccess = (event) => { resolve(request.result); };
-        request.onupgradeneeded = (event) => {
+        request.onsuccess = () => { resolve(request.result); };
+        request.onupgradeneeded = () => {
             const db = request.result;
             db.createObjectStore("pickleKey");
             db.createObjectStore("account");
@@ -264,6 +243,6 @@ export async function idbDelete(
         const objectStore = txn.objectStore(table);
         const request = objectStore.delete(key);
         request.onerror = reject;
-        request.onsuccess = (event) => { resolve(); };
+        request.onsuccess = () => { resolve(); };
     });
 }

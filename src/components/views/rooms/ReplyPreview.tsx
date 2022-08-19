@@ -15,87 +15,47 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
-import RoomViewStore from '../../../stores/RoomViewStore';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ReplyTile from './ReplyTile';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { EventSubscription } from 'fbemitter';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import AccessibleButton from "../elements/AccessibleButton";
 
-function cancelQuoting() {
+function cancelQuoting(context: TimelineRenderingType) {
     dis.dispatch({
         action: 'reply_to_event',
         event: null,
+        context,
     });
 }
 
 interface IProps {
     permalinkCreator: RoomPermalinkCreator;
+    replyToEvent: MatrixEvent;
 }
 
-interface IState {
-    event: MatrixEvent;
-}
+export default class ReplyPreview extends React.Component<IProps> {
+    public static contextType = RoomContext;
 
-@replaceableComponent("views.rooms.ReplyPreview")
-export default class ReplyPreview extends React.Component<IProps, IState> {
-    private unmounted = false;
-    private readonly roomStoreToken: EventSubscription;
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            event: RoomViewStore.getQuotingEvent(),
-        };
-
-        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-    }
-
-    componentWillUnmount() {
-        this.unmounted = true;
-
-        // Remove RoomStore listener
-        if (this.roomStoreToken) {
-            this.roomStoreToken.remove();
-        }
-    }
-
-    private onRoomViewStoreUpdate = (): void => {
-        if (this.unmounted) return;
-
-        const event = RoomViewStore.getQuotingEvent();
-        if (this.state.event !== event) {
-            this.setState({ event });
-        }
-    };
-
-    render() {
-        if (!this.state.event) return null;
+    public render(): JSX.Element {
+        if (!this.props.replyToEvent) return null;
 
         return <div className="mx_ReplyPreview">
             <div className="mx_ReplyPreview_section">
-                <div className="mx_ReplyPreview_header mx_ReplyPreview_title">
-                    { _t('Replying') }
-                </div>
-                <div className="mx_ReplyPreview_header mx_ReplyPreview_cancel">
-                    <img
-                        className="mx_filterFlipColor"
-                        src={require("../../../../res/img/cancel.svg")}
-                        width="18"
-                        height="18"
-                        onClick={cancelQuoting}
+                <div className="mx_ReplyPreview_header">
+                    <span>{ _t('Replying') }</span>
+                    <AccessibleButton
+                        className="mx_ReplyPreview_header_cancel"
+                        onClick={() => cancelQuoting(this.context.timelineRenderingType)}
                     />
                 </div>
-                <div className="mx_ReplyPreview_clear" />
-                <div className="mx_ReplyPreview_tile">
-                    <ReplyTile
-                        mxEvent={this.state.event}
-                        permalinkCreator={this.props.permalinkCreator}
-                    />
-                </div>
+                <ReplyTile
+                    mxEvent={this.props.replyToEvent}
+                    permalinkCreator={this.props.permalinkCreator}
+                />
             </div>
         </div>;
     }

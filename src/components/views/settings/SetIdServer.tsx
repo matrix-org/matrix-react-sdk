@@ -16,6 +16,8 @@ limitations under the License.
 
 import url from 'url';
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from '../../../Modal';
@@ -25,7 +27,6 @@ import IdentityAuthClient from "../../../IdentityAuthClient";
 import { abbreviateUrl, unabbreviateUrl } from "../../../utils/UrlUtils";
 import { getDefaultIdentityServerUrl, doesIdentityServerHaveTerms } from '../../../utils/IdentityServerUtils';
 import { timeout } from "../../../utils/promise";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ActionPayload } from '../../../dispatcher/payloads';
 import InlineSpinner from '../elements/InlineSpinner';
 import AccessibleButton from '../elements/AccessibleButton';
@@ -78,7 +79,6 @@ interface IState {
     checking: boolean;
 }
 
-@replaceableComponent("views.settings.SetIdServer")
 export default class SetIdServer extends React.Component<IProps, IState> {
     private dispatcherRef: string;
 
@@ -206,7 +206,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                     this.saveIdServer(fullUrl);
                 }
             } catch (e) {
-                console.error(e);
+                logger.error(e);
                 errStr = _t("Terms of service not accepted or the identity server is invalid.");
             }
         }
@@ -219,7 +219,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
     };
 
     private showNoTermsWarning(fullUrl) {
-        const { finished } = Modal.createTrackedDialog('No Terms Warning', '', QuestionDialog, {
+        const { finished } = Modal.createDialog(QuestionDialog, {
             title: _t("Identity server has no terms of service"),
             description: (
                 <div>
@@ -268,11 +268,11 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             );
         } catch (e) {
             currentServerReachable = false;
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${currentClientIdServer} to check ` +
                 `for 3PIDs during IS change flow`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
         const boundThreepids = threepids.filter(tp => tp.bound);
         let message;
@@ -320,7 +320,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             message = unboundMessage;
         }
 
-        const { finished } = Modal.createTrackedDialog('Identity Server Bound Warning', '', QuestionDialog, {
+        const { finished } = Modal.createDialog(QuestionDialog, {
             title,
             description: message,
             button,
@@ -407,7 +407,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         }
 
         return (
-            <form className="mx_SettingsTab_section mx_SetIdServer" onSubmit={this.checkIdServer}>
+            <form className="mx_SetIdServer" onSubmit={this.checkIdServer}>
                 <span className="mx_SettingsTab_subheading">
                     { sectionTitle }
                 </span>

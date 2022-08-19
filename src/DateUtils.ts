@@ -123,16 +123,103 @@ export function formatTime(date: Date, showTwelveHour = false): string {
     return pad(date.getHours()) + ':' + pad(date.getMinutes());
 }
 
+export function formatCallTime(delta: Date): string {
+    const hours = delta.getUTCHours();
+    const minutes = delta.getUTCMinutes();
+    const seconds = delta.getUTCSeconds();
+
+    let output = "";
+    if (hours) output += `${hours}h `;
+    if (minutes || output) output += `${minutes}m `;
+    if (seconds || output) output += `${seconds}s`;
+
+    return output;
+}
+
+export function formatSeconds(inSeconds: number): string {
+    const hours = Math.floor(inSeconds / (60 * 60)).toFixed(0).padStart(2, '0');
+    const minutes = Math.floor((inSeconds % (60 * 60)) / 60).toFixed(0).padStart(2, '0');
+    const seconds = Math.floor(((inSeconds % (60 * 60)) % 60)).toFixed(0).padStart(2, '0');
+
+    let output = "";
+    if (hours !== "00") output += `${hours}:`;
+    output += `${minutes}:${seconds}`;
+
+    return output;
+}
+
 const MILLIS_IN_DAY = 86400000;
+function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
+    return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
+}
+
+function withinCurrentYear(prevDate: Date, nextDate: Date): boolean {
+    return prevDate.getFullYear() === nextDate.getFullYear();
+}
+
 export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): boolean {
     if (!nextEventDate || !prevEventDate) {
         return false;
     }
     // Return early for events that are > 24h apart
-    if (Math.abs(prevEventDate.getTime() - nextEventDate.getTime()) > MILLIS_IN_DAY) {
+    if (!withinPast24Hours(prevEventDate, nextEventDate)) {
         return true;
     }
 
     // Compare weekdays
     return prevEventDate.getDay() !== nextEventDate.getDay();
+}
+
+export function formatFullDateNoDay(date: Date) {
+    return _t("%(date)s at %(time)s", {
+        date: date.toLocaleDateString().replace(/\//g, '-'),
+        time: date.toLocaleTimeString().replace(/:/g, '-'),
+    });
+}
+
+export function formatFullDateNoDayNoTime(date: Date) {
+    return (
+        date.getFullYear() +
+        "/" +
+        pad(date.getMonth() + 1) +
+        "/" +
+        pad(date.getDate())
+    );
+}
+
+export function formatRelativeTime(date: Date, showTwelveHour = false): string {
+    const now = new Date(Date.now());
+    if (withinPast24Hours(date, now)) {
+        return formatTime(date, showTwelveHour);
+    } else {
+        const months = getMonthsArray();
+        let relativeDate = `${months[date.getMonth()]} ${date.getDate()}`;
+
+        if (!withinCurrentYear(date, now)) {
+            relativeDate += `, ${date.getFullYear()}`;
+        }
+        return relativeDate;
+    }
+}
+
+/**
+ * Formats duration in ms to human readable string
+ * Returns value in biggest possible unit (day, hour, min, second)
+ * Rounds values up until unit threshold
+ * ie. 23:13:57 -> 23h, 24:13:57 -> 1d, 44:56:56 -> 2d
+ */
+const MINUTE_MS = 60000;
+const HOUR_MS = MINUTE_MS * 60;
+const DAY_MS = HOUR_MS * 24;
+export function formatDuration(durationMs: number): string {
+    if (durationMs >= DAY_MS) {
+        return _t('%(value)sd', { value: Math.round(durationMs / DAY_MS) });
+    }
+    if (durationMs >= HOUR_MS) {
+        return _t('%(value)sh', { value: Math.round(durationMs / HOUR_MS) });
+    }
+    if (durationMs >= MINUTE_MS) {
+        return _t('%(value)sm', { value: Math.round(durationMs / MINUTE_MS) });
+    }
+    return _t('%(value)ss', { value: Math.round(durationMs / 1000) });
 }

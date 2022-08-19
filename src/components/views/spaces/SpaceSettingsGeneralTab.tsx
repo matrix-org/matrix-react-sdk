@@ -18,14 +18,16 @@ import React, { useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SpaceBasicSettings from "./SpaceBasicSettings";
 import { avatarUrlForRoom } from "../../../Avatar";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import { getTopic } from "../elements/RoomTopic";
-import { leaveSpace } from "../../../utils/space";
+import { htmlSerializeFromMdIfNeeded } from "../../../editor/serialize";
+import { leaveSpace } from "../../../utils/leave-behaviour";
+import { getTopic } from "../../../hooks/room/useTopic";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
@@ -46,7 +48,7 @@ const SpaceSettingsGeneralTab = ({ matrixClient: cli, space, onFinished }: IProp
     const canSetName = space.currentState.maySendStateEvent(EventType.RoomName, userId);
     const nameChanged = name !== space.name;
 
-    const currentTopic = getTopic(space);
+    const currentTopic = getTopic(space)?.text;
     const [topic, setTopic] = useState<string>(currentTopic);
     const canSetTopic = space.currentState.maySendStateEvent(EventType.RoomTopic, userId);
     const topicChanged = topic !== currentTopic;
@@ -76,14 +78,15 @@ const SpaceSettingsGeneralTab = ({ matrixClient: cli, space, onFinished }: IProp
         }
 
         if (topicChanged) {
-            promises.push(cli.setRoomTopic(space.roomId, topic));
+            const htmlTopic = htmlSerializeFromMdIfNeeded(topic, { forceHTML: false });
+            promises.push(cli.setRoomTopic(space.roomId, topic, htmlTopic));
         }
 
         const results = await Promise.allSettled(promises);
         setBusy(false);
         const failures = results.filter(r => r.status === "rejected");
         if (failures.length > 0) {
-            console.error("Failed to save space settings: ", failures);
+            logger.error("Failed to save space settings: ", failures);
             setError(_t("Failed to save space settings."));
         }
     };

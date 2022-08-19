@@ -19,7 +19,6 @@ import classNames from 'classnames';
 
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 export enum Formatting {
     Bold = "bold",
@@ -27,6 +26,7 @@ export enum Formatting {
     Strikethrough = "strikethrough",
     Code = "code",
     Quote = "quote",
+    InsertLink = "insert_link",
 }
 
 interface IProps {
@@ -38,7 +38,6 @@ interface IState {
     visible: boolean;
 }
 
-@replaceableComponent("views.rooms.MessageComposerFormatBar")
 export default class MessageComposerFormatBar extends React.PureComponent<IProps, IState> {
     private readonly formatBarRef = createRef<HTMLDivElement>();
 
@@ -55,8 +54,9 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
             <FormatButton label={_t("Bold")} onClick={() => this.props.onAction(Formatting.Bold)} icon="Bold" shortcut={this.props.shortcuts.bold} visible={this.state.visible} />
             <FormatButton label={_t("Italics")} onClick={() => this.props.onAction(Formatting.Italics)} icon="Italic" shortcut={this.props.shortcuts.italics} visible={this.state.visible} />
             <FormatButton label={_t("Strikethrough")} onClick={() => this.props.onAction(Formatting.Strikethrough)} icon="Strikethrough" visible={this.state.visible} />
-            <FormatButton label={_t("Code block")} onClick={() => this.props.onAction(Formatting.Code)} icon="Code" visible={this.state.visible} />
+            <FormatButton label={_t("Code block")} onClick={() => this.props.onAction(Formatting.Code)} icon="Code" shortcut={this.props.shortcuts.code} visible={this.state.visible} />
             <FormatButton label={_t("Quote")} onClick={() => this.props.onAction(Formatting.Quote)} icon="Quote" shortcut={this.props.shortcuts.quote} visible={this.state.visible} />
+            <FormatButton label={_t("Insert link")} onClick={() => this.props.onAction(Formatting.InsertLink)} icon="InsertLink" shortcut={this.props.shortcuts.insert_link} visible={this.state.visible} />
         </div>);
     }
 
@@ -66,8 +66,8 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
         this.setState({ visible: true });
         const parentRect = this.formatBarRef.current.parentElement.getBoundingClientRect();
         this.formatBarRef.current.style.left = `${selectionRect.left - parentRect.left}px`;
-        // 12 is half the height of the bar (e.g. to center it) and 16 is an offset that felt ok.
-        this.formatBarRef.current.style.top = `${selectionRect.top - parentRect.top - 16 - 12}px`;
+        // 16 is half the height of the bar (e.g. to center it) and 18 is an offset that felt ok.
+        this.formatBarRef.current.style.top = `${selectionRect.top - parentRect.top - 16 - 18}px`;
     }
 
     public hide(): void {
@@ -101,6 +101,8 @@ class FormatButton extends React.PureComponent<IFormatButtonProps> {
             </div>
         </div>;
 
+        // element="button" and type="button" are necessary for the buttons to work on WebKit,
+        // otherwise the text is deselected before onClick can ever be called
         return (
             <AccessibleTooltipButton
                 element="button"

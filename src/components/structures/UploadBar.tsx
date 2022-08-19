@@ -16,20 +16,22 @@ limitations under the License.
 
 import React from 'react';
 import { Room } from "matrix-js-sdk/src/models/room";
+import filesize from "filesize";
+import { IEventRelation } from 'matrix-js-sdk/src/matrix';
+
 import ContentMessages from '../../ContentMessages';
 import dis from "../../dispatcher/dispatcher";
-import filesize from "filesize";
 import { _t } from '../../languageHandler';
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import ProgressBar from "../views/elements/ProgressBar";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { IUpload } from "../../models/IUpload";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 
 interface IProps {
     room: Room;
+    relation?: IEventRelation;
 }
 
 interface IState {
@@ -37,7 +39,6 @@ interface IState {
     uploadsHere: IUpload[];
 }
 
-@replaceableComponent("structures.UploadBar")
 export default class UploadBar extends React.Component<IProps, IState> {
     static contextType = MatrixClientContext;
 
@@ -64,7 +65,7 @@ export default class UploadBar extends React.Component<IProps, IState> {
     }
 
     private getUploadsInRoom(): IUpload[] {
-        const uploads = ContentMessages.sharedInstance().getCurrentUploads();
+        const uploads = ContentMessages.sharedInstance().getCurrentUploads(this.props.relation);
         return uploads.filter(u => u.roomId === this.props.room.roomId);
     }
 

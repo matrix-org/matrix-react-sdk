@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Capability, EventDirection, MatrixCapabilities, WidgetEventCapability, WidgetKind } from "matrix-widget-api";
-import { _t, _td, TranslatedString } from "../languageHandler";
+import {
+    Capability,
+    EventDirection,
+    EventKind,
+    getTimelineRoomIDFromCapability,
+    isTimelineCapability,
+    isTimelineCapabilityFor,
+    MatrixCapabilities, Symbols,
+    WidgetEventCapability,
+    WidgetKind,
+} from "matrix-widget-api";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { ElementWidgetCapabilities } from "../stores/widgets/ElementWidgetCapabilities";
 import React from "react";
+
+import { _t, _td, TranslatedString } from "../languageHandler";
+import { ElementWidgetCapabilities } from "../stores/widgets/ElementWidgetCapabilities";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import TextWithTooltip from "../components/views/elements/TextWithTooltip";
 
 type GENERIC_WIDGET_KIND = "generic"; // eslint-disable-line @typescript-eslint/naming-convention
 const GENERIC_WIDGET_KIND: GENERIC_WIDGET_KIND = "generic";
@@ -98,11 +111,11 @@ export class CapabilityText {
         },
         [EventType.RoomMember]: {
             [WidgetKind.Room]: {
-                [EventDirection.Send]: _td("Kick, ban, or invite people to this room, and make you leave"),
+                [EventDirection.Send]: _td("Remove, ban, or invite people to this room, and make you leave"),
                 [EventDirection.Receive]: _td("See when people join, leave, or are invited to this room"),
             },
             [GENERIC_WIDGET_KIND]: {
-                [EventDirection.Send]: _td("Kick, ban, or invite people to your active room, and make you leave"),
+                [EventDirection.Send]: _td("Remove, ban, or invite people to your active room, and make you leave"),
                 [EventDirection.Receive]: _td("See when people join, leave, or are invited to your active room"),
             },
         },
@@ -122,7 +135,7 @@ export class CapabilityText {
     };
 
     private static bylineFor(eventCap: WidgetEventCapability): TranslatedString {
-        if (eventCap.isState) {
+        if (eventCap.kind === EventKind.State) {
             return !eventCap.keyStr
                 ? _t("with an empty state key")
                 : _t("with state key %(stateKey)s", { stateKey: eventCap.keyStr });
@@ -131,6 +144,8 @@ export class CapabilityText {
     }
 
     public static for(capability: Capability, kind: WidgetKind): TranslatedCapabilityText {
+        // TODO: Support MSC3819 (to-device capabilities)
+
         // First see if we have a super simple line of text to provide back
         if (CapabilityText.simpleCaps[capability]) {
             const textForKind = CapabilityText.simpleCaps[capability];
@@ -138,8 +153,31 @@ export class CapabilityText {
             if (textForKind[GENERIC_WIDGET_KIND]) return { primary: _t(textForKind[GENERIC_WIDGET_KIND]) };
 
             // ... we'll fall through to the generic capability processing at the end of this
-            // function if we fail to locate a simple string and the capability isn't for an
-            // event.
+            // function if we fail to generate a string for the capability.
+        }
+
+        // Try to handle timeline capabilities. The text here implies that the caller has sorted
+        // the timeline caps to the end for UI purposes.
+        if (isTimelineCapability(capability)) {
+            if (isTimelineCapabilityFor(capability, Symbols.AnyRoom)) {
+                return { primary: _t("The above, but in any room you are joined or invited to as well") };
+            } else {
+                const roomId = getTimelineRoomIDFromCapability(capability);
+                const room = MatrixClientPeg.get().getRoom(roomId);
+                return {
+                    primary: _t("The above, but in <Room /> as well", {}, {
+                        Room: () => {
+                            if (room) {
+                                return <TextWithTooltip tooltip={room.getCanonicalAlias() ?? roomId}>
+                                    <b>{ room.name }</b>
+                                </TextWithTooltip>;
+                            } else {
+                                return <b><code>{ roomId }</code></b>;
+                            }
+                        },
+                    }),
+                };
+            }
         }
 
         // We didn't have a super simple line of text, so try processing the capability as the
@@ -149,13 +187,13 @@ export class CapabilityText {
             // Special case room messages so they show up a bit cleaner to the user. Result is
             // effectively "Send images" instead of "Send messages... of type images" if we were
             // to handle the msgtype nuances in this function.
-            if (!eventCap.isState && eventCap.eventType === EventType.RoomMessage) {
+            if (eventCap.kind === EventKind.Event && eventCap.eventType === EventType.RoomMessage) {
                 return CapabilityText.forRoomMessageCap(eventCap, kind);
             }
 
             // See if we have a static line of text to provide for the given event type and
             // direction. The hope is that we do for common event types for friendlier copy.
-            const evSendRecv = eventCap.isState
+            const evSendRecv = eventCap.kind === EventKind.State
                 ? CapabilityText.stateSendRecvCaps
                 : CapabilityText.nonStateSendRecvCaps;
             if (evSendRecv[eventCap.eventType]) {

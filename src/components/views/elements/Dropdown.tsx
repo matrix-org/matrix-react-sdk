@@ -18,10 +18,10 @@ limitations under the License.
 import React, { ChangeEvent, createRef, CSSProperties, ReactElement, ReactNode, Ref } from 'react';
 import classnames from 'classnames';
 
-import AccessibleButton from './AccessibleButton';
+import AccessibleButton, { ButtonEvent } from './AccessibleButton';
 import { _t } from '../../../languageHandler';
-import { Key } from "../../../Keyboard";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IMenuOptionProps {
     children: ReactElement;
@@ -82,6 +82,8 @@ interface IProps {
     // width.
     menuWidth?: number;
     searchEnabled?: boolean;
+    // Placeholder to show when no value is selected
+    placeholder?: string;
     // Called when the selected option changes
     onOptionChange(dropdownKey: string): void;
     // Called when the value of the search field changes
@@ -106,7 +108,6 @@ interface IState {
  * but somewhat simpler as react-select is 79KB of minified
  * javascript.
  */
-@replaceableComponent("views.elements.Dropdown")
 export default class Dropdown extends React.Component<IProps, IState> {
     private readonly buttonRef = createRef<HTMLDivElement>();
     private dropdownRootElement: HTMLDivElement = null;
@@ -178,13 +179,21 @@ export default class Dropdown extends React.Component<IProps, IState> {
         this.ignoreEvent = ev;
     };
 
-    private onInputClick = (ev: React.MouseEvent) => {
+    private onAccessibleButtonClick = (ev: ButtonEvent) => {
         if (this.props.disabled) return;
 
+        const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
+
         if (!this.state.expanded) {
-            this.setState({
-                expanded: true,
-            });
+            this.setState({ expanded: true });
+            ev.preventDefault();
+        } else if (action === KeyBindingAction.Enter) {
+            // the accessible button consumes enter onKeyDown for firing onClick, so handle it here
+            this.props.onOptionChange(this.state.highlightedOption);
+            this.close();
+        } else if (!(ev as React.KeyboardEvent).key) {
+            // collapse on other non-keyboard event activations
+            this.setState({ expanded: false });
             ev.preventDefault();
         }
     };
@@ -204,26 +213,35 @@ export default class Dropdown extends React.Component<IProps, IState> {
         this.props.onOptionChange(dropdownKey);
     };
 
-    private onInputKeyDown = (e: React.KeyboardEvent) => {
+    private onKeyDown = (e: React.KeyboardEvent) => {
         let handled = true;
 
         // These keys don't generate keypress events and so needs to be on keyup
-        switch (e.key) {
-            case Key.ENTER:
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
+        switch (action) {
+            case KeyBindingAction.Enter:
                 this.props.onOptionChange(this.state.highlightedOption);
                 // fallthrough
-            case Key.ESCAPE:
+            case KeyBindingAction.Escape:
                 this.close();
                 break;
-            case Key.ARROW_DOWN:
-                this.setState({
-                    highlightedOption: this.nextOption(this.state.highlightedOption),
-                });
+            case KeyBindingAction.ArrowDown:
+                if (this.state.expanded) {
+                    this.setState({
+                        highlightedOption: this.nextOption(this.state.highlightedOption),
+                    });
+                } else {
+                    this.setState({ expanded: true });
+                }
                 break;
-            case Key.ARROW_UP:
-                this.setState({
-                    highlightedOption: this.prevOption(this.state.highlightedOption),
-                });
+            case KeyBindingAction.ArrowUp:
+                if (this.state.expanded) {
+                    this.setState({
+                        highlightedOption: this.prevOption(this.state.highlightedOption),
+                    });
+                } else {
+                    this.setState({ expanded: true });
+                }
                 break;
             default:
                 handled = false;
@@ -269,7 +287,7 @@ export default class Dropdown extends React.Component<IProps, IState> {
     private prevOption(optionKey: string): string {
         const keys = Object.keys(this.childrenByKey);
         const index = keys.indexOf(optionKey);
-        return keys[(index - 1) % keys.length];
+        return keys[index <= 0 ? keys.length - 1 : (index - 1) % keys.length];
     }
 
     private scrollIntoView(node: Element) {
@@ -299,7 +317,7 @@ export default class Dropdown extends React.Component<IProps, IState> {
             );
         });
         if (options.length === 0) {
-            return [<div key="0" className="mx_Dropdown_option" role="option">
+            return [<div key="0" className="mx_Dropdown_option" role="option" aria-selected={false}>
                 { _t("No results") }
             </div>];
         }
@@ -317,18 +335,20 @@ export default class Dropdown extends React.Component<IProps, IState> {
             if (this.props.searchEnabled) {
                 currentValue = (
                     <input
+                        id={`${this.props.id}_input`}
                         type="text"
                         autoFocus={true}
                         className="mx_Dropdown_option"
-                        onKeyDown={this.onInputKeyDown}
                         onChange={this.onInputChange}
                         value={this.state.searchQuery}
                         role="combobox"
                         aria-autocomplete="list"
                         aria-activedescendant={`${this.props.id}__${this.state.highlightedOption}`}
-                        aria-owns={`${this.props.id}_listbox`}
+                        aria-expanded={this.state.expanded}
+                        aria-controls={`${this.props.id}_listbox`}
                         aria-disabled={this.props.disabled}
                         aria-label={this.props.label}
+                        onKeyDown={this.onKeyDown}
                     />
                 );
             }
@@ -344,7 +364,7 @@ export default class Dropdown extends React.Component<IProps, IState> {
                 this.props.getShortOption(this.props.value) :
                 this.childrenByKey[this.props.value];
             currentValue = <div className="mx_Dropdown_option" id={`${this.props.id}_value`}>
-                { selectedChild }
+                { selectedChild || this.props.placeholder }
             </div>;
         }
 
@@ -361,13 +381,15 @@ export default class Dropdown extends React.Component<IProps, IState> {
         return <div className={classnames(dropdownClasses)} ref={this.collectRoot}>
             <AccessibleButton
                 className="mx_Dropdown_input mx_no_textinput"
-                onClick={this.onInputClick}
+                onClick={this.onAccessibleButtonClick}
                 aria-haspopup="listbox"
                 aria-expanded={this.state.expanded}
                 disabled={this.props.disabled}
                 inputRef={this.buttonRef}
                 aria-label={this.props.label}
                 aria-describedby={`${this.props.id}_value`}
+                aria-owns={`${this.props.id}_input`}
+                onKeyDown={this.onKeyDown}
             >
                 { currentValue }
                 <span className="mx_Dropdown_arrow" />

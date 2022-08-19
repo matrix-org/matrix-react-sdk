@@ -23,22 +23,24 @@ import { MemoryStore } from 'matrix-js-sdk/src/store/memory';
 import * as utils from 'matrix-js-sdk/src/utils';
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import * as sdk from './index';
+import { verificationMethods } from 'matrix-js-sdk/src/crypto';
+import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import createMatrixClient from './utils/createMatrixClient';
 import SettingsStore from './settings/SettingsStore';
 import MatrixActionCreators from './actions/MatrixActionCreators';
 import Modal from './Modal';
-import { verificationMethods } from 'matrix-js-sdk/src/crypto';
 import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
 import * as StorageManager from './utils/StorageManager';
 import IdentityAuthClient from './IdentityAuthClient';
 import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from './SecurityManager';
-import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import SecurityCustomisations from "./customisations/Security";
+import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
-    identityServerUrl: string;
+    identityServerUrl?: string;
     userId: string;
     deviceId?: string;
     accessToken: string;
@@ -47,6 +49,12 @@ export interface IMatrixClientCreds {
     freshLogin?: boolean;
 }
 
+/**
+ * Holds the current instance of the `MatrixClient` to use across the codebase.
+ * Looking for an `MatrixClient`? Just look for the `MatrixClientPeg` on the peg
+ * board. "Peg" is the literal meaning of something you hang something on. So
+ * you'll find a `MatrixClient` hanging on the `MatrixClientPeg`.
+ */
 export interface IMatrixClientPeg {
     opts: IStartClientOpts;
 
@@ -70,11 +78,11 @@ export interface IMatrixClientPeg {
      * If we've registered a user ID we set this to the ID of the
      * user we've just registered. If they then go & log in, we
      * can send them to the welcome user (obviously this doesn't
-     * guarentee they'll get a chat with the welcome user).
+     * guarantee they'll get a chat with the welcome user).
      *
      * @param {string} uid The user ID of the user we've just registered
      */
-    setJustRegisteredUserId(uid: string): void;
+    setJustRegisteredUserId(uid: string | null): void;
 
     /**
      * Returns true if the current user has just been registered by this
@@ -89,6 +97,12 @@ export interface IMatrixClientPeg {
      * returns a boolean of whether it was within the last N hours given.
      */
     userRegisteredWithinLastHours(hours: number): boolean;
+
+    /**
+     * If the current user has been registered by this device then this
+     * returns a boolean of whether it was after a given timestamp.
+     */
+    userRegisteredAfter(date: Date): boolean;
 
     /**
      * Replace this MatrixClientPeg's client with a client instance that has
@@ -115,14 +129,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     };
 
     private matrixClient: MatrixClient = null;
-    private justRegisteredUserId: string;
+    private justRegisteredUserId: string | null = null;
 
     // the credentials used to init the current client object.
     // used if we tear it down & recreate it with a different store
     private currentClientCreds: IMatrixClientCreds;
-
-    constructor() {
-    }
 
     public get(): MatrixClient {
         return this.matrixClient;
@@ -134,10 +145,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         MatrixActionCreators.stop();
     }
 
-    public setJustRegisteredUserId(uid: string): void {
+    public setJustRegisteredUserId(uid: string | null): void {
         this.justRegisteredUserId = uid;
         if (uid) {
-            window.localStorage.setItem("mx_registration_time", String(new Date().getTime()));
+            const registrationTime = Date.now().toString();
+            window.localStorage.setItem("mx_registration_time", registrationTime);
         }
     }
 
@@ -149,9 +161,23 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public userRegisteredWithinLastHours(hours: number): boolean {
+        if (hours <= 0) {
+            return false;
+        }
+
         try {
-            const date = new Date(window.localStorage.getItem("mx_registration_time"));
-            return ((new Date().getTime() - date.getTime()) / 36e5) <= hours;
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const diff = Date.now() - registrationTime;
+            return (diff / 36e5) <= hours;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    public userRegisteredAfter(timestamp: Date): boolean {
+        try {
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            return timestamp.getTime() <= registrationTime;
         } catch (e) {
             return false;
         }
@@ -166,23 +192,21 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         for (const dbType of ['indexeddb', 'memory']) {
             try {
                 const promise = this.matrixClient.store.startup();
-                console.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
+                logger.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
                 await promise;
                 break;
             } catch (err) {
                 if (dbType === 'indexeddb') {
-                    console.error('Error starting matrixclient store - falling back to memory store', err);
+                    logger.error('Error starting matrixclient store - falling back to memory store', err);
                     this.matrixClient.store = new MemoryStore({
                         localStorage: localStorage,
                     });
                 } else {
-                    console.error('Failed to start memory store!', err);
+                    logger.error('Failed to start memory store!', err);
                     throw err;
                 }
             }
         }
-
-        StorageManager.trackStores(this.matrixClient);
 
         // try to initialise e2e on the new client
         try {
@@ -198,14 +222,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         } catch (e) {
             if (e && e.name === 'InvalidCryptoStoreError') {
                 // The js-sdk found a crypto DB too new for it to use
-                // FIXME: Using an import will result in test failures
-                const CryptoStoreTooNewDialog =
-                    sdk.getComponent("views.dialogs.CryptoStoreTooNewDialog");
                 Modal.createDialog(CryptoStoreTooNewDialog);
             }
             // this can happen for a number of reasons, the most likely being
             // that the olm library was missing. It's not fatal.
-            console.warn("Unable to initialise e2e", e);
+            logger.warn("Unable to initialise e2e", e);
         }
 
         const opts = utils.deepCopy(this.opts);
@@ -213,6 +234,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.pendingEventOrdering = PendingEventOrdering.Detached;
         opts.lazyLoadMembers = true;
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
+        opts.experimentalThreadSupport = SettingsStore.getValue("feature_thread");
 
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
@@ -224,13 +246,21 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     public async start(): Promise<any> {
         const opts = await this.assign();
 
-        console.log(`MatrixClientPeg: really starting MatrixClient`);
+        logger.log(`MatrixClientPeg: really starting MatrixClient`);
         await this.get().startClient(opts);
-        console.log(`MatrixClientPeg: MatrixClient started`);
+        logger.log(`MatrixClientPeg: MatrixClient started`);
     }
 
     public getCredentials(): IMatrixClientCreds {
+        let copiedCredentials = this.currentClientCreds;
+        if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
+            // cached credentials belong to a different user - don't use them
+            copiedCredentials = null;
+        }
         return {
+            // Copy the cached credentials before overriding what we can.
+            ...(copiedCredentials ?? {}),
+
             homeserverUrl: this.matrixClient.baseUrl,
             identityServerUrl: this.matrixClient.idBaseUrl,
             userId: this.matrixClient.credentials.userId,
@@ -268,7 +298,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 SHOW_QR_CODE_METHOD,
                 verificationMethods.RECIPROCATE_QR_CODE,
             ],
-            unstableClientRelationAggregation: true,
             identityServer: new IdentityAuthClient(),
             cryptoCallbacks: {},
         };
@@ -292,6 +321,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         const notifTimelineSet = new EventTimelineSet(null, {
             timelineSupport: true,
+            pendingEvents: false,
         });
         // XXX: what is our initial pagination token?! it somehow needs to be synchronised with /sync.
         notifTimelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
@@ -299,8 +329,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 }
 
-if (!window.mxMatrixClientPeg) {
-    window.mxMatrixClientPeg = new MatrixClientPegClass();
-}
+/**
+ * Note: You should be using a React context with access to a client rather than
+ * using this, as in a multi-account world this will not exist!
+ */
+export const MatrixClientPeg: IMatrixClientPeg = new MatrixClientPegClass();
 
-export const MatrixClientPeg = window.mxMatrixClientPeg;
+if (!window.mxMatrixClientPeg) {
+    window.mxMatrixClientPeg = MatrixClientPeg;
+}

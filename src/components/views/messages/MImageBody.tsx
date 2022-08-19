@@ -17,26 +17,39 @@ limitations under the License.
 
 import React, { ComponentProps, createRef } from 'react';
 import { Blurhash } from "react-blurhash";
+import classNames from 'classnames';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
 
 import MFileBody from './MFileBody';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import InlineSpinner from '../elements/InlineSpinner';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { mediaFromContent } from "../../../customisations/Media";
-import { BLURHASH_FIELD } from "../../../ContentMessages";
+import Spinner from '../elements/Spinner';
+import { Media, mediaFromContent } from "../../../customisations/Media";
+import { BLURHASH_FIELD, createThumbnail } from "../../../utils/image-media";
 import { IMediaEventContent } from '../../../customisations/models/IMediaEventContent';
 import ImageView from '../elements/ImageView';
-import { SyncState } from 'matrix-js-sdk/src/sync.api';
 import { IBodyProps } from "./IBodyProps";
+import { ImageSize, suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
+import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
+import { presentableTextForFile } from "../../../utils/FileUtils";
+import { createReconnectedListener } from '../../../utils/connection';
+import MediaProcessingError from './shared/MediaProcessingError';
+
+enum Placeholder {
+    NoImage,
+    Blurhash,
+}
 
 interface IState {
-    decryptedUrl?: string;
-    decryptedThumbnailUrl?: string;
-    decryptedBlob?: Blob;
-    error;
+    contentUrl?: string;
+    thumbUrl?: string;
+    isAnimated?: boolean;
+    error?: Error;
     imgError: boolean;
     imgLoaded: boolean;
     loadedImageDimensions?: {
@@ -45,43 +58,32 @@ interface IState {
     };
     hover: boolean;
     showImage: boolean;
+    placeholder: Placeholder;
 }
 
-@replaceableComponent("views.messages.MImageBody")
 export default class MImageBody extends React.Component<IBodyProps, IState> {
-    static contextType = MatrixClientContext;
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
+    private timeout?: number;
+    private sizeWatcher: string;
+    private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
     constructor(props: IBodyProps) {
         super(props);
 
+        this.reconnectedListener = createReconnectedListener(this.clearError);
+
         this.state = {
-            decryptedUrl: null,
-            decryptedThumbnailUrl: null,
-            decryptedBlob: null,
-            error: null,
             imgError: false,
             imgLoaded: false,
-            loadedImageDimensions: null,
             hover: false,
             showImage: SettingsStore.getValue("showImages"),
+            placeholder: Placeholder.NoImage,
         };
     }
-
-    // FIXME: factor this out and apply it to MVideoBody and MAudioBody too!
-    private onClientSync = (syncState: SyncState, prevState: SyncState): void => {
-        if (this.unmounted) return;
-        // Consider the client reconnected if there is no error with syncing.
-        // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
-        const reconnected = syncState !== "ERROR" && prevState !== syncState;
-        if (reconnected && this.state.imgError) {
-            // Load the image again
-            this.setState({
-                imgError: false,
-            });
-        }
-    };
 
     protected showImage(): void {
         localStorage.setItem("mx_ShowImage_" + this.props.mxEvent.getId(), "true");
@@ -98,7 +100,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             }
 
             const content = this.props.mxEvent.getContent<IMediaEventContent>();
-            const httpUrl = this.getContentUrl();
+            const httpUrl = this.state.contentUrl;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
                 name: content.body?.length > 0 ? content.body : _t('Attachment'),
@@ -112,65 +114,79 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 params.fileSize = content.info.size;
             }
 
+            if (this.image.current) {
+                const clientRect = this.image.current.getBoundingClientRect();
+
+                params.thumbnailInfo = {
+                    width: clientRect.width,
+                    height: clientRect.height,
+                    positionX: clientRect.x,
+                    positionY: clientRect.y,
+                };
+            }
+
             Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
         }
     };
 
-    private isGif = (): boolean => {
-        const content = this.props.mxEvent.getContent();
-        return content.info?.mimetype === "image/gif";
-    };
-
-    private onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
+    protected onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: true });
 
-        if (!this.state.showImage || !this.isGif() || SettingsStore.getValue("autoplayGifsAndVideos")) {
+        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
             return;
         }
         const imgElement = e.currentTarget;
-        imgElement.src = this.getContentUrl();
+        imgElement.src = this.state.contentUrl;
     };
 
-    private onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
+    protected onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: false });
 
-        if (!this.state.showImage || !this.isGif() || SettingsStore.getValue("autoplayGifsAndVideos")) {
+        if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
             return;
         }
         const imgElement = e.currentTarget;
-        imgElement.src = this.getThumbUrl();
+        imgElement.src = this.state.thumbUrl ?? this.state.contentUrl;
+    };
+
+    private clearError = () => {
+        MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
+        this.setState({ imgError: false });
     };
 
     private onImageError = (): void => {
+        this.clearBlurhashTimeout();
         this.setState({
             imgError: true,
         });
+        MatrixClientPeg.get().on(ClientEvent.Sync, this.reconnectedListener);
     };
 
     private onImageLoad = (): void => {
+        this.clearBlurhashTimeout();
         this.props.onHeightChanged();
 
-        let loadedImageDimensions;
+        let loadedImageDimensions: IState["loadedImageDimensions"];
 
         if (this.image.current) {
             const { naturalWidth, naturalHeight } = this.image.current;
             // this is only used as a fallback in case content.info.w/h is missing
             loadedImageDimensions = { naturalWidth, naturalHeight };
         }
-
         this.setState({ imgLoaded: true, loadedImageDimensions });
     };
 
-    protected getContentUrl(): string {
-        const media = mediaFromContent(this.props.mxEvent.getContent());
-        if (media.isEncrypted) {
-            return this.state.decryptedUrl;
-        } else {
-            return media.srcHttp;
-        }
+    private getContentUrl(): string {
+        // During export, the content url will point to the MSC, which will later point to a local url
+        if (this.props.forExport) return this.media.srcMxc;
+        return this.media.srcHttp;
     }
 
-    protected getThumbUrl(): string {
+    private get media(): Media {
+        return mediaFromContent(this.props.mxEvent.getContent());
+    }
+
+    private getThumbUrl(): string {
         // FIXME: we let images grow as wide as you like, rather than capped to 800x600.
         // So either we need to support custom timeline widths here, or reimpose the cap, otherwise the
         // thumbnail resolution will be unnecessarily reduced.
@@ -180,90 +196,123 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
         const media = mediaFromContent(content);
+        const info = content.info;
 
-        if (media.isEncrypted) {
-            // Don't use the thumbnail for clients wishing to autoplay gifs.
-            if (this.state.decryptedThumbnailUrl) {
-                return this.state.decryptedThumbnailUrl;
-            }
-            return this.state.decryptedUrl;
-        } else if (content.info && content.info.mimetype === "image/svg+xml" && media.hasThumbnail) {
-            // special case to return clientside sender-generated thumbnails for SVGs, if any,
-            // given we deliberately don't thumbnail them serverside to prevent
-            // billion lol attacks and similar
+        if (info?.mimetype === "image/svg+xml" && media.hasThumbnail) {
+            // Special-case to return clientside sender-generated thumbnails for SVGs, if any,
+            // given we deliberately don't thumbnail them serverside to prevent billion lol attacks and similar.
             return media.getThumbnailHttp(thumbWidth, thumbHeight, 'scale');
-        } else {
-            // we try to download the correct resolution
-            // for hi-res images (like retina screenshots).
-            // synapse only supports 800x600 thumbnails for now though,
-            // so we'll need to download the original image for this to work
-            // well for now. First, let's try a few cases that let us avoid
-            // downloading the original, including:
-            //   - When displaying a GIF, we always want to thumbnail so that we can
-            //     properly respect the user's GIF autoplay setting (which relies on
-            //     thumbnailing to produce the static preview image)
-            //   - On a low DPI device, always thumbnail to save bandwidth
-            //   - If there's no sizing info in the event, default to thumbnail
-            const info = content.info;
-            if (
-                this.isGif() ||
-                window.devicePixelRatio === 1.0 ||
-                (!info || !info.w || !info.h || !info.size)
-            ) {
-                return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
-            } else {
-                // we should only request thumbnails if the image is bigger than 800x600
-                // (or 1600x1200 on retina) otherwise the image in the timeline will just
-                // end up resampled and de-retina'd for no good reason.
-                // Ideally the server would pregen 1600x1200 thumbnails in order to provide retina
-                // thumbnails, but we don't do this currently in synapse for fear of disk space.
-                // As a compromise, let's switch to non-retina thumbnails only if the original
-                // image is both physically too large and going to be massive to load in the
-                // timeline (e.g. >1MB).
-
-                const isLargerThanThumbnail = (
-                    info.w > thumbWidth ||
-                    info.h > thumbHeight
-                );
-                const isLargeFileSize = info.size > 1*1024*1024; // 1mb
-
-                if (isLargeFileSize && isLargerThanThumbnail) {
-                    // image is too large physically and bytewise to clutter our timeline so
-                    // we ask for a thumbnail, despite knowing that it will be max 800x600
-                    // despite us being retina (as synapse doesn't do 1600x1200 thumbs yet).
-                    return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
-                } else {
-                    // download the original image otherwise, so we can scale it client side
-                    // to take pixelRatio into account.
-                    return media.srcHttp;
-                }
-            }
         }
+
+        // we try to download the correct resolution for hi-res images (like retina screenshots).
+        // Synapse only supports 800x600 thumbnails for now though,
+        // so we'll need to download the original image for this to work  well for now.
+        // First, let's try a few cases that let us avoid downloading the original, including:
+        //   - When displaying a GIF, we always want to thumbnail so that we can
+        //     properly respect the user's GIF autoplay setting (which relies on
+        //     thumbnailing to produce the static preview image)
+        //   - On a low DPI device, always thumbnail to save bandwidth
+        //   - If there's no sizing info in the event, default to thumbnail
+        if (
+            this.state.isAnimated ||
+            window.devicePixelRatio === 1.0 ||
+            (!info || !info.w || !info.h || !info.size)
+        ) {
+            return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
+        }
+
+        // We should only request thumbnails if the image is bigger than 800x600 (or 1600x1200 on retina) otherwise
+        // the image in the timeline will just end up resampled and de-retina'd for no good reason.
+        // Ideally the server would pre-gen 1600x1200 thumbnails in order to provide retina thumbnails,
+        // but we don't do this currently in synapse for fear of disk space.
+        // As a compromise, let's switch to non-retina thumbnails only if the original image is both
+        // physically too large and going to be massive to load in the timeline (e.g. >1MB).
+
+        const isLargerThanThumbnail = (
+            info.w > thumbWidth ||
+            info.h > thumbHeight
+        );
+        const isLargeFileSize = info.size > 1 * 1024 * 1024; // 1mb
+
+        if (isLargeFileSize && isLargerThanThumbnail) {
+            // image is too large physically and byte-wise to clutter our timeline so,
+            // we ask for a thumbnail, despite knowing that it will be max 800x600
+            // despite us being retina (as synapse doesn't do 1600x1200 thumbs yet).
+            return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
+        }
+
+        // download the original image otherwise, so we can scale it client side to take pixelRatio into account.
+        return media.srcHttp;
     }
 
     private async downloadImage() {
-        if (this.props.mediaEventHelper.media.isEncrypted && this.state.decryptedUrl === null) {
+        if (this.state.contentUrl) return; // already downloaded
+
+        let thumbUrl: string;
+        let contentUrl: string;
+        if (this.props.mediaEventHelper.media.isEncrypted) {
             try {
-                const thumbnailUrl = await this.props.mediaEventHelper.thumbnailUrl.value;
-                this.setState({
-                    decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
-                    decryptedThumbnailUrl: thumbnailUrl,
-                    decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
-                });
-            } catch (err) {
+                ([contentUrl, thumbUrl] = await Promise.all([
+                    this.props.mediaEventHelper.sourceUrl.value,
+                    this.props.mediaEventHelper.thumbnailUrl.value,
+                ]));
+            } catch (error) {
                 if (this.unmounted) return;
-                console.warn("Unable to decrypt attachment: ", err);
+                logger.warn("Unable to decrypt attachment: ", error);
                 // Set a placeholder image when we can't decrypt the image.
-                this.setState({
-                    error: err,
-                });
+                this.setState({ error });
             }
+        } else {
+            thumbUrl = this.getThumbUrl();
+            contentUrl = this.getContentUrl();
+        }
+
+        const content = this.props.mxEvent.getContent<IMediaEventContent>();
+        let isAnimated = mayBeAnimated(content.info?.mimetype);
+
+        // If there is no included non-animated thumbnail then we will generate our own, we can't depend on the server
+        // because 1. encryption and 2. we can't ask the server specifically for a non-animated thumbnail.
+        if (isAnimated && !SettingsStore.getValue("autoplayGifs")) {
+            if (!thumbUrl || !content?.info.thumbnail_info || mayBeAnimated(content.info.thumbnail_info.mimetype)) {
+                const img = document.createElement("img");
+                const loadPromise = new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                });
+                img.crossOrigin = "Anonymous"; // CORS allow canvas access
+                img.src = contentUrl;
+
+                await loadPromise;
+
+                const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                if (!await blobIsAnimated(content.info.mimetype, blob)) {
+                    isAnimated = false;
+                }
+
+                if (isAnimated) {
+                    const thumb = await createThumbnail(img, img.width, img.height, content.info.mimetype, false);
+                    thumbUrl = URL.createObjectURL(thumb.thumbnail);
+                }
+            }
+        }
+
+        if (this.unmounted) return;
+        this.setState({
+            contentUrl,
+            thumbUrl,
+            isAnimated,
+        });
+    }
+
+    private clearBlurhashTimeout() {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+            this.timeout = undefined;
         }
     }
 
     componentDidMount() {
         this.unmounted = false;
-        this.context.on('sync', this.onClientSync);
 
         const showImage = this.state.showImage ||
             localStorage.getItem("mx_ShowImage_" + this.props.mxEvent.getId()) === "true";
@@ -273,11 +322,48 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             this.downloadImage();
             this.setState({ showImage: true });
         } // else don't download anything because we don't want to display anything.
+
+        // Add a 150ms timer for blurhash to first appear.
+        if (this.props.mxEvent.getContent().info?.[BLURHASH_FIELD]) {
+            this.clearBlurhashTimeout();
+            this.timeout = setTimeout(() => {
+                if (!this.state.imgLoaded || !this.state.imgError) {
+                    this.setState({
+                        placeholder: Placeholder.Blurhash,
+                    });
+                }
+            }, 150);
+        }
+
+        this.sizeWatcher = SettingsStore.watchSetting("Images.size", null, () => {
+            this.forceUpdate(); // we don't really have a reliable thing to update, so just update the whole thing
+        });
     }
 
     componentWillUnmount() {
         this.unmounted = true;
-        this.context.removeListener('sync', this.onClientSync);
+        MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
+        this.clearBlurhashTimeout();
+        SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.state.isAnimated && this.state.thumbUrl) {
+            URL.revokeObjectURL(this.state.thumbUrl);
+        }
+    }
+
+    protected getBanner(content: IMediaEventContent): JSX.Element {
+        // Hide it for the threads list & the file panel where we show it as text anyway.
+        if ([
+            TimelineRenderingType.ThreadsList,
+            TimelineRenderingType.File,
+        ].includes(this.context.timelineRenderingType)) {
+            return null;
+        }
+
+        return (
+            <span className="mx_MImageBody_banner">
+                { presentableTextForFile(content, _t("Image"), true, true) }
+            </span>
+        );
     }
 
     protected messageContent(
@@ -286,12 +372,16 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         content: IMediaEventContent,
         forcedHeight?: number,
     ): JSX.Element {
-        let infoWidth;
-        let infoHeight;
+        if (!thumbUrl) thumbUrl = contentUrl; // fallback
 
-        if (content && content.info && content.info.w && content.info.h) {
+        let infoWidth: number;
+        let infoHeight: number;
+        let infoSvg = false;
+
+        if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
+            infoSvg = content.info.mimetype === "image/svg+xml";
         } else {
             // Whilst the image loads, display nothing. We also don't display a blurhash image
             // because we don't really know what size of image we'll end up with.
@@ -322,17 +412,19 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             infoHeight = this.state.loadedImageDimensions.naturalHeight;
         }
 
-        // The maximum height of the thumbnail as it is rendered as an <img>
-        const maxHeight = forcedHeight || Math.min((this.props.maxImageHeight || 600), infoHeight);
-        // The maximum width of the thumbnail, as dictated by its natural
-        // maximum height.
-        const maxWidth = infoWidth * maxHeight / infoHeight;
+        // The maximum size of the thumbnail as it is rendered as an <img>,
+        // accounting for any height constraints
+        const { w: maxWidth, h: maxHeight } = suggestedImageSize(
+            SettingsStore.getValue("Images.size") as ImageSize,
+            { w: infoWidth, h: infoHeight },
+            forcedHeight ?? this.props.maxImageHeight,
+        );
 
-        let img = null;
-        let placeholder = null;
-        let gifLabel = null;
+        let img: JSX.Element;
+        let placeholder: JSX.Element;
+        let gifLabel: JSX.Element;
 
-        if (!this.state.imgLoaded) {
+        if (!this.props.forExport && !this.state.imgLoaded) {
             placeholder = this.getPlaceholder(maxWidth, maxHeight);
         }
 
@@ -347,12 +439,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     className="mx_MImageBody_thumbnail"
                     src={thumbUrl}
                     ref={this.image}
-                    style={{ maxWidth: `min(100%, ${maxWidth}px)` }}
                     alt={content.body}
                     onError={this.onImageError}
                     onLoad={this.onImageLoad}
                     onMouseEnter={this.onImageEnter}
-                    onMouseLeave={this.onImageLeave} />
+                    onMouseLeave={this.onImageLeave}
+                />
             );
         }
 
@@ -361,28 +453,48 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             showPlaceholder = false; // because we're hiding the image, so don't show the placeholder.
         }
 
-        if (this.isGif() && !SettingsStore.getValue("autoplayGifsAndVideos") && !this.state.hover) {
+        if (this.state.isAnimated && !SettingsStore.getValue("autoplayGifs") && !this.state.hover) {
+            // XXX: Arguably we may want a different label when the animated image is WEBP and not GIF
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
-        const thumbnail = (
-            <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight: maxHeight, maxWidth: maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}>
-                { showPlaceholder &&
-                    <div
-                        className="mx_MImageBody_thumbnail"
-                        style={{
-                            // Constrain width here so that spinner appears central to the loaded thumbnail
-                            maxWidth: `min(100%, ${infoWidth}px)`,
-                        }}
-                    >
-                        { placeholder }
-                    </div>
-                }
+        let banner: JSX.Element;
+        if (this.state.showImage && this.state.hover) {
+            banner = this.getBanner(content);
+        }
 
-                <div style={{ display: !showPlaceholder ? undefined : 'none' }}>
+        const classes = classNames({
+            'mx_MImageBody_placeholder': true,
+            'mx_MImageBody_placeholder--blurhash': this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
+        });
+
+        // many SVGs don't have an intrinsic size if used in <img> elements.
+        // due to this we have to set our desired width directly.
+        // this way if the image is forced to shrink, the height adapts appropriately.
+        const sizing = infoSvg ? { maxHeight, maxWidth, width: maxWidth } : { maxHeight, maxWidth };
+
+        const thumbnail = (
+            <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight, maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}>
+                <SwitchTransition mode="out-in">
+                    <CSSTransition
+                        classNames="mx_rtg--fade"
+                        key={`img-${showPlaceholder}`}
+                        timeout={300}
+                    >
+                        { showPlaceholder ? <div className={classes}>
+                            { placeholder }
+                        </div> : <></> /* Transition always expects a child */ }
+                    </CSSTransition>
+                </SwitchTransition>
+
+                <div style={sizing}>
                     { img }
                     { gifLabel }
+                    { banner }
                 </div>
+
+                { /* HACK: This div fills out space while the image loads, to prevent scroll jumps */ }
+                { !this.state.imgLoaded && <div style={{ height: maxHeight, width: maxWidth }} /> }
 
                 { this.state.hover && this.getTooltip() }
             </div>
@@ -391,31 +503,47 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return this.wrapImage(contentUrl, thumbnail);
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
-        return <a href={contentUrl} onClick={this.onClick}>
+        return <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
             { children }
         </a>;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getPlaceholder(width: number, height: number): JSX.Element {
-        const blurhash = this.props.mxEvent.getContent().info[BLURHASH_FIELD];
-        if (blurhash) return <Blurhash hash={blurhash} width={width} height={height} />;
-        return (
-            <InlineSpinner w={32} h={32} />
-        );
+        const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
+
+        if (blurhash) {
+            if (this.state.placeholder === Placeholder.NoImage) {
+                return null;
+            } else if (this.state.placeholder === Placeholder.Blurhash) {
+                return <Blurhash className="mx_Blurhash" hash={blurhash} width={width} height={height} />;
+            }
+        }
+        return <Spinner w={32} h={32} />;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getTooltip(): JSX.Element {
         return null;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getFileBody(): string | JSX.Element {
-        // We only ever need the download bar if we're appearing outside of the timeline
-        if (this.props.tileShape) {
+        if (this.props.forExport) return null;
+        /*
+         * In the room timeline or the thread context we don't need the download
+         * link as the message action bar will fulfill that
+         */
+        const hasMessageActionBar = (
+            this.context.timelineRenderingType === TimelineRenderingType.Room ||
+            this.context.timelineRenderingType === TimelineRenderingType.Pinned ||
+            this.context.timelineRenderingType === TimelineRenderingType.Search ||
+            this.context.timelineRenderingType === TimelineRenderingType.Thread ||
+            this.context.timelineRenderingType === TimelineRenderingType.ThreadsList
+        );
+        if (!hasMessageActionBar) {
             return <MFileBody {...this.props} showGenericPlaceholder={false} />;
         }
     }
@@ -423,30 +551,31 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     render() {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
 
-        if (this.state.error !== null) {
+        if (this.state.error) {
             return (
-                <div className="mx_MImageBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                <MediaProcessingError className="mx_MImageBody">
                     { _t("Error decrypting image") }
-                </div>
+                </MediaProcessingError>
             );
         }
 
-        const contentUrl = this.getContentUrl();
-        let thumbUrl;
-        if (this.isGif() && SettingsStore.getValue("autoplayGifsAndVideos")) {
+        const contentUrl = this.state.contentUrl;
+        let thumbUrl: string;
+        if (this.props.forExport || (this.state.isAnimated && SettingsStore.getValue("autoplayGifs"))) {
             thumbUrl = contentUrl;
         } else {
-            thumbUrl = this.getThumbUrl();
+            thumbUrl = this.state.thumbUrl ?? this.state.contentUrl;
         }
 
         const thumbnail = this.messageContent(contentUrl, thumbUrl, content);
         const fileBody = this.getFileBody();
 
-        return <div className="mx_MImageBody">
-            { thumbnail }
-            { fileBody }
-        </div>;
+        return (
+            <div className="mx_MImageBody">
+                { thumbnail }
+                { fileBody }
+            </div>
+        );
     }
 }
 

@@ -15,19 +15,27 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+
 import { _t } from '../../../languageHandler';
 import BaseDialog from "..//dialogs/BaseDialog";
 import DialogButtons from "./DialogButtons";
-import classNames from 'classnames';
 import AccessibleButton from './AccessibleButton';
-import { getDesktopCapturerSources } from "matrix-js-sdk/src/webrtc/call";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
+import PlatformPeg from "../../../PlatformPeg";
 
-export interface DesktopCapturerSource {
-    id: string;
-    name: string;
-    thumbnailURL;
+export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource>> {
+    const options: GetSourcesOptions = {
+        thumbnailSize: {
+            height: 176,
+            width: 312,
+        },
+        types: [
+            "screen",
+            "window",
+        ],
+    };
+    return PlatformPeg.get().getDesktopCapturerSources(options);
 }
 
 export enum Tabs {
@@ -78,10 +86,9 @@ export interface PickerIState {
     selectedSource: DesktopCapturerSource | null;
 }
 export interface PickerIProps {
-    onFinished(source: DesktopCapturerSource): void;
+    onFinished(sourceId: string): void;
 }
 
-@replaceableComponent("views.elements.DesktopCapturerSourcePicker")
 export default class DesktopCapturerSourcePicker extends React.Component<
     PickerIProps,
     PickerIState
@@ -123,7 +130,7 @@ export default class DesktopCapturerSourcePicker extends React.Component<
     };
 
     private onShare = (): void => {
-        this.props.onFinished(this.state.selectedSource);
+        this.props.onFinished(this.state.selectedSource.id);
     };
 
     private onTabChange = (): void => {

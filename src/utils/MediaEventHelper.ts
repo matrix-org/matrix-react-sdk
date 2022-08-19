@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { LazyValue } from "./LazyValue";
 import { Media, mediaFromContent } from "../customisations/Media";
 import { decryptFile } from "./DecryptFile";
 import { IMediaEventContent } from "../customisations/models/IMediaEventContent";
 import { IDestroyable } from "./IDestroyable";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 
 // TODO: We should consider caching the blobs. https://github.com/vector-im/element-web/issues/17192
 
@@ -45,7 +47,9 @@ export class MediaEventHelper implements IDestroyable {
     }
 
     public get fileName(): string {
-        return this.event.getContent<IMediaEventContent>().body || "download";
+        return this.event.getContent<IMediaEventContent>().filename
+            || this.event.getContent<IMediaEventContent>().body
+            || "download";
     }
 
     public destroy() {
@@ -76,7 +80,8 @@ export class MediaEventHelper implements IDestroyable {
 
     private fetchSource = () => {
         if (this.media.isEncrypted) {
-            return decryptFile(this.event.getContent<IMediaEventContent>().file);
+            const content = this.event.getContent<IMediaEventContent>();
+            return decryptFile(content.file, content.info);
         }
         return this.media.downloadSource().then(r => r.blob());
     };
@@ -87,10 +92,10 @@ export class MediaEventHelper implements IDestroyable {
         if (this.media.isEncrypted) {
             const content = this.event.getContent<IMediaEventContent>();
             if (content.info?.thumbnail_file) {
-                return decryptFile(content.info.thumbnail_file);
+                return decryptFile(content.info.thumbnail_file, content.info.thumbnail_info);
             } else {
                 // "Should never happen"
-                console.warn("Media claims to have thumbnail and is encrypted, but no thumbnail_file found");
+                logger.warn("Media claims to have thumbnail and is encrypted, but no thumbnail_file found");
                 return Promise.resolve(null);
             }
         }

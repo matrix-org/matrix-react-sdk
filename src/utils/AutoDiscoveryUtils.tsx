@@ -16,28 +16,17 @@ limitations under the License.
 
 import React, { ReactNode } from 'react';
 import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t, _td, newTranslatableError } from "../languageHandler";
 import { makeType } from "./TypeUtils";
 import SdkConfig from '../SdkConfig';
+import { ValidatedServerConfig } from './ValidatedServerConfig';
 
 const LIVELINESS_DISCOVERY_ERRORS: string[] = [
     AutoDiscovery.ERROR_INVALID_HOMESERVER,
     AutoDiscovery.ERROR_INVALID_IDENTITY_SERVER,
 ];
-
-export class ValidatedServerConfig {
-    hsUrl: string;
-    hsName: string;
-    hsNameIsDifferent: string;
-
-    isUrl: string;
-
-    isDefault: boolean;
-    // when the server config is based on static URLs the hsName is not resolvable and things may wish to use hsUrl
-    isNameResolvable: boolean;
-
-    warning: string;
-}
 
 export interface IAuthComponentState {
     serverIsAlive: boolean;
@@ -198,14 +187,14 @@ export default class AutoDiscoveryUtils {
         if (!discoveryResult || !discoveryResult["m.homeserver"]) {
             // This shouldn't happen without major misconfiguration, so we'll log a bit of information
             // in the log so we can find this bit of codee but otherwise tell teh user "it broke".
-            console.error("Ended up in a state of not knowing which homeserver to connect to.");
+            logger.error("Ended up in a state of not knowing which homeserver to connect to.");
             throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
         }
 
         const hsResult = discoveryResult['m.homeserver'];
         const isResult = discoveryResult['m.identity_server'];
 
-        const defaultConfig = SdkConfig.get()["validated_server_config"];
+        const defaultConfig = SdkConfig.get("validated_server_config");
 
         // Validate the identity server first because an invalid identity server causes
         // an invalid homeserver, which may not be picked up correctly.
@@ -218,7 +207,7 @@ export default class AutoDiscoveryUtils {
         if (isResult && isResult.state === AutoDiscovery.SUCCESS) {
             preferredIdentityUrl = isResult["base_url"];
         } else if (isResult && isResult.state !== AutoDiscovery.PROMPT) {
-            console.error("Error determining preferred identity server URL:", isResult);
+            logger.error("Error determining preferred identity server URL:", isResult);
             if (isResult.state === AutoDiscovery.FAIL_ERROR) {
                 if (AutoDiscovery.ALL_ERRORS.indexOf(isResult.error) !== -1) {
                     throw newTranslatableError(isResult.error);
@@ -234,7 +223,7 @@ export default class AutoDiscoveryUtils {
         }
 
         if (hsResult.state !== AutoDiscovery.SUCCESS) {
-            console.error("Error processing homeserver config:", hsResult);
+            logger.error("Error processing homeserver config:", hsResult);
             if (!syntaxOnly || !AutoDiscoveryUtils.isLivelinessError(hsResult.error)) {
                 if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error) !== -1) {
                     throw newTranslatableError(hsResult.error);
@@ -251,7 +240,7 @@ export default class AutoDiscoveryUtils {
 
         // It should have been set by now, so check it
         if (!preferredHomeserverName) {
-            console.error("Failed to parse homeserver name from homeserver URL");
+            logger.error("Failed to parse homeserver name from homeserver URL");
             throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
         }
 

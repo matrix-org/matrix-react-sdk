@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 
 import AccessibleButton from "./AccessibleButton";
-import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 import { _t } from "../../../languageHandler";
 import TextWithTooltip from "./TextWithTooltip";
 import SdkConfig from "../../../SdkConfig";
@@ -37,15 +37,16 @@ const showPickerDialog = (
     serverConfig: ValidatedServerConfig,
     onFinished: (config: ValidatedServerConfig) => void,
 ) => {
-    Modal.createTrackedDialog("Server Picker", "", ServerPickerDialog, { title, serverConfig, onFinished });
+    Modal.createDialog(ServerPickerDialog, { title, serverConfig, onFinished });
 };
 
 const onHelpClick = () => {
-    Modal.createTrackedDialog('Custom Server Dialog', '', InfoDialog, {
+    const brand = SdkConfig.get().brand;
+    Modal.createDialog(InfoDialog, {
         title: _t("Server Options"),
         description: _t("You can use the custom server options to sign into other Matrix servers by specifying " +
-            "a different homeserver URL. This allows you to use Element with an existing Matrix account on " +
-            "a different homeserver."),
+            "a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on " +
+            "a different homeserver.", { brand }),
         button: _t("Dismiss"),
         hasCloseButton: false,
         fixedWidth: false,
@@ -53,8 +54,10 @@ const onHelpClick = () => {
 };
 
 const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }: IProps) => {
+    const disableCustomUrls = SdkConfig.get("disable_custom_urls");
+
     let editBtn;
-    if (!SdkConfig.get()["disable_custom_urls"] && onServerConfigChange) {
+    if (!disableCustomUrls && onServerConfigChange) {
         const onClick = () => {
             showPickerDialog(dialogTitle, serverConfig, (config?: ValidatedServerConfig) => {
                 if (config) {
@@ -82,9 +85,16 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
     }
 
     return <div className="mx_ServerPicker">
-        <h3>{ title || _t("Homeserver") }</h3>
-        <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} />
-        <span className="mx_ServerPicker_server">{ serverName }</span>
+        <h2>{ title || _t("Homeserver") }</h2>
+        { !disableCustomUrls ? (
+            <AccessibleButton
+                className="mx_ServerPicker_help"
+                onClick={onHelpClick}
+                aria-label={_t("Help")}
+            />): null }
+        <span className="mx_ServerPicker_server" title={typeof serverName === "string" ? serverName : undefined}>
+            { serverName }
+        </span>
         { editBtn }
         { desc }
     </div>;

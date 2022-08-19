@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { PushRuleVectorState, VectorState } from "./PushRuleVectorState";
 import { IAnnotatedPushRule, IPushRules, PushRuleKind } from "matrix-js-sdk/src/@types/PushRules";
+
+import { PushRuleVectorState, VectorState } from "./PushRuleVectorState";
 
 export interface IContentRules {
     vectorState: VectorState;
     rules: IAnnotatedPushRule[];
     externalRules: IAnnotatedPushRule[];
 }
-
-export const SCOPE = "global";
-export const KIND = "content";
 
 export class ContentRules {
     /**

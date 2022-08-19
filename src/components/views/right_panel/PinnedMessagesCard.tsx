@@ -15,22 +15,32 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
+import { Icon as ContextMenuIcon } from '../../../../res/img/element-icons/context-menu.svg';
+import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
+import { Icon as ReplyIcon } from '../../../../res/img/element-icons/room/message-bar/reply.svg';
 import { _t } from "../../../languageHandler";
 import BaseCard from "./BaseCard";
 import Spinner from "../elements/Spinner";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import PinningUtils from "../../../utils/PinningUtils";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { ReadPinsEventId } from "./types";
+import Heading from '../typography/Heading';
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 
 interface IProps {
     room: Room;
+    permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
 }
 
@@ -43,7 +53,7 @@ export const usePinnedEvents = (room: Room): string[] => {
         setPinnedEvents(room.currentState.getStateEvents(EventType.RoomPinnedEvents, "")?.getContent()?.pinned || []);
     }, [room]);
 
-    useEventEmitter(room?.currentState, "RoomState.events", update);
+    useTypedEventEmitter(room?.currentState, RoomStateEvent.Events, update);
     useEffect(() => {
         update();
         return () => {
@@ -52,8 +62,6 @@ export const usePinnedEvents = (room: Room): string[] => {
     }, [update]);
     return pinnedEvents;
 };
-
-export const ReadPinsEventId = "im.vector.room.read_pins";
 
 export const useReadPinnedEvents = (room: Room): Set<string> => {
     const [readPinnedEvents, setReadPinnedEvents] = useState<Set<string>>(new Set());
@@ -65,7 +73,7 @@ export const useReadPinnedEvents = (room: Room): Set<string> => {
         setReadPinnedEvents(new Set(readPins || []));
     }, [room]);
 
-    useEventEmitter(room, "Room.accountData", update);
+    useTypedEventEmitter(room, RoomEvent.AccountData, update);
     useEffect(() => {
         update();
         return () => {
@@ -75,8 +83,9 @@ export const useReadPinnedEvents = (room: Room): Set<string> => {
     return readPinnedEvents;
 };
 
-const PinnedMessagesCard = ({ room, onClose }: IProps) => {
+const PinnedMessagesCard = ({ room, onClose, permalinkCreator }: IProps) => {
     const cli = useContext(MatrixClientContext);
+    const roomContext = useContext(RoomContext);
     const canUnpin = useRoomState(room, state => state.mayClientSendStateEvent(EventType.RoomPinnedEvents, cli));
     const pinnedEventIds = usePinnedEvents(room);
     const readPinnedEvents = useReadPinnedEvents(room);
@@ -95,20 +104,30 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         const promises = pinnedEventIds.map(async eventId => {
             const timelineSet = room.getUnfilteredTimelineSet();
             const localEvent = timelineSet?.getTimelineForEvent(eventId)?.getEvents().find(e => e.getId() === eventId);
-            if (localEvent) return localEvent;
+            if (localEvent) return PinningUtils.isPinnable(localEvent) ? localEvent : null;
 
             try {
-                const evJson = await cli.fetchRoomEvent(room.roomId, eventId);
+                // Fetch the event and latest edit in parallel
+                const [evJson, { events: [edit] }] = await Promise.all([
+                    cli.fetchRoomEvent(room.roomId, eventId),
+                    cli.relations(room.roomId, eventId, RelationType.Replace, null, { limit: 1 }),
+                ]);
                 const event = new MatrixEvent(evJson);
                 if (event.isEncrypted()) {
                     await cli.decryptEventIfNeeded(event); // TODO await?
                 }
+
                 if (event && PinningUtils.isPinnable(event)) {
+                    // Inject sender information
+                    event.sender = room.getMember(event.getSender());
+                    // Also inject any edits we've found
+                    if (edit) event.makeReplaced(edit);
+
                     return event;
                 }
             } catch (err) {
-                console.error("Error looking up pinned event " + eventId + " in room " + room.roomId);
-                console.error(err);
+                logger.error("Error looking up pinned event " + eventId + " in room " + room.roomId);
+                logger.error(err);
             }
             return null;
         });
@@ -120,36 +139,44 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
     if (!pinnedEvents) {
         content = <Spinner />;
     } else if (pinnedEvents.length > 0) {
-        let onUnpinClicked;
-        if (canUnpin) {
-            onUnpinClicked = async (event: MatrixEvent) => {
-                const pinnedEvents = room.currentState.getStateEvents(EventType.RoomPinnedEvents, "");
-                if (pinnedEvents?.getContent()?.pinned) {
-                    const pinned = pinnedEvents.getContent().pinned;
-                    const index = pinned.indexOf(event.getId());
-                    if (index !== -1) {
-                        pinned.splice(index, 1);
-                        await cli.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned }, "");
-                    }
+        const onUnpinClicked = async (event: MatrixEvent) => {
+            const pinnedEvents = room.currentState.getStateEvents(EventType.RoomPinnedEvents, "");
+            if (pinnedEvents?.getContent()?.pinned) {
+                const pinned = pinnedEvents.getContent().pinned;
+                const index = pinned.indexOf(event.getId());
+                if (index !== -1) {
+                    pinned.splice(index, 1);
+                    await cli.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned }, "");
                 }
-            };
-        }
+            }
+        };
 
         // show them in reverse, with latest pinned at the top
         content = pinnedEvents.filter(Boolean).reverse().map(ev => (
-            <PinnedEventTile key={ev.getId()} room={room} event={ev} onUnpinClicked={() => onUnpinClicked(ev)} />
+            <PinnedEventTile
+                key={ev.getId()}
+                event={ev}
+                onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
+                permalinkCreator={permalinkCreator}
+            />
         ));
     } else {
-        content = <div className="mx_PinnedMessagesCard_empty">
-            <div>
+        content = <div className="mx_PinnedMessagesCard_empty_wrapper">
+            <div className="mx_PinnedMessagesCard_empty">
                 { /* XXX: We reuse the classes for simplicity, but deliberately not the components for non-interactivity. */ }
-                <div className="mx_PinnedMessagesCard_MessageActionBar">
-                    <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton" />
-                    <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton" />
-                    <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton" />
+                <div className="mx_MessageActionBar mx_PinnedMessagesCard_MessageActionBar">
+                    <div className="mx_MessageActionBar_iconButton">
+                        <EmojiIcon />
+                    </div>
+                    <div className="mx_MessageActionBar_iconButton">
+                        <ReplyIcon />
+                    </div>
+                    <div className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton">
+                        <ContextMenuIcon />
+                    </div>
                 </div>
 
-                <h2>{ _t("Nothing pinned, yet") }</h2>
+                <Heading size="h4" className="mx_PinnedMessagesCard_empty_header">{ _t("Nothing pinned, yet") }</Heading>
                 { _t("If you have permissions, open the menu on any message and select " +
                     "<b>Pin</b> to stick them here.", {}, {
                     b: sub => <b>{ sub }</b>,
@@ -159,11 +186,18 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
     }
 
     return <BaseCard
-        header={<h2>{ _t("Pinned messages") }</h2>}
+        header={<div className="mx_BaseCard_header_title">
+            <Heading size="h4" className="mx_BaseCard_header_title_heading">{ _t("Pinned messages") }</Heading>
+        </div>}
         className="mx_PinnedMessagesCard"
         onClose={onClose}
     >
-        { content }
+        <RoomContext.Provider value={{
+            ...roomContext,
+            timelineRenderingType: TimelineRenderingType.Pinned,
+        }}>
+            { content }
+        </RoomContext.Provider>
     </BaseCard>;
 };
 

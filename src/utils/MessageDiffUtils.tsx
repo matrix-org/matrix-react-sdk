@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch';
 import { DiffDOM, IDiff } from "diff-dom";
 import { IContent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { bodyToHtml, checkBlockNode, IOptsReturnString } from "../HtmlUtils";
 
@@ -218,7 +219,7 @@ function renderDifferenceInDOM(originalRootNode: Node, diff: IDiff, diffMathPatc
         }
         default:
             // Should not happen (modifyComment, ???)
-            console.warn("MessageDiffUtils::editBodyDiffToHtml: diff action not supported atm", diff);
+            logger.warn("MessageDiffUtils::editBodyDiffToHtml: diff action not supported atm", diff);
     }
 }
 

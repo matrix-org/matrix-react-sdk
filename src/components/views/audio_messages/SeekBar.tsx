@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Playback, PlaybackState } from "../../../audio/Playback";
 import React, { ChangeEvent, CSSProperties, ReactNode } from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+
+import { Playback, PlaybackState } from "../../../audio/Playback";
 import { MarkedExecution } from "../../../utils/MarkedExecution";
 import { percentageOf } from "../../../utils/numbers";
 
@@ -42,7 +42,6 @@ interface ISeekCSS extends CSSProperties {
 
 const ARROW_SKIP_SECONDS = 5; // arbitrary
 
-@replaceableComponent("views.audio_messages.SeekBar")
 export default class SeekBar extends React.PureComponent<IProps, IState> {
     // We use an animation frame request to avoid overly spamming prop updates, even if we aren't
     // really using anything demanding on the CSS front.

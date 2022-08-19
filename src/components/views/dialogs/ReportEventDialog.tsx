@@ -1,5 +1,6 @@
 /*
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,20 +16,22 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from '../../../languageHandler';
 import { ensureDMExists } from "../../../createRoom";
 import { IDialogProps } from "./IDialogProps";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SdkConfig from '../../../SdkConfig';
 import Markdown from '../../../Markdown';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from "../../../settings/SettingsStore";
 import StyledRadioButton from "../elements/StyledRadioButton";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
+import LabelledCheckbox from "../elements/LabelledCheckbox";
 
 interface IProps extends IDialogProps {
     mxEvent: MatrixEvent;
@@ -41,6 +44,7 @@ interface IState {
     err?: string;
     // If we know it, the nature of the abuse, as specified by MSC3215.
     nature?: ExtendedNature;
+    ignoreUserToo: boolean; // if true, user will be ignored/blocked on submit
 }
 
 const MODERATED_BY_STATE_EVENT_TYPE = [
@@ -88,7 +92,6 @@ type Moderation = {
  *    a well-formed state event `m.room.moderation.moderated_by`
  *    /`org.matrix.msc3215.room.moderation.moderated_by`?
  */
-@replaceableComponent("views.dialogs.ReportEventDialog")
 export default class ReportEventDialog extends React.Component<IProps, IState> {
     // If the room supports moderation, the moderation information.
     private moderation?: Moderation;
@@ -160,8 +163,13 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             err: null,
             // If specified, the nature of the abuse, as specified by MSC3215.
             nature: null,
+            ignoreUserToo: false, // default false, for now. Could easily be argued as default true
         };
     }
+
+    private onIgnoreUserTooChanged = (newVal: boolean): void => {
+        this.setState({ ignoreUserToo: newVal });
+    };
 
     // The user has written down a freeform description of the abuse.
     private onReasonChange = ({ target: { value: reason } }): void => {
@@ -214,7 +222,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         try {
             const client = MatrixClientPeg.get();
             const ev = this.props.mxEvent;
-            if (this.moderation && this.state.nature != NonStandardValue.Admin) {
+            if (this.moderation && this.state.nature !== NonStandardValue.Admin) {
                 const nature: Nature = this.state.nature;
 
                 // Report to moderators through to the dedicated bot,
@@ -232,8 +240,18 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 // Report to homeserver admin through the dedicated Matrix API.
                 await client.reportEvent(ev.getRoomId(), ev.getId(), -100, this.state.reason.trim());
             }
+
+            // if the user should also be ignored, do that
+            if (this.state.ignoreUserToo) {
+                await client.setIgnoredUsers([
+                    ...client.getIgnoredUsers(),
+                    ev.getSender(),
+                ]);
+            }
+
             this.props.onFinished(true);
         } catch (e) {
+            logger.error(e);
             this.setState({
                 busy: false,
                 err: e.message,
@@ -241,7 +259,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         }
     };
 
-    render() {
+    public render() {
         let error = null;
         if (this.state.err) {
             error = <div className="error">
@@ -258,9 +276,16 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             );
         }
 
-        const adminMessageMD =
-            SdkConfig.get().reportEvent &&
-            SdkConfig.get().reportEvent.adminMessageMD;
+        const ignoreUserCheckbox = <LabelledCheckbox
+            value={this.state.ignoreUserToo}
+            label={_t("Ignore user")}
+            byline={_t("Check if you want to hide all current and future messages from this user.")}
+            onChange={this.onIgnoreUserTooChanged}
+            disabled={this.state.busy}
+        />;
+
+        const adminMessageMD = SdkConfig
+            .getObject("report_event")?.get("admin_message_md", "adminMessageMD");
         let adminMessage;
         if (adminMessageMD) {
             const html = new Markdown(adminMessageMD).toHTML({ externalLinks: true });
@@ -271,7 +296,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             // Display report-to-moderator dialog.
             // We let the user pick a nature.
             const client = MatrixClientPeg.get();
-            const homeServerName = SdkConfig.get()["validated_server_config"].hsName;
+            const homeServerName = SdkConfig.get("validated_server_config").hsName;
             let subtitle;
             switch (this.state.nature) {
                 case Nature.Disagreement:
@@ -387,6 +412,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         />
                         { progress }
                         { error }
+                        { ignoreUserCheckbox }
                     </div>
                     <DialogButtons
                         primaryButton={_t("Send report")}
@@ -428,6 +454,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     />
                     { progress }
                     { error }
+                    { ignoreUserCheckbox }
                 </div>
                 <DialogButtons
                     primaryButton={_t("Send report")}

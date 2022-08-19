@@ -16,8 +16,8 @@ limitations under the License.
 
 import React, { useRef, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import BaseDialog from "./BaseDialog";
@@ -26,9 +26,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
-import SpaceStore from "../../../stores/SpaceStore";
-import { SpaceCreateForm } from "../spaces/SpaceCreateMenu";
-import createRoom from "../../../createRoom";
+import { createSpace, SpaceCreateForm } from "../spaces/SpaceCreateMenu";
 import { SubspaceSelector } from "./AddExistingToSpaceDialog";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
 
@@ -49,14 +47,10 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
     const [avatar, setAvatar] = useState<File>(null);
     const [topic, setTopic] = useState<string>("");
 
-    const supportsRestricted = !!SpaceStore.instance.restrictedJoinRuleSupport?.preferred;
-
     const spaceJoinRule = space.getJoinRule();
-    let defaultJoinRule = JoinRule.Invite;
+    let defaultJoinRule = JoinRule.Restricted;
     if (spaceJoinRule === JoinRule.Public) {
         defaultJoinRule = JoinRule.Public;
-    } else if (supportsRestricted) {
-        defaultJoinRule = JoinRule.Restricted;
     }
     const [joinRule, setJoinRule] = useState<JoinRule>(defaultJoinRule);
 
@@ -66,14 +60,14 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
         setBusy(true);
         // require & validate the space name field
-        if (!await spaceNameField.current.validate({ allowEmpty: false })) {
+        if (!(await spaceNameField.current.validate({ allowEmpty: false }))) {
             spaceNameField.current.focus();
             spaceNameField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
         // validate the space name alias field but do not require it
-        if (joinRule === JoinRule.Public && !await spaceAliasField.current.validate({ allowEmpty: true })) {
+        if (joinRule === JoinRule.Public && !(await spaceAliasField.current.validate({ allowEmpty: true }))) {
             spaceAliasField.current.focus();
             spaceAliasField.current.validate({ allowEmpty: true, focused: true });
             setBusy(false);
@@ -81,32 +75,11 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         }
 
         try {
-            await createRoom({
-                createOpts: {
-                    preset: joinRule === JoinRule.Public ? Preset.PublicChat : Preset.PrivateChat,
-                    name,
-                    power_level_content_override: {
-                        // Only allow Admins to write to the timeline to prevent hidden sync spam
-                        events_default: 100,
-                        ...joinRule === JoinRule.Public ? { invite: 0 } : {},
-                    },
-                    room_alias_name: joinRule === JoinRule.Public && alias
-                        ? alias.substr(1, alias.indexOf(":") - 1)
-                        : undefined,
-                    topic,
-                },
-                avatar,
-                roomType: RoomType.Space,
-                parentSpace,
-                spinner: false,
-                encryption: false,
-                andView: true,
-                inlineErrors: true,
-            });
+            await createSpace(name, joinRule === JoinRule.Public, alias, topic, avatar, {}, { parentSpace, joinRule });
 
             onFinished(true);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
     };
 
@@ -172,7 +145,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                         label={_t("Space visibility")}
                         labelInvite={_t("Private space (invite only)")}
                         labelPublic={_t("Public space")}
-                        labelRestricted={supportsRestricted ? _t("Visible to space members") : undefined}
+                        labelRestricted={_t("Visible to space members")}
                         width={478}
                         value={joinRule}
                         onChange={setJoinRule}

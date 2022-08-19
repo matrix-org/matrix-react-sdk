@@ -19,7 +19,6 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { upgradeRoom } from "../../../utils/RoomUpgrade";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
@@ -35,7 +34,6 @@ interface IState {
     busy: boolean;
 }
 
-@replaceableComponent("views.dialogs.RoomUpgradeDialog")
 export default class RoomUpgradeDialog extends React.Component<IProps, IState> {
     private targetVersion: string;
 
@@ -58,7 +56,7 @@ export default class RoomUpgradeDialog extends React.Component<IProps, IState> {
         upgradeRoom(this.props.room, this.targetVersion, false, false).then(() => {
             this.props.onFinished(true);
         }).catch((err) => {
-            Modal.createTrackedDialog('Failed to upgrade room', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to upgrade room"),
                 description: ((err && err.message) ? err.message : _t("The room upgrade could not be completed")),
             });

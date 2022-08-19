@@ -24,7 +24,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { formatBytes, formatCountLong } from "../../../utils/FormattingUtils";
 import EventIndexPeg from "../../../indexing/EventIndexPeg";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SeshatResetDialog from '../dialogs/SeshatResetDialog';
 import InlineSpinner from '../elements/InlineSpinner';
 
@@ -35,7 +34,6 @@ interface IState {
     eventIndexingEnabled: boolean;
 }
 
-@replaceableComponent("views.settings.EventIndexPanel")
 export default class EventIndexPanel extends React.Component<{}, IState> {
     constructor(props) {
         super(props);
@@ -110,7 +108,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
     }
 
     private onManage = async () => {
-        Modal.createTrackedDialogAsync('Message search', 'Message search',
+        Modal.createDialogAsync(
             // @ts-ignore: TS doesn't seem to like the type of this now that it
             // has also been converted to TS as well, but I can't figure out why...
             import('../../../async-components/views/dialogs/eventindex/ManageEventIndexDialog'),
@@ -127,7 +125,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
 
         await EventIndexPeg.initEventIndex();
         await EventIndexPeg.get().addInitialCheckpoints();
-        await EventIndexPeg.get().startCrawler();
+        EventIndexPeg.get().startCrawler();
         await SettingsStore.setValue('enableEventIndexing', null, SettingLevel.DEVICE, true);
         await this.updateState();
     };

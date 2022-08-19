@@ -17,16 +17,18 @@ limitations under the License.
 import * as Recorder from 'opus-recorder';
 import encoderPath from 'opus-recorder/dist/encoderWorker.min.js';
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import MediaDeviceHandler from "../MediaDeviceHandler";
 import { SimpleObservable } from "matrix-widget-api";
 import EventEmitter from "events";
+import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import MediaDeviceHandler from "../MediaDeviceHandler";
 import { IDestroyable } from "../utils/IDestroyable";
 import { Singleflight } from "../utils/Singleflight";
 import { PayloadEvent, WORKLET_NAME } from "./consts";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { Playback } from "./Playback";
 import { createAudioContext } from "./compat";
-import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
 import { uploadFile } from "../ContentMessages";
 import { FixedRollingArray } from "../utils/FixedRollingArray";
 import { clamp } from "../utils/numbers";
@@ -35,7 +37,7 @@ import mxRecorderWorkletPath from "./RecorderWorklet";
 const CHANNELS = 1; // stereo isn't important
 export const SAMPLE_RATE = 48000; // 48khz is what WebRTC uses. 12khz is where we lose quality.
 const BITRATE = 24000; // 24kbps is pretty high quality for our use case in opus.
-const TARGET_MAX_LENGTH = 120; // 2 minutes in seconds. Somewhat arbitrary, though longer == larger files.
+const TARGET_MAX_LENGTH = 900; // 15 minutes in seconds. Somewhat arbitrary, though longer == larger files.
 const TARGET_WARN_TIME_LEFT = 10; // 10 seconds, also somewhat arbitrary.
 
 export const RECORDING_PLAYBACK_SAMPLES = 44;
@@ -171,9 +173,9 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
                 this.buffer = newBuf;
             };
         } catch (e) {
-            console.error("Error starting recording: ", e);
+            logger.error("Error starting recording: ", e);
             if (e instanceof DOMException) { // Unhelpful DOMExceptions are common - parse them sanely
-                console.error(`${e.name} (${e.code}): ${e.message}`);
+                logger.error(`${e.name} (${e.code}): ${e.message}`);
             }
 
             // Clean up as best as possible
@@ -227,8 +229,8 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         // go horribly over the limit. We also emit a warning state if needed.
         //
         // We use the recorder's perspective of time to make sure we don't cut off the last
-        // frame of audio, otherwise we end up with a 1:59 clip (119.68 seconds). This extra
-        // safety can allow us to overshoot the target a bit, but at least when we say 2min
+        // frame of audio, otherwise we end up with a 14:59 clip (899.68 seconds). This extra
+        // safety can allow us to overshoot the target a bit, but at least when we say 15min
         // maximum we actually mean it.
         //
         // In testing, recorder time and worker time lag by about 400ms, which is roughly the

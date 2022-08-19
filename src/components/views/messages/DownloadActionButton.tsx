@@ -14,14 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src";
-import { MediaEventHelper } from "../../../utils/MediaEventHelper";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import React from "react";
+import classNames from "classnames";
+
+import { Icon as DownloadIcon } from "../../../../res/img/download.svg";
+import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import Spinner from "../elements/Spinner";
-import classNames from "classnames";
-import { _t } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { _t, _td } from "../../../languageHandler";
 import { FileDownloader } from "../../../utils/FileDownloader";
 
 interface IProps {
@@ -36,9 +37,9 @@ interface IProps {
 interface IState {
     loading: boolean;
     blob?: Blob;
+    tooltip: string;
 }
 
-@replaceableComponent("views.messages.DownloadActionButton")
 export default class DownloadActionButton extends React.PureComponent<IProps, IState> {
     private downloader = new FileDownloader();
 
@@ -47,11 +48,16 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
 
         this.state = {
             loading: false,
+            tooltip: _td("Downloading"),
         };
     }
 
     private onDownloadClick = async () => {
         if (this.state.loading) return;
+
+        if (this.props.mediaEventHelperGet().media.isEncrypted) {
+            this.setState({ tooltip: _td("Decrypting") });
+        }
 
         this.setState({ loading: true });
 
@@ -80,17 +86,18 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         }
 
         const classes = classNames({
-            'mx_MessageActionBar_maskButton': true,
+            'mx_MessageActionBar_iconButton': true,
             'mx_MessageActionBar_downloadButton': true,
             'mx_MessageActionBar_downloadSpinnerButton': !!spinner,
         });
 
         return <RovingAccessibleTooltipButton
             className={classes}
-            title={spinner ? _t("Decrypting") : _t("Download")}
+            title={spinner ? _t(this.state.tooltip) : _t("Download")}
             onClick={this.onDownloadClick}
             disabled={!!spinner}
         >
+            <DownloadIcon />
             { spinner }
         </RovingAccessibleTooltipButton>;
     }
