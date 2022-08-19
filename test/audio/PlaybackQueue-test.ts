@@ -103,10 +103,10 @@ describe('PlaybackQueue', () => {
 
         const playback0 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
         const playback1 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
-        const PlaybackQueueInstance = PlaybackQueue.forRoom(ev0.getRoomId());
-        PlaybackQueueInstance.unsortedEnqueue(ev0, playback0);
+        const playbackQueueInstance = PlaybackQueue.forRoom(roomIdTest);
+        playbackQueueInstance.unsortedEnqueue(ev0, playback0);
         await playback0.prepare();
-        PlaybackQueueInstance.unsortedEnqueue(ev1, playback1);
+        playbackQueueInstance.unsortedEnqueue(ev1, playback1);
         await playback1.prepare();
 
         await playback0.toggle();
@@ -155,10 +155,10 @@ describe('PlaybackQueue', () => {
 
         const playback0 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
         const playback1 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
-        const PlaybackQueueInstance = PlaybackQueue.forRoom(ev0.getRoomId());
-        PlaybackQueueInstance.unsortedEnqueue(ev0, playback0);
+        const playbackQueueInstance = PlaybackQueue.forRoom(roomIdTest);
+        playbackQueueInstance.unsortedEnqueue(ev0, playback0);
         await playback0.prepare();
-        PlaybackQueueInstance.unsortedEnqueue(ev2, playback1);
+        playbackQueueInstance.unsortedEnqueue(ev2, playback1);
         await playback1.prepare();
 
         await playback0.toggle();
@@ -195,10 +195,10 @@ describe('PlaybackQueue', () => {
 
         const playback0 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
         const playback1 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
-        const PlaybackQueueInstance = PlaybackQueue.forRoom(ev0.getRoomId());
-        PlaybackQueueInstance.unsortedEnqueue(ev0, playback0);
+        const playbackQueueInstance = PlaybackQueue.forRoom(roomIdTest);
+        playbackQueueInstance.unsortedEnqueue(ev0, playback0);
         await playback0.prepare();
-        PlaybackQueueInstance.unsortedEnqueue(ev1, playback1);
+        playbackQueueInstance.unsortedEnqueue(ev1, playback1);
         await playback1.prepare();
 
         await playback0.toggle();
@@ -238,10 +238,10 @@ describe('PlaybackQueue', () => {
 
         const playback0 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
         const playback1 = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
-        const PlaybackQueueInstance = PlaybackQueue.forRoom(ev0.getRoomId());
-        PlaybackQueueInstance.unsortedEnqueue(ev0, playback0);
+        const playbackQueueInstance = PlaybackQueue.forRoom(roomIdTest);
+        playbackQueueInstance.unsortedEnqueue(ev0, playback0);
         await playback0.prepare();
-        PlaybackQueueInstance.unsortedEnqueue(ev1, playback1);
+        playbackQueueInstance.unsortedEnqueue(ev1, playback1);
         await playback1.prepare();
 
         await playback0.toggle();
