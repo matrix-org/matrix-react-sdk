@@ -415,13 +415,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true, // XXX: overrides for testing sliding sync on netlify, do not commit this to main!
         controller: new SlidingSyncController(),
     },
-    "feature_message_right_click_context_menu": {
-        isFeature: true,
-        supportedLevels: LEVELS_FEATURE,
-        labsGroup: LabGroup.Rooms,
-        displayName: _td("Right-click message context menu"),
-        default: false,
-    },
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
