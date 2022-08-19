@@ -51,6 +51,7 @@ import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdat
 import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 
 let instanceCount = 0;
 
@@ -360,6 +361,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
+    private get showStickersButton(): boolean {
+        return this.state.showStickersButton && !isLocalRoom(this.props.room);
+    }
+
     public render() {
         const controls = [
             this.props.e2eStatus ?
@@ -485,7 +490,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             setStickerPickerOpen={this.setStickerPickerOpen}
                             showLocationButton={!window.electron}
                             showPollsButton={this.state.showPollsButton}
-                            showStickersButton={this.state.showStickersButton}
+                            showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
                         /> }
                         { showSendButton && (
