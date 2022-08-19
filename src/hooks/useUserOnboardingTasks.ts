@@ -98,7 +98,8 @@ const tasks: InternalUserOnboardingTask[] = [
         title: _t("Download Element"),
         description: _t("Don’t miss a thing by taking Element with you"),
         completed: (ctx: UserOnboardingContext) => {
-            return Boolean(ctx.devices.filter(it => it.device_id !== ctx.myDevice).length);
+            return Boolean(ctx.devices.filter(it => it.device_id !== ctx.myDevice).length)
+                || Boolean(window.electron);
         },
         action: {
             label: _t("Download apps"),
