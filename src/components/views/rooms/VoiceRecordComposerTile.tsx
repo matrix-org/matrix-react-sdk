@@ -77,7 +77,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             this.props.relation?.rel_type === "io.element.thread"
             || this.props.relation?.rel_type === RelationType.Thread ?
                 this.props.room.roomId + this.props.relation.event_id
-            :
+                :
                 this.props.room.roomId;
     }
 
