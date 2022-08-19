@@ -262,7 +262,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         controller: new ThreadBetaController(),
         displayName: _td("Threaded messaging"),
         supportedLevels: LEVELS_FEATURE,
-        default: false,
+        default: true,
         betaInfo: {
             title: _td("Threads"),
             caption: () => <>
