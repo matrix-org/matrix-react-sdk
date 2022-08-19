@@ -216,7 +216,7 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_RoomTile", "Test Room").should("not.have.class", "mx_NotificationBadge_count");
     });
 
-    it.only("should not show unread indicators", () => { // TODO: for now. Later we should.
+    it("should not show unread indicators", () => { // TODO: for now. Later we should.
         createAndJoinBob();
 
         // disable notifs in this room (TODO: CS API call?)
@@ -240,5 +240,16 @@ describe("Sliding Sync", () => {
         ]);
 
         cy.contains(".mx_RoomTile", "Test Room").get(".mx_NotificationBadge").should("not.exist");
+    });
+
+    it.only("should update user settings promptly", () => {
+        cy.get(".mx_UserMenu_userAvatar").click();
+        cy.contains("All settings").click();
+        cy.contains("Preferences").click();
+        cy.contains(".mx_SettingsFlag", "Show timestamps in 12 hour format").should("exist").find(".mx_ToggleSwitch_on").should("not.exist");
+        cy.contains(".mx_SettingsFlag", "Show timestamps in 12 hour format").should("exist").find(".mx_ToggleSwitch_ball").click();
+        cy.contains(".mx_SettingsFlag", "Show timestamps in 12 hour format", { timeout: 2000 }).should("exist").find(
+            ".mx_ToggleSwitch_on", { timeout: 2000 },
+        ).should("exist");
     });
 });
