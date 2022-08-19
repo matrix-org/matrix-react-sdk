@@ -462,7 +462,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     private getRoomDelta = (roomId: string, delta: number, unread = false) => {
         const lists = RoomListStore.instance.orderedLists;
         const rooms: Room[] = [];
-        ALWAYS_VISIBLE_TAGS.forEach(t => { // FIXME: read from store?
+        TAG_ORDER.forEach(t => {
             let listRooms = lists[t];
 
             if (unread) {
@@ -587,7 +587,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         const showSkeleton = !this.state.suggestedRooms?.length &&
             Object.values(RoomListStore.instance.orderedLists).every(list => !list?.length);
 
-        return ALWAYS_VISIBLE_TAGS // FIXME: read from store?
+        return TAG_ORDER
             .map(orderedTagId => {
                 let extraTiles = null;
                 if (orderedTagId === DefaultTagID.Suggested) {

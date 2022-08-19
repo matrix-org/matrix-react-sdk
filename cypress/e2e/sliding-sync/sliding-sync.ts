@@ -242,7 +242,7 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_RoomTile", "Test Room").get(".mx_NotificationBadge").should("not.exist");
     });
 
-    it.only("should update user settings promptly", () => {
+    it("should update user settings promptly", () => {
         cy.get(".mx_UserMenu_userAvatar").click();
         cy.contains("All settings").click();
         cy.contains("Preferences").click();
@@ -251,5 +251,74 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_SettingsFlag", "Show timestamps in 12 hour format", { timeout: 2000 }).should("exist").find(
             ".mx_ToggleSwitch_on", { timeout: 2000 },
         ).should("exist");
+    });
+
+    it.only("should show and be able to accept/reject/rescind invites", () => {
+        createAndJoinBob();
+
+        let clientUserId;
+        cy.getClient().then((cli) => {
+            clientUserId = cli.getUserId();
+        });
+
+        // invite Sloth into 3 rooms:
+        // - roomJoin: will join this room
+        // - roomReject: will reject the invite
+        // - roomRescind: will make Bob rescind the invite
+        let roomJoin, roomReject, roomRescind, bobClient;
+        cy.get<MatrixClient>("@bob").then((bob) => {
+            bobClient = bob;
+            return Promise.all([
+                bob.createRoom({name: "Join"}),
+                bob.createRoom({name: "Reject"}),
+                bob.createRoom({name: "Rescind"}),
+            ]);
+        }).then(([join,reject,rescind]) => {
+            roomJoin = join.room_id;
+            roomReject = reject.room_id;
+            roomRescind = rescind.room_id;
+            return Promise.all([
+                bobClient.invite(roomJoin, clientUserId),
+                bobClient.invite(roomReject, clientUserId),
+                bobClient.invite(roomRescind, clientUserId),
+            ])
+        });
+
+        // wait for them all to be on the UI
+        cy.get(".mx_RoomTile").should('have.length', 4); // due to the Test Room in beforeEach
+
+        cy.contains(".mx_RoomTile", "Join").click();
+        cy.contains(".mx_AccessibleButton","Accept").click();
+
+        checkOrder([
+            "Join", "Test Room",
+        ]);
+
+        cy.contains(".mx_RoomTile", "Reject").click();
+        cy.get(".mx_RoomView").contains(".mx_AccessibleButton", "Reject").click();
+
+        // wait for the rejected room to disappear
+        cy.get(".mx_RoomTile").should('have.length', 3);
+
+        // check the lists are correct
+        checkOrder([
+            "Join", "Test Room",
+        ]);
+        cy.contains(".mx_RoomSublist", "Invites").find(".mx_RoomTile_title").should((elements) => {
+            expect(_.map(elements, (e) => {
+                return e.textContent;
+            }), "rooms are sorted").to.deep.equal(["Rescind"]);
+        });
+
+        // now rescind the invite
+        cy.get<MatrixClient>("@bob").then((bob) => {
+            return bob.kick(roomRescind, clientUserId);
+        });
+        cy.contains(".mx_RoomSublist_showNButtonText", "Show").click(); // sometimes the room list gets hidden :S FIXME
+        // wait for the rescind to take effect and check the joined list once more
+        cy.get(".mx_RoomTile").should('have.length', 2);
+        checkOrder([
+            "Join", "Test Room",
+        ]);
     });
 });
