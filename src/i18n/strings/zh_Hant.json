@@ -3205,7 +3205,7 @@
     "Started": "已開始",
     "Ready": "準備",
     "Requested": "已請求",
-    "Unsent": "取消傳送",
+    "Unsent": "未傳送",
     "Edit values": "編輯值",
     "Failed to save settings.": "儲存設定失敗。",
     "Number of users": "使用者數量",
