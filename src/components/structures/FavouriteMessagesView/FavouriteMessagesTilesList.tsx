@@ -28,15 +28,17 @@ import FavouriteMessageTile from './FavouriteMessageTile';
 interface IProps{
     favouriteMessageEvents: MatrixEvent[];
     favouriteMessagesPanelRef: any;
+    searchQuery: string;
 }
 
-const FavouriteMessagesTilesList = ({ favouriteMessageEvents, favouriteMessagesPanelRef }: IProps) => {
+const FavouriteMessagesTilesList = ({ favouriteMessageEvents, favouriteMessagesPanelRef, searchQuery }: IProps) => {
     const ret = [];
     let lastRoomId: string;
     const cli = useContext<MatrixClient>(MatrixClientContext);
+    const highlights = [];
 
     if (!favouriteMessageEvents) {
-        ret.push(<Spinner />);
+        ret.push(<Spinner key={Math.random()} />);
     } else {
         favouriteMessageEvents.reverse().forEach(mxEvent => {
             const timeline = [] as MatrixEvent[];
@@ -44,6 +46,7 @@ const FavouriteMessagesTilesList = ({ favouriteMessageEvents, favouriteMessagesP
             const room = cli.getRoom(roomId);
 
             timeline.push(mxEvent);
+            if (searchQuery) highlights.push(searchQuery);
 
             if (roomId !== lastRoomId) {
                 ret.push(<li key={mxEvent.getId() + "-room"}>
@@ -65,6 +68,7 @@ const FavouriteMessagesTilesList = ({ favouriteMessageEvents, favouriteMessagesP
             ret.push(
                 <FavouriteMessageTile
                     key={mxEvent.getId()}
+                    searchHighlights={highlights}
                     result={mxEvent}
                     resultLink={resultLink}
                     timeline={timeline}

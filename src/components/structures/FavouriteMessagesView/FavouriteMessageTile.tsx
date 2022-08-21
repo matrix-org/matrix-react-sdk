@@ -32,6 +32,8 @@ interface IProps {
     result: MatrixEvent;
     // href for the highlights in this result
     resultLink?: string;
+    // a list of strings to be highlighted in the results
+    searchHighlights?: string[];
     onHeightChanged?: () => void;
     permalinkCreator?: RoomPermalinkCreator;
     //a list containing the saved items events
@@ -59,6 +61,7 @@ export default class FavouriteMessageTile extends React.Component<IProps> {
 
         for (let j = 0; j < this.props.timeline.length; j++) {
             const mxEv = this.props.timeline[j];
+            const highlights = this.props.searchHighlights;
 
             if (haveRendererForEvent(mxEv, this.context?.showHiddenEvents)) {
                 // do we need a date separator since the last event?
@@ -94,6 +97,7 @@ export default class FavouriteMessageTile extends React.Component<IProps> {
                         key={`${eventId}+${j}`}
                         mxEvent={mxEv}
                         layout={layout}
+                        highlights={highlights}
                         permalinkCreator={this.props.permalinkCreator}
                         highlightLink={this.props.resultLink}
                         onHeightChanged={this.props.onHeightChanged}

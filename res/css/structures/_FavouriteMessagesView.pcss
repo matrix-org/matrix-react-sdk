@@ -33,11 +33,46 @@ limitations under the License.
     margin: 0 20px 0 16px;
     padding-top: 8px;
     border-bottom: 1px solid $system;
+    justify-content: space-between;
+
+    &--left{
+        display: flex;
+        align-items: center;
+        flex: 0.4;
+    
+        & > span {
+                color: $primary-content;
+                font-weight: $font-semi-bold;
+                font-size: $font-18px;
+                margin: 0 8px;
+            }
+    }
+
+    &--right{
+        display: flex;
+        align-items: center;
+        flex: 0.6;
+        justify-content: flex-end;
+    }
 }
 
-.mx_FavMessagesHeader_Wrapper > span {
-    color: $primary-content;
-    font-weight: $font-semi-bold;
-    font-size: $font-18px;
-    margin: 0 8px;
+
+.mx_FavMessagesHeader_sortButton::before {
+    mask-image: url('$(res)/img/element-icons/room/sort-twoway.svg');
+}
+
+.mx_FavMessagesHeader_clearAllButton::before {
+    mask-image: url('$(res)/img/element-icons/room/clear-all.svg');
+}
+
+.mx_FavMessagesHeader_Search{
+    width: 70%;
+}
+
+.mx_FavouriteMessages_emptyMarker{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: 600;
 }

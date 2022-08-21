@@ -18,32 +18,55 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { useState } from "react";
 
 interface IButtonProp {
-    mxEvent: MatrixEvent;
+    mxEvent?: MatrixEvent;
 }
 
-const favouriteMessageIds = JSON.parse(
-    localStorage?.getItem("io_element_favouriteMessages")?? "[]") as any[];
+let sortState = false;
 
-export default function useFavouriteMessages({ mxEvent }: IButtonProp) {
+export default function useFavouriteMessages(props?: IButtonProp) {
+    let favouriteMessagesIds = JSON.parse(
+        localStorage?.getItem("io_element_favouriteMessages")?? "[]") as any[];
+
     const [, setX] = useState<string[]>();
-    const eventId = mxEvent.getId();
-    const roomId = mxEvent.getRoomId();
+    const eventId = props?.mxEvent.getId();
+    const roomId = props?.mxEvent.getRoomId();
+    const content = props?.mxEvent.getContent();
 
     //checks if an id already exist
     const isFavourite = (): boolean => {
-        return favouriteMessageIds.some(val => val.eventId === eventId);
+        return favouriteMessagesIds.some(val => val.eventId === eventId);
     };
 
     const toggleFavourite = () => {
-        isFavourite() ? favouriteMessageIds.splice(favouriteMessageIds.findIndex(val => val.eventId === eventId), 1)
-            : favouriteMessageIds.push({ eventId, roomId });
+        isFavourite() ? favouriteMessagesIds.splice(favouriteMessagesIds.findIndex(val => val.eventId === eventId), 1)
+            : favouriteMessagesIds.push({ eventId, roomId, content });
 
         //update the local storage
-        localStorage.setItem('io_element_favouriteMessages', JSON.stringify(favouriteMessageIds));
+        localStorage.setItem('io_element_favouriteMessages', JSON.stringify(favouriteMessagesIds));
 
         // This forces a re-render to account for changes in appearance in real-time when the favourite button is toggled
         setX([]);
     };
 
-    return { isFavourite, toggleFavourite };
+    const sortFavouriteMessages = () => {
+        sortState = !sortState;
+    };
+
+    const clearFavouriteMessages = () => {
+        favouriteMessagesIds = [];
+        //update the local storage
+        localStorage.setItem('io_element_favouriteMessages', JSON.stringify(favouriteMessagesIds));
+    };
+
+    const getFavouriteMessagesIds = () => {
+        return sortState ? favouriteMessagesIds.reverse(): favouriteMessagesIds;
+    };
+
+    return {
+        isFavourite,
+        toggleFavourite,
+        getFavouriteMessagesIds,
+        sortFavouriteMessages,
+        clearFavouriteMessages,
+    };
 }

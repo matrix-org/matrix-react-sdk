@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { MatrixClient, MatrixEvent, RelationType } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
@@ -27,16 +27,37 @@ import FavouriteMessagesTilesList from './FavouriteMessagesTilesList';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import FavouriteMessagesHeader from './FavouriteMessagesHeader';
+import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
+
+//temporary container for current messageids after filtering
+let temp = JSON.parse(
+    localStorage?.getItem("io_element_favouriteMessages")?? "[]") as any[];
+
+let searchQuery: string;
 
 const FavouriteMessagesView = () => {
-    const favouriteMessagesIds= JSON.parse(
-        localStorage?.getItem("io_element_favouriteMessages") ?? "[]") as any[];
+    const { getFavouriteMessagesIds } = useFavouriteMessages();
+    const favouriteMessagesIds = getFavouriteMessagesIds();
 
     const favouriteMessagesPanelRef = useRef<ScrollPanel>();
     const cli = useContext<MatrixClient>(MatrixClientContext);
+    const [, setX] = useState<string[]>();
+
+    //temporary implementation till a better approach comes up
+    const handleSearchQuery = (query: string) => {
+        if (query?.length === 0 || query?.length > 2) {
+            temp = favouriteMessagesIds.filter((evtObj) => (
+                evtObj.content.body.trim().toLowerCase().includes(query)));
+            searchQuery = query;
+            //force rerender
+            setX([]);
+        }
+    };
 
     const favouriteMessageEvents = useAsyncMemo(() => {
-        const promises = favouriteMessagesIds.map(async (resultObj) => {
+        const currentFavMessageIds = temp.length < favouriteMessagesIds.length ? temp : favouriteMessagesIds;
+
+        const promises = currentFavMessageIds.map(async (resultObj) => {
             try {
                 // Fetch the events and latest edit in parallel
                 const [evJson, { events: [edit] }] = await Promise.all([
@@ -72,16 +93,21 @@ const FavouriteMessagesView = () => {
     let favouriteMessagesPanel;
 
     if (favouriteMessagesIds?.length === 0) {
-        favouriteMessagesPanel = (<h2 className="mx_RoomView_topMarker">{ _t("No Saved Messages") }</h2>);
+        favouriteMessagesPanel = (
+            <>
+                <FavouriteMessagesHeader handleSearchQuery={handleSearchQuery} />
+                <h2 className="mx_FavouriteMessages_emptyMarker">{ _t("No Saved Messages") }</h2>
+            </>
+        );
     } else {
         favouriteMessagesPanel = (
             <React.Fragment>
-                <FavouriteMessagesHeader />
+                <FavouriteMessagesHeader handleSearchQuery={handleSearchQuery} />
                 <ScrollPanel
                     ref={favouriteMessagesPanelRef}
                     className="mx_RoomView_searchResultsPanel "
                 >
-                    <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} />
+                    <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} searchQuery={searchQuery} />
                 </ScrollPanel>
             </React.Fragment>
         );
