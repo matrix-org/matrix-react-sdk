@@ -42,6 +42,7 @@ const loggedInPageTypeMap: Record<PageType, ScreenName> = {
     [PageType.RoomView]: "Room",
     [PageType.UserView]: "User",
     [PageType.LegacyGroupView]: "Group",
+    [PageType.FavouriteMessagesView]: "favourite_messages",
 };
 
 export default class PosthogTrackers {
