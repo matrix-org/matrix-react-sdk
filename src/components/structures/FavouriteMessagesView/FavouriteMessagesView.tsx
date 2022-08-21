@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { MatrixClient, MatrixEvent, RelationType } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
@@ -36,23 +36,32 @@ let temp = JSON.parse(
 let searchQuery: string;
 
 const FavouriteMessagesView = () => {
-    const { getFavouriteMessagesIds } = useFavouriteMessages();
+    const { getFavouriteMessagesIds, isSearchClicked } = useFavouriteMessages();
     const favouriteMessagesIds = getFavouriteMessagesIds();
 
     const favouriteMessagesPanelRef = useRef<ScrollPanel>();
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const [, setX] = useState<string[]>();
 
-    //temporary implementation till a better approach comes up
+    //not the best solution, temporary implementation till a better approach comes up
     const handleSearchQuery = (query: string) => {
         if (query?.length === 0 || query?.length > 2) {
             temp = favouriteMessagesIds.filter((evtObj) => (
                 evtObj.content.body.trim().toLowerCase().includes(query)));
             searchQuery = query;
+
             //force rerender
             setX([]);
         }
     };
+
+    useEffect(() => {
+        if (!isSearchClicked) {
+            searchQuery = '';
+            temp = favouriteMessagesIds;
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSearchClicked]);
 
     const favouriteMessageEvents = useAsyncMemo(() => {
         const currentFavMessageIds = temp.length < favouriteMessagesIds.length ? temp : favouriteMessagesIds;
@@ -105,7 +114,7 @@ const FavouriteMessagesView = () => {
                 <FavouriteMessagesHeader handleSearchQuery={handleSearchQuery} />
                 <ScrollPanel
                     ref={favouriteMessagesPanelRef}
-                    className="mx_RoomView_searchResultsPanel "
+                    className="mx_RoomView_searchResultsPanel mx_FavouriteMessages_scrollPanel"
                 >
                     <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} searchQuery={searchQuery} />
                 </ScrollPanel>

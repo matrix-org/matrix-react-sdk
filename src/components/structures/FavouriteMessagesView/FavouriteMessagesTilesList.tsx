@@ -21,6 +21,7 @@ import { MatrixClient, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import React, { useContext } from 'react';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
 import { _t } from '../../../languageHandler';
 import Spinner from '../../views/elements/Spinner';
 import FavouriteMessageTile from './FavouriteMessageTile';
@@ -32,10 +33,12 @@ interface IProps{
 }
 
 const FavouriteMessagesTilesList = ({ favouriteMessageEvents, favouriteMessagesPanelRef, searchQuery }: IProps) => {
+    const { isSearchClicked } = useFavouriteMessages();
+
     const ret = [];
     let lastRoomId: string;
-    const cli = useContext<MatrixClient>(MatrixClientContext);
     const highlights = [];
+    const cli = useContext<MatrixClient>(MatrixClientContext);
 
     if (!favouriteMessageEvents) {
         ret.push(<Spinner key={Math.random()} />);
@@ -46,7 +49,9 @@ const FavouriteMessagesTilesList = ({ favouriteMessageEvents, favouriteMessagesP
             const room = cli.getRoom(roomId);
 
             timeline.push(mxEvent);
-            if (searchQuery) highlights.push(searchQuery);
+            if (searchQuery && isSearchClicked) {
+                highlights.push(searchQuery);
+            }
 
             if (roomId !== lastRoomId) {
                 ret.push(<li key={mxEvent.getId() + "-room"}>

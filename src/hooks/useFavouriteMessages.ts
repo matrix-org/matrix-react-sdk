@@ -22,6 +22,7 @@ interface IButtonProp {
 }
 
 let sortState = false;
+let isSearchClicked = false;
 
 export default function useFavouriteMessages(props?: IButtonProp) {
     let favouriteMessagesIds = JSON.parse(
@@ -52,6 +53,10 @@ export default function useFavouriteMessages(props?: IButtonProp) {
         sortState = !sortState;
     };
 
+    const setSearchState = (val: boolean) => {
+        isSearchClicked = val;
+    };
+
     const clearFavouriteMessages = () => {
         favouriteMessagesIds = [];
         //update the local storage
@@ -68,5 +73,8 @@ export default function useFavouriteMessages(props?: IButtonProp) {
         getFavouriteMessagesIds,
         sortFavouriteMessages,
         clearFavouriteMessages,
+        setSearchState,
+        isSearchClicked,
+
     };
 }
