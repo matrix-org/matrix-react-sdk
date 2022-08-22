@@ -648,7 +648,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
 
             case PageTypes.FavouriteMessagesView:
-                pageElement = <FavouriteMessagesView />;
+                pageElement = <FavouriteMessagesView resizeNotifier={this.props.resizeNotifier} />;
                 break;
         }
 

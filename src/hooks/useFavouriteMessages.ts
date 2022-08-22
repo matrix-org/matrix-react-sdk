@@ -25,7 +25,7 @@ let sortState = false;
 let isSearchClicked = false;
 
 export default function useFavouriteMessages(props?: IButtonProp) {
-    let favouriteMessagesIds = JSON.parse(
+    const favouriteMessagesIds = JSON.parse(
         localStorage?.getItem("io_element_favouriteMessages")?? "[]") as any[];
 
     const [, setX] = useState<string[]>();
@@ -49,7 +49,7 @@ export default function useFavouriteMessages(props?: IButtonProp) {
         setX([]);
     };
 
-    const sortFavouriteMessages = () => {
+    const reorderFavouriteMessages = () => {
         sortState = !sortState;
     };
 
@@ -58,9 +58,7 @@ export default function useFavouriteMessages(props?: IButtonProp) {
     };
 
     const clearFavouriteMessages = () => {
-        favouriteMessagesIds = [];
-        //update the local storage
-        localStorage.setItem('io_element_favouriteMessages', JSON.stringify(favouriteMessagesIds));
+        localStorage.removeItem('io_element_favouriteMessages');
     };
 
     const getFavouriteMessagesIds = () => {
@@ -71,7 +69,7 @@ export default function useFavouriteMessages(props?: IButtonProp) {
         isFavourite,
         toggleFavourite,
         getFavouriteMessagesIds,
-        sortFavouriteMessages,
+        reorderFavouriteMessages,
         clearFavouriteMessages,
         setSearchState,
         isSearchClicked,

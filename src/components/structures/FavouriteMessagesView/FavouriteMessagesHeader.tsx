@@ -17,14 +17,16 @@ limitations under the License.
 
 import React, { useEffect, useState } from 'react';
 
+import { Action } from '../../../dispatcher/actions';
+import defaultDispatcher from '../../../dispatcher/dispatcher';
 import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
 import { _t } from '../../../languageHandler';
 import RoomAvatar from '../../views/avatars/RoomAvatar';
 import AccessibleTooltipButton from '../../views/elements/AccessibleTooltipButton';
-import { Alignment } from '../../views/elements/Tooltip';
 
 const FavouriteMessagesHeader = ({ handleSearchQuery }) => {
-    const { sortFavouriteMessages, clearFavouriteMessages, setSearchState } = useFavouriteMessages();
+    const { reorderFavouriteMessages, setSearchState, getFavouriteMessagesIds } = useFavouriteMessages();
+    const favouriteMessagesIds = getFavouriteMessagesIds();
 
     const [isSearchClicked, setSearchClicked] = useState<boolean>(false);
     const [query, setQuery] = useState<string>();
@@ -38,6 +40,12 @@ const FavouriteMessagesHeader = ({ handleSearchQuery }) => {
         setSearchState(isSearchClicked);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSearchClicked]);
+
+    const onClearClick = () => {
+        if (favouriteMessagesIds.length > 0) {
+            defaultDispatcher.dispatch({ action: Action.OpenClearModal });
+        }
+    };
 
     return (
         <div className="mx_FavMessagesHeader">
@@ -68,26 +76,23 @@ const FavouriteMessagesHeader = ({ handleSearchQuery }) => {
                             onClick={() => setSearchClicked(!isSearchClicked)}
                             title={_t("Search")}
                             key="search"
-                            alignment={Alignment.Bottom}
                         /> :
                         <AccessibleTooltipButton
                             className="mx_FavMessagesHeader_cancelButton"
                             onClick={() => setSearchClicked(!isSearchClicked)}
                             title={_t("Cancel")}
                             key="cancel"
-                            alignment={Alignment.Bottom}
                         />
                     }
                     <AccessibleTooltipButton
                         className="mx_RoomHeader_button mx_FavMessagesHeader_sortButton"
-                        onClick={() => sortFavouriteMessages()}
-                        title={_t("Sort")}
-                        key="sort"
-                        alignment={Alignment.Bottom}
+                        onClick={() => reorderFavouriteMessages()}
+                        title={_t("Reorder")}
+                        key="reorder"
                     />
                     <AccessibleTooltipButton
                         className="mx_RoomHeader_button mx_FavMessagesHeader_clearAllButton"
-                        onClick={() => clearFavouriteMessages()}
+                        onClick={onClearClick}
                         title={_t("Clear")}
                         key="clear"
                     />

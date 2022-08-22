@@ -137,6 +137,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import ConfirmClearDialog from './FavouriteMessagesView/ConfirmClearDialog';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -705,6 +706,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
+                break;
+            }
+            case Action.OpenClearModal: {
+                Modal.createDialog(ConfirmClearDialog, {
+                    title: _t("Confirm Removal"),
+                    description: _t("Are you sure you wish to clear all your starred messages? "),
+                    button: _t("Confirm"),
+                    hasCancel: true,
+                });
                 break;
             }
             case 'view_welcome_page':

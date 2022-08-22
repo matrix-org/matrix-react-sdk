@@ -28,6 +28,11 @@ import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import FavouriteMessagesHeader from './FavouriteMessagesHeader';
 import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
+import ResizeNotifier from '../../../utils/ResizeNotifier';
+
+interface IProps {
+    resizeNotifier: ResizeNotifier;
+}
 
 //temporary container for current messageids after filtering
 let temp = JSON.parse(
@@ -35,7 +40,7 @@ let temp = JSON.parse(
 
 let searchQuery: string;
 
-const FavouriteMessagesView = () => {
+const FavouriteMessagesView = ({ resizeNotifier }: IProps) => {
     const { getFavouriteMessagesIds, isSearchClicked } = useFavouriteMessages();
     const favouriteMessagesIds = getFavouriteMessagesIds();
 
@@ -115,6 +120,7 @@ const FavouriteMessagesView = () => {
                 <ScrollPanel
                     ref={favouriteMessagesPanelRef}
                     className="mx_RoomView_searchResultsPanel mx_FavouriteMessages_scrollPanel"
+                    resizeNotifier={resizeNotifier}
                 >
                     <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} searchQuery={searchQuery} />
                 </ScrollPanel>
