@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { _t } from "../../../../../languageHandler";
 import { useOwnDevices } from '../../devices/useOwnDevices';
@@ -22,10 +22,21 @@ import SettingsSubsection from '../../shared/SettingsSubsection';
 import FilteredDeviceList from '../../devices/FilteredDeviceList';
 import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
 import SecurityRecommendations from '../../devices/SecurityRecommendations';
+import { DeviceSecurityVariation, DeviceWithVerification } from '../../devices/types';
 import SettingsTab from '../SettingsTab';
 
 const SessionManagerTab: React.FC = () => {
     const { devices, currentDeviceId, isLoading } = useOwnDevices();
+    const [filter, setFilter] = useState<DeviceSecurityVariation>();
+    const [expandedDeviceIds, setExpandedDeviceIds] = useState([]);
+
+    const onDeviceExpandToggle = (deviceId: DeviceWithVerification['device_id']): void => {
+        if (expandedDeviceIds.includes(deviceId)) {
+            setExpandedDeviceIds(expandedDeviceIds.filter(id => id !== deviceId));
+        } else {
+            setExpandedDeviceIds([...expandedDeviceIds, deviceId]);
+        }
+    };
 
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
     const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
@@ -46,7 +57,13 @@ const SessionManagerTab: React.FC = () => {
                 )}
                 data-testid='other-sessions-section'
             >
-                <FilteredDeviceList devices={otherDevices} />
+                <FilteredDeviceList
+                    devices={otherDevices}
+                    filter={filter}
+                    expandedDeviceIds={expandedDeviceIds}
+                    onFilterChange={setFilter}
+                    onDeviceExpandToggle={onDeviceExpandToggle}
+                />
             </SettingsSubsection>
         }
     </SettingsTab>;
