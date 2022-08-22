@@ -73,6 +73,29 @@ Example:
     }
 }
 
+kick
+------
+Kicks a user from a room. The request will no-op if the user is not in the room.
+
+Request:
+ - room_id is the room to invite the user into.
+ - user_id is the user ID to invite.
+ - reason is an optional string for the kick reason
+Response:
+{
+    success: true
+}
+Example:
+{
+    action: "kick",
+    room_id: "!foo:bar",
+    user_id: "@invitee:bar",
+    reason: "Removed from room",
+    response: {
+        success: true
+    }
+}
+
 set_bot_options
 ---------------
 Set the m.room.bot.options state event for a bot user.
@@ -266,6 +289,7 @@ enum Action {
     CanSendEvent = "can_send_event",
     MembershipState = "membership_state",
     invite = "invite",
+    Kick = "kick",
     BotOptions = "bot_options",
     SetBotOptions = "set_bot_options",
     SetBotPower = "set_bot_power",
@@ -319,6 +343,35 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
         });
     }, function(err) {
         sendError(event, _t('You need to be able to invite users to do that.'), err);
+    });
+}
+
+function kickUser(event: MessageEvent<any>, roomId: string, userId: string): void {
+    logger.log(`Received request to kick ${userId} from room ${roomId}`);
+    const client = MatrixClientPeg.get();
+    if (!client) {
+        sendError(event, _t('You need to be logged in.'));
+        return;
+    }
+    const room = client.getRoom(roomId);
+    if (room) {
+        // if they are already not in the room we can resolve immediately.
+        const member = room.getMember(userId);
+        if (!member || (member && member.membership === "leave")) {
+            sendResponse(event, {
+                success: true,
+            });
+            return;
+        }
+    }
+
+    const reason = event.data.reason;
+    client.kick(roomId, userId, reason).then(function() {
+        sendResponse(event, {
+            success: true,
+        });
+    }, function(err) {
+        sendError(event, _t('You need to be able to kick users to do that.'), err);
     });
 }
 
@@ -709,6 +762,9 @@ const onMessage = function(event: MessageEvent<any>): void {
             break;
         case Action.invite:
             inviteUser(event, roomId, userId);
+            break;
+        case Action.Kick:
+            kickUser(event, roomId, userId);
             break;
         case Action.BotOptions:
             botOptions(event, roomId, userId);
