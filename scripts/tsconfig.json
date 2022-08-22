@@ -1,25 +1,25 @@
 {
-  "compilerOptions": {
-    "experimentalDecorators": false,
-    "emitDecoratorMetadata": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es2016",
-    "noImplicitAny": false,
-    "noUnusedLocals": true,
-    "sourceMap": false,
-    "outDir": "./bin",
-    "declaration": true,
-    "jsx": "react",
-    "lib": [
-      "es2020",
-      "dom",
-      "dom.iterable"
-    ],
-  },
-  "include": [
-    "./**/*.ts",
-  ],
+    "compilerOptions": {
+        "target": "es2016",
+        "jsx": "react",
+        "lib": [
+            "es2020",
+            "dom",
+            "dom.iterable"
+        ],
+        "outDir": "./bin",
+        "types": [
+            "cypress",
+            "cypress-axe",
+            "@percy/cypress",
+            "@types/node"
+        ],
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "module": "commonjs"
+    },
+    "include": [
+        "**/*.ts"
+    ]
 }

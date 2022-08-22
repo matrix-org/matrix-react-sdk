@@ -95,6 +95,7 @@ module.exports = {
                 "src/**/*.{ts,tsx}",
                 "test/**/*.{ts,tsx}",
                 "cypress/**/*.ts",
+                "scripts/**/*.ts",
             ],
             extends: [
                 "plugin:matrix-org/typescript",
@@ -105,7 +106,9 @@ module.exports = {
                 "prefer-promise-reject-errors": "off",
                 "quotes": "off",
                 "no-extra-boolean-cast": "off",
-
+                // Permit while(true) constructs
+                // for (;;;) is permitted and is equivalent to while(true) but less readable
+		"no-constant-condition": [ "error", { "checkLoops": false } ],
                 // Remove Babel things manually due to override limitations
                 "@babel/no-invalid-this": ["off"],
 

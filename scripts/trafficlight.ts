@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import fetch from 'node-fetch';
-
-const ccrypto = require('crypto');
-const pprocess = require('process');
-const cypress = require('cypress');
-
+import cypress from 'cypress';
+import * as crypto from 'crypto';
+import * as process from 'process';
 function setupPromise(trafficlightUrl, uuid) {
     console.log('Registering trafficlight client');
 
@@ -40,7 +38,6 @@ function setupPromise(trafficlightUrl, uuid) {
 function openPromise(trafficlightUrl, uuid) {
     return cypress
         .open({
-            spec: './cypress/e2e/trafficlight/*.ts',
             env: {
                 'TRAFFICLIGHT_URL': trafficlightUrl,
                 'TRAFFICLIGHT_UUID': uuid,
@@ -51,11 +48,11 @@ function openPromise(trafficlightUrl, uuid) {
                     'runMode': 0,
                 },
                 e2e: {
+                    specPattern: './cypress/e2e/trafficlight/*.ts',
                     excludeSpecPattern: [],
                 },
                 videosFolder: 'cypress/videos/trafficlight/'+uuid+'/',
             },
-            quiet: false,
         });
 }
 function runPromise(trafficlightUrl, uuid) {
@@ -81,7 +78,7 @@ function runPromise(trafficlightUrl, uuid) {
 }
 
 async function runOnce(trafficlightUrl) {
-    const uuid = ccrypto.randomUUID();
+    const uuid = crypto.randomUUID();
     await setupPromise(trafficlightUrl, uuid);
     const cypressOpen = await openPromise(trafficlightUrl, uuid);
     console.log(cypressOpen);
@@ -89,7 +86,7 @@ async function runOnce(trafficlightUrl) {
 
 async function runRepeatedly(trafficlightUrl) {
     while (true) {
-        const uuid = ccrypto.randomUUID();
+        const uuid = crypto.randomUUID();
         // NB: we allow exceptions to propigate to top level and exit.
         await setupPromise(trafficlightUrl, uuid);
         const cypressRun = await runPromise(trafficlightUrl, uuid);
@@ -99,7 +96,7 @@ async function runRepeatedly(trafficlightUrl) {
 
 const trafficlightUrl = 'http://localhost:5000';
 
-const args = pprocess.argv.slice(2);
+const args = process.argv.slice(2);
 if (args[0] == 'run') {
     runRepeatedly(trafficlightUrl).then((result) => {
         console.log('Finished looping forever(?), got ' + result);
@@ -110,5 +107,5 @@ if (args[0] == 'run') {
     });
 } else {
     console.error('No idea what ' + args[0] + 'means (i understand "run" to run continually, "open" to launch the UI)');
-    pprocess.exit(1);
+    process.exit(1);
 }
