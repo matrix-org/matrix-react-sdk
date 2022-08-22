@@ -35,7 +35,7 @@ const instances = new Map<string, ProxyInstance>();
 const PG_PASSWORD = "p4S5w0rD";
 
 async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
-    console.log(new Date(),"Starting sliding sync proxy...");
+    console.log(new Date(), "Starting sliding sync proxy...");
 
     const postgresId = await dockerRun({
         image: "postgres",
@@ -64,7 +64,7 @@ async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
             });
             lastErr = null;
             break;
-        } catch(err) {
+        } catch (err) {
             console.log("pg_isready: failed");
             lastErr = err;
         }
@@ -75,7 +75,7 @@ async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
     }
 
     const port = await getFreePort();
-    console.log(new Date(),"starting proxy container...");
+    console.log(new Date(), "starting proxy container...");
     const containerId = await dockerRun({
         image: "ghcr.io/matrix-org/sliding-sync-proxy:v0.3.3",
         containerName: "react-sdk-cypress-sliding-sync-proxy",
@@ -87,7 +87,7 @@ async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
             "-e", `SYNCV3_DB=user=postgres dbname=postgres password=${PG_PASSWORD} host=${postgresIp} sslmode=disable`,
         ],
     });
-    console.log(new Date(),"started!");
+    console.log(new Date(), "started!");
 
     const instance: ProxyInstance = { containerId, postgresId, port };
     instances.set(containerId, instance);
@@ -104,7 +104,7 @@ async function proxyStop(instance: ProxyInstance): Promise<void> {
 
     instances.delete(instance.containerId);
 
-    console.log(new Date(),"Stopped sliding sync proxy.");
+    console.log(new Date(), "Stopped sliding sync proxy.");
     // cypress deliberately fails if you return 'undefined', so
     // return null to signal all is well, and we've handled the task.
     return null;

@@ -198,7 +198,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         // no sticky room if you aren't viewing a room.
         this.stickyRoomId = RoomViewStore.instance.getRoomId();
         let stickyRoomNewIndex = -1;
-        let stickyRoomOldIndex = (tagMap[tagId] || []).findIndex((room) => {
+        const stickyRoomOldIndex = (tagMap[tagId] || []).findIndex((room) => {
             return room.roomId === this.stickyRoomId;
         });
 
@@ -286,7 +286,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
                 // resort it based on the slidingSync view of the list. This may cause this old sticky
                 // room to cease to exist.
                 const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
-                const {roomIndexToRoomId} = SlidingSyncManager.instance.slidingSync.getListData(index);
+                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(index);
                 this.refreshOrderedLists(tagId, roomIndexToRoomId);
                 hasUpdatedAnyList = true;
             }
