@@ -314,7 +314,7 @@ describe("Sliding Sync", () => {
         cy.get<MatrixClient>("@bob").then((bob) => {
             return bob.kick(roomRescind, clientUserId);
         });
-        cy.contains(".mx_RoomSublist_showNButtonText", "Show").click(); // sometimes the room list gets hidden :S FIXME
+
         // wait for the rescind to take effect and check the joined list once more
         cy.get(".mx_RoomTile").should('have.length', 2);
         checkOrder([
