@@ -97,7 +97,7 @@ async function runRepeatedly(trafficlightUrl) {
     }
 }
 
-const trafficlightUrl = 'http://localhost:5000';
+const trafficlightUrl = 'http://127.0.0.1:5000';
 
 const args = pprocess.argv.slice(2);
 if (args[0] == 'run') {
