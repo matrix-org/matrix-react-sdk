@@ -55,6 +55,7 @@ function openPromise(trafficlightUrl, uuid) {
             },
         });
 }
+
 function runPromise(trafficlightUrl, uuid) {
     return cypress
         .run({
