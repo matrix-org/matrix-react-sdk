@@ -90,8 +90,6 @@ export default class SdkConfig {
                 cfg[defaultKeys[i]] = DEFAULTS[defaultKeys[i]];
             }
         }
-        // XXX overrides for testing sliding sync on netlify, do not commit this to main!
-        cfg.show_labs_settings = true;
         SdkConfig.setInstance(cfg);
     }
 
