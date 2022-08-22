@@ -15,11 +15,16 @@ limitations under the License.
 */
 
 import { Optional } from "matrix-events-sdk";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { RelationType } from "matrix-js-sdk/src/@types/event";
+import { IEventRelation } from "matrix-js-sdk/src/models/event";
 
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { VoiceRecording } from "../audio/VoiceRecording";
+
+const SEPARATOR = "|";
 
 interface IState {
     [voiceRecordingId: string]: Optional<VoiceRecording>;
@@ -42,6 +47,14 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
     protected async onAction(payload: ActionPayload): Promise<void> {
         // Nothing to do, but we're required to override the function
         return;
+    }
+
+    public getVoiceRecordingId(room: Room, relation?: IEventRelation): string {
+        if (relation?.rel_type === "io.element.thread" || relation?.rel_type === RelationType.Thread) {
+            return room.roomId + SEPARATOR + relation.event_id;
+        } else {
+            return room.roomId;
+        }
     }
 
     /**

@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Optional } from "matrix-events-sdk";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
@@ -308,12 +308,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private updateRecordingState() {
-        this.voiceRecording =
-            this.props.relation?.rel_type === ("io.element.thread")
-            || this.props.relation?.rel_type === RelationType.Thread ?
-                VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId+this.props.relation.event_id)
-                :
-                VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.instance.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         if (this.voiceRecording) {
             // If the recording has already started, it's probably a cached one.
             if (this.voiceRecording.hasRecording && !this.voiceRecording.isRecording) {
@@ -328,12 +324,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onRecordingStarted = () => {
         // update the recording instance, just in case
-        this.voiceRecording =
-            this.props.relation?.rel_type === ("io.element.thread")
-            || this.props.relation?.rel_type === RelationType.Thread ?
-                VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId+this.props.relation.event_id)
-                :
-                VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.instance.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         this.setState({
             haveRecording: !!this.voiceRecording,
         });

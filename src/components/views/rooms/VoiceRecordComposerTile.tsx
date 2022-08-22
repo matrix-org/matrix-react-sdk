@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -73,12 +73,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             recorder: null, // no recording started by default
         };
 
-        this.voiceRecordingId =
-            this.props.relation?.rel_type === "io.element.thread"
-            || this.props.relation?.rel_type === RelationType.Thread ?
-                this.props.room.roomId + this.props.relation.event_id
-                :
-                this.props.room.roomId;
+        this.voiceRecordingId = VoiceRecordingStore.instance.getVoiceRecordingId(this.props.room, this.props.relation);
     }
 
     public componentDidMount() {
