@@ -100,7 +100,6 @@ interface IState {
     isExpanded: boolean; // used for the for expand of the sublist when the room list is being filtered
     height: number;
     rooms: Room[];
-    filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
     roomsLoading: boolean;
 }
 
@@ -271,7 +270,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         if (this.props.tagId !== tagId) {
             return;
         }
-        console.log("sliding onListsLoading ", tagId, isLoading);
         this.setState({
             roomsLoading: isLoading,
         });
@@ -575,7 +573,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 isAlphabetical = slidingList.sort[0] === "by_name";
                 isUnreadFirst = (
                     slidingList.sort[0] === "by_highlight_count" ||
-                    slidingList.sort[0] === "by_unread_count"
+                    slidingList.sort[0] === "by_notification_count"
                 );
             }
 

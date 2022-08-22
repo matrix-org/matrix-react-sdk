@@ -49,6 +49,7 @@ describe('RoomViewStore', function() {
         mockClient.credentials = { userId: "@test:example.com" };
         mockClient.joinRoom.mockResolvedValue(room);
         mockClient.getRoom.mockReturnValue(room);
+        mockClient.isGuest.mockReturnValue(false);
 
         // Reset the state of the store
         RoomViewStore.instance.reset();
