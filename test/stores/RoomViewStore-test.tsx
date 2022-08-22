@@ -41,6 +41,7 @@ describe('RoomViewStore', function() {
         joinRoom: jest.fn(),
         getRoom: jest.fn(),
         getRoomIdForAlias: jest.fn(),
+        isGuest: jest.fn(),
     });
     const room = new Room('!room:server', mockClient, userId);
 
