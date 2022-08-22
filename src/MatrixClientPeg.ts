@@ -279,7 +279,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         return matches[1];
     }
 
-    private memberNamesToRoomName(names: string[], count: number): string {
+    private namesToRoomName(names: string[], count: number): string | undefined {
         const countWithoutMe = count - 1;
         if (!names.length) {
             return _t("Empty room");
@@ -287,7 +287,13 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (names.length === 1 && countWithoutMe <= 1) {
             return names[0];
         }
-        if (names.length === 2 && countWithoutMe <= 2) {
+    }
+
+    private memberNamesToRoomName(names: string[], count: number): string {
+        const name = this.namesToRoomName(names, count);
+        if (name) return name;
+
+        if (names.length === 2 && count === 2) {
             return _t("%(user1)s and %(user2)s", {
                 user1: names[0],
                 user2: names[1],
@@ -295,19 +301,15 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
         return _t("%(user)s and %(count)s others", {
             user: names[0],
-            count: countWithoutMe,
+            count: count - 1,
         });
     }
 
     private inviteeNamesToRoomName(names: string[], count: number): string {
-        const countWithoutMe = count - 1;
-        if (!names.length) {
-            return _t("Empty room");
-        }
-        if (names.length === 1 && countWithoutMe <= 1) {
-            return names[0];
-        }
-        if (names.length === 2 && countWithoutMe <= 2) {
+        const name = this.namesToRoomName(names, count);
+        if (name) return name;
+
+        if (names.length === 2 && count === 2) {
             return _t("Inviting %(user1)s and %(user2)s", {
                 user1: names[0],
                 user2: names[1],
@@ -315,7 +317,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
         return _t("Inviting %(user)s and %(count)s others", {
             user: names[0],
-            count: countWithoutMe,
+            count: count - 1,
         });
     }
 
