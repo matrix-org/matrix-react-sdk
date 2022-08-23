@@ -45,8 +45,11 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
     [DefaultTagID.Invite]: {
         is_invite: true,
     },
+    [DefaultTagID.Favourite]: {
+        tags: ["m.favourite"],
+        is_tombstoned: false,
+    },
     // TODO
-    // DefaultTagID.Favourite,
     // DefaultTagID.SavedItems,
     [DefaultTagID.DM]: {
         is_dm: true,
@@ -58,10 +61,14 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
         is_invite: false,
         is_tombstoned: false,
         not_room_types: ["m.space"],
+        not_tags: ["m.favourite", "m.lowpriority"],
         // spaces filter added dynamically
     },
+    [DefaultTagID.LowPriority]: {
+        tags: ["m.lowpriority"],
+        is_tombstoned: false,
+    },
     // TODO
-    // DefaultTagID.LowPriority,
     // DefaultTagID.ServerNotice,
     // DefaultTagID.Suggested,
     // DefaultTagID.Archived,
