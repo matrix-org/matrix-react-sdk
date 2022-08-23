@@ -1,9 +1,6 @@
 #!/bin/bash
 #
 # Script to perform a release of matrix-react-sdk.
-#
-# Requires githib-changelog-generator; to install, do
-#   pip install git+https://github.com/matrix-org/github-changelog-generator.git
 
 set -e
 
