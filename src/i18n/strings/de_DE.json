@@ -3504,7 +3504,7 @@
     "Send custom room account data event": "Sende benutzerdefiniertes Raumdatenereignis",
     "Send custom account data event": "Sende benutzerdefiniertes Kontodatenereignis",
     "Remove search filter for %(filter)s": "Entferne Suchfilter für %(filter)s",
-    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Falls du Zugriff auf deinen Nachrichtenverlauf behalten willst, richte die Schlüsselsicherung ein oder exportiere deine Chiffrierungsschlüssel von einem deiner Geräte bevor du weiter machst.",
+    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Falls du den Zugriff auf deinen Nachrichtenverlauf behalten willst, richte die Schlüsselsicherung ein oder exportiere deine Chiffrierungsschlüssel von einem deiner Geräte bevor du weiter machst.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Das Ausloggen aus deinem Gerät wird die Chiffrierungsschlüssel löschen, woraufhin verschlüsselte Nachrichtenverläufe nicht mehr lesbar sein werden.",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tipp:</b> Nutze “%(replyInThread)s” beim Schweben über eine Nachricht."
 }
