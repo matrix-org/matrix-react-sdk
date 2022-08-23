@@ -3475,5 +3475,12 @@
     "In %(spaceName)s and %(count)s other spaces.|other": "In %(spaceName)s und %(count)s weiteren Spaces.",
     "Download %(brand)s": "%(brand)s herunterladen",
     "Find and invite your community members": "Finde deine Community-Mitglieder und lade sie ein",
-    "Get stuff done by finding your teammates": "Finde dein Team und werdet produktiv"
+    "Get stuff done by finding your teammates": "Finde dein Team und werdet produktiv",
+    "Reset bearing to north": "Ausrichtung nach Norden zurücksetzen",
+    "Mapbox logo": "Mapbox Logo",
+    "Location not available": "Standort nicht verfügbar",
+    "Find my location": "Zeige meinen Standort",
+    "Exit fullscreen": "Vollbild verlassen",
+    "Enter fullscreen": "Vollbild",
+    "Map feedback": "Rückmeldung zur Karte"
 }
