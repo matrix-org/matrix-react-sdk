@@ -351,7 +351,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
     logger.log(`Received request to kick ${userId} from room ${roomId}`);
     const client = MatrixClientPeg.get();
     if (!client) {
-        sendError(event, _t('You need to be logged in.'));
+        sendError(event, _t("You need to be logged in."));
         return;
     }
     const room = client.getRoom(roomId);
@@ -367,12 +367,12 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
     }
 
     const reason = event.data.reason;
-    client.kick(roomId, userId, reason).then(function() {
+    client.kick(roomId, userId, reason).then(() => {
         sendResponse(event, {
             success: true,
         });
-    }, function(err) {
-        sendError(event, _t('You need to be able to kick users to do that.'), err);
+    }).catch((err) => {
+        sendError(event, _t("You need to be able to kick users to do that."), err);
     });
 }
 
