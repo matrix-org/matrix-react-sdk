@@ -3410,5 +3410,6 @@
     "Deactivating your account is a permanent action — be careful!": "Die Deaktivierung deines Kontos ist unwiderruflich - sei vorsichtig!",
     "Favourite Messages (under active development)": "Favorisierte Nachrichten (in aktiver Entwicklung)",
     "Use new session manager (under active development)": "Benutze neue Sitzungsverwaltung (in aktiver Entwicklung)",
-    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Entwicklerbefehl: Verwirft die aktuell ausgehende Gruppensitzung und setzt eine neue Olm-Sitzung auf"
+    "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Entwicklerbefehl: Verwirft die aktuell ausgehende Gruppensitzung und setzt eine neue Olm-Sitzung auf",
+    "Toggle attribution": "Info ein-/ausblenden"
 }
