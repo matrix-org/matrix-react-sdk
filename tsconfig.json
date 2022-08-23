@@ -17,7 +17,7 @@
       "es2020",
       "dom",
       "dom.iterable"
-    ],
+    ]
   },
   "include": [
     "./src/**/*.ts",
