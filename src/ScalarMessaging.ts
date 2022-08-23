@@ -78,8 +78,8 @@ kick
 Kicks a user from a room. The request will no-op if the user is not in the room.
 
 Request:
- - room_id is the room to invite the user into.
- - user_id is the user ID to invite.
+ - room_id is the room to kick the user from.
+ - user_id is the user ID to kick.
  - reason is an optional string for the kick reason
 Response:
 {
@@ -89,7 +89,7 @@ Example:
 {
     action: "kick",
     room_id: "!foo:bar",
-    user_id: "@invitee:bar",
+    user_id: "@target:example.org",
     reason: "Removed from room",
     response: {
         success: true
