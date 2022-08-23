@@ -277,6 +277,7 @@ import { _t } from './languageHandler';
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { WidgetType } from "./widgets/WidgetType";
 import { objectClone } from "./utils/objects";
+import { EffectiveMembership, getEffectiveMembership } from './utils/membership';
 
 enum Action {
     CloseScalar = "close_scalar",
@@ -357,7 +358,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
     if (room) {
         // if they are already not in the room we can resolve immediately.
         const member = room.getMember(userId);
-        if (!member || (member && member.membership === "leave")) {
+        if (!member || getEffectiveMembership(member.membership) === EffectiveMembership.Leave) {
             sendResponse(event, {
                 success: true,
             });
