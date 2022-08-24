@@ -69,11 +69,11 @@ const RoomStateExplorerEventType = ({ eventType, onBack }: IEventTypeProps) => {
     const [query, setQuery] = useState("");
     const [event, setEvent] = useState<MatrixEvent | null>(null);
 
-    const events = context.room.currentState.events.get(eventType);
+    const events = context.room.currentState.events.get(eventType)!;
 
     useEffect(() => {
-        if (events?.size === 1 && events.has("")) {
-            setEvent(events.get(""));
+        if (events.size === 1 && events.has("")) {
+            setEvent(events.get("")!);
         } else {
             setEvent(null);
         }
