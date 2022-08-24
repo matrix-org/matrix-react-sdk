@@ -1,8 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2018, 2019 New Vector Ltd
-Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,21 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MatrixClient, MatrixEvent, RelationType } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
-import { _t } from '../../../languageHandler';
-import ScrollPanel from '../ScrollPanel';
-import FavouriteMessagesTilesList from './FavouriteMessagesTilesList';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
-import FavouriteMessagesHeader from './FavouriteMessagesHeader';
 import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
 import ResizeNotifier from '../../../utils/ResizeNotifier';
+import FavouriteMessagesPanel from './FavouriteMessagesPanel';
 
 interface IProps {
-    resizeNotifier: ResizeNotifier;
+    resizeNotifier?: ResizeNotifier;
 }
 
 //temporary container for current messageids after filtering
@@ -44,7 +38,6 @@ const FavouriteMessagesView = ({ resizeNotifier }: IProps) => {
     const { getFavouriteMessagesIds, isSearchClicked } = useFavouriteMessages();
     const favouriteMessagesIds = getFavouriteMessagesIds();
 
-    const favouriteMessagesPanelRef = useRef<ScrollPanel>();
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const [, setX] = useState<string[]>();
 
@@ -104,33 +97,15 @@ const FavouriteMessagesView = ({ resizeNotifier }: IProps) => {
         return Promise.all(promises);
     }, [cli, favouriteMessagesIds], null);
 
-    let favouriteMessagesPanel;
+    const props = {
+        favouriteMessageEvents,
+        resizeNotifier,
+        searchQuery,
+        handleSearchQuery,
+        cli,
+    };
 
-    if (favouriteMessagesIds?.length === 0) {
-        favouriteMessagesPanel = (
-            <>
-                <FavouriteMessagesHeader handleSearchQuery={handleSearchQuery} />
-                <h2 className="mx_FavouriteMessages_emptyMarker">{ _t("No Saved Messages") }</h2>
-            </>
-        );
-    } else {
-        favouriteMessagesPanel = (
-            <React.Fragment>
-                <FavouriteMessagesHeader handleSearchQuery={handleSearchQuery} />
-                <ScrollPanel
-                    ref={favouriteMessagesPanelRef}
-                    className="mx_RoomView_searchResultsPanel mx_FavouriteMessages_scrollPanel"
-                    resizeNotifier={resizeNotifier}
-                >
-                    <FavouriteMessagesTilesList favouriteMessageEvents={favouriteMessageEvents} favouriteMessagesPanelRef={favouriteMessagesPanelRef} searchQuery={searchQuery} />
-                </ScrollPanel>
-            </React.Fragment>
-        );
-    }
-
-    return (
-        <> { favouriteMessagesPanel } </>
-    );
+    return (<FavouriteMessagesPanel {...props} />);
 };
 
 export default FavouriteMessagesView;

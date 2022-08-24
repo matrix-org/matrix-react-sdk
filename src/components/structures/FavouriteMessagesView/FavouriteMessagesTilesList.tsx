@@ -1,8 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2018, 2019 New Vector Ltd
-Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,27 +15,27 @@ limitations under the License.
 */
 
 import { MatrixClient, MatrixEvent } from 'matrix-js-sdk/src/matrix';
-import React, { useContext } from 'react';
+import React from 'react';
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
 import { _t } from '../../../languageHandler';
 import Spinner from '../../views/elements/Spinner';
 import FavouriteMessageTile from './FavouriteMessageTile';
 
 interface IProps{
-    favouriteMessageEvents: MatrixEvent[];
-    favouriteMessagesPanelRef: any;
-    searchQuery: string;
+    favouriteMessageEvents?: MatrixEvent[];
+    favouriteMessagesPanelRef?: any;
+    searchQuery?: string;
+    cli?: MatrixClient;
 }
 
-const FavouriteMessagesTilesList = ({ favouriteMessageEvents, favouriteMessagesPanelRef, searchQuery }: IProps) => {
+// eslint-disable-next-line max-len
+const FavouriteMessagesTilesList = ({ cli, favouriteMessageEvents, favouriteMessagesPanelRef, searchQuery }: IProps) => {
     const { isSearchClicked } = useFavouriteMessages();
 
     const ret = [];
     let lastRoomId: string;
     const highlights = [];
-    const cli = useContext<MatrixClient>(MatrixClientContext);
 
     if (!favouriteMessageEvents) {
         ret.push(<Spinner key={Math.random()} />);
