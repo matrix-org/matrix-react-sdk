@@ -18,6 +18,7 @@ import React from 'react';
 import { Room } from "matrix-js-sdk/src/models/room";
 import filesize from "filesize";
 import { IAbortablePromise, IEventRelation } from 'matrix-js-sdk/src/matrix';
+import { Optional } from "matrix-events-sdk";
 
 import ContentMessages from '../../ContentMessages';
 import dis from "../../dispatcher/dispatcher";
@@ -56,8 +57,8 @@ function isUploadPayload(payload: ActionPayload): payload is UploadPayload {
 export default class UploadBar extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
 
-    private dispatcherRef: string;
-    private mounted: boolean;
+    private dispatcherRef: Optional<string>;
+    private mounted = false;
 
     constructor(props) {
         super(props);
@@ -74,7 +75,7 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
 
     componentWillUnmount() {
         this.mounted = false;
-        dis.unregister(this.dispatcherRef);
+        dis.unregister(this.dispatcherRef!);
     }
 
     private getUploadsInRoom(): IUpload[] {
