@@ -80,10 +80,14 @@ const RoomStateExplorerEventType = ({ eventType, onBack }: IEventTypeProps) => {
     }, [events]);
 
     if (event) {
-        const onBack = () => {
-            setEvent(null);
+        const _onBack = () => {
+            if (events.size === 1 && events.has("")) {
+                onBack();
+            } else {
+                setEvent(null);
+            }
         };
-        return <EventViewer mxEvent={event} onBack={onBack} Editor={StateEventEditor} />;
+        return <EventViewer mxEvent={event} onBack={_onBack} Editor={StateEventEditor} />;
     }
 
     return <BaseTool onBack={onBack}>
@@ -104,7 +108,7 @@ export const RoomStateExplorer = ({ onBack, setTool }: IDevtoolsProps) => {
 
     const events = context.room.currentState.events;
 
-    if (eventType) {
+    if (eventType !== null) {
         const onBack = () => {
             setEventType(null);
         };
