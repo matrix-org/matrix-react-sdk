@@ -72,7 +72,7 @@ const FavouriteMessagesView = ({ resizeNotifier }: IProps) => {
                     cli.relations(resultObj.roomId, resultObj.eventId, RelationType.Replace, null, { limit: 1 }),
                 ]);
                 const event = new MatrixEvent(evJson);
-                const roomId = event.getRoomId();
+                const roomId = event.getRoomId()!;
                 const room = cli.getRoom(roomId);
 
                 if (event.isEncrypted()) {
@@ -81,7 +81,7 @@ const FavouriteMessagesView = ({ resizeNotifier }: IProps) => {
 
                 if (event) {
                     // Inject sender information
-                    event.sender = room.getMember(event.getSender());
+                    event.sender = room.getMember(event.getSender())!;
 
                     // Also inject any edits found
                     if (edit) event.makeReplaced(edit);

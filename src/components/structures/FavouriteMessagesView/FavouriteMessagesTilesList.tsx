@@ -33,9 +33,9 @@ interface IProps{
 const FavouriteMessagesTilesList = ({ cli, favouriteMessageEvents, favouriteMessagesPanelRef, searchQuery }: IProps) => {
     const { isSearchClicked } = useFavouriteMessages();
 
-    const ret = [];
+    const ret: JSX.Element[] = [];
     let lastRoomId: string;
-    const highlights = [];
+    const highlights: string[] = [];
 
     if (!favouriteMessageEvents) {
         ret.push(<Spinner key={Math.random()} />);
@@ -43,7 +43,7 @@ const FavouriteMessagesTilesList = ({ cli, favouriteMessageEvents, favouriteMess
         favouriteMessageEvents.reverse().forEach(mxEvent => {
             const timeline = [] as MatrixEvent[];
             const roomId = mxEvent.getRoomId();
-            const room = cli.getRoom(roomId);
+            const room = cli?.getRoom(roomId);
 
             timeline.push(mxEvent);
             if (searchQuery && isSearchClicked) {
@@ -54,7 +54,7 @@ const FavouriteMessagesTilesList = ({ cli, favouriteMessageEvents, favouriteMess
                 ret.push(<li key={mxEvent.getId() + "-room"}>
                     <h2>{ _t("Room") }: { room.name }</h2>
                 </li>);
-                lastRoomId = roomId;
+                lastRoomId = roomId!;
             }
             // once dynamic content in the favourite messages panel loads, make the scrollPanel check
             // the scroll offsets.

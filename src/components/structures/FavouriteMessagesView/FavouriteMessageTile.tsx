@@ -30,13 +30,13 @@ interface IProps {
     // an event result object
     result: MatrixEvent;
     // href for the highlights in this result
-    resultLink?: string;
+    resultLink: string;
     // a list of strings to be highlighted in the results
     searchHighlights?: string[];
     onHeightChanged?: () => void;
     permalinkCreator?: RoomPermalinkCreator;
     //a list containing the saved items events
-    timeline?: MatrixEvent[];
+    timeline: MatrixEvent[];
 }
 
 const FavouriteMessageTile: FC<IProps> = (props: IProps) => {
@@ -46,22 +46,22 @@ const FavouriteMessageTile: FC<IProps> = (props: IProps) => {
     const eventId = result.getId();
 
     const ts1 = result?.getTs();
-    const ret = [<DateSeparator key={ts1 + "-search"} roomId={result.getRoomId()} ts={ts1} />];
+    const ret = [<DateSeparator key={ts1 + "-search"} roomId={(result.getRoomId())!} ts={ts1} />];
     const layout = SettingsStore.getValue("layout");
     const isTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
     const alwaysShowTimestamps = SettingsStore.getValue("alwaysShowTimestamps");
     const threadsEnabled = SettingsStore.getValue("feature_thread");
 
-    for (let j = 0; j < props.timeline.length; j++) {
-        const mxEv = props.timeline[j];
-        const highlights = props.searchHighlights;
+    for (let j = 0; j < props?.timeline.length; j++) {
+        const mxEv = props?.timeline[j];
+        const highlights = props?.searchHighlights;
 
         if (haveRendererForEvent(mxEv, context?.showHiddenEvents)) {
             // do we need a date separator since the last event?
             const prevEv = props.timeline[j - 1];
             // is this a continuation of the previous message?
             const continuation = prevEv &&
-                !wantsDateSeparator(prevEv.getDate(), mxEv.getDate()) &&
+                !wantsDateSeparator((prevEv.getDate())!, mxEv.getDate()) &&
                 shouldFormContinuation(
                     prevEv,
                     mxEv,
@@ -70,9 +70,9 @@ const FavouriteMessageTile: FC<IProps> = (props: IProps) => {
                 );
 
             let lastInSection = true;
-            const nextEv = props.timeline[j + 1];
+            const nextEv = props?.timeline[j + 1];
             if (nextEv) {
-                const willWantDateSeparator = wantsDateSeparator(mxEv.getDate(), nextEv.getDate());
+                const willWantDateSeparator = wantsDateSeparator((mxEv.getDate())!, nextEv.getDate());
                 lastInSection = (
                     willWantDateSeparator ||
                     mxEv.getSender() !== nextEv.getSender() ||

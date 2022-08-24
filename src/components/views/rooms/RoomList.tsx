@@ -72,7 +72,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     isMinimized: boolean;
     activeSpace: SpaceKey;
-    pageType: PageType;
+    pageType?: PageType;
 }
 
 interface IState {

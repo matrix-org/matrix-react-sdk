@@ -47,7 +47,7 @@ const FavouriteMessagesPanel = (props: IProps) => {
             <>
                 <FavouriteMessagesHeader handleSearchQuery={props.handleSearchQuery} />
                 <ScrollPanel
-                    ref={favouriteMessagesPanelRef}
+                    ref={favouriteMessagesPanelRef!}
                     className="mx_RoomView_searchResultsPanel mx_FavouriteMessages_scrollPanel"
                     resizeNotifier={props.resizeNotifier}
                 >
