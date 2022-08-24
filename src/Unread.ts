@@ -32,7 +32,7 @@ import { RoomNotificationStateStore } from "./stores/notifications/RoomNotificat
  * @param {Object} ev The event
  * @returns {boolean} True if the given event should affect the unread message count
  */
-export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
+export function eventTriggersUnreadCount(ev?: MatrixEvent): boolean {
     if (ev.getSender() === MatrixClientPeg.get().credentials.userId) {
         return false;
     }
