@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { act } from 'react-test-renderer';
+import { act } from "react-test-renderer";
 import {
     EventType,
     EventStatus,
@@ -530,8 +530,7 @@ describe('<MessageActionBar />', () => {
 
                     expect(alicesAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
                     expect(bobsAction.classList).not.toContain('mx_MessageActionBar_favouriteButton_fillstar');
-                    expect(localStorageMock.setItem)
-                        .toHaveBeenCalledWith('io_element_favouriteMessages', '["$alices_message"]');
+                    expect(JSON.parse(localStorageMock.getItem('io_element_favouriteMessages'))).toHaveLength(1);
 
                     //when bob's event is fired,both should be styled and stored in localStorage
                     act(() => {
@@ -540,20 +539,19 @@ describe('<MessageActionBar />', () => {
 
                     expect(alicesAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
                     expect(bobsAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
-                    expect(localStorageMock.setItem)
-                        .toHaveBeenCalledWith('io_element_favouriteMessages', '["$alices_message","$bobs_message"]');
 
-                    //finally, at this point the localStorage should contain the two eventids
-                    expect(localStorageMock.getItem('io_element_favouriteMessages'))
-                        .toEqual('["$alices_message","$bobs_message"]');
+                    //if we decided to unfavourite alice's and  bob's event by clicking again
+                    act(() => {
+                        fireEvent.click(alicesAction);
+                    });
 
-                    //if decided to unfavourite bob's event by clicking again
                     act(() => {
                         fireEvent.click(bobsAction);
                     });
+
                     expect(bobsAction.classList).not.toContain('mx_MessageActionBar_favouriteButton_fillstar');
-                    expect(alicesAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
-                    expect(localStorageMock.getItem('io_element_favouriteMessages')).toEqual('["$alices_message"]');
+                    expect(alicesAction.classList).not.toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(JSON.parse(localStorageMock.getItem('io_element_favouriteMessages'))).toHaveLength(0);
                 });
         });
 
