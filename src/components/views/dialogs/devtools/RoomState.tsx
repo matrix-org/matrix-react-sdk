@@ -67,12 +67,12 @@ interface IEventTypeProps extends Pick<IDevtoolsProps, "onBack"> {
 const RoomStateExplorerEventType = ({ eventType, onBack }: IEventTypeProps) => {
     const context = useContext(DevtoolsContext);
     const [query, setQuery] = useState("");
-    const [event, setEvent] = useState<MatrixEvent>(null);
+    const [event, setEvent] = useState<MatrixEvent | null>(null);
 
     const events = context.room.currentState.events.get(eventType);
 
     useEffect(() => {
-        if (events.size === 1 && events.has("")) {
+        if (events?.size === 1 && events.has("")) {
             setEvent(events.get(""));
         } else {
             setEvent(null);
@@ -81,7 +81,7 @@ const RoomStateExplorerEventType = ({ eventType, onBack }: IEventTypeProps) => {
 
     if (event) {
         const _onBack = () => {
-            if (events.size === 1 && events.has("")) {
+            if (events?.size === 1 && events.has("")) {
                 onBack();
             } else {
                 setEvent(null);
@@ -104,7 +104,7 @@ const RoomStateExplorerEventType = ({ eventType, onBack }: IEventTypeProps) => {
 export const RoomStateExplorer = ({ onBack, setTool }: IDevtoolsProps) => {
     const context = useContext(DevtoolsContext);
     const [query, setQuery] = useState("");
-    const [eventType, setEventType] = useState<string>(null);
+    const [eventType, setEventType] = useState<string | null>(null);
 
     const events = context.room.currentState.events;
 
