@@ -3507,7 +3507,7 @@
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Falls du den Zugriff auf deinen Nachrichtenverlauf behalten willst, richte die Schlüsselsicherung ein oder exportiere deine Chiffrierungsschlüssel von einem deiner Geräte bevor du weiter machst.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Das Ausloggen aus deinem Gerät wird die Chiffrierungsschlüssel löschen, woraufhin verschlüsselte Nachrichtenverläufe nicht mehr lesbar sein werden.",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tipp:</b> Nutze “%(replyInThread)s” beim Schweben über eine Nachricht.",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Dank freiem, Ende-zu-Ende verschlüsseltem Nachrichtenaustausch und unbegrenzten Sprach- und Videoanrufen ist %(brand)s eine großartige Möglichkeit, um in Kontakt zu bleiben.",
+    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Dank freien, Ende-zu-Ende verschlüsselten Nachrichten und unbegrenzten Sprach- und Videoanrufen ist %(brand)s eine großartige Möglichkeit, um in Kontakt zu bleiben.",
     "How are you finding %(brand)s so far?": "Wie findest du %(brand)s bisher?",
     "Don’t miss a reply or important message": "Verpasse keine Antworten oder wichtigen Nachrichten",
     "Make sure people know it’s really you": "Lass andere wissen, dass du es wirklich bist",
@@ -3518,5 +3518,14 @@
     "Get it on F-Droid": "In F-Droid erhältlich",
     "View related event": "Zugehöriges Ereignis anzeigen",
     "Stop and close": "Verwerfen und schließen",
-    "We’d appreciate any feedback on how you’re finding %(brand)s.": "Wir würden eine Rückmeldung bezüglich deiner Zufriedenheit mit %(brand)s sehr wertschätzen."
+    "We’d appreciate any feedback on how you’re finding %(brand)s.": "Wir würden eine Rückmeldung bezüglich deiner Zufriedenheit mit %(brand)s sehr wertschätzen.",
+    "We'll help you get connected.": "Wir helfen dir, dich zu vernetzen.",
+    "You're in": "Du bist dabei",
+    "Choose a locale": "Wähle ein Gebietsschema",
+    "Saved Items": "Gespeicherte Elemente",
+    "Read receipts": "Lesebestätigungen",
+    "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Für besonders sichere Nachrichten verifiziere deine Sitzungen oder melde dich von ihnen ab, falls du sie nicht mehr identifizieren kannst.",
+    "Verify or sign out from this session for best security and reliability.": "Für die höchste Sicherheit und Zuverlässigkeit solltest du dich verifizieren oder abmelden.",
+    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Verfüge und behalte die Kontrolle über Gespräche deiner Gemeinschaft.\nSkalierbar für Millionen von Nutzenden, mit mächtigen Moderationswerkzeugen und Interoperabilität.",
+    "Community ownership": "In gemeinschaftlicher Hand"
 }
