@@ -27,6 +27,7 @@ import ProgressBar from "../views/elements/ProgressBar";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import { IUpload } from "../../models/IUpload";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { ActionPayload } from '../../dispatcher/payloads';
 import { UploadPayload } from "../../dispatcher/payloads/UploadPayload";
 
 interface IProps {
@@ -40,6 +41,16 @@ interface IState {
     currentLoaded: number;
     currentTotal: number;
     countFiles: number;
+}
+
+function isUploadPayload(payload: ActionPayload): payload is UploadPayload {
+    return [
+        Action.UploadStarted,
+        Action.UploadProgress,
+        Action.UploadFailed,
+        Action.UploadFinished,
+        Action.UploadCanceled,
+    ].includes(payload.action as Action);
 }
 
 export default class UploadBar extends React.PureComponent<IProps, IState> {
@@ -82,24 +93,10 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
         };
     }
 
-    private onAction = (payload: UploadPayload) => {
-        switch (payload.action) {
-            case Action.UploadStarted:
-            case Action.UploadFinished:
-            case Action.UploadCanceled:
-            case Action.UploadFailed: {
-                if (!this.mounted) return;
-                this.setState(this.calculateState());
-                break;
-            }
-            case Action.UploadProgress:
-                if (payload.upload.promise === this.state.currentPromise) {
-                    this.setState({
-                        currentLoaded: payload.upload.loaded,
-                        currentTotal: payload.upload.total,
-                    });
-                }
-                break;
+    private onAction = (payload: ActionPayload) => {
+        if (!this.mounted) return;
+        if (isUploadPayload(payload)) {
+            this.setState(this.calculateState());
         }
     };
 
