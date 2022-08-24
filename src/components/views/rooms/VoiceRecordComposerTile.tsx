@@ -73,7 +73,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             recorder: null, // no recording started by default
         };
 
-        this.voiceRecordingId = VoiceRecordingStore.instance.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
     }
 
     public componentDidMount() {

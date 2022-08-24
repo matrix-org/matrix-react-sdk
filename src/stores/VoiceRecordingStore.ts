@@ -49,7 +49,7 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
         return;
     }
 
-    public getVoiceRecordingId(room: Room, relation?: IEventRelation): string {
+    public static getVoiceRecordingId(room: Room, relation?: IEventRelation): string {
         if (relation?.rel_type === "io.element.thread" || relation?.rel_type === RelationType.Thread) {
             return room.roomId + SEPARATOR + relation.event_id;
         } else {
