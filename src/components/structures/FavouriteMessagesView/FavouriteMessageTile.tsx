@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { FC } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import RoomContext from "../../../contexts/RoomContext";
@@ -39,78 +39,73 @@ interface IProps {
     timeline?: MatrixEvent[];
 }
 
-export default class FavouriteMessageTile extends React.Component<IProps> {
-    static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+const FavouriteMessageTile: FC<IProps> = (props: IProps) => {
+    let context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props, context) {
-        super(props, context);
-    }
+    const result = props.result;
+    const eventId = result.getId();
 
-    public render() {
-        const result = this.props.result;
-        const eventId = result.getId();
+    const ts1 = result?.getTs();
+    const ret = [<DateSeparator key={ts1 + "-search"} roomId={result.getRoomId()} ts={ts1} />];
+    const layout = SettingsStore.getValue("layout");
+    const isTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
+    const alwaysShowTimestamps = SettingsStore.getValue("alwaysShowTimestamps");
+    const threadsEnabled = SettingsStore.getValue("feature_thread");
 
-        const ts1 = result?.getTs();
-        const ret = [<DateSeparator key={ts1 + "-search"} roomId={result.getRoomId()} ts={ts1} />];
-        const layout = SettingsStore.getValue("layout");
-        const isTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
-        const alwaysShowTimestamps = SettingsStore.getValue("alwaysShowTimestamps");
-        const threadsEnabled = SettingsStore.getValue("feature_thread");
+    for (let j = 0; j < props.timeline.length; j++) {
+        const mxEv = props.timeline[j];
+        const highlights = props.searchHighlights;
 
-        for (let j = 0; j < this.props.timeline.length; j++) {
-            const mxEv = this.props.timeline[j];
-            const highlights = this.props.searchHighlights;
+        if (haveRendererForEvent(mxEv, context?.showHiddenEvents)) {
+            // do we need a date separator since the last event?
+            const prevEv = props.timeline[j - 1];
+            // is this a continuation of the previous message?
+            const continuation = prevEv &&
+                !wantsDateSeparator(prevEv.getDate(), mxEv.getDate()) &&
+                shouldFormContinuation(
+                    prevEv,
+                    mxEv,
+                    context?.showHiddenEvents,
+                    threadsEnabled,
+                );
 
-            if (haveRendererForEvent(mxEv, this.context?.showHiddenEvents)) {
-                // do we need a date separator since the last event?
-                const prevEv = this.props.timeline[j - 1];
-                // is this a continuation of the previous message?
-                const continuation = prevEv &&
-                    !wantsDateSeparator(prevEv.getDate(), mxEv.getDate()) &&
-                    shouldFormContinuation(
-                        prevEv,
+            let lastInSection = true;
+            const nextEv = props.timeline[j + 1];
+            if (nextEv) {
+                const willWantDateSeparator = wantsDateSeparator(mxEv.getDate(), nextEv.getDate());
+                lastInSection = (
+                    willWantDateSeparator ||
+                    mxEv.getSender() !== nextEv.getSender() ||
+                    !shouldFormContinuation(
                         mxEv,
-                        this.context?.showHiddenEvents,
+                        nextEv,
+                        context?.showHiddenEvents,
                         threadsEnabled,
-                    );
-
-                let lastInSection = true;
-                const nextEv = this.props.timeline[j + 1];
-                if (nextEv) {
-                    const willWantDateSeparator = wantsDateSeparator(mxEv.getDate(), nextEv.getDate());
-                    lastInSection = (
-                        willWantDateSeparator ||
-                        mxEv.getSender() !== nextEv.getSender() ||
-                        !shouldFormContinuation(
-                            mxEv,
-                            nextEv,
-                            this.context?.showHiddenEvents,
-                            threadsEnabled,
-                        )
-                    );
-                }
-
-                ret.push(
-                    <EventTile
-                        key={`${eventId}+${j}`}
-                        mxEvent={mxEv}
-                        layout={layout}
-                        highlights={highlights}
-                        permalinkCreator={this.props.permalinkCreator}
-                        highlightLink={this.props.resultLink}
-                        onHeightChanged={this.props.onHeightChanged}
-                        isTwelveHour={isTwelveHour}
-                        alwaysShowTimestamps={alwaysShowTimestamps}
-                        lastInSection={lastInSection}
-                        continuation={continuation}
-                    />,
+                    )
                 );
             }
-        }
 
-        return <li data-scroll-tokens={eventId}>
-            <ol>{ ret }</ol>
-        </li>;
+            ret.push(
+                <EventTile
+                    key={`${eventId}+${j}`}
+                    mxEvent={mxEv}
+                    layout={layout}
+                    highlights={highlights}
+                    permalinkCreator={props.permalinkCreator}
+                    highlightLink={props.resultLink}
+                    onHeightChanged={props.onHeightChanged}
+                    isTwelveHour={isTwelveHour}
+                    alwaysShowTimestamps={alwaysShowTimestamps}
+                    lastInSection={lastInSection}
+                    continuation={continuation}
+                />,
+            );
+        }
     }
-}
+
+    return <li data-scroll-tokens={eventId}>
+        <ol>{ ret }</ol>
+    </li>;
+};
+
+export default FavouriteMessageTile;

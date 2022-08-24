@@ -709,12 +709,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             }
             case Action.OpenClearModal: {
-                Modal.createDialog(ConfirmClearDialog, {
-                    title: _t("Confirm Removal"),
-                    description: _t("Are you sure you wish to clear all your starred messages? "),
-                    button: _t("Confirm"),
-                    hasCancel: true,
-                });
+                Modal.createDialog(ConfirmClearDialog);
                 break;
             }
             case 'view_welcome_page':

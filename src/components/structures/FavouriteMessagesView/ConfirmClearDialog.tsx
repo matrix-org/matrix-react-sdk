@@ -17,21 +17,15 @@ limitations under the License.
 import React, { FC } from 'react';
 
 import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
+import { _t } from '../../../languageHandler';
 import BaseDialog from "../../views/dialogs/BaseDialog";
 import { IDialogProps } from '../../views/dialogs/IDialogProps';
 import DialogButtons from "../../views/elements/DialogButtons";
 
-interface IProps extends IDialogProps {
-    title?: string;
-    description?: string;
-    button?: string;
-    hasCancel?: boolean;
-}
-
 /*
  * A dialog for confirming a clearing of starred messages.
  */
-const ConfirmClearDialog: FC<IProps> = (props: IProps) => {
+const ConfirmClearDialog: FC<IDialogProps> = (props: IDialogProps) => {
     const { clearFavouriteMessages } = useFavouriteMessages();
 
     const onConfirmClick = () => {
@@ -43,18 +37,18 @@ const ConfirmClearDialog: FC<IProps> = (props: IProps) => {
         <BaseDialog
             className="mx_TextInputDialog mx_ClearDialog"
             onFinished={props.onFinished}
-            title={props.title}
+            title={_t("Confirm Removal")}
         >
             <div className="mx_Dialog_content">
                 <div className="mx_TextInputDialog_label">
-                    <span> { props.description } </span>
+                    <span> { _t("Are you sure you wish to clear all your starred messages? ") } </span>
                 </div>
             </div>
             <DialogButtons
-                primaryButton={props.button}
+                primaryButton={_t("Confirm")}
                 onPrimaryButtonClick={onConfirmClick}
                 onCancel={props.onFinished}
-                hasCancel={props.hasCancel}
+                hasCancel={true}
             />
         </BaseDialog>
     );

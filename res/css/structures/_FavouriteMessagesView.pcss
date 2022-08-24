@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,14 +18,14 @@ limitations under the License.
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; 
-    flex:  0 0 50px;
+    width: 100%;
+    flex: 0 0 50px;
     border-bottom: 1px solid $primary-hairline-color;
     background-color: $background;
     z-index: 999;
 }
 
-.mx_FavMessagesHeader_Wrapper{
+.mx_FavMessagesHeader_Wrapper {
     height: 44px;
     display: flex;
     align-items: center;
@@ -35,27 +35,26 @@ limitations under the License.
     border-bottom: 1px solid $system;
     justify-content: space-between;
 
-    &--left{
+    .mx_FavMessagesHeader_Wrapper_left {
         display: flex;
         align-items: center;
         flex: 0.4;
-    
+
         & > span {
-                color: $primary-content;
-                font-weight: $font-semi-bold;
-                font-size: $font-18px;
-                margin: 0 8px;
-            }
+            color: $primary-content;
+            font-weight: $font-semi-bold;
+            font-size: $font-18px;
+            margin: 0 8px;
+        }
     }
 
-    &--right{
+    .mx_FavMessagesHeader_Wrapper_right {
         display: flex;
         align-items: center;
         flex: 0.6;
         justify-content: flex-end;
     }
 }
-
 
 .mx_FavMessagesHeader_sortButton::before {
     mask-image: url('$(res)/img/element-icons/room/sort-twoway.svg');
@@ -76,11 +75,11 @@ limitations under the License.
     cursor: pointer;
 }
 
-.mx_FavMessagesHeader_Search{
+.mx_FavMessagesHeader_Search {
     width: 70%;
 }
 
-.mx_FavouriteMessages_emptyMarker{
+.mx_FavouriteMessages_emptyMarker {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -92,6 +91,6 @@ limitations under the License.
     margin-top: 25px;
 }
 
-.mx_ClearDialog{
+.mx_ClearDialog {
     width: 100%;
 }

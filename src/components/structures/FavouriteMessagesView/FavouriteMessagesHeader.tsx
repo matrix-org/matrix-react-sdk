@@ -49,7 +49,7 @@ const FavouriteMessagesHeader = ({ handleSearchQuery }) => {
     return (
         <div className="mx_FavMessagesHeader">
             <div className="mx_FavMessagesHeader_Wrapper">
-                <div className="mx_FavMessagesHeader_Wrapper--left">
+                <div className="mx_FavMessagesHeader_Wrapper_left">
                     <RoomAvatar
                         oobData={{
                             name: "Favourites",
@@ -60,7 +60,7 @@ const FavouriteMessagesHeader = ({ handleSearchQuery }) => {
                     />
                     <span>Favourite Messages</span>
                 </div>
-                <div className="mx_FavMessagesHeader_Wrapper--right">
+                <div className="mx_FavMessagesHeader_Wrapper_right">
                     { isSearchClicked &&
                     (<input
                         type='text'
