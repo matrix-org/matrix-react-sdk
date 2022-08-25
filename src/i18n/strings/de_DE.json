@@ -1852,7 +1852,7 @@
     "Add a photo, so people can easily spot your room.": "Füge ein Bild hinzu, damit andere deinen Raum besser erkennen können.",
     "This is the start of <roomName/>.": "Dies ist der Beginn von <roomName/>.",
     "Start a new chat": "Starte einen neuen Chat",
-    "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their avatar.": "Nachrichten hier sind Ende-zu-Ende-verschlüsselt. Verifiziere %(displayName)s im deren Profil - klicke auf deren Avatar.",
+    "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their avatar.": "Nachrichten hier sind Ende-zu-Ende-verschlüsselt. Verifiziere %(displayName)s in deren Profil - klicke auf deren Avatar.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their avatar.": "Nachrichten in diesem Raum sind Ende-zu-Ende-verschlüsselt. Wenn Personen beitreten, kannst du sie in ihrem Profil verifizieren, indem du auf deren Avatar klickst.",
     "Comment": "Kommentar",
     "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Bitte wirf einen Blick auf <existingIssuesLink>existierende Programmfehler auf Github</existingIssuesLink>. Keinen passenden gefunden? <newIssueLink>Erstelle einen neuen</newIssueLink>.",
