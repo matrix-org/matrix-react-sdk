@@ -22,7 +22,7 @@ jest.useFakeTimers();
 describe("<ProgressBar/>", () => {
     it("works when animated", () => {
         const { container, rerender } = render(<ProgressBar max={100} value={50} animated={true} />);
-        const progress = container.querySelector<HTMLProgressElement>("progress");
+        const progress = container.querySelector<HTMLProgressElement>("progress")!;
 
         // The animation always starts from 0
         expect(progress.value).toBe(0);
@@ -43,7 +43,7 @@ describe("<ProgressBar/>", () => {
 
     it("works when not animated", () => {
         const { container, rerender } = render(<ProgressBar max={100} value={50} animated={false} />);
-        const progress = container.querySelector<HTMLProgressElement>("progress");
+        const progress = container.querySelector<HTMLProgressElement>("progress")!;
 
         // Without animation all positional updates are immediate, not requiring timers to run
         expect(progress.position).toBe(0.5);
