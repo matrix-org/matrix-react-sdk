@@ -342,7 +342,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 verificationMethods.RECIPROCATE_QR_CODE,
             ],
             identityServer: new IdentityAuthClient(),
-            cryptoCallbacks: {},
+            // These are always installed regardless of the labs flag so that cross-signing features
+            // can toggle on without reloading and also be accessed immediately after login.
+            cryptoCallbacks: { ...crossSigningCallbacks },
             roomNameGenerator: (_: string, state: RoomNameState) => {
                 switch (state.type) {
                     case RoomNameType.Generated:
@@ -366,13 +368,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             },
         };
 
-        // These are always installed regardless of the labs flag so that
-        // cross-signing features can toggle on without reloading and also be
-        // accessed immediately after login.
-        Object.assign(opts.cryptoCallbacks, crossSigningCallbacks);
         if (SecurityCustomisations.getDehydrationKey) {
-            opts.cryptoCallbacks.getDehydrationKey =
-                SecurityCustomisations.getDehydrationKey;
+            opts.cryptoCallbacks.getDehydrationKey = SecurityCustomisations.getDehydrationKey;
         }
 
         this.matrixClient = createMatrixClient(opts);
@@ -383,7 +380,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         this.matrixClient.setGuest(Boolean(creds.guest));
 
-        const notifTimelineSet = new EventTimelineSet(null, {
+        const notifTimelineSet = new EventTimelineSet(undefined, {
             timelineSupport: true,
             pendingEvents: false,
         });
