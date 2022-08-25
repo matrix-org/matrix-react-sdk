@@ -786,7 +786,7 @@ const onMessage = function(event: MessageEvent<any>): void {
 };
 
 let listenerCount = 0;
-let openManagerUrl: string = null;
+let openManagerUrl: string | null = null;
 
 export function startListening(): void {
     if (listenerCount === 0) {
