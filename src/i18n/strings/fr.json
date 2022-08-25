@@ -3534,5 +3534,8 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Pour une meilleure sécurité, vérifiez vos sessions et déconnectez toutes les sessions que vous ne connaissez pas ou que vous n’utilisez plus.",
     "Other sessions": "Autres sessions",
     "Welcome": "Bienvenue",
-    "Show shortcut to welcome checklist above the room list": "Afficher le raccourci vers la liste de vérification de bienvenue au-dessus de la liste des salons"
+    "Show shortcut to welcome checklist above the room list": "Afficher le raccourci vers la liste de vérification de bienvenue au-dessus de la liste des salons",
+    "We’d appreciate any feedback on how you’re finding %(brand)s.": "Nous apprécierions toutes vos remarques sur %(brand)s.",
+    "How are you finding %(brand)s so far?": "Comment trouvez-vous %(brand)s jusque-là ?",
+    "Don’t miss a thing by taking %(brand)s with you": "Ne ratez pas une miette en emportant %(brand)s avec vous"
 }
