@@ -369,7 +369,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         };
 
         if (SecurityCustomisations.getDehydrationKey) {
-            opts.cryptoCallbacks.getDehydrationKey = SecurityCustomisations.getDehydrationKey;
+            opts.cryptoCallbacks!.getDehydrationKey = SecurityCustomisations.getDehydrationKey;
         }
 
         this.matrixClient = createMatrixClient(opts);
