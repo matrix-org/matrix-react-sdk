@@ -86,10 +86,10 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
     private calculateState(): IState {
         const [currentUpload, ...otherUploads] = this.getUploadsInRoom();
         return {
-            currentFile: currentUpload.fileName,
-            currentPromise: currentUpload.promise,
-            currentLoaded: currentUpload.loaded,
-            currentTotal: currentUpload.total,
+            currentFile: currentUpload?.fileName,
+            currentPromise: currentUpload?.promise,
+            currentLoaded: currentUpload?.loaded,
+            currentTotal: currentUpload?.total,
             countFiles: otherUploads.length + 1,
         };
     }
