@@ -150,7 +150,7 @@ describe("Kick", () => {
         ]).then(([targetUser, roomId]) => {
             const targetUserId = targetUser.getUserId();
             cy.viewRoomByName(ROOM_NAME);
-            cy.inviteUser(roomId, targetUserId).as("targetJoined");
+            cy.inviteUser(roomId, targetUserId);
             cy.getClient().then(async client => {
                 await client.sendStateEvent(roomId, 'm.room.power_levels', {
                     kick: 50,
@@ -158,13 +158,13 @@ describe("Kick", () => {
                         [testUser.userId]: 0,
                     },
                 });
-            });
+            }).then(() => {
+                openIntegrationManager();
+                sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
 
-            openIntegrationManager();
-            sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-            cy.getClient().then(client => {
-                expect(client.getRoom(roomId).getMember(targetUserId).isKicked()).to.be.false;
+                cy.getClient().then(client => {
+                    expect(client.getRoom(roomId).getMember(targetUserId).isKicked()).to.be.false;
+                });
             });
         });
     });
@@ -181,13 +181,13 @@ describe("Kick", () => {
             // Wait for target to join
             cy.wait(100).then(async () => {
                 await targetUser.leave(roomId);
-            });
+            }).then(() => {
+                openIntegrationManager();
+                sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
 
-            openIntegrationManager();
-            sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-            cy.getClient().then(client => {
-                expect(client.getRoom(roomId).getMember(targetUserId).isKicked()).to.be.false;
+                cy.getClient().then(client => {
+                    expect(client.getRoom(roomId).getMember(targetUserId).isKicked()).to.be.false;
+                });
             });
         });
     });
@@ -205,13 +205,13 @@ describe("Kick", () => {
             cy.wait(100);
             cy.getClient().then(async client => {
                 await client.ban(roomId, targetUserId);
-            });
+            }).then(() => {
+                openIntegrationManager();
+                sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
 
-            openIntegrationManager();
-            sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-            cy.getClient().then(async client => {
-                expect(client.getRoom(roomId).getMember(targetUserId).membership).to.eq('ban');
+                cy.getClient().then(async client => {
+                    expect(client.getRoom(roomId).getMember(targetUserId).membership).to.eq('ban');
+                });
             });
         });
     });
