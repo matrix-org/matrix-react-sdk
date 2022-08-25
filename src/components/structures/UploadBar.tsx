@@ -103,7 +103,7 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
 
     private onCancelClick = (ev: ButtonEvent) => {
         ev.preventDefault();
-        ContentMessages.sharedInstance().cancelUpload(this.state.currentPromise, this.context);
+        ContentMessages.sharedInstance().cancelUpload(this.state.currentPromise!, this.context);
     };
 
     render() {
@@ -119,12 +119,12 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
             },
         );
 
-        const uploadSize = filesize(this.state.currentTotal);
+        const uploadSize = filesize(this.state.currentTotal!);
         return (
             <div className="mx_UploadBar">
                 <div className="mx_UploadBar_filename">{ uploadText } ({ uploadSize })</div>
                 <AccessibleButton onClick={this.onCancelClick} className='mx_UploadBar_cancel' />
-                <ProgressBar value={this.state.currentLoaded} max={this.state.currentTotal} />
+                <ProgressBar value={this.state.currentLoaded!} max={this.state.currentTotal!} />
             </div>
         );
     }
