@@ -44,9 +44,7 @@ export default class RoomSearch extends React.PureComponent<IProps> {
     }
 
     private openSpotlight() {
-        defaultDispatcher.dispatch<OpenSpotlightPayload>({
-            action: Action.OpenSpotlight,
-        });
+        defaultDispatcher.fire(Action.OpenSpotlight);
     }
 
     private onAction = (payload: ActionPayload) => {
