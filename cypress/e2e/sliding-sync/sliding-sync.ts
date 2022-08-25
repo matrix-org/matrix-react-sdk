@@ -40,7 +40,9 @@ describe("Sliding Sync", () => {
                 return req.continue(res => {
                     res.send(200, {
                         ...res.body,
-                        sliding_sync_proxy_url: `http://localhost:${proxy.port}`,
+                        setting_defaults: {
+                            feature_sliding_sync_proxy_url: `http://localhost:${proxy.port}`,
+                        },
                     });
                 });
             });

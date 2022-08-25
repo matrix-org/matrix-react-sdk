@@ -95,7 +95,7 @@ export class SlidingSyncManager {
         return SlidingSyncManager.internalInstance;
     }
 
-    public configure(client: MatrixClient, proxyUrl: string): SlidingSync {
+    public configure(client: MatrixClient, proxyUrl?: string): SlidingSync {
         this.client = client;
         this.listIdToIndex = {};
         this.slidingSync = new SlidingSync(

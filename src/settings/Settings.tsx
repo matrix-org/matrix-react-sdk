@@ -411,9 +411,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Sliding Sync mode (under active development)'),
-        default: window.location.hostname === "pr8328--matrix-react-sdk.netlify.app", // XXX: overrides for testing sliding sync on netlify, do not commit this to main!
+        displayName: _td('Sliding Sync mode (under active development, requires server or proxy support)'),
+        default: false,
         controller: new SlidingSyncController(),
+    },
+    "feature_sliding_sync_proxy_url": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: "",
     },
     "feature_location_share_live": {
         isFeature: true,
