@@ -37,10 +37,10 @@ interface IProps {
 }
 
 interface IState {
-    currentFile: string;
-    currentPromise: IAbortablePromise<any>;
-    currentLoaded: number;
-    currentTotal: number;
+    currentFile?: string;
+    currentPromise?: IAbortablePromise<any>;
+    currentLoaded?: number;
+    currentTotal?: number;
     countFiles: number;
 }
 
