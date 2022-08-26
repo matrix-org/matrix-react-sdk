@@ -3533,5 +3533,13 @@
     "No unverified sessions found.": "Verifitseerimata sessioone ei leidu.",
     "No verified sessions found.": "Verifitseeritud sessioone ei leidu.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Parima turvalisuse nimel logi välja neist sessioonidest, mida sa enam ei kasuta või ei tunne ära.",
-    "Verified sessions": "Verifitseeritud sessioonid"
+    "Verified sessions": "Verifitseeritud sessioonid",
+    "Empty room (was %(oldName)s)": "Tühi jututuba (varasema nimega %(oldName)s)",
+    "Inviting %(user)s and %(count)s others|one": "Saadame kutset kasutajale %(user)s ning veel ühele muule kasutajale",
+    "Inviting %(user)s and %(count)s others|other": "Saadame kutset kasutajale %(user)s ja veel %(count)s'le muule kasutajale",
+    "Inviting %(user1)s and %(user2)s": "Saadame kutset kasutajatele %(user1)s ja %(user2)s",
+    "%(user)s and %(count)s others|one": "%(user)s ja veel 1 kasutaja",
+    "%(user)s and %(count)s others|other": "%(user)s ja veel %(count)s kasutajat",
+    "%(user1)s and %(user2)s": "%(user1)s ja %(user2)s",
+    "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Me ei soovita avalikes jututubades krüptimise kasutamist.</b> Kuna kõik huvilised saavad vabalt leida avalikke jututube ning nendega liituda, siis saavad nad niikuinii ka neis leiduvaid sõnumeid lugeda. Olemuselt puuduvad sellises olukorras krüptimise eelised ning sa ei saa hiljem krüptimist välja lülitada. Avalike jututubade sõnumite krüptimine teeb ka sõnumite saatmise ja vastuvõtmise aeglasemaks."
 }
