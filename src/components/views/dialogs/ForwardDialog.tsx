@@ -23,6 +23,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
+import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -48,9 +49,9 @@ import BaseAvatar from "../avatars/BaseAvatar";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { ButtonEvent } from "../elements/AccessibleButton";
-import { roomContextDetailsText } from "../../../utils/i18n-helpers";
 import { isLocationEvent } from "../../../utils/EventUtils";
 import { isSelfLocation, locationEventGeoUri } from "../../../utils/location";
+import { RoomContextDetails } from "../rooms/RoomContextDetails";
 
 const AVATAR_SIZE = 30;
 
@@ -129,8 +130,6 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         />;
     }
 
-    const detailsText = roomContextDetailsText(room);
-
     return <div className="mx_ForwardList_entry">
         <AccessibleTooltipButton
             className="mx_ForwardList_roomButton"
@@ -140,9 +139,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         >
             <DecoratedRoomAvatar room={room} avatarSize={32} />
             <span className="mx_ForwardList_entry_name">{ room.name }</span>
-            { detailsText && <span className="mx_ForwardList_entry_detail">
-                { detailsText }
-            </span> }
+            <RoomContextDetails component="span" className="mx_ForwardList_entry_detail" room={room} />
         </AccessibleTooltipButton>
         <AccessibleTooltipButton
             kind={sendState === SendState.Failed ? "danger_outline" : "primary_outline"}
@@ -158,7 +155,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
     </div>;
 };
 
-const getStrippedEventContent = (event: MatrixEvent): IContent => {
+const transformEvent = (event: MatrixEvent): {type: string, content: IContent } => {
     const {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         "m.relates_to": _, // strip relations - in future we will attach a relation pointing at the original event
@@ -166,24 +163,34 @@ const getStrippedEventContent = (event: MatrixEvent): IContent => {
         ...content
     } = event.getContent();
 
+    // beacon pulses get transformed into static locations on forward
+    const type = M_BEACON.matches(event.getType()) ? EventType.RoomMessage : event.getType();
+
     // self location shares should have their description removed
     // and become 'pin' share type
-    if (isLocationEvent(event) && isSelfLocation(content as ILocationContent)) {
+    if (
+        (isLocationEvent(event) && isSelfLocation(content as ILocationContent)) ||
+        // beacon pulses get transformed into static locations on forward
+        M_BEACON.matches(event.getType())
+    ) {
         const timestamp = M_TIMESTAMP.findIn<number>(content);
         const geoUri = locationEventGeoUri(event);
         return {
-            ...content,
-            ...makeLocationContent(
-                undefined, // text
-                geoUri,
-                timestamp || Date.now(),
-                undefined, // description
-                LocationAssetType.Pin,
-            ),
+            type,
+            content: {
+                ...content,
+                ...makeLocationContent(
+                    undefined, // text
+                    geoUri,
+                    timestamp || Date.now(),
+                    undefined, // description
+                    LocationAssetType.Pin,
+                ),
+            },
         };
     }
 
-    return content;
+    return { type, content };
 };
 
 const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCreator, onFinished }) => {
@@ -193,7 +200,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
         cli.getProfileInfo(userId).then(info => setProfileInfo(info));
     }, [cli, userId]);
 
-    const content = getStrippedEventContent(event);
+    const { type, content } = transformEvent(event);
 
     // For the message preview we fake the sender as ourselves
     const mockEvent = new MatrixEvent({
@@ -265,7 +272,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
         <h3>{ _t("Message preview") }</h3>
         <div className={classnames("mx_ForwardDialog_preview", {
             "mx_IRCLayout": previewLayout == Layout.IRC,
-            "mx_GroupLayout": previewLayout == Layout.Group,
         })}>
             <EventTile
                 mxEvent={mockEvent}
@@ -293,7 +299,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                                 <Entry
                                     key={room.roomId}
                                     room={room}
-                                    type={event.getType()}
+                                    type={type}
                                     content={content}
                                     matrixClient={cli}
                                     onFinished={onFinished}

@@ -39,7 +39,7 @@ import WidgetUtils from "./utils/WidgetUtils";
 import { textToHtmlRainbow } from "./utils/colour";
 import { AddressType, getAddressType } from './UserAddress';
 import { abbreviateUrl } from './utils/UrlUtils';
-import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/IdentityServerUtils';
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from './utils/IdentityServerUtils';
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import { WidgetType } from "./widgets/WidgetType";
 import { Jitsi } from "./widgets/Jitsi";
@@ -69,6 +69,7 @@ import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import VoipUserMapper from './VoipUserMapper';
 import { htmlSerializeFromMdIfNeeded } from './editor/serialize';
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
+import { isLocalRoom } from './utils/localRoom/isLocalRoom';
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -82,7 +83,7 @@ const singleMxcUpload = async (): Promise<any> => {
         fileSelector.onchange = (ev: HTMLInputEvent) => {
             const file = ev.target.files[0];
 
-            Modal.createTrackedDialog('Upload Files confirmation', '', UploadConfirmDialog, {
+            Modal.createDialog(UploadConfirmDialog, {
                 file,
                 onFinished: (shouldContinue) => {
                     resolve(shouldContinue ? MatrixClientPeg.get().uploadContent(file) : null);
@@ -206,6 +207,12 @@ function successSync(value: any) {
     return success(Promise.resolve(value));
 }
 
+const isCurrentLocalRoom = (): boolean => {
+    const cli = MatrixClientPeg.get();
+    const room = cli.getRoom(RoomViewStore.instance.getRoomId());
+    return isLocalRoom(room);
+};
+
 /* Disable the "unexpected this" error for these commands - all of the run
  * functions are called with `this` bound to the Command instance.
  */
@@ -297,6 +304,7 @@ export const Commands = [
         command: 'upgraderoom',
         args: '<new_version>',
         description: _td('Upgrades a room to a new version'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
                 const cli = MatrixClientPeg.get();
@@ -307,7 +315,7 @@ export const Commands = [
                     );
                 }
 
-                const { finished } = Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
+                const { finished } = Modal.createDialog(
                     RoomUpgradeWarningDialog, { roomId: roomId, targetVersion: args }, /*className=*/null,
                     /*isPriority=*/false, /*isStatic=*/true);
 
@@ -380,6 +388,7 @@ export const Commands = [
         aliases: ['roomnick'],
         args: '<display_name>',
         description: _td('Changes your display nickname in the current room only'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
                 const cli = MatrixClientPeg.get();
@@ -399,6 +408,7 @@ export const Commands = [
         command: 'roomavatar',
         args: '[<mxc_url>]',
         description: _td('Changes the avatar of the current room'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             let promise = Promise.resolve(args);
             if (!args) {
@@ -417,6 +427,7 @@ export const Commands = [
         command: 'myroomavatar',
         args: '[<mxc_url>]',
         description: _td('Changes your avatar in this current room only'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(roomId);
@@ -462,6 +473,7 @@ export const Commands = [
         command: 'topic',
         args: '[<topic>]',
         description: _td('Gets or sets the room topic'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
             if (args) {
@@ -483,7 +495,7 @@ export const Commands = [
             const ref = e => e && linkifyElement(e);
             const body = topicToHtml(topic.text, topic.html, ref, true);
 
-            Modal.createTrackedDialog('Slash Commands', 'Topic', InfoDialog, {
+            Modal.createDialog(InfoDialog, {
                 title: room.name,
                 description: <div ref={ref}>{ body }</div>,
                 hasCloseButton: true,
@@ -498,6 +510,7 @@ export const Commands = [
         command: 'roomname',
         args: '<name>',
         description: _td('Sets the room name'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
                 return success(MatrixClientPeg.get().setRoomName(roomId, args));
@@ -512,7 +525,7 @@ export const Commands = [
         args: '<user-id> [<reason>]',
         description: _td('Invites user with given id to current room'),
         analyticsName: "Invite",
-        isEnabled: () => shouldShowComponent(UIComponent.InviteUsers),
+        isEnabled: () => !isCurrentLocalRoom() && shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
             if (args) {
                 const [address, reason] = args.split(/\s+(.+)/);
@@ -529,26 +542,22 @@ export const Commands = [
                     ) {
                         const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
                         if (defaultIdentityServerUrl) {
-                            const { finished } = Modal.createTrackedDialog<[boolean]>(
-                                'Slash Commands',
-                                'Identity server',
-                                QuestionDialog, {
-                                    title: _t("Use an identity server"),
-                                    description: <p>{ _t(
-                                        "Use an identity server to invite by email. " +
-                                        "Click continue to use the default identity server " +
-                                        "(%(defaultIdentityServerName)s) or manage in Settings.",
-                                        {
-                                            defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
-                                        },
-                                    ) }</p>,
-                                    button: _t("Continue"),
-                                },
-                            );
+                            const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+                                title: _t("Use an identity server"),
+                                description: <p>{ _t(
+                                    "Use an identity server to invite by email. " +
+                                    "Click continue to use the default identity server " +
+                                    "(%(defaultIdentityServerName)s) or manage in Settings.",
+                                    {
+                                        defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
+                                    },
+                                ) }</p>,
+                                button: _t("Continue"),
+                            });
 
                             prom = finished.then(([useDefault]) => {
                                 if (useDefault) {
-                                    useDefaultIdentityServer();
+                                    setToDefaultIdentityServer();
                                     return;
                                 }
                                 throw newTranslatableError(
@@ -698,6 +707,7 @@ export const Commands = [
         args: '[<room-address>]',
         description: _td('Leave room'),
         analyticsName: "Part",
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
@@ -750,6 +760,7 @@ export const Commands = [
         aliases: ["kick"],
         args: '<user-id> [reason]',
         description: _td('Removes user with given id from this room'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
@@ -766,6 +777,7 @@ export const Commands = [
         command: 'ban',
         args: '<user-id> [reason]',
         description: _td('Bans user with given id'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
@@ -782,6 +794,7 @@ export const Commands = [
         command: 'unban',
         args: '<user-id>',
         description: _td('Unbans user with given ID'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
@@ -810,7 +823,7 @@ export const Commands = [
                     ignoredUsers.push(userId); // de-duped internally in the js-sdk
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createTrackedDialog('Slash Commands', 'User ignored', InfoDialog, {
+                            Modal.createDialog(InfoDialog, {
                                 title: _t('Ignored user'),
                                 description: <div>
                                     <p>{ _t('You are now ignoring %(userId)s', { userId }) }</p>
@@ -840,7 +853,7 @@ export const Commands = [
                     if (index !== -1) ignoredUsers.splice(index, 1);
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createTrackedDialog('Slash Commands', 'User unignored', InfoDialog, {
+                            Modal.createDialog(InfoDialog, {
                                 title: _t('Unignored user'),
                                 description: <div>
                                     <p>{ _t('You are no longer ignoring %(userId)s', { userId }) }</p>
@@ -861,7 +874,8 @@ export const Commands = [
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(RoomViewStore.instance.getRoomId());
-            return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
+            return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId())
+                && !isLocalRoom(room);
         },
         runFn: function(roomId, args) {
             if (args) {
@@ -901,7 +915,8 @@ export const Commands = [
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(RoomViewStore.instance.getRoomId());
-            return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
+            return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId())
+                && !isLocalRoom(room);
         },
         runFn: function(roomId, args) {
             if (args) {
@@ -940,7 +955,9 @@ export const Commands = [
         command: 'addwidget',
         args: '<url | embed code | Jitsi url>',
         description: _td('Adds a custom widget by URL to the room'),
-        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets) && shouldShowComponent(UIComponent.AddIntegrations),
+        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets)
+            && shouldShowComponent(UIComponent.AddIntegrations)
+            && !isCurrentLocalRoom(),
         runFn: function(roomId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(newTranslatableError("Please supply a widget URL or embed code"));
@@ -1040,7 +1057,7 @@ export const Commands = [
                         await cli.setDeviceVerified(userId, deviceId, true);
 
                         // Tell the user we verified everything
-                        Modal.createTrackedDialog('Slash Commands', 'Verified key', InfoDialog, {
+                        Modal.createDialog(InfoDialog, {
                             title: _t('Verified key'),
                             description: <div>
                                 <p>
@@ -1063,9 +1080,32 @@ export const Commands = [
     new Command({
         command: 'discardsession',
         description: _td('Forces the current outbound group session in an encrypted room to be discarded'),
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId) {
             try {
                 MatrixClientPeg.get().forceDiscardSession(roomId);
+            } catch (e) {
+                return reject(e.message);
+            }
+            return success();
+        },
+        category: CommandCategories.advanced,
+        renderingTypes: [TimelineRenderingType.Room],
+    }),
+    new Command({
+        command: 'remakeolm',
+        description: _td('Developer command: Discards the current outbound group session and sets up new Olm sessions'),
+        isEnabled: () => {
+            return SettingsStore.getValue("developerMode") && !isCurrentLocalRoom();
+        },
+        runFn: (roomId) => {
+            try {
+                const room = MatrixClientPeg.get().getRoom(roomId);
+
+                MatrixClientPeg.get().forceDiscardSession(roomId);
+
+                // noinspection JSIgnoredPromiseFromCall
+                MatrixClientPeg.get().crypto.ensureOlmSessionsForUsers(room.getMembers().map(m => m.userId), true);
             } catch (e) {
                 return reject(e.message);
             }
@@ -1098,7 +1138,7 @@ export const Commands = [
         command: "help",
         description: _td("Displays list of commands with usages and descriptions"),
         runFn: function() {
-            Modal.createTrackedDialog('Slash Commands', 'Help', SlashCommandHelpDialog);
+            Modal.createDialog(SlashCommandHelpDialog);
             return success();
         },
         category: CommandCategories.advanced,
@@ -1107,6 +1147,7 @@ export const Commands = [
         command: "whois",
         description: _td("Displays information about a user"),
         args: "<user-id>",
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, userId) {
             if (!userId || !userId.startsWith("@") || !userId.includes(":")) {
                 return reject(this.getUsage());
@@ -1130,7 +1171,7 @@ export const Commands = [
         args: "<description>",
         runFn: function(roomId, args) {
             return success(
-                Modal.createTrackedDialog('Slash Commands', 'Bug Report Dialog', BugReportDialog, {
+                Modal.createDialog(BugReportDialog, {
                     initialText: args,
                 }).finished,
             );
@@ -1142,7 +1183,7 @@ export const Commands = [
         description: _td("Switches to this room's virtual room, if it has one"),
         category: CommandCategories.advanced,
         isEnabled(): boolean {
-            return CallHandler.instance.getSupportsVirtualRooms();
+            return CallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom();
         },
         runFn: (roomId) => {
             return success((async () => {
@@ -1226,6 +1267,7 @@ export const Commands = [
         command: "holdcall",
         description: _td("Places the call in the current room on hold"),
         category: CommandCategories.other,
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
@@ -1240,6 +1282,7 @@ export const Commands = [
         command: "unholdcall",
         description: _td("Takes the call in the current room off hold"),
         category: CommandCategories.other,
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
@@ -1254,6 +1297,7 @@ export const Commands = [
         command: "converttodm",
         description: _td("Converts the room to a DM"),
         category: CommandCategories.other,
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const room = MatrixClientPeg.get().getRoom(roomId);
             return success(guessAndSetDMRoom(room, true));
@@ -1264,6 +1308,7 @@ export const Commands = [
         command: "converttoroom",
         description: _td("Converts the DM to a room"),
         category: CommandCategories.other,
+        isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const room = MatrixClientPeg.get().getRoom(roomId);
             return success(guessAndSetDMRoom(room, false));
@@ -1287,19 +1332,17 @@ export const Commands = [
             description: effect.description(),
             args: '<message>',
             runFn: function(roomId, args) {
-                return success((async () => {
-                    if (!args) {
-                        args = effect.fallbackMessage();
-                        MatrixClientPeg.get().sendEmoteMessage(roomId, args);
-                    } else {
-                        const content = {
-                            msgtype: effect.msgType,
-                            body: args,
-                        };
-                        MatrixClientPeg.get().sendMessage(roomId, content);
-                    }
-                    dis.dispatch({ action: `effects.${effect.command}` });
-                })());
+                let content: IContent;
+                if (!args) {
+                    content = ContentHelpers.makeEmoteMessage(effect.fallbackMessage());
+                } else {
+                    content = {
+                        msgtype: effect.msgType,
+                        body: args,
+                    };
+                }
+                dis.dispatch({ action: `effects.${effect.command}` });
+                return successSync(content);
             },
             category: CommandCategories.effects,
             renderingTypes: [TimelineRenderingType.Room],

@@ -31,7 +31,7 @@ import SpaceStore from "../../stores/spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
-import { findSiblingElement, IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
+import { IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
 import RoomListHeader from "../views/rooms/RoomListHeader";
 import RecentlyViewedButton from "../views/rooms/RecentlyViewedButton";
 import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
@@ -45,9 +45,12 @@ import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import PosthogTrackers from "../../PosthogTrackers";
+import PageType from "../../PageTypes";
+import { UserOnboardingButton } from "../views/user-onboarding/UserOnboardingButton";
 
 interface IProps {
     isMinimized: boolean;
+    pageType: PageType;
     resizeNotifier: ResizeNotifier;
 }
 
@@ -64,7 +67,6 @@ interface IState {
 
 export default class LeftPanel extends React.Component<IProps, IState> {
     private listContainerRef = createRef<HTMLDivElement>();
-    private roomSearchRef = createRef<RoomSearch>();
     private roomListRef = createRef<RoomList>();
     private focusedElement = null;
     private isDoingStickyHeaders = false;
@@ -302,40 +304,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     this.roomListRef.current?.focus();
                 }
                 break;
-
-            case KeyBindingAction.PrevRoom:
-                if (state && state.activeRef === findSiblingElement(state.refs, 0)) {
-                    ev.stopPropagation();
-                    ev.preventDefault();
-                    this.roomSearchRef.current?.focus();
-                }
-                break;
-        }
-    };
-
-    private onRoomListKeydown = (ev: React.KeyboardEvent) => {
-        if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
-        if (SettingsStore.getValue("feature_spotlight")) return;
-
-        const action = getKeyBindingsManager().getAccessibilityAction(ev);
-
-        // we cannot handle Space as that is an activation key for all focusable elements in this widget
-        if (ev.key.length === 1) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            this.roomSearchRef.current?.appendChar(ev.key);
-        } else if (action === KeyBindingAction.Backspace) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            this.roomSearchRef.current?.backspace();
-        }
-    };
-
-    private selectRoom = () => {
-        const firstRoom = this.listContainerRef.current.querySelector<HTMLDivElement>(".mx_RoomTile");
-        if (firstRoom) {
-            firstRoom.click();
-            return true; // to get the field to clear
         }
     };
 
@@ -384,11 +352,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onBlur={this.onBlur}
                 onKeyDown={this.onKeyDown}
             >
-                <RoomSearch
-                    isMinimized={this.props.isMinimized}
-                    ref={this.roomSearchRef}
-                    onSelectRoom={this.selectRoom}
-                />
+                <RoomSearch isMinimized={this.props.isMinimized} />
 
                 { dialPadButton }
                 { rightButton }
@@ -421,7 +385,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
         return (
             <div className={containerClasses}>
-                <aside className="mx_LeftPanel_roomListContainer">
+                <div className="mx_LeftPanel_roomListContainer">
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }
                     { !this.props.isMinimized && (
@@ -429,6 +393,10 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                             onVisibilityChange={this.refreshStickyHeaders}
                         />
                     ) }
+                    <UserOnboardingButton
+                        selected={this.props.pageType === PageType.HomePage}
+                        minimized={this.props.isMinimized}
+                    />
                     <div className="mx_LeftPanel_roomListWrapper">
                         <div
                             className={roomListClasses}
@@ -436,12 +404,11 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                             // Firefox sometimes makes this element focusable due to
                             // overflow:scroll;, so force it out of tab order.
                             tabIndex={-1}
-                            onKeyDown={this.onRoomListKeydown}
                         >
                             { roomList }
                         </div>
                     </div>
-                </aside>
+                </div>
             </div>
         );
     }

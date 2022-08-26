@@ -32,7 +32,9 @@ export function useTypedEventEmitter<
     useEventEmitter(emitter, eventName, handler);
 }
 
-// Hook to wrap event emitter on and removeListener in hook lifecycle
+/**
+ * Hook to wrap an EventEmitter on and off in hook lifecycle
+ */
 export function useEventEmitter(
     emitter: EventEmitter | undefined,
     eventName: string | symbol,
@@ -59,7 +61,7 @@ export function useEventEmitter(
 
             // Remove event listener on cleanup
             return () => {
-                emitter.removeListener(eventName, eventListener);
+                emitter.off(eventName, eventListener);
             };
         },
         [eventName, emitter], // Re-run if eventName or emitter changes

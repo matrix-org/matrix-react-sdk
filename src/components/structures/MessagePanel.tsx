@@ -23,8 +23,8 @@ import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
+import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -60,7 +60,7 @@ import { hasThreadSummary } from "../../utils/EventUtils";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
-const groupedEvents = [
+const groupedStateEvents = [
     EventType.RoomMember,
     EventType.RoomThirdPartyInvite,
     EventType.RoomServerAcl,
@@ -828,7 +828,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
         const receipts: IReadReceiptProps[] = [];
         room.getReceiptsForEvent(event).forEach((r) => {
-            if (!r.userId || ![ReceiptType.Read, ReceiptType.ReadPrivate].includes(r.type) || r.userId === myUserId) {
+            if (
+                !r.userId ||
+                !isSupportedReceiptType(r.type) ||
+                r.userId === myUserId
+            ) {
                 return; // ignore non-read receipts and receipts from self.
             }
             if (MatrixClientPeg.get().isUserIgnored(r.userId)) {
@@ -1190,7 +1194,7 @@ class MainGrouper extends BaseGrouper {
     static canStartGroup = function(panel: MessagePanel, ev: MatrixEvent): boolean {
         if (!panel.shouldShowEvent(ev)) return false;
 
-        if (groupedEvents.includes(ev.getType() as EventType)) {
+        if (ev.isState() && groupedStateEvents.includes(ev.getType() as EventType)) {
             return true;
         }
 
@@ -1225,7 +1229,7 @@ class MainGrouper extends BaseGrouper {
         if (this.panel.wantsDateSeparator(this.events[0], ev.getDate())) {
             return false;
         }
-        if (groupedEvents.includes(ev.getType() as EventType)) {
+        if (ev.isState() && groupedStateEvents.includes(ev.getType() as EventType)) {
             return true;
         }
         if (ev.isRedacted()) {
@@ -1313,6 +1317,7 @@ class MainGrouper extends BaseGrouper {
         ret.push(
             <EventListSummary
                 key={key}
+                data-testid={key}
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInSummary}

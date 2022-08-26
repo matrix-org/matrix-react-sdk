@@ -17,6 +17,7 @@ limitations under the License.
 import { IProtocol } from 'matrix-js-sdk/src/matrix';
 import { CallEvent, CallState, CallType } from 'matrix-js-sdk/src/webrtc/call';
 import EventEmitter from 'events';
+import { mocked } from 'jest-mock';
 
 import CallHandler, {
     CallHandlerEvent, PROTOCOL_PSTN, PROTOCOL_PSTN_PREFIXED, PROTOCOL_SIP_NATIVE, PROTOCOL_SIP_VIRTUAL,
@@ -26,6 +27,11 @@ import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import DMRoomMap from '../src/utils/DMRoomMap';
 import SdkConfig from '../src/SdkConfig';
 import { Action } from "../src/dispatcher/actions";
+import { getFunctionalMembers } from "../src/utils/room/getFunctionalMembers";
+
+jest.mock("../src/utils/room/getFunctionalMembers", () => ({
+    getFunctionalMembers: jest.fn(),
+}));
 
 // The Matrix IDs that the user sees when talking to Alice & Bob
 const NATIVE_ALICE = "@alice:example.org";
@@ -40,6 +46,8 @@ const VIRTUAL_BOB = "@virtual_bob:example.org";
 const NATIVE_ROOM_ALICE = "$alice_room:example.org";
 const NATIVE_ROOM_BOB = "$bob_room:example.org";
 const NATIVE_ROOM_CHARLIE = "$charlie_room:example.org";
+
+const FUNCTIONAL_USER = "@bot:example.com";
 
 // The room we use to talk to virtual Bob (but that the user does not see)
 // Bob has a virtual room, but Alice doesn't
@@ -69,9 +77,17 @@ function mkStubDM(roomId, userId) {
             getAvatarUrl: () => 'mxc://avatar.url/image.png',
             getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
         },
+        {
+            userId: FUNCTIONAL_USER,
+            name: 'Bot user',
+            rawDisplayName: 'Bot user',
+            roomId: roomId,
+            membership: 'join',
+            getAvatarUrl: () => 'mxc://avatar.url/image.png',
+            getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+        },
     ]);
     room.currentState.getMembers = room.getJoinedMembers;
-
     return room;
 }
 
@@ -79,7 +95,7 @@ class FakeCall extends EventEmitter {
     roomId: string;
     callId = "fake call id";
 
-    constructor(roomId) {
+    constructor(roomId: string) {
         super();
 
         this.roomId = roomId;
@@ -104,14 +120,14 @@ function untilCallHandlerEvent(callHandler: CallHandler, event: CallHandlerEvent
 describe('CallHandler', () => {
     let dmRoomMap;
     let callHandler;
-    let audioElement;
+    let audioElement: HTMLAudioElement;
     let fakeCall;
 
     // what addresses the app has looked up via pstn and native lookup
     let pstnLookup: string;
     let nativeLookup: string;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         stubClient();
         MatrixClientPeg.get().createCall = roomId => {
             if (fakeCall && fakeCall.roomId !== roomId) {
@@ -132,6 +148,10 @@ describe('CallHandler', () => {
         callHandler = new CallHandler();
         callHandler.start();
 
+        mocked(getFunctionalMembers).mockReturnValue([
+            FUNCTIONAL_USER,
+        ]);
+
         const nativeRoomAlice = mkStubDM(NATIVE_ROOM_ALICE, NATIVE_ALICE);
         const nativeRoomBob = mkStubDM(NATIVE_ROOM_BOB, NATIVE_BOB);
         const nativeRoomCharie = mkStubDM(NATIVE_ROOM_CHARLIE, NATIVE_CHARLIE);
@@ -151,7 +171,7 @@ describe('CallHandler', () => {
         };
 
         dmRoomMap = {
-            getUserIdForRoomId: roomId => {
+            getUserIdForRoomId: (roomId: string) => {
                 if (roomId === NATIVE_ROOM_ALICE) {
                     return NATIVE_ALICE;
                 } else if (roomId === NATIVE_ROOM_BOB) {
@@ -164,7 +184,7 @@ describe('CallHandler', () => {
                     return null;
                 }
             },
-            getDMRoomsForUserId: userId => {
+            getDMRoomsForUserId: (userId: string) => {
                 if (userId === NATIVE_ALICE) {
                     return [NATIVE_ROOM_ALICE];
                 } else if (userId === NATIVE_BOB) {
@@ -320,5 +340,90 @@ describe('CallHandler', () => {
         expect(callRoomChangeEventCount).toEqual(1);
         expect(callHandler.getCallForRoom(NATIVE_ROOM_BOB)).toBeNull();
         expect(callHandler.getCallForRoom(NATIVE_ROOM_CHARLIE)).toBe(fakeCall);
+    });
+});
+
+describe('CallHandler without third party protocols', () => {
+    let dmRoomMap;
+    let callHandler: CallHandler;
+    let audioElement: HTMLAudioElement;
+    let fakeCall;
+
+    beforeEach(() => {
+        stubClient();
+        MatrixClientPeg.get().createCall = roomId => {
+            if (fakeCall && fakeCall.roomId !== roomId) {
+                throw new Error("Only one call is supported!");
+            }
+            fakeCall = new FakeCall(roomId);
+            return fakeCall;
+        };
+
+        MatrixClientPeg.get().getThirdpartyProtocols = () => {
+            throw new Error("Endpoint unsupported.");
+        };
+
+        callHandler = new CallHandler();
+        callHandler.start();
+
+        const nativeRoomAlice = mkStubDM(NATIVE_ROOM_ALICE, NATIVE_ALICE);
+
+        MatrixClientPeg.get().getRoom = roomId => {
+            switch (roomId) {
+                case NATIVE_ROOM_ALICE:
+                    return nativeRoomAlice;
+            }
+        };
+
+        dmRoomMap = {
+            getUserIdForRoomId: (roomId: string) => {
+                if (roomId === NATIVE_ROOM_ALICE) {
+                    return NATIVE_ALICE;
+                } else {
+                    return null;
+                }
+            },
+            getDMRoomsForUserId: (userId: string) => {
+                if (userId === NATIVE_ALICE) {
+                    return [NATIVE_ROOM_ALICE];
+                } else {
+                    return [];
+                }
+            },
+        };
+        DMRoomMap.setShared(dmRoomMap);
+
+        MatrixClientPeg.get().getThirdpartyUser = (_proto, _params) => {
+            throw new Error("Endpoint unsupported.");
+        };
+
+        audioElement = document.createElement('audio');
+        audioElement.id = "remoteAudio";
+        document.body.appendChild(audioElement);
+    });
+
+    afterEach(() => {
+        callHandler.stop();
+        DMRoomMap.setShared(null);
+        // @ts-ignore
+        window.mxCallHandler = null;
+        fakeCall = null;
+        MatrixClientPeg.unset();
+
+        document.body.removeChild(audioElement);
+        SdkConfig.unset();
+    });
+
+    it('should still start a native call', async () => {
+        callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
+
+        await untilCallHandlerEvent(callHandler, CallHandlerEvent.CallState);
+
+        // Check that a call was started: its room on the protocol level
+        // should be the virtual room
+        expect(fakeCall.roomId).toEqual(NATIVE_ROOM_ALICE);
+
+        // but it should appear to the user to be in thw native room for Bob
+        expect(callHandler.roomIdForCall(fakeCall)).toEqual(NATIVE_ROOM_ALICE);
     });
 });

@@ -28,6 +28,8 @@ import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 
+import { Icon as LinkIcon } from '../../../../res/img/element-icons/link.svg';
+import { Icon as ViewInRoomIcon } from '../../../../res/img/element-icons/view-in-room.svg';
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -58,7 +60,6 @@ import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventRenderingUtils';
 import SettingsStore from "../../../settings/SettingsStore";
-import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
@@ -80,6 +81,8 @@ import { haveRendererForEvent, isMessageEvent, renderTile } from "../../../event
 import ThreadSummary, { ThreadMessagePreview } from "./ThreadSummary";
 import { ReadReceiptGroup } from './ReadReceiptGroup';
 import { useTooltip } from "../../../utils/useTooltip";
+import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -533,14 +536,14 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
             if (this.props.highlightLink) {
                 return (
-                    <a className="mx_ThreadSummaryIcon" href={this.props.highlightLink}>
+                    <a className="mx_ThreadSummary_icon" href={this.props.highlightLink}>
                         { _t("From a thread") }
                     </a>
                 );
             }
 
             return (
-                <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
+                <p className="mx_ThreadSummary_icon">{ _t("From a thread") }</p>
             );
         }
     }
@@ -766,6 +769,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     private renderE2EPadlock() {
         const ev = this.props.mxEvent;
 
+        // no icon for local rooms
+        if (isLocalRoom(ev.getRoomId())) return;
+
         // event could not be decrypted
         if (ev.getContent().msgtype === 'm.bad.encrypted') {
             return <E2ePadlockUndecryptable />;
@@ -847,9 +853,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
     private showContextMenu(ev: React.MouseEvent, permalink?: string): void {
         const clickTarget = ev.target as HTMLElement;
-
-        // Return if message right-click context menu isn't enabled
-        if (!SettingsStore.getValue("feature_message_right_click_context_menu")) return;
 
         // Try to find an anchor element
         const anchorElement = (clickTarget instanceof HTMLAnchorElement) ? clickTarget : clickTarget.closest("a");
@@ -942,7 +945,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             isSeeingThroughMessageHiddenForModeration,
         } = getEventDisplayInfo(this.props.mxEvent, this.context.showHiddenEvents, this.shouldHideEvent());
         const { isQuoteExpanded } = this.state;
-
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
         if (!hasRenderer) {
@@ -1121,9 +1123,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             || Boolean(this.state.contextMenu));
 
         // Thread panel shows the timestamp of the last reply in that thread
-        const ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
+        let ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
             ? this.props.mxEvent.getTs()
-            : this.state.thread?.replyToEvent.getTs();
+            : this.state.thread?.replyToEvent?.getTs();
+        if (typeof ts !== "number") {
+            // Fall back to something we can use
+            ts = this.props.mxEvent.getTs();
+        }
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
@@ -1349,7 +1355,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
-                            showThread({ rootEvent: this.props.mxEvent, push: true });
+                            dis.dispatch<ShowThreadPayload>({
+                                action: Action.ShowThread,
+                                rootEvent: this.props.mxEvent,
+                                push: true,
+                            });
                             const target = ev.currentTarget as HTMLElement;
                             const index = Array.from(target.parentElement.children).indexOf(target);
                             PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
@@ -1372,17 +1382,21 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoomButton"
+                                className="mx_MessageActionBar_iconButton"
                                 onClick={this.viewInRoom}
                                 title={_t("View in room")}
                                 key="view_in_room"
-                            />
+                            >
+                                <ViewInRoomIcon />
+                            </RovingAccessibleTooltipButton>
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkButton"
+                                className="mx_MessageActionBar_iconButton"
                                 onClick={this.copyLinkToThread}
                                 title={_t("Copy link to thread")}
                                 key="copy_link_to_thread"
-                            />
+                            >
+                                <LinkIcon />
+                            </RovingAccessibleTooltipButton>
                         </Toolbar>
                         { msgOption }
                     </>)

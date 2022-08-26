@@ -220,6 +220,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             requiresRefresh: true,
         },
     },
+    "feature_exploring_public_spaces": {
+        displayName: _td("Explore public spaces in the new search dialog"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -342,10 +347,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show extensible event representation of events"),
         default: false,
     },
-    "feature_use_only_current_profiles": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
+    "useOnlyCurrentProfiles": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show current avatar and name for users in message history"),
         default: false,
     },
@@ -378,32 +381,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Use new room breadcrumbs"),
         default: false,
     },
-    "feature_spotlight": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New search experience"),
-        default: false,
-        betaInfo: {
-            title: _td("The new search"),
-            caption: () => <>
-                <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
-                <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
-            </>,
-            faq: () => <>
-                { SdkConfig.get().bug_report_endpoint_url && <>
-                    <h4>{ _t("How can I give feedback?") }</h4>
-                    <p>{ _t("To feedback, join the beta, start a search and click on feedback.") }</p>
-                </> }
-                <h4>{ _t("How can I leave the beta?") }</h4>
-                <p>{ _t("To leave, just return to this page or click on the beta badge when you search.") }</p>
-            </>,
-            feedbackLabel: "spotlight-feedback",
-            feedbackSubheading: _td("Thank you for trying the beta, " +
-                "please go into as much detail as you can so we can improve it."),
-            image: require("../../res/img/betas/new_search_experience.gif"),
-        },
-    },
     "feature_right_panel_default_open": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
@@ -424,24 +401,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
-    "feature_hidden_read_receipts": {
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Don't send read receipts"),
-        default: false,
-    },
-    "feature_message_right_click_context_menu": {
-        isFeature: true,
-        supportedLevels: LEVELS_FEATURE,
-        labsGroup: LabGroup.Rooms,
-        displayName: _td("Right-click message context menu"),
-        default: false,
-    },
-    "feature_location_share_pin_drop": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Location sharing - pin drop"),
-        default: false,
+    "sendReadReceipts": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Send read receipts"),
+        default: true,
     },
     "feature_location_share_live": {
         isFeature: true,
@@ -450,6 +413,20 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td(
             "Live Location Sharing (temporary implementation: locations persist in room history)",
         ),
+        default: false,
+    },
+    "feature_favourite_messages": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Favourite Messages (under active development)"),
+        default: false,
+    },
+    "feature_new_device_manager": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new session manager (under active development)"),
         default: false,
     },
     "baseFontSize": {
@@ -711,18 +688,18 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevelsAreOrdered: true,
         default: {}, // none allowed
     },
+    // Legacy, kept around for transitionary purposes
     "analyticsOptIn": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Send analytics data'),
         default: false,
-    },
-    "showCookieBar": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: true,
     },
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
+        default: null,
+    },
+    "FTUE.useCaseSelection": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
     "autocompleteDelay": {
@@ -819,6 +796,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
         controller: new IncompatibleController("feature_breadcrumbs_v2", true),
+    },
+    "FTUE.userOnboardingButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show shortcut to welcome checklist above the room list"),
+        default: true,
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
@@ -965,6 +947,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
     },
     "debug_registration": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "debug_animation": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },

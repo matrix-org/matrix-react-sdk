@@ -26,7 +26,7 @@ import { Service, startTermsFlow, TermsNotSignedError } from './Terms';
 import {
     doesAccountDataHaveIdentityServer,
     doesIdentityServerHaveTerms,
-    useDefaultIdentityServer,
+    setToDefaultIdentityServer,
 } from './utils/IdentityServerUtils';
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import { abbreviateUrl } from "./utils/UrlUtils";
@@ -143,31 +143,28 @@ export default class IdentityAuthClient {
             !doesAccountDataHaveIdentityServer() &&
             !(await doesIdentityServerHaveTerms(identityServerUrl))
         ) {
-            const { finished } = Modal.createTrackedDialog(
-                'Default identity server terms warning', '',
-                QuestionDialog, {
-                    title: _t("Identity server has no terms of service"),
-                    description: (
-                        <div>
-                            <p>{ _t(
-                                "This action requires accessing the default identity server " +
-                            "<server /> to validate an email address or phone number, " +
-                            "but the server does not have any terms of service.", {},
-                                {
-                                    server: () => <b>{ abbreviateUrl(identityServerUrl) }</b>,
-                                },
-                            ) }</p>
-                            <p>{ _t(
-                                "Only continue if you trust the owner of the server.",
-                            ) }</p>
-                        </div>
-                    ),
-                    button: _t("Trust"),
-                });
+            const { finished } = Modal.createDialog(QuestionDialog, {
+                title: _t("Identity server has no terms of service"),
+                description: (
+                    <div>
+                        <p>{ _t(
+                            "This action requires accessing the default identity server " +
+                        "<server /> to validate an email address or phone number, " +
+                        "but the server does not have any terms of service.", {},
+                            {
+                                server: () => <b>{ abbreviateUrl(identityServerUrl) }</b>,
+                            },
+                        ) }</p>
+                        <p>{ _t(
+                            "Only continue if you trust the owner of the server.",
+                        ) }</p>
+                    </div>
+                ),
+                button: _t("Trust"),
+            });
             const [confirmed] = await finished;
             if (confirmed) {
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                useDefaultIdentityServer();
+                setToDefaultIdentityServer();
             } else {
                 throw new AbortedIdentityActionError(
                     "User aborted identity server action without terms",

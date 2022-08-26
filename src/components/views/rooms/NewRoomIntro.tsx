@@ -38,6 +38,7 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
+import { LocalRoom } from "../../../models/LocalRoom";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -49,11 +50,19 @@ const NewRoomIntro = () => {
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
+    const isLocalRoom = room instanceof LocalRoom;
+    const dmPartner = isLocalRoom
+        ? room.targets[0]?.userId
+        : DMRoomMap.shared().getUserIdForRoomId(roomId);
+
     let body;
     if (dmPartner) {
+        let introMessage = _t("This is the beginning of your direct message history with <displayName/>.");
         let caption;
-        if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
+
+        if (isLocalRoom) {
+            introMessage = _t("Send your first message to invite <displayName/> to chat");
+        } else if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
             caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
         }
 
@@ -75,7 +84,7 @@ const NewRoomIntro = () => {
 
             <h2>{ room.name }</h2>
 
-            <p>{ _t("This is the beginning of your direct message history with <displayName/>.", {}, {
+            <p>{ _t(introMessage, {}, {
                 displayName: () => <b>{ displayName }</b>,
             }) }</p>
             { caption && <p>{ caption }</p> }
@@ -99,17 +108,13 @@ const NewRoomIntro = () => {
         let topicText;
         if (canAddTopic && topic) {
             topicText = _t("Topic: %(topic)s (<a>edit</a>)", { topic }, {
-                a: sub => <AccessibleButton kind="link" onClick={onTopicClick}>{ sub }</AccessibleButton>,
+                a: sub => <AccessibleButton kind="link_inline" onClick={onTopicClick}>{ sub }</AccessibleButton>,
             });
         } else if (topic) {
             topicText = _t("Topic: %(topic)s ", { topic });
         } else if (canAddTopic) {
             topicText = _t("<a>Add a topic</a> to help people know what it is about.", {}, {
-                a: sub => <AccessibleButton
-                    kind="link"
-                    element="span"
-                    onClick={onTopicClick}
-                >{ sub }</AccessibleButton>,
+                a: sub => <AccessibleButton kind="link_inline" onClick={onTopicClick}>{ sub }</AccessibleButton>,
             });
         }
 
@@ -204,7 +209,7 @@ const NewRoomIntro = () => {
     );
 
     let subButton;
-    if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get())) {
+    if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get()) && !isLocalRoom) {
         subButton = (
             <AccessibleButton kind='link_inline' onClick={openRoomSettings}>{ _t("Enable encryption in settings.") }</AccessibleButton>
         );
@@ -214,8 +219,7 @@ const NewRoomIntro = () => {
         <span> { subText } { subButton } </span>
     );
 
-    return <div className="mx_NewRoomIntro">
-
+    return <li className="mx_NewRoomIntro">
         { !hasExpectedEncryptionSettings(cli, room) && (
             <EventTileBubble
                 className="mx_cryptoEvent mx_cryptoEvent_icon_warning"
@@ -225,7 +229,7 @@ const NewRoomIntro = () => {
         ) }
 
         { body }
-    </div>;
+    </li>;
 };
 
 export default NewRoomIntro;

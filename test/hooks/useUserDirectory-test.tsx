@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 import { sleep } from "matrix-js-sdk/src/utils";
 import React from "react";
@@ -96,7 +97,7 @@ describe("useUserDirectory", () => {
         expect(wrapper.text()).toBe("ready: true, loading: false");
     });
 
-    it("should work with empty queries", async () => {
+    it("should recover from a server exception", async () => {
         cli.searchUserDirectory = () => { throw new Error("Oops"); };
         const query = "Bob";
 

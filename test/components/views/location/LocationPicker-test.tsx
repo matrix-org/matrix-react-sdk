@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import maplibregl from "maplibre-gl";
+// eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 import { act } from 'react-dom/test-utils';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -99,7 +100,7 @@ describe("LocationPicker", () => {
                 wrapper.setProps({});
             });
 
-            expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
+            expect(findByTestId(wrapper, 'map-rendering-error').find('p').text()).toEqual(
                 "This homeserver is not configured correctly to display maps, "
                 + "or the configured map server may be unreachable.",
             );
@@ -115,7 +116,7 @@ describe("LocationPicker", () => {
             const wrapper = getComponent();
             wrapper.setProps({});
 
-            expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
+            expect(findByTestId(wrapper, 'map-rendering-error').find('p').text()).toEqual(
                 "This homeserver is not configured to display maps.",
             );
         });
@@ -130,7 +131,7 @@ describe("LocationPicker", () => {
             const wrapper = getComponent();
             wrapper.setProps({});
 
-            expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
+            expect(findByTestId(wrapper, 'map-rendering-error').find('p').text()).toEqual(
                 "This homeserver is not configured correctly to display maps, "
                 + "or the configured map server may be unreachable.",
             );
