@@ -92,9 +92,7 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
      * @returns {Promise<void>} Resolves when complete.
      */
     public disposeRecording(voiceRecordingId: string): Promise<void> {
-        if (this.state[voiceRecordingId]) {
-            this.state[voiceRecordingId].destroy(); // stops internally
-        }
+        this.state[voiceRecordingId]?.destroy(); // stops internally
 
         const {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
