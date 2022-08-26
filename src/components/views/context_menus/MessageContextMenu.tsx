@@ -382,7 +382,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     public render(): JSX.Element {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
-        const { mxEvent, rightClick, link, eventTileOps, reactions, collapseReplyChain } = this.props;
+        const { mxEvent, rightClick, link, eventTileOps, reactions, collapseReplyChain,
+            permalinkCreator, getRelationsForEvent, ...otherProps } = this.props;
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
         const contentActionable = isContentActionable(mxEvent);
@@ -747,7 +748,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return (
             <React.Fragment>
                 <IconizedContextMenu
-                    {...this.props}
+                    {...otherProps}
                     className="mx_MessageContextMenu"
                     compact={true}
                     data-testid="mx_MessageContextMenu"
