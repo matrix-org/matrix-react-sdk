@@ -26,7 +26,6 @@ import withValidation from "../elements/Validation";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import PlatformPeg from "../../../PlatformPeg";
 
 /**
  * Check that the server natively supports sliding sync.
@@ -73,7 +72,6 @@ async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void>
 
 export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished }) => {
     const cli = MatrixClientPeg.get();
-    const enabled = SettingsStore.getValue("feature_sliding_sync");
     const currentProxy = SettingsStore.getValue("feature_sliding_sync_proxy_url");
     const hasNativeSupport = useAsyncMemo(() => syncHealthCheck(cli).then(() => true, () => false), [], null);
 
@@ -112,20 +110,18 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
 
     return <TextInputDialog
         title={_t("Sliding Sync configuration")}
-        description={nativeSupport}
-        placeholder={hasNativeSupport ? _t('Proxy URL') : _t('Proxy URL (optional)')}
+        description={<div>
+            <div><b>{ _t("To disable you will need to log out and back in, use with caution!") }</b></div>
+            { nativeSupport }
+        </div>}
+        placeholder={hasNativeSupport ? _t('Proxy URL (optional)') : _t('Proxy URL')}
         value={currentProxy}
-        button={_t("Save")}
-        cancelButton={_t("Disable")}
+        button={_t("Enable")}
         validator={validProxy}
         onFinished={(enable: boolean, proxyUrl: string) => {
             if (enable) {
                 SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
                 onFinished(true);
-                if (enabled && proxyUrl !== currentProxy) {
-                    // We're changing proxy URL here, cause a reload
-                    PlatformPeg.get().reload();
-                }
             } else {
                 onFinished(false);
             }

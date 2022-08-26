@@ -411,7 +411,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Sliding Sync mode (under active development, requires server or proxy support)'),
+        displayName: _td('Sliding Sync mode (under active development, cannot be disabled)'),
         default: false,
         controller: new SlidingSyncController(),
     },

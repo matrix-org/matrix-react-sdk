@@ -29,7 +29,6 @@ interface IProps extends IDialogProps {
     value?: string;
     placeholder?: string;
     button?: string;
-    cancelButton?: string;
     busyMessage?: string; // pass _td string
     focus?: boolean;
     hasCancel?: boolean;
@@ -135,7 +134,6 @@ export default class TextInputDialog extends React.Component<IProps, IState> {
                 </form>
                 <DialogButtons
                     primaryButton={this.state.busy ? _t(this.props.busyMessage) : this.props.button}
-                    cancelButton={this.props.cancelButton}
                     disabled={this.state.busy}
                     onPrimaryButtonClick={this.onOk}
                     onCancel={this.onCancel}

@@ -19,6 +19,7 @@ import PlatformPeg from "../../PlatformPeg";
 import { SettingLevel } from "../SettingLevel";
 import { SlidingSyncOptionsDialog } from "../../components/views/dialogs/SlidingSyncOptionsDialog";
 import Modal from "../../Modal";
+import SettingsStore from "../SettingsStore";
 
 export default class SlidingSyncController extends SettingController {
     public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
@@ -29,5 +30,10 @@ export default class SlidingSyncController extends SettingController {
 
     public async onChange(): Promise<void> {
         PlatformPeg.get().reload();
+    }
+
+    public get settingDisabled(): boolean {
+        // Cannot be disabled once enabled, user has been warned and must log out and back in.
+        return SettingsStore.getValue("feature_sliding_sync");
     }
 }
