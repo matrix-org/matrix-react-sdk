@@ -67,7 +67,7 @@ function sendActionFromIntegrationManager(integrationManagerUrl: string, targetR
     return cy.wait(100);
 }
 
-describe("Kick", () => {
+describe("Integration Manager: Kick", () => {
     let testUser: UserCredentials;
     let synapse: SynapseInstance;
     let integrationManagerUrl: string;
