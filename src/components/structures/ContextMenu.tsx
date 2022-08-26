@@ -246,6 +246,8 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             wrapperClassName,
             chevronFace: propsChevronFace,
             chevronOffset: propsChevronOffset,
+            hasBackground: _,
+            onFinished: __,
             ...props
         } = this.props;
 
