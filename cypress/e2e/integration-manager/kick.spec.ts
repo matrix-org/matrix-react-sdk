@@ -21,6 +21,7 @@ import { MatrixClient } from "../../global";
 import { UserCredentials } from "../../support/login";
 
 const ROOM_NAME = "Integration Manager Test";
+const BOT_DISPLAY_NAME = "Bob"
 
 const INTEGRATION_MANAGER_TOKEN = "Sr_oU-B-Cir_Tx573Ugr";
 const INTEGRATION_MANAGER_HTML = `
@@ -114,7 +115,7 @@ describe("Kick", () => {
                 name: ROOM_NAME,
             }).as("roomId");
 
-            cy.getBot(synapse, { displayName: "Bob", autoAcceptInvites: true }).as("bob");
+            cy.getBot(synapse, { displayName: BOT_DISPLAY_NAME, autoAcceptInvites: true }).as("bob");
         });
     });
 
@@ -132,6 +133,7 @@ describe("Kick", () => {
             const targetUserId = targetUser.getUserId();
             cy.viewRoomByName(ROOM_NAME);
             cy.inviteUser(roomId, targetUserId);
+            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist');
 
             openIntegrationManager();
             sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
@@ -151,6 +153,7 @@ describe("Kick", () => {
             const targetUserId = targetUser.getUserId();
             cy.viewRoomByName(ROOM_NAME);
             cy.inviteUser(roomId, targetUserId);
+            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist');
             cy.getClient().then(async client => {
                 await client.sendStateEvent(roomId, 'm.room.power_levels', {
                     kick: 50,
@@ -178,8 +181,7 @@ describe("Kick", () => {
             const targetUserId = targetUser.getUserId();
             cy.viewRoomByName(ROOM_NAME);
             cy.inviteUser(roomId, targetUserId);
-            // Wait for target to join
-            cy.wait(100).then(async () => {
+            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist').then(async () => {
                 await targetUser.leave(roomId);
             }).then(() => {
                 openIntegrationManager();
@@ -201,8 +203,7 @@ describe("Kick", () => {
             const targetUserId = targetUser.getUserId();
             cy.viewRoomByName(ROOM_NAME);
             cy.inviteUser(roomId, targetUserId);
-            // Wait for target to join
-            cy.wait(100);
+            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist');
             cy.getClient().then(async client => {
                 await client.ban(roomId, targetUserId);
             }).then(() => {
