@@ -3537,5 +3537,6 @@
     "How are you finding %(brand)s so far?": "Come ti sta sembrando %(brand)s?",
     "Welcome": "Benvenuti",
     "Don’t miss a thing by taking %(brand)s with you": "Non perderti niente portando %(brand)s con te",
-    "Show shortcut to welcome checklist above the room list": "Mostra scorciatoia per l'elenco di benvenuto sopra la lista stanze"
+    "Show shortcut to welcome checklist above the room list": "Mostra scorciatoia per l'elenco di benvenuto sopra la lista stanze",
+    "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Non è consigliabile aggiungere la crittografia alle stanze pubbliche.</b>Chiunque può trovare ed entrare in stanze pubbliche, quindi chiunque può leggere i messaggi. Non avrai alcun beneficio dalla crittografia e non potrai disattivarla in seguito. Cifrare i messaggi in una stanza pubblica renderà più lenti l'invio e la ricezione dei messaggi."
 }
