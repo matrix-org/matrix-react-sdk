@@ -3537,5 +3537,6 @@
     "Manually verify by text": "Ruční ověření pomocí textu",
     "We’d appreciate any feedback on how you’re finding %(brand)s.": "Budeme rádi za jakoukoli zpětnou vazbu o tom, jak se vám %(brand)s osvědčil.",
     "How are you finding %(brand)s so far?": "Jak se vám zatím %(brand)s osvědčil?",
-    "Don’t miss a thing by taking %(brand)s with you": "Vezměte si %(brand)s s sebou a nic vám neunikne"
+    "Don’t miss a thing by taking %(brand)s with you": "Vezměte si %(brand)s s sebou a nic vám neunikne",
+    "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nedoporučuje se šifrovat veřejné místnosti.</b>Veřejné místnosti může najít a připojit se k nim kdokoli, takže si v nich může číst zprávy kdokoli. Nezískáte tak žádnou z výhod šifrování a nebudete ho moci později vypnout. Šifrování zpráv ve veřejné místnosti zpomalí příjem a odesílání zpráv."
 }
