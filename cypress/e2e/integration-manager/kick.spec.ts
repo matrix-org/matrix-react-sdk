@@ -23,7 +23,7 @@ import { UserCredentials } from "../../support/login";
 const ROOM_NAME = "Integration Manager Test";
 const BOT_DISPLAY_NAME = "Bob";
 
-const INTEGRATION_MANAGER_TOKEN = "Sr_oU-B-Cir_Tx573Ugr";
+const INTEGRATION_MANAGER_TOKEN = "DefinitelySecret_DoNotUseThisForReal";
 const INTEGRATION_MANAGER_HTML = `
     <html lang="en">
         <head>
