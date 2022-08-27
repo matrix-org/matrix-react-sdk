@@ -114,7 +114,7 @@ import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
 import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
-import CallHandler from "../../CallHandler";
+import LegacyCallHandler from "../../LegacyCallHandler";
 import { showSpaceInvite } from "../../utils/space";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -576,7 +576,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             case 'logout':
-                CallHandler.instance.hangupAllCalls();
+                LegacyCallHandler.instance.hangupAllCalls();
                 if (VideoChannelStore.instance.connected) VideoChannelStore.instance.setDisconnected();
                 Lifecycle.logout();
                 break;

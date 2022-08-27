@@ -27,7 +27,7 @@ interface IProps {
     pipMode: boolean;
 }
 
-export default class CallViewSidebar extends React.Component<IProps> {
+export default class LegacyCallViewSidebar extends React.Component<IProps> {
     render() {
         const feeds = this.props.feeds.map((feed) => {
             return (
@@ -41,8 +41,8 @@ export default class CallViewSidebar extends React.Component<IProps> {
             );
         });
 
-        const className = classNames("mx_CallViewSidebar", {
-            mx_CallViewSidebar_pipMode: this.props.pipMode,
+        const className = classNames("mx_LegacyCallViewSidebar", {
+            mx_LegacyCallViewSidebar_pipMode: this.props.pipMode,
         });
 
         return (

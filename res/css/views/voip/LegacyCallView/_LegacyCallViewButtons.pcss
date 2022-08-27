@@ -18,13 +18,13 @@ limitations under the License.
 
 /* data-whatintent makes more sense here semantically but then the tooltip would stay visible without the button */
 /* which looks broken, so we match the behaviour of tooltips which is fine too. */
-[data-whatinput="mouse"] .mx_CallViewButtons.mx_CallViewButtons_hidden {
+[data-whatinput="mouse"] .mx_LegacyCallViewButtons.mx_LegacyCallViewButtons_hidden {
     opacity: 0.001; /* opacity 0 can cause a re-layout */
     pointer-events: none;
 }
 
-.mx_CallViewButtons {
-    --CallViewButtons_dropdownButton-size: 16px;
+.mx_LegacyCallViewButtons {
+    --LegacyCallViewButtons_dropdownButton-size: 16px;
 
     position: absolute;
     display: flex;
@@ -35,7 +35,7 @@ limitations under the License.
     z-index: 200; /* To be above _all_ feeds */
     gap: 18px;
 
-    .mx_CallViewButtons_button {
+    .mx_LegacyCallViewButtons_button {
         cursor: pointer;
 
         background-color: $call-view-button-on-background;
@@ -66,9 +66,9 @@ limitations under the License.
             width: 24px;
         }
 
-        &.mx_CallViewButtons_dropdownButton {
-            width: var(--CallViewButtons_dropdownButton-size);
-            height: var(--CallViewButtons_dropdownButton-size);
+        &.mx_LegacyCallViewButtons_dropdownButton {
+            width: var(--LegacyCallViewButtons_dropdownButton-size);
+            height: var(--LegacyCallViewButtons_dropdownButton-size);
 
             position: absolute;
             right: 0;
@@ -80,28 +80,28 @@ limitations under the License.
                 mask-image: url('$(res)/img/element-icons/message/chevron-up.svg');
             }
 
-            &.mx_CallViewButtons_dropdownButton_collapsed::before {
+            &.mx_LegacyCallViewButtons_dropdownButton_collapsed::before {
                 transform: rotate(180deg);
             }
         }
 
         /* State buttons */
-        &.mx_CallViewButtons_button_on {
+        &.mx_LegacyCallViewButtons_button_on {
             background-color: $call-view-button-on-background;
 
             &::before {
                 background-color: $call-view-button-on-foreground;
             }
 
-            &.mx_CallViewButtons_button_mic::before {
+            &.mx_LegacyCallViewButtons_button_mic::before {
                 mask-image: url('$(res)/img/voip/call-view/mic-on.svg');
             }
 
-            &.mx_CallViewButtons_button_vid::before {
+            &.mx_LegacyCallViewButtons_button_vid::before {
                 mask-image: url('$(res)/img/voip/call-view/cam-on.svg');
             }
 
-            &.mx_CallViewButtons_button_screensharing {
+            &.mx_LegacyCallViewButtons_button_screensharing {
                 background-color: $accent;
 
                 &::before {
@@ -110,27 +110,27 @@ limitations under the License.
                 }
             }
 
-            &.mx_CallViewButtons_button_sidebar::before {
+            &.mx_LegacyCallViewButtons_button_sidebar::before {
                 mask-image: url('$(res)/img/voip/call-view/sidebar-on.svg');
             }
         }
 
-        &.mx_CallViewButtons_button_off {
+        &.mx_LegacyCallViewButtons_button_off {
             background-color: $call-view-button-off-background;
 
             &::before {
                 background-color: $call-view-button-off-foreground;
             }
 
-            &.mx_CallViewButtons_button_mic::before {
+            &.mx_LegacyCallViewButtons_button_mic::before {
                 mask-image: url('$(res)/img/voip/call-view/mic-off.svg');
             }
 
-            &.mx_CallViewButtons_button_vid::before {
+            &.mx_LegacyCallViewButtons_button_vid::before {
                 mask-image: url('$(res)/img/voip/call-view/cam-off.svg');
             }
 
-            &.mx_CallViewButtons_button_screensharing {
+            &.mx_LegacyCallViewButtons_button_screensharing {
                 background-color: $call-view-button-on-background;
 
                 &::before {
@@ -139,7 +139,7 @@ limitations under the License.
                 }
             }
 
-            &.mx_CallViewButtons_button_sidebar {
+            &.mx_LegacyCallViewButtons_button_sidebar {
                 background-color: $call-view-button-on-background;
 
                 &::before {
@@ -151,11 +151,11 @@ limitations under the License.
         /* State buttons */
 
         /* Stateless buttons */
-        &.mx_CallViewButtons_dialpad::before {
+        &.mx_LegacyCallViewButtons_dialpad::before {
             mask-image: url('$(res)/img/voip/call-view/dialpad.svg');
         }
 
-        &.mx_CallViewButtons_button_hangup {
+        &.mx_LegacyCallViewButtons_button_hangup {
             background-color: $alert;
 
             &::before {
@@ -164,13 +164,13 @@ limitations under the License.
             }
         }
 
-        &.mx_CallViewButtons_button_more::before {
+        &.mx_LegacyCallViewButtons_button_more::before {
             mask-image: url('$(res)/img/voip/call-view/more.svg');
         }
         /* Stateless buttons */
 
         /* Invisible state */
-        &.mx_CallViewButtons_button_invisible {
+        &.mx_LegacyCallViewButtons_button_invisible {
             visibility: hidden;
             pointer-events: none;
             position: absolute;

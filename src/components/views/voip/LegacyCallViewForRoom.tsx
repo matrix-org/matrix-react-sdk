@@ -18,8 +18,8 @@ import { CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React from 'react';
 import { Resizable } from "re-resizable";
 
-import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
-import CallView from './CallView';
+import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
+import LegacyCallView from './LegacyCallView';
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 
 interface IProps {
@@ -36,10 +36,10 @@ interface IState {
 }
 
 /*
- * Wrapper for CallView that always display the call in a given room,
+ * Wrapper for LegacyCallView that always display the call in a given room,
  * or nothing if there is no call in that room.
  */
-export default class CallViewForRoom extends React.Component<IProps, IState> {
+export default class LegacyCallViewForRoom extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -48,13 +48,13 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCall);
-        CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallState, this.updateCall);
+        LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCall);
     }
 
     public componentWillUnmount() {
-        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.updateCall);
-        CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.updateCall);
+        LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCall);
     }
 
     private updateCall = () => {
@@ -65,7 +65,7 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     };
 
     private getCall(): MatrixCall {
-        const call = CallHandler.instance.getCallForRoom(this.props.roomId);
+        const call = LegacyCallHandler.instance.getCallForRoom(this.props.roomId);
 
         if (call && [CallState.Ended, CallState.Ringing].includes(call.state)) return null;
         return call;
@@ -87,7 +87,7 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
         if (!this.state.call) return null;
 
         return (
-            <div className="mx_CallViewForRoom">
+            <div className="mx_LegacyCallViewForRoom">
                 <Resizable
                     minHeight={380}
                     maxHeight="80vh"
@@ -104,10 +104,10 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
                     onResizeStart={this.onResizeStart}
                     onResize={this.onResize}
                     onResizeStop={this.onResizeStop}
-                    className="mx_CallViewForRoom_ResizeWrapper"
-                    handleClasses={{ bottom: "mx_CallViewForRoom_ResizeHandle" }}
+                    className="mx_LegacyCallViewForRoom_ResizeWrapper"
+                    handleClasses={{ bottom: "mx_LegacyCallViewForRoom_ResizeHandle" }}
                 >
-                    <CallView
+                    <LegacyCallView
                         call={this.state.call}
                         pipMode={false}
                         showApps={this.props.showApps}

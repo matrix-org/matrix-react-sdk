@@ -21,26 +21,26 @@ import { _t } from '../../../../languageHandler';
 import RoomAvatar from '../../avatars/RoomAvatar';
 import AccessibleTooltipButton from '../../elements/AccessibleTooltipButton';
 
-interface CallControlsProps {
+interface LegacyCallControlsProps {
     onExpand?: () => void;
     onPin?: () => void;
     onMaximize?: () => void;
 }
 
-const CallViewHeaderControls: React.FC<CallControlsProps> = ({ onExpand, onPin, onMaximize }) => {
-    return <div className="mx_CallViewHeader_controls">
+const LegacyCallViewHeaderControls: React.FC<LegacyCallControlsProps> = ({ onExpand, onPin, onMaximize }) => {
+    return <div className="mx_LegacyCallViewHeader_controls">
         { onMaximize && <AccessibleTooltipButton
-            className="mx_CallViewHeader_button mx_CallViewHeader_button_fullscreen"
+            className="mx_LegacyCallViewHeader_button mx_LegacyCallViewHeader_button_fullscreen"
             onClick={onMaximize}
             title={_t("Fill Screen")}
         /> }
         { onPin && <AccessibleTooltipButton
-            className="mx_CallViewHeader_button mx_CallViewHeader_button_pin"
+            className="mx_LegacyCallViewHeader_button mx_LegacyCallViewHeader_button_pin"
             onClick={onPin}
             title={_t("Pin")}
         /> }
         { onExpand && <AccessibleTooltipButton
-            className="mx_CallViewHeader_button mx_CallViewHeader_button_expand"
+            className="mx_LegacyCallViewHeader_button mx_LegacyCallViewHeader_button_expand"
             onClick={onExpand}
             title={_t("Return to call")}
         /> }
@@ -52,15 +52,15 @@ interface ISecondaryCallInfoProps {
 }
 
 const SecondaryCallInfo: React.FC<ISecondaryCallInfoProps> = ({ callRoom }) => {
-    return <span className="mx_CallViewHeader_secondaryCallInfo">
+    return <span className="mx_LegacyCallViewHeader_secondaryCallInfo">
         <RoomAvatar room={callRoom} height={16} width={16} />
-        <span className="mx_CallView_secondaryCall_roomName">
+        <span className="mx_LegacyCallView_secondaryCall_roomName">
             { _t("%(name)s on hold", { name: callRoom.name }) }
         </span>
     </span>;
 };
 
-interface CallViewHeaderProps {
+interface LegacyCallViewHeaderProps {
     pipMode: boolean;
     callRooms?: Room[];
     onPipMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
@@ -69,7 +69,7 @@ interface CallViewHeaderProps {
     onMaximize?: () => void;
 }
 
-const CallViewHeader: React.FC<CallViewHeaderProps> = ({
+const LegacyCallViewHeader: React.FC<LegacyCallViewHeaderProps> = ({
     pipMode = false,
     callRooms = [],
     onPipMouseDown,
@@ -81,25 +81,25 @@ const CallViewHeader: React.FC<CallViewHeaderProps> = ({
     const callRoomName = callRoom.name;
 
     if (!pipMode) {
-        return <div className="mx_CallViewHeader">
-            <div className="mx_CallViewHeader_icon" />
-            <span className="mx_CallViewHeader_text">{ _t("Call") }</span>
-            <CallViewHeaderControls onMaximize={onMaximize} />
+        return <div className="mx_LegacyCallViewHeader">
+            <div className="mx_LegacyCallViewHeader_icon" />
+            <span className="mx_LegacyCallViewHeader_text">{ _t("Call") }</span>
+            <LegacyCallViewHeaderControls onMaximize={onMaximize} />
         </div>;
     }
     return (
         <div
-            className="mx_CallViewHeader mx_CallViewHeader_pip"
+            className="mx_LegacyCallViewHeader mx_LegacyCallViewHeader_pip"
             onMouseDown={onPipMouseDown}
         >
             <RoomAvatar room={callRoom} height={32} width={32} />
-            <div className="mx_CallViewHeader_callInfo">
-                <div className="mx_CallViewHeader_roomName">{ callRoomName }</div>
+            <div className="mx_LegacyCallViewHeader_callInfo">
+                <div className="mx_LegacyCallViewHeader_roomName">{ callRoomName }</div>
                 { onHoldCallRoom && <SecondaryCallInfo callRoom={onHoldCallRoom} /> }
             </div>
-            <CallViewHeaderControls onExpand={onExpand} onPin={onPin} onMaximize={onMaximize} />
+            <LegacyCallViewHeaderControls onExpand={onExpand} onPin={onPin} onMaximize={onMaximize} />
         </div>
     );
 };
 
-export default CallViewHeader;
+export default LegacyCallViewHeader;

@@ -19,10 +19,10 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { CallEvent, CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { EventEmitter } from 'events';
 
-import CallHandler, { CallHandlerEvent } from '../../CallHandler';
+import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../LegacyCallHandler';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 
-export enum CallEventGrouperEvent {
+export enum LegacyCallEventGrouperEvent {
     StateChanged = "state_changed",
     SilencedChanged = "silenced_changed",
     LengthChanged = "length_changed",
@@ -44,10 +44,10 @@ export enum CustomCallState {
     Missed = "missed",
 }
 
-export function buildCallEventGroupers(
-    callEventGroupers: Map<string, CallEventGrouper>,
+export function buildLegacyCallEventGroupers(
+    callEventGroupers: Map<string, LegacyCallEventGrouper>,
     events?: MatrixEvent[],
-): Map<string, CallEventGrouper> {
+): Map<string, LegacyCallEventGrouper> {
     const newCallEventGroupers = new Map();
     events?.forEach(ev => {
         if (!ev.getType().startsWith("m.call.") && !ev.getType().startsWith("org.matrix.call.")) {
@@ -57,10 +57,10 @@ export function buildCallEventGroupers(
         const callId = ev.getContent().call_id;
         if (!newCallEventGroupers.has(callId)) {
             if (callEventGroupers.has(callId)) {
-                // reuse the CallEventGrouper object where possible
+                // reuse the LegacyCallEventGrouper object where possible
                 newCallEventGroupers.set(callId, callEventGroupers.get(callId));
             } else {
-                newCallEventGroupers.set(callId, new CallEventGrouper());
+                newCallEventGroupers.set(callId, new LegacyCallEventGrouper());
             }
         }
         newCallEventGroupers.get(callId).add(ev);
@@ -68,7 +68,7 @@ export function buildCallEventGroupers(
     return newCallEventGroupers;
 }
 
-export default class CallEventGrouper extends EventEmitter {
+export default class LegacyCallEventGrouper extends EventEmitter {
     private events: Set<MatrixEvent> = new Set<MatrixEvent>();
     private call: MatrixCall;
     public state: CallState | CustomCallState;
@@ -76,8 +76,10 @@ export default class CallEventGrouper extends EventEmitter {
     constructor() {
         super();
 
-        CallHandler.instance.addListener(CallHandlerEvent.CallsChanged, this.setCall);
-        CallHandler.instance.addListener(CallHandlerEvent.SilencedCallsChanged, this.onSilencedCallsChanged);
+        LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallsChanged, this.setCall);
+        LegacyCallHandler.instance.addListener(
+            LegacyCallHandlerEvent.SilencedCallsChanged, this.onSilencedCallsChanged,
+        );
     }
 
     private get invite(): MatrixEvent {
@@ -138,31 +140,31 @@ export default class CallEventGrouper extends EventEmitter {
     }
 
     private onSilencedCallsChanged = () => {
-        const newState = CallHandler.instance.isCallSilenced(this.callId);
-        this.emit(CallEventGrouperEvent.SilencedChanged, newState);
+        const newState = LegacyCallHandler.instance.isCallSilenced(this.callId);
+        this.emit(LegacyCallEventGrouperEvent.SilencedChanged, newState);
     };
 
     private onLengthChanged = (length: number): void => {
-        this.emit(CallEventGrouperEvent.LengthChanged, length);
+        this.emit(LegacyCallEventGrouperEvent.LengthChanged, length);
     };
 
     public answerCall = (): void => {
-        CallHandler.instance.answerCall(this.roomId);
+        LegacyCallHandler.instance.answerCall(this.roomId);
     };
 
     public rejectCall = (): void => {
-        CallHandler.instance.hangupOrReject(this.roomId, true);
+        LegacyCallHandler.instance.hangupOrReject(this.roomId, true);
     };
 
     public callBack = (): void => {
-        CallHandler.instance.placeCall(this.roomId, this.isVoice ? CallType.Voice : CallType.Video);
+        LegacyCallHandler.instance.placeCall(this.roomId, this.isVoice ? CallType.Voice : CallType.Video);
     };
 
     public toggleSilenced = () => {
-        const silenced = CallHandler.instance.isCallSilenced(this.callId);
+        const silenced = LegacyCallHandler.instance.isCallSilenced(this.callId);
         silenced ?
-            CallHandler.instance.unSilenceCall(this.callId) :
-            CallHandler.instance.silenceCall(this.callId);
+            LegacyCallHandler.instance.unSilenceCall(this.callId) :
+            LegacyCallHandler.instance.silenceCall(this.callId);
     };
 
     private setCallListeners() {
@@ -182,13 +184,13 @@ export default class CallEventGrouper extends EventEmitter {
             else if (this.hangup) this.state = CallState.Ended;
             else if (this.invite && this.call) this.state = CallState.Connecting;
         }
-        this.emit(CallEventGrouperEvent.StateChanged, this.state);
+        this.emit(LegacyCallEventGrouperEvent.StateChanged, this.state);
     };
 
     private setCall = () => {
         if (this.call) return;
 
-        this.call = CallHandler.instance.getCallById(this.callId);
+        this.call = LegacyCallHandler.instance.getCallById(this.callId);
         this.setCallListeners();
         this.setState();
     };

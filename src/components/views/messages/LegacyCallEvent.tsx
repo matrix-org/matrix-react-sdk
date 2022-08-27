@@ -21,7 +21,10 @@ import classNames from 'classnames';
 
 import { _t } from '../../../languageHandler';
 import MemberAvatar from '../avatars/MemberAvatar';
-import CallEventGrouper, { CallEventGrouperEvent, CustomCallState } from '../../structures/CallEventGrouper';
+import LegacyCallEventGrouper, {
+    LegacyCallEventGrouperEvent,
+    CustomCallState,
+} from '../../structures/LegacyCallEventGrouper';
 import AccessibleButton from '../elements/AccessibleButton';
 import InfoTooltip, { InfoTooltipKind } from '../elements/InfoTooltip';
 import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
@@ -32,7 +35,7 @@ const MAX_NON_NARROW_WIDTH = 450 / 70 * 100;
 
 interface IProps {
     mxEvent: MatrixEvent;
-    callEventGrouper: CallEventGrouper;
+    callEventGrouper: LegacyCallEventGrouper;
     timestamp?: JSX.Element;
 }
 
@@ -43,7 +46,7 @@ interface IState {
     length: number;
 }
 
-export default class CallEvent extends React.PureComponent<IProps, IState> {
+export default class LegacyCallEvent extends React.PureComponent<IProps, IState> {
     private wrapperElement = createRef<HTMLDivElement>();
     private resizeObserver: ResizeObserver;
 
@@ -59,18 +62,18 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
     }
 
     componentDidMount() {
-        this.props.callEventGrouper.addListener(CallEventGrouperEvent.StateChanged, this.onStateChanged);
-        this.props.callEventGrouper.addListener(CallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
-        this.props.callEventGrouper.addListener(CallEventGrouperEvent.LengthChanged, this.onLengthChanged);
+        this.props.callEventGrouper.addListener(LegacyCallEventGrouperEvent.StateChanged, this.onStateChanged);
+        this.props.callEventGrouper.addListener(LegacyCallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
+        this.props.callEventGrouper.addListener(LegacyCallEventGrouperEvent.LengthChanged, this.onLengthChanged);
 
         this.resizeObserver = new ResizeObserver(this.resizeObserverCallback);
         this.wrapperElement.current && this.resizeObserver.observe(this.wrapperElement.current);
     }
 
     componentWillUnmount() {
-        this.props.callEventGrouper.removeListener(CallEventGrouperEvent.StateChanged, this.onStateChanged);
-        this.props.callEventGrouper.removeListener(CallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
-        this.props.callEventGrouper.removeListener(CallEventGrouperEvent.LengthChanged, this.onLengthChanged);
+        this.props.callEventGrouper.removeListener(LegacyCallEventGrouperEvent.StateChanged, this.onStateChanged);
+        this.props.callEventGrouper.removeListener(LegacyCallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
+        this.props.callEventGrouper.removeListener(LegacyCallEventGrouperEvent.LengthChanged, this.onLengthChanged);
 
         this.resizeObserver.disconnect();
     }
@@ -97,7 +100,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
     private renderCallBackButton(text: string): JSX.Element {
         return (
             <AccessibleButton
-                className="mx_CallEvent_content_button mx_CallEvent_content_button_callBack"
+                className="mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_callBack"
                 onClick={this.props.callEventGrouper.callBack}
                 kind="primary"
             >
@@ -108,9 +111,9 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
 
     private renderSilenceIcon(): JSX.Element {
         const silenceClass = classNames({
-            "mx_CallEvent_iconButton": true,
-            "mx_CallEvent_unSilence": this.state.silenced,
-            "mx_CallEvent_silence": !this.state.silenced,
+            "mx_LegacyCallEvent_iconButton": true,
+            "mx_LegacyCallEvent_unSilence": this.state.silenced,
+            "mx_LegacyCallEvent_silence": !this.state.silenced,
         });
 
         return (
@@ -130,17 +133,17 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
             }
 
             return (
-                <div className="mx_CallEvent_content">
+                <div className="mx_LegacyCallEvent_content">
                     { silenceIcon }
                     <AccessibleButton
-                        className="mx_CallEvent_content_button mx_CallEvent_content_button_reject"
+                        className="mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_reject"
                         onClick={this.props.callEventGrouper.rejectCall}
                         kind="danger"
                     >
                         <span> { _t("Decline") } </span>
                     </AccessibleButton>
                     <AccessibleButton
-                        className="mx_CallEvent_content_button mx_CallEvent_content_button_answer"
+                        className="mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_answer"
                         onClick={this.props.callEventGrouper.answerCall}
                         kind="primary"
                     >
@@ -156,7 +159,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
 
             if (gotRejected) {
                 return (
-                    <div className="mx_CallEvent_content">
+                    <div className="mx_LegacyCallEvent_content">
                         { _t("Call declined") }
                         { this.renderCallBackButton(_t("Call back")) }
                         { this.props.timestamp }
@@ -175,14 +178,14 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
                     text += " • " + formatCallTime(duration);
                 }
                 return (
-                    <div className="mx_CallEvent_content">
+                    <div className="mx_LegacyCallEvent_content">
                         { text }
                         { this.props.timestamp }
                     </div>
                 );
             } else if (hangupReason === CallErrorCode.InviteTimeout) {
                 return (
-                    <div className="mx_CallEvent_content">
+                    <div className="mx_LegacyCallEvent_content">
                         { _t("No answer") }
                         { this.renderCallBackButton(_t("Call back")) }
                         { this.props.timestamp }
@@ -212,10 +215,10 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
             }
 
             return (
-                <div className="mx_CallEvent_content">
+                <div className="mx_LegacyCallEvent_content">
                     <InfoTooltip
                         tooltip={reason}
-                        className="mx_CallEvent_content_tooltip"
+                        className="mx_LegacyCallEvent_content_tooltip"
                         kind={InfoTooltipKind.Warning}
                     />
                     { _t("Connection failed") }
@@ -226,7 +229,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
         }
         if (state === CallState.Connected) {
             return (
-                <div className="mx_CallEvent_content">
+                <div className="mx_LegacyCallEvent_content">
                     <Clock seconds={this.state.length} aria-live="off" />
                     { this.props.timestamp }
                 </div>
@@ -234,7 +237,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
         }
         if (state === CallState.Connecting) {
             return (
-                <div className="mx_CallEvent_content">
+                <div className="mx_LegacyCallEvent_content">
                     { _t("Connecting") }
                     { this.props.timestamp }
                 </div>
@@ -242,7 +245,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
         }
         if (state === CustomCallState.Missed) {
             return (
-                <div className="mx_CallEvent_content">
+                <div className="mx_LegacyCallEvent_content">
                     { _t("Missed call") }
                     { this.renderCallBackButton(_t("Call back")) }
                     { this.props.timestamp }
@@ -251,7 +254,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div className="mx_CallEvent_content">
+            <div className="mx_LegacyCallEvent_content">
                 { _t("The call is in an unknown state!") }
                 { this.props.timestamp }
             </div>
@@ -266,13 +269,13 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
         const callState = this.state.callState;
         const hangupReason = this.props.callEventGrouper.hangupReason;
         const content = this.renderContent(callState);
-        const className = classNames("mx_CallEvent", {
-            mx_CallEvent_voice: isVoice,
-            mx_CallEvent_video: !isVoice,
-            mx_CallEvent_narrow: this.state.narrow,
-            mx_CallEvent_missed: callState === CustomCallState.Missed,
-            mx_CallEvent_noAnswer: callState === CallState.Ended && hangupReason === CallErrorCode.InviteTimeout,
-            mx_CallEvent_rejected: callState === CallState.Ended && this.props.callEventGrouper.gotRejected,
+        const className = classNames("mx_LegacyCallEvent", {
+            mx_LegacyCallEvent_voice: isVoice,
+            mx_LegacyCallEvent_video: !isVoice,
+            mx_LegacyCallEvent_narrow: this.state.narrow,
+            mx_LegacyCallEvent_missed: callState === CustomCallState.Missed,
+            mx_LegacyCallEvent_noAnswer: callState === CallState.Ended && hangupReason === CallErrorCode.InviteTimeout,
+            mx_LegacyCallEvent_rejected: callState === CallState.Ended && this.props.callEventGrouper.gotRejected,
         });
         let silenceIcon;
         if (this.state.narrow && this.state.callState === CallState.Ringing) {
@@ -280,21 +283,21 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div className="mx_CallEvent_wrapper" ref={this.wrapperElement}>
+            <div className="mx_LegacyCallEvent_wrapper" ref={this.wrapperElement}>
                 <div className={className}>
                     { silenceIcon }
-                    <div className="mx_CallEvent_info">
+                    <div className="mx_LegacyCallEvent_info">
                         <MemberAvatar
                             member={event.sender}
                             width={32}
                             height={32}
                         />
-                        <div className="mx_CallEvent_info_basic">
-                            <div className="mx_CallEvent_sender">
+                        <div className="mx_LegacyCallEvent_info_basic">
+                            <div className="mx_LegacyCallEvent_sender">
                                 { sender }
                             </div>
-                            <div className="mx_CallEvent_type">
-                                <div className="mx_CallEvent_type_icon" />
+                            <div className="mx_LegacyCallEvent_type">
+                                <div className="mx_LegacyCallEvent_type_icon" />
                                 { callType }
                             </div>
                         </div>

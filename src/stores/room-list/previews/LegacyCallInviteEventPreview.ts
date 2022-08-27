@@ -21,16 +21,20 @@ import { TagID } from "../models";
 import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
 import { _t } from "../../../languageHandler";
 
-export class CallAnswerEventPreview implements IPreview {
+export class LegacyCallInviteEventPreview implements IPreview {
     public getTextFor(event: MatrixEvent, tagId?: TagID): string {
         if (shouldPrefixMessagesIn(event.getRoomId(), tagId)) {
             if (isSelf(event)) {
-                return _t("You joined the call");
+                return _t("You started a call");
             } else {
-                return _t("%(senderName)s joined the call", { senderName: getSenderName(event) });
+                return _t("%(senderName)s started a call", { senderName: getSenderName(event) });
             }
         } else {
-            return _t("Call in progress");
+            if (isSelf(event)) {
+                return _t("Waiting for answer");
+            } else {
+                return _t("%(senderName)s is calling", { senderName: getSenderName(event) });
+            }
         }
     }
 }

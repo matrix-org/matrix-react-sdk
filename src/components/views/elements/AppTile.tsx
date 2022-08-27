@@ -39,7 +39,7 @@ import { ElementWidget, StopGapWidget } from "../../../stores/widgets/StopGapWid
 import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
 import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
-import CallHandler from '../../../CallHandler';
+import LegacyCallHandler from '../../../LegacyCallHandler';
 import { IApp } from "../../../stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
@@ -393,7 +393,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         if (WidgetType.JITSI.matches(this.props.app.type) && this.props.room) {
-            CallHandler.instance.hangupCallApp(this.props.room.roomId);
+            LegacyCallHandler.instance.hangupCallApp(this.props.room.roomId);
         }
 
         // Delete the widget from the persisted store for good measure.

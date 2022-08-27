@@ -20,14 +20,14 @@ import { CallState } from "matrix-js-sdk/src/webrtc/call";
 
 import { stubClient } from '../../test-utils';
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
-import CallEventGrouper, { CustomCallState } from "../../../src/components/structures/CallEventGrouper";
+import LegacyCallEventGrouper, { CustomCallState } from "../../../src/components/structures/LegacyCallEventGrouper";
 
 const MY_USER_ID = "@me:here";
 const THEIR_USER_ID = "@they:here";
 
 let client: MatrixClient;
 
-describe('CallEventGrouper', () => {
+describe('LegacyCallEventGrouper', () => {
     beforeEach(() => {
         stubClient();
         client = MatrixClientPeg.get();
@@ -37,7 +37,7 @@ describe('CallEventGrouper', () => {
     });
 
     it("detects a missed call", () => {
-        const grouper = new CallEventGrouper();
+        const grouper = new LegacyCallEventGrouper();
 
         grouper.add({
             getContent: () => {
@@ -57,8 +57,8 @@ describe('CallEventGrouper', () => {
     });
 
     it("detects an ended call", () => {
-        const grouperHangup = new CallEventGrouper();
-        const grouperReject = new CallEventGrouper();
+        const grouperHangup = new LegacyCallEventGrouper();
+        const grouperReject = new LegacyCallEventGrouper();
 
         grouperHangup.add({
             getContent: () => {
@@ -119,7 +119,7 @@ describe('CallEventGrouper', () => {
     });
 
     it("detects call type", () => {
-        const grouper = new CallEventGrouper();
+        const grouper = new LegacyCallEventGrouper();
 
         grouper.add({
             getContent: () => {

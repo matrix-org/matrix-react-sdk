@@ -54,7 +54,7 @@ import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/
 import SdkConfig from './SdkConfig';
 import { ensureDMExists } from './createRoom';
 import { Container, WidgetLayoutStore } from './stores/widgets/WidgetLayoutStore';
-import IncomingCallToast, { getIncomingCallToastKey } from './toasts/IncomingCallToast';
+import IncomingLegacyCallToast, { getIncomingLegacyCallToastKey } from './toasts/IncomingLegacyCallToast';
 import ToastStore from './stores/ToastStore';
 import Resend from './Resend';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
@@ -100,7 +100,7 @@ interface ThirdpartyLookupResponse {
     fields: ThirdpartyLookupResponseFields;
 }
 
-export enum CallHandlerEvent {
+export enum LegacyCallHandlerEvent {
     CallsChanged = "calls_changed",
     CallChangeRoom = "call_change_room",
     SilencedCallsChanged = "silenced_calls_changed",
@@ -108,11 +108,11 @@ export enum CallHandlerEvent {
 }
 
 /**
- * CallHandler manages all currently active calls. It should be used for
+ * LegacyCallHandler manages all currently active calls. It should be used for
  * placing, answering, rejecting and hanging up calls. It also handles ringing,
  * PSTN support and other things.
  */
-export default class CallHandler extends EventEmitter {
+export default class LegacyCallHandler extends EventEmitter {
     private calls = new Map<string, MatrixCall>(); // roomId -> call
     // Calls started as an attended transfer, ie. with the intention of transferring another
     // call with a different party to this one.
@@ -130,11 +130,11 @@ export default class CallHandler extends EventEmitter {
     private silencedCalls = new Set<string>(); // callIds
 
     public static get instance() {
-        if (!window.mxCallHandler) {
-            window.mxCallHandler = new CallHandler();
+        if (!window.mxLegacyCallHandler) {
+            window.mxLegacyCallHandler = new LegacyCallHandler();
         }
 
-        return window.mxCallHandler;
+        return window.mxLegacyCallHandler;
     }
 
     /*
@@ -186,7 +186,7 @@ export default class CallHandler extends EventEmitter {
 
     public silenceCall(callId: string): void {
         this.silencedCalls.add(callId);
-        this.emit(CallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
+        this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
 
         // Don't pause audio if we have calls which are still ringing
         if (this.areAnyCallsUnsilenced()) return;
@@ -195,7 +195,7 @@ export default class CallHandler extends EventEmitter {
 
     public unSilenceCall(callId: string): void {
         this.silencedCalls.delete(callId);
-        this.emit(CallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
+        this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
         this.play(AudioID.Ring);
     }
 
@@ -311,7 +311,7 @@ export default class CallHandler extends EventEmitter {
             return;
         }
 
-        const mappedRoomId = CallHandler.instance.roomIdForCall(call);
+        const mappedRoomId = LegacyCallHandler.instance.roomIdForCall(call);
         if (this.getCallForRoom(mappedRoomId)) {
             logger.log(
                 "Got incoming call for room " + mappedRoomId +
@@ -389,7 +389,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     public play(audioId: AudioID): void {
-        const logPrefix = `CallHandler.play(${audioId}):`;
+        const logPrefix = `LegacyCallHandler.play(${audioId}):`;
         logger.debug(`${logPrefix} beginning of function`);
         // TODO: Attach an invisible element for this instead
         // which listens?
@@ -424,7 +424,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     public pause(audioId: AudioID): void {
-        const logPrefix = `CallHandler.pause(${audioId}):`;
+        const logPrefix = `LegacyCallHandler.pause(${audioId}):`;
         logger.debug(`${logPrefix} beginning of function`);
         // TODO: Attach an invisible element for this instead
         // which listens?
@@ -688,32 +688,32 @@ export default class CallHandler extends EventEmitter {
     }
 
     private setCallState(call: MatrixCall, status: CallState): void {
-        const mappedRoomId = CallHandler.instance.roomIdForCall(call);
+        const mappedRoomId = LegacyCallHandler.instance.roomIdForCall(call);
 
         logger.log(
             `Call state in ${mappedRoomId} changed to ${status}`,
         );
 
-        const toastKey = getIncomingCallToastKey(call.callId);
+        const toastKey = getIncomingLegacyCallToastKey(call.callId);
         if (status === CallState.Ringing) {
             ToastStore.sharedInstance().addOrReplaceToast({
                 key: toastKey,
                 priority: 100,
-                component: IncomingCallToast,
-                bodyClassName: "mx_IncomingCallToast",
+                component: IncomingLegacyCallToast,
+                bodyClassName: "mx_IncomingLegacyCallToast",
                 props: { call },
             });
         } else {
             ToastStore.sharedInstance().dismissToast(toastKey);
         }
 
-        this.emit(CallHandlerEvent.CallState, mappedRoomId, status);
+        this.emit(LegacyCallHandlerEvent.CallState, mappedRoomId, status);
     }
 
     private removeCallForRoom(roomId: string): void {
         logger.log("Removing call for room ", roomId);
         this.calls.delete(roomId);
-        this.emit(CallHandlerEvent.CallsChanged, this.calls);
+        this.emit(LegacyCallHandlerEvent.CallsChanged, this.calls);
     }
 
     private showICEFallbackPrompt(): void {
@@ -1115,9 +1115,9 @@ export default class CallHandler extends EventEmitter {
 
         // Should we always emit CallsChanged too?
         if (changedRooms) {
-            this.emit(CallHandlerEvent.CallChangeRoom, call);
+            this.emit(LegacyCallHandlerEvent.CallChangeRoom, call);
         } else {
-            this.emit(CallHandlerEvent.CallsChanged, this.calls);
+            this.emit(LegacyCallHandlerEvent.CallsChanged, this.calls);
         }
     }
 }

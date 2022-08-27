@@ -1,5 +1,5 @@
 /*
-Copyright 2020 New Vector Ltd
+Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_CallContextMenu_item {
-    width: 205px;
-    height: 40px;
-    padding-left: 16px;
-    line-height: 40px;
-    vertical-align: center;
+.mx_LegacyCallPreview {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    pointer-events: initial; /* restore pointer events so the user can leave/interact */
+
+    .mx_VideoFeed_remote.mx_VideoFeed_voice {
+        min-height: 150px;
+    }
+
+    .mx_VideoFeed_local {
+        border-radius: 8px;
+        overflow: hidden;
+    }
 }

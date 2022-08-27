@@ -19,9 +19,9 @@ import { CallEvent, CallState, CallType } from 'matrix-js-sdk/src/webrtc/call';
 import EventEmitter from 'events';
 import { mocked } from 'jest-mock';
 
-import CallHandler, {
-    CallHandlerEvent, PROTOCOL_PSTN, PROTOCOL_PSTN_PREFIXED, PROTOCOL_SIP_NATIVE, PROTOCOL_SIP_VIRTUAL,
-} from '../src/CallHandler';
+import LegacyCallHandler, {
+    LegacyCallHandlerEvent, PROTOCOL_PSTN, PROTOCOL_PSTN_PREFIXED, PROTOCOL_SIP_NATIVE, PROTOCOL_SIP_VIRTUAL,
+} from '../src/LegacyCallHandler';
 import { stubClient, mkStubRoom, untilDispatch } from './test-utils';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import DMRoomMap from '../src/utils/DMRoomMap';
@@ -109,7 +109,7 @@ class FakeCall extends EventEmitter {
     }
 }
 
-function untilCallHandlerEvent(callHandler: CallHandler, event: CallHandlerEvent): Promise<void> {
+function untilCallHandlerEvent(callHandler: LegacyCallHandler, event: LegacyCallHandlerEvent): Promise<void> {
     return new Promise<void>((resolve) => {
         callHandler.addListener(event, () => {
             resolve();
@@ -117,7 +117,7 @@ function untilCallHandlerEvent(callHandler: CallHandler, event: CallHandlerEvent
     });
 }
 
-describe('CallHandler', () => {
+describe('LegacyCallHandler', () => {
     let dmRoomMap;
     let callHandler;
     let audioElement: HTMLAudioElement;
@@ -145,7 +145,7 @@ describe('CallHandler', () => {
             });
         };
 
-        callHandler = new CallHandler();
+        callHandler = new LegacyCallHandler();
         callHandler.start();
 
         mocked(getFunctionalMembers).mockReturnValue([
@@ -251,7 +251,7 @@ describe('CallHandler', () => {
         callHandler.stop();
         DMRoomMap.setShared(null);
         // @ts-ignore
-        window.mxCallHandler = null;
+        window.mxLegacyCallHandler = null;
         fakeCall = null;
         MatrixClientPeg.unset();
 
@@ -295,14 +295,14 @@ describe('CallHandler', () => {
     it('should move calls between rooms when remote asserted identity changes', async () => {
         callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
 
-        await untilCallHandlerEvent(callHandler, CallHandlerEvent.CallState);
+        await untilCallHandlerEvent(callHandler, LegacyCallHandlerEvent.CallState);
 
         // We placed the call in Alice's room so it should start off there
         expect(callHandler.getCallForRoom(NATIVE_ROOM_ALICE)).toBe(fakeCall);
 
         let callRoomChangeEventCount = 0;
         const roomChangePromise = new Promise<void>(resolve => {
-            callHandler.addListener(CallHandlerEvent.CallChangeRoom, () => {
+            callHandler.addListener(LegacyCallHandlerEvent.CallChangeRoom, () => {
                 ++callRoomChangeEventCount;
                 resolve();
             });
@@ -343,9 +343,9 @@ describe('CallHandler', () => {
     });
 });
 
-describe('CallHandler without third party protocols', () => {
+describe('LegacyCallHandler without third party protocols', () => {
     let dmRoomMap;
-    let callHandler: CallHandler;
+    let callHandler: LegacyCallHandler;
     let audioElement: HTMLAudioElement;
     let fakeCall;
 
@@ -363,7 +363,7 @@ describe('CallHandler without third party protocols', () => {
             throw new Error("Endpoint unsupported.");
         };
 
-        callHandler = new CallHandler();
+        callHandler = new LegacyCallHandler();
         callHandler.start();
 
         const nativeRoomAlice = mkStubDM(NATIVE_ROOM_ALICE, NATIVE_ALICE);
@@ -406,7 +406,7 @@ describe('CallHandler without third party protocols', () => {
         callHandler.stop();
         DMRoomMap.setShared(null);
         // @ts-ignore
-        window.mxCallHandler = null;
+        window.mxLegacyCallHandler = null;
         fakeCall = null;
         MatrixClientPeg.unset();
 
@@ -417,7 +417,7 @@ describe('CallHandler without third party protocols', () => {
     it('should still start a native call', async () => {
         callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
 
-        await untilCallHandlerEvent(callHandler, CallHandlerEvent.CallState);
+        await untilCallHandlerEvent(callHandler, LegacyCallHandlerEvent.CallState);
 
         // Check that a call was started: its room on the protocol level
         // should be the virtual room

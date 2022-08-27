@@ -20,13 +20,13 @@ import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 
 import { _t } from '../../../languageHandler';
 import ContextMenu, { IProps as IContextMenuProps, MenuItem } from '../../structures/ContextMenu';
-import CallHandler from '../../../CallHandler';
+import LegacyCallHandler from '../../../LegacyCallHandler';
 
 interface IProps extends IContextMenuProps {
     call: MatrixCall;
 }
 
-export default class CallContextMenu extends React.Component<IProps> {
+export default class LegacyCallContextMenu extends React.Component<IProps> {
     static propTypes = {
         // js-sdk User object. Not required because it might not exist.
         user: PropTypes.object,
@@ -42,13 +42,13 @@ export default class CallContextMenu extends React.Component<IProps> {
     };
 
     onUnholdClick = () => {
-        CallHandler.instance.setActiveCallRoomId(this.props.call.roomId);
+        LegacyCallHandler.instance.setActiveCallRoomId(this.props.call.roomId);
 
         this.props.onFinished();
     };
 
     onTransferClick = () => {
-        CallHandler.instance.showTransferDialog(this.props.call);
+        LegacyCallHandler.instance.showTransferDialog(this.props.call);
         this.props.onFinished();
     };
 
@@ -58,13 +58,13 @@ export default class CallContextMenu extends React.Component<IProps> {
 
         let transferItem;
         if (this.props.call.opponentCanBeTransferred()) {
-            transferItem = <MenuItem className="mx_CallContextMenu_item" onClick={this.onTransferClick}>
+            transferItem = <MenuItem className="mx_LegacyCallContextMenu_item" onClick={this.onTransferClick}>
                 { _t("Transfer") }
             </MenuItem>;
         }
 
         return <ContextMenu {...this.props}>
-            <MenuItem className="mx_CallContextMenu_item" onClick={handler}>
+            <MenuItem className="mx_LegacyCallContextMenu_item" onClick={handler}>
                 { holdUnholdCaption }
             </MenuItem>
             { transferItem }

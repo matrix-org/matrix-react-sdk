@@ -28,7 +28,7 @@ interface IState {
     feeds: Array<CallFeed>;
 }
 
-export default class AudioFeedArrayForCall extends React.Component<IProps, IState> {
+export default class AudioFeedArrayForLegacyCall extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 

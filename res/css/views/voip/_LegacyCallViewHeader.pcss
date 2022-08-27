@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_CallViewHeader {
+.mx_LegacyCallViewHeader {
     height: 44px;
     display: flex;
     flex-direction: row;
@@ -24,18 +24,18 @@ limitations under the License.
     flex-shrink: 0;
     width: 100%;
 
-    &.mx_CallViewHeader_pip {
+    &.mx_LegacyCallViewHeader_pip {
         cursor: pointer;
     }
 }
 
-.mx_CallViewHeader_text {
+.mx_LegacyCallViewHeader_text {
     font-size: 1.2rem;
     font-weight: bold;
     vertical-align: middle;
 }
 
-.mx_CallViewHeader_secondaryCallInfo {
+.mx_LegacyCallViewHeader_secondaryCallInfo {
     &::before {
         content: '·';
         margin-left: 6px;
@@ -43,13 +43,13 @@ limitations under the License.
     }
 }
 
-.mx_CallViewHeader_controls {
+.mx_LegacyCallViewHeader_controls {
     margin-left: auto;
     display: flex;
     gap: 5px;
 }
 
-.mx_CallViewHeader_button {
+.mx_LegacyCallViewHeader_button {
     display: inline-block;
     vertical-align: middle;
     cursor: pointer;
@@ -66,32 +66,32 @@ limitations under the License.
         mask-position: center;
     }
 
-    &.mx_CallViewHeader_button_fullscreen {
+    &.mx_LegacyCallViewHeader_button_fullscreen {
         &::before {
             mask-image: url('$(res)/img/element-icons/call/fullscreen.svg');
         }
     }
 
-    &.mx_CallViewHeader_button_pin {
+    &.mx_LegacyCallViewHeader_button_pin {
         &::before {
             mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
         }
     }
 
-    &.mx_CallViewHeader_button_expand {
+    &.mx_LegacyCallViewHeader_button_expand {
         &::before {
             mask-image: url('$(res)/img/element-icons/call/expand.svg');
         }
     }
 }
 
-.mx_CallViewHeader_callInfo {
+.mx_LegacyCallViewHeader_callInfo {
     margin-left: 12px;
     margin-right: 16px;
     overflow: hidden;
 }
 
-.mx_CallViewHeader_roomName {
+.mx_LegacyCallViewHeader_roomName {
     font-weight: bold;
     font-size: 12px;
     line-height: initial;
@@ -102,11 +102,11 @@ limitations under the License.
     white-space: nowrap;
 }
 
-.mx_CallView_secondaryCall_roomName {
+.mx_LegacyCallView_secondaryCall_roomName {
     margin-left: 4px;
 }
 
-.mx_CallViewHeader_icon {
+.mx_LegacyCallViewHeader_icon {
     display: inline-block;
     margin-right: 6px;
     height: 16px;

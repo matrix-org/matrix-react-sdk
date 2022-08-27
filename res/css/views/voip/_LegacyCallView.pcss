@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_CallView {
+.mx_LegacyCallView {
     border-radius: 8px;
     background-color: $dark-panel-bg-color;
     padding-left: 8px;
@@ -24,7 +24,7 @@ limitations under the License.
     /* XXX: PiPContainer sets pointer-events: none - should probably be set back in a better place */
     pointer-events: initial;
 
-    .mx_CallView_toast {
+    .mx_LegacyCallView_toast {
         position: absolute;
         top: 74px;
 
@@ -38,7 +38,7 @@ limitations under the License.
         background-color: #17191c;
     }
 
-    .mx_CallView_content_wrapper {
+    .mx_LegacyCallView_content_wrapper {
         display: flex;
         justify-content: center;
 
@@ -47,7 +47,7 @@ limitations under the License.
 
         overflow: hidden;
 
-        .mx_CallView_content {
+        .mx_LegacyCallView_content {
             position: relative;
 
             display: flex;
@@ -65,12 +65,12 @@ limitations under the License.
 
             background-color: $call-view-content-background;
 
-            .mx_CallView_status {
+            .mx_LegacyCallView_status {
                 z-index: 50;
                 color: $accent-fg-color;
             }
 
-            .mx_CallView_avatarsContainer {
+            .mx_LegacyCallView_avatarsContainer {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -82,7 +82,7 @@ limitations under the License.
                 }
             }
 
-            .mx_CallView_holdBackground {
+            .mx_LegacyCallView_holdBackground {
                 position: absolute;
                 left: 0;
                 right: 0;
@@ -107,7 +107,7 @@ limitations under the License.
                 }
             }
 
-            &.mx_CallView_content_hold .mx_CallView_status {
+            &.mx_LegacyCallView_content_hold .mx_LegacyCallView_status {
                 font-weight: bold;
                 text-align: center;
 
@@ -123,7 +123,7 @@ limitations under the License.
                     background-size: cover;
                 }
 
-                .mx_CallView_pip &::before {
+                .mx_LegacyCallView_pip &::before {
                     width: 30px;
                     height: 30px;
                 }
@@ -131,7 +131,7 @@ limitations under the License.
         }
     }
 
-    &:not(.mx_CallView_sidebar) .mx_CallView_content {
+    &:not(.mx_LegacyCallView_sidebar) .mx_LegacyCallView_content {
         padding: 0;
         width: 100%;
         height: 100%;
@@ -145,7 +145,7 @@ limitations under the License.
         }
     }
 
-    &.mx_CallView_pip {
+    &.mx_LegacyCallView_pip {
         width: 320px;
         padding-bottom: 8px;
 
@@ -154,16 +154,16 @@ limitations under the License.
         background-color: $system;
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 
-        .mx_CallViewButtons {
+        .mx_LegacyCallViewButtons {
             bottom: 13px;
 
-            .mx_CallViewButtons_button {
+            .mx_LegacyCallViewButtons_button {
                 width: 34px;
                 height: 34px;
 
-                &.mx_CallViewButtons_dropdownButton {
-                    width: var(--CallViewButtons_dropdownButton-size);
-                    height: var(--CallViewButtons_dropdownButton-size);
+                &.mx_LegacyCallViewButtons_dropdownButton {
+                    width: var(--LegacyCallViewButtons_dropdownButton-size);
+                    height: var(--LegacyCallViewButtons_dropdownButton-size);
                 }
 
                 &::before {
@@ -173,12 +173,12 @@ limitations under the License.
             }
         }
 
-        .mx_CallView_content {
+        .mx_LegacyCallView_content {
             min-height: 180px;
         }
     }
 
-    &.mx_CallView_large {
+    &.mx_LegacyCallView_large {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -193,7 +193,7 @@ limitations under the License.
         margin-bottom: 10px;
     }
 
-    &.mx_CallView_belowWidget {
+    &.mx_LegacyCallView_belowWidget {
         margin-top: 0;
     }
 }
