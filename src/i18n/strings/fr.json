@@ -3537,5 +3537,13 @@
     "Show shortcut to welcome checklist above the room list": "Afficher le raccourci vers la liste de vérification de bienvenue au-dessus de la liste des salons",
     "We’d appreciate any feedback on how you’re finding %(brand)s.": "Nous apprécierions toutes vos remarques sur %(brand)s.",
     "How are you finding %(brand)s so far?": "Comment trouvez-vous %(brand)s jusque-là ?",
-    "Don’t miss a thing by taking %(brand)s with you": "Ne ratez pas une miette en emportant %(brand)s avec vous"
+    "Don’t miss a thing by taking %(brand)s with you": "Ne ratez pas une miette en emportant %(brand)s avec vous",
+    "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Il n'est pas recommandé d’ajouter le chiffrement aux salons publics.</b> Tout le monde peut trouver et rejoindre les salons publics, donc tout le monde peut lire les messages qui s’y trouvent. Vous n’aurez aucun des avantages du chiffrement, et vous ne pourrez pas le désactiver plus tard. Chiffrer les messages dans un salon public ralentira la réception et l’envoi de messages.",
+    "Empty room (was %(oldName)s)": "Salon vide (précédemment %(oldName)s)",
+    "Inviting %(user)s and %(count)s others|one": "Envoi de l’invitation à %(user)s et 1 autre",
+    "Inviting %(user)s and %(count)s others|other": "Envoi de l’invitation à %(user)s et %(count)s autres",
+    "Inviting %(user1)s and %(user2)s": "Envoi de l’invitation à %(user1)s et %(user2)s",
+    "%(user)s and %(count)s others|one": "%(user)s et un autre",
+    "%(user)s and %(count)s others|other": "%(user)s et %(count)s autres",
+    "%(user1)s and %(user2)s": "%(user1)s et %(user2)s"
 }
