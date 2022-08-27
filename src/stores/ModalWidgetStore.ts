@@ -30,7 +30,11 @@ interface IState {
 }
 
 export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new ModalWidgetStore();
+    private static readonly internalInstance = (() => {
+        const instance = new ModalWidgetStore();
+        instance.start();
+        return instance;
+    })();
     private modalInstance: IHandle<void[]> = null;
     private openSourceWidgetId: string = null;
     private openSourceWidgetRoomId: string = null;

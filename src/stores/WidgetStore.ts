@@ -46,7 +46,11 @@ interface IRoomWidgets {
 // TODO consolidate WidgetEchoStore into this
 // TODO consolidate ActiveWidgetStore into this
 export default class WidgetStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new WidgetStore();
+    private static readonly internalInstance = (() => {
+        const instance = new WidgetStore();
+        instance.start();
+        return instance;
+    })();
 
     private widgetMap = new Map<string, IApp>(); // Key is widget Unique ID (UID)
     private roomMap = new Map<string, IRoomWidgets>(); // Key is room ID

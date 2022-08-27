@@ -87,7 +87,11 @@ interface IState {
 }
 
 export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new MessagePreviewStore();
+    private static readonly internalInstance = (() => {
+        const instance = new MessagePreviewStore();
+        instance.start();
+        return instance;
+    })();
 
     // null indicates the preview is empty / irrelevant
     private previews = new Map<string, Map<TagID|TAG_ANY, string|null>>();

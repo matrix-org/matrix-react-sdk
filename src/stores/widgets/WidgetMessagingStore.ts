@@ -35,7 +35,11 @@ export enum WidgetMessagingStoreEvent {
  * easiest to split this into a single place.
  */
 export class WidgetMessagingStore extends AsyncStoreWithClient<unknown> {
-    private static internalInstance = new WidgetMessagingStore();
+    private static readonly internalInstance = (() => {
+        const instance = new WidgetMessagingStore();
+        instance.start();
+        return instance;
+    })();
 
     private widgetMap = new EnhancedMap<string, ClientWidgetApi>(); // <widget UID, ClientWidgetAPi>
     private readyWidgets = new Set<string>(); // widgets that have sent a WidgetReady event
