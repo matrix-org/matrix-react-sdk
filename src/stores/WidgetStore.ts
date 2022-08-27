@@ -36,7 +36,7 @@ export interface IApp extends IWidget {
     roomId: string;
     eventId: string;
     // eslint-disable-next-line camelcase
-    avatar_url: string; // MSC2765 https://github.com/matrix-org/matrix-doc/pull/2765
+    avatar_url?: string; // MSC2765 https://github.com/matrix-org/matrix-doc/pull/2765
 }
 
 interface IRoomWidgets {

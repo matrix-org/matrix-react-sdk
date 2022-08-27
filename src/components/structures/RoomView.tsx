@@ -78,7 +78,7 @@ import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
 import WidgetStore from "../../stores/WidgetStore";
-import VideoRoomView from "./VideoRoomView";
+import { VideoRoomView } from "./VideoRoomView";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";

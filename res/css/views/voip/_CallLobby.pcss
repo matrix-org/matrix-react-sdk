@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VideoLobby {
+.mx_CallLobby {
     min-height: 0;
     flex-grow: 1;
     padding: $spacing-12;
-    color: $video-lobby-primary-content;
-    background-color: $video-lobby-background;
+    color: $call-lobby-primary-content;
+    background-color: $call-lobby-background;
     border-radius: 8px;
 
     display: flex;
@@ -33,16 +33,16 @@ limitations under the License.
         margin: $spacing-8 auto 0;
 
         .mx_FacePile_faces .mx_BaseAvatar_image {
-            border-color: $video-lobby-background;
+            border-color: $call-lobby-background;
         }
     }
 
-    .mx_VideoLobby_preview {
+    .mx_CallLobby_preview {
         position: relative;
         width: 100%;
         max-width: 800px;
         aspect-ratio: 1.5;
-        background-color: $video-lobby-system;
+        background-color: $call-lobby-system;
 
         border-radius: 20px;
         overflow: hidden;
@@ -74,29 +74,29 @@ limitations under the License.
             background-color: black;
         }
 
-        .mx_VideoLobby_controls {
+        .mx_CallLobby_controls {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
 
-            background-color: rgba($video-lobby-background, 0.9);
+            background-color: rgba($call-lobby-background, 0.9);
 
             display: flex;
             justify-content: center;
             gap: $spacing-24;
 
-            .mx_VideoLobby_deviceButtonWrapper {
+            .mx_CallLobby_deviceButtonWrapper {
                 position: relative;
                 margin: 6px 0 10px;
 
-                .mx_VideoLobby_deviceButton {
+                .mx_CallLobby_deviceButton {
                     $size: 50px;
 
                     width: $size;
                     height: $size;
 
-                    background-color: $video-lobby-primary-content;
+                    background-color: $call-lobby-system;
                     border-radius: calc($size / 2);
 
                     &::before {
@@ -105,21 +105,21 @@ limitations under the License.
                         mask-repeat: no-repeat;
                         mask-size: 20px;
                         mask-position: center;
-                        background-color: $video-lobby-system;
+                        background-color: $call-lobby-primary-content;
                         height: 100%;
                         width: 100%;
                     }
 
-                    &.mx_VideoLobby_deviceButton_audio::before {
-                        mask-image: url('$(res)/img/voip/call-view/mic-off.svg');
+                    &.mx_CallLobby_deviceButton_audio::before {
+                        mask-image: url('$(res)/img/voip/call-view/mic-on.svg');
                     }
 
-                    &.mx_VideoLobby_deviceButton_video::before {
-                        mask-image: url('$(res)/img/voip/call-view/cam-off.svg');
+                    &.mx_CallLobby_deviceButton_video::before {
+                        mask-image: url('$(res)/img/voip/call-view/cam-on.svg');
                     }
                 }
 
-                .mx_VideoLobby_deviceListButton {
+                .mx_CallLobby_deviceListButton {
                     $size: 15px;
 
                     position: absolute;
@@ -128,7 +128,7 @@ limitations under the License.
                     width: $size;
                     height: $size;
 
-                    background-color: $video-lobby-primary-content;
+                    background-color: $call-lobby-system;
                     border-radius: calc($size / 2);
 
                     &::before {
@@ -137,29 +137,29 @@ limitations under the License.
                         mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
                         mask-size: $size;
                         mask-position: center;
-                        background-color: $video-lobby-system;
+                        background-color: $call-lobby-primary-content;
                         height: 100%;
                         width: 100%;
                     }
                 }
 
-                &.mx_VideoLobby_deviceButtonWrapper_active {
-                    .mx_VideoLobby_deviceButton,
-                    .mx_VideoLobby_deviceListButton {
-                        background-color: $video-lobby-system;
+                &.mx_CallLobby_deviceButtonWrapper_muted {
+                    .mx_CallLobby_deviceButton,
+                    .mx_CallLobby_deviceListButton {
+                        background-color: $call-lobby-primary-content;
 
                         &::before {
-                            background-color: $video-lobby-primary-content;
+                            background-color: $call-lobby-system;
                         }
                     }
 
-                    .mx_VideoLobby_deviceButton {
-                        &.mx_VideoLobby_deviceButton_audio::before {
-                            mask-image: url('$(res)/img/voip/call-view/mic-on.svg');
+                    .mx_CallLobby_deviceButton {
+                        &.mx_CallLobby_deviceButton_audio::before {
+                            mask-image: url('$(res)/img/voip/call-view/mic-off.svg');
                         }
 
-                        &.mx_VideoLobby_deviceButton_video::before {
-                            mask-image: url('$(res)/img/voip/call-view/cam-on.svg');
+                        &.mx_CallLobby_deviceButton_video::before {
+                            mask-image: url('$(res)/img/voip/call-view/cam-off.svg');
                         }
                     }
                 }
@@ -167,7 +167,7 @@ limitations under the License.
         }
     }
 
-    .mx_VideoLobby_joinButton {
+    .mx_CallLobby_connectButton {
         padding-left: 50px;
         padding-right: 50px;
     }

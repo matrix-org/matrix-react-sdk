@@ -59,8 +59,6 @@ import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialo
 import { setSentryUser } from "./sentry";
 import SdkConfig from "./SdkConfig";
 import { DialogOpener } from "./utils/DialogOpener";
-import VideoChannelStore from "./stores/VideoChannelStore";
-import { fixStuckDevices } from "./utils/VideoChannelUtils";
 import { Action } from "./dispatcher/actions";
 import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
@@ -839,11 +837,6 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
 
     // Now that we have a MatrixClientPeg, update the Jitsi info
     Jitsi.getInstance().start();
-
-    // In case we disconnected uncleanly from a video room, clean up the stuck device
-    if (VideoChannelStore.instance.roomId) {
-        fixStuckDevices(MatrixClientPeg.get().getRoom(VideoChannelStore.instance.roomId), false);
-    }
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.

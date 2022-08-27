@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, useState, useMemo, useRef, useEffect } from "react";
+import React, { FC, useState, useMemo, useRef, useEffect, useCallback } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from "../../../languageHandler";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
-import { useConnectedMembers } from "../../../utils/VideoChannelUtils";
-import VideoChannelStore from "../../../stores/VideoChannelStore";
+import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
+import { useParticipants } from "../../../hooks/useCall";
+import { CallStore } from "../../../stores/CallStore";
+import { Call } from "../../../models/Call";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
@@ -34,25 +36,21 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
 
-interface IDeviceButtonProps {
+interface DeviceButtonProps {
     kind: string;
     devices: MediaDeviceInfo[];
     setDevice: (device: MediaDeviceInfo) => void;
     deviceListLabel: string;
-    active: boolean;
+    muted: boolean;
     disabled: boolean;
     toggle: () => void;
-    activeTitle: string;
-    inactiveTitle: string;
+    unmutedTitle: string;
+    mutedTitle: string;
 }
 
-const DeviceButton: FC<IDeviceButtonProps> = ({
-    kind, devices, setDevice, deviceListLabel, active, disabled, toggle, activeTitle, inactiveTitle,
+const DeviceButton: FC<DeviceButtonProps> = ({
+    kind, devices, setDevice, deviceListLabel, muted, disabled, toggle, unmutedTitle, mutedTitle,
 }) => {
-    // Depending on permissions, the browser might not let us know device labels,
-    // in which case there's nothing helpful we can display
-    const labelledDevices = useMemo(() => devices.filter(d => d.label.length), [devices]);
-
     const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
     let contextMenu;
     if (menuDisplayed) {
@@ -64,10 +62,10 @@ const DeviceButton: FC<IDeviceButtonProps> = ({
         const buttonRect = buttonRef.current.getBoundingClientRect();
         contextMenu = <IconizedContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
             <IconizedContextMenuOptionList>
-                { labelledDevices.map(d =>
+                { devices.map((d, index) =>
                     <IconizedContextMenuOption
                         key={d.deviceId}
-                        label={d.label}
+                        label={d.label || `Audio input ${index + 1}`}
                         onClick={() => selectDevice(d)}
                     />,
                 ) }
@@ -78,21 +76,20 @@ const DeviceButton: FC<IDeviceButtonProps> = ({
     if (!devices.length) return null;
 
     return <div
-        className={classNames({
-            "mx_VideoLobby_deviceButtonWrapper": true,
-            "mx_VideoLobby_deviceButtonWrapper_active": active,
+        className={classNames("mx_CallLobby_deviceButtonWrapper", {
+            "mx_CallLobby_deviceButtonWrapper_muted": muted,
         })}
     >
         <AccessibleTooltipButton
-            className={`mx_VideoLobby_deviceButton mx_VideoLobby_deviceButton_${kind}`}
-            title={active ? activeTitle : inactiveTitle}
+            className={`mx_CallLobby_deviceButton mx_CallLobby_deviceButton_${kind}`}
+            title={muted ? mutedTitle : unmutedTitle}
             alignment={Alignment.Top}
             onClick={toggle}
             disabled={disabled}
         />
-        { labelledDevices.length > 1 ? (
+        { devices.length > 1 ? (
             <ContextMenuButton
-                className="mx_VideoLobby_deviceListButton"
+                className="mx_CallLobby_deviceListButton"
                 inputRef={buttonRef}
                 onClick={openMenu}
                 isExpanded={menuDisplayed}
@@ -106,53 +103,61 @@ const DeviceButton: FC<IDeviceButtonProps> = ({
 
 const MAX_FACES = 8;
 
-const VideoLobby: FC<{ room: Room }> = ({ room }) => {
-    const store = VideoChannelStore.instance;
+interface Props {
+    room: Room;
+    call: Call;
+}
+
+export const CallLobby: FC<Props> = ({ room, call }) => {
     const [connecting, setConnecting] = useState(false);
     const me = useMemo(() => room.getMember(room.myUserId), [room]);
-    const connectedMembers = useConnectedMembers(room, false);
+    const participants = useParticipants(call);
     const videoRef = useRef<HTMLVideoElement>();
 
-    const devices = useAsyncMemo(async () => {
+    const [audioInputs, videoInputs] = useAsyncMemo(async () => {
         try {
-            return await navigator.mediaDevices.enumerateDevices();
+            const devices = await MediaDeviceHandler.getDevices();
+            return [devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
         } catch (e) {
-            logger.warn(`Failed to get media device list: ${e}`);
-            return [];
+            logger.warn(`Failed to get media device list`, e);
+            return [[], []];
         }
-    }, [], []);
-    const audioDevices = useMemo(() => devices.filter(d => d.kind === "audioinput"), [devices]);
-    const videoDevices = useMemo(() => devices.filter(d => d.kind === "videoinput"), [devices]);
+    }, [], [[], []]);
 
-    const [selectedAudioDevice, selectAudioDevice] = useState<MediaDeviceInfo>(null);
-    const [selectedVideoDevice, selectVideoDevice] = useState<MediaDeviceInfo>(null);
+    const [videoInputId, setVideoInputId] = useState<string>(() => MediaDeviceHandler.getVideoInput());
 
-    const audioDevice = selectedAudioDevice ?? audioDevices[0];
-    const videoDevice = selectedVideoDevice ?? videoDevices[0];
+    const setAudioInput = useCallback((device: MediaDeviceInfo) => {
+        MediaDeviceHandler.instance.setAudioInput(device.deviceId);
+    }, []);
+    const setVideoInput = useCallback((device: MediaDeviceInfo) => {
+        MediaDeviceHandler.instance.setVideoInput(device.deviceId);
+        setVideoInputId(device.deviceId);
+    }, []);
 
-    const [audioActive, setAudioActive] = useState(!store.audioMuted);
-    const [videoActive, setVideoActive] = useState(!store.videoMuted);
-    const toggleAudio = () => {
-        store.audioMuted = audioActive;
-        setAudioActive(!audioActive);
-    };
-    const toggleVideo = () => {
-        store.videoMuted = videoActive;
-        setVideoActive(!videoActive);
-    };
+    const [audioMuted, setAudioMuted] = useState(() => CallStore.instance.startWithAudioMuted);
+    const [videoMuted, setVideoMuted] = useState(() => CallStore.instance.startWithVideoMuted);
+
+    const toggleAudio = useCallback(() => {
+        CallStore.instance.startWithAudioMuted = !audioMuted;
+        setAudioMuted(!audioMuted);
+    }, [audioMuted, setAudioMuted]);
+    const toggleVideo = useCallback(() => {
+        CallStore.instance.startWithVideoMuted = !videoMuted;
+        setVideoMuted(!videoMuted);
+    }, [videoMuted, setVideoMuted]);
 
     const videoStream = useAsyncMemo(async () => {
-        if (videoDevice && videoActive) {
+        if (videoInputId && !videoMuted) {
             try {
                 return await navigator.mediaDevices.getUserMedia({
-                    video: { deviceId: videoDevice.deviceId },
+                    video: { deviceId: videoInputId },
                 });
             } catch (e) {
-                logger.error(`Failed to get stream for device ${videoDevice.deviceId}: ${e}`);
+                logger.error(`Failed to get stream for device ${videoInputId}`, e);
             }
         }
         return null;
-    }, [videoDevice, videoActive]);
+    }, [videoInputId, videoMuted]);
 
     useEffect(() => {
         if (videoStream) {
@@ -167,67 +172,65 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
         }
     }, [videoStream]);
 
-    const connect = async () => {
+    const connect = useCallback(async () => {
         setConnecting(true);
         try {
-            await store.connect(
-                room.roomId, audioActive ? audioDevice : null, videoActive ? videoDevice : null,
-            );
+            await CallStore.instance.connect(call);
         } catch (e) {
             logger.error(e);
             setConnecting(false);
         }
-    };
+    }, [call, setConnecting]);
 
-    let facePile;
-    if (connectedMembers.size) {
-        const shownMembers = [...connectedMembers].slice(0, MAX_FACES);
-        const overflow = connectedMembers.size > shownMembers.length;
+    let facePile: JSX.Element | null = null;
+    if (participants.size) {
+        const shownMembers = [...participants].slice(0, MAX_FACES);
+        const overflow = participants.size > shownMembers.length;
 
-        facePile = <div className="mx_VideoLobby_connectedMembers">
-            { _t("%(count)s people joined", { count: connectedMembers.size }) }
+        facePile = <div className="mx_CallLobby_participants">
+            { _t("%(count)s people joined", { count: participants.size }) }
             <FacePile members={shownMembers} faceSize={24} overflow={overflow} />
         </div>;
     }
 
-    return <div className="mx_VideoLobby">
+    return <div className="mx_CallLobby">
         { facePile }
-        <div className="mx_VideoLobby_preview">
+        <div className="mx_CallLobby_preview">
             <MemberAvatar key={me.userId} member={me} width={200} height={200} resizeMethod="scale" />
             <video
                 ref={videoRef}
-                style={{ visibility: videoActive ? null : "hidden" }}
+                style={{ visibility: videoMuted ? "hidden" : null }}
                 muted
                 playsInline
                 disablePictureInPicture
             />
-            <div className="mx_VideoLobby_controls">
+            <div className="mx_CallLobby_controls">
                 <DeviceButton
                     kind="audio"
-                    devices={audioDevices}
-                    setDevice={selectAudioDevice}
+                    devices={audioInputs}
+                    setDevice={setAudioInput}
                     deviceListLabel={_t("Audio devices")}
-                    active={audioActive}
+                    muted={audioMuted}
                     disabled={connecting}
                     toggle={toggleAudio}
-                    activeTitle={_t("Mute microphone")}
-                    inactiveTitle={_t("Unmute microphone")}
+                    unmutedTitle={_t("Mute microphone")}
+                    mutedTitle={_t("Unmute microphone")}
                 />
                 <DeviceButton
                     kind="video"
-                    devices={videoDevices}
-                    setDevice={selectVideoDevice}
+                    devices={videoInputs}
+                    setDevice={setVideoInput}
                     deviceListLabel={_t("Video devices")}
-                    active={videoActive}
+                    muted={videoMuted}
                     disabled={connecting}
                     toggle={toggleVideo}
-                    activeTitle={_t("Turn off camera")}
-                    inactiveTitle={_t("Turn on camera")}
+                    unmutedTitle={_t("Turn off camera")}
+                    mutedTitle={_t("Turn on camera")}
                 />
             </div>
         </div>
         <AccessibleButton
-            className="mx_VideoLobby_joinButton"
+            className="mx_CallLobby_connectButton"
             kind="primary"
             disabled={connecting}
             onClick={connect}
@@ -236,5 +239,3 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
         </AccessibleButton>
     </div>;
 };
-
-export default VideoLobby;

@@ -128,7 +128,7 @@ import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStart
 import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
-import VideoChannelStore from "../../stores/VideoChannelStore";
+import { CallStore } from "../../stores/CallStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
 import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
@@ -577,7 +577,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case 'logout':
                 LegacyCallHandler.instance.hangupAllCalls();
-                if (VideoChannelStore.instance.connected) VideoChannelStore.instance.setDisconnected();
+                CallStore.instance.activeCall?.setDisconnected();
                 Lifecycle.logout();
                 break;
             case 'require_registration':

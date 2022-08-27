@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VideoRoomSummary {
-    .mx_VideoRoomSummary_indicator {
+.mx_RoomTileCallSummary {
+    .mx_RoomTileCallSummary_text {
         &::before {
             display: inline-block;
             vertical-align: text-bottom;
@@ -28,7 +28,7 @@ limitations under the License.
             margin-right: 4px;
         }
 
-        &.mx_VideoRoomSummary_indicator_active {
+        &.mx_RoomTileCallSummary_text_active {
             color: $accent;
 
             &::before {
@@ -37,7 +37,7 @@ limitations under the License.
         }
     }
 
-    .mx_VideoRoomSummary_participants::before {
+    .mx_RoomTileCallSummary_participants::before {
         display: inline-block;
         vertical-align: text-bottom;
         content: '';
