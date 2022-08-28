@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import React from 'react';
+// eslint-disable-next-line deprecate/import
 import { mount } from 'enzyme';
 import { RoomMember } from 'matrix-js-sdk/src/matrix';
 import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import maplibregl from 'maplibre-gl';
 
 import LocationViewDialog from '../../../../src/components/views/location/LocationViewDialog';
 import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
@@ -40,6 +42,10 @@ describe('<LocationViewDialog />', () => {
     };
     const getComponent = (props = {}) =>
         mount(<LocationViewDialog {...defaultProps} {...props} />);
+
+    beforeAll(() => {
+        maplibregl.AttributionControl = jest.fn();
+    });
 
     it('renders map correctly', () => {
         const component = getComponent();

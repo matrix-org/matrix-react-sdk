@@ -35,6 +35,7 @@ import RoomTopic from "../elements/RoomTopic";
 import RoomFacePile from "../elements/RoomFacePile";
 import RoomAvatar from "../avatars/RoomAvatar";
 import MemberAvatar from "../avatars/MemberAvatar";
+import { BetaPill } from "../beta/BetaCard";
 import RoomInfoLine from "./RoomInfoLine";
 
 interface IProps {
@@ -101,6 +102,10 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                         { inviteSender }
                     </div> : null }
                 </div>
+                { room.isElementVideoRoom()
+                    ? <BetaPill onClick={viewLabs} tooltipTitle={_t("Video rooms are a beta feature")} />
+                    : null
+                }
             </div>;
         }
 

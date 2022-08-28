@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+// eslint-disable-next-line deprecate/import
 import { mount } from 'enzyme';
 import { Room, Beacon, BeaconEvent, getBeaconInfoIdentifier } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
@@ -32,6 +33,8 @@ import {
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from '../../../test-utils';
+import defaultDispatcher from '../../../../src/dispatcher/dispatcher';
+import { Action } from '../../../../src/dispatcher/actions';
 
 jest.useFakeTimers();
 describe('<RoomLiveShareWarning />', () => {
@@ -117,6 +120,7 @@ describe('<RoomLiveShareWarning />', () => {
     afterAll(() => {
         jest.spyOn(global.Date, 'now').mockRestore();
         localStorageSpy.mockRestore();
+        jest.spyOn(defaultDispatcher, 'dispatch').mockRestore();
     });
 
     const getExpiryText = wrapper => findByTestId(wrapper, 'room-live-share-expiry').text();
@@ -261,6 +265,24 @@ describe('<RoomLiveShareWarning />', () => {
             });
 
             expect(clearIntervalSpy).toHaveBeenCalled();
+        });
+
+        it('navigates to beacon tile on click', () => {
+            const dispatcherSpy = jest.spyOn(defaultDispatcher, 'dispatch');
+            const component = getComponent({ roomId: room1Id });
+
+            act(() => {
+                component.simulate('click');
+            });
+
+            expect(dispatcherSpy).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                event_id: room1Beacon1.getId(),
+                room_id: room1Id,
+                highlighted: true,
+                scroll_into_view: true,
+                metricsTrigger: undefined,
+            });
         });
 
         describe('stopping beacons', () => {

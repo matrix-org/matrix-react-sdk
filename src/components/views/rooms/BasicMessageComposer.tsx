@@ -449,12 +449,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const selection = document.getSelection();
         if (this.hasTextSelected && selection.isCollapsed) {
             this.hasTextSelected = false;
-            if (this.formatBarRef.current) {
-                this.formatBarRef.current.hide();
-            }
+            this.formatBarRef.current?.hide();
         } else if (!selection.isCollapsed && !isEmpty) {
             this.hasTextSelected = true;
-            if (this.formatBarRef.current && this.state.useMarkdown) {
+            const range = getRangeForSelection(this.editorRef.current, this.props.model, selection);
+            if (this.formatBarRef.current && this.state.useMarkdown && !!range.text.trim()) {
                 const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
                 this.formatBarRef.current.showAt(selectionRect);
             }
@@ -761,7 +760,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         const { completionIndex } = this.state;
         const hasAutocomplete = Boolean(this.state.autoComplete);
-        let activeDescendant;
+        let activeDescendant: string;
         if (hasAutocomplete && completionIndex >= 0) {
             activeDescendant = generateCompletionDomId(completionIndex);
         }
@@ -785,8 +784,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 aria-multiline="true"
                 aria-autocomplete="list"
                 aria-haspopup="listbox"
-                aria-expanded={hasAutocomplete}
-                aria-owns="mx_Autocomplete"
+                aria-expanded={hasAutocomplete ? true : undefined}
+                aria-owns={hasAutocomplete ? "mx_Autocomplete" : undefined}
                 aria-activedescendant={activeDescendant}
                 dir="auto"
                 aria-disabled={this.props.disabled}

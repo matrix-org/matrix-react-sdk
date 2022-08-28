@@ -23,9 +23,10 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
+import { randomString, randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
+import PlatformPeg from '../PlatformPeg';
 import SdkConfig from "../SdkConfig";
 import dis from '../dispatcher/dispatcher';
 import WidgetEchoStore from '../stores/WidgetEchoStore';
@@ -35,7 +36,6 @@ import { Jitsi } from "../widgets/Jitsi";
 import { objectClone } from "./objects";
 import { _t } from "../languageHandler";
 import { IApp } from "../stores/WidgetStore";
-import { VIDEO_CHANNEL } from "./VideoChannelUtils";
 
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
@@ -444,11 +444,12 @@ export default class WidgetUtils {
         roomId: string,
         type: CallType,
         name: string,
-        widgetId: string,
+        isVideoChannel: boolean,
         oobRoomName?: string,
     ): Promise<void> {
         const domain = Jitsi.getInstance().preferredDomain;
         const auth = await Jitsi.getInstance().getJitsiAuth();
+        const widgetId = randomString(24); // Must be globally unique
 
         let confId;
         if (auth === 'openidtoken-jwt') {
@@ -471,7 +472,7 @@ export default class WidgetUtils {
             conferenceId: confId,
             roomName: oobRoomName ?? MatrixClientPeg.get().getRoom(roomId)?.name,
             isAudioOnly: type === CallType.Voice,
-            isVideoChannel: widgetId === VIDEO_CHANNEL,
+            isVideoChannel,
             domain,
             auth,
         });
@@ -510,6 +511,7 @@ export default class WidgetUtils {
             'roomId=$matrix_room_id',
             'theme=$theme',
             'roomName=$roomName',
+            `supportsScreensharing=${PlatformPeg.get().supportsJitsiScreensharing()}`,
         ];
         if (opts.auth) {
             queryStringParts.push(`auth=${opts.auth}`);

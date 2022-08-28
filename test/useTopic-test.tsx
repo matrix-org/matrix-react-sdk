@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
+// eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 
@@ -42,7 +43,7 @@ describe("useTopic", () => {
 
         function RoomTopic() {
             const topic = useTopic(room);
-            return <p>{ topic }</p>;
+            return <p>{ topic.text }</p>;
         }
 
         const wrapper = mount(<RoomTopic />);

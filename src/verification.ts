@@ -28,7 +28,7 @@ import { IDevice } from "./components/views/right_panel/UserInfo";
 import ManualDeviceKeyVerificationDialog from "./components/views/dialogs/ManualDeviceKeyVerificationDialog";
 import RightPanelStore from "./stores/right-panel/RightPanelStore";
 import { IRightPanelCardState } from "./stores/right-panel/RightPanelStoreIPanelState";
-import { findDMForUser } from "./utils/direct-messages";
+import { findDMForUser } from "./utils/dm/findDMForUser";
 
 async function enable4SIfNeeded() {
     const cli = MatrixClientPeg.get();
@@ -57,7 +57,7 @@ export async function verifyDevice(user: User, device: IDevice) {
         }
     }
 
-    Modal.createTrackedDialog("Verification warning", "unverified session", UntrustedDeviceDialog, {
+    Modal.createDialog(UntrustedDeviceDialog, {
         user,
         device,
         onFinished: async (action) => {
@@ -69,13 +69,10 @@ export async function verifyDevice(user: User, device: IDevice) {
                 );
                 setRightPanel({ member: user, verificationRequestPromise });
             } else if (action === "legacy") {
-                Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
-                    ManualDeviceKeyVerificationDialog,
-                    {
-                        userId: user.userId,
-                        device,
-                    },
-                );
+                Modal.createDialog(ManualDeviceKeyVerificationDialog, {
+                    userId: user.userId,
+                    device,
+                });
             }
         },
     });

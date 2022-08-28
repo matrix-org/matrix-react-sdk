@@ -38,6 +38,7 @@ import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
 import { UIComponent } from "../../settings/UIFeature";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
+import { IRightPanelCard } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import {
@@ -60,7 +61,7 @@ import {
     defaultDmsRenderer,
     defaultRoomsRenderer,
 } from "../views/dialogs/AddExistingToSpaceDialog";
-import AccessibleButton from "../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import ErrorBoundary from "../views/elements/ErrorBoundary";
 import Field from "../views/elements/Field";
@@ -123,7 +124,7 @@ const SpaceLandingAddButton = ({ space }) => {
                 { canCreateRoom && <>
                     <IconizedContextMenuOption
                         label={_t("New room")}
-                        iconClassName="mx_RoomList_iconPlus"
+                        iconClassName="mx_RoomList_iconNewRoom"
                         onClick={async (e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -135,19 +136,23 @@ const SpaceLandingAddButton = ({ space }) => {
                             }
                         }}
                     />
-                    { videoRoomsEnabled && <IconizedContextMenuOption
-                        label={_t("New video room")}
-                        iconClassName="mx_RoomList_iconNewVideoRoom"
-                        onClick={async (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            closeMenu();
+                    { videoRoomsEnabled && (
+                        <IconizedContextMenuOption
+                            label={_t("New video room")}
+                            iconClassName="mx_RoomList_iconNewVideoRoom"
+                            onClick={async (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                closeMenu();
 
-                            if (await showCreateNewRoom(space, RoomType.ElementVideo)) {
-                                defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
-                            }
-                        }}
-                    /> }
+                                if (await showCreateNewRoom(space, RoomType.ElementVideo)) {
+                                    defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                                }
+                            }}
+                        >
+                            <BetaPill />
+                        </IconizedContextMenuOption>
+                    ) }
                 </> }
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
@@ -295,7 +300,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
         />;
     });
 
-    const onNextClick = async (ev) => {
+    const onNextClick = async (ev: ButtonEvent) => {
         ev.preventDefault();
         if (busy) return;
         setError("");
@@ -326,7 +331,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
         setBusy(false);
     };
 
-    let onClick = (ev) => {
+    let onClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         onFinished();
     };
@@ -613,10 +618,18 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         if (payload.action !== Action.ViewUser && payload.action !== "view_3pid_invite") return;
 
         if (payload.action === Action.ViewUser && payload.member) {
-            RightPanelStore.instance.setCard({
+            const spaceMemberInfoCard: IRightPanelCard = {
                 phase: RightPanelPhases.SpaceMemberInfo,
                 state: { spaceId: this.props.space.roomId, member: payload.member },
-            });
+            };
+            if (payload.push) {
+                RightPanelStore.instance.pushCard(spaceMemberInfoCard);
+            } else {
+                RightPanelStore.instance.setCards([
+                    { phase: RightPanelPhases.SpaceMemberList, state: { spaceId: this.props.space.roomId } },
+                    spaceMemberInfoCard,
+                ]);
+            }
         } else if (payload.action === "view_3pid_invite" && payload.event) {
             RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.Space3pidMemberInfo,

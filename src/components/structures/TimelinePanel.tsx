@@ -30,6 +30,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
+import { getPrivateReadReceiptField } from "matrix-js-sdk/src/utils";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -384,47 +385,77 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * every message change so instead we only log it out when asked.
      */
     private onDumpDebugLogs = (): void => {
-        const room = this.props.timelineSet.room;
+        const room = this.props.timelineSet?.room;
         // Get a list of the event IDs used in this TimelinePanel.
         // This includes state and hidden events which we don't render
-        const eventIdList = this.state.events.map((ev) => ev.getId());
+        const eventIdList = this.state?.events?.map((ev) => ev.getId());
 
         // Get the list of actually rendered events seen in the DOM.
         // This is useful to know for sure what's being shown on screen.
         // And we can suss out any corrupted React `key` problems.
         let renderedEventIds: string[];
-        const messagePanel = this.messagePanel.current;
-        if (messagePanel) {
-            const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
-            if (messagePanelNode) {
-                const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
-                renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
-                    return renderedEvent.getAttribute('data-event-id');
-                });
+        try {
+            const messagePanel = this.messagePanel.current;
+            if (messagePanel) {
+                const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
+                if (messagePanelNode) {
+                    const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
+                    renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
+                        return renderedEvent.getAttribute('data-event-id');
+                    });
+                }
             }
+        } catch (err) {
+            logger.error(`onDumpDebugLogs: Failed to get the actual event ID's in the DOM`, err);
         }
 
         // Get the list of events and threads for the room as seen by the
         // matrix-js-sdk.
         let serializedEventIdsFromTimelineSets: { [key: string]: string[] }[];
         let serializedEventIdsFromThreadsTimelineSets: { [key: string]: string[] }[];
-        const serializedThreadsMap: { [key: string]: string[] } = {};
+        const serializedThreadsMap: { [key: string]: any } = {};
         if (room) {
             const timelineSets = room.getTimelineSets();
             const threadsTimelineSets = room.threadsTimelineSets;
 
-            // Serialize all of the timelineSets and timelines in each set to their event IDs
-            serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
-            serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
+            try {
+                // Serialize all of the timelineSets and timelines in each set to their event IDs
+                serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
+                serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
+            } catch (err) {
+                logger.error(`onDumpDebugLogs: Failed to serialize event IDs from timelinesets`, err);
+            }
 
-            // Serialize all threads in the room from theadId -> event IDs in the thread
-            room.getThreads().forEach((thread) => {
-                serializedThreadsMap[thread.id] = thread.events.map(ev => ev.getId());
-            });
+            try {
+                // Serialize all threads in the room from theadId -> event IDs in the thread
+                room.getThreads().forEach((thread) => {
+                    serializedThreadsMap[thread.id] = {
+                        events: thread.events.map(ev => ev.getId()),
+                        numTimelines: thread.timelineSet.getTimelines().length,
+                        liveTimeline: thread.timelineSet.getLiveTimeline().getEvents().length,
+                        prevTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Backward)
+                            ?.getEvents().length,
+                        nextTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Forward)
+                            ?.getEvents().length,
+                    };
+                });
+            } catch (err) {
+                logger.error(`onDumpDebugLogs: Failed to serialize event IDs from the threads`, err);
+            }
         }
 
-        const timelineWindowEventIds = this.timelineWindow.getEvents().map(ev => ev.getId());
-        const pendingEvents = this.props.timelineSet.getPendingEvents().map(ev => ev.getId());
+        let timelineWindowEventIds: string[];
+        try {
+            timelineWindowEventIds = this.timelineWindow.getEvents().map(ev => ev.getId());
+        } catch (err) {
+            logger.error(`onDumpDebugLogs: Failed to get event IDs from the timelineWindow`, err);
+        }
+        let pendingEventIds: string[];
+        try {
+            pendingEventIds = this.props.timelineSet.getPendingEvents().map(ev => ev.getId());
+        } catch (err) {
+            logger.error(`onDumpDebugLogs: Failed to get pending event IDs`, err);
+        }
 
         logger.debug(
             `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${room?.roomId}\n` +
@@ -436,7 +467,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             `${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
             `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}\n` +
             `\ttimelineWindowEventIds(${timelineWindowEventIds.length})=${JSON.stringify(timelineWindowEventIds)}\n` +
-            `\tpendingEvents(${pendingEvents.length})=${JSON.stringify(pendingEvents)}`,
+            `\tpendingEventIds(${pendingEventIds.length})=${JSON.stringify(pendingEventIds)}`,
         );
     };
 
@@ -935,29 +966,35 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.lastRMSentEventId = this.state.readMarkerEventId;
 
             const roomId = this.props.timelineSet.room.roomId;
-            const hiddenRR = SettingsStore.getValue("feature_hidden_read_receipts", roomId);
+            const sendRRs = SettingsStore.getValue("sendReadReceipts", roomId);
 
-            debuglog('Sending Read Markers for ',
-                this.props.timelineSet.room.roomId,
-                'rm', this.state.readMarkerEventId,
-                lastReadEvent ? 'rr ' + lastReadEvent.getId() : '',
-                ' hidden:' + hiddenRR,
+            debuglog(
+                `Sending Read Markers for ${this.props.timelineSet.room.roomId}: `,
+                `rm=${this.state.readMarkerEventId} `,
+                `rr=${sendRRs ? lastReadEvent?.getId() : null} `,
+                `prr=${lastReadEvent?.getId()}`,
+
             );
             MatrixClientPeg.get().setRoomReadMarkers(
                 roomId,
                 this.state.readMarkerEventId,
-                hiddenRR ? null : lastReadEvent, // Could be null, in which case no RR is sent
-                lastReadEvent, // Could be null, in which case no private RR is sent
-            ).catch((e) => {
+                sendRRs ? lastReadEvent : null, // Public read receipt (could be null)
+                lastReadEvent, // Private read receipt (could be null)
+            ).catch(async (e) => {
                 // /read_markers API is not implemented on this HS, fallback to just RR
                 if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
-                    return MatrixClientPeg.get().sendReadReceipt(
-                        lastReadEvent,
-                        hiddenRR ? ReceiptType.ReadPrivate : ReceiptType.Read,
-                    ).catch((e) => {
+                    const privateField = await getPrivateReadReceiptField(MatrixClientPeg.get());
+                    if (!sendRRs && !privateField) return;
+
+                    try {
+                        return await MatrixClientPeg.get().sendReadReceipt(
+                            lastReadEvent,
+                            sendRRs ? ReceiptType.Read : privateField,
+                        );
+                    } catch (error) {
                         logger.error(e);
                         this.lastRRSentEventId = undefined;
-                    });
+                    }
                 } else {
                     logger.error(e);
                 }
@@ -1107,11 +1144,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
     public forgetReadMarker = (): void => {
         if (!this.props.manageReadMarkers) return;
 
+        // Find the read receipt - we will set the read marker to this
         const rmId = this.getCurrentReadReceipt();
 
-        // see if we know the timestamp for the rr event
+        // Look up the timestamp if we can find it
         const tl = this.props.timelineSet.getTimelineForEvent(rmId);
-        let rmTs;
+        let rmTs: number;
         if (tl) {
             const event = tl.getEvents().find((e) => { return e.getId() == rmId; });
             if (event) {
@@ -1119,7 +1157,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             }
         }
 
+        // Update the read marker to the values we found
         this.setReadMarker(rmId, rmTs);
+
+        // Send the receipts to the server immediately (don't wait for activity)
+        this.sendReadReceipt();
     };
 
     /* return true if the content is fully scrolled down and we are
@@ -1340,7 +1382,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 );
             }
 
-            Modal.createTrackedDialog('Failed to load timeline position', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to load timeline position"),
                 description,
                 onFinished,
@@ -1417,27 +1459,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // if we're at the end of the live timeline, append the pending events
         if (!this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             const pendingEvents = this.props.timelineSet.getPendingEvents();
-            if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
-                events.push(...pendingEvents.filter(e => e.threadRootId === this.context.threadId));
-            } else {
-                events.push(...pendingEvents.filter(e => {
-                    const hasNoRelation = !e.getRelation();
-                    if (hasNoRelation) {
-                        return true;
-                    }
+            events.push(...pendingEvents.filter(event => {
+                const {
+                    shouldLiveInRoom,
+                    threadId,
+                } = this.props.timelineSet.room.eventShouldLiveIn(event, pendingEvents);
 
-                    if (e.isThreadRelation) {
-                        return false;
-                    }
-
-                    const parentEvent = this.props.timelineSet.findEventById(e.getAssociatedId());
-                    if (!parentEvent) {
-                        return false;
-                    } else {
-                        return !parentEvent.isThreadRelation;
-                    }
-                }));
-            }
+                if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+                    return threadId === this.context.threadId;
+                } {
+                    return shouldLiveInRoom;
+                }
+            }));
         }
 
         return {
@@ -1549,8 +1582,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const isNodeInView = (node) => {
             if (node) {
                 const boundingRect = node.getBoundingClientRect();
-                if ((allowPartial && boundingRect.top < wrapperRect.bottom) ||
-                    (!allowPartial && boundingRect.bottom < wrapperRect.bottom)) {
+                if (
+                    (allowPartial && boundingRect.top <= wrapperRect.bottom) ||
+                    (!allowPartial && boundingRect.bottom <= wrapperRect.bottom)
+                ) {
                     return true;
                 }
             }
@@ -1670,7 +1705,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         eventId: string,
         relationType: RelationType,
         eventType: EventType | string,
-    ) => this.props.timelineSet.getRelationsForEvent(eventId, relationType, eventType);
+    ) => this.props.timelineSet.relations?.getChildEventsForEvent(eventId, relationType, eventType);
 
     private buildCallEventGroupers(events?: MatrixEvent[]): void {
         this.callEventGroupers = buildCallEventGroupers(this.callEventGroupers, events);

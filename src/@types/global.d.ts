@@ -23,7 +23,7 @@ import ContentMessages from "../ContentMessages";
 import { IMatrixClientPeg } from "../MatrixClientPeg";
 import ToastStore from "../stores/ToastStore";
 import DeviceListener from "../DeviceListener";
-import { RoomListStoreClass } from "../stores/room-list/RoomListStore";
+import { RoomListStore } from "../stores/room-list/Interface";
 import { PlatformPeg } from "../PlatformPeg";
 import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
@@ -34,7 +34,6 @@ import type { Renderer } from "react-dom";
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
 import CallHandler from "../CallHandler";
-import { Analytics } from "../Analytics";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -80,7 +79,7 @@ declare global {
         mxContentMessages: ContentMessages;
         mxToastStore: ToastStore;
         mxDeviceListener: DeviceListener;
-        mxRoomListStore: RoomListStoreClass;
+        mxRoomListStore: RoomListStore;
         mxRoomListLayoutStore: RoomListLayoutStore;
         mxPlatformPeg: PlatformPeg;
         mxIntegrationManagers: typeof IntegrationManagers;
@@ -91,7 +90,6 @@ declare global {
         mxWidgetStore: WidgetStore;
         mxWidgetLayoutStore: WidgetLayoutStore;
         mxCallHandler: CallHandler;
-        mxAnalytics: Analytics;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -173,10 +171,6 @@ declare global {
         // sinkId & setSinkId are experimental and typescript doesn't know about them
         sinkId: string;
         setSinkId(outputId: string): void;
-    }
-
-    interface HTMLStyleElement {
-        disabled?: boolean;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour
