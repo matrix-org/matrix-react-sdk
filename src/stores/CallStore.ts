@@ -165,7 +165,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         if (!this.calls.has(state.roomId)) {
             const room = this.matrixClient.getRoom(state.roomId);
             // State events can arrive before the room does, when creating a room
-            if (room) this.updateRoom(room);
+            if (room !== null) this.updateRoom(room);
         }
     };
 
@@ -177,7 +177,9 @@ export class CallStore extends AsyncStoreWithClient<{}> {
                 this.updateRoom(room);
             }
         } else {
-            this.updateRoom(this.matrixClient.getRoom(roomId)!);
+            const room = this.matrixClient.getRoom(roomId);
+            // Widget updates can arrive before the room does, empirically
+            if (room !== null) this.updateRoom(room);
         }
     };
 }
