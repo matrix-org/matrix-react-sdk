@@ -99,7 +99,7 @@ export class CallStore extends AsyncStoreWithClient<null> {
         SettingsStore.setValue("activeCallRoomId", null, SettingLevel.DEVICE, value?.roomId ?? null);
     }
 
-    private calls = new Map<string, Call | null>(); // Key is room ID
+    private calls = new Map<string, Call>(); // Key is room ID
 
     public get startWithAudioMuted(): boolean { return SettingsStore.getValue("audioInputMuted"); }
     public set startWithAudioMuted(value: boolean) {
@@ -112,10 +112,17 @@ export class CallStore extends AsyncStoreWithClient<null> {
     }
 
     private updateRoom(room: Room) {
-        const call = Call.get(room);
-        call?.once(CallEvent.Destroy, () => this.updateRoom(room));
-        this.calls.set(room.roomId, call);
-        this.emit(CallStoreEvent.Call, call, room.roomId);
+        if (!this.calls.has(room.roomId)) {
+            const call = Call.get(room);
+            if (call) {
+                call.once(CallEvent.Destroy, () => {
+                    this.calls.delete(room.roomId);
+                    this.updateRoom(room);
+                });
+                this.calls.set(room.roomId, call);
+            }
+            this.emit(CallStoreEvent.Call, call, room.roomId);
+        }
     }
 
     /**
@@ -124,7 +131,7 @@ export class CallStore extends AsyncStoreWithClient<null> {
      * @returns {Call | null} The call.
      */
     public get(roomId: string): Call | null {
-        return this.calls.get(roomId);
+        return this.calls.get(roomId) ?? null;
     }
 
     /**
@@ -168,7 +175,7 @@ export class CallStore extends AsyncStoreWithClient<null> {
     private onRoomState = (event: MatrixEvent, state: RoomState) => {
         // If there's already a call stored for this room, it's understood to
         // still be valid until destroyed
-        if (this.calls.get(event.getRoomId()) === null) {
+        if (!this.calls.has(event.getRoomId())) {
             const room = this.matrixClient.getRoom(event.getRoomId());
             this.updateRoom(room);
         }
