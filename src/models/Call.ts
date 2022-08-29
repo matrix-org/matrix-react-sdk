@@ -59,6 +59,9 @@ export enum ConnectionState {
     Disconnecting = "disconnecting",
 }
 
+export const isConnected = (state: ConnectionState): boolean =>
+    state === ConnectionState.Connected || state === ConnectionState.Disconnecting;
+
 export enum CallEvent {
     ConnectionState = "connection_state",
     Participants = "participants",
@@ -110,8 +113,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     }
 
     public get connected(): boolean {
-        return this.connectionState === ConnectionState.Connected
-            || this.connectionState === ConnectionState.Disconnecting;
+        return isConnected(this.connectionState);
     }
 
     private _participants = new Set<RoomMember>();
@@ -491,10 +493,7 @@ export class JitsiCall extends Call {
                 logger.log(`Resending video member event for ${this.roomId}`);
                 await this.addOurDevice();
             }, (JitsiCall.STUCK_DEVICE_TIMEOUT_MS * 3) / 4);
-        } else if (
-            state === ConnectionState.Disconnected
-            && (prevState === ConnectionState.Disconnecting || prevState === ConnectionState.Connected)
-        ) {
+        } else if (state === ConnectionState.Disconnected && isConnected(prevState)) {
             this.updateParticipants();
 
             clearInterval(this.resendDevicesTimer);

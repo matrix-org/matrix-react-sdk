@@ -19,7 +19,7 @@ import React, { FC, useContext, useEffect } from "react";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { Call } from "../../models/Call";
 import { useCall, useConnectionState } from "../../hooks/useCall";
-import { ConnectionState } from "../../models/Call";
+import { isConnected } from "../../models/Call";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AppTile from "../views/elements/AppTile";
 import { CallLobby } from "../views/voip/CallLobby";
@@ -31,9 +31,7 @@ interface Props {
 
 const LoadedVideoRoomView: FC<Props & { call: Call }> = ({ room, resizing, call }) => {
     const cli = useContext(MatrixClientContext);
-    const connectionState = useConnectionState(call);
-    const connected = connectionState === ConnectionState.Connected
-        || connectionState === ConnectionState.Disconnecting;
+    const connected = isConnected(useConnectionState(call));
 
     // We'll take this opportunity to tidy up our room state
     useEffect(() => { call?.clean(); }, [call]);

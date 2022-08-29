@@ -63,13 +63,13 @@ describe("Algorithm", () => {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
 
-        client.getRoom.mockImplementation(roomId =>
-            roomId === room.roomId
-                ? room
-                : roomId === roomWithCall.roomId
-                    ? roomWithCall
-                    : undefined,
-        );
+        client.getRoom.mockImplementation(roomId => {
+            switch (roomId) {
+                case room.roomId: return room;
+                case roomWithCall.roomId: return roomWithCall;
+                default: return undefined;
+            }
+        });
         client.getRooms.mockReturnValue([room, roomWithCall]);
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
         client.reEmitter.reEmit(roomWithCall, [RoomStateEvent.Events]);
