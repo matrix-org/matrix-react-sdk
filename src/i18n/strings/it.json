@@ -3538,5 +3538,12 @@
     "Welcome": "Benvenuti",
     "Don’t miss a thing by taking %(brand)s with you": "Non perderti niente portando %(brand)s con te",
     "Show shortcut to welcome checklist above the room list": "Mostra scorciatoia per l'elenco di benvenuto sopra la lista stanze",
-    "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Non è consigliabile aggiungere la crittografia alle stanze pubbliche.</b>Chiunque può trovare ed entrare in stanze pubbliche, quindi chiunque può leggere i messaggi. Non avrai alcun beneficio dalla crittografia e non potrai disattivarla in seguito. Cifrare i messaggi in una stanza pubblica renderà più lenti l'invio e la ricezione dei messaggi."
+    "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Non è consigliabile aggiungere la crittografia alle stanze pubbliche.</b>Chiunque può trovare ed entrare in stanze pubbliche, quindi chiunque può leggere i messaggi. Non avrai alcun beneficio dalla crittografia e non potrai disattivarla in seguito. Cifrare i messaggi in una stanza pubblica renderà più lenti l'invio e la ricezione dei messaggi.",
+    "Empty room (was %(oldName)s)": "Stanza vuota (era %(oldName)s)",
+    "Inviting %(user)s and %(count)s others|one": "Invito di %(user)s e 1 altro",
+    "Inviting %(user)s and %(count)s others|other": "Invito di %(user)s e altri %(count)s",
+    "Inviting %(user1)s and %(user2)s": "Invito di %(user1)s e %(user2)s",
+    "%(user)s and %(count)s others|one": "%(user)s e 1 altro",
+    "%(user)s and %(count)s others|other": "%(user)s e altri %(count)s",
+    "%(user1)s and %(user2)s": "%(user1)s e %(user2)s"
 }
