@@ -21,9 +21,10 @@ import { Icon as UnknownDeviceIcon } from '../../../../../res/img/element-icons/
 import { Icon as VerifiedIcon } from '../../../../../res/img/e2e/verified.svg';
 import { Icon as UnverifiedIcon } from '../../../../../res/img/e2e/warning.svg';
 import { _t } from '../../../../languageHandler';
+import { DeviceWithVerification } from './types';
 
 interface Props {
-    isVerified?: boolean;
+    isVerified?: DeviceWithVerification['isVerified'];
     isSelected?: boolean;
 }
 
