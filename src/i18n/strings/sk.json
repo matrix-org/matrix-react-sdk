@@ -3545,5 +3545,6 @@
     "Inviting %(user1)s and %(user2)s": "Pozývanie %(user1)s a %(user2)s",
     "%(user)s and %(count)s others|one": "%(user)s a 1 ďalší",
     "%(user)s and %(count)s others|other": "%(user)s a %(count)s ďalších",
-    "%(user1)s and %(user2)s": "%(user1)s a %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s a %(user2)s",
+    "Unknown device type": "Neznámy typ zariadenia"
 }
