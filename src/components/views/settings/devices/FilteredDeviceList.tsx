@@ -18,7 +18,7 @@ import React from 'react';
 
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
-import Dropdown from '../../elements/Dropdown';
+import { FilterDropdown } from '../../elements/FilterDropdown';
 import DeviceDetails from './DeviceDetails';
 import DeviceExpandDetailsButton from './DeviceExpandDetailsButton';
 import DeviceSecurityCard from './DeviceSecurityCard';
@@ -189,16 +189,14 @@ const FilteredDeviceList: React.FC<Props> = ({
             <span className='mx_FilteredDeviceList_headerLabel'>
                 { _t('Sessions') }
             </span>
-            <Dropdown
+            <FilterDropdown
                 id='device-list-filter'
                 label={_t('Filter devices')}
                 value={filter || ALL_FILTER_ID}
                 onOptionChange={onFilterOptionChange}
-            >
-                { options.map(({ id, label }) =>
-                    <div data-test-id={`device-filter-option-${id}`} key={id}>{ label }</div>,
-                ) }
-            </Dropdown>
+                options={options}
+                selectedLabel={_t('Show')}
+            />
         </div>
         { !!sortedDevices.length
             ? <FilterSecurityCard filter={filter} />
