@@ -48,8 +48,8 @@ import { shouldDisplayAsBeaconTile } from "../utils/beacon/timeline";
 export interface EventTileTypeProps {
     ref?: React.RefObject<any>; // `any` because it's effectively impossible to convince TS of a reasonable type
     mxEvent: MatrixEvent;
-    highlights: string[];
-    highlightLink: string;
+    highlights?: string[];
+    highlightLink?: string;
     showUrlPreview?: boolean;
     onHeightChanged: () => void;
     forExport?: boolean;
@@ -223,6 +223,10 @@ export function pickFactory(
 
         if (SINGULAR_STATE_EVENTS.has(evType) && mxEvent.getStateKey() !== '') {
             return noEventFactoryFactory(); // improper event type to render
+        }
+
+        if (STATE_EVENT_TILE_TYPES[evType] === TextualEventFactory && !hasText(mxEvent, showHiddenEvents)) {
+            return noEventFactoryFactory();
         }
 
         return STATE_EVENT_TILE_TYPES[evType] ?? noEventFactoryFactory();

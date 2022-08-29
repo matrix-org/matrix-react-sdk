@@ -41,12 +41,8 @@ import dispatcher from '../../../../src/dispatcher/dispatcher';
 import SettingsStore from '../../../../src/settings/SettingsStore';
 import { Action } from '../../../../src/dispatcher/actions';
 import { UserTab } from '../../../../src/components/views/dialogs/UserTab';
-import { showThread } from '../../../../src/dispatcher/dispatch-actions/threads';
 
 jest.mock('../../../../src/dispatcher/dispatcher');
-jest.mock('../../../../src/dispatcher/dispatch-actions/threads', () => ({
-    showThread: jest.fn(),
-}));
 
 describe('<MessageActionBar />', () => {
     const userId = '@alice:server.org';
@@ -59,6 +55,7 @@ describe('<MessageActionBar />', () => {
             msgtype: MsgType.Text,
             body: 'Hello',
         },
+        event_id: "$alices_message",
     });
 
     const bobsMessageEvent = new MatrixEvent({
@@ -69,6 +66,7 @@ describe('<MessageActionBar />', () => {
             msgtype: MsgType.Text,
             body: 'I am bob',
         },
+        event_id: "$bobs_message",
     });
 
     const redactedEvent = new MatrixEvent({
@@ -82,6 +80,25 @@ describe('<MessageActionBar />', () => {
         ...mockClientMethodsEvents(),
         getRoom: jest.fn(),
     });
+
+    const localStorageMock = (() => {
+        let store = {};
+        return {
+            getItem: jest.fn().mockImplementation(key => store[key] ?? null),
+            setItem: jest.fn().mockImplementation((key, value) => {
+                store[key] = value;
+            }),
+            clear: jest.fn().mockImplementation(() => {
+                store = {};
+            }),
+            removeItem: jest.fn().mockImplementation((key) => delete store[key]),
+        };
+    })();
+    Object.defineProperty(window, 'localStorage', {
+        value: localStorageMock,
+        writable: true,
+    });
+
     const room = new Room(roomId, client, userId);
     jest.spyOn(room, 'getPendingEvents').mockReturnValue([]);
 
@@ -223,11 +240,11 @@ describe('<MessageActionBar />', () => {
         });
 
         it('opens message context menu on click', () => {
-            const { findByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            const { getByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
                 fireEvent.click(queryByLabelText('Options'));
             });
-            expect(findByTestId('mx_MessageContextMenu')).toBeTruthy();
+            expect(getByTestId('mx_MessageContextMenu')).toBeTruthy();
         });
     });
 
@@ -293,11 +310,11 @@ describe('<MessageActionBar />', () => {
         });
 
         it('opens reaction picker on click', () => {
-            const { queryByLabelText, findByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByLabelText, getByTestId } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
                 fireEvent.click(queryByLabelText('React'));
             });
-            expect(findByTestId('mx_ReactionPicker')).toBeTruthy();
+            expect(getByTestId('mx_EmojiPicker')).toBeTruthy();
         });
     });
 
@@ -426,7 +443,8 @@ describe('<MessageActionBar />', () => {
                     fireEvent.click(getByLabelText('Reply in thread'));
                 });
 
-                expect(showThread).toHaveBeenCalledWith({
+                expect(dispatcher.dispatch).toHaveBeenCalledWith({
+                    action: Action.ShowThread,
                     rootEvent: alicesMessageEvent,
                     push: false,
                 });
@@ -454,7 +472,8 @@ describe('<MessageActionBar />', () => {
                     fireEvent.click(getByLabelText('Reply in thread'));
                 });
 
-                expect(showThread).toHaveBeenCalledWith({
+                expect(dispatcher.dispatch).toHaveBeenCalledWith({
+                    action: Action.ShowThread,
                     rootEvent: alicesMessageEvent,
                     initialEvent: threadReplyEvent,
                     highlighted: true,
@@ -463,5 +482,121 @@ describe('<MessageActionBar />', () => {
                 });
             });
         });
+    });
+
+    describe('favourite button', () => {
+        //for multiple event usecase
+        const favButton = (evt: MatrixEvent) => {
+            return getComponent({ mxEvent: evt }).getByTestId(evt.getId());
+        };
+
+        describe('when favourite_messages feature is enabled', () => {
+            beforeEach(() => {
+                jest.spyOn(SettingsStore, 'getValue')
+                    .mockImplementation(setting => setting === 'feature_favourite_messages');
+                localStorageMock.clear();
+            });
+
+            it('renders favourite button on own actionable event', () => {
+                const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+                expect(queryByLabelText('Favourite')).toBeTruthy();
+            });
+
+            it('renders favourite button on other actionable events', () => {
+                const { queryByLabelText } = getComponent({ mxEvent: bobsMessageEvent });
+                expect(queryByLabelText('Favourite')).toBeTruthy();
+            });
+
+            it('does not render Favourite button on non-actionable event', () => {
+                //redacted event is not actionable
+                const { queryByLabelText } = getComponent({ mxEvent: redactedEvent });
+                expect(queryByLabelText('Favourite')).toBeFalsy();
+            });
+
+            it('remembers favourited state of multiple events, and handles the localStorage of the events accordingly',
+                () => {
+                    const alicesAction = favButton(alicesMessageEvent);
+                    const bobsAction = favButton(bobsMessageEvent);
+
+                    //default state before being clicked
+                    expect(alicesAction.classList).not.toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(bobsAction.classList).not.toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(localStorageMock.getItem('io_element_favouriteMessages')).toBeNull();
+
+                    //if only alice's event is fired
+                    act(() => {
+                        fireEvent.click(alicesAction);
+                    });
+
+                    expect(alicesAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(bobsAction.classList).not.toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(localStorageMock.setItem)
+                        .toHaveBeenCalledWith('io_element_favouriteMessages', '["$alices_message"]');
+
+                    //when bob's event is fired,both should be styled and stored in localStorage
+                    act(() => {
+                        fireEvent.click(bobsAction);
+                    });
+
+                    expect(alicesAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(bobsAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(localStorageMock.setItem)
+                        .toHaveBeenCalledWith('io_element_favouriteMessages', '["$alices_message","$bobs_message"]');
+
+                    //finally, at this point the localStorage should contain the two eventids
+                    expect(localStorageMock.getItem('io_element_favouriteMessages'))
+                        .toEqual('["$alices_message","$bobs_message"]');
+
+                    //if decided to unfavourite bob's event by clicking again
+                    act(() => {
+                        fireEvent.click(bobsAction);
+                    });
+                    expect(bobsAction.classList).not.toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(alicesAction.classList).toContain('mx_MessageActionBar_favouriteButton_fillstar');
+                    expect(localStorageMock.getItem('io_element_favouriteMessages')).toEqual('["$alices_message"]');
+                });
+        });
+
+        describe('when favourite_messages feature is disabled', () => {
+            it('does not render', () => {
+                jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
+                const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+                expect(queryByLabelText('Favourite')).toBeFalsy();
+            });
+        });
+    });
+
+    it.each([
+        ["React"],
+        ["Reply"],
+        ["Reply in thread"],
+        ["Favourite"],
+        ["Edit"],
+    ])("does not show context menu when right-clicking", (buttonLabel: string) => {
+        // For favourite button
+        jest.spyOn(SettingsStore, 'getValue').mockReturnValue(true);
+
+        const event = new MouseEvent("contextmenu", {
+            bubbles: true,
+            cancelable: true,
+        });
+        event.stopPropagation = jest.fn();
+        event.preventDefault = jest.fn();
+
+        const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+        act(() => {
+            fireEvent(queryByLabelText(buttonLabel), event);
+        });
+        expect(event.stopPropagation).toHaveBeenCalled();
+        expect(event.preventDefault).toHaveBeenCalled();
+        expect(queryByTestId("mx_MessageContextMenu")).toBeFalsy();
+    });
+
+    it("does shows context menu when right-clicking options", () => {
+        const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+        act(() => {
+            fireEvent.contextMenu(queryByLabelText("Options"));
+        });
+        expect(queryByTestId("mx_MessageContextMenu")).toBeTruthy();
     });
 });

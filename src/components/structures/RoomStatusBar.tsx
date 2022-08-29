@@ -25,13 +25,13 @@ import Resend from '../../Resend';
 import dis from '../../dispatcher/dispatcher';
 import { messageForResourceLimitError } from '../../utils/ErrorUtils';
 import { Action } from "../../dispatcher/actions";
-import NotificationBadge from "../views/rooms/NotificationBadge";
 import { StaticNotificationState } from "../../stores/notifications/StaticNotificationState";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import Modal from '../../Modal';
 import BugReportDialog from '../views/dialogs/BugReportDialog';
+import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -300,7 +300,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             <AccessibleButton onClick={this.onCancelAllClick} className="mx_RoomStatusBar_unsentCancelAllBtn">
                 { _t("Delete all") }
             </AccessibleButton>
-            <AccessibleButton onClick={this.onResendAllClick} className="mx_RoomStatusBar_unsentResendAllBtn">
+            <AccessibleButton onClick={this.onResendAllClick} className="mx_RoomStatusBar_unsentRetry">
                 { _t("Retry all") }
             </AccessibleButton>
         </>;
@@ -312,28 +312,12 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             </>;
         }
 
-        return <>
-            <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages">
-                <div role="alert">
-                    <div className="mx_RoomStatusBar_unsentBadge">
-                        <NotificationBadge
-                            notification={StaticNotificationState.RED_EXCLAMATION}
-                        />
-                    </div>
-                    <div>
-                        <div className="mx_RoomStatusBar_unsentTitle">
-                            { title }
-                        </div>
-                        <div className="mx_RoomStatusBar_unsentDescription">
-                            { _t("You can select all or individual messages to retry or delete") }
-                        </div>
-                    </div>
-                    <div className="mx_RoomStatusBar_unsentButtonBar">
-                        { buttonRow }
-                    </div>
-                </div>
-            </div>
-        </>;
+        return <RoomStatusBarUnsentMessages
+            title={title}
+            description={_t("You can select all or individual messages to retry or delete")}
+            notificationState={StaticNotificationState.RED_EXCLAMATION}
+            buttons={buttonRow}
+        />;
     }
 
     private getRefreshTimelineContent(): JSX.Element {
