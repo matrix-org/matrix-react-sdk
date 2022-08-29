@@ -156,7 +156,7 @@ describe("CallLobby", () => {
                 {
                     deviceId: "2",
                     groupId: "1",
-                    label: "Built-in microphone",
+                    label: "", // Should fall back to "Audio input 2"
                     kind: "audioinput",
                     toJSON: () => {},
                 },
@@ -166,7 +166,7 @@ describe("CallLobby", () => {
             screen.getByRole("button", { name: /microphone/ });
             fireEvent.click(screen.getByRole("button", { name: "Audio devices" }));
             screen.getByRole("menuitem", { name: "Headphones" });
-            screen.getByRole("menuitem", { name: "Built-in microphone" });
+            screen.getByRole("menuitem", { name: "Audio input 2" });
         });
     });
 

@@ -41,6 +41,7 @@ interface DeviceButtonProps {
     devices: MediaDeviceInfo[];
     setDevice: (device: MediaDeviceInfo) => void;
     deviceListLabel: string;
+    fallbackDeviceLabel: (n: number) => string;
     muted: boolean;
     disabled: boolean;
     toggle: () => void;
@@ -49,7 +50,7 @@ interface DeviceButtonProps {
 }
 
 const DeviceButton: FC<DeviceButtonProps> = ({
-    kind, devices, setDevice, deviceListLabel, muted, disabled, toggle, unmutedTitle, mutedTitle,
+    kind, devices, setDevice, deviceListLabel, fallbackDeviceLabel, muted, disabled, toggle, unmutedTitle, mutedTitle,
 }) => {
     const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
     let contextMenu;
@@ -65,7 +66,7 @@ const DeviceButton: FC<DeviceButtonProps> = ({
                 { devices.map((d, index) =>
                     <IconizedContextMenuOption
                         key={d.deviceId}
-                        label={d.label || `Audio input ${index + 1}`}
+                        label={d.label || fallbackDeviceLabel(index + 1)}
                         onClick={() => selectDevice(d)}
                     />,
                 ) }
@@ -212,6 +213,7 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
                     devices={audioInputs}
                     setDevice={setAudioInput}
                     deviceListLabel={_t("Audio devices")}
+                    fallbackDeviceLabel={n => _t("Audio input %(n)s", { n })}
                     muted={audioMuted}
                     disabled={connecting}
                     toggle={toggleAudio}
@@ -223,6 +225,7 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
                     devices={videoInputs}
                     setDevice={setVideoInput}
                     deviceListLabel={_t("Video devices")}
+                    fallbackDeviceLabel={n => _t("Video input %(n)s", { n })}
                     muted={videoMuted}
                     disabled={connecting}
                     toggle={toggleVideo}
