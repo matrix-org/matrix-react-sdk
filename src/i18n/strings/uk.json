@@ -2254,7 +2254,7 @@
     "An unknown error occurred": "Трапилась невідома помилка",
     "Call back": "Передзвонити",
     "Automatically invite members from this room to the new one": "Автоматично запросити учасників цієї кімнати до нової",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Зауважте, поліпшення створить нову версію кімнати</b>. Всі наявні повідомлення залишаться в цій архівованій кімнаті.",
+    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Зауважте, поліпшення створить нову версію кімнати</b>. Усі наявні повідомлення залишаться в цій архівованій кімнаті.",
     "Anyone will be able to find and join this room.": "Будь-хто зможе знайти цю кімнату й приєднатись.",
     "Anyone in <SpaceName/> will be able to find and join.": "Будь-хто в <SpaceName/> зможе знайти й приєднатись.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Будь-хто зможе знайти цей простір і приєднатись, не лише учасники <SpaceName/>.",
@@ -2619,7 +2619,7 @@
     "If your other sessions do not have the key for this message you will not be able to decrypt them.": "Якщо ваші інші сеанси не мають ключа від цього повідомлення, ви не зможете його розшифрувати.",
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Порада: Почніть повідомлення з <code>//</code>, щоб його першим символом стала скісна риска.",
     "Server unavailable, overloaded, or something else went wrong.": "Сервер недоступний, перевантажений чи ще щось пішло не так.",
-    "Everyone in this room is verified": "Всі в цій кімнаті звірені",
+    "Everyone in this room is verified": "Усі в цій кімнаті звірені",
     "Someone is using an unknown session": "Хтось користується невідомим сеансом",
     "You have verified this user. This user has verified all of their sessions.": "Ви звірили цього користувача. Цей користувач звірив усі свої сеанси.",
     "You have not verified this user.": "Ви не звіряли цього користувача.",
@@ -3545,5 +3545,6 @@
     "Inviting %(user1)s and %(user2)s": "Запрошення %(user1)s і %(user2)s",
     "%(user)s and %(count)s others|one": "%(user)s і ще 1",
     "%(user)s and %(count)s others|other": "%(user)s і ще %(count)s",
-    "%(user1)s and %(user2)s": "%(user1)s і %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s і %(user2)s",
+    "Unknown device type": "Невідомий тип пристрою"
 }
