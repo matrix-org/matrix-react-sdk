@@ -34,7 +34,7 @@ type FilterDropdownProps<FilterKeysType extends string> = Omit<DropdownProps, 'c
 };
 
 const getSelectedFilterOptionComponent = <FilterKeysType extends string>(
-    selectedLabel: string, options: FilterDropdownOption<FilterKeysType>[],
+    options: FilterDropdownOption<FilterKeysType>[], selectedLabel?: string,
 ) => (filterKey: FilterKeysType) => {
         const option = options.find(({ id }) => id === filterKey);
         if (!option) {
@@ -46,6 +46,9 @@ const getSelectedFilterOptionComponent = <FilterKeysType extends string>(
         return option.label;
     };
 
+/**
+ * Dropdown styled for list filtering
+ */
 export const FilterDropdown = <FilterKeysType extends string = string>(
     {
         value,
@@ -54,12 +57,12 @@ export const FilterDropdown = <FilterKeysType extends string = string>(
         className,
         ...restProps
     }: FilterDropdownProps<FilterKeysType>,
-): React.ReactNode => {
+): React.ReactElement<FilterDropdownProps<FilterKeysType>> => {
     return <Dropdown
         {...restProps}
         value={value}
         className={classNames('mx_FilterDropdown', className)}
-        getShortOption={getSelectedFilterOptionComponent<FilterKeysType>(selectedLabel, options)}
+        getShortOption={getSelectedFilterOptionComponent<FilterKeysType>(options, selectedLabel)}
     >
         { options.map(({ id, label, description }) =>
             <div
@@ -81,5 +84,3 @@ export const FilterDropdown = <FilterKeysType extends string = string>(
         ) }
     </Dropdown>;
 };
-
-export default FilterDropdown;
