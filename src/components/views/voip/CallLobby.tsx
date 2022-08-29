@@ -134,15 +134,15 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
         setVideoInputId(device.deviceId);
     }, []);
 
-    const [audioMuted, setAudioMuted] = useState(() => CallStore.instance.startWithAudioMuted);
-    const [videoMuted, setVideoMuted] = useState(() => CallStore.instance.startWithVideoMuted);
+    const [audioMuted, setAudioMuted] = useState(() => MediaDeviceHandler.startWithAudioMuted);
+    const [videoMuted, setVideoMuted] = useState(() => MediaDeviceHandler.startWithVideoMuted);
 
     const toggleAudio = useCallback(() => {
-        CallStore.instance.startWithAudioMuted = !audioMuted;
+        MediaDeviceHandler.startWithAudioMuted = !audioMuted;
         setAudioMuted(!audioMuted);
     }, [audioMuted, setAudioMuted]);
     const toggleVideo = useCallback(() => {
-        CallStore.instance.startWithVideoMuted = !videoMuted;
+        MediaDeviceHandler.startWithVideoMuted = !videoMuted;
         setVideoMuted(!videoMuted);
     }, [videoMuted, setVideoMuted]);
 
@@ -175,7 +175,9 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
     const connect = useCallback(async () => {
         setConnecting(true);
         try {
-            await CallStore.instance.connect(call);
+            // Disconnect from any other active calls first, since we don't yet support holding
+            await Promise.all([...CallStore.instance.activeCalls].map(call => call.disconnect()));
+            await call.connect();
         } catch (e) {
             logger.error(e);
             setConnecting(false);

@@ -29,6 +29,7 @@ import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import type { Call } from "../../src/models/Call";
 import { stubClient, mkEvent, mkRoomMember, setupAsyncStoreWithClient, mockPlatformPeg } from "../test-utils";
+import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../src/MediaDeviceHandler";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { CallEvent, ConnectionState, JitsiCall } from "../../src/models/Call";
 import WidgetStore from "../../src/stores/WidgetStore";
@@ -38,6 +39,17 @@ import { ElementWidgetActions } from "../../src/stores/widgets/ElementWidgetActi
 
 describe("JitsiCall", () => {
     mockPlatformPeg({ supportsJitsiScreensharing: () => true });
+    jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
+        [MediaDeviceKindEnum.AudioInput]: [
+            { deviceId: "1", groupId: "1", kind: "audioinput", label: "Headphones", toJSON: () => {} },
+        ],
+        [MediaDeviceKindEnum.VideoInput]: [
+            { deviceId: "2", groupId: "2", kind: "videoinput", label: "Built-in webcam", toJSON: () => {} },
+        ],
+        [MediaDeviceKindEnum.AudioOutput]: [],
+    });
+    jest.spyOn(MediaDeviceHandler, "getAudioInput").mockReturnValue("1");
+    jest.spyOn(MediaDeviceHandler, "getVideoInput").mockReturnValue("2");
 
     let client: Mocked<MatrixClient>;
     let room: Room;
@@ -47,6 +59,8 @@ describe("JitsiCall", () => {
     let call: Call;
     let widget: Widget;
     let messaging: Mocked<ClientWidgetApi>;
+    let audioMutedSpy: jest.SpyInstance<boolean, []>;
+    let videoMutedSpy: jest.SpyInstance<boolean, []>;
 
     beforeEach(async () => {
         jest.useFakeTimers();
@@ -123,6 +137,9 @@ describe("JitsiCall", () => {
             },
         } as unknown as Mocked<ClientWidgetApi>;
         WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
+
+        audioMutedSpy = jest.spyOn(MediaDeviceHandler, "startWithAudioMuted", "get");
+        videoMutedSpy = jest.spyOn(MediaDeviceHandler, "startWithVideoMuted", "get");
     });
 
     afterEach(() => {
@@ -130,12 +147,16 @@ describe("JitsiCall", () => {
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
         WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
         jest.clearAllMocks();
+        audioMutedSpy.mockRestore();
+        videoMutedSpy.mockRestore();
     });
 
     it("connects muted", async () => {
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        audioMutedSpy.mockReturnValue(true);
+        videoMutedSpy.mockReturnValue(true);
 
-        await call.connect(null, null);
+        await call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connected);
         expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
             audioInput: null,
@@ -145,11 +166,10 @@ describe("JitsiCall", () => {
 
     it("connects unmuted", async () => {
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        audioMutedSpy.mockReturnValue(false);
+        videoMutedSpy.mockReturnValue(false);
 
-        await call.connect(
-            { deviceId: "1", groupId: "1", kind: "audioinput", label: "Headphones", toJSON: () => {} },
-            { deviceId: "2", groupId: "2", kind: "videoinput", label: "Built-in webcam", toJSON: () => {} },
-        );
+        await call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connected);
         expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
             audioInput: "Headphones",
@@ -163,7 +183,7 @@ describe("JitsiCall", () => {
         WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
-        const connect = call.connect(null, null);
+        const connect = call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connecting);
 
         WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
@@ -174,7 +194,7 @@ describe("JitsiCall", () => {
     it("handles remote disconnection", async () => {
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
-        await call.connect(null, null);
+        await call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connected);
 
         messaging.emit(
@@ -201,7 +221,7 @@ describe("JitsiCall", () => {
             return {};
         });
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        await call.connect(null, null);
+        await call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connected);
         // Should disconnect on its own almost instantly
         await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
@@ -209,7 +229,7 @@ describe("JitsiCall", () => {
 
     it("disconnects", async () => {
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        await call.connect(null, null);
+        await call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connected);
         await call.disconnect();
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
@@ -235,7 +255,7 @@ describe("JitsiCall", () => {
 
         // Now, stub out client.sendStateEvent so we can test our local echo
         client.sendStateEvent.mockReset();
-        await call.connect(null, null);
+        await call.connect();
         expect([...call.participants]).toEqual([bob, alice]);
 
         await call.disconnect();
@@ -244,7 +264,7 @@ describe("JitsiCall", () => {
 
     it("updates room state when connecting and disconnecting", async () => {
         const now1 = Date.now();
-        await call.connect(null, null);
+        await call.connect();
         await waitFor(() => expect(
             room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
         ).toEqual({
@@ -263,7 +283,7 @@ describe("JitsiCall", () => {
     });
 
     it("repeatedly updates room state while connected", async () => {
-        await call.connect(null, null);
+        await call.connect();
         await waitFor(() => expect(client.sendStateEvent).toHaveBeenLastCalledWith(
             room.roomId,
             JitsiCall.MEMBER_EVENT_TYPE,
@@ -286,7 +306,7 @@ describe("JitsiCall", () => {
         const onConnectionState = (state: ConnectionState) => events.push(state);
         call.on(CallEvent.ConnectionState, onConnectionState);
 
-        await call.connect(null, null);
+        await call.connect();
         await call.disconnect();
         expect(events).toEqual([
             ConnectionState.Connecting,
@@ -303,13 +323,13 @@ describe("JitsiCall", () => {
         };
         call.on(CallEvent.Participants, onParticipants);
 
-        await call.connect(null, null);
+        await call.connect();
         await call.disconnect();
         expect(events).toEqual([new Set([alice]), new Set()]);
     });
 
     it("switches to spotlight layout when the widget becomes a PiP", async () => {
-        await call.connect(null, null);
+        await call.connect();
         ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Undock);
         expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.SpotlightLayout, {});
         ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Dock);

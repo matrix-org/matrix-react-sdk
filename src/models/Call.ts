@@ -28,6 +28,7 @@ import type { Room } from "matrix-js-sdk/src/models/room";
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import type { IApp } from "../stores/WidgetStore";
+import MediaDeviceHandler, { MediaDeviceKindEnum } from "../MediaDeviceHandler";
 import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
 import { WidgetType } from "../widgets/WidgetType";
@@ -165,18 +166,28 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     protected abstract performDisconnection(): Promise<void>;
 
     /**
-     * Connects the user to the call. The widget associated with the call must
-     * be active for this to succeed.
-     * @param {MediaDeviceInfo | null} audioDevice The audio input to use, or
-     *   null to start muted.
-     * @param {MediaDeviceInfo | null} audioDevice The video input to use, or
-     *   null to start muted.
+     * Connects the user to the call using the media devices set in
+     * MediaDeviceHandler. The widget associated with the call must be active
+     * for this to succeed.
      */
-    public async connect(
-        audioInput: MediaDeviceInfo | null,
-        videoInput: MediaDeviceInfo | null,
-    ): Promise<void> {
+    public async connect(): Promise<void> {
         this.connectionState = ConnectionState.Connecting;
+
+        const {
+            [MediaDeviceKindEnum.AudioInput]: audioInputs,
+            [MediaDeviceKindEnum.VideoInput]: videoInputs,
+        } = await MediaDeviceHandler.getDevices();
+
+        let audioInput: MediaDeviceInfo | null = null;
+        if (!MediaDeviceHandler.startWithAudioMuted) {
+            const deviceId = MediaDeviceHandler.getAudioInput();
+            audioInput = audioInputs.find(d => d.deviceId === deviceId) ?? audioInputs[0] ?? null;
+        }
+        let videoInput: MediaDeviceInfo | null = null;
+        if (!MediaDeviceHandler.startWithVideoMuted) {
+            const deviceId = MediaDeviceHandler.getVideoInput();
+            videoInput = videoInputs.find(d => d.deviceId === deviceId) ?? videoInputs[0] ?? null;
+        }
 
         const messagingStore = WidgetMessagingStore.instance;
         this.messaging = messagingStore.getMessagingForUid(this.widgetUid);

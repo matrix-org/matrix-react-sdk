@@ -95,9 +95,9 @@ describe("Algorithm", () => {
         // End of setup
 
         expect(algorithm.getOrderedRooms()[DefaultTagID.Untagged]).toEqual([room, roomWithCall]);
-        await CallStore.instance.connect(call);
+        await call.connect();
         expect(algorithm.getOrderedRooms()[DefaultTagID.Untagged]).toEqual([roomWithCall, room]);
-        await CallStore.instance.activeCall.disconnect();
+        await call.disconnect();
         expect(algorithm.getOrderedRooms()[DefaultTagID.Untagged]).toEqual([room, roomWithCall]);
     });
 });

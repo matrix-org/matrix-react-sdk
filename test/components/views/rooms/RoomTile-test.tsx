@@ -116,7 +116,7 @@ describe("RoomTile", () => {
                     completeConnection();
                     await joinedFound;
                 })(),
-                CallStore.instance.connect(call),
+                call.connect(),
             ]);
 
             await Promise.all([

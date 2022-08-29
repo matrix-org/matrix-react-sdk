@@ -24,9 +24,9 @@ import { Call } from "../../src/models/Call";
 export class MockedCall extends Call {
     private static EVENT_TYPE = "org.example.mocked_call";
 
-    private constructor(room: Room) {
+    private constructor(private readonly room: Room, private readonly id: string) {
         super({
-            id: "1",
+            id,
             eventId: "$1:example.org",
             roomId: room.roomId,
             type: MatrixWidgetType.Custom,
@@ -37,7 +37,8 @@ export class MockedCall extends Call {
     }
 
     public static get(room: Room): MockedCall | null {
-        return room.currentState.getStateEvents(this.EVENT_TYPE).length ? new MockedCall(room) : null;
+        const [event] = room.currentState.getStateEvents(this.EVENT_TYPE);
+        return event?.getContent().terminated ?? true ? null : new MockedCall(room, event.getStateKey());
     }
 
     public static create(room: Room, id: string) {
@@ -47,7 +48,7 @@ export class MockedCall extends Call {
             type: this.EVENT_TYPE,
             room: room.roomId,
             user: "@alice:example.org",
-            content: {},
+            content: { terminated: false },
             skey: id,
         })]);
     }
@@ -67,6 +68,20 @@ export class MockedCall extends Call {
         videoInput: MediaDeviceInfo | null,
     ): Promise<void> {}
     public async performDisconnection(): Promise<void> {}
+
+    public destroy() {
+        // Terminate the call for good measure
+        this.room.addLiveEvents([mkEvent({
+            event: true,
+            type: MockedCall.EVENT_TYPE,
+            room: this.room.roomId,
+            user: "@alice:example.org",
+            content: { terminated: true },
+            skey: this.id,
+        })]);
+
+        super.destroy();
+    }
 }
 
 /**

@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
@@ -27,14 +28,13 @@ import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import WidgetStore from "./WidgetStore";
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
-import MediaDeviceHandler, { MediaDeviceKindEnum } from "../MediaDeviceHandler";
 import { Call, CallEvent, ConnectionState } from "../models/Call";
 
 export enum CallStoreEvent {
     // Signals a change in the call associated with a given room
     Call = "call",
-    // Signals a change in the active call
-    ActiveCall = "active_call",
+    // Signals a change in the active calls
+    ActiveCalls = "active_calls",
 }
 
 export class CallStore extends AsyncStoreWithClient<null> {
@@ -66,61 +66,84 @@ export class CallStore extends AsyncStoreWithClient<null> {
         this.matrixClient.on(RoomStateEvent.Events, this.onRoomState);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgets);
 
-        // If the room ID of the last connected call is still in settings at
+        // If the room ID of a previously connected call is still in settings at
         // this time, that's a sign that we failed to disconnect from it
         // properly, and need to clean up after ourselves
-        const uncleanlyDisconnectedRoomId = SettingsStore.getValue("activeCallRoomId");
-        if (uncleanlyDisconnectedRoomId) {
-            await this.get(uncleanlyDisconnectedRoomId)?.clean();
-            SettingsStore.setValue("activeCallRoomId", null, SettingLevel.DEVICE, null);
+        const uncleanlyDisconnectedRoomIds = SettingsStore.getValue<string[]>("activeCallRoomIds");
+        if (uncleanlyDisconnectedRoomIds.length) {
+            await Promise.all([
+                ...uncleanlyDisconnectedRoomIds.map(async uncleanlyDisconnectedRoomId => {
+                    logger.log(`Cleaning up call state for room ${uncleanlyDisconnectedRoomId}`);
+                    await this.get(uncleanlyDisconnectedRoomId)?.clean();
+                }),
+                SettingsStore.setValue("activeCallRoomIds", null, SettingLevel.DEVICE, []),
+            ]);
         }
     }
 
     protected async onNotReady(): Promise<any> {
-        for (const call of this.calls.values()) call.destroy();
+        for (const [call, listenerMap] of this.callListeners) {
+            // It's important that we remove the listeners before destroying the
+            // call, because otherwise the call's onDestroy callback would fire
+            // and immediately repopulate the map
+            for (const [event, listener] of listenerMap) call.off(event, listener);
+            call.destroy();
+        }
+        this.callListeners.clear();
         this.calls.clear();
+        this.activeCalls = new Set();
+
         this.matrixClient.off(ClientEvent.Room, this.onRoom);
         this.matrixClient.off(RoomStateEvent.Events, this.onRoomState);
         WidgetStore.instance.off(UPDATE_EVENT, this.onWidgets);
     }
 
-    private _activeCall: Call | null = null;
+    private _activeCalls: Set<Call> = new Set();
     /**
-     * The call to which the user is currently connected.
+     * The calls to which the user is currently connected.
      */
-    public get activeCall(): Call | null {
-        return this._activeCall;
+    public get activeCalls(): Set<Call> {
+        return this._activeCalls;
     }
-    private set activeCall(value: Call | null) {
-        this._activeCall = value;
-        this.emit(CallStoreEvent.ActiveCall, value);
+    private set activeCalls(value: Set<Call>) {
+        this._activeCalls = value;
+        this.emit(CallStoreEvent.ActiveCalls, value);
 
-        // The room ID is persisted to settings so we can detect unclean disconnects
-        SettingsStore.setValue("activeCallRoomId", null, SettingLevel.DEVICE, value?.roomId ?? null);
+        // The room IDs are persisted to settings so we can detect unclean disconnects
+        SettingsStore.setValue("activeCallRoomIds", null, SettingLevel.DEVICE, [...value].map(call => call.roomId));
     }
 
     private calls = new Map<string, Call>(); // Key is room ID
-
-    public get startWithAudioMuted(): boolean { return SettingsStore.getValue("audioInputMuted"); }
-    public set startWithAudioMuted(value: boolean) {
-        SettingsStore.setValue("audioInputMuted", null, SettingLevel.DEVICE, value);
-    }
-
-    public get startWithVideoMuted(): boolean { return SettingsStore.getValue("videoInputMuted"); }
-    public set startWithVideoMuted(value: boolean) {
-        SettingsStore.setValue("videoInputMuted", null, SettingLevel.DEVICE, value);
-    }
+    private callListeners = new Map<Call, Map<CallEvent, (...args: unknown[]) => unknown>>();
 
     private updateRoom(room: Room) {
         if (!this.calls.has(room.roomId)) {
             const call = Call.get(room);
+
             if (call) {
-                call.once(CallEvent.Destroy, () => {
+                const onConnectionState = (state: ConnectionState) => {
+                    if (state === ConnectionState.Connected) {
+                        this.activeCalls = new Set([...this.activeCalls, call]);
+                    } else if (state === ConnectionState.Disconnected) {
+                        this.activeCalls = new Set([...this.activeCalls].filter(c => c !== call));
+                    }
+                };
+                const onDestroy = () => {
                     this.calls.delete(room.roomId);
+                    for (const [event, listener] of this.callListeners.get(call)) call.off(event, listener);
                     this.updateRoom(room);
-                });
+                };
+
+                call.on(CallEvent.ConnectionState, onConnectionState);
+                call.on(CallEvent.Destroy, onDestroy);
+
                 this.calls.set(room.roomId, call);
+                this.callListeners.set(call, new Map<CallEvent, (...args: unknown[]) => unknown>([
+                    [CallEvent.ConnectionState, onConnectionState],
+                    [CallEvent.Destroy, onDestroy],
+                ]));
             }
+
             this.emit(CallStoreEvent.Call, call, room.roomId);
         }
     }
@@ -132,42 +155,6 @@ export class CallStore extends AsyncStoreWithClient<null> {
      */
     public get(roomId: string): Call | null {
         return this.calls.get(roomId) ?? null;
-    }
-
-    /**
-     * Connects the user to the given call, ensuring that they're first
-     * disconnected from any previous call they were on.
-     * @param {Call} call The call to connect to.
-     */
-    public async connect(call: Call): Promise<void> {
-        await this.activeCall?.disconnect();
-
-        const {
-            [MediaDeviceKindEnum.AudioInput]: audioInputs,
-            [MediaDeviceKindEnum.VideoInput]: videoInputs,
-        } = await MediaDeviceHandler.getDevices();
-
-        let audioInput: MediaDeviceInfo | null = null;
-        if (!this.startWithAudioMuted) {
-            const deviceId = MediaDeviceHandler.getAudioInput();
-            audioInput = audioInputs.find(d => d.deviceId === deviceId) ?? audioInputs[0] ?? null;
-        }
-        let videoInput: MediaDeviceInfo | null = null;
-        if (!this.startWithVideoMuted) {
-            const deviceId = MediaDeviceHandler.getVideoInput();
-            videoInput = videoInputs.find(d => d.deviceId === deviceId) ?? videoInputs[0] ?? null;
-        }
-
-        await call.connect(audioInput, videoInput);
-        this.activeCall = call;
-
-        const onConnectionState = (state: ConnectionState) => {
-            if (state === ConnectionState.Disconnected) {
-                this.activeCall = null;
-                call.off(CallEvent.ConnectionState, onConnectionState);
-            }
-        };
-        call.on(CallEvent.ConnectionState, onConnectionState);
     }
 
     private onRoom = (room: Room) => this.updateRoom(room);
