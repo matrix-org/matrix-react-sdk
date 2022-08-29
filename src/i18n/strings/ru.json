@@ -3519,5 +3519,9 @@
     "Inactive sessions": "Неактивные сессии",
     "Unverified sessions": "Неподтверждённые сессии",
     "All": "Все",
-    "Verified sessions": "Подтверждённые сессии"
+    "Verified sessions": "Подтверждённые сессии",
+    "Inactive": "Неактивная",
+    "View all": "Посмотреть все",
+    "Empty room (was %(oldName)s)": "Пустая комната (без %(oldName)s)",
+    "%(user1)s and %(user2)s": "%(user1)s и %(user2)s"
 }
