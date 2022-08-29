@@ -29,7 +29,7 @@ type FilterDropdownProps<FilterKeysType extends string> = Omit<DropdownProps, 'c
     value: FilterKeysType;
     options: FilterDropdownOption<FilterKeysType>[];
     // A label displayed before the selected value
-    // when the dropdown is closed
+    // in the dropdown input
     selectedLabel?: string;
 };
 
