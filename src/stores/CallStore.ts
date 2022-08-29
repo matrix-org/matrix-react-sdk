@@ -164,7 +164,8 @@ export class CallStore extends AsyncStoreWithClient<null> {
         // still be valid until destroyed
         if (!this.calls.has(event.getRoomId())) {
             const room = this.matrixClient.getRoom(event.getRoomId());
-            this.updateRoom(room);
+            // State events can arrive before the room does, when creating a room
+            if (room) this.updateRoom(room);
         }
     };
 
