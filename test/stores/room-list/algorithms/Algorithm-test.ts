@@ -67,7 +67,7 @@ describe("Algorithm", () => {
             switch (roomId) {
                 case room.roomId: return room;
                 case roomWithCall.roomId: return roomWithCall;
-                default: return undefined;
+                default: return null;
             }
         });
         client.getRooms.mockReturnValue([room, roomWithCall]);
@@ -82,6 +82,7 @@ describe("Algorithm", () => {
 
         MockedCall.create(roomWithCall, "1");
         const call = CallStore.instance.get(roomWithCall.roomId);
+        if (call === null) throw new Error("Failed to create call");
 
         const widget = new Widget(call.widget);
         WidgetMessagingStore.instance.storeMessaging(widget, roomWithCall.roomId, {

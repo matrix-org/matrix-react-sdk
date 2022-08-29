@@ -38,7 +38,7 @@ export class MockedCall extends Call {
 
     public static get(room: Room): MockedCall | null {
         const [event] = room.currentState.getStateEvents(this.EVENT_TYPE);
-        return event?.getContent().terminated ?? true ? null : new MockedCall(room, event.getStateKey());
+        return event?.getContent().terminated ?? true ? null : new MockedCall(room, event.getStateKey()!);
     }
 
     public static create(room: Room, id: string) {

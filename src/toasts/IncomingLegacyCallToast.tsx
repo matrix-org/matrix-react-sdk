@@ -97,7 +97,7 @@ export default class IncomingLegacyCallToast extends React.Component<IProps, ISt
 
         return <React.Fragment>
             <RoomAvatar
-                room={room}
+                room={room ?? undefined}
                 height={32}
                 width={32}
             />

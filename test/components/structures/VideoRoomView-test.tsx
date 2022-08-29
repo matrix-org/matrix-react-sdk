@@ -66,7 +66,7 @@ describe("VideoRoomView", () => {
         alice = mkRoomMember(room.roomId, "@alice:example.org");
         jest.spyOn(room, "getMember").mockImplementation(userId => userId === alice.userId ? alice : null);
 
-        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : undefined);
+        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
         client.getRooms.mockReturnValue([room]);
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
 
@@ -75,6 +75,7 @@ describe("VideoRoomView", () => {
 
         MockedCall.create(room, "1");
         call = CallStore.instance.get(room.roomId);
+        if (call === null) throw new Error("Failed to create call");
 
         widget = new Widget(call.widget);
         WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {

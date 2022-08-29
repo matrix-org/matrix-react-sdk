@@ -32,7 +32,7 @@ export enum WidgetMessagingStoreEvent {
  * going to be merged with a more complete WidgetStore, but for now it's
  * easiest to split this into a single place.
  */
-export class WidgetMessagingStore extends AsyncStoreWithClient<unknown> {
+export class WidgetMessagingStore extends AsyncStoreWithClient<{}> {
     private static readonly internalInstance = (() => {
         const instance = new WidgetMessagingStore();
         instance.start();

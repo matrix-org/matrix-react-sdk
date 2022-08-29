@@ -65,7 +65,7 @@ describe("CallLobby", () => {
         alice = mkRoomMember(room.roomId, "@alice:example.org");
         jest.spyOn(room, "getMember").mockImplementation(userId => userId === alice.userId ? alice : null);
 
-        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : undefined);
+        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
         client.getRooms.mockReturnValue([room]);
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
 
@@ -101,7 +101,7 @@ describe("CallLobby", () => {
             expect(userIds.length).toBe(avatars.length);
 
             for (const [userId, avatar] of zip(userIds, avatars)) {
-                fireEvent.focus(avatar);
+                fireEvent.focus(avatar!);
                 screen.getByRole("tooltip", { name: userId });
             }
         };

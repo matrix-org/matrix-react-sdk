@@ -26,7 +26,7 @@ import { Action } from "../dispatcher/actions";
 
 export abstract class ReadyWatchingStore extends EventEmitter implements IDestroyable {
     protected matrixClient: MatrixClient;
-    private dispatcherRef: string;
+    private dispatcherRef: string | null = null;
 
     constructor(protected readonly dispatcher: Dispatcher<ActionPayload>) {
         super();
@@ -51,7 +51,7 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
     }
 
     public destroy() {
-        this.dispatcher.unregister(this.dispatcherRef);
+        if (this.dispatcherRef !== null) this.dispatcher.unregister(this.dispatcherRef);
     }
 
     protected async onReady() {

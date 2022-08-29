@@ -48,7 +48,7 @@ const LoadedVideoRoomView: FC<Props & { call: Call }> = ({ room, resizing, call 
             creatorUserId={call.widget.creatorUserId}
             waitForIframeLoad={call.widget.waitForIframeLoad}
             showMenubar={false}
-            pointerEvents={resizing ? "none" : null}
+            pointerEvents={resizing ? "none" : undefined}
         />
     </div>;
 };

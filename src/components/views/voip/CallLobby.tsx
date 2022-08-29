@@ -60,7 +60,7 @@ const DeviceButton: FC<DeviceButtonProps> = ({
             closeMenu();
         };
 
-        const buttonRect = buttonRef.current.getBoundingClientRect();
+        const buttonRect = buttonRef.current!.getBoundingClientRect();
         contextMenu = <IconizedContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
             <IconizedContextMenuOptionList>
                 { devices.map((d, index) =>
@@ -111,9 +111,9 @@ interface Props {
 
 export const CallLobby: FC<Props> = ({ room, call }) => {
     const [connecting, setConnecting] = useState(false);
-    const me = useMemo(() => room.getMember(room.myUserId), [room]);
+    const me = useMemo(() => room.getMember(room.myUserId)!, [room]);
     const participants = useParticipants(call);
-    const videoRef = useRef<HTMLVideoElement>();
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     const [audioInputs, videoInputs] = useAsyncMemo(async () => {
         try {
@@ -162,7 +162,7 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
 
     useEffect(() => {
         if (videoStream) {
-            const videoElement = videoRef.current;
+            const videoElement = videoRef.current!;
             videoElement.srcObject = videoStream;
             videoElement.play();
 
@@ -202,7 +202,7 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
             <MemberAvatar key={me.userId} member={me} width={200} height={200} resizeMethod="scale" />
             <video
                 ref={videoRef}
-                style={{ visibility: videoMuted ? "hidden" : null }}
+                style={{ visibility: videoMuted ? "hidden" : undefined }}
                 muted
                 playsInline
                 disablePictureInPicture

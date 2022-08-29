@@ -286,7 +286,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
 
             // Reset our power level back to admin so that the widget becomes immutable
             const plEvent = (await room)?.currentState.getStateEvents(EventType.RoomPowerLevels, "");
-            await client.setPowerLevel(roomId, client.getUserId(), 100, plEvent);
+            await client.setPowerLevel(roomId, client.getUserId()!, 100, plEvent);
         }
     }).then(function() {
         // NB we haven't necessarily blocked on the room promise, so we race

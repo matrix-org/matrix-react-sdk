@@ -69,7 +69,7 @@ describe("RoomTile", () => {
                 pendingEventOrdering: PendingEventOrdering.Detached,
             });
 
-            client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : undefined);
+            client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
             client.getRooms.mockReturnValue([room]);
             client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
 

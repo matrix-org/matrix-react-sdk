@@ -257,7 +257,7 @@ export class JitsiCall extends Call {
     public static readonly MEMBER_EVENT_TYPE = "io.element.video.member";
     public static readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-    private room: Room = this.client.getRoom(this.roomId);
+    private room: Room = this.client.getRoom(this.roomId)!;
     private resendDevicesTimer: number | null = null;
     private participantsExpirationTimer: number | null = null;
 
@@ -272,7 +272,7 @@ export class JitsiCall extends Call {
     public static get(room: Room): JitsiCall | null {
         const apps = WidgetStore.instance.getApps(room.roomId);
         // The isVideoChannel field differentiates rich Jitsi calls from bare Jitsi widgets
-        const jitsiWidget = apps.find(app => WidgetType.JITSI.matches(app.type) && app.data.isVideoChannel);
+        const jitsiWidget = apps.find(app => WidgetType.JITSI.matches(app.type) && app.data?.isVideoChannel);
         return jitsiWidget ? new JitsiCall(jitsiWidget, room.client) : null;
     }
 
@@ -291,7 +291,7 @@ export class JitsiCall extends Call {
         let allExpireAt = Infinity;
 
         for (const e of this.room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE)) {
-            const member = this.room.getMember(e.getStateKey());
+            const member = this.room.getMember(e.getStateKey()!);
             const content = e.getContent<JitsiCallMemberContent>();
             let devices = Array.isArray(content.devices) ? content.devices : [];
             const expiresAt = typeof content.expires_ts === "number" ? content.expires_ts : -Infinity;
@@ -308,7 +308,7 @@ export class JitsiCall extends Call {
         }
 
         // Apply local echo for the connected case
-        if (this.connected) members.add(this.room.getMember(this.client.getUserId()));
+        if (this.connected) members.add(this.room.getMember(this.client.getUserId()!)!);
 
         this.participants = members;
         if (allExpireAt < Infinity) {
@@ -322,7 +322,7 @@ export class JitsiCall extends Call {
         if (this.room.getMyMembership() !== "join") return;
 
         const devicesState = this.room.currentState.getStateEvents(
-            JitsiCall.MEMBER_EVENT_TYPE, this.client.getUserId(),
+            JitsiCall.MEMBER_EVENT_TYPE, this.client.getUserId()!,
         );
         const devices = devicesState?.getContent<JitsiCallMemberContent>().devices ?? [];
         const newDevices = fn(devices);
@@ -334,7 +334,7 @@ export class JitsiCall extends Call {
             };
 
             await this.client.sendStateEvent(
-                this.roomId, JitsiCall.MEMBER_EVENT_TYPE, content, this.client.getUserId(),
+                this.roomId, JitsiCall.MEMBER_EVENT_TYPE, content, this.client.getUserId()!,
             );
         }
     }
@@ -401,19 +401,19 @@ export class JitsiCall extends Call {
         // Empirically, it's possible for Jitsi Meet to crash instantly at startup,
         // sending a hangup event that races with the rest of this method, so we need
         // to add the hangup listener now rather than later
-        this.messaging.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
 
         // Actually perform the join
         const response = waitForEvent(
-            this.messaging,
+            this.messaging!,
             `action:${ElementWidgetActions.JoinCall}`,
             (ev: CustomEvent<IWidgetApiRequest>) => {
                 ev.preventDefault();
-                this.messaging.transport.reply(ev.detail, {}); // ack
+                this.messaging!.transport.reply(ev.detail, {}); // ack
                 return true;
             },
         );
-        const request = this.messaging.transport.send(ElementWidgetActions.JoinCall, {
+        const request = this.messaging!.transport.send(ElementWidgetActions.JoinCall, {
             audioInput: audioInput?.label ?? null,
             videoInput: videoInput?.label ?? null,
         });
@@ -421,11 +421,11 @@ export class JitsiCall extends Call {
             await Promise.race([Promise.all([request, response]), dontStopMessaging]);
         } catch (e) {
             // If it timed out, clean up our advance preparations
-            this.messaging.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+            this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
 
-            if (this.messaging.transport.ready) {
+            if (this.messaging!.transport.ready) {
                 // The messaging still exists, which means Jitsi might still be going in the background
-                this.messaging.transport.send(ElementWidgetActions.HangupCall, { force: true });
+                this.messaging!.transport.send(ElementWidgetActions.HangupCall, { force: true });
             }
 
             throw new Error(`Failed to join call in room ${this.roomId}: ${e}`);
@@ -439,15 +439,15 @@ export class JitsiCall extends Call {
 
     protected async performDisconnection(): Promise<void> {
         const response = waitForEvent(
-            this.messaging,
+            this.messaging!,
             `action:${ElementWidgetActions.HangupCall}`,
             (ev: CustomEvent<IWidgetApiRequest>) => {
                 ev.preventDefault();
-                this.messaging.transport.reply(ev.detail, {}); // ack
+                this.messaging!.transport.reply(ev.detail, {}); // ack
                 return true;
             },
         );
-        const request = this.messaging.transport.send(ElementWidgetActions.HangupCall, {});
+        const request = this.messaging!.transport.send(ElementWidgetActions.HangupCall, {});
         try {
             await Promise.all([request, response]);
         } catch (e) {
@@ -456,7 +456,7 @@ export class JitsiCall extends Call {
     }
 
     public setDisconnected() {
-        this.messaging.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Dock, this.onDock);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Undock, this.onUndock);
         this.room.off(RoomEvent.MyMembership, this.onMyMembership);
@@ -505,13 +505,13 @@ export class JitsiCall extends Call {
 
     private onDock = async () => {
         // The widget is no longer a PiP, so let's restore the default layout
-        await this.messaging.transport.send(ElementWidgetActions.TileLayout, {});
+        await this.messaging!.transport.send(ElementWidgetActions.TileLayout, {});
     };
 
     private onUndock = async () => {
         // The widget has become a PiP, so let's switch Jitsi to spotlight mode
         // to only show the active speaker and economize on space
-        await this.messaging.transport.send(ElementWidgetActions.SpotlightLayout, {});
+        await this.messaging!.transport.send(ElementWidgetActions.SpotlightLayout, {});
     };
 
     private onMyMembership = async (room: Room, membership: string) => {
@@ -533,7 +533,7 @@ export class JitsiCall extends Call {
             await waitForEvent(this, CallEvent.ConnectionState);
         }
 
-        await this.messaging.transport.reply(ev.detail, {}); // ack
+        await this.messaging!.transport.reply(ev.detail, {}); // ack
         this.setDisconnected();
     };
 }

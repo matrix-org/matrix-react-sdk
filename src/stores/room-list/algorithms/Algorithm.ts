@@ -383,8 +383,8 @@ export class Algorithm extends EventEmitter {
             const rooms = this._cachedStickyRooms[updatedTag];
 
             const activeRoomIds = new Set([...CallStore.instance.activeCalls].map(call => call.roomId));
-            const activeRooms = [];
-            const inactiveRooms = [];
+            const activeRooms: Room[] = [];
+            const inactiveRooms: Room[] = [];
 
             for (const room of rooms) {
                 (activeRoomIds.has(room.roomId) ? activeRooms : inactiveRooms).push(room);

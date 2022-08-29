@@ -37,7 +37,7 @@ export enum CallStoreEvent {
     ActiveCalls = "active_calls",
 }
 
-export class CallStore extends AsyncStoreWithClient<null> {
+export class CallStore extends AsyncStoreWithClient<{}> {
     private static _instance: CallStore;
     public static get instance(): CallStore {
         if (!this._instance) {
@@ -130,7 +130,7 @@ export class CallStore extends AsyncStoreWithClient<null> {
                 };
                 const onDestroy = () => {
                     this.calls.delete(room.roomId);
-                    for (const [event, listener] of this.callListeners.get(call)) call.off(event, listener);
+                    for (const [event, listener] of this.callListeners.get(call)!) call.off(event, listener);
                     this.updateRoom(room);
                 };
 
@@ -162,8 +162,8 @@ export class CallStore extends AsyncStoreWithClient<null> {
     private onRoomState = (event: MatrixEvent, state: RoomState) => {
         // If there's already a call stored for this room, it's understood to
         // still be valid until destroyed
-        if (!this.calls.has(event.getRoomId())) {
-            const room = this.matrixClient.getRoom(event.getRoomId());
+        if (!this.calls.has(state.roomId)) {
+            const room = this.matrixClient.getRoom(state.roomId);
             // State events can arrive before the room does, when creating a room
             if (room) this.updateRoom(room);
         }
@@ -177,7 +177,7 @@ export class CallStore extends AsyncStoreWithClient<null> {
                 this.updateRoom(room);
             }
         } else {
-            this.updateRoom(this.matrixClient.getRoom(roomId));
+            this.updateRoom(this.matrixClient.getRoom(roomId)!);
         }
     };
 }

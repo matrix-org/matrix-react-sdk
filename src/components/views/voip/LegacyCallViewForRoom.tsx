@@ -32,7 +32,7 @@ interface IProps {
 }
 
 interface IState {
-    call: MatrixCall;
+    call: MatrixCall | null;
 }
 
 /*
@@ -64,7 +64,7 @@ export default class LegacyCallViewForRoom extends React.Component<IProps, IStat
         }
     };
 
-    private getCall(): MatrixCall {
+    private getCall(): MatrixCall | null {
         const call = LegacyCallHandler.instance.getCallForRoom(this.props.roomId);
 
         if (call && [CallState.Ended, CallState.Ringing].includes(call.state)) return null;

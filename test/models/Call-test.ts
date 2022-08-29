@@ -85,7 +85,7 @@ describe("JitsiCall", () => {
         });
         jest.spyOn(room, "getMyMembership").mockReturnValue("join");
 
-        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : undefined);
+        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
         client.getRooms.mockReturnValue([room]);
         client.getUserId.mockReturnValue(alice.userId);
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
@@ -108,6 +108,7 @@ describe("JitsiCall", () => {
 
         await JitsiCall.create(room);
         call = JitsiCall.get(room);
+        if (call === null) throw new Error("Failed to create call");
 
         widget = new Widget(call.widget);
 
