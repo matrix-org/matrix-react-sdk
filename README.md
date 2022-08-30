@@ -48,7 +48,7 @@ All code lands on the `develop` branch - `master` is only used for stable releas
 We use the same contribution guide as Element. Check it out here:
 https://github.com/vector-im/element-web/blob/develop/CONTRIBUTING.md
 
-Please follow the Matrix JS/React code style as per:
+Our code style is also the same as Element's:
 https://github.com/vector-im/element-web/blob/develop/code_style.md
 
 Code should be committed as follows:
