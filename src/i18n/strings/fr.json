@@ -3545,5 +3545,9 @@
     "Inviting %(user1)s and %(user2)s": "Envoi de l’invitation à %(user1)s et %(user2)s",
     "%(user)s and %(count)s others|one": "%(user)s et un autre",
     "%(user)s and %(count)s others|other": "%(user)s et %(count)s autres",
-    "%(user1)s and %(user2)s": "%(user1)s et %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s et %(user2)s",
+    "Show": "Afficher",
+    "Unknown device type": "Type de périphérique inconnu",
+    "Video input %(n)s": "Entrée vidéo %(n)s",
+    "Audio input %(n)s": "Entrée audio %(n)s"
 }
