@@ -21,7 +21,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { useLatestResult } from "./useLatestResult";
 import { SlidingSyncManager } from "../SlidingSyncManager";
 
-export interface ISlidingSyncRoomSearchOpts {
+export interface SlidingSyncRoomSearchOpts {
     limit: number;
     query?: string;
 }
@@ -37,7 +37,7 @@ export const useSlidingSyncRoomSearch = () => {
     const search = useCallback(async ({
         limit = 100,
         query: term,
-    }: ISlidingSyncRoomSearchOpts): Promise<boolean> => {
+    }: SlidingSyncRoomSearchOpts): Promise<boolean> => {
         const opts = { limit, term };
         updateQuery(opts);
 

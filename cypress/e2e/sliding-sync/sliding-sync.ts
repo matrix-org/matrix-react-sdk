@@ -79,22 +79,11 @@ describe("Sliding Sync", () => {
     };
     const createAndJoinBob = () => {
         // create a Bob user
-        let baseUrl;
-        let creds;
         cy.get<SynapseInstance>("@synapse").then((synapse) => {
-            baseUrl = synapse.baseUrl;
-            return cy.registerUser(synapse, "bob", "passwordgoeshere123", "Bob");
-        }).then((c) => {
-            creds = c;
-            return cy.window({ log: false });
-        }).then((window) => {
-            return window.matrixcs.createClient({
-                baseUrl: baseUrl,
-                accessToken: creds.accessToken,
-                userId: creds.userId,
-                deviceId: creds.deviceId,
-            });
-        }).as("bob");
+            return cy.getBot(synapse, {
+                displayName: "Bob",
+            }).as("bob");
+        });
 
         // invite Bob to Test Room and accept then send a message.
         cy.all([cy.get<string>("@roomId"), cy.get<MatrixClient>("@bob")]).then(([roomId, bob]) => {

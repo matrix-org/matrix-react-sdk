@@ -249,7 +249,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         return false;
     }
 
-    public async componentDidMount() {
+    public componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
         RoomListStore.instance.on(LISTS_LOADING_EVENT, this.onListsLoading);

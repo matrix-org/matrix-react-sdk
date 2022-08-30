@@ -219,22 +219,16 @@ export class SlidingSyncManager {
             subscriptions.delete(roomId);
         }
         logger.log("SlidingSync setRoomVisible:", roomId, visible);
-        this.slidingSync.modifyRoomSubscriptions(subscriptions);
-
-        return new Promise((resolve) => {
-            if (this.client.getRoom(roomId)) {
-                resolve(roomId); // we have data already for this room, show immediately e.g it's in a list
-                return;
-            }
-            const resolveOnSubscribed = (gotRoomId: string) => {
-                if (roomId === gotRoomId) {
-                    // we processed a /sync response which returned this subscription
-                    this.slidingSync.off(SlidingSyncEvent.RoomData, resolveOnSubscribed);
-                    resolve(roomId);
-                }
-            };
+        const p = this.slidingSync.modifyRoomSubscriptions(subscriptions);
+        if (this.client.getRoom(roomId)) {
+            return roomId; // we have data already for this room, show immediately e.g it's in a list
+        }
+        try {
             // wait until the next sync before returning as RoomView may need to know the current state
-            this.slidingSync.on(SlidingSyncEvent.RoomData, resolveOnSubscribed);
-        });
+            await p;
+        } catch (err) {
+            logger.warn("SlidingSync setRoomVisible:", roomId, visible, "failed to confirm transaction");
+        }
+        return roomId;
     }
 }
