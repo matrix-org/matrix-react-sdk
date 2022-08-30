@@ -195,7 +195,7 @@ describe('<SessionManagerTab />', () => {
 
     it('goes to filtered list from security recommendations', async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
-        const { getByTestId } = render(getComponent());
+        const { getByTestId, container } = render(getComponent());
 
         await act(async () => {
             await flushPromisesWithFakeTimers();
@@ -208,7 +208,8 @@ describe('<SessionManagerTab />', () => {
         // our session manager waits a tick for rerender
         await flushPromisesWithFakeTimers();
 
-        expect(getByTestId('other-sessions-section')).toMatchSnapshot();
+        // unverified filter is set
+        expect(container.querySelector('.mx_FilteredDeviceList_header')).toMatchSnapshot();
     });
 
     describe('device detail expansion', () => {
