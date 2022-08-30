@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
@@ -158,7 +158,7 @@ export const FilteredDeviceList:
         expandedDeviceIds,
         onFilterChange,
         onDeviceExpandToggle,
-    }, ref: React.RefObject<HTMLDivElement>) => {
+    }, ref: ForwardedRef<HTMLDivElement>) => {
         const sortedDevices = getFilteredSortedDevices(devices, filter);
 
         const options: FilterDropdownOption<DeviceFilterKey>[] = [

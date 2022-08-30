@@ -241,7 +241,7 @@ describe('<SessionManagerTab />', () => {
 
             act(() => {
                 const tile = getByTestId(`device-tile-${alicesOlderMobileDevice.device_id}`);
-                const toggle = tile.querySelector('[aria-label="Toggle device details"]');
+                const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
                 fireEvent.click(toggle);
             });
 
@@ -250,7 +250,7 @@ describe('<SessionManagerTab />', () => {
 
             act(() => {
                 const tile = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
-                const toggle = tile.querySelector('[aria-label="Toggle device details"]');
+                const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
                 fireEvent.click(toggle);
             });
 
@@ -260,7 +260,7 @@ describe('<SessionManagerTab />', () => {
 
             act(() => {
                 const tile = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
-                const toggle = tile.querySelector('[aria-label="Toggle device details"]');
+                const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
                 fireEvent.click(toggle);
             });
 
