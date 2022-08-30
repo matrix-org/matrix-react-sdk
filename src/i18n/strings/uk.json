@@ -3546,5 +3546,8 @@
     "%(user)s and %(count)s others|one": "%(user)s і ще 1",
     "%(user)s and %(count)s others|other": "%(user)s і ще %(count)s",
     "%(user1)s and %(user2)s": "%(user1)s і %(user2)s",
-    "Unknown device type": "Невідомий тип пристрою"
+    "Unknown device type": "Невідомий тип пристрою",
+    "Show": "Показати",
+    "Video input %(n)s": "Відеовхід %(n)s",
+    "Audio input %(n)s": "Аудіовхід %(n)s"
 }
