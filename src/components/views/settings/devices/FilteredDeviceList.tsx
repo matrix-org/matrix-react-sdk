@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
@@ -150,13 +150,13 @@ const DeviceListItem: React.FC<{
  * Filtered list of devices
  * Sorted by latest activity descending
  */
-const FilteredDeviceList: React.FC<Props> = ({
+export const FilteredDeviceList: React.FC<Props> = forwardRef(({
     devices,
     filter,
     expandedDeviceIds,
     onFilterChange,
     onDeviceExpandToggle,
-}) => {
+}, ref: React.RefObject<HTMLDivElement>) => {
     const sortedDevices = getFilteredSortedDevices(devices, filter);
 
     const options: FilterDropdownOption<DeviceFilterKey>[] = [
@@ -185,7 +185,7 @@ const FilteredDeviceList: React.FC<Props> = ({
         onFilterChange(filterId === ALL_FILTER_ID ? undefined : filterId as DeviceSecurityVariation);
     };
 
-    return <div className='mx_FilteredDeviceList'>
+    return <div className='mx_FilteredDeviceList' ref={ref}>
         <div className='mx_FilteredDeviceList_header'>
             <span className='mx_FilteredDeviceList_headerLabel'>
                 { _t('Sessions') }
@@ -212,8 +212,6 @@ const FilteredDeviceList: React.FC<Props> = ({
             />,
             ) }
         </ol>
-    </div>
-    ;
-};
+    </div>;
+});
 
-export default FilteredDeviceList;
