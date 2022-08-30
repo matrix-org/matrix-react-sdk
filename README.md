@@ -45,7 +45,7 @@ Platform Targets:
 All code lands on the `develop` branch - `master` is only used for stable releases.
 **Please file PRs against `develop`!!**
 
-Please follow the standard Matrix contributor's guide:
+We use the same contribution guide as Element. Check it out here:
 https://github.com/vector-im/element-web/blob/develop/CONTRIBUTING.md
 
 Please follow the Matrix JS/React code style as per:
