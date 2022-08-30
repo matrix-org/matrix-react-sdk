@@ -3545,5 +3545,6 @@
     "Inviting %(user1)s and %(user2)s": "Invito di %(user1)s e %(user2)s",
     "%(user)s and %(count)s others|one": "%(user)s e 1 altro",
     "%(user)s and %(count)s others|other": "%(user)s e altri %(count)s",
-    "%(user1)s and %(user2)s": "%(user1)s e %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s e %(user2)s",
+    "Unknown device type": "Tipo di dispositivo sconosciuto"
 }
