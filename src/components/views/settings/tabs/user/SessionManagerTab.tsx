@@ -40,8 +40,6 @@ const SessionManagerTab: React.FC = () => {
         }
     };
 
-    console.log('hhh', { filteredDeviceListRef });
-
     const onGoToFilteredList = (filter: DeviceSecurityVariation) => {
         setFilter(filter);
         // @TODO(kerrya) clear selection when added in PSG-659

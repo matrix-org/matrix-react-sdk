@@ -193,6 +193,24 @@ describe('<SessionManagerTab />', () => {
         expect(getByTestId('other-sessions-section')).toBeTruthy();
     });
 
+    it('goes to filtered list from security recommendations', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        act(() => {
+            fireEvent.click(getByTestId('unverified-devices-cta'));
+        });
+
+        // our session manager waits a tick for rerender
+        await flushPromisesWithFakeTimers();
+
+        expect(getByTestId('other-sessions-section')).toMatchSnapshot();
+    });
+
     describe('device detail expansion', () => {
         it('renders no devices expanded by default', async () => {
             mockClient.getDevices.mockResolvedValue({

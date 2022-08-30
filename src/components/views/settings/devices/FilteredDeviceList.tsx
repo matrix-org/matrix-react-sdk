@@ -150,68 +150,70 @@ const DeviceListItem: React.FC<{
  * Filtered list of devices
  * Sorted by latest activity descending
  */
-export const FilteredDeviceList: React.FC<Props> = forwardRef(({
-    devices,
-    filter,
-    expandedDeviceIds,
-    onFilterChange,
-    onDeviceExpandToggle,
-}, ref: React.RefObject<HTMLDivElement>) => {
-    const sortedDevices = getFilteredSortedDevices(devices, filter);
+export const FilteredDeviceList:
+    React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>> =
+    forwardRef(({
+        devices,
+        filter,
+        expandedDeviceIds,
+        onFilterChange,
+        onDeviceExpandToggle,
+    }, ref: React.RefObject<HTMLDivElement>) => {
+        const sortedDevices = getFilteredSortedDevices(devices, filter);
 
-    const options: FilterDropdownOption<DeviceFilterKey>[] = [
-        { id: ALL_FILTER_ID, label: _t('All') },
-        {
-            id: DeviceSecurityVariation.Verified,
-            label: _t('Verified'),
-            description: _t('Ready for secure messaging'),
-        },
-        {
-            id: DeviceSecurityVariation.Unverified,
-            label: _t('Unverified'),
-            description: _t('Not ready for secure messaging'),
-        },
-        {
-            id: DeviceSecurityVariation.Inactive,
-            label: _t('Inactive'),
-            description: _t(
-                'Inactive for %(inactiveAgeDays)s days or longer',
-                { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
-            ),
-        },
-    ];
+        const options: FilterDropdownOption<DeviceFilterKey>[] = [
+            { id: ALL_FILTER_ID, label: _t('All') },
+            {
+                id: DeviceSecurityVariation.Verified,
+                label: _t('Verified'),
+                description: _t('Ready for secure messaging'),
+            },
+            {
+                id: DeviceSecurityVariation.Unverified,
+                label: _t('Unverified'),
+                description: _t('Not ready for secure messaging'),
+            },
+            {
+                id: DeviceSecurityVariation.Inactive,
+                label: _t('Inactive'),
+                description: _t(
+                    'Inactive for %(inactiveAgeDays)s days or longer',
+                    { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
+                ),
+            },
+        ];
 
-    const onFilterOptionChange = (filterId: DeviceFilterKey) => {
-        onFilterChange(filterId === ALL_FILTER_ID ? undefined : filterId as DeviceSecurityVariation);
-    };
+        const onFilterOptionChange = (filterId: DeviceFilterKey) => {
+            onFilterChange(filterId === ALL_FILTER_ID ? undefined : filterId as DeviceSecurityVariation);
+        };
 
-    return <div className='mx_FilteredDeviceList' ref={ref}>
-        <div className='mx_FilteredDeviceList_header'>
-            <span className='mx_FilteredDeviceList_headerLabel'>
-                { _t('Sessions') }
-            </span>
-            <FilterDropdown<DeviceFilterKey>
-                id='device-list-filter'
-                label={_t('Filter devices')}
-                value={filter || ALL_FILTER_ID}
-                onOptionChange={onFilterOptionChange}
-                options={options}
-                selectedLabel={_t('Show')}
-            />
-        </div>
-        { !!sortedDevices.length
-            ? <FilterSecurityCard filter={filter} />
-            : <NoResults filter={filter} clearFilter={() => onFilterChange(undefined)} />
-        }
-        <ol className='mx_FilteredDeviceList_list'>
-            { sortedDevices.map((device) => <DeviceListItem
-                key={device.device_id}
-                device={device}
-                isExpanded={expandedDeviceIds.includes(device.device_id)}
-                onDeviceExpandToggle={() => onDeviceExpandToggle(device.device_id)}
-            />,
-            ) }
-        </ol>
-    </div>;
-});
+        return <div className='mx_FilteredDeviceList' ref={ref}>
+            <div className='mx_FilteredDeviceList_header'>
+                <span className='mx_FilteredDeviceList_headerLabel'>
+                    { _t('Sessions') }
+                </span>
+                <FilterDropdown<DeviceFilterKey>
+                    id='device-list-filter'
+                    label={_t('Filter devices')}
+                    value={filter || ALL_FILTER_ID}
+                    onOptionChange={onFilterOptionChange}
+                    options={options}
+                    selectedLabel={_t('Show')}
+                />
+            </div>
+            { !!sortedDevices.length
+                ? <FilterSecurityCard filter={filter} />
+                : <NoResults filter={filter} clearFilter={() => onFilterChange(undefined)} />
+            }
+            <ol className='mx_FilteredDeviceList_list'>
+                { sortedDevices.map((device) => <DeviceListItem
+                    key={device.device_id}
+                    device={device}
+                    isExpanded={expandedDeviceIds.includes(device.device_id)}
+                    onDeviceExpandToggle={() => onDeviceExpandToggle(device.device_id)}
+                />,
+                ) }
+            </ol>
+        </div>;
+    });
 
