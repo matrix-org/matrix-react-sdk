@@ -3546,5 +3546,6 @@
     "%(user)s and %(count)s others|one": "%(user)s a 1 další",
     "%(user)s and %(count)s others|other": "%(user)s a %(count)s další",
     "%(user1)s and %(user2)s": "%(user1)s a %(user2)s",
-    "Unknown device type": "Neznámý typ zařízení"
+    "Unknown device type": "Neznámý typ zařízení",
+    "Show": "Zobrazit"
 }
