@@ -3402,7 +3402,7 @@
     "Who will you chat to the most?": "Mit wem wirst du am meisten schreiben?",
     "We're creating a room with %(names)s": "Wir erstellen einen Raum mit %(names)s",
     "Messages in this chat will be end-to-end encrypted.": "Nachrichten in dieser Konversation werden Ende-zu-Ende verschlüsselt.",
-    "Send your first message to invite <displayName/> to chat": "Schreibe die erste Nachricht, um <displayName/> zur Konversation einzuladen",
+    "Send your first message to invite <displayName/> to chat": "Schreibe deine erste Nachricht, um <displayName/> zur Konversation einzuladen",
     "Your server doesn't support disabling sending read receipts.": "Dein Server unterstützt das deaktivieren von Lesebestätigungen nicht.",
     "Send read receipts": "Sende Lesebestätigungen",
     "Share your activity and status with others.": "Teile anderen deine Aktivität und deinen Status mit.",
@@ -3447,7 +3447,7 @@
     "Device": "Gerät",
     "Last activity": "Neuste Aktivität",
     "Current session": "Aktuelle Sitzung",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Für die bestmögliche Sicherheit, prüfe deine Sitzungen und logge dich aus allen Sitzungen aus, die du nicht erkennst oder nicht mehr benutzt.",
+    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Für bestmögliche Sicherheit verifiziere deine Sitzungen und melde dich von allen ab, die du nicht erkennst oder nutzt.",
     "Other sessions": "Andere Sitzungen",
     "Sessions": "Sitzungen",
     "Spell check": "Rechtschreibprüfung",
@@ -3535,9 +3535,11 @@
     "It’s what you’re here for, so lets get to it": "Deshalb bist du hier, also lass uns beginnen",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Verschlüsselung ist für öffentliche Räume nicht empfohlen.</b> Jeder kann öffentliche Räume finden und betreten, also kann auch jeder die Nachrichten lesen. Du wirst keine der Vorteile von Verschlüsselung erhalten und kannst sie später auch nicht mehr deaktivieren. Nachrichten in öffentlichen Räumen zu verschlüsseln, wird das empfangen und senden verlangsamen.",
     "Empty room (was %(oldName)s)": "Leerer Raum (war %(oldName)s)",
-    "Inviting %(user)s and %(count)s others|other": "Lade %(user)s und %(count)s andere",
+    "Inviting %(user)s and %(count)s others|other": "Lade %(user)s und %(count)s weitere Person ein",
     "Inviting %(user1)s and %(user2)s": "Lade %(user1)s und %(user2)s ein",
     "%(user)s and %(count)s others|one": "%(user)s und 1 anderer",
     "%(user)s and %(count)s others|other": "%(user)s und %(count)s andere",
-    "%(user1)s and %(user2)s": "%(user1)s und %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s und %(user2)s",
+    "Unknown device type": "Unbekannter Gerätetyp",
+    "Inviting %(user)s and %(count)s others|one": "Lade %(user)s und eine weitere Person ein"
 }
