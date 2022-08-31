@@ -3542,5 +3542,12 @@
     "%(user)s and %(count)s others|other": "%(user)s ja veel %(count)s kasutajat",
     "%(user1)s and %(user2)s": "%(user1)s ja %(user2)s",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Me ei soovita avalikes jututubades krüptimise kasutamist.</b> Kuna kõik huvilised saavad vabalt leida avalikke jututube ning nendega liituda, siis saavad nad niikuinii ka neis leiduvaid sõnumeid lugeda. Olemuselt puuduvad sellises olukorras krüptimise eelised ning sa ei saa hiljem krüptimist välja lülitada. Avalike jututubade sõnumite krüptimine teeb ka sõnumite saatmise ja vastuvõtmise aeglasemaks.",
-    "Unknown device type": "Tundmatu seadme tüüp"
+    "Unknown device type": "Tundmatu seadme tüüp",
+    "Toggle attribution": "Lülita omistamine sisse või välja",
+    "Map feedback": "Tagasiside kaardi kohta",
+    "You made it!": "Sa said valmis!",
+    "We're creating a room with %(names)s": "Me loome jututoa järgnevaist: %(names)s",
+    "Show": "Näita",
+    "Audio input %(n)s": "Helisisend %(n)s",
+    "Video input %(n)s": "Videosisend %(n)s"
 }
