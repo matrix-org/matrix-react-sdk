@@ -38,6 +38,8 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import Modal from '../../../Modal';
+import RendezvousDialog from '../../views/dialogs/RendezvousDialog';
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -543,6 +545,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         );
     };
 
+    private startRendezvous = () => {
+        Modal.createDialog(RendezvousDialog, { device: 'new' });
+    };
+
     render() {
         const loader = this.isBusy() && !this.state.busyLoggingIn ?
             <div className="mx_Login_loader"><Spinner /></div> : null;
@@ -595,6 +601,15 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 </span>
             );
         }
+        const rendezvous =
+        <div style={{ textAlign: "center", marginBottom: "8px" }}>
+            <AccessibleButton
+                kind="primary"
+                onClick={this.startRendezvous}
+            >
+                { _t("Link using another device") }
+            </AccessibleButton>
+        </div>;
 
         return (
             <AuthPage>
@@ -611,6 +626,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         onServerConfigChange={this.props.onServerConfigChange}
                     />
                     { this.renderLoginComponentForFlows() }
+                    { rendezvous }
                     { footer }
                 </AuthBody>
             </AuthPage>

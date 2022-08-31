@@ -40,6 +40,8 @@ export enum Action {
      */
     ViewUserSettings = "view_user_settings",
 
+    LinkAnotherDevice = "link_another_device",
+
     /**
      * Open the user device settings. No additional payload information required.
      */
