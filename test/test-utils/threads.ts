@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, RelationType, Room } from "matrix-js-sdk/src/matrix";
 
 import { mkMessage, MessageEventProps } from "./test-utils";
 
@@ -78,7 +78,7 @@ export const makeThreadEvents = ({
 
     rootEvent.setUnsigned({
         "m.relations": {
-            "m.thread": {
+            [RelationType.Thread]: {
                 latest_event: events[events.length - 1],
                 count: length,
                 current_user_participated: [...participantUserIds, authorId].includes(currentUserId),
