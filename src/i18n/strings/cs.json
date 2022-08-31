@@ -3547,5 +3547,7 @@
     "%(user)s and %(count)s others|other": "%(user)s a %(count)s další",
     "%(user1)s and %(user2)s": "%(user1)s a %(user2)s",
     "Unknown device type": "Neznámý typ zařízení",
-    "Show": "Zobrazit"
+    "Show": "Zobrazit",
+    "Video input %(n)s": "Video vstup %(n)s",
+    "Audio input %(n)s": "Zvukový vstup %(n)s"
 }
