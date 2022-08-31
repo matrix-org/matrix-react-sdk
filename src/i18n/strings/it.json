@@ -3546,5 +3546,8 @@
     "%(user)s and %(count)s others|one": "%(user)s e 1 altro",
     "%(user)s and %(count)s others|other": "%(user)s e altri %(count)s",
     "%(user1)s and %(user2)s": "%(user1)s e %(user2)s",
-    "Unknown device type": "Tipo di dispositivo sconosciuto"
+    "Unknown device type": "Tipo di dispositivo sconosciuto",
+    "Show": "Mostra",
+    "Video input %(n)s": "Input video %(n)s",
+    "Audio input %(n)s": "Input audio %(n)s"
 }
