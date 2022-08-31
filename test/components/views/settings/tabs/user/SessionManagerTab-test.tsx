@@ -201,9 +201,7 @@ describe('<SessionManagerTab />', () => {
             await flushPromisesWithFakeTimers();
         });
 
-        act(() => {
-            fireEvent.click(getByTestId('unverified-devices-cta'));
-        });
+        fireEvent.click(getByTestId('unverified-devices-cta'));
 
         // our session manager waits a tick for rerender
         await flushPromisesWithFakeTimers();
@@ -239,30 +237,24 @@ describe('<SessionManagerTab />', () => {
                 await flushPromisesWithFakeTimers();
             });
 
-            act(() => {
-                const tile = getByTestId(`device-tile-${alicesOlderMobileDevice.device_id}`);
-                const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
-                fireEvent.click(toggle);
-            });
+            const tile1 = getByTestId(`device-tile-${alicesOlderMobileDevice.device_id}`);
+            const toggle1 = tile1.querySelector('[aria-label="Toggle device details"]') as Element;
+            fireEvent.click(toggle1);
 
             // device details are expanded
             expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
 
-            act(() => {
-                const tile = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
-                const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
-                fireEvent.click(toggle);
-            });
+            const tile2 = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
+            const toggle2 = tile2.querySelector('[aria-label="Toggle device details"]') as Element;
+            fireEvent.click(toggle2);
 
             // both device details are expanded
             expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
             expect(getByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeTruthy();
 
-            act(() => {
-                const tile = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
-                const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
-                fireEvent.click(toggle);
-            });
+            const tile3 = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
+            const toggle3 = tile3.querySelector('[aria-label="Toggle device details"]') as Element;
+            fireEvent.click(toggle3);
 
             // alicesMobileDevice was toggled off
             expect(queryByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeFalsy();

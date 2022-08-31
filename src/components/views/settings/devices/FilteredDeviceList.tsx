@@ -150,15 +150,14 @@ const DeviceListItem: React.FC<{
  * Filtered list of devices
  * Sorted by latest activity descending
  */
-export const FilteredDeviceList:
-    React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>> =
+export const FilteredDeviceList =
     forwardRef(({
         devices,
         filter,
         expandedDeviceIds,
         onFilterChange,
         onDeviceExpandToggle,
-    }, ref: ForwardedRef<HTMLDivElement>) => {
+    }: Props, ref: ForwardedRef<HTMLDivElement>) => {
         const sortedDevices = getFilteredSortedDevices(devices, filter);
 
         const options: FilterDropdownOption<DeviceFilterKey>[] = [
