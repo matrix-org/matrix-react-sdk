@@ -1859,7 +1859,7 @@
     "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIPP: Wenn du einen Programmfehler meldest, füge bitte <debugLogsLink>Debug-Logs</debugLogsLink> hinzu um uns zu helfen das Problem zu finden.",
     "Invite by email": "Via Email einladen",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Beginne eine Konversation mit jemanden unter Benutzung des Namens, der Email-Adresse oder der Matrix-ID (wie <userId/>).",
-    "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Lade jemanden unter Benutzung seines Namens, E-Mailaddresse oder Benutzername (siehe <userId/>) ein, oder <a>teile diesen Raum</a>.",
+    "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Lade jemanden mittels Name, E-Mail-Adresse oder Benutzername (wie <userId/>) ein, oder <a>teile diesen Raum</a>.",
     "Approve widget permissions": "Rechte für das Widget genehmigen",
     "This widget would like to:": "Dieses Widget würde gerne:",
     "Approve": "Zustimmen",
@@ -3541,5 +3541,6 @@
     "%(user)s and %(count)s others|other": "%(user)s und %(count)s andere",
     "%(user1)s and %(user2)s": "%(user1)s und %(user2)s",
     "Unknown device type": "Unbekannter Gerätetyp",
-    "Inviting %(user)s and %(count)s others|one": "Lade %(user)s und eine weitere Person ein"
+    "Inviting %(user)s and %(count)s others|one": "Lade %(user)s und eine weitere Person ein",
+    "Audio input %(n)s": "Audioeingabe %(n)s"
 }
