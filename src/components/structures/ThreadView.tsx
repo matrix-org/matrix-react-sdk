@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent } from 'react';
 import { Thread, THREAD_RELATION_TYPE, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
@@ -69,6 +69,7 @@ interface IProps {
 
 interface IState {
     thread?: Thread;
+    lastReply?: MatrixEvent;
     layout: Layout;
     editState?: EditorStateTransfer;
     replyToEvent?: MatrixEvent;
@@ -188,13 +189,32 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private updateThreadRelation = (): void => {
+        this.setState({
+            lastReply: this.state.thread?.lastReply((ev: MatrixEvent) => {
+                return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
+            }),
+        });
+    };
+
     private updateThread = (thread?: Thread) => {
+        if (this.state.thread) {
+            this.state.thread.off(ThreadEvent.NewReply, this.updateThreadRelation);
+            this.props.room.off(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
+        }
+
         if (thread && this.state.thread !== thread) {
+            thread.on(ThreadEvent.NewReply, this.updateThreadRelation);
+            this.props.room.on(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
             this.setState({
                 thread,
+                lastReply: thread?.lastReply((ev: MatrixEvent) => {
+                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
+                }),
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
                 await thread.fetchInitialEvents();
+                this.updateThreadRelation();
                 this.nextBatch = thread.liveTimeline.getPaginationToken(Direction.Backward);
                 this.timelinePanel.current?.refreshTimeline();
             });
@@ -283,16 +303,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private get threadRelation(): IEventRelation {
-        const lastThreadReply = this.state.thread?.lastReply((ev: MatrixEvent) => {
-            return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
-        });
-
         return {
             "rel_type": THREAD_RELATION_TYPE.name,
             "event_id": this.state.thread?.id,
             "is_falling_back": true,
             "m.in_reply_to": {
-                "event_id": lastThreadReply?.getId() ?? this.state.thread?.id,
+                "event_id": this.state.lastReply?.getId() ?? this.state.thread?.id,
             },
         };
     }
