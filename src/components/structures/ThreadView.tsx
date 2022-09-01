@@ -198,12 +198,11 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private updateThread = (thread?: Thread) => {
-        if (this.state.thread) {
-            this.state.thread.off(ThreadEvent.NewReply, this.updateThreadRelation);
-            this.props.room.off(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
-        }
-
         if (thread && this.state.thread !== thread) {
+            if (this.state.thread) {
+                this.state.thread.off(ThreadEvent.NewReply, this.updateThreadRelation);
+                this.props.room.off(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
+            }
             thread.on(ThreadEvent.NewReply, this.updateThreadRelation);
             this.props.room.on(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
             this.setState({
