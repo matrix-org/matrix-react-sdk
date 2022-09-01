@@ -19,18 +19,18 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ILoginParams, IPasswordFlow, ISSOFlow } from "matrix-js-sdk/src/@types/auth";
+import { ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
 
-export { IPasswordFlow, IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "matrix-js-sdk/src/@types/auth";
+export {
+    IPasswordFlow, IdentityProviderBrand, IIdentityProvider, ISSOFlow, LoginFlow,
+} from "matrix-js-sdk/src/@types/auth";
 
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
 }
-
-export type LoginFlow = ISSOFlow | IPasswordFlow;
 
 export default class Login {
     private hsUrl: string;
