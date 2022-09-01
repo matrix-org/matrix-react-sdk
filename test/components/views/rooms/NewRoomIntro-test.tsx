@@ -53,11 +53,13 @@ describe("NewRoomIntro", () => {
     describe("for a DM Room", () => {
         beforeEach(() => {
             jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(userId);
-            renderNewRoomIntro(client, new Room(roomId, client, client.getUserId()));
+            const room = new Room(roomId, client, client.getUserId());
+            room.name = "test_room";
+            renderNewRoomIntro(client, room);
         });
 
         it("should render the expected intro", () => {
-            const expected = `This is the beginning of your direct message history with ${userId}.`;
+            const expected = `This is the beginning of your direct message history with test_room.`;
             screen.getByText((id, element) => element.tagName === "SPAN" && element.textContent === expected);
         });
     });
@@ -66,12 +68,13 @@ describe("NewRoomIntro", () => {
         beforeEach(() => {
             jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(userId);
             const localRoom = new LocalRoom(roomId, client, client.getUserId());
+            localRoom.name = "test_room";
             localRoom.targets.push(new DirectoryMember({ user_id: userId }));
             renderNewRoomIntro(client, localRoom);
         });
 
         it("should render the expected intro", () => {
-            const expected = `Send your first message to invite ${userId} to chat`;
+            const expected = `Send your first message to invite test_room to chat`;
             screen.getByText((id, element) => element.tagName === "SPAN" && element.textContent === expected);
         });
     });
