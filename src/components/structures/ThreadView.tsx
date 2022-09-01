@@ -60,7 +60,7 @@ interface IProps {
     onClose: () => void;
     resizeNotifier: ResizeNotifier;
     mxEvent: MatrixEvent;
-    permalinkCreator?: RoomPermalinkCreator;
+    permalinkCreator: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
@@ -69,7 +69,7 @@ interface IProps {
 
 interface IState {
     thread?: Thread;
-    lastReply?: MatrixEvent;
+    lastReply?: MatrixEvent | null;
     layout: Layout;
     editState?: EditorStateTransfer;
     replyToEvent?: MatrixEvent;
@@ -260,7 +260,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
-    private nextBatch: string;
+    private nextBatch: string | null;
 
     private onPaginationRequest = async (
         timelineWindow: TimelineWindow | null,
@@ -302,14 +302,20 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private get threadRelation(): IEventRelation {
-        return {
+        const relation = {
             "rel_type": THREAD_RELATION_TYPE.name,
             "event_id": this.state.thread?.id,
             "is_falling_back": true,
-            "m.in_reply_to": {
-                "event_id": this.state.lastReply?.getId() ?? this.state.thread?.id,
-            },
         };
+
+        const fallbackEventId = this.state.lastReply?.getId() ?? this.state.thread?.id;
+        if (fallbackEventId) {
+            relation["m.in_reply_to"] = {
+                "event_id": fallbackEventId,
+            };
+        }
+
+        return relation;
     }
 
     private renderThreadViewHeader = (): JSX.Element => {
