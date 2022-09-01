@@ -60,7 +60,7 @@ describe("NewRoomIntro", () => {
 
         it("should render the expected intro", () => {
             const expected = `This is the beginning of your direct message history with test_room.`;
-            screen.getByText((id, element) => element.tagName === "SPAN" && element.textContent === expected);
+            screen.getByText((id, element) => element?.tagName === "SPAN" && element?.textContent === expected);
         });
     });
 
@@ -75,7 +75,7 @@ describe("NewRoomIntro", () => {
 
         it("should render the expected intro", () => {
             const expected = `Send your first message to invite test_room to chat`;
-            screen.getByText((id, element) => element.tagName === "SPAN" && element.textContent === expected);
+            screen.getByText((id, element) => element?.tagName === "SPAN" && element?.textContent === expected);
         });
     });
 });
