@@ -406,6 +406,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Send read receipts"),
         default: true,
     },
+<<<<<<< HEAD
     "feature_message_right_click_context_menu": {
         isFeature: true,
         supportedLevels: LEVELS_FEATURE,
@@ -413,6 +414,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Right-click message context menu"),
         default: false,
     },
+=======
+>>>>>>> upstream/develop
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -804,6 +807,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true,
         controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
+    "FTUE.userOnboardingButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show shortcut to welcome checklist above the room list"),
+        default: true,
+    },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -964,9 +972,9 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },
-    "videoChannelRoomId": {
+    "activeCallRoomIds": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: [],
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

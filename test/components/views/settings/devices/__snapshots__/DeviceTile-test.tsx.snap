@@ -4,7 +4,76 @@ exports[`<DeviceTile /> renders a device with no metadata 1`] = `
 <div>
   <div
     class="mx_DeviceTile"
+<<<<<<< HEAD
   >
+    <div
+=======
+    data-testid="device-tile-123"
+  >
+    <div
+      class="mx_DeviceType"
+    >
+      <div
+        aria-label="Unknown device type"
+        class="mx_DeviceType_deviceIcon"
+        role="img"
+      />
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceType_verificationIcon unverified"
+        role="img"
+      />
+    </div>
+    <div
+>>>>>>> upstream/develop
+      class="mx_DeviceTile_info"
+    >
+      <h4
+        class="mx_Heading_h4"
+      >
+        123
+      </h4>
+      <div
+        class="mx_DeviceTile_metadata"
+      >
+<<<<<<< HEAD
+=======
+        <span
+          data-testid="device-metadata-isVerified"
+        >
+          Unverified
+        </span>
+         · 
+         · 
+      </div>
+    </div>
+    <div
+      class="mx_DeviceTile_actions"
+    />
+  </div>
+</div>
+`;
+
+exports[`<DeviceTile /> renders a verified device with no metadata 1`] = `
+<div>
+  <div
+    class="mx_DeviceTile"
+    data-testid="device-tile-123"
+  >
+    <div
+      class="mx_DeviceType"
+    >
+      <div
+        aria-label="Unknown device type"
+        class="mx_DeviceType_deviceIcon"
+        role="img"
+      />
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceType_verificationIcon unverified"
+        role="img"
+      />
+    </div>
     <div
       class="mx_DeviceTile_info"
     >
@@ -16,6 +85,13 @@ exports[`<DeviceTile /> renders a device with no metadata 1`] = `
       <div
         class="mx_DeviceTile_metadata"
       >
+        <span
+          data-testid="device-metadata-isVerified"
+        >
+          Unverified
+        </span>
+         · 
+>>>>>>> upstream/develop
          · 
       </div>
     </div>
@@ -30,8 +106,28 @@ exports[`<DeviceTile /> renders display name with a tooltip 1`] = `
 <div>
   <div
     class="mx_DeviceTile"
+<<<<<<< HEAD
   >
     <div
+=======
+    data-testid="device-tile-123"
+  >
+    <div
+      class="mx_DeviceType"
+    >
+      <div
+        aria-label="Unknown device type"
+        class="mx_DeviceType_deviceIcon"
+        role="img"
+      />
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceType_verificationIcon unverified"
+        role="img"
+      />
+    </div>
+    <div
+>>>>>>> upstream/develop
       class="mx_DeviceTile_info"
     >
       <div
@@ -46,6 +142,15 @@ exports[`<DeviceTile /> renders display name with a tooltip 1`] = `
       <div
         class="mx_DeviceTile_metadata"
       >
+<<<<<<< HEAD
+=======
+        <span
+          data-testid="device-metadata-isVerified"
+        >
+          Unverified
+        </span>
+         · 
+>>>>>>> upstream/develop
          · 
       </div>
     </div>
@@ -60,8 +165,28 @@ exports[`<DeviceTile /> separates metadata with a dot 1`] = `
 <div>
   <div
     class="mx_DeviceTile"
+<<<<<<< HEAD
   >
     <div
+=======
+    data-testid="device-tile-123"
+  >
+    <div
+      class="mx_DeviceType"
+    >
+      <div
+        aria-label="Unknown device type"
+        class="mx_DeviceType_deviceIcon"
+        role="img"
+      />
+      <div
+        aria-label="Unverified"
+        class="mx_DeviceType_verificationIcon unverified"
+        role="img"
+      />
+    </div>
+    <div
+>>>>>>> upstream/develop
       class="mx_DeviceTile_info"
     >
       <h4
@@ -73,6 +198,15 @@ exports[`<DeviceTile /> separates metadata with a dot 1`] = `
         class="mx_DeviceTile_metadata"
       >
         <span
+<<<<<<< HEAD
+=======
+          data-testid="device-metadata-isVerified"
+        >
+          Unverified
+        </span>
+         · 
+        <span
+>>>>>>> upstream/develop
           data-testid="device-metadata-lastActivity"
         >
           Last activity 15:13

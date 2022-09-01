@@ -32,6 +32,7 @@ import {
     IUnsigned,
 } from 'matrix-js-sdk/src/matrix';
 import { normalize } from "matrix-js-sdk/src/utils";
+import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
@@ -175,6 +176,11 @@ export function createTestClient(): MatrixClient {
         encryptAndSendToDevices: jest.fn().mockResolvedValue(undefined),
     } as unknown as MatrixClient;
 
+<<<<<<< HEAD
+=======
+    client.reEmitter = new ReEmitter(client);
+
+>>>>>>> upstream/develop
     Object.defineProperty(client, "pollingTurnServers", {
         configurable: true,
         get: () => true,
@@ -323,6 +329,18 @@ export function mkMembership(opts: MakeEventPassThruProps & {
         e.target = opts.target;
     }
     return e;
+}
+
+export function mkRoomMember(roomId: string, userId: string, membership = "join"): RoomMember {
+    return {
+        userId,
+        membership,
+        name: userId,
+        rawDisplayName: userId,
+        roomId,
+        getAvatarUrl: () => {},
+        getMxcAvatarUrl: () => {},
+    } as unknown as RoomMember;
 }
 
 export type MessageEventProps = MakeEventPassThruProps & {

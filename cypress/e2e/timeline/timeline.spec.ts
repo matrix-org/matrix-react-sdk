@@ -238,7 +238,11 @@ describe("Timeline", () => {
             cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
 
             // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
+<<<<<<< HEAD
             cy.get(".mx_EventTile .mx_ViewSourceEvent").realHover().within(() => {
+=======
+            cy.get(".mx_EventTile .mx_ViewSourceEvent").should("exist").realHover().within(() => {
+>>>>>>> upstream/develop
                 cy.get(".mx_ViewSourceEvent_toggle").click('topLeft', { force: false });
             });
 
@@ -273,6 +277,49 @@ describe("Timeline", () => {
 
             cy.get(".mx_EventTile:not(.mx_EventTile_contextual)").find(".mx_EventTile_searchHighlight").should("exist");
             cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
+        });
+
+        it("should render url previews", () => {
+            cy.intercept("**/_matrix/media/r0/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*", {
+                statusCode: 200,
+                fixture: "riot.png",
+                headers: {
+                    "Content-Type": "image/png",
+                },
+            }).as("mxc");
+            cy.intercept("**/_matrix/media/r0/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*", {
+                statusCode: 200,
+                body: {
+                    "og:title": "Element Call",
+                    "og:description": null,
+                    "og:image:width": 48,
+                    "og:image:height": 48,
+                    "og:image": "mxc://matrix.org/2022-08-16_yaiSVSRIsNFfxDnV",
+                    "og:image:type": "image/png",
+                    "matrix:image:size": 2121,
+                },
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).as("preview_url");
+
+            cy.sendEvent(
+                roomId,
+                null,
+                "m.room.message" as EventType,
+                MessageEvent.from("https://call.element.io/").serialize().content,
+            );
+            cy.visit("/#/room/" + roomId);
+
+            cy.get(".mx_LinkPreviewWidget").should("exist").should("contain.text", "Element Call");
+
+            cy.wait("@preview_url");
+            cy.wait("@mxc");
+
+            cy.checkA11y();
+            cy.get(".mx_EventTile_last").percySnapshotElement("URL Preview", {
+                widths: [800, 400],
+            });
         });
     });
 
