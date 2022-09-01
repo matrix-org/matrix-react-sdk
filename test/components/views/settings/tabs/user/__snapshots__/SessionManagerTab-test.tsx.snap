@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<SessionManagerTab /> goes to filtered list from security recommendations 1`] = `
+<div
+  class="mx_FilteredDeviceList_header"
+>
+  <span
+    class="mx_FilteredDeviceList_headerLabel"
+  >
+    Sessions
+  </span>
+  <div
+    class="mx_Dropdown mx_FilterDropdown"
+  >
+    <div
+      aria-describedby="device-list-filter_value"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Filter devices"
+      aria-owns="device-list-filter_input"
+      class="mx_AccessibleButton mx_Dropdown_input mx_no_textinput"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="mx_Dropdown_option"
+        id="device-list-filter_value"
+      >
+        Show: Unverified
+      </div>
+      <span
+        class="mx_Dropdown_arrow"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<SessionManagerTab /> renders current session section with a verified session 1`] = `
 <div
   class="mx_SettingsSubsection"
@@ -17,6 +53,20 @@ exports[`<SessionManagerTab /> renders current session section with a verified s
       class="mx_DeviceTile"
       data-testid="device-tile-alices_device"
     >
+      <div
+        class="mx_DeviceType"
+      >
+        <div
+          aria-label="Unknown device type"
+          class="mx_DeviceType_deviceIcon"
+          role="img"
+        />
+        <div
+          aria-label="Verified"
+          class="mx_DeviceType_verificationIcon verified"
+          role="img"
+        />
+      </div>
       <div
         class="mx_DeviceTile_info"
       >
@@ -102,6 +152,20 @@ exports[`<SessionManagerTab /> renders current session section with an unverifie
       data-testid="device-tile-alices_device"
     >
       <div
+        class="mx_DeviceType"
+      >
+        <div
+          aria-label="Unknown device type"
+          class="mx_DeviceType_deviceIcon"
+          role="img"
+        />
+        <div
+          aria-label="Unverified"
+          class="mx_DeviceType_verificationIcon unverified"
+          role="img"
+        />
+      </div>
+      <div
         class="mx_DeviceTile_info"
       >
         <h4
@@ -173,6 +237,20 @@ exports[`<SessionManagerTab /> sets device verification status correctly 1`] = `
   class="mx_DeviceTile"
   data-testid="device-tile-alices_device"
 >
+  <div
+    class="mx_DeviceType"
+  >
+    <div
+      aria-label="Unknown device type"
+      class="mx_DeviceType_deviceIcon"
+      role="img"
+    />
+    <div
+      aria-label="Verified"
+      class="mx_DeviceType_verificationIcon verified"
+      role="img"
+    />
+  </div>
   <div
     class="mx_DeviceTile_info"
   >
