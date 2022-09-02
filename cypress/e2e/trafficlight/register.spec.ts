@@ -25,7 +25,6 @@ type JSONValue =
     | { [x: string]: JSONValue }
     | Array<JSONValue>;
 
-
 /*
  * Core loop of the trafficlight client.
  * We call it recurse() and loop via recursion rather than traditional looping
