@@ -470,7 +470,6 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         sanitizeParams = composerSanitizeHtmlParams;
     }
     let strippedBody: string;
-    
     let safeBody: string; // safe, sanitised HTML, preferred over `strippedBody` which is fully plaintext
 
     try {
@@ -497,9 +496,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
                 // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
                 // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
-            
                 sanitizeParams.textFilter = function(safeText) {
-                    return highlighter.applyHighlights(safeText, safeHighlights).join('').replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+                    return highlighter.applyHighlights(safeText, safeHighlights).join('')
+                    .replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
                 };
             }
 
@@ -524,7 +523,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                             // @ts-ignore - `e` can be an Element, not just a Node
                             displayMode: e.name == 'div',
                             output: "htmlAndMathml",
-                        })
+                        });
                 });
                 safeBody = phtml.html();
             }
@@ -575,17 +574,16 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         'mx_EventTile_bigEmoji': emojiBody,
         'markdown-body': isHtmlMessage && !emojiBody,
     });
-    let tmp=strippedBody?.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
-    if(tmp!=strippedBody){
+    const tmp=strippedBody?.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+    if (tmp!=strippedBody) {
         safeBody=tmp;
     }
-    
     
     let emojiBodyElements: JSX.Element[];
     if (!safeBody && bodyHasEmoji) {
         emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
     }
-    
+
     return safeBody ?
         <span
             key="body"

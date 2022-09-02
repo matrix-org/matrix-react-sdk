@@ -18,14 +18,13 @@ import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from 'rea
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { EventType} from 'matrix-js-sdk/src/@types/event';
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
-
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -196,7 +195,7 @@ interface IState {
     ghostReadMarkers: string[];
     showTypingNotifications: boolean;
     hideSender: boolean;
-    emotes:Dictionary<string>;
+    emotes: Dictionary<string>;
 }
 
 interface IReadReceiptForUser {
@@ -285,8 +284,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         this.showTypingNotificationsWatcherRef =
             SettingsStore.watchSetting("showTypingNotifications", null, this.onShowTypingNotificationsChange);
-        
-            
     }
 
     componentDidMount() {
@@ -773,38 +770,38 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         isLastSuccessful = isLastSuccessful && mxEv.getSender() === MatrixClientPeg.get().getUserId();
 
         const callEventGrouper = this.props.callEventGroupers.get(mxEv.getContent().call_id);
-        
+
         // use txnId as key if available so that we don't remount during sending
         ret.push(
             <EventTile
-            key={mxEv.getTxnId() || eventId}
-            as="li"
-            ref={this.collectEventTile.bind(this, eventId)}
-            alwaysShowTimestamps={this.props.alwaysShowTimestamps}
-            mxEvent={mxEv}
-            continuation={continuation}
-            isRedacted={mxEv.isRedacted()}
-            replacingEventId={mxEv.replacingEventId()}
-            editState={isEditing && this.props.editState}
-            onHeightChanged={this.onHeightChanged}
-            readReceipts={readReceipts}
-            readReceiptMap={this.readReceiptMap}
-            showUrlPreview={this.props.showUrlPreview}
-            checkUnmounting={this.isUnmounting}
-            eventSendStatus={mxEv.getAssociatedStatus()}
-            isTwelveHour={this.props.isTwelveHour}
-            permalinkCreator={this.props.permalinkCreator}
-            last={last}
-            lastInSection={lastInSection}
-            lastSuccessful={isLastSuccessful}
-            isSelectedEvent={highlight}
-            getRelationsForEvent={this.props.getRelationsForEvent}
-            showReactions={this.props.showReactions}
-            layout={this.props.layout}
-            showReadReceipts={this.props.showReadReceipts}
-            callEventGrouper={callEventGrouper}
-            hideSender={this.state.hideSender}
-        />
+                key={mxEv.getTxnId() || eventId}
+                as="li"
+                ref={this.collectEventTile.bind(this, eventId)}
+                alwaysShowTimestamps={this.props.alwaysShowTimestamps}
+                mxEvent={mxEv}
+                continuation={continuation}
+                isRedacted={mxEv.isRedacted()}
+                replacingEventId={mxEv.replacingEventId()}
+                editState={isEditing && this.props.editState}
+                onHeightChanged={this.onHeightChanged}
+                readReceipts={readReceipts}
+                readReceiptMap={this.readReceiptMap}
+                showUrlPreview={this.props.showUrlPreview}
+                checkUnmounting={this.isUnmounting}
+                eventSendStatus={mxEv.getAssociatedStatus()}
+                isTwelveHour={this.props.isTwelveHour}
+                permalinkCreator={this.props.permalinkCreator}
+                last={last}
+                lastInSection={lastInSection}
+                lastSuccessful={isLastSuccessful}
+                isSelectedEvent={highlight}
+                getRelationsForEvent={this.props.getRelationsForEvent}
+                showReactions={this.props.showReactions}
+                layout={this.props.layout}
+                showReadReceipts={this.props.showReadReceipts}
+                callEventGrouper={callEventGrouper}
+                hideSender={this.state.hideSender}
+            />,
         );
 
         return ret;
