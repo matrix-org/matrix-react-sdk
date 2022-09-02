@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Changes in [3.53.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.53.0) (2022-08-31)
 =====================================================================================================
 
@@ -76,11 +75,9 @@ Changes in [3.52.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/
  * Use default styling on nested numbered lists due to MD being sensitive ([\#9110](https://github.com/matrix-org/matrix-react-sdk/pull/9110)). Fixes vector-im/element-web#22935.
  * Fix replying using chat effect commands ([\#9101](https://github.com/matrix-org/matrix-react-sdk/pull/9101)). Fixes vector-im/element-web#22824.
  * The first message in a DM can no longer be a sticker. This has been changed to avoid issues with the integration manager. ([\#9180](https://github.com/matrix-org/matrix-react-sdk/pull/9180)).
-=======
 Added ability to upload room-specific custom emotes in Room Settings. These show up in the room's messages when the shortcode is in the message.
 The file fixes were a local issue in which I had to copy the correct version of the files from another folder. Not a part of the emote feature.
 Currently emotes are not encrypted and do not show up in autocomplete or the right side emoji panel. I think this could be a start for fully implementing custom emotes.
->>>>>>> 8a422d88e6 (edits to changelog)
 
 Changes in [3.51.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.51.0) (2022-08-02)
 =====================================================================================================
