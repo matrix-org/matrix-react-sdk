@@ -16,11 +16,7 @@ limitations under the License.
 
 /* eslint no-constant-condition: [ "error", { "checkLoops": false } ], prefer-template: 1 */
 
-
 /// <reference types='cypress' />
-
-
-
 
 /*
  * Core loop of the trafficlight client.
@@ -61,7 +57,7 @@ function recurse() {
                 cy.get('#mx_RegistrationForm_passwordConfirm').type(data['password']);
                 cy.get('.mx_Login_submit').click();
                 cy.get('.mx_UseCaseSelection_skip > .mx_AccessibleButton').click();
-                response('registered')
+                response('registered');
                 break;
             case 'login':
                 cy.visit('/#/login');
@@ -74,11 +70,11 @@ function recurse() {
                 cy.get('#mx_LoginForm_username').type(data['username']);
                 cy.get('#mx_LoginForm_password').type(data['password']);
                 cy.get('.mx_Login_submit').click();
-                response('loggedin')
+                response('loggedin');
                 break;
             case 'start_crosssign':
                 cy.get('.mx_CompleteSecurity_actionRow > .mx_AccessibleButton').click();
-                response('started_crosssign')
+                response('started_crosssign');
                 break;
             case 'accept_crosssign':
                 // Can we please tag some buttons :)
@@ -86,12 +82,12 @@ function recurse() {
                 cy.get('.mx_Toast_buttons > .mx_AccessibleButton_kind_primary').click();
                 // Click to move to emoji verification
                 cy.get('.mx_VerificationPanel_QRPhase_startOption > .mx_AccessibleButton').click();
-                response('accepted_crosssign')
+                response('accepted_crosssign');
                 break;
             case 'verify_crosssign_emoji':
                 cy.get('.mx_VerificationShowSas_buttonRow > .mx_AccessibleButton_kind_primary').click();
                 cy.get('.mx_UserInfo_container > .mx_AccessibleButton').click();
-                response('verified_crosssign')
+                response('verified_crosssign');
                 break;
             case 'idle':
                 cy.wait(5000);

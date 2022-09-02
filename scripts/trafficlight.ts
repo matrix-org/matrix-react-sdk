@@ -20,7 +20,7 @@ import fetch from 'node-fetch';
 import cypress from 'cypress';
 import * as crypto from 'crypto';
 import * as process from 'process';
-function setupPromise(trafficlightUrl, uuid) {
+function setupPromise(trafficlightUrl: string, uuid: string) {
     console.log('Registering trafficlight client');
 
     const data = JSON.stringify({
@@ -33,13 +33,13 @@ function setupPromise(trafficlightUrl, uuid) {
             if (response.status != 200) {
                 throw new Error(`Unable to register client, got ${ response.status } from server`);
             } else {
-		console.log(`Registered to trafficlight as ${uuid}`);
+                console.log(`Registered to trafficlight as ${uuid}`);
             }
         });
     return promise;
 }
 
-function openPromise(trafficlightUrl, uuid) {
+function openPromise(trafficlightUrl: string, uuid: string) {
     return cypress
         .open({
             env: {
@@ -60,7 +60,7 @@ function openPromise(trafficlightUrl, uuid) {
         });
 }
 
-function runPromise(trafficlightUrl, uuid) {
+function runPromise(trafficlightUrl: string, uuid: string) {
     return cypress
         .run({
             spec: './cypress/e2e/trafficlight/*.ts',
@@ -82,21 +82,21 @@ function runPromise(trafficlightUrl, uuid) {
         });
 }
 
-async function openOnce(trafficlightUrl) {
+async function openOnce(trafficlightUrl: string) {
     const uuid = crypto.randomUUID();
     await setupPromise(trafficlightUrl, uuid);
     const cypressOpen = await openPromise(trafficlightUrl, uuid);
     console.log(cypressOpen);
 }
 
-async function runOnce(trafficlightUrl) {
+async function runOnce(trafficlightUrl: string) {
     const uuid = crypto.randomUUID();
     await setupPromise(trafficlightUrl, uuid);
     const cypressRun = await runPromise(trafficlightUrl, uuid);
     console.log(cypressRun);
 }
 
-async function runRepeatedly(trafficlightUrl) {
+async function runRepeatedly(trafficlightUrl: string) {
     while (true) {
         const uuid = crypto.randomUUID();
         // NB: we allow exceptions to propigate to top level and exit.
