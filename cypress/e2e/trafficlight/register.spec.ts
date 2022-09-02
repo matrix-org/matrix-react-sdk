@@ -18,6 +18,14 @@ limitations under the License.
 
 /// <reference types='cypress' />
 
+type JSONValue =
+    | string
+    | number
+    | boolean
+    | { [x: string]: JSONValue }
+    | Array<JSONValue>;
+
+
 /*
  * Core loop of the trafficlight client.
  * We call it recurse() and loop via recursion rather than traditional looping
@@ -38,8 +46,8 @@ function recurse() {
     cy.request(pollUrl).then((resp) => {
         expect(resp.status).to.eq(200);
         // promote response out of the callback for future use.
-        const data = resp.body.data;
-        const action = resp.body.action;
+        const data: JSONValue = resp.body.data;
+        const action: string = resp.body.action;
         cy.log('... got ', action, data);
         switch (action) {
             case 'register':
