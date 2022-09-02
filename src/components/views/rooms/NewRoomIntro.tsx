@@ -58,7 +58,7 @@ const NewRoomIntro = () => {
     let body: JSX.Element;
     if (dmPartner) {
         let introMessage = _t("This is the beginning of your direct message history with <displayName/>.");
-        let caption: string;
+        let caption: string | undefined;
 
         if (isLocalRoom) {
             introMessage = _t("Send your first message to invite <displayName/> to chat");
