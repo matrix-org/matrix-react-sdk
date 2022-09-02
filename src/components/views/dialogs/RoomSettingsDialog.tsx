@@ -121,57 +121,38 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     private getTabs(): NonEmptyArray<Tab<RoomSettingsTab>> {
         const tabs: Tab<RoomSettingsTab>[] = [];
 
-        tabs.push(
-            new Tab(
-                RoomSettingsTab.General,
-                _td("General"),
-                "mx_RoomSettingsDialog_settingsIcon",
-                <GeneralRoomSettingsTab room={this.state.room} />,
-                "RoomSettingsGeneral",
-            ),
-        );
-        if (SettingsStore.getValue("feature_group_calls")) {
-            tabs.push(
-                new Tab(
-                    RoomSettingsTab.Voip,
-                    _td("Voice & Video"),
-                    "mx_RoomSettingsDialog_voiceIcon",
-                    <VoipRoomSettingsTab room={this.state.room} />,
-                ),
-            );
-        }
-        tabs.push(
-            new Tab(
-                RoomSettingsTab.Security,
-                _td("Security & Privacy"),
-                "mx_RoomSettingsDialog_securityIcon",
-                <SecurityRoomSettingsTab room={this.state.room} closeSettingsFn={() => this.props.onFinished(true)} />,
-                "RoomSettingsSecurityPrivacy",
-            ),
-        );
-        tabs.push(
-            new Tab(
-                RoomSettingsTab.Roles,
-                _td("Roles & Permissions"),
-                "mx_RoomSettingsDialog_rolesIcon",
-                <RolesRoomSettingsTab room={this.state.room} />,
-                "RoomSettingsRolesPermissions",
-            ),
-        );
-        tabs.push(
-            new Tab(
-                RoomSettingsTab.Notifications,
-                _td("Notifications"),
-                "mx_RoomSettingsDialog_notificationsIcon",
-                (
-                    <NotificationSettingsTab
-                        roomId={this.state.room.roomId}
-                        closeSettingsFn={() => this.props.onFinished(true)}
-                    />
-                ),
-                "RoomSettingsNotifications",
-            ),
-        );
+        tabs.push(new Tab(
+            ROOM_GENERAL_TAB,
+            _td("General"),
+            "mx_RoomSettingsDialog_settingsIcon",
+            <GeneralRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsGeneral",
+        ));
+        tabs.push(new Tab(
+            ROOM_SECURITY_TAB,
+            _td("Security & Privacy"),
+            "mx_RoomSettingsDialog_securityIcon",
+            <SecurityRoomSettingsTab
+                roomId={this.props.roomId}
+                closeSettingsFn={() => this.props.onFinished(true)}
+            />,
+            "RoomSettingsSecurityPrivacy",
+        ));
+        tabs.push(new Tab(
+            ROOM_ROLES_TAB,
+            _td("Roles & Permissions"),
+            "mx_RoomSettingsDialog_rolesIcon",
+            <RolesRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsRolesPermissions",
+        ));
+        tabs.push(new Tab(
+            ROOM_NOTIFICATIONS_TAB,
+            _td("Notifications"),
+            "mx_RoomSettingsDialog_notificationsIcon",
+            <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
+            "RoomSettingsNotifications",
+        ));
+
         tabs.push(new Tab(
             ROOM_NOTIFICATIONS_TAB,
             _td("Emotes"),

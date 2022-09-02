@@ -63,7 +63,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         for (let emote in emotes) {
             value[emote] = emote;
         }
-        
+
         this.state = {
             emotes: emotes,
             EmoteFieldsTouched: {},
@@ -181,7 +181,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newState.deleted = false;
             newState.deletedItems = {};
 
-        } 
+        }
         this.setState(newState as IState);
     };
 

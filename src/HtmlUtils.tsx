@@ -575,11 +575,11 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     }
 
     let contentBody = safeBody ?? strippedBody;
-    contentBody=contentBody.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+    contentBody = contentBody.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
     if (opts.returnString) {
         return contentBody;
     }
-    
+
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
         const contentBody = safeBody ?? strippedBody;
