@@ -42,7 +42,7 @@ const newReceipt = (eventId: string, userId: string, readTs: number, fullyReadTs
             [ReceiptType.FullyRead]: { [userId]: { ts: fullyReadTs } },
         },
     };
-    return new MatrixEvent({ content: receiptContent, type: "m.receipt" });
+    return new MatrixEvent({ content: receiptContent, type: EventType.Receipt });
 };
 
 const renderPanel = (room: Room, events: MatrixEvent[]): RenderResult => {
