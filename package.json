@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.51.0",
+  "version": "3.53.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -166,7 +166,7 @@
     "@types/react-transition-group": "^4.4.0",
     "@types/sanitize-html": "^2.3.1",
     "@types/zxcvbn": "^4.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.6.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "allchange": "^1.0.6",

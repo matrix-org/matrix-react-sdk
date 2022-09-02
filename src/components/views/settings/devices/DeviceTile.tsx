@@ -22,8 +22,9 @@ import { formatDate, formatRelativeTime } from "../../../../DateUtils";
 import TooltipTarget from "../../elements/TooltipTarget";
 import { Alignment } from "../../elements/Tooltip";
 import Heading from "../../typography/Heading";
-import { INACTIVE_DEVICE_AGE_MS, isDeviceInactive } from "./filter";
-import { DeviceWithVerification } from "./useOwnDevices";
+import { INACTIVE_DEVICE_AGE_DAYS, isDeviceInactive } from "./filter";
+import { DeviceWithVerification } from "./types";
+import { DeviceType } from "./DeviceType";
 export interface DeviceTileProps {
     device: DeviceWithVerification;
     children?: React.ReactNode;
@@ -64,12 +65,11 @@ const getInactiveMetadata = (device: DeviceWithVerification): { id: string, valu
     if (!isInactive) {
         return undefined;
     }
-    const inactiveAgeDays = Math.round(INACTIVE_DEVICE_AGE_MS / MS_DAY);
     return { id: 'inactive', value: (
         <>
             <InactiveIcon className="mx_DeviceTile_inactiveIcon" />
             {
-                _t('Inactive for %(inactiveAgeDays)s+ days', { inactiveAgeDays }) +
+                _t('Inactive for %(inactiveAgeDays)s+ days', { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS }) +
                 ` (${formatLastActivity(device.last_seen_ts)})`
             }
         </>),
@@ -94,6 +94,7 @@ const DeviceTile: React.FC<DeviceTileProps> = ({ device, children, onClick }) =>
         ];
 
     return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
+        <DeviceType isVerified={device.isVerified} />
         <div className="mx_DeviceTile_info" onClick={onClick}>
             <DeviceTileName device={device} />
             <div className="mx_DeviceTile_metadata">
