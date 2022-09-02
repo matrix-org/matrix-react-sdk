@@ -122,6 +122,7 @@ if (args[0] == 'run') {
         console.log(`Finished one-shot, got ${result}`);
     });
 } else {
-    console.error(`No idea what ${args[0]} means (i understand "run" to run continually, "once" for a single shot, and "open" to launch the UI)`);
+    console.error(`No idea what ${args[0]} means`);
+    console.error('i understand "run" to run continually, "once" for a single shot, and "open" to launch the UI)');
     process.exit(1);
 }
