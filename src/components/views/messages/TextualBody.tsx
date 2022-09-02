@@ -579,7 +579,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const finalEmotes = {};
         for (const key in rawEmotes) {
-            finalEmotes[":" + key + ":"] = "<img class='mx_Emote' title=':"+key+ 
+            finalEmotes[":" + key + ":"] = "<img class='mx_Emote' title=':"+key+
             ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
         }
         if (SettingsStore.isEnabled("feature_extensible_events")) {
@@ -614,7 +614,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 ref: this.contentRef,
                 returnString: false,
             });
-           
         }
         if (this.props.replacingEventId) {
             body = <>

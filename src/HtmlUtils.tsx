@@ -496,9 +496,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
                 // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
                 // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
-                sanitizeParams.textFilter = function(safeText) {
+                sanitizeParams.textFilter = function (safeText) {
                     return highlighter.applyHighlights(safeText, safeHighlights).join('')
-                    .replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+                        .replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
                 };
             }
 
@@ -578,7 +578,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     if (tmp!=strippedBody) {
         safeBody=tmp;
     }
-    
+
     let emojiBodyElements: JSX.Element[];
     if (!safeBody && bodyHasEmoji) {
         emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
