@@ -54,6 +54,7 @@
     "test:cypress:open": "cypress open",
     "test:trafficlight": "tsc -p scripts && node scripts/bin/trafficlight.js run",
     "test:trafficlight:open": "tsc -p scripts && node scripts/bin/trafficlight.js open",
+    "test:trafficlight:once": "tsc -p scripts && node scripts/bin/trafficlight.js once",
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
