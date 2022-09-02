@@ -167,7 +167,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = completions.map(c => ({
                 completion: c.emoji.unicode,
                 component: (
-                    <PillCompletion title={c.emoji.shortcodes[0]} aria-label={c.emoji.unicode}>
+                    <PillCompletion title={this.emotes[c.emoji.shortcodes[0]]?c.emoji.shortcodes[0]:`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
                         <span>{ this.emotes[c.emoji.shortcodes[0]]? this.emotes[c.emoji.shortcodes[0]]:c.emoji.unicode }</span>
                     </PillCompletion>
                 ),
