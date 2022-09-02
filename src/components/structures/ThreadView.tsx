@@ -280,9 +280,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
             opts.from = this.nextBatch;
         }
 
-        const { nextBatch } = await this.state.thread.fetchEvents(opts);
-
-        this.nextBatch = nextBatch;
+        let nextBatch = null;
+        if (this.state.thread) {
+            const response = await this.state.thread.fetchEvents(opts);
+            nextBatch = response.nextBatch;
+            this.nextBatch = nextBatch;
+        }
 
         // Advances the marker on the TimelineWindow to define the correct
         // window of events to display on screen

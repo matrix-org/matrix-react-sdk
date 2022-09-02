@@ -64,10 +64,10 @@ const ThreadListContextMenu: React.FC<IProps> = ({
         closeThreadOptions();
     }, [mxEvent, closeThreadOptions]);
 
-    const copyLinkToThread = useCallback(async (evt: ButtonEvent) => {
+    const copyLinkToThread = useCallback(async (evt: ButtonEvent | undefined) => {
         if (permalinkCreator) {
-            evt.preventDefault();
-            evt.stopPropagation();
+            evt?.preventDefault();
+            evt?.stopPropagation();
             const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
             await copyPlaintext(matrixToUrl);
             closeThreadOptions();
