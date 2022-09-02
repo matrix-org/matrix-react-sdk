@@ -116,9 +116,9 @@ export default class EmojiProvider extends AutocompleteProvider {
             return []; // don't give any suggestions if the user doesn't want them
         }
         const emojisAndEmotes=[...SORTED_EMOJI];
-        for(const key in this.emotes) {
+        for (const key in this.emotes) {
             emojisAndEmotes.push({
-                emoji: {label: key,
+                emoji: { label: key,
                     shortcodes: [this.emotes[key]],
                     hexcode: "",
                     unicode: ":"+key+":",
