@@ -58,14 +58,12 @@ const NewRoomIntro = () => {
     let body: JSX.Element;
     if (dmPartner) {
         let introMessage = _t("This is the beginning of your direct message history with <displayName/>.");
-        let captionElement: JSX.Element = <></>;
+        let caption: string;
 
         if (isLocalRoom) {
             introMessage = _t("Send your first message to invite <displayName/> to chat");
         } else if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
-            captionElement = <p>
-                { _t("Only the two of you are in this conversation, unless either of you invites anyone to join.") }
-            </p>;
+            caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
         }
 
         const member = room?.getMember(dmPartner);
@@ -89,7 +87,7 @@ const NewRoomIntro = () => {
             <p>{ _t(introMessage, {}, {
                 displayName: () => <b>{ displayName }</b>,
             }) }</p>
-            { captionElement }
+            { caption && <p>{ caption }</p> }
         </React.Fragment>;
     } else {
         const inRoom = room && room.getMyMembership() === "join";
