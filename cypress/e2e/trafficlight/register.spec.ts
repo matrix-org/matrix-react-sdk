@@ -87,6 +87,30 @@ function recurse() {
             case 'idle':
                 cy.wait(5000);
                 break;
+            case 'create_room': {
+                    cy.get('.mx_RoomListHeader_plusButton').click();
+                    cy.get('.mx_ContextualMenu').contains('New room').click();
+                    cy.get('.mx_CreateRoomDialog_name input').type(data['name']);
+                    if (data['topic']) {
+                        cy.get('.mx_CreateRoomDialog_topic input').type(data['topic']);
+                    }
+                    cy.get('.mx_Dialog_primary').click();
+                    cy.get('.mx_RoomHeader_nametext').should('contain', data['name']);
+                    cy.request('POST', respondUrl, { response: 'room_created' }).then((response) => {
+                        expect(response.status).to.eq(200);
+                    });
+                    break;
+                }
+            case 'send_message': {
+                    const composer = cy.get('.mx_SendMessageComposer div[contenteditable=true]');
+                    composer.type(data['message']);
+                    composer.type("{enter}");
+                    //cy.contains(data['message']).closest('mx_EventTile').should('have.class', 'mx_EventTile_receiptSent');
+                    cy.request('POST', respondUrl, { response: 'message_sent' }).then((response) => {
+                        expect(response.status).to.eq(200);
+                    });
+                    break;
+                }
             case 'exit':
                 cy.log('Client asked to exit, test complete or server teardown');
                 return;
