@@ -18,7 +18,6 @@ import React, { createRef } from 'react';
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import Field from "../elements/Field";
 import { mediaFromMxc } from "../../../customisations/Media";
 import AccessibleButton from "../elements/AccessibleButton";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
@@ -53,10 +52,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
         //TODO: Decrypt the shortcodes and emotes if they are encrypted
         const emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
-        
         const emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const value = {};
-        for (let emote in emotes) {
+        for (const emote in emotes) {
             value[emote] = emote;
         }
 
@@ -78,10 +76,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         this.emoteUpload.current.click();
     };
 
-
     private isSaveEnabled = () => {
         return Boolean(Object.values(this.state.EmoteFieldsTouched).length) ||
-         (this.state.newEmoteCodeAdded && this.state.newEmoteFileAdded) || 
+         (this.state.newEmoteCodeAdded && this.state.newEmoteFileAdded) ||
          (this.state.deleted);
     };
 
@@ -141,7 +138,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const client = MatrixClientPeg.get();
         const newState: Partial<IState> = {};
         const emotesMxcs = {};
-        let value = {};
+        const value = {};
         // TODO: What do we do about errors?
 
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
@@ -181,12 +178,11 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
         }
         this.setState(newState as IState);
-    };
-
+    }
 
     private onEmoteChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const id = e.target.getAttribute("id");
-        let b = this.state.value
+        const b = this.state.value;
         b[id] = e.target.value;
         this.setState({ value: b, EmoteFieldsTouched: { ...this.state.EmoteFieldsTouched, [id]: e.target.value } });
     }
@@ -241,18 +237,18 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             emoteSettingsButtons = (
                 <div className="mx_EmoteSettings_buttons">
                     <AccessibleButton
-                        onClick={this.cancelEmoteChanges}
+                        onClick={ this.cancelEmoteChanges }
                         kind="link"
-                        disabled={!this.isSaveEnabled()}
+                        disabled={ !this.isSaveEnabled() }
                     >
-                        {_t("Cancel")}
+                        { _t("Cancel") }
                     </AccessibleButton>
                     <AccessibleButton
-                        onClick={this.saveEmote}
+                        onClick={ this.saveEmote }
                         kind="primary"
-                        disabled={!this.isSaveEnabled()}
+                        disabled={ !this.isSaveEnabled() }
                     >
-                        {_t("Save")}
+                        { _t("Save") }
                     </AccessibleButton>
                 </div>
             )}
@@ -264,9 +260,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     <li className='mx_EmoteSettings_addEmoteField'>
                         <input
                             type="text"
-                            id={emotecode}
-                            value={this.state.value[emotecode]}
-                            onChange={this.onEmoteChange}
+                            id={ emotecode }
+                            value={ this.state.value[emotecode] }
+                            onChange={ this.onEmoteChange }
                             className="mx_EmoteSettings_existingEmoteCode"
 
                         />
@@ -282,7 +278,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                                 aria-label="Close"
                                 id={emotecode}
                             >
-                                {_t("Delete")}
+                                { _t("Delete") }
                             </AccessibleButton>
                         </div>
                     </li>
@@ -295,7 +291,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             emoteUploadButton = (
                 <div className="mx_EmoteSettings_uploadButton">
                     <AccessibleButton
-                        onClick={this.uploadEmoteClick}
+                        onClick={ this.uploadEmoteClick }
                         kind="primary"
                     >
                         {_t("Upload Emote")}

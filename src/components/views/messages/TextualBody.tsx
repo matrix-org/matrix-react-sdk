@@ -583,11 +583,12 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(mxEvent.getRoomId());
         //TODO: Decrypt emotes if encryption is added
-        let emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
-        let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        let finalEmotes = {};
-        for (let key in rawEmotes) {
-            finalEmotes[":" + key + ":"] = "<img class='mx_Emote' title=':"+key+ ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
+        const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
+        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+        const finalEmotes = {};
+        for (const key in rawEmotes) {
+            finalEmotes[":" + key + ":"] = "<img class='mx_Emote' title=':"+key+ 
+            ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
         }
         if (SettingsStore.isEnabled("feature_extensible_events")) {
             const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;

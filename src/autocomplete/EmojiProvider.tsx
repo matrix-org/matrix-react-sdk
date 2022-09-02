@@ -81,14 +81,15 @@ export default class EmojiProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<ISortedEmoji>;
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
-    emotes:Dictionary<string>;
+    emotes: Dictionary<string>;
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
-        let emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
-        let rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+        const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
+        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         this.emotes = {};
-        for (let key in rawEmotes) {
-            this.emotes[key] = "<img class='mx_Emote' title=':"+key+ ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
+        for (const key in rawEmotes) {
+            this.emotes[key] = "<img class='mx_Emote' title=':"+key+
+             ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
         }
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
@@ -114,17 +115,17 @@ export default class EmojiProvider extends AutocompleteProvider {
         if (!SettingsStore.getValue("MessageComposerInput.suggestEmoji")) {
             return []; // don't give any suggestions if the user doesn't want them
         }
-        let emojisAndEmotes=[...SORTED_EMOJI];
-        for(let key in this.emotes){
+        const emojisAndEmotes=[...SORTED_EMOJI];
+        for(const key in this.emotes) {
             emojisAndEmotes.push({
-                emoji:{label:key,
-                    shortcodes:[this.emotes[key]],
-                    hexcode:"",
-                    unicode:":"+key+":",
+                emoji: {label: key,
+                    shortcodes: [this.emotes[key]],
+                    hexcode: "",
+                    unicode: ":"+key+":",
 
                 },
-                _orderBy:0
-            })
+                _orderBy: 0,
+            });
         }
         this.matcher.setObjects(emojisAndEmotes);
         this.nameMatcher.setObjects(emojisAndEmotes);

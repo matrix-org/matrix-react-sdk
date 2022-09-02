@@ -70,7 +70,7 @@ export const PillCompletion = forwardRef<IPillCompletionProps, any>((props, ref)
             ref={ref}
         >
             { children }
-            <span className="mx_Autocomplete_Completion_title" dangerouslySetInnerHTML={{ __html: title }}>{}</span>
+            <span className="mx_Autocomplete_Completion_title" dangerouslySetInnerHTML={{ __html: title }}>{ }</span>
             <span className="mx_Autocomplete_Completion_subtitle">{ subtitle }</span>
             <span className="mx_Autocomplete_Completion_description">{ description }</span>
         </div>
