@@ -401,24 +401,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
-    "feature_hidden_read_receipts": {
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Don't send read receipts"),
-        default: false,
-    },
-    "feature_message_right_click_context_menu": {
-        isFeature: true,
-        supportedLevels: LEVELS_FEATURE,
-        labsGroup: LabGroup.Rooms,
-        displayName: _td("Right-click message context menu"),
-        default: false,
-    },
-    "feature_location_share_pin_drop": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Location sharing - pin drop"),
-        default: false,
+    "sendReadReceipts": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Send read receipts"),
+        default: true,
     },
     "feature_location_share_live": {
         isFeature: true,
@@ -427,6 +413,20 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td(
             "Live Location Sharing (temporary implementation: locations persist in room history)",
         ),
+        default: false,
+    },
+    "feature_favourite_messages": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Favourite Messages (under active development)"),
+        default: false,
+    },
+    "feature_new_device_manager": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new session manager (under active development)"),
         default: false,
     },
     "baseFontSize": {
@@ -698,6 +698,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Send analytics data'),
         default: null,
     },
+    "FTUE.useCaseSelection": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: null,
+    },
     "autocompleteDelay": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: 200,
@@ -792,6 +796,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
         controller: new IncompatibleController("feature_breadcrumbs_v2", true),
+    },
+    "FTUE.userOnboardingButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show shortcut to welcome checklist above the room list"),
+        default: true,
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
@@ -941,6 +950,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },
+    "debug_animation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
     "audioInputMuted": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
@@ -949,9 +962,9 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },
-    "videoChannelRoomId": {
+    "activeCallRoomIds": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: [],
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
