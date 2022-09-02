@@ -18,14 +18,7 @@ import React, { ContextType } from 'react';
 
 import { _t } from "../../../../../languageHandler";
 import RoomEmoteSettings from "../../../room_settings/RoomEmoteSettings";
-import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
-import dis from "../../../../../dispatcher/dispatcher";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
-import SettingsStore from "../../../../../settings/SettingsStore";
-import { UIFeature } from "../../../../../settings/UIFeature";
-import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
-import AliasSettings from "../../../room_settings/AliasSettings";
-import PosthogTrackers from "../../../../../PosthogTrackers";
 
 interface IProps {
     roomId: string;
@@ -47,19 +40,9 @@ export default class EmoteRoomSettingsTab extends React.Component<IProps, IState
         };
     }
 
-
     public render(): JSX.Element {
         const client = this.context;
         const room = client.getRoom(this.props.roomId);
-
-        /*const canSetAliases = true; // Previously, we arbitrarily only allowed admins to do this
-        const canSetCanonical = room.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
-        const canonicalAliasEv = room.currentState.getStateEvents("m.room.canonical_alias", '');*/
-
-        const urlPreviewSettings = SettingsStore.getValue(UIFeature.URLPreviews) ?
-            <UrlPreviewSettings room={room} /> :
-            null;
-
 
         return (
             <div className="mx_SettingsTab mx_EmoteRoomSettingsTab">
