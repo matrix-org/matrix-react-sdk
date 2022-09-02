@@ -74,7 +74,7 @@ jobs:
       fail-fast: false
       matrix:
         # Run 3 instances in Parallel
-        containers: [1, 2, 3]
+        runner: [1, 2, 3]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -149,11 +149,14 @@ jobs:
             cypress/videos
             cypress/synapselogs
 
+      - run: mv cypress/performance/*.json cypress/performance/measurements-${{ strategy.job-index }}.json
+
       - name: Upload Benchmark
         uses: actions/upload-artifact@v2
         with:
           name: cypress-benchmark
-          path: cypress/performance/measurements.json
+          path: cypress/performance/*
+          if-no-files-found: ignore
           retention-days: 1
 
   store-benchmark:
@@ -172,6 +175,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: cypress-benchmark
+
+      - name: Merge measurements
+        run: jq -s add measurements-*.json > measurements.json
 
       - name: Store benchmark result
         uses: matrix-org/github-action-benchmark@jsperfentry-6
