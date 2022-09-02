@@ -60,7 +60,7 @@ interface IProps {
     onClose: () => void;
     resizeNotifier: ResizeNotifier;
     mxEvent: MatrixEvent;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
@@ -260,14 +260,14 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
-    private nextBatch: string | null;
+    private nextBatch: string | undefined | null = null;
 
     private onPaginationRequest = async (
         timelineWindow: TimelineWindow | null,
         direction = Direction.Backward,
         limit = 20,
     ): Promise<boolean> => {
-        if (!Thread.hasServerSideSupport) {
+        if (!Thread.hasServerSideSupport && timelineWindow) {
             timelineWindow.extend(direction, limit);
             return true;
         }
