@@ -48,6 +48,7 @@ enum UsernameAvailableStatus {
     Available,
     Unavailable,
     Error,
+    Invalid,
 }
 
 export const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from offline slow-hash scenario.
@@ -363,7 +364,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 const available = await this.props.matrixClient.isUsernameAvailable(value);
                 return available ? UsernameAvailableStatus.Available : UsernameAvailableStatus.Unavailable;
             } catch (err) {
-                return UsernameAvailableStatus.Error;
+                return err.errcode === "M_INVALID_USERNAME"
+                    ? UsernameAvailableStatus.Invalid
+                    : UsernameAvailableStatus.Error;
             }
         },
         rules: [
@@ -374,7 +377,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             },
             {
                 key: "safeLocalpart",
-                test: ({ value }) => !value || SAFE_LOCALPART_REGEX.test(value),
+                test: ({ value }, usernameAvailable) => (!value || SAFE_LOCALPART_REGEX.test(value))
+                    && usernameAvailable !== UsernameAvailableStatus.Invalid,
                 invalid: () => _t("Some characters not allowed"),
             },
             {
