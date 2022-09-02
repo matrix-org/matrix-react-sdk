@@ -107,7 +107,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
         this.emoteUpload.current.value = "";
         this.emoteCodeUpload.current.value = "";
-
     };
     private deleteEmote = (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
@@ -120,15 +119,14 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             if (emote != id) {
                 cleanemotes[emote] = this.state.emotes[emote];
                 value[emote] = emote;
-            }
-            else {
+            } else {
                 deletedItems[emote] = this.state.emotes[emote];
             }
         }
 
         this.setState({ deleted: true, emotes: cleanemotes, deletedItems: deletedItems, value: value });
         return;
-    }
+    };
     private saveEmote = async (e: React.FormEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
@@ -156,13 +154,10 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     if (this.state.EmoteFieldsTouched.hasOwnProperty(shortcode)) {
                         emotesMxcs[this.state.EmoteFieldsTouched[shortcode]] = this.state.emotes[shortcode];
                         value[this.state.EmoteFieldsTouched[shortcode]] = this.state.EmoteFieldsTouched[shortcode];
-                    }
-
-                    else {
+                    } else {
                         emotesMxcs[shortcode] = this.state.emotes[shortcode];
                         value[shortcode] = shortcode;
                     }
-
                 }
             }
             newState.value = value;
@@ -220,8 +215,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     ...this.state.EmoteFieldsTouched,
                 },
             });
-        }
-        else {
+        } else {
             this.setState({
                 newEmoteCodeAdded: false,
             });
@@ -250,11 +244,12 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         { _t("Save") }
                     </AccessibleButton>
                 </div>
-            )};
+            );
+        }
 
-        let existingEmotes = [];
+        const existingEmotes = [];
         if (this.state.emotes) {
-            for (let emotecode in this.state.emotes) {
+            for (const emotecode in this.state.emotes) {
                 existingEmotes.push(
                     <li className='mx_EmoteSettings_addEmoteField'>
                         <input
@@ -266,9 +261,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
                         />
                         <img className="mx_EmoteSettings_uploadedEmoteImage"
-                        src={
-                            mediaFromMxc(this.state.emotes[emotecode]).srcHttp
-                        } />
+                            src={
+                                mediaFromMxc(this.state.emotes[emotecode]).srcHttp
+                            } />
                         <div className="mx_EmoteSettings_uploadButton">
                             <AccessibleButton
                                 onClick={this.deleteEmote}
@@ -277,7 +272,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                                 aria-label="Close"
                                 id={emotecode}
                             >
-                                { _t("Delete") }
+                                {_t("Delete")}
                             </AccessibleButton>
                         </div>
                     </li>
@@ -310,7 +305,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             >
                 <input
                     type="file"
-                    ref={ this.emoteUpload }
+                    ref={this.emoteUpload}
                     className="mx_EmoteSettings_emoteUpload"
                     onClick={chromeFileInputFix}
                     onChange={this.onEmoteFileAdd}
