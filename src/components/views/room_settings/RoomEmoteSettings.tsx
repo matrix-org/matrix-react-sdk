@@ -272,10 +272,10 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                                 aria-label="Close"
                                 id={emotecode}
                             >
-                                {_t("Delete")}
+                                { _t("Delete") }
                             </AccessibleButton>
                         </div>
-                    </li>
+                    </li>,
                 );
             }
         }
@@ -285,15 +285,14 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             emoteUploadButton = (
                 <div className="mx_EmoteSettings_uploadButton">
                     <AccessibleButton
-                        onClick={ this.uploadEmoteClick }
+                        onClick={this.uploadEmoteClick}
                         kind="primary"
                     >
-                        {_t("Upload Emote")}
+                        { _t("Upload Emote") }
                     </AccessibleButton>
                 </div>
             );
         }
-
 
         return (
 
