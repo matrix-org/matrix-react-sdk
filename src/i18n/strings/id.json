@@ -3452,8 +3452,8 @@
     "Complete these to get the most out of %(brand)s": "Selesaikan untuk mendapatkan hasil yang maksimal dari %(brand)s",
     "Welcome to %(brand)s": "Selamat datang di %(brand)s",
     "We're creating a room with %(names)s": "Kami sedang membuat sebuah ruangan dengan %(names)s",
-    "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play dan logo Google Play adalah merek dagang dari Google LLC.",
-    "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store® dan logo Apple® adalah merek dagang dari Apple Inc.",
+    "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play dan logo Google Play adalah merek dagang Google LLC.",
+    "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store® dan logo Apple® adalah merek dagang Apple Inc.",
     "Get it on F-Droid": "Dapatkan di F-Droid",
     "Get it on Google Play": "Dapatkan di Google Play",
     "Android": "Android",
@@ -3545,5 +3545,9 @@
     "Inviting %(user)s and %(count)s others|other": "Mengundang %(user)s dan %(count)s lainnya",
     "%(user)s and %(count)s others|one": "%(user)s dan 1 lainnya",
     "%(user)s and %(count)s others|other": "%(user)s dan %(count)s lainnya",
-    "%(user1)s and %(user2)s": "%(user1)s dan%(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s dan%(user2)s",
+    "Show": "Tampilkan",
+    "Unknown device type": "Tipe perangkat tidak diketahui",
+    "Video input %(n)s": "Masukan video %(n)s",
+    "Audio input %(n)s": "Masukan audio %(n)s"
 }
