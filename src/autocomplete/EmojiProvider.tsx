@@ -115,8 +115,8 @@ export default class EmojiProvider extends AutocompleteProvider {
             emojisAndEmotes.push({
                 emoji: { label: key,
                     shortcodes: [this.emotes[key]],
-                    hexcode: "",
-                    unicode: ":"+key+":",
+                    hexcode: key,
+                    unicode: this.emotes[key],
 
                 },
                 _orderBy: 0,
@@ -167,8 +167,8 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = completions.map(c => ({
                 completion: c.emoji.unicode,
                 component: (
-                    <PillCompletion title={this.emotes[c.emoji.shortcodes[0]]?c.emoji.shortcodes[0]:`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
-                        <span>{ this.emotes[c.emoji.shortcodes[0]]? this.emotes[c.emoji.shortcodes[0]]:c.emoji.unicode }</span>
+                    <PillCompletion title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:":"+c.emoji.shortcodes[0]+":"} aria-label={c.emoji.unicode}>
+                        <span>{ this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode }</span>
                     </PillCompletion>
                 ),
                 range,

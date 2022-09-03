@@ -310,6 +310,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     onChange={this.onEmoteFileAdd}
                     accept="image/*"
                 />
+                { emoteSettingsButtons }
                 <li className='mx_EmoteSettings_addEmoteField'>
                     <input
                         ref={this.emoteCodeUpload}
@@ -333,7 +334,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 {
                     existingEmotes
                 }
-                { emoteSettingsButtons }
+                
             </form>
         );
     }
