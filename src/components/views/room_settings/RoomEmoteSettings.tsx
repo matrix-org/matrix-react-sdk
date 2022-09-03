@@ -334,7 +334,6 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 {
                     existingEmotes
                 }
-                
             </form>
         );
     }
