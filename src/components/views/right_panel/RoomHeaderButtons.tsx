@@ -35,7 +35,7 @@ import { showThreadPanel } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
 import {
     RoomNotificationStateStore,
-    UPDATE_STATUS_INDICATOR
+    UPDATE_STATUS_INDICATOR,
 } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
