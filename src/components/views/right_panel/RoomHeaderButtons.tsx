@@ -33,7 +33,10 @@ import { useSettingValue } from "../../../hooks/useSettings";
 import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
 import { showThreadPanel } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
-import { RoomNotificationStateStore, UPDATE_STATUS_INDICATOR } from "../../../stores/notifications/RoomNotificationStateStore";
+import {
+    RoomNotificationStateStore,
+    UPDATE_STATUS_INDICATOR
+} from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
 import { SummarizedNotificationState } from "../../../stores/notifications/SummarizedNotificationState";
@@ -271,8 +274,8 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 isUnread={this.globalNotificationState.color === NotificationColor.Red}
             >
                 { this.globalNotificationState.color === NotificationColor.Red ?
-                  <UnreadIndicator color={this.globalNotificationState.color} /> :
-                  null }
+                    <UnreadIndicator color={this.globalNotificationState.color} /> :
+                    null }
             </HeaderButton>,
         );
         rightPanelPhaseButtons.set(RightPanelPhases.RoomSummary,
