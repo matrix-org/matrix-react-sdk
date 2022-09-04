@@ -36,6 +36,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { RoomNotificationStateStore, UPDATE_STATUS_INDICATOR } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
+import { SummarizedNotificationState } from "../../../stores/notifications/SummarizedNotificationState";
 import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ButtonEvent } from "../elements/AccessibleButton";
@@ -164,7 +165,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         this.setState({
             globalNotificationColor: notificationState.color,
         });
-    }
+    };
 
     protected onAction(payload: ActionPayload) {
         if (payload.action === Action.ViewUser) {
@@ -269,7 +270,9 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 onClick={this.onNotificationsClicked}
                 isUnread={this.globalNotificationState.color === NotificationColor.Red}
             >
-                { this.globalNotificationState.color === NotificationColor.Red ? <UnreadIndicator color={this.globalNotificationState.color} /> : null }
+                { this.globalNotificationState.color === NotificationColor.Red ?
+                  <UnreadIndicator color={this.globalNotificationState.color} /> :
+                  null }
             </HeaderButton>,
         );
         rightPanelPhaseButtons.set(RightPanelPhases.RoomSummary,
@@ -285,7 +288,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         return <>
             {
                 Array.from(rightPanelPhaseButtons.keys()).map((phase) =>
-                    (this.props.excludedRightPanelPhaseButtons.includes(phase)
+                    (this.props.excludedRightPanelPhaseButtons?.includes(phase)
                         ? null
                         : rightPanelPhaseButtons.get(phase)))
             }
