@@ -294,7 +294,11 @@ limitations under the License.
             /* we put the timestamps for media (other than stickers) atop the media */
             &.mx_EventTile_image {
                 .mx_MessageTimestamp {
-                    color: #ffffff; /* regardless of theme */
+                    border-radius: $timeline-image-border-radius;
+                    /* Hardcoded colours because it's the same on all themes */
+                    background-color: rgba(0, 0, 0, 0.6);
+                    color: #ffffff;
+                    padding: 0px 4px 0px 4px;
                 }
             }
         }
