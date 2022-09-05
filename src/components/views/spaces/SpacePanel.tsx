@@ -73,6 +73,8 @@ import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 
+const KEY_PANEL_IS_COLLAPSED = "mx_space_panel_is_collapsed";
+
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
         return SpaceStore.instance.invitedSpaces;
@@ -324,7 +326,17 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({
 });
 
 const SpacePanel = () => {
-    const [isPanelCollapsed, setPanelCollapsed] = useState(true);
+    const [isPanelCollapsed, setPanelCollapsed] = useState(() => {
+        const defaultValue = true;
+
+        try {
+            const item = window.localStorage.getItem(KEY_PANEL_IS_COLLAPSED);
+            return item ? JSON.parse(item) : defaultValue;
+        } catch (error) {
+            return defaultValue;
+        }
+    });
+
     const ref = useRef<HTMLDivElement>();
     useLayoutEffect(() => {
         UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
@@ -336,6 +348,14 @@ const SpacePanel = () => {
             setPanelCollapsed(!isPanelCollapsed);
         }
     });
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(KEY_PANEL_IS_COLLAPSED, isPanelCollapsed);
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isPanelCollapsed]);
 
     return (
         <DragDropContext onDragEnd={result => {
