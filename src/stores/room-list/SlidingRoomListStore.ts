@@ -49,7 +49,7 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
         tags: ["m.favourite"],
         is_tombstoned: false,
     },
-    // TODO
+    // TODO https://github.com/vector-im/element-web/issues/23207
     // DefaultTagID.SavedItems,
     [DefaultTagID.DM]: {
         is_dm: true,
@@ -68,7 +68,7 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
         tags: ["m.lowpriority"],
         is_tombstoned: false,
     },
-    // TODO
+    // TODO https://github.com/vector-im/element-web/issues/23207
     // DefaultTagID.ServerNotice,
     // DefaultTagID.Suggested,
     // DefaultTagID.Archived,
@@ -128,11 +128,11 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     public setListOrder(tagId: TagID, order: ListAlgorithm) {
-        // TODO?
+        // TODO: https://github.com/vector-im/element-web/issues/23207
     }
 
     public getListOrder(tagId: TagID): ListAlgorithm {
-        // TODO: handle unread msgs first?
+        // TODO: handle unread msgs first? https://github.com/vector-im/element-web/issues/23207
         return ListAlgorithm.Natural;
     }
 

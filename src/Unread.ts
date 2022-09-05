@@ -56,6 +56,7 @@ export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
 
 export function doesRoomHaveUnreadMessages(room: Room): boolean {
     if (SettingsStore.getValue("feature_sliding_sync")) {
+        // TODO: https://github.com/vector-im/element-web/issues/23207
         // Sliding Sync doesn't support unread indicator dots (yet...)
         return false;
     }
