@@ -56,7 +56,7 @@ type State = Partial<Pick<CSSProperties, "display" | "right" | "top" | "transfor
 
 export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
     private static container: HTMLElement;
-    private parent: Element;
+    private parent: Element | null = null;
 
     // XXX: This is because some components (Field) are unable to `import` the Tooltip class,
     // so we expose the Alignment options off of us statically.
@@ -86,7 +86,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
             capture: true,
         });
 
-        this.parent = ReactDOM.findDOMNode(this).parentNode as Element;
+        this.parent = ReactDOM.findDOMNode(this)?.parentNode as Element ?? null;
 
         this.updatePosition();
     }

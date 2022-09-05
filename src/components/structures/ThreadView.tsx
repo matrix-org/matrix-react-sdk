@@ -280,7 +280,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             opts.from = this.nextBatch;
         }
 
-        let nextBatch = null;
+        let nextBatch: string | null = null;
         if (this.state.thread) {
             const response = await this.state.thread.fetchEvents(opts);
             nextBatch = response.nextBatch;
@@ -289,19 +289,24 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         // Advances the marker on the TimelineWindow to define the correct
         // window of events to display on screen
-        timelineWindow.extend(direction, limit);
+        timelineWindow?.extend(direction, limit);
 
         return !!nextBatch;
     };
 
     private onFileDrop = (dataTransfer: DataTransfer) => {
-        ContentMessages.sharedInstance().sendContentListToRoom(
-            Array.from(dataTransfer.files),
-            this.props.mxEvent.getRoomId(),
-            this.threadRelation,
-            MatrixClientPeg.get(),
-            TimelineRenderingType.Thread,
-        );
+        const roomId = this.props.mxEvent.getRoomId();
+        if (roomId) {
+            ContentMessages.sharedInstance().sendContentListToRoom(
+                Array.from(dataTransfer.files),
+                roomId,
+                this.threadRelation,
+                MatrixClientPeg.get(),
+                TimelineRenderingType.Thread,
+            );
+        } else {
+            console.warn("Unknwon roomId for event", this.props.mxEvent);
+        }
     };
 
     private get threadRelation(): IEventRelation {
