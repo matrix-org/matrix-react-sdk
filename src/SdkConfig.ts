@@ -27,8 +27,6 @@ export const DEFAULTS: IConfigOptions = {
     integrations_ui_url: "https://scalar.vector.im/",
     integrations_rest_url: "https://scalar.vector.im/api",
     bug_report_endpoint_url: null,
-
-    // Jitsi conference options
     jitsi: {
         preferred_domain: "meet.element.io",
     },

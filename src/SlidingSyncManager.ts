@@ -73,9 +73,9 @@ export type PartialSlidingSyncRequest ={ filters?: MSC3575Filter, sort?: string[
  * sync options and code.
  */
 export class SlidingSyncManager {
-    public static ListSpaces = "space_list";
-    public static ListSearch = "search_list";
-    private static internalInstance = new SlidingSyncManager();
+    public static readonly ListSpaces = "space_list";
+    public static readonly ListSearch = "search_list";
+    private static readonly internalInstance = new SlidingSyncManager();
 
     public slidingSync: SlidingSync;
     private client: MatrixClient;
