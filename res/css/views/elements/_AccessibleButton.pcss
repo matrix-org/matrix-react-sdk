@@ -38,8 +38,8 @@ limitations under the License.
         align-items: center;
         justify-content: center;
         font-size: $font-14px;
-        border: none; // override default <button /> styles
-        word-break: keep-all; // prevent button text in Chinese/Japanese/Korean (CJK) from being collapsed
+        border: none; /* override default <button /> styles */
+        word-break: keep-all; /* prevent button text in Chinese/Japanese/Korean (CJK) from being collapsed */
 
         &.mx_AccessibleButton_kind_primary_sm,
         &.mx_AccessibleButton_kind_danger_sm,
@@ -75,6 +75,12 @@ limitations under the License.
             &::before {
                 mask-image: url('$(res)/img/feather-customised/x.svg');
             }
+        }
+
+        &.mx_AccessibleButton_kind_icon {
+            padding: 0;
+            height: 32px;
+            width: 32px;
         }
     }
 

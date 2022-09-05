@@ -41,12 +41,8 @@ import dispatcher from '../../../../src/dispatcher/dispatcher';
 import SettingsStore from '../../../../src/settings/SettingsStore';
 import { Action } from '../../../../src/dispatcher/actions';
 import { UserTab } from '../../../../src/components/views/dialogs/UserTab';
-import { showThread } from '../../../../src/dispatcher/dispatch-actions/threads';
 
 jest.mock('../../../../src/dispatcher/dispatcher');
-jest.mock('../../../../src/dispatcher/dispatch-actions/threads', () => ({
-    showThread: jest.fn(),
-}));
 
 describe('<MessageActionBar />', () => {
     const userId = '@alice:server.org';
@@ -244,11 +240,11 @@ describe('<MessageActionBar />', () => {
         });
 
         it('opens message context menu on click', () => {
-            const { findByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            const { getByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
                 fireEvent.click(queryByLabelText('Options'));
             });
-            expect(findByTestId('mx_MessageContextMenu')).toBeTruthy();
+            expect(getByTestId('mx_MessageContextMenu')).toBeTruthy();
         });
     });
 
@@ -314,11 +310,11 @@ describe('<MessageActionBar />', () => {
         });
 
         it('opens reaction picker on click', () => {
-            const { queryByLabelText, findByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByLabelText, getByTestId } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
                 fireEvent.click(queryByLabelText('React'));
             });
-            expect(findByTestId('mx_ReactionPicker')).toBeTruthy();
+            expect(getByTestId('mx_EmojiPicker')).toBeTruthy();
         });
     });
 
@@ -447,7 +443,8 @@ describe('<MessageActionBar />', () => {
                     fireEvent.click(getByLabelText('Reply in thread'));
                 });
 
-                expect(showThread).toHaveBeenCalledWith({
+                expect(dispatcher.dispatch).toHaveBeenCalledWith({
+                    action: Action.ShowThread,
                     rootEvent: alicesMessageEvent,
                     push: false,
                 });
@@ -475,7 +472,8 @@ describe('<MessageActionBar />', () => {
                     fireEvent.click(getByLabelText('Reply in thread'));
                 });
 
-                expect(showThread).toHaveBeenCalledWith({
+                expect(dispatcher.dispatch).toHaveBeenCalledWith({
+                    action: Action.ShowThread,
                     rootEvent: alicesMessageEvent,
                     initialEvent: threadReplyEvent,
                     highlighted: true,
@@ -566,5 +564,39 @@ describe('<MessageActionBar />', () => {
                 expect(queryByLabelText('Favourite')).toBeFalsy();
             });
         });
+    });
+
+    it.each([
+        ["React"],
+        ["Reply"],
+        ["Reply in thread"],
+        ["Favourite"],
+        ["Edit"],
+    ])("does not show context menu when right-clicking", (buttonLabel: string) => {
+        // For favourite button
+        jest.spyOn(SettingsStore, 'getValue').mockReturnValue(true);
+
+        const event = new MouseEvent("contextmenu", {
+            bubbles: true,
+            cancelable: true,
+        });
+        event.stopPropagation = jest.fn();
+        event.preventDefault = jest.fn();
+
+        const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+        act(() => {
+            fireEvent(queryByLabelText(buttonLabel), event);
+        });
+        expect(event.stopPropagation).toHaveBeenCalled();
+        expect(event.preventDefault).toHaveBeenCalled();
+        expect(queryByTestId("mx_MessageContextMenu")).toBeFalsy();
+    });
+
+    it("does shows context menu when right-clicking options", () => {
+        const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+        act(() => {
+            fireEvent.contextMenu(queryByLabelText("Options"));
+        });
+        expect(queryByTestId("mx_MessageContextMenu")).toBeTruthy();
     });
 });

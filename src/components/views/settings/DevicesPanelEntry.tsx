@@ -17,18 +17,18 @@ limitations under the License.
 import React from 'react';
 import { IMyDevice } from 'matrix-js-sdk/src/client';
 import { logger } from "matrix-js-sdk/src/logger";
+import classNames from 'classnames';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { formatDate } from '../../../DateUtils';
-import StyledCheckbox, { CheckboxStyle } from '../elements/StyledCheckbox';
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
-import TextWithTooltip from "../elements/TextWithTooltip";
 import Modal from "../../../Modal";
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
 import LogoutDialog from '../dialogs/LogoutDialog';
+import DeviceTile from './devices/DeviceTile';
+import SelectableDeviceTile from './devices/SelectableDeviceTile';
 
 interface IProps {
     device: IMyDevice;
@@ -114,19 +114,6 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        const device = this.props.device;
-
-        let lastSeen = "";
-        if (device.last_seen_ts) {
-            const lastSeenDate = new Date(device.last_seen_ts);
-            lastSeen = _t("Last seen %(date)s at %(ip)s", {
-                date: formatDate(lastSeenDate),
-                ip: device.last_seen_ip,
-            });
-        }
-
-        const myDeviceClass = this.props.isOwnDevice ? " mx_DevicesPanel_myDevice" : '';
-
         let iconClass = '';
         let verifyButton: JSX.Element;
         if (this.props.verified !== null) {
@@ -144,24 +131,6 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
                 { _t("Sign Out") }
             </AccessibleButton>;
         }
-
-        const left = this.props.isOwnDevice ?
-            <div className="mx_DevicesPanel_deviceTrust">
-                <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
-            </div> :
-            <div className="mx_DevicesPanel_checkbox">
-                <StyledCheckbox kind={CheckboxStyle.Outline} onChange={this.onDeviceToggled} checked={this.props.selected} />
-            </div>;
-
-        const deviceName = device.display_name ?
-            <React.Fragment>
-                <TextWithTooltip tooltip={device.display_name + " (" + device.device_id + ")"}>
-                    { device.display_name }
-                </TextWithTooltip>
-            </React.Fragment> :
-            <React.Fragment>
-                { device.device_id }
-            </React.Fragment>;
 
         const buttons = this.state.renaming ?
             <form className="mx_DevicesPanel_renameForm" onSubmit={this.onRenameSubmit}>
@@ -184,20 +153,27 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
                 </AccessibleButton>
             </React.Fragment>;
 
-        return (
-            <div className={"mx_DevicesPanel_device" + myDeviceClass}>
-                { left }
-                <div className="mx_DevicesPanel_deviceInfo">
-                    <div className="mx_DevicesPanel_deviceName">
-                        { deviceName }
-                    </div>
-                    <div className="mx_DevicesPanel_lastSeen">
-                        { lastSeen }
-                    </div>
+        const deviceWithVerification = {
+            ...this.props.device,
+            isVerified: this.props.verified,
+        };
+
+        if (this.props.isOwnDevice) {
+            return <div className={classNames("mx_DevicesPanel_device", "mx_DevicesPanel_myDevice")}>
+                <div className="mx_DevicesPanel_deviceTrust">
+                    <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
                 </div>
-                <div className="mx_DevicesPanel_deviceButtons">
+                <DeviceTile device={deviceWithVerification}>
                     { buttons }
-                </div>
+                </DeviceTile>
+            </div>;
+        }
+
+        return (
+            <div className="mx_DevicesPanel_device">
+                <SelectableDeviceTile device={deviceWithVerification} onClick={this.onDeviceToggled} isSelected={this.props.selected}>
+                    { buttons }
+                </SelectableDeviceTile>
             </div>
         );
     }

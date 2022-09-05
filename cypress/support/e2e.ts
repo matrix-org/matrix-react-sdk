@@ -35,3 +35,5 @@ import "./views";
 import "./iframes";
 import "./timeline";
 import "./network";
+import "./composer";
+import "./axe";

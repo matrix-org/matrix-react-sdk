@@ -70,7 +70,7 @@ import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sor
 import { RoomViewStore } from "../../../../stores/RoomViewStore";
 import { getMetaSpaceName } from "../../../../stores/spaces";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
-import { DirectoryMember, Member, startDm } from "../../../../utils/direct-messages";
+import { DirectoryMember, Member, startDmOnFirstMessage } from "../../../../utils/direct-messages";
 import DMRoomMap from "../../../../utils/DMRoomMap";
 import { makeUserPermalink } from "../../../../utils/permalinks/Permalinks";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../../utils/SortMembers";
@@ -91,6 +91,7 @@ import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultContextMenus } from "./RoomResultContextMenus";
 import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
+import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -243,6 +244,9 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
 
 const findVisibleRooms = (cli: MatrixClient) => {
     return cli.getVisibleRooms().filter(room => {
+        // Do not show local rooms
+        if (isLocalRoom(room)) return false;
+
         // TODO we may want to put invites in their own list
         return room.getMyMembership() === "join" || room.getMyMembership() == "invite";
     });
@@ -372,7 +376,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 })),
                 ...roomResults,
                 ...userResults,
-                ...(profile ? [new DirectoryMember(profile)] : []).map(toMemberResult),
+                ...(profile && !alreadyAddedUserIds.has(profile.user_id)
+                    ? [new DirectoryMember(profile)]
+                    : []).map(toMemberResult),
                 ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
         },
@@ -395,7 +401,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
             possibleResults.forEach(entry => {
                 if (isRoomResult(entry)) {
-                    if (!entry.room.normalizedName.includes(normalizedQuery) &&
+                    if (!entry.room.normalizedName?.includes(normalizedQuery) &&
                         !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
                         !entry.query?.some(q => q.includes(lcQuery))
                     ) return; // bail, does not match query
@@ -480,7 +486,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         // eslint-disable-next-line
     }, [results, filter]);
 
-    const viewRoom = (room: {roomId: string, roomAlias?: string}, persist = false, viaKeyboard = false) => {
+    const viewRoom = (
+        room: { roomId: string, roomAlias?: string, autoJoin?: boolean, shouldPeek?: boolean},
+        persist = false,
+        viaKeyboard = false,
+    ) => {
         if (persist) {
             const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
             // remove & add the room to put it at the end
@@ -501,6 +511,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             metricsViaKeyboard: viaKeyboard,
             room_id: room.roomId,
             room_alias: room.roomAlias,
+            auto_join: room.autoJoin,
+            should_peek: room.shouldPeek,
         });
         onFinished();
     };
@@ -582,7 +594,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.member.userId}`}
                         key={`${Section[result.section]}-${result.member.userId}`}
                         onClick={() => {
-                            startDm(cli, [result.member]);
+                            startDmOnFirstMessage(cli, [result.member]);
                             onFinished();
                         }}
                         aria-label={result.member instanceof RoomMember
@@ -603,11 +615,23 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             }
             if (isPublicRoomResult(result)) {
                 const clientRoom = cli.getRoom(result.publicRoom.room_id);
+                // Element Web currently does not allow guests to join rooms, so we
+                // instead show them view buttons for all rooms. If the room is not
+                // world readable, a modal will appear asking you to register first. If
+                // it is readable, the preview appears as normal.
+                const showViewButton = (
+                    clientRoom?.getMyMembership() === "join" ||
+                    result.publicRoom.world_readable ||
+                    cli.isGuest()
+                );
+
                 const listener = (ev) => {
                     const { publicRoom } = result;
                     viewRoom({
                         roomAlias: publicRoom.canonical_alias || publicRoom.aliases?.[0],
                         roomId: publicRoom.room_id,
+                        autoJoin: !result.publicRoom.world_readable && !cli.isGuest(),
+                        shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
                     }, true, ev.type !== "click");
                 };
                 return (
@@ -618,11 +642,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         onClick={listener}
                         endAdornment={
                             <AccessibleButton
-                                kind={clientRoom ? "primary" : "primary_outline"}
+                                kind={showViewButton ? "primary_outline" : "primary"}
                                 onClick={listener}
                                 tabIndex={-1}
                             >
-                                { _t(clientRoom ? "View" : "Join") }
+                                { showViewButton ? _t("View") : _t("Join") }
                             </AccessibleButton>}
                         aria-labelledby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
                         aria-describedby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_alias`}

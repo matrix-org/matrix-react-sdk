@@ -55,7 +55,7 @@ export enum OwnBeaconStoreEvent {
     BeaconUpdateError = 'BeaconUpdateError',
 }
 
-const MOVING_UPDATE_INTERVAL = 2000;
+const MOVING_UPDATE_INTERVAL = 5000;
 const STATIC_UPDATE_INTERVAL = 30000;
 
 const BAIL_AFTER_CONSECUTIVE_ERROR_COUNT = 2;
@@ -92,7 +92,11 @@ const getLocallyCreatedBeaconEventIds = (): string[] => {
     return ids;
 };
 export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
-    private static internalInstance = new OwnBeaconStore();
+    private static readonly internalInstance = (() => {
+        const instance = new OwnBeaconStore();
+        instance.start();
+        return instance;
+    })();
     // users beacons, keyed by event type
     public readonly beacons = new Map<BeaconIdentifier, Beacon>();
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<BeaconIdentifier>>();

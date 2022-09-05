@@ -29,7 +29,7 @@ import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/
 import DMRoomMap from "../../../utils/DMRoomMap";
 import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
-import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
 import { abbreviateUrl } from "../../../utils/UrlUtils";
 import IdentityAuthClient from "../../../IdentityAuthClient";
@@ -56,13 +56,19 @@ import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
-import CallHandler from "../../../CallHandler";
+import LegacyCallHandler from "../../../LegacyCallHandler";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import CopyableText from "../elements/CopyableText";
 import { ScreenName } from '../../../PosthogTrackers';
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { DirectoryMember, IDMUserTileProps, Member, startDm, ThreepidMember } from "../../../utils/direct-messages";
+import {
+    DirectoryMember,
+    IDMUserTileProps,
+    Member,
+    startDmOnFirstMessage,
+    ThreepidMember,
+} from "../../../utils/direct-messages";
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
 import Modal from '../../../Modal';
 import dis from "../../../dispatcher/dispatcher";
@@ -445,11 +451,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     }
 
     private startDm = async () => {
-        this.setState({ busy: true });
         try {
             const cli = MatrixClientPeg.get();
             const targets = this.convertFilter();
-            await startDm(cli, targets);
+            startDmOnFirstMessage(cli, targets);
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);
@@ -457,8 +462,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 busy: false,
                 errorText: _t("We couldn't create your DM."),
             });
-        } finally {
-            this.setState({ busy: false });
         }
     };
 
@@ -507,13 +510,13 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 return;
             }
 
-            CallHandler.instance.startTransferToMatrixID(
+            LegacyCallHandler.instance.startTransferToMatrixID(
                 this.props.call,
                 targetIds[0],
                 this.state.consultFirst,
             );
         } else {
-            CallHandler.instance.startTransferToPhoneNumber(
+            LegacyCallHandler.instance.startTransferToPhoneNumber(
                 this.props.call,
                 this.state.dialPadValue,
                 this.state.consultFirst,
@@ -814,7 +817,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         // Update the IS in account data. Actually using it may trigger terms.
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        useDefaultIdentityServer();
+        setToDefaultIdentityServer();
         this.setState({ canUseIdentityServer: true, tryingIdentityServer: false });
     };
 
