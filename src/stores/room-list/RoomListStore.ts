@@ -612,13 +612,17 @@ export default class RoomListStore {
         if (!RoomListStore.internalInstance) {
             if (SettingsStore.getValue("feature_sliding_sync")) {
                 logger.info("using SlidingRoomListStoreClass");
-                RoomListStore.internalInstance = new SlidingRoomListStoreClass();
+                const instance = new SlidingRoomListStoreClass();
+                instance.start();
+                RoomListStore.internalInstance = instance;
             } else {
-                RoomListStore.internalInstance = new RoomListStoreClass();
+                const instance = new RoomListStoreClass();
+                instance.start();
+                RoomListStore.internalInstance = instance;
             }
         }
 
-        return RoomListStore.internalInstance;
+        return this.internalInstance;
     }
 }
 
