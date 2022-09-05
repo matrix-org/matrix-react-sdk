@@ -214,7 +214,6 @@ describe('PlaybackQueue', () => {
 
     it('own voice message stop the queue', async () => {
         const roomIdTest = '!room3:server';
-        const clientId: string = cli.getUserId();
         const ev0 = mkEvent({
             event: true,
             type: "m.room.message",
@@ -228,7 +227,7 @@ describe('PlaybackQueue', () => {
         const ev1 = mkEvent({
             event: true,
             type: "m.room.message",
-            user: clientId,
+            user: cli.getUserId() || "",
             room: roomIdTest,
             content: {
                 "org.matrix.msc2516.voice": {},
