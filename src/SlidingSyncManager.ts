@@ -48,7 +48,8 @@ import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import {
     MSC3575Filter,
-    MSC3575List, SlidingSync,
+    MSC3575List, 
+    SlidingSync,
 } from 'matrix-js-sdk/src/sliding-sync';
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -83,7 +84,7 @@ export class SlidingSyncManager {
     private configurePromise: Promise<void>;
     private configureResolve: Function;
 
-    constructor() {
+    public constructor() {
         this.listIdToIndex = {};
         this.configurePromise = new Promise((resolve) => {
             this.configureResolve = resolve;
@@ -163,7 +164,7 @@ export class SlidingSyncManager {
      * @param updateArgs The fields to update on the list.
      * @returns The complete list request params
      */
-    async ensureListRegistered(
+    public async ensureListRegistered(
         listIndex: number, updateArgs: PartialSlidingSyncRequest,
     ): Promise<MSC3575List> {
         logger.debug("ensureListRegistered:::", listIndex, updateArgs);
@@ -209,7 +210,7 @@ export class SlidingSyncManager {
         return this.slidingSync.getList(listIndex);
     }
 
-    async setRoomVisible(roomId: string, visible: boolean): Promise<string> {
+    public async setRoomVisible(roomId: string, visible: boolean): Promise<string> {
         await this.configurePromise;
         const subscriptions = this.slidingSync.getRoomSubscriptions();
         if (visible) {
