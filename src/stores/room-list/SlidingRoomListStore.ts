@@ -82,7 +82,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     private counts: Record<TagID, number> = {};
     private stickyRoomId: string | null;
 
-    constructor() {
+    public constructor() {
         super(defaultDispatcher);
         this.setMaxListeners(20); // RoomList + LeftPanel + 8xRoomSubList + spares
     }
