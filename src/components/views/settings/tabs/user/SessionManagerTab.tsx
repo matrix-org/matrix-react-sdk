@@ -68,9 +68,10 @@ const SessionManagerTab: React.FC = () => {
         if (!currentDevice) {
             return;
         }
-        Modal.createDialog(SetupEncryptionDialog, {
-            onFinished: refreshDevices,
-        });
+        Modal.createDialog(
+            SetupEncryptionDialog as unknown as React.ComponentType,
+            { onFinished: refreshDevices },
+        );
     };
 
     useEffect(() => () => {
