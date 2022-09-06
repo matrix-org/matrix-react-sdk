@@ -82,7 +82,7 @@ const INITIAL_STATE = {
 
     wasContextSwitch: false,
 
-    fromNotifPanel: false as Optional<boolean>,
+    fromNotifPanel: false as boolean | undefined,
 };
 
 type Listener = (isActive: boolean) => void;
