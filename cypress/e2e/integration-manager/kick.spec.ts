@@ -21,7 +21,9 @@ import { MatrixClient } from "../../global";
 import { UserCredentials } from "../../support/login";
 
 const ROOM_NAME = "Integration Manager Test";
+const USER_DISPLAY_NAME = "Alice";
 const BOT_DISPLAY_NAME = "Bob";
+const KICK_REASON = "Goodbye";
 
 const INTEGRATION_MANAGER_TOKEN = "DefinitelySecret_DoNotUseThisForReal";
 const INTEGRATION_MANAGER_HTML = `
@@ -33,6 +35,7 @@ const INTEGRATION_MANAGER_HTML = `
             <input type="text" id="target-room-id"/>
             <input type="text" id="target-user-id"/>
             <button name="Send" id="send-action">Press to send action</button>
+            <button name="Close" id="close">Press to close</button>
             <script>
                 document.getElementById("send-action").onclick = () => {
                     window.parent.postMessage(
@@ -40,7 +43,15 @@ const INTEGRATION_MANAGER_HTML = `
                             action: "kick",
                             room_id: document.getElementById("target-room-id").value,
                             user_id: document.getElementById("target-user-id").value,
-                            reason: "Removed from room",
+                            reason: "${KICK_REASON}",
+                        },
+                        '*',
+                    );
+                };
+                document.getElementById("close").onclick = () => {
+                    window.parent.postMessage(
+                        {
+                            action: "close_scalar",
                         },
                         '*',
                     );
@@ -57,14 +68,25 @@ function openIntegrationManager() {
     });
 }
 
+function closeIntegrationManager(integrationManagerUrl: string) {
+    cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
+        cy.get("#close").should("exist").click();
+    });
+}
+
 function sendActionFromIntegrationManager(integrationManagerUrl: string, targetRoomId: string, targetUserId: string) {
     cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
         cy.get("#target-room-id").should("exist").type(targetRoomId);
         cy.get("#target-user-id").should("exist").type(targetUserId);
         cy.get("#send-action").should("exist").click();
     });
-    // Wait for the message to be handled
-    return cy.wait(100);
+}
+
+function expectKickedMessage(shouldExist: boolean) {
+    // Check for the event message (or lack thereof)
+    cy.get(".mx_EventTile_line")
+        .contains(`${USER_DISPLAY_NAME} removed ${BOT_DISPLAY_NAME}: ${KICK_REASON}`)
+        .should(shouldExist ? "exist" : "not.exist");
 }
 
 describe("Integration Manager: Kick", () => {
@@ -79,7 +101,7 @@ describe("Integration Manager: Kick", () => {
         cy.startSynapse("default").then(data => {
             synapse = data;
 
-            cy.initTestUser(synapse, "Alice", () => {
+            cy.initTestUser(synapse, USER_DISPLAY_NAME, () => {
                 cy.window().then(win => {
                     win.localStorage.setItem("mx_scalar_token", INTEGRATION_MANAGER_TOKEN);
                     win.localStorage.setItem(`mx_scalar_token_at_${integrationManagerUrl}`, INTEGRATION_MANAGER_TOKEN);
@@ -137,10 +159,8 @@ describe("Integration Manager: Kick", () => {
 
             openIntegrationManager();
             sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-            cy.getClient().then(client => {
-                expect(client.getRoom(roomId).getMember(targetUserId).isKicked()).to.be.true;
-            });
+            closeIntegrationManager(integrationManagerUrl);
+            expectKickedMessage(true);
         });
     });
 
@@ -164,10 +184,8 @@ describe("Integration Manager: Kick", () => {
             }).then(() => {
                 openIntegrationManager();
                 sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-                cy.getClient().then(client => {
-                    expect(client.getRoom(roomId).getMember(targetUserId).isKicked()).to.be.false;
-                });
+                closeIntegrationManager(integrationManagerUrl);
+                expectKickedMessage(false);
             });
         });
     });
@@ -186,10 +204,8 @@ describe("Integration Manager: Kick", () => {
             }).then(() => {
                 openIntegrationManager();
                 sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-                cy.getClient().then(client => {
-                    expect(client.getRoom(roomId).getMember(targetUserId).isKicked()).to.be.false;
-                });
+                closeIntegrationManager(integrationManagerUrl);
+                expectKickedMessage(false);
             });
         });
     });
@@ -209,10 +225,8 @@ describe("Integration Manager: Kick", () => {
             }).then(() => {
                 openIntegrationManager();
                 sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-                cy.getClient().then(async client => {
-                    expect(client.getRoom(roomId).getMember(targetUserId).membership).to.eq('ban');
-                });
+                closeIntegrationManager(integrationManagerUrl);
+                expectKickedMessage(false);
             });
         });
     });
@@ -228,10 +242,8 @@ describe("Integration Manager: Kick", () => {
 
             openIntegrationManager();
             sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-
-            cy.getClient().then(async client => {
-                expect(client.getRoom(roomId).getMember(targetUserId)).to.be.null;
-            });
+            closeIntegrationManager(integrationManagerUrl);
+            expectKickedMessage(false);
         });
     });
 });
