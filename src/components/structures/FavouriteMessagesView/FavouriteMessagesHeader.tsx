@@ -69,14 +69,14 @@ const FavouriteMessagesHeader = ({ handleSearchQuery }) => {
                         onChange={(e) => setQuery(e.target.value)}
                     />)
                     }
-                    { !isSearchClicked ?
-                        <AccessibleTooltipButton
+                    { !isSearchClicked
+                        ? <AccessibleTooltipButton
                             className="mx_RoomHeader_button mx_RoomHeader_searchButton"
                             onClick={() => setSearchClicked(!isSearchClicked)}
                             title={_t("Search")}
                             key="search"
-                        /> :
-                        <AccessibleTooltipButton
+                        />
+                        : <AccessibleTooltipButton
                             className="mx_FavMessagesHeader_cancelButton"
                             onClick={() => setSearchClicked(!isSearchClicked)}
                             title={_t("Cancel")}
