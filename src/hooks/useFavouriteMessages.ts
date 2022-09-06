@@ -26,7 +26,7 @@ let isSearchClicked = false;
 
 export default function useFavouriteMessages(props?: IButtonProp) {
     const favouriteMessagesIds = JSON.parse(
-        localStorage?.getItem("io_element_favouriteMessages")?? "[]") as any[];
+        localStorage?.getItem("io_element_favouriteMessages") ?? "[]") as any[];
 
     const [, setX] = useState<string[]>();
     const eventId = props?.mxEvent.getId();
