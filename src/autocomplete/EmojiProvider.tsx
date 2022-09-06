@@ -168,23 +168,8 @@ export default class EmojiProvider extends AutocompleteProvider {
                 }
             });
 
-            //if there is an exact shortcode match in the frequently used emojis, it goes before everything
-            for (let i = 0; i < recentlyUsedAutocomplete.length; i++) {
-                if (recentlyUsedAutocomplete[i].emoji.shortcodes[0] === trimmedMatch) {
-                    const exactMatchEmoji = recentlyUsedAutocomplete[i];
-                    for (let j = i; j > 0; j--) {
-                        recentlyUsedAutocomplete[j] = recentlyUsedAutocomplete[j - 1];
-                    }
-                    recentlyUsedAutocomplete[0] = exactMatchEmoji;
-                    break;
-                }
-            }
-
-            completions = recentlyUsedAutocomplete.concat(completions);
-            completions = uniqBy(completions, "emoji");
-
-            return completions.map((c) => ({
-                completion: c.emoji.unicode,
+            completions = completions.map(c => ({
+                completion: this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode,
                 component: (
                     <PillCompletion title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:":"+c.emoji.shortcodes[0]+":"} aria-label={c.emoji.unicode}>
                         <span>{ this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode }</span>
