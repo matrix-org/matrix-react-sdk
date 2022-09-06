@@ -78,7 +78,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (payload.action !== Action.ActiveRoomChanged) return;
 
         const changePayload = <ActiveRoomChangedPayload>payload;
-        this.handleViewedRoomChange(changePayload.oldRoomId, changePayload.newRoomId);
+        this.handleViewedRoomChange(changePayload.oldRoomId, changePayload.newRoomId, changePayload.fromNotifPanel);
     }
 
     // Getters
@@ -355,21 +355,48 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     };
 
-    private handleViewedRoomChange(oldRoomId: Optional<string>, newRoomId: Optional<string>) {
+    private handleViewedRoomChange(
+        oldRoomId: Optional<string>,
+        newRoomId: Optional<string>,
+        fromNotifPanel: Optional<boolean>,
+    ) {
         if (!this.mxClient) return; // not ready, onReady will handle the first room
         this.viewedRoomId = newRoomId;
         // load values from byRoomCache with the viewedRoomId.
         this.loadCacheFromSettings();
 
-        // when we're switching to a room, clear out any stale MemberInfo cards
-        // in order to fix https://github.com/vector-im/element-web/issues/21487
-        if (this.currentCard?.phase !== RightPanelPhases.EncryptionPanel) {
-            const panel = this.byRoom[this.viewedRoomId];
-            if (panel?.history) {
+        const panel = this.byRoom[this.viewedRoomId];
+        if (panel?.history) {
+            // when we're switching to a room, clear out any stale MemberInfo cards
+            // in order to fix https://github.com/vector-im/element-web/issues/21487
+            if (this.currentCard?.phase !== RightPanelPhases.EncryptionPanel) {
                 panel.history = panel.history.filter(
                     (card) => card.phase != RightPanelPhases.RoomMemberInfo &&
                         card.phase != RightPanelPhases.Room3pidMemberInfo,
                 );
+            }
+            // also, never restore NotifPanels from history
+            // fixes https://github.com/vector-im/element-web/issues/23216
+            // XXX: except this flashes the NotifPanel nastily when you switch to a room
+            // where the NotifPanel was last open, and which otherwise didn't have RightPanel open
+            panel.history = panel.history.filter(
+                (card) => card.phase != RightPanelPhases.NotificationPanel,
+            );
+        }
+
+        // if we have come from a NotifPanel interaction, we should keep the panel open.
+        // so we can rapidly click between permalinks from the NotifPanel
+        // except this doesn't preserve the position in the NotifPanel
+        // it'd be much better to have the NotifPanel as a permenant panel rather than being
+        // strictly per-room.
+        if (fromNotifPanel) {
+            const history = panel?.history || [];
+            history.unshift({ phase: RightPanelPhases.NotificationPanel });
+            if (!panel) {
+                this.byRoom[this.viewedRoomId] = { isOpen: true, history };
+            } else {
+                panel.isOpen = true;
+                panel.history = history;
             }
         }
 

@@ -81,6 +81,8 @@ const INITIAL_STATE = {
     viaServers: [] as string[],
 
     wasContextSwitch: false,
+
+    fromNotifPanel: false,
 };
 
 type Listener = (isActive: boolean) => void;
@@ -156,6 +158,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                 action: Action.ActiveRoomChanged,
                 oldRoomId: lastRoomId,
                 newRoomId: this.state.roomId,
+                fromNotifPanel: this.state.fromNotifPanel,
             });
         }
 
@@ -170,6 +173,7 @@ export class RoomViewStore extends Store<ActionPayload> {
             //      - event_id:     '$213456782:matrix.org'
             //      - event_offset: 100
             //      - highlighted:  true
+            //      - from_notif_panel: false
             case Action.ViewRoom:
                 this.viewRoom(payload);
                 break;
@@ -295,6 +299,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                 replyingToEvent: null,
                 viaServers: payload.via_servers,
                 wasContextSwitch: payload.context_switch,
+                fromNotifPanel: payload.from_notif_panel,
             };
 
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room

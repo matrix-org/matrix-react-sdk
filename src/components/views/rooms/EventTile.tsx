@@ -760,6 +760,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
+            from_notif_panel: this.context.timelineRenderingType === TimelineRenderingType.Notification,
             metricsTrigger: this.context.timelineRenderingType === TimelineRenderingType.Search
                 ? "MessageSearch"
                 : undefined,

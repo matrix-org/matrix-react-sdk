@@ -58,6 +58,7 @@ describe("RightPanelStore", () => {
             action: Action.ActiveRoomChanged,
             oldRoomId: null,
             newRoomId: roomId,
+            fromNotifPanel: false,
         });
 
         await roomChanged;
