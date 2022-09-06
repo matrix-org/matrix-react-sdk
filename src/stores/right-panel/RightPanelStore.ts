@@ -365,7 +365,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // load values from byRoomCache with the viewedRoomId.
         this.loadCacheFromSettings();
 
-        const panel = this.byRoom[this.viewedRoomId];
+        const panel = this.viewedRoomId && this.byRoom[this.viewedRoomId];
         if (panel?.history) {
             // when we're switching to a room, clear out any stale MemberInfo cards
             // in order to fix https://github.com/vector-im/element-web/issues/21487
@@ -389,7 +389,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // except this doesn't preserve the position in the NotifPanel
         // it'd be much better to have the NotifPanel as a permenant panel rather than being
         // strictly per-room.
-        if (fromNotifPanel) {
+        if (fromNotifPanel && this.viewedRoomId) {
             const history = panel?.history || [];
             history.unshift({ phase: RightPanelPhases.NotificationPanel });
             if (!panel) {
@@ -405,6 +405,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // the room member list.
         if (
             SettingsStore.getValue("feature_right_panel_default_open") &&
+            this.viewedRoomId &&
             !this.byRoom[this.viewedRoomId]?.isOpen
         ) {
             const history = [{ phase: RightPanelPhases.RoomMemberList }];
