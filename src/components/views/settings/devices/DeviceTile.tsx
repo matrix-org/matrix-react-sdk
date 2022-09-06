@@ -93,8 +93,6 @@ const DeviceTile: React.FC<DeviceTileProps> = ({ device, children, onClick }) =>
             { id: 'lastSeenIp', value: device.last_seen_ip },
         ];
 
-    console.log(metadata);
-
     return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
         <DeviceType isVerified={device.isVerified} />
         <div className="mx_DeviceTile_info" onClick={onClick}>
