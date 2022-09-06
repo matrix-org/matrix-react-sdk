@@ -245,7 +245,7 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                                     autoComplete="off"
                                     value={this.state.generatedRendezvous}
                                     readOnly={true}
-                                    onClick={(e) => e.target.select()}
+                                    onClick={(e) => (e.target as any).select()}
                                 />
                                 <div className="mx_Centre">
                                     { this.props.device === 'new' ?
