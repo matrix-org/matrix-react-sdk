@@ -93,16 +93,20 @@ const DeviceTile: React.FC<DeviceTileProps> = ({ device, children, onClick }) =>
             { id: 'lastSeenIp', value: device.last_seen_ip },
         ];
 
+    console.log(metadata);
+
     return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
         <DeviceType isVerified={device.isVerified} />
         <div className="mx_DeviceTile_info" onClick={onClick}>
             <DeviceTileName device={device} />
             <div className="mx_DeviceTile_metadata">
                 { metadata.map(({ id, value }, index) =>
-                    <Fragment key={id}>
-                        { !!index && ' · ' }
-                        <DeviceMetadata id={id} value={value} />
-                    </Fragment>,
+                    !!value
+                        ? <Fragment key={id}>
+                            { !!index && ' · ' }
+                            <DeviceMetadata id={id} value={value} />
+                        </Fragment>
+                        : null,
                 ) }
             </div>
         </div>
