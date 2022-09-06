@@ -25,5 +25,5 @@ export interface ActiveRoomChangedPayload extends ActionPayload {
     oldRoomId: Optional<string>;
     newRoomId: Optional<string>;
 
-    fromNotifPanel: Optional<boolean>;
+    fromNotifPanel?: boolean;
 }
