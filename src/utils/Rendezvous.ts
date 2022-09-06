@@ -328,7 +328,7 @@ export class Rendezvous {
     async confirmLoginOnExistingDevice(): Promise<string | undefined> {
         logger.info("Requesting login token");
         // eslint-disable-next-line camelcase
-        const { login_token } = await this.cli.http.authedRequest<{ login_token: string, expires_in: number }>(undefined, Method.Post, '/rendezvous/request_token', {}, {});
+        const { login_token } = await this.cli.http.authedRequest<{ login_token: string, expires_in: number }>(undefined, Method.Post, '/login/token', {}, {});
 
         // eslint-disable-next-line camelcase
         await this.sendData({ user: this.cli.getUserId(), homeserver: this.cli.baseUrl, login_token });
