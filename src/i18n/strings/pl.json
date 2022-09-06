@@ -2122,5 +2122,6 @@
     "%(user)s and %(count)s others|other": "%(user)s i %(count)s innych",
     "%(user1)s and %(user2)s": "%(user1)s i %(user2)s",
     "%(value)sd": "%(value)sd",
-    "In %(spaceName)s and %(count)s other spaces.|other": "W %(spaceName)s i %(count)s innych przestrzeniach."
+    "In %(spaceName)s and %(count)s other spaces.|other": "W %(spaceName)s i %(count)s innych przestrzeniach.",
+    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Pokoje wideo są stale włączonymi kanałami VoIP zawartymi w pokoju w %(brand)s."
 }
