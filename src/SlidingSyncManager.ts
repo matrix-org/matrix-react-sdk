@@ -68,7 +68,7 @@ const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
 export type PartialSlidingSyncRequest = {
     filters?: MSC3575Filter;
     sort?: string[];
-    ranges?: number[][];
+    ranges?: [startIndex: number, endIndex: number][];
 };
 
 /**
