@@ -68,6 +68,9 @@ function runPromise(trafficlightUrl: string, uuid: string) {
                 'TRAFFICLIGHT_URL': trafficlightUrl,
                 'TRAFFICLIGHT_UUID': uuid,
             },
+            //headed: true,
+            // @ts-ignore-next-line
+            //exit: false,
             config: {
                 retries: { // Override cypress.json - we want to run exactly once.
                     'openMode': 0,
