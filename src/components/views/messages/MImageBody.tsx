@@ -481,7 +481,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     key={`img-${showPlaceholder}`}
                     timeout={300}
                 >
-                    { placeholder ?? <></> /* Transition always expects a child */ }
+                    { showPlaceholder ? placeholder : <></> /* Transition always expects a child */ }
                 </CSSTransition>
             </SwitchTransition>;
         }
