@@ -64,7 +64,11 @@ const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
     ],
 };
 
-export type PartialSlidingSyncRequest ={ filters?: MSC3575Filter, sort?: string[], ranges?: number[][] };
+export type PartialSlidingSyncRequest = {
+    filters?: MSC3575Filter;
+    sort?: string[];
+    ranges?: number[][];
+};
 
 /**
  * This class manages the entirety of sliding sync at a high UI/UX level. It controls the placement
@@ -95,7 +99,7 @@ export class SlidingSyncManager {
         return SlidingSyncManager.internalInstance;
     }
 
-    public configure(client: MatrixClient, proxyUrl?: string): SlidingSync {
+    public configure(client: MatrixClient, proxyUrl: string): SlidingSync {
         this.client = client;
         this.listIdToIndex = {};
         this.slidingSync = new SlidingSync(
@@ -117,7 +121,7 @@ export class SlidingSyncManager {
                 [EventType.RoomCreate, ""], // for isSpaceRoom checks
                 [EventType.SpaceChild, "*"], // all space children
                 [EventType.SpaceParent, "*"], // all space parents
-                [EventType.RoomMember, this.client.getUserId()], // lets the client calculate that we are in fact in the room
+                [EventType.RoomMember, this.client.getUserId()!], // lets the client calculate that we are in fact in the room
             ],
             filters: {
                 room_types: ["m.space"],
