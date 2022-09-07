@@ -3549,5 +3549,9 @@
     "Inviting %(user1)s and %(user2)s": "正在邀請 %(user1)s 與 %(user2)s",
     "%(user)s and %(count)s others|one": "%(user)s 與 1 個其他人",
     "%(user)s and %(count)s others|other": "%(user)s 與 %(count)s 個其他人",
-    "%(user1)s and %(user2)s": "%(user1)s 與 %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s 與 %(user2)s",
+    "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s 或 %(copyButton)s",
+    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
+    "%(qrCode)s or %(appLinks)s": "%(qrCode)s 或 %(appLinks)s",
+    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s 或 %(emojiCompare)s"
 }
