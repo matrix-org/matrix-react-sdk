@@ -29,15 +29,26 @@ import {
 
 interface Props {
     devices: DevicesDictionary;
+    currentDeviceId: DeviceWithVerification['device_id'];
+    goToFilteredList: (filter: DeviceSecurityVariation) => void;
 }
 
-const SecurityRecommendations: React.FC<Props> = ({ devices }) => {
+const SecurityRecommendations: React.FC<Props> = ({
+    devices,
+    currentDeviceId,
+    goToFilteredList,
+}) => {
     const devicesArray = Object.values<DeviceWithVerification>(devices);
 
     const unverifiedDevicesCount = filterDevicesBySecurityRecommendation(
         devicesArray,
         [DeviceSecurityVariation.Unverified],
-    ).length;
+    )
+        // filter out the current device
+        // as unverfied warning and actions
+        // will be shown in current session section
+        .filter((device) => device.device_id !== currentDeviceId)
+        .length;
     const inactiveDevicesCount = filterDevicesBySecurityRecommendation(
         devicesArray,
         [DeviceSecurityVariation.Inactive],
@@ -48,9 +59,6 @@ const SecurityRecommendations: React.FC<Props> = ({ devices }) => {
     }
 
     const inactiveAgeDays = INACTIVE_DEVICE_AGE_DAYS;
-
-    // TODO(kerrya) stubbed until PSG-640/652
-    const noop = () => {};
 
     return <SettingsSubsection
         heading={_t('Security recommendations')}
@@ -69,7 +77,8 @@ const SecurityRecommendations: React.FC<Props> = ({ devices }) => {
             >
                 <AccessibleButton
                     kind='link_inline'
-                    onClick={noop}
+                    onClick={() => goToFilteredList(DeviceSecurityVariation.Unverified)}
+                    data-testid='unverified-devices-cta'
                 >
                     { _t('View all') + ` (${unverifiedDevicesCount})` }
                 </AccessibleButton>
@@ -90,7 +99,8 @@ const SecurityRecommendations: React.FC<Props> = ({ devices }) => {
                 >
                     <AccessibleButton
                         kind='link_inline'
-                        onClick={noop}
+                        onClick={() => goToFilteredList(DeviceSecurityVariation.Inactive)}
+                        data-testid='inactive-devices-cta'
                     >
                         { _t('View all') + ` (${inactiveDevicesCount})` }
                     </AccessibleButton>
