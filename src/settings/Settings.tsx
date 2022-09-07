@@ -412,12 +412,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td('Sliding Sync mode (under active development, cannot be disabled)'),
-        default: false,
+        default: true,
         controller: new SlidingSyncController(),
     },
     "feature_sliding_sync_proxy_url": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: "",
+        default: "https://slidingsync.lab.element.dev",
     },
     "feature_location_share_live": {
         isFeature: true,
