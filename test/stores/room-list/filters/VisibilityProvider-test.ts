@@ -22,7 +22,9 @@ import LegacyCallHandler from "../../../../src/LegacyCallHandler";
 import VoipUserMapper from "../../../../src/VoipUserMapper";
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoom";
 import { RoomListCustomisations } from "../../../../src/customisations/RoomList";
-import { createTestClient } from "../../../test-utils";
+import { createTestClient, IGNORE_INVITES_FROM_THIS_USER, IGNORE_INVITES_TO_THIS_ROOM, stubClient }
+    from "../../../test-utils";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 jest.mock("../../../../src/VoipUserMapper", () => ({
     sharedInstance: jest.fn(),
@@ -40,9 +42,29 @@ jest.mock("../../../../src/customisations/RoomList", () => ({
     },
 }));
 
-const createRoom = (isSpaceRoom = false): Room => {
+const createRoom = ({ isSpaceRoom, inviter, roomId }: { isSpaceRoom?: boolean, inviter?: string, roomId?: string } =
+{ isSpaceRoom: false, roomId: `${Math.random()}:example.org` }): Room => {
     return {
+        roomId,
         isSpaceRoom: () => isSpaceRoom,
+        getMyMembership: () =>
+            inviter ? "invite" : "join",
+        currentState: {
+            getMember(userId: string): any | null {
+                if (userId != MatrixClientPeg.get().getUserId()) {
+                    return null;
+                }
+                return {
+                    events: {
+                        member: {
+                            getSender() {
+                                return inviter;
+                            },
+                        },
+                    },
+                };
+            },
+        },
     } as unknown as Room;
 };
 
@@ -61,6 +83,7 @@ describe("VisibilityProvider", () => {
             isVirtualRoom: jest.fn(),
         } as unknown as VoipUserMapper;
         mocked(VoipUserMapper.sharedInstance).mockReturnValue(mockVoipUserMapper);
+        stubClient();
     });
 
     describe("instance", () => {
@@ -86,39 +109,58 @@ describe("VisibilityProvider", () => {
                 mocked(mockVoipUserMapper.isVirtualRoom).mockReturnValue(true);
             });
 
-            it("should return return false", () => {
+            it("should return return false", async () => {
                 const room = createRoom();
-                expect(VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
+                expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
                 expect(mockVoipUserMapper.isVirtualRoom).toHaveBeenCalledWith(room);
             });
         });
 
-        it("should return false without room", () => {
-            expect(VisibilityProvider.instance.isRoomVisible()).toBe(false);
+        it("should return false without room", async () => {
+            expect(await VisibilityProvider.instance.isRoomVisible()).toBe(false);
         });
 
-        it("should return false for a space room", () => {
-            const room = createRoom(true);
-            expect(VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
+        it("should return false for a space room", async () => {
+            const room = createRoom({ isSpaceRoom: true });
+            expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
         });
 
-        it("should return false for a local room", () => {
+        it("should return false for a local room", async () => {
             const room = createLocalRoom();
-            expect(VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
+            expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
         });
 
-        it("should return false if visibility customisation returns false", () => {
+        it("should return false if visibility customisation returns false", async () => {
             mocked(RoomListCustomisations.isRoomVisible).mockReturnValue(false);
             const room = createRoom();
-            expect(VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
+            expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
             expect(RoomListCustomisations.isRoomVisible).toHaveBeenCalledWith(room);
         });
 
-        it("should return true if visibility customisation returns true", () => {
+        it("should return true if visibility customisation returns true", async () => {
             mocked(RoomListCustomisations.isRoomVisible).mockReturnValue(true);
             const room = createRoom();
-            expect(VisibilityProvider.instance.isRoomVisible(room)).toBe(true);
+            expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(true);
             expect(RoomListCustomisations.isRoomVisible).toHaveBeenCalledWith(room);
+        });
+
+        it("should return true if the room is an invite but hasn't been marked as ignored", async () => {
+            mocked(RoomListCustomisations.isRoomVisible).mockReturnValue(true);
+            const room = createRoom({ inviter: "@good-user:example.org" });
+            expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(true);
+            expect(RoomListCustomisations.isRoomVisible).toHaveBeenCalledWith(room);
+        });
+
+        it("should return false if the room is an invite and the sender has been marked as ignored", async () => {
+            mocked(RoomListCustomisations.isRoomVisible).mockReturnValue(true);
+            const room = createRoom({ inviter: IGNORE_INVITES_FROM_THIS_USER });
+            expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
+        });
+
+        it("should return false if the room is an invite and the roomId has been marked as ignored", async () => {
+            mocked(RoomListCustomisations.isRoomVisible).mockReturnValue(true);
+            const room = createRoom({ inviter: "@good-user:example.org", roomId: IGNORE_INVITES_TO_THIS_ROOM });
+            expect(await VisibilityProvider.instance.isRoomVisible(room)).toBe(false);
         });
     });
 });

@@ -318,7 +318,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             await VisibilityProvider.instance.onNewInvitedRoom(room);
         }
 
-        if (!VisibilityProvider.instance.isRoomVisible(room)) {
+        if (!await VisibilityProvider.instance.isRoomVisible(room)) {
             return; // don't do anything on rooms that aren't visible
         }
 
@@ -342,7 +342,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         this.algorithm.updatesInhibited = true;
 
         // Figure out which rooms are about to be valid, and the state of affairs
-        const rooms = this.getPlausibleRooms();
+        const rooms = await this.getPlausibleRooms();
         const currentSticky = this.algorithm.stickyRoom;
         const stickyIsStillPresent = currentSticky && rooms.includes(currentSticky);
 
@@ -486,10 +486,16 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         this.updateFn.trigger();
     };
 
-    private getPlausibleRooms(): Room[] {
+    private async getPlausibleRooms(): Promise<Room[]> {
         if (!this.matrixClient) return [];
 
-        let rooms = this.matrixClient.getVisibleRooms().filter(r => VisibilityProvider.instance.isRoomVisible(r));
+        const allRooms = this.matrixClient.getVisibleRooms();
+        let rooms = [];
+        for (const room of allRooms) {
+            if (await VisibilityProvider.instance.isRoomVisible(room)) {
+                rooms.push(allRooms);
+            }
+        }
 
         if (this.prefilterConditions.length > 0) {
             rooms = rooms.filter(r => {
@@ -513,10 +519,10 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
      * @param trigger Set to false to prevent a list update from being sent. Should only
      * be used if the calling code will manually trigger the update.
      */
-    public regenerateAllLists({ trigger = true }) {
+    public async regenerateAllLists({ trigger = true }) {
         logger.warn("Regenerating all room lists");
 
-        const rooms = this.getPlausibleRooms();
+        const rooms = await this.getPlausibleRooms();
 
         const sorts: ITagSortingMap = {};
         const orders: IListOrderingMap = {};
@@ -528,8 +534,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             RoomListLayoutStore.instance.ensureLayoutExists(tagId);
         }
 
-        this.algorithm.populateTags(sorts, orders);
-        this.algorithm.setKnownRooms(rooms);
+        await this.algorithm.populateTags(sorts, orders);
+        await this.algorithm.setKnownRooms(rooms);
 
         this.initialListsGenerated = true;
 

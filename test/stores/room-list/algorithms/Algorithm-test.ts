@@ -38,14 +38,14 @@ describe("Algorithm", () => {
     let client: MockedObject<MatrixClient>;
     let algorithm: Algorithm;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         stubClient();
         client = mocked(MatrixClientPeg.get());
         DMRoomMap.makeShared();
 
         algorithm = new Algorithm();
         algorithm.start();
-        algorithm.populateTags(
+        await algorithm.populateTags(
             { [DefaultTagID.Untagged]: SortAlgorithm.Alphabetic },
             { [DefaultTagID.Untagged]: ListAlgorithm.Natural },
         );
@@ -75,7 +75,7 @@ describe("Algorithm", () => {
         client.reEmitter.reEmit(roomWithCall, [RoomStateEvent.Events]);
 
         for (const room of client.getRooms()) jest.spyOn(room, "getMyMembership").mockReturnValue("join");
-        algorithm.setKnownRooms(client.getRooms());
+        await algorithm.setKnownRooms(client.getRooms());
 
         setupAsyncStoreWithClient(CallStore.instance, client);
         setupAsyncStoreWithClient(WidgetMessagingStore.instance, client);

@@ -66,6 +66,11 @@ export function stubClient() {
     MatrixClientBackedSettingsHandler.matrixClient = client;
 }
 
+export const IGNORE_INVITES_TO_THIS_ROOM = "$ignore-invites-to-this-room:example.org";
+export const IGNORE_INVITES_TO_THIS_ROOM_ISSUER = "@user-who-decided-to-ignore-invites-to-this-room:example.org";
+export const IGNORE_INVITES_FROM_THIS_USER = "@ignore-invites-from-this-sender:example.org";
+export const IGNORE_INVITES_FROM_THIS_USER_ISSUER = "@user-who-decided-to-ignore-invites-from-this-user:example.org";
+
 /**
  * Create a stubbed-out MatrixClient
  *
@@ -174,6 +179,21 @@ export function createTestClient(): MatrixClient {
         sendToDevice: jest.fn().mockResolvedValue(undefined),
         queueToDevice: jest.fn().mockResolvedValue(undefined),
         encryptAndSendToDevices: jest.fn().mockResolvedValue(undefined),
+        ignoredInvites: {
+            getRuleForInvite: jest.fn().mockImplementation(({ roomId, sender }) => {
+                if (roomId === IGNORE_INVITES_TO_THIS_ROOM) {
+                    return Promise.resolve(new MatrixEvent({
+                        sender: IGNORE_INVITES_TO_THIS_ROOM_ISSUER,
+                    }));
+                }
+                if (sender === IGNORE_INVITES_FROM_THIS_USER) {
+                    return Promise.resolve(new MatrixEvent({
+                        sender: IGNORE_INVITES_FROM_THIS_USER_ISSUER,
+                    }));
+                }
+                return Promise.resolve(null);
+            }),
+        },
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);

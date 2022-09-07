@@ -108,32 +108,46 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         return RoomNotificationStateStore.internalInstance;
     }
 
-    private onSync = (state: SyncState, prevState?: SyncState, data?: ISyncStateData) => {
+    private onSync = async (state: SyncState, prevState?: SyncState, data?: ISyncStateData) => {
         // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
         // This will include highlights from the previous version of the room internally
+
+        // Async phase: gather data. Do *not* perform any side-effect.
         const globalState = new SummarizedNotificationState();
         const visibleRooms = this.matrixClient.getVisibleRooms();
 
         let numFavourites = 0;
         for (const room of visibleRooms) {
-            if (VisibilityProvider.instance.isRoomVisible(room)) {
+            if (await VisibilityProvider.instance.isRoomVisible(room)) {
                 globalState.add(this.getRoomState(room));
 
                 if (room.tags[DefaultTagID.Favourite] && !room.getType()) numFavourites++;
             }
         }
 
-        PosthogAnalytics.instance.setProperty("numFavouriteRooms", numFavourites);
+        // Sync phrase: perform side-effects.
+        // By making sure that we perform side-effects after the last call to `await`, we make sure that
+        // the side-effects represent *some* snapshot of reality, rather than a mix of two ore more
+        // snapshots.
+        //
+        // Normally, calls to `VisibilityProvider.instance.isRoomVisible` should resolve in the order
+        // in which they have been enqueued. As long as this holds, we have guaranteeds that the side-
+        // effects we're causing correspond to the latest snapshot of reality.
+        (() => {
+            // Do NOT make this function `async`.
+            // Its sole purpose is to make sure that we do not call `await` while performing side-effects.
+            PosthogAnalytics.instance.setProperty("numFavouriteRooms", numFavourites);
 
-        if (this.globalState.symbol !== globalState.symbol ||
-            this.globalState.count !== globalState.count ||
-            this.globalState.color !== globalState.color ||
-            this.globalState.numUnreadStates !== globalState.numUnreadStates ||
-            state !== prevState
-        ) {
-            this._globalState = globalState;
-            this.emit(UPDATE_STATUS_INDICATOR, globalState, state, prevState, data);
-        }
+            if (this.globalState.symbol !== globalState.symbol ||
+                this.globalState.count !== globalState.count ||
+                this.globalState.color !== globalState.color ||
+                this.globalState.numUnreadStates !== globalState.numUnreadStates ||
+                state !== prevState
+            ) {
+                this._globalState = globalState;
+                this.emit(UPDATE_STATUS_INDICATOR, globalState, state, prevState, data);
+            }
+        })();
     };
 
     protected async onReady() {
