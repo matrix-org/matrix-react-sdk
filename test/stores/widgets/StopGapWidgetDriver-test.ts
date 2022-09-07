@@ -226,31 +226,5 @@ describe("StopGapWidgetDriver", () => {
                 },
             );
         });
-
-        it('should ignore invalid direction', async () => {
-            client.relations.mockResolvedValue({
-                originalEvent: new MatrixEvent(),
-                events: [],
-            });
-
-            await driver.readEventRelations(
-                '$event',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                'q' as any,
-            );
-
-            expect(client.relations).toBeCalledWith(
-                '!this-room-id',
-                '$event',
-                null,
-                null,
-                { direction: undefined },
-            );
-        });
     });
 });
