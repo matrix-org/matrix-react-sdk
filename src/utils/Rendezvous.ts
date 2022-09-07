@@ -72,6 +72,7 @@ export class Rendezvous {
     private theirPublicKey?: Uint8Array;
     private theirType: string;
     private sharedSecret?: Uint8Array;
+    private defaultRzServer = 'https://localhost:8080/';
     private uri?: string;
     private expiresAt?: Date;
     public user?: string;
@@ -355,7 +356,7 @@ export class Rendezvous {
             return;
         }
         const method = this.uri ? "PUT" : "POST";
-        const uri = this.uri ?? "https://localhost:8080";
+        const uri = this.uri ?? this.defaultRzServer;
 
         const body = JSON.stringify(this.sharedSecret ? await encryptAES(JSON.stringify(data), this.sharedSecret, 'rendezvous') : data);
 
@@ -374,11 +375,11 @@ export class Rendezvous {
         logger.info(`Posted data to ${this.uri} new sequence number ${this.etag}`);
 
         if (method === 'POST') {
-            const { uri } = await res.json();
+            const { id } = await res.json();
             if (res.headers.has('expires')) {
                 this.expiresAt = new Date(res.headers.get('expires'));
             }
-            this.uri = uri;
+            this.uri =`${uri}${id}`;
         }
     }
 
