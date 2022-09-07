@@ -375,7 +375,10 @@ export class Rendezvous {
         logger.info(`Posted data to ${this.uri} new sequence number ${this.etag}`);
 
         if (method === 'POST') {
-            const { id } = await res.json();
+            const id = res.headers.get('location');
+            if (!id || id.includes('/')) {
+                throw new Error('Rendezvous ID is invalid');
+            }
             if (res.headers.has('expires')) {
                 this.expiresAt = new Date(res.headers.get('expires'));
             }
