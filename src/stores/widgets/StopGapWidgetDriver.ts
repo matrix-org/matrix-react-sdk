@@ -380,13 +380,10 @@ export class StopGapWidgetDriver extends WidgetDriver {
         direction?: 'f' | 'b',
     ): Promise<IReadEventRelationsResult> {
         const client = MatrixClientPeg.get();
-        const dir =
-            direction && Object.values(Direction as Record<string, string>).includes(direction)
-                ? direction as Direction
-                : undefined;
-        const room = roomId !== undefined ? roomId : RoomViewStore.instance.getRoomId();
+        const dir = direction as Direction;
+        roomId = roomId ?? RoomViewStore.instance.getRoomId() ?? undefined;
 
-        if (typeof room !== "string") {
+        if (typeof roomId !== "string") {
             throw new Error('Error while reading the current room');
         }
 
@@ -396,7 +393,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
             nextBatch,
             prevBatch,
         } = await client.relations(
-            room,
+            roomId,
             eventId,
             relationType ?? null,
             eventType ?? null,
