@@ -3549,5 +3549,9 @@
     "Unknown device type": "Neznámy typ zariadenia",
     "Show": "Zobraziť",
     "Video input %(n)s": "Video vstup %(n)s",
-    "Audio input %(n)s": "Zvukový vstup %(n)s"
+    "Audio input %(n)s": "Zvukový vstup %(n)s",
+    "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s alebo %(copyButton)s",
+    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
+    "%(qrCode)s or %(appLinks)s": "%(qrCode)s alebo %(appLinks)s",
+    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s alebo %(emojiCompare)s"
 }
