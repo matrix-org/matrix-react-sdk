@@ -127,9 +127,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             isResizing: false,
             isExpanded: !this.layout.isCollapsed,
             height: 0, // to be fixed in a moment, we need `rooms` to calculate this.
-            rooms: (
-                arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || [])
-            ),
+            rooms: arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []),
             roomsLoading: false,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.

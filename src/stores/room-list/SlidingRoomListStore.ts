@@ -167,7 +167,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
      */
     public getTagsForRoom(room: Room): TagID[] {
         // check all lists for each tag we know about and see if the room is there
-        const tags = [];
+        const tags: TagID[] = [];
         for (const tagId in this.tagIdToSortAlgo) {
             const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
             const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(index);
