@@ -354,9 +354,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
     const possibleResults = useMemo<Result[]>(
         () => {
-            const userResults = [];
-            let roomResults;
-            let alreadyAddedUserIds;
+            const userResults: IMemberResult[] = [];
+            let roomResults: IRoomResult[];
+            let alreadyAddedUserIds: Set<string>;
             if (isSlidingSyncEnabled) {
                 // use the rooms sliding sync returned as the server has already worked it out for us
                 roomResults = slidingSyncRooms.map(toRoomResult);

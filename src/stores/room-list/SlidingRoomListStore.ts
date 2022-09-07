@@ -88,7 +88,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     public async setTagSorting(tagId: TagID, sort: SortAlgorithm) {
-        console.log("SlidingRoomListStore.setTagSorting ", tagId, sort);
+        logger.info("SlidingRoomListStore.setTagSorting ", tagId, sort);
         this.tagIdToSortAlgo[tagId] = sort;
         const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
         switch (sort) {
@@ -179,7 +179,6 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
                 }
             }
         }
-        console.log("SlidingRoomListStore.getTagsForRoom ", room.roomId, " => ", tags);
         return tags;
     }
 
@@ -307,7 +306,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     protected async onReady(): Promise<any> {
-        console.log("SlidingRoomListStore.onReady");
+        logger.info("SlidingRoomListStore.onReady");
         // permanent listeners: never get destroyed. Could be an issue if we want to test this in isolation.
         SlidingSyncManager.instance.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
         RoomViewStore.instance.addListener(this.onRoomViewStoreUpdated.bind(this));
@@ -322,7 +321,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         OrderedDefaultTagIDs.forEach((tagId) => {
             const filter = filterConditions[tagId];
             if (!filter) {
-                console.log("SlidingRoomListStore.onReady unsupported list ", tagId);
+                logger.info("SlidingRoomListStore.onReady unsupported list ", tagId);
                 return; // we do not support this list yet.
             }
             const sort = SortAlgorithm.Recent; // default to recency sort, TODO: read from config
@@ -339,7 +338,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome: boolean) => {
-        console.log("SlidingRoomListStore.onSelectedSpaceUpdated", activeSpace);
+        logger.info("SlidingRoomListStore.onSelectedSpaceUpdated", activeSpace);
         // update the untagged filter
         const tagId = DefaultTagID.Untagged;
         const filters = filterConditions[tagId];

@@ -79,7 +79,6 @@ export const useSlidingSyncRoomSearch = () => {
     }, [updateQuery, updateResult, listIndex]);
 
     return {
-        ready: true,
         loading,
         rooms,
         search,

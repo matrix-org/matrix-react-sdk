@@ -52,6 +52,7 @@ import {
     SlidingSync,
 } from 'matrix-js-sdk/src/sliding-sync';
 import { logger } from "matrix-js-sdk/src/logger";
+import { IDeferred, defer } from 'matrix-js-sdk/src/utils';
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
@@ -85,14 +86,11 @@ export class SlidingSyncManager {
     private client: MatrixClient;
     private listIdToIndex: Record<string, number>;
 
-    private configurePromise: Promise<void>;
-    private configureResolve: Function;
+    private configureDefer: IDeferred<void>;
 
     public constructor() {
         this.listIdToIndex = {};
-        this.configurePromise = new Promise((resolve) => {
-            this.configureResolve = resolve;
-        });
+        this.configureDefer = defer<void>();
     }
 
     public static get instance(): SlidingSyncManager {
@@ -127,7 +125,7 @@ export class SlidingSyncManager {
                 room_types: ["m.space"],
             },
         });
-        this.configureResolve();
+        this.configureDefer.resolve();
         return this.slidingSync;
     }
 
@@ -172,7 +170,7 @@ export class SlidingSyncManager {
         listIndex: number, updateArgs: PartialSlidingSyncRequest,
     ): Promise<MSC3575List> {
         logger.debug("ensureListRegistered:::", listIndex, updateArgs);
-        await this.configurePromise;
+        await this.configureDefer.promise;
         let list = this.slidingSync.getList(listIndex);
         if (!list) {
             list = {
@@ -215,7 +213,7 @@ export class SlidingSyncManager {
     }
 
     public async setRoomVisible(roomId: string, visible: boolean): Promise<string> {
-        await this.configurePromise;
+        await this.configureDefer.promise;
         const subscriptions = this.slidingSync.getRoomSubscriptions();
         if (visible) {
             subscriptions.add(roomId);
