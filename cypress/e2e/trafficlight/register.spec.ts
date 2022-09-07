@@ -14,17 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/* eslint no-constant-condition: [ "error", { "checkLoops": false } ], prefer-template: 1 */
+
 /// <reference types='cypress' />
 
+type JSONValue =
+    | string
+    | number
+    | boolean
+    | { [x: string]: JSONValue }
+    | Array<JSONValue>;
+
+/*
+ * Core loop of the trafficlight client.
+ * We call it recurse() and loop via recursion rather than traditional looping
+ * as cypress works in a native promise like way, tasks are enqueued for later work/matching.
+ *
+ * Each cycle pulls one request from the trafficlight server and acts on it.
+ */
 function recurse() {
     cy.log('Requesting next action...');
-    const pollUrl = Cypress.env('TRAFFICLIGHT_URL') + '/client/' + Cypress.env('TRAFFICLIGHT_UUID') + '/poll';
-    const respondUrl = Cypress.env('TRAFFICLIGHT_URL') + '/client/' + Cypress.env('TRAFFICLIGHT_UUID') + '/respond';
+    const pollUrl = `${Cypress.env('TRAFFICLIGHT_URL') }/client/${ Cypress.env('TRAFFICLIGHT_UUID') }/poll`;
+    const respondUrl = `${Cypress.env('TRAFFICLIGHT_URL') }/client/${ Cypress.env('TRAFFICLIGHT_UUID') }/respond`;
+
+    function sendResponse(responseStatus) {
+        cy.request('POST', respondUrl, { response: responseStatus }).then((response) => {
+            expect(response.status).to.eq(200);
+        });
+    }
     cy.request(pollUrl).then((resp) => {
         expect(resp.status).to.eq(200);
         // promote response out of the callback for future use.
-        const data = resp.body.data;
-        const action = resp.body.action;
+        const data: JSONValue = resp.body.data;
+        const action: string = resp.body.action;
         cy.log('... got ', action, data);
         switch (action) {
             case 'register':
@@ -42,9 +64,7 @@ function recurse() {
                 cy.get('#mx_RegistrationForm_passwordConfirm').type(data['password']);
                 cy.get('.mx_Login_submit').click();
                 cy.get('.mx_UseCaseSelection_skip > .mx_AccessibleButton').click();
-                cy.request('POST', respondUrl, { response: 'registered' }).then((response) => {
-                    expect(response.status).to.eq(200);
-                });
+                sendResponse('registered');
                 break;
             case 'login':
                 cy.visit('/#/login');
@@ -57,15 +77,11 @@ function recurse() {
                 cy.get('#mx_LoginForm_username').type(data['username']);
                 cy.get('#mx_LoginForm_password').type(data['password']);
                 cy.get('.mx_Login_submit').click();
-                cy.request('POST', respondUrl, { response: 'loggedin' }).then((response) => {
-                    expect(response.status).to.eq(200);
-                });
+                sendResponse('loggedin');
                 break;
             case 'start_crosssign':
                 cy.get('.mx_CompleteSecurity_actionRow > .mx_AccessibleButton').click();
-                cy.request('POST', respondUrl, { response: 'started_crosssign' }).then((response) => {
-                    expect(response.status).to.eq(200);
-                });
+                sendResponse('started_crosssign');
                 break;
             case 'accept_crosssign':
                 // Can we please tag some buttons :)
@@ -73,16 +89,12 @@ function recurse() {
                 cy.get('.mx_Toast_buttons > .mx_AccessibleButton_kind_primary').click();
                 // Click to move to emoji verification
                 cy.get('.mx_VerificationPanel_QRPhase_startOption > .mx_AccessibleButton').click();
-                cy.request('POST', respondUrl, { response: 'accepted_crosssign' }).then((response) => {
-                    expect(response.status).to.eq(200);
-                });
+                sendResponse('accepted_crosssign');
                 break;
             case 'verify_crosssign_emoji':
                 cy.get('.mx_VerificationShowSas_buttonRow > .mx_AccessibleButton_kind_primary').click();
                 cy.get('.mx_UserInfo_container > .mx_AccessibleButton').click();
-                cy.request('POST', respondUrl, { response: 'verified_crosssign' }).then((response) => {
-                    expect(response.status).to.eq(200);
-                });
+                sendResponse('verified_crosssign');
                 break;
             case 'idle':
                 cy.wait(5000);
@@ -128,7 +140,6 @@ function recurse() {
 
 describe('traffic light client', () => {
     it('runs a trafficlight client once', () => {
-        cy.log('Beginning recursion');
         recurse();
     });
 });

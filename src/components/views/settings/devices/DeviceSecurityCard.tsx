@@ -20,7 +20,7 @@ import React from 'react';
 import { Icon as VerifiedIcon } from '../../../../../res/img/e2e/verified.svg';
 import { Icon as UnverifiedIcon } from '../../../../../res/img/e2e/warning.svg';
 import { Icon as InactiveIcon } from '../../../../../res/img/element-icons/settings/inactive.svg';
-import { DeviceSecurityVariation } from './filter';
+import { DeviceSecurityVariation } from './types';
 interface Props {
     variation: DeviceSecurityVariation;
     heading: string;
@@ -47,7 +47,9 @@ const DeviceSecurityCard: React.FC<Props> = ({ variation, heading, description, 
         <div className='mx_DeviceSecurityCard_content'>
             <p className='mx_DeviceSecurityCard_heading'>{ heading }</p>
             <p className='mx_DeviceSecurityCard_description'>{ description }</p>
-            { children }
+            { !!children && <div className='mx_DeviceSecurityCard_actions'>
+                { children }
+            </div> }
         </div>
     </div>;
 };

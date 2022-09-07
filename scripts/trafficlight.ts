@@ -13,29 +13,33 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+/* eslint no-constant-condition: [ "error", { "checkLoops": false } ], prefer-template: 1 */
+
 import fetch from 'node-fetch';
 import cypress from 'cypress';
 import * as crypto from 'crypto';
 import * as process from 'process';
-function setupPromise(trafficlightUrl, uuid) {
+function setupPromise(trafficlightUrl: string, uuid: string) {
     console.log('Registering trafficlight client');
 
     const data = JSON.stringify({
         type: 'element-web',
         version: 'UNKNOWN', // at some point we need to know this, but for now it's hard to determine.
     });
-    const target = trafficlightUrl + '/client/' + uuid + '/register';
+    const target = `${trafficlightUrl}/client/${uuid}/register`;
     const promise = fetch(target, { method: 'POST', body: data, headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
-            console.log(response);
             if (response.status != 200) {
-                throw new Error('Unable to register client, got ' + response.status + ' from server');
+                throw new Error(`Unable to register client, got ${ response.status } from server`);
+            } else {
+                console.log(`Registered to trafficlight as ${uuid}`);
             }
         });
     return promise;
 }
 
-function openPromise(trafficlightUrl, uuid) {
+function openPromise(trafficlightUrl: string, uuid: string) {
     return cypress
         .open({
             env: {
@@ -51,12 +55,12 @@ function openPromise(trafficlightUrl, uuid) {
                     specPattern: './cypress/e2e/trafficlight/*.ts',
                     excludeSpecPattern: [],
                 },
-                videosFolder: 'cypress/videos/trafficlight/'+uuid+'/',
+                videosFolder: `cypress/videos/trafficlight/${uuid}/`,
             },
         });
 }
 
-function runPromise(trafficlightUrl, uuid) {
+function runPromise(trafficlightUrl: string, uuid: string) {
     return cypress
         .run({
             spec: './cypress/e2e/trafficlight/*.ts',
@@ -72,20 +76,27 @@ function runPromise(trafficlightUrl, uuid) {
                 e2e: {
                     excludeSpecPattern: [],
                 },
-                videosFolder: 'cypress/videos/trafficlight/'+uuid+'/',
+                videosFolder: `cypress/videos/trafficlight/${uuid}/`,
             },
             quiet: true,
         });
 }
 
-async function runOnce(trafficlightUrl) {
+async function openOnce(trafficlightUrl: string) {
     const uuid = crypto.randomUUID();
     await setupPromise(trafficlightUrl, uuid);
     const cypressOpen = await openPromise(trafficlightUrl, uuid);
     console.log(cypressOpen);
 }
 
-async function runRepeatedly(trafficlightUrl) {
+async function runOnce(trafficlightUrl: string) {
+    const uuid = crypto.randomUUID();
+    await setupPromise(trafficlightUrl, uuid);
+    const cypressRun = await runPromise(trafficlightUrl, uuid);
+    console.log(cypressRun);
+}
+
+async function runRepeatedly(trafficlightUrl: string) {
     while (true) {
         const uuid = crypto.randomUUID();
         // NB: we allow exceptions to propigate to top level and exit.
@@ -95,18 +106,27 @@ async function runRepeatedly(trafficlightUrl) {
     }
 }
 
+<<<<<<< HEAD
 const trafficlightUrl = 'http://127.0.0.1:5000';
+=======
+const trafficlightUrl = process.env.TRAFFICLIGHT_URL || 'http://localhost:5000';
+>>>>>>> origin/michaelk/trafficlight
 
 const args = process.argv.slice(2);
 if (args[0] == 'run') {
     runRepeatedly(trafficlightUrl).then((result) => {
-        console.log('Finished looping forever(?), got ' + result);
+        console.log(`Finished looping forever(?), got ${result}`);
+    });
+} else if (args[0] == 'once') {
+    runOnce(trafficlightUrl).then((result) => {
+        console.log(`Finished one-shot, got ${result}`);
     });
 } else if (args[0] == 'open') {
-    runOnce(trafficlightUrl).then((result) => {
-        console.log('Finished one-shot, got ' + result);
+    openOnce(trafficlightUrl).then((result) => {
+        console.log(`Finished one-shot, got ${result}`);
     });
 } else {
-    console.error('No idea what ' + args[0] + 'means (i understand "run" to run continually, "open" to launch the UI)');
+    console.error(`No idea what ${args[0]} means`);
+    console.error('i understand "run" to run continually, "once" for a single shot, and "open" to launch the UI)');
     process.exit(1);
 }

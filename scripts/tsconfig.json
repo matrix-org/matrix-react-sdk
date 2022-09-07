@@ -15,6 +15,9 @@
             "@types/node"
         ],
         "resolveJsonModule": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
         "esModuleInterop": true,
         "moduleResolution": "node",
         "module": "commonjs"

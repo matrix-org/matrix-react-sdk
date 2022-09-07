@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { DeviceInfo } from 'matrix-js-sdk/src/crypto/deviceinfo';
 import { logger } from 'matrix-js-sdk/src/logger';
@@ -191,5 +191,75 @@ describe('<SessionManagerTab />', () => {
         });
 
         expect(getByTestId('other-sessions-section')).toBeTruthy();
+    });
+
+    it('goes to filtered list from security recommendations', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+        const { getByTestId, container } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        fireEvent.click(getByTestId('unverified-devices-cta'));
+
+        // our session manager waits a tick for rerender
+        await flushPromisesWithFakeTimers();
+
+        // unverified filter is set
+        expect(container.querySelector('.mx_FilteredDeviceList_header')).toMatchSnapshot();
+    });
+
+    describe('device detail expansion', () => {
+        it('renders no devices expanded by default', async () => {
+            mockClient.getDevices.mockResolvedValue({
+                devices: [alicesDevice, alicesOlderMobileDevice, alicesMobileDevice],
+            });
+            const { getByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            const otherSessionsSection = getByTestId('other-sessions-section');
+
+            // no expanded device details
+            expect(otherSessionsSection.getElementsByClassName('mx_DeviceDetails').length).toBeFalsy();
+        });
+
+        it('toggles device expansion on click', async () => {
+            mockClient.getDevices.mockResolvedValue({
+                devices: [alicesDevice, alicesOlderMobileDevice, alicesMobileDevice],
+            });
+            const { getByTestId, queryByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            const tile1 = getByTestId(`device-tile-${alicesOlderMobileDevice.device_id}`);
+            const toggle1 = tile1.querySelector('[aria-label="Toggle device details"]') as Element;
+            fireEvent.click(toggle1);
+
+            // device details are expanded
+            expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
+
+            const tile2 = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
+            const toggle2 = tile2.querySelector('[aria-label="Toggle device details"]') as Element;
+            fireEvent.click(toggle2);
+
+            // both device details are expanded
+            expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
+            expect(getByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeTruthy();
+
+            const tile3 = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
+            const toggle3 = tile3.querySelector('[aria-label="Toggle device details"]') as Element;
+            fireEvent.click(toggle3);
+
+            // alicesMobileDevice was toggled off
+            expect(queryByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeFalsy();
+            // alicesOlderMobileDevice stayed open
+            expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
+        });
     });
 });
