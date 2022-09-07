@@ -157,6 +157,91 @@ describe("Polls", () => {
         });
     });
 
+    it("Polls without votes can be edited from context menu", () => {
+        let bot: MatrixClient;
+        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
+            bot = _bot;
+        });
+
+        let roomId: string;
+        cy.createRoom({}).then(_roomId => {
+            roomId = _roomId;
+            cy.inviteUser(roomId, bot.getUserId());
+            cy.visit('/#/room/' + roomId);
+        });
+
+        cy.openMessageComposerOptions().within(() => {
+            cy.get('[aria-label="Poll"]').click();
+        });
+
+        const pollParams = {
+            title: 'Does the polls feature work?',
+            options: ['Yes', 'No', 'Maybe'],
+        };
+        createPoll(pollParams);
+
+        // Wait for message to send, get its ID and save as @pollId
+        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", pollParams.title)
+            .invoke("attr", "data-scroll-tokens").as("pollId");
+
+        cy.get<string>("@pollId").then(pollId => {
+            // Open context menu
+            getPollTile(pollId).rightclick();
+
+            // Select edit item
+            cy.get('.mx_ContextualMenu').within(() => {
+                cy.get('[aria-label="Edit"]').click();
+            });
+
+            // Expect poll editing dialog
+            cy.get('.mx_PollCreateDialog');
+        });
+    });
+
+    it("Polls with votes cannot be edited from context menu", () => {
+        let bot: MatrixClient;
+        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
+            bot = _bot;
+        });
+
+        let roomId: string;
+        cy.createRoom({}).then(_roomId => {
+            roomId = _roomId;
+            cy.inviteUser(roomId, bot.getUserId());
+            cy.visit('/#/room/' + roomId);
+        });
+
+        cy.openMessageComposerOptions().within(() => {
+            cy.get('[aria-label="Poll"]').click();
+        });
+
+        const pollParams = {
+            title: 'Does the polls feature work?',
+            options: ['Yes', 'No', 'Maybe'],
+        };
+        createPoll(pollParams);
+
+        // Wait for message to send, get its ID and save as @pollId
+        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", pollParams.title)
+            .invoke("attr", "data-scroll-tokens").as("pollId");
+
+        cy.get<string>("@pollId").then(pollId => {
+            // Bot votes 'Maybe' in the poll
+            botVoteForOption(bot, roomId, pollId, pollParams.options[2]);
+
+            // Open context menu
+            getPollTile(pollId).rightclick();
+
+            // Select edit item
+            cy.get('.mx_ContextualMenu').within(() => {
+                cy.get('[aria-label="Edit"]').click();
+            });
+
+            // Expect error dialog
+            cy.get('.mx_ErrorDialog');
+        });
+    });
+
     it("displays polls correctly in thread panel", () => {
         let botBob: MatrixClient;
         let botCharlie: MatrixClient;
