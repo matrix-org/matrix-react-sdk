@@ -3549,5 +3549,9 @@
     "Unknown device type": "Невідомий тип пристрою",
     "Show": "Показати",
     "Video input %(n)s": "Відеовхід %(n)s",
-    "Audio input %(n)s": "Аудіовхід %(n)s"
+    "Audio input %(n)s": "Аудіовхід %(n)s",
+    "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s або %(copyButton)s",
+    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
+    "%(qrCode)s or %(appLinks)s": "%(qrCode)s або %(appLinks)s",
+    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s з %(emojiCompare)s"
 }
