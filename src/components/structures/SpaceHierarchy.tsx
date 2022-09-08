@@ -691,7 +691,7 @@ const SpaceHierarchy = ({
     const { loading, rooms, hierarchy, loadMore, error: hierarchyError } = useRoomHierarchy(space);
 
     const filteredRoomSet = useMemo<Set<IHierarchyRoom>>(() => {
-        if (!rooms?.length) return new Set();
+        if (!rooms?.length || !hierarchy) return new Set();
         const lcQuery = query.toLowerCase().trim();
         if (!lcQuery) return new Set(rooms);
 
@@ -723,7 +723,7 @@ const SpaceHierarchy = ({
 
     const loaderRef = useIntersectionObserver(loadMore);
 
-    if (!loading && hierarchy.noSupport) {
+    if (!loading && hierarchy!.noSupport) {
         return <p>{ _t("Your server does not support showing space hierarchies.") }</p>;
     }
 
@@ -757,7 +757,7 @@ const SpaceHierarchy = ({
     return <RovingTabIndexProvider onKeyDown={onKeyDown} handleHomeEnd handleUpDown>
         { ({ onKeyDownHandler }) => {
             let content: JSX.Element;
-            if (loading && !rooms?.length) {
+            if (!hierarchy || (loading && !rooms?.length)) {
                 content = <Spinner />;
             } else {
                 const hasPermissions = space?.getMyMembership() === "join" &&
