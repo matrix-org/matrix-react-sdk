@@ -3499,7 +3499,7 @@
     "Send custom timeline event": "Sende benutzerdefiniertes Ereignis",
     "Interactively verify by emoji": "Interaktiv per Emoji verifizieren",
     "Manually verify by text": "Manuell per Text verifizieren",
-    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Um dein Konto zu erstellen, öffne den Link in der E-Mail, die wir grade an %(emailAddress)s geschickt haben.",
+    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Um dein Konto zu erstellen, öffne den Link in der E-Mail, die wir gerade an %(emailAddress)s geschickt haben.",
     "Requester": "Anforderer",
     "Send custom room account data event": "Sende benutzerdefiniertes Raumdatenereignis",
     "Send custom account data event": "Sende benutzerdefiniertes Kontodatenereignis",
