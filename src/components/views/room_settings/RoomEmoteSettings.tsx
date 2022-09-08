@@ -145,7 +145,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
             //TODO: Encrypt the shortcode and the image data before uploading
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
-                const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile)//await client.uploadContent(this.state.newEmoteFile);
+                const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile); //await client.uploadContent(this.state.newEmoteFile); FOR UNENCRYPTED
                 emotesMxcs[this.state.newEmoteCode] = newEmote.file;
                 value[this.state.newEmoteCode] = this.state.newEmoteCode;
             }
@@ -226,17 +226,17 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             });
         }
     };
-    private async decryptEmotes(){
-        const decryptede={}
+    private async decryptEmotes() {
+        const decryptede={};
         for (const shortcode in this.state.emotes) {
-            const blob =  await decryptFile(this.state.emotes[shortcode]);
+            const blob = await decryptFile(this.state.emotes[shortcode]);
             decryptede[shortcode] = URL.createObjectURL(blob);
         }
         this.setState({
-            decryptedemotes:decryptede,
+            decryptedemotes: decryptede,
         });
     }
-    public render(): JSX.Element {        
+    public render(): JSX.Element {
         let emoteSettingsButtons;
         if (
             this.state.canAddEmote

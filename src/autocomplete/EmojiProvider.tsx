@@ -32,7 +32,6 @@ import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji, getEmojiFromUnicode } from '../emoji';
 import { TimelineRenderingType } from '../contexts/RoomContext';
 import * as recent from '../emojipicker/recent';
-import { mediaFromMxc } from "../customisations/Media";
 import { decryptFile } from '../utils/DecryptFile';
 
 const LIMIT = 20;
@@ -104,15 +103,15 @@ export default class EmojiProvider extends AutocompleteProvider {
         this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
     }
 
-    private async decryptEmotes(emotes: Object){
-        const decryptede={}
+    private async decryptEmotes(emotes: Object) {
+        const decryptede={};
         for (const shortcode in emotes) {
-            const blob =  await decryptFile(emotes[shortcode]);
+            const blob = await decryptFile(emotes[shortcode]);
             const durl=URL.createObjectURL(blob);
             decryptede[shortcode] = "<img class='mx_Emote' title=':"+shortcode+
                   ":'src='" + durl + "'/>";
         }
-        return decryptede
+        return decryptede;
     }
 
     async getCompletions(
@@ -124,7 +123,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         if (!SettingsStore.getValue("MessageComposerInput.suggestEmoji")) {
             return []; // don't give any suggestions if the user doesn't want them
         }
-        this.emotes=await this.emotesPromise
+        this.emotes=await this.emotesPromise;
         //console.log("emotes",this.emotes)
         const emojisAndEmotes=[...SORTED_EMOJI];
         for (const key in this.emotes) {
