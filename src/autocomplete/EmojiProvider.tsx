@@ -34,6 +34,7 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
 import { filterBoolean } from "../utils/arrays";
 import { mediaFromMxc } from "../customisations/Media";
+import { decryptFile } from '../utils/DecryptFile';
 
 const LIMIT = 20;
 
@@ -81,16 +82,18 @@ export default class EmojiProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<ISortedEmoji>;
     public nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
-    emotes: Dictionary<string>;
+    emotes: Dictionary<any>;
+    emotesPromise: Promise<any>;
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        this.emotes = {};
-        for (const key in rawEmotes) {
-            this.emotes[key] = "<img class='mx_Emote' title=':"+key+
-             ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
-        }
+        this.emotesPromise = this.decryptEmotes(rawEmotes);
+        this.emotes={};
+        // for (const key in rawEmotes) { FOR UNENCRYPTED
+        //     this.emotes[key] = "<img class='mx_Emote' title=':"+key+
+        //      ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
+        // }
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
             funcs: [(o) => o.emoji.shortcodes.map((s) => `:${s}:`)],
@@ -106,7 +109,18 @@ export default class EmojiProvider extends AutocompleteProvider {
         this.recentlyUsed = Array.from(new Set(filterBoolean(recent.get().map(getEmojiFromUnicode))));
     }
 
-    public async getCompletions(
+    private async decryptEmotes(emotes: Object){
+        const decryptede={}
+        for (const shortcode in emotes) {
+            const blob =  await decryptFile(emotes[shortcode]);
+            const durl=URL.createObjectURL(blob);
+            decryptede[shortcode] = "<img class='mx_Emote' title=':"+shortcode+
+                  ":'src='" + durl + "'/>";
+        }
+        return decryptede
+    }
+
+    async getCompletions(
         query: string,
         selection: ISelectionRange,
         force?: boolean,
@@ -115,6 +129,8 @@ export default class EmojiProvider extends AutocompleteProvider {
         if (!SettingsStore.getValue("MessageComposerInput.suggestEmoji")) {
             return []; // don't give any suggestions if the user doesn't want them
         }
+        this.emotes=await this.emotesPromise
+        //console.log("emotes",this.emotes)
         const emojisAndEmotes=[...SORTED_EMOJI];
         for (const key in this.emotes) {
             emojisAndEmotes.push({
