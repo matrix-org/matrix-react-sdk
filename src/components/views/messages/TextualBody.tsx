@@ -56,7 +56,7 @@ interface IState {
 
     // track whether the preview widget is hidden
     widgetHidden: boolean;
-    finalEmotes: Dictionary<Object>;
+    finalEmotes: Dictionary<string>;
 }
 
 export default class TextualBody extends React.Component<IBodyProps, IState> {
