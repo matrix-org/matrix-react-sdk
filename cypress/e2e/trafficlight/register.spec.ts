@@ -99,7 +99,8 @@ function recurse() {
             case 'idle':
                 cy.wait(5000);
                 break;
-            case 'create_room': {
+            case 'create_room':
+                {
                     cy.get('.mx_RoomListHeader_plusButton').click();
                     cy.get('.mx_ContextualMenu').contains('New room').click();
                     cy.get('.mx_CreateRoomDialog_name input').type(data['name']);
@@ -111,13 +112,14 @@ function recurse() {
                     // cy.wait(5000);
 
                     cy.get('.mx_Dialog_primary').click();
-                    //cy.get('.mx_RoomHeader_nametext').should('contain', data['name']);
+                    cy.get('.mx_RoomHeader_nametext').should('contain', data['name']);
                     cy.request('POST', respondUrl, { response: 'room_created' }).then((response) => {
                         expect(response.status).to.eq(200);
                     });
                     break;
                 }
-            case 'send_message': {
+            case 'send_message':
+                {
                     const composer = cy.get('.mx_SendMessageComposer div[contenteditable=true]');
                     composer.type(data['message']);
                     composer.type("{enter}");
