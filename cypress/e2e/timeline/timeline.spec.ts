@@ -148,6 +148,8 @@ describe("Timeline", () => {
 
     describe("message displaying", () => {
         beforeEach(() => {
+            // override clock time so that percy snapshots are consistent
+            cy.clock(Date.UTC(1337, 10, 20, 12, 34, 56), ["Date"]);
             cy.injectAxe();
         });
 
