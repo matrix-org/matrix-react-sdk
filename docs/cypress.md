@@ -168,6 +168,13 @@ already familiar with Cypress.
 This is a small selection - the Cypress best practices guide, linked above, has more good advice, and we
 should generally try to adhere to them.
 
+### Trafficlight
+
+The [trafficlight test code](../cypress/e2e/trafficlight/) in this repository diverges slightly from these guidelines:
+    - it implements actions requested by the [trafficlight server](https://github.com/matrix-org/trafficlight/) such as 'login', 'create_room', ... without having an overview of the full test that is being run. The test is written in python and runs within the trafficlight server.
+    - therefore it can't use the programmatic shortcuts provides in the cypress object, otherwise trafficlight wouldn't be testing the UI at all.
+    - each trafficlight action also depends on some state, e.g. the create_room action assumes you're logged in, the 'send_message' action assumes you are in a room, etc...
+
 ## Percy Visual Testing
 We also support visual testing via Percy, this extracts the DOM from Cypress and renders it using custom renderers
 for Safari, Firefox, Chrome & Edge, allowing us to spot visual regressions before they become release regressions.
