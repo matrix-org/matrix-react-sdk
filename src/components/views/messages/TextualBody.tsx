@@ -49,7 +49,7 @@ import AccessibleButton from '../elements/AccessibleButton';
 import { options as linkifyOpts } from "../../../linkify-matrix";
 import { getParentEventId } from '../../../utils/Reply';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { mediaFromMxc } from "../../../customisations/Media";
+import { decryptFile } from '../../../utils/DecryptFile';
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
 interface IState {
@@ -58,6 +58,7 @@ interface IState {
 
     // track whether the preview widget is hidden
     widgetHidden: boolean;
+    finalEmotes: Dictionary<Object>;
 }
 
 export default class TextualBody extends React.Component<IBodyProps, IState> {
@@ -76,6 +77,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.state = {
             links: [],
             widgetHidden: false,
+            finalEmotes: {},
         };
     }
 
@@ -86,6 +88,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
 
     private applyFormatting(): void {
+        this.decryptEmotes();
         const showLineNumbers = SettingsStore.getValue("showCodeLineNumbers");
         this.activateSpoilers([this.contentRef.current]);
 
@@ -560,7 +563,24 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             <span className="mx_EventTile_pendingModeration">{ `(${text})` }</span>
         );
     }
-
+    private async decryptEmotes(){
+        const client = MatrixClientPeg.get();
+        const room = client.getRoom(this.props.mxEvent.getRoomId());
+        //TODO: Do not encrypt/decrypt if room is not encrypted
+        const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
+        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+        const decryptede={}
+        for (const shortcode in rawEmotes) {
+            const blob =  await decryptFile(rawEmotes[shortcode]);
+            const durl=URL.createObjectURL(blob);
+            decryptede[":" + shortcode + ":"] = "<img class='mx_Emote' title=':"+shortcode+
+                  ":' src='" + durl + "'/>";
+        }
+        this.setState({
+            finalEmotes:decryptede
+        });
+        this.forceUpdate();
+    }
     render() {
         if (this.props.editState) {
             return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
@@ -572,16 +592,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         let body: ReactNode;
-        const client = MatrixClientPeg.get();
-        const room = client.getRoom(mxEvent.getRoomId());
-        //TODO: Decrypt emotes if encryption is added
-        const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
-        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        const finalEmotes = {};
-        for (const key in rawEmotes) {
-            finalEmotes[":" + key + ":"] = "<img class='mx_Emote' title=':"+key+
-            ":'src=" + mediaFromMxc(rawEmotes[key]).srcHttp + "/>";
-        }
         if (SettingsStore.isEnabled("feature_extensible_events")) {
             const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
             if (extev?.isEquivalentTo(M_MESSAGE)) {
@@ -599,7 +609,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                     stripReplyFallback: stripReply,
                     ref: this.contentRef,
                     returnString: false,
-                    emotes: finalEmotes,
+                    emotes: this.state.finalEmotes,
                 }));
             }
         }

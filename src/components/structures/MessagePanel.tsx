@@ -195,7 +195,6 @@ interface IState {
     ghostReadMarkers: string[];
     showTypingNotifications: boolean;
     hideSender: boolean;
-    emotes: Dictionary<string>;
 }
 
 interface IReadReceiptForUser {
@@ -273,7 +272,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             ghostReadMarkers: [],
             showTypingNotifications: SettingsStore.getValue("showTypingNotifications"),
             hideSender: this.shouldHideSender(),
-            emotes: {},
         };
 
         // Cache these settings on mount since Settings is expensive to query,
@@ -289,7 +287,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     componentDidMount() {
         this.calculateRoomMembersCount();
         this.props.room?.currentState.on(RoomStateEvent.Update, this.calculateRoomMembersCount);
-        //this.props.room?.currentState.on(RoomStateEvent.Update, this.getEmotes);
         this.isMounted = true;
     }
 

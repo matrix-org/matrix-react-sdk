@@ -18,9 +18,10 @@ import React, { createRef } from 'react';
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { mediaFromMxc } from "../../../customisations/Media";
 import AccessibleButton from "../elements/AccessibleButton";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import { uploadFile } from "../../../ContentMessages";
+import { decryptFile } from "../../../utils/DecryptFile";
 
 interface IProps {
     roomId: string;
@@ -28,6 +29,7 @@ interface IProps {
 
 interface IState {
     emotes: Dictionary<string>;
+    decryptedemotes: Dictionary<string>;
     EmoteFieldsTouched: Record<string, string>;
     newEmoteFileAdded: boolean;
     newEmoteCodeAdded: boolean;
@@ -50,7 +52,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(props.roomId);
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
-        //TODO: Decrypt the shortcodes and emotes if they are encrypted
+        //TODO: Do not encrypt/decrypt if room is not encrypted
         const emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
         const emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const value = {};
@@ -60,6 +62,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
 
         this.state = {
             emotes: emotes,
+            decryptedemotes: {},
             EmoteFieldsTouched: {},
             newEmoteFileAdded: false,
             newEmoteCodeAdded: false,
@@ -70,6 +73,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             canAddEmote: room.currentState.maySendStateEvent('m.room.emotes', client.getUserId()),
             value: value,
         };
+        this.decryptEmotes();
     }
 
     private uploadEmoteClick = (): void => {
@@ -141,8 +145,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
             //TODO: Encrypt the shortcode and the image data before uploading
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
-                const newEmote = await client.uploadContent(this.state.newEmoteFile);
-                emotesMxcs[this.state.newEmoteCode] = newEmote;
+                const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile)//await client.uploadContent(this.state.newEmoteFile);
+                emotesMxcs[this.state.newEmoteCode] = newEmote.file;
                 value[this.state.newEmoteCode] = this.state.newEmoteCode;
             }
             if (this.state.emotes) {
@@ -172,6 +176,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newState.deletedItems = {};
         }
         this.setState(newState as IState);
+        this.decryptEmotes();
     };
 
     private onEmoteChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -221,8 +226,17 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             });
         }
     };
-
-    public render(): JSX.Element {
+    private async decryptEmotes(){
+        const decryptede={}
+        for (const shortcode in this.state.emotes) {
+            const blob =  await decryptFile(this.state.emotes[shortcode]);
+            decryptede[shortcode] = URL.createObjectURL(blob);
+        }
+        this.setState({
+            decryptedemotes:decryptede,
+        });
+    }
+    public render(): JSX.Element {        
         let emoteSettingsButtons;
         if (
             this.state.canAddEmote
@@ -262,7 +276,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         />
                         <img className="mx_EmoteSettings_uploadedEmoteImage"
                             src={
-                                mediaFromMxc(this.state.emotes[emotecode]).srcHttp
+                                this.state.decryptedemotes[emotecode]
                             } />
                         <div className="mx_EmoteSettings_uploadButton">
                             <AccessibleButton
