@@ -22,13 +22,14 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import { uploadFile } from "../../../ContentMessages";
 import { decryptFile } from "../../../utils/DecryptFile";
+import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
 
 interface IProps {
     roomId: string;
 }
 
 interface IState {
-    emotes: Dictionary<string>;
+    emotes: Dictionary<IEncryptedFile>;
     decryptedemotes: Dictionary<string>;
     EmoteFieldsTouched: Record<string, string>;
     newEmoteFileAdded: boolean;
@@ -37,7 +38,7 @@ interface IState {
     newEmoteFile: File;
     canAddEmote: boolean;
     deleted: boolean;
-    deletedItems: Dictionary<string>;
+    deletedItems: Dictionary<IEncryptedFile>;
     value: Dictionary<string>;
 }
 
