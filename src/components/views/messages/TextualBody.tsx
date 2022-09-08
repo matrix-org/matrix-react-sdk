@@ -566,21 +566,21 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         return <span className="mx_EventTile_pendingModeration">{`(${text})`}</span>;
     }
-    private async decryptEmotes(){
+    private async decryptEmotes() {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.mxEvent.getRoomId());
         //TODO: Do not encrypt/decrypt if room is not encrypted
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        const decryptede={}
+        const decryptede={};
         for (const shortcode in rawEmotes) {
-            const blob =  await decryptFile(rawEmotes[shortcode]);
+            const blob = await decryptFile(rawEmotes[shortcode]);
             const durl=URL.createObjectURL(blob);
             decryptede[":" + shortcode + ":"] = "<img class='mx_Emote' title=':"+shortcode+
                   ":' src='" + durl + "'/>";
         }
         this.setState({
-            finalEmotes:decryptede
+            finalEmotes: decryptede,
         });
         this.forceUpdate();
     }
