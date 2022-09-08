@@ -328,13 +328,8 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({
 const SpacePanel = () => {
     const [isPanelCollapsed, setPanelCollapsed] = useState(() => {
         const defaultValue = true;
-
-        try {
-            const item = window.localStorage.getItem(KEY_PANEL_IS_COLLAPSED);
-            return item ? JSON.parse(item) : defaultValue;
-        } catch (error) {
-            return defaultValue;
-        }
+        const item = window.localStorage.getItem(KEY_PANEL_IS_COLLAPSED);
+        return item ? JSON.parse(item) : defaultValue;
     });
 
     const ref = useRef<HTMLDivElement>();
