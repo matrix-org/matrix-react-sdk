@@ -729,7 +729,7 @@ describe("ElementCall", () => {
             await call.clean();
             expectDevices([]);
         });
-        
+
         it("no-ops if there are no state events", async () => {
             await call.clean();
             expect(room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)).toBe(null);
