@@ -67,6 +67,17 @@ export interface IOpts {
     joinRule?: JoinRule;
 }
 
+const DEFAULT_EVENT_POWER_LEVELS = {
+    [EventType.RoomName]: 50,
+    [EventType.RoomAvatar]: 50,
+    [EventType.RoomPowerLevels]: 100,
+    [EventType.RoomHistoryVisibility]: 100,
+    [EventType.RoomCanonicalAlias]: 50,
+    [EventType.RoomTombstone]: 100,
+    [EventType.RoomServerAcl]: 100,
+    [EventType.RoomEncryption]: 100,
+};
+
 /**
  * Create a new room, and switch to it.
  *
@@ -131,19 +142,11 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         if (opts.roomType === RoomType.ElementVideo) {
             createOpts.power_level_content_override = {
                 events: {
+                    ...DEFAULT_EVENT_POWER_LEVELS,
                     // Allow all users to send call membership updates
                     [JitsiCall.MEMBER_EVENT_TYPE]: 0,
                     // Make widgets immutable, even to admins
                     "im.vector.modular.widgets": 200,
-                    // Annoyingly, we have to reiterate all the defaults here
-                    [EventType.RoomName]: 50,
-                    [EventType.RoomAvatar]: 50,
-                    [EventType.RoomPowerLevels]: 100,
-                    [EventType.RoomHistoryVisibility]: 100,
-                    [EventType.RoomCanonicalAlias]: 50,
-                    [EventType.RoomTombstone]: 100,
-                    [EventType.RoomServerAcl]: 100,
-                    [EventType.RoomEncryption]: 100,
                 },
                 users: {
                     // Temporarily give ourselves the power to set up a widget
@@ -153,19 +156,11 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         } else if (opts.roomType === RoomType.UnstableCall) {
             createOpts.power_level_content_override = {
                 events: {
+                    ...DEFAULT_EVENT_POWER_LEVELS,
                     // Allow all users to send call membership updates
                     "org.matrix.msc3401.call.member": 0,
                     // Make calls immutable, even to admins
                     "org.matrix.msc3401.call": 200,
-                    // Annoyingly, we have to reiterate all the defaults here
-                    [EventType.RoomName]: 50,
-                    [EventType.RoomAvatar]: 50,
-                    [EventType.RoomPowerLevels]: 100,
-                    [EventType.RoomHistoryVisibility]: 100,
-                    [EventType.RoomCanonicalAlias]: 50,
-                    [EventType.RoomTombstone]: 100,
-                    [EventType.RoomServerAcl]: 100,
-                    [EventType.RoomEncryption]: 100,
                 },
                 users: {
                     // Temporarily give ourselves the power to set up a call
