@@ -25,10 +25,10 @@ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Widget } from "matrix-widget-api";
 
 import type { Mocked } from "jest-mock";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { ClientWidgetApi } from "matrix-widget-api";
-import type { Call } from "../../src/models/Call";
+import type { Call, JitsiCallMemberContent, ElementCallMemberContent } from "../../src/models/Call";
 import { stubClient, mkEvent, mkRoomMember, setupAsyncStoreWithClient, mockPlatformPeg } from "../test-utils";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../src/MediaDeviceHandler";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
@@ -379,6 +379,96 @@ describe("JitsiCall", () => {
         ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Dock);
         expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.TileLayout, {});
     });
+
+    describe("clean", () => {
+        const aliceWeb: IMyDevice = {
+            device_id: "aliceweb",
+            last_seen_ts: 0,
+        };
+        const aliceDesktop: IMyDevice = {
+            device_id: "alicedesktop",
+            last_seen_ts: 0,
+        };
+        const aliceDesktopOffline: IMyDevice = {
+            device_id: "alicedesktopoffline",
+            last_seen_ts: 1000 * 60 * 60 * -2, // 2 hours ago
+        };
+        const aliceDesktopNeverOnline: IMyDevice = {
+            device_id: "alicedesktopneveronline",
+        };
+
+        const mkContent = (devices: IMyDevice[]): JitsiCallMemberContent => ({
+            expires_ts: 1000 * 60 * 10,
+            devices: devices.map(d => d.device_id),
+        });
+        const expectDevices = (devices: IMyDevice[]) => expect(
+            room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+        ).toEqual({
+            expires_ts: expect.any(Number),
+            devices: devices.map(d => d.device_id),
+        });
+
+        beforeEach(() => {
+            client.getDeviceId.mockReturnValue(aliceWeb.device_id);
+            client.getDevices.mockResolvedValue({
+                devices: [
+                    aliceWeb,
+                    aliceDesktop,
+                    aliceDesktopOffline,
+                    aliceDesktopNeverOnline,
+                ],
+            });
+        });
+
+        it("doesn't clean up valid devices", async () => {
+            await call.connect();
+            await client.sendStateEvent(
+                room.roomId,
+                JitsiCall.MEMBER_EVENT_TYPE,
+                mkContent([aliceWeb, aliceDesktop]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([aliceWeb, aliceDesktop]);
+        });
+
+        it("cleans up our own device if we're disconnected", async () => {
+            await client.sendStateEvent(
+                room.roomId,
+                JitsiCall.MEMBER_EVENT_TYPE,
+                mkContent([aliceWeb]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([]);
+        });
+
+        it("cleans up devices that have been offline for too long", async () => {
+            await client.sendStateEvent(
+                room.roomId,
+                JitsiCall.MEMBER_EVENT_TYPE,
+                mkContent([aliceDesktopOffline]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([]);
+        });
+
+        it("cleans up devices that have never been online", async () => {
+            await client.sendStateEvent(
+                room.roomId,
+                JitsiCall.MEMBER_EVENT_TYPE,
+                mkContent([aliceDesktopNeverOnline]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([]);
+        });
+    });
 });
 
 describe("ElementCall", () => {
@@ -394,6 +484,9 @@ describe("ElementCall", () => {
     let videoMutedSpy: jest.SpyInstance<boolean, []>;
 
     beforeEach(async () => {
+        jest.useFakeTimers();
+        jest.setSystemTime(0);
+
         ({ client, room, alice, bob, carol, call, widget, messaging, audioMutedSpy, videoMutedSpy } =
             await setUpClientRoomAndStores(RoomType.UnstableCall, async room => {
                 await ElementCall.create(room);
@@ -535,5 +628,101 @@ describe("ElementCall", () => {
         await call.connect();
         await call.disconnect();
         expect(events).toEqual([new Set([alice]), new Set()]);
+    });
+
+    describe("clean", () => {
+        const aliceWeb: IMyDevice = {
+            device_id: "aliceweb",
+            last_seen_ts: 0,
+        };
+        const aliceDesktop: IMyDevice = {
+            device_id: "alicedesktop",
+            last_seen_ts: 0,
+        };
+        const aliceDesktopOffline: IMyDevice = {
+            device_id: "alicedesktopoffline",
+            last_seen_ts: 1000 * 60 * 60 * -2, // 2 hours ago
+        };
+        const aliceDesktopNeverOnline: IMyDevice = {
+            device_id: "alicedesktopneveronline",
+        };
+
+        const mkContent = (devices: IMyDevice[]): ElementCallMemberContent => ({
+            "m.expires_ts": 1000 * 60 * 10,
+            "m.calls": [{
+                "m.call_id": call.groupCall.getStateKey()!,
+                "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
+            }],
+        });
+        const expectDevices = (devices: IMyDevice[]) => expect(
+            room.currentState.getStateEvents(ElementCall.MEMBER_EVENT_TYPE.name, alice.userId).getContent(),
+        ).toEqual({
+            "m.expires_ts": expect.any(Number),
+            "m.calls": [{
+                "m.call_id": call.groupCall.getStateKey()!,
+                "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
+            }],
+        });
+
+        beforeEach(() => {
+            client.getDeviceId.mockReturnValue(aliceWeb.device_id);
+            client.getDevices.mockResolvedValue({
+                devices: [
+                    aliceWeb,
+                    aliceDesktop,
+                    aliceDesktopOffline,
+                    aliceDesktopNeverOnline,
+                ],
+            });
+        });
+
+        it("doesn't clean up valid devices", async () => {
+            await call.connect();
+            await client.sendStateEvent(
+                room.roomId,
+                ElementCall.MEMBER_EVENT_TYPE.name,
+                mkContent([aliceWeb, aliceDesktop]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([aliceWeb, aliceDesktop]);
+        });
+
+        it("cleans up our own device if we're disconnected", async () => {
+            await client.sendStateEvent(
+                room.roomId,
+                ElementCall.MEMBER_EVENT_TYPE.name,
+                mkContent([aliceWeb]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([]);
+        });
+
+        it("cleans up devices that have been offline for too long", async () => {
+            await client.sendStateEvent(
+                room.roomId,
+                ElementCall.MEMBER_EVENT_TYPE.name,
+                mkContent([aliceDesktopOffline]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([]);
+        });
+
+        it("cleans up devices that have never been online", async () => {
+            await client.sendStateEvent(
+                room.roomId,
+                ElementCall.MEMBER_EVENT_TYPE.name,
+                mkContent([aliceDesktopNeverOnline]),
+                alice.userId,
+            );
+
+            await call.clean();
+            expectDevices([]);
+        });
     });
 });

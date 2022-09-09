@@ -251,7 +251,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     }
 }
 
-interface JitsiCallMemberContent {
+export interface JitsiCallMemberContent {
     // Connected device IDs
     devices: string[];
     // Time at which this state event should be considered stale
@@ -376,7 +376,7 @@ export class JitsiCall extends Call {
         await this.updateDevices(devices => {
             const newDevices = devices.filter(d => {
                 const device = deviceMap.get(d);
-                return device?.last_seen_ts
+                return device?.last_seen_ts !== undefined
                     && !(d === this.client.getDeviceId() && !this.connected)
                     && (now - device.last_seen_ts) < JitsiCall.STUCK_DEVICE_TIMEOUT_MS;
             });
@@ -553,7 +553,7 @@ export class JitsiCall extends Call {
     };
 }
 
-interface ElementCallMemberContent {
+export interface ElementCallMemberContent {
     "m.expires_ts": number;
     "m.calls": {
         "m.call_id": string;
@@ -729,7 +729,7 @@ export class ElementCall extends Call {
         await this.updateDevices(devices => {
             const newDevices = devices.filter(d => {
                 const device = deviceMap.get(d);
-                return device?.last_seen_ts
+                return device?.last_seen_ts !== undefined
                     && !(d === this.client.getDeviceId() && !this.connected)
                     && (now - device.last_seen_ts) < ElementCall.STUCK_DEVICE_TIMEOUT_MS;
             });
