@@ -30,6 +30,7 @@ export const DEFAULTS: IConfigOptions = {
     jitsi: {
         preferred_domain: "meet.element.io",
     },
+    element_call_url: "https://call.element.io",
 
     // @ts-ignore - we deliberately use the camelCase version here so we trigger
     // the fallback behaviour. If we used the snake_case version then we'd break
