@@ -312,7 +312,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         const e2eIcon = this.props.e2eStatus ? <E2EIcon status={this.props.e2eStatus} /> : undefined;
 
-        const isVideoRoom = SettingsStore.getValue("feature_video_rooms") && this.props.room.isElementVideoRoom();
+        const isVideoRoom = SettingsStore.getValue("feature_video_rooms") && (
+            this.props.room.isElementVideoRoom() || (
+                SettingsStore.getValue("feature_element_call_video_rooms") && this.props.room.isCallRoom()
+            )
+        );
         const viewLabs = () => defaultDispatcher.dispatch({
             action: Action.ViewUserSettings,
             initialTabId: UserTab.Labs,

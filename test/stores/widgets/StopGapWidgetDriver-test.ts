@@ -40,6 +40,7 @@ describe("StopGapWidgetDriver", () => {
                 url: "https://example.org",
             }),
             WidgetKind.Room,
+            false,
         );
     });
 

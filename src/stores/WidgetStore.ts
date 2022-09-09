@@ -34,7 +34,7 @@ interface IState {}
 
 export interface IApp extends IWidget {
     roomId: string;
-    eventId: string;
+    eventId?: string; // not present on virtual widgets
     // eslint-disable-next-line camelcase
     avatar_url?: string; // MSC2765 https://github.com/matrix-org/matrix-doc/pull/2765
 }

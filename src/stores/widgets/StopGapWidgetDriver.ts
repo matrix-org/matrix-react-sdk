@@ -38,6 +38,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
+import SdkConfig from "../../SdkConfig";
 import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import Modal from "../../Modal";
@@ -78,6 +79,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         allowedCapabilities: Capability[],
         private forWidget: Widget,
         private forWidgetKind: WidgetKind,
+        virtual: boolean,
         private inRoomId?: string,
     ) {
         super();
@@ -100,6 +102,50 @@ export class StopGapWidgetDriver extends WidgetDriver {
             // Auto-approve the legacy visibility capability. We send it regardless of capability.
             // Widgets don't technically need to request this capability, but Scalar still does.
             this.allowedCapabilities.add("visibility");
+        } else if (virtual && new URL(SdkConfig.get("element_call_url")).origin === this.forWidget.origin) {
+            // This is a trusted Element Call widget that we control
+            this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);
+            this.allowedCapabilities.add(MatrixCapabilities.MSC3846TurnServers);
+
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomMember).raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Send, "org.matrix.msc3401.call").raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Receive, "org.matrix.msc3401.call").raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(
+                    EventDirection.Send, "org.matrix.msc3401.call.member", MatrixClientPeg.get().getUserId()!,
+                ).raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Receive, "org.matrix.msc3401.call.member").raw,
+            );
+
+            const sendRecvToDevice = [
+                EventType.CallInvite,
+                EventType.CallCandidates,
+                EventType.CallAnswer,
+                EventType.CallHangup,
+                EventType.CallReject,
+                EventType.CallSelectAnswer,
+                EventType.CallNegotiate,
+                EventType.CallSDPStreamMetadataChanged,
+                EventType.CallSDPStreamMetadataChangedPrefix,
+                EventType.CallReplaces,
+                "org.matrix.call_duplicate_session",
+            ];
+            for (const eventType of sendRecvToDevice) {
+                this.allowedCapabilities.add(
+                    WidgetEventCapability.forToDeviceEvent(EventDirection.Send, eventType).raw,
+                );
+                this.allowedCapabilities.add(
+                    WidgetEventCapability.forToDeviceEvent(EventDirection.Receive, eventType).raw,
+                );
+            }
         }
     }
 

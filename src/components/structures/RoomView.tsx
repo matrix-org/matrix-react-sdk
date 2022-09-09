@@ -514,7 +514,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private getMainSplitContentType = (room: Room) => {
-        if (SettingsStore.getValue("feature_video_rooms") && room.isElementVideoRoom()) {
+        if (
+            SettingsStore.getValue("feature_video_rooms") && (
+                room.isElementVideoRoom()
+                || (SettingsStore.getValue("feature_element_call_video_rooms") && room.isCallRoom())
+            )
+        ) {
             return MainSplitContentType.Video;
         }
         if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
@@ -2014,8 +2019,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const myMembership = this.state.room.getMyMembership();
         if (
-            this.state.room.isElementVideoRoom() &&
-            !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
+            (
+                this.state.room.isElementVideoRoom()
+                || (
+                    SettingsStore.getValue("feature_element_call_video_rooms")
+                    && this.state.room.isCallRoom()
+                )
+            )
+            && !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
         ) {
             return <ErrorBoundary>
                 <div className="mx_MainSplit">
