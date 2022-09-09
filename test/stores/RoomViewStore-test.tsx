@@ -89,7 +89,6 @@ describe('RoomViewStore', function() {
     });
 
     describe('Sliding Sync', function() {
-
         beforeEach(() => {
             jest.spyOn(SettingsStore, 'getValue').mockImplementation((settingName, roomId, value) => {
                 return settingName === "feature_sliding_sync"; // this is enabled, everything else is disabled.
@@ -98,7 +97,9 @@ describe('RoomViewStore', function() {
         });
 
         it("subscribes to the room", async () => {
-            const setRoomVisible = jest.spyOn(SlidingSyncManager.instance, "setRoomVisible").mockReturnValue(Promise.resolve(""));
+            const setRoomVisible = jest.spyOn(SlidingSyncManager.instance, "setRoomVisible").mockReturnValue(
+                Promise.resolve(""),
+            );
             const subscribedRoomId = "!sub1:localhost";
             dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId });
             await flushPromises();
@@ -109,7 +110,9 @@ describe('RoomViewStore', function() {
 
         // Regression test for an in-the-wild bug where rooms would rapidly switch forever in sliding sync mode
         it("doesn't get stuck in a loop if you view rooms quickly", async () => {
-            const setRoomVisible = jest.spyOn(SlidingSyncManager.instance, "setRoomVisible").mockReturnValue(Promise.resolve(""));
+            const setRoomVisible = jest.spyOn(SlidingSyncManager.instance, "setRoomVisible").mockReturnValue(
+                Promise.resolve(""),
+            );
             const subscribedRoomId = "!sub2:localhost";
             const subscribedRoomId2 = "!sub3:localhost";
             dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId });
@@ -125,6 +128,5 @@ describe('RoomViewStore', function() {
             await flushPromises();
             expect(setRoomVisible).toHaveBeenCalledTimes(4);
         });
-
     });
 });
