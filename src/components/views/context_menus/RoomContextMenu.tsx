@@ -112,7 +112,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     );
 
     let inviteOption: JSX.Element;
-    if (room.canInvite(cli.getUserId()) && !isDm) {
+    if (room.canInvite(cli.getUserId()!) && !isDm) {
         const onInviteClick = (ev: ButtonEvent) => {
             ev.preventDefault();
             ev.stopPropagation();

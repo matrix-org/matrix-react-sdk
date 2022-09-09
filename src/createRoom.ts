@@ -150,7 +150,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 },
                 users: {
                     // Temporarily give ourselves the power to set up a widget
-                    [client.getUserId()]: 200,
+                    [client.getUserId()!]: 200,
                 },
             };
         } else if (opts.roomType === RoomType.UnstableCall) {
@@ -164,7 +164,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 },
                 users: {
                     // Temporarily give ourselves the power to set up a call
-                    [client.getUserId()]: 200,
+                    [client.getUserId()!]: 200,
                 },
             };
         }

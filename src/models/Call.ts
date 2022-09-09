@@ -577,24 +577,24 @@ export class ElementCall extends Call {
 
     private constructor(public readonly groupCall: MatrixEvent, private readonly client: MatrixClient) {
         // Splice together the Element Call URL for this call
-        const url = new URL(SdkConfig.get("element_call_url"));
+        const url = new URL(SdkConfig.get("element_call_url")!);
         url.pathname = "/room";
         const params = new URLSearchParams({
             embed: "",
             preload: "",
             hideHeader: "",
-            userId: client.getUserId(),
+            userId: client.getUserId()!,
             deviceId: client.getDeviceId(),
-            roomId: groupCall.getRoomId(),
+            roomId: groupCall.getRoomId()!,
         });
         url.hash = `#?${params.toString()}`;
 
         // To use Element Call without touching room state, we create a virtual
         // widget (one that doesn't have a corresponding state event)
         super({
-            roomId: groupCall.getRoomId(),
+            roomId: groupCall.getRoomId()!,
             id: randomString(24), // So that it's globally unique
-            creatorUserId: client.getUserId(),
+            creatorUserId: client.getUserId()!,
             name: "Element Call",
             type: MatrixWidgetType.Custom,
             url: url.toString(),
@@ -696,9 +696,9 @@ export class ElementCall extends Call {
         })();
         const content = event?.getContent<ElementCallMemberContent>();
         const expiresAt = typeof content?.["m.expires_ts"] === "number" ? content["m.expires_ts"] : -Infinity;
-        const calls = expiresAt > Date.now() && Array.isArray(content?.["m.calls"]) ? content["m.calls"] : [];
+        const calls = expiresAt > Date.now() && Array.isArray(content?.["m.calls"]) ? content!["m.calls"] : [];
         const call = calls.find(call => call["m.call_id"] === this.groupCall.getStateKey());
-        const devices = Array.isArray(call?.["m.devices"]) ? call["m.devices"] : [];
+        const devices = Array.isArray(call?.["m.devices"]) ? call!["m.devices"] : [];
         const newDevices = fn(devices.map(d => d["m.device_id"]));
 
         if (newDevices) {
@@ -706,7 +706,7 @@ export class ElementCall extends Call {
                 "m.expires_ts": Date.now() + ElementCall.STUCK_DEVICE_TIMEOUT_MS,
                 "m.calls": [
                     {
-                        "m.call_id": this.groupCall.getStateKey(),
+                        "m.call_id": this.groupCall.getStateKey()!,
                         "m.devices": newDevices.map(d => ({ "m.device_id": d })),
                     },
                     ...calls.filter(c => c["m.call_id"] !== this.groupCall.getStateKey()),

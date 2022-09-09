@@ -49,7 +49,7 @@ interface IProps extends IContextMenuProps {
 
 const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) => {
     const cli = useContext(MatrixClientContext);
-    const userId = cli.getUserId();
+    const userId = cli.getUserId()!;
 
     let inviteOption: JSX.Element | null = null;
     if (space.getJoinRule() === "public" || space.canInvite(userId)) {
