@@ -776,6 +776,10 @@ export class ElementCall extends Call {
     public destroy() {
         this.room.off(RoomStateEvent.Update, this.onRoomState);
         this.off(CallEvent.ConnectionState, this.onConnectionState);
+        if (this.participantsExpirationTimer !== null) {
+            clearTimeout(this.participantsExpirationTimer);
+            this.participantsExpirationTimer = null;
+        }
 
         super.destroy();
     }
