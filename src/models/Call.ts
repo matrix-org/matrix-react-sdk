@@ -88,6 +88,12 @@ interface CallEventHandlerMap {
  */
 export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandlerMap> {
     protected readonly widgetUid = WidgetUtils.getWidgetUid(this.widget);
+    protected readonly room = this.client.getRoom(this.roomId)!;
+
+    /**
+     * The time after which device member state should be considered expired.
+     */
+    public abstract readonly STUCK_DEVICE_TIMEOUT_MS: number;
 
     private _messaging: ClientWidgetApi | null = null;
     /**
@@ -132,6 +138,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
          * The widget used to access this call.
          */
         public readonly widget: IApp,
+        protected readonly client: MatrixClient,
     ) {
         super();
     }
@@ -146,10 +153,67 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     }
 
     /**
+     * Gets the connected devices associated with the given user in room state.
+     * @param userId The user's ID.
+     * @returns The IDs of the user's connected devices.
+     */
+    protected abstract getDevices(userId: string): string[];
+
+    /**
+     * Sets the connected devices associated with ourselves in room state.
+     * @param devices The devices with which we're connected.
+     */
+    protected abstract setDevices(devices: string[]): Promise<void>;
+
+    /**
+     * Updates our member state with the devices returned by the given function.
+     * @param fn A function from the current devices to the new devices. If it
+     *     returns null, the update is skipped.
+     */
+    protected async updateDevices(fn: (devices: string[]) => (string[] | null)): Promise<void> {
+        if (this.room.getMyMembership() !== "join") return;
+
+        const devices = fn(this.getDevices(this.client.getUserId()!));
+        if (devices) {
+            await this.setDevices(devices);
+        }
+    }
+
+    /**
      * Performs a routine check of the call's associated room state, cleaning up
      * any data left over from an unclean disconnection.
      */
-    public abstract clean(): Promise<void>;
+    public async clean(): Promise<void> {
+        const now = Date.now();
+        const { devices: myDevices } = await this.client.getDevices();
+        const deviceMap = new Map<string, IMyDevice>(myDevices.map(d => [d.device_id, d]));
+
+        // Clean up our member state by filtering out logged out devices,
+        // inactive devices, and our own device (if we're disconnected)
+        await this.updateDevices(devices => {
+            const newDevices = devices.filter(d => {
+                const device = deviceMap.get(d);
+                return device?.last_seen_ts !== undefined
+                    && !(d === this.client.getDeviceId() && !this.connected)
+                    && (now - device.last_seen_ts) < this.STUCK_DEVICE_TIMEOUT_MS;
+            });
+
+            // Skip the update if the devices are unchanged
+            return newDevices.length === devices.length ? null : newDevices;
+        });
+    }
+
+    protected async addOurDevice(): Promise<void> {
+        await this.updateDevices(devices => Array.from(new Set(devices).add(this.client.getDeviceId())));
+    }
+
+    protected async removeOurDevice(): Promise<void> {
+        await this.updateDevices(devices => {
+            const devicesSet = new Set(devices);
+            devicesSet.delete(this.client.getDeviceId());
+            return Array.from(devicesSet);
+        });
+    }
 
     /**
      * Contacts the widget to connect to the call.
@@ -263,14 +327,13 @@ export interface JitsiCallMemberContent {
  */
 export class JitsiCall extends Call {
     public static readonly MEMBER_EVENT_TYPE = "io.element.video.member";
-    public static readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
+    public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-    private room: Room = this.client.getRoom(this.roomId)!;
     private resendDevicesTimer: number | null = null;
     private participantsExpirationTimer: number | null = null;
 
-    private constructor(widget: IApp, private readonly client: MatrixClient) {
-        super(widget);
+    private constructor(widget: IApp, client: MatrixClient) {
+        super(widget, client);
 
         this.room.on(RoomStateEvent.Update, this.onRoomState);
         this.on(CallEvent.ConnectionState, this.onConnectionState);
@@ -329,41 +392,22 @@ export class JitsiCall extends Call {
         }
     }
 
-    // Helper method that updates our member state with the devices returned by
-    // the given function. If it returns null, the update is skipped.
-    private async updateDevices(fn: (devices: string[]) => (string[] | null)): Promise<void> {
-        if (this.room.getMyMembership() !== "join") return;
-
-        const event = this.room.currentState.getStateEvents(
-            JitsiCall.MEMBER_EVENT_TYPE, this.client.getUserId()!,
-        );
+    protected getDevices(userId: string): string[] {
+        const event = this.room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, userId);
         const content = event?.getContent<JitsiCallMemberContent>();
         const expiresAt = typeof content?.expires_ts === "number" ? content.expires_ts : -Infinity;
-        const devices = expiresAt > Date.now() && Array.isArray(content?.devices) ? content.devices : [];
-        const newDevices = fn(devices);
-
-        if (newDevices) {
-            const content: JitsiCallMemberContent = {
-                devices: newDevices,
-                expires_ts: Date.now() + JitsiCall.STUCK_DEVICE_TIMEOUT_MS,
-            };
-
-            await this.client.sendStateEvent(
-                this.roomId, JitsiCall.MEMBER_EVENT_TYPE, content, this.client.getUserId()!,
-            );
-        }
+        return expiresAt > Date.now() && Array.isArray(content?.devices) ? content.devices : [];
     }
 
-    private async addOurDevice(): Promise<void> {
-        await this.updateDevices(devices => Array.from(new Set(devices).add(this.client.getDeviceId())));
-    }
+    protected async setDevices(devices: string[]): Promise<void> {
+        const content: JitsiCallMemberContent = {
+            devices,
+            expires_ts: Date.now() + this.STUCK_DEVICE_TIMEOUT_MS,
+        };
 
-    private async removeOurDevice(): Promise<void> {
-        await this.updateDevices(devices => {
-            const devicesSet = new Set(devices);
-            devicesSet.delete(this.client.getDeviceId());
-            return Array.from(devicesSet);
-        });
+        await this.client.sendStateEvent(
+            this.roomId, JitsiCall.MEMBER_EVENT_TYPE, content, this.client.getUserId()!,
+        );
     }
 
     public async clean(): Promise<void> {
@@ -378,7 +422,7 @@ export class JitsiCall extends Call {
                 const device = deviceMap.get(d);
                 return device?.last_seen_ts !== undefined
                     && !(d === this.client.getDeviceId() && !this.connected)
-                    && (now - device.last_seen_ts) < JitsiCall.STUCK_DEVICE_TIMEOUT_MS;
+                    && (now - device.last_seen_ts) < this.STUCK_DEVICE_TIMEOUT_MS;
             });
 
             // Skip the update if the devices are unchanged
@@ -507,7 +551,7 @@ export class JitsiCall extends Call {
             this.resendDevicesTimer = setInterval(async () => {
                 logger.log(`Resending video member event for ${this.roomId}`);
                 await this.addOurDevice();
-            }, (JitsiCall.STUCK_DEVICE_TIMEOUT_MS * 3) / 4);
+            }, (this.STUCK_DEVICE_TIMEOUT_MS * 3) / 4);
         } else if (state === ConnectionState.Disconnected && isConnected(prevState)) {
             this.updateParticipants(); // Local echo
 
@@ -570,12 +614,11 @@ export interface ElementCallMemberContent {
 export class ElementCall extends Call {
     public static readonly CALL_EVENT_TYPE = new NamespacedValue(null, "org.matrix.msc3401.call");
     public static readonly MEMBER_EVENT_TYPE = new NamespacedValue(null, "org.matrix.msc3401.call.member");
-    public static readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
+    public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-    private room: Room = this.client.getRoom(this.roomId)!;
     private participantsExpirationTimer: number | null = null;
 
-    private constructor(public readonly groupCall: MatrixEvent, private readonly client: MatrixClient) {
+    private constructor(public readonly groupCall: MatrixEvent, client: MatrixClient) {
         // Splice together the Element Call URL for this call
         const url = new URL(SdkConfig.get("element_call_url")!);
         url.pathname = "/room";
@@ -591,14 +634,17 @@ export class ElementCall extends Call {
 
         // To use Element Call without touching room state, we create a virtual
         // widget (one that doesn't have a corresponding state event)
-        super({
-            roomId: groupCall.getRoomId()!,
-            id: randomString(24), // So that it's globally unique
-            creatorUserId: client.getUserId()!,
-            name: "Element Call",
-            type: MatrixWidgetType.Custom,
-            url: url.toString(),
-        });
+        super(
+            {
+                roomId: groupCall.getRoomId()!,
+                id: randomString(24), // So that it's globally unique
+                creatorUserId: client.getUserId()!,
+                name: "Element Call",
+                type: MatrixWidgetType.Custom,
+                url: url.toString(),
+            },
+            client,
+        );
 
         this.room.on(RoomStateEvent.Update, this.onRoomState);
         this.on(CallEvent.ConnectionState, this.onConnectionState);
@@ -682,61 +728,42 @@ export class ElementCall extends Call {
         }
     }
 
-    // Helper method that updates our member state with the devices returned by
-    // the given function. If it returns null, the update is skipped.
-    private async updateDevices(fn: (devices: string[]) => (string[] | null)): Promise<void> {
-        if (this.room.getMyMembership() !== "join") return;
-
+    private getCallsState(userId: string): ElementCallMemberContent["m.calls"] {
         const event = (() => {
             for (const eventType of ElementCall.MEMBER_EVENT_TYPE.names) {
-                const e = this.room.currentState.getStateEvents(eventType, this.client.getUserId()!);
+                const e = this.room.currentState.getStateEvents(eventType, userId);
                 if (e) return e;
             }
             return null;
         })();
         const content = event?.getContent<ElementCallMemberContent>();
         const expiresAt = typeof content?.["m.expires_ts"] === "number" ? content["m.expires_ts"] : -Infinity;
-        const calls = expiresAt > Date.now() && Array.isArray(content?.["m.calls"]) ? content!["m.calls"] : [];
-        const call = calls.find(call => call["m.call_id"] === this.groupCall.getStateKey());
-        const devices = Array.isArray(call?.["m.devices"]) ? call!["m.devices"] : [];
-        const newDevices = fn(devices.map(d => d["m.device_id"]));
-
-        if (newDevices) {
-            const content: ElementCallMemberContent = {
-                "m.expires_ts": Date.now() + ElementCall.STUCK_DEVICE_TIMEOUT_MS,
-                "m.calls": [
-                    {
-                        "m.call_id": this.groupCall.getStateKey()!,
-                        "m.devices": newDevices.map(d => ({ "m.device_id": d })),
-                    },
-                    ...calls.filter(c => c["m.call_id"] !== this.groupCall.getStateKey()),
-                ],
-            };
-
-            await this.client.sendStateEvent(
-                this.roomId, ElementCall.MEMBER_EVENT_TYPE.name, content, this.client.getUserId()!,
-            );
-        }
+        return expiresAt > Date.now() && Array.isArray(content?.["m.calls"]) ? content!["m.calls"] : [];
     }
 
-    public async clean(): Promise<void> {
-        const now = Date.now();
-        const { devices: myDevices } = await this.client.getDevices();
-        const deviceMap = new Map<string, IMyDevice>(myDevices.map(d => [d.device_id, d]));
+    protected getDevices(userId: string): string[] {
+        const calls = this.getCallsState(userId);
+        const call = calls.find(call => call["m.call_id"] === this.groupCall.getStateKey());
+        const devices = Array.isArray(call?.["m.devices"]) ? call!["m.devices"] : [];
+        return devices.map(d => d["m.device_id"]);
+    }
 
-        // Clean up our member state by filtering out logged out devices,
-        // inactive devices, and our own device (if we're disconnected)
-        await this.updateDevices(devices => {
-            const newDevices = devices.filter(d => {
-                const device = deviceMap.get(d);
-                return device?.last_seen_ts !== undefined
-                    && !(d === this.client.getDeviceId() && !this.connected)
-                    && (now - device.last_seen_ts) < ElementCall.STUCK_DEVICE_TIMEOUT_MS;
-            });
+    protected async setDevices(devices: string[]): Promise<void> {
+        const calls = this.getCallsState(this.client.getUserId()!);
+        const newContent: ElementCallMemberContent = {
+            "m.expires_ts": Date.now() + this.STUCK_DEVICE_TIMEOUT_MS,
+            "m.calls": [
+                {
+                    "m.call_id": this.groupCall.getStateKey()!,
+                    "m.devices": devices.map(d => ({ "m.device_id": d })),
+                },
+                ...calls.filter(c => c["m.call_id"] !== this.groupCall.getStateKey()),
+            ],
+        };
 
-            // Skip the update if the devices are unchanged
-            return newDevices.length === devices.length ? null : newDevices;
-        });
+        await this.client.sendStateEvent(
+            this.roomId, ElementCall.MEMBER_EVENT_TYPE.name, newContent, this.client.getUserId()!,
+        );
     }
 
     protected async performConnection(

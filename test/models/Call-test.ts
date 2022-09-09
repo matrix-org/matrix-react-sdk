@@ -313,7 +313,7 @@ describe("JitsiCall", () => {
             room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
         ).toEqual({
             devices: [client.getDeviceId()],
-            expires_ts: now1 + JitsiCall.STUCK_DEVICE_TIMEOUT_MS,
+            expires_ts: now1 + call.STUCK_DEVICE_TIMEOUT_MS,
         }), { interval: 5 });
 
         const now2 = Date.now();
@@ -322,7 +322,7 @@ describe("JitsiCall", () => {
             room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
         ).toEqual({
             devices: [],
-            expires_ts: now2 + JitsiCall.STUCK_DEVICE_TIMEOUT_MS,
+            expires_ts: now2 + call.STUCK_DEVICE_TIMEOUT_MS,
         }), { interval: 5 });
     });
 
@@ -336,7 +336,7 @@ describe("JitsiCall", () => {
         ), { interval: 5 });
 
         client.sendStateEvent.mockClear();
-        jest.advanceTimersByTime(JitsiCall.STUCK_DEVICE_TIMEOUT_MS);
+        jest.advanceTimersByTime(call.STUCK_DEVICE_TIMEOUT_MS);
         await waitFor(() => expect(client.sendStateEvent).toHaveBeenLastCalledWith(
             room.roomId,
             JitsiCall.MEMBER_EVENT_TYPE,
