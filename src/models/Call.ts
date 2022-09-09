@@ -57,7 +57,7 @@ const waitForEvent = async (
     });
 
     const timedOut = await timeout(wait, false, TIMEOUT_MS) === false;
-    emitter.off(event, listener);
+    emitter.off(event, listener!);
     if (timedOut) throw new Error("Timed out");
 };
 
@@ -555,8 +555,10 @@ export class JitsiCall extends Call {
         } else if (state === ConnectionState.Disconnected && isConnected(prevState)) {
             this.updateParticipants(); // Local echo
 
-            clearInterval(this.resendDevicesTimer);
-            this.resendDevicesTimer = null;
+            if (this.resendDevicesTimer !== null) {
+                clearInterval(this.resendDevicesTimer);
+                this.resendDevicesTimer = null;
+            }
             // Tell others that we're disconnected, by removing our device from room state
             await this.removeOurDevice();
         }
@@ -706,7 +708,7 @@ export class ElementCall extends Call {
             const expiresAt = typeof content["m.expires_ts"] === "number" ? content["m.expires_ts"] : -Infinity;
             const calls = expiresAt > now && Array.isArray(content["m.calls"]) ? content["m.calls"] : [];
             const call = calls.find(call => call["m.call_id"] === this.groupCall.getStateKey());
-            let devices = Array.isArray(call?.["m.devices"]) ? call["m.devices"] : [];
+            let devices = Array.isArray(call?.["m.devices"]) ? call!["m.devices"] : [];
 
             // Apply local echo for the disconnected case
             if (!this.connected && member?.userId === this.client.getUserId()) {
