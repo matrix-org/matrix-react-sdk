@@ -24,7 +24,6 @@ import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/ty
 import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { ClientEvent } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
@@ -48,6 +47,9 @@ import { JoinRoomErrorPayload } from "../dispatcher/payloads/JoinRoomErrorPayloa
 import { ViewRoomErrorPayload } from "../dispatcher/payloads/ViewRoomErrorPayload";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
+import SettingsStore from "../settings/SettingsStore";
+import { SlidingSyncManager } from "../SlidingSyncManager";
+import { awaitRoomDownSync } from "../utils/RoomUpgrade";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -209,10 +211,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                     this.setState({ shouldPeek: false });
                 }
 
-                const cli = MatrixClientPeg.get();
-
-                const updateMetrics = () => {
-                    const room = cli.getRoom(payload.roomId);
+                awaitRoomDownSync(MatrixClientPeg.get(), payload.roomId).then(room => {
                     const numMembers = room.getJoinedMemberCount();
                     const roomSize = numMembers > 1000 ? "MoreThanAThousand"
                         : numMembers > 100 ? "OneHundredAndOneToAThousand"
@@ -228,15 +227,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                         isDM: !!DMRoomMap.shared().getUserIdForRoomId(room.roomId),
                         isSpace: room.isSpaceRoom(),
                     });
-
-                    cli.off(ClientEvent.Room, updateMetrics);
-                };
-
-                if (cli.getRoom(payload.roomId)) {
-                    updateMetrics();
-                } else {
-                    cli.on(ClientEvent.Room, updateMetrics);
-                }
+                });
 
                 break;
             }
@@ -288,6 +279,32 @@ export class RoomViewStore extends Store<ActionPayload> {
                     isSpace: MatrixClientPeg.get().getRoom(payload.room_id)?.isSpaceRoom(),
                     activeSpace,
                 });
+            }
+            if (SettingsStore.getValue("feature_sliding_sync") && this.state.roomId !== payload.room_id) {
+                if (this.state.roomId) {
+                    // unsubscribe from this room, but don't await it as we don't care when this gets done.
+                    SlidingSyncManager.instance.setRoomVisible(this.state.roomId, false);
+                }
+                this.setState({
+                    roomId: payload.room_id,
+                    initialEventId: null,
+                    initialEventPixelOffset: null,
+                    isInitialEventHighlighted: null,
+                    initialEventScrollIntoView: true,
+                    roomAlias: null,
+                    roomLoading: true,
+                    roomLoadError: null,
+                    viaServers: payload.via_servers,
+                    wasContextSwitch: payload.context_switch,
+                });
+                // set this room as the room subscription. We need to await for it as this will fetch
+                // all room state for this room, which is required before we get the state below.
+                await SlidingSyncManager.instance.setRoomVisible(payload.room_id, true);
+                // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
+                dis.dispatch({
+                    ...payload,
+                });
+                return;
             }
 
             const newState = {

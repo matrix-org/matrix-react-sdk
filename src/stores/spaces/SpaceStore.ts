@@ -18,7 +18,7 @@ import { ListIteratee, Many, sortBy } from "lodash";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ClientEvent, IRoomCapability } from "matrix-js-sdk/src/client";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
@@ -132,7 +132,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private _suggestedRooms: ISuggestedRoom[] = [];
     private _invitedSpaces = new Set<Room>();
     private spaceOrderLocalEchoMap = new Map<string, string>();
-    private _restrictedJoinRuleSupport?: IRoomCapability;
     // The following properties are set by onReady as they live in account_data
     private _allRoomsInHome = false;
     private _enabledMetaSpaces: MetaSpace[] = [];
@@ -187,7 +186,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 metricsTrigger: "WebSpacePanelNotificationBadge",
             });
         } else {
-            const lists = RoomListStore.instance.unfilteredLists;
+            const lists = RoomListStore.instance.orderedLists;
             for (let i = 0; i < TAG_ORDER.length; i++) {
                 const t = TAG_ORDER[i];
                 const listRooms = lists[t];
@@ -208,10 +207,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 }
             }
         }
-    }
-
-    public get restrictedJoinRuleSupport(): IRoomCapability {
-        return this._restrictedJoinRuleSupport;
     }
 
     /**
@@ -1066,11 +1061,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.matrixClient.on(RoomStateEvent.Members, this.onRoomStateMembers);
         this.matrixClient.on(ClientEvent.AccountData, this.onAccountData);
 
-        this.matrixClient.getCapabilities().then(capabilities => {
-            this._restrictedJoinRuleSupport = capabilities
-                ?.["m.room_versions"]?.["org.matrix.msc3244.room_capabilities"]?.["restricted"];
-        });
-
         const oldMetaSpaces = this._enabledMetaSpaces;
         const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
         this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]);
@@ -1294,7 +1284,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 }
 
 export default class SpaceStore {
-    private static internalInstance = new SpaceStoreClass();
+    private static readonly internalInstance = (() => {
+        const instance = new SpaceStoreClass();
+        instance.start();
+        return instance;
+    })();
 
     public static get instance(): SpaceStoreClass {
         return SpaceStore.internalInstance;

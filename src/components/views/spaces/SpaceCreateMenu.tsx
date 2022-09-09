@@ -52,9 +52,9 @@ export const createSpace = async (
         createOpts: {
             name,
             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
-            visibility: (isPublic && await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827"))
-                ? Visibility.Public
-                : Visibility.Private,
+            visibility: (
+                isPublic && await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827.stable")
+            ) ? Visibility.Public : Visibility.Private,
             power_level_content_override: {
                 // Only allow Admins to write to the timeline to prevent hidden sync spam
                 events_default: 100,
@@ -105,7 +105,7 @@ export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
     return <div className="mx_SpaceFeedbackPrompt">
         <span className="mx_SpaceFeedbackPrompt_text">{ _t("Spaces are a new feature.") }</span>
         <AccessibleButton
-            kind="link"
+            kind="link_inline"
             onClick={() => {
                 if (onClick) onClick();
                 Modal.createDialog(GenericFeatureFeedbackDialog, {

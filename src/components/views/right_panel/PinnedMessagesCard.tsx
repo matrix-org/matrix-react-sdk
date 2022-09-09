@@ -21,6 +21,9 @@ import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
+import { Icon as ContextMenuIcon } from '../../../../res/img/element-icons/context-menu.svg';
+import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
+import { Icon as ReplyIcon } from '../../../../res/img/element-icons/room/message-bar/reply.svg';
 import { _t } from "../../../languageHandler";
 import BaseCard from "./BaseCard";
 import Spinner from "../elements/Spinner";
@@ -33,9 +36,11 @@ import { useRoomState } from "../../../hooks/useRoomState";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { ReadPinsEventId } from "./types";
 import Heading from '../typography/Heading';
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 
 interface IProps {
     room: Room;
+    permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
 }
 
@@ -78,7 +83,7 @@ export const useReadPinnedEvents = (room: Room): Set<string> => {
     return readPinnedEvents;
 };
 
-const PinnedMessagesCard = ({ room, onClose }: IProps) => {
+const PinnedMessagesCard = ({ room, onClose, permalinkCreator }: IProps) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
     const canUnpin = useRoomState(room, state => state.mayClientSendStateEvent(EventType.RoomPinnedEvents, cli));
@@ -152,6 +157,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
                 key={ev.getId()}
                 event={ev}
                 onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
+                permalinkCreator={permalinkCreator}
             />
         ));
     } else {
@@ -159,9 +165,15 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
             <div className="mx_PinnedMessagesCard_empty">
                 { /* XXX: We reuse the classes for simplicity, but deliberately not the components for non-interactivity. */ }
                 <div className="mx_MessageActionBar mx_PinnedMessagesCard_MessageActionBar">
-                    <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton" />
-                    <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton" />
-                    <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton" />
+                    <div className="mx_MessageActionBar_iconButton">
+                        <EmojiIcon />
+                    </div>
+                    <div className="mx_MessageActionBar_iconButton">
+                        <ReplyIcon />
+                    </div>
+                    <div className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton">
+                        <ContextMenuIcon />
+                    </div>
                 </div>
 
                 <Heading size="h4" className="mx_PinnedMessagesCard_empty_header">{ _t("Nothing pinned, yet") }</Heading>

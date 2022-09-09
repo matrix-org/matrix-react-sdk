@@ -35,13 +35,19 @@ declare global {
              * Generates a test user and instantiates an Element session with that user.
              * @param synapse the synapse returned by startSynapse
              * @param displayName the displayName to give the test user
+             * @param prelaunchFn optional function to run before the app is visited
              */
-            initTestUser(synapse: SynapseInstance, displayName: string): Chainable<UserCredentials>;
+            initTestUser(
+                synapse: SynapseInstance,
+                displayName: string,
+                prelaunchFn?: () => void,
+            ): Chainable<UserCredentials>;
         }
     }
 }
 
-Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: string): Chainable<UserCredentials> => {
+// eslint-disable-next-line max-len
+Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: string, prelaunchFn?: () => void): Chainable<UserCredentials> => {
     // XXX: work around Cypress not clearing IDB between tests
     cy.window({ log: false }).then(win => {
         win.indexedDB.databases().then(databases => {
@@ -82,7 +88,12 @@ Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: str
             win.localStorage.setItem("mx_is_guest", "false");
             win.localStorage.setItem("mx_has_pickle_key", "false");
             win.localStorage.setItem("mx_has_access_token", "true");
+
+            // Ensure the language is set to a consistent value
+            win.localStorage.setItem("mx_local_settings", '{"language":"en"}');
         });
+
+        prelaunchFn?.();
 
         return cy.visit("/").then(() => {
             // wait for the app to load
