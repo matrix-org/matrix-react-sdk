@@ -72,7 +72,7 @@ export class Rendezvous {
     private theirPublicKey?: Uint8Array;
     private theirType: string;
     private sharedSecret?: Uint8Array;
-    private defaultRzServer = 'https://localhost:8080/';
+    private defaultRzServer = 'http://localhost:8090';
     private uri?: string;
     private expiresAt?: Date;
     public user?: string;
@@ -375,14 +375,12 @@ export class Rendezvous {
         logger.info(`Posted data to ${this.uri} new sequence number ${this.etag}`);
 
         if (method === 'POST') {
-            const id = res.headers.get('location');
-            if (!id || id.includes('/')) {
-                throw new Error('Rendezvous ID is invalid');
-            }
+            const location = res.headers.get('location');
             if (res.headers.has('expires')) {
                 this.expiresAt = new Date(res.headers.get('expires'));
             }
-            this.uri =`${uri}${id}`;
+            // resolve location header which could be relative or absolute
+            this.uri = new URL(location, res.url).href;
         }
     }
 
