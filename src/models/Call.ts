@@ -787,9 +787,10 @@ export class ElementCall extends Call {
     private onRoomState = () => this.updateParticipants();
 
     private onConnectionState = async (state: ConnectionState, prevState: ConnectionState) => {
-        if (state === ConnectionState.Connected && !isConnected(prevState)) {
-            this.updateParticipants(); // Local echo
-        } else if (state === ConnectionState.Disconnected && isConnected(prevState)) {
+        if (
+            (state === ConnectionState.Connected && !isConnected(prevState))
+            || (state === ConnectionState.Disconnected && isConnected(prevState))
+        ) {
             this.updateParticipants(); // Local echo
         }
     };
