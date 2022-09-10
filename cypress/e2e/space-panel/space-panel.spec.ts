@@ -17,7 +17,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
-// import Chainable = Cypress.Chainable;
 
 describe("Create Room", () => {
     let synapse: SynapseInstance;
