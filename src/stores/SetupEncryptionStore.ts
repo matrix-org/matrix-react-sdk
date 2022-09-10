@@ -89,9 +89,7 @@ export class SetupEncryptionStore extends EventEmitter {
             return;
         }
         this.started = false;
-        if (this.verificationRequest) {
-            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
-        }
+        this.verificationRequest?.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener(CryptoEvent.VerificationRequest, this.onVerificationRequest);
             MatrixClientPeg.get().removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
@@ -99,6 +97,7 @@ export class SetupEncryptionStore extends EventEmitter {
     }
 
     public async fetchKeyInfo(): Promise<void> {
+        if (!this.started) return; // bail if we were stopped
         const cli = MatrixClientPeg.get();
         const keys = await cli.isSecretStored('m.cross_signing.master');
         if (keys === null || Object.keys(keys).length === 0) {
@@ -233,14 +232,11 @@ export class SetupEncryptionStore extends EventEmitter {
                 const cli = MatrixClientPeg.get();
                 await cli.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest) => {
-                        const { finished } = Modal.createTrackedDialog(
-                            'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                            {
-                                title: _t("Setting up keys"),
-                                matrixClient: cli,
-                                makeRequest,
-                            },
-                        );
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                            title: _t("Setting up keys"),
+                            matrixClient: cli,
+                            makeRequest,
+                        });
                         const [confirmed] = await finished;
                         if (!confirmed) {
                             throw new Error("Cross-signing key upload auth canceled");
@@ -270,6 +266,7 @@ export class SetupEncryptionStore extends EventEmitter {
     }
 
     private async setActiveVerificationRequest(request: VerificationRequest): Promise<void> {
+        if (!this.started) return; // bail if we were stopped
         if (request.otherUserId !== MatrixClientPeg.get().getUserId()) return;
 
         if (this.verificationRequest) {

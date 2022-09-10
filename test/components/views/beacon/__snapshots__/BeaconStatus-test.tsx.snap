@@ -9,22 +9,22 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
       "_beaconInfo": Object {
         "assetType": "m.self",
         "description": undefined,
-        "live": undefined,
+        "live": false,
         "timeout": 3600000,
         "timestamp": 123456789,
       },
       "_events": Object {},
       "_eventsCount": 0,
-      "_isLive": undefined,
-      "_latestLocationState": undefined,
+      "_isLive": false,
+      "_latestLocationEvent": undefined,
       "_maxListeners": undefined,
       "clearLatestLocation": [Function],
-      "livenessWatchInterval": undefined,
+      "livenessWatchTimeout": undefined,
       "roomId": "!room:server",
       "rootEvent": Object {
         "content": Object {
           "description": undefined,
-          "live": undefined,
+          "live": false,
           "org.matrix.msc3488.asset": Object {
             "type": "m.self",
           },
@@ -71,22 +71,22 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
             "_beaconInfo": Object {
               "assetType": "m.self",
               "description": undefined,
-              "live": undefined,
+              "live": false,
               "timeout": 3600000,
               "timestamp": 123456789,
             },
             "_events": Object {},
             "_eventsCount": 0,
-            "_isLive": undefined,
-            "_latestLocationState": undefined,
+            "_isLive": false,
+            "_latestLocationEvent": undefined,
             "_maxListeners": undefined,
             "clearLatestLocation": [Function],
-            "livenessWatchInterval": undefined,
+            "livenessWatchTimeout": undefined,
             "roomId": "!room:server",
             "rootEvent": Object {
               "content": Object {
                 "description": undefined,
-                "live": undefined,
+                "live": false,
                 "org.matrix.msc3488.asset": Object {
                   "type": "m.self",
                 },
@@ -136,7 +136,9 @@ exports[`<BeaconStatus /> renders loading state 1`] = `
     <div
       className="mx_BeaconStatus_description"
     >
-      <span>
+      <span
+        className="mx_BeaconStatus_description_status"
+      >
         Loading live location...
       </span>
     </div>
@@ -165,7 +167,9 @@ exports[`<BeaconStatus /> renders stopped state 1`] = `
     <div
       className="mx_BeaconStatus_description"
     >
-      <span>
+      <span
+        className="mx_BeaconStatus_description_status"
+      >
         Live location ended
       </span>
     </div>

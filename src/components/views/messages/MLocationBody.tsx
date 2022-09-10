@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { randomString } from 'matrix-js-sdk/src/randomstring';
+import { ClientEvent, ClientEventHandlerMap } from 'matrix-js-sdk/src/matrix';
 
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
@@ -32,6 +34,7 @@ import LocationViewDialog from '../location/LocationViewDialog';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
 import { IBodyProps } from "./IBodyProps";
+import { createReconnectedListener } from '../../../utils/connection';
 
 interface IState {
     error: Error;
@@ -41,15 +44,17 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
     private mapId: string;
+    private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
     constructor(props: IBodyProps) {
         super(props);
 
-        const randomString = Math.random().toString(16).slice(2, 10);
         // multiple instances of same map might be in document
         // eg thread and main timeline, reply
-        const idSuffix = `${props.mxEvent.getId()}_${randomString}`;
+        const idSuffix = `${props.mxEvent.getId()}_${randomString(8)}`;
         this.mapId = `mx_MLocationBody_${idSuffix}`;
+
+        this.reconnectedListener = createReconnectedListener(this.clearError);
 
         this.state = {
             error: undefined,
@@ -57,9 +62,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     }
 
     private onClick = () => {
-        Modal.createTrackedDialog(
-            'Location View',
-            '',
+        Modal.createDialog(
             LocationViewDialog,
             {
                 matrixClient: this.context,
@@ -71,9 +74,19 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         );
     };
 
-    private onError = (error) => {
-        this.setState({ error });
+    private clearError = () => {
+        this.context.off(ClientEvent.Sync, this.reconnectedListener);
+        this.setState({ error: undefined });
     };
+
+    private onError = (error: Error) => {
+        this.setState({ error });
+        this.context.on(ClientEvent.Sync, this.reconnectedListener);
+    };
+
+    componentWillUnmount(): void {
+        this.context.off(ClientEvent.Sync, this.reconnectedListener);
+    }
 
     render(): React.ReactElement<HTMLDivElement> {
         return this.state.error ?

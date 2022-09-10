@@ -33,9 +33,11 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 
 interface IProps {
     event: MatrixEvent;
+    permalinkCreator: RoomPermalinkCreator;
     onUnpinClicked?(): void;
 }
 
@@ -140,11 +142,13 @@ export default class PinnedEventTile extends React.Component<IProps> {
                     className="mx_PinnedEventTile_body"
                     maxImageHeight={150}
                     onHeightChanged={() => {}} // we need to give this, apparently
+                    permalinkCreator={this.props.permalinkCreator}
+                    replacingEventId={this.props.event.replacingEventId()}
                 />
             </div>
 
             <div className="mx_PinnedEventTile_footer">
-                <span className="mx_PinnedEventTile_timestamp">
+                <span className="mx_MessageTimestamp mx_PinnedEventTile_timestamp">
                     { formatDate(new Date(this.props.event.getTs())) }
                 </span>
 

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef } from "react";
+import React, { MouseEvent, ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef } from "react";
 import classNames from "classnames";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
@@ -25,6 +25,8 @@ import { SpaceKey } from "../../../stores/spaces";
 import SpaceTreeLevelLayoutStore from "../../../stores/spaces/SpaceTreeLevelLayoutStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { _t } from "../../../languageHandler";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import { toRightOf, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -82,9 +84,15 @@ export const SpaceButton: React.FC<IButtonProps> = ({
             ariaLabel = _t("Jump to first invite.");
         }
 
+        const jumpToNotification = (ev: MouseEvent) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId);
+        };
+
         notifBadge = <div className="mx_SpacePanel_badgeContainer">
             <NotificationBadge
-                onClick={() => SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId)}
+                onClick={jumpToNotification}
                 forceCount={false}
                 notification={notificationState}
                 aria-label={ariaLabel}
@@ -103,6 +111,10 @@ export const SpaceButton: React.FC<IButtonProps> = ({
         />;
     }
 
+    const viewSpaceHome = () => defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space.roomId });
+    const activateSpace = () => SpaceStore.instance.setActiveSpace(spaceKey ?? space.roomId);
+    const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
+
     return (
         <AccessibleTooltipButton
             {...props}
@@ -112,7 +124,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
                 mx_SpaceButton_narrow: isNarrow,
             })}
             title={label}
-            onClick={spaceKey ? () => SpaceStore.instance.setActiveSpace(spaceKey) : props.onClick}
+            onClick={onClick}
             onContextMenu={openMenu}
             forceHide={!isNarrow || menuDisplayed}
             inputRef={handle}
@@ -261,12 +273,6 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         }
     };
 
-    private onClick = (ev: React.MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        SpaceStore.instance.setActiveSpace(this.props.space.roomId);
-    };
-
     render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { space, activeSpaces, isNested, isPanelCollapsed, onExpand, parents, innerRef, dragHandleProps,
@@ -309,6 +315,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { tabIndex, ...restDragHandleProps } = dragHandleProps || {};
+        const selected = activeSpaces.includes(space.roomId);
 
         return (
             <li
@@ -316,19 +323,19 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                 className={itemClasses}
                 ref={innerRef}
                 aria-expanded={hasChildren ? !collapsed : undefined}
+                aria-selected={selected}
                 role="treeitem"
             >
                 <SpaceButton
                     {...restDragHandleProps}
                     space={space}
                     className={isInvite ? "mx_SpaceButton_invite" : undefined}
-                    selected={activeSpaces.includes(space.roomId)}
+                    selected={selected}
                     label={this.state.name}
                     contextMenuTooltip={_t("Space options")}
                     notificationState={notificationState}
                     isNarrow={isPanelCollapsed}
                     avatarSize={isNested ? 24 : 32}
-                    onClick={this.onClick}
                     onKeyDown={this.onKeyDown}
                     ContextMenuComponent={this.props.space.getMyMembership() === "join" ? SpaceContextMenu : undefined}
                 >
@@ -366,5 +373,3 @@ const SpaceTreeLevel: React.FC<ITreeLevelProps> = ({
         }) }
     </ul>;
 };
-
-export default SpaceTreeLevel;

@@ -6,6 +6,7 @@ It aims to cover:
  * How to run the tests yourself
  * How the tests work
  * How to write great Cypress tests
+ * Visual testing
 
 ## Running the Tests
 Our Cypress tests run automatically as part of our CI along with our other tests,
@@ -31,7 +32,7 @@ This will run the Cypress tests once, non-interactively.
 You can also run individual tests this way too, as you'd expect:
 
 ```
-yarn run test:cypress --spec cypress/integration/1-register/register.spec.ts
+yarn run test:cypress --spec cypress/e2e/1-register/register.spec.ts
 ```
 
 Cypress also has its own UI that you can use to run and debug the tests.
@@ -43,7 +44,7 @@ yarn run test:cypress:open
 
 ## How the Tests Work
 Everything Cypress-related lives in the `cypress/` subdirectory of react-sdk
-as is typical for Cypress tests. Likewise, tests live in `cypress/integration`.
+as is typical for Cypress tests. Likewise, tests live in `cypress/e2e`.
 
 `cypress/plugins/synapsedocker` contains a Cypress plugin that starts instances
 of Synapse in Docker containers. These synapses are what Element-web runs against
@@ -166,3 +167,13 @@ already familiar with Cypress.
 
 This is a small selection - the Cypress best practices guide, linked above, has more good advice, and we
 should generally try to adhere to them.
+
+## Percy Visual Testing
+We also support visual testing via Percy, this extracts the DOM from Cypress and renders it using custom renderers
+for Safari, Firefox, Chrome & Edge, allowing us to spot visual regressions before they become release regressions.
+Each `cy.percySnapshot()` call results in 8 screenshots (4 browsers, 2 sizes) this can quickly be exhausted and
+so we only run Percy testing on `develop` and PRs which are labelled `X-Needs-Percy`.
+
+To record a snapshot use `cy.percySnapshot()`, you may have to pass `percyCSS` into the 2nd argument to hide certain
+elements which contain dynamic/generated data to avoid them cause false positives in the Percy screenshot diffs.
+

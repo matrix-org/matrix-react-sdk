@@ -98,7 +98,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         // We need to call onFinished now to close this dialog, and
         // again later to signal that the verification is complete.
         this.props.onFinished();
-        Modal.createTrackedDialog('New Session Verification', 'Starting dialog', VerificationRequestDialog, {
+        Modal.createDialog(VerificationRequestDialog, {
             verificationRequestPromise: requestPromise,
             member: cli.getUser(userId),
             onFinished: async () => {
@@ -212,11 +212,13 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
                             { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
-                                a: (sub) => <button
+                                a: (sub) => <AccessibleButton
+                                    kind="link_inline"
+                                    className="mx_SetupEncryptionBody_reset_link"
                                     onClick={this.onResetClick}
-                                    className="mx_SetupEncryptionBody_reset_link mx_Dialog_nonDialogButton">
+                                >
                                     { sub }
-                                </button>,
+                                </AccessibleButton>,
                             }) }
                         </div>
                     </div>

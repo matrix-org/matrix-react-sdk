@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ViewRoom as ViewRoomEvent } from "matrix-analytics-events/types/typescript/ViewRoom";
+import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
 
 import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
@@ -26,7 +26,9 @@ import { IOpts } from "../../createRoom";
 export interface ViewRoomPayload extends Pick<ActionPayload, "action"> {
     action: Action.ViewRoom;
 
-    // either of room_id or room_alias must be specified
+    // either or both of room_id or room_alias must be specified
+    // where possible, a room_id should be provided with a room_alias as it reduces
+    // the number of API calls required.
     room_id?: string;
     room_alias?: string;
 

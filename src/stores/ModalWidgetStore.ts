@@ -30,10 +30,14 @@ interface IState {
 }
 
 export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new ModalWidgetStore();
-    private modalInstance: IHandle<void[]> = null;
-    private openSourceWidgetId: string = null;
-    private openSourceWidgetRoomId: string = null;
+    private static readonly internalInstance = (() => {
+        const instance = new ModalWidgetStore();
+        instance.start();
+        return instance;
+    })();
+    private modalInstance: IHandle<void[]> | null = null;
+    private openSourceWidgetId: string | null = null;
+    private openSourceWidgetRoomId: string | null = null;
 
     private constructor() {
         super(defaultDispatcher, {});
@@ -59,7 +63,7 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
         if (this.modalInstance) return;
         this.openSourceWidgetId = sourceWidget.id;
         this.openSourceWidgetRoomId = widgetRoomId;
-        this.modalInstance = Modal.createTrackedDialog('Modal Widget', '', ModalWidgetDialog, {
+        this.modalInstance = Modal.createDialog(ModalWidgetDialog, {
             widgetDefinition: { ...requestData },
             widgetRoomId,
             sourceWidgetId: sourceWidget.id,

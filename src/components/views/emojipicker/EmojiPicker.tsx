@@ -37,6 +37,7 @@ interface IProps {
     selectedEmojis?: Set<string>;
     showQuickReactions?: boolean;
     onChoose(unicode: string): boolean;
+    isEmojiDisabled?: (unicode: string) => boolean;
 }
 
 interface IState {
@@ -54,7 +55,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
     private readonly memoizedDataByCategory: Record<CategoryKey, IEmoji[]>;
     private readonly categories: ICategory[];
 
-    private scrollRef = React.createRef<AutoHideScrollbar>();
+    private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
     constructor(props: IProps) {
         super(props);
@@ -239,7 +240,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
     render() {
         let heightBefore = 0;
         return (
-            <div className="mx_EmojiPicker">
+            <div className="mx_EmojiPicker" data-testid='mx_EmojiPicker'>
                 <Header categories={this.categories} onAnchorClick={this.scrollToCategory} />
                 <Search query={this.state.filter} onChange={this.onChangeFilter} onEnter={this.onEnterFilter} />
                 <AutoHideScrollbar
@@ -261,6 +262,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                                 onClick={this.onClickEmoji}
                                 onMouseEnter={this.onHoverEmoji}
                                 onMouseLeave={this.onHoverEmojiEnd}
+                                isEmojiDisabled={this.props.isEmojiDisabled}
                                 selectedEmojis={this.props.selectedEmojis}
                             />
                         );

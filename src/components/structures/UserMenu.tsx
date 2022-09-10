@@ -229,7 +229,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
-        Modal.createTrackedDialog('Feedback Dialog', '', FeedbackDialog);
+        Modal.createDialog(FeedbackDialog);
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
@@ -242,7 +242,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             // log out without user prompt if they have no local megolm sessions
             defaultDispatcher.dispatch({ action: 'logout' });
         } else {
-            Modal.createTrackedDialog('Logout from LeftPanel', '', LogoutDialog);
+            Modal.createDialog(LogoutDialog);
         }
 
         this.setState({ contextMenuPosition: null }); // also close the menu
@@ -276,14 +276,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
                     { _t("Got an account? <a>Sign in</a>", {}, {
                         a: sub => (
-                            <AccessibleButton kind="link" onClick={this.onSignInClick}>
+                            <AccessibleButton kind="link_inline" onClick={this.onSignInClick}>
                                 { sub }
                             </AccessibleButton>
                         ),
                     }) }
                     { _t("New here? <a>Create an account</a>", {}, {
                         a: sub => (
-                            <AccessibleButton kind="link" onClick={this.onRegisterClick}>
+                            <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
                                 { sub }
                             </AccessibleButton>
                         ),

@@ -19,10 +19,9 @@ import React from 'react';
 import { AuthType, IAuthData } from 'matrix-js-sdk/src/interactive-auth';
 import { logger } from "matrix-js-sdk/src/logger";
 
-import Analytics from '../../../Analytics';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import InteractiveAuth, { ERROR_USER_CANCELLED } from "../../structures/InteractiveAuth";
+import InteractiveAuth, { ERROR_USER_CANCELLED, InteractiveAuthCallback } from "../../structures/InteractiveAuth";
 import { DEFAULT_PHASE, PasswordAuthEntry, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import BaseDialog from "./BaseDialog";
@@ -104,7 +103,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         this.setState({ bodyText, continueText, continueKind });
     };
 
-    private onUIAuthFinished = (success: boolean, result: Error) => {
+    private onUIAuthFinished: InteractiveAuthCallback = (success, result) => {
         if (success) return; // great! makeRequest() will be called too.
 
         if (result === ERROR_USER_CANCELLED) {
@@ -122,7 +121,6 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         // this isn't done.
         MatrixClientPeg.get().deactivateAccount(auth, this.state.shouldErase).then(r => {
             // Deactivation worked - logout & close this dialog
-            Analytics.trackEvent('Account', 'Deactivate Account');
             defaultDispatcher.fire(Action.TriggerLogout);
             this.props.onFinished(true);
         }).catch(e => {

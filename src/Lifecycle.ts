@@ -28,7 +28,6 @@ import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
 import SecurityCustomisations from "./customisations/Security";
 import EventIndexPeg from './indexing/EventIndexPeg';
 import createMatrixClient from './utils/createMatrixClient';
-import Analytics from './Analytics';
 import Notifier from './Notifier';
 import UserActivity from './UserActivity';
 import Presence from './Presence';
@@ -49,7 +48,7 @@ import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
 import { PosthogAnalytics } from "./PosthogAnalytics";
-import CallHandler from './CallHandler';
+import LegacyCallHandler from './LegacyCallHandler';
 import LifecycleCustomisations from "./customisations/Lifecycle";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import { _t } from "./languageHandler";
@@ -62,6 +61,7 @@ import SdkConfig from "./SdkConfig";
 import { DialogOpener } from "./utils/DialogOpener";
 import { Action } from "./dispatcher/actions";
 import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
+import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -70,6 +70,10 @@ dis.register((payload) => {
     if (payload.action === Action.TriggerLogout) {
         // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
         onLoggedOut();
+    } else if (payload.action === Action.OverwriteLogin) {
+        const typed = <OverwriteLoginPayload>payload;
+        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
+        doSetLoggedIn(typed.credentials, true);
     }
 });
 
@@ -166,7 +170,7 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
  * Gets the user ID of the persisted session, if one exists. This does not validate
  * that the user's credentials still work, just that they exist and that a user ID
  * is associated with them. The session is not loaded.
- * @returns {[String, bool]} The persisted session's owner and whether the stored
+ * @returns {[string, boolean]} The persisted session's owner and whether the stored
  *     session is for a guest user, if an owner exists. If there is no stored session,
  *     return [null, null].
  */
@@ -199,7 +203,7 @@ export function attemptTokenLogin(
     const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY);
     if (!homeserver) {
         logger.warn("Cannot log in with token: can't determine HS URL to use");
-        Modal.createTrackedDialog("SSO", "Unknown HS", ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("We couldn't log you in"),
             description: _t("We asked the browser to remember which homeserver you use to let you sign in, " +
                 "but unfortunately your browser has forgotten it. Go to the sign in page and try again."),
@@ -224,7 +228,7 @@ export function attemptTokenLogin(
             return true;
         });
     }).catch((err) => {
-        Modal.createTrackedDialog("SSO", "Token Rejected", ErrorDialog, {
+        Modal.createDialog(ErrorDialog, {
             title: _t("We couldn't log you in"),
             description: err.name === "ConnectionError"
                 ? _t("Your homeserver was unreachable and was not able to log you in. Please try again. " +
@@ -468,7 +472,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
 async function handleLoadSessionFailure(e: Error): Promise<boolean> {
     logger.error("Unable to load session", e);
 
-    const modal = Modal.createTrackedDialog('Session Restore Error', '', SessionRestoreErrorDialog, {
+    const modal = Modal.createDialog(SessionRestoreErrorDialog, {
         error: e,
     });
 
@@ -492,7 +496,7 @@ async function handleLoadSessionFailure(e: Error): Promise<boolean> {
  * Also stops the old MatrixClient and clears old credentials/etc out of
  * storage before starting the new client.
  *
- * @param {MatrixClientCreds} credentials The credentials to use
+ * @param {IMatrixClientCreds} credentials The credentials to use
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
@@ -523,7 +527,7 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
  * If the credentials belong to a different user from the session already stored,
  * the old session will be cleared automatically.
  *
- * @param {MatrixClientCreds} credentials The credentials to use
+ * @param {IMatrixClientCreds} credentials The credentials to use
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
@@ -595,8 +599,6 @@ async function doSetLoggedIn(
         await abortLogin();
     }
 
-    Analytics.setLoggedIn(credentials.guest, credentials.homeserverUrl);
-
     MatrixClientPeg.replaceUsingCreds(credentials);
 
     setSentryUser(credentials.userId);
@@ -630,15 +632,15 @@ async function doSetLoggedIn(
         logger.warn("No local storage available: can't persist session!");
     }
 
-    dis.dispatch({ action: 'on_logged_in' });
-
+    dis.fire(Action.OnLoggedIn);
     await startMatrixClient(/*startSyncing=*/!softLogout);
+
     return client;
 }
 
 function showStorageEvictedDialog(): Promise<boolean> {
     return new Promise(resolve => {
-        Modal.createTrackedDialog('Storage evicted', '', StorageEvictedDialog, {
+        Modal.createDialog(StorageEvictedDialog, {
             onFinished: resolve,
         });
     });
@@ -729,7 +731,7 @@ export function logout(): void {
     if (MatrixClientPeg.get().isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
-        // defer until next tick because it calls a synchronous dispatch and we are likely here from a dispatch.
+        // defer until next tick because it calls a synchronous dispatch, and we are likely here from a dispatch.
         setImmediate(() => onLoggedOut());
         return;
     }
@@ -737,19 +739,17 @@ export function logout(): void {
     _isLoggingOut = true;
     const client = MatrixClientPeg.get();
     PlatformPeg.get().destroyPickleKey(client.getUserId(), client.getDeviceId());
-    client.logout().then(onLoggedOut,
-        (err) => {
-            // Just throwing an error here is going to be very unhelpful
-            // if you're trying to log out because your server's down and
-            // you want to log into a different server, so just forget the
-            // access token. It's annoying that this will leave the access
-            // token still valid, but we should fix this by having access
-            // tokens expire (and if you really think you've been compromised,
-            // change your password).
-            logger.log("Failed to call logout API: token will not be invalidated");
-            onLoggedOut();
-        },
-    );
+    client.logout(undefined, true).then(onLoggedOut, (err) => {
+        // Just throwing an error here is going to be very unhelpful
+        // if you're trying to log out because your server's down and
+        // you want to log into a different server, so just forget the
+        // access token. It's annoying that this will leave the access
+        // token still valid, but we should fix this by having access
+        // tokens expire (and if you really think you've been compromised,
+        // change your password).
+        logger.warn("Failed to call logout API: token will not be invalidated", err);
+        onLoggedOut();
+    });
 }
 
 export function softLogout(): void {
@@ -806,7 +806,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     DMRoomMap.makeShared().start();
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
-    CallHandler.instance.start();
+    LegacyCallHandler.instance.start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -823,6 +823,9 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
         logger.warn("Caller requested only auxiliary services be started");
         await MatrixClientPeg.assign();
     }
+
+    // Run the migrations after the MatrixClientPeg has been assigned
+    SettingsStore.runMigrations();
 
     // This needs to be started after crypto is set up
     DeviceListener.sharedInstance().start();
@@ -849,21 +852,25 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
  * storage. Used after a session has been logged out.
  */
 export async function onLoggedOut(): Promise<void> {
-    _isLoggingOut = false;
-    // Ensure that we dispatch a view change **before** stopping the client so
-    // so that React components unmount first. This avoids React soft crashes
+    // Ensure that we dispatch a view change **before** stopping the client,
+    // that React components unmount first. This avoids React soft crashes
     // that can occur when components try to use a null client.
-    dis.dispatch({ action: 'on_logged_out' }, true);
+    dis.fire(Action.OnLoggedOut, true);
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
 
-    // Do this last so we can make sure all storage has been cleared and all
+    // Do this last, so we can make sure all storage has been cleared and all
     // customisations got the memo.
     if (SdkConfig.get().logout_redirect_url) {
         logger.log("Redirecting to external provider to finish logout");
-        window.location.href = SdkConfig.get().logout_redirect_url;
+        // XXX: Defer this so that it doesn't race with MatrixChat unmounting the world by going to /#/login
+        setTimeout(() => {
+            window.location.href = SdkConfig.get().logout_redirect_url;
+        }, 100);
     }
+    // Do this last to prevent racing `stopMatrixClient` and `on_logged_out` with MatrixChat handling Session.logged_out
+    _isLoggingOut = false;
 }
 
 /**
@@ -871,8 +878,6 @@ export async function onLoggedOut(): Promise<void> {
  * @returns {Promise} promise which resolves once the stores have been cleared
  */
 async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void> {
-    Analytics.disable();
-
     if (window.localStorage) {
         // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
@@ -901,9 +906,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         }
     }
 
-    if (window.sessionStorage) {
-        window.sessionStorage.clear();
-    }
+    window.sessionStorage?.clear();
 
     // create a temporary client to clear out the persistent stores.
     const cli = createMatrixClient({
@@ -922,7 +925,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
  */
 export function stopMatrixClient(unsetClient = true): void {
     Notifier.stop();
-    CallHandler.instance.stop();
+    LegacyCallHandler.instance.stop();
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();
     Presence.stop();
@@ -930,7 +933,7 @@ export function stopMatrixClient(unsetClient = true): void {
     IntegrationManagers.sharedInstance().stopWatching();
     Mjolnir.sharedInstance().stop();
     DeviceListener.sharedInstance().stop();
-    if (DMRoomMap.shared()) DMRoomMap.shared().stop();
+    DMRoomMap.shared()?.stop();
     EventIndexPeg.stop();
     const cli = MatrixClientPeg.get();
     if (cli) {

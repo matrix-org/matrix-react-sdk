@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import url from 'url';
-import React, { ContextType, createRef } from 'react';
+import React, { ContextType, createRef, MutableRefObject } from 'react';
 import classNames from 'classnames';
 import { MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
@@ -35,11 +35,10 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, ContextMenuButton } from "../../structures/ContextMenu";
 import PersistedElement, { getPersistKey } from "./PersistedElement";
 import { WidgetType } from "../../../widgets/WidgetType";
-import { StopGapWidget } from "../../../stores/widgets/StopGapWidget";
-import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
+import { ElementWidget, StopGapWidget } from "../../../stores/widgets/StopGapWidget";
 import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
-import CallHandler from '../../../CallHandler';
+import LegacyCallHandler from '../../../LegacyCallHandler';
 import { IApp } from "../../../stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
@@ -50,6 +49,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from '../../../dispatcher/actions';
 import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
+import { WidgetMessagingStore } from '../../../stores/widgets/WidgetMessagingStore';
 
 interface IProps {
     app: IApp;
@@ -84,6 +84,8 @@ interface IProps {
     pointerEvents?: string;
     widgetPageTitle?: string;
     showLayoutButtons?: boolean;
+    // Handle to manually notify the PersistedElement that it needs to move
+    movePersistedElement?: MutableRefObject<() => void>;
 }
 
 interface IState {
@@ -189,10 +191,28 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private onMyMembership = (room: Room, membership: string): void => {
-        if (membership === "leave" && room.roomId === this.props.room?.roomId) {
+        if ((membership === "leave" || membership === "ban") && room.roomId === this.props.room?.roomId) {
             this.onUserLeftRoom();
         }
     };
+
+    private determineInitialRequiresClientState(): boolean {
+        try {
+            const mockWidget = new ElementWidget(this.props.app);
+            const widgetApi = WidgetMessagingStore.instance.getMessaging(mockWidget, this.props.room.roomId);
+            if (widgetApi) {
+                // Load value from existing API to prevent resetting the requiresClient value on layout changes.
+                return widgetApi.hasCapability(ElementWidgetCapabilities.RequiresClient);
+            }
+        } catch {
+            // fallback to true
+        }
+
+        // requiresClient is initially set to true. This avoids the broken state of the popout
+        // button being visible (for an instance) and then disappearing when the widget is loaded.
+        // requiresClient <-> hide the popout button
+        return true;
+    }
 
     /**
      * Set initial component state when the App wUrl (widget URL) is being updated.
@@ -212,10 +232,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
-            // requiresClient is initially set to true. This avoids the broken state of the popout
-            // button being visible (for an instance) and then disappearing when the widget is loaded.
-            // requiresClient <-> hide the popout button
-            requiresClient: true,
+            requiresClient: this.determineInitialRequiresClientState(),
         };
     }
 
@@ -287,7 +304,6 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private setupSgListeners() {
         this.sgWidget.on("preparing", this.onWidgetPreparing);
-        this.sgWidget.on("ready", this.onWidgetReady);
         // emits when the capabilities have been set up or changed
         this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
     }
@@ -295,7 +311,6 @@ export default class AppTile extends React.Component<IProps, IState> {
     private stopSgListeners() {
         if (!this.sgWidget) return;
         this.sgWidget.off("preparing", this.onWidgetPreparing);
-        this.sgWidget.off("ready", this.onWidgetReady);
         this.sgWidget.off("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
     }
 
@@ -375,7 +390,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         if (WidgetType.JITSI.matches(this.props.app.type) && this.props.room) {
-            CallHandler.instance.hangupCallApp(this.props.room.roomId);
+            LegacyCallHandler.instance.hangupCallApp(this.props.room.roomId);
         }
 
         // Delete the widget from the persisted store for good measure.
@@ -387,12 +402,6 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private onWidgetPreparing = (): void => {
         this.setState({ loading: false });
-    };
-
-    private onWidgetReady = (): void => {
-        if (WidgetType.JITSI.matches(this.props.app.type)) {
-            this.sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
-        }
     };
 
     private onWidgetCapabilitiesNotified = (): void => {
@@ -510,18 +519,14 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!this.props.room) return; // ignore action - it shouldn't even be visible
         const targetContainer =
             WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
-                ? Container.Right
+                ? Container.Top
                 : Container.Center;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 
-    private onTogglePinnedClick = (): void => {
+    private onMinimiseClicked = (): void => {
         if (!this.props.room) return; // ignore action - it shouldn't even be visible
-        const targetContainer =
-            WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Top)
-                ? Container.Right
-                : Container.Top;
-        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
+        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, Container.Right);
     };
 
     private onContextMenuClick = (): void => {
@@ -545,7 +550,8 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         // Additional iframe feature permissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
-        const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write;";
+        const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write; " +
+            "clipboard-read;";
 
         const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
         const appTileBodyStyles = {};
@@ -623,7 +629,11 @@ export default class AppTile extends React.Component<IProps, IState> {
                     const zIndexAboveOtherPersistentElements = 101;
 
                     appTileBody = <div className="mx_AppTile_persistedWrapper">
-                        <PersistedElement zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9} persistKey={this.persistKey}>
+                        <PersistedElement
+                            zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9}
+                            persistKey={this.persistKey}
+                            moveRef={this.props.movePersistedElement}
+                        >
                             { appTileBody }
                         </PersistedElement>
                     </div>;
@@ -662,32 +672,23 @@ export default class AppTile extends React.Component<IProps, IState> {
                 isInContainer(this.props.room, this.props.app, Container.Center);
             const maximisedClasses = classNames({
                 "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_close": isMaximised,
+                "mx_AppTileMenuBar_iconButton_collapse": isMaximised,
                 "mx_AppTileMenuBar_iconButton_maximise": !isMaximised,
             });
             layoutButtons.push(<AccessibleButton
                 key="toggleMaximised"
                 className={maximisedClasses}
                 title={
-                    isMaximised ? _t("Close") : _t("Maximise")
+                    isMaximised ? _t("Un-maximise") : _t("Maximise")
                 }
                 onClick={this.onToggleMaximisedClick}
             />);
 
-            const isPinned = WidgetLayoutStore.instance.
-                isInContainer(this.props.room, this.props.app, Container.Top);
-            const pinnedClasses = classNames({
-                "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_unpin": isPinned,
-                "mx_AppTileMenuBar_iconButton_pin": !isPinned,
-            });
             layoutButtons.push(<AccessibleButton
-                key="togglePinned"
-                className={pinnedClasses}
-                title={
-                    isPinned ? _t("Unpin") : _t("Pin")
-                }
-                onClick={this.onTogglePinnedClick}
+                key="minimise"
+                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
+                title={_t("Minimise")}
+                onClick={this.onMinimiseClicked}
             />);
         }
 

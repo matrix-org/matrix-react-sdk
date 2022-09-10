@@ -23,7 +23,7 @@ import encrypt from "matrix-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation, ISendEventResponse, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { IEventRelation, ISendEventResponse, MatrixError, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
@@ -50,6 +50,7 @@ import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog"
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { createThumbnail } from "./utils/image-media";
 import { attachRelation } from "./components/views/rooms/SendMessageComposer";
+import { doMaybeLocalRoomAction } from "./utils/local-room";
 
 // scraped out of a macOS hidpi (5660ppm) screenshot png
 //                  5669 px (x-axis)      , 5669 px (y-axis)      , per metre
@@ -64,10 +65,7 @@ interface IMediaConfig {
 interface IContent {
     body: string;
     msgtype: string;
-    info: {
-        size: number;
-        mimetype?: string;
-    };
+    info: IMediaEventInfo;
     file?: string;
     url?: string;
 }
@@ -129,6 +127,9 @@ const IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT = 0.1; // 10%
 // We don't apply these thresholds to video thumbnails as a poster image is always useful
 // and videos tend to be much larger.
 
+// Image mime types for which to always include a thumbnail for even if it is larger than the input for wider support.
+const ALWAYS_INCLUDE_THUMBNAIL = ["image/avif", "image/webp"];
+
 /**
  * Read the metadata for an image file and create and upload a thumbnail of the image.
  *
@@ -137,7 +138,11 @@ const IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT = 0.1; // 10%
  * @param {File} imageFile The image to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
-async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imageFile: File) {
+async function infoForImageFile(
+    matrixClient: MatrixClient,
+    roomId: string,
+    imageFile: File,
+): Promise<Partial<IMediaEventInfo>> {
     let thumbnailType = "image/png";
     if (imageFile.type === "image/jpeg") {
         thumbnailType = "image/jpeg";
@@ -149,7 +154,7 @@ async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imag
     const imageInfo = result.info;
 
     // For lesser supported image types, always include the thumbnail even if it is larger
-    if (!["image/avif", "image/webp"].includes(imageFile.type)) {
+    if (!ALWAYS_INCLUDE_THUMBNAIL.includes(imageFile.type)) {
         // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
         const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
         if (
@@ -178,7 +183,7 @@ async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imag
  * @param {File} videoFile The file to load in an video element.
  * @return {Promise} A promise that resolves with the video image element.
  */
-function loadVideoElement(videoFile): Promise<HTMLVideoElement> {
+function loadVideoElement(videoFile: File): Promise<HTMLVideoElement> {
     return new Promise((resolve, reject) => {
         // Load the file into an html element
         const video = document.createElement("video");
@@ -224,7 +229,11 @@ function loadVideoElement(videoFile): Promise<HTMLVideoElement> {
  * @param {File} videoFile The video to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
-function infoForVideoFile(matrixClient, roomId, videoFile) {
+function infoForVideoFile(
+    matrixClient: MatrixClient,
+    roomId: string,
+    videoFile: File,
+): Promise<Partial<IMediaEventInfo>> {
     const thumbnailType = "image/jpeg";
 
     let videoInfo: Partial<IMediaEventInfo>;
@@ -343,11 +352,14 @@ export default class ContentMessages {
         text: string,
         matrixClient: MatrixClient,
     ): Promise<ISendEventResponse> {
-        const prom = matrixClient.sendStickerMessage(roomId, threadId, url, info, text).catch((e) => {
+        return doMaybeLocalRoomAction(
+            roomId,
+            (actualRoomId: string) => matrixClient.sendStickerMessage(actualRoomId, threadId, url, info, text),
+            matrixClient,
+        ).catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
-        return prom;
     }
 
     public getUploadLimit(): number | null {
@@ -389,7 +401,7 @@ export default class ContentMessages {
         }
 
         if (tooBigFiles.length > 0) {
-            const { finished } = Modal.createTrackedDialog<[boolean]>('Upload Failure', '', UploadFailureDialog, {
+            const { finished } = Modal.createDialog<[boolean]>(UploadFailureDialog, {
                 badFiles: tooBigFiles,
                 totalFiles: files.length,
                 contentMessages: this,
@@ -404,14 +416,14 @@ export default class ContentMessages {
         let promBefore: Promise<any> = Promise.resolve();
         for (let i = 0; i < okFiles.length; ++i) {
             const file = okFiles[i];
+            const loopPromiseBefore = promBefore;
+
             if (!uploadAll) {
-                const { finished } = Modal.createTrackedDialog<[boolean, boolean]>('Upload Files confirmation',
-                    '', UploadConfirmDialog, {
-                        file,
-                        currentIndex: i,
-                        totalFiles: okFiles.length,
-                    },
-                );
+                const { finished } = Modal.createDialog<[boolean, boolean]>(UploadConfirmDialog, {
+                    file,
+                    currentIndex: i,
+                    totalFiles: okFiles.length,
+                });
                 const [shouldContinue, shouldUploadAll] = await finished;
                 if (!shouldContinue) break;
                 if (shouldUploadAll) {
@@ -419,7 +431,17 @@ export default class ContentMessages {
                 }
             }
 
-            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, replyToEvent, promBefore);
+            promBefore = doMaybeLocalRoomAction(
+                roomId,
+                (actualRoomId) => this.sendContentToRoom(
+                    file,
+                    actualRoomId,
+                    relation,
+                    matrixClient,
+                    replyToEvent,
+                    loopPromiseBefore,
+                ),
+            );
         }
 
         if (replyToEvent) {
@@ -449,7 +471,7 @@ export default class ContentMessages {
         });
     }
 
-    public cancelUpload(promise: Promise<any>, matrixClient: MatrixClient): void {
+    public cancelUpload(promise: IAbortablePromise<any>, matrixClient: MatrixClient): void {
         const upload = this.inprogress.find(item => item.promise === promise);
         if (upload) {
             upload.canceled = true;
@@ -466,12 +488,12 @@ export default class ContentMessages {
         replyToEvent: MatrixEvent | undefined,
         promBefore: Promise<any>,
     ) {
-        const content: IContent = {
+        const content: Omit<IContent, "info"> & { info: Partial<IMediaEventInfo> } = {
             body: file.name || 'Attachment',
             info: {
                 size: file.size,
             },
-            msgtype: "", // set later
+            msgtype: MsgType.File, // set more specifically later
         };
 
         attachRelation(content, relation);
@@ -497,6 +519,7 @@ export default class ContentMessages {
                     Object.assign(content.info, imageInfo);
                     resolve();
                 }, (e) => {
+                    // Failed to thumbnail, fall back to uploading an m.file
                     logger.error(e);
                     content.msgtype = MsgType.File;
                     resolve();
@@ -510,6 +533,8 @@ export default class ContentMessages {
                     Object.assign(content.info, videoInfo);
                     resolve();
                 }, (e) => {
+                    // Failed to thumbnail, fall back to uploading an m.file
+                    logger.error(e);
                     content.msgtype = MsgType.File;
                     resolve();
                 });
@@ -541,8 +566,8 @@ export default class ContentMessages {
             dis.dispatch<UploadProgressPayload>({ action: Action.UploadProgress, upload });
         }
 
-        let error;
-        return prom.then(function() {
+        let error: MatrixError;
+        return prom.then(() => {
             if (upload.canceled) throw new UploadCanceledError();
             // XXX: upload.promise must be the promise that
             // is returned by uploadFile as it has an abort()
@@ -567,17 +592,17 @@ export default class ContentMessages {
                 });
             }
             return prom;
-        }, function(err) {
+        }, function(err: MatrixError) {
             error = err;
             if (!upload.canceled) {
                 let desc = _t("The file '%(fileName)s' failed to upload.", { fileName: upload.fileName });
-                if (err.http_status === 413) {
+                if (err.httpStatus === 413) {
                     desc = _t(
                         "The file '%(fileName)s' exceeds this homeserver's size limit for uploads",
                         { fileName: upload.fileName },
                     );
                 }
-                Modal.createTrackedDialog('Upload failed', '', ErrorDialog, {
+                Modal.createDialog(ErrorDialog, {
                     title: _t('Upload Failed'),
                     description: desc,
                 });
@@ -593,7 +618,7 @@ export default class ContentMessages {
                 // 413: File was too big or upset the server in some way:
                 // clear the media size limit so we fetch it again next time
                 // we try to upload
-                if (error && error.http_status === 413) {
+                if (error?.httpStatus === 413) {
                     this.mediaConfig = null;
                 }
                 dis.dispatch<UploadErrorPayload>({ action: Action.UploadFailed, upload, error });
@@ -613,7 +638,7 @@ export default class ContentMessages {
         return true;
     }
 
-    private ensureMediaConfigFetched(matrixClient: MatrixClient) {
+    private ensureMediaConfigFetched(matrixClient: MatrixClient): Promise<void> {
         if (this.mediaConfig !== null) return;
 
         logger.log("[Media Config] Fetching");

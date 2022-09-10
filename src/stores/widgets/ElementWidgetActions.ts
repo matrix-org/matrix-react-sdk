@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 The Matrix.org Foundation C.I.C.
+ * Copyright 2020-2022 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,7 @@
 import { IWidgetApiRequest } from "matrix-widget-api";
 
 export enum ElementWidgetActions {
-    ClientReady = "im.vector.ready",
-    WidgetReady = "io.element.widget_ready",
+    // All of these actions are currently specific to Jitsi
     JoinCall = "io.element.join",
     HangupCall = "im.vector.hangup",
     CallParticipants = "io.element.participants",
@@ -27,12 +26,22 @@ export enum ElementWidgetActions {
     MuteVideo = "io.element.mute_video",
     UnmuteVideo = "io.element.unmute_video",
     StartLiveStream = "im.vector.start_live_stream",
+    // Actions for switching layouts
+    TileLayout = "io.element.tile_layout",
+    SpotlightLayout = "io.element.spotlight_layout",
+
     OpenIntegrationManager = "integration_manager_open",
 
     /**
      * @deprecated Use MSC2931 instead
      */
     ViewRoom = "io.element.view_room",
+}
+
+export interface IHangupCallApiRequest extends IWidgetApiRequest {
+    data: {
+        errorMessage?: string;
+    };
 }
 
 /**

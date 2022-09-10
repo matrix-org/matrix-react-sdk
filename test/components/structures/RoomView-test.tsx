@@ -15,64 +15,105 @@ limitations under the License.
 */
 
 import React from "react";
-import TestRenderer from "react-test-renderer";
+// eslint-disable-next-line deprecate/import
+import { mount, ReactWrapper } from "enzyme";
+import { act } from "react-dom/test-utils";
+import { mocked, MockedObject } from "jest-mock";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventType } from "matrix-js-sdk/src/matrix";
+import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 
+import { stubClient, mockPlatformPeg, unmockPlatformPeg, wrapInMatrixClientContext } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
-import { stubClient } from "../../test-utils";
 import { Action } from "../../../src/dispatcher/actions";
-import dis from "../../../src/dispatcher/dispatcher";
+import { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../src/dispatcher/payloads/ViewRoomPayload";
-import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
-import { RoomView } from "../../../src/components/structures/RoomView";
+import { RoomView as _RoomView } from "../../../src/components/structures/RoomView";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { RoomViewStore } from "../../../src/stores/RoomViewStore";
+import SettingsStore from "../../../src/settings/SettingsStore";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
+import { NotificationState } from "../../../src/stores/notifications/NotificationState";
+import RightPanelStore from "../../../src/stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from "../../../src/stores/right-panel/RightPanelStorePhases";
+import { LocalRoom, LocalRoomState } from "../../../src/models/LocalRoom";
+import { DirectoryMember } from "../../../src/utils/direct-messages";
+import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
+
+const RoomView = wrapInMatrixClientContext(_RoomView);
 
 describe("RoomView", () => {
-    it("updates url preview visibility on encryption state change", async () => {
-        stubClient();
-        const cli = MatrixClientPeg.get();
-        cli.hasLazyLoadMembersEnabled = () => false;
-        cli.isInitialSyncComplete = () => true;
-        cli.stopPeeking = () => undefined;
+    let cli: MockedObject<MatrixClient>;
+    let room: Room;
+    let roomCount = 0;
 
-        const r1 = new Room("r1", cli, "@name:example.com");
-        cli.getRoom = () => r1;
-        r1.getPendingEvents = () => [];
+    beforeEach(async () => {
+        mockPlatformPeg({ reload: () => {} });
+        stubClient();
+        cli = mocked(MatrixClientPeg.get());
+
+        room = new Room(`!${roomCount++}:example.org`, cli, "@alice:example.org");
+        room.getPendingEvents = () => [];
+        cli.getRoom.mockImplementation(() => room);
+        // Re-emit certain events on the mocked client
+        room.on(RoomEvent.Timeline, (...args) => cli.emit(RoomEvent.Timeline, ...args));
+        room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
         DMRoomMap.makeShared();
+        RightPanelStore.instance.useUnitTestClient(cli);
+    });
 
-        const switchRoomPromise = new Promise<void>(resolve => {
-            const subscription = RoomViewStore.instance.addListener(() => {
-                if (RoomViewStore.instance.getRoomId()) {
-                    subscription.remove();
-                    resolve();
-                }
+    afterEach(async () => {
+        unmockPlatformPeg();
+        jest.restoreAllMocks();
+    });
+
+    const mountRoomView = async (): Promise<ReactWrapper> => {
+        if (RoomViewStore.instance.getRoomId() !== room.roomId) {
+            const switchedRoom = new Promise<void>(resolve => {
+                const subscription = RoomViewStore.instance.addListener(() => {
+                    if (RoomViewStore.instance.getRoomId()) {
+                        subscription.remove();
+                        resolve();
+                    }
+                });
             });
-        });
 
-        dis.dispatch<ViewRoomPayload>({
-            action: Action.ViewRoom,
-            room_id: r1.roomId,
-            metricsTrigger: null,
-        });
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                metricsTrigger: null,
+            });
 
-        await switchRoomPromise;
+            await switchedRoom;
+        }
 
-        const renderer = TestRenderer.create(<MatrixClientContext.Provider value={cli}>
-            <RoomView mxClient={cli}
+        const roomView = mount(
+            <RoomView
+                mxClient={cli}
                 threepidInvite={null}
                 oobData={null}
                 resizeNotifier={new ResizeNotifier()}
                 justCreatedOpts={null}
                 forceTimeline={false}
                 onRegistered={null}
-            />
-        </MatrixClientContext.Provider>);
+            />,
+        );
+        await act(() => Promise.resolve()); // Allow state to settle
+        return roomView;
+    };
+    const getRoomViewInstance = async (): Promise<_RoomView> =>
+        (await mountRoomView()).find(_RoomView).instance() as _RoomView;
 
-        const roomViewInstance = renderer.root.findByType(RoomView).instance;
+    it("updates url preview visibility on encryption state change", async () => {
+        // we should be starting unencrypted
+        expect(cli.isCryptoEnabled()).toEqual(false);
+        expect(cli.isRoomEncrypted(room.roomId)).toEqual(false);
+
+        const roomViewInstance = await getRoomViewInstance();
 
         // in a default (non-encrypted room, it should start out with url previews enabled)
         // This is a white-box test in that we're asserting things about the state, which
@@ -84,32 +125,127 @@ describe("RoomView", () => {
         // 2) SettingsStore is a static class and so very hard to mock out.
         expect(roomViewInstance.state.showUrlPreview).toBe(true);
 
-        // now enable encryption (by mocking out the tests for whether a room is encrypted)
-        cli.isCryptoEnabled = () => true;
-        cli.isRoomEncrypted = () => true;
+        // now enable encryption
+        cli.isCryptoEnabled.mockReturnValue(true);
+        cli.isRoomEncrypted.mockReturnValue(true);
 
         // and fake an encryption event into the room to prompt it to re-check
-        // wait until the event has been added
-        const eventAddedPromise = new Promise<void>(resolve => {
-            r1.once(RoomEvent.Timeline, (...args) => {
-                // we're also using mock client that doesn't re-emit, so
-                // we emit the event to client manually
-                cli.emit(RoomEvent.Timeline, ...args);
-                resolve();
-            });
-        });
-
-        r1.addLiveEvents([new MatrixEvent({
+        room.addLiveEvents([new MatrixEvent({
             type: "m.room.encryption",
             sender: cli.getUserId(),
             content: {},
             event_id: "someid",
-            room_id: r1.roomId,
+            room_id: room.roomId,
         })]);
-
-        await eventAddedPromise;
 
         // URL previews should now be disabled
         expect(roomViewInstance.state.showUrlPreview).toBe(false);
+    });
+
+    it("updates live timeline when a timeline reset happens", async () => {
+        const roomViewInstance = await getRoomViewInstance();
+        const oldTimeline = roomViewInstance.state.liveTimeline;
+
+        room.getUnfilteredTimelineSet().resetLiveTimeline();
+        expect(roomViewInstance.state.liveTimeline).not.toEqual(oldTimeline);
+    });
+
+    describe("video rooms", () => {
+        beforeEach(async () => {
+            // Make it a video room
+            room.isElementVideoRoom = () => true;
+            await SettingsStore.setValue("feature_video_rooms", null, SettingLevel.DEVICE, true);
+        });
+
+        it("normally doesn't open the chat panel", async () => {
+            jest.spyOn(NotificationState.prototype, "isUnread", "get").mockReturnValue(false);
+            await mountRoomView();
+            expect(RightPanelStore.instance.isOpen).toEqual(false);
+        });
+
+        it("opens the chat panel if there are unread messages", async () => {
+            jest.spyOn(NotificationState.prototype, "isUnread", "get").mockReturnValue(true);
+            await mountRoomView();
+            expect(RightPanelStore.instance.isOpen).toEqual(true);
+            expect(RightPanelStore.instance.currentCard.phase).toEqual(RightPanelPhases.Timeline);
+        });
+    });
+
+    describe("for a local room", () => {
+        let localRoom: LocalRoom;
+        let roomView: ReactWrapper;
+
+        beforeEach(async () => {
+            localRoom = room = await createDmLocalRoom(cli, [new DirectoryMember({ user_id: "@user:example.com" })]);
+            cli.store.storeRoom(room);
+        });
+
+        it("should remove the room from the store on unmount", async () => {
+            roomView = await mountRoomView();
+            roomView.unmount();
+            expect(cli.store.removeRoom).toHaveBeenCalledWith(room.roomId);
+        });
+
+        describe("in state NEW", () => {
+            it("should match the snapshot", async () => {
+                roomView = await mountRoomView();
+                expect(roomView.html()).toMatchSnapshot();
+            });
+
+            describe("that is encrypted", () => {
+                beforeEach(() => {
+                    mocked(cli.isRoomEncrypted).mockReturnValue(true);
+                    localRoom.encrypted = true;
+                    localRoom.currentState.setStateEvents([
+                        new MatrixEvent({
+                            event_id: `~${localRoom.roomId}:${cli.makeTxnId()}`,
+                            type: EventType.RoomEncryption,
+                            content: {
+                                algorithm: MEGOLM_ALGORITHM,
+                            },
+                            user_id: cli.getUserId(),
+                            sender: cli.getUserId(),
+                            state_key: "",
+                            room_id: localRoom.roomId,
+                            origin_server_ts: Date.now(),
+                        }),
+                    ]);
+                });
+
+                it("should match the snapshot", async () => {
+                    const roomView = await mountRoomView();
+                    expect(roomView.html()).toMatchSnapshot();
+                });
+            });
+        });
+
+        it("in state CREATING should match the snapshot", async () => {
+            localRoom.state = LocalRoomState.CREATING;
+            roomView = await mountRoomView();
+            expect(roomView.html()).toMatchSnapshot();
+        });
+
+        describe("in state ERROR", () => {
+            beforeEach(async () => {
+                localRoom.state = LocalRoomState.ERROR;
+                roomView = await mountRoomView();
+            });
+
+            it("should match the snapshot", async () => {
+                expect(roomView.html()).toMatchSnapshot();
+            });
+
+            it("clicking retry should set the room state to new dispatch a local room event", () => {
+                jest.spyOn(defaultDispatcher, "dispatch");
+                roomView.findWhere((w: ReactWrapper) => {
+                    return w.hasClass("mx_RoomStatusBar_unsentRetry") && w.text() === "Retry";
+                }).first().simulate("click");
+                expect(localRoom.state).toBe(LocalRoomState.NEW);
+                expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({
+                    action: "local_room_event",
+                    roomId: room.roomId,
+                });
+            });
+        });
     });
 });

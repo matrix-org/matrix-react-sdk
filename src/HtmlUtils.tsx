@@ -26,6 +26,7 @@ import { split } from 'lodash';
 import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
+import { Optional } from 'matrix-events-sdk';
 
 import {
     _linkifyElement,
@@ -107,33 +108,6 @@ function mightContainEmoji(str: string): boolean {
 export function unicodeToShortcode(char: string): string {
     const shortcodes = getEmojiFromUnicode(char)?.shortcodes;
     return shortcodes?.length ? `:${shortcodes[0]}:` : '';
-}
-
-export function processHtmlForSending(html: string): string {
-    const contentDiv = document.createElement('div');
-    contentDiv.innerHTML = html;
-
-    if (contentDiv.children.length === 0) {
-        return contentDiv.innerHTML;
-    }
-
-    let contentHTML = "";
-    for (let i = 0; i < contentDiv.children.length; i++) {
-        const element = contentDiv.children[i];
-        if (element.tagName.toLowerCase() === 'p') {
-            contentHTML += element.innerHTML;
-            // Don't add a <br /> for the last <p>
-            if (i !== contentDiv.children.length - 1) {
-                contentHTML += '<br />';
-            }
-        } else {
-            const temp = document.createElement('div');
-            temp.appendChild(element.cloneNode(true));
-            contentHTML += temp.innerHTML;
-        }
-    }
-
-    return contentHTML;
 }
 
 /*
@@ -323,6 +297,18 @@ const composerSanitizeHtmlParams: IExtendedSanitizeOptions = {
     },
 };
 
+// reduced set of allowed tags to avoid turning topics into Myspace
+const topicSanitizeHtmlParams: IExtendedSanitizeOptions = {
+    ...sanitizeHtmlParams,
+    allowedTags: [
+        'font', // custom to matrix for IRC-style font coloring
+        'del', // for markdown
+        'a', 'sup', 'sub',
+        'b', 'i', 'u', 'strong', 'em', 'strike', 'br', 'div',
+        'span',
+    ],
+};
+
 abstract class BaseHighlighter<T extends React.ReactNode> {
     constructor(public highlightClass: string, public highlightLink: string) {
     }
@@ -471,9 +457,9 @@ function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | s
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
  * opts.ref: React ref to attach to any React components returned (not compatible with opts.returnString)
  */
-export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnString): string;
-export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnNode): ReactNode;
-export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts = {}) {
+export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnString): string;
+export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnNode): ReactNode;
+export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOpts = {}) {
     const isFormattedBody = content.format === "org.matrix.custom.html" && content.formatted_body;
     let bodyHasEmoji = false;
     let isHtmlMessage = false;
@@ -484,40 +470,38 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
     }
 
     let strippedBody: string;
-    let safeBody: string;
-    let isDisplayedWithHtml: boolean;
-    // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying
-    // to highlight HTML tags themselves.  However, this does mean that we don't highlight textnodes which
-    // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
-    // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
+    let safeBody: string; // safe, sanitised HTML, preferred over `strippedBody` which is fully plaintext
+
     try {
-        if (highlights && highlights.length > 0) {
-            const highlighter = new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink);
-            const safeHighlights = highlights
-                // sanitizeHtml can hang if an unclosed HTML tag is thrown at it
-                // A search for `<foo` will make the browser crash
-                // an alternative would be to escape HTML special characters
-                // but that would bring no additional benefit as the highlighter
-                // does not work with those special chars
-                .filter((highlight: string): boolean => !highlight.includes("<"))
-                .map((highlight: string): string => sanitizeHtml(highlight, sanitizeParams));
-            // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
-            sanitizeParams.textFilter = function(safeText) {
-                return highlighter.applyHighlights(safeText, safeHighlights).join('');
-            };
-        }
+        // sanitizeHtml can hang if an unclosed HTML tag is thrown at it
+        // A search for `<foo` will make the browser crash an alternative would be to escape HTML special characters
+        // but that would bring no additional benefit as the highlighter does not work with those special chars
+        const safeHighlights = highlights
+            ?.filter((highlight: string): boolean => !highlight.includes("<"))
+            .map((highlight: string): string => sanitizeHtml(highlight, sanitizeParams));
 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
 
         if (opts.stripReplyFallback && formattedBody) formattedBody = stripHTMLReply(formattedBody);
         strippedBody = opts.stripReplyFallback ? stripPlainReply(plainBody) : plainBody;
-
         bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
 
-        // Only generate safeBody if the message was sent as org.matrix.custom.html
+        const highlighter = safeHighlights?.length
+            ? new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink)
+            : null;
+
         if (isFormattedBody) {
-            isDisplayedWithHtml = true;
+            if (highlighter) {
+                // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying
+                // to highlight HTML tags themselves. However, this does mean that we don't highlight textnodes which
+                // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
+                // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
+                // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
+                sanitizeParams.textFilter = function(safeText) {
+                    return highlighter.applyHighlights(safeText, safeHighlights).join('');
+                };
+            }
 
             safeBody = sanitizeHtml(formattedBody, sanitizeParams);
             const phtml = cheerio.load(safeBody, {
@@ -547,12 +531,14 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
             if (bodyHasEmoji) {
                 safeBody = formatEmojis(safeBody, true).join('');
             }
+        } else if (highlighter) {
+            safeBody = highlighter.applyHighlights(plainBody, safeHighlights).join('');
         }
     } finally {
         delete sanitizeParams.textFilter;
     }
 
-    const contentBody = isDisplayedWithHtml ? safeBody : strippedBody;
+    const contentBody = safeBody ?? strippedBody;
     if (opts.returnString) {
         return contentBody;
     }
@@ -590,11 +576,11 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
     });
 
     let emojiBodyElements: JSX.Element[];
-    if (!isDisplayedWithHtml && bodyHasEmoji) {
+    if (!safeBody && bodyHasEmoji) {
         emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
     }
 
-    return isDisplayedWithHtml ?
+    return safeBody ?
         <span
             key="body"
             ref={opts.ref}
@@ -603,6 +589,57 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
             dir="auto"
         /> : <span key="body" ref={opts.ref} className={className} dir="auto">
             { emojiBodyElements || strippedBody }
+        </span>;
+}
+
+/**
+ * Turn a room topic into html
+ * @param topic plain text topic
+ * @param htmlTopic optional html topic
+ * @param ref React ref to attach to any React components returned
+ * @param allowExtendedHtml whether to allow extended HTML tags such as headings and lists
+ * @return The HTML-ified node.
+ */
+export function topicToHtml(
+    topic: string,
+    htmlTopic?: string,
+    ref?: React.Ref<HTMLSpanElement>,
+    allowExtendedHtml = false,
+): ReactNode {
+    if (!SettingsStore.getValue("feature_html_topic")) {
+        htmlTopic = null;
+    }
+
+    let isFormattedTopic = !!htmlTopic;
+    let topicHasEmoji = false;
+    let safeTopic = "";
+
+    try {
+        topicHasEmoji = mightContainEmoji(isFormattedTopic ? htmlTopic : topic);
+
+        if (isFormattedTopic) {
+            safeTopic = sanitizeHtml(htmlTopic, allowExtendedHtml ? sanitizeHtmlParams : topicSanitizeHtmlParams);
+            if (topicHasEmoji) {
+                safeTopic = formatEmojis(safeTopic, true).join('');
+            }
+        }
+    } catch {
+        isFormattedTopic = false; // Fall back to plain-text topic
+    }
+
+    let emojiBodyElements: ReturnType<typeof formatEmojis>;
+    if (!isFormattedTopic && topicHasEmoji) {
+        emojiBodyElements = formatEmojis(topic, false);
+    }
+
+    return isFormattedTopic
+        ? <span
+            ref={ref}
+            dangerouslySetInnerHTML={{ __html: safeTopic }}
+            dir="auto"
+        />
+        : <span ref={ref} dir="auto">
+            { emojiBodyElements || topic }
         </span>;
 }
 
