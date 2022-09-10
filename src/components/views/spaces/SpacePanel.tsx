@@ -345,11 +345,7 @@ const SpacePanel = () => {
     });
 
     useEffect(() => {
-        try {
-            localStorage.setItem(KEY_PANEL_IS_COLLAPSED, isPanelCollapsed);
-        } catch (error) {
-            console.log(error);
-        }
+        localStorage.setItem(KEY_PANEL_IS_COLLAPSED, isPanelCollapsed);
     }, [isPanelCollapsed]);
 
     return (
