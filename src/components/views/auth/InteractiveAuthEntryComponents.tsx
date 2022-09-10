@@ -722,6 +722,7 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
                 <AccessibleButton
                     onClick={this.onSubmit}
                     kind='primary'
+                    disabled={!this.state.registrationToken}
                 >{ _t("Continue") }</AccessibleButton>
             );
         }
