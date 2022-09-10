@@ -94,7 +94,7 @@ describe("Polls", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("Open polls can be created and voted in", () => {
+    it("should be creatable and votable", () => {
         let bot: MatrixClient;
         cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
             bot = _bot;
@@ -157,7 +157,7 @@ describe("Polls", () => {
         });
     });
 
-    it("Polls without votes can be edited from context menu", () => {
+    it("should be editable from context menu if no votes have been cast", () => {
         let bot: MatrixClient;
         cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
             bot = _bot;
@@ -198,7 +198,7 @@ describe("Polls", () => {
         });
     });
 
-    it("Polls with votes cannot be edited from context menu", () => {
+    it("should not be editable from context menu if votes have been cast", () => {
         let bot: MatrixClient;
         cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
             bot = _bot;
@@ -242,7 +242,7 @@ describe("Polls", () => {
         });
     });
 
-    it("displays polls correctly in thread panel", () => {
+    it("should be displayed correctly in thread panel", () => {
         let botBob: MatrixClient;
         let botCharlie: MatrixClient;
         cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
