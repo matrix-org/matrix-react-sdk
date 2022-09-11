@@ -420,26 +420,6 @@ export class JitsiCall extends Call {
         );
     }
 
-    public async clean(): Promise<void> {
-        const now = Date.now();
-        const { devices: myDevices } = await this.client.getDevices();
-        const deviceMap = new Map<string, IMyDevice>(myDevices.map(d => [d.device_id, d]));
-
-        // Clean up our member state by filtering out logged out devices,
-        // inactive devices, and our own device (if we're disconnected)
-        await this.updateDevices(devices => {
-            const newDevices = devices.filter(d => {
-                const device = deviceMap.get(d);
-                return device?.last_seen_ts !== undefined
-                    && !(d === this.client.getDeviceId() && !this.connected)
-                    && (now - device.last_seen_ts) < this.STUCK_DEVICE_TIMEOUT_MS;
-            });
-
-            // Skip the update if the devices are unchanged
-            return newDevices.length === devices.length ? null : newDevices;
-        });
-    }
-
     protected async performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
