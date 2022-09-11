@@ -99,7 +99,7 @@ describe("createRoom", () => {
         // and we should have been reset back to admin
         expect(client.setPowerLevel).toHaveBeenCalledWith(roomId, userId, 100, undefined);
     });
-    
+
     it("doesn't create calls in non-video-rooms", async () => {
         const createJitsiCallSpy = jest.spyOn(JitsiCall, "create");
         const createElementCallSpy = jest.spyOn(ElementCall, "create");
@@ -108,7 +108,7 @@ describe("createRoom", () => {
 
         expect(createJitsiCallSpy).not.toHaveBeenCalled();
         expect(createElementCallSpy).not.toHaveBeenCalled();
-    })
+    });
 });
 
 describe("canEncryptToAllUsers", () => {
