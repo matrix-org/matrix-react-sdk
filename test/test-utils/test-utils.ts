@@ -335,8 +335,10 @@ export function mkRoomMember(roomId: string, userId: string, membership = "join"
         name: userId,
         rawDisplayName: userId,
         roomId,
+        events: {},
         getAvatarUrl: () => {},
         getMxcAvatarUrl: () => {},
+        getDMInviter: () => {},
     } as unknown as RoomMember;
 }
 
