@@ -284,6 +284,8 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
             throw e;
         }
 
+        this.room.on(RoomEvent.MyMembership, this.onMyMembership);
+        window.addEventListener("beforeunload", this.beforeUnload);
         this.connectionState = ConnectionState.Connected;
     }
 
@@ -302,6 +304,8 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
      * Manually marks the call as disconnected and cleans up.
      */
     public setDisconnected() {
+        this.room.off(RoomEvent.MyMembership, this.onMyMembership);
+        window.removeEventListener("beforeunload", this.beforeUnload);
         this.messaging = null;
         this.connectionState = ConnectionState.Disconnected;
     }
@@ -313,6 +317,12 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         if (this.connected) this.setDisconnected();
         this.emit(CallEvent.Destroy);
     }
+
+    private onMyMembership = async (_room: Room, membership: string) => {
+        if (membership !== "join") this.setDisconnected();
+    };
+
+    private beforeUnload = () => this.setDisconnected();
 }
 
 export interface JitsiCallMemberContent {
@@ -492,8 +502,6 @@ export class JitsiCall extends Call {
 
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Dock, this.onDock);
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Undock, this.onUndock);
-        this.room.on(RoomEvent.MyMembership, this.onMyMembership);
-        window.addEventListener("beforeunload", this.beforeUnload);
     }
 
     protected async performDisconnection(): Promise<void> {
@@ -518,8 +526,6 @@ export class JitsiCall extends Call {
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Dock, this.onDock);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Undock, this.onUndock);
-        this.room.off(RoomEvent.MyMembership, this.onMyMembership);
-        window.removeEventListener("beforeunload", this.beforeUnload);
 
         super.setDisconnected();
     }
@@ -574,12 +580,6 @@ export class JitsiCall extends Call {
         // to only show the active speaker and economize on space
         await this.messaging!.transport.send(ElementWidgetActions.SpotlightLayout, {});
     };
-
-    private onMyMembership = async (_room: Room, membership: string) => {
-        if (membership !== "join") this.setDisconnected();
-    };
-
-    private beforeUnload = () => this.setDisconnected();
 
     private onHangup = async (ev: CustomEvent<IWidgetApiRequest>) => {
         // If we're already in the middle of a client-initiated disconnection,
@@ -782,8 +782,6 @@ export class ElementCall extends Call {
         }
 
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-        this.room.on(RoomEvent.MyMembership, this.onMyMembership);
-        window.addEventListener("beforeunload", this.beforeUnload);
     }
 
     protected async performDisconnection(): Promise<void> {
@@ -796,9 +794,6 @@ export class ElementCall extends Call {
 
     public setDisconnected() {
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-        this.room.off(RoomEvent.MyMembership, this.onMyMembership);
-        window.removeEventListener("beforeunload", this.beforeUnload);
-
         super.setDisconnected();
     }
 
@@ -829,10 +824,4 @@ export class ElementCall extends Call {
         await this.messaging!.transport.reply(ev.detail, {}); // ack
         this.setDisconnected();
     };
-
-    private onMyMembership = async (_room: Room, membership: string) => {
-        if (membership !== "join") this.setDisconnected();
-    };
-
-    private beforeUnload = () => this.setDisconnected();
 }

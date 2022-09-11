@@ -20,7 +20,7 @@ import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Widget } from "matrix-widget-api";
 
@@ -276,6 +276,13 @@ describe("JitsiCall", () => {
         await call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connected);
         await call.disconnect();
+        expect(call.connectionState).toBe(ConnectionState.Disconnected);
+    });
+
+    it("disconnects when we leave the room", async () => {
+        await call.connect();
+        expect(call.connectionState).toBe(ConnectionState.Connected);
+        room.emit(RoomEvent.MyMembership, room, "leave");
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
     });
 
@@ -561,6 +568,13 @@ describe("ElementCall", () => {
         await call.connect();
         expect(call.connectionState).toBe(ConnectionState.Connected);
         await call.disconnect();
+        expect(call.connectionState).toBe(ConnectionState.Disconnected);
+    });
+
+    it("disconnects when we leave the room", async () => {
+        await call.connect();
+        expect(call.connectionState).toBe(ConnectionState.Connected);
+        room.emit(RoomEvent.MyMembership, room, "leave");
         expect(call.connectionState).toBe(ConnectionState.Disconnected);
     });
 
