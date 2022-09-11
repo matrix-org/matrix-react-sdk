@@ -71,7 +71,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
         initialTabId: UserTab.Labs,
     });
 
-    let inviterSection: JSX.Element;
+    let inviterSection: JSX.Element | null = null;
     let joinButtons: JSX.Element;
     if (myMembership === "join") {
         joinButtons = (
@@ -88,10 +88,11 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
             </AccessibleButton>
         );
     } else if (myMembership === "invite") {
-        const inviteSender = room.getMember(cli.getUserId())?.events.member?.getSender();
-        const inviter = inviteSender && room.getMember(inviteSender);
+        const inviteSender = room.getMember(cli.getUserId()!)?.events.member?.getSender();
 
         if (inviteSender) {
+            const inviter = room.getMember(inviteSender);
+
             inviterSection = <div className="mx_RoomPreviewCard_inviter">
                 <MemberAvatar member={inviter} fallbackUserId={inviteSender} width={32} height={32} />
                 <div>
@@ -165,7 +166,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
         avatarRow = <RoomAvatar room={room} height={50} width={50} viewAvatarOnClick />;
     }
 
-    let notice: string;
+    let notice: string | null = null;
     if (cannotJoin) {
         notice = _t("To view %(roomName)s, you need an invite", {
             roomName: room.name,
