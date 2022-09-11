@@ -19,19 +19,23 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { IDevice } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 
-import { stubClient, setupAsyncStoreWithClient } from "./test-utils";
+import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import WidgetStore from "../src/stores/WidgetStore";
 import WidgetUtils from "../src/utils/WidgetUtils";
-import { VIDEO_CHANNEL_MEMBER } from "../src/utils/VideoChannelUtils";
+import { JitsiCall } from "../src/models/Call";
 import createRoom, { canEncryptToAllUsers } from '../src/createRoom';
 
 describe("createRoom", () => {
+    mockPlatformPeg();
+
     let client: MatrixClient;
     beforeEach(() => {
         stubClient();
         client = MatrixClientPeg.get();
     });
+
+    afterEach(() => jest.clearAllMocks());
 
     it("sets up video rooms correctly", async () => {
         setupAsyncStoreWithClient(WidgetStore.instance, client);
@@ -47,7 +51,7 @@ describe("createRoom", () => {
                 },
                 events: {
                     "im.vector.modular.widgets": widgetPower,
-                    [VIDEO_CHANNEL_MEMBER]: videoMemberPower,
+                    [JitsiCall.MEMBER_EVENT_TYPE]: jitsiMemberPower,
                 },
             },
         }]] = mocked(client.createRoom).mock.calls as any; // no good type
@@ -60,7 +64,7 @@ describe("createRoom", () => {
         expect(widgetStateKey).toEqual("im.vector.modular.widgets");
 
         // All members should be able to update their connected devices
-        expect(videoMemberPower).toEqual(0);
+        expect(jitsiMemberPower).toEqual(0);
         // Jitsi widget should be immutable for admins
         expect(widgetPower).toBeGreaterThan(100);
         // and we should have been reset back to admin

@@ -14,46 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
-import dis from "../dispatcher";
-import { Action } from "../actions";
-import { TimelineRenderingType } from "../../contexts/RoomContext";
-
-export const showThread = (props: {
-    rootEvent: MatrixEvent;
-    initialEvent?: MatrixEvent;
-    highlighted?: boolean;
-    scroll_into_view?: boolean;
-    push?: boolean;
-}) => {
-    const push = props.push ?? false;
-    const threadViewCard = {
-        phase: RightPanelPhases.ThreadView,
-        state: {
-            threadHeadEvent: props.rootEvent,
-            initialEvent: props.initialEvent,
-            isInitialEventHighlighted: props.highlighted,
-            initialEventScrollIntoView: props.scroll_into_view,
-        },
-    };
-    if (push) {
-        RightPanelStore.instance.pushCard(threadViewCard);
-    } else {
-        RightPanelStore.instance.setCards([
-            { phase: RightPanelPhases.ThreadPanel },
-            threadViewCard,
-        ]);
-    }
-
-    // Focus the composer
-    dis.dispatch({
-        action: Action.FocusSendMessageComposer,
-        context: TimelineRenderingType.Thread,
-    });
-};
 
 export const showThreadPanel = () => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel });

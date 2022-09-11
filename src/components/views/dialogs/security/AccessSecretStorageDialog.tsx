@@ -328,8 +328,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 <p>{ _t(
                     "Enter your Security Phrase or <button>use your Security Key</button> to continue.", {},
                     {
-                        button: s => <AccessibleButton className="mx_linkButton"
-                            element="span"
+                        button: s => <AccessibleButton
+                            kind="link_inline"
                             onClick={this.onUseRecoveryKeyClick}
                         >
                             { s }
@@ -395,7 +395,10 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             />
                         </div>
                         <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
-                            { _t("or") }
+                            { _t("%(securityKey)s or %(recoveryFile)s", {
+                                recoveryFile: "",
+                                securityKey: "",
+                            }) }
                         </span>
                         <div>
                             <input type="file"

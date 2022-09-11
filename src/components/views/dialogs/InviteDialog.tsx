@@ -21,13 +21,15 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
+import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
-import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
 import { abbreviateUrl } from "../../../utils/UrlUtils";
 import IdentityAuthClient from "../../../IdentityAuthClient";
@@ -54,13 +56,19 @@ import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
-import CallHandler from "../../../CallHandler";
+import LegacyCallHandler from "../../../LegacyCallHandler";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import CopyableText from "../elements/CopyableText";
 import { ScreenName } from '../../../PosthogTrackers';
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { DirectoryMember, IDMUserTileProps, Member, startDm, ThreepidMember } from "../../../utils/direct-messages";
+import {
+    DirectoryMember,
+    IDMUserTileProps,
+    Member,
+    startDmOnFirstMessage,
+    ThreepidMember,
+} from "../../../utils/direct-messages";
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
 import Modal from '../../../Modal';
 import dis from "../../../dispatcher/dispatcher";
@@ -186,8 +194,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 
         const avatarSize = 36;
         const avatar = (this.props.member as ThreepidMember).isEmail
-            ? <img
-                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
+            ? <EmailPillAvatarIcon
                 width={avatarSize}
                 height={avatarSize}
             />
@@ -444,11 +451,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     }
 
     private startDm = async () => {
-        this.setState({ busy: true });
         try {
             const cli = MatrixClientPeg.get();
             const targets = this.convertFilter();
-            await startDm(cli, targets);
+            startDmOnFirstMessage(cli, targets);
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);
@@ -456,8 +462,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 busy: false,
                 errorText: _t("We couldn't create your DM."),
             });
-        } finally {
-            this.setState({ busy: false });
         }
     };
 
@@ -506,13 +510,13 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 return;
             }
 
-            CallHandler.instance.startTransferToMatrixID(
+            LegacyCallHandler.instance.startTransferToMatrixID(
                 this.props.call,
                 targetIds[0],
                 this.state.consultFirst,
             );
         } else {
-            CallHandler.instance.startTransferToPhoneNumber(
+            LegacyCallHandler.instance.startTransferToPhoneNumber(
                 this.props.call,
                 this.state.dialPadValue,
                 this.state.consultFirst,
@@ -813,7 +817,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         // Update the IS in account data. Actually using it may trigger terms.
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        useDefaultIdentityServer();
+        setToDefaultIdentityServer();
         this.setState({ canUseIdentityServer: true, tryingIdentityServer: false });
     };
 
@@ -936,6 +940,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 disabled={this.state.busy || (this.props.kind == KIND_CALL_TRANSFER && this.state.targets.length > 0)}
                 autoComplete="off"
                 placeholder={hasPlaceholder ? _t("Search") : null}
+                data-test-id="invite-dialog-input"
             />
         );
         return (
@@ -1151,10 +1156,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 if (visibility === "world_readable" || visibility === "shared") {
                     keySharingWarning =
                         <p className='mx_InviteDialog_helpText'>
-                            <img
-                                src={require("../../../../res/img/element-icons/info.svg").default}
-                                width={14}
-                                height={14} />
+                            <InfoIcon height={14} width={14} />
                             { " " + _t("Invited people will be able to read old messages.") }
                         </p>;
                 }

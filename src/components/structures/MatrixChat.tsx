@@ -32,6 +32,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
 import 'focus-visible';
@@ -60,13 +61,14 @@ import ThemeController from "../../settings/controllers/ThemeController";
 import { startAnyRegistrationFlow } from "../../Registration";
 import { messageForSyncError } from '../../utils/ErrorUtils';
 import ResizeNotifier from "../../utils/ResizeNotifier";
-import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../utils/AutoDiscoveryUtils";
+import AutoDiscoveryUtils from "../../utils/AutoDiscoveryUtils";
 import DMRoomMap from '../../utils/DMRoomMap';
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { FontWatcher } from '../../settings/watchers/FontWatcher';
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import ToastStore from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
+import { UseCase } from "../../settings/enums/UseCase";
 import type LoggedInViewType from "./LoggedInView";
 import LoggedInView from './LoggedInView';
 import { Action } from "../../dispatcher/actions";
@@ -93,7 +95,6 @@ import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
 import UserSettingsDialog from '../views/dialogs/UserSettingsDialog';
-import { UserTab } from "../views/dialogs/UserTab";
 import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
 import RoomDirectory from './RoomDirectory';
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
@@ -113,12 +114,11 @@ import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
 import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
-import CallHandler from "../../CallHandler";
+import LegacyCallHandler from "../../LegacyCallHandler";
 import { showSpaceInvite } from "../../utils/space";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
-import GenericToast from '../views/toasts/GenericToast';
 import Views from '../../Views';
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { ViewHomePagePayload } from '../../dispatcher/payloads/ViewHomePagePayload';
@@ -128,8 +128,15 @@ import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStart
 import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
-import VideoChannelStore from "../../stores/VideoChannelStore";
+import { CallStore } from "../../stores/CallStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
+import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
+import { TimelineRenderingType } from "../../contexts/RoomContext";
+import { UseCaseSelection } from '../views/elements/UseCaseSelection';
+import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
+import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -150,7 +157,7 @@ interface IScreen {
     params?: QueryDict;
 }
 
-interface IProps { // TODO type things better
+interface IProps {
     config: IConfigOptions;
     serverConfig?: ValidatedServerConfig;
     onNewScreen: (screen: string, replaceLast: boolean) => void;
@@ -569,9 +576,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             case 'logout':
-                CallHandler.instance.hangupAllCalls();
-                if (VideoChannelStore.instance.connected) VideoChannelStore.instance.setDisconnected();
-                Lifecycle.logout();
+                LegacyCallHandler.instance.hangupAllCalls();
+                Promise.all([...CallStore.instance.activeCalls].map(call => call.disconnect()))
+                    .finally(() => Lifecycle.logout());
                 break;
             case 'require_registration':
                 startAnyRegistrationFlow(payload as any);
@@ -738,9 +745,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.state.resizeNotifier.notifyLeftHandleResized();
                 });
                 break;
-            case 'focus_room_filter': // for CtrlOrCmd+K to work by expanding the left panel first
-                if (SettingsStore.getValue("feature_spotlight")) break; // don't expand if spotlight enabled
-                // fallthrough
             case 'show_left_panel':
                 this.setState({
                     collapseLhs: false,
@@ -759,7 +763,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.state.view !== Views.LOGIN &&
                     this.state.view !== Views.REGISTER &&
                     this.state.view !== Views.COMPLETE_SECURITY &&
-                    this.state.view !== Views.E2E_SETUP
+                    this.state.view !== Views.E2E_SETUP &&
+                    this.state.view !== Views.USE_CASE_SELECTION
                 ) {
                     this.onLoggedIn();
                 }
@@ -802,6 +807,41 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 hideAnalyticsToast();
                 SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, false);
                 break;
+            case Action.ShowThread: {
+                const {
+                    rootEvent,
+                    initialEvent,
+                    highlighted,
+                    scrollIntoView,
+                    push,
+                } = payload as ShowThreadPayload;
+
+                const threadViewCard = {
+                    phase: RightPanelPhases.ThreadView,
+                    state: {
+                        threadHeadEvent: rootEvent,
+                        initialEvent: initialEvent,
+                        isInitialEventHighlighted: highlighted,
+                        initialEventScrollIntoView: scrollIntoView,
+                    },
+                };
+                if (push ?? false) {
+                    RightPanelStore.instance.pushCard(threadViewCard);
+                } else {
+                    RightPanelStore.instance.setCards([
+                        { phase: RightPanelPhases.ThreadPanel },
+                        threadViewCard,
+                    ]);
+                }
+
+                // Focus the composer
+                dis.dispatch({
+                    action: Action.FocusSendMessageComposer,
+                    context: TimelineRenderingType.Thread,
+                });
+
+                break;
+            }
         }
     };
 
@@ -890,7 +930,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         // If we are redirecting to a Room Alias and it is for the room we already showing then replace history item
-        const replaceLast = presentedId[0] === "#" && roomInfo.room_id === this.state.currentRoomId;
+        let replaceLast = presentedId[0] === "#" && roomInfo.room_id === this.state.currentRoomId;
+
+        if (isLocalRoom(this.state.currentRoomId)) {
+            // Replace local room history items
+            replaceLast = true;
+        }
 
         if (roomInfo.room_id === this.state.currentRoomId) {
             // if we are re-viewing the same room then copy any state we already know
@@ -1210,6 +1255,40 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private async onLoggedIn() {
         ThemeController.isLogin = false;
         this.themeWatcher.recheck();
+        StorageManager.tryPersistStorage();
+
+        if (
+            MatrixClientPeg.currentUserIsJustRegistered() &&
+            SettingsStore.getValue("FTUE.useCaseSelection") === null
+        ) {
+            this.setStateForNewView({ view: Views.USE_CASE_SELECTION });
+
+            // Listen to changes in settings and hide the use case screen if appropriate - this is necessary because
+            // account settings can still be changing at this point in app init (due to the initial sync being cached,
+            // then subsequent syncs being received from the server)
+            //
+            // This seems unlikely for something that should happen directly after registration, but if a user does
+            // their initial login on another device/browser than they registered on, we want to avoid asking this
+            // question twice
+            //
+            // initPosthogAnalyticsToast pioneered this technique, we’re just reusing it here.
+            SettingsStore.watchSetting("FTUE.useCaseSelection", null,
+                (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+                    if (newValue !== null && this.state.view === Views.USE_CASE_SELECTION) {
+                        this.onShowPostLoginScreen();
+                    }
+                });
+        } else {
+            return this.onShowPostLoginScreen();
+        }
+    }
+
+    private async onShowPostLoginScreen(useCase?: UseCase) {
+        if (useCase) {
+            PosthogAnalytics.instance.setProperty("ftueUseCaseSelection", useCase);
+            SettingsStore.setValue("FTUE.useCaseSelection", null, SettingLevel.ACCOUNT, useCase);
+        }
+
         this.setStateForNewView({ view: Views.LOGGED_IN });
         // If a specific screen is set to be shown after login, show that above
         // all else, as it probably means the user clicked on something already.
@@ -1245,12 +1324,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
         } else {
             this.showScreenAfterLogin();
-        }
-
-        StorageManager.tryPersistStorage();
-
-        if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
-            this.initPosthogAnalyticsToast();
         }
 
         if (SdkConfig.get("mobile_guide_toast")) {
@@ -1398,42 +1471,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 showNotificationsToast(false);
             }
 
-            if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {
-                setTimeout(() => {
-                    // Skip the toast if the beta is already enabled or the user has changed the setting from default
-                    if (SettingsStore.getValue("feature_spotlight") ||
-                        SettingsStore.getValue("feature_spotlight", null, true) !== null) {
-                        return;
-                    }
-
-                    const key = "BETA_SPOTLIGHT_TOAST";
-                    ToastStore.sharedInstance().addOrReplaceToast({
-                        key,
-                        title: _t("New search beta available"),
-                        props: {
-                            description: _t("We're testing a new search to make finding what you want quicker.\n"),
-                            acceptLabel: _t("Learn more"),
-                            onAccept: () => {
-                                dis.dispatch({
-                                    action: Action.ViewUserSettings,
-                                    initialTabId: UserTab.Labs,
-                                });
-                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
-                                ToastStore.sharedInstance().dismissToast(key);
-                            },
-                            rejectLabel: _t("Dismiss"),
-                            onReject: () => {
-                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
-                                ToastStore.sharedInstance().dismissToast(key);
-                            },
-                        },
-                        icon: "labs",
-                        component: GenericToast,
-                        priority: 9,
-                    });
-                }, 5 * 60 * 1000); // show after 5 minutes to not overload user with toasts on launch
-            }
-
             dis.fire(Action.FocusSendMessageComposer);
             this.setState({
                 ready: true,
@@ -1493,7 +1530,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // When logging out, stop tracking failures and destroy state
         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
-        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as MatrixError));
+        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
 
         cli.on(ClientEvent.Room, (room) => {
             if (MatrixClientPeg.get().isCryptoEnabled()) {
@@ -1603,6 +1640,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // changing colour. More advanced behaviour will come once
             // we implement more settings.
             cli.setGlobalErrorOnUnknownDevices(false);
+        }
+
+        // Cannot be done in OnLoggedIn as at that point the AccountSettingsHandler doesn't yet have a client
+        // Will be moved to a pre-login flow as well
+        if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
+            this.initPosthogAnalyticsToast();
         }
     }
 
@@ -2044,6 +2087,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onTokenLoginCompleted={this.props.onTokenLoginCompleted}
                     fragmentAfterLogin={fragmentAfterLogin}
                 />
+            );
+        } else if (this.state.view === Views.USE_CASE_SELECTION) {
+            view = (
+                <UseCaseSelection onFinished={useCase => this.onShowPostLoginScreen(useCase)} />
             );
         } else {
             logger.error(`Unknown view ${this.state.view}`);

@@ -45,11 +45,11 @@ Platform Targets:
 All code lands on the `develop` branch - `master` is only used for stable releases.
 **Please file PRs against `develop`!!**
 
-Please follow the standard Matrix contributor's guide:
-https://github.com/matrix-org/matrix-js-sdk/blob/develop/CONTRIBUTING.md
+We use the same contribution guide as Element. Check it out here:
+https://github.com/vector-im/element-web/blob/develop/CONTRIBUTING.md
 
-Please follow the Matrix JS/React code style as per:
-https://github.com/matrix-org/matrix-react-sdk/blob/master/code_style.md
+Our code style is also the same as Element's:
+https://github.com/vector-im/element-web/blob/develop/code_style.md
 
 Code should be committed as follows:
  * All new components:
@@ -211,6 +211,6 @@ Now the yarn commands should work as normal.
 ### End-to-End tests
 
 Make sure you've got your Element development server running (by doing `yarn
-start` in element-web), and then in this project, run `yarn run e2etests`. See
-[`test/end-to-end-tests/README.md`](https://github.com/matrix-org/matrix-react-sdk/blob/develop/test/end-to-end-tests/README.md)
+start` in element-web), and then in this project, run `yarn run test:cypress`. See
+[`docs/cypress.md`](https://github.com/matrix-org/matrix-react-sdk/blob/develop/docs/cypress.md)
 for more information.

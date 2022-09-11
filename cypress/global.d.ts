@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import "../src/@types/global";
+import "../src/@types/svg";
+import "../src/@types/raw-loader";
 import "matrix-js-sdk/src/@types/global";
 import type {
     MatrixClient,
@@ -25,14 +28,17 @@ import type {
     RoomStateEvent,
     Visibility,
     RoomMemberEvent,
+    ICreateClientOpts,
 } from "matrix-js-sdk/src/matrix";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
+import type SettingsStore from "../src/settings/SettingsStore";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface ApplicationWindow {
+            mxSettingsStore: typeof SettingsStore;
             mxMatrixClientPeg: {
                 matrixClient?: MatrixClient;
             };
@@ -50,6 +56,7 @@ declare global {
                 MemoryCryptoStore: typeof MemoryCryptoStore;
                 Visibility: typeof Visibility;
                 Preset: typeof Preset;
+                createClient(opts: ICreateClientOpts | string);
             };
         }
     }

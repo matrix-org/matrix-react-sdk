@@ -97,6 +97,7 @@ const DEFAULT_CONTENT_PROPS: ContentProps = {
 export const makeBeaconEvent = (
     sender: string,
     contentProps: Partial<ContentProps> = {},
+    roomId?: string,
 ): MatrixEvent => {
     const { geoUri, timestamp, beaconInfoId, description } = {
         ...DEFAULT_CONTENT_PROPS,
@@ -105,6 +106,7 @@ export const makeBeaconEvent = (
 
     return new MatrixEvent({
         type: M_BEACON.name,
+        room_id: roomId,
         sender,
         content: makeBeaconContent(geoUri, timestamp, beaconInfoId, description),
     });
@@ -203,7 +205,11 @@ export const makeRoomWithBeacons = (
     const room = makeRoomWithStateEvents(beaconInfoEvents, { roomId, mockClient });
     const beacons = beaconInfoEvents.map(event => room.currentState.beacons.get(getBeaconInfoIdentifier(event)));
     if (locationEvents) {
-        beacons.forEach(beacon => beacon.addLocations(locationEvents));
+        beacons.forEach(beacon => {
+            // this filtering happens in roomState, which is bypassed here
+            const validLocationEvents = locationEvents?.filter(event => event.getSender() === beacon.beaconInfoOwner);
+            beacon.addLocations(validLocationEvents);
+        });
     }
     return beacons;
 };
