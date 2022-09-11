@@ -55,21 +55,13 @@ jest.spyOn(SettingsStore, "getValue").mockImplementation(settingName =>
     settingName === "feature_video_rooms" || settingName === "feature_element_call_video_rooms" ? true : undefined,
 );
 
-const setUpClientRoomAndStores = async <T extends Call>(
-    roomType: RoomType,
-    mkCall: (room: Room) => Promise<T>,
-): Promise<{
+const setUpClientRoomAndStores = (roomType: RoomType): {
     client: Mocked<MatrixClient>;
     room: Room;
     alice: RoomMember;
     bob: RoomMember;
     carol: RoomMember;
-    call: T;
-    widget: Widget;
-    messaging: Mocked<ClientWidgetApi>;
-    audioMutedSpy: jest.SpyInstance<boolean, []>;
-    videoMutedSpy: jest.SpyInstance<boolean, []>;
-}> => {
+} => {
     stubClient();
     const client = mocked<MatrixClient>(MatrixClientPeg.get());
 
@@ -112,7 +104,22 @@ const setUpClientRoomAndStores = async <T extends Call>(
     setupAsyncStoreWithClient(WidgetStore.instance, client);
     setupAsyncStoreWithClient(WidgetMessagingStore.instance, client);
 
-    const call = await mkCall(room);
+    return { client, room, alice, bob, carol };
+};
+
+const cleanUpClientRoomAndStores = (
+    client: MatrixClient,
+    room: Room,
+) => {
+    client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
+};
+
+const setUpWidget = (call: Call): {
+    widget: Widget;
+    messaging: Mocked<ClientWidgetApi>;
+    audioMutedSpy: jest.SpyInstance<boolean, []>;
+    videoMutedSpy: jest.SpyInstance<boolean, []>;
+} => {
     const widget = new Widget(call.widget);
 
     const eventEmitter = new EventEmitter();
@@ -127,26 +134,23 @@ const setUpClientRoomAndStores = async <T extends Call>(
             reply: jest.fn(),
         },
     } as unknown as Mocked<ClientWidgetApi>;
-    WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
+    WidgetMessagingStore.instance.storeMessaging(widget, call.roomId, messaging);
 
     const audioMutedSpy = jest.spyOn(MediaDeviceHandler, "startWithAudioMuted", "get");
     const videoMutedSpy = jest.spyOn(MediaDeviceHandler, "startWithVideoMuted", "get");
 
-    return { client, room, alice, bob, carol, call, widget, messaging, audioMutedSpy, videoMutedSpy };
+    return { widget, messaging, audioMutedSpy, videoMutedSpy };
 };
 
-const cleanUpClientRoomAndStores = (
-    client: MatrixClient,
-    room: Room,
+const cleanUpCallAndWidget = (
     call: Call,
     widget: Widget,
     audioMutedSpy: jest.SpyInstance<boolean, []>,
     videoMutedSpy: jest.SpyInstance<boolean, []>,
 ) => {
     call.destroy();
-    client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
-    WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
     jest.clearAllMocks();
+    WidgetMessagingStore.instance.stopMessaging(widget, call.roomId);
     audioMutedSpy.mockRestore();
     videoMutedSpy.mockRestore();
 };
@@ -159,326 +163,355 @@ describe("JitsiCall", () => {
     let alice: RoomMember;
     let bob: RoomMember;
     let carol: RoomMember;
-    let call: JitsiCall;
-    let widget: Widget;
-    let messaging: Mocked<ClientWidgetApi>;
-    let audioMutedSpy: jest.SpyInstance<boolean, []>;
-    let videoMutedSpy: jest.SpyInstance<boolean, []>;
 
-    beforeEach(async () => {
-        jest.useFakeTimers();
-        jest.setSystemTime(0);
+    beforeEach(() => {
+        ({ client, room, alice, bob, carol } = setUpClientRoomAndStores(RoomType.ElementVideo));
+    });
 
-        ({ client, room, alice, bob, carol, call, widget, messaging, audioMutedSpy, videoMutedSpy } =
-            await setUpClientRoomAndStores(RoomType.ElementVideo, async room => {
-                await JitsiCall.create(room);
-                const call = JitsiCall.get(room);
-                if (call === null) throw new Error("Failed to create call");
-                return call;
-            }));
+    afterEach(() => cleanUpClientRoomAndStores(client, room));
 
-        mocked(messaging.transport).send.mockImplementation(async (action: string) => {
-            if (action === ElementWidgetActions.JoinCall) {
-                messaging.emit(
-                    `action:${ElementWidgetActions.JoinCall}`,
-                    new CustomEvent("widgetapirequest", { detail: {} }),
-                );
-            } else if (action === ElementWidgetActions.HangupCall) {
-                messaging.emit(
-                    `action:${ElementWidgetActions.HangupCall}`,
-                    new CustomEvent("widgetapirequest", { detail: {} }),
-                );
-            }
-            return {};
+    describe("get", () => {
+        it("finds no calls", () => {
+            expect(JitsiCall.get(room)).toBeNull();
+        });
+
+        it("finds calls", async () => {
+            await JitsiCall.create(room);
+            expect(JitsiCall.get(room)).toBeInstanceOf(JitsiCall);
+        });
+
+        it("ignores terminated calls", async () => {
+            await JitsiCall.create(room);
+
+            // Terminate the call
+            const [event] = room.currentState.getStateEvents("im.vector.modular.widgets");
+            await client.sendStateEvent(room.roomId, "im.vector.modular.widgets", {}, event.getStateKey()!);
+
+            expect(JitsiCall.get(room)).toBeNull();
         });
     });
 
-    afterEach(() => cleanUpClientRoomAndStores(client, room, call, widget, audioMutedSpy, videoMutedSpy));
+    describe("instance", () => {
+        let call: JitsiCall;
+        let widget: Widget;
+        let messaging: Mocked<ClientWidgetApi>;
+        let audioMutedSpy: jest.SpyInstance<boolean, []>;
+        let videoMutedSpy: jest.SpyInstance<boolean, []>;
 
-    it("connects muted", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        audioMutedSpy.mockReturnValue(true);
-        videoMutedSpy.mockReturnValue(true);
+        beforeEach(async () => {
+            jest.useFakeTimers();
+            jest.setSystemTime(0);
 
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
-            audioInput: null,
-            videoInput: null,
-        });
-    });
+            await JitsiCall.create(room);
+            const maybeCall = JitsiCall.get(room);
+            if (maybeCall === null) throw new Error("Failed to create call");
+            call = maybeCall;
 
-    it("connects unmuted", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        audioMutedSpy.mockReturnValue(false);
-        videoMutedSpy.mockReturnValue(false);
+            ({ widget, messaging, audioMutedSpy, videoMutedSpy } = setUpWidget(call));
 
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
-            audioInput: "Headphones",
-            videoInput: "Built-in webcam",
-        });
-    });
-
-    it("waits for messaging when connecting", async () => {
-        // Temporarily remove the messaging to simulate connecting while the
-        // widget is still initializing
-        WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-
-        const connect = call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connecting);
-
-        WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
-        await connect;
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-    });
-
-    it("handles remote disconnection", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-
-        messaging.emit(
-            `action:${ElementWidgetActions.HangupCall}`,
-            new CustomEvent("widgetapirequest", { detail: {} }),
-        );
-        await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
-    });
-
-    it("handles instant remote disconnection when connecting", async () => {
-        mocked(messaging.transport).send.mockImplementation(async action => {
-            if (action === ElementWidgetActions.JoinCall) {
-                // Emit the hangup event *before* the join event to fully
-                // exercise the race condition
-                messaging.emit(
-                    `action:${ElementWidgetActions.HangupCall}`,
-                    new CustomEvent("widgetapirequest", { detail: {} }),
-                );
-                messaging.emit(
-                    `action:${ElementWidgetActions.JoinCall}`,
-                    new CustomEvent("widgetapirequest", { detail: {} }),
-                );
-            }
-            return {};
-        });
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        // Should disconnect on its own almost instantly
-        await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
-    });
-
-    it("disconnects", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        await call.disconnect();
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-    });
-
-    it("disconnects when we leave the room", async () => {
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        room.emit(RoomEvent.MyMembership, room, "leave");
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-    });
-
-    it("tracks participants in room state", async () => {
-        expect([...call.participants]).toEqual([]);
-
-        // A participant with multiple devices (should only show up once)
-        await client.sendStateEvent(
-            room.roomId,
-            JitsiCall.MEMBER_EVENT_TYPE,
-            { devices: ["bobweb", "bobdesktop"], expires_ts: 1000 * 60 * 10 },
-            bob.userId,
-        );
-        // A participant with an expired device (should not show up)
-        await client.sendStateEvent(
-            room.roomId,
-            JitsiCall.MEMBER_EVENT_TYPE,
-            { devices: ["carolandroid"], expires_ts: -1000 * 60 },
-            carol.userId,
-        );
-
-        // Now, stub out client.sendStateEvent so we can test our local echo
-        client.sendStateEvent.mockReset();
-        await call.connect();
-        expect([...call.participants]).toEqual([bob, alice]);
-
-        await call.disconnect();
-        expect([...call.participants]).toEqual([bob]);
-    });
-
-    it("updates room state when connecting and disconnecting", async () => {
-        const now1 = Date.now();
-        await call.connect();
-        await waitFor(() => expect(
-            room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
-        ).toEqual({
-            devices: [client.getDeviceId()],
-            expires_ts: now1 + call.STUCK_DEVICE_TIMEOUT_MS,
-        }), { interval: 5 });
-
-        const now2 = Date.now();
-        await call.disconnect();
-        await waitFor(() => expect(
-            room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
-        ).toEqual({
-            devices: [],
-            expires_ts: now2 + call.STUCK_DEVICE_TIMEOUT_MS,
-        }), { interval: 5 });
-    });
-
-    it("repeatedly updates room state while connected", async () => {
-        await call.connect();
-        await waitFor(() => expect(client.sendStateEvent).toHaveBeenLastCalledWith(
-            room.roomId,
-            JitsiCall.MEMBER_EVENT_TYPE,
-            { devices: [client.getDeviceId()], expires_ts: expect.any(Number) },
-            alice.userId,
-        ), { interval: 5 });
-
-        client.sendStateEvent.mockClear();
-        jest.advanceTimersByTime(call.STUCK_DEVICE_TIMEOUT_MS);
-        await waitFor(() => expect(client.sendStateEvent).toHaveBeenLastCalledWith(
-            room.roomId,
-            JitsiCall.MEMBER_EVENT_TYPE,
-            { devices: [client.getDeviceId()], expires_ts: expect.any(Number) },
-            alice.userId,
-        ), { interval: 5 });
-    });
-
-    it("emits events when connection state changes", async () => {
-        const events: ConnectionState[] = [];
-        const onConnectionState = (state: ConnectionState) => events.push(state);
-        call.on(CallEvent.ConnectionState, onConnectionState);
-
-        await call.connect();
-        await call.disconnect();
-        expect(events).toEqual([
-            ConnectionState.Connecting,
-            ConnectionState.Connected,
-            ConnectionState.Disconnecting,
-            ConnectionState.Disconnected,
-        ]);
-    });
-
-    it("emits events when participants change", async () => {
-        const events: Set<RoomMember>[] = [];
-        const onParticipants = (participants: Set<RoomMember>) => {
-            if (!isEqual(participants, events[events.length - 1])) events.push(participants);
-        };
-        call.on(CallEvent.Participants, onParticipants);
-
-        await call.connect();
-        await call.disconnect();
-        expect(events).toEqual([new Set([alice]), new Set()]);
-    });
-
-    it("switches to spotlight layout when the widget becomes a PiP", async () => {
-        await call.connect();
-        ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Undock);
-        expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.SpotlightLayout, {});
-        ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Dock);
-        expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.TileLayout, {});
-    });
-
-    describe("clean", () => {
-        const aliceWeb: IMyDevice = {
-            device_id: "aliceweb",
-            last_seen_ts: 0,
-        };
-        const aliceDesktop: IMyDevice = {
-            device_id: "alicedesktop",
-            last_seen_ts: 0,
-        };
-        const aliceDesktopOffline: IMyDevice = {
-            device_id: "alicedesktopoffline",
-            last_seen_ts: 1000 * 60 * 60 * -2, // 2 hours ago
-        };
-        const aliceDesktopNeverOnline: IMyDevice = {
-            device_id: "alicedesktopneveronline",
-        };
-
-        const mkContent = (devices: IMyDevice[]): JitsiCallMemberContent => ({
-            expires_ts: 1000 * 60 * 10,
-            devices: devices.map(d => d.device_id),
-        });
-        const expectDevices = (devices: IMyDevice[]) => expect(
-            room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
-        ).toEqual({
-            expires_ts: expect.any(Number),
-            devices: devices.map(d => d.device_id),
-        });
-
-        beforeEach(() => {
-            client.getDeviceId.mockReturnValue(aliceWeb.device_id);
-            client.getDevices.mockResolvedValue({
-                devices: [
-                    aliceWeb,
-                    aliceDesktop,
-                    aliceDesktopOffline,
-                    aliceDesktopNeverOnline,
-                ],
+            mocked(messaging.transport).send.mockImplementation(async (action: string) => {
+                if (action === ElementWidgetActions.JoinCall) {
+                    messaging.emit(
+                        `action:${ElementWidgetActions.JoinCall}`,
+                        new CustomEvent("widgetapirequest", { detail: {} }),
+                    );
+                } else if (action === ElementWidgetActions.HangupCall) {
+                    messaging.emit(
+                        `action:${ElementWidgetActions.HangupCall}`,
+                        new CustomEvent("widgetapirequest", { detail: {} }),
+                    );
+                }
+                return {};
             });
         });
 
-        it("doesn't clean up valid devices", async () => {
+        afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
+
+        it("connects muted", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            audioMutedSpy.mockReturnValue(true);
+            videoMutedSpy.mockReturnValue(true);
+
             await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
+                audioInput: null,
+                videoInput: null,
+            });
+        });
+
+        it("connects unmuted", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            audioMutedSpy.mockReturnValue(false);
+            videoMutedSpy.mockReturnValue(false);
+
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
+                audioInput: "Headphones",
+                videoInput: "Built-in webcam",
+            });
+        });
+
+        it("waits for messaging when connecting", async () => {
+            // Temporarily remove the messaging to simulate connecting while the
+            // widget is still initializing
+            WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+
+            const connect = call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connecting);
+
+            WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
+            await connect;
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+        });
+
+        it("handles remote disconnection", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+
+            messaging.emit(
+                `action:${ElementWidgetActions.HangupCall}`,
+                new CustomEvent("widgetapirequest", { detail: {} }),
+            );
+            await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
+        });
+
+        it("handles instant remote disconnection when connecting", async () => {
+            mocked(messaging.transport).send.mockImplementation(async action => {
+                if (action === ElementWidgetActions.JoinCall) {
+                    // Emit the hangup event *before* the join event to fully
+                    // exercise the race condition
+                    messaging.emit(
+                        `action:${ElementWidgetActions.HangupCall}`,
+                        new CustomEvent("widgetapirequest", { detail: {} }),
+                    );
+                    messaging.emit(
+                        `action:${ElementWidgetActions.JoinCall}`,
+                        new CustomEvent("widgetapirequest", { detail: {} }),
+                    );
+                }
+                return {};
+            });
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            // Should disconnect on its own almost instantly
+            await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
+        });
+
+        it("disconnects", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            await call.disconnect();
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        });
+
+        it("disconnects when we leave the room", async () => {
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            room.emit(RoomEvent.MyMembership, room, "leave");
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        });
+
+        it("tracks participants in room state", async () => {
+            expect([...call.participants]).toEqual([]);
+
+            // A participant with multiple devices (should only show up once)
             await client.sendStateEvent(
                 room.roomId,
                 JitsiCall.MEMBER_EVENT_TYPE,
-                mkContent([aliceWeb, aliceDesktop]),
-                alice.userId,
+                { devices: ["bobweb", "bobdesktop"], expires_ts: 1000 * 60 * 10 },
+                bob.userId,
             );
-
-            await call.clean();
-            expectDevices([aliceWeb, aliceDesktop]);
-        });
-
-        it("cleans up our own device if we're disconnected", async () => {
+            // A participant with an expired device (should not show up)
             await client.sendStateEvent(
                 room.roomId,
                 JitsiCall.MEMBER_EVENT_TYPE,
-                mkContent([aliceWeb]),
-                alice.userId,
+                { devices: ["carolandroid"], expires_ts: -1000 * 60 },
+                carol.userId,
             );
 
-            await call.clean();
-            expectDevices([]);
+            // Now, stub out client.sendStateEvent so we can test our local echo
+            client.sendStateEvent.mockReset();
+            await call.connect();
+            expect([...call.participants]).toEqual([bob, alice]);
+
+            await call.disconnect();
+            expect([...call.participants]).toEqual([bob]);
         });
 
-        it("cleans up devices that have been offline for too long", async () => {
-            await client.sendStateEvent(
+        it("updates room state when connecting and disconnecting", async () => {
+            const now1 = Date.now();
+            await call.connect();
+            await waitFor(() => expect(
+                room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+            ).toEqual({
+                devices: [client.getDeviceId()],
+                expires_ts: now1 + call.STUCK_DEVICE_TIMEOUT_MS,
+            }), { interval: 5 });
+
+            const now2 = Date.now();
+            await call.disconnect();
+            await waitFor(() => expect(
+                room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+            ).toEqual({
+                devices: [],
+                expires_ts: now2 + call.STUCK_DEVICE_TIMEOUT_MS,
+            }), { interval: 5 });
+        });
+
+        it("repeatedly updates room state while connected", async () => {
+            await call.connect();
+            await waitFor(() => expect(client.sendStateEvent).toHaveBeenLastCalledWith(
                 room.roomId,
                 JitsiCall.MEMBER_EVENT_TYPE,
-                mkContent([aliceDesktopOffline]),
+                { devices: [client.getDeviceId()], expires_ts: expect.any(Number) },
                 alice.userId,
-            );
+            ), { interval: 5 });
 
-            await call.clean();
-            expectDevices([]);
-        });
-
-        it("cleans up devices that have never been online", async () => {
-            await client.sendStateEvent(
+            client.sendStateEvent.mockClear();
+            jest.advanceTimersByTime(call.STUCK_DEVICE_TIMEOUT_MS);
+            await waitFor(() => expect(client.sendStateEvent).toHaveBeenLastCalledWith(
                 room.roomId,
                 JitsiCall.MEMBER_EVENT_TYPE,
-                mkContent([aliceDesktopNeverOnline]),
+                { devices: [client.getDeviceId()], expires_ts: expect.any(Number) },
                 alice.userId,
-            );
-
-            await call.clean();
-            expectDevices([]);
+            ), { interval: 5 });
         });
 
-        it("no-ops if there are no state events", async () => {
-            await call.clean();
-            expect(room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)).toBe(null);
+        it("emits events when connection state changes", async () => {
+            const events: ConnectionState[] = [];
+            const onConnectionState = (state: ConnectionState) => events.push(state);
+            call.on(CallEvent.ConnectionState, onConnectionState);
+
+            await call.connect();
+            await call.disconnect();
+            expect(events).toEqual([
+                ConnectionState.Connecting,
+                ConnectionState.Connected,
+                ConnectionState.Disconnecting,
+                ConnectionState.Disconnected,
+            ]);
+        });
+
+        it("emits events when participants change", async () => {
+            const events: Set<RoomMember>[] = [];
+            const onParticipants = (participants: Set<RoomMember>) => {
+                if (!isEqual(participants, events[events.length - 1])) events.push(participants);
+            };
+            call.on(CallEvent.Participants, onParticipants);
+
+            await call.connect();
+            await call.disconnect();
+            expect(events).toEqual([new Set([alice]), new Set()]);
+        });
+
+        it("switches to spotlight layout when the widget becomes a PiP", async () => {
+            await call.connect();
+            ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Undock);
+            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.SpotlightLayout, {});
+            ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Dock);
+            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.TileLayout, {});
+        });
+
+        describe("clean", () => {
+            const aliceWeb: IMyDevice = {
+                device_id: "aliceweb",
+                last_seen_ts: 0,
+            };
+            const aliceDesktop: IMyDevice = {
+                device_id: "alicedesktop",
+                last_seen_ts: 0,
+            };
+            const aliceDesktopOffline: IMyDevice = {
+                device_id: "alicedesktopoffline",
+                last_seen_ts: 1000 * 60 * 60 * -2, // 2 hours ago
+            };
+            const aliceDesktopNeverOnline: IMyDevice = {
+                device_id: "alicedesktopneveronline",
+            };
+
+            const mkContent = (devices: IMyDevice[]): JitsiCallMemberContent => ({
+                expires_ts: 1000 * 60 * 10,
+                devices: devices.map(d => d.device_id),
+            });
+            const expectDevices = (devices: IMyDevice[]) => expect(
+                room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+            ).toEqual({
+                expires_ts: expect.any(Number),
+                devices: devices.map(d => d.device_id),
+            });
+
+            beforeEach(() => {
+                client.getDeviceId.mockReturnValue(aliceWeb.device_id);
+                client.getDevices.mockResolvedValue({
+                    devices: [
+                        aliceWeb,
+                        aliceDesktop,
+                        aliceDesktopOffline,
+                        aliceDesktopNeverOnline,
+                    ],
+                });
+            });
+
+            it("doesn't clean up valid devices", async () => {
+                await call.connect();
+                await client.sendStateEvent(
+                    room.roomId,
+                    JitsiCall.MEMBER_EVENT_TYPE,
+                    mkContent([aliceWeb, aliceDesktop]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([aliceWeb, aliceDesktop]);
+            });
+
+            it("cleans up our own device if we're disconnected", async () => {
+                await client.sendStateEvent(
+                    room.roomId,
+                    JitsiCall.MEMBER_EVENT_TYPE,
+                    mkContent([aliceWeb]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([]);
+            });
+
+            it("cleans up devices that have been offline for too long", async () => {
+                await client.sendStateEvent(
+                    room.roomId,
+                    JitsiCall.MEMBER_EVENT_TYPE,
+                    mkContent([aliceDesktopOffline]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([]);
+            });
+
+            it("cleans up devices that have never been online", async () => {
+                await client.sendStateEvent(
+                    room.roomId,
+                    JitsiCall.MEMBER_EVENT_TYPE,
+                    mkContent([aliceDesktopNeverOnline]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([]);
+            });
+
+            it("no-ops if there are no state events", async () => {
+                await call.clean();
+                expect(room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)).toBe(null);
+            });
         });
     });
 });
@@ -489,264 +522,294 @@ describe("ElementCall", () => {
     let alice: RoomMember;
     let bob: RoomMember;
     let carol: RoomMember;
-    let call: ElementCall;
-    let widget: Widget;
-    let messaging: Mocked<ClientWidgetApi>;
-    let audioMutedSpy: jest.SpyInstance<boolean, []>;
-    let videoMutedSpy: jest.SpyInstance<boolean, []>;
 
-    beforeEach(async () => {
-        jest.useFakeTimers();
-        jest.setSystemTime(0);
-
-        ({ client, room, alice, bob, carol, call, widget, messaging, audioMutedSpy, videoMutedSpy } =
-            await setUpClientRoomAndStores(RoomType.UnstableCall, async room => {
-                await ElementCall.create(room);
-                const call = ElementCall.get(room);
-                if (call === null) throw new Error("Failed to create call");
-                return call;
-            }));
+    beforeEach(() => {
+        ({ client, room, alice, bob, carol } = setUpClientRoomAndStores(RoomType.UnstableCall));
     });
 
-    afterEach(() => cleanUpClientRoomAndStores(client, room, call, widget, audioMutedSpy, videoMutedSpy));
+    afterEach(() => cleanUpClientRoomAndStores(client, room));
 
-    it("connects muted", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        audioMutedSpy.mockReturnValue(true);
-        videoMutedSpy.mockReturnValue(true);
+    describe("get", () => {
+        it("finds no calls", () => {
+            expect(ElementCall.get(room)).toBeNull();
+        });
 
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
-            audioInput: null,
-            videoInput: null,
+        it("finds calls", async () => {
+            await ElementCall.create(room);
+            expect(ElementCall.get(room)).toBeInstanceOf(ElementCall);
+        });
+
+        it("ignores terminated calls", async () => {
+            await ElementCall.create(room);
+
+            // Terminate the call
+            const [event] = room.currentState.getStateEvents(ElementCall.CALL_EVENT_TYPE.name);
+            const content = { ...event.getContent(), "m.terminated": "Call ended" };
+            await client.sendStateEvent(room.roomId, ElementCall.CALL_EVENT_TYPE.name, content, event.getStateKey()!);
+
+            expect(ElementCall.get(room)).toBeNull();
         });
     });
 
-    it("connects unmuted", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        audioMutedSpy.mockReturnValue(false);
-        videoMutedSpy.mockReturnValue(false);
+    describe("instance", () => {
+        let call: ElementCall;
+        let widget: Widget;
+        let messaging: Mocked<ClientWidgetApi>;
+        let audioMutedSpy: jest.SpyInstance<boolean, []>;
+        let videoMutedSpy: jest.SpyInstance<boolean, []>;
 
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
-            audioInput: "1",
-            videoInput: "2",
-        });
-    });
+        beforeEach(async () => {
+            jest.useFakeTimers();
+            jest.setSystemTime(0);
 
-    it("waits for messaging when connecting", async () => {
-        // Temporarily remove the messaging to simulate connecting while the
-        // widget is still initializing
-        WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            await ElementCall.create(room);
+            const maybeCall = ElementCall.get(room);
+            if (maybeCall === null) throw new Error("Failed to create call");
+            call = maybeCall;
 
-        const connect = call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connecting);
-
-        WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
-        await connect;
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-    });
-
-    it("handles remote disconnection", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-
-        messaging.emit(
-            `action:${ElementWidgetActions.HangupCall}`,
-            new CustomEvent("widgetapirequest", { detail: {} }),
-        );
-        await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
-    });
-
-    it("disconnects", async () => {
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        await call.disconnect();
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-    });
-
-    it("disconnects when we leave the room", async () => {
-        await call.connect();
-        expect(call.connectionState).toBe(ConnectionState.Connected);
-        room.emit(RoomEvent.MyMembership, room, "leave");
-        expect(call.connectionState).toBe(ConnectionState.Disconnected);
-    });
-
-    it("tracks participants in room state", async () => {
-        expect([...call.participants]).toEqual([]);
-
-        // A participant with multiple devices (should only show up once)
-        await client.sendStateEvent(
-            room.roomId,
-            ElementCall.MEMBER_EVENT_TYPE.name,
-            {
-                "m.expires_ts": 1000 * 60 * 10,
-                "m.calls": [{
-                    "m.call_id": call.groupCall.getStateKey()!,
-                    "m.devices": [
-                        { "m.device_id": "bobweb" },
-                        { "m.device_id": "bobdesktop" },
-                    ],
-                }],
-            },
-            bob.userId,
-        );
-        // A participant with an expired device (should not show up)
-        await client.sendStateEvent(
-            room.roomId,
-            ElementCall.MEMBER_EVENT_TYPE.name,
-            {
-                "m.expires_ts": -1000 * 60,
-                "m.calls": [{
-                    "m.call_id": call.groupCall.getStateKey()!,
-                    "m.devices": [
-                        { "m.device_id": "carolandroid" },
-                    ],
-                }],
-            },
-            carol.userId,
-        );
-
-        // Now, stub out client.sendStateEvent so we can test our local echo
-        client.sendStateEvent.mockReset();
-        await call.connect();
-        expect([...call.participants]).toEqual([bob, alice]);
-
-        await call.disconnect();
-        expect([...call.participants]).toEqual([bob]);
-    });
-
-    it("emits events when connection state changes", async () => {
-        const events: ConnectionState[] = [];
-        const onConnectionState = (state: ConnectionState) => events.push(state);
-        call.on(CallEvent.ConnectionState, onConnectionState);
-
-        await call.connect();
-        await call.disconnect();
-        expect(events).toEqual([
-            ConnectionState.Connecting,
-            ConnectionState.Connected,
-            ConnectionState.Disconnecting,
-            ConnectionState.Disconnected,
-        ]);
-    });
-
-    it("emits events when participants change", async () => {
-        const events: Set<RoomMember>[] = [];
-        const onParticipants = (participants: Set<RoomMember>) => {
-            if (!isEqual(participants, events[events.length - 1])) events.push(participants);
-        };
-        call.on(CallEvent.Participants, onParticipants);
-
-        await call.connect();
-        await call.disconnect();
-        expect(events).toEqual([new Set([alice]), new Set()]);
-    });
-
-    describe("clean", () => {
-        const aliceWeb: IMyDevice = {
-            device_id: "aliceweb",
-            last_seen_ts: 0,
-        };
-        const aliceDesktop: IMyDevice = {
-            device_id: "alicedesktop",
-            last_seen_ts: 0,
-        };
-        const aliceDesktopOffline: IMyDevice = {
-            device_id: "alicedesktopoffline",
-            last_seen_ts: 1000 * 60 * 60 * -2, // 2 hours ago
-        };
-        const aliceDesktopNeverOnline: IMyDevice = {
-            device_id: "alicedesktopneveronline",
-        };
-
-        const mkContent = (devices: IMyDevice[]): ElementCallMemberContent => ({
-            "m.expires_ts": 1000 * 60 * 10,
-            "m.calls": [{
-                "m.call_id": call.groupCall.getStateKey()!,
-                "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
-            }],
-        });
-        const expectDevices = (devices: IMyDevice[]) => expect(
-            room.currentState.getStateEvents(ElementCall.MEMBER_EVENT_TYPE.name, alice.userId).getContent(),
-        ).toEqual({
-            "m.expires_ts": expect.any(Number),
-            "m.calls": [{
-                "m.call_id": call.groupCall.getStateKey()!,
-                "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
-            }],
+            ({ widget, messaging, audioMutedSpy, videoMutedSpy } = setUpWidget(call));
         });
 
-        beforeEach(() => {
-            client.getDeviceId.mockReturnValue(aliceWeb.device_id);
-            client.getDevices.mockResolvedValue({
-                devices: [
-                    aliceWeb,
-                    aliceDesktop,
-                    aliceDesktopOffline,
-                    aliceDesktopNeverOnline,
-                ],
+        afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
+
+        it("connects muted", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            audioMutedSpy.mockReturnValue(true);
+            videoMutedSpy.mockReturnValue(true);
+
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
+                audioInput: null,
+                videoInput: null,
             });
         });
 
-        it("doesn't clean up valid devices", async () => {
+        it("connects unmuted", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            audioMutedSpy.mockReturnValue(false);
+            videoMutedSpy.mockReturnValue(false);
+
             await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
+                audioInput: "1",
+                videoInput: "2",
+            });
+        });
+
+        it("waits for messaging when connecting", async () => {
+            // Temporarily remove the messaging to simulate connecting while the
+            // widget is still initializing
+            WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+
+            const connect = call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connecting);
+
+            WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
+            await connect;
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+        });
+
+        it("handles remote disconnection", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+
+            messaging.emit(
+                `action:${ElementWidgetActions.HangupCall}`,
+                new CustomEvent("widgetapirequest", { detail: {} }),
+            );
+            await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
+        });
+
+        it("disconnects", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            await call.disconnect();
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        });
+
+        it("disconnects when we leave the room", async () => {
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            room.emit(RoomEvent.MyMembership, room, "leave");
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        });
+
+        it("tracks participants in room state", async () => {
+            expect([...call.participants]).toEqual([]);
+
+            // A participant with multiple devices (should only show up once)
             await client.sendStateEvent(
                 room.roomId,
                 ElementCall.MEMBER_EVENT_TYPE.name,
-                mkContent([aliceWeb, aliceDesktop]),
-                alice.userId,
+                {
+                    "m.expires_ts": 1000 * 60 * 10,
+                    "m.calls": [{
+                        "m.call_id": call.groupCall.getStateKey()!,
+                        "m.devices": [
+                            { "m.device_id": "bobweb" },
+                            { "m.device_id": "bobdesktop" },
+                        ],
+                    }],
+                },
+                bob.userId,
             );
-
-            await call.clean();
-            expectDevices([aliceWeb, aliceDesktop]);
-        });
-
-        it("cleans up our own device if we're disconnected", async () => {
+            // A participant with an expired device (should not show up)
             await client.sendStateEvent(
                 room.roomId,
                 ElementCall.MEMBER_EVENT_TYPE.name,
-                mkContent([aliceWeb]),
-                alice.userId,
+                {
+                    "m.expires_ts": -1000 * 60,
+                    "m.calls": [{
+                        "m.call_id": call.groupCall.getStateKey()!,
+                        "m.devices": [
+                            { "m.device_id": "carolandroid" },
+                        ],
+                    }],
+                },
+                carol.userId,
             );
 
-            await call.clean();
-            expectDevices([]);
+            // Now, stub out client.sendStateEvent so we can test our local echo
+            client.sendStateEvent.mockReset();
+            await call.connect();
+            expect([...call.participants]).toEqual([bob, alice]);
+
+            await call.disconnect();
+            expect([...call.participants]).toEqual([bob]);
         });
 
-        it("cleans up devices that have been offline for too long", async () => {
-            await client.sendStateEvent(
-                room.roomId,
-                ElementCall.MEMBER_EVENT_TYPE.name,
-                mkContent([aliceDesktopOffline]),
-                alice.userId,
-            );
+        it("emits events when connection state changes", async () => {
+            const events: ConnectionState[] = [];
+            const onConnectionState = (state: ConnectionState) => events.push(state);
+            call.on(CallEvent.ConnectionState, onConnectionState);
 
-            await call.clean();
-            expectDevices([]);
+            await call.connect();
+            await call.disconnect();
+            expect(events).toEqual([
+                ConnectionState.Connecting,
+                ConnectionState.Connected,
+                ConnectionState.Disconnecting,
+                ConnectionState.Disconnected,
+            ]);
         });
 
-        it("cleans up devices that have never been online", async () => {
-            await client.sendStateEvent(
-                room.roomId,
-                ElementCall.MEMBER_EVENT_TYPE.name,
-                mkContent([aliceDesktopNeverOnline]),
-                alice.userId,
-            );
+        it("emits events when participants change", async () => {
+            const events: Set<RoomMember>[] = [];
+            const onParticipants = (participants: Set<RoomMember>) => {
+                if (!isEqual(participants, events[events.length - 1])) events.push(participants);
+            };
+            call.on(CallEvent.Participants, onParticipants);
 
-            await call.clean();
-            expectDevices([]);
+            await call.connect();
+            await call.disconnect();
+            expect(events).toEqual([new Set([alice]), new Set()]);
         });
 
-        it("no-ops if there are no state events", async () => {
-            await call.clean();
-            expect(room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)).toBe(null);
+        describe("clean", () => {
+            const aliceWeb: IMyDevice = {
+                device_id: "aliceweb",
+                last_seen_ts: 0,
+            };
+            const aliceDesktop: IMyDevice = {
+                device_id: "alicedesktop",
+                last_seen_ts: 0,
+            };
+            const aliceDesktopOffline: IMyDevice = {
+                device_id: "alicedesktopoffline",
+                last_seen_ts: 1000 * 60 * 60 * -2, // 2 hours ago
+            };
+            const aliceDesktopNeverOnline: IMyDevice = {
+                device_id: "alicedesktopneveronline",
+            };
+
+            const mkContent = (devices: IMyDevice[]): ElementCallMemberContent => ({
+                "m.expires_ts": 1000 * 60 * 10,
+                "m.calls": [{
+                    "m.call_id": call.groupCall.getStateKey()!,
+                    "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
+                }],
+            });
+            const expectDevices = (devices: IMyDevice[]) => expect(
+                room.currentState.getStateEvents(ElementCall.MEMBER_EVENT_TYPE.name, alice.userId).getContent(),
+            ).toEqual({
+                "m.expires_ts": expect.any(Number),
+                "m.calls": [{
+                    "m.call_id": call.groupCall.getStateKey()!,
+                    "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
+                }],
+            });
+
+            beforeEach(() => {
+                client.getDeviceId.mockReturnValue(aliceWeb.device_id);
+                client.getDevices.mockResolvedValue({
+                    devices: [
+                        aliceWeb,
+                        aliceDesktop,
+                        aliceDesktopOffline,
+                        aliceDesktopNeverOnline,
+                    ],
+                });
+            });
+
+            it("doesn't clean up valid devices", async () => {
+                await call.connect();
+                await client.sendStateEvent(
+                    room.roomId,
+                    ElementCall.MEMBER_EVENT_TYPE.name,
+                    mkContent([aliceWeb, aliceDesktop]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([aliceWeb, aliceDesktop]);
+            });
+
+            it("cleans up our own device if we're disconnected", async () => {
+                await client.sendStateEvent(
+                    room.roomId,
+                    ElementCall.MEMBER_EVENT_TYPE.name,
+                    mkContent([aliceWeb]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([]);
+            });
+
+            it("cleans up devices that have been offline for too long", async () => {
+                await client.sendStateEvent(
+                    room.roomId,
+                    ElementCall.MEMBER_EVENT_TYPE.name,
+                    mkContent([aliceDesktopOffline]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([]);
+            });
+
+            it("cleans up devices that have never been online", async () => {
+                await client.sendStateEvent(
+                    room.roomId,
+                    ElementCall.MEMBER_EVENT_TYPE.name,
+                    mkContent([aliceDesktopNeverOnline]),
+                    alice.userId,
+                );
+
+                await call.clean();
+                expectDevices([]);
+            });
+
+            it("no-ops if there are no state events", async () => {
+                await call.clean();
+                expect(room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)).toBe(null);
+            });
         });
     });
 });
