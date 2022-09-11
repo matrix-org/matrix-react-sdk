@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 
 import SecurityRecommendations from '../../../../../src/components/views/settings/devices/SecurityRecommendations';
+import { DeviceSecurityVariation } from '../../../../../src/components/views/settings/devices/types';
 
 const MS_DAY = 24 * 60 * 60 * 1000;
 describe('<SecurityRecommendations />', () => {
@@ -32,6 +33,8 @@ describe('<SecurityRecommendations />', () => {
 
     const defaultProps = {
         devices: {},
+        goToFilteredList: jest.fn(),
+        currentDeviceId: 'abc123',
     };
     const getComponent = (props = {}) =>
         (<SecurityRecommendations {...defaultProps} {...props} />);
@@ -51,6 +54,16 @@ describe('<SecurityRecommendations />', () => {
         expect(container).toMatchSnapshot();
     });
 
+    it('does not render unverified devices section when only the current device is unverified', () => {
+        const devices = {
+            [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
+            [verifiedNoMetadata.device_id]: verifiedNoMetadata,
+        };
+        const { container } = render(getComponent({ devices, currentDeviceId: unverifiedNoMetadata.device_id }));
+        // nothing to render
+        expect(container.firstChild).toBeFalsy();
+    });
+
     it('renders inactive devices section when user has inactive devices', () => {
         const devices = {
             [verifiedNoMetadata.device_id]: verifiedNoMetadata,
@@ -68,5 +81,37 @@ describe('<SecurityRecommendations />', () => {
         };
         const { container } = render(getComponent({ devices }));
         expect(container).toMatchSnapshot();
+    });
+
+    it('clicking view all unverified devices button works', () => {
+        const goToFilteredList = jest.fn();
+        const devices = {
+            [verifiedNoMetadata.device_id]: verifiedNoMetadata,
+            [hundredDaysOld.device_id]: hundredDaysOld,
+            [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
+        };
+        const { getByTestId } = render(getComponent({ devices, goToFilteredList }));
+
+        act(() => {
+            fireEvent.click(getByTestId('unverified-devices-cta'));
+        });
+
+        expect(goToFilteredList).toHaveBeenCalledWith(DeviceSecurityVariation.Unverified);
+    });
+
+    it('clicking view all inactive devices button works', () => {
+        const goToFilteredList = jest.fn();
+        const devices = {
+            [verifiedNoMetadata.device_id]: verifiedNoMetadata,
+            [hundredDaysOld.device_id]: hundredDaysOld,
+            [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
+        };
+        const { getByTestId } = render(getComponent({ devices, goToFilteredList }));
+
+        act(() => {
+            fireEvent.click(getByTestId('inactive-devices-cta'));
+        });
+
+        expect(goToFilteredList).toHaveBeenCalledWith(DeviceSecurityVariation.Inactive);
     });
 });
