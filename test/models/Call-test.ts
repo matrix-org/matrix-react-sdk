@@ -267,6 +267,17 @@ describe("JitsiCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
+        it("fails to connect if the widget returns an error", async () => {
+            mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
+            await expect(call.connect()).rejects.toBeDefined();
+        });
+
+        it("fails to disconnect if the widget returns an error", async () => {
+            await call.connect();
+            mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
+            await expect(call.disconnect()).rejects.toBeDefined();
+        });
+
         it("handles remote disconnection", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
@@ -316,6 +327,13 @@ describe("JitsiCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Connected);
             room.emit(RoomEvent.MyMembership, room, "leave");
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        });
+
+        it("remains connected if we stay in the room", async () => {
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            room.emit(RoomEvent.MyMembership, room, "join");
+            expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
         it("tracks participants in room state", async () => {
@@ -612,6 +630,17 @@ describe("ElementCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
+        it("fails to connect if the widget returns an error", async () => {
+            mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
+            await expect(call.connect()).rejects.toBeDefined();
+        });
+
+        it("fails to disconnect if the widget returns an error", async () => {
+            await call.connect();
+            mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
+            await expect(call.disconnect()).rejects.toBeDefined();
+        });
+
         it("handles remote disconnection", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
@@ -638,6 +667,13 @@ describe("ElementCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Connected);
             room.emit(RoomEvent.MyMembership, room, "leave");
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        });
+
+        it("remains connected if we stay in the room", async () => {
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            room.emit(RoomEvent.MyMembership, room, "join");
+            expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
         it("tracks participants in room state", async () => {
