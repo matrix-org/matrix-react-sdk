@@ -72,7 +72,7 @@ export class Rendezvous {
     private theirPublicKey?: Uint8Array;
     private theirType: string;
     private sharedSecret?: Uint8Array;
-    private defaultRzServer = 'http://localhost:8090';
+    private defaultRzServer = 'http://localhost:8008/_synapse/client/rendezvous';
     private uri?: string;
     private expiresAt?: Date;
     public user?: string;
@@ -376,11 +376,14 @@ export class Rendezvous {
 
         if (method === 'POST') {
             const location = res.headers.get('location');
+            if (!location) {
+                throw new Error('No rendezvous URI given');
+            }
             if (res.headers.has('expires')) {
                 this.expiresAt = new Date(res.headers.get('expires'));
             }
             // resolve location header which could be relative or absolute
-            this.uri = new URL(location, res.url).href;
+            this.uri = new URL(location, `${res.url}${res.url.endsWith('/') ? '' : '/'}`).href;
         }
     }
 
