@@ -28,11 +28,11 @@ import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { ClientWidgetApi } from "matrix-widget-api";
-import type { Call, JitsiCallMemberContent, ElementCallMemberContent } from "../../src/models/Call";
+import type { JitsiCallMemberContent, ElementCallMemberContent } from "../../src/models/Call";
 import { stubClient, mkEvent, mkRoomMember, setupAsyncStoreWithClient, mockPlatformPeg } from "../test-utils";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../src/MediaDeviceHandler";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
-import { CallEvent, ConnectionState, JitsiCall, ElementCall } from "../../src/models/Call";
+import { Call, CallEvent, ConnectionState, JitsiCall, ElementCall } from "../../src/models/Call";
 import WidgetStore from "../../src/stores/WidgetStore";
 import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../src/stores/ActiveWidgetStore";
@@ -172,12 +172,12 @@ describe("JitsiCall", () => {
 
     describe("get", () => {
         it("finds no calls", () => {
-            expect(JitsiCall.get(room)).toBeNull();
+            expect(Call.get(room)).toBeNull();
         });
 
         it("finds calls", async () => {
             await JitsiCall.create(room);
-            expect(JitsiCall.get(room)).toBeInstanceOf(JitsiCall);
+            expect(Call.get(room)).toBeInstanceOf(JitsiCall);
         });
 
         it("ignores terminated calls", async () => {
@@ -187,7 +187,7 @@ describe("JitsiCall", () => {
             const [event] = room.currentState.getStateEvents("im.vector.modular.widgets");
             await client.sendStateEvent(room.roomId, "im.vector.modular.widgets", {}, event.getStateKey()!);
 
-            expect(JitsiCall.get(room)).toBeNull();
+            expect(Call.get(room)).toBeNull();
         });
     });
 
@@ -549,12 +549,12 @@ describe("ElementCall", () => {
 
     describe("get", () => {
         it("finds no calls", () => {
-            expect(ElementCall.get(room)).toBeNull();
+            expect(Call.get(room)).toBeNull();
         });
 
         it("finds calls", async () => {
             await ElementCall.create(room);
-            expect(ElementCall.get(room)).toBeInstanceOf(ElementCall);
+            expect(Call.get(room)).toBeInstanceOf(ElementCall);
         });
 
         it("ignores terminated calls", async () => {
@@ -565,7 +565,7 @@ describe("ElementCall", () => {
             const content = { ...event.getContent(), "m.terminated": "Call ended" };
             await client.sendStateEvent(room.roomId, ElementCall.CALL_EVENT_TYPE.name, content, event.getStateKey()!);
 
-            expect(ElementCall.get(room)).toBeNull();
+            expect(Call.get(room)).toBeNull();
         });
     });
 
