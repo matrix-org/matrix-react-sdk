@@ -494,36 +494,36 @@ describe("JitsiCall", () => {
                 await client.sendStateEvent(
                     room.roomId,
                     JitsiCall.MEMBER_EVENT_TYPE,
-                    mkContent([aliceWeb]),
+                    mkContent([aliceWeb, aliceDesktop]),
                     alice.userId,
                 );
 
                 await call.clean();
-                expectDevices([]);
+                expectDevices([aliceDesktop]);
             });
 
             it("cleans up devices that have been offline for too long", async () => {
                 await client.sendStateEvent(
                     room.roomId,
                     JitsiCall.MEMBER_EVENT_TYPE,
-                    mkContent([aliceDesktopOffline]),
+                    mkContent([aliceDesktop, aliceDesktopOffline]),
                     alice.userId,
                 );
 
                 await call.clean();
-                expectDevices([]);
+                expectDevices([aliceDesktop]);
             });
 
             it("cleans up devices that have never been online", async () => {
                 await client.sendStateEvent(
                     room.roomId,
                     JitsiCall.MEMBER_EVENT_TYPE,
-                    mkContent([aliceDesktopNeverOnline]),
+                    mkContent([aliceDesktop, aliceDesktopNeverOnline]),
                     alice.userId,
                 );
 
                 await call.clean();
-                expectDevices([]);
+                expectDevices([aliceDesktop]);
             });
 
             it("no-ops if there are no state events", async () => {
@@ -810,36 +810,36 @@ describe("ElementCall", () => {
                 await client.sendStateEvent(
                     room.roomId,
                     ElementCall.MEMBER_EVENT_TYPE.name,
-                    mkContent([aliceWeb]),
+                    mkContent([aliceWeb, aliceDesktop]),
                     alice.userId,
                 );
 
                 await call.clean();
-                expectDevices([]);
+                expectDevices([aliceDesktop]);
             });
 
             it("cleans up devices that have been offline for too long", async () => {
                 await client.sendStateEvent(
                     room.roomId,
                     ElementCall.MEMBER_EVENT_TYPE.name,
-                    mkContent([aliceDesktopOffline]),
+                    mkContent([aliceDesktop, aliceDesktopOffline]),
                     alice.userId,
                 );
 
                 await call.clean();
-                expectDevices([]);
+                expectDevices([aliceDesktop]);
             });
 
             it("cleans up devices that have never been online", async () => {
                 await client.sendStateEvent(
                     room.roomId,
                     ElementCall.MEMBER_EVENT_TYPE.name,
-                    mkContent([aliceDesktopNeverOnline]),
+                    mkContent([aliceDesktop, aliceDesktopNeverOnline]),
                     alice.userId,
                 );
 
                 await call.clean();
-                expectDevices([]);
+                expectDevices([aliceDesktop]);
             });
 
             it("no-ops if there are no state events", async () => {
