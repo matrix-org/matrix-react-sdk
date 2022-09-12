@@ -136,7 +136,6 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 EventType.CallSDPStreamMetadataChanged,
                 EventType.CallSDPStreamMetadataChangedPrefix,
                 EventType.CallReplaces,
-                "org.matrix.call_duplicate_session",
             ];
             for (const eventType of sendRecvToDevice) {
                 this.allowedCapabilities.add(

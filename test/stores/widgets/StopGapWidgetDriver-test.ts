@@ -86,8 +86,6 @@ describe("StopGapWidgetDriver", () => {
             "org.matrix.msc3819.receive.to_device:org.matrix.call.sdp_stream_metadata_changed",
             "org.matrix.msc3819.send.to_device:m.call.replaces",
             "org.matrix.msc3819.receive.to_device:m.call.replaces",
-            "org.matrix.msc3819.send.to_device:org.matrix.call_duplicate_session",
-            "org.matrix.msc3819.receive.to_device:org.matrix.call_duplicate_session",
         ]);
 
         // As long as this resolves, we'll know that it didn't try to pop up a modal
