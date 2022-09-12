@@ -6,14 +6,14 @@ on:
     types:
       - completed
 jobs:
-  # This job cannot have a pretty name due to https://github.com/haya14busa/action-workflow_run-status/issues/158
-  cypress:
+  prepare:
+    name: Prepare
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       actions: read
-      statuses: write
       issues: read
+      statuses: write
       pull-requests: read
     outputs:
       uuid: ${{ steps.uuid.outputs.value }}
@@ -23,8 +23,15 @@ jobs:
       commit_email: ${{ steps.commit.outputs.email }}
       percy_enable: ${{ steps.percy.outputs.value || '1' }}
     steps:
-      # Wire up the status check for this workflow_run action
-      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0
+      # We create the status here and then update it to success/failure in the `report` stage
+      # This provides an easy link to this workflow_run from the PR before Cypress is done.
+      - uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          state: pending
+          context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+          sha: ${{ github.event.workflow_run.head_sha }}
+          target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - id: prdetails
         if: github.event.workflow_run.event == 'pull_request'
@@ -62,11 +69,10 @@ jobs:
 
   tests:
     name: "Run Tests"
-    needs: cypress
+    needs: prepare
     runs-on: ubuntu-latest
     permissions:
       actions: read
-      statuses: write
       issues: read
       pull-requests: read
     environment: Cypress
@@ -106,7 +112,7 @@ jobs:
           record: true
           parallel: true
           command-prefix: 'yarn percy exec --parallel --'
-          ci-build-id: ${{ needs.cypress.outputs.uuid }}
+          ci-build-id: ${{ needs.prepare.outputs.uuid }}
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -124,20 +130,20 @@ jobs:
           COMMIT_INFO_BRANCH: ${{ github.event.workflow_run.head_branch }}
           COMMIT_INFO_SHA: ${{ github.event.workflow_run.head_sha }}
           COMMIT_INFO_REMOTE: ${{ github.repositoryUrl }}
-          COMMIT_INFO_MESSAGE: ${{ needs.cypress.outputs.commit_message }}
-          COMMIT_INFO_AUTHOR: ${{ needs.cypress.outputs.commit_author }}
-          COMMIT_INFO_EMAIL: ${{ needs.cypress.outputs.commit_email }}
+          COMMIT_INFO_MESSAGE: ${{ needs.prepare.outputs.commit_message }}
+          COMMIT_INFO_AUTHOR: ${{ needs.prepare.outputs.commit_author }}
+          COMMIT_INFO_EMAIL: ${{ needs.prepare.outputs.commit_email }}
 
           # pass the Percy token as an environment variable
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          PERCY_ENABLE: ${{ needs.cypress.outputs.percy_enable }}
+          PERCY_ENABLE: ${{ needs.prepare.outputs.percy_enable }}
           PERCY_BROWSER_EXECUTABLE: /usr/bin/chromium-browser
           # tell Percy more details about the context of this run
           PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
           PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
-          PERCY_PULL_REQUEST: ${{ needs.cypress.outputs.pr_id }}
+          PERCY_PULL_REQUEST: ${{ needs.prepare.outputs.pr_id }}
           PERCY_PARALLEL_TOTAL: ${{ strategy.job-total }}
-          PERCY_PARALLEL_NONCE: ${{ needs.cypress.outputs.uuid }}
+          PERCY_PARALLEL_NONCE: ${{ needs.prepare.outputs.uuid }}
 
       - name: Upload Artifact
         if: failure()
@@ -159,6 +165,22 @@ jobs:
           path: cypress/performance/*
           if-no-files-found: ignore
           retention-days: 1
+
+  report:
+    name: Report results
+    needs: tests
+    runs-on: ubuntu-latest
+    if: always()
+    permissions:
+      statuses: write
+    steps:
+      - uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          state: ${{ needs.tests.result == 'success' && 'success' || 'failure' }}
+          context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
+          sha: ${{ github.event.workflow_run.head_sha }}
+          target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   store-benchmark:
     needs: tests
