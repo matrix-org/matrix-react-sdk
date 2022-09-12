@@ -325,8 +325,6 @@ describe("Sliding Sync", () => {
             name: "Favourite DM",
             is_direct: true,
         }).as("room").then(roomId => {
-            cy.contains(".mx_RoomSublist", "Apple");
-
             cy.getClient().then(cli => cli.setRoomTag(roomId, "m.favourite", { order: 0.5 }));
         });
 
