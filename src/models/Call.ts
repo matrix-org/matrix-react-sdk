@@ -584,7 +584,9 @@ export interface ElementCallMemberContent {
     "m.calls": {
         "m.call_id": string;
         "m.devices": {
-            "m.device_id": string;
+            device_id: string;
+            session_id: string;
+            feeds: unknown[]; // We don't care about what these are
         }[];
     }[];
 }
@@ -692,7 +694,7 @@ export class ElementCall extends Call {
 
             // Apply local echo for the disconnected case
             if (!this.connected && member?.userId === this.client.getUserId()) {
-                devices = devices.filter(d => d["m.device_id"] !== this.client.getDeviceId());
+                devices = devices.filter(d => d.device_id !== this.client.getDeviceId());
             }
             // Must have a connected device and still be joined to the room
             if (devices.length && member?.membership === "join") {
@@ -727,19 +729,26 @@ export class ElementCall extends Call {
         const calls = this.getCallsState(userId);
         const call = calls.find(call => call["m.call_id"] === this.groupCall.getStateKey());
         const devices = Array.isArray(call?.["m.devices"]) ? call!["m.devices"] : [];
-        return devices.map(d => d["m.device_id"]);
+        return devices.map(d => d.device_id);
     }
 
     protected async setDevices(devices: string[]): Promise<void> {
         const calls = this.getCallsState(this.client.getUserId()!);
+        const call = calls.find(c => c["m.call_id"] === this.groupCall.getStateKey())!;
+        const prevDevices = Array.isArray(call?.["m.devices"]) ? call!["m.devices"] : [];
+        const prevDevicesMap = new Map(prevDevices.map(d => [d.device_id, d]));
+
         const newContent: ElementCallMemberContent = {
             "m.expires_ts": Date.now() + this.STUCK_DEVICE_TIMEOUT_MS,
             "m.calls": [
                 {
                     "m.call_id": this.groupCall.getStateKey()!,
-                    "m.devices": devices.map(d => ({ "m.device_id": d })),
+                    // This method will only ever be used to remove devices, so
+                    // it's safe to assume that all requested devices are
+                    // present in the map
+                    "m.devices": devices.map(d => prevDevicesMap.get(d)!),
                 },
-                ...calls.filter(c => c["m.call_id"] !== this.groupCall.getStateKey()),
+                ...calls.filter(c => c !== call),
             ],
         };
 

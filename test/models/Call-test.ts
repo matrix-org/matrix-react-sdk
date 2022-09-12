@@ -688,8 +688,8 @@ describe("ElementCall", () => {
                     "m.calls": [{
                         "m.call_id": call.groupCall.getStateKey()!,
                         "m.devices": [
-                            { "m.device_id": "bobweb" },
-                            { "m.device_id": "bobdesktop" },
+                            { device_id: "bobweb", session_id: "1", feeds: [] },
+                            { device_id: "bobdesktop", session_id: "1", feeds: [] },
                         ],
                     }],
                 },
@@ -704,7 +704,7 @@ describe("ElementCall", () => {
                     "m.calls": [{
                         "m.call_id": call.groupCall.getStateKey()!,
                         "m.devices": [
-                            { "m.device_id": "carolandroid" },
+                            { device_id: "carolandroid", session_id: "1", feeds: [] },
                         ],
                     }],
                 },
@@ -768,7 +768,7 @@ describe("ElementCall", () => {
                 "m.expires_ts": 1000 * 60 * 10,
                 "m.calls": [{
                     "m.call_id": call.groupCall.getStateKey()!,
-                    "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
+                    "m.devices": devices.map(d => ({ device_id: d.device_id, session_id: "1", feeds: [] })),
                 }],
             });
             const expectDevices = (devices: IMyDevice[]) => expect(
@@ -777,7 +777,7 @@ describe("ElementCall", () => {
                 "m.expires_ts": expect.any(Number),
                 "m.calls": [{
                     "m.call_id": call.groupCall.getStateKey()!,
-                    "m.devices": devices.map(d => ({ "m.device_id": d.device_id })),
+                    "m.devices": devices.map(d => ({ device_id: d.device_id, session_id: "1", feeds: [] })),
                 }],
             });
 
