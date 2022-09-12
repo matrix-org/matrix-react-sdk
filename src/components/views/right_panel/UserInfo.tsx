@@ -456,7 +456,7 @@ const UserOptionsSection: React.FC<{
     );
 
     let directMessageButton: JSX.Element;
-    if (!isMe) {
+    if (!isMe && shouldShowComponent(UIComponent.CreateRooms)) {
         directMessageButton = <MessageButton member={member} />;
     }
 
