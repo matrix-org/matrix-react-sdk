@@ -692,7 +692,7 @@ export class ElementCall extends Call {
 
             // Apply local echo for the disconnected case
             if (!this.connected && member?.userId === this.client.getUserId()) {
-                devices = devices.filter(d => d.device_id !== this.client.getDeviceId());
+                devices = devices.filter(d => d["m.device_id"] !== this.client.getDeviceId());
             }
             // Must have a connected device and still be joined to the room
             if (devices.length && member?.membership === "join") {
@@ -743,9 +743,9 @@ export class ElementCall extends Call {
             ],
         };
 
-        // await this.client.sendStateEvent(
-        //     this.roomId, ElementCall.MEMBER_EVENT_TYPE.name, newContent, this.client.getUserId()!,
-        // );
+        await this.client.sendStateEvent(
+            this.roomId, ElementCall.MEMBER_EVENT_TYPE.name, newContent, this.client.getUserId()!,
+        );
     }
 
     protected async performConnection(
