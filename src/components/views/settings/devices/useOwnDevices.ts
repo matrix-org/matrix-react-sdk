@@ -66,9 +66,8 @@ type DevicesState = {
     devices: DevicesDictionary;
     currentDeviceId: string;
     currentUserMember?: User;
-    isCurrentDeviceVerified: boolean;
     isLoading: boolean;
-    // not provided when current device is not verified
+    // not provided when current session cannot request verification
     requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
     error?: OwnDevicesError;
@@ -118,7 +117,6 @@ export const useOwnDevices = (): DevicesState => {
         devices,
         currentDeviceId,
         currentUserMember: matrixClient.getUser(matrixClient.getUserId()),
-        isCurrentDeviceVerified,
         requestDeviceVerification,
         refreshDevices,
         isLoading,
