@@ -21,6 +21,7 @@ import { mocked } from 'jest-mock';
 import { act } from "react-dom/test-utils";
 import { Room, User, MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { Phase, VerificationRequest } from 'matrix-js-sdk/src/crypto/verification/request/VerificationRequest';
+import { render, screen } from '@testing-library/react';
 
 import UserInfo from '../../../../src/components/views/right_panel/UserInfo';
 import { RightPanelPhases } from '../../../../src/stores/right-panel/RightPanelStorePhases';
@@ -63,6 +64,7 @@ describe('<UserInfo />', () => {
         isCryptoEnabled: jest.fn(),
         getUserId: jest.fn(),
         on: jest.fn(),
+        off: jest.fn(),
         isSynapseAdministrator: jest.fn().mockResolvedValue(false),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         doesServerSupportUnstableFeature: jest.fn().mockReturnValue(false),
@@ -194,19 +196,27 @@ describe('<UserInfo />', () => {
         });
 
         it('renders the message button', () => {
-            const component = getComponent();
+            render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <UserInfo {...defaultProps} />
+                </MatrixClientContext.Provider>,
+            );
 
-            expect(component.find("MessageButton")).toHaveLength(1);
+            screen.getByRole('button', { name: 'Message' });
         });
 
         it('hides the message button if the visibility customisation hides all create room features', () => {
-            (shouldShowComponent as jest.Mock).mockImplementation((component) => {
+            mocked(shouldShowComponent).mockImplementation((component) => {
                 return component !== UIComponent.CreateRooms;
             });
 
-            const component = getComponent();
+            render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <UserInfo {...defaultProps} />
+                </MatrixClientContext.Provider>,
+            );
 
-            expect(component.find("MessageButton")).toHaveLength(0);
+            expect(screen.queryByRole('button', { name: 'Message' })).toBeNull();
         });
     });
 });
