@@ -34,8 +34,8 @@ interface IState {
     EmoteFieldsTouched: Record<string, string>;
     newEmoteFileAdded: boolean;
     newEmoteCodeAdded: boolean;
-    newEmoteCode: string;
-    newEmoteFile: File;
+    newEmoteCode: Array<string>;
+    newEmoteFile: Array<File>;
     canAddEmote: boolean;
     deleted: boolean;
     deletedItems: Dictionary<IEncryptedFile>;
@@ -67,8 +67,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             EmoteFieldsTouched: {},
             newEmoteFileAdded: false,
             newEmoteCodeAdded: false,
-            newEmoteCode: "",
-            newEmoteFile: null,
+            newEmoteCode: [""],
+            newEmoteFile: [],
             deleted: false,
             deletedItems: {},
             canAddEmote: room.currentState.maySendStateEvent('m.room.emotes', client.getUserId()),
@@ -105,13 +105,15 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             EmoteFieldsTouched: {},
             newEmoteFileAdded: false,
             newEmoteCodeAdded: false,
+            newEmoteCode: [""],
+            newEmoteFile: [],
             deleted: false,
             deletedItems: {},
             value: value,
         });
 
-        this.emoteUpload.current.value = "";
-        this.emoteCodeUpload.current.value = "";
+        //this.emoteUpload.current.value = "";
+        //this.emoteCodeUpload.current.value = "";
     };
     private deleteEmote = (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
@@ -146,14 +148,16 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
             //TODO: Encrypt the shortcode and the image data before uploading
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
-                const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile); //await client.uploadContent(this.state.newEmoteFile); FOR UNENCRYPTED
-                emotesMxcs[this.state.newEmoteCode] = newEmote.file;
-                value[this.state.newEmoteCode] = this.state.newEmoteCode;
+                for (var i = 0; i < this.state.newEmoteCode.length; i++) {
+                const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]); //await client.uploadContent(this.state.newEmoteFile); FOR UNENCRYPTED
+                emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
+                value[this.state.newEmoteCode[i]] = this.state.newEmoteCode[i];
+            }
             }
             if (this.state.emotes) {
                 for (const shortcode in this.state.emotes) {
                     if ((this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)
-                    && (shortcode === this.state.newEmoteCode)) {
+                    && (shortcode in this.state.newEmoteCode)) {
                         continue;
                     }
                     if (this.state.EmoteFieldsTouched.hasOwnProperty(shortcode)) {
@@ -167,14 +171,16 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             }
             newState.value = value;
             await client.sendStateEvent(this.props.roomId, 'm.room.emotes', emotesMxcs, "");
-            this.emoteUpload.current.value = "";
-            this.emoteCodeUpload.current.value = "";
+            //this.emoteUpload.current.value = "";
+            //this.emoteCodeUpload.current.value = "";
             newState.newEmoteFileAdded = false;
             newState.newEmoteCodeAdded = false;
             newState.EmoteFieldsTouched = {};
             newState.emotes = emotesMxcs;
             newState.deleted = false;
             newState.deletedItems = {};
+            newState.newEmoteCode = [""]
+            newState.newEmoteFile =[]
         }
         this.setState(newState as IState);
         this.decryptEmotes();
@@ -198,32 +204,44 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             return;
         }
 
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (ev) => {
+        const uploadedFiles=[]
+        const newCodes=[]
+        for (const file of e.target.files){
+            const fileName = file.name.replace(/\.[^.]*$/,'')
+            uploadedFiles.push(file)
+            newCodes.push(fileName)
+        }  
+        //reader.onload = (ev) => {
             this.setState({
+                newEmoteCodeAdded: true,
                 newEmoteFileAdded: true,
-                newEmoteFile: file,
+                newEmoteCode: newCodes,
+                newEmoteFile: uploadedFiles,
                 EmoteFieldsTouched: {
                     ...this.state.EmoteFieldsTouched,
                 },
             });
-            this.emoteUploadImage.current.src = URL.createObjectURL(file);
-        };
-        reader.readAsDataURL(file);
+            //this.emoteUploadImage.current.src = URL.createObjectURL(file);
+        //};
+        //reader.readAsDataURL(file);
     };
     private onEmoteCodeAdd = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.value.length > 0) {
+            const updatedCode=this.state.newEmoteCode;
+            updatedCode[e.target.getAttribute("data-index")]=e.target.value;
             this.setState({
                 newEmoteCodeAdded: true,
-                newEmoteCode: e.target.value,
+                newEmoteCode: updatedCode,
                 EmoteFieldsTouched: {
                     ...this.state.EmoteFieldsTouched,
                 },
             });
         } else {
+            const updatedCode=this.state.newEmoteCode;
+            updatedCode[e.target.getAttribute("data-index")]=e.target.value;
             this.setState({
                 newEmoteCodeAdded: false,
+                newEmoteCode: updatedCode,
             });
         }
     };
@@ -309,6 +327,35 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             );
         }
 
+        let uploadedEmotes =[];
+        for (var i = 0; i < this.state.newEmoteCode.length; i++) {
+            const fileUrl=this.state.newEmoteFile[i]? URL.createObjectURL(this.state.newEmoteFile[i]):""
+            uploadedEmotes.push(
+                <li className='mx_EmoteSettings_addEmoteField'>
+                <input
+                    ref={this.emoteCodeUpload}
+                    type="text"
+                    autoComplete="off"
+                    placeholder=':emote:'
+                    value={this.state.newEmoteCode[i]}
+                    data-index={i}
+                    className="mx_EmoteSettings_emoteField"
+                    onChange={this.onEmoteCodeAdd}
+                />
+                {
+                    this.state.newEmoteFileAdded ?
+                        <img
+                            src={fileUrl}
+                            ref={this.emoteUploadImage}
+                            className="mx_EmoteSettings_uploadedEmoteImage"
+                        /> : null
+                }
+
+                { i==0? emoteUploadButton: null }
+            </li>
+
+            )
+        }
         return (
 
             <form
@@ -324,28 +371,10 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     onClick={chromeFileInputFix}
                     onChange={this.onEmoteFileAdd}
                     accept="image/*"
+                    multiple
                 />
                 { emoteSettingsButtons }
-                <li className='mx_EmoteSettings_addEmoteField'>
-                    <input
-                        ref={this.emoteCodeUpload}
-                        type="text"
-                        autoComplete="off"
-                        placeholder=':emote:'
-                        className="mx_EmoteSettings_emoteField"
-                        onChange={this.onEmoteCodeAdd}
-                    />
-                    {
-                        this.state.newEmoteFileAdded ?
-                            <img
-                                src=""
-                                ref={this.emoteUploadImage}
-                                className="mx_EmoteSettings_uploadedEmoteImage"
-                            /> : null
-                    }
-
-                    { emoteUploadButton }
-                </li>
+                { uploadedEmotes }
                 {
                     existingEmotes
                 }
