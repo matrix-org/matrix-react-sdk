@@ -17,10 +17,12 @@ limitations under the License.
 import { useCallback, useContext, useEffect, useState } from "react";
 import { IMyDevice, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { User } from "matrix-js-sdk/src/models/user";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
-import { DevicesDictionary } from "./types";
+import { DevicesDictionary, DeviceWithVerification } from "./types";
 
 const isDeviceVerified = (
     matrixClient: MatrixClient,
@@ -63,7 +65,11 @@ export enum OwnDevicesError {
 type DevicesState = {
     devices: DevicesDictionary;
     currentDeviceId: string;
+    currentUserMember?: User;
+    isCurrentDeviceVerified: boolean;
     isLoading: boolean;
+    // not provided when current device is not verified
+    requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
     error?: OwnDevicesError;
 };
@@ -98,9 +104,22 @@ export const useOwnDevices = (): DevicesState => {
         refreshDevices();
     }, [refreshDevices]);
 
+    const isCurrentDeviceVerified = !!devices[currentDeviceId]?.isVerified;
+
+    const requestDeviceVerification = isCurrentDeviceVerified ? async (deviceId) => {
+        const userId = matrixClient.getUserId();
+        return await matrixClient.requestVerification(
+            userId,
+            [deviceId],
+        );
+    } : undefined;
+
     return {
         devices,
         currentDeviceId,
+        currentUserMember: matrixClient.getUser(matrixClient.getUserId()),
+        isCurrentDeviceVerified,
+        requestDeviceVerification,
         refreshDevices,
         isLoading,
         error,

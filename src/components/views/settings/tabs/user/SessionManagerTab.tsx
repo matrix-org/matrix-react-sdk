@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { _t } from "../../../../../languageHandler";
 import { useOwnDevices } from '../../devices/useOwnDevices';
@@ -26,12 +26,15 @@ import { DeviceSecurityVariation, DeviceWithVerification } from '../../devices/t
 import SettingsTab from '../SettingsTab';
 import Modal from '../../../../../Modal';
 import SetupEncryptionDialog from '../../../dialogs/security/SetupEncryptionDialog';
+import VerificationRequestDialog from '../../../dialogs/VerificationRequestDialog';
 
 const SessionManagerTab: React.FC = () => {
     const {
         devices,
         currentDeviceId,
+        currentUserMember,
         isLoading,
+        requestDeviceVerification,
         refreshDevices,
     } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
@@ -74,6 +77,22 @@ const SessionManagerTab: React.FC = () => {
         );
     };
 
+    const onTriggerDeviceVerification = useCallback((deviceId: DeviceWithVerification['device_id']) => {
+        if (!requestDeviceVerification) {
+            return;
+        }
+        const verificationRequestPromise = requestDeviceVerification(deviceId);
+        Modal.createDialog(VerificationRequestDialog, {
+            verificationRequestPromise,
+            member: currentUserMember,
+            onFinished: async () => {
+                const request = await verificationRequestPromise;
+                request.cancel();
+                await refreshDevices();
+            },
+        });
+    }, [requestDeviceVerification, refreshDevices, currentUserMember]);
+
     useEffect(() => () => {
         clearTimeout(scrollIntoViewTimeoutRef.current);
     }, [scrollIntoViewTimeoutRef]);
@@ -105,6 +124,7 @@ const SessionManagerTab: React.FC = () => {
                     expandedDeviceIds={expandedDeviceIds}
                     onFilterChange={setFilter}
                     onDeviceExpandToggle={onDeviceExpandToggle}
+                    onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
                     ref={filteredDeviceListRef}
                 />
             </SettingsSubsection>
