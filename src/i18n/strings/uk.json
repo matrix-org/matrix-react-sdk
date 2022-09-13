@@ -181,7 +181,7 @@
     "Moderator": "Модератор",
     "Failed to invite": "Не вдалося запросити",
     "You need to be logged in.": "Вам потрібно увійти.",
-    "You need to be able to invite users to do that.": "Щоб це зробити, вам необхідно мати можливість запрошувати людей.",
+    "You need to be able to invite users to do that.": "Для цього вам потрібен дозвіл запрошувати користувачів.",
     "Unable to create widget.": "Неможливо створити віджет.",
     "Missing roomId.": "Бракує ID кімнати.",
     "Failed to send request.": "Не вдалося надіслати запит.",
@@ -3562,5 +3562,6 @@
     "Your server lacks native support": "На вашому сервері немає вбудованої підтримки",
     "Your server has native support": "Ваш сервер має вбудовану підтримку",
     "Checking...": "Перевірка...",
-    "Sliding Sync mode (under active development, cannot be disabled)": "Режим ковзної синхронізації (в активній розробці, не можна вимкнути)"
+    "Sliding Sync mode (under active development, cannot be disabled)": "Режим ковзної синхронізації (в активній розробці, не можна вимкнути)",
+    "You need to be able to kick users to do that.": "Для цього вам потрібен дозвіл вилучати користувачів."
 }
