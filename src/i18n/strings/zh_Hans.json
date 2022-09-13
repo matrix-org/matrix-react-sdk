@@ -3503,5 +3503,22 @@
     "Create room": "创建房间",
     "Create video room": "创建视频房间",
     "Create a video room": "创建视频房间",
-    "%(user1)s and %(user2)s": "%(user1)s和%(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s和%(user2)s",
+    "Choose a locale": "选择区域设置",
+    "Empty room (was %(oldName)s)": "空房间（曾是%(oldName)s）",
+    "Unknown device type": "未知的设备类型",
+    "Show": "显示",
+    "Audio input %(n)s": "音频输入%(n)s",
+    "Video input %(n)s": "视频输入%(n)s",
+    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s或%(emojiCompare)s",
+    "%(qrCode)s or %(appLinks)s": "%(qrCode)s或%(appLinks)s",
+    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
+    "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s或%(copyButton)s",
+    "Checking...": "正在检查……",
+    "Your server has native support": "你的服务器有原生支持",
+    "Your server lacks native support": "你的服务器缺少原生支持",
+    "Your server lacks native support, you must specify a proxy": "你的服务器缺少原生支持，你必须指定代理",
+    "To disable you will need to log out and back in, use with caution!": "要停用，你必须登出并重新登录，请小心！",
+    "Proxy URL (optional)": "代理URL（可选）",
+    "Proxy URL": "代理URL"
 }
