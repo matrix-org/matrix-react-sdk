@@ -221,13 +221,13 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 ...this.state.EmoteFieldsTouched,
             },
         });
-            //this.emoteUploadImage.current.src = URL.createObjectURL(file);
+        //this.emoteUploadImage.current.src = URL.createObjectURL(file);
         //};
         //reader.readAsDataURL(file);
     };
     private onEmoteCodeAdd = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.value.length > 0) {
-            const updatedCode=this.state.newEmoteCode;
+            const updatedCode = this.state.newEmoteCode;
             updatedCode[e.target.getAttribute("data-index")]=e.target.value;
             this.setState({
                 newEmoteCodeAdded: true,
@@ -351,7 +351,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                             /> : null
                     }
 
-                    {i == 0 ? emoteUploadButton : null}
+                    { i == 0 ? emoteUploadButton : null }
                 </li>,
             );
         }
