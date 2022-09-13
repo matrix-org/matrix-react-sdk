@@ -148,11 +148,11 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
             //TODO: Encrypt the shortcode and the image data before uploading
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
-                for (var i = 0; i < this.state.newEmoteCode.length; i++) {
-                const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]); //await client.uploadContent(this.state.newEmoteFile); FOR UNENCRYPTED
-                emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
-                value[this.state.newEmoteCode[i]] = this.state.newEmoteCode[i];
-            }
+                for (let i = 0; i < this.state.newEmoteCode.length; i++) {
+                    const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]); //await client.uploadContent(this.state.newEmoteFile); FOR UNENCRYPTED
+                    emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
+                    value[this.state.newEmoteCode[i]] = this.state.newEmoteCode[i];
+                }
             }
             if (this.state.emotes) {
                 for (const shortcode in this.state.emotes) {
@@ -179,8 +179,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newState.emotes = emotesMxcs;
             newState.deleted = false;
             newState.deletedItems = {};
-            newState.newEmoteCode = [""]
-            newState.newEmoteFile =[]
+            newState.newEmoteCode = [""];
+            newState.newEmoteFile =[];
         }
         this.setState(newState as IState);
         this.decryptEmotes();
@@ -204,23 +204,23 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             return;
         }
 
-        const uploadedFiles=[]
-        const newCodes=[]
-        for (const file of e.target.files){
-            const fileName = file.name.replace(/\.[^.]*$/,'')
-            uploadedFiles.push(file)
-            newCodes.push(fileName)
-        }  
+        const uploadedFiles=[];
+        const newCodes=[];
+        for (const file of e.target.files) {
+            const fileName = file.name.replace(/\.[^.]*$/, '');
+            uploadedFiles.push(file);
+            newCodes.push(fileName);
+        }
         //reader.onload = (ev) => {
-            this.setState({
-                newEmoteCodeAdded: true,
-                newEmoteFileAdded: true,
-                newEmoteCode: newCodes,
-                newEmoteFile: uploadedFiles,
-                EmoteFieldsTouched: {
-                    ...this.state.EmoteFieldsTouched,
-                },
-            });
+        this.setState({
+            newEmoteCodeAdded: true,
+            newEmoteFileAdded: true,
+            newEmoteCode: newCodes,
+            newEmoteFile: uploadedFiles,
+            EmoteFieldsTouched: {
+                ...this.state.EmoteFieldsTouched,
+            },
+        });
             //this.emoteUploadImage.current.src = URL.createObjectURL(file);
         //};
         //reader.readAsDataURL(file);
@@ -327,34 +327,33 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             );
         }
 
-        let uploadedEmotes =[];
-        for (var i = 0; i < this.state.newEmoteCode.length; i++) {
-            const fileUrl=this.state.newEmoteFile[i]? URL.createObjectURL(this.state.newEmoteFile[i]):""
+        const uploadedEmotes = [];
+        for (let i = 0; i < this.state.newEmoteCode.length; i++) {
+            const fileUrl = this.state.newEmoteFile[i] ? URL.createObjectURL(this.state.newEmoteFile[i]) : "";
             uploadedEmotes.push(
                 <li className='mx_EmoteSettings_addEmoteField'>
-                <input
-                    ref={this.emoteCodeUpload}
-                    type="text"
-                    autoComplete="off"
-                    placeholder=':emote:'
-                    value={this.state.newEmoteCode[i]}
-                    data-index={i}
-                    className="mx_EmoteSettings_emoteField"
-                    onChange={this.onEmoteCodeAdd}
-                />
-                {
-                    this.state.newEmoteFileAdded ?
-                        <img
-                            src={fileUrl}
-                            ref={this.emoteUploadImage}
-                            className="mx_EmoteSettings_uploadedEmoteImage"
-                        /> : null
-                }
+                    <input
+                        ref={this.emoteCodeUpload}
+                        type="text"
+                        autoComplete="off"
+                        placeholder=':emote:'
+                        value={this.state.newEmoteCode[i]}
+                        data-index={i}
+                        className="mx_EmoteSettings_emoteField"
+                        onChange={this.onEmoteCodeAdd}
+                    />
+                    {
+                        this.state.newEmoteFileAdded ?
+                            <img
+                                src={fileUrl}
+                                ref={this.emoteUploadImage}
+                                className="mx_EmoteSettings_uploadedEmoteImage"
+                            /> : null
+                    }
 
-                { i==0? emoteUploadButton: null }
-            </li>
-
-            )
+                    {i == 0 ? emoteUploadButton : null}
+                </li>,
+            );
         }
         return (
 
