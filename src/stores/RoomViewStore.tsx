@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { Store } from 'flux/utils';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
@@ -26,13 +25,13 @@ import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
+import EventEmitter from "events";
 
-import dis from '../dispatcher/dispatcher';
+import { defaultDispatcher, MatrixDispatcher } from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
 import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
-import { ActionPayload } from "../dispatcher/payloads";
 import { Action } from "../dispatcher/actions";
 import { retry } from "../utils/promise";
 import { TimelineRenderingType } from "../contexts/RoomContext";
@@ -50,6 +49,7 @@ import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChang
 import SettingsStore from "../settings/SettingsStore";
 import { SlidingSyncManager } from "../SlidingSyncManager";
 import { awaitRoomDownSync } from "../utils/RoomUpgrade";
+import { UPDATE_EVENT } from "./AsyncStore";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -90,23 +90,26 @@ const INITIAL_STATE = {
 type Listener = (isActive: boolean) => void;
 
 /**
- * A class for storing application state for RoomView. This is the RoomView's interface
-*  with a subset of the js-sdk.
- *  ```
+ * A class for storing application state for RoomView.
  */
-export class RoomViewStore extends Store<ActionPayload> {
+export class RoomViewStore extends EventEmitter {
     // Important: This cannot be a dynamic getter (lazily-constructed instance) because
     // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
     // the app. We need to eagerly create the instance.
-    public static readonly instance = new RoomViewStore();
+    public static readonly instance = new RoomViewStore(defaultDispatcher);
 
     private state = INITIAL_STATE; // initialize state
 
     // Keep these out of state to avoid causing excessive/recursive updates
     private roomIdActivityListeners: Record<string, Listener[]> = {};
 
-    public constructor() {
-        super(dis);
+    private dis: MatrixDispatcher;
+    private dispatchToken: string;
+
+    public constructor(dis: MatrixDispatcher) {
+        super();
+        this.dis = dis;
+        this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
     }
 
     public addRoomListener(roomId: string, fn: Listener): void {
@@ -156,17 +159,17 @@ export class RoomViewStore extends Store<ActionPayload> {
 
             // Fired so we can reduce dependency on event emitters to this store, which is relatively
             // central to the application and can easily cause import cycles.
-            dis.dispatch<ActiveRoomChangedPayload>({
+            this.dis.dispatch<ActiveRoomChangedPayload>({
                 action: Action.ActiveRoomChanged,
                 oldRoomId: lastRoomId,
                 newRoomId: this.state.roomId,
             });
         }
 
-        this.__emitChange();
+        this.emit(UPDATE_EVENT);
     }
 
-    protected __onDispatch(payload): void { // eslint-disable-line @typescript-eslint/naming-convention
+    private onDispatch(payload): void { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // view_room:
             //      - room_alias:   '#somealias:matrix.org'
@@ -243,7 +246,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                 // both room and search timeline rendering types, search will get auto-closed by RoomView at this time.
                 if ([TimelineRenderingType.Room, TimelineRenderingType.Search].includes(payload.context)) {
                     if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
-                        dis.dispatch<ViewRoomPayload>({
+                        this.dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
                             replyingToEvent: payload.event,
@@ -310,7 +313,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                     return;
                 }
                 // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
-                dis.dispatch({
+                this.dis.dispatch({
                     ...payload,
                 });
                 return;
@@ -345,7 +348,7 @@ export class RoomViewStore extends Store<ActionPayload> {
             this.setState(newState);
 
             if (payload.auto_join) {
-                dis.dispatch<JoinRoomPayload>({
+                this.dis.dispatch<JoinRoomPayload>({
                     ...payload,
                     action: Action.JoinRoom,
                     roomId: payload.room_id,
@@ -377,7 +380,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                     roomId = result.room_id;
                 } catch (err) {
                     logger.error("RVS failed to get room id for alias: ", err);
-                    dis.dispatch<ViewRoomErrorPayload>({
+                    this.dis.dispatch<ViewRoomErrorPayload>({
                         action: Action.ViewRoomError,
                         room_id: null,
                         room_alias: payload.room_alias,
@@ -388,7 +391,7 @@ export class RoomViewStore extends Store<ActionPayload> {
             }
 
             // Re-fire the payload with the newly found room_id
-            dis.dispatch({
+            this.dis.dispatch({
                 ...payload,
                 room_id: roomId,
             });
@@ -426,13 +429,13 @@ export class RoomViewStore extends Store<ActionPayload> {
             // We do *not* clear the 'joining' flag because the Room object and/or our 'joined' member event may not
             // have come down the sync stream yet, and that's the point at which we'd consider the user joined to the
             // room.
-            dis.dispatch<JoinRoomReadyPayload>({
+            this.dis.dispatch<JoinRoomReadyPayload>({
                 action: Action.JoinRoomReady,
                 roomId,
                 metricsTrigger: payload.metricsTrigger,
             });
         } catch (err) {
-            dis.dispatch({
+            this.dis.dispatch({
                 action: Action.JoinRoomError,
                 roomId,
                 err,
