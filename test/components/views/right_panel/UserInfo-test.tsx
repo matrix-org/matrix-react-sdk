@@ -28,6 +28,8 @@ import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 import VerificationPanel from '../../../../src/components/views/right_panel/VerificationPanel';
 import EncryptionInfo from '../../../../src/components/views/right_panel/EncryptionInfo';
+import { shouldShowComponent } from '../../../../src/customisations/helpers/UIComponents';
+import { UIComponent } from '../../../../src/settings/UIFeature';
 
 const findByTestId = (component, id) => component.find(`[data-test-id="${id}"]`);
 
@@ -41,6 +43,13 @@ jest.mock('../../../../src/utils/DMRoomMap', () => {
         shared: jest.fn().mockReturnValue(mock),
         sharedInstance: mock,
     };
+});
+
+jest.mock('../../../../src/customisations/helpers/UIComponents', () => {
+    const original = jest.requireActual('../../../../src/customisations/helpers/UIComponents');
+    return ({
+        shouldShowComponent: jest.fn().mockImplementation(original.shouldShowComponent),
+    });
 });
 
 describe('<UserInfo />', () => {
@@ -182,6 +191,22 @@ describe('<UserInfo />', () => {
 
             expect(component.find(EncryptionInfo).length).toBeFalsy();
             expect(component.find(VerificationPanel).length).toBeTruthy();
+        });
+
+        it('renders the message button', () => {
+            const component = getComponent();
+
+            expect(component.find("MessageButton")).toHaveLength(1);
+        });
+
+        it('hides the message button if the visibility customisation hides all create room features', () => {
+            (shouldShowComponent as jest.Mock).mockImplementation((component) => {
+                return component !== UIComponent.CreateRooms;
+            });
+
+            const component = getComponent();
+
+            expect(component.find("MessageButton")).toHaveLength(0);
         });
     });
 });
