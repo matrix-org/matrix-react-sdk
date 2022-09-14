@@ -94,7 +94,7 @@ interface IState {
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
@@ -116,12 +116,12 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.state = {
             isComposerEmpty: true,
             haveRecording: false,
-            recordingTimeLeftSeconds: null, // when set to a number, shows a toast
+            recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
-            showVoiceBroadcastButton: SettingsStore.getValue(FEATURES.VOICE_BROADCAST, null),
+            showVoiceBroadcastButton: SettingsStore.getValue(FEATURES.VOICE_BROADCAST),
         };
 
         this.instanceId = instanceCount++;
@@ -157,7 +157,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.waitForOwnMember();
-        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
+        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current!);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
         this.updateRecordingState(); // grab any cached recordings
     }
@@ -215,8 +215,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private waitForOwnMember() {
+        const userId = MatrixClientPeg.get().getUserId()!;
+
         // if we have the member already, do that
-        const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
+        const me = this.props.room.getMember(userId);
         if (me) {
             this.setState({ me });
             return;
@@ -225,14 +227,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         // The members should already be loading, and loadMembersIfNeeded
         // will return the promise for the existing operation
         this.props.room.loadMembersIfNeeded().then(() => {
-            const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
+            const me = this.props.room.getMember(userId) || undefined;
             this.setState({ me });
         });
     }
 
     public componentWillUnmount() {
         VoiceRecordingStore.instance.off(UPDATE_EVENT, this.onVoiceStoreUpdate);
-        dis.unregister(this.dispatcherRef);
+        dis.unregister(this.dispatcherRef!);
         UIStore.instance.stopTrackingElementDimensions(`MessageComposer${this.instanceId}`);
         UIStore.instance.removeListener(`MessageComposer${this.instanceId}`, this.onResize);
 
@@ -243,15 +245,18 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     private onTombstoneClick = (ev) => {
         ev.preventDefault();
 
-        const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
+        const replacementRoomId = this.context.tombstone?.getContent()['replacement_room'];
         const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
-        let createEventId = null;
+        let createEventId: string | undefined = undefined;
         if (replacementRoom) {
             const createEvent = replacementRoom.currentState.getStateEvents(EventType.RoomCreate, '');
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
+        const viaServers = this.context.tombstone
+            ? [this.context.tombstone.getSender().split(':').slice(1).join(':')]
+            : undefined;
+
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -343,7 +348,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onRecordingEndingSoon = ({ secondsLeft }) => {
         this.setState({ recordingTimeLeftSeconds: secondsLeft });
-        setTimeout(() => this.setState({ recordingTimeLeftSeconds: null }), 3000);
+        setTimeout(() => this.setState({ recordingTimeLeftSeconds: undefined }), 3000);
     };
 
     private setStickerPickerOpen = (isStickerPickerOpen: boolean) => {
@@ -436,8 +441,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         let recordingTooltip;
-        const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
-        if (secondsLeft) {
+        if (this.state.recordingTimeLeftSeconds) {
+            const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = <Tooltip
                 label={_t("%(seconds)ss left", { seconds: secondsLeft })}
                 alignment={Alignment.Top}

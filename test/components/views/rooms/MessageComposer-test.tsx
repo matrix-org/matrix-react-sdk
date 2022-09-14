@@ -107,7 +107,7 @@ describe("MessageComposer", () => {
     });
 
     describe("for a LocalRoom", () => {
-        const localRoom = new LocalRoom("!room:example.com", cli, cli.getUserId());
+        const localRoom = new LocalRoom("!room:example.com", cli, cli.getUserId()!);
 
         it("should pass the sticker picker disabled prop", () => {
             const wrapper = wrapAndRender({ room: localRoom });

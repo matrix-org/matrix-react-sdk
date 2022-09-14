@@ -45,7 +45,7 @@ interface IProps {
     haveRecording: boolean;
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
-    menuPosition: AboveLeftOf;
+    menuPosition?: AboveLeftOf;
     onRecordStartEndClick: () => void;
     relation?: IEventRelation;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
@@ -64,12 +64,12 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     const matrixClient: MatrixClient = useContext(MatrixClientContext);
     const { room, roomId, narrow } = useContext(RoomContext);
 
-    if (props.haveRecording) {
+    if (props.haveRecording || !room || !roomId) {
         return null;
     }
 
-    let mainButtons: ReactElement[];
-    let moreButtons: ReactElement[];
+    let mainButtons: (ReactElement|null)[];
+    let moreButtons: (ReactElement|null)[];
     if (narrow) {
         mainButtons = [
             emojiButton(props),
@@ -79,7 +79,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
             startVoiceBroadcastButton(props),
-            props.showPollsButton && pollButton(room, props.relation),
+            props.showPollsButton ? pollButton(room, props.relation) : null,
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -91,13 +91,13 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
             startVoiceBroadcastButton(props),
-            props.showPollsButton && pollButton(room, props.relation),
+            props.showPollsButton ? pollButton(room, props.relation) : null,
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
 
-    mainButtons = mainButtons.filter((x: ReactElement) => x);
-    moreButtons = moreButtons.filter((x: ReactElement) => x);
+    mainButtons = mainButtons.filter((x: ReactElement|null) => x);
+    moreButtons = moreButtons.filter((x: ReactElement|null) => x);
 
     const moreOptionsClasses = classNames({
         mx_MessageComposer_button: true,
@@ -139,7 +139,7 @@ function emojiButton(props: IProps): ReactElement {
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
-    menuPosition: AboveLeftOf;
+    menuPosition?: AboveLeftOf;
 }
 
 const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) => {
@@ -147,7 +147,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu: React.ReactElement | null = null;
-    if (menuDisplayed) {
+    if (menuDisplayed && button.current) {
         const position = (
             menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
         );
@@ -201,7 +201,7 @@ interface IUploadButtonProps {
 const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const uploadInput = useRef<HTMLInputElement>();
+    const uploadInput = useRef<HTMLInputElement>() as React.MutableRefObject<HTMLInputElement>;
 
     const onUploadClick = () => {
         if (cli.isGuest()) {
@@ -218,13 +218,13 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
     });
 
     const onUploadFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        if (ev.target.files.length === 0) return;
+        if (!ev.target.files?.length) return;
 
         // Take a copy, so we can safely reset the value of the form control
         ContentMessages.sharedInstance().sendContentListToRoom(
             Array.from(ev.target.files),
             roomId,
-            relation,
+            relation || undefined,
             cli,
             roomContext.timelineRenderingType,
         );
@@ -269,7 +269,7 @@ const UploadButton = () => {
     />;
 };
 
-function showStickersButton(props: IProps): ReactElement {
+function showStickersButton(props: IProps): ReactElement | null {
     return (
         props.showStickersButton
             ? <CollapsibleButton
@@ -284,7 +284,7 @@ function showStickersButton(props: IProps): ReactElement {
     );
 }
 
-const startVoiceBroadcastButton: React.FC<IProps> = (props: IProps): ReactElement => {
+const startVoiceBroadcastButton: React.FC<IProps> = (props: IProps): ReactElement | null => {
     return (
         props.showVoiceBroadcastButton
             ? <CollapsibleButton
@@ -298,7 +298,7 @@ const startVoiceBroadcastButton: React.FC<IProps> = (props: IProps): ReactElemen
     );
 };
 
-function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
+function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement | null {
     // XXX: recording UI does not work well in narrow mode, so hide for now
     return (
         narrow
@@ -330,7 +330,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         this.context?.(); // close overflow menu
         const canSend = this.props.room.currentState.maySendEvent(
             M_POLL_START.name,
-            MatrixClientPeg.get().getUserId(),
+            MatrixClientPeg.get().getUserId()!,
         );
         if (!canSend) {
             Modal.createDialog(
@@ -380,14 +380,16 @@ function showLocationButton(
     room: Room,
     roomId: string,
     matrixClient: MatrixClient,
-): ReactElement {
+): ReactElement | null {
+    const sender = room.getMember(matrixClient.getUserId()!);
+
     return (
-        props.showLocationButton
+        props.showLocationButton && sender
             ? <LocationButton
                 key="location"
                 roomId={roomId}
                 relation={props.relation}
-                sender={room.getMember(matrixClient.getUserId())}
+                sender={sender}
                 menuPosition={props.menuPosition}
             />
             : null
