@@ -3562,5 +3562,6 @@
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s ou %(appLinks)s",
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ou %(emojiCompare)s",
     "Show shortcut to welcome checklist above the room list": "Mostrar atallo á lista de comprobacións de benvida sobre a lista de salas",
-    "Sliding Sync mode (under active development, cannot be disabled)": "Modo Sliding Sync (en desenvolvemento, non se pode desactivar)"
+    "Sliding Sync mode (under active development, cannot be disabled)": "Modo Sliding Sync (en desenvolvemento, non se pode desactivar)",
+    "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso."
 }
