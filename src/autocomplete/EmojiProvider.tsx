@@ -22,6 +22,7 @@ import React from 'react';
 import { uniq, sortBy } from 'lodash';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
@@ -33,6 +34,7 @@ import { EMOJI, IEmoji, getEmojiFromUnicode } from '../emoji';
 import { TimelineRenderingType } from '../contexts/RoomContext';
 import * as recent from '../emojipicker/recent';
 import { decryptFile } from '../utils/DecryptFile';
+import { mediaFromMxc } from '../customisations/Media';
 
 const LIMIT = 20;
 
@@ -82,7 +84,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        this.emotesPromise = this.decryptEmotes(rawEmotes);
+        this.emotesPromise = this.decryptEmotes(rawEmotes,room?.roomId);
         this.emotes={};
         // for (const key in rawEmotes) { FOR UNENCRYPTED
         //     this.emotes[key] = "<img class='mx_Emote' title=':"+key+
@@ -103,13 +105,20 @@ export default class EmojiProvider extends AutocompleteProvider {
         this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
     }
 
-    private async decryptEmotes(emotes: Object) {
+    private async decryptEmotes(emotes: Object, roomId:string) {
         const decryptede={};
+        const client = MatrixClientPeg.get();
+        let durl = "";
+        const isEnc=client.isRoomEncrypted(roomId)
         for (const shortcode in emotes) {
-            const blob = await decryptFile(emotes[shortcode]);
-            const durl=URL.createObjectURL(blob);
-            decryptede[shortcode] = "<img class='mx_Emote' title=':"+shortcode+
-                  ":'src='" + durl + "'/>";
+            if (isEnc) {
+                const blob = await decryptFile(emotes[shortcode]);
+                durl = URL.createObjectURL(blob);
+            } else {
+                durl = mediaFromMxc(emotes[shortcode]).srcHttp
+            }
+            decryptede[shortcode] = "<img class='mx_Emote' title=':" + shortcode +
+                ":'src='" + durl + "'/>";
         }
         return decryptede;
     }
