@@ -3563,5 +3563,6 @@
     "Your server lacks native support": "Váš server nemá nativní podporu",
     "Your server has native support": "Váš server má nativní podporu",
     "Checking...": "Kontroluje se...",
-    "You need to be able to kick users to do that.": "Pro tuto akci musíte mít právo vyhodit uživatele."
+    "You need to be able to kick users to do that.": "Pro tuto akci musíte mít právo vyhodit uživatele.",
+    "Sign out of this session": "Odhlásit se z této relace"
 }
