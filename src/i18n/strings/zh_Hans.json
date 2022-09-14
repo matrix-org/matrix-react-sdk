@@ -491,7 +491,7 @@
     "Share room": "分享房间",
     "System Alerts": "系统警告",
     "Muted Users": "被禁言的用户",
-    "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "在加密的房间中，比如这个，默认禁用URL预览，以确保主服务器（生成预览的地方）无法获知你在此房间中看到的链接的有关的信息。",
+    "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "在加密的房间中，比如此房间，URL预览默认禁用，以确保主服务器（生成预览的地方）无法收集与你在此房间中看到的链接有关的信息。",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "当有人在他们的消息里放置URL时，可显示URL预览以给出更多有关链接的信息，如其网站的标题、描述以及图片。",
     "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "你确定要移除（删除）此事件吗？注意，如果删除房间名称或话题的更改，更改会被撤销。",
     "Clear Storage and Sign Out": "清除存储并登出",
