@@ -170,8 +170,8 @@ const SessionManagerTab: React.FC = () => {
         <CurrentDeviceSection
             device={currentDevice}
             isSigningOut={signingOutDeviceIds.includes(currentDevice?.device_id)}
-            isLoading={isLoadingDeviceList || pendingDeviceIds.includes(currentDevice.device_id)}
-            onSaveDeviceName={(deviceName) => saveDeviceName(currentDevice.device_id, deviceName)}
+            isLoading={isLoadingDeviceList || pendingDeviceIds.includes(currentDevice?.device_id)}
+            onSaveDeviceName={(deviceName) => saveDeviceName(currentDevice?.device_id, deviceName)}
             onVerifyCurrentDevice={onVerifyCurrentDevice}
             onSignOutCurrentDevice={onSignOutCurrentDevice}
         />
