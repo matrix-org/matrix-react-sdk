@@ -19,6 +19,8 @@ import React, { useEffect, useState } from 'react';
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
 import Field from '../../elements/Field';
+import Spinner from '../../elements/Spinner';
+import { Caption } from '../../typography/Caption';
 import Heading from '../../typography/Heading';
 import { DeviceWithVerification } from './types';
 
@@ -41,32 +43,55 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
         setDeviceName(event.target.value);
 
     const onSubmit = () => saveDeviceName(deviceName);
+    const headingId = `device-rename-${device.device_id}`;
+    const descriptionId = `device-rename-description-${device.device_id}`;
 
     return <form
         aria-disabled={isLoading}
         className="mx_DeviceDetailHeading_renameForm"
         onSubmit={onSubmit}>
-        <Field
-            data-testid='device-rename-input'
-            type="text"
-            value={deviceName}
-            autoComplete="off"
-            onChange={onInputChange}
-            autoFocus
-            disabled={isLoading}
-        />
-        <AccessibleButton
-            onClick={onSubmit}
-            kind="confirm"
-            data-testid='device-rename-submit-cta'
-            disabled={isLoading}
-        >{ _t('Save') }</AccessibleButton>
-        <AccessibleButton
-            onClick={stopEditing}
-            kind="cancel"
-            data-testid='device-rename-cancel-cta'
-            disabled={isLoading}
-        >{ _t('Cancel') }</AccessibleButton>
+        <p
+            id={headingId}
+            className="mx_DeviceDetailHeading_renameFormHeading"
+        >
+            { _t('Rename session') }
+        </p>
+        <div>
+            <Field
+                data-testid='device-rename-input'
+                type="text"
+                value={deviceName}
+                autoComplete="off"
+                onChange={onInputChange}
+                autoFocus
+                disabled={isLoading}
+                aria-labelledby={headingId}
+                aria-describedby={descriptionId}
+                className="mx_DeviceDetailHeading_renameFormInput"
+            />
+            <Caption
+                id={descriptionId}
+            >
+                { _t('Please be aware that session names are also visible to people you communicate with') }
+            </Caption>
+        </div>
+        <div className="mx_DeviceDetailHeading_renameFormButtons">
+            <AccessibleButton
+                onClick={onSubmit}
+                kind="primary"
+                data-testid='device-rename-submit-cta'
+                disabled={isLoading}
+            >
+                { _t('Save') }
+            </AccessibleButton>
+            { isLoading && <Spinner w={16} h={16} /> }
+            <AccessibleButton
+                onClick={stopEditing}
+                kind="secondary"
+                data-testid='device-rename-cancel-cta'
+                disabled={isLoading}
+            >{ _t('Cancel') }</AccessibleButton>
+        </div>
     </form>;
 };
 

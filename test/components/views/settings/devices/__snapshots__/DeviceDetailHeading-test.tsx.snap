@@ -7,35 +7,55 @@ Object {
       aria-disabled="false"
       class="mx_DeviceDetailHeading_renameForm"
     >
-      <div
-        class="mx_Field mx_Field_input"
+      <p
+        class="mx_DeviceDetailHeading_renameFormHeading"
+        id="device-rename-123"
       >
-        <input
-          autocomplete="off"
-          data-testid="device-rename-input"
-          id="mx_Field_1"
-          type="text"
-          value="My device"
-        />
-        <label
-          for="mx_Field_1"
-        />
+        Rename session
+      </p>
+      <div>
+        <div
+          class="mx_Field mx_Field_input mx_DeviceDetailHeading_renameFormInput"
+        >
+          <input
+            aria-describedby="device-rename-description-123"
+            aria-labelledby="device-rename-123"
+            autocomplete="off"
+            data-testid="device-rename-input"
+            id="mx_Field_1"
+            type="text"
+            value="My device"
+          />
+          <label
+            for="mx_Field_1"
+          />
+        </div>
+        <span
+          class="mx_Caption"
+          id="device-rename-description-123"
+        >
+          Please be aware that session names are also visible to people you communicate with
+        </span>
       </div>
       <div
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_confirm"
-        data-testid="device-rename-submit-cta"
-        role="button"
-        tabindex="0"
+        class="mx_DeviceDetailHeading_renameFormButtons"
       >
-        Save
-      </div>
-      <div
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_cancel"
-        data-testid="device-rename-cancel-cta"
-        role="button"
-        tabindex="0"
-      >
-        Cancel
+        <div
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+          data-testid="device-rename-submit-cta"
+          role="button"
+          tabindex="0"
+        >
+          Save
+        </div>
+        <div
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary"
+          data-testid="device-rename-cancel-cta"
+          role="button"
+          tabindex="0"
+        >
+          Cancel
+        </div>
       </div>
     </form>
   </div>,

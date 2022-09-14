@@ -25,6 +25,22 @@ limitations under the License.
     flex-shrink: 0;
 }
 
-.mx_DeviceDetailHeading_editor {
+.mx_DeviceDetailHeading_renameForm {
     display: grid;
+    grid-gap: $spacing-16;
+    justify-content: left;
+    grid-template-columns: 100%;
+}
+
+.mx_DeviceDetailHeading_renameFormButtons {
+    gap: $spacing-8;
+}
+
+.mx_DeviceDetailHeading_renameFormInput {
+    // override field styles
+    margin: 0 0 $spacing-4 0 !important;
+}
+
+.mx_DeviceDetailHeading_renameFormHeading {
+    margin: 0;
 }

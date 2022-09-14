@@ -17,6 +17,14 @@ HTMLCollection [
         >
           alices_device
         </h3>
+        <div
+          class="mx_AccessibleButton mx_DeviceDetailHeading_renameCta mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+          data-testid="device-heading-rename-cta"
+          role="button"
+          tabindex="0"
+        >
+          Rename
+        </div>
       </div>
       <div
         class="mx_DeviceSecurityCard"

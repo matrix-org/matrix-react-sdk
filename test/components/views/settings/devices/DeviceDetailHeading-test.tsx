@@ -17,7 +17,7 @@ limitations under the License.
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 
-import {DeviceDetailHeading} from '../../../../../src/components/views/settings/devices/DeviceDetailHeading';
+import { DeviceDetailHeading } from '../../../../../src/components/views/settings/devices/DeviceDetailHeading';
 
 describe('<DeviceDetailHeading />', () => {
     const device = {
@@ -33,11 +33,11 @@ describe('<DeviceDetailHeading />', () => {
     const getComponent = (props = {}) =>
         <DeviceDetailHeading {...defaultProps} {...props} />;
 
-    const setInputValue = (getByTestId: RenderResult['getByTestId'] , value: string) => {
+    const setInputValue = (getByTestId: RenderResult['getByTestId'], value: string) => {
         const input = getByTestId('device-rename-input');
 
-        fireEvent.change(input, { target: { value }});
-    }
+        fireEvent.change(input, { target: { value } });
+    };
 
     it('renders device name', () => {
         const { container } = render(getComponent());
