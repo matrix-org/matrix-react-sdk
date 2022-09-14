@@ -334,7 +334,7 @@ describe("Sliding Sync", () => {
 
     // Regression test for a bug in SS mode, but would be useful to have in non-SS mode too.
     // This ensures we are setting RoomViewStore state correctly.
-    it.only("should clear the reply to field when swapping rooms", () => {
+    it("should clear the reply to field when swapping rooms", () => {
         cy.createRoom({ name: "Other Room" }).as("roomA").then(() => cy.contains(".mx_RoomSublist", "Other Room"));
         cy.get<string>("@roomId").then((roomId) => {
             return cy.sendEvent(roomId, null, "m.room.message", {
@@ -342,10 +342,6 @@ describe("Sliding Sync", () => {
                 msgtype: "m.text",
             });
         });
-        // wait for the message to arrive
-        checkOrder([
-            "Test Room", "Other Room",
-        ]);
         // select the room
         cy.contains(".mx_RoomTile", "Test Room").click();
         cy.get(".mx_ReplyPreview").should("not.exist");
