@@ -518,9 +518,6 @@ describe('<SessionManagerTab />', () => {
                     await flushPromisesWithFakeTimers();
                 });
 
-                // reset mock count after initial load
-                mockClient.getDevices.mockClear();
-
                 toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
 
                 const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
@@ -554,8 +551,8 @@ describe('<SessionManagerTab />', () => {
 
                 // not called again
                 expect(mockClient.deleteMultipleDevices).toHaveBeenCalledTimes(1);
-                // devices not refreshed
-                expect(mockClient.getDevices).not.toHaveBeenCalled();
+                // devices not refreshed (not called since initial fetch)
+                expect(mockClient.getDevices).toHaveBeenCalledTimes(1);
 
                 // loading state cleared
                 expect((deviceDetails.querySelector(
