@@ -25,7 +25,9 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
+import { ReadReceipt } from 'matrix-js-sdk/src/models/read-receipt';
 
+import { ListenerMap } from 'matrix-js-sdk/src/models/typed-event-emitter';
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
@@ -827,7 +829,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             return null;
         }
 
-        const receiptDestination = this.context.threadId
+        const receiptDestination: ReadReceipt<string, ListenerMap<string>> = this.context.threadId
             ? room.getThread(this.context.threadId)
             : room;
 
