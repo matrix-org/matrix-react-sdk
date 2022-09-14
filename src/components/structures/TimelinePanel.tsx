@@ -30,7 +30,6 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
-import { getPrivateReadReceiptField } from "matrix-js-sdk/src/utils";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -992,13 +991,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 ).catch(async (e) => {
                     // /read_markers API is not implemented on this HS, fallback to just RR
                     if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
-                        const privateField = await getPrivateReadReceiptField(cli);
-                        if (!sendRRs && !privateField) return;
-
+                        if (
+                            !sendRRs
+                            && !cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")
+                        ) return;
                         try {
                             return await cli.sendReadReceipt(
                                 lastReadEvent,
-                                sendRRs ? ReceiptType.Read : privateField,
+                                sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
                             );
                         } catch (error) {
                             logger.error(e);
@@ -1011,20 +1011,20 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     this.lastRRSentEventId = undefined;
                     this.lastRMSentEventId = undefined;
                 });
-            }
 
-            // do a quick-reset of our unreadNotificationCount to avoid having
-            // to wait from the remote echo from the homeserver.
-            // we only do this if we're right at the end, because we're just assuming
-            // that sending an RR for the latest message will set our notif counter
-            // to zero: it may not do this if we send an RR for somewhere before the end.
-            if (this.isAtEndOfLiveTimeline()) {
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
-                dis.dispatch({
-                    action: 'on_room_read',
-                    roomId: this.props.timelineSet.room.roomId,
-                });
+                // do a quick-reset of our unreadNotificationCount to avoid having
+                // to wait from the remote echo from the homeserver.
+                // we only do this if we're right at the end, because we're just assuming
+                // that sending an RR for the latest message will set our notif counter
+                // to zero: it may not do this if we send an RR for somewhere before the end.
+                if (this.isAtEndOfLiveTimeline()) {
+                    this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
+                    this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
+                    dis.dispatch({
+                        action: 'on_room_read',
+                        roomId: this.props.timelineSet.room.roomId,
+                    });
+                }
             }
         }
     };
