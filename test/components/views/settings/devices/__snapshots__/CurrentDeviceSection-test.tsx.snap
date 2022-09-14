@@ -50,7 +50,7 @@ HTMLCollection [
         Session details
       </p>
       <table
-        class="mxDeviceDetails_metadataTable"
+        class="mx_DeviceDetails_metadataTable"
       >
         <tbody>
           <tr>
@@ -78,7 +78,7 @@ HTMLCollection [
         </tbody>
       </table>
       <table
-        class="mxDeviceDetails_metadataTable"
+        class="mx_DeviceDetails_metadataTable"
       >
         <thead>
           <tr>

@@ -69,7 +69,7 @@ const DeviceDetails: React.FC<Props> = ({
         <section className='mx_DeviceDetails_section'>
             <p className='mx_DeviceDetails_sectionHeading'>{ _t('Session details') }</p>
             { metadata.map(({ heading, values }, index) => <table
-                className='mxDeviceDetails_metadataTable'
+                className='mx_DeviceDetails_metadataTable'
                 key={index}
             >
                 { heading &&
