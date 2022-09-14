@@ -34,8 +34,6 @@ import Modal from '../../../../../../src/Modal';
 import LogoutDialog from '../../../../../../src/components/views/dialogs/LogoutDialog';
 import { DeviceWithVerification } from '../../../../../../src/components/views/settings/devices/types';
 
-// jest.useFakeTimers();
-
 describe('<SessionManagerTab />', () => {
     const aliceId = '@alice:server.org';
     const deviceId = 'alices_device';
