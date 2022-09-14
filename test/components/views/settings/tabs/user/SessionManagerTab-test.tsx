@@ -468,7 +468,9 @@ describe('<SessionManagerTab />', () => {
                 toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
 
                 const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
-                const signOutButton = deviceDetails.querySelector('[data-testid="device-detail-sign-out-cta"]');
+                const signOutButton = deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element;
                 fireEvent.click(signOutButton);
 
                 await flushPromisesWithFakeTimers();
