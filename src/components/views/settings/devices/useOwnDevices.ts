@@ -73,7 +73,7 @@ export enum OwnDevicesError {
     Unsupported = 'Unsupported',
     Default = 'Default',
 }
-type DevicesState = {
+export type DevicesState = {
     devices: DevicesDictionary;
     currentDeviceId: string;
     isLoading: boolean;

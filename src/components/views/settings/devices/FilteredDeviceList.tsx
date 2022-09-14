@@ -36,6 +36,7 @@ import {
 interface Props {
     devices: DevicesDictionary;
     expandedDeviceIds: DeviceWithVerification['device_id'][];
+    signingOutDeviceIds: DeviceWithVerification['device_id'][];
     filter?: DeviceSecurityVariation;
     onFilterChange: (filter: DeviceSecurityVariation | undefined) => void;
     onDeviceExpandToggle: (deviceId: DeviceWithVerification['device_id']) => void;
@@ -133,12 +134,14 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) =>
 const DeviceListItem: React.FC<{
     device: DeviceWithVerification;
     isExpanded: boolean;
+    isSigningOut: boolean;
     onDeviceExpandToggle: () => void;
     onSignOutDevice: () => void;
     onRequestDeviceVerification?: () => void;
 }> = ({
     device,
     isExpanded,
+    isSigningOut,
     onDeviceExpandToggle,
     onSignOutDevice,
     onRequestDeviceVerification,
@@ -155,6 +158,7 @@ const DeviceListItem: React.FC<{
         isExpanded &&
         <DeviceDetails
             device={device}
+            isSigningOut={isSigningOut}
             onVerifyDevice={onRequestDeviceVerification}
             onSignOutDevice={onSignOutDevice}
         />
@@ -170,6 +174,7 @@ export const FilteredDeviceList =
         devices,
         filter,
         expandedDeviceIds,
+        signingOutDeviceIds,
         onFilterChange,
         onDeviceExpandToggle,
         onSignOutDevices,
@@ -226,6 +231,7 @@ export const FilteredDeviceList =
                     key={device.device_id}
                     device={device}
                     isExpanded={expandedDeviceIds.includes(device.device_id)}
+                    isSigningOut={signingOutDeviceIds.includes(device.device_id)}
                     onDeviceExpandToggle={() => onDeviceExpandToggle(device.device_id)}
                     onSignOutDevice={() => onSignOutDevices([device.device_id])}
                     onRequestDeviceVerification={

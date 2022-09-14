@@ -45,6 +45,7 @@ describe('<FilteredDeviceList />', () => {
         onDeviceExpandToggle: jest.fn(),
         onSignOutDevices: jest.fn(),
         expandedDeviceIds: [],
+        signingOutDeviceIds: [],
         devices: {
             [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
             [verifiedNoMetadata.device_id]: verifiedNoMetadata,

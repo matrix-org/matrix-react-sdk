@@ -19,12 +19,14 @@ import React from 'react';
 import { formatDate } from '../../../../DateUtils';
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
+import Spinner from '../../elements/Spinner';
 import Heading from '../../typography/Heading';
 import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
 import { DeviceWithVerification } from './types';
 
 interface Props {
     device: DeviceWithVerification;
+    isSigningOut: boolean;
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
 }
@@ -36,6 +38,7 @@ interface MetadataTable {
 
 const DeviceDetails: React.FC<Props> = ({
     device,
+    isSigningOut,
     onVerifyDevice,
     onSignOutDevice,
 }) => {
@@ -89,9 +92,17 @@ const DeviceDetails: React.FC<Props> = ({
             <AccessibleButton
                 onClick={onSignOutDevice}
                 kind='danger_inline'
+                disabled={isSigningOut}
                 data-testid='device-detail-sign-out-cta'
             >
-                { _t('Sign out of this session') }
+                <span className='mx_DeviceDetails_signOutButtonContent'>
+                    { _t('Sign out of this session') }
+                    { isSigningOut && <>
+                    &nbsp;
+                        <Spinner w={16} h={16} />
+                    </>
+                    }
+                </span>
             </AccessibleButton>
         </section>
     </div>;

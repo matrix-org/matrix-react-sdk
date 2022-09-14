@@ -26,6 +26,7 @@ describe('<DeviceDetails />', () => {
     };
     const defaultProps = {
         device: baseDevice,
+        isSigningOut: false,
         onSignOutDevice: jest.fn(),
     };
     const getComponent = (props = {}) => <DeviceDetails {...defaultProps} {...props} />;
@@ -60,5 +61,13 @@ describe('<DeviceDetails />', () => {
         };
         const { container } = render(getComponent({ device }));
         expect(container).toMatchSnapshot();
+    });
+
+    it('disables sign out button while sign out is pending', () => {
+        const device = {
+            ...baseDevice,
+        };
+        const { getByTestId } = render(getComponent({ device, isSigningOut: true }));
+        expect(getByTestId('device-detail-sign-out-cta')).toMatchSnapshot();
     });
 });
