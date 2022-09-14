@@ -604,7 +604,7 @@ export class ElementCall extends Call {
 
     private constructor(public readonly groupCall: MatrixEvent, client: MatrixClient) {
         // Splice together the Element Call URL for this call
-        const url = new URL(SdkConfig.get("element_call_url")!);
+        const url = new URL(SdkConfig.get("element_call").url);
         url.pathname = "/room";
         const params = new URLSearchParams({
             embed: "",

@@ -102,7 +102,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
             // Auto-approve the legacy visibility capability. We send it regardless of capability.
             // Widgets don't technically need to request this capability, but Scalar still does.
             this.allowedCapabilities.add("visibility");
-        } else if (virtual && new URL(SdkConfig.get("element_call_url")).origin === this.forWidget.origin) {
+        } else if (virtual && new URL(SdkConfig.get("element_call").url).origin === this.forWidget.origin) {
             // This is a trusted Element Call widget that we control
             this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);
             this.allowedCapabilities.add(MatrixCapabilities.MSC3846TurnServers);

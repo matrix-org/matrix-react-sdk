@@ -116,7 +116,9 @@ export interface IConfigOptions {
     voip?: {
         obey_asserted_identity?: boolean; // MSC3086
     };
-    element_call_url?: string;
+    element_call: {
+        url: string;
+    };
 
     logout_redirect_url?: string;
 
