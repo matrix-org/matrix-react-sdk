@@ -54,7 +54,7 @@ describe('<SessionManagerTab />', () => {
     const mockCrossSigningInfo = {
         checkDeviceTrust: jest.fn(),
     };
-    const mockVerificationRequest = { cancel: jest.fn() } as unknown as VerificationRequest;
+    const mockVerificationRequest = { cancel: jest.fn(), on: jest.fn() } as unknown as VerificationRequest;
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(aliceId),
         getStoredCrossSigningForUser: jest.fn().mockReturnValue(mockCrossSigningInfo),
