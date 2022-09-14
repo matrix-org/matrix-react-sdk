@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DeviceDetailHeading /> displays name edit form on rename button click 1`] = `
+Object {
+  "container": <div>
+    <form
+      aria-disabled="false"
+      class="mx_DeviceDetailHeading_renameForm"
+    >
+      <div
+        class="mx_Field mx_Field_input"
+      >
+        <input
+          autocomplete="off"
+          data-testid="device-rename-input"
+          id="mx_Field_1"
+          type="text"
+          value="My device"
+        />
+        <label
+          for="mx_Field_1"
+        />
+      </div>
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_confirm"
+        data-testid="device-rename-submit-cta"
+        role="button"
+        tabindex="0"
+      >
+        Save
+      </div>
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_cancel"
+        data-testid="device-rename-cancel-cta"
+        role="button"
+        tabindex="0"
+      >
+        Cancel
+      </div>
+    </form>
+  </div>,
+}
+`;
+
+exports[`<DeviceDetailHeading /> renders device id as fallback when device has no display name  1`] = `
+Object {
+  "container": <div>
+    <div
+      class="mx_DeviceDetailHeading"
+    >
+      <h3
+        class="mx_Heading_h3"
+      >
+        123
+      </h3>
+      <div
+        class="mx_AccessibleButton mx_DeviceDetailHeading_renameCta mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+        data-testid="device-heading-rename-cta"
+        role="button"
+        tabindex="0"
+      >
+        Rename
+      </div>
+    </div>
+  </div>,
+}
+`;
+
+exports[`<DeviceDetailHeading /> renders device name 1`] = `
+Object {
+  "container": <div>
+    <div
+      class="mx_DeviceDetailHeading"
+    >
+      <h3
+        class="mx_Heading_h3"
+      >
+        My device
+      </h3>
+      <div
+        class="mx_AccessibleButton mx_DeviceDetailHeading_renameCta mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+        data-testid="device-heading-rename-cta"
+        role="button"
+        tabindex="0"
+      >
+        Rename
+      </div>
+    </div>
+  </div>,
+}
+`;

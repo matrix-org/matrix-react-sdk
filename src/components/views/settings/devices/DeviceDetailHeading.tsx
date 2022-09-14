@@ -18,6 +18,7 @@ import React, { useEffect, useState } from 'react';
 
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
+import Field from '../../elements/Field';
 import Heading from '../../typography/Heading';
 import { DeviceWithVerification } from './types';
 
@@ -36,19 +37,37 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
         setDeviceName(device.display_name);
     }, [device]);
 
-    return <div className='mx_DeviceDetailHeading_editor'>
-        { deviceName }
+    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
+        setDeviceName(event.target.value);
+
+    const onSubmit = () => saveDeviceName(deviceName);
+
+    return <form
+        aria-disabled={isLoading}
+        className="mx_DeviceDetailHeading_renameForm"
+        onSubmit={onSubmit}>
+        <Field
+            data-testid='device-rename-input'
+            type="text"
+            value={deviceName}
+            autoComplete="off"
+            onChange={onInputChange}
+            autoFocus
+            disabled={isLoading}
+        />
         <AccessibleButton
-            kind='primary'
-            onClick={() => saveDeviceName('test')}
-        >{ _t('Save') }
-        </AccessibleButton>
+            onClick={onSubmit}
+            kind="confirm"
+            data-testid='device-rename-submit-cta'
+            disabled={isLoading}
+        >{ _t('Save') }</AccessibleButton>
         <AccessibleButton
-            kind='secondary'
             onClick={stopEditing}
-        >{ _t('Cancel') }
-        </AccessibleButton>
-    </div>;
+            kind="cancel"
+            data-testid='device-rename-cancel-cta'
+            disabled={isLoading}
+        >{ _t('Cancel') }</AccessibleButton>
+    </form>;
 };
 
 export const DeviceDetailHeading: React.FC<Props> = ({
@@ -68,6 +87,7 @@ export const DeviceDetailHeading: React.FC<Props> = ({
                 kind='link_inline'
                 onClick={() => setIsEditing(true)}
                 className='mx_DeviceDetailHeading_renameCta'
+                data-testid='device-heading-rename-cta'
             >
                 { _t('Rename') }
             </AccessibleButton>
