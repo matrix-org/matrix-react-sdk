@@ -26,8 +26,8 @@ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
 import { ReadReceipt } from 'matrix-js-sdk/src/models/read-receipt';
-
 import { ListenerMap } from 'matrix-js-sdk/src/models/typed-event-emitter';
+
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
