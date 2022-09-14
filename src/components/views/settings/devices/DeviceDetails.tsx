@@ -42,7 +42,7 @@ const DeviceDetails: React.FC<Props> = ({
     isSigningOut,
     onVerifyDevice,
     onSignOutDevice,
-    onSetDeviceName,
+    onSaveDeviceName,
 }) => {
     const metadata: MetadataTable[] = [
         {
@@ -66,7 +66,7 @@ const DeviceDetails: React.FC<Props> = ({
             <DeviceDetailHeading
                 device={device}
                 isLoading={false}
-                setDeviceName={onSetDeviceName}
+                saveDeviceName={onSaveDeviceName}
             />
             <DeviceVerificationStatusCard
                 device={device}

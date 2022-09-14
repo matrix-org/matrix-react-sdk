@@ -14,21 +14,62 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { _t } from '../../../../languageHandler';
+import AccessibleButton from '../../elements/AccessibleButton';
 import Heading from '../../typography/Heading';
 import { DeviceWithVerification } from './types';
 
 interface Props {
     device: DeviceWithVerification;
     isLoading: boolean;
-    setDeviceName: (deviceName: string) => void;
+    saveDeviceName: (deviceName: string) => void;
 }
 
-export const DeviceDetailHeading: React.FC<Props> = ({
-    device, isLoading, setDeviceName,
+const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
+    device, isLoading, saveDeviceName, stopEditing,
 }) => {
-    return <div className='mx_DeviceDetailHeading'>
-        <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
+    const [deviceName, setDeviceName] = useState(device.display_name || '');
+
+    useEffect(() => {
+        setDeviceName(device.display_name);
+    }, [device]);
+
+    return <div className='mx_DeviceDetailHeading_editor'>
+        { deviceName }
+        <AccessibleButton
+            kind='primary'
+            onClick={() => saveDeviceName('test')}
+        >{ _t('Save') }
+        </AccessibleButton>
+        <AccessibleButton
+            kind='secondary'
+            onClick={stopEditing}
+        >{ _t('Cancel') }
+        </AccessibleButton>
     </div>;
+};
+
+export const DeviceDetailHeading: React.FC<Props> = ({
+    device, isLoading, saveDeviceName,
+}) => {
+    const [isEditing, setIsEditing] = useState(false);
+    return isEditing
+        ? <DeviceNameEditor
+            device={device}
+            isLoading={isLoading}
+            saveDeviceName={saveDeviceName}
+            stopEditing={() => setIsEditing(false)}
+        />
+        : <div className='mx_DeviceDetailHeading'>
+            <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
+            <AccessibleButton
+                kind='link_inline'
+                onClick={() => setIsEditing(true)}
+                className='mx_DeviceDetailHeading_renameCta'
+            >
+                { _t('Rename') }
+            </AccessibleButton>
+        </div>;
 };
