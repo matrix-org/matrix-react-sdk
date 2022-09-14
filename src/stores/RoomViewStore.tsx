@@ -25,7 +25,6 @@ import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
-import EventEmitter from "events";
 
 import { defaultDispatcher, MatrixDispatcher } from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -49,11 +48,11 @@ import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChang
 import SettingsStore from "../settings/SettingsStore";
 import { SlidingSyncManager } from "../SlidingSyncManager";
 import { awaitRoomDownSync } from "../utils/RoomUpgrade";
-import { UPDATE_EVENT } from "./AsyncStore";
+import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 
 const NUM_JOIN_RETRY = 5;
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IState = {
     // Whether we're joining the currently viewed room (see isJoining())
     joining: false,
     // Any error that has occurred during joining
@@ -89,27 +88,40 @@ const INITIAL_STATE = {
 
 type Listener = (isActive: boolean) => void;
 
+type IState = {
+    joining: boolean;
+    joinError: Error | null;
+    roomId: string | null;
+    subscribingRoomId: string | null;
+    initialEventId: string | null;
+    initialEventPixelOffset: number | null;
+    isInitialEventHighlighted: boolean;
+    initialEventScrollIntoView: boolean;
+    roomAlias: string | null;
+    roomLoading: boolean;
+    roomLoadError: MatrixError | null;
+    replyingToEvent: MatrixEvent | null;
+    shouldPeek: boolean;
+    viaServers: string[];
+    wasContextSwitch: boolean;
+};
+
 /**
  * A class for storing application state for RoomView.
  */
-export class RoomViewStore extends EventEmitter {
+export class RoomViewStore extends AsyncStoreWithClient<IState> {
     // Important: This cannot be a dynamic getter (lazily-constructed instance) because
     // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
     // the app. We need to eagerly create the instance.
     public static readonly instance = new RoomViewStore(defaultDispatcher);
 
-    private state = INITIAL_STATE; // initialize state
-
     // Keep these out of state to avoid causing excessive/recursive updates
     private roomIdActivityListeners: Record<string, Listener[]> = {};
-
     private dis: MatrixDispatcher;
-    private dispatchToken: string;
 
     public constructor(dis: MatrixDispatcher) {
-        super();
+        super(dis, INITIAL_STATE);
         this.dis = dis;
-        this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
     }
 
     public addRoomListener(roomId: string, fn: Listener): void {
@@ -152,24 +164,23 @@ export class RoomViewStore extends EventEmitter {
         }
 
         const lastRoomId = this.state.roomId;
-        this.state = Object.assign(this.state, newState);
-        if (lastRoomId !== this.state.roomId) {
+        this.updateState(newState);
+        const nextRoomId = newState.roomId || this.state.roomId;
+        if (lastRoomId !== nextRoomId) {
             if (lastRoomId) this.emitForRoom(lastRoomId, false);
-            if (this.state.roomId) this.emitForRoom(this.state.roomId, true);
+            if (nextRoomId) this.emitForRoom(nextRoomId, true);
 
             // Fired so we can reduce dependency on event emitters to this store, which is relatively
             // central to the application and can easily cause import cycles.
             this.dis.dispatch<ActiveRoomChangedPayload>({
                 action: Action.ActiveRoomChanged,
                 oldRoomId: lastRoomId,
-                newRoomId: this.state.roomId,
+                newRoomId: nextRoomId,
             });
         }
-
-        this.emit(UPDATE_EVENT);
     }
 
-    private onDispatch(payload): void { // eslint-disable-line @typescript-eslint/naming-convention
+    protected async onAction(payload): Promise<void> {
         switch (payload.action) {
             // view_room:
             //      - room_alias:   '#somealias:matrix.org'
@@ -238,7 +249,7 @@ export class RoomViewStore extends EventEmitter {
             }
             case 'on_client_not_viable':
             case Action.OnLoggedOut:
-                this.reset();
+                this.resetToInitial();
                 break;
             case 'reply_to_event':
                 // If currently viewed room does not match the room in which we wish to reply then change rooms
@@ -491,8 +502,8 @@ export class RoomViewStore extends EventEmitter {
         this.showJoinRoomError(payload.err, payload.roomId);
     }
 
-    public reset(): void {
-        this.state = Object.assign({}, INITIAL_STATE);
+    public resetToInitial(): void {
+        this.reset(INITIAL_STATE, true);
     }
 
     // The room ID of the room currently being viewed

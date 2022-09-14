@@ -54,7 +54,7 @@ describe('RoomViewStore', function() {
         mockClient.isGuest.mockReturnValue(false);
 
         // Reset the state of the store
-        RoomViewStore.instance.reset();
+        RoomViewStore.instance.resetToInitial();
     });
 
     it('can be used to view a room by ID and join', async () => {
@@ -92,7 +92,7 @@ describe('RoomViewStore', function() {
             jest.spyOn(SettingsStore, 'getValue').mockImplementation((settingName, roomId, value) => {
                 return settingName === "feature_sliding_sync"; // this is enabled, everything else is disabled.
             });
-            RoomViewStore.instance.reset();
+            RoomViewStore.instance.resetToInitial();
         });
 
         it("subscribes to the room", async () => {
