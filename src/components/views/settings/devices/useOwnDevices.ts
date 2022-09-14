@@ -123,12 +123,14 @@ export const useOwnDevices = (): DevicesState => {
 
     const isCurrentDeviceVerified = !!devices[currentDeviceId]?.isVerified;
 
-    const requestDeviceVerification = isCurrentDeviceVerified && userId ? async (deviceId) => {
-        return await matrixClient.requestVerification(
-            userId,
-            [deviceId],
-        );
-    } : undefined;
+    const requestDeviceVerification = isCurrentDeviceVerified && userId
+        ? async (deviceId: DeviceWithVerification['device_id']) => {
+            return await matrixClient.requestVerification(
+                userId,
+                [deviceId],
+            );
+        }
+        : undefined;
 
     return {
         devices,
