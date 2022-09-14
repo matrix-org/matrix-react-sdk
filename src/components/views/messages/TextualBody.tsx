@@ -48,6 +48,8 @@ import { options as linkifyOpts } from "../../../linkify-matrix";
 import { getParentEventId } from '../../../utils/Reply';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { decryptFile } from '../../../utils/DecryptFile';
+import { mediaFromMxc } from '../../../customisations/Media';
+
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
 interface IState {
@@ -573,9 +575,16 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const decryptede={};
+        let durl="";
+        const isEnc=client.isRoomEncrypted(this.props.mxEvent.getRoomId())
         for (const shortcode in rawEmotes) {
-            const blob = await decryptFile(rawEmotes[shortcode]);
-            const durl=URL.createObjectURL(blob);
+            if (isEnc) {
+                const blob = await decryptFile(rawEmotes[shortcode]);
+                durl = URL.createObjectURL(blob);
+            } else {
+                durl = mediaFromMxc(rawEmotes[shortcode]).srcHttp
+            }
+
             decryptede[":" + shortcode + ":"] = "<img class='mx_Emote' title=':"+shortcode+
                   ":' src='" + durl + "'/>";
         }

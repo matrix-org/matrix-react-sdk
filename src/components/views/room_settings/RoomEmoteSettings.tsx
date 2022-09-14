@@ -22,14 +22,14 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import { uploadFile } from "../../../ContentMessages";
 import { decryptFile } from "../../../utils/DecryptFile";
-import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
+import { mediaFromMxc } from '../../../customisations/Media';
 
 interface IProps {
     roomId: string;
 }
 
 interface IState {
-    emotes: Dictionary<IEncryptedFile>;
+    emotes: Dictionary<any>;
     decryptedemotes: Dictionary<string>;
     EmoteFieldsTouched: Record<string, string>;
     newEmoteFileAdded: boolean;
@@ -38,7 +38,7 @@ interface IState {
     newEmoteFile: Array<File>;
     canAddEmote: boolean;
     deleted: boolean;
-    deletedItems: Dictionary<IEncryptedFile>;
+    deletedItems: Dictionary<any>;
     value: Dictionary<string>;
 }
 
@@ -74,7 +74,11 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             canAddEmote: room.currentState.maySendStateEvent('m.room.emotes', client.getUserId()),
             value: value,
         };
-        this.decryptEmotes();
+        this.decryptEmotes(client.isRoomEncrypted(props.roomId));
+    }
+    componentDidMount() {
+        const client = MatrixClientPeg.get();
+        this.decryptEmotes(client.isRoomEncrypted(this.props.roomId));
     }
 
     private uploadEmoteClick = (): void => {
@@ -150,7 +154,12 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             if (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded) {
                 for (let i = 0; i < this.state.newEmoteCode.length; i++) {
                     const newEmote = await uploadFile(client, this.props.roomId, this.state.newEmoteFile[i]); //await client.uploadContent(this.state.newEmoteFile); FOR UNENCRYPTED
-                    emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
+                    if (client.isRoomEncrypted(this.props.roomId)) {
+                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.file;
+                    }
+                    else {
+                        emotesMxcs[this.state.newEmoteCode[i]] = newEmote.url;
+                    }
                     value[this.state.newEmoteCode[i]] = this.state.newEmoteCode[i];
                 }
             }
@@ -183,7 +192,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newState.newEmoteFile =[];
         }
         this.setState(newState as IState);
-        this.decryptEmotes();
+        this.decryptEmotes(client.isRoomEncrypted(this.props.roomId));
     };
 
     private onEmoteChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -245,15 +254,21 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             });
         }
     };
-    private async decryptEmotes() {
-        const decryptede={};
+    private async decryptEmotes(isEnc:boolean) {
+        const decryptede = {};
         for (const shortcode in this.state.emotes) {
-            const blob = await decryptFile(this.state.emotes[shortcode]);
-            decryptede[shortcode] = URL.createObjectURL(blob);
+            if (isEnc) {
+                const blob = await decryptFile(this.state.emotes[shortcode]);
+                decryptede[shortcode] = URL.createObjectURL(blob);
+            } else {
+                decryptede[shortcode] = mediaFromMxc(this.state.emotes[shortcode]).srcHttp
+            }
+
         }
         this.setState({
             decryptedemotes: decryptede,
         });
+        //this.forceUpdate();
     }
     public render(): JSX.Element {
         let emoteSettingsButtons;
