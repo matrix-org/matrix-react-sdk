@@ -17,8 +17,8 @@ limitations under the License.
 import * as React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MsgType, RoomMember } from "matrix-js-sdk/src/matrix";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { createTestClient, mkEvent, mkStubRoom, stubClient } from "../../../test-utils";
 import MessageComposer from "../../../../src/components/views/rooms/MessageComposer";
@@ -35,6 +35,8 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import dis from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
+import { SendMessageComposer } from "../../../../src/components/views/rooms/SendMessageComposer";
+import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 
 describe("MessageComposer", () => {
     stubClient();
@@ -74,33 +76,168 @@ describe("MessageComposer", () => {
             expect(wrapper.find(".mx_MessageComposer_roomReplaced_header")).toHaveLength(1);
         });
 
-        [true, false].forEach((value: boolean) => {
-            describe(`when ${FEATURES.VOICE_BROADCAST} = ${value}`, () => {
-                let wrapper: ReactWrapper;
+        describe("when receiving a »reply_to_event«", () => {
+            let wrapper: ReactWrapper;
+            let resizeNotifier: ResizeNotifier;
 
-                beforeEach(() => {
-                    SettingsStore.setValue(FEATURES.VOICE_BROADCAST, null, SettingLevel.DEVICE, value);
-                    wrapper = wrapAndRender({ room });
+            beforeEach(() => {
+                resizeNotifier = {
+                    notifyTimelineHeightChanged: jest.fn(),
+                } as unknown as ResizeNotifier;
+                wrapper = wrapAndRender({
+                    room,
+                    resizeNotifier,
                 });
+            });
 
-                it(`should pass the prop showVoiceBroadcastButton = ${value}`, () => {
-                    expect(wrapper.find(MessageComposerButtons).props().showVoiceBroadcastButton).toBe(value);
+            it("should call notifyTimelineHeightChanged() for the same context", (done) => {
+                dis.dispatch({
+                    action: "reply_to_event",
+                    context: (wrapper.instance as unknown as MessageComposer).context,
                 });
+                wrapper.update();
 
-                describe(`and setting ${FEATURES.VOICE_BROADCAST} to ${!value}`, () => {
+                setTimeout(() => {
+                    expect(resizeNotifier.notifyTimelineHeightChanged).toHaveBeenCalled();
+                    done();
+                }, 150); // higher timeout than in MessageComposer::onAction
+            });
+
+            it("should not call notifyTimelineHeightChanged() for a different context", (done) => {
+                dis.dispatch({
+                    action: "reply_to_event",
+                    context: "test",
+                });
+                wrapper.update();
+
+                setTimeout(() => {
+                    expect(resizeNotifier.notifyTimelineHeightChanged).not.toHaveBeenCalled();
+                    done();
+                }, 150); // higher timeout than in MessageComposer::onAction
+            });
+        });
+
+        // test button display depending on settings
+        [
+            {
+                setting: "MessageComposerInput.showStickersButton",
+                prop: "showStickersButton",
+            },
+            {
+                setting: "MessageComposerInput.showPollsButton",
+                prop: "showPollsButton",
+            },
+            {
+                setting: FEATURES.VOICE_BROADCAST,
+                prop: "showVoiceBroadcastButton",
+            },
+        ].forEach(({ setting, prop }) => {
+            [true, false].forEach((value: boolean) => {
+                describe(`when ${setting} = ${value}`, () => {
+                    let wrapper: ReactWrapper;
+
                     beforeEach(() => {
-                        // simulate settings update
-                        dis.dispatch({
-                            action: Action.SettingUpdated,
-                            settingName: FEATURES.VOICE_BROADCAST,
-                            newValue: !value,
-                        }, true);
-                        wrapper.update();
+                        SettingsStore.setValue(setting, null, SettingLevel.DEVICE, value);
+                        wrapper = wrapAndRender({ room });
                     });
 
-                    it(`should pass the prop showVoiceBroadcastButton = ${!value}`, () => {
-                        expect(wrapper.find(MessageComposerButtons).props().showVoiceBroadcastButton).toBe(!value);
+                    it(`should pass the prop ${prop} = ${value}`, () => {
+                        expect(wrapper.find(MessageComposerButtons).props()[prop]).toBe(value);
                     });
+
+                    describe(`and setting ${setting} to ${!value}`, () => {
+                        beforeEach(async () => {
+                            // simulate settings update
+                            await SettingsStore.setValue(setting, null, SettingLevel.DEVICE, !value);
+                            dis.dispatch({
+                                action: Action.SettingUpdated,
+                                settingName: setting,
+                                newValue: !value,
+                            }, true);
+                            wrapper.update();
+                        });
+
+                        it(`should pass the prop ${prop} = ${!value}`, () => {
+                            expect(wrapper.find(MessageComposerButtons).props()[prop]).toBe(!value);
+                        });
+                    });
+                });
+            });
+        });
+
+        describe("when not replying to an event", () => {
+            it("should pass the expected placeholder to SendMessageComposer", () => {
+                const wrapper = wrapAndRender({ room });
+                expect(wrapper.find(SendMessageComposer).props().placeholder).toBe("Send a message…");
+            });
+
+            it("and an e2e status it should pass the expected placeholder to SendMessageComposer", () => {
+                const wrapper = wrapAndRender({
+                    room,
+                    e2eStatus: E2EStatus.Normal,
+                });
+                expect(wrapper.find(SendMessageComposer).props().placeholder).toBe("Send an encrypted message…");
+            });
+        });
+
+        describe("when replying to an event", () => {
+            let replyToEvent: MatrixEvent;
+            let props: Partial<React.ComponentProps<typeof MessageComposer>>;
+
+            const checkPlaceholder = (expected: string) => {
+                it("should pass the expected placeholder to SendMessageComposer", () => {
+                    const wrapper = wrapAndRender(props);
+                    expect(wrapper.find(SendMessageComposer).props().placeholder).toBe(expected);
+                });
+            };
+
+            const setEncrypted = () => {
+                beforeEach(() => {
+                    props.e2eStatus = E2EStatus.Normal;
+                });
+            };
+
+            beforeEach(() => {
+                replyToEvent = mkEvent({
+                    event: true,
+                    type: MsgType.Text,
+                    user: cli.getUserId(),
+                    content: {},
+                });
+
+                props = {
+                    room,
+                    replyToEvent,
+                };
+            });
+
+            describe("without encryption", () => {
+                checkPlaceholder("Send a reply…");
+            });
+
+            describe("with encryption", () => {
+                setEncrypted();
+                checkPlaceholder("Send an encrypted reply…");
+            });
+
+            describe("with a non-thread relation", () => {
+                beforeEach(() => {
+                    props.relation = { rel_type: "test" };
+                });
+
+                checkPlaceholder("Send a reply…");
+            });
+
+            describe("that is a thread", () => {
+                beforeEach(() => {
+                    props.relation = { rel_type: THREAD_RELATION_TYPE.name };
+                });
+
+                checkPlaceholder("Reply to thread…");
+
+                describe("with encryption", () => {
+                    setEncrypted();
+                    checkPlaceholder("Reply to encrypted thread…");
                 });
             });
         });
