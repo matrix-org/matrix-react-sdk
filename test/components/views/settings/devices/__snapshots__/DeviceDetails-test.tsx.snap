@@ -1,33 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<DeviceDetails /> disables sign out button while sign out is pending 1`] = `
-<div
-  aria-disabled="true"
-  class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_inline mx_AccessibleButton_disabled"
-  data-testid="device-detail-sign-out-cta"
-  disabled=""
-  role="button"
-  tabindex="0"
->
-  <span
-    class="mx_DeviceDetails_signOutButtonContent"
-  >
-    Sign out of this session
-     
-    <div
-      class="mx_Spinner"
-    >
-      <div
-        aria-label="Loading..."
-        class="mx_Spinner_icon"
-        role="progressbar"
-        style="width: 16px; height: 16px;"
-      />
-    </div>
-  </span>
-</div>
-`;
-
 exports[`<DeviceDetails /> renders a verified device 1`] = `
 <div>
   <div

@@ -68,6 +68,8 @@ describe('<DeviceDetails />', () => {
             ...baseDevice,
         };
         const { getByTestId } = render(getComponent({ device, isSigningOut: true }));
-        expect(getByTestId('device-detail-sign-out-cta')).toMatchSnapshot();
+        expect(
+            getByTestId('device-detail-sign-out-cta').getAttribute('aria-disabled'),
+        ).toEqual("true");
     });
 });

@@ -432,7 +432,7 @@ describe('<SessionManagerTab />', () => {
                 // sign out button is disabled with spinner
                 expect((deviceDetails.querySelector(
                     '[data-testid="device-detail-sign-out-cta"]',
-                ) as Element)).toMatchSnapshot();
+                ) as Element).getAttribute('aria-disabled')).toEqual("true");
                 // delete called
                 expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
                     [alicesMobileDevice.device_id], undefined,

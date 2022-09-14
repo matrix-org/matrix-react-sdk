@@ -44,9 +44,13 @@ const useSignOut = (
     const [signingOutDeviceIds, setSigningOutDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
 
     const onSignOutCurrentDevice = () => {
-        Modal.createDialog(LogoutDialog,
-            /* props= */{}, /* className= */undefined,
-            /* isPriority= */false, /* isStatic= */true);
+        Modal.createDialog(
+            LogoutDialog,
+            {}, // props,
+            undefined, // className
+            false, // isPriority
+            true, // isStatic
+        );
     };
 
     const onSignOutOtherDevices = async (deviceIds: DeviceWithVerification['device_id'][]) => {
