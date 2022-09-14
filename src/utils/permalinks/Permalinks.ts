@@ -444,11 +444,11 @@ export function parsePermalink(fullUrl: string): PermalinkParts {
     return null; // not a permalink we can handle
 }
 
-function getServerName(userId: string): string {
+export function getServerName(userId: string): string {
     return userId.split(":").splice(1).join(":");
 }
 
-function getHostnameFromMatrixServerName(serverName: string): string | null {
+export function getHostnameFromMatrixServerName(serverName: string): string | null {
     if (!serverName) return null;
     try {
         return new URL(`https://${serverName}`).hostname;
