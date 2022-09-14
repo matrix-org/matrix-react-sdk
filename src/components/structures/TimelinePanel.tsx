@@ -180,7 +180,7 @@ interface IState {
     // disappearance when switching into the room.
     readMarkerVisible: boolean;
 
-    readMarkerEventId: string;
+    readMarkerEventId: string | null;
 
     backPaginating: boolean;
     forwardPaginating: boolean;
@@ -943,7 +943,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (lastReadEventIndex === null) {
             shouldSendRR = false;
         }
-        let lastReadEvent: MatrixEvent | null = this.state.events[lastReadEventIndex];
+        let lastReadEvent: MatrixEvent | null = this.state.events[lastReadEventIndex ?? 0];
         shouldSendRR = shouldSendRR &&
             // Only send a RR if the last read event is ahead in the timeline relative to
             // the current RR event.
@@ -987,7 +987,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 cli.setRoomReadMarkers(
                     roomId,
                     this.state.readMarkerEventId,
-                    sendRRs ? lastReadEvent : undefined, // Public read receipt (could be null)
+                    sendRRs ? (lastReadEvent ?? undefined) : undefined, // Public read receipt (could be null)
                     lastReadEvent, // Private read receipt (could be null)
                 ).catch(async (e) => {
                     // /read_markers API is not implemented on this HS, fallback to just RR
@@ -1690,7 +1690,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         // in order to later figure out if the read marker is
         // above or below the visible timeline, we stash the timestamp.
-        TimelinePanel.roomReadMarkerTsMap[roomId] = eventTs;
+        TimelinePanel.roomReadMarkerTsMap[roomId ?? ""] = eventTs;
 
         if (inhibitSetState) {
             return;
