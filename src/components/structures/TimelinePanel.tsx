@@ -230,8 +230,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         disableGrouping: false,
     };
 
-    private lastRRSentEventId: string | undefined = undefined;
-    private lastRMSentEventId: string | undefined = undefined;
+    private lastRRSentEventId: string | null | undefined = undefined;
+    private lastRMSentEventId: string | null | undefined = undefined;
 
     private readonly messagePanel = createRef<MessagePanel>();
     private readonly dispatcherRef: string;
@@ -986,7 +986,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             } else {
                 cli.setRoomReadMarkers(
                     roomId,
-                    this.state.readMarkerEventId,
+                    this.state.readMarkerEventId ?? "",
                     sendRRs ? (lastReadEvent ?? undefined) : undefined, // Public read receipt (could be null)
                     lastReadEvent, // Private read receipt (could be null)
                 ).catch(async (e) => {

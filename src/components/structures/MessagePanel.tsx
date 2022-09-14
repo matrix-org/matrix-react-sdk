@@ -137,7 +137,7 @@ interface IProps {
     showUrlPreview?: boolean;
 
     // event after which we should show a read marker
-    readMarkerEventId?: string;
+    readMarkerEventId?: string | null;
 
     // whether the read marker should be visible
     readMarkerVisible?: boolean;
