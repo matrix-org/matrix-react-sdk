@@ -9,11 +9,15 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
     <section
       class="mx_DeviceDetails_section"
     >
-      <h3
-        class="mx_Heading_h3"
+      <div
+        class="mx_DeviceDetailHeading"
       >
-        my-device
-      </h3>
+        <h3
+          class="mx_Heading_h3"
+        >
+          my-device
+        </h3>
+      </div>
       <div
         class="mx_DeviceSecurityCard"
       >
@@ -130,11 +134,15 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
     <section
       class="mx_DeviceDetails_section"
     >
-      <h3
-        class="mx_Heading_h3"
+      <div
+        class="mx_DeviceDetailHeading"
       >
-        My Device
-      </h3>
+        <h3
+          class="mx_Heading_h3"
+        >
+          My Device
+        </h3>
+      </div>
       <div
         class="mx_DeviceSecurityCard"
       >
@@ -255,11 +263,15 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
     <section
       class="mx_DeviceDetails_section"
     >
-      <h3
-        class="mx_Heading_h3"
+      <div
+        class="mx_DeviceDetailHeading"
       >
-        my-device
-      </h3>
+        <h3
+          class="mx_Heading_h3"
+        >
+          my-device
+        </h3>
+      </div>
       <div
         class="mx_DeviceSecurityCard"
       >
