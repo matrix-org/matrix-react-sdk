@@ -94,7 +94,7 @@ describe('RoomViewStore', function() {
         await flushPromises();
         const replyToEvent = {
             getRoomId: () => '!randomcharacters:aser.ver',
-        }
+        };
         dispatch({ action: 'reply_to_event', event: replyToEvent, context: TimelineRenderingType.Room });
         await flushPromises();
         expect(RoomViewStore.instance.getQuotingEvent()).toEqual(replyToEvent);
