@@ -23,6 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { DevicesDictionary, DeviceWithVerification } from "./types";
+import { _t } from "../../../../languageHandler";
 
 const isDeviceVerified = (
     matrixClient: MatrixClient,
@@ -76,10 +77,13 @@ export enum OwnDevicesError {
 export type DevicesState = {
     devices: DevicesDictionary;
     currentDeviceId: string;
-    isLoading: boolean;
+    isLoadingDeviceList: boolean;
+    // device ids with pending requests
+    pendingDeviceIds: DeviceWithVerification['device_id'][];
     // not provided when current session cannot request verification
     requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
+    saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
     error?: OwnDevicesError;
 };
 export const useOwnDevices = (): DevicesState => {
@@ -89,11 +93,14 @@ export const useOwnDevices = (): DevicesState => {
     const userId = matrixClient.getUserId();
 
     const [devices, setDevices] = useState<DevicesState['devices']>({});
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingDeviceList, setIsLoadingDeviceList] = useState(true);
+
+    // device ids with pending requests
+    const [pendingDeviceIds, setPendingDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
     const [error, setError] = useState<OwnDevicesError>();
 
     const refreshDevices = useCallback(async () => {
-        setIsLoading(true);
+        setIsLoadingDeviceList(true);
         try {
             // realistically we should never hit this
             // but it satisfies types
@@ -102,7 +109,7 @@ export const useOwnDevices = (): DevicesState => {
             }
             const devices = await fetchDevicesWithVerification(matrixClient, userId);
             setDevices(devices);
-            setIsLoading(false);
+            setIsLoadingDeviceList(false);
         } catch (error) {
             if ((error as MatrixError).httpStatus == 404) {
                 // 404 probably means the HS doesn't yet support the API.
@@ -111,7 +118,7 @@ export const useOwnDevices = (): DevicesState => {
                 logger.error("Error loading sessions:", error);
                 setError(OwnDevicesError.Default);
             }
-            setIsLoading(false);
+            setIsLoadingDeviceList(false);
         }
     }, [matrixClient, userId]);
 
@@ -130,12 +137,37 @@ export const useOwnDevices = (): DevicesState => {
         }
         : undefined;
 
+    const saveDeviceName = useCallback(
+        async (deviceId: DeviceWithVerification['device_id'], deviceName: string): Promise<void> => {
+            const device = devices[deviceId];
+
+            // no change
+            if (deviceName === device?.display_name) {
+                return;
+            }
+
+            try {
+                setPendingDeviceIds(p => ([...p, deviceId]));
+                await matrixClient.setDeviceDetails(
+                    deviceId,
+                    { display_name: deviceName },
+                );
+                await refreshDevices();
+            } catch (error) {
+                logger.error("Error setting session display name", error);
+                throw new Error(_t("Failed to set display name"));
+            }
+            setPendingDeviceIds(p => p.filter(id => id !== deviceId));
+        }, [matrixClient, devices, refreshDevices, setPendingDeviceIds]);
+
     return {
         devices,
         currentDeviceId,
+        isLoadingDeviceList,
+        error,
+        pendingDeviceIds,
         requestDeviceVerification,
         refreshDevices,
-        isLoading,
-        error,
+        saveDeviceName,
     };
 };

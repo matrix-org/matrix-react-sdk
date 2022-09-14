@@ -6,6 +6,7 @@ Object {
     <form
       aria-disabled="false"
       class="mx_DeviceDetailHeading_renameForm"
+      method="post"
     >
       <p
         class="mx_DeviceDetailHeading_renameFormHeading"
@@ -23,6 +24,7 @@ Object {
             autocomplete="off"
             data-testid="device-rename-input"
             id="mx_Field_1"
+            maxlength="100"
             type="text"
             value="My device"
           />

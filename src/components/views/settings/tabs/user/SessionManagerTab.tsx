@@ -88,9 +88,11 @@ const SessionManagerTab: React.FC = () => {
     const {
         devices,
         currentDeviceId,
-        isLoading,
+        isLoadingDeviceList,
+        pendingDeviceIds,
         requestDeviceVerification,
         refreshDevices,
+        saveDeviceName,
     } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
     const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
@@ -167,8 +169,9 @@ const SessionManagerTab: React.FC = () => {
         />
         <CurrentDeviceSection
             device={currentDevice}
-            isLoading={isLoading}
             isSigningOut={signingOutDeviceIds.includes(currentDevice?.device_id)}
+            isLoading={isLoadingDeviceList || pendingDeviceIds.includes(currentDevice.device_id)}
+            onSaveDeviceName={(deviceName) => saveDeviceName(currentDevice.device_id, deviceName)}
             onVerifyCurrentDevice={onVerifyCurrentDevice}
             onSignOutCurrentDevice={onSignOutCurrentDevice}
         />

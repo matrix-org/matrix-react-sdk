@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
@@ -27,7 +27,7 @@ import { DeviceWithVerification } from './types';
 interface Props {
     device: DeviceWithVerification;
     isLoading: boolean;
-    saveDeviceName: (deviceName: string) => void;
+    saveDeviceName: (deviceName: string) => Promise<void>;
 }
 
 const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
@@ -37,19 +37,26 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
 
     useEffect(() => {
         setDeviceName(device.display_name);
-    }, [device]);
+    }, [device.display_name]);
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
         setDeviceName(event.target.value);
 
-    const onSubmit = () => saveDeviceName(deviceName);
+    const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        await saveDeviceName(deviceName);
+        stopEditing();
+    };
+
     const headingId = `device-rename-${device.device_id}`;
     const descriptionId = `device-rename-description-${device.device_id}`;
 
     return <form
         aria-disabled={isLoading}
         className="mx_DeviceDetailHeading_renameForm"
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+        method="post"
+    >
         <p
             id={headingId}
             className="mx_DeviceDetailHeading_renameFormHeading"
@@ -68,6 +75,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
                 aria-labelledby={headingId}
                 aria-describedby={descriptionId}
                 className="mx_DeviceDetailHeading_renameFormInput"
+                maxLength={100}
             />
             <Caption
                 id={descriptionId}
@@ -84,13 +92,15 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
             >
                 { _t('Save') }
             </AccessibleButton>
-            { isLoading && <Spinner w={16} h={16} /> }
             <AccessibleButton
                 onClick={stopEditing}
                 kind="secondary"
                 data-testid='device-rename-cancel-cta'
                 disabled={isLoading}
-            >{ _t('Cancel') }</AccessibleButton>
+            >
+                { _t('Cancel') }
+            </AccessibleButton>
+            { isLoading && <Spinner w={16} h={16} /> }
         </div>
     </form>;
 };
@@ -99,6 +109,7 @@ export const DeviceDetailHeading: React.FC<Props> = ({
     device, isLoading, saveDeviceName,
 }) => {
     const [isEditing, setIsEditing] = useState(false);
+
     return isEditing
         ? <DeviceNameEditor
             device={device}

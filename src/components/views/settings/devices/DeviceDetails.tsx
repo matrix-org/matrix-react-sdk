@@ -27,6 +27,7 @@ import { DeviceWithVerification } from './types';
 interface Props {
     device: DeviceWithVerification;
     isSigningOut: boolean;
+    isLoading: boolean;
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
     onSetDeviceName: (deviceName: string) => void;
@@ -40,6 +41,7 @@ interface MetadataTable {
 const DeviceDetails: React.FC<Props> = ({
     device,
     isSigningOut,
+    isLoading,
     onVerifyDevice,
     onSignOutDevice,
     onSaveDeviceName,
@@ -65,7 +67,7 @@ const DeviceDetails: React.FC<Props> = ({
         <section className='mx_DeviceDetails_section'>
             <DeviceDetailHeading
                 device={device}
-                isLoading={false}
+                isLoading={isLoading}
                 saveDeviceName={onSaveDeviceName}
             />
             <DeviceVerificationStatusCard
