@@ -26,6 +26,7 @@ describe('<DeviceDetails />', () => {
     };
     const defaultProps = {
         device: baseDevice,
+        onSignOutDevice: jest.fn(),
     };
     const getComponent = (props = {}) => <DeviceDetails {...defaultProps} {...props} />;
     // 14.03.2022 16:15

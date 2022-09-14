@@ -107,6 +107,7 @@ const SessionManagerTab: React.FC = () => {
     };
 
     const onSignOutOtherDevices = async (deviceIds: DeviceWithVerification['device_id'][]) => {
+        console.log('device ids', deviceIds);
         if (!deviceIds.length) {
             return;
         }
@@ -123,6 +124,7 @@ const SessionManagerTab: React.FC = () => {
                 },
             );
         } catch (error) {
+            console.log('eeee', error);
             logger.error("Error deleting sessions", error);
         }
     };
