@@ -14,28 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/*
- * Compound icon
+import React from 'react';
 
- * {@link https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed}
+import { Icon as WarningBadgeIcon } from "../../../res/img/element-icons/warning-badge.svg";
+
+interface ErrorMessageProps {
+    message: string | null;
+}
+
+/**
+ * Error message component.
+ * Reserves two lines to display errors to prevent layout shifts when the error pops up.
  */
+export const ErrorMessage: React.FC<ErrorMessageProps> = ({
+    message,
+}) => {
+    const icon = message
+        ? <WarningBadgeIcon className="mx_Icon mx_Icon_16" />
+        : null;
 
-.mx_Icon {
-    box-sizing: border-box;
-    padding: 1px;
-}
-
-.mx_Icon_16 {
-    height: 16px;
-    flex: 0 0 16px;
-    width: 16px;
-}
-
-.mx_Icon_32 {
-    height: 32px;
-    width: 32px;
-}
-
-.mx_Icon_accent {
-    color: $accent;
-}
+    return <div className="mx_ErrorMessage">
+        { icon }
+        { message }
+    </div>;
+};

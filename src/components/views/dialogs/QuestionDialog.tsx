@@ -39,7 +39,7 @@ export interface IQuestionDialogProps extends IDialogProps {
     cancelButton?: React.ReactNode;
 }
 
-export default class QuestionDialog extends React.Component<IQuestionDialogProps> {
+const QuestionDialog: React.ComponentClass<IQuestionDialogProps> = class extends React.Component<IQuestionDialogProps> {
     public static defaultProps: Partial<IQuestionDialogProps> = {
         title: "",
         description: "",
@@ -90,4 +90,6 @@ export default class QuestionDialog extends React.Component<IQuestionDialogProps
             </BaseDialog>
         );
     }
-}
+};
+
+export default QuestionDialog;
