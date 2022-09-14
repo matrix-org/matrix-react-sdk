@@ -301,7 +301,7 @@ describe('<SessionManagerTab />', () => {
             expect(queryByTestId(`verification-status-button-${alicesOlderMobileDevice.device_id}`)).toBeFalsy();
         });
 
-        it('does not render device verification cta when current session is not verified', async () => {
+        it('renders device verification cta on other sessions when current session is verified', async () => {
             const modalSpy = jest.spyOn(Modal, 'createDialog');
 
             // make the current device verified
@@ -331,6 +331,47 @@ describe('<SessionManagerTab />', () => {
 
             expect(mockClient.requestVerification).toHaveBeenCalledWith(aliceId, [alicesMobileDevice.device_id]);
             expect(modalSpy).toHaveBeenCalled();
+        });
+
+        it('refreshes devices after verifying other device', async () => {
+            const modalSpy = jest.spyOn(Modal, 'createDialog');
+
+            // make the current device verified
+            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+            mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
+            mockCrossSigningInfo.checkDeviceTrust
+                .mockImplementation((_userId, { deviceId }) => {
+                    console.log('hhh', deviceId);
+                    if (deviceId === alicesDevice.device_id) {
+                        return new DeviceTrustLevel(true, true, false, false);
+                    }
+                    throw new Error('everything else unverified');
+                });
+
+            const { getByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            const tile1 = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
+            const toggle1 = tile1.querySelector('[aria-label="Toggle device details"]') as Element;
+            fireEvent.click(toggle1);
+
+            // reset mock counter before triggering verification
+            mockClient.getDevices.mockClear();
+
+            // click verify button from current session section
+            fireEvent.click(getByTestId(`verification-status-button-${alicesMobileDevice.device_id}`));
+
+            const { onFinished: modalOnFinished } = modalSpy.mock.calls[0][1];
+            // simulate modal completing process
+            await modalOnFinished();
+
+            // cancelled in case it was a failure exit from modal
+            expect(mockVerificationRequest.cancel).toHaveBeenCalled();
+            // devices refreshed
+            expect(mockClient.getDevices).toHaveBeenCalled();
         });
     });
 });
