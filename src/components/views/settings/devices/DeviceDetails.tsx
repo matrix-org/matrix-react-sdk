@@ -26,9 +26,7 @@ import { DeviceWithVerification } from './types';
 interface Props {
     device: DeviceWithVerification;
     onVerifyDevice?: () => void;
-    // @TODO(kerry) optional while signout only implemented
-    // for current device (PSG-744)
-    onSignOutDevice?: () => void;
+    onSignOutDevice: () => void;
 }
 
 interface MetadataTable {
@@ -87,7 +85,7 @@ const DeviceDetails: React.FC<Props> = ({
             </table>,
             ) }
         </section>
-        { !!onSignOutDevice && <section className='mx_DeviceDetails_section'>
+        <section className='mx_DeviceDetails_section'>
             <AccessibleButton
                 onClick={onSignOutDevice}
                 kind='danger_inline'
@@ -95,7 +93,7 @@ const DeviceDetails: React.FC<Props> = ({
             >
                 { _t('Sign out of this session') }
             </AccessibleButton>
-        </section> }
+        </section>
     </div>;
 };
 

@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import { _t } from "../../../../../languageHandler";
 import { useOwnDevices } from '../../devices/useOwnDevices';
@@ -28,12 +29,13 @@ import Modal from '../../../../../Modal';
 import SetupEncryptionDialog from '../../../dialogs/security/SetupEncryptionDialog';
 import VerificationRequestDialog from '../../../dialogs/VerificationRequestDialog';
 import LogoutDialog from '../../../dialogs/LogoutDialog';
+import MatrixClientContext from '../../../../../contexts/MatrixClientContext';
+import { deleteDevicesWithInteractiveAuth } from '../../devices/deleteDevices';
 
 const SessionManagerTab: React.FC = () => {
     const {
         devices,
         currentDeviceId,
-        currentUserMember,
         isLoading,
         requestDeviceVerification,
         refreshDevices,
@@ -42,6 +44,10 @@ const SessionManagerTab: React.FC = () => {
     const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
     const filteredDeviceListRef = useRef<HTMLDivElement>(null);
     const scrollIntoViewTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+    const matrixClient = useContext(MatrixClientContext);
+    const userId = matrixClient.getUserId();
+    const currentUserMember = userId && matrixClient.getUser(userId) || undefined;
 
     const onDeviceExpandToggle = (deviceId: DeviceWithVerification['device_id']): void => {
         if (expandedDeviceIds.includes(deviceId)) {
@@ -100,6 +106,27 @@ const SessionManagerTab: React.FC = () => {
             /* isPriority= */false, /* isStatic= */true);
     };
 
+    const onSignOutOtherDevices = async (deviceIds: DeviceWithVerification['device_id'][]) => {
+        if (!deviceIds.length) {
+            return;
+        }
+        try {
+            await deleteDevicesWithInteractiveAuth(
+                matrixClient,
+                deviceIds,
+                (success) => {
+                    if (success) {
+                        // @TODO(kerrya) clear selection if was bulk deletion
+                        // when added in PSG-659
+                        refreshDevices();
+                    }
+                },
+            );
+        } catch (error) {
+            logger.error("Error deleting sessions", error);
+        }
+    };
+
     useEffect(() => () => {
         clearTimeout(scrollIntoViewTimeoutRef.current);
     }, [scrollIntoViewTimeoutRef]);
@@ -133,6 +160,7 @@ const SessionManagerTab: React.FC = () => {
                     onFilterChange={setFilter}
                     onDeviceExpandToggle={onDeviceExpandToggle}
                     onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
+                    onSignOutDevices={onSignOutOtherDevices}
                     ref={filteredDeviceListRef}
                 />
             </SettingsSubsection>
