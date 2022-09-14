@@ -3549,5 +3549,19 @@
     "Inviting %(user1)s and %(user2)s": "正在邀請 %(user1)s 與 %(user2)s",
     "%(user)s and %(count)s others|one": "%(user)s 與 1 個其他人",
     "%(user)s and %(count)s others|other": "%(user)s 與 %(count)s 個其他人",
-    "%(user1)s and %(user2)s": "%(user1)s 與 %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s 與 %(user2)s",
+    "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s 或 %(copyButton)s",
+    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
+    "%(qrCode)s or %(appLinks)s": "%(qrCode)s 或 %(appLinks)s",
+    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s 或 %(emojiCompare)s",
+    "Proxy URL": "代理伺服器 URL",
+    "Proxy URL (optional)": "代理伺服器（選擇性）",
+    "To disable you will need to log out and back in, use with caution!": "要停用，您必須登出並重新登入，請小心使用！",
+    "Sliding Sync configuration": "滑動同步設定",
+    "Your server lacks native support, you must specify a proxy": "您的伺服器缺乏原生支援，您必須指定代理伺服器",
+    "Your server lacks native support": "您的伺服器缺乏原生支援",
+    "Your server has native support": "您的伺服器有原生支援",
+    "Checking...": "正在檢查……",
+    "Sliding Sync mode (under active development, cannot be disabled)": "滑動同步模式（積極開發中，無法停用）",
+    "You need to be able to kick users to do that.": "您必須可以踢除使用者才能作到這件事。"
 }
