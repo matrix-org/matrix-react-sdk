@@ -96,7 +96,7 @@ const SessionManagerTab: React.FC = () => {
             return;
         }
         Modal.createDialog(LogoutDialog,
-            /* props= */{}, /* className= */null,
+            /* props= */{}, /* className= */undefined,
             /* isPriority= */false, /* isStatic= */true);
     };
 
