@@ -3562,5 +3562,6 @@
     "Checking...": "Memeriksa…",
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s atau %(appLinks)s",
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s atau %(emojiCompare)s",
-    "Sliding Sync mode (under active development, cannot be disabled)": "Mode Penyinkronan Bergeser (dalam pengembangan aktif, tidak dapat dinonaktifkan)"
+    "Sliding Sync mode (under active development, cannot be disabled)": "Mode Penyinkronan Bergeser (dalam pengembangan aktif, tidak dapat dinonaktifkan)",
+    "You need to be able to kick users to do that.": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu."
 }
