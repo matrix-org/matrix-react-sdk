@@ -52,6 +52,7 @@ import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { FEATURES } from '../../../settings/Settings';
 
 let instanceCount = 0;
 
@@ -89,6 +90,7 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+    showVoiceBroadcastButton: boolean;
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
@@ -119,12 +121,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
+            showVoiceBroadcastButton: SettingsStore.getValue(FEATURES.VOICE_BROADCAST, null),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
+        SettingsStore.monitorSetting(FEATURES.VOICE_BROADCAST, null);
     }
 
     private get voiceRecording(): Optional<VoiceRecording> {
@@ -196,6 +200,12 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         const showPollsButton = SettingsStore.getValue("MessageComposerInput.showPollsButton");
                         if (this.state.showPollsButton !== showPollsButton) {
                             this.setState({ showPollsButton });
+                        }
+                        break;
+                    }
+                    case FEATURES.VOICE_BROADCAST: {
+                        if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
+                            this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
                         }
                         break;
                     }
@@ -484,6 +494,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
+                            showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
+                            onStartVoiceBroadcastClick={() => {
+                                // Sends a voice message. To be replaced by voice broadcast during development.
+                                this.voiceRecordingButton.current?.onRecordStartEndClick();
+                                if (this.context.narrow) {
+                                    this.toggleButtonMenu();
+                                }
+                            }}
                         /> }
                         { showSendButton && (
                             <SendButton

@@ -30,6 +30,11 @@ import ResizeNotifier from "../../../../src/utils/ResizeNotifier";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { LocalRoom } from "../../../../src/models/LocalRoom";
 import MessageComposerButtons from "../../../../src/components/views/rooms/MessageComposerButtons";
+import { FEATURES } from "../../../../src/settings/Settings";
+import SettingsStore from "../../../../src/settings/SettingsStore";
+import { SettingLevel } from "../../../../src/settings/SettingLevel";
+import dis from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
 
 describe("MessageComposer", () => {
     stubClient();
@@ -67,6 +72,37 @@ describe("MessageComposer", () => {
             expect(wrapper.find("SendMessageComposer")).toHaveLength(0);
             expect(wrapper.find("MessageComposerButtons")).toHaveLength(0);
             expect(wrapper.find(".mx_MessageComposer_roomReplaced_header")).toHaveLength(1);
+        });
+
+        [true, false].forEach((value: boolean) => {
+            describe(`when ${FEATURES.VOICE_BROADCAST} = ${value}`, () => {
+                let wrapper: ReactWrapper;
+
+                beforeEach(() => {
+                    SettingsStore.setValue(FEATURES.VOICE_BROADCAST, null, SettingLevel.DEVICE, value);
+                    wrapper = wrapAndRender({ room });
+                });
+
+                it(`should pass the prop showVoiceBroadcastButton = ${value}`, () => {
+                    expect(wrapper.find(MessageComposerButtons).props().showVoiceBroadcastButton).toBe(value);
+                });
+
+                describe(`and setting ${FEATURES.VOICE_BROADCAST} to ${!value}`, () => {
+                    beforeEach(() => {
+                        // simulate settings update
+                        dis.dispatch({
+                            action: Action.SettingUpdated,
+                            settingName: FEATURES.VOICE_BROADCAST,
+                            newValue: !value,
+                        }, true);
+                        wrapper.update();
+                    });
+
+                    it(`should pass the prop showVoiceBroadcastButton = ${!value}`, () => {
+                        expect(wrapper.find(MessageComposerButtons).props().showVoiceBroadcastButton).toBe(!value);
+                    });
+                });
+            });
         });
     });
 

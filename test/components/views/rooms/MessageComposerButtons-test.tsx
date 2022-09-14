@@ -176,6 +176,35 @@ describe("MessageComposerButtons", () => {
             ]);
         });
     });
+
+    describe("with showVoiceBroadcastButton = true", () => {
+        it("should render the »Voice broadcast« button", () => {
+            const buttons = wrapAndRender(
+                <MessageComposerButtons
+                    isMenuOpen={true}
+                    showLocationButton={true}
+                    showPollsButton={true}
+                    showStickersButton={true}
+                    showVoiceBroadcastButton={true}
+                    {...mockProps}
+                />,
+                false,
+            );
+
+            expect(buttonLabels(buttons)).toEqual([
+                "Emoji",
+                "Attachment",
+                "More options",
+                [
+                    "Sticker",
+                    "Voice Message",
+                    "Voice broadcast",
+                    "Poll",
+                    "Location",
+                ],
+            ]);
+        });
+    });
 });
 
 function wrapAndRender(component: React.ReactElement, narrow: boolean): ReactWrapper {
