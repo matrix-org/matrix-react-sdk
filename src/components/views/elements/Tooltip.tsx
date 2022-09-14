@@ -109,7 +109,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
     // positioned, also taking into account any window zoom
     private updatePosition = (): void => {
         // When the tooltip is hidden, no need to thrash the DOM with `style` attribute updates (performance)
-        if (!this.props.visible) return;
+        if (!this.props.visible || !this.parent) return;
 
         const parentBox = this.parent.getBoundingClientRect();
         const width = UIStore.instance.windowWidth;

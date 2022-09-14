@@ -282,7 +282,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             opts.from = this.nextBatch;
         }
 
-        let nextBatch: string | null = null;
+        let nextBatch: string | null | undefined = null;
         if (this.state.thread) {
             const response = await this.state.thread.fetchEvents(opts);
             nextBatch = response.nextBatch;
@@ -344,7 +344,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         const threadRelation = this.threadRelation;
 
-        let timeline: JSX.Element;
+        let timeline: JSX.Element | null;
         if (this.state.thread) {
             if (this.props.initialEvent && this.props.initialEvent.getRoomId() !== this.state.thread.roomId) {
                 logger.warn("ThreadView attempting to render TimelinePanel with mismatched initialEvent",
