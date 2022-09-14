@@ -988,7 +988,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     roomId,
                     this.state.readMarkerEventId ?? "",
                     sendRRs ? (lastReadEvent ?? undefined) : undefined, // Public read receipt (could be null)
-                    lastReadEvent, // Private read receipt (could be null)
+                    lastReadEvent ?? undefined, // Private read receipt (could be null)
                 ).catch(async (e) => {
                     // /read_markers API is not implemented on this HS, fallback to just RR
                     if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
@@ -1159,7 +1159,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const rmId = this.getCurrentReadReceipt();
 
         // Look up the timestamp if we can find it
-        const tl = this.props.timelineSet.getTimelineForEvent(rmId);
+        const tl = this.props.timelineSet.getTimelineForEvent(rmId ?? "");
         let rmTs: number;
         if (tl) {
             const event = tl.getEvents().find((e) => { return e.getId() == rmId; });
