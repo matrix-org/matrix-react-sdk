@@ -3562,5 +3562,6 @@
     "Your server lacks native support": "您的伺服器缺乏原生支援",
     "Your server has native support": "您的伺服器有原生支援",
     "Checking...": "正在檢查……",
-    "Sliding Sync mode (under active development, cannot be disabled)": "滑動同步模式（積極開發中，無法停用）"
+    "Sliding Sync mode (under active development, cannot be disabled)": "滑動同步模式（積極開發中，無法停用）",
+    "You need to be able to kick users to do that.": "您必須可以踢除使用者才能作到這件事。"
 }
