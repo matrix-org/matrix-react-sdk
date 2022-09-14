@@ -3563,5 +3563,6 @@
     "Your server has native support": "Váš server má natívnu podporu",
     "Checking...": "Kontroluje sa...",
     "Sliding Sync mode (under active development, cannot be disabled)": "Režim kĺzavej synchronizácie (v štádiu aktívneho vývoja, nie je možné ho vypnúť)",
-    "You need to be able to kick users to do that.": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť."
+    "You need to be able to kick users to do that.": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť.",
+    "Sign out of this session": "Odhlásiť sa z tejto relácie"
 }
