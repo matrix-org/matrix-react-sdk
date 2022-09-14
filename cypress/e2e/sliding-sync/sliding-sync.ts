@@ -350,7 +350,9 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_RoomTile", "Test Room").click();
         cy.get(".mx_ReplyPreview").should("not.exist");
         // click reply-to on the Hello World message
-        cy.contains(".mx_EventTile", "Hello world").find('.mx_AccessibleButton[aria-label="Reply"]').click({ force: true });
+        cy.contains(".mx_EventTile", "Hello world").find('.mx_AccessibleButton[aria-label="Reply"]').click(
+            { force: true },
+        );
         // check it's visible
         cy.get(".mx_ReplyPreview").should("exist");
         // now click Other Room
@@ -375,14 +377,16 @@ describe("Sliding Sync", () => {
                 cy.sendEvent(roomId, null, "m.room.message", {
                     body: "Reply to me",
                     msgtype: "m.text",
-                })
+                });
             });
         });
         // select the room
         cy.contains(".mx_RoomTile", "Test Room").click();
         cy.get(".mx_ReplyPreview").should("not.exist");
         // click reply-to on the Reply to me message
-        cy.contains(".mx_EventTile", "Reply to me").find('.mx_AccessibleButton[aria-label="Reply"]').click({ force: true });
+        cy.contains(".mx_EventTile", "Reply to me").find('.mx_AccessibleButton[aria-label="Reply"]').click(
+            { force: true },
+        );
         // check it's visible
         cy.get(".mx_ReplyPreview").should("exist");
         // now click on the permalink for Permalink me
