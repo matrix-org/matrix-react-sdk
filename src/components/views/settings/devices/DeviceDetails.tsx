@@ -97,11 +97,7 @@ const DeviceDetails: React.FC<Props> = ({
             >
                 <span className='mx_DeviceDetails_signOutButtonContent'>
                     { _t('Sign out of this session') }
-                    { isSigningOut && <>
-                    &nbsp;
-                        <Spinner w={16} h={16} />
-                    </>
-                    }
+                    { isSigningOut && <Spinner w={16} h={16} /> }
                 </span>
             </AccessibleButton>
         </section>
