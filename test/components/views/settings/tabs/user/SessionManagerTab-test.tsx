@@ -397,7 +397,7 @@ describe('<SessionManagerTab />', () => {
             fireEvent.click(signOutButton);
 
             // logout dialog opened
-            expect(modalSpy).toHaveBeenCalledWith(LogoutDialog, {}, null, false, true);
+            expect(modalSpy).toHaveBeenCalledWith(LogoutDialog, {}, undefined, false, true);
         });
     });
 });
