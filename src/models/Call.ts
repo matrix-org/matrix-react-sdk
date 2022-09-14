@@ -619,14 +619,13 @@ export class ElementCall extends Call {
         // To use Element Call without touching room state, we create a virtual
         // widget (one that doesn't have a corresponding state event)
         super(
-            {
-                roomId: groupCall.getRoomId()!,
+            WidgetStore.instance.addVirtualWidget({
                 id: randomString(24), // So that it's globally unique
                 creatorUserId: client.getUserId()!,
                 name: "Element Call",
                 type: MatrixWidgetType.Custom,
                 url: url.toString(),
-            },
+            }, groupCall.getRoomId()!),
             client,
         );
 
@@ -787,6 +786,7 @@ export class ElementCall extends Call {
     }
 
     public destroy() {
+        WidgetStore.instance.removeVirtualWidget(this.widget.id, this.groupCall.getRoomId()!);
         this.room.off(RoomStateEvent.Update, this.onRoomState);
         this.off(CallEvent.ConnectionState, this.onConnectionState);
         if (this.participantsExpirationTimer !== null) {
