@@ -68,9 +68,6 @@ const SessionManagerTab: React.FC = () => {
     const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
 
     const onVerifyCurrentDevice = () => {
-        if (!currentDevice) {
-            return;
-        }
         Modal.createDialog(
             SetupEncryptionDialog as unknown as React.ComponentType,
             { onFinished: refreshDevices },
