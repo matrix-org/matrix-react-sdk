@@ -180,7 +180,7 @@ export class RoomPermalinkCreator {
         if (plEvent) {
             const content = plEvent.getContent();
             if (content) {
-                const users = content.users;
+                const users: Record<string, number> = content.users;
                 if (users) {
                     const entries = Object.entries(users);
                     const allowedEntries = entries.filter(([userId]) => {
@@ -190,12 +190,7 @@ export class RoomPermalinkCreator {
                         }
                         const serverName = getServerName(userId);
 
-                        let domain = serverName;
-                        try {
-                            domain = getHostnameFromMatrixServerName(serverName);
-                        } catch (e) {
-                            console.error("Error encountered while updating highest power level user", e);
-                        }
+                        const domain = getHostnameFromMatrixServerName(serverName) ?? serverName;
                         return !isHostnameIpAddress(domain) &&
                             !isHostInRegex(domain, this.bannedHostsRegexps) &&
                             isHostInRegex(domain, this.allowedHostsRegexps);
@@ -258,18 +253,14 @@ export class RoomPermalinkCreator {
 
         for (let i = 0; i < serversByPopulation.length && candidates.size < MAX_SERVER_CANDIDATES; i++) {
             const serverName = serversByPopulation[i];
-            try {
-                const domain = getHostnameFromMatrixServerName(serverName);
-                if (
-                    !candidates.has(serverName) &&
-                    !isHostnameIpAddress(domain) &&
-                    !isHostInRegex(domain, this.bannedHostsRegexps) &&
-                    isHostInRegex(domain, this.allowedHostsRegexps)
-                ) {
-                    candidates.add(serverName);
-                }
-            } catch (e) {
-                console.error("Encountered error while updating server candidates", e);
+            const domain = getHostnameFromMatrixServerName(serverName) ?? "";
+            if (
+                !candidates.has(serverName) &&
+                !isHostnameIpAddress(domain) &&
+                !isHostInRegex(domain, this.bannedHostsRegexps) &&
+                isHostInRegex(domain, this.allowedHostsRegexps)
+            ) {
+                candidates.add(serverName);
             }
         }
 
@@ -457,9 +448,14 @@ function getServerName(userId: string): string {
     return userId.split(":").splice(1).join(":");
 }
 
-function getHostnameFromMatrixServerName(serverName: string): string {
+function getHostnameFromMatrixServerName(serverName: string): string | null {
     if (!serverName) return null;
-    return new URL(`https://${serverName}`).hostname;
+    try {
+        return new URL(`https://${serverName}`).hostname;
+    } catch (e) {
+        console.error("Error encountered while extracting hostname from server name", e);
+        return null;
+    }
 }
 
 function isHostInRegex(hostname: string, regexps: RegExp[]): boolean {
