@@ -38,6 +38,7 @@ describe("StopGapWidgetDriver", () => {
         }),
         WidgetKind.Room,
         false,
+        "!1:example.org",
     );
 
     beforeEach(() => {
@@ -57,12 +58,14 @@ describe("StopGapWidgetDriver", () => {
             }),
             WidgetKind.Room,
             true,
+            "!1:example.org",
         );
 
         // These are intentionally raw identifiers rather than constants, so it's obvious what's being requested
         const requestedCapabilities = new Set([
             "m.always_on_screen",
             "town.robin.msc3846.turn_servers",
+            "org.matrix.msc2762.timeline:!1:example.org",
             "org.matrix.msc2762.receive.state_event:m.room.member",
             "org.matrix.msc2762.send.state_event:org.matrix.msc3401.call",
             "org.matrix.msc2762.receive.state_event:org.matrix.msc3401.call",

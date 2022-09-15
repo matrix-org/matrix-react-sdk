@@ -108,6 +108,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
             // This is a trusted Element Call widget that we control
             this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);
             this.allowedCapabilities.add(MatrixCapabilities.MSC3846TurnServers);
+            this.allowedCapabilities.add(`org.matrix.msc2762.timeline:${inRoomId}`);
 
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomMember).raw,
