@@ -215,10 +215,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private waitForOwnMember() {
-        const userId = MatrixClientPeg.get().getUserId()!;
-
         // if we have the member already, do that
-        const me = this.props.room.getMember(userId);
+        const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
             return;
@@ -227,14 +225,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         // The members should already be loading, and loadMembersIfNeeded
         // will return the promise for the existing operation
         this.props.room.loadMembersIfNeeded().then(() => {
-            const me = this.props.room.getMember(userId) || undefined;
+            const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
             this.setState({ me });
         });
     }
 
     public componentWillUnmount() {
         VoiceRecordingStore.instance.off(UPDATE_EVENT, this.onVoiceStoreUpdate);
-        dis.unregister(this.dispatcherRef!);
+        dis.unregister(this.dispatcherRef);
         UIStore.instance.stopTrackingElementDimensions(`MessageComposer${this.instanceId}`);
         UIStore.instance.removeListener(`MessageComposer${this.instanceId}`, this.onResize);
 
@@ -245,17 +243,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     private onTombstoneClick = (ev) => {
         ev.preventDefault();
 
-        const replacementRoomId = this.context.tombstone?.getContent()['replacement_room'];
+        const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
         const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
-        let createEventId: string | undefined = undefined;
+        let createEventId = null;
         if (replacementRoom) {
             const createEvent = replacementRoom.currentState.getStateEvents(EventType.RoomCreate, '');
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = this.context.tombstone
-            ? [this.context.tombstone.getSender().split(':').slice(1).join(':')]
-            : undefined;
+        const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
 
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
@@ -348,7 +344,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onRecordingEndingSoon = ({ secondsLeft }) => {
         this.setState({ recordingTimeLeftSeconds: secondsLeft });
-        setTimeout(() => this.setState({ recordingTimeLeftSeconds: undefined }), 3000);
+        setTimeout(() => this.setState({ recordingTimeLeftSeconds: null }), 3000);
     };
 
     private setStickerPickerOpen = (isStickerPickerOpen: boolean) => {

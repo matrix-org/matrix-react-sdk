@@ -64,12 +64,12 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     const matrixClient: MatrixClient = useContext(MatrixClientContext);
     const { room, roomId, narrow } = useContext(RoomContext);
 
-    if (props.haveRecording || !room || !roomId) {
+    if (props.haveRecording) {
         return null;
     }
 
-    let mainButtons: (ReactElement|null)[];
-    let moreButtons: (ReactElement|null)[];
+    let mainButtons: ReactElement[];
+    let moreButtons: ReactElement[];
     if (narrow) {
         mainButtons = [
             emojiButton(props),
@@ -96,8 +96,8 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
     }
 
-    mainButtons = mainButtons.filter((x: ReactElement|null) => x);
-    moreButtons = moreButtons.filter((x: ReactElement|null) => x);
+    mainButtons = mainButtons.filter((x: ReactElement) => x);
+    moreButtons = moreButtons.filter((x: ReactElement) => x);
 
     const moreOptionsClasses = classNames({
         mx_MessageComposer_button: true,
@@ -139,7 +139,7 @@ function emojiButton(props: IProps): ReactElement {
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
-    menuPosition?: AboveLeftOf;
+    menuPosition: AboveLeftOf;
 }
 
 const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) => {
@@ -147,7 +147,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu: React.ReactElement | null = null;
-    if (menuDisplayed && button.current) {
+    if (menuDisplayed) {
         const position = (
             menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
         );
@@ -201,7 +201,7 @@ interface IUploadButtonProps {
 const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const uploadInput = useRef<HTMLInputElement>() as React.MutableRefObject<HTMLInputElement>;
+    const uploadInput = useRef<HTMLInputElement>();
 
     const onUploadClick = () => {
         if (cli.isGuest()) {
@@ -218,13 +218,13 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
     });
 
     const onUploadFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        if (!ev.target.files?.length) return;
+        if (ev.target.files.length === 0) return;
 
         // Take a copy, so we can safely reset the value of the form control
         ContentMessages.sharedInstance().sendContentListToRoom(
             Array.from(ev.target.files),
             roomId,
-            relation || undefined,
+            relation,
             cli,
             roomContext.timelineRenderingType,
         );
