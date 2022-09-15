@@ -89,6 +89,7 @@ const INITIAL_STATE = {
 
 type Listener = (isActive: boolean) => void;
 
+
 /**
  * A class for storing application state for RoomView.
  */
@@ -108,8 +109,7 @@ export class RoomViewStore extends EventEmitter {
 
     public constructor(dis: MatrixDispatcher) {
         super();
-        this.dis = dis;
-        this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
+        this.resetDispatcher(dis);
     }
 
     public addRoomListener(roomId: string, fn: Listener): void {
@@ -286,9 +286,9 @@ export class RoomViewStore extends EventEmitter {
                 });
             }
             if (SettingsStore.getValue("feature_sliding_sync") && this.state.roomId !== payload.room_id) {
-                if (this.state.roomId) {
+                if (this.state.subscribingRoomId && this.state.subscribingRoomId !== payload.room_id) {
                     // unsubscribe from this room, but don't await it as we don't care when this gets done.
-                    SlidingSyncManager.instance.setRoomVisible(this.state.roomId, false);
+                    SlidingSyncManager.instance.setRoomVisible(this.state.subscribingRoomId, false);
                 }
                 this.setState({
                     subscribingRoomId: payload.room_id,
@@ -309,7 +309,7 @@ export class RoomViewStore extends EventEmitter {
                 // Whilst we were subscribing another room was viewed, so stop what we're doing and
                 // unsubscribe
                 if (this.state.subscribingRoomId !== payload.room_id) {
-                    SlidingSyncManager.instance.setRoomVisible(this.state.roomId, false);
+                    SlidingSyncManager.instance.setRoomVisible(payload.room_id, false);
                     return;
                 }
                 // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
@@ -494,6 +494,14 @@ export class RoomViewStore extends EventEmitter {
 
     public reset(): void {
         this.state = Object.assign({}, INITIAL_STATE);
+    }
+
+    public resetDispatcher(dis: MatrixDispatcher) {
+        if (this.dispatchToken) {
+            this.dis.unregister(this.dispatchToken);
+        }
+        this.dis = dis;
+        this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
     }
 
     // The room ID of the room currently being viewed

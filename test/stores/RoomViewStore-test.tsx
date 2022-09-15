@@ -18,10 +18,12 @@ import { Room } from 'matrix-js-sdk/src/matrix';
 
 import { RoomViewStore } from '../../src/stores/RoomViewStore';
 import { Action } from '../../src/dispatcher/actions';
-import { flushPromises, getMockClientWithEventEmitter } from '../test-utils';
+import { getMockClientWithEventEmitter, untilDispatch, untilEmission } from '../test-utils';
 import SettingsStore from '../../src/settings/SettingsStore';
 import { SlidingSyncManager } from '../../src/SlidingSyncManager';
 import { TimelineRenderingType } from '../../src/contexts/RoomContext';
+import { MatrixDispatcher } from '../../src/dispatcher/dispatcher';
+import { UPDATE_EVENT } from '../../src/stores/AsyncStore';
 
 jest.mock('../../src/utils/DMRoomMap', () => {
     const mock = {
@@ -44,7 +46,7 @@ describe('RoomViewStore', function() {
         isGuest: jest.fn(),
     });
     const room = new Room('!room:server', mockClient, userId);
-    const dis = defaultDispatcher;
+    let dis: MatrixDispatcher;
 
     beforeEach(function() {
         jest.clearAllMocks();
@@ -54,13 +56,15 @@ describe('RoomViewStore', function() {
         mockClient.isGuest.mockReturnValue(false);
 
         // Reset the state of the store
+        dis = new MatrixDispatcher();
         RoomViewStore.instance.reset();
+        RoomViewStore.instance.resetDispatcher(dis);
     });
 
     it('can be used to view a room by ID and join', async () => {
         dis.dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
         dis.dispatch({ action: Action.JoinRoom });
-        await flushPromises();
+        await untilDispatch(Action.JoinRoomReady, dis);
         expect(mockClient.joinRoom).toHaveBeenCalledWith('!randomcharacters:aser.ver', { viaServers: [] });
         expect(RoomViewStore.instance.isJoining()).toBe(true);
     });
@@ -70,10 +74,10 @@ describe('RoomViewStore', function() {
         const alias = "#somealias2:aser.ver";
 
         mockClient.getRoomIdForAlias.mockResolvedValue({ room_id: roomId, servers: [] });
-
         dis.dispatch({ action: Action.ViewRoom, room_alias: alias });
-        await flushPromises();
-        await flushPromises();
+        await untilDispatch((p) => { // wait for the re-dispatch with the room ID
+            return p.action === Action.ViewRoom && p.room_id === roomId;
+        }, dis);
 
         // roomId is set to id of the room alias
         expect(RoomViewStore.instance.getRoomId()).toBe(roomId);
@@ -81,24 +85,25 @@ describe('RoomViewStore', function() {
         // join the room
         dis.dispatch({ action: Action.JoinRoom }, true);
 
-        expect(RoomViewStore.instance.isJoining()).toBeTruthy();
-        await flushPromises();
+        await untilDispatch(Action.JoinRoomReady, dis);
 
+        expect(RoomViewStore.instance.isJoining()).toBeTruthy();
         expect(mockClient.joinRoom).toHaveBeenCalledWith(alias, { viaServers: [] });
     });
 
     it('remembers the event being replied to when swapping rooms', async () => {
-        dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
-        await flushPromises();
+        dis.dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
         const replyToEvent = {
             getRoomId: () => '!randomcharacters:aser.ver',
         };
-        dispatch({ action: 'reply_to_event', event: replyToEvent, context: TimelineRenderingType.Room });
-        await flushPromises();
+        dis.dispatch({ action: 'reply_to_event', event: replyToEvent, context: TimelineRenderingType.Room });
+        await untilEmission(RoomViewStore.instance, UPDATE_EVENT);
         expect(RoomViewStore.instance.getQuotingEvent()).toEqual(replyToEvent);
         // view the same room, should remember the event.
-        dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
-        await flushPromises();
+        // set the highlighed flag to make sure there is a state change so we get an update event
+        dis.dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver', highlighted: true });
+        await untilEmission(RoomViewStore.instance, UPDATE_EVENT);
         expect(RoomViewStore.instance.getQuotingEvent()).toEqual(replyToEvent);
     });
 
@@ -116,8 +121,7 @@ describe('RoomViewStore', function() {
             );
             const subscribedRoomId = "!sub1:localhost";
             dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId });
-            await flushPromises();
-            await flushPromises();
+            await untilDispatch(Action.ActiveRoomChanged, dis);
             expect(RoomViewStore.instance.getRoomId()).toBe(subscribedRoomId);
             expect(setRoomVisible).toHaveBeenCalledWith(subscribedRoomId, true);
         });
@@ -127,20 +131,27 @@ describe('RoomViewStore', function() {
             const setRoomVisible = jest.spyOn(SlidingSyncManager.instance, "setRoomVisible").mockReturnValue(
                 Promise.resolve(""),
             );
-            const subscribedRoomId = "!sub2:localhost";
-            const subscribedRoomId2 = "!sub3:localhost";
+            const subscribedRoomId = "!sub1:localhost";
+            const subscribedRoomId2 = "!sub2:localhost";
             dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId }, true);
             dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId2 }, true);
-            // sub(1) then unsub(1) sub(2)
-            expect(setRoomVisible).toHaveBeenCalledTimes(3);
-            await flushPromises();
-            await flushPromises();
-            // this should not churn, extra call to allow unsub(1)
-            expect(setRoomVisible).toHaveBeenCalledTimes(4);
-            // flush a bit more to ensure this doesn't change
-            await flushPromises();
-            await flushPromises();
-            expect(setRoomVisible).toHaveBeenCalledTimes(4);
+            await untilDispatch(Action.ActiveRoomChanged, dis);
+            // sub(1) then unsub(1) sub(2), unsub(1)
+            const wantCalls = [
+                [subscribedRoomId, true],
+                [subscribedRoomId, false],
+                [subscribedRoomId2, true],
+                [subscribedRoomId, false],
+            ];
+            expect(setRoomVisible).toHaveBeenCalledTimes(wantCalls.length);
+            wantCalls.forEach((v, i) => {
+                try {
+                    expect(setRoomVisible.mock.calls[i][0]).toEqual(v[0]);
+                    expect(setRoomVisible.mock.calls[i][1]).toEqual(v[1]);
+                } catch(err) {
+                    throw new Error(`i=${i} got ${setRoomVisible.mock.calls[i]} want ${v}`);
+                }
+            });
         });
     });
 });
