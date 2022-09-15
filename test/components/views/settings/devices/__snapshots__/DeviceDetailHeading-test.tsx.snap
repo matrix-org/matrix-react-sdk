@@ -64,31 +64,6 @@ Object {
 }
 `;
 
-exports[`<DeviceDetailHeading /> renders device id as fallback when device has no display name  1`] = `
-Object {
-  "container": <div>
-    <div
-      class="mx_DeviceDetailHeading"
-      data-testid="device-detail-heading"
-    >
-      <h3
-        class="mx_Heading_h3"
-      >
-        123
-      </h3>
-      <div
-        class="mx_AccessibleButton mx_DeviceDetailHeading_renameCta mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
-        data-testid="device-heading-rename-cta"
-        role="button"
-        tabindex="0"
-      >
-        Rename
-      </div>
-    </div>
-  </div>,
-}
-`;
-
 exports[`<DeviceDetailHeading /> renders device name 1`] = `
 Object {
   "container": <div>

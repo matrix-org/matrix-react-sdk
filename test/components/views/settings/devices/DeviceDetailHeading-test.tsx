@@ -47,10 +47,10 @@ describe('<DeviceDetailHeading />', () => {
     });
 
     it('renders device id as fallback when device has no display name ', () => {
-        const { container } = render(getComponent({
+        const { getByText } = render(getComponent({
             device: { ...device, display_name: undefined },
         }));
-        expect({ container }).toMatchSnapshot();
+        expect(getByText(device.device_id)).toBeTruthy();
     });
 
     it('displays name edit form on rename button click', () => {

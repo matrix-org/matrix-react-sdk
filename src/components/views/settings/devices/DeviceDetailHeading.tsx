@@ -90,7 +90,9 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
             >
                 { _t('Please be aware that session names are also visible to people you communicate with') }
                 { !!error &&
-                    <span className='mx_DeviceDetailHeading_renameFormError'>
+                    <span
+                        data-testid="device-rename-error"
+                        className='mx_DeviceDetailHeading_renameFormError'>
                         { error }
                     </span>
                 }
