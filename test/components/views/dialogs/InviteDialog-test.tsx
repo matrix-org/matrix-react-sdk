@@ -40,6 +40,7 @@ describe("InviteDialog", () => {
             displayname: 'Alice',
         }),
         getIdentityServerUrl: jest.fn(),
+        searchUserDirectory: jest.fn().mockResolvedValue({}),
     });
 
     beforeEach(() => {
