@@ -30,7 +30,7 @@ import ResizeNotifier from "../../../../src/utils/ResizeNotifier";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { LocalRoom } from "../../../../src/models/LocalRoom";
 import MessageComposerButtons from "../../../../src/components/views/rooms/MessageComposerButtons";
-import { FEATURES } from "../../../../src/settings/Settings";
+import { Features } from "../../../../src/settings/Settings";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import dis from "../../../../src/dispatcher/dispatcher";
@@ -130,7 +130,7 @@ describe("MessageComposer", () => {
                 prop: "showPollsButton",
             },
             {
-                setting: FEATURES.VOICE_BROADCAST,
+                setting: Features.VoiceBroadcast,
                 prop: "showVoiceBroadcastButton",
             },
         ].forEach(({ setting, prop }) => {
