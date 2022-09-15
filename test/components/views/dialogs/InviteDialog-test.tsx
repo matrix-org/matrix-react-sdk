@@ -36,9 +36,7 @@ describe("InviteDialog", () => {
         getPushActionsForEvent: jest.fn(),
         mxcUrlToHttp: jest.fn().mockReturnValue(''),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
-        getProfileInfo: jest.fn().mockResolvedValue({
-            displayname: 'Alice',
-        }),
+        getProfileInfo: jest.fn().mockRejectedValue({ errcode: "" }),
         getIdentityServerUrl: jest.fn(),
         searchUserDirectory: jest.fn().mockResolvedValue({}),
     });
