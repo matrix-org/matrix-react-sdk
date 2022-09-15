@@ -3563,5 +3563,6 @@
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s ou %(appLinks)s",
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ou %(emojiCompare)s",
     "Sliding Sync mode (under active development, cannot be disabled)": "Mode de synchronisation progressive (en développement, ne peut pas être désactivé)",
-    "You need to be able to kick users to do that.": "Vous devez avoir l’autorisation d’expulser des utilisateurs pour faire ceci."
+    "You need to be able to kick users to do that.": "Vous devez avoir l’autorisation d’expulser des utilisateurs pour faire ceci.",
+    "Sign out of this session": "Se déconnecter de cette session"
 }
