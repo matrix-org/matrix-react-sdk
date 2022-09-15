@@ -3562,5 +3562,7 @@
     "Your server has native support": "Selle funktsionaalsuse tugi on sinu koduserveris olemas",
     "Checking...": "Kontrollime...",
     "Sign out of this session": "Logi sellest sessioonist välja",
-    "You need to be able to kick users to do that.": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele müksamiseks."
+    "You need to be able to kick users to do that.": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele müksamiseks.",
+    "Please be aware that session names are also visible to people you communicate with": "Palun arvesta, et sessioonide nimed on näha ka kõikidele osapooltele, kellega sa suhtled",
+    "Rename session": "Muuda sessiooni nime"
 }
