@@ -22,8 +22,8 @@ import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
-import { DevicesDictionary, DeviceWithVerification } from "./types";
 import { _t } from "../../../../languageHandler";
+import { DevicesDictionary, DeviceWithVerification } from "./types";
 
 const isDeviceVerified = (
     matrixClient: MatrixClient,
