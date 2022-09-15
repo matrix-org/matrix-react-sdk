@@ -305,8 +305,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         initialText: "",
     };
 
-    private closeCopiedTooltip: () => void;
-    private debounceTimer: number = null; // actually number because we're in the browser
+    private debounceTimer: number | null = null; // actually number because we're in the browser
     private editorRef = createRef<HTMLInputElement>();
     private numberEntryFieldRef: React.RefObject<Field> = createRef();
     private unmounted = false;
@@ -332,7 +331,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         this.state = {
             targets: [], // array of Member objects (see interface above)
-            filterText: this.props.initialText,
+            filterText: this.props.initialText || "",
             recents: InviteDialog.buildRecents(alreadyInvited),
             numRecentsShown: INITIAL_ROOMS_SHOWN,
             suggestions: this.buildSuggestions(alreadyInvited),
@@ -359,9 +358,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
     componentWillUnmount() {
         this.unmounted = true;
-        // if the Copied tooltip is open then get rid of it, there are ways to close the modal which wouldn't close
-        // the tooltip otherwise, such as pressing Escape or clicking X really quickly
-        if (this.closeCopiedTooltip) this.closeCopiedTooltip();
     }
 
     private onConsultFirstChange = (ev) => {
@@ -1134,10 +1130,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             const isSpace = room?.isSpaceRoom();
             title = isSpace
                 ? _t("Invite to %(spaceName)s", {
-                    spaceName: room.name || _t("Unnamed Space"),
+                    spaceName: room?.name || _t("Unnamed Space"),
                 })
                 : _t("Invite to %(roomName)s", {
-                    roomName: room.name || _t("Unnamed Room"),
+                    roomName: room?.name || _t("Unnamed Room"),
                 });
 
             let helpTextUntranslated;
@@ -1170,7 +1166,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             goButtonFn = this.inviteUsers;
 
             if (cli.isRoomEncrypted(this.props.roomId)) {
-                const room = cli.getRoom(this.props.roomId);
+                const room = cli.getRoom(this.props.roomId)!;
                 const visibilityEvent = room.currentState.getStateEvents(
                     "m.room.history_visibility", "",
                 );
