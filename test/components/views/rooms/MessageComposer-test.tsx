@@ -83,6 +83,7 @@ describe("MessageComposer", () => {
             let resizeNotifier: ResizeNotifier;
 
             beforeEach(() => {
+                jest.useFakeTimers();
                 resizeNotifier = {
                     notifyTimelineHeightChanged: jest.fn(),
                 } as unknown as ResizeNotifier;
@@ -92,30 +93,26 @@ describe("MessageComposer", () => {
                 });
             });
 
-            it("should call notifyTimelineHeightChanged() for the same context", (done) => {
+            it("should call notifyTimelineHeightChanged() for the same context", () => {
                 dis.dispatch({
                     action: "reply_to_event",
                     context: (wrapper.instance as unknown as MessageComposer).context,
                 });
                 wrapper.update();
 
-                setTimeout(() => {
-                    expect(resizeNotifier.notifyTimelineHeightChanged).toHaveBeenCalled();
-                    done();
-                }, 150); // higher timeout than in MessageComposer::onAction
+                jest.advanceTimersByTime(150);
+                expect(resizeNotifier.notifyTimelineHeightChanged).toHaveBeenCalled();
             });
 
-            it("should not call notifyTimelineHeightChanged() for a different context", (done) => {
+            it("should not call notifyTimelineHeightChanged() for a different context", () => {
                 dis.dispatch({
                     action: "reply_to_event",
                     context: "test",
                 });
                 wrapper.update();
 
-                setTimeout(() => {
-                    expect(resizeNotifier.notifyTimelineHeightChanged).not.toHaveBeenCalled();
-                    done();
-                }, 150); // higher timeout than in MessageComposer::onAction
+                jest.advanceTimersByTime(150);
+                expect(resizeNotifier.notifyTimelineHeightChanged).not.toHaveBeenCalled();
             });
         });
 
