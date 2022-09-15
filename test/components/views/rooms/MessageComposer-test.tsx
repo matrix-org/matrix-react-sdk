@@ -140,7 +140,10 @@ describe("MessageComposer", () => {
 
                     beforeEach(() => {
                         SettingsStore.setValue(setting, null, SettingLevel.DEVICE, value);
-                        wrapper = wrapAndRender({ room });
+                        wrapper = wrapAndRender({
+                            room,
+                            showVoiceBroadcastButton: true,
+                        });
                     });
 
                     it(`should pass the prop ${prop} = ${value}`, () => {
@@ -164,6 +167,17 @@ describe("MessageComposer", () => {
                         });
                     });
                 });
+            });
+        });
+
+        [false, undefined].forEach((value) => {
+            it(`should pass showVoiceBroadcastButton = false if the MessageComposer prop is ${value}`, () => {
+                SettingsStore.setValue(FEATURES.VOICE_BROADCAST, null, SettingLevel.DEVICE, true);
+                const wrapper = wrapAndRender({
+                    room,
+                    showVoiceBroadcastButton: value,
+                });
+                expect(wrapper.find(MessageComposerButtons).props().showVoiceBroadcastButton).toBe(false);
             });
         });
 
