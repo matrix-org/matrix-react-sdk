@@ -3564,5 +3564,7 @@
     "Checking...": "Перевірка...",
     "Sliding Sync mode (under active development, cannot be disabled)": "Режим ковзної синхронізації (в активній розробці, не можна вимкнути)",
     "You need to be able to kick users to do that.": "Для цього вам потрібен дозвіл вилучати користувачів.",
-    "Sign out of this session": "Вийти з цього сеансу"
+    "Sign out of this session": "Вийти з цього сеансу",
+    "Please be aware that session names are also visible to people you communicate with": "Зауважте, що назви сеансів також видно людям, з якими ви спілкуєтесь",
+    "Rename session": "Перейменувати сеанс"
 }
