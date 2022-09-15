@@ -26,14 +26,15 @@ import { DeviceWithVerification } from './types';
 
 interface Props {
     device: DeviceWithVerification;
-    isLoading: boolean;
     saveDeviceName: (deviceName: string) => Promise<void>;
 }
 
 const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
-    device, isLoading, saveDeviceName, stopEditing,
+    device, saveDeviceName, stopEditing,
 }) => {
     const [deviceName, setDeviceName] = useState(device.display_name || '');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string>(null);
 
     useEffect(() => {
         setDeviceName(device.display_name);
@@ -43,9 +44,16 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
         setDeviceName(event.target.value);
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        setIsLoading(true);
+        setError(null);
         event.preventDefault();
-        await saveDeviceName(deviceName);
-        stopEditing();
+        try {
+            await saveDeviceName(deviceName);
+            stopEditing();
+        } catch (error) {
+            setError(_t('Failed to set display name'));
+            setIsLoading(false);
+        }
     };
 
     const headingId = `device-rename-${device.device_id}`;
@@ -81,6 +89,11 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
                 id={descriptionId}
             >
                 { _t('Please be aware that session names are also visible to people you communicate with') }
+                { !!error &&
+                    <span className='mx_DeviceDetailHeading_renameFormError'>
+                        { error }
+                    </span>
+                }
             </Caption>
         </div>
         <div className="mx_DeviceDetailHeading_renameFormButtons">
@@ -106,18 +119,17 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
 };
 
 export const DeviceDetailHeading: React.FC<Props> = ({
-    device, isLoading, saveDeviceName,
+    device, saveDeviceName,
 }) => {
     const [isEditing, setIsEditing] = useState(false);
 
     return isEditing
         ? <DeviceNameEditor
             device={device}
-            isLoading={isLoading}
             saveDeviceName={saveDeviceName}
             stopEditing={() => setIsEditing(false)}
         />
-        : <div className='mx_DeviceDetailHeading'>
+        : <div className='mx_DeviceDetailHeading' data-testid='device-detail-heading'>
             <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
             <AccessibleButton
                 kind='link_inline'

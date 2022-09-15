@@ -14,10 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 
 import { DeviceDetailHeading } from '../../../../../src/components/views/settings/devices/DeviceDetailHeading';
+import { flushPromisesWithFakeTimers } from '../../../../test-utils';
+
+jest.useFakeTimers();
 
 describe('<DeviceDetailHeading />', () => {
     const device = {
@@ -27,7 +30,6 @@ describe('<DeviceDetailHeading />', () => {
     };
     const defaultProps = {
         device,
-        isLoading: false,
         saveDeviceName: jest.fn(),
     };
     const getComponent = (props = {}) =>
@@ -71,24 +73,6 @@ describe('<DeviceDetailHeading />', () => {
         expect(container.getElementsByClassName('mx_DeviceDetailHeading').length).toBe(1);
     });
 
-    it('disables form while device isLoading', () => {
-        const { getByTestId, rerender } = render(getComponent());
-
-        // start editing
-        fireEvent.click(getByTestId('device-heading-rename-cta'));
-
-        // enter loading state
-        rerender(getComponent({ isLoading: true }));
-
-        // buttons disabled
-        expect(
-            getByTestId('device-rename-cancel-cta').getAttribute('aria-disabled'),
-        ).toEqual("true");
-        expect(
-            getByTestId('device-rename-submit-cta').getAttribute('aria-disabled'),
-        ).toEqual("true");
-    });
-
     it('clicking submit updates device name with edited value', () => {
         const saveDeviceName = jest.fn();
         const { getByTestId } = render(getComponent({ saveDeviceName }));
@@ -101,5 +85,66 @@ describe('<DeviceDetailHeading />', () => {
         fireEvent.click(getByTestId('device-rename-submit-cta'));
 
         expect(saveDeviceName).toHaveBeenCalledWith('new device name');
+    });
+
+    it('disables form while device name is saving', () => {
+        const { getByTestId, container } = render(getComponent());
+
+        // start editing
+        fireEvent.click(getByTestId('device-heading-rename-cta'));
+
+        setInputValue(getByTestId, 'new device name');
+
+        fireEvent.click(getByTestId('device-rename-submit-cta'));
+
+        // buttons disabled
+        expect(
+            getByTestId('device-rename-cancel-cta').getAttribute('aria-disabled'),
+        ).toEqual("true");
+        expect(
+            getByTestId('device-rename-submit-cta').getAttribute('aria-disabled'),
+        ).toEqual("true");
+
+        expect(container.getElementsByClassName('mx_Spinner').length).toBeTruthy();
+    });
+
+    it('toggles out of editing mode when device name is saved successfully', async () => {
+        const { getByTestId } = render(getComponent());
+
+        // start editing
+        fireEvent.click(getByTestId('device-heading-rename-cta'));
+        setInputValue(getByTestId, 'new device name');
+        fireEvent.click(getByTestId('device-rename-submit-cta'));
+
+        await flushPromisesWithFakeTimers();
+
+        // read mode displayed
+        expect(getByTestId('device-detail-heading')).toBeTruthy();
+    });
+
+    it('displays error when device name fails to save', async () => {
+        const saveDeviceName = jest.fn().mockRejectedValueOnce('oups').mockResolvedValue({});
+        const { getByTestId, queryByText, container } = render(getComponent({ saveDeviceName }));
+
+        // start editing
+        fireEvent.click(getByTestId('device-heading-rename-cta'));
+        setInputValue(getByTestId, 'new device name');
+        fireEvent.click(getByTestId('device-rename-submit-cta'));
+
+        // flush promise
+        await flushPromisesWithFakeTimers();
+        // then tick for render
+        await flushPromisesWithFakeTimers();
+
+        // error message displayed
+        expect(queryByText('Failed to set display name')).toBeTruthy();
+        // spinner removed
+        expect(container.getElementsByClassName('mx_Spinner').length).toBeFalsy();
+
+        // try again
+        fireEvent.click(getByTestId('device-rename-submit-cta'));
+
+        // error message cleared
+        expect(queryByText('Failed to set display name')).toBeFalsy();
     });
 });

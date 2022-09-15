@@ -11,6 +11,7 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
     >
       <div
         class="mx_DeviceDetailHeading"
+        data-testid="device-detail-heading"
       >
         <h3
           class="mx_Heading_h3"
@@ -144,6 +145,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
     >
       <div
         class="mx_DeviceDetailHeading"
+        data-testid="device-detail-heading"
       >
         <h3
           class="mx_Heading_h3"
@@ -281,6 +283,7 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
     >
       <div
         class="mx_DeviceDetailHeading"
+        data-testid="device-detail-heading"
       >
         <h3
           class="mx_Heading_h3"

@@ -89,7 +89,6 @@ const SessionManagerTab: React.FC = () => {
         devices,
         currentDeviceId,
         isLoadingDeviceList,
-        pendingDeviceIds,
         requestDeviceVerification,
         refreshDevices,
         saveDeviceName,
@@ -170,8 +169,8 @@ const SessionManagerTab: React.FC = () => {
         <CurrentDeviceSection
             device={currentDevice}
             isSigningOut={signingOutDeviceIds.includes(currentDevice?.device_id)}
-            isLoading={isLoadingDeviceList || pendingDeviceIds.includes(currentDevice?.device_id)}
-            onSaveDeviceName={(deviceName) => saveDeviceName(currentDevice?.device_id, deviceName)}
+            isLoading={isLoadingDeviceList}
+            saveDeviceName={(deviceName) => saveDeviceName(currentDevice?.device_id, deviceName)}
             onVerifyCurrentDevice={onVerifyCurrentDevice}
             onSignOutCurrentDevice={onSignOutCurrentDevice}
         />
@@ -194,6 +193,7 @@ const SessionManagerTab: React.FC = () => {
                     onDeviceExpandToggle={onDeviceExpandToggle}
                     onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
                     onSignOutDevices={onSignOutOtherDevices}
+                    saveDeviceName={saveDeviceName}
                     ref={filteredDeviceListRef}
                 />
             </SettingsSubsection>

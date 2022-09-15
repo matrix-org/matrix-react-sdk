@@ -78,8 +78,6 @@ export type DevicesState = {
     devices: DevicesDictionary;
     currentDeviceId: string;
     isLoadingDeviceList: boolean;
-    // device ids with pending requests
-    pendingDeviceIds: DeviceWithVerification['device_id'][];
     // not provided when current session cannot request verification
     requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
@@ -95,8 +93,6 @@ export const useOwnDevices = (): DevicesState => {
     const [devices, setDevices] = useState<DevicesState['devices']>({});
     const [isLoadingDeviceList, setIsLoadingDeviceList] = useState(true);
 
-    // device ids with pending requests
-    const [pendingDeviceIds, setPendingDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
     const [error, setError] = useState<OwnDevicesError>();
 
     const refreshDevices = useCallback(async () => {
@@ -147,7 +143,6 @@ export const useOwnDevices = (): DevicesState => {
             }
 
             try {
-                setPendingDeviceIds(p => ([...p, deviceId]));
                 await matrixClient.setDeviceDetails(
                     deviceId,
                     { display_name: deviceName },
@@ -157,15 +152,13 @@ export const useOwnDevices = (): DevicesState => {
                 logger.error("Error setting session display name", error);
                 throw new Error(_t("Failed to set display name"));
             }
-            setPendingDeviceIds(p => p.filter(id => id !== deviceId));
-        }, [matrixClient, devices, refreshDevices, setPendingDeviceIds]);
+        }, [matrixClient, devices, refreshDevices]);
 
     return {
         devices,
         currentDeviceId,
         isLoadingDeviceList,
         error,
-        pendingDeviceIds,
         requestDeviceVerification,
         refreshDevices,
         saveDeviceName,

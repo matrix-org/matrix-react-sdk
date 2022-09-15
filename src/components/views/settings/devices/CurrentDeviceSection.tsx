@@ -31,7 +31,7 @@ interface Props {
     isSigningOut: boolean;
     onVerifyCurrentDevice: () => void;
     onSignOutCurrentDevice: () => void;
-    onSaveDeviceName: (deviceName: string) => Promise<void>;
+    saveDeviceName: (deviceName: string) => Promise<void>;
 }
 
 const CurrentDeviceSection: React.FC<Props> = ({
@@ -40,7 +40,7 @@ const CurrentDeviceSection: React.FC<Props> = ({
     isSigningOut,
     onVerifyCurrentDevice,
     onSignOutCurrentDevice,
-    onSaveDeviceName,
+    saveDeviceName,
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -64,9 +64,9 @@ const CurrentDeviceSection: React.FC<Props> = ({
                 <DeviceDetails
                     device={device}
                     isSigningOut={isSigningOut}
-                    isLoading={isLoading}
+                    onVerifyDevice={onVerifyCurrentDevice}
                     onSignOutDevice={onSignOutCurrentDevice}
-                    onSaveDeviceName={onSaveDeviceName}
+                    saveDeviceName={saveDeviceName}
                 />
             }
             <br />

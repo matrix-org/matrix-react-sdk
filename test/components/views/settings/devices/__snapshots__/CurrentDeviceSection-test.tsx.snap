@@ -11,6 +11,7 @@ HTMLCollection [
     >
       <div
         class="mx_DeviceDetailHeading"
+        data-testid="device-detail-heading"
       >
         <h3
           class="mx_Heading_h3"
@@ -50,6 +51,18 @@ HTMLCollection [
           >
             Verify or sign out from this session for best security and reliability.
           </p>
+          <div
+            class="mx_DeviceSecurityCard_actions"
+          >
+            <div
+              class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+              data-testid="verification-status-button-alices_device"
+              role="button"
+              tabindex="0"
+            >
+              Verify session
+            </div>
+          </div>
         </div>
       </div>
     </section>
