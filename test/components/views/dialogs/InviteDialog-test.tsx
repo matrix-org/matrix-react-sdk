@@ -59,7 +59,46 @@ describe("InviteDialog", () => {
         jest.spyOn(MatrixClientPeg, 'get').mockRestore();
     });
 
-    it("should not suggest invalid MXIDs", async () => {
+    it("should label with space name", () => {
+        mockClient.getRoom(roomId).isSpaceRoom = jest.fn().mockReturnValue(true);
+        mockClient.getRoom(roomId).name = "Space";
+        render((
+            <InviteDialog
+                kind={KIND_INVITE}
+                roomId={roomId}
+                onFinished={jest.fn()}
+            />
+        ));
+
+        expect(screen.queryByText("Invite to Space")).toBeTruthy();
+    });
+
+    it("should label with room name", () => {
+        render((
+            <InviteDialog
+                kind={KIND_INVITE}
+                roomId={roomId}
+                onFinished={jest.fn()}
+            />
+        ));
+
+        expect(screen.queryByText("Invite to Room")).toBeTruthy();
+    });
+
+    it("should suggest valid MXIDs even if unknown", () => {
+        render((
+            <InviteDialog
+                kind={KIND_INVITE}
+                roomId={roomId}
+                onFinished={jest.fn()}
+                initialText="@localpart:server.tld"
+            />
+        ));
+
+        expect(screen.queryByText("@localpart:server.tld")).toBeFalsy();
+    });
+
+    it("should not suggest invalid MXIDs", () => {
         render((
             <InviteDialog
                 kind={KIND_INVITE}
