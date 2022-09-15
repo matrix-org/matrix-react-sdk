@@ -21,7 +21,7 @@ import { Action } from '../../src/dispatcher/actions';
 import { flushPromises, getMockClientWithEventEmitter } from '../test-utils';
 import SettingsStore from '../../src/settings/SettingsStore';
 import { SlidingSyncManager } from '../../src/SlidingSyncManager';
-import defaultDispatcher from '../../src/dispatcher/dispatcher';
+import { TimelineRenderingType } from '../../src/contexts/RoomContext';
 
 jest.mock('../../src/utils/DMRoomMap', () => {
     const mock = {
@@ -85,6 +85,21 @@ describe('RoomViewStore', function() {
         await flushPromises();
 
         expect(mockClient.joinRoom).toHaveBeenCalledWith(alias, { viaServers: [] });
+    });
+
+    it('remembers the event being replied to when swapping rooms', async () => {
+        dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
+        await flushPromises();
+        const replyToEvent = {
+            getRoomId: () => '!randomcharacters:aser.ver',
+        };
+        dispatch({ action: 'reply_to_event', event: replyToEvent, context: TimelineRenderingType.Room });
+        await flushPromises();
+        expect(RoomViewStore.instance.getQuotingEvent()).toEqual(replyToEvent);
+        // view the same room, should remember the event.
+        dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
+        await flushPromises();
+        expect(RoomViewStore.instance.getQuotingEvent()).toEqual(replyToEvent);
     });
 
     describe('Sliding Sync', function() {
