@@ -34,10 +34,10 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({
 }) => {
     const [deviceName, setDeviceName] = useState(device.display_name || '');
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        setDeviceName(device.display_name);
+        setDeviceName(device.display_name || '');
     }, [device.display_name]);
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
