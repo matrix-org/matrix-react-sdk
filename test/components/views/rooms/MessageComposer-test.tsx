@@ -37,6 +37,8 @@ import dis from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
 import { SendMessageComposer } from "../../../../src/components/views/rooms/SendMessageComposer";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
+import { addTextToComposer } from "../../../test-utils/composer";
+import UIStore, { UI_EVENTS } from "../../../../src/stores/UIStore";
 
 describe("MessageComposer", () => {
     stubClient();
@@ -61,7 +63,7 @@ describe("MessageComposer", () => {
         });
 
         it("Does not render a SendMessageComposer or MessageComposerButtons when room is tombstoned", () => {
-            const wrapper = wrapAndRender({ room }, true, mkEvent({
+            const wrapper = wrapAndRender({ room }, true, false, mkEvent({
                 event: true,
                 type: "m.room.tombstone",
                 room: room.roomId,
@@ -165,6 +167,91 @@ describe("MessageComposer", () => {
             });
         });
 
+        it("should not render the send button", () => {
+            const wrapper = wrapAndRender({ room });
+            expect(wrapper.find("SendButton")).toHaveLength(0);
+        });
+
+        describe("when a message has been entered", () => {
+            let wrapper: ReactWrapper;
+
+            beforeEach(() => {
+                wrapper = wrapAndRender({ room });
+                addTextToComposer(wrapper, "Hello");
+                wrapper.update();
+            });
+
+            it("should render the send button", () => {
+                expect(wrapper.find("SendButton")).toHaveLength(1);
+            });
+        });
+
+        describe("UIStore interactions", () => {
+            let wrapper: ReactWrapper;
+            let resizeCallback: Function;
+
+            beforeEach(() => {
+                jest.spyOn(UIStore.instance, "on").mockImplementation((_event: string, listener: Function): any => {
+                    resizeCallback = listener;
+                });
+            });
+
+            describe("when a non-resize event occurred in UIStore", () => {
+                let stateBefore: any;
+
+                beforeEach(() => {
+                    wrapper = wrapAndRender({ room });
+                    stateBefore = { ...wrapper.instance().state };
+                    resizeCallback("test", {});
+                    wrapper.update();
+                });
+
+                it("should not change the state", () => {
+                    expect(wrapper.instance().state).toEqual(stateBefore);
+                });
+            });
+
+            describe("when a resize to narrow event occurred in UIStore", () => {
+                beforeEach(() => {
+                    wrapper = wrapAndRender({ room }, true, true);
+                    wrapper.setState({
+                        isMenuOpen: true,
+                        isStickerPickerOpen: true,
+                    });
+                    resizeCallback(UI_EVENTS.Resize, {});
+                    wrapper.update();
+                });
+
+                it("isMenuOpen should be true", () => {
+                    expect(wrapper.state("isMenuOpen")).toBe(true);
+                });
+
+                it("isStickerPickerOpen should be false", () => {
+                    expect(wrapper.state("isStickerPickerOpen")).toBe(false);
+                });
+            });
+
+            describe("when a resize to non-narrow event occurred in UIStore", () => {
+                beforeEach(() => {
+                    wrapper = wrapAndRender({ room }, true, false);
+                    wrapper.setState({
+                        isMenuOpen: true,
+                        isStickerPickerOpen: true,
+                    });
+                    resizeCallback(UI_EVENTS.Resize, {});
+                    wrapper.update();
+                });
+
+                it("isMenuOpen should be false", () => {
+                    expect(wrapper.state("isMenuOpen")).toBe(false);
+                });
+
+                it("isStickerPickerOpen should be false", () => {
+                    expect(wrapper.state("isStickerPickerOpen")).toBe(false);
+                });
+            });
+        });
+
         describe("when not replying to an event", () => {
             it("should pass the expected placeholder to SendMessageComposer", () => {
                 const wrapper = wrapAndRender({ room });
@@ -256,6 +343,7 @@ describe("MessageComposer", () => {
 function wrapAndRender(
     props: Partial<React.ComponentProps<typeof MessageComposer>> = {},
     canSendMessages = true,
+    narrow = false,
     tombstone?: MatrixEvent,
 ): ReactWrapper {
     const mockClient = MatrixClientPeg.get();
@@ -270,7 +358,10 @@ function wrapAndRender(
     };
 
     const roomState = {
-        room, canSendMessages, tombstone,
+        room,
+        canSendMessages,
+        tombstone,
+        narrow,
     } as unknown as IRoomState;
 
     const defaultProps = {
