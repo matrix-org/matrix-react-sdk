@@ -3564,5 +3564,7 @@
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s atau %(emojiCompare)s",
     "Sliding Sync mode (under active development, cannot be disabled)": "Mode Penyinkronan Bergeser (dalam pengembangan aktif, tidak dapat dinonaktifkan)",
     "You need to be able to kick users to do that.": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu.",
-    "Sign out of this session": "Keluarkan sesi ini"
+    "Sign out of this session": "Keluarkan sesi ini",
+    "Please be aware that session names are also visible to people you communicate with": "Ketahui bahwa nama sesi juga terlihat kepada siapa pun yang Anda berkomunikasi",
+    "Rename session": "Ubah nama sesi"
 }
