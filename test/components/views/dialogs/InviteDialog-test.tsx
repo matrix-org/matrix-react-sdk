@@ -15,13 +15,16 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import InviteDialog from "../../../../src/components/views/dialogs/InviteDialog";
 import { KIND_INVITE } from "../../../../src/components/views/dialogs/InviteDialogTypes";
 import { getMockClientWithEventEmitter, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import SdkConfig from "../../../../src/SdkConfig";
+import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
+import { IConfigOptions } from "../../../../src/IConfigOptions";
 
 describe("InviteDialog", () => {
     const roomId = "!111111111111111111:example.org";
@@ -42,6 +45,7 @@ describe("InviteDialog", () => {
     });
 
     beforeEach(() => {
+        SdkConfig.put({ validated_server_config: {} as ValidatedServerConfig } as IConfigOptions);
         DMRoomMap.makeShared();
         jest.clearAllMocks();
         mockClient.getUserId.mockReturnValue("@bob:example.org");
@@ -61,11 +65,9 @@ describe("InviteDialog", () => {
                 kind={KIND_INVITE}
                 roomId={roomId}
                 onFinished={jest.fn()}
+                initialText="@localpart:server:tld"
             />
         ));
-
-        const input = screen.getByTestId("invite-dialog-input");
-        fireEvent.change(input, { target: { value: "@localpart:server:tld" } });
 
         expect(screen.queryByText("@localpart:server:tld")).toBeFalsy();
     });
