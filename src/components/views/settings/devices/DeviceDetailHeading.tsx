@@ -132,7 +132,7 @@ export const DeviceDetailHeading: React.FC<Props> = ({
             stopEditing={() => setIsEditing(false)}
         />
         : <div className='mx_DeviceDetailHeading' data-testid='device-detail-heading'>
-            <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
+            <Heading size='h3'>{ device.display_name || device.device_id }</Heading>
             <AccessibleButton
                 kind='link_inline'
                 onClick={() => setIsEditing(true)}
