@@ -20,6 +20,8 @@ import { act } from 'react-dom/test-utils';
 import { DeviceInfo } from 'matrix-js-sdk/src/crypto/deviceinfo';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { DeviceTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import { VerificationRequest } from 'matrix-js-sdk/src/crypto/verification/request/VerificationRequest';
+import { sleep } from 'matrix-js-sdk/src/utils';
 
 import SessionManagerTab from '../../../../../../src/components/views/settings/tabs/user/SessionManagerTab';
 import MatrixClientContext from '../../../../../../src/contexts/MatrixClientContext';
@@ -29,8 +31,8 @@ import {
     mockClientMethodsUser,
 } from '../../../../../test-utils';
 import Modal from '../../../../../../src/Modal';
-
-jest.useFakeTimers();
+import LogoutDialog from '../../../../../../src/components/views/dialogs/LogoutDialog';
+import { DeviceWithVerification } from '../../../../../../src/components/views/settings/devices/types';
 
 describe('<SessionManagerTab />', () => {
     const aliceId = '@alice:server.org';
@@ -52,12 +54,16 @@ describe('<SessionManagerTab />', () => {
     const mockCrossSigningInfo = {
         checkDeviceTrust: jest.fn(),
     };
+    const mockVerificationRequest = { cancel: jest.fn(), on: jest.fn() } as unknown as VerificationRequest;
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(aliceId),
         getStoredCrossSigningForUser: jest.fn().mockReturnValue(mockCrossSigningInfo),
         getDevices: jest.fn(),
         getStoredDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue(deviceId),
+        requestVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
+        deleteMultipleDevices: jest.fn(),
+        generateClientSecret: jest.fn(),
     });
 
     const defaultProps = {};
@@ -67,6 +73,16 @@ describe('<SessionManagerTab />', () => {
                 <SessionManagerTab {...defaultProps} {...props} />
             </MatrixClientContext.Provider>
         );
+
+    const toggleDeviceDetails = (
+        getByTestId: ReturnType<typeof render>['getByTestId'],
+        deviceId: DeviceWithVerification['device_id'],
+    ) => {
+        // open device detail
+        const tile = getByTestId(`device-tile-${deviceId}`);
+        const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
+        fireEvent.click(toggle);
+    };
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -79,6 +95,10 @@ describe('<SessionManagerTab />', () => {
         mockCrossSigningInfo.checkDeviceTrust
             .mockReset()
             .mockReturnValue(new DeviceTrustLevel(false, false, false, false));
+
+        mockClient.getDevices
+            .mockReset()
+            .mockResolvedValue({ devices: [alicesMobileDevice] });
     });
 
     it('renders spinner while devices load', () => {
@@ -253,29 +273,292 @@ describe('<SessionManagerTab />', () => {
                 await flushPromisesWithFakeTimers();
             });
 
-            const tile1 = getByTestId(`device-tile-${alicesOlderMobileDevice.device_id}`);
-            const toggle1 = tile1.querySelector('[aria-label="Toggle device details"]') as Element;
-            fireEvent.click(toggle1);
+            toggleDeviceDetails(getByTestId, alicesOlderMobileDevice.device_id);
 
             // device details are expanded
             expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
 
-            const tile2 = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
-            const toggle2 = tile2.querySelector('[aria-label="Toggle device details"]') as Element;
-            fireEvent.click(toggle2);
+            toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
 
             // both device details are expanded
             expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
             expect(getByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeTruthy();
 
-            const tile3 = getByTestId(`device-tile-${alicesMobileDevice.device_id}`);
-            const toggle3 = tile3.querySelector('[aria-label="Toggle device details"]') as Element;
-            fireEvent.click(toggle3);
+            toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
 
             // alicesMobileDevice was toggled off
             expect(queryByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeFalsy();
             // alicesOlderMobileDevice stayed open
             expect(getByTestId(`device-detail-${alicesOlderMobileDevice.device_id}`)).toBeTruthy();
+        });
+    });
+
+    describe('Device verification', () => {
+        it('does not render device verification cta when current session is not verified', async () => {
+            mockClient.getDevices.mockResolvedValue({
+                devices: [alicesDevice, alicesOlderMobileDevice, alicesMobileDevice],
+            });
+            const { getByTestId, queryByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            toggleDeviceDetails(getByTestId, alicesOlderMobileDevice.device_id);
+
+            // verify device button is not rendered
+            expect(queryByTestId(`verification-status-button-${alicesOlderMobileDevice.device_id}`)).toBeFalsy();
+        });
+
+        it('renders device verification cta on other sessions when current session is verified', async () => {
+            const modalSpy = jest.spyOn(Modal, 'createDialog');
+
+            // make the current device verified
+            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+            mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
+            mockCrossSigningInfo.checkDeviceTrust
+                .mockImplementation((_userId, { deviceId }) => {
+                    console.log('hhh', deviceId);
+                    if (deviceId === alicesDevice.device_id) {
+                        return new DeviceTrustLevel(true, true, false, false);
+                    }
+                    throw new Error('everything else unverified');
+                });
+
+            const { getByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+            // click verify button from current session section
+            fireEvent.click(getByTestId(`verification-status-button-${alicesMobileDevice.device_id}`));
+
+            expect(mockClient.requestVerification).toHaveBeenCalledWith(aliceId, [alicesMobileDevice.device_id]);
+            expect(modalSpy).toHaveBeenCalled();
+        });
+
+        it('refreshes devices after verifying other device', async () => {
+            const modalSpy = jest.spyOn(Modal, 'createDialog');
+
+            // make the current device verified
+            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+            mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
+            mockCrossSigningInfo.checkDeviceTrust
+                .mockImplementation((_userId, { deviceId }) => {
+                    console.log('hhh', deviceId);
+                    if (deviceId === alicesDevice.device_id) {
+                        return new DeviceTrustLevel(true, true, false, false);
+                    }
+                    throw new Error('everything else unverified');
+                });
+
+            const { getByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+            // reset mock counter before triggering verification
+            mockClient.getDevices.mockClear();
+
+            // click verify button from current session section
+            fireEvent.click(getByTestId(`verification-status-button-${alicesMobileDevice.device_id}`));
+
+            const { onFinished: modalOnFinished } = modalSpy.mock.calls[0][1] as any;
+            // simulate modal completing process
+            await modalOnFinished();
+
+            // cancelled in case it was a failure exit from modal
+            expect(mockVerificationRequest.cancel).toHaveBeenCalled();
+            // devices refreshed
+            expect(mockClient.getDevices).toHaveBeenCalled();
+        });
+    });
+
+    describe('Sign out', () => {
+        it('Signs out of current device', async () => {
+            const modalSpy = jest.spyOn(Modal, 'createDialog');
+
+            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice] });
+            const { getByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+
+            const signOutButton = getByTestId('device-detail-sign-out-cta');
+            expect(signOutButton).toMatchSnapshot();
+            fireEvent.click(signOutButton);
+
+            // logout dialog opened
+            expect(modalSpy).toHaveBeenCalledWith(LogoutDialog, {}, undefined, false, true);
+        });
+
+        describe('other devices', () => {
+            const interactiveAuthError = { httpStatus: 401, data: { flows: [{ stages: ["m.login.password"] }] } };
+
+            beforeEach(() => {
+                mockClient.deleteMultipleDevices.mockReset();
+            });
+
+            it('deletes a device when interactive auth is not required', async () => {
+                mockClient.deleteMultipleDevices.mockResolvedValue({});
+                mockClient.getDevices
+                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice] })
+                    // pretend it was really deleted on refresh
+                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesOlderMobileDevice] });
+
+                const { getByTestId } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromisesWithFakeTimers();
+                });
+
+                toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+                const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
+                const signOutButton = deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element;
+                fireEvent.click(signOutButton);
+
+                // sign out button is disabled with spinner
+                expect((deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element).getAttribute('aria-disabled')).toEqual("true");
+                // delete called
+                expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
+                    [alicesMobileDevice.device_id], undefined,
+                );
+
+                await flushPromisesWithFakeTimers();
+
+                // devices refreshed
+                expect(mockClient.getDevices).toHaveBeenCalled();
+            });
+
+            it('deletes a device when interactive auth is required', async () => {
+                mockClient.deleteMultipleDevices
+                    // require auth
+                    .mockRejectedValueOnce(interactiveAuthError)
+                    // then succeed
+                    .mockResolvedValueOnce({});
+
+                mockClient.getDevices
+                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice] })
+                    // pretend it was really deleted on refresh
+                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesOlderMobileDevice] });
+
+                const { getByTestId, getByLabelText } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromisesWithFakeTimers();
+                });
+
+                // reset mock count after initial load
+                mockClient.getDevices.mockClear();
+
+                toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+                const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
+                const signOutButton = deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element;
+                fireEvent.click(signOutButton);
+
+                await flushPromisesWithFakeTimers();
+                // modal rendering has some weird sleeps
+                await sleep(100);
+
+                expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
+                    [alicesMobileDevice.device_id], undefined,
+                );
+
+                const modal = document.getElementsByClassName('mx_Dialog');
+                expect(modal.length).toBeTruthy();
+
+                // fill password and submit for interactive auth
+                act(() => {
+                    fireEvent.change(getByLabelText('Password'), { target: { value: 'topsecret' } });
+                    fireEvent.submit(getByLabelText('Password'));
+                });
+
+                await flushPromisesWithFakeTimers();
+
+                // called again with auth
+                expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith([alicesMobileDevice.device_id],
+                    { identifier: {
+                        type: "m.id.user", user: aliceId,
+                    }, password: "", type: "m.login.password", user: aliceId,
+                    });
+                // devices refreshed
+                expect(mockClient.getDevices).toHaveBeenCalled();
+            });
+
+            it('clears loading state when device deletion is cancelled during interactive auth', async () => {
+                mockClient.deleteMultipleDevices
+                    // require auth
+                    .mockRejectedValueOnce(interactiveAuthError)
+                    // then succeed
+                    .mockResolvedValueOnce({});
+
+                mockClient.getDevices
+                    .mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice] });
+
+                const { getByTestId, getByLabelText } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromisesWithFakeTimers();
+                });
+
+                toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+                const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
+                const signOutButton = deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element;
+                fireEvent.click(signOutButton);
+
+                // button is loading
+                expect((deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element).getAttribute('aria-disabled')).toEqual("true");
+
+                await flushPromisesWithFakeTimers();
+                // modal rendering has some weird sleeps
+                await sleep(100);
+
+                expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
+                    [alicesMobileDevice.device_id], undefined,
+                );
+
+                const modal = document.getElementsByClassName('mx_Dialog');
+                expect(modal.length).toBeTruthy();
+
+                // cancel iau by closing modal
+                act(() => {
+                    fireEvent.click(getByLabelText('Close dialog'));
+                });
+
+                await flushPromisesWithFakeTimers();
+
+                // not called again
+                expect(mockClient.deleteMultipleDevices).toHaveBeenCalledTimes(1);
+                // devices not refreshed (not called since initial fetch)
+                expect(mockClient.getDevices).toHaveBeenCalledTimes(1);
+
+                // loading state cleared
+                expect((deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element).getAttribute('aria-disabled')).toEqual(null);
+            });
         });
     });
 });
