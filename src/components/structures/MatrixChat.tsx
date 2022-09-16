@@ -137,6 +137,8 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import { Stores, StoresContext } from '../../Stores';
+import { RoomViewStore } from '../../stores/RoomViewStore';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -239,9 +241,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private readonly dispatcherRef: string;
     private readonly themeWatcher: ThemeWatcher;
     private readonly fontWatcher: FontWatcher;
+    private readonly stores: Stores;
 
     constructor(props: IProps) {
         super(props);
+        this.stores = new Stores(
+            RoomViewStore.instance,
+        );
 
         this.state = {
             view: Views.LOADING,
@@ -756,6 +762,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 Modal.createDialog(DialPadModal, {}, "mx_Dialog_dialPadWrapper");
                 break;
             case Action.OnLoggedIn:
+                this.stores.client = MatrixClientPeg.get();
                 if (
                     // Skip this handling for token login as that always calls onLoggedIn itself
                     !this.tokenLogin &&
@@ -2097,7 +2104,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         return <ErrorBoundary>
-            { view }
+            <StoresContext.Provider value={this.stores}>
+                { view }
+            </StoresContext.Provider>
         </ErrorBoundary>;
     }
 }
