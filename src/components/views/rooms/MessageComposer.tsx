@@ -215,7 +215,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private waitForOwnMember() {
-        // if we have the member already, do that
+        // If we have the member already, do that
         const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
