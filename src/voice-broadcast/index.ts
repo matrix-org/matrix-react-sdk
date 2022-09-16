@@ -14,4 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export const VOICE_BROADCAST_INFO_EVENT_TYPE = "io.element.voice_broadcast_info";
+export const VoiceBroadcastInfoEventType = "io.element.voice_broadcast_info";

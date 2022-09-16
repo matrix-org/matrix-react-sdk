@@ -119,7 +119,7 @@ import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 import { LargeLoader } from './LargeLoader';
-import { VOICE_BROADCAST_INFO_EVENT_TYPE } from '../../voice-broadcast';
+import { VoiceBroadcastInfoEventType } from '../../voice-broadcast';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -1348,7 +1348,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
             const canSendMessages = room.maySendMessage();
             const canSelfRedact = room.currentState.maySendEvent(EventType.RoomRedaction, me);
-            const canSendVoiceBroadcasts = room.currentState.maySendEvent(VOICE_BROADCAST_INFO_EVENT_TYPE, me);
+            const canSendVoiceBroadcasts = room.currentState.maySendEvent(VoiceBroadcastInfoEventType, me);
 
             this.setState({
                 canReact,

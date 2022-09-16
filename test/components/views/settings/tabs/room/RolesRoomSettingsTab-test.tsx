@@ -21,7 +21,7 @@ import { EventType, MatrixClient } from "matrix-js-sdk/src/matrix";
 import RolesRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/RolesRoomSettingsTab";
 import { mkStubRoom, stubClient } from "../../../../../test-utils";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
-import { VOICE_BROADCAST_INFO_EVENT_TYPE } from "../../../../../../src/voice-broadcast";
+import { VoiceBroadcastInfoEventType } from "../../../../../../src/voice-broadcast";
 
 describe("RolesRoomSettingsTab", () => {
     const roomId = "!room:example.com";
@@ -60,7 +60,7 @@ describe("RolesRoomSettingsTab", () => {
                 EventType.RoomPowerLevels,
                 {
                     events: {
-                        [VOICE_BROADCAST_INFO_EVENT_TYPE]: 0,
+                        [VoiceBroadcastInfoEventType]: 0,
                     },
                 },
             );
