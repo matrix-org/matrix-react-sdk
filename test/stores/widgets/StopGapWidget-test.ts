@@ -16,11 +16,12 @@ limitations under the License.
 
 import { mocked, MockedObject } from "jest-mock";
 import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
-import { ClientWidgetApi } from "matrix-widget-api";
+import { ClientWidgetApi, WidgetApiFromWidgetAction } from "matrix-widget-api";
 
 import { stubClient, mkRoom, mkEvent } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { StopGapWidget } from "../../../src/stores/widgets/StopGapWidget";
+import { ElementWidgetActions } from "../../../src/stores/widgets/ElementWidgetActions";
 
 jest.mock("matrix-widget-api/lib/ClientWidgetApi");
 
@@ -66,5 +67,43 @@ describe("StopGapWidget", () => {
         client.emit(ClientEvent.ToDeviceEvent, event);
         await Promise.resolve(); // flush promises
         expect(messaging.feedToDevice).toHaveBeenCalledWith(event.getEffectiveEvent(), false);
+    });
+
+    describe("startMessaging", () => {
+        it("should register listeners", () => {
+            expect(messaging.on).toHaveBeenCalledWith(
+                `action:${ElementWidgetActions.ViewRoom}`,
+                expect.anything(),
+            );
+            expect(messaging.on).toHaveBeenCalledWith(
+                `action:${WidgetApiFromWidgetAction.SendSticker}`,
+                expect.anything(),
+            );
+            expect(messaging.on).toHaveBeenCalledWith(
+                `action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
+                expect.anything(),
+            );
+        });
+    });
+
+    describe("stopMessaging", () => {
+        beforeEach(() => {
+            widget.stopMessaging();
+        });
+
+        it("should de-register listeners", () => {
+            expect(messaging.off).toHaveBeenCalledWith(
+                `action:${ElementWidgetActions.ViewRoom}`,
+                expect.anything(),
+            );
+            expect(messaging.off).toHaveBeenCalledWith(
+                `action:${WidgetApiFromWidgetAction.SendSticker}`,
+                expect.anything(),
+            );
+            expect(messaging.off).toHaveBeenCalledWith(
+                `action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
+                expect.anything(),
+            );
+        });
     });
 });

@@ -275,34 +275,10 @@ export class StopGapWidget extends EventEmitter {
         WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging);
 
         // Always attach a handler for ViewRoom, but permission check it internally
-        this.messaging.on(`action:${ElementWidgetActions.ViewRoom}`, (ev: CustomEvent<IViewRoomApiRequest>) => {
-            ev.preventDefault(); // stop the widget API from auto-rejecting this
-
-            // Check up front if this is even a valid request
-            const targetRoomId = (ev.detail.data || {}).room_id;
-            if (!targetRoomId) {
-                return this.messaging.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
-                    error: { message: "Room ID not supplied." },
-                });
-            }
-
-            // Check the widget's permission
-            if (!this.messaging.hasCapability(ElementWidgetCapabilities.CanChangeViewedRoom)) {
-                return this.messaging.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
-                    error: { message: "This widget does not have permission for this action (denied)." },
-                });
-            }
-
-            // at this point we can change rooms, so do that
-            defaultDispatcher.dispatch<ViewRoomPayload>({
-                action: Action.ViewRoom,
-                room_id: targetRoomId,
-                metricsTrigger: "Widget",
-            });
-
-            // acknowledge so the widget doesn't freak out
-            this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
-        });
+        this.messaging.on(
+            `action:${ElementWidgetActions.ViewRoom}`,
+            this.onElementWidgetActionsViewRoom,
+        );
 
         // Populate the map of "read up to" events for this widget with the current event in every room.
         // This is a bit inefficient, but should be okay. We do this for all rooms in case the widget
@@ -320,35 +296,16 @@ export class StopGapWidget extends EventEmitter {
         this.client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         this.client.on(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
 
-        this.messaging.on(`action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
-            (ev: CustomEvent<IStickyActionRequest>) => {
-                if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
-                    ActiveWidgetStore.instance.setWidgetPersistence(
-                        this.mockWidget.id, this.roomId, ev.detail.data.value,
-                    );
-                    ev.preventDefault();
-                    this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
-                }
-            },
+        this.messaging.on(
+            `action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
+            this.onWidgetApiFromWidgetActionUpdateAlwaysOnScreen,
         );
 
         // TODO: Replace this event listener with appropriate driver functionality once the API
         // establishes a sane way to send events back and forth.
-        this.messaging.on(`action:${WidgetApiFromWidgetAction.SendSticker}`,
-            (ev: CustomEvent<IStickerActionRequest>) => {
-                if (this.messaging.hasCapability(MatrixCapabilities.StickerSending)) {
-                    // Acknowledge first
-                    ev.preventDefault();
-                    this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
-
-                    // Send the sticker
-                    defaultDispatcher.dispatch({
-                        action: 'm.sticker',
-                        data: ev.detail.data,
-                        widgetId: this.mockWidget.id,
-                    });
-                }
-            },
+        this.messaging.on(
+            `action:${WidgetApiFromWidgetAction.SendSticker}`,
+            this.onWidgetApiFromWidgetActionSendSticker,
         );
 
         if (WidgetType.STICKERPICKER.matches(this.mockWidget.type)) {
@@ -395,6 +352,60 @@ export class StopGapWidget extends EventEmitter {
         }
     }
 
+    private onWidgetApiFromWidgetActionUpdateAlwaysOnScreen = (ev: CustomEvent<IStickyActionRequest>) => {
+        if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
+            ActiveWidgetStore.instance.setWidgetPersistence(
+                this.mockWidget.id, this.roomId, ev.detail.data.value,
+            );
+            ev.preventDefault();
+            this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
+        }
+    };
+
+    private onWidgetApiFromWidgetActionSendSticker = (ev: CustomEvent<IStickerActionRequest>) => {
+        if (this.messaging.hasCapability(MatrixCapabilities.StickerSending)) {
+            // Acknowledge first
+            ev.preventDefault();
+            this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
+
+            // Send the sticker
+            defaultDispatcher.dispatch({
+                action: 'm.sticker',
+                data: ev.detail.data,
+                widgetId: this.mockWidget.id,
+            });
+        }
+    };
+
+    private onElementWidgetActionsViewRoom = (ev: CustomEvent<IViewRoomApiRequest>) => {
+        ev.preventDefault(); // stop the widget API from auto-rejecting this
+
+        // Check up front if this is even a valid request
+        const targetRoomId = (ev.detail.data || {}).room_id;
+        if (!targetRoomId) {
+            return this.messaging.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                error: { message: "Room ID not supplied." },
+            });
+        }
+
+        // Check the widget's permission
+        if (!this.messaging.hasCapability(ElementWidgetCapabilities.CanChangeViewedRoom)) {
+            return this.messaging.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                error: { message: "This widget does not have permission for this action (denied)." },
+            });
+        }
+
+        // at this point we can change rooms, so do that
+        defaultDispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: targetRoomId,
+            metricsTrigger: "Widget",
+        });
+
+        // acknowledge so the widget doesn't freak out
+        this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
+    };
+
     public async prepare(): Promise<void> {
         // Ensure the variables are ready for us to be rendered before continuing
         await (WidgetVariableCustomisations?.isReady?.() ?? Promise.resolve());
@@ -431,7 +442,20 @@ export class StopGapWidget extends EventEmitter {
             return;
         }
         if (!this.started) return;
+
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget, this.roomId);
+        this.messaging.off(
+            `action:${ElementWidgetActions.ViewRoom}`,
+            this.onElementWidgetActionsViewRoom,
+        );
+        this.messaging.off(
+            `action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
+            this.onWidgetApiFromWidgetActionUpdateAlwaysOnScreen,
+        );
+        this.messaging.off(
+            `action:${WidgetApiFromWidgetAction.SendSticker}`,
+            this.onWidgetApiFromWidgetActionSendSticker,
+        );
         this.messaging = null;
 
         this.client.off(ClientEvent.Event, this.onEvent);
