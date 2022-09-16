@@ -3566,5 +3566,7 @@
     "You need to be able to kick users to do that.": "Для цього вам потрібен дозвіл вилучати користувачів.",
     "Sign out of this session": "Вийти з цього сеансу",
     "Please be aware that session names are also visible to people you communicate with": "Зауважте, що назви сеансів також видно людям, з якими ви спілкуєтесь",
-    "Rename session": "Перейменувати сеанс"
+    "Rename session": "Перейменувати сеанс",
+    "Voice broadcast": "Голосове мовлення",
+    "Voice broadcast (under active development)": "Голосове мовлення (в активній розробці)"
 }
