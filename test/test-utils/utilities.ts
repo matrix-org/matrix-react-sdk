@@ -78,11 +78,10 @@ export function untilDispatch(
  * Waits for a certain event to be emitted.
  * @param emitter The EventEmitter to listen on.
  * @param eventName The event string to wait for.
- * @param check the function which is invoked when the event fires. If this returns true, stops waiting.
+ * @param check Optional function which is invoked when the event fires. If this returns true, stops waiting.
  * @param timeout The max time to wait before giving up and stop waiting. If 0, no timeout.
  * @returns A promise which resolves when the callback returns true or when the event is emitted if
- * no callback is provided. Resolves with the payload that made it stop waiting.
- * Rejects when the timeout is reached.
+ * no callback is provided. Rejects when the timeout is reached.
  */
 export function untilEmission(
     emitter: EventEmitter, eventName: string, check: ((...args: any[]) => boolean)=undefined, timeout=1000,
