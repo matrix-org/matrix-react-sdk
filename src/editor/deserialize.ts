@@ -24,11 +24,14 @@ import { Part, PartCreator, Type } from "./parts";
 import SdkConfig from "../SdkConfig";
 import { textToHtmlRainbow } from "../utils/colour";
 import { stripPlainReply } from "../utils/Reply";
+import Markdown from "../Markdown";
 
 const LIST_TYPES = ["UL", "OL", "LI"];
 
 // Escapes all markup in the given text
 function escape(text: string): string {
+    const parser = new Markdown(text);
+    if (parser.isPlainText()) return text;
     return text.replace(/[\\*_[\]`<]|^>/g, match => `\\${match}`);
 }
 
