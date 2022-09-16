@@ -24,7 +24,6 @@ import { DispatcherAction } from "../../src/dispatcher/actions";
 
 export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise(r => e.once(k, r));
 
-
 /**
  * Waits for a certain payload to be dispatched.
  * @param waitForAction The action string to wait for or the callback which is invoked for every dispatch. If this returns true, stops waiting.
@@ -33,7 +32,10 @@ export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise(
  * @returns A promise which resolves when the callback returns true. Resolves with the payload that made it stop waiting.
  * Rejects when the timeout is reached.
  */
-export function untilDispatch(waitForAction: DispatcherAction | ((payload: ActionPayload) => boolean), dispatcher=defaultDispatcher, timeout=1000): Promise<ActionPayload> {
+export function untilDispatch(
+    waitForAction: DispatcherAction | ((payload: ActionPayload) => boolean), dispatcher=defaultDispatcher, timeout=1000,
+): Promise<ActionPayload> {
+    const callerLine = new Error().stack.toString().split("\n")[2];
     if (typeof waitForAction === "string") {
         const action = waitForAction;
         waitForAction = (payload) => {
@@ -47,15 +49,15 @@ export function untilDispatch(waitForAction: DispatcherAction | ((payload: Actio
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = setTimeout(() => {
-                if(!fulfilled) {
-                    reject(new Error("untilDispatch: timed out"));
+                if (!fulfilled) {
+                    reject(new Error(`untilDispatch: timed out at ${callerLine}`));
                     fulfilled = true;
                 }
             }, timeout);
         }
         // listen for dispatches
         const token = dispatcher.register((p: ActionPayload) => {
-            const finishWaiting = callback(p) ;
+            const finishWaiting = callback(p);
             if (finishWaiting || fulfilled) { // wait until we're told or we timeout
                 // if we haven't timed out, resolve now with the payload.
                 if (!fulfilled) {
@@ -82,7 +84,9 @@ export function untilDispatch(waitForAction: DispatcherAction | ((payload: Actio
  * no callback is provided. Resolves with the payload that made it stop waiting.
  * Rejects when the timeout is reached.
  */
- export function untilEmission(emitter: EventEmitter, eventName: string, check: ((...args: any[]) => boolean)=undefined, timeout=1000): Promise<void> {
+export function untilEmission(
+    emitter: EventEmitter, eventName: string, check: ((...args: any[]) => boolean)=undefined, timeout=1000,
+): Promise<void> {
     const callerLine = new Error().stack.toString().split("\n")[2];
     return new Promise((resolve, reject) => {
         let fulfilled = false;
@@ -90,7 +94,7 @@ export function untilDispatch(waitForAction: DispatcherAction | ((payload: Actio
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = setTimeout(() => {
-                if(!fulfilled) {
+                if (!fulfilled) {
                     reject(new Error(`untilEmission: timed out at ${callerLine}`));
                     fulfilled = true;
                 }
@@ -113,7 +117,7 @@ export function untilDispatch(waitForAction: DispatcherAction | ((payload: Actio
             if (timeoutId) {
                 clearTimeout(timeoutId);
             }
-        }
+        };
         // listen for emissions
         emitter.on(eventName, callback);
     });

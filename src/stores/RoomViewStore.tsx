@@ -89,7 +89,6 @@ const INITIAL_STATE = {
 
 type Listener = (isActive: boolean) => void;
 
-
 /**
  * A class for storing application state for RoomView.
  */
@@ -101,9 +100,6 @@ export class RoomViewStore extends EventEmitter {
 
     private state = INITIAL_STATE; // initialize state
 
-    // Keep these out of state to avoid causing excessive/recursive updates
-    private roomIdActivityListeners: Record<string, Listener[]> = {};
-
     private dis: MatrixDispatcher;
     private dispatchToken: string;
 
@@ -113,27 +109,15 @@ export class RoomViewStore extends EventEmitter {
     }
 
     public addRoomListener(roomId: string, fn: Listener): void {
-        if (!this.roomIdActivityListeners[roomId]) this.roomIdActivityListeners[roomId] = [];
-        this.roomIdActivityListeners[roomId].push(fn);
+        this.on(roomId, fn);
     }
 
     public removeRoomListener(roomId: string, fn: Listener): void {
-        if (this.roomIdActivityListeners[roomId]) {
-            const i = this.roomIdActivityListeners[roomId].indexOf(fn);
-            if (i > -1) {
-                this.roomIdActivityListeners[roomId].splice(i, 1);
-            }
-        } else {
-            logger.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
-        }
+        this.off(roomId, fn);
     }
 
     private emitForRoom(roomId: string, isActive: boolean): void {
-        if (!this.roomIdActivityListeners[roomId]) return;
-
-        for (const fn of this.roomIdActivityListeners[roomId]) {
-            fn.call(null, isActive);
-        }
+        this.emit(roomId, isActive);
     }
 
     private setState(newState: Partial<typeof INITIAL_STATE>): void {
@@ -496,6 +480,11 @@ export class RoomViewStore extends EventEmitter {
         this.state = Object.assign({}, INITIAL_STATE);
     }
 
+    /**
+     * Reset which dispatcher should be used to listen for actions. The old dispatcher will be
+     * unregistered.
+     * @param dis The new dispatcher to use.
+     */
     public resetDispatcher(dis: MatrixDispatcher) {
         if (this.dispatchToken) {
             this.dis.unregister(this.dispatchToken);
