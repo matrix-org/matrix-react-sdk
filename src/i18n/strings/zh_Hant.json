@@ -3564,5 +3564,7 @@
     "Checking...": "正在檢查……",
     "Sliding Sync mode (under active development, cannot be disabled)": "滑動同步模式（積極開發中，無法停用）",
     "You need to be able to kick users to do that.": "您必須可以踢除使用者才能作到這件事。",
-    "Sign out of this session": "登出此工作階段"
+    "Sign out of this session": "登出此工作階段",
+    "Please be aware that session names are also visible to people you communicate with": "請注意，工作階段名稱也對與您與之溝通的對象可見",
+    "Rename session": "重新命名工作階段"
 }
