@@ -85,8 +85,11 @@ limitations under the License.
             margin-right: 0;
         }
 
+        // Make use of the space above the composer buttons too
         .mx_Autocomplete {
-            // Make use of the space above the composer buttons too
+            width: calc(100% + 140px);
+        }
+        &.mx_ThreadView_narrow .mx_Autocomplete {
             width: calc(100% + 108px);
         }
     }
