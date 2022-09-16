@@ -3564,5 +3564,9 @@
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s o %(emojiCompare)s",
     "Sliding Sync mode (under active development, cannot be disabled)": "Modalità sincronizzazione Sliding (in sviluppo attivo, non può essere disattivata)",
     "Sign out of this session": "Disconnetti da questa sessione",
-    "You need to be able to kick users to do that.": "Devi poter cacciare via utenti per completare l'azione."
+    "You need to be able to kick users to do that.": "Devi poter cacciare via utenti per completare l'azione.",
+    "Voice broadcast": "Broadcast voce",
+    "Please be aware that session names are also visible to people you communicate with": "Ricorda che i nomi delle sessioni sono visibili anche alle persone con cui comunichi",
+    "Rename session": "Rinomina sessione",
+    "Voice broadcast (under active development)": "Broadcast voce (in sviluppo attivo)"
 }
