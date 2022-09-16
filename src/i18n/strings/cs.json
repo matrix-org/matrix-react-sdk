@@ -3564,5 +3564,7 @@
     "Your server has native support": "Váš server má nativní podporu",
     "Checking...": "Kontroluje se...",
     "You need to be able to kick users to do that.": "Pro tuto akci musíte mít právo vyhodit uživatele.",
-    "Sign out of this session": "Odhlásit se z této relace"
+    "Sign out of this session": "Odhlásit se z této relace",
+    "Please be aware that session names are also visible to people you communicate with": "Uvědomte si prosím, že jména relací jsou viditelná i pro osoby, se kterými komunikujete",
+    "Rename session": "Přejmenovat relaci"
 }
