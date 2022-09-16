@@ -30,7 +30,7 @@ import ResizeNotifier from "../../../../src/utils/ResizeNotifier";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { LocalRoom } from "../../../../src/models/LocalRoom";
 import MessageComposerButtons from "../../../../src/components/views/rooms/MessageComposerButtons";
-import { FEATURES } from "../../../../src/settings/Settings";
+import { Features } from "../../../../src/settings/Settings";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import dis from "../../../../src/dispatcher/dispatcher";
@@ -83,6 +83,7 @@ describe("MessageComposer", () => {
             let resizeNotifier: ResizeNotifier;
 
             beforeEach(() => {
+                jest.useFakeTimers();
                 resizeNotifier = {
                     notifyTimelineHeightChanged: jest.fn(),
                 } as unknown as ResizeNotifier;
@@ -92,30 +93,26 @@ describe("MessageComposer", () => {
                 });
             });
 
-            it("should call notifyTimelineHeightChanged() for the same context", (done) => {
+            it("should call notifyTimelineHeightChanged() for the same context", () => {
                 dis.dispatch({
                     action: "reply_to_event",
                     context: (wrapper.instance as unknown as MessageComposer).context,
                 });
                 wrapper.update();
 
-                setTimeout(() => {
-                    expect(resizeNotifier.notifyTimelineHeightChanged).toHaveBeenCalled();
-                    done();
-                }, 150); // higher timeout than in MessageComposer::onAction
+                jest.advanceTimersByTime(150);
+                expect(resizeNotifier.notifyTimelineHeightChanged).toHaveBeenCalled();
             });
 
-            it("should not call notifyTimelineHeightChanged() for a different context", (done) => {
+            it("should not call notifyTimelineHeightChanged() for a different context", () => {
                 dis.dispatch({
                     action: "reply_to_event",
                     context: "test",
                 });
                 wrapper.update();
 
-                setTimeout(() => {
-                    expect(resizeNotifier.notifyTimelineHeightChanged).not.toHaveBeenCalled();
-                    done();
-                }, 150); // higher timeout than in MessageComposer::onAction
+                jest.advanceTimersByTime(150);
+                expect(resizeNotifier.notifyTimelineHeightChanged).not.toHaveBeenCalled();
             });
         });
 
@@ -130,7 +127,7 @@ describe("MessageComposer", () => {
                 prop: "showPollsButton",
             },
             {
-                setting: FEATURES.VOICE_BROADCAST,
+                setting: Features.VoiceBroadcast,
                 prop: "showVoiceBroadcastButton",
             },
         ].forEach(({ setting, prop }) => {
@@ -140,10 +137,7 @@ describe("MessageComposer", () => {
 
                     beforeEach(() => {
                         SettingsStore.setValue(setting, null, SettingLevel.DEVICE, value);
-                        wrapper = wrapAndRender({
-                            room,
-                            showVoiceBroadcastButton: true,
-                        });
+                        wrapper = wrapAndRender({ room, showVoiceBroadcastButton: true });
                     });
 
                     it(`should pass the prop ${prop} = ${value}`, () => {
@@ -172,7 +166,7 @@ describe("MessageComposer", () => {
 
         [false, undefined].forEach((value) => {
             it(`should pass showVoiceBroadcastButton = false if the MessageComposer prop is ${value}`, () => {
-                SettingsStore.setValue(FEATURES.VOICE_BROADCAST, null, SettingLevel.DEVICE, true);
+                SettingsStore.setValue(Features.VoiceBroadcast, null, SettingLevel.DEVICE, true);
                 const wrapper = wrapAndRender({
                     room,
                     showVoiceBroadcastButton: value,

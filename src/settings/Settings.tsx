@@ -101,9 +101,9 @@ export enum LabGroup {
     Developer,
 }
 
-export const FEATURES = {
-    VOICE_BROADCAST: "voice_broadcast",
-};
+export enum Features {
+    VoiceBroadcast = "feature_voice_broadcast",
+}
 
 export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Messaging]: _td("Messaging"),
@@ -439,7 +439,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Favourite Messages (under active development)"),
         default: false,
     },
-    [FEATURES.VOICE_BROADCAST]: {
+    [Features.VoiceBroadcast]: {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,

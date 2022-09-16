@@ -52,7 +52,7 @@ import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
-import { FEATURES } from '../../../settings/Settings';
+import { Features } from '../../../settings/Settings';
 
 let instanceCount = 0;
 
@@ -123,14 +123,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
-            showVoiceBroadcastButton: SettingsStore.getValue(FEATURES.VOICE_BROADCAST),
+            showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
-        SettingsStore.monitorSetting(FEATURES.VOICE_BROADCAST, null);
+        SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
     }
 
     private get voiceRecording(): Optional<VoiceRecording> {
@@ -205,7 +205,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         }
                         break;
                     }
-                    case FEATURES.VOICE_BROADCAST: {
+                    case Features.VoiceBroadcast: {
                         if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
                             this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
                         }
@@ -217,7 +217,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private waitForOwnMember() {
-        // if we have the member already, do that
+        // If we have the member already, do that
         const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
