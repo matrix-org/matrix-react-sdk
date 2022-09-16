@@ -97,6 +97,12 @@ describe('editor/deserialize', function() {
             expect(parts.length).toBe(1);
             expect(parts[0]).toStrictEqual({ type: "plain", text: "/me says DON'T SHOUT!" });
         });
+        it("should not escape where redundant", () => {
+            const text = "matrix-react-sdk/res/themes/light/css/_light.scss";
+            const parts = normalize(parseEvent(textMessage(text, "m.text"), createPartCreator()));
+            expect(parts).toHaveLength(1);
+            expect(parts[0]).toStrictEqual({ type: "plain", text });
+        });
     });
     describe('html messages', function() {
         it('inline styling', function() {
