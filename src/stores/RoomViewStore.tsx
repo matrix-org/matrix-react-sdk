@@ -490,7 +490,11 @@ export class RoomViewStore extends EventEmitter {
             this.dis.unregister(this.dispatchToken);
         }
         this.dis = dis;
-        this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
+        if (dis) {
+            // Some tests mock the dispatcher file resulting in an empty defaultDispatcher
+            // so rather than dying here, just ignore it.
+            this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
+        }
     }
 
     // The room ID of the room currently being viewed
