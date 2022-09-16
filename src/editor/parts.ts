@@ -32,6 +32,8 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
 import SettingsStore from "../settings/SettingsStore";
 
+const HAIR_SPACE = String.fromCodePoint(0x200A);
+
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
     text: string;
@@ -214,9 +216,9 @@ abstract class PlainBasePart extends BasePart {
                 return false;
             }
 
-            // or split if the previous character is a space
+            // or split if the previous character is a space or a hair space
             // or if it is a + and this is a :
-            return this._text[offset - 1] !== " " &&
+            return (this._text[offset - 1] !== " " && this._text[offset - 1] !== HAIR_SPACE) &&
                 (this._text[offset - 1] !== "+" || chr !== ":");
         }
         return true;
@@ -631,6 +633,10 @@ export class PartCreator {
         return new UserPillPart(userId, displayName, member);
     }
 
+    private static isRegionalIndicator(c): boolean {
+        return c.length == 2 && 127462 < c.codePointAt() && c.codePointAt() < 127488;
+    }
+
     public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
         const parts = [];
         let plainText = "";
@@ -643,6 +649,9 @@ export class PartCreator {
                     plainText = "";
                 }
                 parts.push(this.emoji(char));
+                if (PartCreator.isRegionalIndicator(text)) {
+                    parts.push(this.plain(HAIR_SPACE));
+                }
             } else {
                 plainText += char;
             }
