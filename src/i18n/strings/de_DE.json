@@ -3555,5 +3555,7 @@
     "Proxy URL (optional)": "Proxy-URL (optional)",
     "Your server lacks native support, you must specify a proxy": "Dein Server unterstützt dies nicht nativ, du musst einen Proxy angeben",
     "Your server lacks native support": "Dein Server unterstützt dies nicht nativ",
-    "To disable you will need to log out and back in, use with caution!": "Zum Deaktivieren musst du dich neu anmelden. Mit Vorsicht verwenden!"
+    "To disable you will need to log out and back in, use with caution!": "Zum Deaktivieren musst du dich neu anmelden. Mit Vorsicht verwenden!",
+    "Show": "Zeigen",
+    "Voice broadcast": "Sprachübertragung"
 }
