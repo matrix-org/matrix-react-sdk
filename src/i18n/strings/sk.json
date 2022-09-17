@@ -3566,5 +3566,8 @@
     "You need to be able to kick users to do that.": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť.",
     "Sign out of this session": "Odhlásiť sa z tejto relácie",
     "Please be aware that session names are also visible to people you communicate with": "Uvedomte si, že názvy relácií sú viditeľné aj pre ľudí, s ktorými komunikujete",
-    "Rename session": "Premenovať reláciu"
+    "Rename session": "Premenovať reláciu",
+    "Element Call video rooms": "Element Call video miestnosti",
+    "Voice broadcast": "Hlasové vysielanie",
+    "Voice broadcast (under active development)": "Hlasové vysielanie (v štádiu aktívneho vývoja)"
 }
