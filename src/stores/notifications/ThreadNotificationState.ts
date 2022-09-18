@@ -15,63 +15,40 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import { NotificationColor } from "./NotificationColor";
-import { IDestroyable } from "../../utils/IDestroyable";
-import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { NotificationState } from "./NotificationState";
+import { TimelineNotificationState } from "./TimelineNotificationState";
 
-export class ThreadNotificationState extends NotificationState implements IDestroyable {
+export class ThreadNotificationState extends TimelineNotificationState {
     protected _symbol = null;
     protected _count = 0;
     protected _color = NotificationColor.None;
 
-    constructor(public readonly thread: Thread) {
-        super();
-        this.thread.on(ThreadEvent.NewReply, this.handleNewThreadReply);
-        this.thread.on(ThreadEvent.ViewThread, this.resetThreadNotification);
-        if (this.thread.replyToEvent) {
-            // Process the current tip event
-            this.handleNewThreadReply(this.thread, this.thread.replyToEvent);
-        }
+    constructor(public readonly room: Room, public readonly threadId: string) {
+        super(room);
     }
 
-    public destroy(): void {
-        super.destroy();
-        this.thread.off(ThreadEvent.NewReply, this.handleNewThreadReply);
-        this.thread.off(ThreadEvent.ViewThread, this.resetThreadNotification);
-    }
-
-    protected handleNewThreadReply = (thread: Thread, event: MatrixEvent) => {
-        const client = MatrixClientPeg.get();
-
-        const myUserId = client.getUserId();
-
-        const isOwn = myUserId === event.getSender();
-        const readReceipt = this.thread.room.getReadReceiptForUserId(myUserId);
-
-        if (!isOwn && !readReceipt || (readReceipt && event.getTs() >= readReceipt.data.ts)) {
-            const actions = client.getPushActionsForEvent(event, true);
-
-            if (actions?.tweaks) {
-                const color = !!actions.tweaks.highlight
-                    ? NotificationColor.Red
-                    : NotificationColor.Grey;
-
-                this.updateNotificationState(color);
-            }
-        }
+    protected handleReadReceipt = (event: MatrixEvent): void => {
+        if (event.threadRootId !== this.threadId) return; // not for us - ignore
+        super.handleReadReceipt(event);
     };
 
-    protected resetThreadNotification = (): void => {
-        this.updateNotificationState(NotificationColor.None);
+    protected onEventDecrypted = (event: MatrixEvent): void => {
+        if (event.threadRootId !== this.threadId) return; // ignore - not for us or notifications timeline
+
+        super.onEventDecrypted(event);
     };
 
-    protected updateNotificationState(color: NotificationColor) {
+    protected handleRoomEventUpdate = (event: MatrixEvent): void => {
+        if (event.threadRootId !== this.threadId) return; // ignore - not for us or notifications timeline
+        super.handleRoomEventUpdate(event);
+    };
+
+    protected updateNotificationState(): void {
         const snapshot = this.snapshot();
 
-        this._color = color;
+        super.updateNotificationState();
 
         // finally, publish an update if needed
         this.emitIfUpdated(snapshot);

@@ -14,34 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { NotificationColor } from "./NotificationColor";
-import { IDestroyable } from "../../utils/IDestroyable";
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
-import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
-import { NotificationState, NotificationStateEvents } from "./NotificationState";
 import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
-import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
+import { TimelineNotificationState } from "./TimelineNotificationState";
 
-export class RoomNotificationState extends NotificationState implements IDestroyable {
-    constructor(public readonly room: Room, private readonly threadsState?: ThreadsRoomNotificationState) {
-        super();
-        this.room.on(RoomEvent.Receipt, this.handleReadReceipt);
-        this.room.on(RoomEvent.Timeline, this.handleRoomEventUpdate);
-        this.room.on(RoomEvent.Redaction, this.handleRoomEventUpdate);
+export class RoomNotificationState extends TimelineNotificationState {
+    constructor(public readonly room: Room) {
+        super(room);
         this.room.on(RoomEvent.MyMembership, this.handleMembershipUpdate);
-        this.room.on(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
-        if (threadsState) {
-            threadsState.on(NotificationStateEvents.Update, this.handleThreadsUpdate);
-        }
-        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
-        MatrixClientPeg.get().on(ClientEvent.AccountData, this.handleAccountDataUpdate);
         this.updateNotificationState();
     }
 
@@ -51,57 +37,31 @@ export class RoomNotificationState extends NotificationState implements IDestroy
 
     public destroy(): void {
         super.destroy();
-        this.room.removeListener(RoomEvent.Receipt, this.handleReadReceipt);
-        this.room.removeListener(RoomEvent.Timeline, this.handleRoomEventUpdate);
-        this.room.removeListener(RoomEvent.Redaction, this.handleRoomEventUpdate);
         this.room.removeListener(RoomEvent.MyMembership, this.handleMembershipUpdate);
-        this.room.removeListener(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
-        if (this.threadsState) {
-            this.threadsState.removeListener(NotificationStateEvents.Update, this.handleThreadsUpdate);
-        }
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
-            MatrixClientPeg.get().removeListener(ClientEvent.AccountData, this.handleAccountDataUpdate);
-        }
     }
 
-    private handleThreadsUpdate = () => {
-        this.updateNotificationState();
+    protected handleReadReceipt = (event: MatrixEvent): void => {
+        if (event.getRoomId() !== this.room.roomId) return; // not for us - ignore
+        super.handleReadReceipt(event);
     };
 
-    private handleLocalEchoUpdated = () => {
-        this.updateNotificationState();
+    private handleMembershipUpdate = (): void => {
+        return this.updateNotificationState();
     };
 
-    private handleReadReceipt = (event: MatrixEvent, room: Room) => {
-        if (!readReceiptChangeIsFor(event, MatrixClientPeg.get())) return; // not our own - ignore
-        if (room.roomId !== this.room.roomId) return; // not for us - ignore
-        this.updateNotificationState();
-    };
-
-    private handleMembershipUpdate = () => {
-        this.updateNotificationState();
-    };
-
-    private onEventDecrypted = (event: MatrixEvent) => {
+    protected onEventDecrypted = (event: MatrixEvent): void => {
         if (event.getRoomId() !== this.room.roomId) return; // ignore - not for us or notifications timeline
+        if (event.threadRootId && !event.isThreadRoot) return; // ignore all threaded events
 
-        this.updateNotificationState();
+        super.onEventDecrypted(event);
     };
 
-    private handleRoomEventUpdate = (event: MatrixEvent, room: Room | null) => {
-        if (room?.roomId !== this.room.roomId) return; // ignore - not for us or notifications timeline
-
-        this.updateNotificationState();
+    protected handleRoomEventUpdate = (event: MatrixEvent): void => {
+        if (event.getRoomId() !== this.room.roomId) return; // ignore - not for us or notifications timeline
+        super.handleRoomEventUpdate(event);
     };
 
-    private handleAccountDataUpdate = (ev: MatrixEvent) => {
-        if (ev.getType() === "m.push_rules") {
-            this.updateNotificationState();
-        }
-    };
-
-    private updateNotificationState() {
+    protected updateNotificationState(): void {
         const snapshot = this.snapshot();
 
         if (getUnsentMessages(this.room).length > 0) {
@@ -119,27 +79,12 @@ export class RoomNotificationState extends NotificationState implements IDestroy
             this._symbol = "!";
             this._count = 1; // not used, technically
         } else {
+            super.updateNotificationState();
+
             const redNotifs = RoomNotifs.getUnreadNotificationCount(this.room, NotificationCountType.Highlight);
             const greyNotifs = RoomNotifs.getUnreadNotificationCount(this.room, NotificationCountType.Total);
 
-            // For a 'true count' we pick the grey notifications first because they include the
-            // red notifications. If we don't have a grey count for some reason we use the red
-            // count. If that count is broken for some reason, assume zero. This avoids us showing
-            // a badge for 'NaN' (which formats as 'NaNB' for NaN Billion).
-            const trueCount = greyNotifs ? greyNotifs : (redNotifs ? redNotifs : 0);
-
-            // Note: we only set the symbol if we have an actual count. We don't want to show
-            // zero on badges.
-
-            if (redNotifs > 0) {
-                this._color = NotificationColor.Red;
-                this._count = trueCount;
-                this._symbol = null; // symbol calculated by component
-            } else if (greyNotifs > 0) {
-                this._color = NotificationColor.Grey;
-                this._count = trueCount;
-                this._symbol = null; // symbol calculated by component
-            } else {
+            if (redNotifs === 0 && greyNotifs === 0) {
                 // We don't have any notified messages, but we might have unread messages. Let's
                 // find out.
                 const hasUnread = Unread.doesRoomHaveUnreadMessages(this.room);
