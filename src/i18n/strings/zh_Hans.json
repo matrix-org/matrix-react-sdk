@@ -3522,5 +3522,8 @@
     "Proxy URL (optional)": "代理URL（可选）",
     "Proxy URL": "代理URL",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
-    "Check if you want to hide all current and future messages from this user.": "若想隐藏来自此用户的全部当前和未来的消息，请打勾。"
+    "Check if you want to hide all current and future messages from this user.": "若想隐藏来自此用户的全部当前和未来的消息，请打勾。",
+    "Inviting %(user1)s and %(user2)s": "正在邀请 %(user1)s 与 %(user2)s",
+    "%(user)s and %(count)s others|one": "%(user)s 与 1 个人",
+    "%(user)s and %(count)s others|other": "%(user)s 与 %(count)s 个人"
 }
