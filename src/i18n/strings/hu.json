@@ -3562,5 +3562,12 @@
     "Checking...": "Ellenőrzés…",
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s vagy %(appLinks)s",
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s vagy %(emojiCompare)s",
-    "Sliding Sync mode (under active development, cannot be disabled)": "Csúszó szinkronizációs mód (aktív fejlesztés alatt, nem lehet kikapcsolni)"
+    "Sliding Sync mode (under active development, cannot be disabled)": "Csúszó szinkronizációs mód (aktív fejlesztés alatt, nem lehet kikapcsolni)",
+    "Voice broadcast": "Hang közvetítés",
+    "Sign out of this session": "Kijelentkezés ebből a munkamenetből",
+    "Please be aware that session names are also visible to people you communicate with": "Fontos, hogy a munkamenet neve a kommunikációban résztvevők számára látható",
+    "Rename session": "Munkamenet átnevezése",
+    "Voice broadcast (under active development)": "Hang közvetítés (aktív fejlesztés alatt)",
+    "Element Call video rooms": "Element Call videó szoba",
+    "You need to be able to kick users to do that.": "Ahhoz, hogy ezt megtedd tudnod kell kirúgni felhasználókat."
 }
