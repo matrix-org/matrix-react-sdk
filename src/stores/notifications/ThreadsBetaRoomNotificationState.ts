@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,12 +17,13 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 
-import { IDestroyable } from "../../utils/IDestroyable";
-import { NotificationState, NotificationStateEvents } from "./NotificationState";
+import { NotificationStateEvents } from "./NotificationState";
 import { ThreadNotificationState } from "./ThreadNotificationState";
 import { NotificationColor } from "./NotificationColor";
+import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
+import { ThreadBetaNotificationState } from "./ThreadBetaNotificationState";
 
-export class ThreadsRoomNotificationState extends NotificationState implements IDestroyable {
+export class ThreadsBetaRoomNotificationState extends ThreadsRoomNotificationState {
     public readonly threadsState = new Map<Thread, ThreadNotificationState>();
 
     protected _symbol = null;
@@ -30,7 +31,7 @@ export class ThreadsRoomNotificationState extends NotificationState implements I
     protected _color = NotificationColor.None;
 
     constructor(public readonly room: Room) {
-        super();
+        super(room);
         for (const thread of this.room.getThreads()) {
             this.onNewThread(thread);
         }
@@ -47,13 +48,13 @@ export class ThreadsRoomNotificationState extends NotificationState implements I
 
     public getThreadRoomState(thread: Thread): ThreadNotificationState {
         if (!this.threadsState.has(thread)) {
-            this.threadsState.set(thread, new ThreadNotificationState(thread));
+            this.threadsState.set(thread, new ThreadBetaNotificationState(thread));
         }
         return this.threadsState.get(thread);
     }
 
     protected onNewThread = (thread: Thread): void => {
-        const notificationState = new ThreadNotificationState(thread);
+        const notificationState = new ThreadBetaNotificationState(thread);
         this.threadsState.set(
             thread,
             notificationState,

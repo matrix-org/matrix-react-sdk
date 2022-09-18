@@ -1,5 +1,5 @@
 /*
-Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,17 +18,16 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 
 import { NotificationColor } from "./NotificationColor";
-import { IDestroyable } from "../../utils/IDestroyable";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { NotificationState } from "./NotificationState";
+import { ThreadNotificationState } from "./ThreadNotificationState";
 
-export class ThreadNotificationState extends NotificationState implements IDestroyable {
+export class ThreadBetaNotificationState extends ThreadNotificationState {
     protected _symbol = null;
     protected _count = 0;
     protected _color = NotificationColor.None;
 
     constructor(public readonly thread: Thread) {
-        super();
+        super(thread);
         this.thread.on(ThreadEvent.NewReply, this.handleNewThreadReply);
         this.thread.on(ThreadEvent.ViewThread, this.resetThreadNotification);
         if (this.thread.replyToEvent) {

@@ -44,9 +44,17 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private roomThreadsMap = new Map<Room, ThreadsRoomNotificationState>();
     private listMap = new Map<TagID, ListNotificationState>();
     private _globalState = new SummarizedNotificationState();
+    private ThreadNotificationStateType;
 
     private constructor() {
         super(defaultDispatcher, {});
+        this.matrixClient.serverSupportsPrefix("org.matrix.msc3773").then(({ serverSupport }) => {
+            if (serverSupport) {
+                this.ThreadNotificationStateType = ThreadsRoomNotificationState;
+            } else {
+                this.ThreadNotificationStateType = ThreadsRoomNotificationState;
+            }
+        });
     }
 
     /**
@@ -90,7 +98,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
             // threads notification at the same time at rooms.
             // There are multiple entry points, and it's unclear which one gets
             // called first
-            const threadState = new ThreadsRoomNotificationState(room);
+            const threadState = new this.ThreadNotificationStateType(room);
             this.roomThreadsMap.set(room, threadState);
             this.roomMap.set(room, new RoomNotificationState(room, threadState));
         }
@@ -99,7 +107,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
 
     public getThreadsRoomState(room: Room): ThreadsRoomNotificationState {
         if (!this.roomThreadsMap.has(room)) {
-            this.roomThreadsMap.set(room, new ThreadsRoomNotificationState(room));
+            this.roomThreadsMap.set(room, new this.ThreadNotificationStateType(room));
         }
         return this.roomThreadsMap.get(room);
     }
