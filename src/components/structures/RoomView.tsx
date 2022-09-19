@@ -120,6 +120,7 @@ import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 import { LargeLoader } from './LargeLoader';
 import { VoiceBroadcastInfoEventType } from '../../voice-broadcast';
+import { isVideoRoom } from '../../utils/video-rooms';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -517,7 +518,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private getMainSplitContentType = (room: Room) => {
-        if (SettingsStore.getValue("feature_video_rooms") && room.isElementVideoRoom()) {
+        if (SettingsStore.getValue("feature_video_rooms") && isVideoRoom(room)) {
             return MainSplitContentType.Video;
         }
         if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
@@ -2024,8 +2025,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const myMembership = this.state.room.getMyMembership();
         if (
-            this.state.room.isElementVideoRoom() &&
-            !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
+            isVideoRoom(this.state.room)
+            && !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
         ) {
             return <ErrorBoundary>
                 <div className="mx_MainSplit">
