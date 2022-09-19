@@ -3566,5 +3566,8 @@
     "You need to be able to kick users to do that.": "您必須可以踢除使用者才能作到這件事。",
     "Sign out of this session": "登出此工作階段",
     "Please be aware that session names are also visible to people you communicate with": "請注意，工作階段名稱也對與您與之溝通的對象可見",
-    "Rename session": "重新命名工作階段"
+    "Rename session": "重新命名工作階段",
+    "Voice broadcast": "音訊廣播",
+    "Voice broadcast (under active development)": "語音廣播（正在活躍開發中）",
+    "Element Call video rooms": "Element Call 視訊聊天室"
 }
