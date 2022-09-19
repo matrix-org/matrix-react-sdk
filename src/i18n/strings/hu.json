@@ -3569,5 +3569,6 @@
     "Rename session": "Munkamenet átnevezése",
     "Voice broadcast (under active development)": "Hang közvetítés (aktív fejlesztés alatt)",
     "Element Call video rooms": "Element Call videó szoba",
-    "You need to be able to kick users to do that.": "Ahhoz, hogy ezt megtedd tudnod kell kirúgni felhasználókat."
+    "You need to be able to kick users to do that.": "Ahhoz, hogy ezt megtedd tudnod kell kirúgni felhasználókat.",
+    "Voice broadcasts": "Videó közvetítés"
 }
