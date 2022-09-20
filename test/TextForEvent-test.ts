@@ -306,8 +306,8 @@ describe('TextForEvent', () => {
                     [userC.id]: 101,
                 },
             });
-            const expectedText =
-                "Alice changed the power level of Bob (@b) from Moderator to Admin, Bob (@c) from Custom (101) to Moderator.";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Admin,"
+                + " Bob (@c) from Custom (101) to Moderator.";
             expect(textForEvent(event)).toEqual(expectedText);
         });
     });
