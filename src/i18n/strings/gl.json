@@ -3563,5 +3563,12 @@
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ou %(emojiCompare)s",
     "Show shortcut to welcome checklist above the room list": "Mostrar atallo á lista de comprobacións de benvida sobre a lista de salas",
     "Sliding Sync mode (under active development, cannot be disabled)": "Modo Sliding Sync (en desenvolvemento, non se pode desactivar)",
-    "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso."
+    "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso.",
+    "Voice broadcast": "Emisión de voz",
+    "Sign out of this session": "Pechar esta sesión",
+    "Please be aware that session names are also visible to people you communicate with": "Pon coidado en que os nomes das sesións sexan visibles para as persoas coas que te comunicas",
+    "Rename session": "Renomear sesión",
+    "Voice broadcasts": "Emisións de voz",
+    "Voice broadcast (under active development)": "Emisión de voz (en desenvolvemento)",
+    "Element Call video rooms": "Salas de chamadas de vídeo Element"
 }
