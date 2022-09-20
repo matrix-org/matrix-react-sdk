@@ -610,7 +610,7 @@ export class PartCreator {
     }
 
     public roomPill(alias: string, roomId?: string): RoomPillPart {
-        let room: Room;
+        let room: Room | undefined;
         if (roomId || alias[0] !== "#") {
             room = this.client.getRoom(roomId || alias);
         } else {
