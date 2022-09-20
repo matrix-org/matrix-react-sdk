@@ -135,7 +135,9 @@ export class Rendezvous {
 
         // TODO: handle UIA response
         // eslint-disable-next-line camelcase
-        const { login_token } = await this.cli.http.authedRequest<{ login_token: string, expires_in: number }>(undefined, Method.Post, '/login/token', {}, {});
+        const { login_token } = await this.cli.http.authedRequest<{ login_token: string, expires_in: number }>(
+            undefined, Method.Post, '/login/token', {}, {},
+        );
 
         // eslint-disable-next-line camelcase
         await this.channel.send({ user: this.cli.getUserId(), homeserver: this.cli.baseUrl, login_token });
@@ -158,8 +160,10 @@ export class Rendezvous {
     }
 
     private async checkAndCrossSignDevice(deviceInfo: DeviceInfo) {
-        if (Object.keys(deviceInfo.keys).length !== Object.keys(this.newDeviceKeys).length) {
-            throw new Error(`New device has different keys than expected: ${Object.keys(deviceInfo.keys).length} vs ${Object.keys(this.newDeviceKeys).length}`);
+        const expected = Object.keys(deviceInfo.keys).length;
+        const actual = Object.keys(this.newDeviceKeys).length;
+        if (expected !== actual) {
+            throw new Error(`New device has different keys than expected: ${expected} vs ${actual}`);
         }
 
         for (const keyId of Object.keys(this.newDeviceKeys)) {
