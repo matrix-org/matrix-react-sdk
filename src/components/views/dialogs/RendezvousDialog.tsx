@@ -93,7 +93,9 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
 
     private generateRendezvous = async () => {
         try {
-            const defaultServer = SdkConfig.get().rendezvous?.default_http_transport_server;
+            const defaultServer = SdkConfig.get().rendezvous?.default_http_transport_server
+                ?? 'https://rendezvous.lab.element.dev'; // FIXME: remove this default value
+
             if (!defaultServer) {
                 throw new Error('No default server configured');
             }
