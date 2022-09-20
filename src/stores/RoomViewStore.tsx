@@ -492,7 +492,8 @@ export class RoomViewStore extends EventEmitter {
         this.dis = dis;
         if (dis) {
             // Some tests mock the dispatcher file resulting in an empty defaultDispatcher
-            // so rather than dying here, just ignore it.
+            // so rather than dying here, just ignore it. When we no longer mock files like this,
+            // we should remove the null check.
             this.dispatchToken = this.dis.register(this.onDispatch.bind(this));
         }
     }

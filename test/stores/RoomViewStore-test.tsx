@@ -163,6 +163,19 @@ describe('RoomViewStore', function() {
         expect(RoomViewStore.instance.getQuotingEvent()).toEqual(replyToEvent);
     });
 
+    it('swaps to the replied event room if it is not the current room', async () => {
+        const roomId2 = "!room2:bar";
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        const replyToEvent = {
+            getRoomId: () => roomId2,
+        };
+        dis.dispatch({ action: 'reply_to_event', event: replyToEvent, context: TimelineRenderingType.Room });
+        await untilDispatch(Action.ViewRoom, dis);
+        expect(RoomViewStore.instance.getQuotingEvent()).toEqual(replyToEvent);
+        expect(RoomViewStore.instance.getRoomId()).toEqual(roomId2);
+    });
+
     it('removes the roomId on ViewHomePage', async () => {
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         await untilDispatch(Action.ActiveRoomChanged, dis);
