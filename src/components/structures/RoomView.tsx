@@ -24,7 +24,6 @@ import React, { createRef, ReactElement, ReactNode, RefObject, useContext } from
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { IThreadBundledRelationship, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventSubscription } from "fbemitter";
 import { ISearchResults } from 'matrix-js-sdk/src/@types/search';
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
@@ -119,6 +118,8 @@ import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 import { LargeLoader } from './LargeLoader';
+import { VoiceBroadcastInfoEventType } from '../../voice-broadcast';
+import { isVideoRoom } from '../../utils/video-rooms';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -199,6 +200,7 @@ export interface IRoomState {
     upgradeRecommendation?: IRecommendedVersion;
     canReact: boolean;
     canSendMessages: boolean;
+    canSendVoiceBroadcasts: boolean;
     tombstone?: MatrixEvent;
     resizing: boolean;
     layout: Layout;
@@ -363,7 +365,6 @@ function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement
 
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private readonly dispatcherRef: string;
-    private readonly roomStoreToken: EventSubscription;
     private settingWatchers: string[];
 
     private unmounted = false;
@@ -401,6 +402,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             statusBarVisible: false,
             canReact: false,
             canSendMessages: false,
+            canSendVoiceBroadcasts: false,
             resizing: false,
             layout: SettingsStore.getValue("layout"),
             lowBandwidth: SettingsStore.getValue("lowBandwidth"),
@@ -435,7 +437,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         context.on(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
         context.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         // Start listening for RoomViewStore updates
-        this.roomStoreToken = RoomViewStore.instance.addListener(this.onRoomViewStoreUpdate);
+        RoomViewStore.instance.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
 
@@ -514,7 +516,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private getMainSplitContentType = (room: Room) => {
-        if (SettingsStore.getValue("feature_video_rooms") && room.isElementVideoRoom()) {
+        if (SettingsStore.getValue("feature_video_rooms") && isVideoRoom(room)) {
             return MainSplitContentType.Video;
         }
         if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
@@ -865,6 +867,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (this.context) {
             this.context.removeListener(ClientEvent.Room, this.onRoom);
             this.context.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
+            this.context.removeListener(RoomEvent.TimelineReset, this.onRoomTimelineReset);
             this.context.removeListener(RoomEvent.Name, this.onRoomName);
             this.context.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
             this.context.removeListener(RoomEvent.MyMembership, this.onMyMembership);
@@ -878,10 +881,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         window.removeEventListener('beforeunload', this.onPageUnload);
 
-        // Remove RoomStore listener
-        if (this.roomStoreToken) {
-            this.roomStoreToken.remove();
-        }
+        RoomViewStore.instance.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         WidgetEchoStore.removeListener(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
@@ -1344,8 +1344,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
             const canSendMessages = room.maySendMessage();
             const canSelfRedact = room.currentState.maySendEvent(EventType.RoomRedaction, me);
+            const canSendVoiceBroadcasts = room.currentState.maySendEvent(VoiceBroadcastInfoEventType, me);
 
-            this.setState({ canReact, canSendMessages, canSelfRedact });
+            this.setState({
+                canReact,
+                canSendMessages,
+                canSendVoiceBroadcasts,
+                canSelfRedact,
+            });
         }
     }
 
@@ -2014,8 +2020,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const myMembership = this.state.room.getMyMembership();
         if (
-            this.state.room.isElementVideoRoom() &&
-            !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
+            isVideoRoom(this.state.room)
+            && !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
         ) {
             return <ErrorBoundary>
                 <div className="mx_MainSplit">
@@ -2218,6 +2224,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     resizeNotifier={this.props.resizeNotifier}
                     replyToEvent={this.state.replyToEvent}
                     permalinkCreator={this.permalinkCreator}
+                    showVoiceBroadcastButton={this.state.canSendVoiceBroadcasts}
                 />;
         }
 

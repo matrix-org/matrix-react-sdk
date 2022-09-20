@@ -52,6 +52,7 @@ import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { Features } from '../../../settings/Settings';
 
 let instanceCount = 0;
 
@@ -78,6 +79,7 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
+    showVoiceBroadcastButton?: boolean;
 }
 
 interface IState {
@@ -89,10 +91,11 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+    showVoiceBroadcastButton: boolean;
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
@@ -105,6 +108,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     public static defaultProps = {
         compact: false,
+        showVoiceBroadcastButton: false,
     };
 
     public constructor(props: IProps) {
@@ -114,17 +118,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.state = {
             isComposerEmpty: true,
             haveRecording: false,
-            recordingTimeLeftSeconds: null, // when set to a number, shows a toast
+            recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
+            showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
+        SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
     }
 
     private get voiceRecording(): Optional<VoiceRecording> {
@@ -153,7 +159,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.waitForOwnMember();
-        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
+        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current!);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
         this.updateRecordingState(); // grab any cached recordings
     }
@@ -199,13 +205,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         }
                         break;
                     }
+                    case Features.VoiceBroadcast: {
+                        if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
+                            this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
+                        }
+                        break;
+                    }
                 }
             }
         }
     };
 
     private waitForOwnMember() {
-        // if we have the member already, do that
+        // If we have the member already, do that
         const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
@@ -242,6 +254,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
+
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -357,6 +370,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return this.state.showStickersButton && !isLocalRoom(this.props.room);
     }
 
+    private get showVoiceBroadcastButton(): boolean {
+        return this.props.showVoiceBroadcastButton && this.state.showVoiceBroadcastButton;
+    }
+
     public render() {
         const controls = [
             this.props.e2eStatus ?
@@ -426,8 +443,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         let recordingTooltip;
-        const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
-        if (secondsLeft) {
+        if (this.state.recordingTimeLeftSeconds) {
+            const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = <Tooltip
                 label={_t("%(seconds)ss left", { seconds: secondsLeft })}
                 alignment={Alignment.Top}
@@ -484,6 +501,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
+                            showVoiceBroadcastButton={this.showVoiceBroadcastButton}
+                            onStartVoiceBroadcastClick={() => {
+                                // Sends a voice message. To be replaced by voice broadcast during development.
+                                this.voiceRecordingButton.current?.onRecordStartEndClick();
+                                if (this.context.narrow) {
+                                    this.toggleButtonMenu();
+                                }
+                            }}
                         /> }
                         { showSendButton && (
                             <SendButton
