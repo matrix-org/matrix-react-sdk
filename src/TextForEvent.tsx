@@ -54,7 +54,7 @@ function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()
     const client = MatrixClientPeg.get();
     const roomId = event.getRoomId();
     const member = client.getRoom(roomId)?.getMember(userId);
-    return member?.rawDisplayName || userId || _t("Someone");
+    return member?.name || member?.rawDisplayName || userId || _t("Someone");
 }
 
 // These functions are frequently used just to check whether an event has

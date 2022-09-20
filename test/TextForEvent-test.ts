@@ -178,13 +178,13 @@ describe('TextForEvent', () => {
         };
         const userB = {
             id: '@b',
-            name: 'Bob',
+            name: 'Bob (@b)',
             rawDisplayName: 'Bob',
         };
         const userC = {
             id: '@c',
-            name: 'Carl',
-            rawDisplayName: 'Carl',
+            name: 'Bob (@c)',
+            rawDisplayName: 'Bob',
         };
         interface PowerEventProps {
             usersDefault?: number;
@@ -263,7 +263,7 @@ describe('TextForEvent', () => {
                     [userB.id]: 50,
                 },
             });
-            const expectedText = "Alice changed the power level of Bob from Moderator to Admin.";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Admin.";
             expect(textForEvent(event)).toEqual(expectedText);
         });
 
@@ -278,7 +278,7 @@ describe('TextForEvent', () => {
                     [userB.id]: 50,
                 },
             });
-            const expectedText = "Alice changed the power level of Bob from Moderator to Default.";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Default.";
             expect(textForEvent(event)).toEqual(expectedText);
         });
 
@@ -291,7 +291,7 @@ describe('TextForEvent', () => {
                     [userB.id]: 50,
                 },
             });
-            const expectedText = "Alice changed the power level of Bob from Moderator to Custom (-1).";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Custom (-1).";
             expect(textForEvent(event)).toEqual(expectedText);
         });
 
@@ -307,7 +307,7 @@ describe('TextForEvent', () => {
                 },
             });
             const expectedText =
-                "Alice changed the power level of Bob from Moderator to Admin, Carl from Custom (101) to Moderator.";
+                "Alice changed the power level of Bob (@b) from Moderator to Admin, Bob (@c) from Custom (101) to Moderator.";
             expect(textForEvent(event)).toEqual(expectedText);
         });
     });
