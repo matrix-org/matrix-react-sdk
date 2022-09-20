@@ -601,15 +601,15 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 </span>
             );
         }
-        const rendezvous =
-        <div style={{ textAlign: "center", marginBottom: "8px" }}>
-            <AccessibleButton
-                kind="primary"
-                onClick={this.startRendezvous}
-            >
-                { _t("Link using another device") }
-            </AccessibleButton>
-        </div>;
+        const rendezvous = !SdkConfig.get().rendezvous?.disabled ?
+            <div style={{ textAlign: "center", marginBottom: "8px" }}>
+                <AccessibleButton
+                    kind="primary"
+                    onClick={this.startRendezvous}
+                >
+                    { _t("Link using another device") }
+                </AccessibleButton>
+            </div> : null;
 
         return (
             <AuthPage>

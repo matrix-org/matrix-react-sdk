@@ -329,14 +329,20 @@ export default class UserMenu extends React.Component<IProps, IState> {
             />;
         }
 
+        let linkAnotherDevice: JSX.Element | undefined;
+
+        if (!SdkConfig.get().rendezvous?.disabled) {
+            linkAnotherDevice = <IconizedContextMenuOption
+                iconClassName="mx_UserMenu_iconQrCode"
+                label={_t("Link another device")}
+                onClick={(e) => this.onLinkAnotherDevice(e, null)}
+            />;
+        }
+
         let primaryOptionList = (
             <IconizedContextMenuOptionList>
                 { homeButton }
-                <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconQrCode"
-                    label={_t("Link another device")}
-                    onClick={(e) => this.onLinkAnotherDevice(e, null)}
-                />
+                { linkAnotherDevice }
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconBell"
                     label={_t("Notifications")}

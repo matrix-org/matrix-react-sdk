@@ -181,6 +181,11 @@ export interface IConfigOptions {
 
     sync_timeline_limit?: number;
     dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
+
+    rendezvous?: {
+        disabled?: boolean;
+        default_http_transport_server?: string;
+    };
 }
 
 export interface ISsoRedirectOptions {
