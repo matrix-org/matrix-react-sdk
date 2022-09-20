@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { isNullOrUndefined, sleep } from "matrix-js-sdk/src/utils";
+import { ClientEvent, IPaginateOpts } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -76,8 +77,11 @@ const PREVIEWS: Record<string, {
     },
 };
 
+// Number of events to load per /messages request
+const PAGE_SIZE = 25;
+
 // The maximum number of events we're willing to look back on to get a preview.
-const MAX_EVENTS_BACKWARDS = 50;
+const MAX_EVENTS_BACKWARDS = 100;
 
 // type merging ftw
 type TAG_ANY = "im.vector.any"; // eslint-disable-line @typescript-eslint/naming-convention
@@ -96,6 +100,8 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
     // null indicates the preview is empty / irrelevant
     private previews = new Map<string, Map<TagID|TAG_ANY, string|null>>();
+    private pendingRooms = new Set<Room>();
+    private stopped = false;
 
     private constructor() {
         super(defaultDispatcher, {});
@@ -109,13 +115,69 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
         return `${ROOM_PREVIEW_CHANGED}:${room?.roomId}`;
     }
 
+    protected async onReady() {
+        await super.onReady();
+        this.stopped = false;
+        this.matrixClient.on(ClientEvent.Room, this.queueRoomIfNeeded);
+        this.matrixClient.on(RoomEvent.TimelineReset, this.queueRoomIfNeeded);
+        // TODO sort these to prioritise the visible ones
+        this.matrixClient.getVisibleRooms().forEach(this.queueRoomIfNeeded);
+    }
+
+    protected async onNotReady() {
+        await super.onNotReady();
+        this.stopped = true;
+        this.pendingRooms.clear();
+        this.matrixClient.off(ClientEvent.Room, this.queueRoomIfNeeded);
+        this.matrixClient.off(RoomEvent.TimelineReset, this.queueRoomIfNeeded);
+    }
+
+    private async shouldBackfill(room: Room): Promise<boolean> {
+        // TODO we should ensure ~5-10 visible events are loaded, not just one
+        if (room.getLiveTimeline().getEvents().length > MAX_EVENTS_BACKWARDS) {
+            return false;
+        }
+        const preview = await this.getPreviewForRoom(room);
+        return !preview;
+    }
+
+    private async startCrawler(): Promise<void> {
+        const options: IPaginateOpts = {
+            limit: PAGE_SIZE,
+            backwards: true,
+        };
+
+        while (!this.stopped && this.pendingRooms.size) {
+            // Pop first room off the Set
+            const room: Room = this.pendingRooms[Symbol.iterator]().next().value;
+            this.pendingRooms.delete(room);
+
+            for (let i = 0; await this.shouldBackfill(room); i++) {
+                if (this.stopped) break;
+                const canPaginateMore = await this.matrixClient.paginateEventTimeline(room.getLiveTimeline(), options);
+                await sleep(100); // Sleep between requests
+                if (this.stopped || !canPaginateMore) break;
+            }
+        }
+    }
+
+    private queueRoomIfNeeded = async (room: Room): Promise<void> => {
+        if (await this.shouldBackfill(room)) {
+            const needsStarting = !this.pendingRooms.size;
+            this.pendingRooms.add(room);
+            if (needsStarting) {
+                this.startCrawler();
+            }
+        }
+    };
+
     /**
      * Gets the pre-translated preview for a given room
      * @param room The room to get the preview for.
      * @param inTagId The tag ID in which the room resides
      * @returns The preview, or null if none present.
      */
-    public async getPreviewForRoom(room: Room, inTagId: TagID): Promise<string | null> {
+    public async getPreviewForRoom(room: Room, inTagId?: TagID): Promise<string | null> {
         if (!room) return null; // invalid room, just return nothing
 
         if (!this.previews.has(room.roomId)) await this.generatePreview(room, inTagId);
@@ -208,3 +270,5 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
         }
     }
 }
+
+window.mxMessagePreviewStore = MessagePreviewStore.instance;
