@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -41,27 +42,27 @@ const PREVIEWS: Record<string, {
     isState: boolean;
     previewer: IPreview;
 }> = {
-    'm.room.message': {
+    [EventType.RoomMessage]: {
         isState: false,
         previewer: new MessageEventPreview(),
     },
-    'm.call.invite': {
+    [EventType.CallInvite]: {
         isState: false,
         previewer: new LegacyCallInviteEventPreview(),
     },
-    'm.call.answer': {
+    [EventType.CallAnswer]: {
         isState: false,
         previewer: new LegacyCallAnswerEventPreview(),
     },
-    'm.call.hangup': {
+    [EventType.CallHangup]: {
         isState: false,
         previewer: new LegacyCallHangupEvent(),
     },
-    'm.sticker': {
+    [EventType.Sticker]: {
         isState: false,
         previewer: new StickerEventPreview(),
     },
-    'm.reaction': {
+    [EventType.Reaction]: {
         isState: false,
         previewer: new ReactionEventPreview(),
     },
@@ -114,7 +115,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
      * @param inTagId The tag ID in which the room resides
      * @returns The preview, or null if none present.
      */
-    public async getPreviewForRoom(room: Room, inTagId: TagID): Promise<string> {
+    public async getPreviewForRoom(room: Room, inTagId: TagID): Promise<string | null> {
         if (!room) return null; // invalid room, just return nothing
 
         if (!this.previews.has(room.roomId)) await this.generatePreview(room, inTagId);
