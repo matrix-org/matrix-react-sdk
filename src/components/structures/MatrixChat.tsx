@@ -137,7 +137,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
-import { Stores, StoresContext } from '../../Stores';
+import { Stores, SDKContext } from '../../SDKContext';
 import { RoomViewStore } from '../../stores/RoomViewStore';
 
 // legacy export
@@ -2104,9 +2104,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         return <ErrorBoundary>
-            <StoresContext.Provider value={this.stores}>
+            <SDKContext.Provider value={this.stores}>
                 { view }
-            </StoresContext.Provider>
+            </SDKContext.Provider>
         </ErrorBoundary>;
     }
 }

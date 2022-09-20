@@ -43,7 +43,7 @@ import { LocalRoom, LocalRoomState } from "../../../src/models/LocalRoom";
 import { DirectoryMember } from "../../../src/utils/direct-messages";
 import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
-import { Stores, StoresContext } from "../../../src/Stores";
+import { Stores, SDKContext } from "../../../src/SDKContext";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -94,11 +94,10 @@ describe("RoomView", () => {
             await switchedRoom;
         }
 
-        const stores = new Stores(RoomViewStore.instance);
-        stores.client = cli;
+        const stores = new Stores(RoomViewStore.instance, cli);
 
         const roomView = mount(
-            <StoresContext.Provider value={stores}>
+            <SDKContext.Provider value={stores}>
                 <RoomView
                     threepidInvite={null}
                     oobData={null}
@@ -107,7 +106,7 @@ describe("RoomView", () => {
                     forceTimeline={false}
                     onRegistered={null}
                 />
-            </StoresContext.Provider>,
+            </SDKContext.Provider>,
         );
         await act(() => Promise.resolve()); // Allow state to settle
         return roomView;

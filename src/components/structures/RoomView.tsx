@@ -118,7 +118,7 @@ import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 import { LargeLoader } from './LargeLoader';
 import { VoiceBroadcastInfoEventType } from '../../voice-broadcast';
 import { isVideoRoom } from '../../utils/video-rooms';
-import { StoresContext } from '../../Stores';
+import { SDKContext } from '../../SDKContext';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -375,10 +375,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private messagePanel: TimelinePanel;
     private roomViewBody = createRef<HTMLDivElement>();
 
-    static contextType = StoresContext;
-    public context!: React.ContextType<typeof StoresContext>;
+    static contextType = SDKContext;
+    public context!: React.ContextType<typeof SDKContext>;
 
-    constructor(props: IRoomProps, context: React.ContextType<typeof StoresContext>) {
+    constructor(props: IRoomProps, context: React.ContextType<typeof SDKContext>) {
         super(props, context);
 
         const llMembers = context.client.hasLazyLoadMembersEnabled();

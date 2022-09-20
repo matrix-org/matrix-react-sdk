@@ -19,14 +19,13 @@ import { createContext } from "react";
 
 import { RoomViewStore } from "./stores/RoomViewStore";
 
-export const StoresContext = createContext<Stores>(undefined);
-StoresContext.displayName = "StoresContext";
+export const SDKContext = createContext<Stores>(undefined);
+SDKContext.displayName = "SDKContext";
 
 export class Stores {
-    // not set in constructor as we don't have a client on initial load if unregistered
-    public client: MatrixClient;
-
     constructor(
-        readonly roomViewStore: RoomViewStore,
+        public readonly roomViewStore: RoomViewStore,
+        // optional as we don't have a client on initial load if unregistered
+        public client?: MatrixClient,
     ) {}
 }
