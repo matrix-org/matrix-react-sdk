@@ -15,53 +15,63 @@ limitations under the License.
 */
 
 import React from 'react';
+import { buildChannelFromCode, RendezvousCancellationReason } from 'matrix-js-sdk/src/rendezvous';
+import { SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
+import { ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
+import { QrReader, OnResultFunction } from 'react-qr-reader';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import { IDialogProps } from "./IDialogProps";
 import AccessibleButton from '../elements/AccessibleButton';
-import { Rendezvous, RendezvousCancellationReason } from '../../../utils/Rendezvous';
+import { Rendezvous } from '../../../utils/Rendezvous';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import Field from '../elements/Field';
 import QRCode from '../elements/QRCode';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
+import SdkConfig from '../../../SdkConfig';
 
 interface IProps extends IDialogProps {
     device: 'new' | 'existing';
 }
 
 interface IState {
-    pastedRendezvous: string;
-    generatedRendezvous: string;
-    rendezvous?: Rendezvous;
+    scannedRendezvous?: Rendezvous;
+    generatedRendezvous?: Rendezvous;
     confirmationDigits?: string;
     cancelled?: RendezvousCancellationReason;
+    mediaPermissionError?: boolean;
 }
 
 export default class RendezvousDialog extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
 
-        this.state = {
-            pastedRendezvous: "",
-            generatedRendezvous: "",
-        };
+        this.state = {};
 
         if (this.props.device === 'new') {
             void this.generateRendezvous();
+        } else {
+            void this.requestMediaPermissions();
         }
     }
 
-    private onPastedRendezvousChange = ev => {
-        this.doPastedRendezvous(ev.target.value);
-    };
+    private get rendezvous(): Rendezvous {
+        return this.state.generatedRendezvous ?? this.state.scannedRendezvous;
+    }
+
+    public componentWillUnmount(): void {
+        if (this.rendezvous) {
+            void this.rendezvous.userCancelled();
+        }
+    }
 
     private approveLogin = async (): Promise<void> => {
-        if (!this.state.rendezvous) {
+        if (!this.rendezvous) {
             throw new Error('Rendezvous not found');
         }
-        const newDeviceId = await this.state.rendezvous.confirmLoginOnExistingDevice();
+        const newDeviceId = await this.rendezvous.confirmLoginOnExistingDevice();
         if (!newDeviceId) {
             // user denied
             return;
@@ -72,7 +82,7 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
             this.props.onFinished(true);
             return;
         }
-        const didCrossSign = await this.state.rendezvous!.crossSign();
+        const didCrossSign = await this.rendezvous.crossSign();
         if (didCrossSign) {
             alert(`New device signed in, cross signed and marked as known: ${newDeviceId}`);
         } else {
@@ -83,19 +93,30 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
 
     private generateRendezvous = async () => {
         try {
-            const rendezvous = new Rendezvous(this.props.device === 'existing' ? MatrixClientPeg.get() : undefined);
-            rendezvous.onConfirmationDigits = this.onConfirmationDigits;
-            rendezvous.onCancelled = this.onCancelled;
-            const generatedRendezvous = await rendezvous.generateCode();
+            const defaultServer = SdkConfig.get().rendezvous?.default_http_transport_server;
+            if (!defaultServer) {
+                throw new Error('No default server configured');
+            }
+            const transport = new SimpleHttpRendezvousTransport(this.onCancelled, defaultServer);
+
+            const client = this.props.device === 'existing' ? MatrixClientPeg.get() : undefined;
+
+            const channel = new ECDHv1RendezvousChannel(transport, client);
+
+            const generatedRendezvous = new Rendezvous(channel, client);
+
+            generatedRendezvous.onConfirmationDigits = this.onConfirmationDigits;
+            generatedRendezvous.onCancelled = this.onCancelled;
+            await generatedRendezvous.generateCode();
+            logger.info(generatedRendezvous.code);
             this.setState({
-                rendezvous,
                 generatedRendezvous,
                 cancelled: undefined,
             });
             if (this.props.device === 'existing') {
-                await rendezvous.startOnExistingDevice();
+                await generatedRendezvous.startOnExistingDevice();
             } else {
-                const res = await rendezvous.completeOnNewDevice();
+                const res = await generatedRendezvous.completeOnNewDevice();
                 if (res) {
                     this.props.onFinished(true);
                     defaultDispatcher.dispatch({
@@ -104,7 +125,10 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                 }
             }
         } catch (e) {
-            alert(e);
+            logger.error(e);
+            if (this.rendezvous) {
+                await this.rendezvous.cancel(RendezvousCancellationReason.Unknown);
+            }
         }
     };
 
@@ -113,33 +137,40 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
     };
 
     private onCancelled = (reason: RendezvousCancellationReason) => {
+        logger.info(`Rendezvous cancelled: ${reason}`);
         this.setState({ cancelled: reason });
     };
 
     reset() {
         this.setState({
-            pastedRendezvous: "",
-            generatedRendezvous: "",
-            rendezvous: undefined,
+            scannedRendezvous: undefined,
+            generatedRendezvous: undefined,
             confirmationDigits: undefined,
             cancelled: undefined,
         });
+        void this.requestMediaPermissions();
     }
 
-    private doPastedRendezvous = async (pastedRendezvous: string) => {
+    private doScannedRendezvous = async (scannedCode: string) => {
+        // try {
+        //     const parsed = JSON.parse(scannedCode);
+        // } catch (err) {
+        //     this.setState({ cancelled: RendezvousCancellationReason.InvalidCode });
+        //     return;
+        // }
         try {
-            const rendezvous = new Rendezvous(this.props.device === 'existing' ? MatrixClientPeg.get() : undefined, pastedRendezvous);
-            rendezvous.onConfirmationDigits = this.onConfirmationDigits;
-            rendezvous.onCancelled = this.onCancelled;
+            const client = this.props.device === 'existing' ? MatrixClientPeg.get() : undefined;
+            const channel = await buildChannelFromCode(scannedCode, this.onCancelled, client);
+            const scannedRendezvous = new Rendezvous(channel, client);
+            scannedRendezvous.onConfirmationDigits = this.onConfirmationDigits;
             this.setState({
-                pastedRendezvous,
-                rendezvous,
+                scannedRendezvous,
                 cancelled: undefined,
             });
             if (this.props.device === 'existing') {
-                await rendezvous.startOnExistingDevice();
+                await scannedRendezvous.startOnExistingDevice();
             } else {
-                const res = await rendezvous.completeOnNewDevice();
+                const res = await scannedRendezvous.completeOnNewDevice();
                 if (res) {
                     this.props.onFinished(true);
                     defaultDispatcher.dispatch({
@@ -153,13 +184,13 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
     };
 
     private cancel = () => {
-        if (this.state.rendezvous) {
+        if (this.rendezvous) {
             if (this.state.confirmationDigits) {
                 if (this.props.device === 'existing') {
-                    void this.state.rendezvous.declineLoginOnExistingDevice();
+                    void this.rendezvous.declineLoginOnExistingDevice();
                 }
             }
-            void this.state.rendezvous.userCancelled();
+            void this.rendezvous.userCancelled();
             this.reset();
         }
     };
@@ -170,6 +201,30 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
             void this.generateRendezvous();
         } else {
             this.reset();
+        }
+    };
+
+    private onQrResult: OnResultFunction = (result, error) => {
+        if (result) {
+            this.doScannedRendezvous(result.getText());
+        }
+    };
+
+    private viewFinder() {
+        return <svg viewBox="0 0 100 100" className="mx_QRViewFinder">
+            <path fill="none" d="M15,0 L0,0 L0,15" />
+            <path fill="none" d="M0,85 L0,100 L15,100" />
+            <path fill="none" d="M85,100 L100,100 L100,85" />
+            <path fill="none" d="M100,15 L100,0 L85,0" />
+        </svg>;
+    }
+
+    private requestMediaPermissions = async () => {
+        try {
+            await navigator.mediaDevices.getUserMedia({ video: true });
+            this.setState({ mediaPermissionError: false });
+        } catch (err) {
+            this.setState({ mediaPermissionError: true });
         }
     };
 
@@ -185,6 +240,12 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                 case RendezvousCancellationReason.Expired:
                     cancellationMessage = _t("The linking wasn't completed in the required time.");
                     break;
+                case RendezvousCancellationReason.InvalidCode:
+                    cancellationMessage = _t("The scanned code is invalid.");
+                    break;
+                case RendezvousCancellationReason.UnsupportedAlgorithm:
+                    cancellationMessage = _t("Linking with this device is not supported.");
+                    break;
                 case RendezvousCancellationReason.UserDeclined:
                     cancellationMessage = _t("The request was declined on the other device.");
                     break;
@@ -196,6 +257,12 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                     break;
                 case RendezvousCancellationReason.UserCancelled:
                     cancellationMessage = _t("The request was cancelled.");
+                    break;
+                case RendezvousCancellationReason.Unknown:
+                    cancellationMessage = _t("An unexpected error occurred.");
+                    break;
+                default:
+                    cancellationMessage = _t("Th request was cancelled.");
                     break;
             }
             cancelled = <div>
@@ -212,73 +279,6 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                 </div>
             </div>;
         } else {
-            if (!this.state.generatedRendezvous && !this.state.confirmationDigits) {
-                pasted = <div>
-                    <p>{ _t("Use your camera to scan the QR code shown on your other device:") }</p>
-                    <div className="mx_Centre">
-                        <div className="mx_MockCamera" />
-                    </div>
-                    <p>{ _t("The camera interaction isn't implemented in this prototype. Instead, please copy and paste the rendezvous code from the other device in the box below below:") }</p>
-                    <Field
-                        type="text"
-                        element="textarea"
-                        autoComplete="off"
-                        value={this.state.pastedRendezvous}
-                        onChange={this.onPastedRendezvousChange}
-                    />
-                </div>;
-            }
-
-            if (!this.state.pastedRendezvous && !this.state.confirmationDigits) {
-                generated = <div>
-                    { this.state.generatedRendezvous ?
-                        <div>
-                            <p>{ _t("Scan this QR code using your other device:") }</p>
-                            <div>
-                                <div className="mx_Centre">
-                                    <QRCode data={this.state.generatedRendezvous} className="mx_QRCode" />
-                                </div>
-                                <p>{ _t("The camera interaction isn't implemented in this prototype. Instead, please copy and paste the code below into the other device:") }</p>
-                                <Field
-                                    type="text"
-                                    element="textarea"
-                                    autoComplete="off"
-                                    value={this.state.generatedRendezvous}
-                                    readOnly={true}
-                                    onClick={(e) => (e.target as any).select()}
-                                />
-                                <div className="mx_Centre">
-                                    { this.props.device === 'new' ?
-                                        <AccessibleButton
-                                            kind="primary"
-                                            onClick={this.cancel}
-                                        >
-                                            { _t("Scan using this device instead") }
-                                        </AccessibleButton>
-                                        :
-                                        <AccessibleButton
-                                            kind="danger_outline"
-                                            onClick={this.cancel}
-                                        >
-                                            { _t("Cancel") }
-                                        </AccessibleButton>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        :
-                        <div className="mx_Centre">
-                            <AccessibleButton
-                                kind="primary"
-                                onClick={this.generateRendezvous}
-                            >
-                                { _t("Show code on this device instead") }
-                            </AccessibleButton>
-                        </div>
-                    }
-                </div>;
-            }
-
             if (this.state.confirmationDigits) {
                 confirm =
                 <div>
@@ -313,6 +313,45 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                         </div>
                     }
                 </div>;
+            } else if (this.state.generatedRendezvous) {
+                generated = <div>
+                    <p>{ _t("Scan this QR code using your other device:") }</p>
+                    <div>
+                        <div className="mx_Centre">
+                            <QRCode data={this.state.generatedRendezvous.code} className="mx_QRCode" />
+                        </div>
+                        <div className="mx_Centre">
+                            <AccessibleButton
+                                kind="primary"
+                                onClick={this.cancel}
+                            >
+                                { _t("Scan using this device instead") }
+                            </AccessibleButton>
+                        </div>
+                    </div>
+                </div>;
+            } else if (!this.state.scannedRendezvous) {
+                pasted = <>
+                    <div>
+                        <p>{ _t("Use your camera to scan the QR code shown on your other device:") }</p>
+                        <div className="mx_Centre">
+                            <QrReader
+                                className="mx_QRScanner"
+                                constraints={{}}
+                                onResult={this.onQrResult}
+                                ViewFinder={this.viewFinder}
+                            />
+                        </div>
+                        <div className="mx_Centre">
+                            <AccessibleButton
+                                kind="primary"
+                                onClick={this.generateRendezvous}
+                            >
+                                { _t("Show code on this device instead") }
+                            </AccessibleButton>
+                        </div>
+                    </div>
+                </>;
             }
         }
 
@@ -330,6 +369,7 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                 { confirm }
                 { pasted }
                 { generated }
+                { !cancelled && !confirm && !pasted && !generated ? <p>Connecting...</p> : null }
             </BaseDialog>
         );
     }
