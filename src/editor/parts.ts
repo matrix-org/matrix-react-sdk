@@ -413,7 +413,7 @@ export class EmojiPart extends BasePart implements IBasePart {
 }
 
 class RoomPillPart extends PillPart {
-    constructor(resourceId: string, label: string, private room: Room) {
+    constructor(resourceId: string, label: string, private room?: Room) {
         super(resourceId, label);
     }
 
@@ -421,8 +421,8 @@ class RoomPillPart extends PillPart {
         let initialLetter = "";
         let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(this.room ? this.room.name : this.resourceId);
-            avatarUrl = Avatar.defaultAvatarUrlForString(this.room ? this.room.roomId : this.resourceId);
+            initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId);
+            avatarUrl = Avatar.defaultAvatarUrlForString(this.room?.roomId ?? this.resourceId);
         }
         this.setAvatarVars(node, avatarUrl, initialLetter);
     }
@@ -432,7 +432,7 @@ class RoomPillPart extends PillPart {
     }
 
     protected get className() {
-        return "mx_Pill " + (this.room.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
+        return "mx_Pill " + (this.room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
     }
 }
 
@@ -612,7 +612,7 @@ export class PartCreator {
     }
 
     public roomPill(alias: string, roomId?: string): RoomPillPart {
-        let room;
+        let room: Room | undefined;
         if (roomId || alias[0] !== "#") {
             room = this.client.getRoom(roomId || alias);
         } else {

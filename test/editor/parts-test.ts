@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { EmojiPart, PlainPart, PartCreator } from "../../src/editor/parts";
+import { createPartCreator } from "./mock";
 
 describe("editor/parts", () => {
     describe("appendUntilRejected", () => {
@@ -32,7 +33,6 @@ describe("editor/parts", () => {
             expect(part.text).toEqual(femaleFacepalmEmoji);
         });
     });
-
     describe("plainWithEmoji", () => {
         it("should append an hair space after a regional emoji", () => {
             const regionalEmojiF = String.fromCodePoint(127467);
@@ -43,5 +43,10 @@ describe("editor/parts", () => {
             expect(parts[0].text).toBe(regionalEmojiF);
             expect(parts[1].text).toBe(hairSpace);
         });
+    });
+    it("should not explode on room pills for unknown rooms", () => {
+        const pc = createPartCreator();
+        const part = pc.roomPill("#room:server");
+        expect(() => part.toDOMNode()).not.toThrow();
     });
 });
