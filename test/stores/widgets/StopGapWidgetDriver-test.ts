@@ -15,32 +15,87 @@ limitations under the License.
 */
 
 import { mocked, MockedObject } from "jest-mock";
-import { Widget, WidgetKind, WidgetDriver, ITurnServer } from "matrix-widget-api";
 import { MatrixClient, ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { Direction, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { Widget, MatrixWidgetType, WidgetKind, WidgetDriver, ITurnServer } from "matrix-widget-api";
 
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
+import { RoomViewStore } from "../../../src/stores/RoomViewStore";
 import { StopGapWidgetDriver } from "../../../src/stores/widgets/StopGapWidgetDriver";
 import { stubClient } from "../../test-utils";
 
 describe("StopGapWidgetDriver", () => {
     let client: MockedObject<MatrixClient>;
-    let driver: WidgetDriver;
+
+    const mkDefaultDriver = (): WidgetDriver => new StopGapWidgetDriver(
+        [],
+        new Widget({
+            id: "test",
+            creatorUserId: "@alice:example.org",
+            type: "example",
+            url: "https://example.org",
+        }),
+        WidgetKind.Room,
+        false,
+        "!1:example.org",
+    );
 
     beforeEach(() => {
         stubClient();
         client = mocked(MatrixClientPeg.get());
+        client.getUserId.mockReturnValue("@alice:example.org");
+    });
 
-        driver = new StopGapWidgetDriver(
+    it("auto-approves capabilities of virtual Element Call widgets", async () => {
+        const driver = new StopGapWidgetDriver(
             [],
             new Widget({
-                id: "test",
+                id: "group_call",
                 creatorUserId: "@alice:example.org",
-                type: "example",
-                url: "https://example.org",
+                type: MatrixWidgetType.Custom,
+                url: "https://call.element.io",
             }),
             WidgetKind.Room,
+            true,
+            "!1:example.org",
         );
+
+        // These are intentionally raw identifiers rather than constants, so it's obvious what's being requested
+        const requestedCapabilities = new Set([
+            "m.always_on_screen",
+            "town.robin.msc3846.turn_servers",
+            "org.matrix.msc2762.timeline:!1:example.org",
+            "org.matrix.msc2762.receive.state_event:m.room.member",
+            "org.matrix.msc2762.send.state_event:org.matrix.msc3401.call",
+            "org.matrix.msc2762.receive.state_event:org.matrix.msc3401.call",
+            "org.matrix.msc2762.send.state_event:org.matrix.msc3401.call.member#@alice:example.org",
+            "org.matrix.msc2762.receive.state_event:org.matrix.msc3401.call.member",
+            "org.matrix.msc3819.send.to_device:m.call.invite",
+            "org.matrix.msc3819.receive.to_device:m.call.invite",
+            "org.matrix.msc3819.send.to_device:m.call.candidates",
+            "org.matrix.msc3819.receive.to_device:m.call.candidates",
+            "org.matrix.msc3819.send.to_device:m.call.answer",
+            "org.matrix.msc3819.receive.to_device:m.call.answer",
+            "org.matrix.msc3819.send.to_device:m.call.hangup",
+            "org.matrix.msc3819.receive.to_device:m.call.hangup",
+            "org.matrix.msc3819.send.to_device:m.call.reject",
+            "org.matrix.msc3819.receive.to_device:m.call.reject",
+            "org.matrix.msc3819.send.to_device:m.call.select_answer",
+            "org.matrix.msc3819.receive.to_device:m.call.select_answer",
+            "org.matrix.msc3819.send.to_device:m.call.negotiate",
+            "org.matrix.msc3819.receive.to_device:m.call.negotiate",
+            "org.matrix.msc3819.send.to_device:m.call.sdp_stream_metadata_changed",
+            "org.matrix.msc3819.receive.to_device:m.call.sdp_stream_metadata_changed",
+            "org.matrix.msc3819.send.to_device:org.matrix.call.sdp_stream_metadata_changed",
+            "org.matrix.msc3819.receive.to_device:org.matrix.call.sdp_stream_metadata_changed",
+            "org.matrix.msc3819.send.to_device:m.call.replaces",
+            "org.matrix.msc3819.receive.to_device:m.call.replaces",
+        ]);
+
+        // As long as this resolves, we'll know that it didn't try to pop up a modal
+        const approvedCapabilities = await driver.validateCapabilities(requestedCapabilities);
+        expect(approvedCapabilities).toEqual(requestedCapabilities);
     });
 
     describe("sendToDevice", () => {
@@ -56,6 +111,10 @@ describe("StopGapWidgetDriver", () => {
                 },
             },
         };
+
+        let driver: WidgetDriver;
+
+        beforeEach(() => { driver = mkDefaultDriver(); });
 
         it("sends unencrypted messages", async () => {
             await driver.sendToDevice("org.example.foo", false, contentMap);
@@ -78,6 +137,10 @@ describe("StopGapWidgetDriver", () => {
     });
 
     describe("getTurnServers", () => {
+        let driver: WidgetDriver;
+
+        beforeEach(() => { driver = mkDefaultDriver(); });
+
         it("stops if VoIP isn't supported", async () => {
             jest.spyOn(client, "pollingTurnServers", "get").mockReturnValue(false);
             const servers = driver.getTurnServers();
@@ -129,6 +192,104 @@ describe("StopGapWidgetDriver", () => {
             expect(await nextServer).toEqual({ value: server2, done: false });
 
             await servers.return(undefined);
+        });
+    });
+
+    describe("readEventRelations", () => {
+        let driver: WidgetDriver;
+
+        beforeEach(() => { driver = mkDefaultDriver(); });
+
+        it('reads related events from the current room', async () => {
+            jest.spyOn(RoomViewStore.instance, 'getRoomId').mockReturnValue('!this-room-id');
+
+            client.relations.mockResolvedValue({
+                originalEvent: new MatrixEvent(),
+                events: [],
+            });
+
+            await expect(driver.readEventRelations('$event')).resolves.toEqual({
+                originalEvent: expect.objectContaining({ content: {} }),
+                chunk: [],
+                nextBatch: undefined,
+                prevBatch: undefined,
+            });
+
+            expect(client.relations).toBeCalledWith('!this-room-id', '$event', null, null, {});
+        });
+
+        it('reads related events if the original event is missing', async () => {
+            client.relations.mockResolvedValue({
+                // the relations function can return an undefined event, even
+                // though the typings don't permit an undefined value.
+                originalEvent: undefined as any,
+                events: [],
+            });
+
+            await expect(driver.readEventRelations('$event', '!room-id')).resolves.toEqual({
+                originalEvent: undefined,
+                chunk: [],
+                nextBatch: undefined,
+                prevBatch: undefined,
+            });
+
+            expect(client.relations).toBeCalledWith('!room-id', '$event', null, null, {});
+        });
+
+        it('reads related events from a selected room', async () => {
+            client.relations.mockResolvedValue({
+                originalEvent: new MatrixEvent(),
+                events: [new MatrixEvent(), new MatrixEvent()],
+                nextBatch: 'next-batch-token',
+            });
+
+            await expect(driver.readEventRelations('$event', '!room-id')).resolves.toEqual({
+                originalEvent: expect.objectContaining({ content: {} }),
+                chunk: [
+                    expect.objectContaining({ content: {} }),
+                    expect.objectContaining({ content: {} }),
+                ],
+                nextBatch: 'next-batch-token',
+                prevBatch: undefined,
+            });
+
+            expect(client.relations).toBeCalledWith('!room-id', '$event', null, null, {});
+        });
+
+        it('reads related events with custom parameters', async () => {
+            client.relations.mockResolvedValue({
+                originalEvent: new MatrixEvent(),
+                events: [],
+            });
+
+            await expect(driver.readEventRelations(
+                '$event',
+                '!room-id',
+                'm.reference',
+                'm.room.message',
+                'from-token',
+                'to-token',
+                25,
+                'f',
+            )).resolves.toEqual({
+                originalEvent: expect.objectContaining({ content: {} }),
+                chunk: [],
+                nextBatch: undefined,
+                prevBatch: undefined,
+            });
+
+            expect(client.relations).toBeCalledWith(
+                '!room-id',
+                '$event',
+                'm.reference',
+                'm.room.message',
+                {
+                    limit: 25,
+                    from: 'from-token',
+                    to: 'to-token',
+                    direction: Direction.Forward,
+                },
+            );
         });
     });
 });
