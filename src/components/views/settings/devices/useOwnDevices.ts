@@ -18,11 +18,11 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { IMyDevice, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { User } from "matrix-js-sdk/src/models/user";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
+import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
+import { _t } from "../../../../languageHandler";
 import { DevicesDictionary, DeviceWithVerification } from "./types";
 
 const isDeviceVerified = (
@@ -74,14 +74,14 @@ export enum OwnDevicesError {
     Unsupported = 'Unsupported',
     Default = 'Default',
 }
-type DevicesState = {
+export type DevicesState = {
     devices: DevicesDictionary;
     currentDeviceId: string;
-    currentUserMember?: User;
-    isLoading: boolean;
+    isLoadingDeviceList: boolean;
     // not provided when current session cannot request verification
     requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
+    saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
     error?: OwnDevicesError;
 };
 export const useOwnDevices = (): DevicesState => {
@@ -91,11 +91,12 @@ export const useOwnDevices = (): DevicesState => {
     const userId = matrixClient.getUserId();
 
     const [devices, setDevices] = useState<DevicesState['devices']>({});
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingDeviceList, setIsLoadingDeviceList] = useState(true);
+
     const [error, setError] = useState<OwnDevicesError>();
 
     const refreshDevices = useCallback(async () => {
-        setIsLoading(true);
+        setIsLoadingDeviceList(true);
         try {
             // realistically we should never hit this
             // but it satisfies types
@@ -104,7 +105,7 @@ export const useOwnDevices = (): DevicesState => {
             }
             const devices = await fetchDevicesWithVerification(matrixClient, userId);
             setDevices(devices);
-            setIsLoading(false);
+            setIsLoadingDeviceList(false);
         } catch (error) {
             if ((error as MatrixError).httpStatus == 404) {
                 // 404 probably means the HS doesn't yet support the API.
@@ -113,7 +114,7 @@ export const useOwnDevices = (): DevicesState => {
                 logger.error("Error loading sessions:", error);
                 setError(OwnDevicesError.Default);
             }
-            setIsLoading(false);
+            setIsLoadingDeviceList(false);
         }
     }, [matrixClient, userId]);
 
@@ -132,13 +133,34 @@ export const useOwnDevices = (): DevicesState => {
         }
         : undefined;
 
+    const saveDeviceName = useCallback(
+        async (deviceId: DeviceWithVerification['device_id'], deviceName: string): Promise<void> => {
+            const device = devices[deviceId];
+
+            // no change
+            if (deviceName === device?.display_name) {
+                return;
+            }
+
+            try {
+                await matrixClient.setDeviceDetails(
+                    deviceId,
+                    { display_name: deviceName },
+                );
+                await refreshDevices();
+            } catch (error) {
+                logger.error("Error setting session display name", error);
+                throw new Error(_t("Failed to set display name"));
+            }
+        }, [matrixClient, devices, refreshDevices]);
+
     return {
         devices,
         currentDeviceId,
-        currentUserMember: userId && matrixClient.getUser(userId) || undefined,
+        isLoadingDeviceList,
+        error,
         requestDeviceVerification,
         refreshDevices,
-        isLoading,
-        error,
+        saveDeviceName,
     };
 };
