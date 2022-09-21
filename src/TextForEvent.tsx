@@ -588,34 +588,45 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => Render
     return () => _t("%(senderName)s changed the pinned messages for the room.", { senderName });
 }
 
-function textForWidgetEvent(event: MatrixEvent): () => string | null {
+
+const onOpenWidgetClick = (widgetId): void => {
+    RightPanelStore.instance.pushCard({
+        phase: RightPanelPhases.Widget,
+        state: { widgetId },
+    });
+};
+
+function textForWidgetEvent(event: MatrixEvent): () => Renderable {
     const senderName = getSenderName(event);
     const { name: prevName, type: prevType, url: prevUrl } = event.getPrevContent();
-    const { name, type, url } = event.getContent() || {};
+    const { name, type, url, id } = event.getContent() || {};
 
     let widgetName = name || prevName || type || prevType || '';
     // Apply sentence case to widget name
     if (widgetName && widgetName.length > 0) {
         widgetName = widgetName[0].toUpperCase() + widgetName.slice(1);
     }
-
     // If the widget was removed, its content should be {}, but this is sufficiently
     // equivalent to that condition.
-    if (url) {
-        if (prevUrl) {
-            return () => _t('%(widgetName)s widget modified by %(senderName)s', {
-                widgetName, senderName,
-            });
-        } else {
-            return () => _t('%(widgetName)s widget added by %(senderName)s', {
-                widgetName, senderName,
-            });
-        }
-    } else {
+    if (!url) {
         return () => _t('%(widgetName)s widget removed by %(senderName)s', {
             widgetName, senderName,
         });
     }
+
+    const openWidgetButton = (sub) =>
+        <AccessibleButton kind='link_inline' onClick={() => onOpenWidgetClick(id)}>
+            { sub }
+        </AccessibleButton>;
+    const text = prevUrl ? '%(widgetName)s widget modified by %(senderName)s. <a>Open widget.</a>' :
+        '%(widgetName)s widget added by %(senderName)s. <a>Open widget.</a>';
+    return () => <span>{ _t(text, {
+        widgetName,
+        senderName,
+    }, {
+        a: openWidgetButton,
+    })
+    }</span>;
 }
 
 function textForWidgetLayoutEvent(event: MatrixEvent): () => string | null {
