@@ -118,7 +118,7 @@ import { RoomStatusBarUnsentMessages } from './RoomStatusBarUnsentMessages';
 import { LargeLoader } from './LargeLoader';
 import { VoiceBroadcastInfoEventType } from '../../voice-broadcast';
 import { isVideoRoom } from '../../utils/video-rooms';
-import { SDKContext } from '../../SDKContext';
+import { SDKContext } from '../../contexts/SDKContext';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};

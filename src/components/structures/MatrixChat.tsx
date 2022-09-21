@@ -137,7 +137,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
-import { Stores, SDKContext } from '../../SDKContext';
+import { Stores, SDKContext } from '../../contexts/SDKContext';
 import { RoomViewStore } from '../../stores/RoomViewStore';
 
 // legacy export

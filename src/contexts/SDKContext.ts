@@ -17,7 +17,7 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { createContext } from "react";
 
-import { RoomViewStore } from "./stores/RoomViewStore";
+import { RoomViewStore } from "../stores/RoomViewStore";
 
 export const SDKContext = createContext<Stores>(undefined);
 SDKContext.displayName = "SDKContext";
