@@ -139,6 +139,8 @@ import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { Stores, SDKContext } from '../../contexts/SDKContext';
 import { RoomViewStore } from '../../stores/RoomViewStore';
+import { WidgetLayoutStore } from '../../stores/widgets/WidgetLayoutStore';
+import WidgetStore from '../../stores/WidgetStore';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -246,7 +248,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.stores = new Stores(
+            LegacyCallHandler.instance,
+            RightPanelStore.instance,
+            RoomNotificationStateStore.instance,
             RoomViewStore.instance,
+            WidgetLayoutStore.instance,
+            WidgetStore.instance,
         );
 
         this.state = {

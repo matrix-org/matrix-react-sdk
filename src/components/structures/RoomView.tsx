@@ -44,7 +44,7 @@ import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import ContentMessages from '../../ContentMessages';
 import Modal from '../../Modal';
-import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../LegacyCallHandler';
+import { LegacyCallHandlerEvent } from '../../LegacyCallHandler';
 import dis, { defaultDispatcher } from '../../dispatcher/dispatcher';
 import * as Rooms from '../../Rooms';
 import eventSearch, { searchPagination } from '../../Searching';
@@ -55,7 +55,6 @@ import WidgetEchoStore from '../../stores/WidgetEchoStore';
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
 import AccessibleButton from "../views/elements/AccessibleButton";
-import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { E2EStatus, shieldStatusForRoom } from '../../utils/ShieldUtils';
 import { Action } from "../../dispatcher/actions";
@@ -74,12 +73,10 @@ import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
-import WidgetStore from "../../stores/WidgetStore";
 import { VideoRoomView } from "./VideoRoomView";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";
-import { RoomNotificationStateStore } from "../../stores/notifications/RoomNotificationStateStore";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import { getKeyBindingsManager } from '../../KeyBindingsManager';
 import { objectHasDiff } from "../../utils/objects";
@@ -438,10 +435,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // Start listening for RoomViewStore updates
         context.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
-        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
+        context.rightPanelStore.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
 
         WidgetEchoStore.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
-        WidgetStore.instance.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
+        context.widgetStore.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
 
         this.props.resizeNotifier.on("isResizing", this.onIsResizing);
 
@@ -492,23 +489,23 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             action: "appsDrawer",
             show: true,
         });
-        if (WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)) {
+        if (this.context.widgetLayoutStore.hasMaximisedWidget(this.state.room)) {
             // Show chat in right panel when a widget is maximised
-            RightPanelStore.instance.setCard({ phase: RightPanelPhases.Timeline });
+            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.Timeline });
         } else if (
-            RightPanelStore.instance.isOpen &&
-            RightPanelStore.instance.roomPhaseHistory.some(card => (card.phase === RightPanelPhases.Timeline))
+            this.context.rightPanelStore.isOpen &&
+            this.context.rightPanelStore.roomPhaseHistory.some(card => (card.phase === RightPanelPhases.Timeline))
         ) {
             // hide chat in right panel when the widget is minimized
-            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
-            RightPanelStore.instance.togglePanel(this.state.roomId);
+            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.RoomSummary });
+            this.context.rightPanelStore.togglePanel(this.state.roomId);
         }
         this.checkWidgets(this.state.room);
     };
 
     private checkWidgets = (room: Room): void => {
         this.setState({
-            hasPinnedWidgets: WidgetLayoutStore.instance.hasPinnedWidgets(room),
+            hasPinnedWidgets: this.context.widgetLayoutStore.hasPinnedWidgets(room),
             mainSplitContentType: this.getMainSplitContentType(room),
             showApps: this.shouldShowApps(room),
         });
@@ -518,7 +515,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (SettingsStore.getValue("feature_video_rooms") && isVideoRoom(room)) {
             return MainSplitContentType.Video;
         }
-        if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
+        if (this.context.widgetLayoutStore.hasMaximisedWidget(room)) {
             return MainSplitContentType.MaximisedWidget;
         }
         return MainSplitContentType.Timeline;
@@ -563,7 +560,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showDisplaynameChanges: SettingsStore.getValue("showDisplaynameChanges", roomId),
             wasContextSwitch: this.context.roomViewStore.getWasContextSwitch(),
             initialEventId: null, // default to clearing this, will get set later in the method if needed
-            showRightPanel: RightPanelStore.instance.isOpenForRoom(roomId),
+            showRightPanel: this.context.rightPanelStore.isOpenForRoom(roomId),
         };
 
         const initialEventId = this.context.roomViewStore.getInitialEventId();
@@ -798,7 +795,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // Otherwise (in case the user set hideWidgetDrawer by clicking the button) follow the parameter.
         const isManuallyShown = hideWidgetDrawer ? hideWidgetDrawer === "false": true;
 
-        const widgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
+        const widgets = this.context.widgetLayoutStore.getContainerWidgets(room, Container.Top);
         return isManuallyShown && widgets.length > 0;
     }
 
@@ -811,7 +808,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             callState: callState,
         });
 
-        LegacyCallHandler.instance.on(LegacyCallHandlerEvent.CallState, this.onCallState);
+        this.context.legacyCallHandler.on(LegacyCallHandlerEvent.CallState, this.onCallState);
         window.addEventListener('beforeunload', this.onPageUnload);
     }
 
@@ -848,7 +845,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // (We could use isMounted, but facebook have deprecated that.)
         this.unmounted = true;
 
-        LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.onCallState);
+        this.context.legacyCallHandler.removeListener(LegacyCallHandlerEvent.CallState, this.onCallState);
 
         // update the scroll map before we get unmounted
         if (this.state.roomId) {
@@ -882,20 +879,20 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         this.context.roomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
-        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
+        this.context.rightPanelStore.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         WidgetEchoStore.removeListener(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
-        WidgetStore.instance.removeListener(UPDATE_EVENT, this.onWidgetStoreUpdate);
+        this.context.widgetStore.removeListener(UPDATE_EVENT, this.onWidgetStoreUpdate);
 
         this.props.resizeNotifier.off("isResizing", this.onIsResizing);
 
         if (this.state.room) {
-            WidgetLayoutStore.instance.off(
+            this.context.widgetLayoutStore.off(
                 WidgetLayoutStore.emissionForRoom(this.state.room),
                 this.onWidgetLayoutChange,
             );
         }
 
-        LegacyCallHandler.instance.off(LegacyCallHandlerEvent.CallState, this.onCallState);
+        this.context.legacyCallHandler.off(LegacyCallHandlerEvent.CallState, this.onCallState);
 
         // cancel any pending calls to the throttled updated
         this.updateRoomMembers.cancel();
@@ -912,7 +909,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.state.roomId),
+            showRightPanel: this.context.rightPanelStore.isOpenForRoom(this.state.roomId),
         });
     };
 
@@ -1127,7 +1124,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private handleEffects = (ev: MatrixEvent) => {
-        const notifState = RoomNotificationStateStore.instance.getRoomState(this.state.room);
+        const notifState = this.context.roomNotificationStateStore.getRoomState(this.state.room);
         if (!notifState.isUnread) return;
 
         CHAT_EFFECTS.forEach(effect => {
@@ -1164,7 +1161,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private onRoomLoaded = (room: Room) => {
         if (this.unmounted) return;
         // Attach a widget store listener only when we get a room
-        WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.onWidgetLayoutChange);
+        this.context.widgetLayoutStore.on(WidgetLayoutStore.emissionForRoom(room), this.onWidgetLayoutChange);
 
         this.calculatePeekRules(room);
         this.updatePreviewUrlVisibility(room);
@@ -1176,10 +1173,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         if (
             this.getMainSplitContentType(room) !== MainSplitContentType.Timeline
-            && RoomNotificationStateStore.instance.getRoomState(room).isUnread
+            && this.context.roomNotificationStateStore.getRoomState(room).isUnread
         ) {
             // Automatically open the chat panel to make unread messages easier to discover
-            RightPanelStore.instance.setCard({ phase: RightPanelPhases.Timeline }, true, room.roomId);
+            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.Timeline }, true, room.roomId);
         }
 
         this.setState({
@@ -1245,7 +1242,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         // Detach the listener if the room is changing for some reason
         if (this.state.room) {
-            WidgetLayoutStore.instance.off(
+            this.context.widgetLayoutStore.off(
                 WidgetLayoutStore.emissionForRoom(this.state.room),
                 this.onWidgetLayoutChange,
             );
@@ -1660,7 +1657,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private onCallPlaced = (type: CallType): void => {
-        LegacyCallHandler.instance.placeCall(this.state.room?.roomId, type);
+        this.context.legacyCallHandler.placeCall(this.state.room?.roomId, type);
     };
 
     private onAppsClick = () => {
@@ -1877,7 +1874,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (!this.state.room) {
             return null;
         }
-        return LegacyCallHandler.instance.getCallForRoom(this.state.room.roomId);
+        return this.context.legacyCallHandler.getCallForRoom(this.state.room.roomId);
     }
 
     // this has to be a proper method rather than an unnamed function,

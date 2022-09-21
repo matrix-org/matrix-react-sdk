@@ -43,7 +43,11 @@ import { LocalRoom, LocalRoomState } from "../../../src/models/LocalRoom";
 import { DirectoryMember } from "../../../src/utils/direct-messages";
 import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
-import { Stores, SDKContext } from "../../../src/SDKContext";
+import { Stores, SDKContext } from "../../../src/contexts/SDKContext";
+import LegacyCallHandler from "../../../src/LegacyCallHandler";
+import { RoomNotificationStateStore } from "../../../src/stores/notifications/RoomNotificationStateStore";
+import { WidgetLayoutStore } from "../../../src/stores/widgets/WidgetLayoutStore";
+import WidgetStore from "../../../src/stores/WidgetStore";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -51,6 +55,7 @@ describe("RoomView", () => {
     let cli: MockedObject<MatrixClient>;
     let room: Room;
     let roomCount = 0;
+    let stores: Stores;
 
     beforeEach(async () => {
         mockPlatformPeg({ reload: () => {} });
@@ -65,7 +70,16 @@ describe("RoomView", () => {
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
         DMRoomMap.makeShared();
-        RightPanelStore.instance.useUnitTestClient(cli);
+        stores = new Stores(
+            LegacyCallHandler.instance,
+            RightPanelStore.instance,
+            RoomNotificationStateStore.instance,
+            RoomViewStore.instance,
+            WidgetLayoutStore.instance,
+            WidgetStore.instance,
+            cli,
+        );
+        stores.rightPanelStore.useUnitTestClient(cli);
     });
 
     afterEach(async () => {
@@ -74,15 +88,15 @@ describe("RoomView", () => {
     });
 
     const mountRoomView = async (): Promise<ReactWrapper> => {
-        if (RoomViewStore.instance.getRoomId() !== room.roomId) {
+        if (stores.roomViewStore.getRoomId() !== room.roomId) {
             const switchedRoom = new Promise<void>(resolve => {
                 const subFn = () => {
-                    if (RoomViewStore.instance.getRoomId()) {
-                        RoomViewStore.instance.off(UPDATE_EVENT, subFn);
+                    if (stores.roomViewStore.getRoomId()) {
+                        stores.roomViewStore.off(UPDATE_EVENT, subFn);
                         resolve();
                     }
                 };
-                RoomViewStore.instance.on(UPDATE_EVENT, subFn);
+                stores.roomViewStore.on(UPDATE_EVENT, subFn);
             });
 
             defaultDispatcher.dispatch<ViewRoomPayload>({
@@ -93,8 +107,6 @@ describe("RoomView", () => {
 
             await switchedRoom;
         }
-
-        const stores = new Stores(RoomViewStore.instance, cli);
 
         const roomView = mount(
             <SDKContext.Provider value={stores}>
@@ -166,14 +178,14 @@ describe("RoomView", () => {
         it("normally doesn't open the chat panel", async () => {
             jest.spyOn(NotificationState.prototype, "isUnread", "get").mockReturnValue(false);
             await mountRoomView();
-            expect(RightPanelStore.instance.isOpen).toEqual(false);
+            expect(stores.rightPanelStore.isOpen).toEqual(false);
         });
 
         it("opens the chat panel if there are unread messages", async () => {
             jest.spyOn(NotificationState.prototype, "isUnread", "get").mockReturnValue(true);
             await mountRoomView();
-            expect(RightPanelStore.instance.isOpen).toEqual(true);
-            expect(RightPanelStore.instance.currentCard.phase).toEqual(RightPanelPhases.Timeline);
+            expect(stores.rightPanelStore.isOpen).toEqual(true);
+            expect(stores.rightPanelStore.currentCard.phase).toEqual(RightPanelPhases.Timeline);
         });
     });
 
