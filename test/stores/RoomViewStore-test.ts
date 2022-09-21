@@ -36,7 +36,6 @@ const MockSlidingSyncManager = <jest.Mock<SlidingSyncManager>><unknown>SlidingSy
 jest.mock('../../src/stores/spaces/SpaceStore');
 const MockSpaceStore = <jest.Mock<SpaceStoreClass>><unknown>SpaceStoreClass;
 
-
 jest.mock('../../src/utils/DMRoomMap', () => {
     const mock = {
         getUserIdForRoomId: jest.fn(),
