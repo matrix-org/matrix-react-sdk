@@ -633,8 +633,8 @@ export class PartCreator {
         return new UserPillPart(userId, displayName, member);
     }
 
-    private static isRegionalIndicator(c): boolean {
-        return c.length == 2 && 127462 < c.codePointAt() && c.codePointAt() < 127488;
+    private static isRegionalIndicator(c: string): boolean {
+        return c.length == 2 && 127462 < c.codePointAt(0) && c.codePointAt(0) < 127488;
     }
 
     public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
