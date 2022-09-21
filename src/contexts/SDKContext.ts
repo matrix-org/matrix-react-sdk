@@ -25,7 +25,10 @@ SDKContext.displayName = "SDKContext";
 export class Stores {
     constructor(
         public readonly roomViewStore: RoomViewStore,
-        // optional as we don't have a client on initial load if unregistered
+        // Optional as we don't have a client on initial load if unregistered. This should be set
+        // when the MatrixClient is first acquired in the dispatcher event Action.OnLoggedIn.
+        // It is only safe to set this once, as updating this value will NOT notify components using
+        // this Context.
         public client?: MatrixClient,
     ) {}
 }

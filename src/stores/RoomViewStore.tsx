@@ -38,7 +38,7 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import DMRoomMap from "../utils/DMRoomMap";
-import SpaceStore from "./spaces/SpaceStore";
+import SpaceStore, { SpaceStoreClass } from "./spaces/SpaceStore";
 import { isMetaSpace, MetaSpace } from "./spaces";
 import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
 import { JoinRoomReadyPayload } from "../dispatcher/payloads/JoinRoomReadyPayload";
@@ -96,14 +96,19 @@ export class RoomViewStore extends EventEmitter {
     // Important: This cannot be a dynamic getter (lazily-constructed instance) because
     // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
     // the app. We need to eagerly create the instance.
-    public static readonly instance = new RoomViewStore(defaultDispatcher);
+    public static readonly instance = new RoomViewStore(
+        defaultDispatcher, SpaceStore.instance, SlidingSyncManager.instance, PosthogAnalytics.instance,
+    );
 
     private state = INITIAL_STATE; // initialize state
 
     private dis: MatrixDispatcher;
     private dispatchToken: string;
 
-    public constructor(dis: MatrixDispatcher) {
+    public constructor(
+        dis: MatrixDispatcher, private readonly spaceStore: SpaceStoreClass,
+        private readonly slidingSyncManager: SlidingSyncManager, private readonly posthog: PosthogAnalytics,
+    ) {
         super();
         this.resetDispatcher(dis);
     }
@@ -209,7 +214,7 @@ export class RoomViewStore extends EventEmitter {
                                     : numMembers > 1 ? "Two"
                                         : "One";
 
-                    PosthogAnalytics.instance.trackEvent<JoinedRoomEvent>({
+                    this.posthog.trackEvent<JoinedRoomEvent>({
                         eventName: "JoinedRoom",
                         trigger: payload.metricsTrigger,
                         roomSize,
@@ -250,17 +255,17 @@ export class RoomViewStore extends EventEmitter {
         if (payload.room_id) {
             if (payload.metricsTrigger !== null && payload.room_id !== this.state.roomId) {
                 let activeSpace: ViewRoomEvent["activeSpace"];
-                if (SpaceStore.instance.activeSpace === MetaSpace.Home) {
+                if (this.spaceStore.activeSpace === MetaSpace.Home) {
                     activeSpace = "Home";
-                } else if (isMetaSpace(SpaceStore.instance.activeSpace)) {
+                } else if (isMetaSpace(this.spaceStore.activeSpace)) {
                     activeSpace = "Meta";
                 } else {
-                    activeSpace = SpaceStore.instance.activeSpaceRoom.getJoinRule() === JoinRule.Public
+                    activeSpace = this.spaceStore.activeSpaceRoom?.getJoinRule() === JoinRule.Public
                         ? "Public"
                         : "Private";
                 }
 
-                PosthogAnalytics.instance.trackEvent<ViewRoomEvent>({
+                this.posthog.trackEvent<ViewRoomEvent>({
                     eventName: "ViewRoom",
                     trigger: payload.metricsTrigger,
                     viaKeyboard: payload.metricsViaKeyboard,
@@ -272,7 +277,7 @@ export class RoomViewStore extends EventEmitter {
             if (SettingsStore.getValue("feature_sliding_sync") && this.state.roomId !== payload.room_id) {
                 if (this.state.subscribingRoomId && this.state.subscribingRoomId !== payload.room_id) {
                     // unsubscribe from this room, but don't await it as we don't care when this gets done.
-                    SlidingSyncManager.instance.setRoomVisible(this.state.subscribingRoomId, false);
+                    this.slidingSyncManager.setRoomVisible(this.state.subscribingRoomId, false);
                 }
                 this.setState({
                     subscribingRoomId: payload.room_id,
@@ -289,11 +294,11 @@ export class RoomViewStore extends EventEmitter {
                 });
                 // set this room as the room subscription. We need to await for it as this will fetch
                 // all room state for this room, which is required before we get the state below.
-                await SlidingSyncManager.instance.setRoomVisible(payload.room_id, true);
+                await this.slidingSyncManager.setRoomVisible(payload.room_id, true);
                 // Whilst we were subscribing another room was viewed, so stop what we're doing and
                 // unsubscribe
                 if (this.state.subscribingRoomId !== payload.room_id) {
-                    SlidingSyncManager.instance.setRoomVisible(payload.room_id, false);
+                    this.slidingSyncManager.setRoomVisible(payload.room_id, false);
                     return;
                 }
                 // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
