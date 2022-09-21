@@ -43,7 +43,10 @@ describe('<FilteredDeviceList />', () => {
     const defaultProps = {
         onFilterChange: jest.fn(),
         onDeviceExpandToggle: jest.fn(),
+        onSignOutDevices: jest.fn(),
+        saveDeviceName: jest.fn(),
         expandedDeviceIds: [],
+        signingOutDeviceIds: [],
         devices: {
             [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
             [verifiedNoMetadata.device_id]: verifiedNoMetadata,
