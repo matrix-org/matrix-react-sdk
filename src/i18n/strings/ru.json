@@ -1425,7 +1425,7 @@
     "Clear cross-signing keys": "Очистить ключи кросс-подписи",
     "Clear all data in this session?": "Очистить все данные в этой сессии?",
     "Enable end-to-end encryption": "Включить сквозное шифрование",
-    "Verify session": "Подтвердить сессию",
+    "Verify session": "Заверить сессию",
     "Session name": "Название сессии",
     "Session key": "Ключ сессии",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
@@ -3544,5 +3544,6 @@
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s или %(emojiCompare)s",
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s или %(appLinks)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
-    "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s или %(copyButton)s"
+    "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s или %(copyButton)s",
+    "Sign out of this session": "Выйти из этой сессии"
 }
