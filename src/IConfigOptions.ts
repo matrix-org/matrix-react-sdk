@@ -181,6 +181,11 @@ export interface IConfigOptions {
 
     // XXX: Undocumented URL for the "Learn more about spaces" link in the "Communities don't exist" messaging.
     spaces_learn_more_url?: string;
+
+    voice_broadcast: {
+        // length per voice chunk in seconds
+        chunk_length?: number;
+    };
 }
 
 export interface ISsoRedirectOptions {

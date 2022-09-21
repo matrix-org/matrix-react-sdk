@@ -44,6 +44,9 @@ export const DEFAULTS: IConfigOptions = {
         url: "https://element.io/get-started",
     },
     spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
+    voice_broadcast: {
+        chunk_length: 5 * 60 * 1000, // 5 minutes
+    },
 };
 
 export default class SdkConfig {
