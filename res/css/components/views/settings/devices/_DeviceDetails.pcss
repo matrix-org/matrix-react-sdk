@@ -34,6 +34,8 @@ limitations under the License.
 
     display: grid;
     grid-gap: $spacing-16;
+    justify-content: left;
+    grid-template-columns: 100%;
 
     &:last-child {
         padding-bottom: 0;
@@ -46,7 +48,7 @@ limitations under the License.
     margin: 0;
 }
 
-.mxDeviceDetails_metadataTable {
+.mx_DeviceDetails_metadataTable {
     font-size: $font-12px;
     color: $secondary-content;
 
@@ -71,4 +73,11 @@ limitations under the License.
     .mxDeviceDetails_metadataValue {
         color: $primary-content;
     }
+}
+
+.mx_DeviceDetails_signOutButtonContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-4;
 }
