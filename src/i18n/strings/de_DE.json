@@ -2147,7 +2147,7 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
     "Continuing without email": "Ohne E-Mail fortfahren",
     "Reason (optional)": "Grund (optional)",
-    "Continue with %(provider)s": "Mit %(provider)s fortfahren",
+    "Continue with %(provider)s": "Weiter mit %(provider)s",
     "Homeserver": "Heimserver",
     "Server Options": "Servereinstellungen",
     "No other application is using the webcam": "keine andere Anwendung auf die Webcam zugreift",
