@@ -285,6 +285,11 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                 confirm =
                 <div>
                     <p>Secure connection established.</p>
+                    { this.props.device === 'new' ?
+                        <p>Please follow the instructions on your other device to complete sign in.</p>
+                        :
+                        null
+                    }
                     <p>The code { this.state.confirmationDigits } should be displayed on the other device.</p>
                     { this.props.device === 'existing' ?
                         <div>
