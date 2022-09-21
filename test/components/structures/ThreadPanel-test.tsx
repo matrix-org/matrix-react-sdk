@@ -30,21 +30,38 @@ import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 jest.mock("../../../src/utils/Feedback");
 
 describe('ThreadPanel', () => {
-    it("should hide feedback prompt if feedback is disabled", () => {
-        mocked(shouldShowFeedback).mockReturnValue(false);
-
+    describe("Feedback prompt", () => {
         const cli = createTestClient();
         const room = mkStubRoom("!room:server", "room", cli);
         mocked(cli.getRoom).mockReturnValue(room);
-        render(<MatrixClientContext.Provider value={cli}>
-            <ThreadPanel
-                roomId="!room:server"
-                onClose={jest.fn()}
-                resizeNotifier={new ResizeNotifier()}
-                permalinkCreator={new RoomPermalinkCreator(room)}
-            />
-        </MatrixClientContext.Provider>);
-        expect(screen.queryByText("Give feedback")).toBeFalsy();
+
+        it("should show feedback prompt if feedback is enabled", () => {
+            mocked(shouldShowFeedback).mockReturnValue(true);
+
+            render(<MatrixClientContext.Provider value={cli}>
+                <ThreadPanel
+                    roomId="!room:server"
+                    onClose={jest.fn()}
+                    resizeNotifier={new ResizeNotifier()}
+                    permalinkCreator={new RoomPermalinkCreator(room)}
+                />
+            </MatrixClientContext.Provider>);
+            expect(screen.queryByText("Give feedback")).toBeTruthy();
+        });
+
+        it("should hide feedback prompt if feedback is disabled", () => {
+            mocked(shouldShowFeedback).mockReturnValue(false);
+
+            render(<MatrixClientContext.Provider value={cli}>
+                <ThreadPanel
+                    roomId="!room:server"
+                    onClose={jest.fn()}
+                    resizeNotifier={new ResizeNotifier()}
+                    permalinkCreator={new RoomPermalinkCreator(room)}
+                />
+            </MatrixClientContext.Provider>);
+            expect(screen.queryByText("Give feedback")).toBeFalsy();
+        });
     });
 
     describe('Header', () => {

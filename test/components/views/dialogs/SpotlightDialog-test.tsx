@@ -375,16 +375,31 @@ describe("Spotlight Dialog", () => {
         wrapper.unmount();
     });
 
-    it("should hide feedback prompt if feedback is disabled", async () => {
-        mocked(shouldShowFeedback).mockReturnValue(false);
+    describe("Feedback prompt", () => {
+        it("should show feedback prompt if feedback is enabled", async () => {
+            mocked(shouldShowFeedback).mockReturnValue(true);
 
-        const wrapper = mount(<SpotlightDialog initialText="test23" onFinished={() => null} />);
-        await act(async () => {
-            await sleep(200);
+            const wrapper = mount(<SpotlightDialog initialText="test23" onFinished={() => null} />);
+            await act(async () => {
+                await sleep(200);
+            });
+            wrapper.update();
+
+            const content = wrapper.find(".mx_SpotlightDialog_footer");
+            expect(content.childAt(0).text()).toBe("Results not as expected? Please give feedback.");
         });
-        wrapper.update();
 
-        const content = wrapper.find(".mx_SpotlightDialog_footer");
-        expect(content.text()).toBeFalsy();
+        it("should hide feedback prompt if feedback is disabled", async () => {
+            mocked(shouldShowFeedback).mockReturnValue(false);
+
+            const wrapper = mount(<SpotlightDialog initialText="test23" onFinished={() => null} />);
+            await act(async () => {
+                await sleep(200);
+            });
+            wrapper.update();
+
+            const content = wrapper.find(".mx_SpotlightDialog_footer");
+            expect(content.text()).toBeFalsy();
+        });
     });
 });
