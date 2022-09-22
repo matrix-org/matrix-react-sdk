@@ -19,6 +19,7 @@ import { MatrixClient, ClientEvent, ITurnServer as IClientTurnServer } from "mat
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Direction, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Widget, MatrixWidgetType, WidgetKind, WidgetDriver, ITurnServer } from "matrix-widget-api";
+import { Stores } from "../../../src/contexts/SDKContext";
 
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { RoomViewStore } from "../../../src/stores/RoomViewStore";
@@ -201,7 +202,7 @@ describe("StopGapWidgetDriver", () => {
         beforeEach(() => { driver = mkDefaultDriver(); });
 
         it('reads related events from the current room', async () => {
-            jest.spyOn(RoomViewStore.instance, 'getRoomId').mockReturnValue('!this-room-id');
+            jest.spyOn(Stores.instance.roomViewStore, 'getRoomId').mockReturnValue('!this-room-id');
 
             client.relations.mockResolvedValue({
                 originalEvent: new MatrixEvent(),

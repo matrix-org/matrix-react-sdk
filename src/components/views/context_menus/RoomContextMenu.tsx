@@ -50,6 +50,7 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import SettingsStore from "../../../settings/SettingsStore";
 import DevtoolsDialog from "../dialogs/DevtoolsDialog";
+import { Stores } from "../../../contexts/SDKContext";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -332,7 +333,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     };
 
     const ensureViewingRoom = (ev: ButtonEvent) => {
-        if (RoomViewStore.instance.getRoomId() === room.roomId) return;
+        if (Stores.instance.roomViewStore.getRoomId() === room.roomId) return;
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
@@ -377,7 +378,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     ev.stopPropagation();
 
                     Modal.createDialog(DevtoolsDialog, {
-                        roomId: RoomViewStore.instance.getRoomId(),
+                        roomId: Stores.instance.roomViewStore.getRoomId(),
                     }, "mx_DevtoolsDialog_wrapper");
                     onFinished();
                 }}

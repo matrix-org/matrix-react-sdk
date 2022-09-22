@@ -378,7 +378,7 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
             metricsTrigger: "SpaceHierarchy",
         });
     }, err => {
-        RoomViewStore.instance.showJoinRoomError(err, roomId);
+        Stores.instance.roomViewStore.showJoinRoomError(err, roomId);
     });
 
     return prom;

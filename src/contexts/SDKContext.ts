@@ -16,6 +16,7 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { createContext } from "react";
+import defaultDispatcher from "../dispatcher/dispatcher";
 
 import LegacyCallHandler from "../LegacyCallHandler";
 import { PosthogAnalytics } from "../PosthogAnalytics";
@@ -35,6 +36,11 @@ SDKContext.displayName = "SDKContext";
  * as singletons scoped to this object.
  */
 export class Stores {
+    /**
+     * The global Stores instance. This is a temporary measure whilst so many stores remain global
+     * as well. Over time, these stores should accept a `Stores` in their constructor. When all
+     * stores do this, this static variable can be deleted.
+     */
     public static readonly instance = new Stores();
 
     // Optional as we don't have a client on initial load if unregistered. This should be set
@@ -43,6 +49,7 @@ export class Stores {
     // this Context.
     public client?: MatrixClient;
 
+    // All protected fields to make it easier to derive OverridableStores
     protected _RightPanelStore?: RightPanelStore;
     protected _RoomNotificationStateStore?: RoomNotificationStateStore;
     protected _RoomViewStore?: RoomViewStore;
@@ -53,7 +60,12 @@ export class Stores {
     protected _SpaceStore?: SpaceStoreClass;
     protected _LegacyCallHandler?: LegacyCallHandler;
 
-    constructor() {}
+    constructor() {
+        // Important: This cannot be a dynamic getter (lazily-constructed instance) because
+        // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
+        // the app. We need to eagerly create the instance.
+        this.roomViewStore;
+    }
 
     public get legacyCallHandler(): LegacyCallHandler {
         if (!this._LegacyCallHandler) {
@@ -75,7 +87,9 @@ export class Stores {
     }
     public get roomViewStore(): RoomViewStore {
         if (!this._RoomViewStore) {
-            this._RoomViewStore = RoomViewStore.instance;
+            this._RoomViewStore = new RoomViewStore(
+                defaultDispatcher, this,
+            );
         }
         return this._RoomViewStore;
     }

@@ -65,6 +65,7 @@ import { arrayFastClone } from "../../utils/arrays";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import Modal from "../../Modal";
 import ErrorDialog from "../../components/views/dialogs/ErrorDialog";
+import { Stores } from "../../contexts/SDKContext";
 
 // TODO: Destroy all of this code
 
@@ -184,7 +185,7 @@ export class StopGapWidget extends EventEmitter {
 
         if (this.roomId) return this.roomId;
 
-        return RoomViewStore.instance.getRoomId();
+        return Stores.instance.roomViewStore.getRoomId();
     }
 
     public get widgetApi(): ClientWidgetApi {
@@ -376,7 +377,7 @@ export class StopGapWidget extends EventEmitter {
 
                     // noinspection JSIgnoredPromiseFromCall
                     IntegrationManagers.sharedInstance().getPrimaryManager().open(
-                        this.client.getRoom(RoomViewStore.instance.getRoomId()),
+                        this.client.getRoom(Stores.instance.roomViewStore.getRoomId()),
                         `type_${integType}`,
                         integId,
                     );

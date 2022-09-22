@@ -37,6 +37,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import DevtoolsDialog from "../dialogs/DevtoolsDialog";
 import { RoomViewStore } from "../../../stores/RoomViewStore";
+import { Stores } from "../../../contexts/SDKContext";
 
 const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
@@ -72,7 +73,7 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
                     onClick={() => {
                         closeMenu();
                         Modal.createDialog(DevtoolsDialog, {
-                            roomId: RoomViewStore.instance.getRoomId(),
+                            roomId: Stores.instance.roomViewStore.getRoomId(),
                         }, "mx_DevtoolsDialog_wrapper");
                     }}
                     kind="danger_outline"

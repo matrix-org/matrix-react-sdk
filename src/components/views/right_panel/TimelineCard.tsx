@@ -42,6 +42,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import Measured from '../elements/Measured';
 import Heading from '../typography/Heading';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
+import { Stores } from '../../../contexts/SDKContext';
 
 interface IProps {
     room: Room;
@@ -91,7 +92,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        RoomViewStore.instance.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        Stores.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction);
         this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[,,, value]) =>
             this.setState({ showReadReceipts: value as boolean }),
@@ -102,7 +103,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        RoomViewStore.instance.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        Stores.instance.roomViewStore.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
         if (this.readReceiptsSettingWatcher) {
             SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
@@ -116,12 +117,9 @@ export default class TimelineCard extends React.Component<IProps, IState> {
 
     private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
         const newState: Pick<IState, any> = {
-            // roomLoading: RoomViewStore.instance.isRoomLoading(),
-            // roomLoadError: RoomViewStore.instance.getRoomLoadError(),
-
-            initialEventId: RoomViewStore.instance.getInitialEventId(),
-            isInitialEventHighlighted: RoomViewStore.instance.isInitialEventHighlighted(),
-            replyToEvent: RoomViewStore.instance.getQuotingEvent(),
+            initialEventId: Stores.instance.roomViewStore.getInitialEventId(),
+            isInitialEventHighlighted: Stores.instance.roomViewStore.isInitialEventHighlighted(),
+            replyToEvent: Stores.instance.roomViewStore.getQuotingEvent(),
         };
 
         this.setState(newState);

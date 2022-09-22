@@ -46,6 +46,7 @@ import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
+import { Stores } from "./contexts/SDKContext";
 
 /*
  * Dispatches:
@@ -408,7 +409,7 @@ export const Notifier = {
 
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions?.notify) {
-            if (RoomViewStore.instance.getRoomId() === room.roomId &&
+            if (Stores.instance.roomViewStore.getRoomId() === room.roomId &&
                 UserActivity.sharedInstance().userActiveRecently() &&
                 !Modal.hasDialogs()
             ) {

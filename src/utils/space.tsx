@@ -38,6 +38,7 @@ import { UIComponent } from "../settings/UIFeature";
 import { OpenSpacePreferencesPayload, SpacePreferenceTab } from "../dispatcher/payloads/OpenSpacePreferencesPayload";
 import { OpenSpaceSettingsPayload } from "../dispatcher/payloads/OpenSpaceSettingsPayload";
 import { OpenAddExistingToSpaceDialogPayload } from "../dispatcher/payloads/OpenAddExistingToSpaceDialogPayload";
+import { Stores } from "../contexts/SDKContext";
 
 export const shouldShowSpaceSettings = (space: Room) => {
     const userId = space.client.getUserId();
@@ -113,7 +114,7 @@ export const showAddExistingSubspace = (space: Room): void => {
         space,
         onCreateSubspaceClick: () => showCreateNewSubspace(space),
         onFinished: (added: boolean) => {
-            if (added && RoomViewStore.instance.getRoomId() === space.roomId) {
+            if (added && Stores.instance.roomViewStore.getRoomId() === space.roomId) {
                 defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
             }
         },
@@ -125,7 +126,7 @@ export const showCreateNewSubspace = (space: Room): void => {
         space,
         onAddExistingSpaceClick: () => showAddExistingSubspace(space),
         onFinished: (added: boolean) => {
-            if (added && RoomViewStore.instance.getRoomId() === space.roomId) {
+            if (added && Stores.instance.roomViewStore.getRoomId() === space.roomId) {
                 defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
             }
         },

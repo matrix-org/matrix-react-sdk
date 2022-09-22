@@ -27,7 +27,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 import EventEmitter from "events";
 
-import { defaultDispatcher, MatrixDispatcher } from '../dispatcher/dispatcher';
+import { MatrixDispatcher } from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
@@ -91,12 +91,6 @@ type Listener = (isActive: boolean) => void;
  * A class for storing application state for RoomView.
  */
 export class RoomViewStore extends EventEmitter {
-    // Important: This cannot be a dynamic getter (lazily-constructed instance) because
-    // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
-    // the app. We need to eagerly create the instance.
-    public static instance = new RoomViewStore(
-        defaultDispatcher, Stores.instance,
-    );
 
     // initialize state as a copy of the initial state. We need to copy else one RVS can talk to
     // another RVS via INITIAL_STATE as they share the same underlying object. Mostly relevant for tests.
@@ -554,7 +548,7 @@ export class RoomViewStore extends EventEmitter {
     //         // Not joined
     //     }
     // } else {
-    //     if (RoomViewStore.instance.isJoining()) {
+    //     if (Stores.instance.roomViewStore.isJoining()) {
     //         // show spinner
     //     } else {
     //         // show join prompt
