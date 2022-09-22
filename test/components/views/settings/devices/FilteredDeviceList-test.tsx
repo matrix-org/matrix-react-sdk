@@ -57,6 +57,7 @@ describe('<FilteredDeviceList />', () => {
             [hundredDaysOldUnverified.device_id]: hundredDaysOldUnverified,
         },
         pushers: [],
+        supportsMSC3881: true,
     };
 
     const mockClient = getMockClientWithEventEmitter({

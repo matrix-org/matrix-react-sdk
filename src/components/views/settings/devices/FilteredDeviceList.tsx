@@ -48,6 +48,7 @@ interface Props {
     saveDeviceName: DevicesState['saveDeviceName'];
     onRequestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => void;
     setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    supportsMSC3881: boolean | null;
 }
 
 // devices without timestamp metadata should be sorted last
@@ -147,6 +148,7 @@ const DeviceListItem: React.FC<{
     saveDeviceName: (deviceName: string) => Promise<void>;
     onRequestDeviceVerification?: () => void;
     setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    supportsMSC3881: boolean | null;
 }> = ({
     device,
     pusher,
@@ -157,6 +159,7 @@ const DeviceListItem: React.FC<{
     saveDeviceName,
     onRequestDeviceVerification,
     setPusherEnabled,
+    supportsMSC3881,
 }) => <li className='mx_FilteredDeviceList_listItem'>
     <DeviceTile
         device={device}
@@ -176,6 +179,7 @@ const DeviceListItem: React.FC<{
             onSignOutDevice={onSignOutDevice}
             saveDeviceName={saveDeviceName}
             setPusherEnabled={setPusherEnabled}
+            supportsMSC3881={supportsMSC3881}
         />
     }
 </li>;
@@ -197,6 +201,7 @@ export const FilteredDeviceList =
         onSignOutDevices,
         onRequestDeviceVerification,
         setPusherEnabled,
+        supportsMSC3881,
     }: Props, ref: ForwardedRef<HTMLDivElement>) => {
         const sortedDevices = getFilteredSortedDevices(devices, filter);
 
@@ -264,6 +269,7 @@ export const FilteredDeviceList =
                             : undefined
                     }
                     setPusherEnabled={setPusherEnabled}
+                    supportsMSC3881={supportsMSC3881}
                 />,
                 ) }
             </ol>

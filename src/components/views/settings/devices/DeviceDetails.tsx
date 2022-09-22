@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
 import { PUSHER_ENABLED } from 'matrix-js-sdk/src/@types/event';
 
@@ -26,7 +26,6 @@ import ToggleSwitch from '../../elements/ToggleSwitch';
 import { DeviceDetailHeading } from './DeviceDetailHeading';
 import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
 import { DeviceWithVerification } from './types';
-import MatrixClientContext from '../../../../contexts/MatrixClientContext';
 
 interface Props {
     device: DeviceWithVerification;
@@ -36,6 +35,7 @@ interface Props {
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
     setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void> | null;
+    supportsMSC3881: boolean | null;
 }
 
 interface MetadataTable {
@@ -51,15 +51,8 @@ const DeviceDetails: React.FC<Props> = ({
     onSignOutDevice,
     saveDeviceName,
     setPusherEnabled,
+    supportsMSC3881,
 }) => {
-    const [supportMSC3881, setSupportsMSC3881] = useState<boolean>(false);
-    const matrixClient = useContext(MatrixClientContext);
-    useEffect(() => {
-        matrixClient.doesServerSupportUnstableFeature("org.matrix.msc3881").then(isEnabled => {
-            setSupportsMSC3881(isEnabled);
-        });
-    }, [matrixClient]);
-
     const metadata: MetadataTable[] = [
         {
             values: [
@@ -109,24 +102,27 @@ const DeviceDetails: React.FC<Props> = ({
             </table>,
             ) }
         </section>
-        { /* { pusher && ( */ }
-        <section className='mx_DeviceDetails_section mx_DeviceDetails_pushNotifications'>
-            <ToggleSwitch
+        { pusher && (
+            <section
+                className='mx_DeviceDetails_section mx_DeviceDetails_pushNotifications'
+                data-testid='device-detail-push-notification'
+            >
+                <ToggleSwitch
                 // For backwards compatibility, if `enabled` is missing
                 // default to `true`
-                checked={pusher?.[PUSHER_ENABLED.name] ?? true}
-                disabled={!supportMSC3881}
-                onChange={(checked) => setPusherEnabled?.(device.device_id, checked)}
-                aria-label={_t("Toggle push notifications on this session.")}
-            />
-            <p className='mx_DeviceDetails_sectionHeading'>
-                { _t('Push notifications') }
-                <small className='mx_DeviceDetails_sectionSubheading'>
-                    { _t('Receive push notifications on this session.') }
-                </small>
-            </p>
-        </section>
-        { /* ) } */ }
+                    checked={pusher?.[PUSHER_ENABLED.name] ?? true}
+                    disabled={!supportsMSC3881}
+                    onChange={(checked) => setPusherEnabled?.(device.device_id, checked)}
+                    aria-label={_t("Toggle push notifications on this session.")}
+                />
+                <p className='mx_DeviceDetails_sectionHeading'>
+                    { _t('Push notifications') }
+                    <small className='mx_DeviceDetails_sectionSubheading'>
+                        { _t('Receive push notifications on this session.') }
+                    </small>
+                </p>
+            </section>
+        ) }
         <section className='mx_DeviceDetails_section'>
             <AccessibleButton
                 onClick={onSignOutDevice}

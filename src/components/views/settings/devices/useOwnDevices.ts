@@ -85,6 +85,7 @@ export type DevicesState = {
     saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
     setPusherEnabled: (deviceId: DeviceWithVerification['device_id'], enabled: boolean) => Promise<void>;
     error?: OwnDevicesError;
+    supportsMSC3881: boolean;
 };
 export const useOwnDevices = (): DevicesState => {
     const matrixClient = useContext(MatrixClientContext);
@@ -95,8 +96,13 @@ export const useOwnDevices = (): DevicesState => {
     const [devices, setDevices] = useState<DevicesState['devices']>({});
     const [pushers, setPushers] = useState<DevicesState['pushers']>([]);
     const [isLoadingDeviceList, setIsLoadingDeviceList] = useState(true);
+    const [supportsMSC3881, setSupportsMSC3881] = useState(true); // optimisticly saying yes!
 
     const [error, setError] = useState<OwnDevicesError>();
+
+    matrixClient.doesServerSupportUnstableFeature("org.matrix.msc3881").then(hasSupport => {
+        setSupportsMSC3881(hasSupport);
+    });
 
     const refreshDevices = useCallback(async () => {
         setIsLoadingDeviceList(true);
@@ -187,5 +193,6 @@ export const useOwnDevices = (): DevicesState => {
         refreshDevices,
         saveDeviceName,
         setPusherEnabled,
+        supportsMSC3881,
     };
 };
