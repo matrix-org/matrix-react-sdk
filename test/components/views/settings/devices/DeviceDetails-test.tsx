@@ -16,10 +16,23 @@ limitations under the License.
 
 import React from 'react';
 import { render } from '@testing-library/react';
+import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
+import { PUSHER_ENABLED } from 'matrix-js-sdk/src/@types/event';
 
 import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
 import MatrixClientContext from '../../../../../src/contexts/MatrixClientContext';
 import { getMockClientWithEventEmitter } from '../../../../test-utils';
+
+const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
+    app_display_name: "app",
+    app_id: "123",
+    data: {},
+    device_display_name: "name",
+    kind: "http",
+    lang: "en",
+    pushkey: "pushpush",
+    ...extra,
+});
 
 describe('<DeviceDetails />', () => {
     const baseDevice = {
@@ -34,6 +47,7 @@ describe('<DeviceDetails />', () => {
         onSignOutDevice: jest.fn(),
         saveDeviceName: jest.fn(),
         setPusherEnabled: jest.fn(),
+        supportsMSC3881: true,
     };
 
     const mockClient = getMockClientWithEventEmitter({
@@ -86,5 +100,58 @@ describe('<DeviceDetails />', () => {
         expect(
             getByTestId('device-detail-sign-out-cta').getAttribute('aria-disabled'),
         ).toEqual("true");
+    });
+
+    it('renders the push notification section when a pusher exists', () => {
+        const device = {
+            ...baseDevice,
+        };
+        const pusher = mkPusher({
+            device_id: device.device_id,
+        });
+
+        const { getByTestId } = render(getComponent({
+            device,
+            pusher,
+            isSigningOut: true,
+        }));
+
+        expect(getByTestId('device-detail-push-notification')).toBeTruthy();
+    });
+
+    it('hides  te push notification section when no pusher', () => {
+        const device = {
+            ...baseDevice,
+        };
+
+        const { getByTestId } = render(getComponent({
+            device,
+            pusher: null,
+            isSigningOut: true,
+        }));
+
+        expect(() => getByTestId('device-detail-push-notification')).toThrow();
+    });
+
+    it('disables the checkbox when there\'s no server support', () => {
+        const device = {
+            ...baseDevice,
+        };
+        const pusher = mkPusher({
+            device_id: device.device_id,
+            [PUSHER_ENABLED.name]: false,
+        });
+
+        const { getByTestId } = render(getComponent({
+            device,
+            pusher,
+            isSigningOut: true,
+            supportsMSC3881: false,
+        }));
+
+        const checkbox = getByTestId('device-detail-push-notification-checkbox');
+
+        expect(checkbox.getAttribute('aria-disabled')).toEqual("true");
+        expect(checkbox.getAttribute('aria-checked')).toEqual("false");
     });
 });

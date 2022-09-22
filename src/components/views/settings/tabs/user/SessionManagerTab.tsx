@@ -94,6 +94,7 @@ const SessionManagerTab: React.FC = () => {
         refreshDevices,
         saveDeviceName,
         setPusherEnabled,
+        supportsMSC3881,
     } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
     const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
@@ -199,6 +200,7 @@ const SessionManagerTab: React.FC = () => {
                     saveDeviceName={saveDeviceName}
                     setPusherEnabled={setPusherEnabled}
                     ref={filteredDeviceListRef}
+                    supportsMSC3881={supportsMSC3881}
                 />
             </SettingsSubsection>
         }

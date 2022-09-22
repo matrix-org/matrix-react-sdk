@@ -114,6 +114,7 @@ const DeviceDetails: React.FC<Props> = ({
                     disabled={!supportsMSC3881}
                     onChange={(checked) => setPusherEnabled?.(device.device_id, checked)}
                     aria-label={_t("Toggle push notifications on this session.")}
+                    data-testid='device-detail-push-notification-checkbox'
                 />
                 <p className='mx_DeviceDetails_sectionHeading'>
                     { _t('Push notifications') }
