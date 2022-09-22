@@ -19,8 +19,7 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 import { FilteredDeviceList } from '../../../../../src/components/views/settings/devices/FilteredDeviceList';
 import { DeviceSecurityVariation } from '../../../../../src/components/views/settings/devices/types';
-import { flushPromises, getMockClientWithEventEmitter, mockPlatformPeg } from '../../../../test-utils';
-import MatrixClientContext from '../../../../../src/contexts/MatrixClientContext';
+import { flushPromises, mockPlatformPeg } from '../../../../test-utils';
 
 mockPlatformPeg();
 
@@ -60,14 +59,8 @@ describe('<FilteredDeviceList />', () => {
         supportsMSC3881: true,
     };
 
-    const mockClient = getMockClientWithEventEmitter({
-        doesServerSupportUnstableFeature: jest.fn().mockReturnValue(Promise.resolve(true)),
-    });
-
     const getComponent = (props = {}) =>
-        (<MatrixClientContext.Provider value={mockClient}>
-            <FilteredDeviceList {...defaultProps} {...props} />
-        </MatrixClientContext.Provider>);
+        (<FilteredDeviceList {...defaultProps} {...props} />);
 
     it('renders devices in correct order', () => {
         const { container } = render(getComponent());

@@ -20,8 +20,6 @@ import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
 import { PUSHER_ENABLED } from 'matrix-js-sdk/src/@types/event';
 
 import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
-import MatrixClientContext from '../../../../../src/contexts/MatrixClientContext';
-import { getMockClientWithEventEmitter } from '../../../../test-utils';
 
 const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
     app_display_name: "app",
@@ -50,14 +48,7 @@ describe('<DeviceDetails />', () => {
         supportsMSC3881: true,
     };
 
-    const mockClient = getMockClientWithEventEmitter({
-        doesServerSupportUnstableFeature: jest.fn().mockReturnValue(Promise.resolve(true)),
-    });
-
-    const getComponent = (props = {}) =>
-        (<MatrixClientContext.Provider value={mockClient}>
-            <DeviceDetails {...defaultProps} {...props} />
-        </MatrixClientContext.Provider>);
+    const getComponent = (props = {}) => <DeviceDetails {...defaultProps} {...props} />;
 
     // 14.03.2022 16:15
     const now = 1647270879403;
