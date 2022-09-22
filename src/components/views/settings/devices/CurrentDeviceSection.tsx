@@ -67,6 +67,9 @@ const CurrentDeviceSection: React.FC<Props> = ({
                     onVerifyDevice={onVerifyCurrentDevice}
                     onSignOutDevice={onSignOutCurrentDevice}
                     saveDeviceName={saveDeviceName}
+                    // Current device can not have a pusher as Web does not use them
+                    pusher={null}
+                    setPusherEnabled={null}
                 />
             }
             <br />

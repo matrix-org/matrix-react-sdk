@@ -35,7 +35,7 @@ interface Props {
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
-    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void> | null;
 }
 
 interface MetadataTable {
@@ -109,24 +109,24 @@ const DeviceDetails: React.FC<Props> = ({
             </table>,
             ) }
         </section>
-        { pusher && (
-            <section className='mx_DeviceDetails_section mx_DeviceDetails_pushNotifications'>
-                <ToggleSwitch
+        { /* { pusher && ( */ }
+        <section className='mx_DeviceDetails_section mx_DeviceDetails_pushNotifications'>
+            <ToggleSwitch
                 // For backwards compatibility, if `enabled` is missing
                 // default to `true`
-                    checked={pusher?.[PUSHER_ENABLED.name] ?? true}
-                    disabled={!supportMSC3881}
-                    onChange={(checked) => setPusherEnabled(device.device_id, checked)}
-                    aria-label={_t("Toggle push notifications on this session.")}
-                />
-                <p className='mx_DeviceDetails_sectionHeading'>
-                    { _t('Push notifications') }
-                    <small className='mx_DeviceDetails_sectionSubheading'>
-                        { _t('Receive push notifications on this session.') }
-                    </small>
-                </p>
-            </section>
-        ) }
+                checked={pusher?.[PUSHER_ENABLED.name] ?? true}
+                disabled={!supportMSC3881}
+                onChange={(checked) => setPusherEnabled?.(device.device_id, checked)}
+                aria-label={_t("Toggle push notifications on this session.")}
+            />
+            <p className='mx_DeviceDetails_sectionHeading'>
+                { _t('Push notifications') }
+                <small className='mx_DeviceDetails_sectionSubheading'>
+                    { _t('Receive push notifications on this session.') }
+                </small>
+            </p>
+        </section>
+        { /* ) } */ }
         <section className='mx_DeviceDetails_section'>
             <AccessibleButton
                 onClick={onSignOutDevice}
