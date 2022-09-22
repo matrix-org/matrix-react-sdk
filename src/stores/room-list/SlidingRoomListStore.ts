@@ -29,7 +29,6 @@ import { SlidingSyncManager } from "../../SlidingSyncManager";
 import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
 import { LISTS_LOADING_EVENT } from "./RoomListStore";
-import { RoomViewStore } from "../RoomViewStore";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { Stores } from "../../contexts/SDKContext";
 

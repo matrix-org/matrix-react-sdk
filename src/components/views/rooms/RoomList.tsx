@@ -38,7 +38,6 @@ import { ITagMap } from "../../../stores/room-list/algorithms/models";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
-import { RoomViewStore } from "../../../stores/RoomViewStore";
 import {
     isMetaSpace,
     ISuggestedRoom,

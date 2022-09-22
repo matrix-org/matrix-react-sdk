@@ -91,7 +91,6 @@ type Listener = (isActive: boolean) => void;
  * A class for storing application state for RoomView.
  */
 export class RoomViewStore extends EventEmitter {
-
     // initialize state as a copy of the initial state. We need to copy else one RVS can talk to
     // another RVS via INITIAL_STATE as they share the same underlying object. Mostly relevant for tests.
     private state = JSON.parse(JSON.stringify(INITIAL_STATE));

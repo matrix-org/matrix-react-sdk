@@ -33,7 +33,6 @@ import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import { ActionPayload } from '../../../dispatcher/payloads';
 import { Action } from '../../../dispatcher/actions';
-import { RoomViewStore } from '../../../stores/RoomViewStore';
 import ContentMessages from '../../../ContentMessages';
 import UploadBar from '../../structures/UploadBar';
 import SettingsStore from '../../../settings/SettingsStore';

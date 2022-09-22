@@ -19,10 +19,9 @@ import { MatrixClient, ClientEvent, ITurnServer as IClientTurnServer } from "mat
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Direction, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Widget, MatrixWidgetType, WidgetKind, WidgetDriver, ITurnServer } from "matrix-widget-api";
-import { Stores } from "../../../src/contexts/SDKContext";
 
+import { Stores } from "../../../src/contexts/SDKContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
-import { RoomViewStore } from "../../../src/stores/RoomViewStore";
 import { StopGapWidgetDriver } from "../../../src/stores/widgets/StopGapWidgetDriver";
 import { stubClient } from "../../test-utils";
 

@@ -27,7 +27,6 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { FILTER_CHANGED, IFilterCondition } from "./filters/IFilterCondition";
-import { RoomViewStore } from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import RoomListLayoutStore from "./RoomListLayoutStore";

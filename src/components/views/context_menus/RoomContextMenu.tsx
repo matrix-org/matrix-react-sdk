@@ -37,7 +37,6 @@ import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { usePinnedEvents } from "../right_panel/PinnedMessagesCard";
-import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";

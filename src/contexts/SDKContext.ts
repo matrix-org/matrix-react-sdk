@@ -16,8 +16,8 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { createContext } from "react";
-import defaultDispatcher from "../dispatcher/dispatcher";
 
+import defaultDispatcher from "../dispatcher/dispatcher";
 import LegacyCallHandler from "../LegacyCallHandler";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 import { SlidingSyncManager } from "../SlidingSyncManager";

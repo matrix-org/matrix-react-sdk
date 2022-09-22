@@ -30,7 +30,6 @@ import { showRoomInviteDialog } from "../RoomInvite";
 import CreateSubspaceDialog from "../components/views/dialogs/CreateSubspaceDialog";
 import AddExistingSubspaceDialog from "../components/views/dialogs/AddExistingSubspaceDialog";
 import defaultDispatcher from "../dispatcher/dispatcher";
-import { RoomViewStore } from "../stores/RoomViewStore";
 import { Action } from "../dispatcher/actions";
 import Spinner from "../components/views/elements/Spinner";
 import { shouldShowComponent } from "../customisations/helpers/UIComponents";

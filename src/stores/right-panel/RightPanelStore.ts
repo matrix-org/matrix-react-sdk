@@ -34,7 +34,6 @@ import {
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { ActiveRoomChangedPayload } from "../../dispatcher/payloads/ActiveRoomChangedPayload";
-import { RoomViewStore } from "../RoomViewStore";
 import { Stores } from "../../contexts/SDKContext";
 
 /**

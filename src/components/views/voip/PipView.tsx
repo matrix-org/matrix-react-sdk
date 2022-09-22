@@ -21,7 +21,6 @@ import classNames from 'classnames';
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import LegacyCallView from "./LegacyCallView";
-import { RoomViewStore } from '../../../stores/RoomViewStore';
 import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
 import PersistentApp from "../elements/PersistentApp";
 import SettingsStore from "../../../settings/SettingsStore";

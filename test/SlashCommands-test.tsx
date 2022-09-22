@@ -60,7 +60,6 @@ describe('SlashCommands', () => {
         room = new Room(roomId, client, client.getUserId());
         localRoom = new LocalRoom(localRoomId, client, client.getUserId());
 
-        
         jest.spyOn(Stores.instance.roomViewStore, "getRoomId");
     });
 

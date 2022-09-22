@@ -41,7 +41,6 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { _t } from "../../languageHandler";
 import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
-import { RoomViewStore } from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { OwnProfileStore } from "../OwnProfileStore";
 import WidgetUtils from '../../utils/WidgetUtils';

@@ -34,7 +34,6 @@ import { RoomNotificationStateStore } from "../notifications/RoomNotificationSta
 import { DefaultTagID } from "../room-list/models";
 import { EnhancedMap, mapDiff } from "../../utils/maps";
 import { setDiff, setHasDiff } from "../../utils/sets";
-import { RoomViewStore } from "../RoomViewStore";
 import { Action } from "../../dispatcher/actions";
 import { arrayHasDiff, arrayHasOrderChange } from "../../utils/arrays";
 import { reorderLexicographically } from "../../utils/stringOrderField";

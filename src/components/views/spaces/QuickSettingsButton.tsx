@@ -36,7 +36,6 @@ import { Icon as FavoriteIcon } from '../../../../res/img/element-icons/roomlist
 import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import DevtoolsDialog from "../dialogs/DevtoolsDialog";
-import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { Stores } from "../../../contexts/SDKContext";
 
 const QuickSettingsButton = ({ isPanelCollapsed = false }) => {

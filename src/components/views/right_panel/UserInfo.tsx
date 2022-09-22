@@ -36,7 +36,6 @@ import { _t } from '../../../languageHandler';
 import DMRoomMap from '../../../utils/DMRoomMap';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import SdkConfig from '../../../SdkConfig';
-import { RoomViewStore } from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon from "../rooms/E2EIcon";
