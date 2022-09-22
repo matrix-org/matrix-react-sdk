@@ -96,9 +96,7 @@ export class RoomViewStore extends EventEmitter {
     // Important: This cannot be a dynamic getter (lazily-constructed instance) because
     // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
     // the app. We need to eagerly create the instance.
-    public static readonly instance = new RoomViewStore(
-        defaultDispatcher, SpaceStore.instance, SlidingSyncManager.instance, PosthogAnalytics.instance,
-    );
+    public static instance: RoomViewStore;
 
     // initialize state as a copy of the initial state. We need to copy else one RVS can talk to
     // another RVS via INITIAL_STATE as they share the same underlying object. Mostly relevant for tests.
@@ -585,3 +583,9 @@ export class RoomViewStore extends EventEmitter {
         return this.state.wasContextSwitch;
     }
 }
+
+queueMicrotask(() => {
+    RoomViewStore.instance = new RoomViewStore(
+        defaultDispatcher, SpaceStore.instance, SlidingSyncManager.instance, PosthogAnalytics.instance,
+    );
+});
