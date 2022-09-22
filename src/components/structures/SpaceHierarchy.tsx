@@ -66,6 +66,7 @@ import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { Alignment } from "../views/elements/Tooltip";
 import { getTopic } from "../../hooks/room/useTopic";
+import { Stores } from "../../contexts/SDKContext";
 
 interface IProps {
     space: Room;
