@@ -20,6 +20,7 @@ import { formatDate } from '../../../../DateUtils';
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
 import Spinner from '../../elements/Spinner';
+import ToggleSwitch from '../../elements/ToggleSwitch';
 import { DeviceDetailHeading } from './DeviceDetailHeading';
 import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
 import { DeviceWithVerification } from './types';
@@ -92,6 +93,20 @@ const DeviceDetails: React.FC<Props> = ({
                 </tbody>
             </table>,
             ) }
+        </section>
+        <section className='mx_DeviceDetails_section mx_DeviceDetails_pushNotifications'>
+            <ToggleSwitch
+                checked={true}
+                disabled={true}
+                onChange={() => {}}
+                aria-label={_t("Toggle push notifications on this session.")}
+            />
+            <p className='mx_DeviceDetails_sectionHeading'>
+                { _t('Push notifications') }
+                <small className='mx_DeviceDetails_sectionSubheading'>
+                    { _t('Receive push notifications on this session.') }
+                </small>
+            </p>
         </section>
         <section className='mx_DeviceDetails_section'>
             <AccessibleButton
