@@ -3560,5 +3560,10 @@
     "Voice broadcast": "Sprachübertragung",
     "Voice broadcasts": "Rundrufe",
     "Voice broadcast (under active development)": "Rundruf (in aktiver Entwicklung)",
-    "Element Call video rooms": "Element Call-Videoräume"
+    "Element Call video rooms": "Element Call-Videoräume",
+    "You need to be able to kick users to do that.": "Du musst in der Lage sein, Benutzer zu entfernen um das zu tun.",
+    "Sign out of this session": "Melde dich von dieser Sitzung ab",
+    "Please be aware that session names are also visible to people you communicate with": "Sei dir bitte bewusst, dass Sitzungsnamen auch für Leute, mit denen du kommunizierst, sichtbar sind",
+    "Rename session": "Sitzung umbenennen",
+    "Video input %(n)s": "Video-Eingang %(n)s"
 }
