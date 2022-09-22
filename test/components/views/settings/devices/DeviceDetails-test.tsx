@@ -18,6 +18,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
+import MatrixClientContext from '../../../../../src/contexts/MatrixClientContext';
+import { getMockClientWithEventEmitter } from '../../../../test-utils';
 
 describe('<DeviceDetails />', () => {
     const baseDevice = {
@@ -26,12 +28,23 @@ describe('<DeviceDetails />', () => {
     };
     const defaultProps = {
         device: baseDevice,
+        pusher: null,
         isSigningOut: false,
         isLoading: false,
         onSignOutDevice: jest.fn(),
         saveDeviceName: jest.fn(),
+        setPusherEnabled: jest.fn(),
     };
-    const getComponent = (props = {}) => <DeviceDetails {...defaultProps} {...props} />;
+
+    const mockClient = getMockClientWithEventEmitter({
+        doesServerSupportUnstableFeature: jest.fn().mockReturnValue(Promise.resolve(true)),
+    });
+
+    const getComponent = (props = {}) =>
+        (<MatrixClientContext.Provider value={mockClient}>
+            <DeviceDetails {...defaultProps} {...props} />
+        </MatrixClientContext.Provider>);
+
     // 14.03.2022 16:15
     const now = 1647270879403;
     jest.useFakeTimers();

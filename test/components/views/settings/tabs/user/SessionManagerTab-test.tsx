@@ -67,6 +67,7 @@ describe('<SessionManagerTab />', () => {
         deleteMultipleDevices: jest.fn(),
         generateClientSecret: jest.fn(),
         setDeviceDetails: jest.fn(),
+        doesServerSupportUnstableFeature: jest.fn().mockReturnValue(Promise.resolve(true)),
     });
 
     const defaultProps = {};

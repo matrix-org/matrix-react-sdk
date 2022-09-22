@@ -19,6 +19,8 @@ import { fireEvent, render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import CurrentDeviceSection from '../../../../../src/components/views/settings/devices/CurrentDeviceSection';
+import MatrixClientContext from '../../../../../src/contexts/MatrixClientContext';
+import { getMockClientWithEventEmitter } from '../../../../test-utils';
 
 describe('<CurrentDeviceSection />', () => {
     const deviceId = 'alices_device';
@@ -40,8 +42,15 @@ describe('<CurrentDeviceSection />', () => {
         isLoading: false,
         isSigningOut: false,
     };
-    const getComponent = (props = {}): React.ReactElement =>
-        (<CurrentDeviceSection {...defaultProps} {...props} />);
+
+    const mockClient = getMockClientWithEventEmitter({
+        doesServerSupportUnstableFeature: jest.fn().mockReturnValue(Promise.resolve(true)),
+    });
+
+    const getComponent = (props = {}) =>
+        (<MatrixClientContext.Provider value={mockClient}>
+            <CurrentDeviceSection {...defaultProps} {...props} />
+        </MatrixClientContext.Provider>);
 
     it('renders spinner while device is loading', () => {
         const { container } = render(getComponent({ device: undefined, isLoading: true }));

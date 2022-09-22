@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { useCallback, useContext, useEffect, useState } from "react";
-import { IMyDevice, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IMyDevice, IPusher, MatrixClient, PUSHER_DEVICE_ID, PUSHER_ENABLED } from "matrix-js-sdk/src/matrix";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
@@ -76,12 +76,14 @@ export enum OwnDevicesError {
 }
 export type DevicesState = {
     devices: DevicesDictionary;
+    pushers: IPusher[];
     currentDeviceId: string;
     isLoadingDeviceList: boolean;
     // not provided when current session cannot request verification
     requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
     saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
+    setPusherEnabled: (deviceId: DeviceWithVerification['device_id'], enabled: boolean) => Promise<void>;
     error?: OwnDevicesError;
 };
 export const useOwnDevices = (): DevicesState => {
@@ -91,6 +93,7 @@ export const useOwnDevices = (): DevicesState => {
     const userId = matrixClient.getUserId();
 
     const [devices, setDevices] = useState<DevicesState['devices']>({});
+    const [pushers, setPushers] = useState<DevicesState['pushers']>([]);
     const [isLoadingDeviceList, setIsLoadingDeviceList] = useState(true);
 
     const [error, setError] = useState<OwnDevicesError>();
@@ -105,6 +108,10 @@ export const useOwnDevices = (): DevicesState => {
             }
             const devices = await fetchDevicesWithVerification(matrixClient, userId);
             setDevices(devices);
+
+            const { pushers } = await matrixClient.getPushers();
+            setPushers(pushers);
+
             setIsLoadingDeviceList(false);
         } catch (error) {
             if ((error as MatrixError).httpStatus == 404) {
@@ -154,13 +161,31 @@ export const useOwnDevices = (): DevicesState => {
             }
         }, [matrixClient, devices, refreshDevices]);
 
+    const setPusherEnabled = useCallback(
+        async (deviceId: DeviceWithVerification['device_id'], enabled: boolean): Promise<void> => {
+            const pusher = pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === deviceId);
+            try {
+                await matrixClient.setPusher({
+                    ...pusher,
+                    [PUSHER_ENABLED.name]: enabled,
+                });
+                await refreshDevices();
+            } catch (error) {
+                logger.error("Error setting session display name", error);
+                throw new Error(_t("Failed to set display name"));
+            }
+        }, [matrixClient, pushers, refreshDevices],
+    );
+
     return {
         devices,
+        pushers,
         currentDeviceId,
         isLoadingDeviceList,
         error,
         requestDeviceVerification,
         refreshDevices,
         saveDeviceName,
+        setPusherEnabled,
     };
 };
