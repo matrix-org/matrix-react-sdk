@@ -32,22 +32,16 @@ import { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../src/dispatcher/payloads/ViewRoomPayload";
 import { RoomView as _RoomView } from "../../../src/components/structures/RoomView";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
-import { RoomViewStore } from "../../../src/stores/RoomViewStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import { NotificationState } from "../../../src/stores/notifications/NotificationState";
-import RightPanelStore from "../../../src/stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../src/stores/right-panel/RightPanelStorePhases";
 import { LocalRoom, LocalRoomState } from "../../../src/models/LocalRoom";
 import { DirectoryMember } from "../../../src/utils/direct-messages";
 import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
 import { Stores, SDKContext } from "../../../src/contexts/SDKContext";
-import LegacyCallHandler from "../../../src/LegacyCallHandler";
-import { RoomNotificationStateStore } from "../../../src/stores/notifications/RoomNotificationStateStore";
-import { WidgetLayoutStore } from "../../../src/stores/widgets/WidgetLayoutStore";
-import WidgetStore from "../../../src/stores/WidgetStore";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -70,15 +64,8 @@ describe("RoomView", () => {
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
         DMRoomMap.makeShared();
-        stores = new Stores(
-            LegacyCallHandler.instance,
-            RightPanelStore.instance,
-            RoomNotificationStateStore.instance,
-            RoomViewStore.instance,
-            WidgetLayoutStore.instance,
-            WidgetStore.instance,
-            cli,
-        );
+        stores = new Stores();
+        stores.client = cli;
         stores.rightPanelStore.useUnitTestClient(cli);
     });
 

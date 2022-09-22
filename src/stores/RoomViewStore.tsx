@@ -35,10 +35,8 @@ import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCach
 import { Action } from "../dispatcher/actions";
 import { retry } from "../utils/promise";
 import { TimelineRenderingType } from "../contexts/RoomContext";
-import { PosthogAnalytics } from "../PosthogAnalytics";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import DMRoomMap from "../utils/DMRoomMap";
-import SpaceStore, { SpaceStoreClass } from "./spaces/SpaceStore";
 import { isMetaSpace, MetaSpace } from "./spaces";
 import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
 import { JoinRoomReadyPayload } from "../dispatcher/payloads/JoinRoomReadyPayload";
@@ -47,9 +45,9 @@ import { ViewRoomErrorPayload } from "../dispatcher/payloads/ViewRoomErrorPayloa
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
 import SettingsStore from "../settings/SettingsStore";
-import { SlidingSyncManager } from "../SlidingSyncManager";
 import { awaitRoomDownSync } from "../utils/RoomUpgrade";
 import { UPDATE_EVENT } from "./AsyncStore";
+import { Stores } from "../contexts/SDKContext";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -96,7 +94,9 @@ export class RoomViewStore extends EventEmitter {
     // Important: This cannot be a dynamic getter (lazily-constructed instance) because
     // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
     // the app. We need to eagerly create the instance.
-    public static instance: RoomViewStore;
+    public static instance = new RoomViewStore(
+        defaultDispatcher, Stores.instance,
+    );
 
     // initialize state as a copy of the initial state. We need to copy else one RVS can talk to
     // another RVS via INITIAL_STATE as they share the same underlying object. Mostly relevant for tests.
@@ -106,8 +106,7 @@ export class RoomViewStore extends EventEmitter {
     private dispatchToken: string;
 
     public constructor(
-        dis: MatrixDispatcher, private readonly spaceStore: SpaceStoreClass,
-        private readonly slidingSyncManager: SlidingSyncManager, private readonly posthog: PosthogAnalytics,
+        dis: MatrixDispatcher, private readonly stores: Stores,
     ) {
         super();
         this.resetDispatcher(dis);
@@ -214,7 +213,7 @@ export class RoomViewStore extends EventEmitter {
                                     : numMembers > 1 ? "Two"
                                         : "One";
 
-                    this.posthog.trackEvent<JoinedRoomEvent>({
+                    this.stores.posthogAnalytics.trackEvent<JoinedRoomEvent>({
                         eventName: "JoinedRoom",
                         trigger: payload.metricsTrigger,
                         roomSize,
@@ -255,17 +254,17 @@ export class RoomViewStore extends EventEmitter {
         if (payload.room_id) {
             if (payload.metricsTrigger !== null && payload.room_id !== this.state.roomId) {
                 let activeSpace: ViewRoomEvent["activeSpace"];
-                if (this.spaceStore.activeSpace === MetaSpace.Home) {
+                if (this.stores.spaceStore.activeSpace === MetaSpace.Home) {
                     activeSpace = "Home";
-                } else if (isMetaSpace(this.spaceStore.activeSpace)) {
+                } else if (isMetaSpace(this.stores.spaceStore.activeSpace)) {
                     activeSpace = "Meta";
                 } else {
-                    activeSpace = this.spaceStore.activeSpaceRoom?.getJoinRule() === JoinRule.Public
+                    activeSpace = this.stores.spaceStore.activeSpaceRoom?.getJoinRule() === JoinRule.Public
                         ? "Public"
                         : "Private";
                 }
 
-                this.posthog.trackEvent<ViewRoomEvent>({
+                this.stores.posthogAnalytics.trackEvent<ViewRoomEvent>({
                     eventName: "ViewRoom",
                     trigger: payload.metricsTrigger,
                     viaKeyboard: payload.metricsViaKeyboard,
@@ -277,7 +276,7 @@ export class RoomViewStore extends EventEmitter {
             if (SettingsStore.getValue("feature_sliding_sync") && this.state.roomId !== payload.room_id) {
                 if (this.state.subscribingRoomId && this.state.subscribingRoomId !== payload.room_id) {
                     // unsubscribe from this room, but don't await it as we don't care when this gets done.
-                    this.slidingSyncManager.setRoomVisible(this.state.subscribingRoomId, false);
+                    this.stores.slidingSyncManager.setRoomVisible(this.state.subscribingRoomId, false);
                 }
                 this.setState({
                     subscribingRoomId: payload.room_id,
@@ -294,11 +293,11 @@ export class RoomViewStore extends EventEmitter {
                 });
                 // set this room as the room subscription. We need to await for it as this will fetch
                 // all room state for this room, which is required before we get the state below.
-                await this.slidingSyncManager.setRoomVisible(payload.room_id, true);
+                await this.stores.slidingSyncManager.setRoomVisible(payload.room_id, true);
                 // Whilst we were subscribing another room was viewed, so stop what we're doing and
                 // unsubscribe
                 if (this.state.subscribingRoomId !== payload.room_id) {
-                    this.slidingSyncManager.setRoomVisible(payload.room_id, false);
+                    this.stores.slidingSyncManager.setRoomVisible(payload.room_id, false);
                     return;
                 }
                 // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
@@ -583,9 +582,3 @@ export class RoomViewStore extends EventEmitter {
         return this.state.wasContextSwitch;
     }
 }
-
-queueMicrotask(() => {
-    RoomViewStore.instance = new RoomViewStore(
-        defaultDispatcher, SpaceStore.instance, SlidingSyncManager.instance, PosthogAnalytics.instance,
-    );
-});
