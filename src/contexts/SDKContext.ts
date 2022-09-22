@@ -60,11 +60,14 @@ export class Stores {
     protected _SpaceStore?: SpaceStoreClass;
     protected _LegacyCallHandler?: LegacyCallHandler;
 
-    constructor() {
-        // Important: This cannot be a dynamic getter (lazily-constructed instance) because
-        // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
-        // the app. We need to eagerly create the instance.
-        this.roomViewStore;
+    constructor() {}
+
+    /**
+     * Automatically construct stores which need to be created eagerly so they can register with
+     * the dispatcher.
+     */
+    public constructEagerStores() {
+        this._RoomViewStore = this.roomViewStore;
     }
 
     public get legacyCallHandler(): LegacyCallHandler {

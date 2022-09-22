@@ -84,6 +84,7 @@ describe('RoomViewStore', function() {
         roomViewStore = new RoomViewStore(
             dis, stores,
         );
+        stores._RoomViewStore = roomViewStore;
     });
 
     it('can be used to view a room by ID and join', async () => {

@@ -244,7 +244,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
-        this.stores = new Stores();
+        this.stores = Stores.instance;
+        this.stores.constructEagerStores();
 
         this.state = {
             view: Views.LOADING,
