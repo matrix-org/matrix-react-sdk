@@ -124,22 +124,3 @@ export class Stores {
         return this._SpaceStore;
     }
 }
-
-/**
- * A class which provides the same API as Stores but adds additional unsafe setters which can
- * replace individual stores. This is useful for tests which need to mock out stores.
- */
-export class OverridableStores extends Stores {
-    public _RightPanelStore?: RightPanelStore;
-    public _RoomNotificationStateStore?: RoomNotificationStateStore;
-    public _RoomViewStore?: RoomViewStore;
-    public _WidgetLayoutStore?: WidgetLayoutStore;
-    public _WidgetStore?: WidgetStore;
-    public _PosthogAnalytics?: PosthogAnalytics;
-    public _SlidingSyncManager?: SlidingSyncManager;
-    public _SpaceStore?: SpaceStoreClass;
-
-    constructor() {
-        super();
-    }
-}

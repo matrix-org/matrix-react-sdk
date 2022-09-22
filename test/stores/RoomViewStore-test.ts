@@ -27,7 +27,7 @@ import { MatrixDispatcher } from '../../src/dispatcher/dispatcher';
 import { UPDATE_EVENT } from '../../src/stores/AsyncStore';
 import { ActiveRoomChangedPayload } from '../../src/dispatcher/payloads/ActiveRoomChangedPayload';
 import { SpaceStoreClass } from '../../src/stores/spaces/SpaceStore';
-import { OverridableStores } from '../../src/contexts/SDKContext';
+import { TestStores } from '../TestStores';
 
 // mock out the injected classes
 jest.mock('../../src/PosthogAnalytics');
@@ -77,7 +77,7 @@ describe('RoomViewStore', function() {
         // Make the RVS to test
         dis = new MatrixDispatcher();
         slidingSyncManager = new MockSlidingSyncManager();
-        const stores = new OverridableStores();
+        const stores = new TestStores();
         stores._SlidingSyncManager = slidingSyncManager;
         stores._PosthogAnalytics = new MockPosthogAnalytics();
         stores._SpaceStore = new MockSpaceStore();
