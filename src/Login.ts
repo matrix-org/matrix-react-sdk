@@ -25,7 +25,10 @@ import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
 
 export {
-    IdentityProviderBrand, IIdentityProvider, ISSOFlow, LoginFlow,
+    IdentityProviderBrand,
+    IIdentityProvider,
+    ISSOFlow,
+    LoginFlow,
 } from "matrix-js-sdk/src/@types/auth";
 
 interface ILoginOptions {
