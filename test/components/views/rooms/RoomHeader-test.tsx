@@ -119,7 +119,7 @@ describe('RoomHeader', () => {
     });
 
     it("renders call buttons normally", () => {
-        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+        const room = createRoom({ name: "Room", isDm: false, userIds: ["other"] });
         const wrapper = render(room);
 
         expect(wrapper.find('[aria-label="Voice call"]').hostNodes()).toHaveLength(1);
