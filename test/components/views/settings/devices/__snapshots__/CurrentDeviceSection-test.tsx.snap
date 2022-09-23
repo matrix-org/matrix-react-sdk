@@ -76,6 +76,7 @@ HTMLCollection [
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-session"
       >
         <tbody>
           <tr>

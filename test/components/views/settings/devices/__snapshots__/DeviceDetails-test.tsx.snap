@@ -64,6 +64,7 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-session"
       >
         <tbody>
           <tr>
@@ -165,6 +166,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-session"
       >
         <tbody>
           <tr>
@@ -195,6 +197,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
       </table>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-device"
       >
         <thead>
           <tr>
@@ -303,6 +306,7 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-session"
       >
         <tbody>
           <tr>

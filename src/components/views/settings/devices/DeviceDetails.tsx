@@ -33,6 +33,7 @@ interface Props {
 }
 
 interface MetadataTable {
+    id: string;
     heading?: string;
     values: { label: string, value?: string | React.ReactNode }[];
 }
@@ -46,6 +47,7 @@ const DeviceDetails: React.FC<Props> = ({
 }) => {
     const metadata: MetadataTable[] = [
         {
+            id: 'session',
             values: [
                 { label: _t('Session ID'), value: device.device_id },
                 {
@@ -55,6 +57,7 @@ const DeviceDetails: React.FC<Props> = ({
             ],
         },
         {
+            id: 'application',
             heading: _t('Application'),
             values: [
                 { label: _t('Name'), value: device.clientName },
@@ -63,6 +66,7 @@ const DeviceDetails: React.FC<Props> = ({
             ],
         },
         {
+            id: 'device',
             heading: _t('Device'),
             values: [
                 { label: _t('IP address'), value: device.last_seen_ip },
@@ -88,9 +92,10 @@ const DeviceDetails: React.FC<Props> = ({
         </section>
         <section className='mx_DeviceDetails_section'>
             <p className='mx_DeviceDetails_sectionHeading'>{ _t('Session details') }</p>
-            { metadata.map(({ heading, values }, index) => <table
+            { metadata.map(({ heading, values, id }, index) => <table
                 className='mx_DeviceDetails_metadataTable'
                 key={index}
+                data-testid={`device-detail-metadata-${id}`}
             >
                 { heading &&
                     <thead>

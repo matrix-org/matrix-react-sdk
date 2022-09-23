@@ -22,7 +22,7 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { DeviceTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 import { VerificationRequest } from 'matrix-js-sdk/src/crypto/verification/request/VerificationRequest';
 import { sleep } from 'matrix-js-sdk/src/utils';
-import { IMyDevice } from 'matrix-js-sdk/src/matrix';
+import { IMyDevice, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 
 import SessionManagerTab from '../../../../../../src/components/views/settings/tabs/user/SessionManagerTab';
 import MatrixClientContext from '../../../../../../src/contexts/MatrixClientContext';
@@ -102,6 +102,8 @@ describe('<SessionManagerTab />', () => {
         mockClient.getDevices
             .mockReset()
             .mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+
+        mockClient.getAccountData.mockReturnValue(undefined);
     });
 
     it('renders spinner while devices load', () => {
@@ -165,6 +167,48 @@ describe('<SessionManagerTab />', () => {
 
         expect(mockCrossSigningInfo.checkDeviceTrust).toHaveBeenCalledTimes(2);
         expect(getByTestId(`device-tile-${alicesDevice.device_id}`)).toMatchSnapshot();
+    });
+
+    it('extends device with client information when available', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+        mockClient.getAccountData.mockImplementation((eventType: string) => {
+            const content = {
+                    name: 'Element Web',
+                    version: '1.2.3',
+                    url: 'test.com',
+                };
+            return new MatrixEvent({
+                type: eventType,
+                content,
+            });
+        });
+
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        // once for each device
+        expect(mockClient.getAccountData).toHaveBeenCalledTimes(2);
+
+        toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+        // application metadata section rendered
+        expect(getByTestId('device-detail-metadata-application')).toBeTruthy();
+    });
+
+    it('renders devices without available client information without error', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+
+        const { getByTestId, queryByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+        // application metadata section not rendered
+        expect(queryByTestId('device-detail-metadata-application')).toBeFalsy();
     });
 
     it('renders current session section with an unverified session', async () => {
