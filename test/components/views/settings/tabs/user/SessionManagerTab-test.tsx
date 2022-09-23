@@ -67,6 +67,7 @@ describe('<SessionManagerTab />', () => {
         deleteMultipleDevices: jest.fn(),
         generateClientSecret: jest.fn(),
         setDeviceDetails: jest.fn(),
+        getAccountData: jest.fn(),
     });
 
     const defaultProps = {};

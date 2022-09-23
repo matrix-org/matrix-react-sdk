@@ -78,39 +78,6 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
               my-device
             </td>
           </tr>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              Last activity
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
-          </tr>
-        </tbody>
-      </table>
-      <table
-        class="mx_DeviceDetails_metadataTable"
-      >
-        <thead>
-          <tr>
-            <th>
-              Device
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              IP address
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
-          </tr>
         </tbody>
       </table>
     </section>
@@ -349,39 +316,6 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
             >
               my-device
             </td>
-          </tr>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              Last activity
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
-          </tr>
-        </tbody>
-      </table>
-      <table
-        class="mx_DeviceDetails_metadataTable"
-      >
-        <thead>
-          <tr>
-            <th>
-              Device
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              IP address
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
           </tr>
         </tbody>
       </table>
