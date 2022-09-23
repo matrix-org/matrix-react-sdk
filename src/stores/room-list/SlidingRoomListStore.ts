@@ -30,6 +30,7 @@ import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
 import { LISTS_LOADING_EVENT } from "./RoomListStore";
 import { RoomViewStore } from "../RoomViewStore";
+import { UPDATE_EVENT } from "../AsyncStore";
 
 interface IState {
     // state is tracked in underlying classes
@@ -55,6 +56,8 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
         is_dm: true,
         is_invite: false,
         is_tombstoned: false,
+        // If a DM has a Favourite & Low Prio tag then it'll be shown in those lists instead
+        not_tags: ["m.favourite", "m.lowpriority"],
     },
     [DefaultTagID.Untagged]: {
         is_dm: false,
@@ -66,6 +69,8 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
     },
     [DefaultTagID.LowPriority]: {
         tags: ["m.lowpriority"],
+        // If a room has both Favourite & Low Prio tags then it'll be shown under Favourites
+        not_tags: ["m.favourite"],
         is_tombstoned: false,
     },
     // TODO https://github.com/vector-im/element-web/issues/23207
@@ -309,7 +314,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         logger.info("SlidingRoomListStore.onReady");
         // permanent listeners: never get destroyed. Could be an issue if we want to test this in isolation.
         SlidingSyncManager.instance.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
-        RoomViewStore.instance.addListener(this.onRoomViewStoreUpdated.bind(this));
+        RoomViewStore.instance.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdated.bind(this));
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated.bind(this));
         if (SpaceStore.instance.activeSpace) {
             this.onSelectedSpaceUpdated(SpaceStore.instance.activeSpace, false);

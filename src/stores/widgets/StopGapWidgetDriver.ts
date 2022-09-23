@@ -21,6 +21,7 @@ import {
     IOpenIDUpdate,
     ISendEventDetails,
     ITurnServer,
+    IReadEventRelationsResult,
     IRoomEvent,
     MatrixCapabilities,
     OpenIDRequestState,
@@ -37,7 +38,9 @@ import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { Direction } from "matrix-js-sdk/src/matrix";
 
+import SdkConfig from "../../SdkConfig";
 import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import Modal from "../../Modal";
@@ -78,6 +81,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         allowedCapabilities: Capability[],
         private forWidget: Widget,
         private forWidgetKind: WidgetKind,
+        virtual: boolean,
         private inRoomId?: string,
     ) {
         super();
@@ -100,6 +104,50 @@ export class StopGapWidgetDriver extends WidgetDriver {
             // Auto-approve the legacy visibility capability. We send it regardless of capability.
             // Widgets don't technically need to request this capability, but Scalar still does.
             this.allowedCapabilities.add("visibility");
+        } else if (virtual && new URL(SdkConfig.get("element_call").url).origin === this.forWidget.origin) {
+            // This is a trusted Element Call widget that we control
+            this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);
+            this.allowedCapabilities.add(MatrixCapabilities.MSC3846TurnServers);
+            this.allowedCapabilities.add(`org.matrix.msc2762.timeline:${inRoomId}`);
+
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomMember).raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Send, "org.matrix.msc3401.call").raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Receive, "org.matrix.msc3401.call").raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(
+                    EventDirection.Send, "org.matrix.msc3401.call.member", MatrixClientPeg.get().getUserId()!,
+                ).raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Receive, "org.matrix.msc3401.call.member").raw,
+            );
+
+            const sendRecvToDevice = [
+                EventType.CallInvite,
+                EventType.CallCandidates,
+                EventType.CallAnswer,
+                EventType.CallHangup,
+                EventType.CallReject,
+                EventType.CallSelectAnswer,
+                EventType.CallNegotiate,
+                EventType.CallSDPStreamMetadataChanged,
+                EventType.CallSDPStreamMetadataChangedPrefix,
+                EventType.CallReplaces,
+            ];
+            for (const eventType of sendRecvToDevice) {
+                this.allowedCapabilities.add(
+                    WidgetEventCapability.forToDeviceEvent(EventDirection.Send, eventType).raw,
+                );
+                this.allowedCapabilities.add(
+                    WidgetEventCapability.forToDeviceEvent(EventDirection.Receive, eventType).raw,
+                );
+            }
         }
     }
 
@@ -365,5 +413,48 @@ export class StopGapWidgetDriver extends WidgetDriver {
             client.off(ClientEvent.TurnServers, onTurnServers);
             client.off(ClientEvent.TurnServersError, onTurnServersError);
         }
+    }
+
+    public async readEventRelations(
+        eventId: string,
+        roomId?: string,
+        relationType?: string,
+        eventType?: string,
+        from?: string,
+        to?: string,
+        limit?: number,
+        direction?: 'f' | 'b',
+    ): Promise<IReadEventRelationsResult> {
+        const client = MatrixClientPeg.get();
+        const dir = direction as Direction;
+        roomId = roomId ?? RoomViewStore.instance.getRoomId() ?? undefined;
+
+        if (typeof roomId !== "string") {
+            throw new Error('Error while reading the current room');
+        }
+
+        const {
+            originalEvent,
+            events,
+            nextBatch,
+            prevBatch,
+        } = await client.relations(
+            roomId,
+            eventId,
+            relationType ?? null,
+            eventType ?? null,
+            {
+                from,
+                to,
+                limit,
+                direction: dir,
+            });
+
+        return {
+            originalEvent: originalEvent?.getEffectiveEvent(),
+            chunk: events.map(e => e.getEffectiveEvent()),
+            nextBatch,
+            prevBatch,
+        };
     }
 }
