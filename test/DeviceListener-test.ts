@@ -18,6 +18,7 @@ limitations under the License.
 import { EventEmitter } from "events";
 import { mocked } from "jest-mock";
 import { Room } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import DeviceListener from "../src/DeviceListener";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -27,6 +28,7 @@ import * as BulkUnverifiedSessionsToast from "../src/toasts/BulkUnverifiedSessio
 import { isSecretStorageBeingAccessed } from "../src/SecurityManager";
 import dis from "../src/dispatcher/dispatcher";
 import { Action } from "../src/dispatcher/actions";
+import { mockPlatformPeg } from "./test-utils";
 
 // don't litter test console with logs
 jest.mock("matrix-js-sdk/src/logger");
@@ -39,6 +41,8 @@ jest.mock("../src/dispatcher/dispatcher", () => ({
 jest.mock("../src/SecurityManager", () => ({
     isSecretStorageBeingAccessed: jest.fn(), accessSecretStorage: jest.fn(),
 }));
+
+const deviceId = 'my-device-id';
 
 class MockClient extends EventEmitter {
     getUserId = jest.fn();
@@ -57,6 +61,8 @@ class MockClient extends EventEmitter {
     downloadKeys = jest.fn();
     isRoomEncrypted = jest.fn();
     getClientWellKnown = jest.fn();
+    getDeviceId = jest.fn().mockReturnValue(deviceId);
+    setAccountData = jest.fn();
 }
 const mockDispatcher = mocked(dis);
 const flushPromises = async () => await new Promise(process.nextTick);
@@ -75,6 +81,9 @@ describe('DeviceListener', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
+        mockPlatformPeg({
+            getAppVersion: jest.fn().mockResolvedValue('1.2.3'),
+        });
         mockClient = new MockClient();
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
     });
@@ -85,6 +94,47 @@ describe('DeviceListener', () => {
         await flushPromises();
         return instance;
     };
+
+    describe('client information', () => {
+        it('saves client information on start', async () => {
+            await createAndStart();
+
+            expect(mockClient.setAccountData).toHaveBeenCalledWith(
+                `io.element.matrix-client-information.${deviceId}`,
+                { name: 'Element', url: 'localhost', version: '1.2.3' },
+            );
+        });
+
+        it('catches error and logs when saving client information fails', async () => {
+            const errorLogSpy = jest.spyOn(logger, 'error');
+            const error = new Error('oups');
+            mockClient.setAccountData.mockRejectedValue(error);
+
+            // doesn't throw
+            await createAndStart();
+
+            expect(errorLogSpy).toHaveBeenCalledWith(
+                'Failed to record client information',
+                error,
+            );
+        });
+
+        it('saves client information on logged in action', async () => {
+            const instance = await createAndStart();
+
+            mockClient.setAccountData.mockClear();
+
+            // @ts-ignore calling private function
+            instance.onAction({ action: Action.OnLoggedIn });
+
+            await flushPromises();
+
+            expect(mockClient.setAccountData).toHaveBeenCalledWith(
+                `io.element.matrix-client-information.${deviceId}`,
+                { name: 'Element', url: 'localhost', version: '1.2.3' },
+            );
+        });
+    });
 
     describe('recheck', () => {
         it('does nothing when cross signing feature is not supported', async () => {

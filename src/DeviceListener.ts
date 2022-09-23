@@ -40,6 +40,9 @@ import { isSecureBackupRequired } from './utils/WellKnownUtils';
 import { ActionPayload } from "./dispatcher/payloads";
 import { Action } from "./dispatcher/actions";
 import { isLoggedIn } from "./utils/login";
+import SdkConfig from "./SdkConfig";
+import PlatformPeg from "./PlatformPeg";
+import { recordClientInformation } from "./utils/device/clientInformation";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -78,6 +81,7 @@ export default class DeviceListener {
         MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
         this.dispatcherRef = dis.register(this.onAction);
         this.recheck();
+        this.recordClientInformation();
     }
 
     public stop() {
@@ -200,6 +204,7 @@ export default class DeviceListener {
     private onAction = ({ action }: ActionPayload) => {
         if (action !== Action.OnLoggedIn) return;
         this.recheck();
+        this.recordClientInformation();
     };
 
     // The server doesn't tell us when key backup is set up, so we poll
@@ -341,6 +346,20 @@ export default class DeviceListener {
 
         if (isKeyBackupEnabled === false) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
+        }
+    };
+
+    private recordClientInformation = async () => {
+        try {
+            await recordClientInformation(
+                MatrixClientPeg.get(),
+                SdkConfig.get(),
+                PlatformPeg.get(),
+            );
+        } catch (error) {
+            // this is a best effort operation
+            // log the error without rethrowing
+            logger.error('Failed to record client information', error);
         }
     };
 }
