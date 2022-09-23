@@ -203,7 +203,6 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         // In testing, recorder time and worker time lag by about 400ms, which is roughly the
         // time needed to encode a sample/frame.
         //
-        // Ref for recorderSeconds: https://github.com/chris-rudmin/opus-recorder#instance-fields
         const secondsLeft = TARGET_MAX_LENGTH - this.recorderSeconds;
         if (secondsLeft < 0) { // go over to make sure we definitely capture that last frame
             // noinspection JSIgnoredPromiseFromCall - we aren't concerned with it overlapping
@@ -216,6 +215,9 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         }
     };
 
+    /**
+     * {@link https://github.com/chris-rudmin/opus-recorder#instance-fields ref for recorderSeconds}
+    */
     public get recorderSeconds() {
         return this.recorder.encodedSamplePosition / 48000;
     }

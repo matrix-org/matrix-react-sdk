@@ -26,7 +26,6 @@ export enum VoiceBroadcastRecordingEvents {
 interface ChunkRecordedPayload {
     buffer: Uint8Array;
     length: number;
-    size: number;
 }
 
 /**
@@ -96,10 +95,10 @@ export class VoiceBroadcastRecording implements IDestroyable {
         }
 
         const currentRecorderTime = this.voiceRecording.recorderSeconds;
-        const payload = {
+        const payload: ChunkRecordedPayload = {
             buffer: concat(this.headers, this.chunkBuffer),
             length: this.chunkLength,
-        } as ChunkRecordedPayload;
+        };
         this.chunkBuffer = new Uint8Array(0);
         this.previousChunkEndTimePosition = currentRecorderTime;
         this.voiceRecording.emit(VoiceBroadcastRecordingEvents.ChunkRecorded, payload);
@@ -109,12 +108,13 @@ export class VoiceBroadcastRecording implements IDestroyable {
         return this.voiceRecording.recorderSeconds - this.previousChunkEndTimePosition;
     }
 
-    destroy(): void {
+    public destroy(): void {
         this.voiceRecording.destroy();
     }
 }
 
 export const createVoiceBroadcastRecording = () => {
-    const targetChunkLength = SdkConfig.get("voice_broadcast")?.chunk_length;
+    // Use target chunk length from config. Default to 5 minutes.
+    const targetChunkLength = SdkConfig.get("voice_broadcast")?.chunk_length || 500;
     return new VoiceBroadcastRecording(new VoiceRecording(), targetChunkLength);
 };

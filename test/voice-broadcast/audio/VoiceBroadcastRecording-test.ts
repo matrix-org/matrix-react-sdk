@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { mocked } from "jest-mock";
+
 import { VoiceRecording } from "../../../src/audio/VoiceRecording";
 import SdkConfig from "../../../src/SdkConfig";
 import { concat } from "../../../src/utils/arrays";
@@ -33,6 +35,10 @@ describe("VoiceBroadcastRecording", () => {
                     };
                 }
             });
+        });
+
+        afterEach(() => {
+            mocked(SdkConfig.get).mockRestore();
         });
 
         it("should return a VoiceBroadcastRecording instance with targetChunkLength from config", () => {
