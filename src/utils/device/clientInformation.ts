@@ -58,3 +58,23 @@ export const recordClientInformation = async (
         url,
     });
 };
+
+const sanitizeContentString = (value: unknown): string | undefined =>
+    value && typeof value === 'string' ? value : undefined;
+
+export const getDeviceClientInformation = (matrixClient: MatrixClient, deviceId: string): DeviceClientInformation => {
+    const event = matrixClient.getAccountData(getClientInformationEventType(deviceId));
+
+    if (!event) {
+        return {};
+    }
+
+    const { name, version, url } = event.getContent();
+
+    return {
+        name: sanitizeContentString(name),
+        version: sanitizeContentString(version),
+        url: sanitizeContentString(url),
+    };
+};
+

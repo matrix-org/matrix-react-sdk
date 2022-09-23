@@ -22,10 +22,10 @@ import AccessibleButton from '../../elements/AccessibleButton';
 import Spinner from '../../elements/Spinner';
 import { DeviceDetailHeading } from './DeviceDetailHeading';
 import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
-import { DeviceWithVerification } from './types';
+import { ExtendedDevice } from './types';
 
 interface Props {
-    device: DeviceWithVerification;
+    device: ExtendedDevice;
     isSigningOut: boolean;
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
@@ -55,12 +55,26 @@ const DeviceDetails: React.FC<Props> = ({
             ],
         },
         {
+            heading: _t('Application'),
+            values: [
+                { label: _t('Name'), value: device.clientName },
+                { label: _t('Version'), value: device.clientVersion },
+                { label: _t('URL'), value: device.url },
+            ],
+        },
+        {
             heading: _t('Device'),
             values: [
                 { label: _t('IP address'), value: device.last_seen_ip },
             ],
         },
-    ];
+    ].map(section =>
+        // filter out falsy values
+        ({ ...section, values: section.values.filter(row => !!row.value) }))
+        .filter(section =>
+        // then filter out sections with no values
+            section.values.length,
+        );
     return <div className='mx_DeviceDetails' data-testid={`device-detail-${device.device_id}`}>
         <section className='mx_DeviceDetails_section'>
             <DeviceDetailHeading
