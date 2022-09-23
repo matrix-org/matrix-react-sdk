@@ -39,5 +39,9 @@ describe("Create Room", () => {
         cy.get(".mx_SpacePanel").should("not.have.class", "collapsed");
         cy.reload(true);
         cy.get(".mx_SpacePanel").should("not.have.class", "collapsed");
+        cy.get(".mx_SpacePanel_toggleCollapse").click();
+        cy.get(".mx_SpacePanel").should("have.class", "collapsed");
+        cy.reload(true);
+        cy.get(".mx_SpacePanel").should("have.class", "collapsed");
     });
 });
