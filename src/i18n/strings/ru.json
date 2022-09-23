@@ -3530,7 +3530,7 @@
     "%(user)s and %(count)s others|one": "%(user)s и ещё 1",
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Подтвердите свои сессии для более безопасного обмена сообщениями или выйдите из тех, которые более не признаёте или не используете.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности выйдите из всех сессий, которые более не признаёте или не используете.",
-    "Inactive for %(inactiveAgeDays)s days or longer": "Неактивна в течение %(inactiveAgeDays)s дней или дольше",
+    "Inactive for %(inactiveAgeDays)s days or longer": "Неактивны %(inactiveAgeDays)s дней или дольше",
     "No inactive sessions found.": "Неактивные сессии не обнаружены.",
     "No sessions found.": "Сессии не обнаружены.",
     "Unknown device type": "Неизвестный тип устройства",
