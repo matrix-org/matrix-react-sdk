@@ -173,10 +173,10 @@ describe('<SessionManagerTab />', () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         mockClient.getAccountData.mockImplementation((eventType: string) => {
             const content = {
-                    name: 'Element Web',
-                    version: '1.2.3',
-                    url: 'test.com',
-                };
+                name: 'Element Web',
+                version: '1.2.3',
+                url: 'test.com',
+            };
             return new MatrixEvent({
                 type: eventType,
                 content,

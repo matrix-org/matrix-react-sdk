@@ -197,6 +197,32 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
       </table>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-application"
+      >
+        <thead>
+          <tr>
+            <th>
+              Application
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td
+              class="mxDeviceDetails_metadataLabel"
+            >
+              Name
+            </td>
+            <td
+              class="mxDeviceDetails_metadataValue"
+            >
+              Element Web
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table
+        class="mx_DeviceDetails_metadataTable"
         data-testid="device-detail-metadata-device"
       >
         <thead>
