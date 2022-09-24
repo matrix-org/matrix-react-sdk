@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EmojiPart, PlainPart, PartCreator } from "../../src/editor/parts";
+import { EmojiPart, PlainPart } from "../../src/editor/parts";
 import { createPartCreator } from "./mock";
 
 describe("editor/parts", () => {
@@ -33,7 +33,7 @@ describe("editor/parts", () => {
             expect(part.text).toEqual(femaleFacepalmEmoji);
         });
     });
-    
+
     it("should not explode on room pills for unknown rooms", () => {
         const pc = createPartCreator();
         const part = pc.roomPill("#room:server");
