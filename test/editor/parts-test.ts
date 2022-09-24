@@ -33,17 +33,7 @@ describe("editor/parts", () => {
             expect(part.text).toEqual(femaleFacepalmEmoji);
         });
     });
-    describe("plainWithEmoji", () => {
-        it("should append an hair space after a regional emoji", () => {
-            const regionalEmojiF = String.fromCodePoint(127467);
-            const hairSpace = String.fromCodePoint(0x200A);
-            const part = new PartCreator(null, null);
-            const parts = part.plainWithEmoji(regionalEmojiF);
-            expect(parts.length).toBe(2);
-            expect(parts[0].text).toBe(regionalEmojiF);
-            expect(parts[1].text).toBe(hairSpace);
-        });
-    });
+    
     it("should not explode on room pills for unknown rooms", () => {
         const pc = createPartCreator();
         const part = pc.roomPill("#room:server");

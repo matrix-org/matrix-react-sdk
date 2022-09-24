@@ -321,4 +321,27 @@ describe('editor/model', function() {
             expect(model.parts[0].text).toBe("foo@a");
         });
     });
+    describe('emojis', function() {
+        it('regional emojis should be separated to prevent them to be converted to flag', () => {
+            const renderer = createRenderer();
+            const pc = createPartCreator();
+            const model = new EditorModel([], pc, renderer);
+            const { partCreator } = model;
+            const regionalEmojiF = String.fromCodePoint(127467);
+            const caret = new DocumentOffset(0, true);
+
+            for (let i = 0; i < 2; i++) {
+                const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
+                model.transform(() => {
+                    const addedLen = model.insert(partCreator.plainWithEmoji(regionalEmojiF), position);
+                    caret.offset += addedLen;
+                    return model.positionForOffset(caret.offset, true);
+                });
+            }
+
+            expect(model.parts.length).toBeGreaterThanOrEqual(2);
+            expect(model.parts[0].type).toBe("emoji");
+            expect(model.parts[1].type).not.toBe("emoji");
+        });
+    });
 });
