@@ -326,14 +326,13 @@ describe('editor/model', function() {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([], pc, renderer);
-            const { partCreator } = model;
             const regionalEmojiF = String.fromCodePoint(127467);
             const caret = new DocumentOffset(0, true);
 
             for (let i = 0; i < 2; i++) {
                 const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
                 model.transform(() => {
-                    const addedLen = model.insert(partCreator.plainWithEmoji(regionalEmojiF), position);
+                    const addedLen = model.insert(pc.plainWithEmoji(regionalEmojiF), position);
                     caret.offset += addedLen;
                     return model.positionForOffset(caret.offset, true);
                 });
