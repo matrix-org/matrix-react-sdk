@@ -142,7 +142,11 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
               Unverified
             </span>
              · 
-             · 
+            <span
+              data-testid="device-metadata-deviceId"
+            >
+              device_1
+            </span>
           </div>
         </div>
         <div
@@ -260,7 +264,11 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
                 Unverified
               </span>
                · 
-               · 
+              <span
+                data-testid="device-metadata-deviceId"
+              >
+                device_2
+              </span>
             </div>
           </div>
           <div
@@ -337,7 +345,11 @@ exports[`<DevicesPanel /> renders device panel with devices 1`] = `
                 Unverified
               </span>
                · 
-               · 
+              <span
+                data-testid="device-metadata-deviceId"
+              >
+                device_3
+              </span>
             </div>
           </div>
           <div

@@ -18,12 +18,18 @@ import React from 'react';
 
 import { formatDate } from '../../../../DateUtils';
 import { _t } from '../../../../languageHandler';
-import Heading from '../../typography/Heading';
+import AccessibleButton from '../../elements/AccessibleButton';
+import Spinner from '../../elements/Spinner';
+import { DeviceDetailHeading } from './DeviceDetailHeading';
 import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
 import { DeviceWithVerification } from './types';
 
 interface Props {
     device: DeviceWithVerification;
+    isSigningOut: boolean;
+    onVerifyDevice?: () => void;
+    onSignOutDevice: () => void;
+    saveDeviceName: (deviceName: string) => Promise<void>;
 }
 
 interface MetadataTable {
@@ -31,7 +37,13 @@ interface MetadataTable {
     values: { label: string, value?: string | React.ReactNode }[];
 }
 
-const DeviceDetails: React.FC<Props> = ({ device }) => {
+const DeviceDetails: React.FC<Props> = ({
+    device,
+    isSigningOut,
+    onVerifyDevice,
+    onSignOutDevice,
+    saveDeviceName,
+}) => {
     const metadata: MetadataTable[] = [
         {
             values: [
@@ -51,13 +63,19 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
     ];
     return <div className='mx_DeviceDetails' data-testid={`device-detail-${device.device_id}`}>
         <section className='mx_DeviceDetails_section'>
-            <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
-            <DeviceVerificationStatusCard device={device} />
+            <DeviceDetailHeading
+                device={device}
+                saveDeviceName={saveDeviceName}
+            />
+            <DeviceVerificationStatusCard
+                device={device}
+                onVerifyDevice={onVerifyDevice}
+            />
         </section>
         <section className='mx_DeviceDetails_section'>
             <p className='mx_DeviceDetails_sectionHeading'>{ _t('Session details') }</p>
             { metadata.map(({ heading, values }, index) => <table
-                className='mxDeviceDetails_metadataTable'
+                className='mx_DeviceDetails_metadataTable'
                 key={index}
             >
                 { heading &&
@@ -74,6 +92,19 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
                 </tbody>
             </table>,
             ) }
+        </section>
+        <section className='mx_DeviceDetails_section'>
+            <AccessibleButton
+                onClick={onSignOutDevice}
+                kind='danger_inline'
+                disabled={isSigningOut}
+                data-testid='device-detail-sign-out-cta'
+            >
+                <span className='mx_DeviceDetails_signOutButtonContent'>
+                    { _t('Sign out of this session') }
+                    { isSigningOut && <Spinner w={16} h={16} /> }
+                </span>
+            </AccessibleButton>
         </section>
     </div>;
 };

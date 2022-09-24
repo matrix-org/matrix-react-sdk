@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<SessionManagerTab /> Sign out Signs out of current device 1`] = `
+<div
+  class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_inline"
+  data-testid="device-detail-sign-out-cta"
+  role="button"
+  tabindex="0"
+>
+  <span
+    class="mx_DeviceDetails_signOutButtonContent"
+  >
+    Sign out of this session
+  </span>
+</div>
+`;
+
 exports[`<SessionManagerTab /> goes to filtered list from security recommendations 1`] = `
 <div
   class="mx_FilteredDeviceList_header"
@@ -73,7 +88,7 @@ exports[`<SessionManagerTab /> renders current session section with a verified s
         <h4
           class="mx_Heading_h4"
         >
-          alices_device
+          Alices device
         </h4>
         <div
           class="mx_DeviceTile_metadata"
@@ -84,7 +99,11 @@ exports[`<SessionManagerTab /> renders current session section with a verified s
             Verified
           </span>
            · 
-           · 
+          <span
+            data-testid="device-metadata-deviceId"
+          >
+            alices_device
+          </span>
         </div>
       </div>
       <div
@@ -171,7 +190,7 @@ exports[`<SessionManagerTab /> renders current session section with an unverifie
         <h4
           class="mx_Heading_h4"
         >
-          alices_device
+          Alices device
         </h4>
         <div
           class="mx_DeviceTile_metadata"
@@ -182,7 +201,11 @@ exports[`<SessionManagerTab /> renders current session section with an unverifie
             Unverified
           </span>
            · 
-           · 
+          <span
+            data-testid="device-metadata-deviceId"
+          >
+            alices_device
+          </span>
         </div>
       </div>
       <div
@@ -269,7 +292,7 @@ exports[`<SessionManagerTab /> sets device verification status correctly 1`] = `
     <h4
       class="mx_Heading_h4"
     >
-      alices_device
+      Alices device
     </h4>
     <div
       class="mx_DeviceTile_metadata"
@@ -280,7 +303,11 @@ exports[`<SessionManagerTab /> sets device verification status correctly 1`] = `
         Verified
       </span>
        · 
-       · 
+      <span
+        data-testid="device-metadata-deviceId"
+      >
+        alices_device
+      </span>
     </div>
   </div>
   <div
