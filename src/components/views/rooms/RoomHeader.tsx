@@ -74,7 +74,7 @@ interface VoiceCallButtonProps {
     room: Room;
     busy: boolean;
     setBusy: (value: boolean) => void;
-    behavior: DisabledWithReason | "legacy";
+    behavior: DisabledWithReason | "legacy_or_jitsi";
 }
 
 /**
@@ -89,7 +89,7 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
                 tooltip: behavior.reason,
                 disabled: true,
             };
-        } else {
+        } else { // behavior === "legacy_or_jitsi"
             return {
                 onClick: async (ev: ButtonEvent) => {
                     ev.preventDefault();
@@ -115,7 +115,7 @@ interface VideoCallButtonProps {
     room: Room;
     busy: boolean;
     setBusy: (value: boolean) => void;
-    behavior: DisabledWithReason | "legacy" | "element" | "legacy_or_element";
+    behavior: DisabledWithReason | "legacy_or_jitsi" | "element" | "jitsi_or_element";
 }
 
 /**
@@ -150,7 +150,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
                 tooltip: behavior.reason,
                 disabled: true,
             };
-        } else if (behavior === "legacy") {
+        } else if (behavior === "legacy_or_jitsi") {
             return {
                 onClick: async (ev: ButtonEvent) => {
                     ev.preventDefault();
@@ -166,7 +166,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
                 },
                 disabled: false,
             };
-        } else {
+        } else { // behavior === "jitsi_or_element"
             return {
                 onClick: async (ev: ButtonEvent) => {
                     ev.preventDefault();
@@ -236,7 +236,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
     const widgets = useWidgets(room);
     const hasJitsiWidget = useMemo(() => widgets.some(widget => WidgetType.JITSI.matches(widget.type)), [widgets]);
 
-    const hasElementCall = useCall(room.roomId) !== null;
+    const hasGroupCall = useCall(room.roomId) !== null;
 
     const [functionalMembers, mayEditWidgets, mayCreateElementCalls] = useTypedEventEmitterState(
         room,
@@ -257,7 +257,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
         return null;
     } else if (groupCallsEnabled) {
         if (useElementCallExclusively) {
-            if (hasElementCall) {
+            if (hasGroupCall) {
                 return makeVideoCallButton(new DisabledWithReason(_t("Ongoing call")));
             } else if (mayCreateElementCalls) {
                 return makeVideoCallButton("element");
@@ -266,7 +266,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
                     new DisabledWithReason(_t("You do not have permission to start video calls")),
                 );
             }
-        } else if (hasLegacyCall || hasJitsiWidget || hasElementCall) {
+        } else if (hasLegacyCall || hasJitsiWidget || hasGroupCall) {
             return <>
                 { makeVoiceCallButton(new DisabledWithReason(_t("Ongoing call"))) }
                 { makeVideoCallButton(new DisabledWithReason(_t("Ongoing call"))) }
@@ -278,13 +278,13 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
             </>;
         } else if (functionalMembers.length === 2) {
             return <>
-                { makeVoiceCallButton("legacy") }
-                { makeVideoCallButton("legacy") }
+                { makeVoiceCallButton("legacy_or_jitsi") }
+                { makeVideoCallButton("legacy_or_jitsi") }
             </>;
         } else if (mayEditWidgets) {
             return <>
-                { makeVoiceCallButton("legacy") }
-                { makeVideoCallButton(mayCreateElementCalls ? "legacy_or_element" : "legacy") }
+                { makeVoiceCallButton("legacy_or_jitsi") }
+                { makeVideoCallButton(mayCreateElementCalls ? "jitsi_or_element" : "legacy_or_jitsi") }
             </>;
         } else {
             const videoCallBehavior = mayCreateElementCalls
@@ -307,8 +307,8 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
         </>;
     } else if (functionalMembers.length === 2 || mayEditWidgets) {
         return <>
-            { makeVoiceCallButton("legacy") }
-            { makeVideoCallButton("legacy") }
+            { makeVoiceCallButton("legacy_or_jitsi") }
+            { makeVideoCallButton("legacy_or_jitsi") }
         </>;
     } else {
         return <>

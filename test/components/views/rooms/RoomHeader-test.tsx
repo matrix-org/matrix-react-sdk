@@ -473,7 +473,7 @@ describe("RoomHeader (React Testing Library)", () => {
     );
 
     it(
-        "hides the voice call button and starts Element calls when the video call button is pressed if configured to "
+        "hides the voice call button and starts an Element call when the video call button is pressed if configured to "
         + "use Element Call exclusively",
         async () => {
             mockEnabledSettings(["showCallButtonsInComposer", "feature_group_calls"]);
@@ -544,7 +544,7 @@ describe("RoomHeader (React Testing Library)", () => {
     });
 
     it(
-        "starts legacy 1:1 calls when call buttons are pressed in the new group call experience if there's 1 other "
+        "starts a legacy 1:1 call when call buttons are pressed in the new group call experience if there's 1 other "
         + "member",
         async () => {
             mockEnabledSettings(["showCallButtonsInComposer", "feature_group_calls"]);
@@ -565,7 +565,7 @@ describe("RoomHeader (React Testing Library)", () => {
     );
 
     it(
-        "creates Jitsi widgets when call buttons are pressed in the new group call experience if the user lacks "
+        "creates a Jitsi widget when call buttons are pressed in the new group call experience if the user lacks "
         + "permission to start Element calls",
         async () => {
             mockEnabledSettings(["showCallButtonsInComposer", "feature_group_calls"]);
@@ -587,7 +587,7 @@ describe("RoomHeader (React Testing Library)", () => {
     );
 
     it(
-        "creates Jitsi widgets when the voice call button is pressed and shows a menu when the video call button is "
+        "creates a Jitsi widget when the voice call button is pressed and shows a menu when the video call button is "
         + "pressed in the new group call experience",
         async () => {
             mockEnabledSettings(["showCallButtonsInComposer", "feature_group_calls"]);
@@ -622,8 +622,8 @@ describe("RoomHeader (React Testing Library)", () => {
     );
 
     it(
-        "disables the voice call button and starts Element calls when the video call button is pressed in the new "
-        + "group call experience when the user lacks permission to edit widgets",
+        "disables the voice call button and starts an Element call when the video call button is pressed in the new "
+        + "group call experience if the user lacks permission to edit widgets",
         async () => {
             mockEnabledSettings(["showCallButtonsInComposer", "feature_group_calls"]);
             mockRoomMembers([alice, bob, carol]);
@@ -680,7 +680,7 @@ describe("RoomHeader (React Testing Library)", () => {
         expect(screen.getByRole("button", { name: "Video call" })).toHaveAttribute("aria-disabled", "true");
     });
 
-    it("starts legacy 1:1 calls when call buttons are pressed if there's 1 other member", async () => {
+    it("starts a legacy 1:1 call when call buttons are pressed if there's 1 other member", async () => {
         mockEnabledSettings(["showCallButtonsInComposer"]);
         mockRoomMembers([alice, bob]);
         mockEventPowerLevels({ "im.vector.modular.widgets": 100 }); // Just to verify that it doesn't try to use Jitsi
@@ -698,7 +698,7 @@ describe("RoomHeader (React Testing Library)", () => {
         expect(placeCallSpy).toHaveBeenCalledWith(room.roomId, CallType.Video);
     });
 
-    it("creates Jitsi widgets when call buttons are pressed", async () => {
+    it("creates a Jitsi widget when call buttons are pressed", async () => {
         mockEnabledSettings(["showCallButtonsInComposer"]);
         mockRoomMembers([alice, bob, carol]);
 
