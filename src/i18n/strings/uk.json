@@ -3570,5 +3570,12 @@
     "Voice broadcast": "Голосове мовлення",
     "Voice broadcast (under active development)": "Голосове мовлення (в активній розробці)",
     "Element Call video rooms": "Відео кімнати Element Call",
-    "Voice broadcasts": "Голосові передачі"
+    "Voice broadcasts": "Голосові передачі",
+    "You do not have permission to start voice calls": "У вас немає дозволу розпочинати голосові виклики",
+    "There's no one here to call": "Тут немає кого викликати",
+    "You do not have permission to start video calls": "У вас немає дозволу розпочинати відеовиклики",
+    "Ongoing call": "Поточний виклик",
+    "Video call (Element Call)": "Відеовиклик (Element Call)",
+    "Video call (Jitsi)": "Відеовиклик (Jitsi)",
+    "New group call experience": "Нові можливості групових викликів"
 }
