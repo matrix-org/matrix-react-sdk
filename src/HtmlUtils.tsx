@@ -425,19 +425,84 @@ function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | s
     const result: (JSX.Element | string)[] = [];
     let text = '';
     let key = 0;
+    let cleanmsg = '';
+    let titles = [];
+    let alts = [];
+    let spoilers=[];
+    const $ = cheerio.load(message, {
+        // @ts-ignore: The `_useHtmlParser2` internal option is the
+        // simplest way to both parse and render using `htmlparser2`.
+        _useHtmlParser2: true,
+        decodeEntities: false,
+    });
+    if (isHtmlMessage) {
 
-    // We use lodash's grapheme splitter to avoid breaking apart compound emojis
-    for (const char of split(message, '')) {
-        if (EMOJIBASE_REGEX.test(char)) {
-            if (text) {
-                result.push(text);
-                text = '';
+        $("img").each(function (i, elm) {
+
+            titles.push($(this).attr("title") ? $(this).attr("title") : null)
+            alts.push($(this).attr("alt") ? $(this).attr("alt") : null)
+            $(this).attr("title", "placeholder")
+            $(this).attr("alt", "placeholder")
+        }
+        )
+
+        $("span").each(function (i, elm) {  
+            if($(this).attr("data-mx-spoiler")){
+                spoilers.push($(this).attr("data-mx-spoiler"))
+                $(this).attr("data-mx-spoiler", "placeholder")
             }
-            result.push(emojiToSpan(char, key));
-            key++;
+            
+        })
+        cleanmsg = $.html()
+    }
+    else {
+        cleanmsg = message;
+
+    }
+    // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+    for (const char of split(cleanmsg, '')) {
+        if (EMOJIBASE_REGEX.test(char)) {
+            if (!isHtmlMessage) {
+                if (text) {
+                    result.push(text);
+                    text = '';
+                }
+
+                result.push(emojiToSpan(char, key));
+                key++;
+            } else {
+                text += emojiToSpan(char, key);
+            }
         } else {
             text += char;
         }
+    }
+    if (isHtmlMessage) {
+        console.log("text ",text)
+        const $ = cheerio.load(text, {
+            // @ts-ignore: The `_useHtmlParser2` internal option is the
+            // simplest way to both parse and render using `htmlparser2`.
+            _useHtmlParser2: true,
+            decodeEntities: false,
+        });
+        let cnt = 0;
+        let cntalt = 0;
+        let splrcnt = 0;
+        $("img").each(function (i, elm) {
+            $(this).attr("title", titles[cnt])
+            cnt = cnt + 1;
+            $(this).attr("alt", alts[cntalt])
+            cntalt += 1;
+        }
+        )
+        $("span").each(function (i, elm) {
+            if($(this).attr("data-mx-spoiler")){
+                $(this).attr("data-mx-spoiler", spoilers[splrcnt])
+                splrcnt+=1;
+            }
+            
+        })
+        text = $.html()
     }
     if (text) {
         result.push(text);
@@ -497,8 +562,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
                 // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
                 sanitizeParams.textFilter = function(safeText) {
-                    return highlighter.applyHighlights(safeText, safeHighlights).join('')
-                        .replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+                    return highlighter.applyHighlights(safeText, safeHighlights).join('');
                 };
             }
 
@@ -538,7 +602,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     }
 
     let contentBody = safeBody ?? strippedBody;
-    contentBody = contentBody.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
+    //contentBody = contentBody.replace(/:[\w+-]+:/g, m => opts.emotes[m] ? opts.emotes[m] : m);
     if (opts.returnString) {
         return contentBody;
     }
