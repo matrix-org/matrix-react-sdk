@@ -37,7 +37,7 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { CallView as _CallView } from "../../../../src/components/views/voip/CallView";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { CallStore } from "../../../../src/stores/CallStore";
-import { ConnectionState } from "../../../../src/models/Call";
+import { Call, ConnectionState } from "../../../../src/models/Call";
 
 const CallView = wrapInMatrixClientContext(_CallView);
 
@@ -53,8 +53,6 @@ describe("CallLobby", () => {
 
     let client: Mocked<MatrixClient>;
     let room: Room;
-    let call: MockedCall;
-    let widget: Widget;
     let alice: RoomMember;
 
     beforeEach(() => {
@@ -75,79 +73,117 @@ describe("CallLobby", () => {
 
         setupAsyncStoreWithClient(CallStore.instance, client);
         setupAsyncStoreWithClient(WidgetMessagingStore.instance, client);
-
-        MockedCall.create(room, "1");
-        const maybeCall = CallStore.instance.get(room.roomId);
-        if (!(maybeCall instanceof MockedCall)) throw new Error("Failed to create call");
-        call = maybeCall;
-
-        widget = new Widget(call.widget);
-        WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {
-            stop: () => {},
-        } as unknown as ClientWidgetApi);
     });
 
     afterEach(() => {
-        cleanup(); // Unmount before we do any cleanup that might update the component
-        call.destroy();
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
-        WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
     });
 
     const renderView = async (): Promise<void> => {
-        render(<CallView room={room} resizing={false} waitForCall={true} />);
+        render(<CallView room={room} resizing={false} waitForCall={false} />);
         await act(() => Promise.resolve()); // Let effects settle
     };
 
-    it("calls clean on mount", async () => {
-        const cleanSpy = jest.spyOn(call, "clean");
-        await renderView();
-        expect(cleanSpy).toHaveBeenCalled();
+    describe("with an existing call", () => {
+        let call: MockedCall;
+        let widget: Widget;
+
+        beforeEach(() => {
+            MockedCall.create(room, "1");
+            const maybeCall = CallStore.instance.get(room.roomId);
+            if (!(maybeCall instanceof MockedCall)) throw new Error("Failed to create call");
+            call = maybeCall;
+
+            widget = new Widget(call.widget);
+            WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {
+                stop: () => {},
+            } as unknown as ClientWidgetApi);
+        });
+
+        afterEach(() => {
+            cleanup(); // Unmount before we do any cleanup that might update the component
+            call.destroy();
+            WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
+        });
+
+        it("calls clean on mount", async () => {
+            const cleanSpy = jest.spyOn(call, "clean");
+            await renderView();
+            expect(cleanSpy).toHaveBeenCalled();
+        });
+
+        it("shows lobby and keeps widget loaded when disconnected", async () => {
+            await renderView();
+            screen.getByRole("button", { name: "Join" });
+            screen.getAllByText(/\bwidget\b/i);
+        });
+
+        it("only shows widget when connected", async () => {
+            await renderView();
+            fireEvent.click(screen.getByRole("button", { name: "Join" }));
+            await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Connected));
+            expect(screen.queryByRole("button", { name: "Join" })).toBe(null);
+            screen.getAllByText(/\bwidget\b/i);
+        });
+
+        it("tracks participants", async () => {
+            const bob = mkRoomMember(room.roomId, "@bob:example.org");
+            const carol = mkRoomMember(room.roomId, "@carol:example.org");
+
+            const expectAvatars = (userIds: string[]) => {
+                const avatars = screen.queryAllByRole("button", { name: "Avatar" });
+                expect(userIds.length).toBe(avatars.length);
+
+                for (const [userId, avatar] of zip(userIds, avatars)) {
+                    fireEvent.focus(avatar!);
+                    screen.getByRole("tooltip", { name: userId });
+                }
+            };
+
+            await renderView();
+            expect(screen.queryByLabelText(/joined/)).toBe(null);
+            expectAvatars([]);
+
+            act(() => { call.participants = new Set([alice]); });
+            screen.getByText("1 person joined");
+            expectAvatars([alice.userId]);
+
+            act(() => { call.participants = new Set([alice, bob, carol]); });
+            screen.getByText("3 people joined");
+            expectAvatars([alice.userId, bob.userId, carol.userId]);
+
+            act(() => { call.participants = new Set(); });
+            expect(screen.queryByLabelText(/joined/)).toBe(null);
+            expectAvatars([]);
+        });
+
+        it("connects to the call when the join button is pressed", async () => {
+            await renderView();
+            const connectSpy = jest.spyOn(call, "connect");
+            fireEvent.click(screen.getByRole("button", { name: "Join" }));
+            await waitFor(() => expect(connectSpy).toHaveBeenCalled(), { interval: 1 });
+        });
     });
 
-    it("shows lobby and keeps widget loaded when disconnected", async () => {
-        await renderView();
-        screen.getByRole("button", { name: "Join" });
-        screen.getAllByText(/\bwidget\b/i);
-    });
+    describe("without an existing call", () => {
+        it("creates and connects to a new call when the join button is pressed", async () => {
+            await renderView();
+            expect(Call.get(room)).toBeNull();
 
-    it("only shows widget when connected", async () => {
-        await renderView();
-        fireEvent.click(screen.getByRole("button", { name: "Join" }));
-        await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Connected));
-        expect(screen.queryByRole("button", { name: "Join" })).toBe(null);
-        screen.getAllByText(/\bwidget\b/i);
-    });
+            fireEvent.click(screen.getByRole("button", { name: "Join" }));
+            await waitFor(() => expect(CallStore.instance.get(room.roomId)).not.toBeNull());
+            const call = CallStore.instance.get(room.roomId)!;
 
-    it("tracks participants", async () => {
-        const bob = mkRoomMember(room.roomId, "@bob:example.org");
-        const carol = mkRoomMember(room.roomId, "@carol:example.org");
+            const widget = new Widget(call.widget);
+            WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {
+                stop: () => {},
+            } as unknown as ClientWidgetApi);
+            await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Connected));
 
-        const expectAvatars = (userIds: string[]) => {
-            const avatars = screen.queryAllByRole("button", { name: "Avatar" });
-            expect(userIds.length).toBe(avatars.length);
-
-            for (const [userId, avatar] of zip(userIds, avatars)) {
-                fireEvent.focus(avatar!);
-                screen.getByRole("tooltip", { name: userId });
-            }
-        };
-
-        await renderView();
-        expect(screen.queryByLabelText(/joined/)).toBe(null);
-        expectAvatars([]);
-
-        act(() => { call.participants = new Set([alice]); });
-        screen.getByText("1 person joined");
-        expectAvatars([alice.userId]);
-
-        act(() => { call.participants = new Set([alice, bob, carol]); });
-        screen.getByText("3 people joined");
-        expectAvatars([alice.userId, bob.userId, carol.userId]);
-
-        act(() => { call.participants = new Set(); });
-        expect(screen.queryByLabelText(/joined/)).toBe(null);
-        expectAvatars([]);
+            cleanup(); // Unmount before we do any cleanup that might update the component
+            call.destroy();
+            WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
+        });
     });
 
     describe("device buttons", () => {
@@ -194,15 +230,6 @@ describe("CallLobby", () => {
             fireEvent.click(screen.getByRole("button", { name: "Audio devices" }));
             screen.getByRole("menuitem", { name: "Headphones" });
             screen.getByRole("menuitem", { name: "Audio input 2" });
-        });
-    });
-
-    describe("join button", () => {
-        it("works", async () => {
-            await renderView();
-            const connectSpy = jest.spyOn(call, "connect");
-            fireEvent.click(screen.getByRole("button", { name: "Join" }));
-            await waitFor(() => expect(connectSpy).toHaveBeenCalled(), { interval: 1 });
         });
     });
 });
