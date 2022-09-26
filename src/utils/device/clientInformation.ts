@@ -19,6 +19,12 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import BasePlatform from "../../BasePlatform";
 import { IConfigOptions } from "../../IConfigOptions";
 
+export type DeviceClientInformation = {
+    name?: string;
+    version?: string;
+    url?: string;
+};
+
 const formatUrl = (): string | undefined => {
     // don't record url for electron clients
     if (window.electron) {
