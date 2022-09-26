@@ -105,7 +105,7 @@ describe('getDeviceClientInformation()', () => {
         expect(getDeviceClientInformation(mockClient, deviceId)).toEqual({});
 
         expect(mockClient.getAccountData).toHaveBeenCalledWith(
-            `io.element.matrix-client-information.${deviceId}`,
+            `io.element.matrix_client_information.${deviceId}`,
         );
     });
 
@@ -116,7 +116,7 @@ describe('getDeviceClientInformation()', () => {
             url: 'test.com',
         };
         const event = new MatrixEvent({
-            type: `io.element.matrix-client-information.${deviceId}`,
+            type: `io.element.matrix_client_information.${deviceId}`,
             content: eventContent,
         });
         mockClient.getAccountData.mockReturnValue(event);
@@ -132,7 +132,7 @@ describe('getDeviceClientInformation()', () => {
             url: 'test.com',
         };
         const event = new MatrixEvent({
-            type: `io.element.matrix-client-information.${deviceId}`,
+            type: `io.element.matrix_client_information.${deviceId}`,
             content: eventContent,
         });
         mockClient.getAccountData.mockReturnValue(event);
