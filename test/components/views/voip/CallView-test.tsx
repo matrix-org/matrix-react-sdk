@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { zip } from "lodash";
-import { render, screen, act, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, act, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -28,14 +28,18 @@ import type { ClientWidgetApi } from "matrix-widget-api";
 import {
     stubClient,
     mkRoomMember,
-    MockedCall,
+    wrapInMatrixClientContext,
     useMockedCalls,
+    MockedCall,
     setupAsyncStoreWithClient,
 } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import { CallLobby } from "../../../../src/components/views/voip/CallLobby";
+import { CallView as _CallView } from "../../../../src/components/views/voip/CallView";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { CallStore } from "../../../../src/stores/CallStore";
+import { ConnectionState } from "../../../../src/models/Call";
+
+const CallView = wrapInMatrixClientContext(_CallView);
 
 describe("CallLobby", () => {
     useMockedCalls();
@@ -73,7 +77,9 @@ describe("CallLobby", () => {
         setupAsyncStoreWithClient(WidgetMessagingStore.instance, client);
 
         MockedCall.create(room, "1");
-        call = CallStore.instance.get(room.roomId) as MockedCall;
+        const maybeCall = CallStore.instance.get(room.roomId);
+        if (!(maybeCall instanceof MockedCall)) throw new Error("Failed to create call");
+        call = maybeCall;
 
         widget = new Widget(call.widget);
         WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {
@@ -82,15 +88,36 @@ describe("CallLobby", () => {
     });
 
     afterEach(() => {
+        cleanup(); // Unmount before we do any cleanup that might update the component
         call.destroy();
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
         WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
     });
 
-    const renderLobby = async (): Promise<void> => {
-        render(<CallLobby room={room} call={call} />);
+    const renderView = async (): Promise<void> => {
+        render(<CallView room={room} resizing={false} waitForCall={true} />);
         await act(() => Promise.resolve()); // Let effects settle
     };
+
+    it("calls clean on mount", async () => {
+        const cleanSpy = jest.spyOn(call, "clean");
+        await renderView();
+        expect(cleanSpy).toHaveBeenCalled();
+    });
+
+    it("shows lobby and keeps widget loaded when disconnected", async () => {
+        await renderView();
+        screen.getByRole("button", { name: "Join" });
+        screen.getAllByText(/\bwidget\b/i);
+    });
+
+    it("only shows widget when connected", async () => {
+        await renderView();
+        fireEvent.click(screen.getByRole("button", { name: "Join" }));
+        await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Connected));
+        expect(screen.queryByRole("button", { name: "Join" })).toBe(null);
+        screen.getAllByText(/\bwidget\b/i);
+    });
 
     it("tracks participants", async () => {
         const bob = mkRoomMember(room.roomId, "@bob:example.org");
@@ -106,7 +133,7 @@ describe("CallLobby", () => {
             }
         };
 
-        await renderLobby();
+        await renderView();
         expect(screen.queryByLabelText(/joined/)).toBe(null);
         expectAvatars([]);
 
@@ -125,7 +152,7 @@ describe("CallLobby", () => {
 
     describe("device buttons", () => {
         it("hide when no devices are available", async () => {
-            await renderLobby();
+            await renderView();
             expect(screen.queryByRole("button", { name: /microphone/ })).toBe(null);
             expect(screen.queryByRole("button", { name: /camera/ })).toBe(null);
         });
@@ -139,7 +166,7 @@ describe("CallLobby", () => {
                 toJSON: () => {},
             }]);
 
-            await renderLobby();
+            await renderView();
             screen.getByRole("button", { name: /camera/ });
             expect(screen.queryByRole("button", { name: "Video devices" })).toBe(null);
         });
@@ -162,7 +189,7 @@ describe("CallLobby", () => {
                 },
             ]);
 
-            await renderLobby();
+            await renderView();
             screen.getByRole("button", { name: /microphone/ });
             fireEvent.click(screen.getByRole("button", { name: "Audio devices" }));
             screen.getByRole("menuitem", { name: "Headphones" });
@@ -172,7 +199,7 @@ describe("CallLobby", () => {
 
     describe("join button", () => {
         it("works", async () => {
-            await renderLobby();
+            await renderView();
             const connectSpy = jest.spyOn(call, "connect");
             fireEvent.click(screen.getByRole("button", { name: "Join" }));
             await waitFor(() => expect(connectSpy).toHaveBeenCalled(), { interval: 1 });
