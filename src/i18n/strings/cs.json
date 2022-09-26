@@ -3570,5 +3570,12 @@
     "Voice broadcast": "Hlasové vysílání",
     "Voice broadcast (under active development)": "Hlasové vysílání (v aktivním vývoji)",
     "Element Call video rooms": "Element Call video místnosti",
-    "Voice broadcasts": "Hlasová vysílání"
+    "Voice broadcasts": "Hlasová vysílání",
+    "New group call experience": "Nový zážitek ze skupinových hovorů",
+    "You do not have permission to start voice calls": "Nemáte oprávnění k zahájení hlasových hovorů",
+    "There's no one here to call": "Není tu nikdo, komu zavolat",
+    "You do not have permission to start video calls": "Nemáte oprávnění ke spuštění videohovorů",
+    "Ongoing call": "Průběžný hovor",
+    "Video call (Element Call)": "Videohovor (Element Call)",
+    "Video call (Jitsi)": "Videohovor (Jitsi)"
 }
