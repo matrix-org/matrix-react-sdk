@@ -41,7 +41,7 @@ const formatUrl = (): string | undefined => {
 };
 
 export const getClientInformationEventType = (deviceId: string): string =>
-    `io.element.matrix-client-information.${deviceId}`;
+    `io.element.matrix_client_information.${deviceId}`;
 
 export const recordClientInformation = async (
     matrixClient: MatrixClient,

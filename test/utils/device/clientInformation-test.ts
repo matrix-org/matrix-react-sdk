@@ -58,7 +58,7 @@ describe('recordClientInformation()', () => {
         );
 
         expect(mockClient.setAccountData).toHaveBeenCalledWith(
-            `io.element.matrix-client-information.${deviceId}`,
+            `io.element.matrix_client_information.${deviceId}`,
             {
                 name: sdkConfig.brand,
                 version,
@@ -75,7 +75,7 @@ describe('recordClientInformation()', () => {
         );
 
         expect(mockClient.setAccountData).toHaveBeenCalledWith(
-            `io.element.matrix-client-information.${deviceId}`,
+            `io.element.matrix_client_information.${deviceId}`,
             {
                 name: sdkConfig.brand,
                 version,
