@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LiveBadge should render the expected HTML 1`] = `
+<div>
+  <div
+    class="mx_LiveBadge"
+  >
+    <div
+      class="mx_Icon mx_Icon_16 mx_Icon_white"
+      style="mask-image: url(\\"image-file-stub\\");"
+    />
+    Live
+  </div>
+</div>
+`;

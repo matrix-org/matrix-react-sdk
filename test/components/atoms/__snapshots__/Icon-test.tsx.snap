@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon should render the colour accent 1`] = `
+<div>
+  <div
+    class="mx_Icon mx_Icon_16 mx_Icon_accent"
+    style="mask-image: url(\\"image-file-stub\\");"
+  />
+</div>
+`;
+
+exports[`Icon should render the colour white 1`] = `
+<div>
+  <div
+    class="mx_Icon mx_Icon_16 mx_Icon_white"
+    style="mask-image: url(\\"image-file-stub\\");"
+  />
+</div>
+`;
+
+exports[`Icon should render the size 16 1`] = `
+<div>
+  <div
+    class="mx_Icon mx_Icon_16 mx_Icon_accent"
+    style="mask-image: url(\\"image-file-stub\\");"
+  />
+</div>
+`;
