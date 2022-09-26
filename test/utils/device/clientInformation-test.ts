@@ -31,7 +31,7 @@ describe('recordClientInformation()', () => {
 
     const sdkConfig: IConfigOptions = {
         brand: 'Test Brand',
-        element_call: { url: '' },
+        element_call: { url: '', use_exclusively: false },
     };
 
     const platform = {
