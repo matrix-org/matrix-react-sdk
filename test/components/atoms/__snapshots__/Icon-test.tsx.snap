@@ -22,17 +22,6 @@ exports[`Icon should render the colour live-badge 1`] = `
 </div>
 `;
 
-exports[`Icon should render the colour white 1`] = `
-<div>
-  <i
-    aria-hidden="true"
-    class="mx_Icon mx_Icon_16 mx_Icon_white"
-    role="presentation"
-    style="mask-image: url(\\"image-file-stub\\");"
-  />
-</div>
-`;
-
 exports[`Icon should render the size 16 1`] = `
 <div>
   <i
