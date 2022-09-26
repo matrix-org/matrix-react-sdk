@@ -3570,5 +3570,12 @@
     "Rename session": "Rinomina sessione",
     "Voice broadcast (under active development)": "Broadcast voce (in sviluppo attivo)",
     "Voice broadcasts": "Broadcast voce",
-    "Element Call video rooms": "Stanze video di Element Call"
+    "Element Call video rooms": "Stanze video di Element Call",
+    "You do not have permission to start voice calls": "Non hai il permesso di avviare chiamate",
+    "There's no one here to call": "Non c'è nessuno da chiamare qui",
+    "You do not have permission to start video calls": "Non hai il permesso di avviare videochiamate",
+    "Ongoing call": "Chiamata in corso",
+    "Video call (Element Call)": "Videochiamata (Element Call)",
+    "Video call (Jitsi)": "Videochiamata (Jitsi)",
+    "New group call experience": "Nuova esperienza per chiamate di gruppo"
 }
