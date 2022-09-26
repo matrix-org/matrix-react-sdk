@@ -20,8 +20,10 @@ exports[`VoiceBroadcastRecordingBody when rendered should render the expected HT
     <div
       class="mx_LiveBadge"
     >
-      <div
-        class="mx_Icon mx_Icon_16 mx_Icon_white"
+      <i
+        aria-hidden="true"
+        class="mx_Icon mx_Icon_16 mx_Icon_live-badge"
+        role="presentation"
         style="mask-image: url(\\"image-file-stub\\");"
       />
       Live

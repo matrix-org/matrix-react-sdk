@@ -28,7 +28,7 @@ const iconTypeMap = new Map([
 
 export enum IconColour {
     Accent = "accent",
-    White = "white",
+    LiveBadge = "live-badge",
 }
 
 export enum IconSize {
@@ -45,6 +45,7 @@ export const Icon: React.FC<IconProps> = ({
     size = IconSize.S16,
     colour = IconColour.Accent,
     type,
+    ...rest
 }) => {
     const classes = [
         "mx_Icon",
@@ -57,9 +58,12 @@ export const Icon: React.FC<IconProps> = ({
     };
 
     return (
-        <div
+        <i
+            aria-hidden
             className={classes.join(" ")}
+            role="presentation"
             style={styles}
+            {...rest}
         />
     );
 };

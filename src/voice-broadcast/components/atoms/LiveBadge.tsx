@@ -21,7 +21,7 @@ import { _t } from "../../../languageHandler";
 
 export const LiveBadge: React.FC = () => {
     return <div className="mx_LiveBadge">
-        <Icon type={IconType.Live} colour={IconColour.White} />
+        <Icon type={IconType.Live} colour={IconColour.LiveBadge} />
         { _t("Live") }
     </div>;
 };

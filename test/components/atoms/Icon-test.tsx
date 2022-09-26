@@ -22,7 +22,7 @@ import { Icon, IconColour, IconSize, IconType } from "../../../src/components/at
 describe("Icon", () => {
     it.each([
         IconColour.Accent,
-        IconColour.White,
+        IconColour.LiveBadge,
     ])("should render the colour %s", (colour: IconColour) => {
         const { container } = render(
             <Icon
