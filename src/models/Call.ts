@@ -665,8 +665,12 @@ export class ElementCall extends Call {
     }
 
     public static async create(room: Room): Promise<void> {
+        const isVideoRoom = SettingsStore.getValue("feature_video_rooms")
+            && SettingsStore.getValue("feature_element_call_video_rooms")
+            && room.isCallRoom();
+
         await room.client.sendStateEvent(room.roomId, ElementCall.CALL_EVENT_TYPE.name, {
-            "m.intent": "m.room",
+            "m.intent": isVideoRoom ? "m.room" : "m.prompt",
             "m.type": "m.video",
         }, randomString(24));
     }
