@@ -3565,5 +3565,12 @@
     "Sign out of this session": "Melde dich von dieser Sitzung ab",
     "Please be aware that session names are also visible to people you communicate with": "Sei dir bitte bewusst, dass Sitzungsnamen auch für Personen, mit denen du kommunizierst, sichtbar sind",
     "Rename session": "Sitzung umbenennen",
-    "Video input %(n)s": "Video-Eingang %(n)s"
+    "Video input %(n)s": "Video-Eingang %(n)s",
+    "There's no one here to call": "Hier ist niemand zum Anrufen",
+    "You do not have permission to start voice calls": "Dir fehlt die Berechtigung, um Audioanrufe zu beginnen",
+    "You do not have permission to start video calls": "Dir fehlt die Berechtigung, um Videoanrufe zu beginnen",
+    "Ongoing call": "laufender Anruf",
+    "Video call (Element Call)": "Videoanruf (Element Call)",
+    "Video call (Jitsi)": "Videoanruf (Jitsi)",
+    "New group call experience": "Neue Gruppenanruf-Erfahrung"
 }
