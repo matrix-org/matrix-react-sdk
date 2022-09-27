@@ -25,6 +25,10 @@ import {
     VoiceBroadcastRecordingStore,
 } from "..";
 
+/**
+ * Starts a new Voice Broadcast Recording.
+ * Sends a voice_broadcast_info state event and waits for the event to actually appear in the room state.
+ */
 export const startNewVoiceBroadcastRecording = async (
     roomId: string,
     client: MatrixClient,
@@ -32,7 +36,7 @@ export const startNewVoiceBroadcastRecording = async (
 ): Promise<VoiceBroadcastRecordingStore> => {
     const room = client.getRoom(roomId);
     const { promise, resolve } = defer<VoiceBroadcastRecordingStore>();
-    let result: ISendEventResponse;
+    let result: ISendEventResponse = null;
 
     const onRoomStateEvents = () => {
         if (!result) return;
@@ -56,7 +60,7 @@ export const startNewVoiceBroadcastRecording = async (
     room.on(RoomStateEvent.Events, onRoomStateEvents);
 
     // XXX refactor to live event
-    client.sendStateEvent(
+    result = await client.sendStateEvent(
         roomId,
         VoiceBroadcastInfoEventType,
         {
@@ -64,9 +68,7 @@ export const startNewVoiceBroadcastRecording = async (
             chunk_length: 300,
         } as VoiceBroadcastInfoEventContent,
         client.getUserId(),
-    ).then((resolvedResult: ISendEventResponse) => {
-        result = resolvedResult;
-    });
+    );
 
     return promise;
 };
