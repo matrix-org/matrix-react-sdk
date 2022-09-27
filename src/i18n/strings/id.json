@@ -3570,5 +3570,13 @@
     "Voice broadcast": "Siaran suara",
     "Voice broadcast (under active development)": "Siaran suara (dalam pemgembangan aktif)",
     "Element Call video rooms": "Ruangan video Element Call",
-    "Voice broadcasts": "Siaran suara"
+    "Voice broadcasts": "Siaran suara",
+    "You do not have permission to start voice calls": "Anda tidak memiliki izin untuk memulai panggilan suara",
+    "There's no one here to call": "Tidak ada siapa pun di sini untuk dipanggil",
+    "You do not have permission to start video calls": "Anda tidak memiliki izin untuk memulai panggilan video",
+    "Ongoing call": "Panggilan sedang berlangsung",
+    "Video call (Element Call)": "Panggilan video (Element Call)",
+    "Video call (Jitsi)": "Panggilan video (Jitsi)",
+    "New group call experience": "Pengalaman panggilan grup baru",
+    "Live": "Langsung"
 }
