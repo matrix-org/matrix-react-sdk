@@ -23,7 +23,7 @@ export enum VoiceBroadcastRecorderEvents {
     ChunkRecorded = "chunk_recorded",
 }
 
-interface ChunkRecordedPayload {
+export interface ChunkRecordedPayload {
     buffer: Uint8Array;
     length: number;
 }
@@ -50,9 +50,12 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         return this.voiceRecording.start();
     }
 
-    public async stop(): Promise<void> {
+    /**
+     * Stops the recording and returns the remaining chunk (if any).
+     */
+    public async stop(): Promise<ChunkRecordedPayload> {
         await this.voiceRecording.stop();
-        this.emitAndResetChunk();
+        return this.extractChunk();
     }
 
     public on(event: string | symbol, listener: (...args: any[]) => void): this {
@@ -89,11 +92,10 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         }
     }
 
-    private emitAndResetChunk() {
-        if (this.chunkBuffer.length === 0) {
-            return;
-        }
-
+    /**
+     * Extracts the current chunk and resets the buffer.
+     */
+    private extractChunk(): ChunkRecordedPayload {
         const currentRecorderTime = this.voiceRecording.recorderSeconds;
         const payload: ChunkRecordedPayload = {
             buffer: concat(this.headers, this.chunkBuffer),
@@ -101,7 +103,18 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         };
         this.chunkBuffer = new Uint8Array(0);
         this.previousChunkEndTimePosition = currentRecorderTime;
-        this.voiceRecording.emit(VoiceBroadcastRecorderEvents.ChunkRecorded, payload);
+        return payload;
+    }
+
+    private emitAndResetChunk() {
+        if (this.chunkBuffer.length === 0) {
+            return;
+        }
+
+        this.voiceRecording.emit(
+            VoiceBroadcastRecorderEvents.ChunkRecorded,
+            this.extractChunk(),
+        );
     }
 
     private get chunkLength() {

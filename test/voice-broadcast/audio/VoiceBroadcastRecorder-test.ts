@@ -20,6 +20,7 @@ import { VoiceRecording } from "../../../src/audio/VoiceRecording";
 import SdkConfig from "../../../src/SdkConfig";
 import { concat } from "../../../src/utils/arrays";
 import {
+    ChunkRecordedPayload,
     createVoiceBroadcastRecording,
     VoiceBroadcastRecorder,
     VoiceBroadcastRecorderEvents,
@@ -146,18 +147,17 @@ describe("VoiceBroadcastRecorder", () => {
             itShouldNotEmitAChunkRecordedEvent();
 
             describe("stop", () => {
+                let stopPayload: ChunkRecordedPayload;
+
                 beforeEach(async () => {
-                    await voiceBroadcastRecording.stop();
+                    stopPayload = await voiceBroadcastRecording.stop();
                 });
 
-                it("should emit the partial chunk", () => {
-                    expect(voiceRecording.emit).toHaveBeenCalledWith(
-                        VoiceBroadcastRecorderEvents.ChunkRecorded,
-                        {
-                            buffer: concat(headers1, headers2, chunk1),
-                            length: 23,
-                        },
-                    );
+                it("should return the remaining chunk", () => {
+                    expect(stopPayload).toEqual({
+                        buffer: concat(headers1, headers2, chunk1),
+                        length: 23,
+                    });
                 });
             });
         });
