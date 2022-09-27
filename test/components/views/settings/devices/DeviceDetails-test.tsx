@@ -16,21 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
 import { PUSHER_ENABLED } from 'matrix-js-sdk/src/@types/event';
 
 import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
-
-const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
-    app_display_name: "app",
-    app_id: "123",
-    data: {},
-    device_display_name: "name",
-    kind: "http",
-    lang: "en",
-    pushkey: "pushpush",
-    ...extra,
-});
+import { mkPusher } from '../../../../test-utils/test-utils';
 
 describe('<DeviceDetails />', () => {
     const baseDevice = {
@@ -168,6 +157,6 @@ describe('<DeviceDetails />', () => {
 
         fireEvent.click(checkbox);
 
-        expect(defaultProps.setPusherEnabled).toHaveBeenCalledWith(!enabled);
+        expect(defaultProps.setPusherEnabled).toHaveBeenCalledWith(device.device_id, !enabled);
     });
 });

@@ -22,13 +22,14 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { DeviceTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 import { VerificationRequest } from 'matrix-js-sdk/src/crypto/verification/request/VerificationRequest';
 import { sleep } from 'matrix-js-sdk/src/utils';
-import { IMyDevice } from 'matrix-js-sdk/src/matrix';
+import { IMyDevice, PUSHER_DEVICE_ID, PUSHER_ENABLED } from 'matrix-js-sdk/src/matrix';
 
 import SessionManagerTab from '../../../../../../src/components/views/settings/tabs/user/SessionManagerTab';
 import MatrixClientContext from '../../../../../../src/contexts/MatrixClientContext';
 import {
     flushPromisesWithFakeTimers,
     getMockClientWithEventEmitter,
+    mkPusher,
     mockClientMethodsUser,
 } from '../../../../../test-utils';
 import Modal from '../../../../../../src/Modal';
@@ -68,6 +69,8 @@ describe('<SessionManagerTab />', () => {
         generateClientSecret: jest.fn(),
         setDeviceDetails: jest.fn(),
         doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(true),
+        getPushers: jest.fn(),
+        setPusher: jest.fn(),
     });
 
     const defaultProps = {};
@@ -102,6 +105,15 @@ describe('<SessionManagerTab />', () => {
         mockClient.getDevices
             .mockReset()
             .mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+
+        mockClient.getPushers
+            .mockReset()
+            .mockResolvedValue({
+                pushers: [mkPusher({
+                    [PUSHER_DEVICE_ID.name]: alicesDevice.device_id,
+                    [PUSHER_ENABLED.name]: true,
+                })],
+            });
     });
 
     it('renders spinner while devices load', () => {
