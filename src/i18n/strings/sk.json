@@ -3578,5 +3578,9 @@
     "Video call (Element Call)": "Videohovor (Element hovor)",
     "Video call (Jitsi)": "Videohovor (Jitsi)",
     "New group call experience": "Nový zážitok zo skupinových hovorov",
-    "Live": "Naživo"
+    "Live": "Naživo",
+    "Failed to set pusher state": "Nepodarilo sa nastaviť stav push oznámení",
+    "Receive push notifications on this session.": "Prijímať push oznámenia v tejto relácii.",
+    "Push notifications": "Push oznámenia",
+    "Toggle push notifications on this session.": "Prepnúť push oznámenia v tejto relácii."
 }
