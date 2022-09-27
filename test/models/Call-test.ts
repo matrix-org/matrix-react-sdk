@@ -612,7 +612,7 @@ describe("ElementCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Connected);
             expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
                 audioInput: "Headphones",
-                videoInput: "Built-in webcam"
+                videoInput: "Built-in webcam",
             });
         });
 
