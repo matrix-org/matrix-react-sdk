@@ -29,7 +29,7 @@ import { DeviceWithVerification } from './types';
 
 interface Props {
     device: DeviceWithVerification;
-    pusher: IPusher | null;
+    pusher?: IPusher | undefined;
     isSigningOut: boolean;
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;

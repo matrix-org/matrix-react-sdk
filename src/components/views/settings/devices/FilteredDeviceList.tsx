@@ -140,7 +140,7 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) =>
 
 const DeviceListItem: React.FC<{
     device: DeviceWithVerification;
-    pusher: IPusher | null;
+    pusher?: IPusher | undefined;
     isExpanded: boolean;
     isSigningOut: boolean;
     onDeviceExpandToggle: () => void;
@@ -205,7 +205,7 @@ export const FilteredDeviceList =
     }: Props, ref: ForwardedRef<HTMLDivElement>) => {
         const sortedDevices = getFilteredSortedDevices(devices, filter);
 
-        function getPusherForDevice(device: DeviceWithVerification): IPusher | null {
+        function getPusherForDevice(device: DeviceWithVerification): IPusher | undefined {
             return pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === device.device_id);
         }
 
