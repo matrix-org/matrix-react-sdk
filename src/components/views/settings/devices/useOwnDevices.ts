@@ -100,9 +100,11 @@ export const useOwnDevices = (): DevicesState => {
 
     const [error, setError] = useState<OwnDevicesError>();
 
-    matrixClient.doesServerSupportUnstableFeature("org.matrix.msc3881").then(hasSupport => {
-        setSupportsMSC3881(hasSupport);
-    });
+    useEffect(() => {
+        matrixClient.doesServerSupportUnstableFeature("org.matrix.msc3881").then(hasSupport => {
+            setSupportsMSC3881(hasSupport);
+        });
+    }, [matrixClient]);
 
     const refreshDevices = useCallback(async () => {
         setIsLoadingDeviceList(true);
@@ -177,8 +179,8 @@ export const useOwnDevices = (): DevicesState => {
                 });
                 await refreshDevices();
             } catch (error) {
-                logger.error("Error setting session display name", error);
-                throw new Error(_t("Failed to set display name"));
+                logger.error("Error setting pusher state", error);
+                throw new Error(_t("Failed to set pusher state"));
             }
         }, [matrixClient, pushers, refreshDevices],
     );
