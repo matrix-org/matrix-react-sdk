@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import { VoiceRecording } from "../../audio/VoiceRecording";
-import SdkConfig from "../../SdkConfig";
+import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 import { concat } from "../../utils/arrays";
 import { IDestroyable } from "../../utils/IDestroyable";
 
-export enum VoiceBroadcastRecordingEvents {
+export enum VoiceBroadcastRecorderEvents {
     ChunkRecorded = "chunk_recorded",
 }
 
@@ -33,7 +33,7 @@ interface ChunkRecordedPayload {
  * Subscribe with on(VoiceBroadcastRecordingEvents.ChunkRecorded, (payload: ChunkRecordedPayload) => {})
  * to retrieve chunks while recording.
  */
-export class VoiceBroadcastRecording implements IDestroyable {
+export class VoiceBroadcastRecorder implements IDestroyable {
     private headers = new Uint8Array(0);
     private chunkBuffer = new Uint8Array(0);
     private previousChunkEndTimePosition = 0;
@@ -101,7 +101,7 @@ export class VoiceBroadcastRecording implements IDestroyable {
         };
         this.chunkBuffer = new Uint8Array(0);
         this.previousChunkEndTimePosition = currentRecorderTime;
-        this.voiceRecording.emit(VoiceBroadcastRecordingEvents.ChunkRecorded, payload);
+        this.voiceRecording.emit(VoiceBroadcastRecorderEvents.ChunkRecorded, payload);
     }
 
     private get chunkLength() {
@@ -114,7 +114,6 @@ export class VoiceBroadcastRecording implements IDestroyable {
 }
 
 export const createVoiceBroadcastRecording = () => {
-    // Use target chunk length from config. Default to 5 minutes.
-    const targetChunkLength = SdkConfig.get("voice_broadcast")?.chunk_length || 500;
-    return new VoiceBroadcastRecording(new VoiceRecording(), targetChunkLength);
+    const targetChunkLength = SdkConfig.get("voice_broadcast")?.chunk_length || DEFAULTS.voice_broadcast.chunk_length;
+    return new VoiceBroadcastRecorder(new VoiceRecording(), targetChunkLength);
 };

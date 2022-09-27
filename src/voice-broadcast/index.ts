@@ -21,6 +21,7 @@ limitations under the License.
 
 import { RelationType } from "matrix-js-sdk/src/matrix";
 
+export * from "./audio";
 export * from "./components";
 export * from "./models";
 export * from "./utils";

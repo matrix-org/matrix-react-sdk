@@ -21,12 +21,12 @@ import SdkConfig from "../../../src/SdkConfig";
 import { concat } from "../../../src/utils/arrays";
 import {
     createVoiceBroadcastRecording,
-    VoiceBroadcastRecording,
-    VoiceBroadcastRecordingEvents,
-} from "../../../src/voice-broadcast/audio/VoiceBroadcastRecording";
+    VoiceBroadcastRecorder,
+    VoiceBroadcastRecorderEvents,
+} from "../../../src/voice-broadcast";
 
-describe("VoiceBroadcastRecording", () => {
-    describe("createVoiceBroadcastRecording", () => {
+describe("VoiceBroadcastRecorder", () => {
+    describe("createVoiceBroadcastRecorder", () => {
         beforeEach(() => {
             jest.spyOn(SdkConfig, "get").mockImplementation((key: string) => {
                 if (key === "voice_broadcast") {
@@ -41,10 +41,10 @@ describe("VoiceBroadcastRecording", () => {
             mocked(SdkConfig.get).mockRestore();
         });
 
-        it("should return a VoiceBroadcastRecording instance with targetChunkLength from config", () => {
-            const voiceBroadcastRecording = createVoiceBroadcastRecording();
-            expect(voiceBroadcastRecording).toBeInstanceOf(VoiceBroadcastRecording);
-            expect(voiceBroadcastRecording.targetChunkLength).toBe(1337);
+        it("should return a VoiceBroadcastRecorder instance with targetChunkLength from config", () => {
+            const voiceBroadcastRecorder = createVoiceBroadcastRecording();
+            expect(voiceBroadcastRecorder).toBeInstanceOf(VoiceBroadcastRecorder);
+            expect(voiceBroadcastRecorder.targetChunkLength).toBe(1337);
         });
     });
 
@@ -58,12 +58,12 @@ describe("VoiceBroadcastRecording", () => {
         const contentType = "test content type";
 
         let voiceRecording: VoiceRecording;
-        let voiceBroadcastRecording: VoiceBroadcastRecording;
+        let voiceBroadcastRecording: VoiceBroadcastRecorder;
 
         const itShouldNotEmitAChunkRecordedEvent = () => {
             it("should not emit a ChunkRecorded event", () => {
                 expect(voiceRecording.emit).not.toHaveBeenCalledWith(
-                    VoiceBroadcastRecordingEvents.ChunkRecorded,
+                    VoiceBroadcastRecorderEvents.ChunkRecorded,
                     expect.anything(),
                 );
             });
@@ -80,7 +80,7 @@ describe("VoiceBroadcastRecording", () => {
                 destroy: jest.fn(),
                 recorderSeconds: 23,
             } as unknown as VoiceRecording;
-            voiceBroadcastRecording = new VoiceBroadcastRecording(voiceRecording, chunkLength);
+            voiceBroadcastRecording = new VoiceBroadcastRecorder(voiceRecording, chunkLength);
         });
 
         it("on should forward the call to VoiceRecording", () => {
@@ -152,7 +152,7 @@ describe("VoiceBroadcastRecording", () => {
 
                 it("should emit the partial chunk", () => {
                     expect(voiceRecording.emit).toHaveBeenCalledWith(
-                        VoiceBroadcastRecordingEvents.ChunkRecorded,
+                        VoiceBroadcastRecorderEvents.ChunkRecorded,
                         {
                             buffer: concat(headers1, headers2, chunk1),
                             length: 23,
@@ -181,7 +181,7 @@ describe("VoiceBroadcastRecording", () => {
             it("should emit ChunkRecorded events", () => {
                 expect(voiceRecording.emit).toHaveBeenNthCalledWith(
                     1,
-                    VoiceBroadcastRecordingEvents.ChunkRecorded,
+                    VoiceBroadcastRecorderEvents.ChunkRecorded,
                     {
                         buffer: concat(headers1, headers2, chunk1),
                         length: 42,
@@ -190,7 +190,7 @@ describe("VoiceBroadcastRecording", () => {
 
                 expect(voiceRecording.emit).toHaveBeenNthCalledWith(
                     2,
-                    VoiceBroadcastRecordingEvents.ChunkRecorded,
+                    VoiceBroadcastRecorderEvents.ChunkRecorded,
                     {
                         buffer: concat(headers1, headers2, chunk2a, chunk2b),
                         length: 72 - 42,
