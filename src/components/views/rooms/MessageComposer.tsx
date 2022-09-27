@@ -54,6 +54,10 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { Features } from '../../../settings/Settings';
 import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
+import {
+    startNewVoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStore,
+} from '../../../voice-broadcast';
 
 let instanceCount = 0;
 
@@ -504,11 +508,12 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             toggleButtonMenu={this.toggleButtonMenu}
                             showVoiceBroadcastButton={this.showVoiceBroadcastButton}
                             onStartVoiceBroadcastClick={() => {
-                                // Sends a voice message. To be replaced by voice broadcast during development.
-                                this.voiceRecordingButton.current?.onRecordStartEndClick();
-                                if (this.context.narrow) {
-                                    this.toggleButtonMenu();
-                                }
+                                startNewVoiceBroadcastRecording(
+                                    this.props.room.roomId,
+                                    MatrixClientPeg.get(),
+                                    VoiceBroadcastRecordingsStore.instance(),
+                                );
+                                this.toggleButtonMenu();
                             }}
                         /> }
                         { showSendButton && (
