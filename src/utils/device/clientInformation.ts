@@ -37,6 +37,10 @@ const formatUrl = (): string | undefined => {
 const getClientInformationEventType = (deviceId: string): string =>
     `io.element.matrix_client_information.${deviceId}`;
 
+/**
+ * Record extra client information for the current device
+ * https://github.com/vector-im/element-meta/blob/develop/spec/matrix_client_information.md
+ */
 export const recordClientInformation = async (
     matrixClient: MatrixClient,
     sdkConfig: IConfigOptions,
