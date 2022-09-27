@@ -50,10 +50,14 @@ export default class MediaDeviceHandler extends EventEmitter {
         return devices.some(d => Boolean(d.label));
     }
 
+    // Gets the available audio input/output and video input devices
+    // from the browser: a thin wrapper around mediaDevices.enumerateDevices()
+    // that also returns results by type of devices.
+    // Note that common browser behaviour is for enumerateDevices() to not require
+    // user media permission, but if you don't have user media permission, all the
+    // all device names will be the empty string. If you care about device names,
+    // call and wait for requestPermission() above.
     public static async getDevices(): Promise<IMediaDevices> {
-        // Only needed for Electron atm, though should work in modern browsers
-        // once permission has been granted to the webapp
-
         try {
             const devices = await navigator.mediaDevices.enumerateDevices();
             const output = {
