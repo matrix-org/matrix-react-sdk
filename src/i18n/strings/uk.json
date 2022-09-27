@@ -3578,5 +3578,9 @@
     "Video call (Element Call)": "Відеовиклик (Element Call)",
     "Video call (Jitsi)": "Відеовиклик (Jitsi)",
     "New group call experience": "Нові можливості групових викликів",
-    "Live": "Наживо"
+    "Live": "Наживо",
+    "Failed to set pusher state": "Не вдалося встановити стан push-служби",
+    "Receive push notifications on this session.": "Отримувати push-сповіщення в цьому сеансі.",
+    "Push notifications": "Push-сповіщення",
+    "Toggle push notifications on this session.": "Увімкнути push-сповіщення для цього сеансу."
 }
