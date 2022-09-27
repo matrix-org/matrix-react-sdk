@@ -110,7 +110,7 @@ describe('<DeviceDetails />', () => {
         expect(getByTestId('device-detail-push-notification')).toBeTruthy();
     });
 
-    it('hides  te push notification section when no pusher', () => {
+    it('hides the push notification section when no pusher', () => {
         const device = {
             ...baseDevice,
         };
