@@ -682,7 +682,7 @@ describe('<SessionManagerTab />', () => {
         });
     });
 
-    it.only("lets you change the pusher state", async () => {
+    it("lets you change the pusher state", async () => {
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
