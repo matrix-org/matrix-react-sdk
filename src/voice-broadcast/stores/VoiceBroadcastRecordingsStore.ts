@@ -17,28 +17,28 @@ limitations under the License.
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
-import { VoiceBroadcastRecordingStore } from "..";
+import { VoiceBroadcastRecording } from "..";
 
 export enum VoiceBroadcastRecordingsStoreEvent {
     CurrentChanged = "current_changed",
 }
 
 interface EventMap {
-    [VoiceBroadcastRecordingsStoreEvent.CurrentChanged]: (recording: VoiceBroadcastRecordingStore) => void;
+    [VoiceBroadcastRecordingsStoreEvent.CurrentChanged]: (recording: VoiceBroadcastRecording) => void;
 }
 
 /**
  * This store provides access to the current and specific Voice Broadcast recordings.
  */
 export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadcastRecordingsStoreEvent, EventMap> {
-    private _current: VoiceBroadcastRecordingStore | null;
-    private recordings = new Map<string, VoiceBroadcastRecordingStore>();
+    private _current: VoiceBroadcastRecording | null;
+    private recordings = new Map<string, VoiceBroadcastRecording>();
 
     public constructor() {
         super();
     }
 
-    public setCurrent(current: VoiceBroadcastRecordingStore): void {
+    public setCurrent(current: VoiceBroadcastRecording): void {
         if (this._current === current) return;
 
         this._current = current;
@@ -46,15 +46,15 @@ export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadc
         this.emit(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, current);
     }
 
-    public get current(): VoiceBroadcastRecordingStore {
+    public get current(): VoiceBroadcastRecording {
         return this._current;
     }
 
-    public getByInfoEvent(infoEvent: MatrixEvent, client: MatrixClient): VoiceBroadcastRecordingStore {
+    public getByInfoEvent(infoEvent: MatrixEvent, client: MatrixClient): VoiceBroadcastRecording {
         const infoEventId = infoEvent.getId();
 
         if (!this.recordings.has(infoEventId)) {
-            this.recordings.set(infoEventId, new VoiceBroadcastRecordingStore(infoEvent, client));
+            this.recordings.set(infoEventId, new VoiceBroadcastRecording(infoEvent, client));
         }
 
         return this.recordings.get(infoEventId);
@@ -63,7 +63,7 @@ export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadc
     public static readonly _instance = new VoiceBroadcastRecordingsStore();
 
     /**
-     * XXX replace when https://github.com/matrix-org/matrix-react-sdk/pull/9293 has been merged
+     * TODO Michael W: replace when https://github.com/matrix-org/matrix-react-sdk/pull/9293 has been merged
      */
     public static instance() {
         return VoiceBroadcastRecordingsStore._instance;

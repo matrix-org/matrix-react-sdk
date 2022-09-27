@@ -22,17 +22,17 @@ import {
     VoiceBroadcastInfoEventContent,
     VoiceBroadcastInfoEventType,
     VoiceBroadcastInfoState,
-    VoiceBroadcastRecordingStore,
-    VoiceBroadcastRecordingStoreEvent,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingEvent,
 } from "../../../src/voice-broadcast";
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 
-describe("VoiceBroadcastRecordingStore", () => {
+describe("VoiceBroadcastRecording", () => {
     const roomId = "!room:example.com";
     let room: Room;
     let client: MatrixClient;
     let infoEvent: MatrixEvent;
-    let voiceBroadcastRecording: VoiceBroadcastRecordingStore;
+    let voiceBroadcastRecording: VoiceBroadcastRecording;
     let onStateChanged: (state: VoiceBroadcastInfoState) => void;
 
     const mkVoiceBroadcastInfoEvent = (content: VoiceBroadcastInfoEventContent) => {
@@ -46,8 +46,8 @@ describe("VoiceBroadcastRecordingStore", () => {
     };
 
     const setUpVoiceBroadcastRecording = () => {
-        voiceBroadcastRecording = new VoiceBroadcastRecordingStore(infoEvent, client);
-        voiceBroadcastRecording.on(VoiceBroadcastRecordingStoreEvent.StateChanged, onStateChanged);
+        voiceBroadcastRecording = new VoiceBroadcastRecording(infoEvent, client);
+        voiceBroadcastRecording.on(VoiceBroadcastRecordingEvent.StateChanged, onStateChanged);
     };
 
     beforeEach(() => {
@@ -62,7 +62,7 @@ describe("VoiceBroadcastRecordingStore", () => {
     });
 
     afterEach(() => {
-        voiceBroadcastRecording.off(VoiceBroadcastRecordingStoreEvent.StateChanged, onStateChanged);
+        voiceBroadcastRecording.off(VoiceBroadcastRecordingEvent.StateChanged, onStateChanged);
     });
 
     describe("when created for a Voice Broadcast Info without relations", () => {

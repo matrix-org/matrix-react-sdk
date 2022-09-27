@@ -26,8 +26,8 @@ import {
     VoiceBroadcastInfoState,
     VoiceBroadcastRecordingBody,
     VoiceBroadcastRecordingsStore,
-    VoiceBroadcastRecordingStore,
-    VoiceBroadcastRecordingStoreEvent,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingEvent,
 } from "../../../src/voice-broadcast";
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 import { IBodyProps } from "../../../src/components/views/messages/IBodyProps";
@@ -42,7 +42,7 @@ describe("VoiceBroadcastBody", () => {
     let client: MatrixClient;
     let room: Room;
     let infoEvent: MatrixEvent;
-    let recordingStore: VoiceBroadcastRecordingStore;
+    let recording: VoiceBroadcastRecording;
     let onRecordingStateChanged: (state: VoiceBroadcastInfoState) => void;
 
     const mkVoiceBroadcastInfoEvent = (state: VoiceBroadcastInfoState) => {
@@ -62,8 +62,8 @@ describe("VoiceBroadcastBody", () => {
             mxEvent: infoEvent,
         } as unknown as IBodyProps;
         render(<VoiceBroadcastBody {...props} />);
-        recordingStore = VoiceBroadcastRecordingsStore.instance().getByInfoEvent(infoEvent, client);
-        recordingStore.on(VoiceBroadcastRecordingStoreEvent.StateChanged, onRecordingStateChanged);
+        recording = VoiceBroadcastRecordingsStore.instance().getByInfoEvent(infoEvent, client);
+        recording.on(VoiceBroadcastRecordingEvent.StateChanged, onRecordingStateChanged);
     };
 
     const itShouldRenderALiveVoiceBroadcast = () => {
@@ -133,8 +133,8 @@ describe("VoiceBroadcastBody", () => {
     });
 
     afterEach(() => {
-        if (recordingStore && onRecordingStateChanged) {
-            recordingStore.off(VoiceBroadcastRecordingStoreEvent.StateChanged, onRecordingStateChanged);
+        if (recording && onRecordingStateChanged) {
+            recording.off(VoiceBroadcastRecordingEvent.StateChanged, onRecordingStateChanged);
         }
     });
 
@@ -155,7 +155,7 @@ describe("VoiceBroadcastBody", () => {
             itShouldRenderANonLiveVoiceBroadcast();
 
             it("should call stop on the recording", () => {
-                expect(recordingStore.state).toBe(VoiceBroadcastInfoState.Stopped);
+                expect(recording.state).toBe(VoiceBroadcastInfoState.Stopped);
                 expect(onRecordingStateChanged).toHaveBeenCalledWith(VoiceBroadcastInfoState.Stopped);
             });
         });

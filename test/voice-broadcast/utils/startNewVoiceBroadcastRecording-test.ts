@@ -22,12 +22,12 @@ import {
     VoiceBroadcastInfoEventType,
     VoiceBroadcastInfoState,
     VoiceBroadcastRecordingsStore,
-    VoiceBroadcastRecordingStore,
+    VoiceBroadcastRecording,
 } from "../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../test-utils";
 
-jest.mock("../../../src/voice-broadcast/stores/VoiceBroadcastRecordingStore", () => ({
-    VoiceBroadcastRecordingStore: jest.fn(),
+jest.mock("../../../src/voice-broadcast/models/VoiceBroadcastRecording", () => ({
+    VoiceBroadcastRecording: jest.fn(),
 }));
 
 describe("startNewVoiceBroadcastRecording", () => {
@@ -102,14 +102,14 @@ describe("startNewVoiceBroadcastRecording", () => {
             room: roomId,
         });
 
-        mocked(VoiceBroadcastRecordingStore).mockImplementation((
+        mocked(VoiceBroadcastRecording).mockImplementation((
             infoEvent: MatrixEvent,
             client: MatrixClient,
         ) => {
             return {
                 infoEvent,
                 client,
-            } as unknown as VoiceBroadcastRecordingStore;
+            } as unknown as VoiceBroadcastRecording;
         });
     });
 

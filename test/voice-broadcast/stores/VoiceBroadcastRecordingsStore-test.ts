@@ -21,12 +21,12 @@ import {
     VoiceBroadcastInfoEventType,
     VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecordingsStoreEvent,
-    VoiceBroadcastRecordingStore,
+    VoiceBroadcastRecording,
 } from "../../../src/voice-broadcast";
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 
-jest.mock("../../../src/voice-broadcast/stores/VoiceBroadcastRecordingStore.ts", () => ({
-    VoiceBroadcastRecordingStore: jest.fn().mockImplementation(
+jest.mock("../../../src/voice-broadcast/models/VoiceBroadcastRecording.ts", () => ({
+    VoiceBroadcastRecording: jest.fn().mockImplementation(
         (
             infoEvent: MatrixEvent,
             client: MatrixClient,
@@ -39,9 +39,9 @@ describe("VoiceBroadcastRecordingsStore", () => {
     let client: MatrixClient;
     let room: Room;
     let infoEvent: MatrixEvent;
-    let recording: VoiceBroadcastRecordingStore;
+    let recording: VoiceBroadcastRecording;
     let recordings: VoiceBroadcastRecordingsStore;
-    let onCurrentChanged: (recording: VoiceBroadcastRecordingStore) => void;
+    let onCurrentChanged: (recording: VoiceBroadcastRecording) => void;
 
     beforeEach(() => {
         client = stubClient();
@@ -60,7 +60,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
         });
         recording = {
             infoEvent,
-        } as unknown as VoiceBroadcastRecordingStore;
+        } as unknown as VoiceBroadcastRecording;
         recordings = new VoiceBroadcastRecordingsStore();
         onCurrentChanged = jest.fn();
         recordings.on(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, onCurrentChanged);
@@ -100,7 +100,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
     });
 
     describe("getByInfoEventId", () => {
-        let returnedRecording: VoiceBroadcastRecordingStore;
+        let returnedRecording: VoiceBroadcastRecording;
 
         describe("when retrieving a known recording", () => {
             beforeEach(() => {

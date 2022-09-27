@@ -19,18 +19,15 @@ import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter"
 
 import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "..";
 
-export enum VoiceBroadcastRecordingStoreEvent {
+export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
 }
 
 interface EventMap {
-    [VoiceBroadcastRecordingStoreEvent.StateChanged]: (state: VoiceBroadcastInfoState) => void;
+    [VoiceBroadcastRecordingEvent.StateChanged]: (state: VoiceBroadcastInfoState) => void;
 }
 
-/**
- * This store handles one Voice Broadcast recording.
- */
-export class VoiceBroadcastRecordingStore extends TypedEventEmitter<VoiceBroadcastRecordingStoreEvent, EventMap> {
+export class VoiceBroadcastRecording extends TypedEventEmitter<VoiceBroadcastRecordingEvent, EventMap> {
     private _state: VoiceBroadcastInfoState;
 
     public constructor(
@@ -50,17 +47,17 @@ export class VoiceBroadcastRecordingStore extends TypedEventEmitter<VoiceBroadca
             return event.getContent()?.state === VoiceBroadcastInfoState.Stopped;
         }) ? VoiceBroadcastInfoState.Started : VoiceBroadcastInfoState.Stopped;
 
-        // XXX add listening for updates
+        // TODO Michael W: add listening for updates
     }
 
     private setState(state: VoiceBroadcastInfoState): void {
         this._state = state;
-        this.emit(VoiceBroadcastRecordingStoreEvent.StateChanged, this.state);
+        this.emit(VoiceBroadcastRecordingEvent.StateChanged, this.state);
     }
 
     public async stop() {
         this.setState(VoiceBroadcastInfoState.Stopped);
-        // XXX add error handling
+        // TODO Michael W: add error handling
         await this.client.sendStateEvent(
             this.infoEvent.getRoomId(),
             VoiceBroadcastInfoEventType,

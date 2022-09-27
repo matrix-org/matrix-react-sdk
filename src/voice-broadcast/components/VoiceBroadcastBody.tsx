@@ -20,8 +20,8 @@ import {
     VoiceBroadcastInfoState,
     VoiceBroadcastRecordingBody,
     VoiceBroadcastRecordingsStore,
-    VoiceBroadcastRecordingStore,
-    VoiceBroadcastRecordingStoreEvent,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingEvent,
 } from "..";
 import { IBodyProps } from "../../components/views/messages/IBodyProps";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -35,8 +35,8 @@ export const VoiceBroadcastBody: React.FC<IBodyProps> = ({ mxEvent }) => {
 
     useTypedEventEmitter(
         recording,
-        VoiceBroadcastRecordingStoreEvent.StateChanged,
-        (state: VoiceBroadcastInfoState, _recording: VoiceBroadcastRecordingStore) => {
+        VoiceBroadcastRecordingEvent.StateChanged,
+        (state: VoiceBroadcastInfoState, _recording: VoiceBroadcastRecording) => {
             setRecordingState(state);
         },
     );
