@@ -124,7 +124,7 @@ describe('<DeviceDetails />', () => {
         expect(() => getByTestId('device-detail-push-notification')).toThrow();
     });
 
-    it('disables the checkbox when there\'s no server support', () => {
+    it('disables the checkbox when there is no server support', () => {
         const device = {
             ...baseDevice,
         };
