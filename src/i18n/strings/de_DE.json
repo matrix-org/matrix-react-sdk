@@ -2756,7 +2756,7 @@
     "Sending invites... (%(progress)s out of %(count)s)|one": "Einladung senden …",
     "Sending invites... (%(progress)s out of %(count)s)|other": "Einladungen senden … (%(progress)s von %(count)s)",
     "Loading new room": "Neuer Raum wird geladen",
-    "Upgrading room": "Raum aktualisieren",
+    "Upgrading room": "Raum wird geupgradet",
     "Developer mode": "Entwicklungsmodus",
     "File Attached": "Datei angehängt",
     "Error fetching file": "Fehler beim Laden der Datei",
