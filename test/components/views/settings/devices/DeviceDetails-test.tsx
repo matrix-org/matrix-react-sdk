@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
 import { PUSHER_ENABLED } from 'matrix-js-sdk/src/@types/event';
 
@@ -144,5 +144,30 @@ describe('<DeviceDetails />', () => {
 
         expect(checkbox.getAttribute('aria-disabled')).toEqual("true");
         expect(checkbox.getAttribute('aria-checked')).toEqual("false");
+    });
+
+    it('changes the pusher status when clicked', () => {
+        const device = {
+            ...baseDevice,
+        };
+
+        const enabled = false;
+
+        const pusher = mkPusher({
+            device_id: device.device_id,
+            [PUSHER_ENABLED.name]: enabled,
+        });
+
+        const { getByTestId } = render(getComponent({
+            device,
+            pusher,
+            isSigningOut: true,
+        }));
+
+        const checkbox = getByTestId('device-detail-push-notification-checkbox');
+
+        fireEvent.click(checkbox);
+
+        expect(defaultProps.setPusherEnabled).toHaveBeenCalledWith(!enabled);
     });
 });
