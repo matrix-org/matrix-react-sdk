@@ -995,7 +995,7 @@
     "You are currently subscribed to:": "Du abonnierst momentan:",
     "⚠ These settings are meant for advanced users.": "⚠ Diese Einstellungen sind für fortgeschrittene Nutzer gedacht.",
     "Cancel entering passphrase?": "Eingabe der Passphrase abbrechen?",
-    "Setting up keys": "Einrichten der Schlüssel",
+    "Setting up keys": "Schlüssel werden eingerichtet",
     "Encryption upgrade available": "Verschlüsselungsaktualisierung verfügbar",
     "Verifies a user, session, and pubkey tuple": "Verifiziert Benutzer, Sitzung und öffentlichen Schlüsselpaare",
     "Session already verified!": "Sitzung bereits verifiziert!",
