@@ -163,18 +163,18 @@ export class Algorithm extends EventEmitter {
         this.recalculateActiveCallRooms(tagId);
     }
 
-    private updateStickyRoom(val: Room) {
-        this.doUpdateStickyRoom(val);
+    private async updateStickyRoom(val: Room) {
+        await this.doUpdateStickyRoom(val);
         this._lastStickyRoom = null; // clear to indicate we're done changing
     }
 
-    private doUpdateStickyRoom(val: Room) {
+    private async doUpdateStickyRoom(val: Room) {
         if (val?.isSpaceRoom() && val.getMyMembership() !== "invite") {
             // no-op sticky rooms for spaces - they're effectively virtual rooms
             val = null;
         }
 
-        if (val && !VisibilityProvider.instance.isRoomVisible(val)) {
+        if (val && !await VisibilityProvider.instance.isRoomVisible(val)) {
             val = null; // the room isn't visible - lie to the rest of this function
         }
 
@@ -402,7 +402,7 @@ export class Algorithm extends EventEmitter {
      * @param {ITagSortingMap} tagSortingMap The tags to generate.
      * @param {IListOrderingMap} listOrderingMap The ordering of those tags.
      */
-    public populateTags(tagSortingMap: ITagSortingMap, listOrderingMap: IListOrderingMap): void {
+    public async populateTags(tagSortingMap: ITagSortingMap, listOrderingMap: IListOrderingMap): Promise<void> {
         if (!tagSortingMap) throw new Error(`Sorting map cannot be null or empty`);
         if (!listOrderingMap) throw new Error(`Ordering ma cannot be null or empty`);
         if (arrayHasDiff(Object.keys(tagSortingMap), Object.keys(listOrderingMap))) {
@@ -442,7 +442,7 @@ export class Algorithm extends EventEmitter {
      * previously known information and instead use these rooms instead.
      * @param {Room[]} rooms The rooms to force the algorithm to use.
      */
-    public setKnownRooms(rooms: Room[]): void {
+    public async setKnownRooms(rooms: Room[]): Promise<void> {
         if (isNullOrUndefined(rooms)) throw new Error(`Array of rooms cannot be null`);
         if (!this.sortAlgorithms) throw new Error(`Cannot set known rooms without a tag sorting map`);
 
@@ -456,7 +456,9 @@ export class Algorithm extends EventEmitter {
         // Before we go any further we need to clear (but remember) the sticky room to
         // avoid accidentally duplicating it in the list.
         const oldStickyRoom = this._stickyRoom;
-        if (oldStickyRoom) this.updateStickyRoom(null);
+        if (oldStickyRoom) {
+            await this.updateStickyRoom(null);
+        }
 
         this.rooms = rooms;
 

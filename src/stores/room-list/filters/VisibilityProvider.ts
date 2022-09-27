@@ -20,6 +20,7 @@ import LegacyCallHandler from "../../../LegacyCallHandler";
 import { RoomListCustomisations } from "../../../customisations/RoomList";
 import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import VoipUserMapper from "../../../VoipUserMapper";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 export class VisibilityProvider {
     private static internalInstance: VisibilityProvider;
@@ -38,7 +39,7 @@ export class VisibilityProvider {
         await VoipUserMapper.sharedInstance().onNewInvitedRoom(room);
     }
 
-    public isRoomVisible(room?: Room): boolean {
+    public async isRoomVisible(room?: Room): Promise<boolean> {
         if (!room) {
             return false;
         }
@@ -48,6 +49,21 @@ export class VisibilityProvider {
             VoipUserMapper.sharedInstance().isVirtualRoom(room)
         ) {
             return false;
+        }
+
+        if (room.getMyMembership() === "invite") {
+            // Find out whether the invite should be hidden.
+            const cli = MatrixClientPeg.get();
+            const myUserId = cli.getUserId();
+            const inviter = room.currentState.getMember(myUserId);
+            if (inviter?.events?.member) {
+                const inviterUserId = inviter.events.member.getSender();
+                const rule = await cli.ignoredInvites.getRuleForInvite({ roomId: room.roomId, sender: inviterUserId });
+                if (rule) {
+                    // Indeed, there is a rule that specifies we should hide the invite.
+                    return false;
+                }
+            }
         }
 
         // hide space rooms as they'll be shown in the SpacePanel
