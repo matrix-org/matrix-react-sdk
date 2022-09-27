@@ -110,7 +110,7 @@ describe('<SessionManagerTab />', () => {
             .mockReset()
             .mockResolvedValue({
                 pushers: [mkPusher({
-                    [PUSHER_DEVICE_ID.name]: alicesDevice.device_id,
+                    [PUSHER_DEVICE_ID.name]: alicesMobileDevice.device_id,
                     [PUSHER_ENABLED.name]: true,
                 })],
             });
@@ -680,5 +680,26 @@ describe('<SessionManagerTab />', () => {
             // error displayed
             expect(getByTestId('device-rename-error')).toBeTruthy();
         });
+    });
+
+    it.only("lets you change the pusher state", async () => {
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+        // device details are expanded
+        expect(getByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeTruthy();
+        expect(getByTestId('device-detail-push-notification')).toBeTruthy();
+
+        const checkbox = getByTestId('device-detail-push-notification-checkbox');
+
+        expect(checkbox).toBeTruthy();
+        fireEvent.click(checkbox);
+
+        expect(mockClient.setPusher).toHaveBeenCalled();
     });
 });
