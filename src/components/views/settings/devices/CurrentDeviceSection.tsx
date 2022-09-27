@@ -69,8 +69,6 @@ const CurrentDeviceSection: React.FC<Props> = ({
                     saveDeviceName={saveDeviceName}
                     // Current device can not have a pusher as Web does not use them
                     pusher={null}
-                    setPusherEnabled={null}
-                    supportsMSC3881={null}
                 />
             }
             <br />

@@ -48,7 +48,7 @@ interface Props {
     saveDeviceName: DevicesState['saveDeviceName'];
     onRequestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => void;
     setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
-    supportsMSC3881: boolean | null;
+    supportsMSC3881?: boolean | undefined;
 }
 
 // devices without timestamp metadata should be sorted last
@@ -148,7 +148,7 @@ const DeviceListItem: React.FC<{
     saveDeviceName: (deviceName: string) => Promise<void>;
     onRequestDeviceVerification?: () => void;
     setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
-    supportsMSC3881: boolean | null;
+    supportsMSC3881?: boolean | undefined;
 }> = ({
     device,
     pusher,

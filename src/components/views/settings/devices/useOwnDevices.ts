@@ -85,7 +85,7 @@ export type DevicesState = {
     saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
     setPusherEnabled: (deviceId: DeviceWithVerification['device_id'], enabled: boolean) => Promise<void>;
     error?: OwnDevicesError;
-    supportsMSC3881: boolean;
+    supportsMSC3881?: boolean | undefined;
 };
 export const useOwnDevices = (): DevicesState => {
     const matrixClient = useContext(MatrixClientContext);

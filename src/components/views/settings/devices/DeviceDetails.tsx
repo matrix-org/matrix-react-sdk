@@ -34,8 +34,8 @@ interface Props {
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
-    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void> | null;
-    supportsMSC3881: boolean | null;
+    setPusherEnabled?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
+    supportsMSC3881?: boolean | undefined;
 }
 
 interface MetadataTable {
