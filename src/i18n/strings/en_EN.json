@@ -1752,6 +1752,7 @@
     "Security recommendations": "Security recommendations",
     "Improve your account security by following these recommendations": "Improve your account security by following these recommendations",
     "View all": "View all",
+    "Failed to set pusher state": "Failed to set pusher state",
     "Unable to remove contact information": "Unable to remove contact information",
     "Remove %(email)s?": "Remove %(email)s?",
     "Invalid Email Address": "Invalid Email Address",
