@@ -3578,5 +3578,9 @@
     "Video call (Element Call)": "Panggilan video (Element Call)",
     "Video call (Jitsi)": "Panggilan video (Jitsi)",
     "New group call experience": "Pengalaman panggilan grup baru",
-    "Live": "Langsung"
+    "Live": "Langsung",
+    "Failed to set pusher state": "Gagal menetapkan keadaan pendorong",
+    "Receive push notifications on this session.": "Terima notifikasi dorongan di sesi ini.",
+    "Push notifications": "Notifikasi dorongan",
+    "Toggle push notifications on this session.": "Aktifkan atau nonaktifkan notifikasi dorongan di sesi ini."
 }
