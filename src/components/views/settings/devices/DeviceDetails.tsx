@@ -108,8 +108,8 @@ const DeviceDetails: React.FC<Props> = ({
                 data-testid='device-detail-push-notification'
             >
                 <ToggleSwitch
-                // For backwards compatibility, if `enabled` is missing
-                // default to `true`
+                    // For backwards compatibility, if `enabled` is missing
+                    // default to `true`
                     checked={pusher?.[PUSHER_ENABLED.name] ?? true}
                     disabled={!supportsMSC3881}
                     onChange={(checked) => setPusherEnabled?.(device.device_id, checked)}
