@@ -83,7 +83,7 @@ export type DevicesState = {
     requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
     saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
-    setPusherEnabled: (deviceId: DeviceWithVerification['device_id'], enabled: boolean) => Promise<void>;
+    setPushNotifications: (deviceId: DeviceWithVerification['device_id'], enabled: boolean) => Promise<void>;
     error?: OwnDevicesError;
     supportsMSC3881?: boolean | undefined;
 };
@@ -169,18 +169,21 @@ export const useOwnDevices = (): DevicesState => {
             }
         }, [matrixClient, devices, refreshDevices]);
 
-    const setPusherEnabled = useCallback(
+    const setPushNotifications = useCallback(
         async (deviceId: DeviceWithVerification['device_id'], enabled: boolean): Promise<void> => {
-            const pusher = pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === deviceId);
             try {
-                await matrixClient.setPusher({
-                    ...pusher,
-                    [PUSHER_ENABLED.name]: enabled,
-                });
-                await refreshDevices();
+                const pusher = pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === deviceId);
+                if (pusher) {
+                    await matrixClient.setPusher({
+                        ...pusher,
+                        [PUSHER_ENABLED.name]: enabled,
+                    });
+                }
             } catch (error) {
                 logger.error("Error setting pusher state", error);
                 throw new Error(_t("Failed to set pusher state"));
+            } finally {
+                await refreshDevices();
             }
         }, [matrixClient, pushers, refreshDevices],
     );
@@ -194,7 +197,7 @@ export const useOwnDevices = (): DevicesState => {
         requestDeviceVerification,
         refreshDevices,
         saveDeviceName,
-        setPusherEnabled,
+        setPushNotifications,
         supportsMSC3881,
     };
 };

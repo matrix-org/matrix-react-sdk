@@ -47,7 +47,7 @@ interface Props {
     onSignOutDevices: (deviceIds: DeviceWithVerification['device_id'][]) => void;
     saveDeviceName: DevicesState['saveDeviceName'];
     onRequestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => void;
-    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     supportsMSC3881?: boolean | undefined;
 }
 
@@ -147,7 +147,7 @@ const DeviceListItem: React.FC<{
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
     onRequestDeviceVerification?: () => void;
-    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     supportsMSC3881?: boolean | undefined;
 }> = ({
     device,
@@ -158,7 +158,7 @@ const DeviceListItem: React.FC<{
     onSignOutDevice,
     saveDeviceName,
     onRequestDeviceVerification,
-    setPusherEnabled,
+    setPushNotifications,
     supportsMSC3881,
 }) => <li className='mx_FilteredDeviceList_listItem'>
     <DeviceTile
@@ -178,7 +178,7 @@ const DeviceListItem: React.FC<{
             onVerifyDevice={onRequestDeviceVerification}
             onSignOutDevice={onSignOutDevice}
             saveDeviceName={saveDeviceName}
-            setPusherEnabled={setPusherEnabled}
+            setPushNotifications={setPushNotifications}
             supportsMSC3881={supportsMSC3881}
         />
     }
@@ -200,7 +200,7 @@ export const FilteredDeviceList =
         saveDeviceName,
         onSignOutDevices,
         onRequestDeviceVerification,
-        setPusherEnabled,
+        setPushNotifications,
         supportsMSC3881,
     }: Props, ref: ForwardedRef<HTMLDivElement>) => {
         const sortedDevices = getFilteredSortedDevices(devices, filter);
@@ -268,7 +268,7 @@ export const FilteredDeviceList =
                             ? () => onRequestDeviceVerification(device.device_id)
                             : undefined
                     }
-                    setPusherEnabled={setPusherEnabled}
+                    setPushNotifications={setPushNotifications}
                     supportsMSC3881={supportsMSC3881}
                 />,
                 ) }
