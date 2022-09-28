@@ -51,10 +51,6 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         newClient.on(ClientEvent.AccountData, this.onAccountData);
     }
 
-    private get localNotificationAccountDataKey(): string {
-        return `${LOCAL_NOTIFICATION_SETTINGS_PREFIX.name}.${this.client.deviceId}`;
-    }
-
     private onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent) => {
         if (event.getType() === "org.matrix.preview_urls") {
             let val = event.getContent()['disable'];
@@ -81,9 +77,6 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         } else if (event.getType() === RECENT_EMOJI_EVENT_TYPE) {
             const val = event.getContent()['enabled'];
             this.watchers.notifyUpdate("recent_emoji", null, SettingLevel.ACCOUNT, val);
-        } else if (event.getType() === this.localNotificationAccountDataKey) {
-            const enabled = !event.getContent()['is_silenced'];
-            this.watchers.notifyUpdate("deviceNotificationsEnabled", null, SettingLevel.DEVICE, enabled);
         }
     };
 
@@ -188,7 +181,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         await deferred.promise;
     }
 
-    public async setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
         switch (settingName) {
             // Special case URL previews
             case "urlPreviewsEnabled":
@@ -215,11 +208,6 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             case "pseudonymousAnalyticsOptIn":
                 return this.setAccountData(ANALYTICS_EVENT_TYPE, "pseudonymousAnalyticsOptIn", newValue);
 
-            case "localNotificationAccountDataKey":
-                await this.client.setAccountData(this.localNotificationAccountDataKey, {
-                    is_silenced: !newValue,
-                });
-                return;
             default:
                 return this.setAccountData(DEFAULT_SETTINGS_EVENT_TYPE, settingName, newValue);
         }
