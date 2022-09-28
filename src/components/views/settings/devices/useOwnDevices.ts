@@ -196,26 +196,19 @@ export const useOwnDevices = (): DevicesState => {
     const setPushNotifications = useCallback(
         async (deviceId: DeviceWithVerification['device_id'], enabled: boolean): Promise<void> => {
             try {
-                console.log("setPushNotifications", deviceId, enabled);
-
                 const pusher = pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === deviceId);
                 if (pusher) {
-                    console.log("pusher");
                     await matrixClient.setPusher({
                         ...pusher,
                         [PUSHER_ENABLED.name]: enabled,
                     });
                 } else if (localNotificationSettings.has(deviceId)) {
-                    console.log("localNotificationSettings");
                     await matrixClient.setLocalNotificationSettings(deviceId, {
                         is_silenced: !enabled,
                     });
-                } else {
-                    console.log("nothing");
                 }
             } catch (error) {
                 logger.error("Error setting pusher state", error);
-                console.error(error);
                 throw new Error(_t("Failed to set pusher state"));
             } finally {
                 await refreshDevices();

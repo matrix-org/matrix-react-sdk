@@ -130,10 +130,7 @@ const DeviceDetails: React.FC<Props> = ({
                     // default to `true`
                     checked={isPushNotificationsEnabled(pusher, localNotificationSettings)}
                     disabled={isCheckboxDisabled(pusher, localNotificationSettings)}
-                    onChange={(checked) => {
-                        console.log("onChange", checked);
-                        setPushNotifications?.(device.device_id, checked);
-                    }}
+                    onChange={checked => setPushNotifications?.(device.device_id, checked)}
                     aria-label={_t("Toggle push notifications on this session.")}
                     data-testid='device-detail-push-notification-checkbox'
                 />
