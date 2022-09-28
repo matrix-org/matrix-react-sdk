@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Method } from 'matrix-js-sdk/src/matrix';
+import { IAuthData, MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { sleep } from 'matrix-js-sdk/src/utils';
 import { logger } from "matrix-js-sdk/src/logger";
 import { DeviceInfo } from 'matrix-js-sdk/src/crypto/deviceinfo';
 import { CrossSigningInfo } from 'matrix-js-sdk/src/crypto/CrossSigning';
 import { RendezvousCancellationReason, RendezvousChannel } from 'matrix-js-sdk/src/rendezvous';
+import { LoginTokenPostResponse } from 'matrix-js-sdk/src/@types/auth';
 
 import { setLoggedIn } from '../Lifecycle';
 import { sendLoginRequest } from '../Login';
@@ -133,11 +134,14 @@ export class Rendezvous {
     async confirmLoginOnExistingDevice(): Promise<string | undefined> {
         logger.info("Requesting login token");
 
-        // TODO: handle UIA response
+        const loginTokenResponse = await this.cli.requestLoginToken();
+
+        if (typeof (loginTokenResponse as IAuthData).session === 'string') {
+            // TODO: handle UIA response
+            throw new Error("UIA isn't supported yet");
+        }
         // eslint-disable-next-line camelcase
-        const { login_token } = await this.cli.http.authedRequest<{ login_token: string, expires_in: number }>(
-            undefined, Method.Post, '/login/token', {}, {},
-        );
+        const { login_token } = loginTokenResponse as LoginTokenPostResponse;
 
         // eslint-disable-next-line camelcase
         await this.channel.send({ user: this.cli.getUserId(), homeserver: this.cli.baseUrl, login_token });
