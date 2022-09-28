@@ -14,27 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VideoRoomView {
-    flex-grow: 1;
-    min-height: 0;
-
-    display: flex;
-    flex-direction: column;
-    margin: $container-gap-width;
-    margin-right: calc($container-gap-width / 2);
-
-    background-color: $header-panel-bg-color;
-    padding: 8px;
-    border-radius: 8px;
-
-    .mx_AppTile {
-        width: auto;
-        height: 100%;
-        border: none;
-    }
-
-    /* While the lobby is shown, the widget needs to stay loaded but hidden in the background */
-    .mx_CallLobby ~ .mx_AppTile {
-        display: none;
-    }
-}
+export * from "./VoiceBroadcastRecording";

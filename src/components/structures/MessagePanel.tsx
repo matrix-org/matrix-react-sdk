@@ -25,6 +25,8 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
+import { ReadReceipt } from 'matrix-js-sdk/src/models/read-receipt';
+import { ListenerMap } from 'matrix-js-sdk/src/models/typed-event-emitter';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -57,6 +59,7 @@ import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
 import { hasThreadSummary } from "../../utils/EventUtils";
+import { VoiceBroadcastInfoEventType } from '../../voice-broadcast';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -135,7 +138,7 @@ interface IProps {
     showUrlPreview?: boolean;
 
     // event after which we should show a read marker
-    readMarkerEventId?: string;
+    readMarkerEventId?: string | null;
 
     // whether the read marker should be visible
     readMarkerVisible?: boolean;
@@ -826,8 +829,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         if (!room) {
             return null;
         }
+
+        const receiptDestination: ReadReceipt<string, ListenerMap<string>> = this.context.threadId
+            ? room.getThread(this.context.threadId)
+            : room;
+
         const receipts: IReadReceiptProps[] = [];
-        room.getReceiptsForEvent(event).forEach((r) => {
+        receiptDestination.getReceiptsForEvent(event).forEach((r) => {
             if (
                 !r.userId ||
                 !isSupportedReceiptType(r.type) ||
@@ -1084,11 +1092,20 @@ class CreationGrouper extends BaseGrouper {
             && (ev.getStateKey() !== createEvent.getSender() || ev.getContent()["membership"] !== "join")) {
             return false;
         }
+
+        const eventType = ev.getType();
+
         // beacons are not part of room creation configuration
         // should be shown in timeline
-        if (M_BEACON_INFO.matches(ev.getType())) {
+        if (M_BEACON_INFO.matches(eventType)) {
             return false;
         }
+
+        if (VoiceBroadcastInfoEventType === eventType) {
+            // always show voice broadcast info events in timeline
+            return false;
+        }
+
         if (ev.isState() && ev.getSender() === createEvent.getSender()) {
             return true;
         }
