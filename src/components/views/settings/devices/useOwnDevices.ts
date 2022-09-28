@@ -15,11 +15,19 @@ limitations under the License.
 */
 
 import { useCallback, useContext, useEffect, useState } from "react";
-import { IMyDevice, IPusher, MatrixClient, PUSHER_DEVICE_ID, PUSHER_ENABLED } from "matrix-js-sdk/src/matrix";
+import {
+    IMyDevice,
+    IPusher,
+    LOCAL_NOTIFICATION_SETTINGS_PREFIX,
+    MatrixClient,
+    PUSHER_DEVICE_ID,
+    PUSHER_ENABLED,
+} from "matrix-js-sdk/src/matrix";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
+import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
@@ -77,6 +85,7 @@ export enum OwnDevicesError {
 export type DevicesState = {
     devices: DevicesDictionary;
     pushers: IPusher[];
+    localNotificationSettings: Map<string, LocalNotificationSettings>;
     currentDeviceId: string;
     isLoadingDeviceList: boolean;
     // not provided when current session cannot request verification
@@ -95,6 +104,8 @@ export const useOwnDevices = (): DevicesState => {
 
     const [devices, setDevices] = useState<DevicesState['devices']>({});
     const [pushers, setPushers] = useState<DevicesState['pushers']>([]);
+    const [localNotificationSettings, setLocalNotificationSettings]
+        = useState<DevicesState['localNotificationSettings']>(new Map<string, LocalNotificationSettings>());
     const [isLoadingDeviceList, setIsLoadingDeviceList] = useState(true);
     const [supportsMSC3881, setSupportsMSC3881] = useState(true); // optimisticly saying yes!
 
@@ -119,6 +130,19 @@ export const useOwnDevices = (): DevicesState => {
 
             const { pushers } = await matrixClient.getPushers();
             setPushers(pushers);
+
+            const notificationSettings = new Map<string, LocalNotificationSettings>();
+            Object.keys(devices).forEach((deviceId) => {
+                const eventType = `${LOCAL_NOTIFICATION_SETTINGS_PREFIX.name}.${deviceId}`;
+                const event = matrixClient.getAccountData(eventType);
+                if (event) {
+                    notificationSettings.set(
+                        deviceId,
+                        event.getContent(),
+                    );
+                }
+            });
+            setLocalNotificationSettings(notificationSettings);
 
             setIsLoadingDeviceList(false);
         } catch (error) {
@@ -172,25 +196,37 @@ export const useOwnDevices = (): DevicesState => {
     const setPushNotifications = useCallback(
         async (deviceId: DeviceWithVerification['device_id'], enabled: boolean): Promise<void> => {
             try {
+                console.log("setPushNotifications", deviceId, enabled);
+
                 const pusher = pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === deviceId);
                 if (pusher) {
+                    console.log("pusher");
                     await matrixClient.setPusher({
                         ...pusher,
                         [PUSHER_ENABLED.name]: enabled,
                     });
+                } else if (localNotificationSettings.has(deviceId)) {
+                    console.log("localNotificationSettings");
+                    await matrixClient.setLocalNotificationSettings(deviceId, {
+                        is_silenced: !enabled,
+                    });
+                } else {
+                    console.log("nothing");
                 }
             } catch (error) {
                 logger.error("Error setting pusher state", error);
+                console.error(error);
                 throw new Error(_t("Failed to set pusher state"));
             } finally {
                 await refreshDevices();
             }
-        }, [matrixClient, pushers, refreshDevices],
+        }, [matrixClient, pushers, localNotificationSettings, refreshDevices],
     );
 
     return {
         devices,
         pushers,
+        localNotificationSettings,
         currentDeviceId,
         isLoadingDeviceList,
         error,
