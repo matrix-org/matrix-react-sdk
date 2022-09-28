@@ -1363,6 +1363,7 @@
     "An error occurred whilst saving your notification preferences.": "An error occurred whilst saving your notification preferences.",
     "Enable for this account": "Enable for this account",
     "Enable email notifications for %(email)s": "Enable email notifications for %(email)s",
+    "Enable notifications for this device": "Enable notifications for this device",
     "Enable desktop notifications for this session": "Enable desktop notifications for this session",
     "Show message in desktop notification": "Show message in desktop notification",
     "Enable audible notifications for this session": "Enable audible notifications for this session",
