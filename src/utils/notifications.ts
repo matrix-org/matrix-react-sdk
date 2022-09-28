@@ -19,6 +19,12 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import SettingsStore from "../settings/SettingsStore";
 
+export const deviceNotificationSettingsKeys = [
+    "notificationsEnabled",
+    "notificationBodyEnabled",
+    "audioNotificationsEnabled",
+];
+
 export function getLocalNotificationAccountDataEventType(deviceId: string): string {
     return `${LOCAL_NOTIFICATION_SETTINGS_PREFIX.name}.${deviceId}`;
 }
@@ -32,10 +38,9 @@ export async function createLocalNotificationSettingsIfNeeded(cli: MatrixClient)
     // For backwards compat purposes, older sessions will need to check settings value
     // to determine what the state of `is_silenced`
     if (!event) {
-        const settingsKeys = ["notificationsEnabled", "notificationBodyEnabled", "audioNotificationsEnabled"];
         // If any of the above is true, we fall in the "backwards compat" case,
         // and `is_silenced` will be set to `false`
-        const isSilenced = !settingsKeys.some(key => SettingsStore.getValue(key));
+        const isSilenced = !deviceNotificationSettingsKeys.some(key => SettingsStore.getValue(key));
 
         await cli.setAccountData(eventType, {
             is_silenced: isSilenced,
