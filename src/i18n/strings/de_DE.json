@@ -3577,5 +3577,8 @@
     "Receive push notifications on this session.": "Erhalte Push-Benachrichtigungen in dieser Sitzung.",
     "Push notifications": "Push-Benachrichtigungen",
     "Toggle push notifications on this session.": "(De)Aktiviere Push-Benachrichtigungen in dieser Sitzung.",
-    "Failed to set pusher state": "Konfigurieren des Push-Dienstes fehlgeschlagen"
+    "Failed to set pusher state": "Konfigurieren des Push-Dienstes fehlgeschlagen",
+    "Enable notifications for this device": "Aktiviere Benachrichtigungen für dieses Gerät",
+    "Turn off to disable notifications on all your devices and sessions": "Ausschalten, um Benachrichtigungen auf all deinen Geräten und Sitzungen zu deaktivieren",
+    "Enable notifications for this account": "Aktiviere Benachrichtigungen für dieses Konto"
 }
