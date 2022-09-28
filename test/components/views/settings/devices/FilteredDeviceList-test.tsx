@@ -48,6 +48,7 @@ describe('<FilteredDeviceList />', () => {
         setPushNotifications: jest.fn(),
         expandedDeviceIds: [],
         signingOutDeviceIds: [],
+        localNotificationSettings: new Map(),
         devices: {
             [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
             [verifiedNoMetadata.device_id]: verifiedNoMetadata,

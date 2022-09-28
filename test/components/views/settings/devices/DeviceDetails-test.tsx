@@ -159,4 +159,25 @@ describe('<DeviceDetails />', () => {
 
         expect(defaultProps.setPushNotifications).toHaveBeenCalledWith(device.device_id, !enabled);
     });
+
+    it('changes the local notifications settings status when clicked', () => {
+        const device = {
+            ...baseDevice,
+        };
+
+        const enabled = false;
+
+        const { getByTestId } = render(getComponent({
+            device,
+            localNotificationSettings: {
+                is_silenced: !enabled,
+            },
+            isSigningOut: true,
+        }));
+
+        const checkbox = getByTestId('device-detail-push-notification-checkbox');
+        fireEvent.click(checkbox);
+
+        expect(defaultProps.setPushNotifications).toHaveBeenCalledWith(device.device_id, !enabled);
+    });
 });

@@ -17,6 +17,7 @@ limitations under the License.
 import React, { ForwardedRef, forwardRef } from 'react';
 import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
 import { PUSHER_DEVICE_ID } from 'matrix-js-sdk/src/@types/event';
+import { LocalNotificationSettings } from 'matrix-js-sdk/src/@types/local_notifications';
 
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
@@ -39,6 +40,7 @@ import { DevicesState } from './useOwnDevices';
 interface Props {
     devices: DevicesDictionary;
     pushers: IPusher[];
+    localNotificationSettings: Map<string, LocalNotificationSettings>;
     expandedDeviceIds: DeviceWithVerification['device_id'][];
     signingOutDeviceIds: DeviceWithVerification['device_id'][];
     filter?: DeviceSecurityVariation;
@@ -141,6 +143,7 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) =>
 const DeviceListItem: React.FC<{
     device: DeviceWithVerification;
     pusher?: IPusher | undefined;
+    localNotificationSettings?: LocalNotificationSettings | undefined;
     isExpanded: boolean;
     isSigningOut: boolean;
     onDeviceExpandToggle: () => void;
@@ -152,6 +155,7 @@ const DeviceListItem: React.FC<{
 }> = ({
     device,
     pusher,
+    localNotificationSettings,
     isExpanded,
     isSigningOut,
     onDeviceExpandToggle,
@@ -174,6 +178,7 @@ const DeviceListItem: React.FC<{
         <DeviceDetails
             device={device}
             pusher={pusher}
+            localNotificationSettings={localNotificationSettings}
             isSigningOut={isSigningOut}
             onVerifyDevice={onRequestDeviceVerification}
             onSignOutDevice={onSignOutDevice}
@@ -192,6 +197,7 @@ export const FilteredDeviceList =
     forwardRef(({
         devices,
         pushers,
+        localNotificationSettings,
         filter,
         expandedDeviceIds,
         signingOutDeviceIds,
@@ -258,6 +264,7 @@ export const FilteredDeviceList =
                     key={device.device_id}
                     device={device}
                     pusher={getPusherForDevice(device)}
+                    localNotificationSettings={localNotificationSettings.get(device.device_id)}
                     isExpanded={expandedDeviceIds.includes(device.device_id)}
                     isSigningOut={signingOutDeviceIds.includes(device.device_id)}
                     onDeviceExpandToggle={() => onDeviceExpandToggle(device.device_id)}

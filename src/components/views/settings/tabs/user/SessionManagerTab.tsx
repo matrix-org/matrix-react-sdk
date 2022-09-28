@@ -88,6 +88,7 @@ const SessionManagerTab: React.FC = () => {
     const {
         devices,
         pushers,
+        localNotificationSettings,
         currentDeviceId,
         isLoadingDeviceList,
         requestDeviceVerification,
@@ -171,9 +172,11 @@ const SessionManagerTab: React.FC = () => {
         />
         <CurrentDeviceSection
             device={currentDevice}
-            isSigningOut={signingOutDeviceIds.includes(currentDevice?.device_id)}
+            localNotificationSettings={localNotificationSettings.get(currentDeviceId)}
+            setPushNotifications={setPushNotifications}
+            isSigningOut={signingOutDeviceIds.includes(currentDeviceId)}
             isLoading={isLoadingDeviceList}
-            saveDeviceName={(deviceName) => saveDeviceName(currentDevice?.device_id, deviceName)}
+            saveDeviceName={(deviceName) => saveDeviceName(currentDeviceId, deviceName)}
             onVerifyCurrentDevice={onVerifyCurrentDevice}
             onSignOutCurrentDevice={onSignOutCurrentDevice}
         />
@@ -190,6 +193,7 @@ const SessionManagerTab: React.FC = () => {
                 <FilteredDeviceList
                     devices={otherDevices}
                     pushers={pushers}
+                    localNotificationSettings={localNotificationSettings}
                     filter={filter}
                     expandedDeviceIds={expandedDeviceIds}
                     signingOutDeviceIds={signingOutDeviceIds}
