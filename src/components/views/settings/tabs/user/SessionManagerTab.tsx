@@ -99,6 +99,7 @@ const SessionManagerTab: React.FC = () => {
     } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
     const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
+    const [selectedDeviceIds, setSelectedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
     const filteredDeviceListRef = useRef<HTMLDivElement>(null);
     const scrollIntoViewTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -116,7 +117,6 @@ const SessionManagerTab: React.FC = () => {
 
     const onGoToFilteredList = (filter: DeviceSecurityVariation) => {
         setFilter(filter);
-        // @TODO(kerrya) clear selection when added in PSG-659
         clearTimeout(scrollIntoViewTimeoutRef.current);
         // wait a tick for the filtered section to rerender with different height
         scrollIntoViewTimeoutRef.current =
@@ -164,6 +164,11 @@ const SessionManagerTab: React.FC = () => {
         clearTimeout(scrollIntoViewTimeoutRef.current);
     }, [scrollIntoViewTimeoutRef]);
 
+    // clear selection when filter changes
+    useEffect(() => {
+        setSelectedDeviceIds([]);
+    }, [filter, setSelectedDeviceIds]);
+
     return <SettingsTab heading={_t('Sessions')}>
         <SecurityRecommendations
             devices={devices}
@@ -197,6 +202,8 @@ const SessionManagerTab: React.FC = () => {
                     filter={filter}
                     expandedDeviceIds={expandedDeviceIds}
                     signingOutDeviceIds={signingOutDeviceIds}
+                    selectedDeviceIds={selectedDeviceIds}
+                    setSelectedDeviceIds={setSelectedDeviceIds}
                     onFilterChange={setFilter}
                     onDeviceExpandToggle={onDeviceExpandToggle}
                     onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
