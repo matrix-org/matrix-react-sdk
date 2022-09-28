@@ -19,7 +19,6 @@ import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } fro
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
-import { LOCAL_NOTIFICATION_SETTINGS_PREFIX } from "matrix-js-sdk/src/@types/event";
 
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -43,6 +42,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
+import { getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -188,14 +188,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private get localNotificationAccountDataKey(): string {
-        const cli = MatrixClientPeg.get();
-        return `${LOCAL_NOTIFICATION_SETTINGS_PREFIX.name}.${cli.deviceId}`;
-    }
-
     private async refreshFromAccountData() {
         const cli = MatrixClientPeg.get();
-        const settingsEvent = cli.getAccountData(this.localNotificationAccountDataKey);
+        const settingsEvent = cli.getAccountData(getLocalNotificationAccountDataEventType(cli.deviceId));
         if (settingsEvent) {
             const notificationsEnabled = !(settingsEvent.getContent() as LocalNotificationSettings).is_silenced;
             await this.updateDeviceNotifications(notificationsEnabled);
@@ -204,7 +199,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private persistLocalNotificationSettings(enabled: boolean): Promise<{}> {
         const cli = MatrixClientPeg.get();
-        return cli.setAccountData(this.localNotificationAccountDataKey, {
+        return cli.setAccountData(getLocalNotificationAccountDataEventType(cli.deviceId), {
             is_silenced: !enabled,
         });
     }
