@@ -33,7 +33,7 @@ describe('<DeviceDetails />', () => {
         isLoading: false,
         onSignOutDevice: jest.fn(),
         saveDeviceName: jest.fn(),
-        setPusherEnabled: jest.fn(),
+        setPushNotifications: jest.fn(),
         supportsMSC3881: true,
     };
 
@@ -157,6 +157,6 @@ describe('<DeviceDetails />', () => {
 
         fireEvent.click(checkbox);
 
-        expect(defaultProps.setPusherEnabled).toHaveBeenCalledWith(device.device_id, !enabled);
+        expect(defaultProps.setPushNotifications).toHaveBeenCalledWith(device.device_id, !enabled);
     });
 });

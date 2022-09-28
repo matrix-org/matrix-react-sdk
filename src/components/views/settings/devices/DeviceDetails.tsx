@@ -34,7 +34,7 @@ interface Props {
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
-    setPusherEnabled?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
+    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
     supportsMSC3881?: boolean | undefined;
 }
 
@@ -50,7 +50,7 @@ const DeviceDetails: React.FC<Props> = ({
     onVerifyDevice,
     onSignOutDevice,
     saveDeviceName,
-    setPusherEnabled,
+    setPushNotifications,
     supportsMSC3881,
 }) => {
     const metadata: MetadataTable[] = [
@@ -112,7 +112,7 @@ const DeviceDetails: React.FC<Props> = ({
                     // default to `true`
                     checked={pusher?.[PUSHER_ENABLED.name] ?? true}
                     disabled={!supportsMSC3881}
-                    onChange={(checked) => setPusherEnabled?.(device.device_id, checked)}
+                    onChange={(checked) => setPushNotifications?.(device.device_id, checked)}
                     aria-label={_t("Toggle push notifications on this session.")}
                     data-testid='device-detail-push-notification-checkbox'
                 />
