@@ -19,7 +19,6 @@ import { mocked } from "jest-mock";
 
 import {
     createLocalNotificationSettingsIfNeeded,
-    deviceNotificationSettingsKeys,
     getLocalNotificationAccountDataEventType,
 } from "../../src/utils/notifications";
 import SettingsStore from "../../src/settings/SettingsStore";
