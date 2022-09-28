@@ -3570,5 +3570,17 @@
     "Element Call video rooms": "Element Call video miestnosti",
     "Voice broadcast": "Hlasové vysielanie",
     "Voice broadcast (under active development)": "Hlasové vysielanie (v štádiu aktívneho vývoja)",
-    "Voice broadcasts": "Hlasové vysielania"
+    "Voice broadcasts": "Hlasové vysielania",
+    "You do not have permission to start voice calls": "Nemáte povolenie na spustenie hlasových hovorov",
+    "There's no one here to call": "Nie je tu nikto, komu by ste mohli zavolať",
+    "You do not have permission to start video calls": "Nemáte povolenie na spustenie videohovorov",
+    "Ongoing call": "Prebiehajúci hovor",
+    "Video call (Element Call)": "Videohovor (Element hovor)",
+    "Video call (Jitsi)": "Videohovor (Jitsi)",
+    "New group call experience": "Nový zážitok zo skupinových hovorov",
+    "Live": "Naživo",
+    "Failed to set pusher state": "Nepodarilo sa nastaviť stav push oznámení",
+    "Receive push notifications on this session.": "Prijímať push oznámenia v tejto relácii.",
+    "Push notifications": "Push oznámenia",
+    "Toggle push notifications on this session.": "Prepnúť push oznámenia v tejto relácii."
 }

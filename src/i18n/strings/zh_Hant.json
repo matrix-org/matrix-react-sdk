@@ -3570,5 +3570,17 @@
     "Voice broadcast": "音訊廣播",
     "Voice broadcast (under active development)": "語音廣播（正在活躍開發中）",
     "Element Call video rooms": "Element Call 視訊聊天室",
-    "Voice broadcasts": "音訊廣播"
+    "Voice broadcasts": "音訊廣播",
+    "You do not have permission to start voice calls": "您無權開始音訊通話",
+    "There's no one here to call": "這裡沒有人可以通話",
+    "You do not have permission to start video calls": "您無權開始視訊通話",
+    "Ongoing call": "正在進行通話",
+    "Video call (Element Call)": "視訊通話 (Element Call)",
+    "Video call (Jitsi)": "視訊通話 (Jitsi)",
+    "New group call experience": "全新的群組通話體驗",
+    "Live": "即時",
+    "Failed to set pusher state": "設定推播程式狀態失敗",
+    "Receive push notifications on this session.": "在此工作階段接收推播通知。",
+    "Push notifications": "推播通知",
+    "Toggle push notifications on this session.": "在此工作階段切換推播通知。"
 }
