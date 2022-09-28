@@ -533,7 +533,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         const masterSwitch = <LabelledToggleSwitch
             data-test-id='notif-master-switch'
             value={!this.isInhibited}
-            label={_t("Enable for this account")}
+            label={_t("Enable notifications for this account")}
+            caption={_t("Turn off to disable notifications on all your devices and sessions")}
             onChange={this.onMasterRuleChanged}
             disabled={this.state.phase === Phase.Persisting}
         />;
