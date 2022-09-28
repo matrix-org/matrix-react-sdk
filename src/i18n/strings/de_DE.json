@@ -3576,5 +3576,6 @@
     "Live": "Live-Übertragung",
     "Receive push notifications on this session.": "Erhalte Push-Benachrichtigungen in dieser Sitzung.",
     "Push notifications": "Push-Benachrichtigungen",
-    "Toggle push notifications on this session.": "(De)Aktiviere Push-Benachrichtigungen in dieser Sitzung."
+    "Toggle push notifications on this session.": "(De)Aktiviere Push-Benachrichtigungen in dieser Sitzung.",
+    "Failed to set pusher state": "Konfigurieren des Push-Dienstes fehlgeschlagen"
 }
