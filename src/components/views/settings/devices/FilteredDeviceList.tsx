@@ -267,15 +267,35 @@ export const FilteredDeviceList =
         };
 
         return <div className='mx_FilteredDeviceList' ref={ref}>
-            <FilteredDeviceListHeader selectedDeviceCount={0}>
-                <FilterDropdown<DeviceFilterKey>
-                    id='device-list-filter'
-                    label={_t('Filter devices')}
-                    value={filter || ALL_FILTER_ID}
-                    onOptionChange={onFilterOptionChange}
-                    options={options}
-                    selectedLabel={_t('Show')}
-                />
+            <FilteredDeviceListHeader selectedDeviceCount={selectedDeviceIds.length}>
+                { selectedDeviceIds.length
+                    ? <>
+                        <AccessibleButton
+                            data-testid='sign-out-selection-cta'
+                            kind='danger_inline'
+                            onClick={() => onSignOutDevices(selectedDeviceIds)}
+                            className='mx_FilteredDeviceList_headerButton'
+                        >
+                            { _t('Sign out') }
+                        </AccessibleButton>
+                        <AccessibleButton
+                            data-testid='cancel-selection-cta'
+                            kind='content_inline'
+                            onClick={() => setSelectedDeviceIds([])}
+                            className='mx_FilteredDeviceList_headerButton'
+                        >
+                            { _t('Cancel') }
+                        </AccessibleButton>
+                    </>
+                    : <FilterDropdown<DeviceFilterKey>
+                        id='device-list-filter'
+                        label={_t('Filter devices')}
+                        value={filter || ALL_FILTER_ID}
+                        onOptionChange={onFilterOptionChange}
+                        options={options}
+                        selectedLabel={_t('Show')}
+                    />
+                }
             </FilteredDeviceListHeader>
             { !!sortedDevices.length
                 ? <FilterSecurityCard filter={filter} />
