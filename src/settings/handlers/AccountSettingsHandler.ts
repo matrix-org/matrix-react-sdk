@@ -18,7 +18,6 @@ limitations under the License.
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { defer } from "matrix-js-sdk/src/utils";
-import { LOCAL_NOTIFICATION_SETTINGS_PREFIX } from "matrix-js-sdk/src/@types/event";
 
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
 import { objectClone, objectKeyChanges } from "../../utils/objects";
