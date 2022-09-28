@@ -3582,5 +3582,8 @@
     "Failed to set pusher state": "Не вдалося встановити стан push-служби",
     "Receive push notifications on this session.": "Отримувати push-сповіщення в цьому сеансі.",
     "Push notifications": "Push-сповіщення",
-    "Toggle push notifications on this session.": "Увімкнути push-сповіщення для цього сеансу."
+    "Toggle push notifications on this session.": "Увімкнути push-сповіщення для цього сеансу.",
+    "Enable notifications for this device": "Увімкнути сповіщення для цього пристрою",
+    "Turn off to disable notifications on all your devices and sessions": "Вимкніть, щоб вимкнути сповіщення для всіх ваших пристроїв і сесій",
+    "Enable notifications for this account": "Увімкнути сповіщення для цього облікового запису"
 }
