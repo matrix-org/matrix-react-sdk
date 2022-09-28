@@ -15,7 +15,14 @@ limitations under the License.
 import React from 'react';
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from 'enzyme';
-import { IPushRule, IPushRules, RuleId, IPusher, LOCAL_NOTIFICATION_SETTINGS_PREFIX, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import {
+    IPushRule,
+    IPushRules,
+    RuleId,
+    IPusher,
+    LOCAL_NOTIFICATION_SETTINGS_PREFIX,
+    MatrixEvent,
+} from 'matrix-js-sdk/src/matrix';
 import { IThreepid, ThreepidMedium } from 'matrix-js-sdk/src/@types/threepids';
 import { act } from 'react-dom/test-utils';
 
