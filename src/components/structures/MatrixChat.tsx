@@ -428,8 +428,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
-
-        this.cli.off(ClientEvent.Sync, this.onInitialSync);
     }
 
     private onWindowResized = (): void => {
