@@ -769,7 +769,7 @@ describe('<SessionManagerTab />', () => {
         const evt = new MatrixEvent({
             type: LOCAL_NOTIFICATION_SETTINGS_PREFIX.name + "." + alicesDevice.device_id,
             content: {
-                is_silenced: false,
+                is_silenced: true,
             },
         });
 
