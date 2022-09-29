@@ -97,12 +97,16 @@ export const Notifier = {
         if (!plaf) {
             return;
         }
+        console.log("1");
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
             return;
         }
+
+        console.log("2");
         if (localNotificationsAreSilenced(cli)) {
             return;
         }
+        console.log("3");
 
         let msg = this.notificationMessageForEvent(ev);
         if (!msg) return;
@@ -128,6 +132,7 @@ export const Notifier = {
             }
         }
 
+        console.log("4");
         if (!this.isBodyEnabled()) {
             msg = '';
         }
@@ -137,6 +142,7 @@ export const Notifier = {
             avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, 'crop');
         }
 
+        console.log("5");
         const notif = plaf.displayNotification(title, msg, avatarUrl, room, ev);
 
         // if displayNotification returns non-null,  the platform supports
