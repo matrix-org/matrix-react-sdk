@@ -115,9 +115,22 @@ export class Rendezvous {
 
         // await confirmation of verification
         // eslint-disable-next-line camelcase
-        const { verifying_device_id } = await this.channel.receive();
+        const { verifying_device_id, keys } = await this.channel.receive();
 
+        // set other device as verified
         await client.setDeviceVerified(userId, verifying_device_id, true);
+
+        if (keys) {
+            // set up cross-signing
+            // eslint-disable-next-line camelcase
+            const { master, user_signing, self_signing } = keys;
+
+            // eslint-disable-next-line camelcase
+            if (master || user_signing || self_signing) {
+                // eslint-disable-next-line camelcase
+                client.crypto.crossSigningInfo.setKeys({ master, user_signing, self_signing });
+            }
+        }
 
         // request keys from the verifying device
         await requestKeysDuringVerification(client, userId, verifying_device_id);
@@ -188,7 +201,10 @@ export class Rendezvous {
 
         const info = await this.cli.crypto.setDeviceVerification(this.cli.getUserId(), this.newDeviceId, true, false, true);
 
-        await this.channel.send({ outcome: 'verified', verifying_device_id: this.cli.getDeviceId() });
+        // eslint-disable-next-line camelcase
+        const { master, user_signing, self_signing } = this.cli.crypto.crossSigningInfo.toStorage().keys;
+        // eslint-disable-next-line camelcase
+        await this.channel.send({ outcome: 'verified', verifying_device_id: this.cli.getDeviceId(), keys: { master, user_signing, self_signing } });
 
         return info;
     }
