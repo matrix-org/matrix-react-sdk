@@ -50,13 +50,19 @@ export default class MediaDeviceHandler extends EventEmitter {
         return devices.some(d => Boolean(d.label));
     }
 
-    // Gets the available audio input/output and video input devices
-    // from the browser: a thin wrapper around mediaDevices.enumerateDevices()
-    // that also returns results by type of devices.
-    // Note that common browser behaviour is for enumerateDevices() to not require
-    // user media permission, but if you don't have user media permission, all the
-    // all device names will be the empty string. If you care about device names,
-    // call and wait for requestPermission() above.
+    /**
+     * Gets the available audio input/output and video input devices
+     * from the browser: a thin wrapper around mediaDevices.enumerateDevices()
+     * that also returns results by type of devices. Note that this requires
+     * user media permissions and an active stream, otherwise you'll get blank
+     * device labels.
+     *
+     * Once the Permissions API
+     * (https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API)
+     * is ready for primetime, it might help make this simpler.
+     *
+     * @return Promise<IMediaDevices> The available media devices
+     */
     public static async getDevices(): Promise<IMediaDevices> {
         try {
             const devices = await navigator.mediaDevices.enumerateDevices();

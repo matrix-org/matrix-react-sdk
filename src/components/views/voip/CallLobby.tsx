@@ -41,7 +41,6 @@ interface DeviceButtonProps {
     devices: MediaDeviceInfo[];
     setDevice: (device: MediaDeviceInfo) => void;
     deviceListLabel: string;
-    fallbackDeviceLabel: (n: number) => string;
     muted: boolean;
     disabled: boolean;
     toggle: () => void;
@@ -50,7 +49,7 @@ interface DeviceButtonProps {
 }
 
 const DeviceButton: FC<DeviceButtonProps> = ({
-    kind, devices, setDevice, deviceListLabel, fallbackDeviceLabel, muted, disabled, toggle, unmutedTitle, mutedTitle,
+    kind, devices, setDevice, deviceListLabel, muted, disabled, toggle, unmutedTitle, mutedTitle,
 }) => {
     const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
     let contextMenu;
@@ -63,10 +62,10 @@ const DeviceButton: FC<DeviceButtonProps> = ({
         const buttonRect = buttonRef.current!.getBoundingClientRect();
         contextMenu = <IconizedContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
             <IconizedContextMenuOptionList>
-                { devices.map((d, index) =>
+                { devices.map((d) =>
                     <IconizedContextMenuOption
                         key={d.deviceId}
-                        label={d.label || fallbackDeviceLabel(index + 1)}
+                        label={d.label}
                         onClick={() => selectDevice(d)}
                     />,
                 ) }
@@ -115,25 +114,8 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
     const participants = useParticipants(call);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const [audioInputs, videoInputs] = useAsyncMemo(async () => {
-        try {
-            const devices = await MediaDeviceHandler.getDevices();
-            return [devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
-        } catch (e) {
-            logger.warn(`Failed to get media device list`, e);
-            return [[], []];
-        }
-    }, [], [[], []]);
-
     const [videoInputId, setVideoInputId] = useState<string>(() => MediaDeviceHandler.getVideoInput());
-
-    const setAudioInput = useCallback((device: MediaDeviceInfo) => {
-        MediaDeviceHandler.instance.setAudioInput(device.deviceId);
-    }, []);
-    const setVideoInput = useCallback((device: MediaDeviceInfo) => {
-        MediaDeviceHandler.instance.setVideoInput(device.deviceId);
-        setVideoInputId(device.deviceId);
-    }, []);
+    const [audioInputId] = useState<string>(() => MediaDeviceHandler.getAudioInput());
 
     const [audioMuted, setAudioMuted] = useState(() => MediaDeviceHandler.startWithAudioMuted);
     const [videoMuted, setVideoMuted] = useState(() => MediaDeviceHandler.startWithVideoMuted);
@@ -147,18 +129,36 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
         setVideoMuted(!videoMuted);
     }, [videoMuted, setVideoMuted]);
 
-    const videoStream = useAsyncMemo(async () => {
+    const [videoStream, audioInputs, videoInputs] = useAsyncMemo(async () => {
         if (videoInputId && !videoMuted) {
             try {
-                return await navigator.mediaDevices.getUserMedia({
+                // We get the preview stream before requesting devices: this is because
+                // we need (in some browsers) an active media stream in order to get
+                // non-blank labels for the devices. According to the docs, we
+                // need a stream of each type (audio + video) if we want to enumerate
+                // audio & video devices, although this didn't seem to be the case
+                // in practice for me. We request both anyway.
+                const s = await navigator.mediaDevices.getUserMedia({
                     video: { deviceId: videoInputId },
+                    audio: { deviceId: audioInputId },
                 });
+
+                const devices = await MediaDeviceHandler.getDevices();
+                return [s, devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
             } catch (e) {
                 logger.error(`Failed to get stream for device ${videoInputId}`, e);
             }
         }
         return null;
-    }, [videoInputId, videoMuted]);
+    }, [videoInputId, videoMuted], [null, [], []]);
+
+    const setAudioInput = useCallback((device: MediaDeviceInfo) => {
+        MediaDeviceHandler.instance.setAudioInput(device.deviceId);
+    }, []);
+    const setVideoInput = useCallback((device: MediaDeviceInfo) => {
+        MediaDeviceHandler.instance.setVideoInput(device.deviceId);
+        setVideoInputId(device.deviceId);
+    }, []);
 
     useEffect(() => {
         if (videoStream) {
@@ -213,7 +213,6 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
                     devices={audioInputs}
                     setDevice={setAudioInput}
                     deviceListLabel={_t("Audio devices")}
-                    fallbackDeviceLabel={n => _t("Audio input %(n)s", { n })}
                     muted={audioMuted}
                     disabled={connecting}
                     toggle={toggleAudio}
@@ -225,7 +224,6 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
                     devices={videoInputs}
                     setDevice={setVideoInput}
                     deviceListLabel={_t("Video devices")}
-                    fallbackDeviceLabel={n => _t("Video input %(n)s", { n })}
                     muted={videoMuted}
                     disabled={connecting}
                     toggle={toggleVideo}
