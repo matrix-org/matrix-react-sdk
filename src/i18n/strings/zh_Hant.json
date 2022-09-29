@@ -3582,5 +3582,8 @@
     "Failed to set pusher state": "設定推播程式狀態失敗",
     "Receive push notifications on this session.": "在此工作階段接收推播通知。",
     "Push notifications": "推播通知",
-    "Toggle push notifications on this session.": "在此工作階段切換推播通知。"
+    "Toggle push notifications on this session.": "在此工作階段切換推播通知。",
+    "Enable notifications for this device": "為此裝置啟用通知",
+    "Turn off to disable notifications on all your devices and sessions": "關閉以停用您所有裝置與工作階段上的通知",
+    "Enable notifications for this account": "為此帳號啟用通知"
 }
