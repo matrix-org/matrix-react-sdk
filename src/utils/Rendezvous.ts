@@ -18,7 +18,7 @@ import { IAuthData, MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { sleep } from 'matrix-js-sdk/src/utils';
 import { logger } from "matrix-js-sdk/src/logger";
 import { DeviceInfo } from 'matrix-js-sdk/src/crypto/deviceinfo';
-import { CrossSigningInfo } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import { CrossSigningInfo, requestKeysDuringVerification } from 'matrix-js-sdk/src/crypto/CrossSigning';
 import { RendezvousCancellationReason, RendezvousChannel } from 'matrix-js-sdk/src/rendezvous';
 import { LoginTokenPostResponse } from 'matrix-js-sdk/src/@types/auth';
 
@@ -113,6 +113,15 @@ export class Rendezvous {
 
         await this.channel.send(data);
 
+        // await confirmation of verification
+        // eslint-disable-next-line camelcase
+        const { verifying_device_id } = await this.channel.receive();
+
+        await client.setDeviceVerified(userId, verifying_device_id, true);
+
+        // request keys from the verifying device
+        await requestKeysDuringVerification(client, userId, verifying_device_id);
+
         return login;
     }
 
@@ -176,7 +185,12 @@ export class Rendezvous {
                 throw new Error(`New device has different keys than expected for ${keyId}`);
             }
         }
-        return await this.cli.crypto.setDeviceVerification(this.cli.getUserId(), this.newDeviceId, true, false, true);
+
+        const info = await this.cli.crypto.setDeviceVerification(this.cli.getUserId(), this.newDeviceId, true, false, true);
+
+        await this.channel.send({ outcome: 'verified', verifying_device_id: this.cli.getDeviceId() });
+
+        return info;
     }
 
     async crossSign(timeout = 10 * 1000): Promise<DeviceInfo | CrossSigningInfo | undefined> {
