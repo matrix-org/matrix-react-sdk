@@ -160,7 +160,7 @@ const DeviceListItem: React.FC<{
     saveDeviceName: (deviceName: string) => Promise<void>;
     onRequestDeviceVerification?: () => void;
     toggleSelected: () => void;
-    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     supportsMSC3881?: boolean | undefined;
 }> = ({
     device,
