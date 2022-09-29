@@ -119,7 +119,6 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const [videoInputId, setVideoInputId] = useState<string>(() => MediaDeviceHandler.getVideoInput());
-    const [audioInputId] = useState<string>(() => MediaDeviceHandler.getAudioInput());
 
     const [audioMuted, setAudioMuted] = useState(() => MediaDeviceHandler.startWithAudioMuted);
     const [videoMuted, setVideoMuted] = useState(() => MediaDeviceHandler.startWithVideoMuted);
@@ -144,7 +143,7 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
                 // in practice for me. We request both anyway.
                 const s = await navigator.mediaDevices.getUserMedia({
                     video: { deviceId: videoInputId },
-                    audio: { deviceId: audioInputId },
+                    audio: { deviceId: MediaDeviceHandler.getAudioInput() },
                 });
 
                 const devices = await MediaDeviceHandler.getDevices();
