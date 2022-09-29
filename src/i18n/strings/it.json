@@ -3582,5 +3582,9 @@
     "Failed to set pusher state": "Impostazione stato del push fallita",
     "Receive push notifications on this session.": "Ricevi notifiche push in questa sessione.",
     "Push notifications": "Notifiche push",
-    "Toggle push notifications on this session.": "Attiva/disattiva le notifiche push in questa sessione."
+    "Toggle push notifications on this session.": "Attiva/disattiva le notifiche push in questa sessione.",
+    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s sessioni selezionate",
+    "Enable notifications for this device": "Attiva le notifiche per questo dispositivo",
+    "Turn off to disable notifications on all your devices and sessions": "Disabilita per disattivare le notifiche in tutti i dispositivi e sessioni",
+    "Enable notifications for this account": "Attiva le notifiche per questo account"
 }
