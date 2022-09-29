@@ -30,6 +30,7 @@ import {
     EventType,
     IEventRelation,
     IUnsigned,
+    IPusher,
 } from 'matrix-js-sdk/src/matrix';
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -49,7 +50,7 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
  */
-export function stubClient() {
+export function stubClient(): MatrixClient {
     const client = createTestClient();
 
     // stub out the methods in MatrixClientPeg
@@ -63,6 +64,7 @@ export function stubClient() {
     // fast stub function rather than a sinon stub
     peg.get = function() { return client; };
     MatrixClientBackedSettingsHandler.matrixClient = client;
+    return client;
 }
 
 /**
@@ -399,7 +401,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getMembers: jest.fn().mockReturnValue([]),
         getPendingEvents: () => [],
         getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
-        getUnfilteredTimelineSet: () => null,
+        getUnfilteredTimelineSet: jest.fn(),
         findEventById: () => null,
         getAccountData: () => null,
         hasMembershipState: () => null,
@@ -443,6 +445,8 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         canInvite: jest.fn(),
         getThreads: jest.fn().mockReturnValue([]),
         eventShouldLiveIn: jest.fn().mockReturnValue({}),
+        createThreadsTimelineSets: jest.fn().mockReturnValue(new Promise(() => {})),
+        fetchRoomThreads: jest.fn().mockReturnValue(new Promise(() => {})),
     } as unknown as Room;
 }
 
@@ -538,3 +542,14 @@ export const mkSpace = (
     )));
     return space;
 };
+
+export const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
+    app_display_name: "app",
+    app_id: "123",
+    data: {},
+    device_display_name: "name",
+    kind: "http",
+    lang: "en",
+    pushkey: "pushpush",
+    ...extra,
+});

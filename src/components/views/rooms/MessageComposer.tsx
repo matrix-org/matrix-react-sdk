@@ -37,7 +37,7 @@ import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
-import { RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
+import { RecordingState } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { E2EStatus } from '../../../utils/ShieldUtils';
@@ -53,6 +53,11 @@ import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { Features } from '../../../settings/Settings';
+import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
+import {
+    startNewVoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStore,
+} from '../../../voice-broadcast';
 
 let instanceCount = 0;
 
@@ -101,7 +106,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
-    private _voiceRecording: Optional<VoiceRecording>;
+    private _voiceRecording: Optional<VoiceMessageRecording>;
 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -133,11 +138,11 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
     }
 
-    private get voiceRecording(): Optional<VoiceRecording> {
+    private get voiceRecording(): Optional<VoiceMessageRecording> {
         return this._voiceRecording;
     }
 
-    private set voiceRecording(rec: Optional<VoiceRecording>) {
+    private set voiceRecording(rec: Optional<VoiceMessageRecording>) {
         if (this._voiceRecording) {
             this._voiceRecording.off(RecordingState.Started, this.onRecordingStarted);
             this._voiceRecording.off(RecordingState.EndingSoon, this.onRecordingEndingSoon);
@@ -503,11 +508,12 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             toggleButtonMenu={this.toggleButtonMenu}
                             showVoiceBroadcastButton={this.showVoiceBroadcastButton}
                             onStartVoiceBroadcastClick={() => {
-                                // Sends a voice message. To be replaced by voice broadcast during development.
-                                this.voiceRecordingButton.current?.onRecordStartEndClick();
-                                if (this.context.narrow) {
-                                    this.toggleButtonMenu();
-                                }
+                                startNewVoiceBroadcastRecording(
+                                    this.props.room.roomId,
+                                    MatrixClientPeg.get(),
+                                    VoiceBroadcastRecordingsStore.instance(),
+                                );
+                                this.toggleButtonMenu();
                             }}
                         /> }
                         { showSendButton && (

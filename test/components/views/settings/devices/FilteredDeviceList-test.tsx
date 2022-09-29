@@ -45,8 +45,10 @@ describe('<FilteredDeviceList />', () => {
         onDeviceExpandToggle: jest.fn(),
         onSignOutDevices: jest.fn(),
         saveDeviceName: jest.fn(),
+        setPushNotifications: jest.fn(),
         expandedDeviceIds: [],
         signingOutDeviceIds: [],
+        localNotificationSettings: new Map(),
         devices: {
             [unverifiedNoMetadata.device_id]: unverifiedNoMetadata,
             [verifiedNoMetadata.device_id]: verifiedNoMetadata,
@@ -54,7 +56,10 @@ describe('<FilteredDeviceList />', () => {
             [hundredDaysOld.device_id]: hundredDaysOld,
             [hundredDaysOldUnverified.device_id]: hundredDaysOldUnverified,
         },
+        pushers: [],
+        supportsMSC3881: true,
     };
+
     const getComponent = (props = {}) =>
         (<FilteredDeviceList {...defaultProps} {...props} />);
 

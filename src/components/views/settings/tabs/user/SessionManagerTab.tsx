@@ -87,11 +87,15 @@ const useSignOut = (
 const SessionManagerTab: React.FC = () => {
     const {
         devices,
+        pushers,
+        localNotificationSettings,
         currentDeviceId,
         isLoadingDeviceList,
         requestDeviceVerification,
         refreshDevices,
         saveDeviceName,
+        setPushNotifications,
+        supportsMSC3881,
     } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
     const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
@@ -168,9 +172,11 @@ const SessionManagerTab: React.FC = () => {
         />
         <CurrentDeviceSection
             device={currentDevice}
-            isSigningOut={signingOutDeviceIds.includes(currentDevice?.device_id)}
+            localNotificationSettings={localNotificationSettings.get(currentDeviceId)}
+            setPushNotifications={setPushNotifications}
+            isSigningOut={signingOutDeviceIds.includes(currentDeviceId)}
             isLoading={isLoadingDeviceList}
-            saveDeviceName={(deviceName) => saveDeviceName(currentDevice?.device_id, deviceName)}
+            saveDeviceName={(deviceName) => saveDeviceName(currentDeviceId, deviceName)}
             onVerifyCurrentDevice={onVerifyCurrentDevice}
             onSignOutCurrentDevice={onSignOutCurrentDevice}
         />
@@ -186,6 +192,8 @@ const SessionManagerTab: React.FC = () => {
             >
                 <FilteredDeviceList
                     devices={otherDevices}
+                    pushers={pushers}
+                    localNotificationSettings={localNotificationSettings}
                     filter={filter}
                     expandedDeviceIds={expandedDeviceIds}
                     signingOutDeviceIds={signingOutDeviceIds}
@@ -194,7 +202,9 @@ const SessionManagerTab: React.FC = () => {
                     onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
                     onSignOutDevices={onSignOutOtherDevices}
                     saveDeviceName={saveDeviceName}
+                    setPushNotifications={setPushNotifications}
                     ref={filteredDeviceListRef}
+                    supportsMSC3881={supportsMSC3881}
                 />
             </SettingsSubsection>
         }
