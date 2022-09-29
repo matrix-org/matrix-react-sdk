@@ -133,24 +133,34 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
     }, [videoMuted, setVideoMuted]);
 
     const [videoStream, audioInputs, videoInputs] = useAsyncMemo(async () => {
-        if (videoInputId && !videoMuted) {
-            try {
-                // We get the preview stream before requesting devices: this is because
-                // we need (in some browsers) an active media stream in order to get
-                // non-blank labels for the devices. According to the docs, we
-                // need a stream of each type (audio + video) if we want to enumerate
-                // audio & video devices, although this didn't seem to be the case
-                // in practice for me. We request both anyway.
-                const s = await navigator.mediaDevices.getUserMedia({
-                    video: { deviceId: videoInputId },
-                    audio: { deviceId: MediaDeviceHandler.getAudioInput() },
-                });
+        try {
+            // We get the preview stream before requesting devices: this is because
+            // we need (in some browsers) an active media stream in order to get
+            // non-blank labels for the devices. According to the docs, we
+            // need a stream of each type (audio + video) if we want to enumerate
+            // audio & video devices, although this didn't seem to be the case
+            // in practice for me. We request both anyway.
+            // For similar reasons, we also request a stream even if video is muted,
+            // which could be a bit strange but allows us to get the device list
+            // reliably. One option could be to try & get devices without a stream,
+            // then try again with a stream if we get blank deviceids, but... ew.
+            let s = await navigator.mediaDevices.getUserMedia({
+                video: { deviceId: videoInputId },
+                audio: { deviceId: MediaDeviceHandler.getAudioInput() },
+            });
 
-                const devices = await MediaDeviceHandler.getDevices();
-                return [s, devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
-            } catch (e) {
-                logger.error(`Failed to get stream for device ${videoInputId}`, e);
+            const devices = await MediaDeviceHandler.getDevices();
+
+            // If video is muted, we don't actually want the stream, so we can get rid of
+            // it now.
+            if (videoMuted) {
+                s.getTracks().forEach(t => t.stop());
+                s = null;
             }
+
+            return [s, devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
+        } catch (e) {
+            logger.error(`Failed to get stream for device ${videoInputId}`, e);
         }
         return null;
     }, [videoInputId, videoMuted], [null, [], []]);
