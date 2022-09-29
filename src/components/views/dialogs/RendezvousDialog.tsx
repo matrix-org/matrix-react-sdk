@@ -107,7 +107,6 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
 
             const generatedRendezvous = new Rendezvous(channel, client);
 
-            generatedRendezvous.onConfirmationDigits = this.onConfirmationDigits;
             generatedRendezvous.onCancelled = this.onCancelled;
             await generatedRendezvous.generateCode();
             logger.info(generatedRendezvous.code);
@@ -115,9 +114,11 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                 generatedRendezvous,
                 cancelled: undefined,
             });
-            if (this.props.device === 'existing') {
-                await generatedRendezvous.startOnExistingDevice();
-            } else {
+
+            const confirmationDigits = await generatedRendezvous.start();
+            this.setState({ confirmationDigits });
+
+            if (this.props.device === 'new') {
                 const res = await generatedRendezvous.completeOnNewDevice();
                 if (res) {
                     this.props.onFinished(true);
@@ -132,10 +133,6 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
                 await this.rendezvous.cancel(RendezvousCancellationReason.Unknown);
             }
         }
-    };
-
-    private onConfirmationDigits = (confirmationDigits: string) => {
-        this.setState({ confirmationDigits });
     };
 
     private onCancelled = (reason: RendezvousCancellationReason) => {
@@ -164,14 +161,15 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
             const client = this.props.device === 'existing' ? MatrixClientPeg.get() : undefined;
             const channel = await buildChannelFromCode(scannedCode, this.onCancelled, client);
             const scannedRendezvous = new Rendezvous(channel, client);
-            scannedRendezvous.onConfirmationDigits = this.onConfirmationDigits;
             this.setState({
                 scannedRendezvous,
                 cancelled: undefined,
             });
-            if (this.props.device === 'existing') {
-                await scannedRendezvous.startOnExistingDevice();
-            } else {
+
+            const confirmationDigits = await scannedRendezvous.start();
+            this.setState({ confirmationDigits });
+
+            if (this.props.device === 'new') {
                 const res = await scannedRendezvous.completeOnNewDevice();
                 if (res) {
                     this.props.onFinished(true);

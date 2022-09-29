@@ -32,7 +32,6 @@ export class Rendezvous {
     private newDeviceId?: string;
     private newDeviceKeys?: Record<string, string>;
     public code?: string;
-    public onConfirmationDigits?: (digits: string) => void;
     public onCancelled?: (reason: RendezvousCancellationReason) => void;
 
     constructor(private channel: RendezvousChannel, cli?: MatrixClient) {
@@ -47,13 +46,11 @@ export class Rendezvous {
         this.code = JSON.stringify(await this.channel.generateCode());
     }
 
+    async start(): Promise<string> {
+        return this.channel.connect();
+    }
+
     async completeOnNewDevice(): Promise<IMatrixClientCreds | undefined> {
-        const digits = await this.channel.connect();
-
-        if (this.onConfirmationDigits) {
-            this.onConfirmationDigits(digits);
-        }
-
         // alert(`Secure connection established. The code ${digits} should be displayed on your other device`);
 
         // Primary: 2. wait for details of existing device
@@ -136,16 +133,6 @@ export class Rendezvous {
         await requestKeysDuringVerification(client, userId, verifying_device_id);
 
         return login;
-    }
-
-    async startOnExistingDevice(): Promise<boolean> {
-        const digits = await this.channel.connect();
-
-        if (this.onConfirmationDigits) {
-            this.onConfirmationDigits(digits);
-        }
-
-        return true;
     }
 
     async declineLoginOnExistingDevice() {
