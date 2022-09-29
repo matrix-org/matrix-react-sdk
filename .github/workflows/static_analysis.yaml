@@ -90,5 +90,5 @@ jobs:
 
       - name: Dead Code Analysis
         run: |
-          cd element-web 
+          cd element-web
           yarn run analyse:unused-exports

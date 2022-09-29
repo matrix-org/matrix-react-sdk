@@ -22,9 +22,10 @@ import SdkConfig from "../../../SdkConfig";
 import AccessibleButton from "../../views/elements/AccessibleButton";
 import Heading from "../../views/typography/Heading";
 import FeedbackDialog from "../dialogs/FeedbackDialog";
+import { shouldShowFeedback } from "../../../utils/Feedback";
 
 export function UserOnboardingFeedback() {
-    if (!SdkConfig.get().bug_report_endpoint_url) {
+    if (!shouldShowFeedback()) {
         return null;
     }
 
@@ -32,10 +33,14 @@ export function UserOnboardingFeedback() {
         <div className="mx_UserOnboardingFeedback">
             <div className="mx_UserOnboardingFeedback_content">
                 <Heading size="h4" className="mx_UserOnboardingFeedback_title">
-                    { _t("How are you finding Element so far?") }
+                    { _t("How are you finding %(brand)s so far?", {
+                        brand: SdkConfig.get("brand"),
+                    }) }
                 </Heading>
                 <div className="mx_UserOnboardingFeedback_text">
-                    { _t("We’d appreciate any feedback on how you’re finding Element.") }
+                    { _t("We’d appreciate any feedback on how you’re finding %(brand)s.", {
+                        brand: SdkConfig.get("brand"),
+                    }) }
                 </div>
             </div>
             <AccessibleButton

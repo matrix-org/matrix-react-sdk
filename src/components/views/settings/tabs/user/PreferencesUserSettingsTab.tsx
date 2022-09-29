@@ -46,6 +46,7 @@ interface IState {
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
     private static ROOM_LIST_SETTINGS = [
         'breadcrumbs',
+        "FTUE.userOnboardingButton",
     ];
 
     private static SPACES_SETTINGS = [
@@ -126,8 +127,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     public async componentDidMount(): Promise<void> {
         this.setState({
             disablingReadReceiptsSupported: (
-                await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285.stable") ||
-                await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285")
+                await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285.stable")
             ),
         });
     }

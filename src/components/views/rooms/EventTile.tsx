@@ -47,7 +47,7 @@ import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import NotificationBadge from "./NotificationBadge";
-import CallEventGrouper from "../../structures/CallEventGrouper";
+import LegacyCallEventGrouper from "../../structures/LegacyCallEventGrouper";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
 import PlatformPeg from '../../../PlatformPeg';
@@ -200,8 +200,8 @@ interface IProps {
     // Helper to build permalinks for the room
     permalinkCreator?: RoomPermalinkCreator;
 
-    // CallEventGrouper for this event
-    callEventGrouper?: CallEventGrouper;
+    // LegacyCallEventGrouper for this event
+    callEventGrouper?: LegacyCallEventGrouper;
 
     // Symbol of the root node
     as?: string;
@@ -628,9 +628,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         if (!userTrust.isCrossSigningVerified()) {
-            // user is not verified, so default to everything is normal
+            // If the message is unauthenticated, then display a grey
+            // shield, otherwise if the user isn't cross-signed then
+            // nothing's needed
             this.setState({
-                verified: E2EState.Normal,
+                verified: encryptionInfo.authenticated ? E2EState.Normal : E2EState.Unauthenticated,
             }, this.props.onHeightChanged); // Decryption may have caused a change in size
             return;
         }
@@ -853,9 +855,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
     private showContextMenu(ev: React.MouseEvent, permalink?: string): void {
         const clickTarget = ev.target as HTMLElement;
-
-        // Return if message right-click context menu isn't enabled
-        if (!SettingsStore.getValue("feature_message_right_click_context_menu")) return;
 
         // Try to find an anchor element
         const anchorElement = (clickTarget instanceof HTMLAnchorElement) ? clickTarget : clickTarget.closest("a");
@@ -1336,6 +1335,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         <a href={permalink} onClick={this.onPermalinkClicked}>
                             { timestamp }
                         </a>
+                        { msgOption }
                     </div>,
                     reactionsRow,
                 ]);

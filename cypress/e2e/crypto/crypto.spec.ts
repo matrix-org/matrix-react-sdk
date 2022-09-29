@@ -50,7 +50,7 @@ const checkDMRoom = () => {
 
 const startDMWithBob = function(this: CryptoTestContext) {
     cy.get('.mx_RoomList [aria-label="Start chat"]').click();
-    cy.get('[data-test-id="invite-dialog-input"]').type(this.bob.getUserId());
+    cy.get('[data-testid="invite-dialog-input"]').type(this.bob.getUserId());
     cy.contains(".mx_InviteDialog_tile_nameStack_name", "Bob").click();
     cy.contains(".mx_InviteDialog_userTile_pill .mx_InviteDialog_userTile_name", "Bob").should("exist");
     cy.get(".mx_InviteDialog_goButton").click();
@@ -58,10 +58,10 @@ const startDMWithBob = function(this: CryptoTestContext) {
 
 const testMessages = function(this: CryptoTestContext) {
     // check the invite message
-    cy.contains(".mx_EventTile_body", "Hey!")
-        .closest(".mx_EventTile")
-        .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning")
-        .should("have.descendants", ".mx_EventTile_receiptSent");
+    cy.contains(".mx_EventTile_body", "Hey!").closest(".mx_EventTile").within(() => {
+        cy.get(".mx_EventTile_e2eIcon_warning").should("not.exist");
+        cy.get(".mx_EventTile_receiptSent").should("exist");
+    });
 
     // Bob sends a response
     cy.get<Room>("@bobsRoom").then((room) => {

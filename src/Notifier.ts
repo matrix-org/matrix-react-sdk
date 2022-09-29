@@ -44,8 +44,9 @@ import { RoomViewStore } from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-import CallHandler from "./CallHandler";
+import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
+import { localNotificationsAreSilenced } from "./utils/notifications";
 
 /*
  * Dispatches:
@@ -90,12 +91,17 @@ export const Notifier = {
         return TextForEvent.textForEvent(ev);
     },
 
-    _displayPopupNotification: function(ev: MatrixEvent, room: Room) {
+    _displayPopupNotification: function(ev: MatrixEvent, room: Room): void {
         const plaf = PlatformPeg.get();
+        const cli = MatrixClientPeg.get();
         if (!plaf) {
             return;
         }
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
+            return;
+        }
+
+        if (localNotificationsAreSilenced(cli)) {
             return;
         }
 
@@ -170,7 +176,12 @@ export const Notifier = {
         };
     },
 
-    _playAudioNotification: async function(ev: MatrixEvent, room: Room) {
+    _playAudioNotification: async function(ev: MatrixEvent, room: Room): Promise<void> {
+        const cli = MatrixClientPeg.get();
+        if (localNotificationsAreSilenced(cli)) {
+            return;
+        }
+
         const sound = this.getSoundForRoom(room.roomId);
         logger.log(`Got sound ${sound && sound.name || "default"} for ${room.roomId}`);
 
@@ -325,7 +336,7 @@ export const Notifier = {
         }
         const isGuest = client.isGuest();
         return !isGuest && this.supportsDesktopNotifications() && !isPushNotifyDisabled() &&
-            !this.isEnabled() && !this._isPromptHidden();
+            !localNotificationsAreSilenced(client) && !this.isEnabled() && !this._isPromptHidden();
     },
 
     _isPromptHidden: function() {
@@ -397,7 +408,7 @@ export const Notifier = {
 
     _evaluateEvent: function(ev: MatrixEvent) {
         let roomId = ev.getRoomId();
-        if (CallHandler.instance.getSupportsVirtualRooms()) {
+        if (LegacyCallHandler.instance.getSupportsVirtualRooms()) {
             // Attempt to translate a virtual room to a native one
             const nativeRoomId = VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(roomId);
             if (nativeRoomId) {
