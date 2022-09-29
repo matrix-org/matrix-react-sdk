@@ -3578,5 +3578,13 @@
     "Ongoing call": "Průběžný hovor",
     "Video call (Element Call)": "Videohovor (Element Call)",
     "Video call (Jitsi)": "Videohovor (Jitsi)",
-    "Live": "Živě"
+    "Live": "Živě",
+    "Failed to set pusher state": "Nepodařilo se nastavit stav push oznámení",
+    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s vybraných relací",
+    "Receive push notifications on this session.": "Přijímat push oznámení v této relaci.",
+    "Toggle push notifications on this session.": "Přepnout push notifikace v této relaci.",
+    "Push notifications": "Push notifikace",
+    "Enable notifications for this device": "Povolit oznámení pro toto zařízení",
+    "Turn off to disable notifications on all your devices and sessions": "Vypnutím zakážete oznámení na všech zařízeních a relacích",
+    "Enable notifications for this account": "Povolit oznámení pro tento účet"
 }
