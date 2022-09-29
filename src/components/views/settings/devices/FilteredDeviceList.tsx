@@ -17,6 +17,7 @@ limitations under the License.
 import React, { ForwardedRef, forwardRef } from 'react';
 import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
 import { PUSHER_DEVICE_ID } from 'matrix-js-sdk/src/@types/event';
+import { LocalNotificationSettings } from 'matrix-js-sdk/src/@types/local_notifications';
 
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
@@ -35,10 +36,12 @@ import {
     DeviceWithVerification,
 } from './types';
 import { DevicesState } from './useOwnDevices';
+import FilteredDeviceListHeader from './FilteredDeviceListHeader';
 
 interface Props {
     devices: DevicesDictionary;
     pushers: IPusher[];
+    localNotificationSettings: Map<string, LocalNotificationSettings>;
     expandedDeviceIds: DeviceWithVerification['device_id'][];
     signingOutDeviceIds: DeviceWithVerification['device_id'][];
     filter?: DeviceSecurityVariation;
@@ -47,7 +50,7 @@ interface Props {
     onSignOutDevices: (deviceIds: DeviceWithVerification['device_id'][]) => void;
     saveDeviceName: DevicesState['saveDeviceName'];
     onRequestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => void;
-    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     supportsMSC3881?: boolean | undefined;
 }
 
@@ -141,24 +144,26 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) =>
 const DeviceListItem: React.FC<{
     device: DeviceWithVerification;
     pusher?: IPusher | undefined;
+    localNotificationSettings?: LocalNotificationSettings | undefined;
     isExpanded: boolean;
     isSigningOut: boolean;
     onDeviceExpandToggle: () => void;
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
     onRequestDeviceVerification?: () => void;
-    setPusherEnabled: (deviceId: string, enabled: boolean) => Promise<void>;
+    setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     supportsMSC3881?: boolean | undefined;
 }> = ({
     device,
     pusher,
+    localNotificationSettings,
     isExpanded,
     isSigningOut,
     onDeviceExpandToggle,
     onSignOutDevice,
     saveDeviceName,
     onRequestDeviceVerification,
-    setPusherEnabled,
+    setPushNotifications,
     supportsMSC3881,
 }) => <li className='mx_FilteredDeviceList_listItem'>
     <DeviceTile
@@ -174,11 +179,12 @@ const DeviceListItem: React.FC<{
         <DeviceDetails
             device={device}
             pusher={pusher}
+            localNotificationSettings={localNotificationSettings}
             isSigningOut={isSigningOut}
             onVerifyDevice={onRequestDeviceVerification}
             onSignOutDevice={onSignOutDevice}
             saveDeviceName={saveDeviceName}
-            setPusherEnabled={setPusherEnabled}
+            setPushNotifications={setPushNotifications}
             supportsMSC3881={supportsMSC3881}
         />
     }
@@ -192,6 +198,7 @@ export const FilteredDeviceList =
     forwardRef(({
         devices,
         pushers,
+        localNotificationSettings,
         filter,
         expandedDeviceIds,
         signingOutDeviceIds,
@@ -200,7 +207,7 @@ export const FilteredDeviceList =
         saveDeviceName,
         onSignOutDevices,
         onRequestDeviceVerification,
-        setPusherEnabled,
+        setPushNotifications,
         supportsMSC3881,
     }: Props, ref: ForwardedRef<HTMLDivElement>) => {
         const sortedDevices = getFilteredSortedDevices(devices, filter);
@@ -236,10 +243,7 @@ export const FilteredDeviceList =
         };
 
         return <div className='mx_FilteredDeviceList' ref={ref}>
-            <div className='mx_FilteredDeviceList_header'>
-                <span className='mx_FilteredDeviceList_headerLabel'>
-                    { _t('Sessions') }
-                </span>
+            <FilteredDeviceListHeader selectedDeviceCount={0}>
                 <FilterDropdown<DeviceFilterKey>
                     id='device-list-filter'
                     label={_t('Filter devices')}
@@ -248,7 +252,7 @@ export const FilteredDeviceList =
                     options={options}
                     selectedLabel={_t('Show')}
                 />
-            </div>
+            </FilteredDeviceListHeader>
             { !!sortedDevices.length
                 ? <FilterSecurityCard filter={filter} />
                 : <NoResults filter={filter} clearFilter={() => onFilterChange(undefined)} />
@@ -258,6 +262,7 @@ export const FilteredDeviceList =
                     key={device.device_id}
                     device={device}
                     pusher={getPusherForDevice(device)}
+                    localNotificationSettings={localNotificationSettings.get(device.device_id)}
                     isExpanded={expandedDeviceIds.includes(device.device_id)}
                     isSigningOut={signingOutDeviceIds.includes(device.device_id)}
                     onDeviceExpandToggle={() => onDeviceExpandToggle(device.device_id)}
@@ -268,7 +273,7 @@ export const FilteredDeviceList =
                             ? () => onRequestDeviceVerification(device.device_id)
                             : undefined
                     }
-                    setPusherEnabled={setPusherEnabled}
+                    setPushNotifications={setPushNotifications}
                     supportsMSC3881={supportsMSC3881}
                 />,
                 ) }
