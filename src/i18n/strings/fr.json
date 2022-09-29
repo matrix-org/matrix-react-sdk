@@ -3570,5 +3570,17 @@
     "Rename session": "Renommer la session",
     "Voice broadcast (under active development)": "Diffusion audio (en développement)",
     "Element Call video rooms": "Salons vidéo Element Call",
-    "Voice broadcasts": "Diffusions audio"
+    "Voice broadcasts": "Diffusions audio",
+    "You do not have permission to start voice calls": "Vous n’avez pas la permission de démarrer un appel audio",
+    "There's no one here to call": "Il n’y a personne à appeler ici",
+    "You do not have permission to start video calls": "Vous n’avez pas la permission de démarrer un appel vidéo",
+    "Ongoing call": "Appel en cours",
+    "Video call (Element Call)": "Appel vidéo (Element Call)",
+    "Video call (Jitsi)": "Appel vidéo (Jitsi)",
+    "Failed to set pusher state": "Échec lors de la définition de l’état push",
+    "Receive push notifications on this session.": "Recevoir les notifications push sur cette session.",
+    "Push notifications": "Notifications push",
+    "Toggle push notifications on this session.": "Activer/désactiver les notifications push pour cette session.",
+    "New group call experience": "Nouvelle expérience d’appel de groupe",
+    "Live": "Direct"
 }
