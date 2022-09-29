@@ -78,15 +78,15 @@ export default class RendezvousDialog extends React.Component<IProps, IState> {
         }
         const cli = MatrixClientPeg.get();
         if (!cli.crypto) {
-            alert(`New device signed in: ${newDeviceId}. Not signing cross-signing as no crypto setup`);
+            // alert(`New device signed in: ${newDeviceId}. Not signing cross-signing as no crypto setup`);
             this.props.onFinished(true);
             return;
         }
         const didCrossSign = await this.rendezvous.crossSign();
         if (didCrossSign) {
-            alert(`New device signed in, cross signed and marked as known: ${newDeviceId}`);
+            // alert(`New device signed in, cross signed and marked as known: ${newDeviceId}`);
         } else {
-            alert(`New device signed in, but no keys received for cross signing: ${newDeviceId}`);
+            // alert(`New device signed in, but no keys received for cross signing: ${newDeviceId}`);
         }
         this.props.onFinished(true);
     };
