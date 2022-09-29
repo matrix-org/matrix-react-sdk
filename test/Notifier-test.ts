@@ -18,8 +18,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import Notifier from "../src/Notifier";
 import { getLocalNotificationAccountDataEventType } from "../src/utils/notifications";
-import { getMockClientWithEventEmitter, mkEvent, mkRoom } from "./test-utils";
-import { getMockPlatform } from "./test-utils/MockPlatform";
+import { getMockClientWithEventEmitter, mkEvent, mkRoom, mockPlatformPeg } from "./test-utils";
 
 describe("Notifier", () => {
     let MockPlatform;
@@ -49,7 +48,7 @@ describe("Notifier", () => {
 
     beforeEach(() => {
         accountDataStore = {};
-        MockPlatform = getMockPlatform({
+        MockPlatform = mockPlatformPeg({
             supportsNotifications: jest.fn().mockReturnValue(true),
             maySendNotifications: jest.fn().mockReturnValue(true),
             displayNotification: jest.fn(),
