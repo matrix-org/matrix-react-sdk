@@ -66,6 +66,7 @@ import RoomPreviewBar from "../views/rooms/RoomPreviewBar";
 import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
 import SearchBar, { SearchScope } from "../views/rooms/SearchBar";
 import RoomUpgradeWarningBar from "../views/rooms/RoomUpgradeWarningBar";
+import { DecryptionFailureBar } from "../views/rooms/DecryptionFailureBar";
 import AuxPanel from "../views/rooms/AuxPanel";
 import RoomHeader from "../views/rooms/RoomHeader";
 import { XOR } from "../../@types/common";
@@ -227,6 +228,7 @@ export interface IRoomState {
     threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
+    visibleDecryptionFailures?: MatrixEvent[];
 }
 
 interface LocalRoomViewProps {
@@ -420,6 +422,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
             narrow: false,
+            visibleDecryptionFailures: [],
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -1153,6 +1156,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private onEventDecrypted = (ev: MatrixEvent) => {
         if (!this.state.room || !this.state.matrixClientIsReady) return; // not ready at all
         if (ev.getRoomId() !== this.state.room.roomId) return; // not for us
+        this.updateVisibleDecryptionFailures();
         if (ev.isDecryptionFailure()) return;
         this.handleEffects(ev);
     };
@@ -1459,6 +1463,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
+    private updateVisibleDecryptionFailures = throttle(() => this.setState({
+        visibleDecryptionFailures: this.messagePanel?.getVisibleDecryptionFailures() ?? [],
+    }), 500, { leading: false, trailing: true });
+
     private onMessageListScroll = ev => {
         if (this.messagePanel.isAtEndOfLiveTimeline()) {
             this.setState({
@@ -1471,6 +1479,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }
         this.updateTopUnreadMessagesBar();
+        this.updateVisibleDecryptionFailures();
     };
 
     private resetJumpToEvent = (eventId?: string) => {
@@ -2210,6 +2219,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     ) }
                 </AccessibleButton>
             );
+        } else if (this.state.visibleDecryptionFailures.length > 0) {
+            aux = <DecryptionFailureBar
+                failures={this.state.visibleDecryptionFailures}
+                room={this.state.room}
+            />;
         }
 
         if (this.state.room?.isSpaceRoom() && !this.props.forceTimeline) {

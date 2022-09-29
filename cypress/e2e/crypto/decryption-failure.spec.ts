@@ -1,0 +1,180 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { SynapseInstance } from "../../plugins/synapsedocker";
+import { UserCredentials } from "../../support/login";
+import Chainable = Cypress.Chainable;
+
+const ROOM_NAME = "Test room";
+const TEST_USER = "Alia";
+const BOT_USER = "Benjamin";
+
+type EmojiMapping = [emoji: string, name: string];
+
+const waitForVerificationRequest = (cli: MatrixClient): Promise<VerificationRequest> => {
+    return new Promise<VerificationRequest>(resolve => {
+        const onVerificationRequestEvent = (request: VerificationRequest) => {
+            // @ts-ignore CryptoEvent is not exported to window.matrixcs; using the string value here
+            cli.off("crypto.verification.request", onVerificationRequestEvent);
+            resolve(request);
+        };
+        // @ts-ignore
+        cli.on("crypto.verification.request", onVerificationRequestEvent);
+    });
+};
+
+const handleVerificationRequest = (request: VerificationRequest): Chainable<EmojiMapping[]> => {
+    return cy.wrap(new Promise<EmojiMapping[]>((resolve) => {
+        const onShowSas = (event: ISasEvent) => {
+            verifier.off("show_sas", onShowSas);
+            event.confirm();
+            resolve(event.sas.emoji);
+        };
+
+        const verifier = request.beginKeyVerification("m.sas.v1");
+        verifier.on("show_sas", onShowSas);
+        verifier.verify();
+    }));
+};
+
+describe("Decryption Failures", () => {
+    let synapse: SynapseInstance | undefined;
+    let testUser: UserCredentials | undefined;
+    let bot: MatrixClient | undefined;
+    let roomId: string;
+
+    beforeEach(function() {
+        cy.startSynapse("default").then((syn: SynapseInstance) => {
+            synapse = syn;
+            cy.initTestUser(synapse, TEST_USER).then((creds: UserCredentials) => {
+                testUser = creds;
+            }).then(() => {
+                cy.getBot(synapse, { displayName: BOT_USER }).then((cli) => {
+                    bot = cli;
+                });
+            }).then(() => {
+                cy.createRoom({ name: ROOM_NAME }).then((id) => {
+                    roomId = id;
+                });
+            }).then(() => {
+                cy.inviteUser(roomId, bot.getUserId());
+                cy.visit("/#/room/" + roomId);
+                cy.contains(".mx_TextualEvent", BOT_USER + " joined the room").should("exist");
+            }).then(() => {
+                cy.getClient().then(async (cli) => {
+                    await cli.setRoomEncryption(roomId, { algorithm: "m.megolm.v1.aes-sha2" });
+                    await bot.setRoomEncryption(roomId, { algorithm: "m.megolm.v1.aes-sha2" });
+                }).then(() => {
+                    bot.getRoom(roomId).setBlacklistUnverifiedDevices(true);
+                });
+            });
+        });
+    });
+
+    afterEach(() => {
+        cy.stopSynapse(synapse);
+    });
+
+    it("the decryption failure bar should prompt the user to verify, "
+        + "if this device isn't verified and there are other verified devices or backups", () => {
+        let otherDevice: MatrixClient | undefined;
+        cy.loginBot(synapse, testUser.username, testUser.password, {}).then(async (cli) => {
+            otherDevice = cli;
+            await otherDevice.bootstrapCrossSigning({
+                authUploadDeviceSigningKeys: async (makeRequest) => { await makeRequest({}); },
+                setupNewCrossSigning: true,
+            });
+        }).then(() => {
+            cy.botSendMessage(bot, roomId, "test");
+            cy.wait(5000);
+            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
+                .should("have.text", "Verify this device to access all messages");
+
+            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_button").click();
+
+            const verificationRequestPromise = waitForVerificationRequest(otherDevice);
+            cy.get(".mx_CompleteSecurity_actionRow .mx_AccessibleButton").click();
+            cy.wrap(verificationRequestPromise).then((verificationRequest: VerificationRequest) => {
+                cy.wrap(verificationRequest.accept());
+                handleVerificationRequest(verificationRequest).then((emojis) => {
+                    cy.get('.mx_VerificationShowSas_emojiSas_block').then((emojiBlocks) => {
+                        emojis.forEach((emoji: EmojiMapping, index: number) => {
+                            expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
+                        });
+                    });
+                });
+            });
+        });
+        cy.contains(".mx_AccessibleButton", "They match").click();
+        cy.get(".mx_VerificationPanel_verified_section .mx_E2EIcon_verified").should("exist");
+        cy.contains(".mx_AccessibleButton", "Got it").click();
+
+        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
+            .should("have.text", "Open another device to load encrypted messages");
+    });
+
+    it("the decryption failure bar should prompt the user to reset keys, "
+        + "if this device isn't verified and there are no other verified devices or backups", () => {
+        cy.loginBot(synapse, testUser.username, testUser.password, {}).then(async (cli) => {
+            await cli.bootstrapCrossSigning({
+                authUploadDeviceSigningKeys: async (makeRequest) => { await makeRequest({}); },
+                setupNewCrossSigning: true,
+            });
+            await cli.logout(true);
+        });
+
+        cy.botSendMessage(bot, roomId, "test");
+        cy.wait(5000);
+        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
+            .should("have.text", "Reset your keys to prevent future decryption errors");
+
+        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_button").click();
+
+        cy.get(".mx_CreateSecretStorageDialog button.mx_Dialog_primary").click();
+        cy.get(".mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn").click();
+        cy.get("button.mx_Dialog_primary").click();
+
+        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
+            .should("have.text", "Requesting keys to decrypt messages...");
+    });
+
+    it("the decryption failure bar should appear and disappear as undecryptable messages enter and leave view", () => {
+        cy.getClient().then((cli) => {
+            for (let i = 0; i < 25; i++) {
+                cy.botSendMessage(cli, roomId, `test ${i}`);
+            }
+        });
+        cy.botSendMessage(bot, roomId, "test");
+        cy.get(".mx_DecryptionFailureBar").should("exist");
+        cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("exist");
+
+        cy.wait(5000);
+        cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("not.exist");
+        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_icon").should("exist");
+
+        cy.get(".mx_RoomView_messagePanel").scrollTo("top");
+        cy.get(".mx_DecryptionFailureBar").should("not.exist");
+
+        cy.botSendMessage(bot, roomId, "another test");
+        cy.get(".mx_DecryptionFailureBar").should("not.exist");
+
+        cy.get(".mx_RoomView_messagePanel").scrollTo("bottom");
+        cy.get(".mx_DecryptionFailureBar").should("exist");
+    });
+});

@@ -1584,6 +1584,32 @@ class TimelinePanel extends React.Component<IProps, IState> {
             : null;
     }
 
+    public getVisibleDecryptionFailures(): MatrixEvent[] {
+        const messagePanel = this.messagePanel.current;
+        if (!messagePanel) return null;
+
+        const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
+        if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
+        const wrapperRect = messagePanelNode.getBoundingClientRect();
+
+        let enteredVisibleRange = false;
+
+        const result = [];
+        for (const ev of this.state.liveEvents) {
+            const node = messagePanel.getNodeForEventId(ev.getId());
+            if (!node) continue;
+
+            const boundingRect = node.getBoundingClientRect();
+            if (boundingRect.top <= wrapperRect.bottom && boundingRect.bottom >= wrapperRect.top) {
+                enteredVisibleRange = true;
+                if (ev.isDecryptionFailure()) result.push(ev);
+            } else if (enteredVisibleRange) {
+                break;
+            }
+        }
+        return result;
+    }
+
     private getLastDisplayedEventIndex(opts: IEventIndexOpts = {}): number | null {
         const ignoreOwn = opts.ignoreOwn || false;
         const allowPartial = opts.allowPartial || false;
