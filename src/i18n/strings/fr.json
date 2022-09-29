@@ -3582,5 +3582,9 @@
     "Push notifications": "Notifications push",
     "Toggle push notifications on this session.": "Activer/désactiver les notifications push pour cette session.",
     "New group call experience": "Nouvelle expérience d’appel de groupe",
-    "Live": "Direct"
+    "Live": "Direct",
+    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s sessions sélectionnées",
+    "Enable notifications for this device": "Activer les notifications sur cet appareil",
+    "Turn off to disable notifications on all your devices and sessions": "Désactiver pour ne plus afficher les notifications sur tous vos appareils et sessions",
+    "Enable notifications for this account": "Activer les notifications pour ce compte"
 }
