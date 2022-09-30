@@ -3585,5 +3585,6 @@
     "Toggle push notifications on this session.": "Prepnúť push oznámenia v tejto relácii.",
     "Enable notifications for this device": "Povoliť oznámenia pre toto zariadenie",
     "Turn off to disable notifications on all your devices and sessions": "Vypnutím vypnete upozornenia na všetkých svojich zariadeniach a reláciách",
-    "Enable notifications for this account": "Povoliť oznámenia pre tento účet"
+    "Enable notifications for this account": "Povoliť oznámenia pre tento účet",
+    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s vybratých relácií"
 }
