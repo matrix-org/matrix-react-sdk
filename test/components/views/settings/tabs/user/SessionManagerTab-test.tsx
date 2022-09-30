@@ -22,13 +22,21 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { DeviceTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 import { VerificationRequest } from 'matrix-js-sdk/src/crypto/verification/request/VerificationRequest';
 import { sleep } from 'matrix-js-sdk/src/utils';
-import { IMyDevice } from 'matrix-js-sdk/src/matrix';
+import {
+    ClientEvent,
+    IMyDevice,
+    LOCAL_NOTIFICATION_SETTINGS_PREFIX,
+    MatrixEvent,
+    PUSHER_DEVICE_ID,
+    PUSHER_ENABLED,
+} from 'matrix-js-sdk/src/matrix';
 
 import SessionManagerTab from '../../../../../../src/components/views/settings/tabs/user/SessionManagerTab';
 import MatrixClientContext from '../../../../../../src/contexts/MatrixClientContext';
 import {
     flushPromisesWithFakeTimers,
     getMockClientWithEventEmitter,
+    mkPusher,
     mockClientMethodsUser,
 } from '../../../../../test-utils';
 import Modal from '../../../../../../src/Modal';
@@ -67,6 +75,11 @@ describe('<SessionManagerTab />', () => {
         deleteMultipleDevices: jest.fn(),
         generateClientSecret: jest.fn(),
         setDeviceDetails: jest.fn(),
+        doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(true),
+        getPushers: jest.fn(),
+        setPusher: jest.fn(),
+        getAccountData: jest.fn(),
+        setLocalNotificationSettings: jest.fn(),
     });
 
     const defaultProps = {};
@@ -87,6 +100,19 @@ describe('<SessionManagerTab />', () => {
         fireEvent.click(toggle);
     };
 
+    const toggleDeviceSelection = (
+        getByTestId: ReturnType<typeof render>['getByTestId'],
+        deviceId: DeviceWithVerification['device_id'],
+    ) => {
+        const checkbox = getByTestId(`device-tile-checkbox-${deviceId}`);
+        fireEvent.click(checkbox);
+    };
+
+    const isDeviceSelected = (
+        getByTestId: ReturnType<typeof render>['getByTestId'],
+        deviceId: DeviceWithVerification['device_id'],
+    ): boolean => !!(getByTestId(`device-tile-checkbox-${deviceId}`) as HTMLInputElement).checked;
+
     beforeEach(() => {
         jest.clearAllMocks();
         jest.spyOn(logger, 'error').mockRestore();
@@ -101,6 +127,28 @@ describe('<SessionManagerTab />', () => {
         mockClient.getDevices
             .mockReset()
             .mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+
+        mockClient.getPushers
+            .mockReset()
+            .mockResolvedValue({
+                pushers: [mkPusher({
+                    [PUSHER_DEVICE_ID.name]: alicesMobileDevice.device_id,
+                    [PUSHER_ENABLED.name]: true,
+                })],
+            });
+
+        mockClient.getAccountData
+            .mockReset()
+            .mockImplementation(eventType => {
+                if (eventType.startsWith(LOCAL_NOTIFICATION_SETTINGS_PREFIX.name)) {
+                    return new MatrixEvent({
+                        type: eventType,
+                        content: {
+                            is_silenced: false,
+                        },
+                    });
+                }
+            });
     });
 
     it('renders spinner while devices load', () => {
@@ -245,7 +293,7 @@ describe('<SessionManagerTab />', () => {
         await flushPromisesWithFakeTimers();
 
         // unverified filter is set
-        expect(container.querySelector('.mx_FilteredDeviceList_header')).toMatchSnapshot();
+        expect(container.querySelector('.mx_FilteredDeviceListHeader')).toMatchSnapshot();
     });
 
     describe('device detail expansion', () => {
@@ -320,7 +368,6 @@ describe('<SessionManagerTab />', () => {
             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
             mockCrossSigningInfo.checkDeviceTrust
                 .mockImplementation((_userId, { deviceId }) => {
-                    console.log('hhh', deviceId);
                     if (deviceId === alicesDevice.device_id) {
                         return new DeviceTrustLevel(true, true, false, false);
                     }
@@ -350,7 +397,6 @@ describe('<SessionManagerTab />', () => {
             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
             mockCrossSigningInfo.checkDeviceTrust
                 .mockImplementation((_userId, { deviceId }) => {
-                    console.log('hhh', deviceId);
                     if (deviceId === alicesDevice.device_id) {
                         return new DeviceTrustLevel(true, true, false, false);
                     }
@@ -564,6 +610,33 @@ describe('<SessionManagerTab />', () => {
                     '[data-testid="device-detail-sign-out-cta"]',
                 ) as Element).getAttribute('aria-disabled')).toEqual(null);
             });
+
+            it('deletes multiple devices', async () => {
+                mockClient.getDevices.mockResolvedValue({ devices: [
+                    alicesDevice, alicesMobileDevice, alicesOlderMobileDevice,
+                ] });
+                mockClient.deleteMultipleDevices.mockResolvedValue({});
+
+                const { getByTestId } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromisesWithFakeTimers();
+                });
+
+                toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
+                toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
+
+                fireEvent.click(getByTestId('sign-out-selection-cta'));
+
+                // delete called with both ids
+                expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
+                    [
+                        alicesMobileDevice.device_id,
+                        alicesOlderMobileDevice.device_id,
+                    ],
+                    undefined,
+                );
+            });
         });
     });
 
@@ -667,5 +740,154 @@ describe('<SessionManagerTab />', () => {
             // error displayed
             expect(getByTestId('device-rename-error')).toBeTruthy();
         });
+    });
+
+    describe('Multiple selection', () => {
+        beforeEach(() => {
+            mockClient.getDevices.mockResolvedValue({ devices: [
+                alicesDevice, alicesMobileDevice, alicesOlderMobileDevice,
+            ] });
+        });
+
+        it('toggles session selection', async () => {
+            const { getByTestId, getByText } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
+            toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
+
+            // header displayed correctly
+            expect(getByText('2 sessions selected')).toBeTruthy();
+
+            expect(isDeviceSelected(getByTestId, alicesMobileDevice.device_id)).toBeTruthy();
+            expect(isDeviceSelected(getByTestId, alicesOlderMobileDevice.device_id)).toBeTruthy();
+
+            toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
+
+            // unselected
+            expect(isDeviceSelected(getByTestId, alicesMobileDevice.device_id)).toBeFalsy();
+            // still selected
+            expect(isDeviceSelected(getByTestId, alicesOlderMobileDevice.device_id)).toBeTruthy();
+        });
+
+        it('cancel button clears selection', async () => {
+            const { getByTestId, getByText } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
+            toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
+
+            // header displayed correctly
+            expect(getByText('2 sessions selected')).toBeTruthy();
+
+            fireEvent.click(getByTestId('cancel-selection-cta'));
+
+            // unselected
+            expect(isDeviceSelected(getByTestId, alicesMobileDevice.device_id)).toBeFalsy();
+            expect(isDeviceSelected(getByTestId, alicesOlderMobileDevice.device_id)).toBeFalsy();
+        });
+
+        it('changing the filter clears selection', async () => {
+            const { getByTestId } = render(getComponent());
+
+            await act(async () => {
+                await flushPromisesWithFakeTimers();
+            });
+
+            toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
+            expect(isDeviceSelected(getByTestId, alicesMobileDevice.device_id)).toBeTruthy();
+
+            fireEvent.click(getByTestId('unverified-devices-cta'));
+
+            // our session manager waits a tick for rerender
+            await flushPromisesWithFakeTimers();
+
+            // unselected
+            expect(isDeviceSelected(getByTestId, alicesOlderMobileDevice.device_id)).toBeFalsy();
+        });
+    });
+
+    it("lets you change the pusher state", async () => {
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+        // device details are expanded
+        expect(getByTestId(`device-detail-${alicesMobileDevice.device_id}`)).toBeTruthy();
+        expect(getByTestId('device-detail-push-notification')).toBeTruthy();
+
+        const checkbox = getByTestId('device-detail-push-notification-checkbox');
+
+        expect(checkbox).toBeTruthy();
+        fireEvent.click(checkbox);
+
+        expect(mockClient.setPusher).toHaveBeenCalled();
+    });
+
+    it("lets you change the local notification settings state", async () => {
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+
+        // device details are expanded
+        expect(getByTestId(`device-detail-${alicesDevice.device_id}`)).toBeTruthy();
+        expect(getByTestId('device-detail-push-notification')).toBeTruthy();
+
+        const checkbox = getByTestId('device-detail-push-notification-checkbox');
+
+        expect(checkbox).toBeTruthy();
+        fireEvent.click(checkbox);
+
+        expect(mockClient.setLocalNotificationSettings).toHaveBeenCalledWith(
+            alicesDevice.device_id,
+            { is_silenced: true },
+        );
+    });
+
+    it("updates the UI when another session changes the local notifications", async () => {
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+
+        // device details are expanded
+        expect(getByTestId(`device-detail-${alicesDevice.device_id}`)).toBeTruthy();
+        expect(getByTestId('device-detail-push-notification')).toBeTruthy();
+
+        const checkbox = getByTestId('device-detail-push-notification-checkbox');
+
+        expect(checkbox).toBeTruthy();
+
+        expect(checkbox.getAttribute('aria-checked')).toEqual("true");
+
+        const evt = new MatrixEvent({
+            type: LOCAL_NOTIFICATION_SETTINGS_PREFIX.name + "." + alicesDevice.device_id,
+            content: {
+                is_silenced: true,
+            },
+        });
+
+        await act(async () => {
+            mockClient.emit(ClientEvent.AccountData, evt);
+        });
+
+        expect(checkbox.getAttribute('aria-checked')).toEqual("false");
     });
 });

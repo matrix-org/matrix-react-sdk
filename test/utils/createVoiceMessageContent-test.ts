@@ -14,27 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VideoRoomView {
-    flex-grow: 1;
-    min-height: 0;
+import { IEncryptedFile } from "matrix-js-sdk/src/matrix";
 
-    display: flex;
-    flex-direction: column;
-    margin: $container-gap-width;
-    margin-right: calc($container-gap-width / 2);
+import { createVoiceMessageContent } from "../../src/utils/createVoiceMessageContent";
 
-    background-color: $header-panel-bg-color;
-    padding: 8px;
-    border-radius: 8px;
-
-    .mx_AppTile {
-        width: auto;
-        height: 100%;
-        border: none;
-    }
-
-    /* While the lobby is shown, the widget needs to stay loaded but hidden in the background */
-    .mx_CallLobby ~ .mx_AppTile {
-        display: none;
-    }
-}
+describe("createVoiceMessageContent", () => {
+    it("should create a voice message content", () => {
+        expect(createVoiceMessageContent(
+            "mxc://example.com/file",
+            "ogg/opus",
+            23000,
+            42000,
+            {} as unknown as IEncryptedFile,
+            [1, 2, 3],
+        )).toMatchSnapshot();
+    });
+});
