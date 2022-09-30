@@ -14,23 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_FilteredDeviceListHeader {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    gap: $spacing-16;
+import { IEncryptedFile } from "matrix-js-sdk/src/matrix";
 
-    width: 100%;
-    height: 48px;
-    padding: 0 $spacing-16;
-    margin-bottom: $spacing-32;
+import { createVoiceMessageContent } from "../../src/utils/createVoiceMessageContent";
 
-    background-color: $system;
-    border-radius: 8px;
-    color: $secondary-content;
-}
-
-.mx_FilteredDeviceListHeader_label {
-    flex: 1 1 100%;
-}
+describe("createVoiceMessageContent", () => {
+    it("should create a voice message content", () => {
+        expect(createVoiceMessageContent(
+            "mxc://example.com/file",
+            "ogg/opus",
+            23000,
+            42000,
+            {} as unknown as IEncryptedFile,
+            [1, 2, 3],
+        )).toMatchSnapshot();
+    });
+});

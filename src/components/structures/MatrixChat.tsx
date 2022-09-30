@@ -137,7 +137,6 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
-import { createLocalNotificationSettingsIfNeeded } from '../../utils/notifications';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1257,9 +1256,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         ThemeController.isLogin = false;
         this.themeWatcher.recheck();
         StorageManager.tryPersistStorage();
-
-        const cli = MatrixClientPeg.get();
-        createLocalNotificationSettingsIfNeeded(cli);
 
         if (
             MatrixClientPeg.currentUserIsJustRegistered() &&
