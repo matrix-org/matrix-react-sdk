@@ -284,7 +284,7 @@ const InfoTopic: React.FC<IAppsSectionProps> = ({ room }) => {
     // Use styles to expand or shrink the component based on the toggle
     const styleNotExpanded = {
         lineHeight: `${lineHeight}px`,
-        webkitLineClamp: `${lines}`,
+        WebkitLineClamp: `${lines}`,
     };
 
     const styleExpanded = {
