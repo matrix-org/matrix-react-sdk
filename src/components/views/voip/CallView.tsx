@@ -133,6 +133,7 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
     }, [videoMuted, setVideoMuted]);
 
     const [videoStream, audioInputs, videoInputs] = useAsyncMemo(async () => {
+        let previewStream: MediaStream;
         try {
             // We get the preview stream before requesting devices: this is because
             // we need (in some browsers) an active media stream in order to get
@@ -144,25 +145,24 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
             // which could be a bit strange but allows us to get the device list
             // reliably. One option could be to try & get devices without a stream,
             // then try again with a stream if we get blank deviceids, but... ew.
-            let s = await navigator.mediaDevices.getUserMedia({
+            previewStream = await navigator.mediaDevices.getUserMedia({
                 video: { deviceId: videoInputId },
                 audio: { deviceId: MediaDeviceHandler.getAudioInput() },
             });
-
-            const devices = await MediaDeviceHandler.getDevices();
-
-            // If video is muted, we don't actually want the stream, so we can get rid of
-            // it now.
-            if (videoMuted) {
-                s.getTracks().forEach(t => t.stop());
-                s = null;
-            }
-
-            return [s, devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
         } catch (e) {
             logger.error(`Failed to get stream for device ${videoInputId}`, e);
         }
-        return null;
+
+        const devices = await MediaDeviceHandler.getDevices();
+
+        // If video is muted, we don't actually want the stream, so we can get rid of
+        // it now.
+        if (videoMuted) {
+            previewStream.getTracks().forEach(t => t.stop());
+            previewStream = undefined;
+        }
+
+        return [previewStream, devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
     }, [videoInputId, videoMuted], [null, [], []]);
 
     const setAudioInput = useCallback((device: MediaDeviceInfo) => {
