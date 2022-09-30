@@ -2289,7 +2289,7 @@
     "Create a new room": "Создать новую комнату",
     "Spaces": "Пространства",
     "Space selection": "Выбор пространства",
-    "Edit devices": "Редактировать устройства",
+    "Edit devices": "Редактировать сессии",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Вы не сможете отменить это изменение, поскольку вы понижаете свои права, если вы являетесь последним привилегированным пользователем в пространстве, будет невозможно восстановить привилегии вбудущем.",
     "Empty room": "Пустая комната",
     "Suggested Rooms": "Предлагаемые комнаты",
@@ -3553,5 +3553,6 @@
     "Enable notifications for this device": "Уведомления для этой сессии",
     "Enable notifications for this account": "Уведомления для этой учётной записи",
     "Turn off to disable notifications on all your devices and sessions": "Выключите, чтобы отключить уведомления во всех своих сессиях",
-    "Failed to set pusher state": "Не удалось установить состояние push-службы"
+    "Failed to set pusher state": "Не удалось установить состояние push-службы",
+    "%(selectedDeviceCount)s sessions selected": "Выбрано сессий: %(selectedDeviceCount)s"
 }
