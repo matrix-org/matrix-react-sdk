@@ -252,7 +252,7 @@
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s удалил(а) аватар комнаты.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s изменил(а) аватар комнаты %(roomName)s",
     "Create new room": "Создать комнату",
-    "Start chat": "Начать чат",
+    "Start chat": "Отправить личное сообщение",
     "Add": "Добавить",
     "Uploading %(filename)s and %(count)s others|zero": "Отправка %(filename)s",
     "Uploading %(filename)s and %(count)s others|one": "Отправка %(filename)s и %(count)s другой",
