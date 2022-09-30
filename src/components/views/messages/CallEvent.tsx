@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, forwardRef, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { forwardRef, useCallback, useContext, useMemo } from "react";
 
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -28,19 +28,9 @@ import type { ButtonEvent } from "../elements/AccessibleButton";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { LiveContentSummary, LiveContentType } from "../rooms/LiveContentSummary";
 import FacePile from "../elements/FacePile";
-import { formatCallTime } from "../../../DateUtils";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-
-interface CallEventDurationProps {
-    delta: number;
-}
-
-const CallEventDuration: FC<CallEventDurationProps> = ({ delta }) => {
-    // Clock desync could lead to a negative duration, so just hide it if that happens
-    if (delta <= 0) return null;
-    return <div className="mx_CallEvent_duration">{ formatCallTime(new Date(delta)) }</div>;
-};
+import { CallDuration, CallDurationFromEvent } from "../voip/CallDuration";
 
 const MAX_FACES = 8;
 
@@ -68,12 +58,6 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
         const facePileMembers = useMemo(() => [...participants].slice(0, MAX_FACES), [participants]);
         const facePileOverflow = participants.size > facePileMembers.length;
 
-        const [now, setNow] = useState(() => Date.now());
-        useEffect(() => {
-            const timer = setInterval(() => setNow(Date.now()), 1000);
-            return () => clearInterval(timer);
-        }, []);
-
         return <div className="mx_CallEvent_wrapper" ref={ref}>
             <div className="mx_CallEvent mx_CallEvent_active">
                 <MemberAvatar
@@ -95,7 +79,7 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                     />
                     <FacePile members={facePileMembers} faceSize={24} overflow={facePileOverflow} />
                 </div>
-                <CallEventDuration delta={now - mxEvent.getTs()} />
+                <CallDurationFromEvent mxEvent={mxEvent} />
                 <AccessibleButton
                     className="mx_CallEvent_button"
                     kind={buttonKind}
@@ -171,7 +155,7 @@ export const CallEvent = forwardRef<any, CallEventProps>(({ mxEvent }, ref) => {
         return <div className="mx_CallEvent_wrapper" ref={ref}>
             <div className="mx_CallEvent mx_CallEvent_inactive">
                 <span className="mx_CallEvent_title">{ _t("Video call ended") }</span>
-                <CallEventDuration delta={latestEvent.getTs() - mxEvent.getTs()} />
+                <CallDuration delta={latestEvent.getTs() - mxEvent.getTs()} />
             </div>
         </div>;
     }
