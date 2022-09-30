@@ -3581,5 +3581,7 @@
     "Enable notifications for this device": "Aktiviere Benachrichtigungen für dieses Gerät",
     "Turn off to disable notifications on all your devices and sessions": "Ausschalten, um Benachrichtigungen auf all deinen Geräten und Sitzungen zu deaktivieren",
     "Enable notifications for this account": "Aktiviere Benachrichtigungen für dieses Konto",
-    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s Sitzungen ausgewählt"
+    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s Sitzungen ausgewählt",
+    "Video call ended": "Videoanruf beendet",
+    "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen"
 }
