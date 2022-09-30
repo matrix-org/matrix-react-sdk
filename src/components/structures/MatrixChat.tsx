@@ -400,8 +400,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private get cli(): MatrixClient { return MatrixClientPeg.get(); }
-
     public componentDidMount(): void {
         window.addEventListener("resize", this.onWindowResized);
     }

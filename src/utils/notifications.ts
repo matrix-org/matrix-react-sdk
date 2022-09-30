@@ -18,8 +18,6 @@ import { LOCAL_NOTIFICATION_SETTINGS_PREFIX } from "matrix-js-sdk/src/@types/eve
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import SettingsStore from "../settings/SettingsStore";
-
 export const deviceNotificationSettingsKeys = [
     "notificationsEnabled",
     "notificationBodyEnabled",
