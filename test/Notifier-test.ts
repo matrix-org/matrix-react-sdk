@@ -57,7 +57,7 @@ describe("Notifier", () => {
         Notifier.isBodyEnabled = jest.fn().mockReturnValue(true);
     });
 
-    describe.skip("_displayPopupNotification", () => {
+    describe("_displayPopupNotification", () => {
         it.each([
             { silenced: true, count: 0 },
             { silenced: false, count: 1 },
@@ -68,7 +68,7 @@ describe("Notifier", () => {
         });
     });
 
-    describe.skip("_playAudioNotification", () => {
+    describe("_playAudioNotification", () => {
         it.each([
             { silenced: true, count: 0 },
             { silenced: false, count: 1 },

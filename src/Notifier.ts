@@ -93,10 +93,15 @@ export const Notifier = {
 
     _displayPopupNotification: function(ev: MatrixEvent, room: Room): void {
         const plaf = PlatformPeg.get();
+        const cli = MatrixClientPeg.get();
         if (!plaf) {
             return;
         }
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
+            return;
+        }
+
+        if (localNotificationsAreSilenced(cli)) {
             return;
         }
 
