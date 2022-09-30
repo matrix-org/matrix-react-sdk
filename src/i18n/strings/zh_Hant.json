@@ -3585,5 +3585,6 @@
     "Toggle push notifications on this session.": "在此工作階段切換推播通知。",
     "Enable notifications for this device": "為此裝置啟用通知",
     "Turn off to disable notifications on all your devices and sessions": "關閉以停用您所有裝置與工作階段上的通知",
-    "Enable notifications for this account": "為此帳號啟用通知"
+    "Enable notifications for this account": "為此帳號啟用通知",
+    "%(selectedDeviceCount)s sessions selected": "已選取 %(selectedDeviceCount)s 個工作階段"
 }
