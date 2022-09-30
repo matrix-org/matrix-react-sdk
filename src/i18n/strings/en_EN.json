@@ -1878,7 +1878,7 @@
     "Recently visited rooms": "Recently visited rooms",
     "No recently visited rooms": "No recently visited rooms",
     "Video call (Jitsi)": "Video call (Jitsi)",
-    "Video call (Element Call)": "Video call (Element Call)",
+    "Video call (%(brand)s Call)": "Video call (%(brand)s Call)",
     "Ongoing call": "Ongoing call",
     "You do not have permission to start video calls": "You do not have permission to start video calls",
     "There's no one here to call": "There's no one here to call",
