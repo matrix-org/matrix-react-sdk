@@ -250,11 +250,10 @@ const InfoTopic: React.FC<IAppsSectionProps> = ({ room }) => {
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html);
 
-    const lineHeight = 16;                      // Basically font-size
-    const lines = 2;                            // Number of lines to show before cut-off
-    const maxHeight = lineHeight * lines;       // Height that would show all lines
+    const lines = 2;                                        // Number of lines to show before cut-off
 
-    const [scrollHeight, setScrollHeight] = useState(maxHeight);
+    const [lineHeight, setLineHeight] = useState(16);       // Default replaced by computedStyle value
+    const [scrollHeight, setScrollHeight] = useState(32);   // Default replaced in ref callback
     const [isExpanded, setIsExpanded] = useState(false);
     const [isOverflow, setIsOverflow] = useState(false);
 
@@ -272,14 +271,18 @@ const InfoTopic: React.FC<IAppsSectionProps> = ({ room }) => {
 
     const checkScrollHeight = useCallback((node: HTMLDivElement) => {
         if (node != null) {
+            const computedLineHeight = parseInt(getComputedStyle(node).getPropertyValue("line-height"));
+            const maxHeight = computedLineHeight * lines;
+            setLineHeight(computedLineHeight);
             setScrollHeight(node.scrollHeight);
+
             if (node.scrollHeight > maxHeight) {
                 setIsOverflow(true);
             }
         }
     // Run when body changes to check if we still overflow
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [body, maxHeight]);
+    }, [body]);
 
     // Use styles to expand or shrink the component based on the toggle
     const styleNotExpanded = {
