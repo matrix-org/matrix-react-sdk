@@ -3585,5 +3585,8 @@
     "Toggle push notifications on this session.": "Увімкнути push-сповіщення для цього сеансу.",
     "Enable notifications for this device": "Увімкнути сповіщення для цього пристрою",
     "Turn off to disable notifications on all your devices and sessions": "Вимкніть, щоб вимкнути сповіщення для всіх ваших пристроїв і сесій",
-    "Enable notifications for this account": "Увімкнути сповіщення для цього облікового запису"
+    "Enable notifications for this account": "Увімкнути сповіщення для цього облікового запису",
+    "Video call ended": "Відеовиклик завершено",
+    "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
+    "%(selectedDeviceCount)s sessions selected": "Вибрано %(selectedDeviceCount)s сеансів"
 }
