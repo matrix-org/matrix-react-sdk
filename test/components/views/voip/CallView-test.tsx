@@ -219,7 +219,7 @@ describe("CallLobby", () => {
                 {
                     deviceId: "2",
                     groupId: "1",
-                    label: "", // Should fall back to "Audio input 2"
+                    label: "Tailphones",
                     kind: "audioinput",
                     toJSON: () => {},
                 },
@@ -229,7 +229,7 @@ describe("CallLobby", () => {
             screen.getByRole("button", { name: /microphone/ });
             fireEvent.click(screen.getByRole("button", { name: "Audio devices" }));
             screen.getByRole("menuitem", { name: "Headphones" });
-            screen.getByRole("menuitem", { name: "Audio input 2" });
+            screen.getByRole("menuitem", { name: "Tailphones" });
         });
     });
 });
