@@ -3570,5 +3570,7 @@
     "Voice broadcast": "Ringhäälingukõne",
     "Voice broadcasts": "Ringhäälingukõned",
     "Voice broadcast (under active development)": "Ringhäälingukõne (aktiivses arenduses)",
-    "Sliding Sync mode (under active development, cannot be disabled)": "Sliding Sync režiim (aktiivses arenduses, ei saa välja lülitada)"
+    "Sliding Sync mode (under active development, cannot be disabled)": "Sliding Sync režiim (aktiivses arenduses, ei saa välja lülitada)",
+    "Enable notifications for this account": "Võta sellel kasutajakontol kasutusele teavitused",
+    "New group call experience": "Uus rühmakõnede lahendus"
 }
