@@ -46,6 +46,7 @@ import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
+import { localNotificationsAreSilenced } from "./utils/notifications";
 
 /*
  * Dispatches:
@@ -171,6 +172,11 @@ export const Notifier = {
     },
 
     _playAudioNotification: async function(ev: MatrixEvent, room: Room): Promise<void> {
+        const cli = MatrixClientPeg.get();
+        if (localNotificationsAreSilenced(cli)) {
+            return;
+        }
+
         const sound = this.getSoundForRoom(room.roomId);
         logger.log(`Got sound ${sound && sound.name || "default"} for ${room.roomId}`);
 
