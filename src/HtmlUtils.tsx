@@ -50,7 +50,7 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
 // Regex pattern for Zero-Width joiner unicode characters
-const ZWJ_REGEX = /[\u200D\u2003]/g;
+const ZWJ_REGEX = /[\u200B\u200D\u2003]/g;
 
 // Regex pattern for whitespace characters
 const WHITESPACE_REGEX = /\s/g;

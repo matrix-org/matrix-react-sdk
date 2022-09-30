@@ -32,7 +32,7 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
 import SettingsStore from "../settings/SettingsStore";
 
-const HAIR_SPACE = String.fromCodePoint(0x200A);
+const REGIONAL_EMOJI_SEPARATOR = String.fromCodePoint(0x200B);
 
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
@@ -216,9 +216,9 @@ abstract class PlainBasePart extends BasePart {
                 return false;
             }
 
-            // or split if the previous character is a space or a hair space
+            // or split if the previous character is a space or regional emoji separator
             // or if it is a + and this is a :
-            return (this._text[offset - 1] !== " " && this._text[offset - 1] !== HAIR_SPACE) &&
+            return (this._text[offset - 1] !== " " && this._text[offset - 1] !== REGIONAL_EMOJI_SEPARATOR) &&
                 (this._text[offset - 1] !== "+" || chr !== ":");
         }
         return true;
@@ -650,7 +650,7 @@ export class PartCreator {
                 }
                 parts.push(this.emoji(char));
                 if (PartCreator.isRegionalIndicator(text)) {
-                    parts.push(this.plain(HAIR_SPACE));
+                    parts.push(this.plain(REGIONAL_EMOJI_SEPARATOR));
                 }
             } else {
                 plainText += char;
