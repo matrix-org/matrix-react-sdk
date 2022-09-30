@@ -3545,7 +3545,7 @@
     "Inviting %(user)s and %(count)s others|other": "Mengundang %(user)s dan %(count)s lainnya",
     "%(user)s and %(count)s others|one": "%(user)s dan 1 lainnya",
     "%(user)s and %(count)s others|other": "%(user)s dan %(count)s lainnya",
-    "%(user1)s and %(user2)s": "%(user1)s dan%(user2)s",
+    "%(user1)s and %(user2)s": "%(user1)s dan %(user2)s",
     "Show": "Tampilkan",
     "Unknown device type": "Tipe perangkat tidak diketahui",
     "Video input %(n)s": "Masukan video %(n)s",
@@ -3582,5 +3582,9 @@
     "Failed to set pusher state": "Gagal menetapkan keadaan pendorong",
     "Receive push notifications on this session.": "Terima notifikasi dorongan di sesi ini.",
     "Push notifications": "Notifikasi dorongan",
-    "Toggle push notifications on this session.": "Aktifkan atau nonaktifkan notifikasi dorongan di sesi ini."
+    "Toggle push notifications on this session.": "Aktifkan atau nonaktifkan notifikasi dorongan di sesi ini.",
+    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s sesi dipilih",
+    "Enable notifications for this device": "Aktifkan notifikasi untuk perangkat ini",
+    "Turn off to disable notifications on all your devices and sessions": "Matikan untuk menonaktifkan notifikasi pada semua perangkat dan sesi Anda",
+    "Enable notifications for this account": "Aktifkan notifikasi untuk akun ini"
 }
