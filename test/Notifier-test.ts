@@ -14,28 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MockedObject } from "jest-mock";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
+import BasePlatform from "../src/BasePlatform";
+import { ElementCall } from "../src/models/Call";
 import Notifier from "../src/Notifier";
+import SettingsStore from "../src/settings/SettingsStore";
+import ToastStore from "../src/stores/ToastStore";
 import { getLocalNotificationAccountDataEventType } from "../src/utils/notifications";
 import { getMockClientWithEventEmitter, mkEvent, mkRoom, mockPlatformPeg } from "./test-utils";
 
 describe("Notifier", () => {
-    let MockPlatform;
-    let accountDataStore = {};
-
-    const mockClient = getMockClientWithEventEmitter({
-        getUserId: jest.fn().mockReturnValue("@bob:example.org"),
-        isGuest: jest.fn().mockReturnValue(false),
-        getAccountData: jest.fn().mockImplementation(eventType => accountDataStore[eventType]),
-        setAccountData: jest.fn().mockImplementation((eventType, content) => {
-            accountDataStore[eventType] = new MatrixEvent({
-                type: eventType,
-                content,
-            });
-        }),
-    });
-    const accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
     const roomId = "!room1:server";
     const testEvent = mkEvent({
         event: true,
@@ -44,10 +36,33 @@ describe("Notifier", () => {
         room: roomId,
         content: {},
     });
-    const testRoom = mkRoom(mockClient, roomId);
+
+    let MockPlatform: MockedObject<BasePlatform>;
+    let mockClient: MockedObject<MatrixClient>;
+    let testRoom: MockedObject<Room>;
+    let accountDataEventKey: string;
+    let accountDataStore = {};
 
     beforeEach(() => {
         accountDataStore = {};
+        mockClient = getMockClientWithEventEmitter({
+            getUserId: jest.fn().mockReturnValue("@bob:example.org"),
+            isGuest: jest.fn().mockReturnValue(false),
+            getAccountData: jest.fn().mockImplementation(eventType => accountDataStore[eventType]),
+            setAccountData: jest.fn().mockImplementation((eventType, content) => {
+                accountDataStore[eventType] = new MatrixEvent({
+                    type: eventType,
+                    content,
+                });
+            }),
+            decryptEventIfNeeded: jest.fn(),
+            getRoom: jest.fn(),
+            getPushActionsForEvent: jest.fn(),
+        });
+        accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
+
+        testRoom = mkRoom(mockClient, roomId);
+
         MockPlatform = mockPlatformPeg({
             supportsNotifications: jest.fn().mockReturnValue(true),
             maySendNotifications: jest.fn().mockReturnValue(true),
@@ -55,6 +70,8 @@ describe("Notifier", () => {
         });
 
         Notifier.isBodyEnabled = jest.fn().mockReturnValue(true);
+
+        mockClient.getRoom.mockReturnValue(testRoom);
     });
 
     describe("_displayPopupNotification", () => {
@@ -80,6 +97,58 @@ describe("Notifier", () => {
             mockClient.setAccountData(accountDataEventKey, { is_silenced: silenced });
             Notifier._playAudioNotification(testEvent, testRoom);
             expect(Notifier.getSoundForRoom).toHaveBeenCalledTimes(count);
+        });
+    });
+
+    describe("group call notifications", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+            jest.spyOn(ToastStore.sharedInstance(), "addOrReplaceToast");
+
+            mockClient.getPushActionsForEvent.mockReturnValue({
+                notify: true,
+                tweaks: {},
+            });
+
+            Notifier.onSyncStateChange("SYNCING");
+        });
+
+        afterEach(() => {
+            jest.resetAllMocks();
+        });
+
+        const callOnEvent = (type?: string) => {
+            Notifier.onEvent({
+                getContent: () => {},
+                getRoomId: () => roomId,
+                isBeingDecrypted: () => false,
+                isDecryptionFailure: () => false,
+                getSender: () => "@alice:foo",
+                getType: () => type ?? ElementCall.CALL_EVENT_TYPE.name,
+                getStateKey: () => "state_key",
+            } as unknown as MatrixEvent);
+        };
+
+        it("should show toast when group calls are supported", () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+
+            callOnEvent();
+
+            expect(ToastStore.sharedInstance().addOrReplaceToast).toHaveBeenCalled();
+        });
+
+        it("should not show toast when group calls are not supported", () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+
+            callOnEvent();
+
+            expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
+        });
+
+        it("should not show toast when calling with non-group call event", () => {
+            callOnEvent("event_type");
+
+            expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
         });
     });
 });
