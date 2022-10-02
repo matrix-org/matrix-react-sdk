@@ -226,7 +226,15 @@ export default class ScrollPanel extends React.Component<IProps> {
 
     private onScroll = ev => {
         // skip scroll events caused by resizing
-        if (this.props.resizeNotifier && this.props.resizeNotifier.isResizing) return;
+        if (this.props.resizeNotifier && this.props.resizeNotifier.isResizing) {
+            debuglog("skipping onScroll due to isResizing", this.getScrollNode().scrollTop);
+            return;
+        }
+        // skip scroll events which are triggered by backfilling (i.e. while loading permalinks)
+        if (this.isFilling) {
+            debuglog("skipping onScroll due to isFilling", this.getScrollNode().scrollTop);
+            return;
+        }
         debuglog("onScroll", this.getScrollNode().scrollTop);
         this.scrollTimeout.restart();
         this.saveScrollState();
