@@ -38,8 +38,7 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
-import Modal from '../../../Modal';
-import RendezvousDialog from '../../views/dialogs/RendezvousDialog';
+import LoginWithQR from '../../views/auth/LoginWithQR';
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -100,6 +99,8 @@ interface IState {
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
     serverDeadError?: ReactNode;
+
+    loginWithQrInProgress: boolean;
 }
 
 /*
@@ -130,6 +131,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             serverIsAlive: true,
             serverErrorIsFatal: false,
             serverDeadError: "",
+
+            loginWithQrInProgress: false,
         };
 
         // map from login step type to a function which will render a control
@@ -142,6 +145,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             'm.login.cas': () => this.renderSsoStep("cas"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.sso': () => this.renderSsoStep("sso"),
+
+            'loginWithQR': () => this.renderLoginWithQRStep(), // FIXME
         };
     }
 
@@ -499,10 +504,14 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // this is the ideal order we want to show the flows in
         const order = [
             "m.login.password",
+            "loginWithQR",
             "m.login.sso",
         ];
 
-        const flows = order.map(type => this.state.flows.find(flow => flow.type === type)).filter(Boolean);
+        const flows = order.map(type =>
+            (type === 'loginWithQR' && !SdkConfig.get().login_with_qr?.disabled)
+                ? { type: 'loginWithQR' } : this.state.flows.find(flow => flow.type === type),
+        ).filter(Boolean);
         return <React.Fragment>
             { flows.map(flow => {
                 const stepRenderer = this.stepRendererMap[flow.type];
@@ -545,8 +554,26 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         );
     };
 
-    private startRendezvous = () => {
-        Modal.createDialog(RendezvousDialog, { device: 'new' });
+    private startLoginWithQR = () => {
+        this.setState({ loginWithQrInProgress: true });
+    };
+
+    private renderLoginWithQRStep = () => {
+        return (
+            <AccessibleButton
+                className="mx_Login_withQR"
+                kind="primary_outline"
+                onClick={this.startLoginWithQR}
+            >
+                { _t("Sign in with QR code") }
+            </AccessibleButton>
+        );
+    };
+
+    private onLoginWithQRFinished = (success: boolean) => {
+        if (!success) {
+            this.setState({ loginWithQrInProgress: false });
+        }
     };
 
     render() {
@@ -601,34 +628,30 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 </span>
             );
         }
-        const rendezvous = !SdkConfig.get().rendezvous?.disabled ?
-            <div style={{ textAlign: "center", marginBottom: "8px" }}>
-                <AccessibleButton
-                    kind="primary"
-                    onClick={this.startRendezvous}
-                >
-                    { _t("Link using another device") }
-                </AccessibleButton>
-            </div> : null;
 
         return (
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
-                <AuthBody>
-                    <h1>
-                        { _t('Sign in') }
-                        { loader }
-                    </h1>
-                    { errorTextSection }
-                    { serverDeadSection }
-                    <ServerPicker
-                        serverConfig={this.props.serverConfig}
-                        onServerConfigChange={this.props.onServerConfigChange}
-                    />
-                    { this.renderLoginComponentForFlows() }
-                    { rendezvous }
-                    { footer }
-                </AuthBody>
+                { this.state.loginWithQrInProgress ?
+                    <AuthBody>
+                        <LoginWithQR device="new" onFinished={this.onLoginWithQRFinished} serverConfig={this.props.serverConfig} />
+                    </AuthBody>
+                    :
+                    <AuthBody>
+                        <h1>
+                            { _t('Sign in') }
+                            { loader }
+                        </h1>
+                        { errorTextSection }
+                        { serverDeadSection }
+                        <ServerPicker
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.props.onServerConfigChange}
+                        />
+                        { this.renderLoginComponentForFlows() }
+                        { footer }
+                    </AuthBody>
+                }
             </AuthPage>
         );
     }

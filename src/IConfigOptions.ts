@@ -182,7 +182,7 @@ export interface IConfigOptions {
     sync_timeline_limit?: number;
     dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
 
-    rendezvous?: {
+    login_with_qr?: {
         disabled?: boolean;
         default_http_transport_server?: string;
     };

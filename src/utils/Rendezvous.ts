@@ -34,7 +34,7 @@ export class Rendezvous {
     public code?: string;
     public onCancelled?: (reason: RendezvousCancellationReason) => void;
 
-    constructor(private channel: RendezvousChannel, cli?: MatrixClient) {
+    constructor(public channel: RendezvousChannel, cli?: MatrixClient) {
         this.cli = cli;
     }
 
