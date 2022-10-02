@@ -649,7 +649,7 @@
     "Unmute": "Suarakan",
     "Historical": "Riwayat",
     "Invites": "Undangan",
-    "Offline": "Offline",
+    "Offline": "Luring",
     "Idle": "Idle",
     "Online": "Daring",
     "Anyone": "Siapa Saja",
@@ -1808,9 +1808,9 @@
     "Recently visited rooms": "Ruangan yang baru saja dilihat",
     "Room %(name)s": "Ruangan %(name)s",
     "Unknown for %(duration)s": "Tidak diketahui untuk %(duration)s",
-    "Offline for %(duration)s": "Offline untuk %(duration)s",
+    "Offline for %(duration)s": "Luring selama %(duration)s",
     "Idle for %(duration)s": "Idle untuk %(duration)s",
-    "Online for %(duration)s": "Daring untuk %(duration)s",
+    "Online for %(duration)s": "Daring selama %(duration)s",
     "View message": "Tampilkan pesan",
     "Message didn't send. Click for info.": "Pesan tidak terkirim. Klik untuk informasi.",
     "End-to-end encryption isn't enabled": "Enkripsi ujung-ke-ujung belum diaktifkan",
@@ -3586,5 +3586,7 @@
     "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s sesi dipilih",
     "Enable notifications for this device": "Aktifkan notifikasi untuk perangkat ini",
     "Turn off to disable notifications on all your devices and sessions": "Matikan untuk menonaktifkan notifikasi pada semua perangkat dan sesi Anda",
-    "Enable notifications for this account": "Aktifkan notifikasi untuk akun ini"
+    "Enable notifications for this account": "Aktifkan notifikasi untuk akun ini",
+    "Video call ended": "Panggilan video berakhir",
+    "%(name)s started a video call": "%(name)s memulai sebuah panggilan video"
 }
