@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { IMyDevice } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
+import { CryptoEvent } from 'matrix-js-sdk/src/crypto';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
@@ -52,10 +53,14 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
+        const cli = MatrixClientPeg.get();
+        cli.on(CryptoEvent.DevicesUpdated, this.loadDevices);
         this.loadDevices();
     }
 
     public componentWillUnmount(): void {
+        const cli = MatrixClientPeg.get();
+        cli.off(CryptoEvent.DevicesUpdated, this.loadDevices);
         this.unmounted = true;
     }
 
