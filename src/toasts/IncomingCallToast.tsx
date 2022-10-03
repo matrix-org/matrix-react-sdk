@@ -46,9 +46,9 @@ export function IncomingCallToast({ callEvent }: Props) {
         ToastStore.sharedInstance().dismissToast(getIncomingCallToastKey(callEvent.getStateKey()!));
     }, [callEvent]);
 
-    const latestEvent = useRoomState(room, (state) => {
+    const latestEvent = useRoomState(room, useCallback((state) => {
         return state.getStateEvents(callEvent.getType(), callEvent.getStateKey()!);
-    });
+    }, [callEvent]));
 
     useEffect(() => {
         if ("m.terminated" in latestEvent.getContent()) {
