@@ -32,11 +32,11 @@ import { useRoomState } from "../hooks/useRoomState";
 
 export const getIncomingCallToastKey = (stateKey: string) => `call_${stateKey}`;
 
-interface IProps {
+interface Props {
     callEvent: MatrixEvent;
 }
 
-export function IncomingCallToast({ callEvent }: IProps) {
+export function IncomingCallToast({ callEvent }: Props) {
     const roomId = callEvent.getRoomId()!;
     const room = MatrixClientPeg.get().getRoom(roomId);
     const call = useCall(roomId);
