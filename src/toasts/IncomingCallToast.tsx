@@ -29,6 +29,7 @@ import AccessibleTooltipButton from "../components/views/elements/AccessibleTool
 import { LiveContentSummary, LiveContentType } from "../components/views/rooms/LiveContentSummary";
 import { useCall, useParticipants } from "../hooks/useCall";
 import { useRoomState } from "../hooks/useRoomState";
+import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 
 export const getIncomingCallToastKey = (stateKey: string) => `call_${stateKey}`;
 
@@ -56,7 +57,7 @@ export function IncomingCallToast({ callEvent }: Props) {
         }
     }, [latestEvent, dismissToast]);
 
-    const onJoinClick = (e: React.MouseEvent): void => {
+    const onJoinClick = useCallback((e: ButtonEvent): void => {
         e.stopPropagation();
 
         defaultDispatcher.dispatch<ViewRoomPayload>({
@@ -66,13 +67,13 @@ export function IncomingCallToast({ callEvent }: Props) {
             metricsTrigger: undefined,
         });
         dismissToast();
-    };
+    }, [room, dismissToast]);
 
-    const onCloseClick = (e: React.MouseEvent): void => {
+    const onCloseClick = useCallback((e: ButtonEvent): void => {
         e.stopPropagation();
 
         dismissToast();
-    };
+    }, [dismissToast]);
 
     return <React.Fragment>
         <RoomAvatar
@@ -81,16 +82,16 @@ export function IncomingCallToast({ callEvent }: Props) {
             width={24}
         />
         <div className="mx_IncomingCallToast_content">
-            <div className="mx_CallEvent_info">
-                <span className="mx_CallEvent_room">
+            <div className="mx_IncomingCallToast_info">
+                <span className="mx_IncomingCallToast_room">
                     { room ? room.name : _t("Unknown room") }
                 </span>
-                <div className="mx_CallEvent_message">
+                <div className="mx_IncomingCallToast_message">
                     { _t("Video call started") }
                 </div>
                 <LiveContentSummary
                     type={LiveContentType.Video}
-                    text={_t("Video call")}
+                    text={_t("Video")}
                     active={false}
                     participantCount={participants?.size ?? 0}
                 />
