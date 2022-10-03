@@ -26,10 +26,6 @@ import Modal from "../../../../../Modal";
 import PlatformPeg from "../../../../../PlatformPeg";
 import UpdateCheckButton from "../../UpdateCheckButton";
 import BugReportDialog from '../../../dialogs/BugReportDialog';
-import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
-import { Action } from "../../../../../dispatcher/actions";
-import { UserTab } from "../../../dialogs/UserTab";
-import dis from "../../../../../dispatcher/dispatcher";
 import CopyableText from "../../../elements/CopyableText";
 
 interface IProps {
@@ -171,13 +167,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         return `${appVersion}\n${olmVersion}`;
     };
 
-    private onKeyboardShortcutsClicked = (): void => {
-        dis.dispatch<OpenToTabPayload>({
-            action: Action.ViewUserSettings,
-            initialTabId: UserTab.Keyboard,
-        });
-    };
-
     render() {
         const brand = SdkConfig.get().brand;
 
@@ -276,9 +265,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <div className='mx_SettingsTab_subsectionText'>
                         { faqText }
                     </div>
-                    <AccessibleButton kind="primary" onClick={this.onKeyboardShortcutsClicked}>
-                        { _t("Keyboard Shortcuts") }
-                    </AccessibleButton>
                 </div>
                 <div className='mx_SettingsTab_section'>
                     <span className='mx_SettingsTab_subheading'>{ _t("Versions") }</span>
