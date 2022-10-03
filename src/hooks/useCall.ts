@@ -35,12 +35,12 @@ export const useConnectionState = (call: Call): ConnectionState =>
     useTypedEventEmitterState(
         call,
         CallEvent.ConnectionState,
-        useCallback(state => state ?? call?.connectionState, [call]),
+        useCallback(state => state ?? call.connectionState, [call]),
     );
 
 export const useParticipants = (call: Call): Set<RoomMember> =>
     useTypedEventEmitterState(
         call,
         CallEvent.Participants,
-        useCallback(state => state ?? call?.participants, [call]),
+        useCallback(state => state ?? call.participants, [call]),
     );

@@ -105,8 +105,19 @@ describe("IncomingCallEvent", () => {
         renderToast();
 
         screen.getByText("Video call started");
-        screen.getByText("Video call");
+        screen.getByText("Video");
         screen.getByLabelText("2 participants");
+
+        screen.getByRole("button", { name: "Join" });
+        screen.getByRole("button", { name: "Close" });
+    });
+
+    it("correctly renders toast without a call", () => {
+        call.destroy();
+        renderToast();
+
+        screen.getByText("Video call started");
+        screen.getByText("Video");
 
         screen.getByRole("button", { name: "Join" });
         screen.getByRole("button", { name: "Close" });

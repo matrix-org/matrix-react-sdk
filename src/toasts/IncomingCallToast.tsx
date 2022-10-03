@@ -26,8 +26,12 @@ import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../dispatcher/actions";
 import ToastStore from "../stores/ToastStore";
 import AccessibleTooltipButton from "../components/views/elements/AccessibleTooltipButton";
-import { LiveContentSummary, LiveContentType } from "../components/views/rooms/LiveContentSummary";
-import { useCall, useParticipants } from "../hooks/useCall";
+import {
+    LiveContentSummary,
+    LiveContentSummaryWithCall,
+    LiveContentType,
+} from "../components/views/rooms/LiveContentSummary";
+import { useCall } from "../hooks/useCall";
 import { useRoomState } from "../hooks/useRoomState";
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 
@@ -41,7 +45,6 @@ export function IncomingCallToast({ callEvent }: Props) {
     const roomId = callEvent.getRoomId()!;
     const room = MatrixClientPeg.get().getRoom(roomId);
     const call = useCall(roomId);
-    const participants = useParticipants(call);
 
     const dismissToast = useCallback((): void => {
         ToastStore.sharedInstance().dismissToast(getIncomingCallToastKey(callEvent.getStateKey()!));
@@ -89,12 +92,15 @@ export function IncomingCallToast({ callEvent }: Props) {
                 <div className="mx_IncomingCallToast_message">
                     { _t("Video call started") }
                 </div>
-                <LiveContentSummary
-                    type={LiveContentType.Video}
-                    text={_t("Video")}
-                    active={false}
-                    participantCount={participants?.size ?? 0}
-                />
+                { call
+                    ? <LiveContentSummaryWithCall call={call} />
+                    : <LiveContentSummary
+                        type={LiveContentType.Video}
+                        text={_t("Video")}
+                        active={false}
+                        participantCount={0}
+                    />
+                }
             </div>
         </div>
         <AccessibleButton
