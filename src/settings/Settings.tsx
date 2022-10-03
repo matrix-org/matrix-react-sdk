@@ -438,6 +438,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("New group call experience"),
+        controller: new ReloadOnChangeController(),
         default: false,
     },
     "feature_location_share_live": {
@@ -792,7 +793,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "deviceNotificationsEnabled": {
         supportedLevels: [SettingLevel.DEVICE],
-        default: false,
+        default: true,
     },
     "notificationSound": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
