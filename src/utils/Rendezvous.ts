@@ -186,12 +186,20 @@ export class Rendezvous {
             }
         }
 
-        const info = await this.cli.crypto.setDeviceVerification(this.cli.getUserId(), this.newDeviceId, true, false, true);
+        const info = await this.cli.crypto.setDeviceVerification(
+            this.cli.getUserId(),
+            this.newDeviceId,
+            true, false, true,
+        );
 
         // eslint-disable-next-line camelcase
         const { master, user_signing, self_signing } = this.cli.crypto.crossSigningInfo.toStorage().keys;
-        // eslint-disable-next-line camelcase
-        await this.channel.send({ outcome: 'verified', verifying_device_id: this.cli.getDeviceId(), keys: { master, user_signing, self_signing } });
+        await this.channel.send({
+            outcome: 'verified',
+            verifying_device_id: this.cli.getDeviceId(),
+            // eslint-disable-next-line camelcase
+            keys: { master, user_signing, self_signing },
+        });
 
         return info;
     }
