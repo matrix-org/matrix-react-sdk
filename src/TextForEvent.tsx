@@ -797,7 +797,6 @@ const stateHandlers: IHandlers = {
     [EventType.RoomTombstone]: textForTombstoneEvent,
     [EventType.RoomJoinRules]: textForJoinRulesEvent,
     [EventType.RoomGuestAccess]: textForGuestAccessEvent,
-    [ElementCall.CALL_EVENT_TYPE.unstable]: textForCallEvent,
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     'im.vector.modular.widgets': textForWidgetEvent,
@@ -807,6 +806,11 @@ const stateHandlers: IHandlers = {
 // Add all the Mjolnir stuff to the renderer
 for (const evType of ALL_RULE_TYPES) {
     stateHandlers[evType] = textForMjolnirEvent;
+}
+
+// Add both stable and unstable m.call events
+for (const evType of ElementCall.CALL_EVENT_TYPE.names) {
+    stateHandlers[evType] = textForCallEvent;
 }
 
 /**
