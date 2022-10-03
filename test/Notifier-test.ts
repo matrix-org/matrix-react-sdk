@@ -26,6 +26,7 @@ import SettingsStore from "../src/settings/SettingsStore";
 import ToastStore from "../src/stores/ToastStore";
 import { getLocalNotificationAccountDataEventType } from "../src/utils/notifications";
 import { getMockClientWithEventEmitter, mkEvent, mkRoom, mockPlatformPeg } from "./test-utils";
+import { IncomingCallToast } from "../src/toasts/IncomingCallToast";
 
 describe("Notifier", () => {
     const roomId = "!room1:server";
@@ -118,27 +119,42 @@ describe("Notifier", () => {
         });
 
         const callOnEvent = (type?: string) => {
-            Notifier.onEvent({
-                getContent: () => {},
+            const callEvent = {
+                getContent: () => { },
                 getRoomId: () => roomId,
                 isBeingDecrypted: () => false,
                 isDecryptionFailure: () => false,
                 getSender: () => "@alice:foo",
                 getType: () => type ?? ElementCall.CALL_EVENT_TYPE.name,
                 getStateKey: () => "state_key",
-            } as unknown as MatrixEvent);
+            } as unknown as MatrixEvent;
+
+            Notifier.onEvent(callEvent);
+            return callEvent;
+        };
+
+        const setGroupCallsEnabled = (val: boolean) => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+                if (name === "feature_group_calls") return val;
+            });
         };
 
         it("should show toast when group calls are supported", () => {
-            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+            setGroupCallsEnabled(true);
 
-            callOnEvent();
+            const callEvent = callOnEvent();
 
-            expect(ToastStore.sharedInstance().addOrReplaceToast).toHaveBeenCalled();
+            expect(ToastStore.sharedInstance().addOrReplaceToast).toHaveBeenCalledWith(expect.objectContaining({
+                key: `call_${callEvent.getStateKey()}`,
+                priority: 100,
+                component: IncomingCallToast,
+                bodyClassName: "mx_IncomingCallToast",
+                props: { callEvent },
+            }));
         });
 
         it("should not show toast when group calls are not supported", () => {
-            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+            setGroupCallsEnabled(false);
 
             callOnEvent();
 
@@ -146,6 +162,8 @@ describe("Notifier", () => {
         });
 
         it("should not show toast when calling with non-group call event", () => {
+            setGroupCallsEnabled(true);
+
             callOnEvent("event_type");
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();

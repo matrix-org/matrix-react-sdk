@@ -21,7 +21,7 @@ import { mocked } from "jest-mock";
 
 import { getSenderName, textForEvent } from "../src/TextForEvent";
 import SettingsStore from "../src/settings/SettingsStore";
-import { createTestClient } from './test-utils';
+import { createTestClient, stubClient } from './test-utils';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import UserIdentifierCustomisations from '../src/customisations/UserIdentifier';
 import { ElementCall } from "../src/models/Call";
@@ -452,9 +452,9 @@ describe('TextForEvent', () => {
         let callEvent: MatrixEvent;
 
         beforeEach(() => {
-            mockClient = createTestClient();
+            stubClient();
+            mockClient = MatrixClientPeg.get();
 
-            MatrixClientPeg.get = () => mockClient;
             mocked(mockClient.getRoom).mockReturnValue({
                 name: "Test room",
             } as unknown as Room);
@@ -466,9 +466,7 @@ describe('TextForEvent', () => {
             } as unknown as MatrixEvent;
         });
 
-        describe.each(
-            [ElementCall.CALL_EVENT_TYPE.unstable],
-        )("eventType=%s", (eventType: string) => {
+        describe.each(ElementCall.CALL_EVENT_TYPE.names)("eventType=%s", (eventType: string) => {
             beforeEach(() => {
                 mocked(callEvent).getType.mockReturnValue(eventType);
             });
