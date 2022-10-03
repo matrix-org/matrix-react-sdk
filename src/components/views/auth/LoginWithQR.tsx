@@ -77,6 +77,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.state.generatedRendezvous.onCancelled = undefined;
                 this.state.generatedRendezvous.channel.transport.onCancelled = undefined;
                 await this.state.generatedRendezvous.userCancelled();
+                this.setState({ generatedRendezvous: undefined });
             }
             await this.requestMediaPermissions();
         } else {
@@ -84,6 +85,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.state.scannedRendezvous.onCancelled = undefined;
                 this.state.scannedRendezvous.channel.transport.onCancelled = undefined;
                 await this.state.scannedRendezvous.userCancelled();
+                this.setState({ scannedRendezvous: undefined });
             }
             await this.generateCode();
         }
@@ -220,16 +222,19 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     };
 
     private cancelClicked = () => {
-        if (this.rendezvous) {
-            if (this.state.confirmationDigits) {
-                if (this.props.device === 'existing') {
-                    void this.rendezvous.declineLoginOnExistingDevice();
-                }
-            }
-            void this.rendezvous.userCancelled();
-            this.reset();
-        }
-        this.props.onFinished(false);
+        void (async () => {
+            await this.rendezvous.userCancelled();
+            this.reset;
+            this.props.onFinished(false);
+        })();
+    };
+
+    private declineClicked = () => {
+        void (async () => {
+            await this.rendezvous.declineLoginOnExistingDevice();
+            this.reset;
+            this.props.onFinished(false);
+        })();
     };
 
     private tryAgainClicked = () => {
@@ -370,7 +375,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 buttons = <>
                     <AccessibleButton
                         kind="primary_outline"
-                        onClick={this.cancelClicked}
+                        onClick={this.declineClicked}
                     >
                         { _t("Cancel") }
                     </AccessibleButton>
