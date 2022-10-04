@@ -34,7 +34,7 @@ import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifi
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
 import { getDeviceClientInformation } from "../../../../utils/device/clientInformation";
-import { DevicesDictionary, DeviceWithVerification, ExtendedDeviceInfo } from "./types";
+import { DevicesDictionary, DeviceWithVerification, ExtendedDeviceClientInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 
 const isDeviceVerified = (
@@ -63,7 +63,7 @@ const isDeviceVerified = (
     }
 };
 
-const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyDevice): ExtendedDeviceInfo => {
+const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyDevice): ExtendedDeviceClientInfo => {
     const { name, version, url } = getDeviceClientInformation(matrixClient, device.device_id);
 
     return {

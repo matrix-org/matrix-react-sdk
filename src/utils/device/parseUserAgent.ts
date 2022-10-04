@@ -14,19 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IMyDevice } from "matrix-js-sdk/src/matrix";
-
-export type DeviceWithVerification = IMyDevice & { isVerified: boolean | null };
-export type ExtendedDeviceClientInfo = {
-    clientName?: string;
-    clientVersion?: string;
-    url?: string;
-};
-export type ExtendedDevice = DeviceWithVerification & ExtendedDeviceClientInfo;
-export type DevicesDictionary = Record<DeviceWithVerification['device_id'], ExtendedDevice>;
-
-export enum DeviceSecurityVariation {
-    Verified = 'Verified',
-    Unverified = 'Unverified',
-    Inactive = 'Inactive',
+export enum DeviceType {
+    Desktop = 'Desktop',
+    Mobile = 'Mobile',
+    Web = 'Web',
+    Unknown = 'Unknown',
 }
+export type ExtendedDeviceInformation = {
+    deviceType: DeviceType;
+    // eg Google Pixel 6
+    deviceModel?: string;
+    // eg Android 11
+    deviceOperatingSystem?: string;
+    // eg Element Nightly.
+    clientName?: string;
+    // eg 1.1.0
+    clientVersion?: string;
+};
+
+export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation => {
+    if (!userAgent) {
+        return {
+            deviceType: DeviceType.Unknown,
+        };
+    }
+    throw new Error('not yet implemented');
+};
