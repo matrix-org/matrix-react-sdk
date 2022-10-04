@@ -3586,5 +3586,8 @@
     "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s sessioni selezionate",
     "Enable notifications for this device": "Attiva le notifiche per questo dispositivo",
     "Turn off to disable notifications on all your devices and sessions": "Disabilita per disattivare le notifiche in tutti i dispositivi e sessioni",
-    "Enable notifications for this account": "Attiva le notifiche per questo account"
+    "Enable notifications for this account": "Attiva le notifiche per questo account",
+    "Video call ended": "Videochiamata terminata",
+    "%(name)s started a video call": "%(name)s ha iniziato una videochiamata",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Registra il nome, la versione e l'url del client per riconoscere le sessioni più facilmente nel gestore di sessioni"
 }
