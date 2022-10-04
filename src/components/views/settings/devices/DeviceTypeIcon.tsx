@@ -22,13 +22,19 @@ import { Icon as VerifiedIcon } from '../../../../../res/img/e2e/verified.svg';
 import { Icon as UnverifiedIcon } from '../../../../../res/img/e2e/warning.svg';
 import { _t } from '../../../../languageHandler';
 import { ExtendedDevice } from './types';
+import { DeviceType } from '../../../../utils/device/parseUserAgent';
 
 interface Props {
     isVerified?: ExtendedDevice['isVerified'];
     isSelected?: boolean;
+    deviceType?: DeviceType;
 }
 
-export const DeviceType: React.FC<Props> = ({ isVerified, isSelected }) => (
+export const DeviceTypeIcon: React.FC<Props> = ({
+    isVerified,
+    isSelected,
+    deviceType,
+}) => (
     <div className={classNames('mx_DeviceType', {
         mx_DeviceType_selected: isSelected,
     })}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<DeviceType /> renders a verified device 1`] = `
+exports[`<DeviceTypeIcon /> renders a verified device 1`] = `
 <div>
   <div
     class="mx_DeviceType"
@@ -19,7 +19,7 @@ exports[`<DeviceType /> renders a verified device 1`] = `
 </div>
 `;
 
-exports[`<DeviceType /> renders an unverified device 1`] = `
+exports[`<DeviceTypeIcon /> renders an unverified device 1`] = `
 <div>
   <div
     class="mx_DeviceType"
@@ -38,7 +38,7 @@ exports[`<DeviceType /> renders an unverified device 1`] = `
 </div>
 `;
 
-exports[`<DeviceType /> renders correctly when selected 1`] = `
+exports[`<DeviceTypeIcon /> renders correctly when selected 1`] = `
 <div>
   <div
     class="mx_DeviceType mx_DeviceType_selected"
