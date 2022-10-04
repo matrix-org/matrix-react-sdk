@@ -994,8 +994,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
                         if (
                             !sendRRs
-                            && !await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")
-                            && !await cli.isVersionSupported("v1.4")
+                            && !(await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable"))
+                            && !(await cli.isVersionSupported("v1.4"))
                         ) return;
                         try {
                             return await cli.sendReadReceipt(
