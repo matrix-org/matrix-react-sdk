@@ -3433,7 +3433,7 @@
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore": "Erwäge, dich aus alten Sitzungen (%(inactiveAgeDays)s oder mehr Tage) abzumelden, die du nicht mehr benutzt",
     "Inactive sessions": "Inaktive Sitzungen",
     "Unverified sessions": "Nicht verifizierte Sitzungen",
-    "For best security, sign out from any session that you don't recognize or use anymore.": "Für die bestmögliche Sicherheit, logge dich aus allen Sitzungen aus, die du nicht erkennst oder nicht mehr benutzt.",
+    "For best security, sign out from any session that you don't recognize or use anymore.": "Für die bestmögliche Sicherheit, melde dich von allen Sitzungen ab, die du nicht erkennst oder nicht mehr benutzt.",
     "Verified sessions": "Verifizierte Sitzungen",
     "Unverified session": "Nicht verifizierte Sitzung",
     "This session is ready for secure messaging.": "Diese Sitzung ist für sichere Kommunikation bereit.",
@@ -3562,7 +3562,7 @@
     "Voice broadcast (under active development)": "Sprachübertragung (wird aktiv entwickelt)",
     "Element Call video rooms": "Element Call-Videoräume",
     "You need to be able to kick users to do that.": "Du musst in der Lage sein, Benutzer zu entfernen um das zu tun.",
-    "Sign out of this session": "Melde dich von dieser Sitzung ab",
+    "Sign out of this session": "Von dieser Sitzung abmelden",
     "Please be aware that session names are also visible to people you communicate with": "Sei dir bitte bewusst, dass Sitzungsnamen auch für Personen, mit denen du kommunizierst, sichtbar sind",
     "Rename session": "Sitzung umbenennen",
     "Video input %(n)s": "Video-Eingang %(n)s",
@@ -3583,5 +3583,6 @@
     "Enable notifications for this account": "Aktiviere Benachrichtigungen für dieses Konto",
     "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s Sitzungen ausgewählt",
     "Video call ended": "Videoanruf beendet",
-    "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen"
+    "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Anwendungsbezeichnung, -version und -adresse registrieren, damit diese Sitzung in der Sitzungsverwaltung besser erkennbar ist"
 }
