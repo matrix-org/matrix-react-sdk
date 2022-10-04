@@ -49,3 +49,7 @@ export type KeysWithObjectShape<Input> = {
         ? (Input[P] extends Array<unknown> ? never : P)
         : never;
 }[keyof Input];
+
+export type KeysStartingWith<Input extends object, Str extends string> = {
+    [P in keyof Input]: P extends `${Str}${infer _X}` ? P : never;
+}[keyof Input];
