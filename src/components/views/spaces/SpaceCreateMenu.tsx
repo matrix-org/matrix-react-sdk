@@ -31,13 +31,13 @@ import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import withValidation from "../elements/Validation";
 import RoomAliasField from "../elements/RoomAliasField";
-import SdkConfig from "../../../SdkConfig";
 import Modal from "../../../Modal";
 import GenericFeatureFeedbackDialog from "../dialogs/GenericFeatureFeedbackDialog";
 import SettingsStore from "../../../settings/SettingsStore";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { shouldShowFeedback } from "../../../utils/Feedback";
 
 export const createSpace = async (
     name: string,
@@ -52,9 +52,9 @@ export const createSpace = async (
         createOpts: {
             name,
             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
-            visibility: (isPublic && await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827"))
-                ? Visibility.Public
-                : Visibility.Private,
+            visibility: (
+                isPublic && await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827.stable")
+            ) ? Visibility.Public : Visibility.Private,
             power_level_content_override: {
                 // Only allow Admins to write to the timeline to prevent hidden sync spam
                 events_default: 100,
@@ -100,7 +100,7 @@ const nameToLocalpart = (name: string): string => {
 
 // XXX: Temporary for the Spaces release only
 export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
-    if (!SdkConfig.get().bug_report_endpoint_url) return null;
+    if (!shouldShowFeedback()) return null;
 
     return <div className="mx_SpaceFeedbackPrompt">
         <span className="mx_SpaceFeedbackPrompt_text">{ _t("Spaces are a new feature.") }</span>

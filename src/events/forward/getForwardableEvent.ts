@@ -18,7 +18,7 @@ import { M_POLL_START } from "matrix-events-sdk";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { getForwardableBeaconEvent } from "./getForwardableBeacon";
+import { getShareableLocationEventForBeacon } from "../../utils/beacon/getShareableLocation";
 
 /**
  * Get forwardable event for a given event
@@ -28,8 +28,11 @@ export const getForwardableEvent = (event: MatrixEvent, cli: MatrixClient): Matr
     if (M_POLL_START.matches(event.getType())) {
         return null;
     }
+
+    // Live location beacons should forward their latest location as a static pin location
+    // If the beacon is not live, or doesn't have a location forwarding is not allowed
     if (M_BEACON_INFO.matches(event.getType())) {
-        return getForwardableBeaconEvent(event, cli);
+        return getShareableLocationEventForBeacon(event, cli);
     }
     return event;
 };

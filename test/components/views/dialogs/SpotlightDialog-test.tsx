@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mount } from "enzyme";
-import { IProtocol, IPublicRoomsChunkRoom, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
+// eslint-disable-next-line deprecate/import
+import { mount, ReactWrapper } from "enzyme";
+import { mocked } from "jest-mock";
+import { IProtocol, IPublicRoomsChunkRoom, MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
 import React from "react";
 import { act } from "react-dom/test-utils";
@@ -23,7 +25,19 @@ import sanitizeHtml from "sanitize-html";
 
 import SpotlightDialog, { Filter } from "../../../../src/components/views/dialogs/spotlight/SpotlightDialog";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import { stubClient } from "../../../test-utils";
+import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoom";
+import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import { mkRoom, stubClient } from "../../../test-utils";
+import { shouldShowFeedback } from "../../../../src/utils/Feedback";
+
+jest.mock("../../../../src/utils/Feedback");
+
+jest.mock("../../../../src/utils/direct-messages", () => ({
+    // @ts-ignore
+    ...jest.requireActual("../../../../src/utils/direct-messages"),
+    startDmOnFirstMessage: jest.fn(),
+}));
 
 interface IUserChunkMember {
     user_id: string;
@@ -110,8 +124,22 @@ describe("Spotlight Dialog", () => {
         guest_can_join: false,
     };
 
+    let testRoom: Room;
+    let testLocalRoom: LocalRoom;
+
+    let mockedClient: MatrixClient;
+
     beforeEach(() => {
-        mockClient({ rooms: [testPublicRoom], users: [testPerson] });
+        mockedClient = mockClient({ rooms: [testPublicRoom], users: [testPerson] });
+        testRoom = mkRoom(mockedClient, "!test23:example.com");
+        mocked(testRoom.getMyMembership).mockReturnValue("join");
+        testLocalRoom = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test23", mockedClient, mockedClient.getUserId());
+        testLocalRoom.updateMyMembership("join");
+        mocked(mockedClient.getVisibleRooms).mockReturnValue([testRoom, testLocalRoom]);
+
+        jest.spyOn(DMRoomMap, "shared").mockReturnValue({
+            getUserIdForRoomId: jest.fn(),
+        } as unknown as DMRoomMap);
     });
 
     describe("should apply filters supplied via props", () => {
@@ -287,6 +315,91 @@ describe("Spotlight Dialog", () => {
             expect(filterChip.exists()).toBeFalsy();
 
             wrapper.unmount();
+        });
+    });
+
+    describe("searching for rooms", () => {
+        let wrapper: ReactWrapper;
+        let options: ReactWrapper;
+
+        beforeAll(async () => {
+            wrapper = mount(
+                <SpotlightDialog
+                    initialText="test23"
+                    onFinished={() => null} />,
+            );
+            await act(async () => {
+                await sleep(200);
+            });
+            wrapper.update();
+
+            const content = wrapper.find("#mx_SpotlightDialog_content");
+            options = content.find("div.mx_SpotlightDialog_option");
+        });
+
+        afterAll(() => {
+            wrapper.unmount();
+        });
+
+        it("should find Rooms", () => {
+            expect(options.length).toBe(3);
+            expect(options.first().text()).toContain(testRoom.name);
+        });
+
+        it("should not find LocalRooms", () => {
+            expect(options.length).toBe(3);
+            expect(options.first().text()).not.toContain(testLocalRoom.name);
+        });
+    });
+
+    it("should start a DM when clicking a person", async () => {
+        const wrapper = mount(
+            <SpotlightDialog
+                initialFilter={Filter.People}
+                initialText={testPerson.display_name}
+                onFinished={() => null} />,
+        );
+
+        await act(async () => {
+            await sleep(200);
+        });
+        wrapper.update();
+
+        const options = wrapper.find("div.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(1);
+        expect(options.first().text()).toContain(testPerson.display_name);
+
+        options.first().simulate("click");
+        expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockedClient, [new DirectoryMember(testPerson)]);
+
+        wrapper.unmount();
+    });
+
+    describe("Feedback prompt", () => {
+        it("should show feedback prompt if feedback is enabled", async () => {
+            mocked(shouldShowFeedback).mockReturnValue(true);
+
+            const wrapper = mount(<SpotlightDialog initialText="test23" onFinished={() => null} />);
+            await act(async () => {
+                await sleep(200);
+            });
+            wrapper.update();
+
+            const content = wrapper.find(".mx_SpotlightDialog_footer");
+            expect(content.childAt(0).text()).toBe("Results not as expected? Please give feedback.");
+        });
+
+        it("should hide feedback prompt if feedback is disabled", async () => {
+            mocked(shouldShowFeedback).mockReturnValue(false);
+
+            const wrapper = mount(<SpotlightDialog initialText="test23" onFinished={() => null} />);
+            await act(async () => {
+                await sleep(200);
+            });
+            wrapper.update();
+
+            const content = wrapper.find(".mx_SpotlightDialog_footer");
+            expect(content.text()).toBeFalsy();
         });
     });
 });

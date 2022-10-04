@@ -33,6 +33,7 @@ import {
     WidgetKind,
 } from "matrix-widget-api";
 import { EventEmitter } from "events";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
@@ -53,6 +54,7 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
 import { ElementWidgetActions, IHangupCallApiRequest, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
+import { IApp } from "../WidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
@@ -68,7 +70,7 @@ import ErrorDialog from "../../components/views/dialogs/ErrorDialog";
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-    app: IWidget;
+    app: IApp;
     room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
@@ -148,26 +150,30 @@ export class ElementWidget extends Widget {
 }
 
 export class StopGapWidget extends EventEmitter {
+    private client: MatrixClient;
     private messaging: ClientWidgetApi;
     private mockWidget: ElementWidget;
     private scalarToken: string;
     private roomId?: string;
     private kind: WidgetKind;
+    private readonly virtual: boolean;
     private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
 
     constructor(private appTileProps: IAppTileProps) {
         super();
-        let app = appTileProps.app;
+        this.client = MatrixClientPeg.get();
 
+        let app = appTileProps.app;
         // Backwards compatibility: not all old widgets have a creatorUserId
         if (!app.creatorUserId) {
             app = objectShallowClone(app); // clone to prevent accidental mutation
-            app.creatorUserId = MatrixClientPeg.get().getUserId();
+            app.creatorUserId = this.client.getUserId();
         }
 
         this.mockWidget = new ElementWidget(app);
         this.roomId = appTileProps.room?.roomId;
         this.kind = appTileProps.userWidget ? WidgetKind.Account : WidgetKind.Room; // probably
+        this.virtual = app.eventId === undefined;
     }
 
     private get eventListenerRoomId(): string {
@@ -203,7 +209,7 @@ export class StopGapWidget extends EventEmitter {
         const fromCustomisation = WidgetVariableCustomisations?.provideVariables?.() ?? {};
         const defaults: ITemplateParams = {
             widgetRoomId: this.roomId,
-            currentUserId: MatrixClientPeg.get().getUserId(),
+            currentUserId: this.client.getUserId(),
             userDisplayName: OwnProfileStore.instance.displayName,
             userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(),
             clientId: ELEMENT_CLIENT_ID,
@@ -260,14 +266,20 @@ export class StopGapWidget extends EventEmitter {
      */
     public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
+
         const allowedCapabilities = this.appTileProps.whitelistCapabilities || [];
-        const driver = new StopGapWidgetDriver(allowedCapabilities, this.mockWidget, this.kind, this.roomId);
+        const driver = new StopGapWidgetDriver(
+            allowedCapabilities, this.mockWidget, this.kind, this.virtual, this.roomId,
+        );
+
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
-        this.messaging.on("ready", () => this.emit("ready"));
+        this.messaging.on("ready", () => {
+            WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging);
+            this.emit("ready");
+        });
         this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
-        WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging);
 
         // Always attach a handler for ViewRoom, but permission check it internally
         this.messaging.on(`action:${ElementWidgetActions.ViewRoom}`, (ev: CustomEvent<IViewRoomApiRequest>) => {
@@ -302,7 +314,7 @@ export class StopGapWidget extends EventEmitter {
         // Populate the map of "read up to" events for this widget with the current event in every room.
         // This is a bit inefficient, but should be okay. We do this for all rooms in case the widget
         // requests timeline capabilities in other rooms down the road. It's just easier to manage here.
-        for (const room of MatrixClientPeg.get().getRooms()) {
+        for (const room of this.client.getRooms()) {
             // Timelines are most recent last
             const events = room.getLiveTimeline()?.getEvents() || [];
             const roomEvent = events[events.length - 1];
@@ -311,8 +323,9 @@ export class StopGapWidget extends EventEmitter {
         }
 
         // Attach listeners for feeding events - the underlying widget classes handle permissions for us
-        MatrixClientPeg.get().on(ClientEvent.Event, this.onEvent);
-        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        this.client.on(ClientEvent.Event, this.onEvent);
+        this.client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        this.client.on(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
 
         this.messaging.on(`action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
             (ev: CustomEvent<IStickyActionRequest>) => {
@@ -363,7 +376,7 @@ export class StopGapWidget extends EventEmitter {
 
                     // noinspection JSIgnoredPromiseFromCall
                     IntegrationManagers.sharedInstance().getPrimaryManager().open(
-                        MatrixClientPeg.get().getRoom(RoomViewStore.instance.getRoomId()),
+                        this.client.getRoom(RoomViewStore.instance.getRoomId()),
                         `type_${integType}`,
                         integId,
                     );
@@ -428,14 +441,13 @@ export class StopGapWidget extends EventEmitter {
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget, this.roomId);
         this.messaging = null;
 
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().off(ClientEvent.Event, this.onEvent);
-            MatrixClientPeg.get().off(MatrixEventEvent.Decrypted, this.onEventDecrypted);
-        }
+        this.client.off(ClientEvent.Event, this.onEvent);
+        this.client.off(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        this.client.off(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
     }
 
     private onEvent = (ev: MatrixEvent) => {
-        MatrixClientPeg.get().decryptEventIfNeeded(ev);
+        this.client.decryptEventIfNeeded(ev);
         if (ev.isBeingDecrypted() || ev.isDecryptionFailure()) return;
         this.feedEvent(ev);
     };
@@ -443,6 +455,12 @@ export class StopGapWidget extends EventEmitter {
     private onEventDecrypted = (ev: MatrixEvent) => {
         if (ev.isDecryptionFailure()) return;
         this.feedEvent(ev);
+    };
+
+    private onToDeviceEvent = async (ev: MatrixEvent) => {
+        await this.client.decryptEventIfNeeded(ev);
+        if (ev.isDecryptionFailure()) return;
+        await this.messaging.feedToDevice(ev.getEffectiveEvent(), ev.isEncrypted());
     };
 
     private feedEvent(ev: MatrixEvent) {
@@ -465,7 +483,7 @@ export class StopGapWidget extends EventEmitter {
 
             // Timelines are most recent last, so reverse the order and limit ourselves to 100 events
             // to avoid overusing the CPU.
-            const timeline = MatrixClientPeg.get().getRoom(ev.getRoomId()).getLiveTimeline();
+            const timeline = this.client.getRoom(ev.getRoomId()).getLiveTimeline();
             const events = arrayFastClone(timeline.getEvents()).reverse().slice(0, 100);
 
             for (const timelineEvent of events) {

@@ -18,7 +18,7 @@ import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
 import { RoomUpload } from "../../models/RoomUpload";
 
-interface UploadPayload extends ActionPayload {
+export interface UploadPayload extends ActionPayload {
     /**
      * The upload with fields representing the new upload state.
      */

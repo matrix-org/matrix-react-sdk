@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as fbEmitter from "fbemitter";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
@@ -32,10 +31,12 @@ import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import PosthogTrackers from "../../../PosthogTrackers";
 import SettingsStore from "../../../settings/SettingsStore";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { UIComponent } from "../../../settings/UIFeature";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { ITagMap } from "../../../stores/room-list/algorithms/models";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import { RoomViewStore } from "../../../stores/RoomViewStore";
 import {
@@ -77,10 +78,12 @@ interface IState {
     sublists: ITagMap;
     currentRoomId?: string;
     suggestedRooms: ISuggestedRoom[];
+    feature_favourite_messages: boolean;
 }
 
 export const TAG_ORDER: TagID[] = [
     DefaultTagID.Invite,
+    DefaultTagID.SavedItems,
     DefaultTagID.Favourite,
     DefaultTagID.DM,
     DefaultTagID.Untagged,
@@ -198,8 +201,10 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
     });
 
     const showCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
+    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
 
-    let contextMenuContent: JSX.Element;
+    let contextMenuContent: JSX.Element | null = null;
     if (menuDisplayed && activeSpace) {
         const canAddRooms = activeSpace.currentState.maySendStateEvent(EventType.SpaceChild,
             MatrixClientPeg.get().getUserId());
@@ -237,7 +242,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                             tooltip={canAddRooms ? undefined
                                 : _t("You do not have permissions to create new rooms in this space")}
                         />
-                        { SettingsStore.getValue("feature_video_rooms") && (
+                        { videoRoomsEnabled && (
                             <IconizedContextMenuOption
                                 label={_t("New video room")}
                                 iconClassName="mx_RoomList_iconNewVideoRoom"
@@ -245,7 +250,10 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     closeMenu();
-                                    showCreateNewRoom(activeSpace, RoomType.ElementVideo);
+                                    showCreateNewRoom(
+                                        activeSpace,
+                                        elementCallVideoRoomsEnabled ? RoomType.UnstableCall : RoomType.ElementVideo,
+                                    );
                                 }}
                                 disabled={!canAddRooms}
                                 tooltip={canAddRooms ? undefined
@@ -285,7 +293,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                         PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                     }}
                 />
-                { SettingsStore.getValue("feature_video_rooms") && (
+                { videoRoomsEnabled && (
                     <IconizedContextMenuOption
                         label={_t("New video room")}
                         iconClassName="mx_RoomList_iconNewVideoRoom"
@@ -295,7 +303,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                             closeMenu();
                             defaultDispatcher.dispatch({
                                 action: "view_create_room",
-                                type: RoomType.ElementVideo,
+                                type: elementCallVideoRoomsEnabled ? RoomType.UnstableCall : RoomType.ElementVideo,
                             });
                         }}
                     >
@@ -317,7 +325,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
         </IconizedContextMenuOptionList>;
     }
 
-    let contextMenu: JSX.Element;
+    let contextMenu: JSX.Element | null = null;
     if (menuDisplayed) {
         contextMenu = <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
             { contextMenuContent }
@@ -348,6 +356,11 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
     },
     [DefaultTagID.Favourite]: {
         sectionLabel: _td("Favourites"),
+        isInvite: false,
+        defaultHidden: false,
+    },
+    [DefaultTagID.SavedItems]: {
+        sectionLabel: _td("Saved Items"),
         isInvite: false,
         defaultHidden: false,
     },
@@ -390,8 +403,8 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
 
 export default class RoomList extends React.PureComponent<IProps, IState> {
     private dispatcherRef;
-    private roomStoreToken: fbEmitter.EventSubscription;
     private treeRef = createRef<HTMLDivElement>();
+    private favouriteMessageWatcher: string;
 
     static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
@@ -402,22 +415,28 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         this.state = {
             sublists: {},
             suggestedRooms: SpaceStore.instance.suggestedRooms,
+            feature_favourite_messages: SettingsStore.getValue("feature_favourite_messages"),
         };
     }
 
     public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
-        this.roomStoreToken = RoomViewStore.instance.addListener(this.onRoomViewStoreUpdate);
+        RoomViewStore.instance.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         SpaceStore.instance.on(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.updateLists);
+        this.favouriteMessageWatcher =
+            SettingsStore.watchSetting("feature_favourite_messages", null, (...[,,, value]) => {
+                this.setState({ feature_favourite_messages: value });
+            });
         this.updateLists(); // trigger the first update
     }
 
     public componentWillUnmount() {
         SpaceStore.instance.off(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
+        SettingsStore.unwatchSetting(this.favouriteMessageWatcher);
         defaultDispatcher.unregister(this.dispatcherRef);
-        if (this.roomStoreToken) this.roomStoreToken.remove();
+        RoomViewStore.instance.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
 
     private onRoomViewStoreUpdate = () => {
@@ -545,6 +564,28 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             );
         });
     }
+    private renderFavoriteMessagesList(): ReactComponentElement<typeof ExtraTile>[] {
+        const avatar = (
+            <RoomAvatar
+                oobData={{
+                    name: "Favourites",
+                }}
+                width={32}
+                height={32}
+                resizeMethod="crop"
+            />);
+
+        return [
+            <ExtraTile
+                isMinimized={this.props.isMinimized}
+                isSelected={false}
+                displayName="Favourite Messages"
+                avatar={avatar}
+                onClick={() => ""}
+                key="favMessagesTile_key"
+            />,
+        ];
+    }
 
     private renderSublists(): React.ReactElement[] {
         // show a skeleton UI if the user is in no rooms and they are not filtering and have no suggested rooms
@@ -556,6 +597,8 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 let extraTiles = null;
                 if (orderedTagId === DefaultTagID.Suggested) {
                     extraTiles = this.renderSuggestedRooms();
+                } else if (this.state.feature_favourite_messages && orderedTagId === DefaultTagID.SavedItems) {
+                    extraTiles = this.renderFavoriteMessagesList();
                 }
 
                 const aesthetics = TAG_AESTHETICS[orderedTagId];
@@ -582,7 +625,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 ) {
                     forceExpanded = true;
                 }
-
                 // The cost of mounting/unmounting this component offsets the cost
                 // of keeping it in the DOM and hiding it when it is not required
                 return <RoomSublist

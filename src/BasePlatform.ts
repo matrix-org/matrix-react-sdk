@@ -151,7 +151,7 @@ export default abstract class BasePlatform {
      * Return true if platform supports multi-language
      * spell-checking, otherwise false.
      */
-    public supportsMultiLanguageSpellCheck(): boolean {
+    public supportsSpellCheckSettings(): boolean {
         return false;
     }
 
@@ -232,6 +232,14 @@ export default abstract class BasePlatform {
     }
 
     /**
+     * Returns true if the platform requires URL previews in tooltips, otherwise false.
+     * @returns {boolean} whether the platform requires URL previews in tooltips
+     */
+    public needsUrlTooltips(): boolean {
+        return false;
+    }
+
+    /**
      * Returns a promise that resolves to a string representing the current version of the application.
      */
     public abstract getAppVersion(): Promise<string>;
@@ -266,6 +274,12 @@ export default abstract class BasePlatform {
 
     public setLanguage(preferredLangs: string[]) {}
 
+    public setSpellCheckEnabled(enabled: boolean): void {}
+
+    public async getSpellCheckEnabled(): Promise<boolean> {
+        return null;
+    }
+
     public setSpellCheckLanguages(preferredLangs: string[]) {}
 
     public getSpellCheckLanguages(): Promise<string[]> | null {
@@ -278,6 +292,10 @@ export default abstract class BasePlatform {
 
     public supportsDesktopCapturer(): boolean {
         return false;
+    }
+
+    public supportsJitsiScreensharing(): boolean {
+        return true;
     }
 
     public overrideBrowserShortcuts(): boolean {

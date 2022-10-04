@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount } from 'enzyme';
+// eslint-disable-next-line deprecate/import
+import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
     MatrixClient,
@@ -25,18 +26,22 @@ import {
     getBeaconInfoIdentifier,
 } from 'matrix-js-sdk/src/matrix';
 import maplibregl from 'maplibre-gl';
+import { mocked } from 'jest-mock';
 
 import BeaconViewDialog from '../../../../src/components/views/beacon/BeaconViewDialog';
 import {
+    findByAttr,
     findByTestId,
     getMockClientWithEventEmitter,
     makeBeaconEvent,
     makeBeaconInfoEvent,
+    makeRoomWithBeacons,
     makeRoomWithStateEvents,
 } from '../../../test-utils';
 import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
 import { BeaconDisplayStatus } from '../../../../src/components/views/beacon/displayStatus';
+import BeaconListItem from '../../../../src/components/views/beacon/BeaconListItem';
 
 describe('<BeaconViewDialog />', () => {
     // 14.03.2022 16:15
@@ -89,13 +94,19 @@ describe('<BeaconViewDialog />', () => {
     const getComponent = (props = {}) =>
         mount(<BeaconViewDialog {...defaultProps} {...props} />);
 
+    const openSidebar = (component: ReactWrapper) => act(() => {
+        findByTestId(component, 'beacon-view-dialog-open-sidebar').at(0).simulate('click');
+        component.setProps({});
+    });
+
     beforeAll(() => {
         maplibregl.AttributionControl = jest.fn();
     });
 
     beforeEach(() => {
         jest.spyOn(OwnBeaconStore.instance, 'getLiveBeaconIds').mockRestore();
-
+        jest.spyOn(OwnBeaconStore.instance, 'getBeaconById').mockRestore();
+        jest.spyOn(global.Date, 'now').mockReturnValue(now);
         jest.clearAllMocks();
     });
 
@@ -185,7 +196,24 @@ describe('<BeaconViewDialog />', () => {
         expect(mockMap.fitBounds).toHaveBeenCalledTimes(1);
     });
 
-    it('renders a fallback when no live beacons remain', () => {
+    it('renders a fallback when there are no locations', () => {
+        // this is a cornercase, should not be a reachable state in UI anymore
+        const onFinished = jest.fn();
+        const room = setupRoom([defaultEvent]);
+        room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
+        const component = getComponent({ onFinished });
+
+        // map placeholder
+        expect(findByTestId(component, 'beacon-view-dialog-map-fallback')).toMatchSnapshot();
+
+        act(() => {
+            findByTestId(component, 'beacon-view-dialog-fallback-close').at(0).simulate('click');
+        });
+
+        expect(onFinished).toHaveBeenCalled();
+    });
+
+    it('renders map without markers when no live beacons remain', () => {
         const onFinished = jest.fn();
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
@@ -198,8 +226,13 @@ describe('<BeaconViewDialog />', () => {
         const anotherBeaconEvent = makeBeaconInfoEvent(aliceId,
             roomId,
             { isLive: false },
-            '$bob-room1-1',
+            '$alice-room1-2',
         );
+
+        expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 41 });
+        // reset call counts
+        mocked(mockMap.setCenter).mockClear();
+        mocked(mockMap.fitBounds).mockClear();
 
         act(() => {
             // emits RoomStateEvent.BeaconLiveness
@@ -208,14 +241,13 @@ describe('<BeaconViewDialog />', () => {
 
         component.setProps({});
 
-        // map placeholder
-        expect(findByTestId(component, 'beacon-view-dialog-map-fallback')).toMatchSnapshot();
-
-        act(() => {
-            findByTestId(component, 'beacon-view-dialog-fallback-close').at(0).simulate('click');
-        });
-
-        expect(onFinished).toHaveBeenCalled();
+        // no more avatars
+        expect(component.find('MemberAvatar').length).toBeFalsy();
+        // map still rendered
+        expect(component.find('Map').length).toBeTruthy();
+        // map location unchanged
+        expect(mockMap.setCenter).not.toHaveBeenCalled();
+        expect(mockMap.fitBounds).not.toHaveBeenCalled();
     });
 
     describe('sidebar', () => {
@@ -225,10 +257,7 @@ describe('<BeaconViewDialog />', () => {
             beacon.addLocations([location1]);
             const component = getComponent();
 
-            act(() => {
-                findByTestId(component, 'beacon-view-dialog-open-sidebar').at(0).simulate('click');
-                component.setProps({});
-            });
+            openSidebar(component);
 
             expect(component.find('DialogSidebar').length).toBeTruthy();
         });
@@ -240,20 +269,134 @@ describe('<BeaconViewDialog />', () => {
             const component = getComponent();
 
             // open the sidebar
-            act(() => {
-                findByTestId(component, 'beacon-view-dialog-open-sidebar').at(0).simulate('click');
-                component.setProps({});
-            });
+            openSidebar(component);
 
             expect(component.find('DialogSidebar').length).toBeTruthy();
 
             // now close it
             act(() => {
-                findByTestId(component, 'dialog-sidebar-close').at(0).simulate('click');
+                findByAttr('data-testid')(component, 'dialog-sidebar-close').at(0).simulate('click');
                 component.setProps({});
             });
 
             expect(component.find('DialogSidebar').length).toBeFalsy();
+        });
+    });
+
+    describe('focused beacons', () => {
+        const beacon2Event = makeBeaconInfoEvent(bobId,
+            roomId,
+            { isLive: true },
+            '$bob-room1-2',
+        );
+
+        const location2 = makeBeaconEvent(
+            bobId, { beaconInfoId: beacon2Event.getId(), geoUri: 'geo:33,22', timestamp: now + 1 },
+        );
+
+        const fitBoundsOptions = { maxZoom: 15, padding: 100 };
+
+        it('opens map with both beacons in view on first load without initialFocusedBeacon', () => {
+            const [beacon1, beacon2] = makeRoomWithBeacons(
+                roomId, mockClient, [defaultEvent, beacon2Event], [location1, location2],
+            );
+
+            getComponent({ beacons: [beacon1, beacon2] });
+
+            // start centered on mid point between both beacons
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 42, lon: 31.5 });
+            // only called once
+            expect(mockMap.setCenter).toHaveBeenCalledTimes(1);
+            // bounds fit both beacons, only called once
+            expect(mockMap.fitBounds).toHaveBeenCalledWith(new maplibregl.LngLatBounds(
+                [22, 33], [41, 51],
+            ), fitBoundsOptions);
+            expect(mockMap.fitBounds).toHaveBeenCalledTimes(1);
+        });
+
+        it('opens map with both beacons in view on first load with an initially focused beacon', () => {
+            const [beacon1, beacon2] = makeRoomWithBeacons(
+                roomId, mockClient, [defaultEvent, beacon2Event], [location1, location2],
+            );
+
+            getComponent({ beacons: [beacon1, beacon2], initialFocusedBeacon: beacon1 });
+
+            // start centered on initialFocusedBeacon
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 41 });
+            // only called once
+            expect(mockMap.setCenter).toHaveBeenCalledTimes(1);
+            // bounds fit both beacons, only called once
+            expect(mockMap.fitBounds).toHaveBeenCalledWith(new maplibregl.LngLatBounds(
+                [22, 33], [41, 51],
+            ), fitBoundsOptions);
+            expect(mockMap.fitBounds).toHaveBeenCalledTimes(1);
+        });
+
+        it('focuses on beacon location on sidebar list item click', () => {
+            const [beacon1, beacon2] = makeRoomWithBeacons(
+                roomId, mockClient, [defaultEvent, beacon2Event], [location1, location2],
+            );
+
+            const component = getComponent({ beacons: [beacon1, beacon2] });
+
+            // reset call counts on map mocks after initial render
+            jest.clearAllMocks();
+
+            openSidebar(component);
+
+            act(() => {
+                // click on the first beacon in the list
+                component.find(BeaconListItem).at(0).simulate('click');
+            });
+
+            // centered on clicked beacon
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 41 });
+            // only called once
+            expect(mockMap.setCenter).toHaveBeenCalledTimes(1);
+            // bounds fitted just to clicked beacon
+            expect(mockMap.fitBounds).toHaveBeenCalledWith(new maplibregl.LngLatBounds(
+                [41, 51], [41, 51],
+            ), fitBoundsOptions);
+            expect(mockMap.fitBounds).toHaveBeenCalledTimes(1);
+        });
+
+        it('refocuses on same beacon when clicking list item again', () => {
+            // test the map responds to refocusing the same beacon
+            const [beacon1, beacon2] = makeRoomWithBeacons(
+                roomId, mockClient, [defaultEvent, beacon2Event], [location1, location2],
+            );
+
+            const component = getComponent({ beacons: [beacon1, beacon2] });
+
+            // reset call counts on map mocks after initial render
+            jest.clearAllMocks();
+
+            openSidebar(component);
+
+            act(() => {
+                // click on the second beacon in the list
+                component.find(BeaconListItem).at(1).simulate('click');
+            });
+
+            const expectedBounds = new maplibregl.LngLatBounds(
+                [22, 33], [22, 33],
+            );
+
+            // date is mocked but this relies on timestamp, manually mock a tick
+            jest.spyOn(global.Date, 'now').mockReturnValue(now + 1);
+
+            act(() => {
+                // click on the second beacon in the list
+                component.find(BeaconListItem).at(1).simulate('click');
+            });
+
+            // centered on clicked beacon
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 33, lon: 22 });
+            // bounds fitted just to clicked beacon
+            expect(mockMap.fitBounds).toHaveBeenCalledWith(expectedBounds, fitBoundsOptions);
+            // each called once per click
+            expect(mockMap.setCenter).toHaveBeenCalledTimes(2);
+            expect(mockMap.fitBounds).toHaveBeenCalledTimes(2);
         });
     });
 });
