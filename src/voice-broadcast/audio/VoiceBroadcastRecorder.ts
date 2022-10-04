@@ -135,7 +135,6 @@ export class VoiceBroadcastRecorder implements IDestroyable {
 }
 
 export const createVoiceBroadcastRecorder = () => {
-    //const targetChunkLength = SdkConfig.get("voice_broadcast")?.chunk_length || DEFAULTS.voice_broadcast.chunk_length;
-    const targetChunkLength = 10;
+    const targetChunkLength = SdkConfig.get("voice_broadcast")?.chunk_length || DEFAULTS.voice_broadcast.chunk_length;
     return new VoiceBroadcastRecorder(new VoiceRecording(), targetChunkLength);
 };
