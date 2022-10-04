@@ -30,6 +30,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
+import { ReadReceipt } from 'matrix-js-sdk/src/models/read-receipt';
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -51,7 +52,7 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import Spinner from "../views/elements/Spinner";
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import ErrorDialog from '../views/dialogs/ErrorDialog';
-import CallEventGrouper, { buildCallEventGroupers } from "./CallEventGrouper";
+import LegacyCallEventGrouper, { buildLegacyCallEventGroupers } from "./LegacyCallEventGrouper";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
@@ -179,7 +180,7 @@ interface IState {
     // disappearance when switching into the room.
     readMarkerVisible: boolean;
 
-    readMarkerEventId: string;
+    readMarkerEventId: string | null;
 
     backPaginating: boolean;
     forwardPaginating: boolean;
@@ -229,8 +230,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         disableGrouping: false,
     };
 
-    private lastRRSentEventId: string = undefined;
-    private lastRMSentEventId: string = undefined;
+    private lastRRSentEventId: string | null | undefined = undefined;
+    private lastRMSentEventId: string | null | undefined = undefined;
 
     private readonly messagePanel = createRef<MessagePanel>();
     private readonly dispatcherRef: string;
@@ -239,8 +240,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private readReceiptActivityTimer: Timer;
     private readMarkerActivityTimer: Timer;
 
-    // A map of <callId, CallEventGrouper>
-    private callEventGroupers = new Map<string, CallEventGrouper>();
+    // A map of <callId, LegacyCallEventGrouper>
+    private callEventGroupers = new Map<string, LegacyCallEventGrouper>();
 
     constructor(props, context) {
         super(props, context);
@@ -250,7 +251,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         // XXX: we could track RM per TimelineSet rather than per Room.
         // but for now we just do it per room for simplicity.
-        let initialReadMarker = null;
+        let initialReadMarker: string | null = null;
         if (this.props.manageReadMarkers) {
             const readmarker = this.props.timelineSet.room.getAccountData('m.fully_read');
             if (readmarker) {
@@ -384,24 +385,28 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * every message change so instead we only log it out when asked.
      */
     private onDumpDebugLogs = (): void => {
-        const room = this.props.timelineSet.room;
+        const room = this.props.timelineSet?.room;
         // Get a list of the event IDs used in this TimelinePanel.
         // This includes state and hidden events which we don't render
-        const eventIdList = this.state.events.map((ev) => ev.getId());
+        const eventIdList = this.state?.events?.map((ev) => ev.getId());
 
         // Get the list of actually rendered events seen in the DOM.
         // This is useful to know for sure what's being shown on screen.
         // And we can suss out any corrupted React `key` problems.
         let renderedEventIds: string[];
-        const messagePanel = this.messagePanel.current;
-        if (messagePanel) {
-            const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
-            if (messagePanelNode) {
-                const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
-                renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
-                    return renderedEvent.getAttribute('data-event-id');
-                });
+        try {
+            const messagePanel = this.messagePanel.current;
+            if (messagePanel) {
+                const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
+                if (messagePanelNode) {
+                    const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
+                    renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
+                        return renderedEvent.getAttribute('data-event-id');
+                    });
+                }
             }
+        } catch (err) {
+            logger.error(`onDumpDebugLogs: Failed to get the actual event ID's in the DOM`, err);
         }
 
         // Get the list of events and threads for the room as seen by the
@@ -413,26 +418,44 @@ class TimelinePanel extends React.Component<IProps, IState> {
             const timelineSets = room.getTimelineSets();
             const threadsTimelineSets = room.threadsTimelineSets;
 
-            // Serialize all of the timelineSets and timelines in each set to their event IDs
-            serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
-            serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
+            try {
+                // Serialize all of the timelineSets and timelines in each set to their event IDs
+                serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
+                serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
+            } catch (err) {
+                logger.error(`onDumpDebugLogs: Failed to serialize event IDs from timelinesets`, err);
+            }
 
-            // Serialize all threads in the room from theadId -> event IDs in the thread
-            room.getThreads().forEach((thread) => {
-                serializedThreadsMap[thread.id] = {
-                    events: thread.events.map(ev => ev.getId()),
-                    numTimelines: thread.timelineSet.getTimelines().length,
-                    liveTimeline: thread.timelineSet.getLiveTimeline().getEvents().length,
-                    prevTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Backward)
-                        ?.getEvents().length,
-                    nextTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Forward)
-                        ?.getEvents().length,
-                };
-            });
+            try {
+                // Serialize all threads in the room from theadId -> event IDs in the thread
+                room.getThreads().forEach((thread) => {
+                    serializedThreadsMap[thread.id] = {
+                        events: thread.events.map(ev => ev.getId()),
+                        numTimelines: thread.timelineSet.getTimelines().length,
+                        liveTimeline: thread.timelineSet.getLiveTimeline().getEvents().length,
+                        prevTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Backward)
+                            ?.getEvents().length,
+                        nextTimeline: thread.timelineSet.getLiveTimeline().getNeighbouringTimeline(Direction.Forward)
+                            ?.getEvents().length,
+                    };
+                });
+            } catch (err) {
+                logger.error(`onDumpDebugLogs: Failed to serialize event IDs from the threads`, err);
+            }
         }
 
-        const timelineWindowEventIds = this.timelineWindow.getEvents().map(ev => ev.getId());
-        const pendingEvents = this.props.timelineSet.getPendingEvents().map(ev => ev.getId());
+        let timelineWindowEventIds: string[];
+        try {
+            timelineWindowEventIds = this.timelineWindow.getEvents().map(ev => ev.getId());
+        } catch (err) {
+            logger.error(`onDumpDebugLogs: Failed to get event IDs from the timelineWindow`, err);
+        }
+        let pendingEventIds: string[];
+        try {
+            pendingEventIds = this.props.timelineSet.getPendingEvents().map(ev => ev.getId());
+        } catch (err) {
+            logger.error(`onDumpDebugLogs: Failed to get pending event IDs`, err);
+        }
 
         logger.debug(
             `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${room?.roomId}\n` +
@@ -444,7 +467,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             `${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
             `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}\n` +
             `\ttimelineWindowEventIds(${timelineWindowEventIds.length})=${JSON.stringify(timelineWindowEventIds)}\n` +
-            `\tpendingEvents(${pendingEvents.length})=${JSON.stringify(pendingEvents)}`,
+            `\tpendingEventIds(${pendingEventIds.length})=${JSON.stringify(pendingEventIds)}`,
         );
     };
 
@@ -470,7 +493,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.timelineWindow.unpaginate(count, backwards);
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
-            this.buildCallEventGroupers(events);
+            this.buildLegacyCallEventGroupers(events);
             const newState: Partial<IState> = {
                 events,
                 liveEvents,
@@ -532,7 +555,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             debuglog("paginate complete backwards:"+backwards+"; success:"+r);
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
-            this.buildCallEventGroupers(events);
+            this.buildLegacyCallEventGroupers(events);
             const newState: Partial<IState> = {
                 [paginatingKey]: false,
                 [canPaginateKey]: r,
@@ -663,7 +686,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) { return; }
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
-            this.buildCallEventGroupers(events);
+            this.buildLegacyCallEventGroupers(events);
             const lastLiveEvent = liveEvents[liveEvents.length - 1];
 
             const updatedState: Partial<IState> = {
@@ -832,7 +855,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // TODO: We should restrict this to only events in our timeline,
         // but possibly the event tile itself should just update when this
         // happens to save us re-rendering the whole timeline.
-        this.buildCallEventGroupers(this.state.events);
+        this.buildLegacyCallEventGroupers(this.state.events);
         this.forceUpdate();
     };
 
@@ -920,13 +943,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (lastReadEventIndex === null) {
             shouldSendRR = false;
         }
-        let lastReadEvent = this.state.events[lastReadEventIndex];
+        let lastReadEvent: MatrixEvent | null = this.state.events[lastReadEventIndex ?? 0];
         shouldSendRR = shouldSendRR &&
             // Only send a RR if the last read event is ahead in the timeline relative to
             // the current RR event.
             lastReadEventIndex > currentRREventIndex &&
             // Only send a RR if the last RR set != the one we would send
-            this.lastRRSentEventId != lastReadEvent.getId();
+            this.lastRRSentEventId !== lastReadEvent?.getId();
 
         // Only send a RM if the last RM sent != the one we would send
         const shouldSendRM =
@@ -936,56 +959,74 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // same one at the server repeatedly
         if (shouldSendRR || shouldSendRM) {
             if (shouldSendRR) {
-                this.lastRRSentEventId = lastReadEvent.getId();
+                this.lastRRSentEventId = lastReadEvent?.getId();
             } else {
                 lastReadEvent = null;
             }
             this.lastRMSentEventId = this.state.readMarkerEventId;
 
             const roomId = this.props.timelineSet.room.roomId;
-            const hiddenRR = SettingsStore.getValue("feature_hidden_read_receipts", roomId);
+            const sendRRs = SettingsStore.getValue("sendReadReceipts", roomId);
 
-            debuglog('Sending Read Markers for ',
-                this.props.timelineSet.room.roomId,
-                'rm', this.state.readMarkerEventId,
-                lastReadEvent ? 'rr ' + lastReadEvent.getId() : '',
-                ' hidden:' + hiddenRR,
+            debuglog(
+                `Sending Read Markers for ${this.props.timelineSet.room.roomId}: `,
+                `rm=${this.state.readMarkerEventId} `,
+                `rr=${sendRRs ? lastReadEvent?.getId() : null} `,
+                `prr=${lastReadEvent?.getId()}`,
+
             );
-            MatrixClientPeg.get().setRoomReadMarkers(
-                roomId,
-                this.state.readMarkerEventId,
-                hiddenRR ? null : lastReadEvent, // Could be null, in which case no RR is sent
-                lastReadEvent, // Could be null, in which case no private RR is sent
-            ).catch((e) => {
-                // /read_markers API is not implemented on this HS, fallback to just RR
-                if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
-                    return MatrixClientPeg.get().sendReadReceipt(
-                        lastReadEvent,
-                        hiddenRR ? ReceiptType.ReadPrivate : ReceiptType.Read,
-                    ).catch((e) => {
-                        logger.error(e);
-                        this.lastRRSentEventId = undefined;
-                    });
-                } else {
-                    logger.error(e);
-                }
-                // it failed, so allow retries next time the user is active
-                this.lastRRSentEventId = undefined;
-                this.lastRMSentEventId = undefined;
-            });
 
-            // do a quick-reset of our unreadNotificationCount to avoid having
-            // to wait from the remote echo from the homeserver.
-            // we only do this if we're right at the end, because we're just assuming
-            // that sending an RR for the latest message will set our notif counter
-            // to zero: it may not do this if we send an RR for somewhere before the end.
-            if (this.isAtEndOfLiveTimeline()) {
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
-                dis.dispatch({
-                    action: 'on_room_read',
-                    roomId: this.props.timelineSet.room.roomId,
+            if (this.props.timelineSet.thread && sendRRs && lastReadEvent) {
+                // There's no support for fully read markers on threads
+                // as defined by MSC3771
+                cli.sendReadReceipt(
+                    lastReadEvent,
+                    sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
+                );
+            } else {
+                cli.setRoomReadMarkers(
+                    roomId,
+                    this.state.readMarkerEventId ?? "",
+                    sendRRs ? (lastReadEvent ?? undefined) : undefined, // Public read receipt (could be null)
+                    lastReadEvent ?? undefined, // Private read receipt (could be null)
+                ).catch(async (e) => {
+                    // /read_markers API is not implemented on this HS, fallback to just RR
+                    if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
+                        if (
+                            !sendRRs
+                            && !(await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable"))
+                            && !(await cli.isVersionSupported("v1.4"))
+                        ) return;
+                        try {
+                            return await cli.sendReadReceipt(
+                                lastReadEvent,
+                                sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
+                            );
+                        } catch (error) {
+                            logger.error(e);
+                            this.lastRRSentEventId = undefined;
+                        }
+                    } else {
+                        logger.error(e);
+                    }
+                    // it failed, so allow retries next time the user is active
+                    this.lastRRSentEventId = undefined;
+                    this.lastRMSentEventId = undefined;
                 });
+
+                // do a quick-reset of our unreadNotificationCount to avoid having
+                // to wait from the remote echo from the homeserver.
+                // we only do this if we're right at the end, because we're just assuming
+                // that sending an RR for the latest message will set our notif counter
+                // to zero: it may not do this if we send an RR for somewhere before the end.
+                if (this.isAtEndOfLiveTimeline()) {
+                    this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
+                    this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
+                    dis.dispatch({
+                        action: 'on_room_read',
+                        roomId: this.props.timelineSet.room.roomId,
+                    });
+                }
             }
         }
     };
@@ -1119,7 +1160,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const rmId = this.getCurrentReadReceipt();
 
         // Look up the timestamp if we can find it
-        const tl = this.props.timelineSet.getTimelineForEvent(rmId);
+        const tl = this.props.timelineSet.getTimelineForEvent(rmId ?? "");
         let rmTs: number;
         if (tl) {
             const event = tl.getEvents().find((e) => { return e.getId() == rmId; });
@@ -1376,7 +1417,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             onLoaded();
         } else {
             const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
-            this.buildCallEventGroupers();
+            this.buildLegacyCallEventGroupers();
             this.setState({
                 events: [],
                 liveEvents: [],
@@ -1397,7 +1438,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (this.unmounted) return;
 
         const state = this.getEvents();
-        this.buildCallEventGroupers(state.events);
+        this.buildLegacyCallEventGroupers(state.events);
         this.setState(state);
     }
 
@@ -1524,7 +1565,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         return 0;
     }
 
-    private indexForEventId(evId: string): number | null {
+    private indexForEventId(evId: string | null): number | null {
+        if (evId === null) { return null; }
         /* Threads do not have server side support for read receipts and the concept
         is very tied to the main room timeline, we are forcing the timeline to
         send read receipts for threaded events */
@@ -1553,8 +1595,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const isNodeInView = (node) => {
             if (node) {
                 const boundingRect = node.getBoundingClientRect();
-                if ((allowPartial && boundingRect.top < wrapperRect.bottom) ||
-                    (!allowPartial && boundingRect.bottom < wrapperRect.bottom)) {
+                if (
+                    (allowPartial && boundingRect.top <= wrapperRect.bottom) ||
+                    (!allowPartial && boundingRect.bottom <= wrapperRect.bottom)
+                ) {
                     return true;
                 }
             }
@@ -1623,7 +1667,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      *                                    SDK.
      * @return {String} the event ID
      */
-    private getCurrentReadReceipt(ignoreSynthesized = false): string {
+    private getCurrentReadReceipt(ignoreSynthesized = false): string | null {
         const client = MatrixClientPeg.get();
         // the client can be null on logout
         if (client == null) {
@@ -1631,21 +1675,23 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         const myUserId = client.credentials.userId;
-        return this.props.timelineSet.room.getEventReadUpTo(myUserId, ignoreSynthesized);
+        const receiptStore: ReadReceipt<any, any> =
+            this.props.timelineSet.thread ?? this.props.timelineSet.room;
+        return receiptStore?.getEventReadUpTo(myUserId, ignoreSynthesized);
     }
 
-    private setReadMarker(eventId: string, eventTs: number, inhibitSetState = false): void {
-        const roomId = this.props.timelineSet.room.roomId;
+    private setReadMarker(eventId: string | null, eventTs: number, inhibitSetState = false): void {
+        const roomId = this.props.timelineSet.room?.roomId;
 
         // don't update the state (and cause a re-render) if there is
         // no change to the RM.
-        if (eventId === this.state.readMarkerEventId) {
+        if (eventId === this.state.readMarkerEventId || eventId === null) {
             return;
         }
 
         // in order to later figure out if the read marker is
         // above or below the visible timeline, we stash the timestamp.
-        TimelinePanel.roomReadMarkerTsMap[roomId] = eventTs;
+        TimelinePanel.roomReadMarkerTsMap[roomId ?? ""] = eventTs;
 
         if (inhibitSetState) {
             return;
@@ -1676,8 +1722,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         eventType: EventType | string,
     ) => this.props.timelineSet.relations?.getChildEventsForEvent(eventId, relationType, eventType);
 
-    private buildCallEventGroupers(events?: MatrixEvent[]): void {
-        this.callEventGroupers = buildCallEventGroupers(this.callEventGroupers, events);
+    private buildLegacyCallEventGroupers(events?: MatrixEvent[]): void {
+        this.callEventGroupers = buildLegacyCallEventGroupers(this.callEventGroupers, events);
     }
 
     render() {

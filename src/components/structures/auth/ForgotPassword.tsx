@@ -24,7 +24,7 @@ import { createClient } from "matrix-js-sdk/src/matrix";
 import { _t, _td } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
-import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
+import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import AuthPage from "../../views/auth/AuthPage";
 import ServerPicker from "../../views/elements/ServerPicker";
 import EmailField from "../../views/auth/EmailField";
@@ -39,6 +39,7 @@ import AuthBody from "../../views/auth/AuthBody";
 import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import StyledCheckbox from '../../views/elements/StyledCheckbox';
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 
 enum Phase {
     // Show the forgot password inputs
@@ -368,7 +369,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     value={_t('Send Reset Email')}
                 />
             </form>
-            <AccessibleButton kind='link_inline' className="mx_AuthBody_changeFlow" onClick={this.onLoginClick}>
+            <AccessibleButton kind='link' className="mx_AuthBody_changeFlow" onClick={this.onLoginClick}>
                 { _t('Sign in instead') }
             </AccessibleButton>
         </div>;
@@ -436,7 +437,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             <AuthPage>
                 <AuthHeader />
                 <AuthBody>
-                    <h2> { _t('Set a new password') } </h2>
+                    <h1> { _t('Set a new password') } </h1>
                     { resetPasswordJsx }
                 </AuthBody>
             </AuthPage>

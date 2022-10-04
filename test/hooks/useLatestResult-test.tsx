@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 import { sleep } from "matrix-js-sdk/src/utils";
 import React, { useEffect, useState } from "react";
@@ -39,28 +40,28 @@ function LatestResultsComponent({ query, doRequest }) {
 describe("useLatestResult", () => {
     it("should return results", async () => {
         const doRequest = async (query) => {
-            await sleep(20);
+            await sleep(180);
             return query;
         };
 
         const wrapper = mount(<LatestResultsComponent query={0} doRequest={doRequest} />);
         await act(async () => {
-            await sleep(25);
+            await sleep(100);
         });
-        expect(wrapper.text()).toContain("0");
+        expect(wrapper.text()).toEqual("0");
         wrapper.setProps({ doRequest, query: 1 });
         await act(async () => {
-            await sleep(15);
+            await sleep(70);
         });
         wrapper.setProps({ doRequest, query: 2 });
         await act(async () => {
-            await sleep(15);
+            await sleep(70);
         });
-        expect(wrapper.text()).toContain("0");
+        expect(wrapper.text()).toEqual("0");
         await act(async () => {
-            await sleep(15);
+            await sleep(120);
         });
-        expect(wrapper.text()).toContain("2");
+        expect(wrapper.text()).toEqual("2");
     });
 
     it("should prevent out-of-order results", async () => {
@@ -73,7 +74,7 @@ describe("useLatestResult", () => {
         await act(async () => {
             await sleep(5);
         });
-        expect(wrapper.text()).toContain("0");
+        expect(wrapper.text()).toEqual("0");
         wrapper.setProps({ doRequest, query: 50 });
         await act(async () => {
             await sleep(5);
@@ -82,10 +83,10 @@ describe("useLatestResult", () => {
         await act(async () => {
             await sleep(5);
         });
-        expect(wrapper.text()).toContain("1");
+        expect(wrapper.text()).toEqual("1");
         await act(async () => {
             await sleep(50);
         });
-        expect(wrapper.text()).toContain("1");
+        expect(wrapper.text()).toEqual("1");
     });
 });

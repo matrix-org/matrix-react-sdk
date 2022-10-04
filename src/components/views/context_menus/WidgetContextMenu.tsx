@@ -85,16 +85,6 @@ const WidgetContextMenu: React.FC<IProps> = ({
     const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
     const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
 
-    let unpinButton;
-    if (showUnpin && widgetIndex >= 0) {
-        const onUnpinClick = () => {
-            WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right);
-            onFinished();
-        };
-
-        unpinButton = <IconizedContextMenuOption onClick={onUnpinClick} label={_t("Unpin")} />;
-    }
-
     let editButton;
     if (canModify && WidgetUtils.isManagedByManager(app)) {
         const _onEditClick = () => {
@@ -156,10 +146,9 @@ const WidgetContextMenu: React.FC<IProps> = ({
         />;
     }
 
-    let isAllowedWidget = SettingsStore.getValue("allowedWidgets", roomId)[app.eventId];
-    if (isAllowedWidget === undefined) {
-        isAllowedWidget = app.creatorUserId === cli.getUserId();
-    }
+    const isAllowedWidget =
+        (app.eventId !== undefined && (SettingsStore.getValue("allowedWidgets", roomId)[app.eventId] ?? false))
+        || app.creatorUserId === cli.getUserId();
 
     const isLocalWidget = WidgetType.JITSI.matches(app.type);
     let revokeButton;
@@ -167,7 +156,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
         const onRevokeClick = () => {
             logger.info("Revoking permission for widget to load: " + app.eventId);
             const current = SettingsStore.getValue("allowedWidgets", roomId);
-            current[app.eventId] = false;
+            if (app.eventId !== undefined) current[app.eventId] = false;
             const level = SettingsStore.firstSupportedLevel("allowedWidgets");
             SettingsStore.setValue("allowedWidgets", roomId, level, current).catch(err => {
                 logger.error(err);
@@ -208,7 +197,6 @@ const WidgetContextMenu: React.FC<IProps> = ({
             { snapshotButton }
             { moveLeftButton }
             { moveRightButton }
-            { unpinButton }
         </IconizedContextMenuOptionList>
     </IconizedContextMenu>;
 };

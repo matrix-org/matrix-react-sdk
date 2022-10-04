@@ -17,8 +17,10 @@ limitations under the License.
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { ISendEventResponse, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
+// eslint-disable-next-line deprecate/import
 import { mount } from 'enzyme';
+import { mocked } from "jest-mock";
 
 import SendMessageComposer, {
     createMessageContent,
@@ -37,6 +39,12 @@ import { Layout } from '../../../../src/settings/enums/Layout';
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { mockPlatformPeg } from "../../../test-utils/platform";
+import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
+import { addTextToComposer } from "../../../test-utils/composer";
+
+jest.mock("../../../../src/utils/local-room", () => ({
+    doMaybeLocalRoomAction: jest.fn(),
+}));
 
 const WrapWithProviders: React.FC<{
     roomContext: IRoomState;
@@ -64,6 +72,7 @@ describe('<SendMessageComposer/>', () => {
         statusBarVisible: false,
         canReact: false,
         canSendMessages: false,
+        canSendVoiceBroadcasts: false,
         layout: Layout.Group,
         lowBandwidth: false,
         alwaysShowTimestamps: false,
@@ -180,20 +189,6 @@ describe('<SendMessageComposer/>', () => {
             spyDispatcher.mockReset();
         });
 
-        const addTextToComposer = (wrapper, text) => act(() => {
-            // couldn't get input event on contenteditable to work
-            // paste works without illegal private method access
-            const pasteEvent = {
-                clipboardData: {
-                    types: [],
-                    files: [],
-                    getData: type => type === "text/plain" ? text : undefined,
-                },
-            };
-            wrapper.find('[role="textbox"]').simulate('paste', pasteEvent);
-            wrapper.update();
-        });
-
         const defaultProps = {
             room: mockRoom,
             toggleStickerPickerOpen: jest.fn(),
@@ -305,6 +300,34 @@ describe('<SendMessageComposer/>', () => {
             // @ts-ignore
             const key = instance.editorStateKey;
             expect(key).toEqual('mx_cider_state_myfakeroom_myFakeThreadId');
+        });
+
+        it("correctly sends a message", () => {
+            mocked(doMaybeLocalRoomAction).mockImplementation((
+                roomId: string,
+                fn: (actualRoomId: string) => Promise<ISendEventResponse>,
+                _client?: MatrixClient,
+            ) => {
+                return fn(roomId);
+            });
+
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
+            const wrapper = getComponent();
+
+            addTextToComposer(wrapper, "test message");
+            act(() => {
+                wrapper.find(".mx_SendMessageComposer").simulate("keydown", { key: "Enter" });
+                wrapper.update();
+            });
+
+            expect(mockClient.sendMessage).toHaveBeenCalledWith(
+                "myfakeroom",
+                null,
+                {
+                    "body": "test message",
+                    "msgtype": MsgType.Text,
+                },
+            );
         });
     });
 

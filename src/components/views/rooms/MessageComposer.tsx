@@ -22,7 +22,6 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Optional } from "matrix-events-sdk";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
-import { CSSTransition } from 'react-transition-group';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -38,7 +37,7 @@ import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
-import { RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
+import { RecordingState } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { E2EStatus } from '../../../utils/ShieldUtils';
@@ -52,14 +51,19 @@ import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdat
 import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { Icon as InfoIcon } from "../../../../res/img/element-icons/room/room-summary.svg";
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { Features } from '../../../settings/Settings';
+import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
+import {
+    startNewVoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStore,
+} from '../../../voice-broadcast';
 
 let instanceCount = 0;
 
 interface ISendButtonProps {
     onClick: (ev: ButtonEvent) => void;
     title?: string; // defaults to something generic
-    "aria-hidden"?: boolean;
 }
 
 function SendButton(props: ISendButtonProps) {
@@ -68,7 +72,6 @@ function SendButton(props: ISendButtonProps) {
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
             title={props.title ?? _t('Send message')}
-            aria-hidden={props['aria-hidden'] ?? false}
         />
     );
 }
@@ -81,6 +84,7 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
+    showVoiceBroadcastButton?: boolean;
 }
 
 interface IState {
@@ -92,22 +96,24 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+    showVoiceBroadcastButton: boolean;
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
-    private _voiceRecording: Optional<VoiceRecording>;
+    private _voiceRecording: Optional<VoiceMessageRecording>;
 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
         compact: false,
+        showVoiceBroadcastButton: false,
     };
 
     public constructor(props: IProps) {
@@ -117,24 +123,26 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.state = {
             isComposerEmpty: true,
             haveRecording: false,
-            recordingTimeLeftSeconds: null, // when set to a number, shows a toast
+            recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
+            showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
+        SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
     }
 
-    private get voiceRecording(): Optional<VoiceRecording> {
+    private get voiceRecording(): Optional<VoiceMessageRecording> {
         return this._voiceRecording;
     }
 
-    private set voiceRecording(rec: Optional<VoiceRecording>) {
+    private set voiceRecording(rec: Optional<VoiceMessageRecording>) {
         if (this._voiceRecording) {
             this._voiceRecording.off(RecordingState.Started, this.onRecordingStarted);
             this._voiceRecording.off(RecordingState.EndingSoon, this.onRecordingEndingSoon);
@@ -156,7 +164,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.waitForOwnMember();
-        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
+        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current!);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
         this.updateRecordingState(); // grab any cached recordings
     }
@@ -202,13 +210,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         }
                         break;
                     }
+                    case Features.VoiceBroadcast: {
+                        if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
+                            this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
+                        }
+                        break;
+                    }
                 }
             }
         }
     };
 
     private waitForOwnMember() {
-        // if we have the member already, do that
+        // If we have the member already, do that
         const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
@@ -245,6 +259,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
+
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -267,15 +282,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             } else if (replyingToThread) {
                 return _t('Reply to thread…');
             } else if (this.props.e2eStatus) {
-                return _t('Send encrypted reply…');
+                return _t('Send an encrypted reply…');
             } else {
-                return _t('Send reply…');
+                return _t('Send a reply…');
             }
         } else {
             if (this.props.e2eStatus) {
-                return _t('Send encrypted message…');
+                return _t('Send an encrypted message…');
             } else {
-                return _t('Send message…');
+                return _t('Send a message…');
             }
         }
     };
@@ -311,7 +326,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private updateRecordingState() {
-        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         if (this.voiceRecording) {
             // If the recording has already started, it's probably a cached one.
             if (this.voiceRecording.hasRecording && !this.voiceRecording.isRecording) {
@@ -326,7 +342,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onRecordingStarted = () => {
         // update the recording instance, just in case
-        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         this.setState({
             haveRecording: !!this.voiceRecording,
         });
@@ -354,16 +371,26 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
+    private get showStickersButton(): boolean {
+        return this.state.showStickersButton && !isLocalRoom(this.props.room);
+    }
+
+    private get showVoiceBroadcastButton(): boolean {
+        return this.props.showVoiceBroadcastButton && this.state.showVoiceBroadcastButton;
+    }
+
     public render() {
-        const controls = [];
+        const controls = [
+            this.props.e2eStatus ?
+                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
+                null,
+        ];
 
         let menuPosition: AboveLeftOf | undefined;
         if (this.ref.current) {
             const contentRect = this.ref.current.getBoundingClientRect();
             menuPosition = aboveLeftOf(contentRect);
         }
-
-        const roomReplaced = !!this.context.tombstone;
 
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
         if (canSendMessages) {
@@ -381,23 +408,37 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     toggleStickerPickerOpen={this.toggleStickerPickerOpen}
                 />,
             );
-        } else if (roomReplaced) {
+
+            controls.push(<VoiceRecordComposerTile
+                key="controls_voice_record"
+                ref={this.voiceRecordingButton}
+                room={this.props.room}
+                permalinkCreator={this.props.permalinkCreator}
+                relation={this.props.relation}
+                replyToEvent={this.props.replyToEvent} />);
+        } else if (this.context.tombstone) {
             const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
 
-            controls.push(<p key="room_replaced">
-                <InfoIcon width={24} />
-                &nbsp;
-                { _t("This room has been replaced and is no longer active.") }
-                &nbsp;
-                { replacementRoomId && (
-                    <a href={makeRoomPermalink(replacementRoomId)}
-                        className="mx_linkButton"
-                        onClick={this.onTombstoneClick}
-                    >
-                        { _t("The conversation continues here.") }
-                    </a>
-                ) }
-            </p>);
+            const continuesLink = replacementRoomId ? (
+                <a href={makeRoomPermalink(replacementRoomId)}
+                    className="mx_MessageComposer_roomReplaced_link"
+                    onClick={this.onTombstoneClick}
+                >
+                    { _t("The conversation continues here.") }
+                </a>
+            ) : '';
+
+            controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
+                <div className="mx_MessageComposer_replaced_valign">
+                    <img className="mx_MessageComposer_roomReplaced_icon"
+                        src={require("../../../../res/img/room_replaced.svg").default}
+                    />
+                    <span className="mx_MessageComposer_roomReplaced_header">
+                        { _t("This room has been replaced and is no longer active.") }
+                    </span><br />
+                    { continuesLink }
+                </div>
+            </div>);
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
@@ -407,8 +448,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         let recordingTooltip;
-        const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
-        if (secondsLeft) {
+        if (this.state.recordingTimeLeftSeconds) {
+            const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = <Tooltip
                 label={_t("%(seconds)ss left", { seconds: secondsLeft })}
                 alignment={Alignment.Top}
@@ -432,15 +473,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
 
-        if (this.props.e2eStatus) {
-            controls.push(
-                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" />,
-            );
-        }
-
         const classes = classNames({
             "mx_MessageComposer": true,
-            "mx_GroupLayout": true,
             "mx_MessageComposer--compact": this.props.compact,
             "mx_MessageComposer_e2eStatus": this.props.e2eStatus != undefined,
         });
@@ -452,17 +486,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     <ReplyPreview
                         replyToEvent={this.props.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator} />
-                    <div
-                        className="mx_MessageComposer_row"
-                        aria-disabled={!canSendMessages && !roomReplaced}
-                        data-notice={roomReplaced}>
+                    <div className="mx_MessageComposer_row">
                         { controls }
-                    </div>
-                    <div className="mx_MessageComposer_controls">
-                        { canSendMessages && <VoiceRecordComposerTile
-                            key="controls_voice_record"
-                            ref={this.voiceRecordingButton}
-                            room={this.props.room} /> }
                         { canSendMessages && <MessageComposerButtons
                             addEmoji={this.addEmoji}
                             haveRecording={this.state.haveRecording}
@@ -479,23 +504,25 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             setStickerPickerOpen={this.setStickerPickerOpen}
                             showLocationButton={!window.electron}
                             showPollsButton={this.state.showPollsButton}
-                            showStickersButton={this.state.showStickersButton}
+                            showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
+                            showVoiceBroadcastButton={this.showVoiceBroadcastButton}
+                            onStartVoiceBroadcastClick={() => {
+                                startNewVoiceBroadcastRecording(
+                                    this.props.room.roomId,
+                                    MatrixClientPeg.get(),
+                                    VoiceBroadcastRecordingsStore.instance(),
+                                );
+                                this.toggleButtonMenu();
+                            }}
                         /> }
-                        <CSSTransition
-                            in={showSendButton}
-                            classNames="mx_MessageComposer_sendMessageWrapper"
-                            addEndListener={() => {}}
-                        >
-                            <div className='mx_MessageComposer_sendMessageWrapper'>
-                                <SendButton
-                                    key="controls_send"
-                                    onClick={this.sendMessage}
-                                    title={this.state.haveRecording ? _t("Send voice message") : undefined}
-                                    aria-hidden={!showSendButton}
-                                />
-                            </div>
-                        </CSSTransition>
+                        { showSendButton && (
+                            <SendButton
+                                key="controls_send"
+                                onClick={this.sendMessage}
+                                title={this.state.haveRecording ? _t("Send voice message") : undefined}
+                            />
+                        ) }
                     </div>
                 </div>
             </div>

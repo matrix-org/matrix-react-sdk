@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { EventSubscription } from "fbemitter";
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
 import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
-import classNames from 'classnames';
 
 import BaseCard from "./BaseCard";
 import ResizeNotifier from '../../../utils/ResizeNotifier';
@@ -43,6 +41,7 @@ import JumpToBottomButton from '../rooms/JumpToBottomButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import Measured from '../elements/Measured';
 import Heading from '../typography/Heading';
+import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 
 interface IProps {
     room: Room;
@@ -78,7 +77,6 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     private layoutWatcherRef: string;
     private timelinePanel = React.createRef<TimelinePanel>();
     private card = React.createRef<HTMLDivElement>();
-    private roomStoreToken: EventSubscription;
     private readReceiptsSettingWatcher: string;
 
     constructor(props: IProps) {
@@ -93,7 +91,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        this.roomStoreToken = RoomViewStore.instance.addListener(this.onRoomViewStoreUpdate);
+        RoomViewStore.instance.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction);
         this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[,,, value]) =>
             this.setState({ showReadReceipts: value as boolean }),
@@ -104,9 +102,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        // Remove RoomStore listener
-
-        this.roomStoreToken?.remove();
+        RoomViewStore.instance.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
         if (this.readReceiptsSettingWatcher) {
             SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
@@ -203,11 +199,6 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             ? this.state.initialEventId
             : null;
 
-        const messagePanelClassNames = classNames({
-            "mx_RoomView_messagePanel": true,
-            "mx_GroupLayout": this.state.layout === Layout.Group,
-        });
-
         let jumpToBottom;
         if (!this.state.atEndOfLiveTimeline) {
             jumpToBottom = (<JumpToBottomButton
@@ -254,7 +245,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                             hideThreadedMessages={false}
                             hidden={false}
                             showReactions={true}
-                            className={messagePanelClassNames}
+                            className="mx_RoomView_messagePanel"
                             permalinkCreator={this.props.permalinkCreator}
                             membersLoaded={true}
                             editState={this.state.editState}

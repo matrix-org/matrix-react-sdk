@@ -16,45 +16,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from "react";
-import { ComponentType, createRef, ReactComponentElement } from "react";
-import { normalize } from "matrix-js-sdk/src/utils";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from 'classnames';
+import { Dispatcher } from "flux";
 import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
-import { Dispatcher } from "flux";
+import * as React from "react";
+import { ComponentType, createRef, ReactComponentElement } from "react";
 
+import { polyfillTouchEvent } from "../../../@types/polyfill";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { RovingAccessibleButton, RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
+import { Action } from "../../../dispatcher/actions";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { ActionPayload } from "../../../dispatcher/payloads";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../../views/elements/AccessibleButton";
-import RoomTile from "./RoomTile";
+import { ListNotificationState } from "../../../stores/notifications/ListNotificationState";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorithms/models";
 import { ListLayout } from "../../../stores/room-list/ListLayout";
+import { DefaultTagID, TagID } from "../../../stores/room-list/models";
+import RoomListLayoutStore from "../../../stores/room-list/RoomListLayoutStore";
+import RoomListStore, { LISTS_UPDATE_EVENT, LISTS_LOADING_EVENT } from "../../../stores/room-list/RoomListStore";
+import { arrayFastClone, arrayHasOrderChange } from "../../../utils/arrays";
+import { objectExcluding, objectHasDiff } from "../../../utils/objects";
+import ResizeNotifier from "../../../utils/ResizeNotifier";
 import ContextMenu, {
     ChevronFace,
     ContextMenuTooltipButton,
     StyledMenuItemCheckbox,
     StyledMenuItemRadio,
 } from "../../structures/ContextMenu";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
-import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorithms/models";
-import { DefaultTagID, TagID } from "../../../stores/room-list/models";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import NotificationBadge from "./NotificationBadge";
+import AccessibleButton from "../../views/elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { ActionPayload } from "../../../dispatcher/payloads";
-import { polyfillTouchEvent } from "../../../@types/polyfill";
-import ResizeNotifier from "../../../utils/ResizeNotifier";
-import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import RoomListLayoutStore from "../../../stores/room-list/RoomListLayoutStore";
-import { arrayFastClone, arrayHasOrderChange } from "../../../utils/arrays";
-import { objectExcluding, objectHasDiff } from "../../../utils/objects";
 import ExtraTile from "./ExtraTile";
-import { ListNotificationState } from "../../../stores/notifications/ListNotificationState";
-import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import SettingsStore from "../../../settings/SettingsStore";
+import { SlidingSyncManager } from "../../../SlidingSyncManager";
+import NotificationBadge from "./NotificationBadge";
+import RoomTile from "./RoomTile";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -99,7 +100,7 @@ interface IState {
     isExpanded: boolean; // used for the for expand of the sublist when the room list is being filtered
     height: number;
     rooms: Room[];
-    filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
+    roomsLoading: boolean;
 }
 
 export default class RoomSublist extends React.Component<IProps, IState> {
@@ -109,22 +110,25 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private layout: ListLayout;
     private heightAtStart: number;
-    private isBeingFiltered: boolean;
     private notificationState: ListNotificationState;
+
+    private slidingSyncMode: boolean;
 
     constructor(props: IProps) {
         super(props);
+        // when this setting is toggled it restarts the app so it's safe to not watch this.
+        this.slidingSyncMode = SettingsStore.getValue("feature_sliding_sync");
 
         this.layout = RoomListLayoutStore.instance.getLayoutFor(this.props.tagId);
         this.heightAtStart = 0;
-        this.isBeingFiltered = !!RoomListStore.instance.getFirstNameFilterCondition();
         this.notificationState = RoomNotificationStateStore.instance.getListState(this.props.tagId);
         this.state = {
             contextMenuPosition: null,
             isResizing: false,
-            isExpanded: this.isBeingFiltered ? this.isBeingFiltered : !this.layout.isCollapsed,
+            isExpanded: !this.layout.isCollapsed,
             height: 0, // to be fixed in a moment, we need `rooms` to calculate this.
             rooms: arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []),
+            roomsLoading: false,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
         this.state = Object.assign(this.state, { height: this.calculateInitialHeight() });
@@ -156,9 +160,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     private get extraTiles(): ReactComponentElement<typeof ExtraTile>[] | null {
-        if (this.state.filteredExtraTiles) {
-            return this.state.filteredExtraTiles;
-        }
         if (this.props.extraTiles) {
             return this.props.extraTiles;
         }
@@ -174,12 +175,15 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     private get numVisibleTiles(): number {
+        if (this.slidingSyncMode) {
+            return this.state.rooms.length;
+        }
         const nVisible = Math.ceil(this.layout.visibleTiles);
         return Math.min(nVisible, this.numTiles);
     }
 
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
-        const prevExtraTiles = prevState.filteredExtraTiles || prevProps.extraTiles;
+        const prevExtraTiles = prevProps.extraTiles;
         // as the rooms can come in one by one we need to reevaluate
         // the amount of available rooms to cap the amount of requested visible rooms by the layout
         if (RoomSublist.calcNumTiles(prevState.rooms, prevExtraTiles) !== this.numTiles) {
@@ -203,7 +207,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         // If we're supposed to handle extra tiles, take the performance hit and re-render all the
         // time so we don't have to consider them as part of the visible room optimization.
         const prevExtraTiles = this.props.extraTiles || [];
-        const nextExtraTiles = (nextState.filteredExtraTiles || nextProps.extraTiles) || [];
+        const nextExtraTiles = nextProps.extraTiles || [];
         if (prevExtraTiles.length > 0 || nextExtraTiles.length > 0) {
             return true;
         }
@@ -246,6 +250,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
+        RoomListStore.instance.on(LISTS_LOADING_EVENT, this.onListsLoading);
+
         // Using the passive option to not block the main thread
         // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
         this.tilesRef.current?.addEventListener("scroll", this.onScrollPrevent, { passive: true });
@@ -254,36 +260,26 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onListsUpdated);
+        RoomListStore.instance.off(LISTS_LOADING_EVENT, this.onListsLoading);
         this.tilesRef.current?.removeEventListener("scroll", this.onScrollPrevent);
     }
 
+    private onListsLoading = (tagId: TagID, isLoading: boolean) => {
+        if (this.props.tagId !== tagId) {
+            return;
+        }
+        this.setState({
+            roomsLoading: isLoading,
+        });
+    };
+
     private onListsUpdated = () => {
         const stateUpdates: IState & any = {}; // &any is to avoid a cast on the initializer
-
-        if (this.props.extraTiles) {
-            const nameCondition = RoomListStore.instance.getFirstNameFilterCondition();
-            if (nameCondition) {
-                stateUpdates.filteredExtraTiles = this.props.extraTiles
-                    .filter(t => nameCondition.matches(normalize(t.props.displayName || "")));
-            } else if (this.state.filteredExtraTiles) {
-                stateUpdates.filteredExtraTiles = null;
-            }
-        }
 
         const currentRooms = this.state.rooms;
         const newRooms = arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []);
         if (arrayHasOrderChange(currentRooms, newRooms)) {
             stateUpdates.rooms = newRooms;
-        }
-
-        const isStillBeingFiltered = !!RoomListStore.instance.getFirstNameFilterCondition();
-        if (isStillBeingFiltered !== this.isBeingFiltered) {
-            this.isBeingFiltered = isStillBeingFiltered;
-            if (isStillBeingFiltered) {
-                stateUpdates.isExpanded = true;
-            } else {
-                stateUpdates.isExpanded = !this.layout.isCollapsed;
-            }
         }
 
         if (Object.keys(stateUpdates).length > 0) {
@@ -342,7 +338,16 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         this.setState({ isResizing: false, height: newHeight });
     };
 
-    private onShowAllClick = () => {
+    private onShowAllClick = async () => {
+        if (this.slidingSyncMode) {
+            const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(this.props.tagId);
+            const count = RoomListStore.instance.getCount(this.props.tagId);
+            await SlidingSyncManager.instance.ensureListRegistered(slidingSyncIndex, {
+                ranges: [
+                    [0, count],
+                ],
+            });
+        }
         // read number of visible tiles before we mutate it
         const numVisibleTiles = this.numVisibleTiles;
         const newHeight = this.layout.tilesToPixelsWithPadding(this.numTiles, this.padding);
@@ -399,7 +404,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onTagSortChanged = async (sort: SortAlgorithm) => {
-        await RoomListStore.instance.setTagSorting(this.props.tagId, sort);
+        RoomListStore.instance.setTagSorting(this.props.tagId, sort);
         this.forceUpdate();
     };
 
@@ -418,7 +423,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             room = this.state.rooms && this.state.rooms[0];
         } else {
             // find the first room with a count of the same colour as the badge count
-            room = RoomListStore.instance.unfilteredLists[this.props.tagId].find((r: Room) => {
+            room = RoomListStore.instance.orderedLists[this.props.tagId].find((r: Room) => {
                 const notifState = this.notificationState.getForRoom(r);
                 return notifState.count > 0 && notifState.color === this.notificationState.color;
             });
@@ -554,12 +559,21 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     private renderMenu(): React.ReactElement {
-        if (this.props.tagId === DefaultTagID.Suggested) return null; // not sortable
+        if (this.props.tagId === DefaultTagID.Suggested || this.props.tagId === DefaultTagID.SavedItems) return null; // not sortable
 
         let contextMenu = null;
         if (this.state.contextMenuPosition) {
-            const isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;
-            const isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
+            let isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;
+            let isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
+            if (this.slidingSyncMode) {
+                const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(this.props.tagId);
+                const slidingList = SlidingSyncManager.instance.slidingSync.getList(slidingSyncIndex);
+                isAlphabetical = slidingList.sort[0] === "by_name";
+                isUnreadFirst = (
+                    slidingList.sort[0] === "by_highlight_count" ||
+                    slidingList.sort[0] === "by_notification_count"
+                );
+            }
 
             // Invites don't get some nonsense options, so only add them if we have to.
             let otherSections = null;
@@ -664,7 +678,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
                     const collapseClasses = classNames({
                         'mx_RoomSublist_collapseBtn': true,
-                        'mx_RoomSublist_collapseBtn_collapsed': !this.state.isExpanded,
+                        'mx_RoomSublist_collapseBtn_collapsed': !this.state.isExpanded && !this.props.forceExpanded,
                     });
 
                     const classes = classNames({
@@ -744,7 +758,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         });
 
         let content = null;
-        if (visibleTiles.length > 0 && this.props.forceExpanded) {
+        if (this.state.roomsLoading) {
+            content = <div className="mx_RoomSublist_skeletonUI" />;
+        } else if (visibleTiles.length > 0 && this.props.forceExpanded) {
             content = <div className="mx_RoomSublist_resizeBox mx_RoomSublist_resizeBox_forceExpanded">
                 <div className="mx_RoomSublist_tiles" ref={this.tilesRef}>
                     { visibleTiles }
@@ -766,12 +782,18 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // floats above the resize handle, if we have one present. If the user has all
             // tiles visible, it becomes 'show less'.
             let showNButton = null;
+            const hasMoreSlidingSync = (
+                this.slidingSyncMode && (RoomListStore.instance.getCount(this.props.tagId) > this.state.rooms.length)
+            );
 
-            if (maxTilesPx > this.state.height) {
+            if ((maxTilesPx > this.state.height) || hasMoreSlidingSync) {
                 // the height of all the tiles is greater than the section height: we need a 'show more' button
                 const nonPaddedHeight = this.state.height - RESIZE_HANDLE_HEIGHT - SHOW_N_BUTTON_HEIGHT;
                 const amountFullyShown = Math.floor(nonPaddedHeight / this.layout.tileHeight);
-                const numMissing = this.numTiles - amountFullyShown;
+                let numMissing = this.numTiles - amountFullyShown;
+                if (this.slidingSyncMode) {
+                    numMissing = RoomListStore.instance.getCount(this.props.tagId) - amountFullyShown;
+                }
                 const label = _t("Show %(count)s more", { count: numMissing });
                 let showMoreText = (
                     <span className='mx_RoomSublist_showNButtonText'>

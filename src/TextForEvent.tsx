@@ -43,7 +43,6 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
 import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
-import UserIdentifierCustomisations from './customisations/UserIdentifier';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { isLocationEvent } from './utils/EventUtils';
 
@@ -55,7 +54,7 @@ function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()
     const client = MatrixClientPeg.get();
     const roomId = event.getRoomId();
     const member = client.getRoom(roomId)?.getMember(userId);
-    return member?.rawDisplayName || userId || _t("Someone");
+    return member?.name || member?.rawDisplayName || userId || _t("Someone");
 }
 
 // These functions are frequently used just to check whether an event has
@@ -434,29 +433,29 @@ function textForHistoryVisibilityEvent(event: MatrixEvent): () => string | null 
 // Currently will only display a change if a user's power level is changed
 function textForPowerEvent(event: MatrixEvent): () => string | null {
     const senderName = getSenderName(event);
-    if (!event.getPrevContent() || !event.getPrevContent().users ||
-        !event.getContent() || !event.getContent().users) {
+    if (!event.getPrevContent()?.users || !event.getContent()?.users) {
         return null;
     }
-    const previousUserDefault = event.getPrevContent().users_default || 0;
-    const currentUserDefault = event.getContent().users_default || 0;
+    const previousUserDefault: number = event.getPrevContent().users_default || 0;
+    const currentUserDefault: number = event.getContent().users_default || 0;
     // Construct set of userIds
-    const users = [];
-    Object.keys(event.getContent().users).forEach(
-        (userId) => {
-            if (users.indexOf(userId) === -1) users.push(userId);
-        },
-    );
-    Object.keys(event.getPrevContent().users).forEach(
-        (userId) => {
-            if (users.indexOf(userId) === -1) users.push(userId);
-        },
-    );
+    const users: string[] = [];
+    Object.keys(event.getContent().users).forEach((userId) => {
+        if (users.indexOf(userId) === -1) users.push(userId);
+    });
+    Object.keys(event.getPrevContent().users).forEach((userId) => {
+        if (users.indexOf(userId) === -1) users.push(userId);
+    });
 
-    const diffs = [];
+    const diffs: {
+        userId: string;
+        name: string;
+        from: number;
+        to: number;
+    }[] = [];
     users.forEach((userId) => {
         // Previous power level
-        let from = event.getPrevContent().users[userId];
+        let from: number = event.getPrevContent().users[userId];
         if (!Number.isInteger(from)) {
             from = previousUserDefault;
         }
@@ -467,7 +466,7 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
         }
         if (from === previousUserDefault && to === currentUserDefault) { return; }
         if (to !== from) {
-            const name = UserIdentifierCustomisations.getDisplayUserIdentifier(userId, { roomId: event.getRoomId() });
+            const name = getRoomMemberDisplayname(event, userId);
             diffs.push({ userId, name, from, to });
         }
     });

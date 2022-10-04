@@ -27,23 +27,18 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 interface IProps {
     mxEvent: MatrixEvent;
     onClick?(): void;
-    as?: string;
 }
 
 export default class SenderProfile extends React.PureComponent<IProps> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    public static defaultProps = {
-        as: "div",
-    };
-
     render() {
         const { mxEvent, onClick } = this.props;
         const msgtype = mxEvent.getContent().msgtype;
 
         let member = mxEvent.sender;
-        if (SettingsStore.getValue("feature_use_only_current_profiles")) {
+        if (SettingsStore.getValue("useOnlyCurrentProfiles")) {
             const room = MatrixClientPeg.get().getRoom(mxEvent.getRoomId());
             if (room) {
                 member = room.getMember(mxEvent.getSender());
@@ -65,7 +60,6 @@ export default class SenderProfile extends React.PureComponent<IProps> {
                         member={member}
                         colored={true}
                         emphasizeDisplayName={true}
-                        as={this.props.as}
                     />
                 );
             } }

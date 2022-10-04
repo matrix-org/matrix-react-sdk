@@ -1,5 +1,6 @@
 /*
 Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 Copyright 2021 - 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +19,6 @@ limitations under the License.
 import { _td } from "../languageHandler";
 import { IS_MAC, Key } from "../Keyboard";
 import { IBaseSetting } from "../settings/Settings";
-import IncompatibleController from "../settings/controllers/IncompatibleController";
 import { KeyCombo } from "../KeyBindingsManager";
 
 export enum KeyBindingAction {
@@ -339,6 +339,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     [KeyBindingAction.FormatQuote]: {
         default: {
             ctrlOrCmdKey: true,
+            shiftKey: true,
             key: Key.GREATER_THAN,
         },
         displayName: _td("Toggle Quote"),
@@ -484,13 +485,6 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.ARROW_RIGHT,
         },
         displayName: _td("Expand room list section"),
-    },
-    [KeyBindingAction.ClearRoomFilter]: {
-        default: {
-            key: Key.ESCAPE,
-        },
-        displayName: _td("Clear room list filter field"),
-        controller: new IncompatibleController("feature_spotlight", { key: null }),
     },
     [KeyBindingAction.NextRoom]: {
         default: {
@@ -720,13 +714,3 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
     },
 };
-
-// For tests
-export function mock({ keyboardShortcuts, macOnlyShortcuts, desktopShortcuts }): void {
-    Object.keys(KEYBOARD_SHORTCUTS).forEach((k) => delete KEYBOARD_SHORTCUTS[k]);
-    if (keyboardShortcuts) Object.assign(KEYBOARD_SHORTCUTS, keyboardShortcuts);
-    MAC_ONLY_SHORTCUTS.splice(0, MAC_ONLY_SHORTCUTS.length);
-    if (macOnlyShortcuts) macOnlyShortcuts.forEach((e) => MAC_ONLY_SHORTCUTS.push(e));
-    DESKTOP_SHORTCUTS.splice(0, DESKTOP_SHORTCUTS.length);
-    if (desktopShortcuts) desktopShortcuts.forEach((e) => DESKTOP_SHORTCUTS.push(e));
-}

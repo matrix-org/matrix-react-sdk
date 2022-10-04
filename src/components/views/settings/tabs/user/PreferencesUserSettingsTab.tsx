@@ -18,6 +18,7 @@ limitations under the License.
 import React from 'react';
 
 import { _t } from "../../../../../languageHandler";
+import { UseCase } from "../../../../../settings/enums/UseCase";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import Field from "../../../elements/Field";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
@@ -28,57 +29,68 @@ import { UserTab } from "../../../dialogs/UserTab";
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
 import SdkConfig from "../../../../../SdkConfig";
+import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
+import { showUserOnboardingPage } from "../../../user-onboarding/UserOnboardingPage";
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
 }
 
 interface IState {
+    disablingReadReceiptsSupported: boolean;
     autocompleteDelay: string;
     readMarkerInViewThresholdMs: string;
     readMarkerOutOfViewThresholdMs: string;
 }
 
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
-    static ROOM_LIST_SETTINGS = [
+    private static ROOM_LIST_SETTINGS = [
         'breadcrumbs',
+        "FTUE.userOnboardingButton",
     ];
 
-    static SPACES_SETTINGS = [
+    private static SPACES_SETTINGS = [
         "Spaces.allRoomsInHome",
     ];
 
-    static KEYBINDINGS_SETTINGS = [
+    private static KEYBINDINGS_SETTINGS = [
         'ctrlFForSearch',
     ];
 
-    static COMPOSER_SETTINGS = [
+    private static PRESENCE_SETTINGS = [
+        "sendTypingNotifications",
+        // sendReadReceipts - handled specially due to server needing support
+    ];
+
+    private static COMPOSER_SETTINGS = [
         'MessageComposerInput.autoReplaceEmoji',
         'MessageComposerInput.useMarkdown',
         'MessageComposerInput.suggestEmoji',
-        'sendTypingNotifications',
         'MessageComposerInput.ctrlEnterToSend',
         'MessageComposerInput.surroundWith',
         'MessageComposerInput.showStickersButton',
         'MessageComposerInput.insertTrailingColon',
     ];
 
-    static TIME_SETTINGS = [
+    private static TIME_SETTINGS = [
         'showTwelveHourTimestamps',
         'alwaysShowTimestamps',
     ];
-    static CODE_BLOCKS_SETTINGS = [
+
+    private static CODE_BLOCKS_SETTINGS = [
         'enableSyntaxHighlightLanguageDetection',
         'expandCodeByDefault',
         'showCodeLineNumbers',
     ];
-    static IMAGES_AND_VIDEOS_SETTINGS = [
+
+    private static IMAGES_AND_VIDEOS_SETTINGS = [
         'urlPreviewsEnabled',
         'autoplayGifs',
         'autoplayVideo',
         'showImages',
     ];
-    static TIMELINE_SETTINGS = [
+
+    private static TIMELINE_SETTINGS = [
         'showTypingNotifications',
         'showRedactions',
         'showReadReceipts',
@@ -89,8 +101,10 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         'Pill.shouldShowPillAvatar',
         'TextualBody.enableBigEmoji',
         'scrollToBottomOnMessageSent',
+        'useOnlyCurrentProfiles',
     ];
-    static GENERAL_SETTINGS = [
+
+    private static GENERAL_SETTINGS = [
         'promptBeforeInviteUnknownUsers',
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
@@ -100,6 +114,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         super(props);
 
         this.state = {
+            disablingReadReceiptsSupported: false,
             autocompleteDelay:
                 SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
             readMarkerInViewThresholdMs:
@@ -107,6 +122,17 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             readMarkerOutOfViewThresholdMs:
                 SettingsStore.getValueAt(SettingLevel.DEVICE, 'readMarkerOutOfViewThresholdMs').toString(10),
         };
+    }
+
+    public async componentDidMount(): Promise<void> {
+        const cli = MatrixClientPeg.get();
+
+        this.setState({
+            disablingReadReceiptsSupported: (
+                (await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable"))
+                || (await cli.isVersionSupported("v1.4"))
+            ),
+        });
     }
 
     private onAutocompleteDelayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,14 +168,21 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     };
 
     render() {
+        const useCase = SettingsStore.getValue<UseCase | null>("FTUE.useCaseSelection");
+        const roomListSettings = PreferencesUserSettingsTab.ROOM_LIST_SETTINGS
+            // Only show the breadcrumbs setting if breadcrumbs v2 is disabled
+            .filter(it => it !== "breadcrumbs" || !SettingsStore.getValue("feature_breadcrumbs_v2"))
+            // Only show the user onboarding setting if the user should see the user onboarding page
+            .filter(it => it !== "FTUE.userOnboardingButton" || showUserOnboardingPage(useCase));
+
         return (
             <div className="mx_SettingsTab mx_PreferencesUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Preferences") }</div>
 
-                { !SettingsStore.getValue("feature_breadcrumbs_v2") &&
+                { roomListSettings.length > 0 &&
                     <div className="mx_SettingsTab_section">
                         <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
-                        { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
+                        { this.renderGroup(roomListSettings) }
                     </div>
                 }
 
@@ -162,7 +195,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     <span className="mx_SettingsTab_subheading">{ _t("Keyboard shortcuts") }</span>
                     <div className="mx_SettingsFlag">
                         { _t("To view all keyboard shortcuts, <a>click here</a>.", {}, {
-                            a: sub => <AccessibleButton kind="link" onClick={this.onKeyboardShortcutsClicked}>
+                            a: sub => <AccessibleButton kind="link_inline" onClick={this.onKeyboardShortcutsClicked}>
                                 { sub }
                             </AccessibleButton>,
                         }) }
@@ -173,6 +206,20 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Displaying time") }</span>
                     { this.renderGroup(PreferencesUserSettingsTab.TIME_SETTINGS) }
+                </div>
+
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{ _t("Presence") }</span>
+                    <span className="mx_SettingsTab_subsectionText">
+                        { _t("Share your activity and status with others.") }
+                    </span>
+                    <SettingsFlag
+                        disabled={!this.state.disablingReadReceiptsSupported}
+                        disabledDescription={_t("Your server doesn't support disabling sending read receipts.")}
+                        name="sendReadReceipts"
+                        level={SettingLevel.ACCOUNT}
+                    />
+                    { this.renderGroup(PreferencesUserSettingsTab.PRESENCE_SETTINGS) }
                 </div>
 
                 <div className="mx_SettingsTab_section">
