@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import UAParser from 'ua-parser-js';
+
 export enum DeviceType {
     Desktop = 'Desktop',
     Mobile = 'Mobile',
@@ -32,49 +34,30 @@ export type ExtendedDeviceInformation = {
     clientVersion?: string;
 };
 
-// Element dbg/1.5.0-dev (Xiaomi; Mi 9T; Android 11; RKQ1.200826.002 test-keys; Flavour GooglePlay; MatrixAndroidSdk2 1.5.0)
-// Legacy : Element/1.0.0 (Linux; U; Android 6.0.1; SM-A510F Build/MMB29; Flavour GPlay; MatrixAndroidSdk2 1.0)
-const ANDROID_KEYWORD = "; MatrixAndroidSdk2";
-
 // Element/1.8.21 (iPhone XS Max; iOS 15.2; Scale/3.00)
 const IOS_KEYWORD = "; iOS ";
 
-// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) ElementNightly/2022091301
-// Chrome/104.0.5112.102 Electron/20.1.1 Safari/537.36
-const DESKTOP_KEYWORD = " Electron/";
-
-// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36
-const WEB_KEYWORD = "Mozilla/";
-
-type UserAgentParser = (userAgent?: string) => ExtendedDeviceInformation;
-
-const androidParser: UserAgentParser = (userAgent) => {
-    return {
-        deviceType: DeviceType.Mobile,
-    };
+const getDeviceType = (
+    userAgent: string,
+    device: UAParser.IDevice,
+    browser: UAParser.IBrowser,
+    operatingSystem: UAParser.IOS,
+): DeviceType => {
+    if (browser.name === 'Electron') {
+        return DeviceType.Desktop;
+    }
+    if (
+        device.type === 'mobile' ||
+        operatingSystem.name?.indexOf('Android') > -1 ||
+        userAgent.indexOf(IOS_KEYWORD) > -1
+    ) {
+        return DeviceType.Mobile;
+    }
+    if (!!browser.name) {
+        return DeviceType.Web;
+    }
+    return DeviceType.Unknown;
 }
-const iosParser: UserAgentParser = (userAgent) => {
-    return {
-        deviceType: DeviceType.Mobile,
-    };
-}
-const makeWebParser = (deviceType: DeviceType): UserAgentParser => (userAgent) => {
-    return {
-        deviceType,
-    };
-}
-const unknownUserAgentParser: UserAgentParser = (userAgent) => ({
-    deviceType: DeviceType.Unknown,
-});
-
-const getParser = (userAgent: string): UserAgentParser => {
-    if (userAgent.indexOf(ANDROID_KEYWORD) > -1) return androidParser;
-    if (userAgent.indexOf(IOS_KEYWORD) > -1) return iosParser;
-    if (userAgent.indexOf(DESKTOP_KEYWORD) > -1) return makeWebParser(DeviceType.Desktop);
-    if (userAgent.indexOf(WEB_KEYWORD) > -1) return makeWebParser(DeviceType.Web);
-
-    return unknownUserAgentParser;
-};
 
 export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation => {
     if (!userAgent) {
@@ -83,7 +66,24 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
         };
     }
 
-    const parser = getParser(userAgent);
+    const parser = new UAParser(userAgent);
 
-    return parser(userAgent);
+    const browser = parser.getBrowser();
+    const device = parser.getDevice();
+    const operatingSystem = parser.getOS();
+    console.log(userAgent, { browser, device, operatingSystem }, parser.getResult());
+
+    const deviceOperatingSystem = operatingSystem.name && [
+        operatingSystem.name, operatingSystem.version,
+    ].filter(Boolean).join(' ');
+    const deviceModel = device.vendor && [device.vendor, device.model].filter(Boolean).join(' ');
+    const deviceType = getDeviceType(userAgent, device, browser, operatingSystem);
+
+    return {
+        deviceType,
+        deviceModel,
+        deviceOperatingSystem,
+        clientName: browser.name,
+        clientVersion: browser.major ?? browser.version,
+    }
 };
