@@ -58,7 +58,7 @@ describe('<DeviceDetails />', () => {
             display_name: 'My Device',
             last_seen_ip: '123.456.789',
             last_seen_ts: now - 60000000,
-            clientName: 'Element Web',
+            appName: 'Element Web',
         };
         const { container } = render(getComponent({ device }));
         expect(container).toMatchSnapshot();

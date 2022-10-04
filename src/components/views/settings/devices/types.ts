@@ -18,12 +18,13 @@ import { IMyDevice } from "matrix-js-sdk/src/matrix";
 
 export type DeviceWithVerification = IMyDevice & { isVerified: boolean | null };
 export type ExtendedDeviceClientInfo = {
-    clientName?: string;
-    clientVersion?: string;
+    // eg Element Web
+    appName?: string;
+    appVersion?: string;
     url?: string;
 };
 export type ExtendedDevice = DeviceWithVerification & ExtendedDeviceClientInfo;
-export type DevicesDictionary = Record<DeviceWithVerification['device_id'], ExtendedDevice>;
+export type DevicesDictionary = Record<ExtendedDevice['device_id'], ExtendedDevice>;
 
 export enum DeviceSecurityVariation {
     Verified = 'Verified',
