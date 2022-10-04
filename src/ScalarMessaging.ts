@@ -73,6 +73,29 @@ Example:
     }
 }
 
+kick
+------
+Kicks a user from a room. The request will no-op if the user is not in the room.
+
+Request:
+ - room_id is the room to kick the user from.
+ - user_id is the user ID to kick.
+ - reason is an optional string for the kick reason
+Response:
+{
+    success: true
+}
+Example:
+{
+    action: "kick",
+    room_id: "!foo:bar",
+    user_id: "@target:example.org",
+    reason: "Removed from room",
+    response: {
+        success: true
+    }
+}
+
 set_bot_options
 ---------------
 Set the m.room.bot.options state event for a bot user.
@@ -148,6 +171,7 @@ Request:
    can configure/lay out the widget in different ways. All widgets must have a type.
  - `name` (String) is an optional human-readable string about the widget.
  - `data` (Object) is some optional data about the widget, and can contain arbitrary key/value pairs.
+ - `avatar_url` (String) is some optional mxc: URI pointing to the avatar of the widget.
 Response:
 {
     success: true
@@ -233,6 +257,13 @@ Example:
         avatar_url: null
     }
 }
+
+get_open_id_token
+-----------------
+Get an openID token for the current user session.
+Request: No parameters
+Response:
+ - The openId token object as described in https://spec.matrix.org/v1.2/client-server-api/#post_matrixclientv3useruseridopenidrequest_token
 */
 
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
@@ -246,6 +277,7 @@ import { _t } from './languageHandler';
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { WidgetType } from "./widgets/WidgetType";
 import { objectClone } from "./utils/objects";
+import { EffectiveMembership, getEffectiveMembership } from './utils/membership';
 
 enum Action {
     CloseScalar = "close_scalar",
@@ -258,9 +290,11 @@ enum Action {
     CanSendEvent = "can_send_event",
     MembershipState = "membership_state",
     invite = "invite",
+    Kick = "kick",
     BotOptions = "bot_options",
     SetBotOptions = "set_bot_options",
     SetBotPower = "set_bot_power",
+    GetOpenIdToken = "get_open_id_token"
 }
 
 function sendResponse(event: MessageEvent<any>, res: any): void {
@@ -313,12 +347,42 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     });
 }
 
+function kickUser(event: MessageEvent<any>, roomId: string, userId: string): void {
+    logger.log(`Received request to kick ${userId} from room ${roomId}`);
+    const client = MatrixClientPeg.get();
+    if (!client) {
+        sendError(event, _t("You need to be logged in."));
+        return;
+    }
+    const room = client.getRoom(roomId);
+    if (room) {
+        // if they are already not in the room we can resolve immediately.
+        const member = room.getMember(userId);
+        if (!member || getEffectiveMembership(member.membership) === EffectiveMembership.Leave) {
+            sendResponse(event, {
+                success: true,
+            });
+            return;
+        }
+    }
+
+    const reason = event.data.reason;
+    client.kick(roomId, userId, reason).then(() => {
+        sendResponse(event, {
+            success: true,
+        });
+    }).catch((err) => {
+        sendError(event, _t("You need to be able to kick users to do that."), err);
+    });
+}
+
 function setWidget(event: MessageEvent<any>, roomId: string): void {
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
     const widgetName = event.data.name; // optional
     const widgetData = event.data.data; // optional
+    const widgetAvatarUrl = event.data.avatar_url; // optional
     const userWidget = event.data.userWidget;
 
     // both adding/removing widgets need these checks
@@ -335,6 +399,14 @@ function setWidget(event: MessageEvent<any>, roomId: string): void {
         }
         if (widgetData !== undefined && !(widgetData instanceof Object)) {
             sendError(event, _t("Unable to create widget."), new Error("Optional field 'data' must be an Object."));
+            return;
+        }
+        if (widgetAvatarUrl !== undefined && typeof widgetAvatarUrl !== 'string') {
+            sendError(
+                event,
+                _t("Unable to create widget."),
+                new Error("Optional field 'avatar_url' must be a string."),
+            );
             return;
         }
         if (typeof widgetType !== 'string') {
@@ -364,13 +436,14 @@ function setWidget(event: MessageEvent<any>, roomId: string): void {
         if (!roomId) {
             sendError(event, _t('Missing roomId.'), null);
         }
-        WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData).then(() => {
-            sendResponse(event, {
-                success: true,
+        WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData, widgetAvatarUrl)
+            .then(() => {
+                sendResponse(event, {
+                    success: true,
+                });
+            }, (err) => {
+                sendError(event, _t('Failed to send request.'), err);
             });
-        }, (err) => {
-            sendError(event, _t('Failed to send request.'), err);
-        });
     }
 }
 
@@ -576,6 +649,16 @@ function returnStateEvent(event: MessageEvent<any>, roomId: string, eventType: s
     sendResponse(event, stateEvent.getContent());
 }
 
+async function getOpenIdToken(event: MessageEvent<any>) {
+    try {
+        const tokenObject = MatrixClientPeg.get().getOpenIdToken();
+        sendResponse(event, tokenObject);
+    } catch (ex) {
+        logger.warn("Unable to fetch openId token.", ex);
+        sendError(event, 'Unable to fetch openId token.');
+    }
+}
+
 const onMessage = function(event: MessageEvent<any>): void {
     if (!event.origin) { // stupid chrome
         // @ts-ignore
@@ -681,6 +764,9 @@ const onMessage = function(event: MessageEvent<any>): void {
         case Action.invite:
             inviteUser(event, roomId, userId);
             break;
+        case Action.Kick:
+            kickUser(event, roomId, userId);
+            break;
         case Action.BotOptions:
             botOptions(event, roomId, userId);
             break;
@@ -690,6 +776,9 @@ const onMessage = function(event: MessageEvent<any>): void {
         case Action.SetBotPower:
             setBotPower(event, roomId, userId, event.data.level, event.data.ignoreIfGreater);
             break;
+        case Action.GetOpenIdToken:
+            getOpenIdToken(event);
+            break;
         default:
             logger.warn("Unhandled postMessage event with action '" + event.data.action +"'");
             break;
@@ -697,7 +786,7 @@ const onMessage = function(event: MessageEvent<any>): void {
 };
 
 let listenerCount = 0;
-let openManagerUrl: string = null;
+let openManagerUrl: string | null = null;
 
 export function startListening(): void {
     if (listenerCount === 0) {
@@ -719,8 +808,4 @@ export function stopListening(): void {
         );
         logger.error(e);
     }
-}
-
-export function setOpenManagerUrl(url: string): void {
-    openManagerUrl = url;
 }

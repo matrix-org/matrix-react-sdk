@@ -185,7 +185,6 @@ export default class HTMLExporter extends Exporter {
                                 mx_AutoHideScrollbar
                                 mx_ScrollPanel
                                 mx_RoomView_messagePanel
-                                mx_GroupLayout
                                 "
                             >
                                 <div class="mx_RoomView_messageListWrapper">
@@ -317,7 +316,7 @@ export default class HTMLExporter extends Exporter {
         }
 
         if (filePath) {
-            const mxc = mxEv.getContent().url || mxEv.getContent().file?.url;
+            const mxc = mxEv.getContent().url ?? mxEv.getContent().file?.url;
             eventTileMarkup = eventTileMarkup.split(mxc).join(filePath);
         }
         eventTileMarkup = eventTileMarkup.replace(/<span class="mx_MFileBody_info_icon".*?>.*?<\/span>/, '');
@@ -383,7 +382,9 @@ export default class HTMLExporter extends Exporter {
                         joined,
                     );
                 }
-            } else eventTile = await this.getEventTileMarkup(mxEv, joined);
+            } else {
+                eventTile = await this.getEventTileMarkup(mxEv, joined);
+            }
         } catch (e) {
             // TODO: Handle callEvent errors
             logger.error(e);
@@ -464,4 +465,3 @@ export default class HTMLExporter extends Exporter {
         this.cleanUp();
     }
 }
-

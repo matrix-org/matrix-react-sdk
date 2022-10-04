@@ -30,6 +30,7 @@ import ErrorDialog from '../../../dialogs/ErrorDialog';
 import PowerSelector from "../../../elements/PowerSelector";
 import SettingsFieldset from '../../SettingsFieldset';
 import SettingsStore from "../../../../../settings/SettingsStore";
+import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -61,6 +62,7 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": { isState: true, hideForSpace: true },
+    [VoiceBroadcastInfoEventType]: { isState: true, hideForSpace: true },
 };
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
@@ -81,7 +83,7 @@ export class BannedUser extends React.Component<IBannedUserProps> {
     private onUnbanClick = (e) => {
         MatrixClientPeg.get().unban(this.props.member.roomId, this.props.member.userId).catch((err) => {
             logger.error("Failed to unban: " + err);
-            Modal.createTrackedDialog('Failed to unban', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Error'),
                 description: _t('Failed to unban'),
             });
@@ -180,7 +182,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         client.sendStateEvent(this.props.roomId, EventType.RoomPowerLevels, plContent).catch(e => {
             logger.error(e);
 
-            Modal.createTrackedDialog('Power level requirement change failed', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Error changing power level requirement'),
                 description: _t(
                     "An error occurred changing the room's power level requirements. Ensure you have sufficient " +
@@ -206,7 +208,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         client.sendStateEvent(this.props.roomId, EventType.RoomPowerLevels, plContent).catch(e => {
             logger.error(e);
 
-            Modal.createTrackedDialog('Power level change failed', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t('Error changing power level'),
                 description: _t(
                     "An error occurred changing the user's power level. Ensure you have sufficient " +
@@ -244,6 +246,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
+            [VoiceBroadcastInfoEventType]: _td("Voice broadcasts"),
         };
 
         if (SettingsStore.getValue("feature_pinning")) {

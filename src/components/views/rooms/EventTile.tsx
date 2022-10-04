@@ -28,6 +28,8 @@ import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 
+import { Icon as LinkIcon } from '../../../../res/img/element-icons/link.svg';
+import { Icon as ViewInRoomIcon } from '../../../../res/img/element-icons/view-in-room.svg';
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -45,7 +47,7 @@ import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import NotificationBadge from "./NotificationBadge";
-import CallEventGrouper from "../../structures/CallEventGrouper";
+import LegacyCallEventGrouper from "../../structures/LegacyCallEventGrouper";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
 import PlatformPeg from '../../../PlatformPeg';
@@ -59,7 +61,6 @@ import ReactionsRow from '../messages/ReactionsRow';
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { getEventDisplayInfo } from '../../../utils/EventRenderingUtils';
 import SettingsStore from "../../../settings/SettingsStore";
-import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
@@ -80,6 +81,9 @@ import { haveRendererForEvent, isMessageEvent, renderTile } from "../../../event
 import ThreadSummary, { ThreadMessagePreview } from "./ThreadSummary";
 import { ReadReceiptGroup } from './ReadReceiptGroup';
 import { useTooltip } from "../../../utils/useTooltip";
+import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { ElementCall } from "../../../models/Call";
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -197,8 +201,8 @@ interface IProps {
     // Helper to build permalinks for the room
     permalinkCreator?: RoomPermalinkCreator;
 
-    // CallEventGrouper for this event
-    callEventGrouper?: CallEventGrouper;
+    // LegacyCallEventGrouper for this event
+    callEventGrouper?: LegacyCallEventGrouper;
 
     // Symbol of the root node
     as?: string;
@@ -212,7 +216,7 @@ interface IProps {
     // whether or not to display thread info
     showThreadInfo?: boolean;
 
-    // if specified and `true`, the message his behing
+    // if specified and `true`, the message is being
     // hidden for moderation from other users but is
     // displayed to the current user either because they're
     // the author or they are a moderator
@@ -234,7 +238,7 @@ interface IState {
     // Position of the context menu
     contextMenu?: {
         position: Pick<DOMRect, "top" | "left" | "bottom">;
-        showPermalink?: boolean;
+        link?: string;
     };
 
     isQuoteExpanded?: boolean;
@@ -401,14 +405,14 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         room?.on(ThreadEvent.New, this.onNewThread);
     }
 
-    private setupNotificationListener = (thread: Thread): void => {
+    private setupNotificationListener(thread: Thread): void {
         const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(thread.room);
 
         this.threadState = notifications.getThreadRoomState(thread);
 
         this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
         this.onThreadStateUpdate();
-    };
+    }
 
     private onThreadStateUpdate = (): void => {
         let threadNotification = null;
@@ -518,7 +522,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         return <div className="mx_ThreadPanel_replies">
-            <span className="mx_ThreadPanel_ThreadsAmount">
+            <span className="mx_ThreadPanel_replies_amount">
                 { this.state.thread.length }
             </span>
             <ThreadMessagePreview thread={this.state.thread} />
@@ -533,14 +537,14 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
             if (this.props.highlightLink) {
                 return (
-                    <a className="mx_ThreadSummaryIcon" href={this.props.highlightLink}>
+                    <a className="mx_ThreadSummary_icon" href={this.props.highlightLink}>
                         { _t("From a thread") }
                     </a>
                 );
             }
 
             return (
-                <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
+                <p className="mx_ThreadSummary_icon">{ _t("From a thread") }</p>
             );
         }
     }
@@ -625,9 +629,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         if (!userTrust.isCrossSigningVerified()) {
-            // user is not verified, so default to everything is normal
+            // If the message is unauthenticated, then display a grey
+            // shield, otherwise if the user isn't cross-signed then
+            // nothing's needed
             this.setState({
-                verified: E2EState.Normal,
+                verified: encryptionInfo.authenticated ? E2EState.Normal : E2EState.Unauthenticated,
             }, this.props.onHeightChanged); // Decryption may have caused a change in size
             return;
         }
@@ -776,6 +782,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     private renderE2EPadlock() {
         const ev = this.props.mxEvent;
 
+        // no icon for local rooms
+        if (isLocalRoom(ev.getRoomId())) return;
+
         // event could not be decrypted
         if (ev.getContent().msgtype === 'm.bad.encrypted') {
             return <E2ePadlockUndecryptable />;
@@ -852,26 +861,24 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     };
 
     private onTimestampContextMenu = (ev: React.MouseEvent): void => {
-        this.showContextMenu(ev, true);
+        this.showContextMenu(ev, this.props.permalinkCreator?.forEvent(this.props.mxEvent.getId()));
     };
 
-    private showContextMenu(ev: React.MouseEvent, showPermalink?: boolean): void {
-        // Return if message right-click context menu isn't enabled
-        if (!SettingsStore.getValue("feature_message_right_click_context_menu")) return;
-
-        // Return if we're in a browser and click either an a tag or we have
-        // selected text, as in those cases we want to use the native browser
-        // menu
+    private showContextMenu(ev: React.MouseEvent, permalink?: string): void {
         const clickTarget = ev.target as HTMLElement;
-        if (
-            !PlatformPeg.get().allowOverridingNativeContextMenus() &&
-            (clickTarget.tagName === "a" || clickTarget.closest("a") || getSelectedText())
-        ) return;
+
+        // Try to find an anchor element
+        const anchorElement = (clickTarget instanceof HTMLAnchorElement) ? clickTarget : clickTarget.closest("a");
 
         // There is no way to copy non-PNG images into clipboard, so we can't
         // have our own handling for copying images, so we leave it to the
         // Electron layer (webcontents-handler.ts)
-        if (ev.target instanceof HTMLImageElement) return;
+        if (clickTarget instanceof HTMLImageElement) return;
+
+        // Return if we're in a browser and click either an a tag or we have
+        // selected text, as in those cases we want to use the native browser
+        // menu
+        if (!PlatformPeg.get().allowOverridingNativeContextMenus() && (getSelectedText() || anchorElement)) return;
 
         // We don't want to show the menu when editing a message
         if (this.props.editState) return;
@@ -885,7 +892,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     top: ev.clientY,
                     bottom: ev.clientY,
                 },
-                showPermalink: showPermalink,
+                link: anchorElement?.href || permalink,
             },
             actionBarFocused: true,
         });
@@ -934,14 +941,14 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 onFinished={this.onCloseMenu}
                 rightClick={true}
                 reactions={this.state.reactions}
-                showPermalink={this.state.contextMenu.showPermalink}
+                link={this.state.contextMenu.link}
             />
         );
     }
 
     public render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
-        const eventType = this.props.mxEvent.getType() as EventType;
+        const eventType = this.props.mxEvent.getType();
         const {
             hasRenderer,
             isBubbleMessage,
@@ -951,7 +958,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             isSeeingThroughMessageHiddenForModeration,
         } = getEventDisplayInfo(this.props.mxEvent, this.context.showHiddenEvents, this.shouldHideEvent());
         const { isQuoteExpanded } = this.state;
-
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
         if (!hasRenderer) {
@@ -1004,7 +1010,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             mx_EventTile_sending: !isEditing && isSending,
             mx_EventTile_highlight: this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent || this.state.contextMenu,
-            mx_EventTile_continuation: isContinuation || eventType === EventType.CallInvite,
+            mx_EventTile_continuation: isContinuation
+                || eventType === EventType.CallInvite
+                || ElementCall.CALL_EVENT_TYPE.matches(eventType),
             mx_EventTile_last: this.props.last,
             mx_EventTile_lastInSection: this.props.lastInSection,
             mx_EventTile_contextual: this.props.contextual,
@@ -1041,6 +1049,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
             needsSenderProfile = true;
+        } else if (isInfoMessage) {
+            // a small avatar, with no sender profile, for
+            // joins/parts/etc
+            avatarSize = 14;
+            needsSenderProfile = false;
         } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
             (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
         ) {
@@ -1049,17 +1062,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
             avatarSize = 0;
             needsSenderProfile = false;
-        } else if (isInfoMessage) {
-            // a small avatar, with no sender profile, for
-            // joins/parts/etc
-            avatarSize = 14;
-            needsSenderProfile = false;
         } else if (this.props.layout == Layout.IRC) {
             avatarSize = 14;
             needsSenderProfile = true;
         } else if (
-            (this.props.continuation && this.context.timelineRenderingType !== TimelineRenderingType.File) ||
-            eventType === EventType.CallInvite
+            (this.props.continuation && this.context.timelineRenderingType !== TimelineRenderingType.File)
+            || eventType === EventType.CallInvite
+            || ElementCall.CALL_EVENT_TYPE.matches(eventType)
         ) {
             // no avatar or sender profile for continuation messages and call tiles
             avatarSize = 0;
@@ -1130,9 +1139,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             || Boolean(this.state.contextMenu));
 
         // Thread panel shows the timestamp of the last reply in that thread
-        const ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
+        let ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
             ? this.props.mxEvent.getTs()
-            : this.state.thread?.replyToEvent.getTs();
+            : this.state.thread?.replyToEvent?.getTs();
+        if (typeof ts !== "number") {
+            // Fall back to something we can use
+            ts = this.props.mxEvent.getTs();
+        }
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
@@ -1244,7 +1257,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             />;
         }
 
-        const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
+        // Use `getSender()` because searched events might not have a proper `sender`.
+        const isOwnEvent = this.props.mxEvent?.getSender() === MatrixClientPeg.get().getUserId();
 
         switch (this.context.timelineRenderingType) {
             case TimelineRenderingType.Notification: {
@@ -1305,6 +1319,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     "data-has-reply": !!replyChain,
                     "data-layout": this.props.layout,
                     "data-self": isOwnEvent,
+                    "data-event-id": this.props.mxEvent.getId(),
                     "onMouseEnter": () => this.setState({ hover: true }),
                     "onMouseLeave": () => this.setState({ hover: false }),
                 }, [
@@ -1338,6 +1353,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         <a href={permalink} onClick={this.onPermalinkClicked}>
                             { timestamp }
                         </a>
+                        { msgOption }
                     </div>,
                     reactionsRow,
                 ]);
@@ -1360,7 +1376,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
-                            showThread({ rootEvent: this.props.mxEvent, push: true });
+                            dis.dispatch<ShowThreadPayload>({
+                                action: Action.ShowThread,
+                                rootEvent: this.props.mxEvent,
+                                push: true,
+                            });
                             const target = ev.currentTarget as HTMLElement;
                             const index = Array.from(target.parentElement.children).indexOf(target);
                             PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
@@ -1383,17 +1403,21 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoom"
+                                className="mx_MessageActionBar_iconButton"
                                 onClick={this.viewInRoom}
                                 title={_t("View in room")}
                                 key="view_in_room"
-                            />
+                            >
+                                <ViewInRoomIcon />
+                            </RovingAccessibleTooltipButton>
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkToThread"
+                                className="mx_MessageActionBar_iconButton"
                                 onClick={this.copyLinkToThread}
                                 title={_t("Copy link to thread")}
                                 key="copy_link_to_thread"
-                            />
+                            >
+                                <LinkIcon />
+                            </RovingAccessibleTooltipButton>
                         </Toolbar>
                         { msgOption }
                     </>)
@@ -1451,6 +1475,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
                         "data-self": isOwnEvent,
+                        "data-event-id": this.props.mxEvent.getId(),
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),

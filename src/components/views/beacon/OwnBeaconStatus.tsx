@@ -19,9 +19,10 @@ import React, { HTMLProps } from 'react';
 
 import { _t } from '../../../languageHandler';
 import { useOwnLiveBeacons } from '../../../utils/beacon';
+import { preventDefaultWrapper } from '../../../utils/NativeEventUtils';
 import BeaconStatus from './BeaconStatus';
 import { BeaconDisplayStatus } from './displayStatus';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 
 interface Props {
     displayStatus: BeaconDisplayStatus;
@@ -60,7 +61,9 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
         { ownDisplayStatus === BeaconDisplayStatus.Active && <AccessibleButton
             data-test-id='beacon-status-stop-beacon'
             kind='link'
-            onClick={onStopSharing}
+            // eat events here to avoid 1) the map and 2) reply or thread tiles
+            // moving under the beacon status on stop/retry click
+            onClick={preventDefaultWrapper<ButtonEvent>(onStopSharing)}
             className='mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton'
             disabled={stoppingInProgress}
         >
@@ -70,7 +73,9 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
         { hasLocationPublishError && <AccessibleButton
             data-test-id='beacon-status-reset-wire-error'
             kind='link'
-            onClick={onResetLocationPublishError}
+            // eat events here to avoid 1) the map and 2) reply or thread tiles
+            // moving under the beacon status on stop/retry click
+            onClick={preventDefaultWrapper(onResetLocationPublishError)}
             className='mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton'
         >
             { _t('Retry') }
@@ -79,7 +84,9 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
         { hasStopSharingError && <AccessibleButton
             data-test-id='beacon-status-stop-beacon-retry'
             kind='link'
-            onClick={onStopSharing}
+            // eat events here to avoid 1) the map and 2) reply or thread tiles
+            // moving under the beacon status on stop/retry click
+            onClick={preventDefaultWrapper(onStopSharing)}
             className='mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton'
         >
             { _t('Retry') }

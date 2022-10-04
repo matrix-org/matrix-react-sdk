@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import { debounce } from "lodash";
 
 import { IFieldState, IValidationResult } from "./Validation";
-import { ComponentClass } from "../../../@types/common";
 import Tooltip from "./Tooltip";
 
 // Invoke validation from user input (when typing, etc.) at most once every N ms.
@@ -39,8 +38,6 @@ export interface IValidateOpts {
 interface IProps {
     // The field's ID, which binds the input and label together. Immutable.
     id?: string;
-    // The field's type (when used as an <input>). Defaults to "text".
-    type?: string;
     // id of a <datalist> element for suggestions
     list?: string;
     // The field's label string.
@@ -83,7 +80,6 @@ export interface IInputProps extends IProps, InputHTMLAttributes<HTMLInputElemen
     inputRef?: RefObject<HTMLInputElement>;
     // The element to create. Defaults to "input".
     element?: "input";
-    componentClass?: undefined;
     // The input's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -93,7 +89,6 @@ interface ISelectProps extends IProps, SelectHTMLAttributes<HTMLSelectElement> {
     inputRef?: RefObject<HTMLSelectElement>;
     // To define options for a select, use <Field><option ... /></Field>
     element: "select";
-    componentClass?: undefined;
     // The select's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -102,7 +97,6 @@ interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElem
     // The ref pass through to the textarea
     inputRef?: RefObject<HTMLTextAreaElement>;
     element: "textarea";
-    componentClass?: undefined;
     // The textarea's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -111,8 +105,6 @@ export interface INativeOnChangeInputProps extends IProps, InputHTMLAttributes<H
     // The ref pass through to the input
     inputRef?: RefObject<HTMLInputElement>;
     element: "input";
-    // The custom component to render
-    componentClass: ComponentClass;
     // The input's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -248,7 +240,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
     public render() {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { element, componentClass, inputRef, prefixComponent, postfixComponent, className, onValidate, children,
+        const { element, inputRef, prefixComponent, postfixComponent, className, onValidate, children,
             tooltipContent, forceValidity, tooltipClassName, list, validateOnBlur, validateOnChange, validateOnFocus,
             usePlaceholderAsHint, forceTooltipVisible,
             ...inputProps } = this.props;
@@ -265,7 +257,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         // Appease typescript's inference
         const inputProps_ = { ...inputProps, ref: this.inputRef, list };
 
-        const fieldInput = React.createElement(this.props.componentClass || this.props.element, inputProps_, children);
+        const fieldInput = React.createElement(this.props.element, inputProps_, children);
 
         let prefixContainer = null;
         if (prefixComponent) {

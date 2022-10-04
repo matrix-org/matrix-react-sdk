@@ -17,7 +17,13 @@ limitations under the License.
 
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { ConditionKind, IPushRule, PushRuleActionName, PushRuleKind } from "matrix-js-sdk/src/@types/PushRules";
+import {
+    ConditionKind,
+    IPushRule,
+    PushRuleActionName,
+    PushRuleKind,
+    TweakName,
+} from "matrix-js-sdk/src/@types/PushRules";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 
 import { MatrixClientPeg } from './MatrixClientPeg';
@@ -27,38 +33,6 @@ export enum RoomNotifState {
     AllMessages = 'all_messages',
     MentionsOnly = 'mentions_only',
     Mute = 'mute',
-}
-
-export const BADGE_STATES = [RoomNotifState.AllMessages, RoomNotifState.AllMessagesLoud];
-export const MENTION_BADGE_STATES = [...BADGE_STATES, RoomNotifState.MentionsOnly];
-
-export function shouldShowNotifBadge(roomNotifState: RoomNotifState): boolean {
-    return BADGE_STATES.includes(roomNotifState);
-}
-
-export function shouldShowMentionBadge(roomNotifState: RoomNotifState): boolean {
-    return MENTION_BADGE_STATES.includes(roomNotifState);
-}
-
-export function aggregateNotificationCount(rooms: Room[]): {count: number, highlight: boolean} {
-    return rooms.reduce<{count: number, highlight: boolean}>((result, room) => {
-        const roomNotifState = getRoomNotifsState(room.roomId);
-        const highlight = room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0;
-        // use helper method to include highlights in the previous version of the room
-        const notificationCount = getUnreadNotificationCount(room);
-
-        const notifBadges = notificationCount > 0 && shouldShowNotifBadge(roomNotifState);
-        const mentionBadges = highlight && shouldShowMentionBadge(roomNotifState);
-        const badges = notifBadges || mentionBadges;
-
-        if (badges) {
-            result.count += notificationCount;
-            if (highlight) {
-                result.highlight = true;
-            }
-        }
-        return result;
-    }, { count: 0, highlight: false });
 }
 
 export function getRoomNotifsState(roomId: string): RoomNotifState {
@@ -144,13 +118,13 @@ function setRoomNotifsStateMuted(roomId: string): Promise<any> {
     promises.push(cli.addPushRule('global', PushRuleKind.Override, roomId, {
         conditions: [
             {
-                kind: 'event_match',
+                kind: ConditionKind.EventMatch,
                 key: 'room_id',
                 pattern: roomId,
             },
         ],
         actions: [
-            'dont_notify',
+            PushRuleActionName.DontNotify,
         ],
     }));
 
@@ -174,7 +148,7 @@ function setRoomNotifsStateUnmuted(roomId: string, newState: RoomNotifState): Pr
     } else if (newState === RoomNotifState.MentionsOnly) {
         promises.push(cli.addPushRule('global', PushRuleKind.RoomSpecific, roomId, {
             actions: [
-                'dont_notify',
+                PushRuleActionName.DontNotify,
             ],
         }));
         // https://matrix.org/jira/browse/SPEC-400
@@ -182,9 +156,9 @@ function setRoomNotifsStateUnmuted(roomId: string, newState: RoomNotifState): Pr
     } else if (newState === RoomNotifState.AllMessagesLoud) {
         promises.push(cli.addPushRule('global', PushRuleKind.RoomSpecific, roomId, {
             actions: [
-                'notify',
+                PushRuleActionName.Notify,
                 {
-                    set_tweak: 'sound',
+                    set_tweak: TweakName.Sound,
                     value: 'default',
                 },
             ],

@@ -18,6 +18,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { ClientEvent, EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { SyncState } from "matrix-js-sdk/src/sync";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
@@ -39,6 +40,10 @@ import { isSecureBackupRequired } from './utils/WellKnownUtils';
 import { ActionPayload } from "./dispatcher/payloads";
 import { Action } from "./dispatcher/actions";
 import { isLoggedIn } from "./utils/login";
+import SdkConfig from "./SdkConfig";
+import PlatformPeg from "./PlatformPeg";
+import { recordClientInformation } from "./utils/device/clientInformation";
+import SettingsStore, { CallbackFn } from "./settings/SettingsStore";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -58,13 +63,17 @@ export default class DeviceListener {
     private ourDeviceIdsAtStart: Set<string> = null;
     // The set of device IDs we're currently displaying toasts for
     private displayingToastsForDeviceIds = new Set<string>();
+    private running = false;
+    private shouldRecordClientInformation = false;
+    private deviceClientInformationSettingWatcherRef: string | undefined;
 
-    static sharedInstance() {
+    public static sharedInstance() {
         if (!window.mxDeviceListener) window.mxDeviceListener = new DeviceListener();
         return window.mxDeviceListener;
     }
 
-    start() {
+    public start() {
+        this.running = true;
         MatrixClientPeg.get().on(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
         MatrixClientPeg.get().on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
         MatrixClientPeg.get().on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
@@ -73,11 +82,19 @@ export default class DeviceListener {
         MatrixClientPeg.get().on(ClientEvent.AccountData, this.onAccountData);
         MatrixClientPeg.get().on(ClientEvent.Sync, this.onSync);
         MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
+        this.shouldRecordClientInformation = SettingsStore.getValue('deviceClientInformationOptIn');
+        this.deviceClientInformationSettingWatcherRef = SettingsStore.watchSetting(
+            'deviceClientInformationOptIn',
+            null,
+            this.onRecordClientInformationSettingChange,
+        );
         this.dispatcherRef = dis.register(this.onAction);
         this.recheck();
+        this.recordClientInformation();
     }
 
-    stop() {
+    public stop() {
+        this.running = false;
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
             MatrixClientPeg.get().removeListener(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
@@ -90,6 +107,9 @@ export default class DeviceListener {
             MatrixClientPeg.get().removeListener(ClientEvent.AccountData, this.onAccountData);
             MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.onSync);
             MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+        }
+        if (this.deviceClientInformationSettingWatcherRef) {
+            SettingsStore.unwatchSetting(this.deviceClientInformationSettingWatcherRef);
         }
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
@@ -109,7 +129,7 @@ export default class DeviceListener {
      *
      * @param {String[]} deviceIds List of device IDs to dismiss notifications for
      */
-    async dismissUnverifiedSessions(deviceIds: Iterable<string>) {
+    public async dismissUnverifiedSessions(deviceIds: Iterable<string>) {
         logger.log("Dismissing unverified sessions: " + Array.from(deviceIds).join(','));
         for (const d of deviceIds) {
             this.dismissed.add(d);
@@ -118,7 +138,7 @@ export default class DeviceListener {
         this.recheck();
     }
 
-    dismissEncryptionSetup() {
+    public dismissEncryptionSetup() {
         this.dismissedThisDeviceToast = true;
         this.recheck();
     }
@@ -179,8 +199,10 @@ export default class DeviceListener {
         }
     };
 
-    private onSync = (state, prevState) => {
-        if (state === 'PREPARED' && prevState === null) this.recheck();
+    private onSync = (state: SyncState, prevState?: SyncState) => {
+        if (state === 'PREPARED' && prevState === null) {
+            this.recheck();
+        }
     };
 
     private onRoomStateEvents = (ev: MatrixEvent) => {
@@ -192,8 +214,9 @@ export default class DeviceListener {
     };
 
     private onAction = ({ action }: ActionPayload) => {
-        if (action !== "on_logged_in") return;
+        if (action !== Action.OnLoggedIn) return;
         this.recheck();
+        this.recordClientInformation();
     };
 
     // The server doesn't tell us when key backup is set up, so we poll
@@ -217,6 +240,7 @@ export default class DeviceListener {
     }
 
     private async recheck() {
+        if (!this.running) return; // we have been stopped
         const cli = MatrixClientPeg.get();
 
         if (!(await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing"))) return;
@@ -334,6 +358,35 @@ export default class DeviceListener {
 
         if (isKeyBackupEnabled === false) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
+        }
+    };
+
+    private onRecordClientInformationSettingChange: CallbackFn = (
+        _originalSettingName, _roomId, _level, _newLevel, newValue,
+    ) => {
+        const prevValue = this.shouldRecordClientInformation;
+
+        this.shouldRecordClientInformation = !!newValue;
+
+        if (this.shouldRecordClientInformation && !prevValue) {
+            this.recordClientInformation();
+        }
+    };
+
+    private recordClientInformation = async () => {
+        if (!this.shouldRecordClientInformation) {
+            return;
+        }
+        try {
+            await recordClientInformation(
+                MatrixClientPeg.get(),
+                SdkConfig.get(),
+                PlatformPeg.get(),
+            );
+        } catch (error) {
+            // this is a best effort operation
+            // log the error without rethrowing
+            logger.error('Failed to record client information', error);
         }
     };
 }

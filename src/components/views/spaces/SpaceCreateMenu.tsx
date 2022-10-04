@@ -18,7 +18,7 @@ import React, { ComponentProps, RefObject, SyntheticEvent, KeyboardEvent, useCon
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
-import { HistoryVisibility, Preset } from "matrix-js-sdk/src/@types/partials";
+import { HistoryVisibility, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -31,12 +31,13 @@ import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import withValidation from "../elements/Validation";
 import RoomAliasField from "../elements/RoomAliasField";
-import SdkConfig from "../../../SdkConfig";
 import Modal from "../../../Modal";
 import GenericFeatureFeedbackDialog from "../dialogs/GenericFeatureFeedbackDialog";
 import SettingsStore from "../../../settings/SettingsStore";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { shouldShowFeedback } from "../../../utils/Feedback";
 
 export const createSpace = async (
     name: string,
@@ -51,6 +52,9 @@ export const createSpace = async (
         createOpts: {
             name,
             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
+            visibility: (
+                isPublic && await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827.stable")
+            ) ? Visibility.Public : Visibility.Private,
             power_level_content_override: {
                 // Only allow Admins to write to the timeline to prevent hidden sync spam
                 events_default: 100,
@@ -80,11 +84,6 @@ const SpaceCreateMenuType = ({ title, description, className, onClick }) => {
     );
 };
 
-enum Visibility {
-    Public,
-    Private,
-}
-
 const spaceNameValidator = withValidation({
     rules: [
         {
@@ -101,15 +100,15 @@ const nameToLocalpart = (name: string): string => {
 
 // XXX: Temporary for the Spaces release only
 export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
-    if (!SdkConfig.get().bug_report_endpoint_url) return null;
+    if (!shouldShowFeedback()) return null;
 
     return <div className="mx_SpaceFeedbackPrompt">
         <span className="mx_SpaceFeedbackPrompt_text">{ _t("Spaces are a new feature.") }</span>
         <AccessibleButton
-            kind="link"
+            kind="link_inline"
             onClick={() => {
                 if (onClick) onClick();
-                Modal.createTrackedDialog("Spaces Feedback", "", GenericFeatureFeedbackDialog, {
+                Modal.createDialog(GenericFeatureFeedbackDialog, {
                     title: _t("Spaces feedback"),
                     subheading: _t("Thank you for trying Spaces. " +
                         "Your feedback will help inform the next versions."),

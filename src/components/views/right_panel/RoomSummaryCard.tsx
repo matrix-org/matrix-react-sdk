@@ -76,7 +76,7 @@ const Button: React.FC<IButtonProps> = ({ children, className, onClick }) => {
 };
 
 export const useWidgets = (room: Room) => {
-    const [apps, setApps] = useState<IApp[]>(WidgetStore.instance.getApps(room.roomId));
+    const [apps, setApps] = useState<IApp[]>(() => WidgetStore.instance.getApps(room.roomId));
 
     const updateApps = useCallback(() => {
         // Copy the array so that we always trigger a re-render, as some updates mutate the array of apps/settings
@@ -166,7 +166,6 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             title={openTitle}
             forceHide={!(isPinned || isMaximised)}
             disabled={isPinned || isMaximised}
-            yOffset={-48}
         >
             <WidgetAvatar app={app} />
             <span>{ name }</span>
@@ -178,7 +177,6 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             isExpanded={menuDisplayed}
             onClick={openMenu}
             title={_t("Options")}
-            yOffset={-24}
         /> }
 
         <AccessibleTooltipButton
@@ -186,13 +184,11 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             onClick={togglePin}
             title={pinTitle}
             disabled={cannotPin}
-            yOffset={-24}
         />
         <AccessibleTooltipButton
             className="mx_RoomSummaryCard_app_maximiseToggle"
             onClick={toggleMaximised}
             title={maximiseTitle}
-            yOffset={-24}
         />
 
         { contextMenu }
@@ -252,13 +248,13 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = () => {
-        Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
+        Modal.createDialog(ShareDialog, {
             target: room,
         });
     };
 
     const onRoomExportClick = async () => {
-        Modal.createTrackedDialog('export room dialog', '', ExportDialog, {
+        Modal.createDialog(ExportDialog, {
             room,
         });
     };
@@ -266,7 +262,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
-    const isVideoRoom = useFeatureEnabled("feature_video_rooms") && room.isElementVideoRoom();
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
+    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
+    const isVideoRoom = videoRoomsEnabled && (
+        room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom())
+    );
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = <React.Fragment>

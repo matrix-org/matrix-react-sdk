@@ -28,6 +28,7 @@ import SettingsFlag from "../elements/SettingsFlag";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import InlineSpinner from "../elements/InlineSpinner";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { shouldShowFeedback } from "../../../utils/Feedback";
 
 // XXX: Keep this around for re-use in future Betas
 
@@ -60,7 +61,6 @@ export const BetaPill = ({
                 </div>
             </div>}
             onClick={onClick}
-            yOffset={-10}
         >
             { _t("Beta") }
         </AccessibleTooltipButton>;
@@ -80,7 +80,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     const {
         title,
         caption,
-        disclaimer,
+        faq,
         image,
         feedbackLabel,
         feedbackSubheading,
@@ -89,15 +89,23 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     } = info;
 
     let feedbackButton;
-    if (value && feedbackLabel && feedbackSubheading && SdkConfig.get().bug_report_endpoint_url) {
+    if (value && feedbackLabel && feedbackSubheading && shouldShowFeedback()) {
         feedbackButton = <AccessibleButton
             onClick={() => {
-                Modal.createTrackedDialog("Beta Feedback", featureId, BetaFeedbackDialog, { featureId });
+                Modal.createDialog(BetaFeedbackDialog, { featureId });
             }}
             kind="primary"
         >
             { _t("Feedback") }
         </AccessibleButton>;
+    }
+
+    let refreshWarning: string;
+    if (requiresRefresh) {
+        const brand = SdkConfig.get().brand;
+        refreshWarning = value
+            ? _t("Leaving the beta will reload %(brand)s.", { brand })
+            : _t("Joining the beta will reload %(brand)s.", { brand });
     }
 
     let content: ReactNode;
@@ -138,8 +146,11 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                         { content }
                     </AccessibleButton>
                 </div>
-                { disclaimer && <div className="mx_BetaCard_disclaimer">
-                    { disclaimer(value) }
+                { refreshWarning && <div className="mx_BetaCard_refreshWarning">
+                    { refreshWarning }
+                </div> }
+                { faq && <div className="mx_BetaCard_faq">
+                    { faq(value) }
                 </div> }
             </div>
             <div className="mx_BetaCard_columns_image_wrapper">

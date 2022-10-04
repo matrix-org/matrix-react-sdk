@@ -33,6 +33,8 @@ interface IProps {
     // XXX: once design replaces all toggles make this the default
     useCheckbox?: boolean;
     disabled?: boolean;
+    disabledDescription?: string;
+    hideIfCannotSet?: boolean;
     onChange?(checked: boolean): void;
 }
 
@@ -76,10 +78,19 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
     public render() {
         const canChange = SettingsStore.canSetValue(this.props.name, this.props.roomId, this.props.level);
 
+        if (!canChange && this.props.hideIfCannotSet) return null;
+
         const label = this.props.label
             ? _t(this.props.label)
             : SettingsStore.getDisplayName(this.props.name, this.props.level);
         const description = SettingsStore.getDescription(this.props.name);
+
+        let disabledDescription: JSX.Element;
+        if (this.props.disabled && this.props.disabledDescription) {
+            disabledDescription = <div className="mx_SettingsFlag_microcopy">
+                { this.props.disabledDescription }
+            </div>;
+        }
 
         if (this.props.useCheckbox) {
             return <StyledCheckbox
@@ -97,6 +108,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                         { description && <div className="mx_SettingsFlag_microcopy">
                             { description }
                         </div> }
+                        { disabledDescription }
                     </label>
                     <ToggleSwitch
                         checked={this.state.value}

@@ -28,6 +28,7 @@ import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
 import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import MediaProcessingError from './shared/MediaProcessingError';
 
 interface IState {
     decryptedUrl?: string;
@@ -136,7 +137,11 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             this.forceUpdate(); // we don't really have a reliable thing to update, so just update the whole thing
         });
 
-        this.loadBlurhash();
+        try {
+            this.loadBlurhash();
+        } catch (e) {
+            logger.error("Failed to load blurhash", e);
+        }
 
         if (this.props.mediaEventHelper.media.isEncrypted && this.state.decryptedUrl === null) {
             try {
@@ -240,10 +245,9 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         if (this.state.error !== null) {
             return (
-                <span className="mx_MVideoBody">
-                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
+                <MediaProcessingError className="mx_MVideoBody">
                     { _t("Error decrypting video") }
-                </span>
+                </MediaProcessingError>
             );
         }
 

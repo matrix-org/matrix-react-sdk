@@ -68,7 +68,7 @@ class MenuOption extends React.Component<IMenuOptionProps> {
     }
 }
 
-interface IProps {
+export interface DropdownProps {
     id: string;
     // ARIA label
     label: string;
@@ -82,6 +82,8 @@ interface IProps {
     // width.
     menuWidth?: number;
     searchEnabled?: boolean;
+    // Placeholder to show when no value is selected
+    placeholder?: string;
     // Called when the selected option changes
     onOptionChange(dropdownKey: string): void;
     // Called when the value of the search field changes
@@ -106,13 +108,13 @@ interface IState {
  * but somewhat simpler as react-select is 79KB of minified
  * javascript.
  */
-export default class Dropdown extends React.Component<IProps, IState> {
+export default class Dropdown extends React.Component<DropdownProps, IState> {
     private readonly buttonRef = createRef<HTMLDivElement>();
     private dropdownRootElement: HTMLDivElement = null;
     private ignoreEvent: MouseEvent = null;
     private childrenByKey: Record<string, ReactNode> = {};
 
-    constructor(props: IProps) {
+    constructor(props: DropdownProps) {
         super(props);
 
         this.reindexChildren(this.props.children);
@@ -298,7 +300,7 @@ export default class Dropdown extends React.Component<IProps, IState> {
     }
 
     private getMenuOptions() {
-        const options = React.Children.map(this.props.children, (child) => {
+        const options = React.Children.map(this.props.children, (child: ReactElement) => {
             const highlighted = this.state.highlightedOption === child.key;
             return (
                 <MenuOption
@@ -362,7 +364,7 @@ export default class Dropdown extends React.Component<IProps, IState> {
                 this.props.getShortOption(this.props.value) :
                 this.childrenByKey[this.props.value];
             currentValue = <div className="mx_Dropdown_option" id={`${this.props.id}_value`}>
-                { selectedChild }
+                { selectedChild || this.props.placeholder }
             </div>;
         }
 

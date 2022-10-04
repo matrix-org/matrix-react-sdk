@@ -22,8 +22,7 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
 import UIStore from "../../../stores/UIStore";
-
-const MIN_TOOLTIP_HEIGHT = 25;
+import { objectHasDiff } from "../../../utils/objects";
 
 export enum Alignment {
     Natural, // Pick left or right
@@ -33,7 +32,6 @@ export enum Alignment {
     Bottom, // Centered
     InnerBottom, // Inside the target, at the bottom
     TopRight, // On top of the target, right aligned
-    TopCenter, // On top of the target, center aligned
 }
 
 export interface ITooltipProps {
@@ -48,7 +46,6 @@ export interface ITooltipProps {
         // the react element to put into the tooltip
         label: React.ReactNode;
         alignment?: Alignment; // defaults to Natural
-        yOffset?: number;
         // id describing tooltip
         // used to associate tooltip with target for a11y
         id?: string;
@@ -56,8 +53,10 @@ export interface ITooltipProps {
         maxParentWidth?: number;
 }
 
-export default class Tooltip extends React.Component<ITooltipProps> {
-    private tooltipContainer: HTMLElement;
+type State = Partial<Pick<CSSProperties, "display" | "right" | "top" | "transform" | "left">>;
+
+export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
+    private static container: HTMLElement;
     private parent: Element;
 
     // XXX: This is because some components (Field) are unable to `import` the Tooltip class,
@@ -66,86 +65,97 @@ export default class Tooltip extends React.Component<ITooltipProps> {
 
     public static readonly defaultProps = {
         visible: true,
-        yOffset: 0,
         alignment: Alignment.Natural,
     };
 
-    // Create a wrapper for the tooltip outside the parent and attach it to the body element
+    constructor(props) {
+        super(props);
+
+        this.state = {};
+
+        // Create a wrapper for the tooltips and attach it to the body element
+        if (!Tooltip.container) {
+            Tooltip.container = document.createElement("div");
+            Tooltip.container.className = "mx_Tooltip_wrapper";
+            document.body.appendChild(Tooltip.container);
+        }
+    }
+
     public componentDidMount() {
-        this.tooltipContainer = document.createElement("div");
-        this.tooltipContainer.className = "mx_Tooltip_wrapper";
-        document.body.appendChild(this.tooltipContainer);
-        window.addEventListener('scroll', this.renderTooltip, {
+        window.addEventListener('scroll', this.updatePosition, {
             passive: true,
             capture: true,
         });
 
         this.parent = ReactDOM.findDOMNode(this).parentNode as Element;
 
-        this.renderTooltip();
+        this.updatePosition();
     }
 
-    public componentDidUpdate() {
-        this.renderTooltip();
+    public componentDidUpdate(prevProps) {
+        if (objectHasDiff(prevProps, this.props)) {
+            this.updatePosition();
+        }
     }
 
     // Remove the wrapper element, as the tooltip has finished using it
     public componentWillUnmount() {
-        ReactDOM.unmountComponentAtNode(this.tooltipContainer);
-        document.body.removeChild(this.tooltipContainer);
-        window.removeEventListener('scroll', this.renderTooltip, {
+        window.removeEventListener('scroll', this.updatePosition, {
             capture: true,
         });
     }
 
     // Add the parent's position to the tooltips, so it's correctly
     // positioned, also taking into account any window zoom
-    private updatePosition(style: CSSProperties) {
+    private updatePosition = (): void => {
+        // When the tooltip is hidden, no need to thrash the DOM with `style` attribute updates (performance)
+        if (!this.props.visible) return;
+
         const parentBox = this.parent.getBoundingClientRect();
-        let offset = 0;
-        if (parentBox.height > MIN_TOOLTIP_HEIGHT) {
-            offset = Math.floor((parentBox.height - MIN_TOOLTIP_HEIGHT) / 2);
-        } else {
-            // The tooltip is larger than the parent height: figure out what offset
-            // we need so that we're still centered.
-            offset = Math.floor(parentBox.height - MIN_TOOLTIP_HEIGHT);
-        }
         const width = UIStore.instance.windowWidth;
+        const spacing = 6;
         const parentWidth = (
             this.props.maxParentWidth
                 ? Math.min(parentBox.width, this.props.maxParentWidth)
                 : parentBox.width
         );
-        const baseTop = (parentBox.top - 2 + this.props.yOffset) + window.scrollY;
-        const top = baseTop + offset;
+        const baseTop = parentBox.top + window.scrollY;
+        const centerTop = parentBox.top + window.scrollY + (parentBox.height / 2);
         const right = width - parentBox.left - window.scrollX;
         const left = parentBox.right + window.scrollX;
         const horizontalCenter = (
             parentBox.left - window.scrollX + (parentWidth / 2)
         );
+
+        const style: State = {};
         switch (this.props.alignment) {
             case Alignment.Natural:
                 if (parentBox.right > width / 2) {
-                    style.right = right;
-                    style.top = top;
+                    style.right = right + spacing;
+                    style.top = centerTop;
+                    style.transform = "translateY(-50%)";
                     break;
                 }
                 // fall through to Right
             case Alignment.Right:
-                style.left = left;
-                style.top = top;
+                style.left = left + spacing;
+                style.top = centerTop;
+                style.transform = "translateY(-50%)";
                 break;
             case Alignment.Left:
-                style.right = right;
-                style.top = top;
+                style.right = right + spacing;
+                style.top = centerTop;
+                style.transform = "translateY(-50%)";
                 break;
             case Alignment.Top:
-                style.top = baseTop - 16;
+                style.top = baseTop - spacing;
                 style.left = horizontalCenter;
+                style.transform = "translate(-50%, -100%)";
                 break;
             case Alignment.Bottom:
-                style.top = baseTop + parentBox.height;
+                style.top = baseTop + parentBox.height + spacing;
                 style.left = horizontalCenter;
+                style.transform = "translate(-50%)";
                 break;
             case Alignment.InnerBottom:
                 style.top = baseTop + parentBox.height - 50;
@@ -153,50 +163,37 @@ export default class Tooltip extends React.Component<ITooltipProps> {
                 style.transform = "translate(-50%)";
                 break;
             case Alignment.TopRight:
-                style.top = baseTop - 5;
+                style.top = baseTop - spacing;
                 style.right = width - parentBox.right - window.scrollX;
-                style.transform = "translate(5px, -100%)";
+                style.transform = "translateY(-100%)";
                 break;
-            case Alignment.TopCenter:
-                style.top = baseTop - 5;
-                style.left = horizontalCenter;
-                style.transform = "translate(-50%, -100%)";
         }
 
-        return style;
-    }
+        this.setState(style);
+    };
 
-    private renderTooltip = () => {
-        let style: CSSProperties = {};
-        // When the tooltip is hidden, no need to thrash the DOM with `style`
-        // attribute updates (performance)
-        if (this.props.visible) {
-            style = this.updatePosition({});
-        }
-        // Hide the entire container when not visible. This prevents flashing of the tooltip
-        // if it is not meant to be visible on first mount.
-        style.display = this.props.visible ? "block" : "none";
-
+    public render() {
         const tooltipClasses = classNames("mx_Tooltip", this.props.tooltipClassName, {
             "mx_Tooltip_visible": this.props.visible,
             "mx_Tooltip_invisible": !this.props.visible,
         });
 
+        const style = { ...this.state };
+        // Hide the entire container when not visible.
+        // This prevents flashing of the tooltip if it is not meant to be visible on first mount.
+        style.display = this.props.visible ? "block" : "none";
+
         const tooltip = (
-            <div className={tooltipClasses} style={style}>
+            <div role="tooltip" className={tooltipClasses} style={style}>
                 <div className="mx_Tooltip_chevron" />
                 { this.props.label }
             </div>
         );
 
-        // Render the tooltip manually, as we wish it not to be rendered within the parent
-        ReactDOM.render<Element>(tooltip, this.tooltipContainer);
-    };
-
-    public render() {
-        // Render a placeholder
         return (
-            <div className={this.props.className} />
+            <div className={this.props.className}>
+                { ReactDOM.createPortal(tooltip, Tooltip.container) }
+            </div>
         );
     }
 }

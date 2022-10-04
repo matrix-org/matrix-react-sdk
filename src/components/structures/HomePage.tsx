@@ -30,24 +30,20 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { useEventEmitter } from "../../hooks/useEventEmitter";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../views/elements/MiniAvatarUploader";
-import Analytics from "../../Analytics";
 import PosthogTrackers from "../../PosthogTrackers";
 import EmbeddedPage from "./EmbeddedPage";
 
 const onClickSendDm = (ev: ButtonEvent) => {
-    Analytics.trackEvent('home_page', 'button', 'dm');
     PosthogTrackers.trackInteraction("WebHomeCreateChatButton", ev);
     dis.dispatch({ action: 'view_create_chat' });
 };
 
 const onClickExplore = (ev: ButtonEvent) => {
-    Analytics.trackEvent('home_page', 'button', 'room_directory');
     PosthogTrackers.trackInteraction("WebHomeExploreRoomsButton", ev);
     dis.fire(Action.ViewRoomDirectory);
 };
 
 const onClickNewRoom = (ev: ButtonEvent) => {
-    Analytics.trackEvent('home_page', 'button', 'create_room');
     PosthogTrackers.trackInteraction("WebHomeCreateRoomButton", ev);
     dis.dispatch({ action: 'view_create_room' });
 };
@@ -75,6 +71,8 @@ const UserWelcomeTop = () => {
             hasAvatarLabel={_tDom("Great, that'll help people know it's you")}
             noAvatarLabel={_tDom("Add a photo so people know it's you.")}
             setAvatarUrl={url => cli.setAvatarUrl(url)}
+            isUserAvatar
+            onClick={ev => PosthogTrackers.trackInteraction("WebHomeMiniAvatarUploadButton", ev)}
         >
             <BaseAvatar
                 idName={userId}
@@ -87,7 +85,7 @@ const UserWelcomeTop = () => {
         </MiniAvatarUploader>
 
         <h1>{ _tDom("Welcome %(name)s", { name: ownProfile.displayName }) }</h1>
-        <h4>{ _tDom("Now, let's help you get started") }</h4>
+        <h2>{ _tDom("Now, let's help you get started") }</h2>
     </div>;
 };
 
@@ -99,8 +97,8 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
         return <EmbeddedPage className="mx_HomePage" url={pageUrl} scrollbar={true} />;
     }
 
-    let introSection;
-    if (justRegistered) {
+    let introSection: JSX.Element;
+    if (justRegistered || !OwnProfileStore.instance.getHttpAvatarUrl(AVATAR_SIZE)) {
         introSection = <UserWelcomeTop />;
     } else {
         const brandingConfig = SdkConfig.getObject("branding");
@@ -109,11 +107,11 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
         introSection = <React.Fragment>
             <img src={logoUrl} alt={config.brand} />
             <h1>{ _tDom("Welcome to %(appName)s", { appName: config.brand }) }</h1>
-            <h4>{ _tDom("Own your conversations.") }</h4>
+            <h2>{ _tDom("Own your conversations.") }</h2>
         </React.Fragment>;
     }
 
-    return <AutoHideScrollbar className="mx_HomePage mx_HomePage_default">
+    return <AutoHideScrollbar className="mx_HomePage mx_HomePage_default" element="main">
         <div className="mx_HomePage_default_wrapper">
             { introSection }
             <div className="mx_HomePage_default_buttons">

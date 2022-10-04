@@ -27,7 +27,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { UIFeature } from "../../../settings/UIFeature";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
-import CallViewForRoom from '../voip/CallViewForRoom';
+import LegacyCallViewForRoom from '../voip/LegacyCallViewForRoom';
 import { objectHasDiff } from "../../../utils/objects";
 
 interface IProps {
@@ -104,7 +104,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                 const severity = ev.getContent().severity || "normal";
                 const stateKey = ev.getStateKey();
 
-                // We want a non-empty title but can accept falsey values (e.g.
+                // We want a non-empty title but can accept falsy values (e.g.
                 // zero)
                 if (title && value !== undefined) {
                     counters.push({
@@ -123,7 +123,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
     render() {
         const callView = (
-            <CallViewForRoom
+            <LegacyCallViewForRoom
                 roomId={this.props.room.roomId}
                 resizeNotifier={this.props.resizeNotifier}
                 showApps={this.props.showApps}

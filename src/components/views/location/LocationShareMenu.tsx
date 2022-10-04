@@ -38,12 +38,18 @@ type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
     relation?: IEventRelation;
 };
 
-const getEnabledShareTypes = (): LocationShareType[] => {
-    const enabledShareTypes = [LocationShareType.Own, LocationShareType.Live];
+const getEnabledShareTypes = (relation): LocationShareType[] => {
+    const enabledShareTypes = [
+        LocationShareType.Own,
+    ];
 
-    if (SettingsStore.getValue("feature_location_share_pin_drop")) {
-        enabledShareTypes.push(LocationShareType.Pin);
+    // live locations cannot have a relation
+    // hide the option when composer has a relation
+    if (!relation) {
+        enabledShareTypes.push(LocationShareType.Live);
     }
+
+    enabledShareTypes.push(LocationShareType.Pin);
 
     return enabledShareTypes;
 };
@@ -57,7 +63,7 @@ const LocationShareMenu: React.FC<Props> = ({
     relation,
 }) => {
     const matrixClient = useContext(MatrixClientContext);
-    const enabledShareTypes = getEnabledShareTypes();
+    const enabledShareTypes = getEnabledShareTypes(relation);
     const isLiveShareEnabled = useFeatureEnabled("feature_location_share_live");
 
     const multipleShareTypesEnabled = enabledShareTypes.length > 1;

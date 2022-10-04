@@ -35,6 +35,7 @@ interface IState {
     headerKind: HeaderKind;
     phase: RightPanelPhases;
     threadNotificationColor: NotificationColor;
+    globalNotificationColor: NotificationColor;
 }
 
 interface IProps {}
@@ -51,6 +52,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
             headerKind: kind,
             phase: rps.currentCard.phase,
             threadNotificationColor: NotificationColor.None,
+            globalNotificationColor: NotificationColor.None,
         };
     }
 
@@ -70,10 +72,10 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     public setPhase(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>) {
         const rps = RightPanelStore.instance;
         if (rps.currentCard.phase == phase && !cardState && rps.isOpen) {
-            rps.togglePanel();
+            rps.togglePanel(null);
         } else {
             RightPanelStore.instance.setCard({ phase, state: cardState });
-            if (!rps.isOpen) rps.togglePanel();
+            if (!rps.isOpen) rps.togglePanel(null);
         }
     }
 
@@ -95,7 +97,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     public abstract renderButtons(): JSX.Element;
 
     public render() {
-        return <div className="mx_HeaderButtons">
+        return <div className="mx_HeaderButtons" role="tablist">
             { this.renderButtons() }
         </div>;
     }

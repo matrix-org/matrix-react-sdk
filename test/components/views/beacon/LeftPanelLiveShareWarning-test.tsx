@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { mocked } from 'jest-mock';
+// eslint-disable-next-line deprecate/import
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { Beacon, BeaconIdentifier } from 'matrix-js-sdk/src/matrix';
@@ -126,6 +127,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
                 metricsTrigger: undefined,
                 // latest beacon's room
                 room_id: roomId2,
+                event_id: beacon2.beaconInfoId,
+                highlighted: true,
+                scroll_into_view: true,
             });
         });
 
@@ -158,6 +162,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
                 metricsTrigger: undefined,
                 // error beacon's room
                 room_id: roomId1,
+                event_id: beacon1.beaconInfoId,
+                highlighted: true,
+                scroll_into_view: true,
             });
         });
 
@@ -168,7 +175,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
             const component = getComponent();
             // error mode
             expect(component.find('.mx_LeftPanelLiveShareWarning').at(0).text()).toEqual(
-                'An error occured whilst sharing your live location',
+                'An error occurred whilst sharing your live location',
             );
 
             act(() => {
@@ -264,6 +271,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
                     metricsTrigger: undefined,
                     // stopping error beacon's room
                     room_id: beacon2.roomId,
+                    event_id: beacon2.beaconInfoId,
+                    highlighted: true,
+                    scroll_into_view: true,
                 });
             });
         });

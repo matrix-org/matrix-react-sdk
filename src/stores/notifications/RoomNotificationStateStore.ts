@@ -34,7 +34,11 @@ interface IState {}
 export const UPDATE_STATUS_INDICATOR = Symbol("update-status-indicator");
 
 export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new RoomNotificationStateStore();
+    private static readonly internalInstance = (() => {
+        const instance = new RoomNotificationStateStore();
+        instance.start();
+        return instance;
+    })();
 
     private roomMap = new Map<Room, RoomNotificationState>();
     private roomThreadsMap = new Map<Room, ThreadsRoomNotificationState>();
@@ -124,7 +128,8 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         if (this.globalState.symbol !== globalState.symbol ||
             this.globalState.count !== globalState.count ||
             this.globalState.color !== globalState.color ||
-            this.globalState.numUnreadStates !== globalState.numUnreadStates
+            this.globalState.numUnreadStates !== globalState.numUnreadStates ||
+            state !== prevState
         ) {
             this._globalState = globalState;
             this.emit(UPDATE_STATUS_INDICATOR, globalState, state, prevState, data);

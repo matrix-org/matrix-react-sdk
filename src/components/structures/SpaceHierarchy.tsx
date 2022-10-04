@@ -18,6 +18,7 @@ import React, {
     Dispatch,
     KeyboardEvent,
     KeyboardEventHandler,
+    ReactElement,
     ReactNode,
     SetStateAction,
     useCallback,
@@ -50,7 +51,7 @@ import TextWithTooltip from "../views/elements/TextWithTooltip";
 import { useStateToggle } from "../../hooks/useStateToggle";
 import { getChildOrder } from "../../stores/spaces/SpaceStore";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import { linkifyElement } from "../../HtmlUtils";
+import { linkifyElement, topicToHtml } from "../../HtmlUtils";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { Action } from "../../dispatcher/actions";
 import { IState, RovingTabIndexProvider, useRovingTabIndex } from "../../accessibility/RovingTabIndex";
@@ -64,6 +65,8 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { Alignment } from "../views/elements/Tooltip";
+import { getTopic } from "../../hooks/room/useTopic";
 
 interface IProps {
     space: Room;
@@ -121,7 +124,7 @@ const Tile: React.FC<ITileProps> = ({
         });
     };
 
-    let button;
+    let button: ReactElement;
     if (busy) {
         button = <AccessibleTooltipButton
             disabled={true}
@@ -153,7 +156,7 @@ const Tile: React.FC<ITileProps> = ({
         </AccessibleButton>;
     }
 
-    let checkbox;
+    let checkbox: ReactElement | undefined;
     if (onToggleClick) {
         if (hasPermissions) {
             checkbox = <StyledCheckbox checked={!!selected} onChange={onToggleClick} tabIndex={isActive ? 0 : -1} />;
@@ -167,7 +170,7 @@ const Tile: React.FC<ITileProps> = ({
         }
     }
 
-    let avatar;
+    let avatar: ReactElement;
     if (joinedRoom) {
         avatar = <RoomAvatar room={joinedRoom} width={20} height={20} />;
     } else {
@@ -185,19 +188,22 @@ const Tile: React.FC<ITileProps> = ({
         description += " · " + _t("%(count)s rooms", { count: numChildRooms });
     }
 
-    const topic = joinedRoom?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || room.topic;
-    if (topic) {
-        description += " · " + topic;
+    let topic: ReactNode | string | null;
+    if (joinedRoom) {
+        const topicObj = getTopic(joinedRoom);
+        topic = topicToHtml(topicObj?.text, topicObj?.html);
+    } else {
+        topic = room.topic;
     }
 
-    let joinedSection;
+    let joinedSection: ReactElement | undefined;
     if (joinedRoom) {
         joinedSection = <div className="mx_SpaceHierarchy_roomTile_joined">
             { _t("Joined") }
         </div>;
     }
 
-    let suggestedSection;
+    let suggestedSection: ReactElement | undefined;
     if (suggested && (!joinedRoom || hasPermissions)) {
         suggestedSection = <InfoTooltip tooltip={_t("This room is suggested as a good one to join")}>
             { _t("Suggested") }
@@ -225,6 +231,8 @@ const Tile: React.FC<ITileProps> = ({
                 }}
             >
                 { description }
+                { topic && " · " }
+                { topic }
             </div>
         </div>
         <div className="mx_SpaceHierarchy_actions">
@@ -491,8 +499,8 @@ const INITIAL_PAGE_SIZE = 20;
 export const useRoomHierarchy = (space: Room): {
     loading: boolean;
     rooms?: IHierarchyRoom[];
-    hierarchy: RoomHierarchy;
-    error: Error;
+    hierarchy?: RoomHierarchy;
+    error?: Error;
     loadMore(pageSize?: number): Promise<void>;
 } => {
     const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
@@ -523,8 +531,21 @@ export const useRoomHierarchy = (space: Room): {
         setRooms(hierarchy.rooms);
     }, [error, hierarchy]);
 
-    const loading = hierarchy?.loading ?? true;
-    return { loading, rooms, hierarchy, loadMore, error };
+    // Only return the hierarchy if it is for the space requested
+    if (hierarchy?.root !== space) {
+        return {
+            loading: true,
+            loadMore,
+        };
+    }
+
+    return {
+        loading: hierarchy.loading,
+        rooms,
+        hierarchy,
+        loadMore,
+        error,
+    };
 };
 
 const useIntersectionObserver = (callback: () => void) => {
@@ -583,7 +604,7 @@ const ManageButtons = ({ hierarchy, selected, setSelected, setError }: IManageBu
         Button = AccessibleTooltipButton;
         props = {
             tooltip: _t("Select a room below first"),
-            yOffset: -40,
+            alignment: Alignment.Top,
         };
     }
 
@@ -670,7 +691,7 @@ const SpaceHierarchy = ({
     const { loading, rooms, hierarchy, loadMore, error: hierarchyError } = useRoomHierarchy(space);
 
     const filteredRoomSet = useMemo<Set<IHierarchyRoom>>(() => {
-        if (!rooms?.length) return new Set();
+        if (!rooms?.length || !hierarchy) return new Set();
         const lcQuery = query.toLowerCase().trim();
         if (!lcQuery) return new Set(rooms);
 
@@ -702,7 +723,7 @@ const SpaceHierarchy = ({
 
     const loaderRef = useIntersectionObserver(loadMore);
 
-    if (!loading && hierarchy.noSupport) {
+    if (!loading && hierarchy!.noSupport) {
         return <p>{ _t("Your server does not support showing space hierarchies.") }</p>;
     }
 
@@ -736,7 +757,7 @@ const SpaceHierarchy = ({
     return <RovingTabIndexProvider onKeyDown={onKeyDown} handleHomeEnd handleUpDown>
         { ({ onKeyDownHandler }) => {
             let content: JSX.Element;
-            if (loading && !rooms?.length) {
+            if (!hierarchy || (loading && !rooms?.length)) {
                 content = <Spinner />;
             } else {
                 const hasPermissions = space?.getMyMembership() === "join" &&
