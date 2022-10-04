@@ -103,7 +103,6 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
             _td("Voice & Video"),
             "mx_RoomSettingsDialog_voiceIcon",
             <VoipRoomSettingsTab roomId={this.props.roomId} />,
-            "RoomSettingsVoip",
         ));
         tabs.push(new Tab(
             ROOM_SECURITY_TAB,
