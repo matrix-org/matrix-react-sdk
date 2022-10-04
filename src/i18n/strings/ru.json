@@ -187,7 +187,7 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Вам необходимо предоставить %(brand)s доступ к микрофону или веб-камере вручную",
     "Anyone": "Все",
     "Are you sure you want to leave the room '%(roomName)s'?": "Уверены, что хотите покинуть '%(roomName)s'?",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s удалил(а) имя комнаты.",
+    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s удалил(а) название комнаты.",
     "Custom level": "Специальные права",
     "Email address": "Электронная почта",
     "Error decrypting attachment": "Ошибка расшифровки вложения",
@@ -613,7 +613,7 @@
     "Timeline": "Лента сообщений",
     "Autocomplete delay (ms)": "Задержка автодополнения (мс)",
     "Roles & Permissions": "Роли и права",
-    "Security & Privacy": "Безопасность и приватность",
+    "Security & Privacy": "Безопасность",
     "Encryption": "Шифрование",
     "Encrypted": "Зашифровано",
     "Ignored users": "Игнорируемые пользователи",
@@ -3554,5 +3554,8 @@
     "Enable notifications for this account": "Уведомления для этой учётной записи",
     "Turn off to disable notifications on all your devices and sessions": "Выключите, чтобы отключить уведомления во всех своих сессиях",
     "Failed to set pusher state": "Не удалось установить состояние push-службы",
-    "%(selectedDeviceCount)s sessions selected": "Выбрано сессий: %(selectedDeviceCount)s"
+    "%(selectedDeviceCount)s sessions selected": "Выбрано сессий: %(selectedDeviceCount)s",
+    "Application": "Приложение",
+    "Version": "Версия",
+    "URL": "URL-адрес"
 }
