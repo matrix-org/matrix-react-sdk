@@ -30,7 +30,7 @@ export class Rendezvous {
     private cli?: MatrixClient;
     public user?: string;
     private newDeviceId?: string;
-    private newDeviceKeys?: Record<string, string>;
+    private newDeviceKey?: string;
     public code?: string;
     public onCancelled?: (reason: RendezvousCancellationReason) => void;
 
@@ -87,50 +87,37 @@ export class Rendezvous {
 
         const { deviceId, userId } = login;
 
-        const data = {
-            outcome: 'success',
-            deviceId,
-            deviceKeys: undefined,
-        };
-
         const client = MatrixClientPeg.get();
 
-        if (client.crypto) {
-            const devices = client.crypto.deviceList.getRawStoredDevicesForUser(userId);
-            if (!devices || !devices[deviceId]) {
-                throw new Error("Unknown device " + userId + ":" + deviceId);
-            }
-
-            const device = devices[deviceId];
-
-            data.deviceKeys = device.keys;
-        } else {
-            logger.info("No crypto module, so not cross-signing");
-        }
-
-        await this.channel.send(data);
+        await this.channel.send({
+            outcome: 'success',
+            device_id: deviceId,
+            device_key: client.getDeviceEd25519Key(),
+        });
 
         // await confirmation of verification
         // eslint-disable-next-line camelcase
-        const { verifying_device_id, keys } = await this.channel.receive();
+        const { verifying_device_id: verifyingDeviceId, master_key: masterKey, verifying_device_key: verifyingDeviceKey } = await this.channel.receive();
 
-        // set other device as verified
-        await client.setDeviceVerified(userId, verifying_device_id, true);
+        const verifyingDeviceFromServer =
+            client.crypto.deviceList.getStoredDevice(userId, verifyingDeviceId);
 
-        if (keys) {
-            // set up cross-signing
-            // eslint-disable-next-line camelcase
-            const { master, user_signing, self_signing } = keys;
+        if (verifyingDeviceFromServer?.getFingerprint() === verifyingDeviceKey) {
+            // set other device as verified
+            logger.info(`Setting device ${verifyingDeviceId} as verified`);
+            await client.setDeviceVerified(userId, verifyingDeviceId, true);
 
-            // eslint-disable-next-line camelcase
-            if (master || user_signing || self_signing) {
-                // eslint-disable-next-line camelcase
-                client.crypto.crossSigningInfo.setKeys({ master, user_signing, self_signing });
+            if (masterKey) {
+                // set master key as trusted
+                await client.setDeviceVerified(userId, masterKey, true);
             }
-        }
 
-        // request keys from the verifying device
-        await requestKeysDuringVerification(client, userId, verifying_device_id);
+            // request secrets from the verifying device
+            logger.info(`Requesting secrets from ${verifyingDeviceId}`);
+            await requestKeysDuringVerification(client, userId, verifyingDeviceId);
+        } else {
+            logger.info(`Verifying device ${verifyingDeviceId} doesn't match: ${verifyingDeviceFromServer}`);
+        }
 
         return login;
     }
@@ -160,45 +147,39 @@ export class Rendezvous {
         if (!res) {
             return undefined;
         }
-        const { outcome, deviceId, deviceKeys } = res;
+        const { outcome, device_id: deviceId, device_key: deviceKey } = res;
 
         if (outcome !== 'success') {
             throw new Error('Linking failed');
         }
 
         this.newDeviceId = deviceId;
-        this.newDeviceKeys = deviceKeys;
+        this.newDeviceKey = deviceKey;
 
         return deviceId;
     }
 
     private async checkAndCrossSignDevice(deviceInfo: DeviceInfo) {
-        const expected = Object.keys(deviceInfo.keys).length;
-        const actual = Object.keys(this.newDeviceKeys).length;
-        if (expected !== actual) {
-            throw new Error(`New device has different keys than expected: ${expected} vs ${actual}`);
+        // check that keys received from the server for the new device match those received from the device itself
+        if (deviceInfo.getFingerprint() !== this.newDeviceKey) {
+            throw new Error(`New device has different keys than expected: ${this.newDeviceKey} vs ${deviceInfo.getFingerprint()}`);
         }
 
-        for (const keyId of Object.keys(this.newDeviceKeys)) {
-            logger.info(`Checking ${keyId}: ${deviceInfo.keys[keyId]} vs ${this.newDeviceKeys[keyId]}`);
-            if (deviceInfo.keys[keyId] !== this.newDeviceKeys[keyId]) {
-                throw new Error(`New device has different keys than expected for ${keyId}`);
-            }
-        }
-
+        // mark the device as verified locally + cross sign
+        logger.info(`Marking device ${this.newDeviceId} as verified`);
         const info = await this.cli.crypto.setDeviceVerification(
             this.cli.getUserId(),
             this.newDeviceId,
             true, false, true,
         );
 
-        // eslint-disable-next-line camelcase
-        const { master, user_signing, self_signing } = this.cli.crypto.crossSigningInfo.toStorage().keys;
+        const masterPublicKey = this.cli.crypto.crossSigningInfo.getId('master');
+
         await this.channel.send({
             outcome: 'verified',
             verifying_device_id: this.cli.getDeviceId(),
-            // eslint-disable-next-line camelcase
-            keys: { master, user_signing, self_signing },
+            verifying_device_key: this.cli.getDeviceEd25519Key(),
+            master_key: masterPublicKey,
         });
 
         return info;
@@ -209,8 +190,8 @@ export class Rendezvous {
             throw new Error('No new device to sign');
         }
 
-        if (!this.newDeviceKeys || Object.values(this.newDeviceKeys).length === 0) {
-            logger.info("No new device keys to sign");
+        if (!this.newDeviceKey) {
+            logger.info("No new device key to sign");
             return undefined;
         }
 
