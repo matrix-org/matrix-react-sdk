@@ -38,12 +38,15 @@ import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
 import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
 import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
+import { SlidingRoomListStoreClass } from "./SlidingRoomListStore";
+import { UPDATE_EVENT } from "../AsyncStore";
 
 interface IState {
     // state is tracked in underlying classes
 }
 
 export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
+export const LISTS_LOADING_EVENT = RoomListStoreEvent.ListsLoading; // unused; used by SlidingRoomListStore
 
 export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     /**
@@ -102,7 +105,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             this.readyStore.useUnitTestClient(forcedClient);
         }
 
-        RoomViewStore.instance.addListener(() => this.handleRVSUpdate({}));
+        RoomViewStore.instance.addListener(UPDATE_EVENT, () => this.handleRVSUpdate({}));
         this.algorithm.on(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.on(FILTER_CHANGED, this.onAlgorithmFilterUpdated);
         this.setupWatchers();
@@ -585,6 +588,11 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         return algorithmTags;
     }
 
+    public getCount(tagId: TagID): number {
+        // The room list store knows about all the rooms, so just return the length.
+        return this.orderedLists[tagId].length || 0;
+    }
+
     /**
      * Manually update a room with a given cause. This should only be used if the
      * room list store would otherwise be incapable of doing the update itself. Note
@@ -602,10 +610,17 @@ export default class RoomListStore {
     private static internalInstance: Interface;
 
     public static get instance(): Interface {
-        if (!this.internalInstance) {
-            const instance = new RoomListStoreClass();
-            instance.start();
-            this.internalInstance = instance;
+        if (!RoomListStore.internalInstance) {
+            if (SettingsStore.getValue("feature_sliding_sync")) {
+                logger.info("using SlidingRoomListStoreClass");
+                const instance = new SlidingRoomListStoreClass();
+                instance.start();
+                RoomListStore.internalInstance = instance;
+            } else {
+                const instance = new RoomListStoreClass();
+                instance.start();
+                RoomListStore.internalInstance = instance;
+            }
         }
 
         return this.internalInstance;

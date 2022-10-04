@@ -30,12 +30,13 @@ import {
     EventType,
     IEventRelation,
     IUnsigned,
+    IPusher,
 } from 'matrix-js-sdk/src/matrix';
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
+import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
-import dis from '../../src/dispatcher/dispatcher';
 import { makeType } from "../../src/utils/TypeUtils";
 import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
@@ -50,7 +51,7 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
  */
-export function stubClient() {
+export function stubClient(): MatrixClient {
     const client = createTestClient();
 
     // stub out the methods in MatrixClientPeg
@@ -64,6 +65,7 @@ export function stubClient() {
     // fast stub function rather than a sinon stub
     peg.get = function() { return client; };
     MatrixClientBackedSettingsHandler.matrixClient = client;
+    return client;
 }
 
 /**
@@ -99,7 +101,7 @@ export function createTestClient(): MatrixClient {
         },
 
         getPushActionsForEvent: jest.fn(),
-        getRoom: jest.fn().mockImplementation(mkStubRoom),
+        getRoom: jest.fn().mockImplementation(roomId => mkStubRoom(roomId, "My room", client)),
         getRooms: jest.fn().mockReturnValue([]),
         getVisibleRooms: jest.fn().mockReturnValue([]),
         loginFlows: jest.fn(),
@@ -174,6 +176,11 @@ export function createTestClient(): MatrixClient {
         sendToDevice: jest.fn().mockResolvedValue(undefined),
         queueToDevice: jest.fn().mockResolvedValue(undefined),
         encryptAndSendToDevices: jest.fn().mockResolvedValue(undefined),
+
+        getMediaHandler: jest.fn().mockReturnValue({
+            setVideoInput: jest.fn(),
+            setAudioInput: jest.fn(),
+        } as unknown as MediaHandler),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -335,8 +342,10 @@ export function mkRoomMember(roomId: string, userId: string, membership = "join"
         name: userId,
         rawDisplayName: userId,
         roomId,
+        events: {},
         getAvatarUrl: () => {},
         getMxcAvatarUrl: () => {},
+        getDMInviter: () => {},
     } as unknown as RoomMember;
 }
 
@@ -398,7 +407,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getMembers: jest.fn().mockReturnValue([]),
         getPendingEvents: () => [],
         getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
-        getUnfilteredTimelineSet: () => null,
+        getUnfilteredTimelineSet: jest.fn(),
         findEventById: () => null,
         getAccountData: () => null,
         hasMembershipState: () => null,
@@ -442,6 +451,8 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         canInvite: jest.fn(),
         getThreads: jest.fn().mockReturnValue([]),
         eventShouldLiveIn: jest.fn().mockReturnValue({}),
+        createThreadsTimelineSets: jest.fn().mockReturnValue(new Promise(() => {})),
+        fetchRoomThreads: jest.fn().mockReturnValue(new Promise(() => {})),
     } as unknown as Room;
 }
 
@@ -452,18 +463,6 @@ export function mkServerConfig(hsUrl, isUrl) {
         hsNameIsDifferent: false, // yes, we lie
         isUrl,
     });
-}
-
-export function getDispatchForStore(store) {
-    // Mock the dispatcher by gut-wrenching. Stores can only __emitChange whilst a
-    // dispatcher `_isDispatching` is true.
-    return (payload) => {
-        // these are private properties in flux dispatcher
-        // fool ts
-        (dis as any)._isDispatching = true;
-        (dis as any)._callbacks[store._dispatchToken](payload);
-        (dis as any)._isDispatching = false;
-    };
 }
 
 // These methods make some use of some private methods on the AsyncStoreWithClient to simplify getting into a consistent
@@ -549,3 +548,14 @@ export const mkSpace = (
     )));
     return space;
 };
+
+export const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
+    app_display_name: "app",
+    app_id: "123",
+    data: {},
+    device_display_name: "name",
+    kind: "http",
+    lang: "en",
+    pushkey: "pushpush",
+    ...extra,
+});

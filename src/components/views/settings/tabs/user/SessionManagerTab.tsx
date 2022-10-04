@@ -14,23 +14,96 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import { _t } from "../../../../../languageHandler";
-import { useOwnDevices } from '../../devices/useOwnDevices';
+import MatrixClientContext from '../../../../../contexts/MatrixClientContext';
+import Modal from '../../../../../Modal';
 import SettingsSubsection from '../../shared/SettingsSubsection';
+import SetupEncryptionDialog from '../../../dialogs/security/SetupEncryptionDialog';
+import VerificationRequestDialog from '../../../dialogs/VerificationRequestDialog';
+import LogoutDialog from '../../../dialogs/LogoutDialog';
+import { useOwnDevices } from '../../devices/useOwnDevices';
 import { FilteredDeviceList } from '../../devices/FilteredDeviceList';
 import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
 import SecurityRecommendations from '../../devices/SecurityRecommendations';
 import { DeviceSecurityVariation, DeviceWithVerification } from '../../devices/types';
+import { deleteDevicesWithInteractiveAuth } from '../../devices/deleteDevices';
 import SettingsTab from '../SettingsTab';
 
+const useSignOut = (
+    matrixClient: MatrixClient,
+    onSignoutResolvedCallback: () => Promise<void>,
+): {
+        onSignOutCurrentDevice: () => void;
+        onSignOutOtherDevices: (deviceIds: DeviceWithVerification['device_id'][]) => Promise<void>;
+        signingOutDeviceIds: DeviceWithVerification['device_id'][];
+    } => {
+    const [signingOutDeviceIds, setSigningOutDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
+
+    const onSignOutCurrentDevice = () => {
+        Modal.createDialog(
+            LogoutDialog,
+            {}, // props,
+            undefined, // className
+            false, // isPriority
+            true, // isStatic
+        );
+    };
+
+    const onSignOutOtherDevices = async (deviceIds: DeviceWithVerification['device_id'][]) => {
+        if (!deviceIds.length) {
+            return;
+        }
+        try {
+            setSigningOutDeviceIds([...signingOutDeviceIds, ...deviceIds]);
+            await deleteDevicesWithInteractiveAuth(
+                matrixClient,
+                deviceIds,
+                async (success) => {
+                    if (success) {
+                        await onSignoutResolvedCallback();
+                    }
+                    setSigningOutDeviceIds(signingOutDeviceIds.filter(deviceId => !deviceIds.includes(deviceId)));
+                },
+            );
+        } catch (error) {
+            logger.error("Error deleting sessions", error);
+            setSigningOutDeviceIds(signingOutDeviceIds.filter(deviceId => !deviceIds.includes(deviceId)));
+        }
+    };
+
+    return {
+        onSignOutCurrentDevice,
+        onSignOutOtherDevices,
+        signingOutDeviceIds,
+    };
+};
+
 const SessionManagerTab: React.FC = () => {
-    const { devices, currentDeviceId, isLoading } = useOwnDevices();
+    const {
+        devices,
+        pushers,
+        localNotificationSettings,
+        currentDeviceId,
+        isLoadingDeviceList,
+        requestDeviceVerification,
+        refreshDevices,
+        saveDeviceName,
+        setPushNotifications,
+        supportsMSC3881,
+    } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
     const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
+    const [selectedDeviceIds, setSelectedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
     const filteredDeviceListRef = useRef<HTMLDivElement>(null);
     const scrollIntoViewTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+    const matrixClient = useContext(MatrixClientContext);
+    const userId = matrixClient.getUserId();
+    const currentUserMember = userId && matrixClient.getUser(userId) || undefined;
 
     const onDeviceExpandToggle = (deviceId: DeviceWithVerification['device_id']): void => {
         if (expandedDeviceIds.includes(deviceId)) {
@@ -42,7 +115,6 @@ const SessionManagerTab: React.FC = () => {
 
     const onGoToFilteredList = (filter: DeviceSecurityVariation) => {
         setFilter(filter);
-        // @TODO(kerrya) clear selection when added in PSG-659
         clearTimeout(scrollIntoViewTimeoutRef.current);
         // wait a tick for the filtered section to rerender with different height
         scrollIntoViewTimeoutRef.current =
@@ -57,9 +129,47 @@ const SessionManagerTab: React.FC = () => {
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
     const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
 
+    const onVerifyCurrentDevice = () => {
+        Modal.createDialog(
+            SetupEncryptionDialog as unknown as React.ComponentType,
+            { onFinished: refreshDevices },
+        );
+    };
+
+    const onTriggerDeviceVerification = useCallback((deviceId: DeviceWithVerification['device_id']) => {
+        if (!requestDeviceVerification) {
+            return;
+        }
+        const verificationRequestPromise = requestDeviceVerification(deviceId);
+        Modal.createDialog(VerificationRequestDialog, {
+            verificationRequestPromise,
+            member: currentUserMember,
+            onFinished: async () => {
+                const request = await verificationRequestPromise;
+                request.cancel();
+                await refreshDevices();
+            },
+        });
+    }, [requestDeviceVerification, refreshDevices, currentUserMember]);
+
+    const onSignoutResolvedCallback = async () => {
+        await refreshDevices();
+        setSelectedDeviceIds([]);
+    };
+    const {
+        onSignOutCurrentDevice,
+        onSignOutOtherDevices,
+        signingOutDeviceIds,
+    } = useSignOut(matrixClient, onSignoutResolvedCallback);
+
     useEffect(() => () => {
         clearTimeout(scrollIntoViewTimeoutRef.current);
     }, [scrollIntoViewTimeoutRef]);
+
+    // clear selection when filter changes
+    useEffect(() => {
+        setSelectedDeviceIds([]);
+    }, [filter, setSelectedDeviceIds]);
 
     return <SettingsTab heading={_t('Sessions')}>
         <SecurityRecommendations
@@ -69,7 +179,13 @@ const SessionManagerTab: React.FC = () => {
         />
         <CurrentDeviceSection
             device={currentDevice}
-            isLoading={isLoading}
+            localNotificationSettings={localNotificationSettings.get(currentDeviceId)}
+            setPushNotifications={setPushNotifications}
+            isSigningOut={signingOutDeviceIds.includes(currentDeviceId)}
+            isLoading={isLoadingDeviceList}
+            saveDeviceName={(deviceName) => saveDeviceName(currentDeviceId, deviceName)}
+            onVerifyCurrentDevice={onVerifyCurrentDevice}
+            onSignOutCurrentDevice={onSignOutCurrentDevice}
         />
         {
             shouldShowOtherSessions &&
@@ -83,11 +199,21 @@ const SessionManagerTab: React.FC = () => {
             >
                 <FilteredDeviceList
                     devices={otherDevices}
+                    pushers={pushers}
+                    localNotificationSettings={localNotificationSettings}
                     filter={filter}
                     expandedDeviceIds={expandedDeviceIds}
+                    signingOutDeviceIds={signingOutDeviceIds}
+                    selectedDeviceIds={selectedDeviceIds}
+                    setSelectedDeviceIds={setSelectedDeviceIds}
                     onFilterChange={setFilter}
                     onDeviceExpandToggle={onDeviceExpandToggle}
+                    onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
+                    onSignOutDevices={onSignOutOtherDevices}
+                    saveDeviceName={saveDeviceName}
+                    setPushNotifications={setPushNotifications}
                     ref={filteredDeviceListRef}
+                    supportsMSC3881={supportsMSC3881}
                 />
             </SettingsSubsection>
         }

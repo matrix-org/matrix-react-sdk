@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import url from 'url';
-import React, { ContextType, createRef, MutableRefObject } from 'react';
+import React, { ContextType, createRef, MutableRefObject, ReactNode } from 'react';
 import classNames from 'classnames';
 import { MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
@@ -165,10 +165,8 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!props.room) return true; // user widgets always have permissions
 
         const currentlyAllowedWidgets = SettingsStore.getValue("allowedWidgets", props.room.roomId);
-        if (currentlyAllowedWidgets[props.app.eventId] === undefined) {
-            return props.userId === props.creatorUserId;
-        }
-        return !!currentlyAllowedWidgets[props.app.eventId];
+        const allowed = props.app.eventId !== undefined && (currentlyAllowedWidgets[props.app.eventId] ?? false);
+        return allowed || props.userId === props.creatorUserId;
     };
 
     private onUserLeftRoom() {
@@ -442,7 +440,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         const roomId = this.props.room?.roomId;
         logger.info("Granting permission for widget to load: " + this.props.app.eventId);
         const current = SettingsStore.getValue("allowedWidgets", roomId);
-        current[this.props.app.eventId] = true;
+        if (this.props.app.eventId !== undefined) current[this.props.app.eventId] = true;
         const level = SettingsStore.firstSupportedLevel("allowedWidgets");
         SettingsStore.setValue("allowedWidgets", roomId, level, current).then(() => {
             this.setState({ hasPermissionToLoad: true });
@@ -550,7 +548,8 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         // Additional iframe feature permissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
-        const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write;";
+        const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write; " +
+            "clipboard-read;";
 
         const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
         const appTileBodyStyles = {};
@@ -665,7 +664,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         }
 
-        const layoutButtons: React.ReactNodeArray = [];
+        const layoutButtons: ReactNode[] = [];
         if (this.props.showLayoutButtons) {
             const isMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);

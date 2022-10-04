@@ -18,27 +18,34 @@ import { MatrixWidgetType } from "matrix-widget-api";
 
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { mkEvent } from "./test-utils";
-import { Call } from "../../src/models/Call";
+import { Call, ElementCall, JitsiCall } from "../../src/models/Call";
 
 export class MockedCall extends Call {
-    private static EVENT_TYPE = "org.example.mocked_call";
+    public static readonly EVENT_TYPE = "org.example.mocked_call";
+    public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-    private constructor(private readonly room: Room, private readonly id: string) {
-        super({
-            id,
-            eventId: "$1:example.org",
-            roomId: room.roomId,
-            type: MatrixWidgetType.Custom,
-            url: "https://example.org",
-            name: "Group call",
-            creatorUserId: "@alice:example.org",
-        });
+    private constructor(room: Room, public readonly event: MatrixEvent) {
+        super(
+            {
+                id: event.getStateKey()!,
+                eventId: "$1:example.org",
+                roomId: room.roomId,
+                type: MatrixWidgetType.Custom,
+                url: "https://example.org",
+                name: "Group call",
+                creatorUserId: "@alice:example.org",
+            },
+            room.client,
+        );
     }
 
     public static get(room: Room): MockedCall | null {
         const [event] = room.currentState.getStateEvents(this.EVENT_TYPE);
-        return event?.getContent().terminated ?? true ? null : new MockedCall(room, event.getStateKey()!);
+        return (event === undefined || "m.terminated" in event.getContent())
+            ? null
+            : new MockedCall(room, event);
     }
 
     public static create(room: Room, id: string) {
@@ -48,8 +55,9 @@ export class MockedCall extends Call {
             type: this.EVENT_TYPE,
             room: room.roomId,
             user: "@alice:example.org",
-            content: { terminated: false },
+            content: { "m.type": "m.video", "m.intent": "m.prompt" },
             skey: id,
+            ts: Date.now(),
         })]);
     }
 
@@ -61,12 +69,10 @@ export class MockedCall extends Call {
     }
 
     // No action needed for any of the following methods since this is just a mock
-    public async clean(): Promise<void> {}
+    protected getDevices(): string[] { return []; }
+    protected async setDevices(): Promise<void> { }
     // Public to allow spying
-    public async performConnection(
-        audioInput: MediaDeviceInfo | null,
-        videoInput: MediaDeviceInfo | null,
-    ): Promise<void> {}
+    public async performConnection(): Promise<void> {}
     public async performDisconnection(): Promise<void> {}
 
     public destroy() {
@@ -76,8 +82,9 @@ export class MockedCall extends Call {
             type: MockedCall.EVENT_TYPE,
             room: this.room.roomId,
             user: "@alice:example.org",
-            content: { terminated: true },
-            skey: this.id,
+            content: { ...this.event.getContent(), "m.terminated": "Call ended" },
+            skey: this.widget.id,
+            ts: Date.now(),
         })]);
 
         super.destroy();
@@ -89,4 +96,6 @@ export class MockedCall extends Call {
  */
 export const useMockedCalls = () => {
     Call.get = room => MockedCall.get(room);
+    JitsiCall.create = async room => MockedCall.create(room, "1");
+    ElementCall.create = async room => MockedCall.create(room, "1");
 };

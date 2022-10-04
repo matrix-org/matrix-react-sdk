@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { LocalNotificationSettings } from 'matrix-js-sdk/src/@types/local_notifications';
 import React, { useState } from 'react';
 
 import { _t } from '../../../../languageHandler';
@@ -28,10 +29,23 @@ import { DeviceWithVerification } from './types';
 interface Props {
     device?: DeviceWithVerification;
     isLoading: boolean;
+    isSigningOut: boolean;
+    localNotificationSettings?: LocalNotificationSettings | undefined;
+    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
+    onVerifyCurrentDevice: () => void;
+    onSignOutCurrentDevice: () => void;
+    saveDeviceName: (deviceName: string) => Promise<void>;
 }
 
 const CurrentDeviceSection: React.FC<Props> = ({
-    device, isLoading,
+    device,
+    isLoading,
+    isSigningOut,
+    localNotificationSettings,
+    setPushNotifications,
+    onVerifyCurrentDevice,
+    onSignOutCurrentDevice,
+    saveDeviceName,
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -39,7 +53,8 @@ const CurrentDeviceSection: React.FC<Props> = ({
         heading={_t('Current session')}
         data-testid='current-session-section'
     >
-        { isLoading && <Spinner /> }
+        { /* only show big spinner on first load */ }
+        { isLoading && !device && <Spinner /> }
         { !!device && <>
             <DeviceTile
                 device={device}
@@ -50,9 +65,19 @@ const CurrentDeviceSection: React.FC<Props> = ({
                     onClick={() => setIsExpanded(!isExpanded)}
                 />
             </DeviceTile>
-            { isExpanded && <DeviceDetails device={device} /> }
+            { isExpanded &&
+                <DeviceDetails
+                    device={device}
+                    localNotificationSettings={localNotificationSettings}
+                    setPushNotifications={setPushNotifications}
+                    isSigningOut={isSigningOut}
+                    onVerifyDevice={onVerifyCurrentDevice}
+                    onSignOutDevice={onSignOutCurrentDevice}
+                    saveDeviceName={saveDeviceName}
+                />
+            }
             <br />
-            <DeviceVerificationStatusCard device={device} />
+            <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyCurrentDevice} />
         </>
         }
     </SettingsSubsection>;
