@@ -54,15 +54,20 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
 
     public componentDidMount(): void {
         const cli = MatrixClientPeg.get();
-        cli.on(CryptoEvent.DevicesUpdated, this.loadDevices);
+        cli.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
         this.loadDevices();
     }
 
     public componentWillUnmount(): void {
         const cli = MatrixClientPeg.get();
-        cli.off(CryptoEvent.DevicesUpdated, this.loadDevices);
+        cli.off(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
         this.unmounted = true;
     }
+
+    private onDevicesUpdated = (users: string[]) => {
+        if (!users.includes(MatrixClientPeg.get().getUserId())) return;
+        this.loadDevices();
+    };
 
     private loadDevices(): void {
         const cli = MatrixClientPeg.get();
