@@ -66,7 +66,7 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
             "mx_SettingsFlag_toggleInFront": this.props.toggleInFront,
         });
         return (
-            <div className={classes}>
+            <div data-testid={this.props["data-testid"]} className={classes}>
                 { firstPart }
                 { secondPart }
             </div>

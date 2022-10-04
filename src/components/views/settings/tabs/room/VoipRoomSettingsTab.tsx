@@ -73,6 +73,7 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
     }, [roomId, content, events, isPublic]);
 
     return <LabelledToggleSwitch
+        data-testid="element-call-switch"
         label={_t("Enable Element Call as an additional calling option in this room")}
         caption={_t(
             "Element Call is end-to-end encrypted, " +
