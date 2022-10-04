@@ -28,6 +28,8 @@ import * as BulkUnverifiedSessionsToast from "../src/toasts/BulkUnverifiedSessio
 import { isSecretStorageBeingAccessed } from "../src/SecurityManager";
 import dis from "../src/dispatcher/dispatcher";
 import { Action } from "../src/dispatcher/actions";
+import SettingsStore from "../src/settings/SettingsStore";
+import { SettingLevel } from "../src/settings/SettingLevel";
 import { mockPlatformPeg } from "./test-utils";
 
 // don't litter test console with logs
@@ -45,6 +47,7 @@ jest.mock("../src/SecurityManager", () => ({
 const deviceId = 'my-device-id';
 
 class MockClient extends EventEmitter {
+    isGuest = jest.fn();
     getUserId = jest.fn();
     getKeyBackupVersion = jest.fn().mockResolvedValue(undefined);
     getRooms = jest.fn().mockReturnValue([]);
@@ -86,6 +89,7 @@ describe('DeviceListener', () => {
         });
         mockClient = new MockClient();
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
+        jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
     });
 
     const createAndStart = async (): Promise<DeviceListener> => {
@@ -96,43 +100,111 @@ describe('DeviceListener', () => {
     };
 
     describe('client information', () => {
-        it('saves client information on start', async () => {
-            await createAndStart();
+        it('watches device client information setting', async () => {
+            const watchSettingSpy = jest.spyOn(SettingsStore, 'watchSetting');
+            const unwatchSettingSpy = jest.spyOn(SettingsStore, 'unwatchSetting');
+            const deviceListener = await createAndStart();
 
-            expect(mockClient.setAccountData).toHaveBeenCalledWith(
-                `io.element.matrix_client_information.${deviceId}`,
-                { name: 'Element', url: 'localhost', version: '1.2.3' },
+            expect(watchSettingSpy).toHaveBeenCalledWith(
+                'deviceClientInformationOptIn', null, expect.any(Function),
             );
+
+            deviceListener.stop();
+
+            expect(unwatchSettingSpy).toHaveBeenCalled();
         });
 
-        it('catches error and logs when saving client information fails', async () => {
-            const errorLogSpy = jest.spyOn(logger, 'error');
-            const error = new Error('oups');
-            mockClient.setAccountData.mockRejectedValue(error);
+        describe('when device client information feature is enabled', () => {
+            beforeEach(() => {
+                jest.spyOn(SettingsStore, 'getValue').mockImplementation(
+                    settingName => settingName === 'deviceClientInformationOptIn',
+                );
+            });
+            it('saves client information on start', async () => {
+                await createAndStart();
 
-            // doesn't throw
-            await createAndStart();
+                expect(mockClient.setAccountData).toHaveBeenCalledWith(
+                    `io.element.matrix_client_information.${deviceId}`,
+                    { name: 'Element', url: 'localhost', version: '1.2.3' },
+                );
+            });
 
-            expect(errorLogSpy).toHaveBeenCalledWith(
-                'Failed to record client information',
-                error,
-            );
+            it('catches error and logs when saving client information fails', async () => {
+                const errorLogSpy = jest.spyOn(logger, 'error');
+                const error = new Error('oups');
+                mockClient.setAccountData.mockRejectedValue(error);
+
+                // doesn't throw
+                await createAndStart();
+
+                expect(errorLogSpy).toHaveBeenCalledWith(
+                    'Failed to record client information',
+                    error,
+                );
+            });
+
+            it('saves client information on logged in action', async () => {
+                const instance = await createAndStart();
+
+                mockClient.setAccountData.mockClear();
+
+                // @ts-ignore calling private function
+                instance.onAction({ action: Action.OnLoggedIn });
+
+                await flushPromises();
+
+                expect(mockClient.setAccountData).toHaveBeenCalledWith(
+                    `io.element.matrix_client_information.${deviceId}`,
+                    { name: 'Element', url: 'localhost', version: '1.2.3' },
+                );
+            });
         });
 
-        it('saves client information on logged in action', async () => {
-            const instance = await createAndStart();
+        describe('when device client information feature is disabled', () => {
+            beforeEach(() => {
+                jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
+            });
 
-            mockClient.setAccountData.mockClear();
+            it('does not save client information on start', async () => {
+                await createAndStart();
 
-            // @ts-ignore calling private function
-            instance.onAction({ action: Action.OnLoggedIn });
+                expect(mockClient.setAccountData).not.toHaveBeenCalledWith(
+                    `io.element.matrix_client_information.${deviceId}`,
+                    { name: 'Element', url: 'localhost', version: '1.2.3' },
+                );
+            });
 
-            await flushPromises();
+            it('does not save client information on logged in action', async () => {
+                const instance = await createAndStart();
 
-            expect(mockClient.setAccountData).toHaveBeenCalledWith(
-                `io.element.matrix_client_information.${deviceId}`,
-                { name: 'Element', url: 'localhost', version: '1.2.3' },
-            );
+                // @ts-ignore calling private function
+                instance.onAction({ action: Action.OnLoggedIn });
+
+                await flushPromises();
+
+                expect(mockClient.setAccountData).not.toHaveBeenCalledWith(
+                    `io.element.matrix_client_information.${deviceId}`,
+                    { name: 'Element', url: 'localhost', version: '1.2.3' },
+                );
+            });
+
+            it('saves client information after setting is enabled', async () => {
+                const watchSettingSpy = jest.spyOn(SettingsStore, 'watchSetting');
+                await createAndStart();
+
+                const [settingName, roomId, callback] = watchSettingSpy.mock.calls[0];
+                expect(settingName).toEqual('deviceClientInformationOptIn');
+                expect(roomId).toBeNull();
+
+                callback('deviceClientInformationOptIn', null, SettingLevel.DEVICE, SettingLevel.DEVICE, true);
+
+                await flushPromises();
+
+                expect(mockClient.setAccountData).toHaveBeenCalledWith(
+                    `io.element.matrix_client_information.${deviceId}`,
+                    { name: 'Element', url: 'localhost', version: '1.2.3' },
+                );
+            });
         });
     });
 
