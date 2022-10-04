@@ -3584,5 +3584,8 @@
     "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s Sitzungen ausgewählt",
     "Video call ended": "Videoanruf beendet",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Anwendungsbezeichnung, -version und -adresse registrieren, damit diese Sitzung in der Sitzungsverwaltung besser erkennbar ist"
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Anwendungsbezeichnung, -version und -adresse registrieren, damit diese Sitzung in der Sitzungsverwaltung besser erkennbar ist",
+    "Application": "Anwendung",
+    "URL": "URL",
+    "Version": "Version"
 }
