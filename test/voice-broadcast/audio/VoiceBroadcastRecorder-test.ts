@@ -21,9 +21,9 @@ import SdkConfig from "../../../src/SdkConfig";
 import { concat } from "../../../src/utils/arrays";
 import {
     ChunkRecordedPayload,
-    createVoiceBroadcastRecording,
+    createVoiceBroadcastRecorder,
     VoiceBroadcastRecorder,
-    VoiceBroadcastRecorderEvents,
+    VoiceBroadcastRecorderEvent,
 } from "../../../src/voice-broadcast";
 
 describe("VoiceBroadcastRecorder", () => {
@@ -43,7 +43,7 @@ describe("VoiceBroadcastRecorder", () => {
         });
 
         it("should return a VoiceBroadcastRecorder instance with targetChunkLength from config", () => {
-            const voiceBroadcastRecorder = createVoiceBroadcastRecording();
+            const voiceBroadcastRecorder = createVoiceBroadcastRecorder();
             expect(voiceBroadcastRecorder).toBeInstanceOf(VoiceBroadcastRecorder);
             expect(voiceBroadcastRecorder.targetChunkLength).toBe(1337);
         });
@@ -64,7 +64,7 @@ describe("VoiceBroadcastRecorder", () => {
         const itShouldNotEmitAChunkRecordedEvent = () => {
             it("should not emit a ChunkRecorded event", () => {
                 expect(voiceRecording.emit).not.toHaveBeenCalledWith(
-                    VoiceBroadcastRecorderEvents.ChunkRecorded,
+                    VoiceBroadcastRecorderEvent.ChunkRecorded,
                     expect.anything(),
                 );
             });
@@ -118,6 +118,10 @@ describe("VoiceBroadcastRecorder", () => {
         it("destroy should forward the call to VoiceRecording.destroy", () => {
             voiceBroadcastRecording.destroy();
             expect(voiceRecording.destroy).toHaveBeenCalled();
+        });
+
+        it("contentType should return the value from VoiceRecording", () => {
+            expect(voiceBroadcastRecording.contentType).toBe(contentType);
         });
 
         describe("when the first page from recorder has been received", () => {
@@ -181,7 +185,7 @@ describe("VoiceBroadcastRecorder", () => {
             it("should emit ChunkRecorded events", () => {
                 expect(voiceRecording.emit).toHaveBeenNthCalledWith(
                     1,
-                    VoiceBroadcastRecorderEvents.ChunkRecorded,
+                    VoiceBroadcastRecorderEvent.ChunkRecorded,
                     {
                         buffer: concat(headers1, headers2, chunk1),
                         length: 42,
@@ -190,7 +194,7 @@ describe("VoiceBroadcastRecorder", () => {
 
                 expect(voiceRecording.emit).toHaveBeenNthCalledWith(
                     2,
-                    VoiceBroadcastRecorderEvents.ChunkRecorded,
+                    VoiceBroadcastRecorderEvent.ChunkRecorded,
                     {
                         buffer: concat(headers1, headers2, chunk2a, chunk2b),
                         length: 72 - 42,
