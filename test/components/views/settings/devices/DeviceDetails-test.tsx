@@ -20,11 +20,13 @@ import { PUSHER_ENABLED } from 'matrix-js-sdk/src/@types/event';
 
 import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
 import { mkPusher } from '../../../../test-utils/test-utils';
+import { DeviceType } from '../../../../../src/utils/device/parseUserAgent';
 
 describe('<DeviceDetails />', () => {
     const baseDevice = {
         device_id: 'my-device',
         isVerified: false,
+        deviceType: DeviceType.Unknown,
     };
     const defaultProps = {
         device: baseDevice,
