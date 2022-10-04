@@ -26,8 +26,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import ProgressBar from "../views/elements/ProgressBar";
 import AccessibleButton from "../views/elements/AccessibleButton";
-import { IUpload } from "../../models/IUpload";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { RoomUpload } from "../../models/RoomUpload";
 
 interface IProps {
     room: Room;
@@ -35,13 +34,11 @@ interface IProps {
 }
 
 interface IState {
-    currentUpload?: IUpload;
-    uploadsHere: IUpload[];
+    currentUpload?: RoomUpload;
+    uploadsHere: RoomUpload[];
 }
 
 export default class UploadBar extends React.Component<IProps, IState> {
-    static contextType = MatrixClientContext;
-
     private dispatcherRef: string;
     private mounted: boolean;
 
@@ -64,7 +61,7 @@ export default class UploadBar extends React.Component<IProps, IState> {
         dis.unregister(this.dispatcherRef);
     }
 
-    private getUploadsInRoom(): IUpload[] {
+    private getUploadsInRoom(): RoomUpload[] {
         const uploads = ContentMessages.sharedInstance().getCurrentUploads(this.props.relation);
         return uploads.filter(u => u.roomId === this.props.room.roomId);
     }
@@ -86,7 +83,7 @@ export default class UploadBar extends React.Component<IProps, IState> {
 
     private onCancelClick = (ev) => {
         ev.preventDefault();
-        ContentMessages.sharedInstance().cancelUpload(this.state.currentUpload.promise, this.context);
+        ContentMessages.sharedInstance().cancelUpload(this.state.currentUpload);
     };
 
     render() {
