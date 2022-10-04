@@ -34,7 +34,7 @@ import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifi
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
 import { getDeviceClientInformation } from "../../../../utils/device/clientInformation";
-import { DevicesDictionary, DeviceWithVerification, ExtendedDeviceInfo } from "./types";
+import { DevicesDictionary, ExtendedDevice, ExtendedDeviceInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 
 const isDeviceVerified = (
@@ -104,10 +104,10 @@ export type DevicesState = {
     currentDeviceId: string;
     isLoadingDeviceList: boolean;
     // not provided when current session cannot request verification
-    requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
+    requestDeviceVerification?: (deviceId: ExtendedDevice['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
-    saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
-    setPushNotifications: (deviceId: DeviceWithVerification['device_id'], enabled: boolean) => Promise<void>;
+    saveDeviceName: (deviceId: ExtendedDevice['device_id'], deviceName: string) => Promise<void>;
+    setPushNotifications: (deviceId: ExtendedDevice['device_id'], enabled: boolean) => Promise<void>;
     error?: OwnDevicesError;
     supportsMSC3881?: boolean | undefined;
 };
@@ -189,7 +189,7 @@ export const useOwnDevices = (): DevicesState => {
     const isCurrentDeviceVerified = !!devices[currentDeviceId]?.isVerified;
 
     const requestDeviceVerification = isCurrentDeviceVerified && userId
-        ? async (deviceId: DeviceWithVerification['device_id']) => {
+        ? async (deviceId: ExtendedDevice['device_id']) => {
             return await matrixClient.requestVerification(
                 userId,
                 [deviceId],
@@ -198,7 +198,7 @@ export const useOwnDevices = (): DevicesState => {
         : undefined;
 
     const saveDeviceName = useCallback(
-        async (deviceId: DeviceWithVerification['device_id'], deviceName: string): Promise<void> => {
+        async (deviceId: ExtendedDevice['device_id'], deviceName: string): Promise<void> => {
             const device = devices[deviceId];
 
             // no change
@@ -219,7 +219,7 @@ export const useOwnDevices = (): DevicesState => {
         }, [matrixClient, devices, refreshDevices]);
 
     const setPushNotifications = useCallback(
-        async (deviceId: DeviceWithVerification['device_id'], enabled: boolean): Promise<void> => {
+        async (deviceId: ExtendedDevice['device_id'], enabled: boolean): Promise<void> => {
             try {
                 const pusher = pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === deviceId);
                 if (pusher) {

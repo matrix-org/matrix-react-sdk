@@ -23,7 +23,7 @@ export type ExtendedDeviceInfo = {
     url?: string;
 };
 export type ExtendedDevice = DeviceWithVerification & ExtendedDeviceInfo;
-export type DevicesDictionary = Record<DeviceWithVerification['device_id'], ExtendedDevice>;
+export type DevicesDictionary = Record<ExtendedDevice['device_id'], ExtendedDevice>;
 
 export enum DeviceSecurityVariation {
     Verified = 'Verified',

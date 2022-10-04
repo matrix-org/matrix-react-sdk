@@ -41,7 +41,7 @@ import {
 } from '../../../../../test-utils';
 import Modal from '../../../../../../src/Modal';
 import LogoutDialog from '../../../../../../src/components/views/dialogs/LogoutDialog';
-import { DeviceWithVerification } from '../../../../../../src/components/views/settings/devices/types';
+import { ExtendedDevice } from '../../../../../../src/components/views/settings/devices/types';
 
 describe('<SessionManagerTab />', () => {
     const aliceId = '@alice:server.org';
@@ -92,7 +92,7 @@ describe('<SessionManagerTab />', () => {
 
     const toggleDeviceDetails = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
-        deviceId: DeviceWithVerification['device_id'],
+        deviceId: ExtendedDevice['device_id'],
     ) => {
         // open device detail
         const tile = getByTestId(`device-tile-${deviceId}`);
@@ -102,7 +102,7 @@ describe('<SessionManagerTab />', () => {
 
     const toggleDeviceSelection = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
-        deviceId: DeviceWithVerification['device_id'],
+        deviceId: ExtendedDevice['device_id'],
     ) => {
         const checkbox = getByTestId(`device-tile-checkbox-${deviceId}`);
         fireEvent.click(checkbox);
@@ -110,7 +110,7 @@ describe('<SessionManagerTab />', () => {
 
     const isDeviceSelected = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
-        deviceId: DeviceWithVerification['device_id'],
+        deviceId: ExtendedDevice['device_id'],
     ): boolean => !!(getByTestId(`device-tile-checkbox-${deviceId}`) as HTMLInputElement).checked;
 
     beforeEach(() => {
