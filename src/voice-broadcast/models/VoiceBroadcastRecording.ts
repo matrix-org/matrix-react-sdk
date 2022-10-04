@@ -107,7 +107,7 @@ export class VoiceBroadcastRecording
         await this.sendVoiceMessage(chunk, url, file);
     };
 
-    private async uploadFile(chunk: ChunkRecordedPayload): IAbortablePromise<{ url?: string, file?: IEncryptedFile }> {
+    private uploadFile(chunk: ChunkRecordedPayload): IAbortablePromise<{ url?: string, file?: IEncryptedFile }> {
         return uploadFile(
             this.client,
             this.infoEvent.getRoomId(),
