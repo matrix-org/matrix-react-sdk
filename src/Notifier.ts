@@ -23,8 +23,12 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
+import {
+    PermissionChanged as PermissionChangedEvent,
+} from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
+import { PosthogAnalytics } from "./PosthogAnalytics";
 import SdkConfig from './SdkConfig';
 import PlatformPeg from './PlatformPeg';
 import * as TextForEvent from './TextForEvent';
@@ -40,8 +44,9 @@ import { RoomViewStore } from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-import CallHandler from "./CallHandler";
+import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
+import { localNotificationsAreSilenced } from "./utils/notifications";
 
 /*
  * Dispatches:
@@ -86,12 +91,17 @@ export const Notifier = {
         return TextForEvent.textForEvent(ev);
     },
 
-    _displayPopupNotification: function(ev: MatrixEvent, room: Room) {
+    _displayPopupNotification: function(ev: MatrixEvent, room: Room): void {
         const plaf = PlatformPeg.get();
+        const cli = MatrixClientPeg.get();
         if (!plaf) {
             return;
         }
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
+            return;
+        }
+
+        if (localNotificationsAreSilenced(cli)) {
             return;
         }
 
@@ -166,7 +176,12 @@ export const Notifier = {
         };
     },
 
-    _playAudioNotification: async function(ev: MatrixEvent, room: Room) {
+    _playAudioNotification: async function(ev: MatrixEvent, room: Room): Promise<void> {
+        const cli = MatrixClientPeg.get();
+        if (localNotificationsAreSilenced(cli)) {
+            return;
+        }
+
         const sound = this.getSoundForRoom(room.roomId);
         logger.log(`Got sound ${sound && sound.name || "default"} for ${room.roomId}`);
 
@@ -254,12 +269,23 @@ export const Notifier = {
                 }
 
                 if (callback) callback();
+
+                PosthogAnalytics.instance.trackEvent<PermissionChangedEvent>({
+                    eventName: "PermissionChanged",
+                    permission: "Notification",
+                    granted: true,
+                });
                 dis.dispatch({
                     action: "notifier_enabled",
                     value: true,
                 });
             });
         } else {
+            PosthogAnalytics.instance.trackEvent<PermissionChangedEvent>({
+                eventName: "PermissionChanged",
+                permission: "Notification",
+                granted: false,
+            });
             dis.dispatch({
                 action: "notifier_enabled",
                 value: false,
@@ -310,7 +336,7 @@ export const Notifier = {
         }
         const isGuest = client.isGuest();
         return !isGuest && this.supportsDesktopNotifications() && !isPushNotifyDisabled() &&
-            !this.isEnabled() && !this._isPromptHidden();
+               !this.isEnabled() && !this._isPromptHidden();
     },
 
     _isPromptHidden: function() {
@@ -382,7 +408,7 @@ export const Notifier = {
 
     _evaluateEvent: function(ev: MatrixEvent) {
         let roomId = ev.getRoomId();
-        if (CallHandler.instance.getSupportsVirtualRooms()) {
+        if (LegacyCallHandler.instance.getSupportsVirtualRooms()) {
             // Attempt to translate a virtual room to a native one
             const nativeRoomId = VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(roomId);
             if (nativeRoomId) {

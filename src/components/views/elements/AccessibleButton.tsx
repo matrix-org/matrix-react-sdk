@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import React, { ReactHTML } from 'react';
+import React, { HTMLAttributes, InputHTMLAttributes, ReactHTML, ReactNode } from 'react';
 import classnames from 'classnames';
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -26,14 +26,31 @@ type AccessibleButtonKind = | 'primary'
     | 'primary_outline'
     | 'primary_sm'
     | 'secondary'
+    | 'content_inline'
     | 'danger'
     | 'danger_outline'
     | 'danger_sm'
+    | 'danger_inline'
     | 'link'
     | 'link_inline'
     | 'link_sm'
     | 'confirm_sm'
-    | 'cancel_sm';
+    | 'cancel_sm'
+    | 'icon';
+
+/**
+ * This type construct allows us to specifically pass those props down to the element we’re creating that the element
+ * actually supports.
+ *
+ * e.g., if element is set to "a", we’ll support href and target, if it’s set to "input", we support type.
+ *
+ * To remain compatible with existing code, we’ll continue to support InputHTMLAttributes<Element>
+ */
+type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
+    JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
+type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
+    Partial<Omit<JSX.IntrinsicElements[T], 'ref' | 'onClick' | 'onMouseDown' | 'onKeyUp' | 'onKeyDown'>>
+    & Omit<InputHTMLAttributes<Element>, 'onClick'>;
 
 /**
  * children: React's magic prop. Represents all children given to the element.
@@ -41,9 +58,10 @@ type AccessibleButtonKind = | 'primary'
  * onClick:  (required) Event handler for button activation. Should be
  *           implemented exactly like a normal onClick handler.
  */
-interface IProps extends React.InputHTMLAttributes<Element> {
+type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     inputRef?: React.Ref<Element>;
-    element?: keyof ReactHTML;
+    element?: T;
+    children?: ReactNode | undefined;
     // The kind of button, similar to how Bootstrap works.
     // See available classes for AccessibleButton for options.
     kind?: AccessibleButtonKind | string;
@@ -54,8 +72,8 @@ interface IProps extends React.InputHTMLAttributes<Element> {
     disabled?: boolean;
     className?: string;
     triggerOnMouseDown?: boolean;
-    onClick(e?: ButtonEvent): void | Promise<void>;
-}
+    onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
+};
 
 interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
@@ -69,7 +87,7 @@ interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
  */
-export default function AccessibleButton({
+export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>({
     element,
     onClick,
     children,
@@ -81,16 +99,16 @@ export default function AccessibleButton({
     onKeyUp,
     triggerOnMouseDown,
     ...restProps
-}: IProps) {
+}: IProps<T>) {
     const newProps: IAccessibleButtonProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
         newProps["disabled"] = true;
     } else {
         if (triggerOnMouseDown) {
-            newProps.onMouseDown = onClick;
+            newProps.onMouseDown = onClick ?? undefined;
         } else {
-            newProps.onClick = onClick;
+            newProps.onClick = onClick ?? undefined;
         }
         // We need to consume enter onKeyDown and space onKeyUp
         // otherwise we are risking also activating other keyboard focusable elements
@@ -106,7 +124,7 @@ export default function AccessibleButton({
                 case KeyBindingAction.Enter:
                     e.stopPropagation();
                     e.preventDefault();
-                    return onClick(e);
+                    return onClick?.(e);
                 case KeyBindingAction.Space:
                     e.stopPropagation();
                     e.preventDefault();
@@ -126,7 +144,7 @@ export default function AccessibleButton({
                 case KeyBindingAction.Space:
                     e.stopPropagation();
                     e.preventDefault();
-                    return onClick(e);
+                    return onClick?.(e);
                 default:
                     onKeyUp?.(e);
                     break;

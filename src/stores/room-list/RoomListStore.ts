@@ -37,18 +37,18 @@ import { RoomNotificationStateStore } from "../notifications/RoomNotificationSta
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
 import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
+import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
+import { SlidingRoomListStoreClass } from "./SlidingRoomListStore";
+import { UPDATE_EVENT } from "../AsyncStore";
 
 interface IState {
     // state is tracked in underlying classes
 }
 
-/**
- * The event/channel which is called when the room lists have been changed. Raised
- * with one argument: the instance of the store.
- */
-export const LISTS_UPDATE_EVENT = "lists_update";
+export const LISTS_UPDATE_EVENT = RoomListStoreEvent.ListsUpdate;
+export const LISTS_LOADING_EVENT = RoomListStoreEvent.ListsLoading; // unused; used by SlidingRoomListStore
 
-export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
+export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements Interface {
     /**
      * Set to true if you're running tests on the store. Should not be touched in
      * any other environment.
@@ -105,7 +105,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             this.readyStore.useUnitTestClient(forcedClient);
         }
 
-        RoomViewStore.instance.addListener(() => this.handleRVSUpdate({}));
+        RoomViewStore.instance.addListener(UPDATE_EVENT, () => this.handleRVSUpdate({}));
         this.algorithm.on(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.on(FILTER_CHANGED, this.onAlgorithmFilterUpdated);
         this.setupWatchers();
@@ -365,7 +365,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         this.algorithm.updatesInhibited = false;
     }
 
-    public async setTagSorting(tagId: TagID, sort: SortAlgorithm) {
+    public setTagSorting(tagId: TagID, sort: SortAlgorithm) {
         this.setAndPersistTagSorting(tagId, sort);
         this.updateFn.trigger();
     }
@@ -588,6 +588,11 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         return algorithmTags;
     }
 
+    public getCount(tagId: TagID): number {
+        // The room list store knows about all the rooms, so just return the length.
+        return this.orderedLists[tagId].length || 0;
+    }
+
     /**
      * Manually update a room with a given cause. This should only be used if the
      * room list store would otherwise be incapable of doing the update itself. Note
@@ -602,14 +607,23 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 }
 
 export default class RoomListStore {
-    private static internalInstance: RoomListStoreClass;
+    private static internalInstance: Interface;
 
-    public static get instance(): RoomListStoreClass {
+    public static get instance(): Interface {
         if (!RoomListStore.internalInstance) {
-            RoomListStore.internalInstance = new RoomListStoreClass();
+            if (SettingsStore.getValue("feature_sliding_sync")) {
+                logger.info("using SlidingRoomListStoreClass");
+                const instance = new SlidingRoomListStoreClass();
+                instance.start();
+                RoomListStore.internalInstance = instance;
+            } else {
+                const instance = new RoomListStoreClass();
+                instance.start();
+                RoomListStore.internalInstance = instance;
+            }
         }
 
-        return RoomListStore.internalInstance;
+        return this.internalInstance;
     }
 }
 

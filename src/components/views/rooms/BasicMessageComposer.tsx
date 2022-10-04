@@ -754,13 +754,13 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             [Formatting.Bold]: ctrlShortcutLabel("B"),
             [Formatting.Italics]: ctrlShortcutLabel("I"),
             [Formatting.Code]: ctrlShortcutLabel("E"),
-            [Formatting.Quote]: ctrlShortcutLabel(">"),
+            [Formatting.Quote]: ctrlShortcutLabel(">", true),
             [Formatting.InsertLink]: ctrlShortcutLabel("L", true),
         };
 
         const { completionIndex } = this.state;
         const hasAutocomplete = Boolean(this.state.autoComplete);
-        let activeDescendant;
+        let activeDescendant: string;
         if (hasAutocomplete && completionIndex >= 0) {
             activeDescendant = generateCompletionDomId(completionIndex);
         }
@@ -784,8 +784,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 aria-multiline="true"
                 aria-autocomplete="list"
                 aria-haspopup="listbox"
-                aria-expanded={hasAutocomplete}
-                aria-owns="mx_Autocomplete"
+                aria-expanded={hasAutocomplete ? true : undefined}
+                aria-owns={hasAutocomplete ? "mx_Autocomplete" : undefined}
                 aria-activedescendant={activeDescendant}
                 dir="auto"
                 aria-disabled={this.props.disabled}

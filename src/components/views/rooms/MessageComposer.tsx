@@ -37,7 +37,7 @@ import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
-import { RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
+import { RecordingState } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { E2EStatus } from '../../../utils/ShieldUtils';
@@ -51,6 +51,13 @@ import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdat
 import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { Features } from '../../../settings/Settings';
+import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
+import {
+    startNewVoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStore,
+} from '../../../voice-broadcast';
 
 let instanceCount = 0;
 
@@ -77,6 +84,7 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
+    showVoiceBroadcastButton?: boolean;
 }
 
 interface IState {
@@ -88,22 +96,24 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+    showVoiceBroadcastButton: boolean;
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
-    private _voiceRecording: Optional<VoiceRecording>;
+    private _voiceRecording: Optional<VoiceMessageRecording>;
 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
         compact: false,
+        showVoiceBroadcastButton: false,
     };
 
     public constructor(props: IProps) {
@@ -113,24 +123,26 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.state = {
             isComposerEmpty: true,
             haveRecording: false,
-            recordingTimeLeftSeconds: null, // when set to a number, shows a toast
+            recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
+            showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
+        SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
     }
 
-    private get voiceRecording(): Optional<VoiceRecording> {
+    private get voiceRecording(): Optional<VoiceMessageRecording> {
         return this._voiceRecording;
     }
 
-    private set voiceRecording(rec: Optional<VoiceRecording>) {
+    private set voiceRecording(rec: Optional<VoiceMessageRecording>) {
         if (this._voiceRecording) {
             this._voiceRecording.off(RecordingState.Started, this.onRecordingStarted);
             this._voiceRecording.off(RecordingState.EndingSoon, this.onRecordingEndingSoon);
@@ -152,7 +164,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.waitForOwnMember();
-        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
+        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current!);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
         this.updateRecordingState(); // grab any cached recordings
     }
@@ -198,13 +210,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         }
                         break;
                     }
+                    case Features.VoiceBroadcast: {
+                        if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
+                            this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
+                        }
+                        break;
+                    }
                 }
             }
         }
     };
 
     private waitForOwnMember() {
-        // if we have the member already, do that
+        // If we have the member already, do that
         const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
@@ -241,6 +259,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
+
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -307,7 +326,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private updateRecordingState() {
-        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         if (this.voiceRecording) {
             // If the recording has already started, it's probably a cached one.
             if (this.voiceRecording.hasRecording && !this.voiceRecording.isRecording) {
@@ -322,7 +342,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onRecordingStarted = () => {
         // update the recording instance, just in case
-        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         this.setState({
             haveRecording: !!this.voiceRecording,
         });
@@ -349,6 +370,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: !this.state.isMenuOpen,
         });
     };
+
+    private get showStickersButton(): boolean {
+        return this.state.showStickersButton && !isLocalRoom(this.props.room);
+    }
+
+    private get showVoiceBroadcastButton(): boolean {
+        return this.props.showVoiceBroadcastButton && this.state.showVoiceBroadcastButton;
+    }
 
     public render() {
         const controls = [
@@ -383,7 +412,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             controls.push(<VoiceRecordComposerTile
                 key="controls_voice_record"
                 ref={this.voiceRecordingButton}
-                room={this.props.room} />);
+                room={this.props.room}
+                permalinkCreator={this.props.permalinkCreator}
+                relation={this.props.relation}
+                replyToEvent={this.props.replyToEvent} />);
         } else if (this.context.tombstone) {
             const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
 
@@ -416,8 +448,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         let recordingTooltip;
-        const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
-        if (secondsLeft) {
+        if (this.state.recordingTimeLeftSeconds) {
+            const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = <Tooltip
                 label={_t("%(seconds)ss left", { seconds: secondsLeft })}
                 alignment={Alignment.Top}
@@ -472,8 +504,17 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             setStickerPickerOpen={this.setStickerPickerOpen}
                             showLocationButton={!window.electron}
                             showPollsButton={this.state.showPollsButton}
-                            showStickersButton={this.state.showStickersButton}
+                            showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
+                            showVoiceBroadcastButton={this.showVoiceBroadcastButton}
+                            onStartVoiceBroadcastClick={() => {
+                                startNewVoiceBroadcastRecording(
+                                    this.props.room.roomId,
+                                    MatrixClientPeg.get(),
+                                    VoiceBroadcastRecordingsStore.instance(),
+                                );
+                                this.toggleButtonMenu();
+                            }}
                         /> }
                         { showSendButton && (
                             <SendButton

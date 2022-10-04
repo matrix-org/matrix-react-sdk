@@ -27,9 +27,9 @@ jobs:
         run: "yarn run lint:types"
 
       - name: Switch js-sdk to release mode
+        working-directory: node_modules/matrix-js-sdk
         run: |
-          scripts/ci/js-sdk-to-release.js
-          cd node_modules/matrix-js-sdk
+          scripts/switch_package_to_release.js
           yarn install
           yarn run build:compile
           yarn run build:types
@@ -74,3 +74,21 @@ jobs:
 
       - name: Run Linter
         run: "yarn run lint:style"
+
+  analyse_dead_code:
+    name: "Analyse Dead Code"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+
+      - name: Install Deps
+        run: "scripts/ci/layered.sh"
+
+      - name: Dead Code Analysis
+        run: |
+          cd element-web
+          yarn run analyse:unused-exports

@@ -17,6 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import shouldHideEvent from './shouldHideEvent';
@@ -44,6 +45,8 @@ export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
         case EventType.RoomAliases:
         case EventType.RoomCanonicalAlias:
         case EventType.RoomServerAcl:
+        case M_BEACON.name:
+        case M_BEACON.altName:
             return false;
     }
 
@@ -52,6 +55,12 @@ export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
 }
 
 export function doesRoomHaveUnreadMessages(room: Room): boolean {
+    if (SettingsStore.getValue("feature_sliding_sync")) {
+        // TODO: https://github.com/vector-im/element-web/issues/23207
+        // Sliding Sync doesn't support unread indicator dots (yet...)
+        return false;
+    }
+
     const myUserId = MatrixClientPeg.get().getUserId();
 
     // get the most recent read receipt sent by our account.

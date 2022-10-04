@@ -26,6 +26,7 @@ import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { randomString, randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
+import PlatformPeg from '../PlatformPeg';
 import SdkConfig from "../SdkConfig";
 import dis from '../dispatcher/dispatcher';
 import WidgetEchoStore from '../stores/WidgetEchoStore';
@@ -481,8 +482,8 @@ export default class WidgetUtils {
         appId: string,
         app: Partial<IApp>,
         senderUserId: string,
-        roomId: string | null,
-        eventId: string,
+        roomId: string | undefined,
+        eventId: string | undefined,
     ): IApp {
         if (!senderUserId) {
             throw new Error("Widgets must be created by someone - provide a senderUserId");
@@ -510,6 +511,7 @@ export default class WidgetUtils {
             'roomId=$matrix_room_id',
             'theme=$theme',
             'roomName=$roomName',
+            `supportsScreensharing=${PlatformPeg.get().supportsJitsiScreensharing()}`,
         ];
         if (opts.auth) {
             queryStringParts.push(`auth=${opts.auth}`);

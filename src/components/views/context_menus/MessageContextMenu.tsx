@@ -16,12 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, useContext } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { M_POLL_START } from "matrix-events-sdk";
+import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -35,7 +36,6 @@ import {
     canPinEvent,
     editEvent,
     isContentActionable,
-    isLocationEvent,
 } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
 import { ReadPinsEventId } from "../right_panel/types";
@@ -58,6 +58,60 @@ import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwa
 import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenReportEventDialogPayload";
 import { createMapSiteLinkFromEvent } from '../../../utils/location';
 import { getForwardableEvent } from '../../../events/forward/getForwardableEvent';
+import { getShareableLocationEvent } from '../../../events/location/getShareableLocationEvent';
+import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+import { CardContext } from "../right_panel/context";
+import { UserTab } from "../dialogs/UserTab";
+
+interface IReplyInThreadButton {
+    mxEvent: MatrixEvent;
+    closeMenu: () => void;
+}
+
+const ReplyInThreadButton = ({ mxEvent, closeMenu }: IReplyInThreadButton) => {
+    const context = useContext(CardContext);
+    const relationType = mxEvent?.getRelation()?.rel_type;
+
+    // Can't create a thread from an event with an existing relation
+    if (Boolean(relationType) && relationType !== RelationType.Thread) return null;
+
+    const onClick = (): void => {
+        if (!localStorage.getItem("mx_seen_feature_thread")) {
+            localStorage.setItem("mx_seen_feature_thread", "true");
+        }
+
+        if (!SettingsStore.getValue("feature_thread")) {
+            dis.dispatch({
+                action: Action.ViewUserSettings,
+                initialTabId: UserTab.Labs,
+            });
+        } else if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
+            dis.dispatch<ShowThreadPayload>({
+                action: Action.ShowThread,
+                rootEvent: mxEvent.getThread().rootEvent,
+                initialEvent: mxEvent,
+                scroll_into_view: true,
+                highlighted: true,
+                push: context.isCard,
+            });
+        } else {
+            dis.dispatch<ShowThreadPayload>({
+                action: Action.ShowThread,
+                rootEvent: mxEvent,
+                push: context.isCard,
+            });
+        }
+        closeMenu();
+    };
+
+    return (
+        <IconizedContextMenuOption
+            iconClassName="mx_MessageContextMenu_iconReplyInThread"
+            label={_t("Reply in thread")}
+            onClick={onClick}
+        />
+    );
+};
 
 interface IProps extends IPosition {
     chevronFace: ChevronFace;
@@ -143,10 +197,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         if (!pinnedEvent) return false;
         const content = pinnedEvent.getContent();
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
-    }
-
-    private canOpenInMapSite(mxEvent: MatrixEvent): boolean {
-        return isLocationEvent(mxEvent);
     }
 
     private canEndPoll(mxEvent: MatrixEvent): boolean {
@@ -369,8 +419,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         let openInMapSiteButton: JSX.Element;
-        if (this.canOpenInMapSite(mxEvent)) {
-            const mapSiteLink = createMapSiteLinkFromEvent(mxEvent);
+        const shareableLocationEvent = getShareableLocationEvent(mxEvent, cli);
+        if (shareableLocationEvent) {
+            const mapSiteLink = createMapSiteLinkFromEvent(shareableLocationEvent);
             openInMapSiteButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconOpenInMapSite"
@@ -585,6 +636,23 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let replyInThreadButton: JSX.Element;
+        if (
+            rightClick &&
+            contentActionable &&
+            canSendMessages &&
+            SettingsStore.getValue("feature_thread") &&
+            Thread.hasServerSideSupport &&
+            timelineRenderingType !== TimelineRenderingType.Thread
+        ) {
+            replyInThreadButton = (
+                <ReplyInThreadButton
+                    mxEvent={mxEvent}
+                    closeMenu={this.closeMenu}
+                />
+            );
+        }
+
         let reactButton;
         if (rightClick && contentActionable && canReact) {
             reactButton = (
@@ -624,6 +692,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOptionList>
                     { reactButton }
                     { replyButton }
+                    { replyInThreadButton }
                     { editButton }
                 </IconizedContextMenuOptionList>
             );

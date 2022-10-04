@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ICreateClientOpts, PendingEventOrdering } from 'matrix-js-sdk/src/matrix';
+import { ICreateClientOpts, PendingEventOrdering, RoomNameState, RoomNameType } from 'matrix-js-sdk/src/matrix';
 import { IStartClientOpts, MatrixClient } from 'matrix-js-sdk/src/client';
 import { MemoryStore } from 'matrix-js-sdk/src/store/memory';
 import * as utils from 'matrix-js-sdk/src/utils';
@@ -36,7 +36,9 @@ import * as StorageManager from './utils/StorageManager';
 import IdentityAuthClient from './IdentityAuthClient';
 import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from './SecurityManager';
 import SecurityCustomisations from "./customisations/Security";
+import { SlidingSyncManager } from './SlidingSyncManager';
 import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
+import { _t } from "./languageHandler";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -97,6 +99,12 @@ export interface IMatrixClientPeg {
      * returns a boolean of whether it was within the last N hours given.
      */
     userRegisteredWithinLastHours(hours: number): boolean;
+
+    /**
+     * If the current user has been registered by this device then this
+     * returns a boolean of whether it was after a given timestamp.
+     */
+    userRegisteredAfter(date: Date): boolean;
 
     /**
      * Replace this MatrixClientPeg's client with a client instance that has
@@ -168,6 +176,15 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
+    public userRegisteredAfter(timestamp: Date): boolean {
+        try {
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            return timestamp.getTime() <= registrationTime;
+        } catch (e) {
+            return false;
+        }
+    }
+
     public replaceUsingCreds(creds: IMatrixClientCreds): void {
         this.currentClientCreds = creds;
         this.createClient(creds);
@@ -221,6 +238,19 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
         opts.experimentalThreadSupport = SettingsStore.getValue("feature_thread");
 
+        if (SettingsStore.getValue("feature_sliding_sync")) {
+            const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
+            if (proxyUrl) {
+                logger.log("Activating sliding sync using proxy at ", proxyUrl);
+            } else {
+                logger.log("Activating sliding sync");
+            }
+            opts.slidingSync = SlidingSyncManager.instance.configure(
+                this.matrixClient,
+                proxyUrl || this.matrixClient.baseUrl,
+            );
+        }
+
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
         MatrixClientBackedSettingsHandler.matrixClient = this.matrixClient;
@@ -263,6 +293,48 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         return matches[1];
     }
 
+    private namesToRoomName(names: string[], count: number): string | undefined {
+        const countWithoutMe = count - 1;
+        if (!names.length) {
+            return _t("Empty room");
+        }
+        if (names.length === 1 && countWithoutMe <= 1) {
+            return names[0];
+        }
+    }
+
+    private memberNamesToRoomName(names: string[], count: number): string {
+        const name = this.namesToRoomName(names, count);
+        if (name) return name;
+
+        if (names.length === 2 && count === 2) {
+            return _t("%(user1)s and %(user2)s", {
+                user1: names[0],
+                user2: names[1],
+            });
+        }
+        return _t("%(user)s and %(count)s others", {
+            user: names[0],
+            count: count - 1,
+        });
+    }
+
+    private inviteeNamesToRoomName(names: string[], count: number): string {
+        const name = this.namesToRoomName(names, count);
+        if (name) return name;
+
+        if (names.length === 2 && count === 2) {
+            return _t("Inviting %(user1)s and %(user2)s", {
+                user1: names[0],
+                user2: names[1],
+            });
+        }
+        return _t("Inviting %(user)s and %(count)s others", {
+            user: names[0],
+            count: count - 1,
+        });
+    }
+
     private createClient(creds: IMatrixClientCreds): void {
         const opts: ICreateClientOpts = {
             baseUrl: creds.homeserverUrl,
@@ -284,16 +356,34 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 verificationMethods.RECIPROCATE_QR_CODE,
             ],
             identityServer: new IdentityAuthClient(),
-            cryptoCallbacks: {},
+            // These are always installed regardless of the labs flag so that cross-signing features
+            // can toggle on without reloading and also be accessed immediately after login.
+            cryptoCallbacks: { ...crossSigningCallbacks },
+            roomNameGenerator: (_: string, state: RoomNameState) => {
+                switch (state.type) {
+                    case RoomNameType.Generated:
+                        switch (state.subtype) {
+                            case "Inviting":
+                                return this.inviteeNamesToRoomName(state.names, state.count);
+                            default:
+                                return this.memberNamesToRoomName(state.names, state.count);
+                        }
+                    case RoomNameType.EmptyRoom:
+                        if (state.oldName) {
+                            return _t("Empty room (was %(oldName)s)", {
+                                oldName: state.oldName,
+                            });
+                        } else {
+                            return _t("Empty room");
+                        }
+                    default:
+                        return null;
+                }
+            },
         };
 
-        // These are always installed regardless of the labs flag so that
-        // cross-signing features can toggle on without reloading and also be
-        // accessed immediately after login.
-        Object.assign(opts.cryptoCallbacks, crossSigningCallbacks);
         if (SecurityCustomisations.getDehydrationKey) {
-            opts.cryptoCallbacks.getDehydrationKey =
-                SecurityCustomisations.getDehydrationKey;
+            opts.cryptoCallbacks!.getDehydrationKey = SecurityCustomisations.getDehydrationKey;
         }
 
         this.matrixClient = createMatrixClient(opts);
@@ -304,7 +394,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         this.matrixClient.setGuest(Boolean(creds.guest));
 
-        const notifTimelineSet = new EventTimelineSet(null, {
+        const notifTimelineSet = new EventTimelineSet(undefined, {
             timelineSupport: true,
             pendingEvents: false,
         });

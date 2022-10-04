@@ -16,14 +16,13 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import { EventSubscription } from 'fbemitter';
 import { logger } from "matrix-js-sdk/src/logger";
 import classNames from 'classnames';
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import CallView from "./CallView";
+import LegacyCallView from "./LegacyCallView";
 import { RoomViewStore } from '../../../stores/RoomViewStore';
-import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
+import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
 import PersistentApp from "../elements/PersistentApp";
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -31,10 +30,11 @@ import PictureInPictureDragger from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
 import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
-import CallViewHeader from './CallView/CallViewHeader';
+import LegacyCallViewHeader from './LegacyCallView/LegacyCallViewHeader';
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/ActiveWidgetStore';
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -81,7 +81,7 @@ const getRoomAndAppForWidget = (widgetId: string, roomId: string): [Room, IApp] 
 // The primary will be the one not on hold, or an arbitrary one
 // if they're all on hold)
 function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall[]] {
-    const calls = CallHandler.instance.getAllActiveCallsForPip(roomId);
+    const calls = LegacyCallHandler.instance.getAllActiveCallsForPip(roomId);
 
     let primary: MatrixCall = null;
     let secondaries: MatrixCall[] = [];
@@ -110,13 +110,12 @@ function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall
 }
 
 /**
- * PipView shows a small version of the CallView or a sticky widget hovering over the UI in 'picture-in-picture'
+ * PipView shows a small version of the LegacyCallView or a sticky widget hovering over the UI in 'picture-in-picture'
  * (PiP mode). It displays the call(s) which is *not* in the room the user is currently viewing
  * and all widgets that are active but not shown in any other possible container.
  */
 
 export default class PipView extends React.Component<IProps, IState> {
-    private roomStoreToken: EventSubscription;
     private settingsWatcherRef: string;
     private movePersistedElement = createRef<() => void>();
 
@@ -139,9 +138,9 @@ export default class PipView extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
-        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCalls);
-        this.roomStoreToken = RoomViewStore.instance.addListener(this.onRoomViewStoreUpdate);
+        LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCalls);
+        LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
+        RoomViewStore.instance.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         const room = MatrixClientPeg.get()?.getRoom(this.state.viewedRoomId);
         if (room) {
@@ -154,10 +153,10 @@ export default class PipView extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount() {
-        CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
-        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.updateCalls);
+        LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCalls);
+        LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
         MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
-        this.roomStoreToken?.remove();
+        RoomViewStore.instance.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         SettingsStore.unwatchSetting(this.settingsWatcherRef);
         const room = MatrixClientPeg.get().getRoom(this.state.viewedRoomId);
         if (room) {
@@ -308,7 +307,7 @@ export default class PipView extends React.Component<IProps, IState> {
 
         if (this.state.primaryCall) {
             pipContent = ({ onStartMoving, onResize }) =>
-                <CallView
+                <LegacyCallView
                     onMouseDownOnHeader={onStartMoving}
                     call={this.state.primaryCall}
                     secondaryCall={this.state.secondaryCall}
@@ -319,9 +318,9 @@ export default class PipView extends React.Component<IProps, IState> {
 
         if (this.state.showWidgetInPip) {
             const pipViewClasses = classNames({
-                mx_CallView: true,
-                mx_CallView_pip: pipMode,
-                mx_CallView_large: !pipMode,
+                mx_LegacyCallView: true,
+                mx_LegacyCallView_pip: pipMode,
+                mx_LegacyCallView_large: !pipMode,
             });
             const roomId = this.state.persistentRoomId;
             const roomForWidget = MatrixClientPeg.get().getRoom(roomId);
@@ -329,7 +328,7 @@ export default class PipView extends React.Component<IProps, IState> {
 
             pipContent = ({ onStartMoving, _onResize }) =>
                 <div className={pipViewClasses}>
-                    <CallViewHeader
+                    <LegacyCallViewHeader
                         onPipMouseDown={(event) => { onStartMoving(event); this.onStartMoving.bind(this)(); }}
                         pipMode={pipMode}
                         callRooms={[roomForWidget]}
@@ -348,7 +347,7 @@ export default class PipView extends React.Component<IProps, IState> {
 
         if (!!pipContent) {
             return <PictureInPictureDragger
-                className="mx_CallPreview"
+                className="mx_LegacyCallPreview"
                 draggable={pipMode}
                 onDoubleClick={this.onDoubleClick}
                 onMove={this.onMove}
