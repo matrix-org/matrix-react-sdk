@@ -48,6 +48,7 @@ interface IProps {
 interface IState {
     scannedRendezvous?: Rendezvous;
     generatedRendezvous?: Rendezvous;
+    scannedCode?: string;
     confirmationDigits?: string;
     cancelled?: RendezvousCancellationReason;
     mediaPermissionError?: boolean;
@@ -182,6 +183,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             generatedRendezvous: undefined,
             confirmationDigits: undefined,
             cancelled: undefined,
+            scannedCode: undefined,
             scanning: false,
         });
         void this.requestMediaPermissions();
@@ -195,11 +197,20 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         //     return;
         // }
         try {
+            if (this.state.scannedCode === scannedCode) {
+                return; // suppress duplicate scans
+            }
+            if (this.rendezvous) {
+                await this.rendezvous.userCancelled();
+                this.reset();
+            }
+
             const client = this.props.device === 'existing' ? MatrixClientPeg.get() : undefined;
             console.log(scannedCode);
             const channel = await buildChannelFromCode(scannedCode, this.onCancelled, client);
             const scannedRendezvous = new Rendezvous(channel, client);
             this.setState({
+                scannedCode,
                 scannedRendezvous,
                 cancelled: undefined,
             });
@@ -224,7 +235,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private cancelClicked = () => {
         void (async () => {
             await this.rendezvous.userCancelled();
-            this.reset;
+            this.reset();
             this.props.onFinished(false);
         })();
     };
@@ -232,7 +243,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private declineClicked = () => {
         void (async () => {
             await this.rendezvous.declineLoginOnExistingDevice();
-            this.reset;
+            this.reset();
             this.props.onFinished(false);
         })();
     };
