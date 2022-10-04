@@ -304,7 +304,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <div className="mx_SettingsTab_subsectionText">
                         <p>
                             { _t("Share anonymous data to help us identify issues. Nothing personal. " +
-                                 "No third parties.") }
+                                "No third parties.") }
                         </p>
                         <AccessibleButton
                             kind="link"
@@ -318,6 +318,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                             name="pseudonymousAnalyticsOptIn"
                             level={SettingLevel.ACCOUNT} />
                     ) }
+                </div>
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{ _t("Sessions") }</span>
+                    <SettingsFlag
+                        name="deviceClientInformationOptIn"
+                        level={SettingLevel.ACCOUNT} />
                 </div>
             </React.Fragment>;
         }

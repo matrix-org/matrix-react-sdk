@@ -82,7 +82,7 @@ declare global {
              * @param {*} value The new value of the setting, may be null.
              * @return {Promise} Resolves when the setting has been changed.
              */
-            setSettingValue(name: string, roomId: string, level: SettingLevel, value: any): Chainable<void>;
+            setSettingValue(settingName: string, roomId: string, level: SettingLevel, value: any): Chainable<void>;
 
             /**
              * Gets the value of a setting. The room ID is optional if the
@@ -96,7 +96,7 @@ declare global {
              * value.
              * @return {*} The value, or null if not found
              */
-            getSettingValue<T>(name: string, roomId?: string): Chainable<T>;
+            getSettingValue<T>(settingName: string, roomId?: string, excludeDefault?: boolean): Chainable<T>;
         }
     }
 }
@@ -111,14 +111,15 @@ Cypress.Commands.add("setSettingValue", (
     level: SettingLevel,
     value: any,
 ): Chainable<void> => {
-    return cy.getSettingsStore().then(async (store: typeof SettingsStore) => {
-        return store.setValue(name, roomId, level, value);
+    return cy.getSettingsStore().then((store: typeof SettingsStore) => {
+        return cy.wrap(store.setValue(name, roomId, level, value));
     });
 });
 
-Cypress.Commands.add("getSettingValue", <T = any>(name: string, roomId?: string): Chainable<T> => {
+// eslint-disable-next-line max-len
+Cypress.Commands.add("getSettingValue", <T = any>(name: string, roomId?: string, excludeDefault?: boolean): Chainable<T> => {
     return cy.getSettingsStore().then((store: typeof SettingsStore) => {
-        return store.getValue(name, roomId);
+        return store.getValue(name, roomId, excludeDefault);
     });
 });
 

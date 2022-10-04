@@ -17,7 +17,7 @@ limitations under the License.
 
 import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
-import { ValidatedServerConfig } from "./utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from "./utils/ValidatedServerConfig";
 
 // Convention decision: All config options are lower_snake_case
 // We use an isolated file for the interface so we can mess around with the eslint options.
@@ -115,6 +115,10 @@ export interface IConfigOptions {
     };
     voip?: {
         obey_asserted_identity?: boolean; // MSC3086
+    };
+    element_call: {
+        url: string;
+        use_exclusively: boolean;
     };
 
     logout_redirect_url?: string;

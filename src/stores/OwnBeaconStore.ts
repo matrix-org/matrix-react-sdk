@@ -44,6 +44,7 @@ import {
     watchPosition,
 } from "../utils/beacon";
 import { getCurrentPosition } from "../utils/beacon";
+import { doMaybeLocalRoomAction } from "../utils/local-room";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
@@ -54,7 +55,7 @@ export enum OwnBeaconStoreEvent {
     BeaconUpdateError = 'BeaconUpdateError',
 }
 
-const MOVING_UPDATE_INTERVAL = 2000;
+const MOVING_UPDATE_INTERVAL = 5000;
 const STATIC_UPDATE_INTERVAL = 30000;
 
 const BAIL_AFTER_CONSECUTIVE_ERROR_COUNT = 2;
@@ -91,7 +92,11 @@ const getLocallyCreatedBeaconEventIds = (): string[] => {
     return ids;
 };
 export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
-    private static internalInstance = new OwnBeaconStore();
+    private static readonly internalInstance = (() => {
+        const instance = new OwnBeaconStore();
+        instance.start();
+        return instance;
+    })();
     // users beacons, keyed by event type
     public readonly beacons = new Map<BeaconIdentifier, Beacon>();
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<BeaconIdentifier>>();
@@ -399,9 +404,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         await Promise.all(existingLiveBeaconIdsForRoom.map(beaconId => this.stopBeacon(beaconId)));
 
         // eslint-disable-next-line camelcase
-        const { event_id } = await this.matrixClient.unstable_createLiveBeacon(
+        const { event_id } = await doMaybeLocalRoomAction(
             roomId,
-            beaconInfoContent,
+            (actualRoomId: string) => this.matrixClient.unstable_createLiveBeacon(actualRoomId, beaconInfoContent),
+            this.matrixClient,
         );
 
         storeLocallyCreateBeaconEventId(event_id);
