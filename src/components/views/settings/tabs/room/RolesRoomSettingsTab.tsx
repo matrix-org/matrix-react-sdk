@@ -249,10 +249,6 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             [EventType.Reaction]: _td("Send reactions"),
             [EventType.RoomRedaction]: _td("Remove messages sent by me"),
 
-            // MSC33401: Native Group VoIP signalling
-            [ElementCall.CALL_EVENT_TYPE.name]: _td("Start Element calls"),
-            [ElementCall.MEMBER_EVENT_TYPE.name]: _td("Join Element calls"),
-
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
             [VoiceBroadcastInfoEventType]: _td("Voice broadcasts"),
@@ -260,6 +256,11 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
         if (SettingsStore.getValue("feature_pinning")) {
             plEventsToLabels[EventType.RoomPinnedEvents] = _td("Manage pinned events");
+        }
+        // MSC33401: Native Group VoIP signalling
+        if (SettingsStore.getValue("feature_group_calls")) {
+            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start Element calls");
+            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join Element calls");
         }
 
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {

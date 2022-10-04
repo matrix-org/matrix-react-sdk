@@ -98,12 +98,14 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
             <GeneralRoomSettingsTab roomId={this.props.roomId} />,
             "RoomSettingsGeneral",
         ));
-        tabs.push(new Tab(
-            ROOM_VOIP_TAB,
-            _td("Voice & Video"),
-            "mx_RoomSettingsDialog_voiceIcon",
-            <VoipRoomSettingsTab roomId={this.props.roomId} />,
-        ));
+        if (SettingsStore.getValue("feature_group_calls")) {
+            tabs.push(new Tab(
+                ROOM_VOIP_TAB,
+                _td("Voice & Video"),
+                "mx_RoomSettingsDialog_voiceIcon",
+                <VoipRoomSettingsTab roomId={this.props.roomId} />,
+            ));
+        }
         tabs.push(new Tab(
             ROOM_SECURITY_TAB,
             _td("Security & Privacy"),
