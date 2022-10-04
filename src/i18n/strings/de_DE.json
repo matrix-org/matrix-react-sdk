@@ -1398,7 +1398,7 @@
     "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)shat %(count)s mal keine Änderung vorgenommen",
     "%(oneUser)smade no changes %(count)s times|one": "%(oneUser)shat keine Änderung vorgenommen",
     "Some characters not allowed": "Einige Zeichen sind nicht erlaubt",
-    "Enter a server name": "Gib einen Server-Namen ein",
+    "Enter a server name": "Gib einen Servernamen ein",
     "Looks good": "Das sieht gut aus",
     "Can't find this server or its room list": "Kann diesen Server oder seine Raumliste nicht finden",
     "All rooms": "Alle Räume",
