@@ -29,6 +29,7 @@ import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDi
 import LogoutDialog from '../dialogs/LogoutDialog';
 import DeviceTile from './devices/DeviceTile';
 import SelectableDeviceTile from './devices/SelectableDeviceTile';
+import { DeviceType } from '../../../utils/device/parseUserAgent';
 
 interface IProps {
     device: IMyDevice;
@@ -156,6 +157,7 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
         const extendedDevice = {
             ...this.props.device,
             isVerified: this.props.verified,
+            deviceType: DeviceType.Unknown,
         };
 
         if (this.props.isOwnDevice) {

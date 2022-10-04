@@ -26,7 +26,7 @@ export type ExtendedDeviceInformation = {
     deviceModel?: string;
     // eg Android 11
     deviceOperatingSystem?: string;
-    // eg Element Nightly.
+    // eg Firefox
     clientName?: string;
     // eg 1.1.0
     clientVersion?: string;
@@ -38,5 +38,8 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
             deviceType: DeviceType.Unknown,
         };
     }
-    throw new Error('not yet implemented');
+    // @TODO(kerrya) not yet implemented
+    return {
+        deviceType: DeviceType.Unknown,
+    };
 };

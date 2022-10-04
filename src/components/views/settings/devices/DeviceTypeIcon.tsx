@@ -35,25 +35,25 @@ export const DeviceTypeIcon: React.FC<Props> = ({
     isSelected,
     deviceType,
 }) => (
-    <div className={classNames('mx_DeviceType', {
-        mx_DeviceType_selected: isSelected,
+    <div className={classNames('mx_DeviceTypeIcon', {
+        mx_DeviceTypeIcon_selected: isSelected,
     })}
     >
         { /* TODO(kerrya) all devices have an unknown type until PSG-650 */ }
         <UnknownDeviceIcon
-            className='mx_DeviceType_deviceIcon'
+            className='mx_DeviceTypeIcon_deviceIcon'
             role='img'
             aria-label={_t('Unknown device type')}
         />
         {
             isVerified
                 ? <VerifiedIcon
-                    className={classNames('mx_DeviceType_verificationIcon', 'verified')}
+                    className={classNames('mx_DeviceTypeIcon_verificationIcon', 'verified')}
                     role='img'
                     aria-label={_t('Verified')}
                 />
                 : <UnverifiedIcon
-                    className={classNames('mx_DeviceType_verificationIcon', 'unverified')}
+                    className={classNames('mx_DeviceTypeIcon_verificationIcon', 'unverified')}
                     role='img'
                     aria-label={_t('Unverified')}
                 />

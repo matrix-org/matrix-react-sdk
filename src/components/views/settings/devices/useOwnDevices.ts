@@ -24,6 +24,7 @@ import {
     MatrixEvent,
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
+    UNSTABLE_MSC3852_LAST_SEEN_UA,
 } from "matrix-js-sdk/src/matrix";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
@@ -36,6 +37,7 @@ import { _t } from "../../../../languageHandler";
 import { getDeviceClientInformation } from "../../../../utils/device/clientInformation";
 import { DevicesDictionary, ExtendedDevice, ExtendedDeviceAppInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
+import { parseUserAgent } from "../../../../utils/device/parseUserAgent";
 
 const isDeviceVerified = (
     matrixClient: MatrixClient,
@@ -87,6 +89,7 @@ const fetchDevicesWithVerification = async (
             ...device,
             isVerified: isDeviceVerified(matrixClient, crossSigningInfo, device),
             ...parseDeviceExtendedInformation(matrixClient, device),
+            ...parseUserAgent(device[UNSTABLE_MSC3852_LAST_SEEN_UA.name]),
         },
     }), {});
 

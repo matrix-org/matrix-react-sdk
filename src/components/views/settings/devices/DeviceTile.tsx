@@ -22,7 +22,7 @@ import { formatDate, formatRelativeTime } from "../../../../DateUtils";
 import Heading from "../../typography/Heading";
 import { INACTIVE_DEVICE_AGE_DAYS, isDeviceInactive } from "./filter";
 import { ExtendedDevice } from "./types";
-import { DeviceType } from "./DeviceType";
+import { DeviceTypeIcon } from "./DeviceTypeIcon";
 export interface DeviceTileProps {
     device: ExtendedDevice;
     isSelected?: boolean;
@@ -89,7 +89,11 @@ const DeviceTile: React.FC<DeviceTileProps> = ({
         ];
 
     return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
-        <DeviceType isVerified={device.isVerified} isSelected={isSelected} />
+        <DeviceTypeIcon
+            isVerified={device.isVerified}
+            isSelected={isSelected}
+            deviceType={device.deviceType}
+        />
         <div className="mx_DeviceTile_info" onClick={onClick}>
             <DeviceTileName device={device} />
             <div className="mx_DeviceTile_metadata">
