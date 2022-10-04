@@ -31,6 +31,7 @@ import PowerSelector from "../../../elements/PowerSelector";
 import SettingsFieldset from '../../SettingsFieldset';
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
+import { ElementCall } from "../../../../../models/Call";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -59,6 +60,10 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
     [EventType.RoomPinnedEvents]: { isState: true, hideForSpace: true },
     [EventType.Reaction]: { isState: false, hideForSpace: true },
     [EventType.RoomRedaction]: { isState: false, hideForSpace: true },
+
+    // MSC33401: Native Group VoIP signalling
+    [ElementCall.CALL_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
+    [ElementCall.MEMBER_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": { isState: true, hideForSpace: true },
@@ -243,6 +248,10 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             [EventType.RoomServerAcl]: _td("Change server ACLs"),
             [EventType.Reaction]: _td("Send reactions"),
             [EventType.RoomRedaction]: _td("Remove messages sent by me"),
+
+            // MSC33401: Native Group VoIP signalling
+            [ElementCall.CALL_EVENT_TYPE.name]: _td("Start Element calls"),
+            [ElementCall.MEMBER_EVENT_TYPE.name]: _td("Join Element calls"),
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
