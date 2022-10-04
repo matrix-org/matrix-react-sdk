@@ -129,8 +129,8 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
         this.setState({
             disablingReadReceiptsSupported: (
-                await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")
-                || await cli.isVersionSupported("v1.4")
+                (await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable"))
+                || (await cli.isVersionSupported("v1.4"))
             ),
         });
     }
