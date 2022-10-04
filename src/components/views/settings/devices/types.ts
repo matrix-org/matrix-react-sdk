@@ -18,8 +18,9 @@ import { IMyDevice } from "matrix-js-sdk/src/matrix";
 
 export type DeviceWithVerification = IMyDevice & { isVerified: boolean | null };
 export type ExtendedDeviceInfo = {
-    clientName?: string;
-    clientVersion?: string;
+    // eg Element Web
+    appName?: string;
+    appVersion?: string;
     url?: string;
 };
 export type ExtendedDevice = DeviceWithVerification & ExtendedDeviceInfo;

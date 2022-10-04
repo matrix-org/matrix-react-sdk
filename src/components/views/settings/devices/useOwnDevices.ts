@@ -67,8 +67,8 @@ const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyD
     const { name, version, url } = getDeviceClientInformation(matrixClient, device.device_id);
 
     return {
-        clientName: name,
-        clientVersion: version,
+        appName: name,
+        appVersion: version,
         url,
     };
 };
