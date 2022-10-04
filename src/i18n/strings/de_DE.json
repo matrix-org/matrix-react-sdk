@@ -2744,7 +2744,7 @@
     "Enter a number between %(min)s and %(max)s": "Gib eine Zahl zwischen %(min)s und %(max)s ein",
     "In reply to <a>this message</a>": "Antwort auf <a>diese Nachricht</a>",
     "Downloading": "Herunterladen",
-    "No answer": "Nicht beantwortet",
+    "No answer": "Keine Antwort",
     "Unban from %(roomName)s": "Von %(roomName)s entbannen",
     "Disinvite from %(roomName)s": "Einladung für %(roomName)s zurückziehen",
     "Export chat": "Unterhaltung exportieren",
