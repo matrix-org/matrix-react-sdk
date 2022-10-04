@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
+import { IAbortablePromise, MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
 import {
@@ -27,6 +27,7 @@ import {
     VoiceBroadcastRecorderEvent,
 } from "..";
 import { uploadFile } from "../../ContentMessages";
+import { IEncryptedFile } from "../../customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../utils/createVoiceMessageContent";
 import { IDestroyable } from "../../utils/IDestroyable";
 
@@ -102,11 +103,14 @@ export class VoiceBroadcastRecording
     }
 
     private onChunkRecorded = async (chunk: ChunkRecordedPayload) => {
-        const roomId = this.infoEvent.getRoomId();
+        const { url, file } = await this.uploadFile(chunk);
+        await this.sendVoiceMessage(chunk, url, file);
+    };
 
-        const upload = await uploadFile(
+    private async uploadFile(chunk: ChunkRecordedPayload): IAbortablePromise<{ url?: string, file?: IEncryptedFile }> {
+        return uploadFile(
             this.client,
-            roomId,
+            this.infoEvent.getRoomId(),
             new Blob(
                 [chunk.buffer],
                 {
@@ -114,21 +118,23 @@ export class VoiceBroadcastRecording
                 },
             ),
         );
+    }
 
+    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url: string, file: IEncryptedFile) {
         const content = createVoiceMessageContent(
-            upload.url,
+            url,
             this.recorder.contentType,
             Math.round(chunk.length * 1000),
             chunk.buffer.length,
-            upload.file,
+            file,
         );
         content["m.relates_to"] = {
             rel_type: RelationType.Reference,
             event_id: this.infoEvent.getId(),
         };
 
-        this.client.sendMessage(roomId, content);
-    };
+        await this.client.sendMessage(this.infoEvent.getRoomId(), content);
+    }
 
     private async sendStoppedStateEvent() {
         // TODO Michael W: add error handling for state event
