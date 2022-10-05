@@ -65,11 +65,11 @@ export class VoiceBroadcastRecording
         // TODO Michael W: add listening for updates
     }
 
-    public async start() {
+    public async start(): Promise<void> {
         return this.getRecorder().start();
     }
 
-    public async stop() {
+    public async stop(): Promise<void> {
         this.setState(VoiceBroadcastInfoState.Stopped);
         await this.stopRecorder();
         await this.sendStoppedStateEvent();
@@ -88,7 +88,7 @@ export class VoiceBroadcastRecording
         return this.recorder;
     }
 
-    public destroy() {
+    public destroy(): void {
         if (this.recorder) {
             this.recorder.off(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
             this.recorder.stop();
@@ -102,7 +102,7 @@ export class VoiceBroadcastRecording
         this.emit(VoiceBroadcastRecordingEvent.StateChanged, this.state);
     }
 
-    private onChunkRecorded = async (chunk: ChunkRecordedPayload) => {
+    private onChunkRecorded = async (chunk: ChunkRecordedPayload): Promise<void> => {
         const { url, file } = await this.uploadFile(chunk);
         await this.sendVoiceMessage(chunk, url, file);
     };
@@ -120,7 +120,7 @@ export class VoiceBroadcastRecording
         );
     }
 
-    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url: string, file: IEncryptedFile) {
+    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url: string, file: IEncryptedFile): Promise<void> {
         const content = createVoiceMessageContent(
             url,
             this.getRecorder().contentType,
@@ -136,7 +136,7 @@ export class VoiceBroadcastRecording
         await this.client.sendMessage(this.infoEvent.getRoomId(), content);
     }
 
-    private async sendStoppedStateEvent() {
+    private async sendStoppedStateEvent(): Promise<void> {
         // TODO Michael W: add error handling for state event
         await this.client.sendStateEvent(
             this.infoEvent.getRoomId(),
@@ -152,7 +152,7 @@ export class VoiceBroadcastRecording
         );
     }
 
-    private async stopRecorder() {
+    private async stopRecorder(): Promise<void> {
         if (!this.recorder) {
             return;
         }

@@ -74,11 +74,11 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         return this.voiceRecording.contentType;
     }
 
-    private get chunkLength() {
+    private get chunkLength(): number {
         return this.voiceRecording.recorderSeconds - this.previousChunkEndTimePosition;
     }
 
-    private onDataAvailable = (data: ArrayBuffer) => {
+    private onDataAvailable = (data: ArrayBuffer): void => {
         const dataArray = new Uint8Array(data);
         this.pagesFromRecorderCount++;
 
@@ -91,12 +91,12 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         this.handleData(dataArray);
     };
 
-    private handleData(data: Uint8Array) {
+    private handleData(data: Uint8Array): void {
         this.chunkBuffer = concat(this.chunkBuffer, data);
         this.emitChunkIfTargetLengthReached();
     }
 
-    private emitChunkIfTargetLengthReached() {
+    private emitChunkIfTargetLengthReached(): void {
         if (this.chunkLength >= this.targetChunkLength) {
             this.emitAndResetChunk();
         }
@@ -120,7 +120,7 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         return payload;
     }
 
-    private emitAndResetChunk() {
+    private emitAndResetChunk(): void {
         if (this.chunkBuffer.length === 0) {
             return;
         }
@@ -136,7 +136,7 @@ export class VoiceBroadcastRecorder implements IDestroyable {
     }
 }
 
-export const createVoiceBroadcastRecorder = () => {
+export const createVoiceBroadcastRecorder = (): VoiceBroadcastRecorder => {
     const targetChunkLength = SdkConfig.get("voice_broadcast")?.chunk_length || DEFAULTS.voice_broadcast!.chunk_length;
     return new VoiceBroadcastRecorder(new VoiceRecording(), targetChunkLength);
 };

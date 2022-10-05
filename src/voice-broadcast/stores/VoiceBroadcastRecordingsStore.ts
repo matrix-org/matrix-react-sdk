@@ -60,12 +60,12 @@ export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadc
         return this.recordings.get(infoEventId);
     }
 
-    public static readonly _instance = new VoiceBroadcastRecordingsStore();
+    private static readonly cachedInstance = new VoiceBroadcastRecordingsStore();
 
     /**
      * TODO Michael W: replace when https://github.com/matrix-org/matrix-react-sdk/pull/9293 has been merged
      */
-    public static instance() {
-        return VoiceBroadcastRecordingsStore._instance;
+    public static instance(): VoiceBroadcastRecordingsStore {
+        return VoiceBroadcastRecordingsStore.cachedInstance;
     }
 }
