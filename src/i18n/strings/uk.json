@@ -3588,5 +3588,9 @@
     "Enable notifications for this account": "Увімкнути сповіщення для цього облікового запису",
     "Video call ended": "Відеовиклик завершено",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
-    "%(selectedDeviceCount)s sessions selected": "Вибрано %(selectedDeviceCount)s сеансів"
+    "%(selectedDeviceCount)s sessions selected": "Вибрано %(selectedDeviceCount)s сеансів",
+    "URL": "URL",
+    "Version": "Версія",
+    "Application": "Застосунок",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Записуйте назву клієнта, версію та URL-адресу, щоб легше розпізнавати сеанси в менеджері сеансів"
 }
