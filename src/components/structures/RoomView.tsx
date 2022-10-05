@@ -121,6 +121,7 @@ import { LargeLoader } from './LargeLoader';
 import { VoiceBroadcastInfoEventType } from '../../voice-broadcast';
 import { isVideoRoom } from '../../utils/video-rooms';
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
+import { Call } from "../../models/Call";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -178,6 +179,7 @@ export interface IRoomState {
     searchHighlights?: string[];
     searchInProgress?: boolean;
     callState?: CallState;
+    activeCall: Call | null;
     canPeek: boolean;
     canSelfRedact: boolean;
     showApps: boolean;
@@ -303,6 +305,8 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
                     excludedRightPanelPhaseButtons={[]}
                     showButtons={false}
                     enableRoomOptionsMenu={false}
+                    viewingCall={false}
+                    activeCall={null}
                 />
                 <main className="mx_RoomView_body" ref={props.roomView}>
                     <FileDropTarget parent={props.roomView.current} onFileDrop={props.onFileDrop} />
@@ -353,6 +357,8 @@ function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement
                     excludedRightPanelPhaseButtons={[]}
                     showButtons={false}
                     enableRoomOptionsMenu={false}
+                    viewingCall={false}
+                    activeCall={null}
                 />
                 <div className="mx_RoomView_body">
                     <LargeLoader text={text} />
@@ -391,6 +397,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             numUnreadMessages: 0,
             searchResults: null,
             callState: null,
+            activeCall: null,
             canPeek: false,
             canSelfRedact: false,
             showApps: false,
@@ -564,6 +571,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             mainSplitContentType: room === null ? undefined : this.getMainSplitContentType(room),
             initialEventId: null, // default to clearing this, will get set later in the method if needed
             showRightPanel: RightPanelStore.instance.isOpenForRoom(roomId),
+            activeCall: CallStore.instance.getActiveCall(roomId),
         };
 
         if (
@@ -707,7 +715,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private onActiveCalls = () => {
-        if (this.state.roomId !== undefined && !CallStore.instance.hasActiveCall(this.state.roomId)) {
+        if (this.state.roomId === undefined) return;
+        const activeCall = CallStore.instance.getActiveCall(this.state.roomId);
+
+        if (activeCall === null) {
             // We disconnected from the call, so stop viewing it
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
@@ -716,6 +727,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 metricsTrigger: undefined,
             }, true); // Synchronous so that CallView disappears immediately
         }
+
+        this.setState({ activeCall });
     };
 
     private getRoomId = () => {
@@ -2410,6 +2423,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         let onForgetClick = this.onForgetClick;
         let onSearchClick = this.onSearchClick;
         let onInviteClick = null;
+        let viewingCall = false;
 
         // Simplify the header for other main split types
         switch (this.state.mainSplitContentType) {
@@ -2428,12 +2442,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     RightPanelPhases.PinnedMessages,
                     RightPanelPhases.NotificationPanel,
                 ];
+                if (!isVideoRoom(this.state.room)) {
+                    excludedRightPanelPhaseButtons.push(RightPanelPhases.RoomSummary);
+                    if (this.state.activeCall === null) {
+                        excludedRightPanelPhaseButtons.push(RightPanelPhases.Timeline);
+                    }
+                }
                 onAppsClick = null;
                 onForgetClick = null;
                 onSearchClick = null;
                 if (this.state.room.canInvite(this.context.credentials.userId)) {
                     onInviteClick = this.onInviteClick;
                 }
+                viewingCall = true;
         }
 
         return (
@@ -2457,6 +2478,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                             showButtons={!this.viewsLocalRoom}
                             enableRoomOptionsMenu={!this.viewsLocalRoom}
+                            viewingCall={viewingCall}
+                            activeCall={this.state.activeCall}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className={mainSplitContentClasses} ref={this.roomViewBody} data-layout={this.state.layout}>
