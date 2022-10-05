@@ -35,10 +35,11 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { aboveLeftOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
 import { Alignment } from "../elements/Tooltip";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
+import SdkConfig from "../../../SdkConfig";
 
 interface DeviceButtonProps {
     kind: string;
@@ -110,10 +111,11 @@ const MAX_FACES = 8;
 interface LobbyProps {
     room: Room;
     connect: () => Promise<void>;
+    callIsFull?: boolean;
     children?: ReactNode;
 }
 
-export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
+export const Lobby: FC<LobbyProps> = ({ room, callIsFull, connect, children }) => {
     const [connecting, setConnecting] = useState(false);
     const me = useMemo(() => room.getMember(room.myUserId)!, [room]);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -197,6 +199,11 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
         }
     }, [connect, setConnecting]);
 
+    const tooltip = useMemo(() => {
+        if (connecting) return _t("Connecting");
+        if (callIsFull) return _t("Unfortunately, you cannot join this call since it is already full");
+    }, [connecting, callIsFull]);
+
     return <div className="mx_CallView_lobby">
         { children }
         <div className="mx_CallView_preview">
@@ -233,14 +240,15 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
                 />
             </div>
         </div>
-        <AccessibleButton
+        <AccessibleTooltipButton
             className="mx_CallView_connectButton"
             kind="primary"
-            disabled={connecting}
+            disabled={connecting || callIsFull}
             onClick={onConnectClick}
-        >
-            { _t("Join") }
-        </AccessibleButton>
+            title={_t("Join")}
+            label={_t("Join")}
+            tooltip={tooltip}
+        />
     </div>;
 };
 
@@ -331,6 +339,10 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
     // We'll take this opportunity to tidy up our room state
     useEffect(() => { call.clean(); }, [call]);
 
+    const callIsFull = useMemo(() => {
+        return participants.size >= SdkConfig.get("element_call").participant_limit;
+    }, [participants]);
+
     let lobby: JSX.Element | null = null;
     if (!connected) {
         let facePile: JSX.Element | null = null;
@@ -344,7 +356,13 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
             </div>;
         }
 
-        lobby = <Lobby room={room} connect={connect}>{ facePile }</Lobby>;
+        lobby = <Lobby
+            room={room}
+            connect={connect}
+            callIsFull={callIsFull}
+        >
+            { facePile }
+        </Lobby>;
     }
 
     return <div className="mx_CallView">
