@@ -109,6 +109,22 @@ describe("createRoom", () => {
         expect(createJitsiCallSpy).not.toHaveBeenCalled();
         expect(createElementCallSpy).not.toHaveBeenCalled();
     });
+
+    it("correctly sets up MSC3401 power levels", async () => {
+        await createRoom({});
+
+        const [[{
+            power_level_content_override: {
+                events: {
+                    [ElementCall.CALL_EVENT_TYPE.name]: callPower,
+                    [ElementCall.MEMBER_EVENT_TYPE.name]: callMemberPower,
+                },
+            },
+        }]] = client.createRoom.mock.calls as any; // no good type
+
+        expect(callPower).toBe(100);
+        expect(callMemberPower).toBe(100);
+    });
 });
 
 describe("canEncryptToAllUsers", () => {

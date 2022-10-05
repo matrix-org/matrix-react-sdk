@@ -31,6 +31,7 @@ import PowerSelector from "../../../elements/PowerSelector";
 import SettingsFieldset from '../../SettingsFieldset';
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
+import { ElementCall } from "../../../../../models/Call";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -59,6 +60,10 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
     [EventType.RoomPinnedEvents]: { isState: true, hideForSpace: true },
     [EventType.Reaction]: { isState: false, hideForSpace: true },
     [EventType.RoomRedaction]: { isState: false, hideForSpace: true },
+
+    // MSC33401: Native Group VoIP signalling
+    [ElementCall.CALL_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
+    [ElementCall.MEMBER_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": { isState: true, hideForSpace: true },
@@ -251,6 +256,11 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
         if (SettingsStore.getValue("feature_pinning")) {
             plEventsToLabels[EventType.RoomPinnedEvents] = _td("Manage pinned events");
+        }
+        // MSC33401: Native Group VoIP signalling
+        if (SettingsStore.getValue("feature_group_calls")) {
+            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start Element calls");
+            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join Element calls");
         }
 
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {
