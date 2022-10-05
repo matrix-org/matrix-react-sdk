@@ -49,11 +49,16 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
         setElementCallEnabled(enabled);
 
         if (enabled) {
-            events[ElementCall.CALL_EVENT_TYPE.name] = isPublic ? 50 : 0;
-            events[ElementCall.MEMBER_EVENT_TYPE.name] = 0;
+            const userLevel = events[EventType.RoomMessage] ?? content.users_default ?? 0;
+            const moderatorLevel = content.kick ?? 50;
+
+            events[ElementCall.CALL_EVENT_TYPE.name] = isPublic ? moderatorLevel : userLevel;
+            events[ElementCall.MEMBER_EVENT_TYPE.name] = userLevel;
         } else {
-            events[ElementCall.CALL_EVENT_TYPE.name] = 100;
-            events[ElementCall.MEMBER_EVENT_TYPE.name] = 100;
+            const adminLevel = events[EventType.RoomPowerLevels] ?? content.state_default ?? 100;
+
+            events[ElementCall.CALL_EVENT_TYPE.name] = adminLevel;
+            events[ElementCall.MEMBER_EVENT_TYPE.name] = adminLevel;
         }
 
         MatrixClientPeg.get().sendStateEvent(roomId, EventType.RoomPowerLevels, {
