@@ -3532,7 +3532,7 @@
     "Show shortcut to welcome checklist above the room list": "Verknüpfung zu ersten Schritten (Willkommen) anzeigen",
     "Find people": "Finde Personen",
     "Find your people": "Finde deine Leute",
-    "It’s what you’re here for, so lets get to it": "Deshalb bist du hier, also lass uns beginnen",
+    "It’s what you’re here for, so lets get to it": "Dafür bist du hier, also dann mal los",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Verschlüsselung ist für öffentliche Räume nicht empfohlen.</b> Jeder kann öffentliche Räume finden und betreten, also kann auch jeder die Nachrichten lesen. Du wirst keine der Vorteile von Verschlüsselung erhalten und kannst sie später auch nicht mehr deaktivieren. Nachrichten in öffentlichen Räumen zu verschlüsseln, wird das empfangen und senden verlangsamen.",
     "Empty room (was %(oldName)s)": "Leerer Raum (war %(oldName)s)",
     "Inviting %(user)s and %(count)s others|other": "Lade %(user)s und %(count)s weitere Person ein",
