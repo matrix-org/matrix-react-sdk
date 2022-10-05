@@ -37,7 +37,7 @@ describe('recordClientInformation()', () => {
     const sdkConfig: IConfigOptions = {
         brand: 'Test Brand',
         element_call: { url: '', use_exclusively: false },
-    } as unknown as IConfigOptions;
+    };
 
     const platform = {
         getAppVersion: jest.fn().mockResolvedValue(version),

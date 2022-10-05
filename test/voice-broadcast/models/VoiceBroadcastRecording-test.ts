@@ -15,7 +15,15 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { EventTimelineSet, EventType, MatrixClient, MatrixEvent, RelationType, Room } from "matrix-js-sdk/src/matrix";
+import {
+    EventTimelineSet,
+    EventType,
+    MatrixClient,
+    MatrixEvent,
+    MsgType,
+    RelationType,
+    Room,
+} from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 
 import { uploadFile } from "../../../src/ContentMessages";
@@ -118,13 +126,30 @@ describe("VoiceBroadcastRecording", () => {
             waveform?: number[],
         ) => {
             return {
-                mxc,
-                mimetype,
-                duration,
-                size,
+                body: "Voice message",
+                msgtype: MsgType.Audio,
+                url: mxc,
                 file,
-                waveform,
-            } as any;
+                info: {
+                    duration,
+                    mimetype,
+                    size,
+                },
+                ["org.matrix.msc1767.text"]: "Voice message",
+                ["org.matrix.msc1767.file"]: {
+                    url: mxc,
+                    file,
+                    name: "Voice message.ogg",
+                    mimetype,
+                    size,
+                },
+                ["org.matrix.msc1767.audio"]: {
+                    duration,
+                    // https://github.com/matrix-org/matrix-doc/pull/3246
+                    waveform,
+                },
+                ["org.matrix.msc3245.voice"]: {}, // No content, this is a rendering hint
+            };
         });
     });
 
@@ -200,18 +225,36 @@ describe("VoiceBroadcastRecording", () => {
                     expect(mocked(client.sendMessage)).toHaveBeenCalledWith(
                         roomId,
                         {
-                            "duration": 23000,
-                            "file": {
-                                "file": true,
+                            body: "Voice message",
+                            file: {
+                                file: true,
                             },
-                            "m.relates_to": {
-                                "event_id": infoEvent.getId(),
-                                "rel_type": "m.reference",
+                            info: {
+                                duration: 23000,
+                                mimetype: "audio/ogg",
+                                size: 3,
                             },
-                            "mimetype": "audio/ogg",
-                            "mxc": "mxc://example.com/vb",
-                            "size": 3,
-                            "waveform": undefined,
+                            ["m.relates_to"]: {
+                                event_id: infoEvent.getId(),
+                                rel_type: "m.reference",
+                            },
+                            msgtype: "m.audio",
+                            ["org.matrix.msc1767.audio"]: {
+                                duration: 23000,
+                                waveform: undefined,
+                            },
+                            ["org.matrix.msc1767.file"]: {
+                                file: {
+                                    file: true,
+                                },
+                                mimetype: "audio/ogg",
+                                name: "Voice message.ogg",
+                                size: 3,
+                                url: "mxc://example.com/vb",
+                            },
+                            ["org.matrix.msc1767.text"]: "Voice message",
+                            ["org.matrix.msc3245.voice"]: {},
+                            url: "mxc://example.com/vb",
                         },
                     );
                 });
@@ -236,18 +279,36 @@ describe("VoiceBroadcastRecording", () => {
                     expect(mocked(client.sendMessage)).toHaveBeenCalledWith(
                         roomId,
                         {
-                            "duration": 42000,
-                            "file": {
-                                "file": true,
+                            body: "Voice message",
+                            file: {
+                                file: true,
                             },
-                            "m.relates_to": {
-                                "event_id": infoEvent.getId(),
-                                "rel_type": "m.reference",
+                            info: {
+                                duration: 42000,
+                                mimetype: "audio/ogg",
+                                size: 3,
                             },
-                            "mimetype": "audio/ogg",
-                            "mxc": "mxc://example.com/vb",
-                            "size": 3,
-                            "waveform": undefined,
+                            ["m.relates_to"]: {
+                                event_id: infoEvent.getId(),
+                                rel_type: "m.reference",
+                            },
+                            msgtype: "m.audio",
+                            ["org.matrix.msc1767.audio"]: {
+                                duration: 42000,
+                                waveform: undefined,
+                            },
+                            ["org.matrix.msc1767.file"]: {
+                                file: {
+                                    file: true,
+                                },
+                                mimetype: "audio/ogg",
+                                name: "Voice message.ogg",
+                                size: 3,
+                                url: "mxc://example.com/vb",
+                            },
+                            ["org.matrix.msc1767.text"]: "Voice message",
+                            ["org.matrix.msc3245.voice"]: {},
+                            url: "mxc://example.com/vb",
                         },
                     );
                 });
