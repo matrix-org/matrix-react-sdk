@@ -92,7 +92,7 @@ declare global {
             uploadContent(
                 file: FileType,
                 opts?: UploadOpts,
-            ): Chainable<Upload>;
+            ): Chainable<Awaited<Upload["promise"]>>;
             /**
              * Turn an MXC URL into an HTTP one. <strong>This method is experimental and
              * may change.</strong>
@@ -202,9 +202,9 @@ Cypress.Commands.add("setDisplayName", (name: string): Chainable<{}> => {
     });
 });
 
-Cypress.Commands.add("uploadContent", (file: FileType, opts?: UploadOpts): Chainable<Upload> => {
+Cypress.Commands.add("uploadContent", (file: FileType, opts?: UploadOpts): Chainable<Awaited<Upload["promise"]>> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
-        return cli.uploadContent(file, opts);
+        return cli.uploadContent(file, opts).promise;
     });
 });
 

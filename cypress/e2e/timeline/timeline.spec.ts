@@ -91,11 +91,11 @@ describe("Timeline", () => {
 
     describe("useOnlyCurrentProfiles", () => {
         beforeEach(() => {
-            cy.uploadContent(OLD_AVATAR).then((url) => {
+            cy.uploadContent(OLD_AVATAR).then(({ content_uri: url }) => {
                 oldAvatarUrl = url;
                 cy.setAvatarUrl(url);
             });
-            cy.uploadContent(NEW_AVATAR).then((url) => {
+            cy.uploadContent(NEW_AVATAR).then(({ content_uri: url }) => {
                 newAvatarUrl = url;
             });
         });
