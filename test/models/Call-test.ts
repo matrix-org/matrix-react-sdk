@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { isEqual } from "lodash";
 import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
