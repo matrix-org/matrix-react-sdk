@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Optional } from "matrix-events-sdk";
+
 import { VoiceRecording } from "../../audio/VoiceRecording";
 import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 import { concat } from "../../utils/arrays";
@@ -53,7 +55,7 @@ export class VoiceBroadcastRecorder implements IDestroyable {
     /**
      * Stops the recording and returns the remaining chunk (if any).
      */
-    public async stop(): Promise<ChunkRecordedPayload> {
+    public async stop(): Promise<Optional<ChunkRecordedPayload>> {
         await this.voiceRecording.stop();
         return this.extractChunk();
     }
@@ -103,7 +105,7 @@ export class VoiceBroadcastRecorder implements IDestroyable {
     /**
      * Extracts the current chunk and resets the buffer.
      */
-    private extractChunk(): ChunkRecordedPayload {
+    private extractChunk(): Optional<ChunkRecordedPayload> {
         if (this.chunkBuffer.length === 0) {
             return null;
         }
