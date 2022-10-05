@@ -7070,10 +7070,10 @@ matrix-events-sdk@^0.0.1-beta.7:
     request "^2.88.2"
     unhomoglyph "^1.0.6"
 
-matrix-mock-request@^2.0.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/matrix-mock-request/-/matrix-mock-request-2.1.2.tgz#11e38ed1233dced88a6f2bfba1684d5c5b3aa2c2"
-  integrity sha512-/OXCIzDGSLPJ3fs+uzDrtaOHI/Sqp4iEuniRn31U8S06mPXbvAnXknHqJ4c6A/KVwJj/nPFbGXpK4wPM038I6A==
+matrix-mock-request@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/matrix-mock-request/-/matrix-mock-request-2.5.0.tgz#78da2590e82be2e31edcf9814833af5e5f8d2f1a"
+  integrity sha512-7T3gklpW+4rfHsTnp/FDML7aWoBrXhAh8+1ltinQfAh9TDj6y382z/RUMR7i03d1WDzt/ed1UTihqO5GDoOq9Q==
   dependencies:
     expect "^28.1.0"
 

@@ -69,6 +69,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
             if (this.unmounted) return;
             logger.warn(`Error loading page: ${err}`);
             this.setState({ page: _t("Couldn't load page") });
+            return;
         }
 
         if (this.unmounted) return;
