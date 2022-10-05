@@ -63,7 +63,7 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error changing power level requirement'),
+                title: _t("Error changing power level requirement"),
                 description: _t(
                     "An error occurred changing the room's power level requirements. Ensure you have sufficient " +
                     "permissions and try again.",
