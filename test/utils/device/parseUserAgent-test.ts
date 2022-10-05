@@ -23,7 +23,10 @@ const makeDeviceExtendedInfo = (
     clientName?: string,
     clientVersion?: string,
 ): ExtendedDeviceInformation => ({
-    deviceType, deviceModel, deviceOperatingSystem, clientName, clientVersion,
+    deviceType,
+    deviceModel,
+    deviceOperatingSystem,
+    client: clientName && [clientName, clientVersion].filter(Boolean).join(' '),
 });
 
 /* eslint-disable max-len */
@@ -129,13 +132,7 @@ describe('parseUserAgent()', () => {
             it.each(
                 testCases,
             )('Parses user agent correctly -  %s', (userAgent, expectedResult) => {
-                const result = parseUserAgent(userAgent);
-                expect(result.deviceType).toEqual(expectedResult.deviceType);
-                expect(result.clientName).toEqual(expectedResult.clientName);
-                expect(result.clientVersion).toEqual(expectedResult.clientVersion);
-                expect(result.deviceModel).toEqual(expectedResult.deviceModel);
-                expect(result.deviceOperatingSystem).toEqual(expectedResult.deviceOperatingSystem);
-                // expect(parseUserAgent(userAgent)).toEqual(expectedResult);
+                expect(parseUserAgent(userAgent)).toEqual(expectedResult);
             });
         });
     };

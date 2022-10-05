@@ -28,10 +28,8 @@ export type ExtendedDeviceInformation = {
     deviceModel?: string;
     // eg Android 11
     deviceOperatingSystem?: string;
-    // eg Firefox
-    clientName?: string;
-    // eg 1.1.0
-    clientVersion?: string;
+    // eg Firefox 1.1.0
+    client?: string;
 };
 
 // Element/1.8.21 (iPhone XS Max; iOS 15.2; Scale/3.00)
@@ -83,6 +81,9 @@ const checkForCustomValues = (userAgent: string): {
     return { customDeviceModel, customDeviceOS };
 };
 
+const concatenateNameAndVersion = (name?: string, version?: string): string | undefined =>
+    name && [name, version].filter(Boolean).join(' ');
+
 export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation => {
     if (!userAgent) {
         return {
@@ -96,10 +97,9 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
     const device = parser.getDevice();
     const operatingSystem = parser.getOS();
 
-    const deviceOperatingSystem = operatingSystem.name && [
-        operatingSystem.name, operatingSystem.version,
-    ].filter(Boolean).join(' ');
-    const deviceModel = device.vendor && [device.vendor, device.model].filter(Boolean).join(' ');
+    const deviceOperatingSystem = concatenateNameAndVersion(operatingSystem.name, operatingSystem.version);
+    const deviceModel = concatenateNameAndVersion(device.vendor, device.model);
+    const client = concatenateNameAndVersion(browser.name, browser.major || browser.version);
 
     const { customDeviceModel, customDeviceOS } = checkForCustomValues(userAgent);
     const deviceType = getDeviceType(userAgent, device, browser, operatingSystem);
@@ -108,7 +108,6 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
         deviceType,
         deviceModel: deviceModel || customDeviceModel,
         deviceOperatingSystem: deviceOperatingSystem || customDeviceOS,
-        clientName: browser.name,
-        clientVersion: browser.major ?? browser.version,
+        client,
     };
 };
