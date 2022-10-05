@@ -141,7 +141,7 @@ describe("VoiceBroadcastRecording", () => {
         });
 
         it("should be in Started state", () => {
-            expect(voiceBroadcastRecording.state).toBe(VoiceBroadcastInfoState.Started);
+            expect(voiceBroadcastRecording.getState()).toBe(VoiceBroadcastInfoState.Started);
         });
 
         describe("and calling stop()", () => {
@@ -165,7 +165,7 @@ describe("VoiceBroadcastRecording", () => {
             });
 
             it("should be in state stopped", () => {
-                expect(voiceBroadcastRecording.state).toBe(VoiceBroadcastInfoState.Stopped);
+                expect(voiceBroadcastRecording.getState()).toBe(VoiceBroadcastInfoState.Stopped);
             });
 
             it("should emit a stopped state changed event", () => {
@@ -315,7 +315,7 @@ describe("VoiceBroadcastRecording", () => {
         });
 
         it("should be in Stopped state", () => {
-            expect(voiceBroadcastRecording.state).toBe(VoiceBroadcastInfoState.Stopped);
+            expect(voiceBroadcastRecording.getState()).toBe(VoiceBroadcastInfoState.Stopped);
         });
     });
 });

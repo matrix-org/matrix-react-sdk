@@ -42,8 +42,8 @@ interface EventMap {
 export class VoiceBroadcastRecording
     extends TypedEventEmitter<VoiceBroadcastRecordingEvent, EventMap>
     implements IDestroyable {
-    private _state: VoiceBroadcastInfoState;
-    private _recorder: VoiceBroadcastRecorder;
+    private state: VoiceBroadcastInfoState;
+    private recorder: VoiceBroadcastRecorder;
 
     public constructor(
         public readonly infoEvent: MatrixEvent,
@@ -58,7 +58,7 @@ export class VoiceBroadcastRecording
             VoiceBroadcastInfoEventType,
         );
         const relatedEvents = relations?.getRelations();
-        this._state = !relatedEvents?.find((event: MatrixEvent) => {
+        this.state = !relatedEvents?.find((event: MatrixEvent) => {
             return event.getContent()?.state === VoiceBroadcastInfoState.Stopped;
         }) ? VoiceBroadcastInfoState.Started : VoiceBroadcastInfoState.Stopped;
 
@@ -66,7 +66,7 @@ export class VoiceBroadcastRecording
     }
 
     public async start() {
-        return this.recorder.start();
+        return this.getRecorder().start();
     }
 
     public async stop() {
@@ -75,30 +75,30 @@ export class VoiceBroadcastRecording
         await this.sendStoppedStateEvent();
     }
 
-    public get state(): VoiceBroadcastInfoState {
-        return this._state;
+    public getState(): VoiceBroadcastInfoState {
+        return this.state;
     }
 
-    private get recorder(): VoiceBroadcastRecorder {
-        if (!this._recorder) {
-            this._recorder = createVoiceBroadcastRecorder();
-            this._recorder.on(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
+    private getRecorder(): VoiceBroadcastRecorder {
+        if (!this.recorder) {
+            this.recorder = createVoiceBroadcastRecorder();
+            this.recorder.on(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
         }
 
-        return this._recorder;
+        return this.recorder;
     }
 
     public destroy() {
-        if (this._recorder) {
-            this._recorder.off(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
-            this._recorder.stop();
+        if (this.recorder) {
+            this.recorder.off(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
+            this.recorder.stop();
         }
 
         this.removeAllListeners();
     }
 
     private setState(state: VoiceBroadcastInfoState): void {
-        this._state = state;
+        this.state = state;
         this.emit(VoiceBroadcastRecordingEvent.StateChanged, this.state);
     }
 
@@ -114,7 +114,7 @@ export class VoiceBroadcastRecording
             new Blob(
                 [chunk.buffer],
                 {
-                    type: this.recorder.contentType,
+                    type: this.getRecorder().contentType,
                 },
             ),
         );
@@ -123,7 +123,7 @@ export class VoiceBroadcastRecording
     private async sendVoiceMessage(chunk: ChunkRecordedPayload, url: string, file: IEncryptedFile) {
         const content = createVoiceMessageContent(
             url,
-            this.recorder.contentType,
+            this.getRecorder().contentType,
             Math.round(chunk.length * 1000),
             chunk.buffer.length,
             file,
@@ -153,12 +153,12 @@ export class VoiceBroadcastRecording
     }
 
     private async stopRecorder() {
-        if (!this._recorder) {
+        if (!this.recorder) {
             return;
         }
 
         try {
-            const lastChunk = await this._recorder.stop();
+            const lastChunk = await this.recorder.stop();
             if (lastChunk) {
                 await this.onChunkRecorded(lastChunk);
             }
