@@ -497,13 +497,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)) {
             // Show chat in right panel when a widget is maximised
             RightPanelStore.instance.setCard({ phase: RightPanelPhases.Timeline });
-        } else if (
-            RightPanelStore.instance.isOpen &&
-            RightPanelStore.instance.roomPhaseHistory.some(card => (card.phase === RightPanelPhases.Timeline))
-        ) {
-            // hide chat in right panel when the widget is minimized
-            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
-            RightPanelStore.instance.togglePanel(this.state.roomId);
         }
         this.checkWidgets(this.state.room);
     };
@@ -572,6 +565,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             initialEventId: null, // default to clearing this, will get set later in the method if needed
             showRightPanel: RightPanelStore.instance.isOpenForRoom(roomId),
         };
+
+        if (
+            this.state.mainSplitContentType !== MainSplitContentType.Timeline
+            && newState.mainSplitContentType === MainSplitContentType.Timeline
+            && RightPanelStore.instance.isOpen
+            && RightPanelStore.instance.currentCard.phase === RightPanelPhases.Timeline
+            && RightPanelStore.instance.roomPhaseHistory.some(card => (card.phase === RightPanelPhases.Timeline))
+        ) {
+            // We're returning to the main timeline, so hide the right panel timeline
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
+            RightPanelStore.instance.togglePanel(this.state.roomId ?? null);
+            newState.showRightPanel = false;
+        }
 
         const initialEventId = RoomViewStore.instance.getInitialEventId();
         if (initialEventId) {
