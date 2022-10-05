@@ -171,12 +171,14 @@ describe("VoiceBroadcastRecorder", () => {
                 // simulate first chunk
                 voiceRecording.onDataAvailable(headers1);
                 voiceRecording.onDataAvailable(headers2);
+                // set recorder seconds to something greater than the test chunk length of 30
                 // @ts-ignore
                 voiceRecording.recorderSeconds = 42;
                 voiceRecording.onDataAvailable(chunk1);
 
                 // simulate a second chunk
                 voiceRecording.onDataAvailable(chunk2a);
+                // add another 30 seconds for the next chunk
                 // @ts-ignore
                 voiceRecording.recorderSeconds = 72;
                 voiceRecording.onDataAvailable(chunk2b);
@@ -197,7 +199,7 @@ describe("VoiceBroadcastRecorder", () => {
                     VoiceBroadcastRecorderEvent.ChunkRecorded,
                     {
                         buffer: concat(headers1, headers2, chunk2a, chunk2b),
-                        length: 72 - 42,
+                        length: 72 - 42, // 72 (position at second chunk) - 42 (position of first chunk)
                     },
                 );
             });
