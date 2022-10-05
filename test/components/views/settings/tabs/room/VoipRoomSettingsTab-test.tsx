@@ -119,7 +119,7 @@ describe("RolesRoomSettingsTab", () => {
                 });
             });
 
-            it("disabled Element calls", async () => {
+            it("disables Element calls", async () => {
                 mockPowerLevels({ [ElementCall.MEMBER_EVENT_TYPE.name]: 0 });
 
                 const tab = renderTab();
