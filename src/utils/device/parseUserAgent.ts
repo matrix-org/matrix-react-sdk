@@ -36,6 +36,7 @@ export type ExtendedDeviceInformation = {
 
 // Element/1.8.21 (iPhone XS Max; iOS 15.2; Scale/3.00)
 const IOS_KEYWORD = "; iOS ";
+const BROWSER_KEYWORD = "Mozilla/";
 
 const getDeviceType = (
     userAgent: string,
@@ -46,18 +47,41 @@ const getDeviceType = (
     if (browser.name === 'Electron') {
         return DeviceType.Desktop;
     }
+    if (!!browser.name) {
+        return DeviceType.Web;
+    }
     if (
         device.type === 'mobile' ||
-        operatingSystem.name?.indexOf('Android') > -1 ||
+        operatingSystem.name?.includes('Android') ||
         userAgent.indexOf(IOS_KEYWORD) > -1
     ) {
         return DeviceType.Mobile;
     }
-    if (!!browser.name) {
-        return DeviceType.Web;
-    }
     return DeviceType.Unknown;
-}
+};
+
+/**
+ * Some mobile model and OS strings are not recognised
+ * by the UA parsing library
+ * check they exist by hand
+ */
+const checkForCustomValues = (userAgent: string): {
+    customDeviceModel?: string;
+    customDeviceOS?: string;
+} => {
+    if (userAgent.includes(BROWSER_KEYWORD)) {
+        return {};
+    }
+
+    const mightHaveDevice = userAgent.includes('(');
+    if (!mightHaveDevice) {
+        return {};
+    }
+    const deviceInfoSegments = userAgent.substring(userAgent.indexOf('(') + 1).split('; ');
+    const customDeviceModel = deviceInfoSegments[0] || undefined;
+    const customDeviceOS = deviceInfoSegments[1] || undefined;
+    return { customDeviceModel, customDeviceOS };
+};
 
 export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation => {
     if (!userAgent) {
@@ -71,19 +95,20 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
     const browser = parser.getBrowser();
     const device = parser.getDevice();
     const operatingSystem = parser.getOS();
-    console.log(userAgent, { browser, device, operatingSystem }, parser.getResult());
 
     const deviceOperatingSystem = operatingSystem.name && [
         operatingSystem.name, operatingSystem.version,
     ].filter(Boolean).join(' ');
     const deviceModel = device.vendor && [device.vendor, device.model].filter(Boolean).join(' ');
+
+    const { customDeviceModel, customDeviceOS } = checkForCustomValues(userAgent);
     const deviceType = getDeviceType(userAgent, device, browser, operatingSystem);
 
     return {
         deviceType,
-        deviceModel,
-        deviceOperatingSystem,
+        deviceModel: deviceModel || customDeviceModel,
+        deviceOperatingSystem: deviceOperatingSystem || customDeviceOS,
         clientName: browser.name,
         clientVersion: browser.major ?? browser.version,
-    }
+    };
 };
