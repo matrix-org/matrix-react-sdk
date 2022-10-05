@@ -44,7 +44,6 @@ export const DEFAULTS: IConfigOptions = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
-    spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
     voice_broadcast: {
         chunk_length: 60 * 1000, // one minute
     },
