@@ -72,6 +72,10 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         return this.voiceRecording.contentType;
     }
 
+    private get chunkLength() {
+        return this.voiceRecording.recorderSeconds - this.previousChunkEndTimePosition;
+    }
+
     private onDataAvailable = (data: ArrayBuffer) => {
         const dataArray = new Uint8Array(data);
         this.pagesFromRecorderCount++;
@@ -123,10 +127,6 @@ export class VoiceBroadcastRecorder implements IDestroyable {
             VoiceBroadcastRecorderEvent.ChunkRecorded,
             this.extractChunk(),
         );
-    }
-
-    private get chunkLength() {
-        return this.voiceRecording.recorderSeconds - this.previousChunkEndTimePosition;
     }
 
     public destroy(): void {

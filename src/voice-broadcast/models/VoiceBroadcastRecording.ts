@@ -79,6 +79,15 @@ export class VoiceBroadcastRecording
         return this._state;
     }
 
+    private get recorder(): VoiceBroadcastRecorder {
+        if (!this._recorder) {
+            this._recorder = createVoiceBroadcastRecorder();
+            this._recorder.on(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
+        }
+
+        return this._recorder;
+    }
+
     public destroy() {
         if (this._recorder) {
             this._recorder.off(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
@@ -91,15 +100,6 @@ export class VoiceBroadcastRecording
     private setState(state: VoiceBroadcastInfoState): void {
         this._state = state;
         this.emit(VoiceBroadcastRecordingEvent.StateChanged, this.state);
-    }
-
-    private get recorder(): VoiceBroadcastRecorder {
-        if (!this._recorder) {
-            this._recorder = createVoiceBroadcastRecorder();
-            this._recorder.on(VoiceBroadcastRecorderEvent.ChunkRecorded, this.onChunkRecorded);
-        }
-
-        return this._recorder;
     }
 
     private onChunkRecorded = async (chunk: ChunkRecordedPayload) => {
