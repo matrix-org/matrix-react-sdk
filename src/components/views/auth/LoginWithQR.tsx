@@ -61,7 +61,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            mode: this.props.device === 'new' ? Mode.SHOW : Mode.SCAN,
+            mode: this.isNewDevice ? Mode.SHOW : Mode.SCAN,
             scanning: false,
         };
 
@@ -80,7 +80,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 await this.state.generatedRendezvous.userCancelled();
                 this.setState({ generatedRendezvous: undefined });
             }
-            await this.requestMediaPermissions();
         } else {
             if (this.state.scannedRendezvous) {
                 this.state.scannedRendezvous.onCancelled = undefined;
@@ -152,10 +151,10 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 cancelled: undefined,
             });
 
-            const confirmationDigits = await generatedRendezvous.start();
+            const confirmationDigits = await generatedRendezvous.startAfterShowingCode();
             this.setState({ confirmationDigits });
 
-            if (this.props.device === 'new') {
+            if (this.isNewDevice) {
                 const res = await generatedRendezvous.completeOnNewDevice();
                 if (res) {
                     this.props.onFinished(true);
@@ -186,7 +185,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             scannedCode: undefined,
             scanning: false,
         });
-        void this.requestMediaPermissions();
+    }
+
+    private get isExistingDevice(): boolean {
+        return this.props.device === 'existing';
+    }
+
+    private get isNewDevice(): boolean {
+        return this.props.device === 'new';
     }
 
     private processScannedCode = async (scannedCode: string) => {
@@ -205,20 +211,19 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.reset();
             }
 
-            const client = this.props.device === 'existing' ? MatrixClientPeg.get() : undefined;
-            console.log(scannedCode);
-            const channel = await buildChannelFromCode(scannedCode, this.onCancelled, client);
-            const scannedRendezvous = new Rendezvous(channel, client);
+            const { channel, intent: theirIntent } = await buildChannelFromCode(scannedCode, this.onCancelled, this.props.client);
+
+            const scannedRendezvous = new Rendezvous(channel, this.props.client);
             this.setState({
                 scannedCode,
                 scannedRendezvous,
                 cancelled: undefined,
             });
 
-            const confirmationDigits = await scannedRendezvous.start();
+            const confirmationDigits = await scannedRendezvous.startAfterScanningCode(theirIntent);
             this.setState({ confirmationDigits });
 
-            if (this.props.device === 'new') {
+            if (this.isNewDevice) {
                 const res = await scannedRendezvous.completeOnNewDevice();
                 if (res) {
                     this.props.onFinished(true);
@@ -297,6 +302,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     private onDoScanQRClicked = () => {
         this.setState({ scanning: true });
+        void this.requestMediaPermissions();
     };
 
     render() {
@@ -332,6 +338,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 case RendezvousCancellationReason.Unknown:
                     cancellationMessage = _t("An unexpected error occurred.");
                     break;
+                case RendezvousCancellationReason.HomeserverLacksSupport:
+                    cancellationMessage = _t("The homeserver doesn't support signing in another device.");
+                    break;
                 default:
                     cancellationMessage = _t("The request was cancelled.");
                     break;
@@ -355,7 +364,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             backButton = false;
         } else if (this.state.confirmationDigits) {
             title = _t("Secure connection established");
-            if (this.props.device === 'new') {
+            if (this.isNewDevice) {
                 main = <>
                     <p>{ _t("Check your signed in device, the code below should be displayed:") }</p>
                     <div className="mx_LoginWithQR_confirmationDigits">
@@ -399,7 +408,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 </>;
             }
         } else if (this.state.mode === Mode.SHOW) {
-            title = this.props.device === 'existing' ? _t("Link a device") : _t("Sign in with QR code");
+            title = this.isExistingDevice ? _t("Link a device") : _t("Sign in with QR code");
             if (this.state.generatedRendezvous) {
                 const code = <div>
                     <div className="mx_Centre">
@@ -407,7 +416,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     </div>
                 </div>;
 
-                if (this.props.device === 'existing') {
+                if (this.isExistingDevice) {
                     main = <>
                         <p>{ _t("Scan the QR code below with your device that’s signed out.") }</p>
                         <ol>
@@ -442,9 +451,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 </AccessibleButton>
             </>;
         } else if (this.state.mode === Mode.SCAN) {
-            title = this.props.device === 'existing' ? _t("Link a device") : _t("Sign in with QR code");
+            title = this.isExistingDevice? _t("Link a device") : _t("Sign in with QR code");
             if (!this.state.scanning) {
-                if (this.props.device === 'existing') {
+                if (this.isExistingDevice) {
                     main = <>
                         <p>
                             <span>{ _t("Use the camera on this device to scan the QR code shown on your other device signed in to Element.") }</span>

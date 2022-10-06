@@ -19,23 +19,33 @@ import { sleep } from 'matrix-js-sdk/src/utils';
 import { logger } from "matrix-js-sdk/src/logger";
 import { DeviceInfo } from 'matrix-js-sdk/src/crypto/deviceinfo';
 import { CrossSigningInfo, requestKeysDuringVerification } from 'matrix-js-sdk/src/crypto/CrossSigning';
-import { RendezvousCancellationReason, RendezvousChannel } from 'matrix-js-sdk/src/rendezvous';
+import { RendezvousCancellationReason, RendezvousChannel, RendezvousIntent } from 'matrix-js-sdk/src/rendezvous';
 import { LoginTokenPostResponse } from 'matrix-js-sdk/src/@types/auth';
 
 import { setLoggedIn } from '../Lifecycle';
 import { sendLoginRequest } from '../Login';
 import { IMatrixClientCreds, MatrixClientPeg } from '../MatrixClientPeg';
 
+export enum PayloadType {
+    Start = 'm.login.start',
+    Finish = 'm.login.finish',
+    Progress = 'm.login.progress',
+}
+
 export class Rendezvous {
     private cli?: MatrixClient;
     public user?: string;
     private newDeviceId?: string;
     private newDeviceKey?: string;
+    private ourIntent: RendezvousIntent;
     public code?: string;
     public onCancelled?: (reason: RendezvousCancellationReason) => void;
 
     constructor(public channel: RendezvousChannel, cli?: MatrixClient) {
         this.cli = cli;
+        this.ourIntent = this.isNewDevice ?
+            RendezvousIntent.LOGIN_ON_NEW_DEVICE :
+            RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE;
     }
 
     async generateCode(): Promise<void> {
@@ -43,32 +53,128 @@ export class Rendezvous {
             return;
         }
 
-        this.code = JSON.stringify(await this.channel.generateCode());
+        this.code = JSON.stringify(await this.channel.generateCode(this.ourIntent));
     }
 
-    async start(): Promise<string> {
-        return this.channel.connect();
+    private get isNewDevice(): boolean {
+        return !this.cli;
+    }
+
+    private get isExistingDevice(): boolean {
+        return !this.isNewDevice;
+    }
+
+    private async areIntentsIncompatible(theirIntent: RendezvousIntent): Promise<boolean> {
+        const incompatible = theirIntent === this.ourIntent;
+
+        logger.info(`ourIntent: ${this.ourIntent}, theirIntent: ${theirIntent}, incompatible: ${incompatible}`);
+
+        if (incompatible) {
+            await this.send({ type: PayloadType.Finish, intent: this.ourIntent });
+            await this.channel.cancel(
+                this.isNewDevice ?
+                    RendezvousCancellationReason.OtherDeviceNotSignedIn :
+                    RendezvousCancellationReason.OtherDeviceAlreadySignedIn,
+            );
+        }
+
+        return incompatible;
+    }
+
+    async startAfterShowingCode(): Promise<string | undefined> {
+        const checksum = await this.channel.connect();
+
+        logger.info(`Connected to secure channel with checksum: ${checksum}`);
+
+        // first step is always to receive a m.login.start event from scanning party
+        const { type, intent: theirIntent } = await this.channel.receive();
+
+        if (type === PayloadType.Finish) {
+            if (theirIntent) {
+                const incompatibleIntents = await this.areIntentsIncompatible(theirIntent);
+                if (!incompatibleIntents) {
+                    await this.channel.cancel(RendezvousCancellationReason.Unknown);
+                }
+            }
+            return undefined;
+        }
+
+        if (type !== PayloadType.Start) {
+            await this.channel.cancel(RendezvousCancellationReason.Unknown);
+            return undefined;
+        }
+
+        return checksum;
+    }
+
+    async send({ type, ...payload }: { type: PayloadType, [key: string]: any }) {
+        await this.channel.send({ type, ...payload });
+    }
+
+    async startAfterScanningCode(theirIntent: RendezvousIntent): Promise<string | undefined> {
+        const checksum = await this.channel.connect();
+
+        logger.info(`Connected to secure channel with checksum: ${checksum}`);
+
+        if (await this.areIntentsIncompatible(theirIntent)) {
+            return undefined;
+        }
+
+        await this.send({ type: PayloadType.Start, intent: this.ourIntent });
+
+        return checksum;
     }
 
     async completeOnNewDevice(): Promise<IMatrixClientCreds | undefined> {
         // alert(`Secure connection established. The code ${digits} should be displayed on your other device`);
 
-        // Primary: 2. wait for details of existing device
-        // Secondary: 4. wait for details of existing device
-        logger.info('Waiting for login_token');
-        // eslint-disable-next-line camelcase
-        const _res = await this.channel.receive();
-        if (!_res) {
+        logger.info('Waiting for protocols and homeserver');
+
+        const { type: type1, homeserver, outcome: outcome1, protocols } = await this.channel.receive();
+
+        if (type1 === PayloadType.Finish) {
+            switch (outcome1 ?? '') {
+                case 'declined':
+                    logger.info('Other device declined the linking');
+                    await this.cancel(RendezvousCancellationReason.UserDeclined);
+                    break;
+                case 'unsupported':
+                    logger.info('Other device declined the linking');
+                    await this.cancel(RendezvousCancellationReason.HomeserverLacksSupport);
+                    break;
+                default:
+                    await this.cancel(RendezvousCancellationReason.Unknown);
+            }
             return undefined;
         }
 
-        // eslint-disable-next-line camelcase
-        const { homeserver, login_token, outcome } = _res;
+        if (type1 !== PayloadType.Progress) {
+            logger.info(`Received unexpected payload: ${type1}`);
+            await this.cancel(RendezvousCancellationReason.Unknown);
+            return undefined;
+        }
 
-        if (outcome === 'declined') {
-            logger.info('Other device declined the linking');
-            // alert('The other device has declined the linking');
-            await this.cancel(RendezvousCancellationReason.UserDeclined);
+        if (!Array.isArray(protocols) || !protocols.includes('login_token')) {
+            await this.send({ type: PayloadType.Finish, outcome: 'unsupported' });
+            await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
+            return undefined;
+        }
+
+        await this.send({ type: PayloadType.Progress, protocol: 'login_token' });
+
+        logger.info('Waiting for login_token');
+
+        // eslint-disable-next-line camelcase
+        const { type: type2, login_token, outcome: outcome2 } = await this.channel.receive();
+
+        if (type2 === PayloadType.Finish) {
+            switch (outcome2 ?? '') {
+                case 'unsupported':
+                    await this.cancel(RendezvousCancellationReason.HomeserverLacksSupport);
+                    break;
+                default:
+                    await this.cancel(RendezvousCancellationReason.Unknown);
+            }
             return undefined;
         }
 
@@ -89,7 +195,8 @@ export class Rendezvous {
 
         const client = MatrixClientPeg.get();
 
-        await this.channel.send({
+        await this.send({
+            type: PayloadType.Progress,
             outcome: 'success',
             device_id: deviceId,
             device_key: client.getDeviceEd25519Key(),
@@ -124,13 +231,51 @@ export class Rendezvous {
 
     async declineLoginOnExistingDevice() {
         logger.info('User declined linking');
-        await this.channel.send({ outcome: 'declined' });
+        await this.send({ type: PayloadType.Finish, outcome: 'declined' });
     }
 
     async confirmLoginOnExistingDevice(): Promise<string | undefined> {
+        const client = this.cli;
+
+        const homeserver = client.baseUrl;
+        const user = client.getUserId();
+
+        if (!(await client.doesServerSupportUnstableFeature('org.matrix.msc3882'))) {
+            logger.info("Server doesn't support MSC3882");
+            await this.send({ type: PayloadType.Finish, outcome: 'unsupported', user, homeserver });
+            await this.cancel(RendezvousCancellationReason.HomeserverLacksSupport);
+            return undefined;
+        }
+
+        await this.send({ type: PayloadType.Progress, protocols: ['login_token'], user, homeserver });
+
+        const { type, protocol, outcome: outcome1 } = await this.channel.receive();
+
+        if (type === PayloadType.Finish) {
+            // new device decided not to complete
+            switch (outcome1 ?? '') {
+                case 'unsupported':
+                    await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
+                    break;
+                default:
+                    await this.cancel(RendezvousCancellationReason.Unknown);
+            }
+            return undefined;
+        }
+
+        if (type !== PayloadType.Progress) {
+            await this.cancel(RendezvousCancellationReason.Unknown);
+            return undefined;
+        }
+
+        if (protocol !== 'login_token') {
+            await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
+            return undefined;
+        }
+
         logger.info("Requesting login token");
 
-        const loginTokenResponse = await this.cli.requestLoginToken();
+        const loginTokenResponse = await client.requestLoginToken();
 
         if (typeof (loginTokenResponse as IAuthData).session === 'string') {
             // TODO: handle UIA response
@@ -140,7 +285,7 @@ export class Rendezvous {
         const { login_token } = loginTokenResponse as LoginTokenPostResponse;
 
         // eslint-disable-next-line camelcase
-        await this.channel.send({ user: this.cli.getUserId(), homeserver: this.cli.baseUrl, login_token });
+        await this.send({ type: PayloadType.Progress, login_token });
 
         logger.info('Waiting for outcome');
         const res = await this.channel.receive();
@@ -175,7 +320,8 @@ export class Rendezvous {
 
         const masterPublicKey = this.cli.crypto.crossSigningInfo.getId('master');
 
-        await this.channel.send({
+        await this.send({
+            type: PayloadType.Finish,
             outcome: 'verified',
             verifying_device_id: this.cli.getDeviceId(),
             verifying_device_key: this.cli.getDeviceEd25519Key(),
@@ -226,6 +372,6 @@ export class Rendezvous {
     }
 
     async cancel(reason: RendezvousCancellationReason) {
-        await this.channel.transport.cancel(reason);
+        await this.channel.cancel(reason);
     }
 }
