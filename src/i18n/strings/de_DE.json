@@ -3591,5 +3591,9 @@
     "Mobile session": "Mobil-Sitzung",
     "Desktop session": "Desktop-Sitzung",
     "Web session": "Web-Sitzung",
-    "Unknown session type": "Unbekannter Sitzungstyp"
+    "Unknown session type": "Unbekannter Sitzungstyp",
+    "Video call started": "Videoanruf hat begonnen",
+    "Unknown room": "Unbekannter Raum",
+    "Video call started in %(roomName)s. (not supported by this browser)": "Ein Videoanruf hat in %(roomName)s begonnen. (Von diesem Browser nicht unterstützt)",
+    "Video call started in %(roomName)s.": "Ein Videoanruf hat in %(roomName)s begonnen."
 }
