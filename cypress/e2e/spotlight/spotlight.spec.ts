@@ -114,7 +114,6 @@ Cypress.Commands.add("startDM", (name: string) => {
     cy.openSpotlightDialog().within(() => {
         cy.spotlightFilter(Filter.People);
         cy.spotlightSearch().clear().type(name);
-        cy.pause();
         cy.wait(1000); // wait for the dialog code to settle
         cy.get(".mx_Spinner").should("not.exist");
         cy.spotlightResults().should("have.length", 1);
