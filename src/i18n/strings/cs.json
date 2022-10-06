@@ -3589,5 +3589,8 @@
     "Enable notifications for this account": "Povolit oznámení pro tento účet",
     "Video call ended": "Videohovor ukončen",
     "%(name)s started a video call": "%(name)s zahájil(a) videohovor",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Zaznamenat název, verzi a url pro snadnější rozpoznání relací ve správci relací"
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Zaznamenat název, verzi a url pro snadnější rozpoznání relací ve správci relací",
+    "URL": "URL",
+    "Version": "Verze",
+    "Application": "Aplikace"
 }
