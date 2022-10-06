@@ -3587,5 +3587,9 @@
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Bezeichnung, Version und URL der Anwendung registrieren, damit diese Sitzung in der Sitzungsverwaltung besser erkennbar ist",
     "Application": "Anwendung",
     "URL": "URL",
-    "Version": "Version"
+    "Version": "Version",
+    "Mobile session": "Mobil-Sitzung",
+    "Desktop session": "Desktop-Sitzung",
+    "Web session": "Web-Sitzung",
+    "Unknown session type": "Unbekannter Sitzungstyp"
 }
