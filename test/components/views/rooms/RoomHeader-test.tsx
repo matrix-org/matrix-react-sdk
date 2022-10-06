@@ -827,6 +827,38 @@ describe("RoomHeader (React Testing Library)", () => {
             });
             fireEvent.click(screen.getByRole("button", { name: /layout/i }));
             screen.getByRole("menuitemradio", { name: "Spotlight", checked: true });
+
+            // Now try switching back to Freedom
+            fireEvent.click(screen.getByRole("menuitemradio", { name: "Freedom" }));
+            expect(mocked(messaging.transport).send).toHaveBeenCalledWith(ElementWidgetActions.TileLayout, {});
+            expect(screen.queryByRole("menu")).toBeNull();
+
+            // When the widget responds and the user reopens the menu, they should see Freedom selected
+            act(() => {
+                messaging.emit(
+                    `action:${ElementWidgetActions.TileLayout}`,
+                    new CustomEvent("widgetapirequest", { detail: { data: {} } }),
+                );
+            });
+            fireEvent.click(screen.getByRole("button", { name: /layout/i }));
+            screen.getByRole("menuitemradio", { name: "Freedom", checked: true });
         });
+    });
+
+    it("shows an invite button in video rooms", () => {
+        mockEnabledSettings(["feature_video_rooms", "feature_element_call_video_rooms"]);
+        mockRoomType(RoomType.UnstableCall);
+
+        const onInviteClick = jest.fn();
+        renderHeader({ onInviteClick, viewingCall: true });
+
+        fireEvent.click(screen.getByRole("button", { name: /invite/i }));
+        expect(onInviteClick).toHaveBeenCalled();
+    });
+
+    it("hides the invite button in non-video rooms when viewing a call", () => {
+        renderHeader({ onInviteClick: () => {}, viewingCall: true });
+
+        expect(screen.queryByRole("button", { name: /invite/i })).toBeNull();
     });
 });

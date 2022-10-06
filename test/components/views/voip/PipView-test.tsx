@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import React from "react";
-import { mocked, Mocked } from "jest-mock"
-import { screen, render, act, cleanup, fireEvent, waitFor } from "@testing-library/react"
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client"
+import { mocked, Mocked } from "jest-mock";
+import { screen, render, act, cleanup, fireEvent, waitFor } from "@testing-library/react";
+import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state"
-import { Widget, ClientWidgetApi } from "matrix-widget-api"
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Widget, ClientWidgetApi } from "matrix-widget-api";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member"
+import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import {
     useMockedCalls,
     MockedCall,
@@ -32,16 +32,16 @@ import {
     resetAsyncStoreWithClient,
     wrapInMatrixClientContext,
 } from "../../../test-utils";
-import { MatrixClientPeg } from "../../../../src/MatrixClientPeg"
-import { CallStore } from "../../../../src/stores/CallStore"
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { CallStore } from "../../../../src/stores/CallStore";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import UnwrappedPipView from "../../../../src/components/views/voip/PipView";
 import ActiveWidgetStore from "../../../../src/stores/ActiveWidgetStore";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import defaultDispatcher from "../../../../src/dispatcher/dispatcher"
-import { Action } from "../../../../src/dispatcher/actions"
+import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
 
-const PipView = wrapInMatrixClientContext(UnwrappedPipView)
+const PipView = wrapInMatrixClientContext(UnwrappedPipView);
 
 describe("PipView", () => {
     useMockedCalls();
@@ -55,13 +55,13 @@ describe("PipView", () => {
     beforeEach(async () => {
         stubClient();
         client = mocked(MatrixClientPeg.get());
-        DMRoomMap.makeShared()
+        DMRoomMap.makeShared();
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
-        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null)
-        client.getRooms.mockReturnValue([room])
+        client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
+        client.getRooms.mockReturnValue([room]);
         alice = mkRoomMember(room.roomId, "@alice:example.org");
         jest.spyOn(room, "getMember").mockImplementation(userId => userId === alice.userId ? alice : null);
 
@@ -71,18 +71,18 @@ describe("PipView", () => {
 
         await Promise.all([CallStore.instance, WidgetMessagingStore.instance].map(
             store => setupAsyncStoreWithClient(store, client),
-        ))
+        ));
     });
 
     afterEach(async () => {
-        cleanup()
-        await Promise.all([CallStore.instance, WidgetMessagingStore.instance].map(resetAsyncStoreWithClient))
+        cleanup();
+        await Promise.all([CallStore.instance, WidgetMessagingStore.instance].map(resetAsyncStoreWithClient));
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
         jest.restoreAllMocks();
     });
-    
-    const renderPip = () => { render(<PipView />) }
-    
+
+    const renderPip = () => { render(<PipView />); };
+
     const withCall = async (fn: () => Promise<void>): Promise<void> => {
         MockedCall.create(room, "1");
         const call = CallStore.instance.getCall(room.roomId);
@@ -92,43 +92,43 @@ describe("PipView", () => {
         WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {
             stop: () => {},
         } as unknown as ClientWidgetApi);
-        
+
         await act(async () => {
-            await call.connect()
-            ActiveWidgetStore.instance.setWidgetPersistence(widget.id, room.roomId, true)
-        })
-        
-        await fn()
-        
-        cleanup()
-        call.destroy()
-        ActiveWidgetStore.instance.destroyPersistentWidget(widget.id, room.roomId)
-    }
-    
+            await call.connect();
+            ActiveWidgetStore.instance.setWidgetPersistence(widget.id, room.roomId, true);
+        });
+
+        await fn();
+
+        cleanup();
+        call.destroy();
+        ActiveWidgetStore.instance.destroyPersistentWidget(widget.id, room.roomId);
+    };
+
     it("hides if there's no content", () => {
-        renderPip()
+        renderPip();
         expect(screen.queryByRole("complementary")).toBeNull();
-    })
-    
+    });
+
     it("shows an active call with a maximise button", async () => {
-        renderPip()
+        renderPip();
 
         await withCall(async () => {
             // PiP should exist
-            screen.getByRole("complementary")
+            screen.getByRole("complementary");
             // Should show the room name
-            screen.getByText(room.roomId)
+            screen.getByText(room.roomId);
 
             // The maximise button should jump to the call
             const dispatcherSpy = jest.fn();
             const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
-            fireEvent.click(screen.getByRole("button", { name: "Fill screen" }))
+            fireEvent.click(screen.getByRole("button", { name: "Fill screen" }));
             await waitFor(() => expect(dispatcherSpy).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
                 view_call: true,
             }));
             defaultDispatcher.unregister(dispatcherRef);
-        })
-    })
-})
+        });
+    });
+});
