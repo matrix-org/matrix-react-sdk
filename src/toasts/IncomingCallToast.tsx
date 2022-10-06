@@ -102,14 +102,14 @@ export function IncomingCallToast({ callEvent }: Props) {
                     />
                 }
             </div>
+            <AccessibleButton
+                className="mx_IncomingCallToast_joinButton"
+                onClick={onJoinClick}
+                kind="primary"
+            >
+                { _t("Join") }
+            </AccessibleButton>
         </div>
-        <AccessibleButton
-            className="mx_IncomingCallToast_joinButton"
-            onClick={onJoinClick}
-            kind="primary"
-        >
-            { _t("Join") }
-        </AccessibleButton>
         <AccessibleTooltipButton
             className="mx_IncomingCallToast_closeButton"
             onClick={onCloseClick}
