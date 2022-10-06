@@ -3592,5 +3592,9 @@
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Registra il nome, la versione e l'url del client per riconoscere le sessioni più facilmente nel gestore di sessioni",
     "URL": "URL",
     "Version": "Versione",
-    "Application": "Applicazione"
+    "Application": "Applicazione",
+    "Unknown session type": "Tipo di sessione sconosciuta",
+    "Web session": "Sessione web",
+    "Mobile session": "Sessione mobile",
+    "Desktop session": "Sessione desktop"
 }
