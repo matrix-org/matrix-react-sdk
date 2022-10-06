@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ExpandableBox /> renders at all 1`] = `
+<ExpandableBox
+  body="Here is a bit of text."
+  className=""
+  lines={3}
+>
+  <div
+    className="mx_RoomSummaryCard_infoTopic"
+  >
+    <div
+      className="mx_RoomSummaryCard_infoTopic_text"
+      style={
+        Object {
+          "WebkitLineClamp": "3",
+          "lineHeight": "16px",
+        }
+      }
+    >
+      Here is a bit of text.
+    </div>
+  </div>
+</ExpandableBox>
+`;
