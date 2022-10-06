@@ -46,6 +46,7 @@ import { findDMForUser } from "./utils/dm/findDMForUser";
 import { privateShouldBeEncrypted } from "./utils/rooms";
 import { waitForMember } from "./utils/membership";
 import { PreferredRoomVersions } from "./utils/PreferredRoomVersions";
+import SettingsStore from "./settings/SettingsStore";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -168,7 +169,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 },
             };
         }
-    } else {
+    } else if (SettingsStore.getValue("feature_group_calls")) {
         createOpts.power_level_content_override = {
             events: {
                 // Element Call should be disabled by default
