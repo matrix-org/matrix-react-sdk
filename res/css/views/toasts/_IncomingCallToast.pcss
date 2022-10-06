@@ -19,6 +19,7 @@ limitations under the License.
     display: flex;
     flex-direction: row;
     pointer-events: initial; /* restore pointer events so the user can accept/decline */
+    width: 250px;
 
     .mx_IncomingCallToast_content {
         display: flex;
@@ -27,9 +28,7 @@ limitations under the License.
         width: 100%;
 
         .mx_IncomingCallToast_info {
-            margin-bottom: 52px;
-            margin-right: 40px;
-            width: 180px;
+            margin-bottom: $spacing-16;
 
             .mx_IncomingCallToast_room {
                 display: inline-block;
@@ -62,20 +61,22 @@ limitations under the License.
                 }
             }
         }
-    }
 
-    .mx_IncomingCallToast_joinButton {
-        position: absolute;
+        .mx_IncomingCallToast_joinButton {
+            position: relative;
 
-        bottom: $spacing-4;
-        right: $spacing-4;
+            bottom: $spacing-4;
+            right: $spacing-4;
 
-        box-sizing: border-box;
-        min-width: 120px;
+            align-self: flex-end;
 
-        padding: $spacing-4 0;
+            box-sizing: border-box;
+            min-width: 120px;
 
-        line-height: $font-24px;
+            padding: $spacing-4 0;
+
+            line-height: $font-24px;
+        }
     }
 
     .mx_IncomingCallToast_closeButton {
