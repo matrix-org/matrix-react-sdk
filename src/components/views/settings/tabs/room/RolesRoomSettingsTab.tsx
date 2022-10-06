@@ -257,7 +257,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         if (SettingsStore.getValue("feature_pinning")) {
             plEventsToLabels[EventType.RoomPinnedEvents] = _td("Manage pinned events");
         }
-        // MSC33401: Native Group VoIP signalling
+        // MSC3401: Native Group VoIP signaling
         if (SettingsStore.getValue("feature_group_calls")) {
             plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start Element calls");
             plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join Element calls");
