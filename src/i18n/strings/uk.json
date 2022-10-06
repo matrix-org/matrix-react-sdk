@@ -3570,7 +3570,7 @@
     "Voice broadcast": "Голосове мовлення",
     "Voice broadcast (under active development)": "Голосове мовлення (в активній розробці)",
     "Element Call video rooms": "Відео кімнати Element Call",
-    "Voice broadcasts": "Голосові передачі",
+    "Voice broadcasts": "Голосове мовлення",
     "You do not have permission to start voice calls": "У вас немає дозволу розпочинати голосові виклики",
     "There's no one here to call": "Тут немає кого викликати",
     "You do not have permission to start video calls": "У вас немає дозволу розпочинати відеовиклики",
@@ -3588,5 +3588,13 @@
     "Enable notifications for this account": "Увімкнути сповіщення для цього облікового запису",
     "Video call ended": "Відеовиклик завершено",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
-    "%(selectedDeviceCount)s sessions selected": "Вибрано %(selectedDeviceCount)s сеансів"
+    "%(selectedDeviceCount)s sessions selected": "Вибрано %(selectedDeviceCount)s сеансів",
+    "URL": "URL",
+    "Version": "Версія",
+    "Application": "Застосунок",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Записуйте назву клієнта, версію та URL-адресу, щоб легше розпізнавати сеанси в менеджері сеансів",
+    "Unknown session type": "Невідомий тип сеансу",
+    "Web session": "Сеанс у браузері",
+    "Mobile session": "Сеанс на мобільному",
+    "Desktop session": "Сеанс на комп'ютері"
 }
