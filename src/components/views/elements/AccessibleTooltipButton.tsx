@@ -86,11 +86,11 @@ export default class AccessibleTooltipButton extends React.PureComponent<IProps,
         return (
             <AccessibleButton
                 {...props}
-                onMouseOver={this.showTooltip}
-                onMouseLeave={this.hideTooltip}
-                onFocus={this.onFocus}
-                onBlur={this.hideTooltip}
-                aria-label={title}
+                onMouseOver={this.showTooltip || props.onMouseOver}
+                onMouseLeave={this.hideTooltip || props.onMouseLeave}
+                onFocus={this.onFocus || props.onFocus}
+                onBlur={this.hideTooltip || props.onBlur}
+                aria-label={title || props["aria-label"]}
             >
                 { children }
                 { this.props.label }

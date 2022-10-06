@@ -24,6 +24,9 @@ interface IProps {
     // Whether or not this toggle is in the 'on' position.
     checked: boolean;
 
+    // Title to use
+    title?: string;
+
     // Whether or not the user can interact with the switch
     disabled?: boolean;
 
@@ -35,7 +38,7 @@ interface IProps {
 }
 
 // Controlled Toggle Switch element, written with Accessibility in mind
-export default ({ checked, disabled = false, tooltip, onChange, ...props }: IProps) => {
+export default ({ checked, disabled = false, title, tooltip, onChange, ...props }: IProps) => {
     const _onClick = () => {
         if (disabled) return;
         onChange(!checked);
@@ -54,6 +57,7 @@ export default ({ checked, disabled = false, tooltip, onChange, ...props }: IPro
             role="switch"
             aria-checked={checked}
             aria-disabled={disabled}
+            title={title}
             tooltip={tooltip}
         >
             <div className="mx_ToggleSwitch_ball" />

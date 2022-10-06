@@ -55,7 +55,7 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
             checked={this.props.value}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
-            aria-label={this.props.label}
+            title={this.props.label}
             tooltip={this.props.tooltip}
         />;
 
