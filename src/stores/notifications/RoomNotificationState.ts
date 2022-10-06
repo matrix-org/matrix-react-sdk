@@ -30,16 +30,14 @@ import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
 import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
-    constructor(public readonly room: Room, private readonly threadsState?: ThreadsRoomNotificationState) {
+    constructor(public readonly room: Room, private readonly threadsState: ThreadsRoomNotificationState) {
         super();
         this.room.on(RoomEvent.Receipt, this.handleReadReceipt);
         this.room.on(RoomEvent.Timeline, this.handleRoomEventUpdate);
         this.room.on(RoomEvent.Redaction, this.handleRoomEventUpdate);
         this.room.on(RoomEvent.MyMembership, this.handleMembershipUpdate);
         this.room.on(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
-        if (threadsState) {
-            threadsState.on(NotificationStateEvents.Update, this.handleThreadsUpdate);
-        }
+        this.threadsState.on(NotificationStateEvents.Update, this.handleThreadsUpdate);
         MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         MatrixClientPeg.get().on(ClientEvent.AccountData, this.handleAccountDataUpdate);
         this.updateNotificationState();
@@ -56,9 +54,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.removeListener(RoomEvent.Redaction, this.handleRoomEventUpdate);
         this.room.removeListener(RoomEvent.MyMembership, this.handleMembershipUpdate);
         this.room.removeListener(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
-        if (this.threadsState) {
-            this.threadsState.removeListener(NotificationStateEvents.Update, this.handleThreadsUpdate);
-        }
+        this.threadsState.removeListener(NotificationStateEvents.Update, this.handleThreadsUpdate);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
             MatrixClientPeg.get().removeListener(ClientEvent.AccountData, this.handleAccountDataUpdate);

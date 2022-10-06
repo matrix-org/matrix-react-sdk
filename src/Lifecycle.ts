@@ -62,6 +62,7 @@ import { DialogOpener } from "./utils/DialogOpener";
 import { Action } from "./dispatcher/actions";
 import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
+import { RoomNotificationStateStore } from './stores/notifications/RoomNotificationStateStore';
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -823,6 +824,8 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
         logger.warn("Caller requested only auxiliary services be started");
         await MatrixClientPeg.assign();
     }
+
+    await RoomNotificationStateStore.checkThreadNotificationsSupport();
 
     // Run the migrations after the MatrixClientPeg has been assigned
     SettingsStore.runMigrations();

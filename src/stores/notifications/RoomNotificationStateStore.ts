@@ -28,6 +28,7 @@ import { SummarizedNotificationState } from "./SummarizedNotificationState";
 import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
 import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 interface IState {}
 
@@ -39,15 +40,24 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         instance.start();
         return instance;
     })();
-
     private roomMap = new Map<Room, RoomNotificationState>();
-    private roomThreadsMap = new Map<Room, ThreadsRoomNotificationState>();
+
+    private roomThreadsMap: Map<Room, ThreadsRoomNotificationState> = new Map<Room, ThreadsRoomNotificationState>();
     private listMap = new Map<TagID, ListNotificationState>();
     private _globalState = new SummarizedNotificationState();
 
     private constructor() {
         super(defaultDispatcher, {});
     }
+
+    // Optimistically setting to true
+    public static hasThreadNotificationSupport = true;
+    public static checkThreadNotificationsSupport = async (): Promise<void> => {
+        const cli = MatrixClientPeg.get();
+        const unstableFeature = await cli.doesServerSupportUnstableFeature("org.matrix.msc3773");
+        const stableSupport = await cli.isVersionSupported("v1.4");
+        this.hasThreadNotificationSupport = unstableFeature || stableSupport;
+    };
 
     /**
      * Gets a snapshot of notification state for all visible rooms. The number of states recorded
