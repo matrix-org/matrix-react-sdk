@@ -119,7 +119,7 @@ export interface IConfigOptions {
     element_call: {
         url: string;
         use_exclusively: boolean;
-        participant_limit: number;
+        participant_limit?: number;
     };
 
     logout_redirect_url?: string;
