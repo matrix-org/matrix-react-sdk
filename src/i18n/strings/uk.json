@@ -3592,5 +3592,9 @@
     "URL": "URL",
     "Version": "Версія",
     "Application": "Застосунок",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Записуйте назву клієнта, версію та URL-адресу, щоб легше розпізнавати сеанси в менеджері сеансів"
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Записуйте назву клієнта, версію та URL-адресу, щоб легше розпізнавати сеанси в менеджері сеансів",
+    "Unknown session type": "Невідомий тип сеансу",
+    "Web session": "Сеанс у браузері",
+    "Mobile session": "Сеанс на мобільному",
+    "Desktop session": "Сеанс на комп'ютері"
 }
