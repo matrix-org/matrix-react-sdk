@@ -149,16 +149,22 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
                 break;
             case Alignment.Top:
                 style.top = baseTop - spacing;
+                // Attempt to center the tooltip on the element while clamping
+                // its horizontal translation to keep it on screen
                 // eslint-disable-next-line max-len
                 style.transform = `translate(max(10px, min(calc(${horizontalCenter}px - 50%), calc(100vw - 100% - 10px))), -100%)`;
                 break;
             case Alignment.Bottom:
                 style.top = baseTop + parentBox.height + spacing;
+                // Attempt to center the tooltip on the element while clamping
+                // its horizontal translation to keep it on screen
                 // eslint-disable-next-line max-len
                 style.transform = `translate(max(10px, min(calc(${horizontalCenter}px - 50%), calc(100vw - 100% - 10px))))`;
                 break;
             case Alignment.InnerBottom:
                 style.top = baseTop + parentBox.height - 50;
+                // Attempt to center the tooltip on the element while clamping
+                // its horizontal translation to keep it on screen
                 // eslint-disable-next-line max-len
                 style.transform = `translate(max(10px, min(calc(${horizontalCenter}px - 50%), calc(100vw - 100% - 10px))))`;
                 break;
