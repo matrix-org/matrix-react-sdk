@@ -3596,5 +3596,9 @@
     "Unknown session type": "Невідомий тип сеансу",
     "Web session": "Сеанс у браузері",
     "Mobile session": "Сеанс на мобільному",
-    "Desktop session": "Сеанс на комп'ютері"
+    "Desktop session": "Сеанс на комп'ютері",
+    "Video call started": "Відеовиклик розпочато",
+    "Unknown room": "Невідома кімната",
+    "Video call started in %(roomName)s. (not supported by this browser)": "Відеовиклик розпочато о %(roomName)s. (не підтримується цим браузером)",
+    "Video call started in %(roomName)s.": "Відеовиклик розпочато о %(roomName)s."
 }
