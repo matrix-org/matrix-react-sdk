@@ -3592,5 +3592,13 @@
     "URL": "URL",
     "Version": "Verzia",
     "Application": "Aplikácia",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Zaznamenať názov klienta, verziu a url, aby bolo možné ľahšie rozpoznať relácie v správcovi relácií"
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Zaznamenať názov klienta, verziu a url, aby bolo možné ľahšie rozpoznať relácie v správcovi relácií",
+    "Unknown session type": "Neznámy typ relácie",
+    "Web session": "Webová relácia",
+    "Mobile session": "Relácia na mobile",
+    "Desktop session": "Relácia stolného počítača",
+    "Video call started": "Videohovor bol spustený",
+    "Unknown room": "Neznáma miestnosť",
+    "Video call started in %(roomName)s. (not supported by this browser)": "Videohovor sa začal v %(roomName)s. (nie je podporované v tomto prehliadači)",
+    "Video call started in %(roomName)s.": "Videohovor sa začal v %(roomName)s."
 }
