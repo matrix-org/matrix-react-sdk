@@ -25,6 +25,7 @@ import WidgetStore from "../src/stores/WidgetStore";
 import WidgetUtils from "../src/utils/WidgetUtils";
 import { JitsiCall, ElementCall } from "../src/models/Call";
 import createRoom, { canEncryptToAllUsers } from '../src/createRoom';
+import SettingsStore from "../src/settings/SettingsStore";
 
 describe("createRoom", () => {
     mockPlatformPeg();
@@ -111,6 +112,10 @@ describe("createRoom", () => {
     });
 
     it("correctly sets up MSC3401 power levels", async () => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+            if (name === "feature_group_calls") return true;
+        });
+
         await createRoom({});
 
         const [[{
