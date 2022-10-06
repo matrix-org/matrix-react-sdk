@@ -61,7 +61,7 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
     [EventType.Reaction]: { isState: false, hideForSpace: true },
     [EventType.RoomRedaction]: { isState: false, hideForSpace: true },
 
-    // MSC33401: Native Group VoIP signalling
+    // MSC3401: Native Group VoIP signaling
     [ElementCall.CALL_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
     [ElementCall.MEMBER_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
 
