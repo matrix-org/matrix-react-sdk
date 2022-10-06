@@ -24,7 +24,6 @@ import LegacyCallView from "./LegacyCallView";
 import { RoomViewStore } from '../../../stores/RoomViewStore';
 import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
 import PersistentApp from "../elements/PersistentApp";
-import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import PictureInPictureDragger from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
@@ -117,7 +116,6 @@ function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall
  */
 
 export default class PipView extends React.Component<IProps, IState> {
-    private settingsWatcherRef: string;
     private movePersistedElement = createRef<() => void>();
 
     constructor(props: IProps) {
@@ -158,7 +156,6 @@ export default class PipView extends React.Component<IProps, IState> {
         LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
         MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         RoomViewStore.instance.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
-        SettingsStore.unwatchSetting(this.settingsWatcherRef);
         const room = MatrixClientPeg.get().getRoom(this.state.viewedRoomId);
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
