@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, { useCallback, useMemo, useState } from 'react';
-import { logger } from "matrix-js-sdk/src/logger";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -24,8 +23,6 @@ import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import SettingsSubsection from "../../shared/SettingsSubsection";
 import SettingsTab from "../SettingsTab";
-import Modal from "../../../../../Modal";
-import ErrorDialog from "../../../dialogs/ErrorDialog";
 import { ElementCall } from "../../../../../models/Call";
 import { useRoomState } from "../../../../../hooks/useRoomState";
 
@@ -36,9 +33,13 @@ interface ElementCallSwitchProps {
 const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
     const room = useMemo(() => MatrixClientPeg.get().getRoom(roomId), [roomId]);
     const isPublic = useMemo(() => room.getJoinRule() === JoinRule.Public, [room]);
-    const [content, events] = useRoomState(room, useCallback((state) => {
+    const [content, events, maySend] = useRoomState(room, useCallback((state) => {
         const content = state?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
-        return [content ?? {}, content?.["events"] ?? {}];
+        return [
+            content ?? {},
+            content?.["events"] ?? {},
+            state?.maySendStateEvent(EventType.RoomPowerLevels, MatrixClientPeg.get().getUserId()),
+        ];
     }, []));
 
     const [elementCallEnabled, setElementCallEnabled] = useState<boolean>(() => {
@@ -64,16 +65,6 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
         MatrixClientPeg.get().sendStateEvent(roomId, EventType.RoomPowerLevels, {
             "events": events,
             ...content,
-        }).catch(e => {
-            logger.error(e);
-
-            Modal.createDialog(ErrorDialog, {
-                title: _t("Error changing power level requirement"),
-                description: _t(
-                    "An error occurred changing the room's power level requirements. Ensure you have sufficient " +
-                    "permissions and try again.",
-                ),
-            });
         });
     }, [roomId, content, events, isPublic]);
 
@@ -86,6 +77,8 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
         )}
         value={elementCallEnabled}
         onChange={onChange}
+        disabled={!maySend}
+        tooltip={_t("You do not have sufficient permissions to change this.")}
     />;
 };
 

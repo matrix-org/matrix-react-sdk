@@ -1690,6 +1690,7 @@
     "Encrypted": "Encrypted",
     "Enable Element Call as an additional calling option in this room": "Enable Element Call as an additional calling option in this room",
     "Element Call is end-to-end encrypted, but is currently limited to smaller numbers of users.": "Element Call is end-to-end encrypted, but is currently limited to smaller numbers of users.",
+    "You do not have sufficient permissions to change this.": "You do not have sufficient permissions to change this.",
     "Call type": "Call type",
     "Unable to revoke sharing for email address": "Unable to revoke sharing for email address",
     "Unable to share email address": "Unable to share email address",
