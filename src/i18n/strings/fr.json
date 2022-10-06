@@ -3589,5 +3589,8 @@
     "Enable notifications for this account": "Activer les notifications pour ce compte",
     "Video call ended": "Appel vidéo terminé",
     "%(name)s started a video call": "%(name)s a démarré un appel vidéo",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Enregistrez le nom, la version et l'URL du client afin de reconnaitre les sessions plus facilement dans le gestionnaire de sessions"
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Enregistrez le nom, la version et l'URL du client afin de reconnaitre les sessions plus facilement dans le gestionnaire de sessions",
+    "Version": "Version",
+    "Application": "Application",
+    "URL": "URL"
 }
