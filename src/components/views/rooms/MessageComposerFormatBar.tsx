@@ -69,8 +69,8 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
         const halfBarHeight = this.formatBarRef.current.clientHeight / 2; // used to center the bar
         const offset = halfBarHeight + 2; // makes sure the bar won't cover selected text
         const offsetLimit = halfBarHeight + offset;
-        this.formatBarRef.current.style.top = `max(${selectionRect.top - parentRect.top - offsetLimit}px,
-        ${-offsetLimit}px)`;
+        const position = Math.max(selectionRect.top - parentRect.top - offsetLimit, -offsetLimit);
+        this.formatBarRef.current.style.top = `${position}px`;
     }
 
     public hide(): void {
