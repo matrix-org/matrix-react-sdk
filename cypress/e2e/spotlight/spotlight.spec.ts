@@ -114,6 +114,7 @@ Cypress.Commands.add("startDM", (name: string) => {
     cy.openSpotlightDialog().within(() => {
         cy.spotlightFilter(Filter.People);
         cy.spotlightSearch().clear().type(name);
+        cy.pause();
         cy.wait(1000); // wait for the dialog code to settle
         cy.get(".mx_Spinner").should("not.exist");
         cy.spotlightResults().should("have.length", 1);
@@ -162,7 +163,7 @@ describe("Spotlight", () => {
                 cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
                     cy.createRoom({ name: room1Name, visibility: Visibility.Public }).then(_room1Id => {
                         room1Id = _room1Id;
-                        cy.inviteUser(room1Id, bot1.getUserId());
+                        bot1.joinRoom(room1Id);
                         cy.visit("/#/room/" + room1Id);
                     });
                     bot2.createRoom({ name: room2Name, visibility: Visibility.Public })
