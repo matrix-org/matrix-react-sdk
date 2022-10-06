@@ -53,6 +53,7 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { useTopic } from "../../../hooks/room/useTopic";
 import { topicToHtml } from "../../../HtmlUtils";
+import ExpandableBox from "../elements/ExpandableBox";
 
 interface IProps {
     room: Room;
@@ -246,68 +247,6 @@ const onRoomSettingsClick = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
-const InfoTopic: React.FC<IAppsSectionProps> = ({ room }) => {
-    const topic = useTopic(room);
-    const body = topicToHtml(topic?.text, topic?.html);
-
-    const lines = 2;                                        // Number of lines to show before cut-off
-
-    const [lineHeight, setLineHeight] = useState(16);       // Default replaced by computedStyle value
-    const [scrollHeight, setScrollHeight] = useState(32);   // Default replaced in ref callback
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [isOverflow, setIsOverflow] = useState(false);
-
-    const ToggleButton = ({ isExpanded, onClick }) => {
-        return (
-            <button className="mx_RoomSummaryCard_infoTopic_toggle" onClick={onClick}>
-                { isExpanded ? "Less" : "More" }
-            </button>
-        );
-    };
-
-    const handleToggle = () => {
-        setIsExpanded((prev) => !prev);
-    };
-
-    const checkScrollHeight = useCallback((node: HTMLDivElement) => {
-        if (node != null) {
-            const computedLineHeight = parseInt(getComputedStyle(node).getPropertyValue("line-height"));
-            const maxHeight = computedLineHeight * lines;
-            setLineHeight(computedLineHeight);
-            setScrollHeight(node.scrollHeight);
-
-            if (node.scrollHeight > maxHeight) {
-                setIsOverflow(true);
-            }
-        }
-    // Run when body changes to check if we still overflow
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [body]);
-
-    // Use styles to expand or shrink the component based on the toggle
-    const styleNotExpanded = {
-        lineHeight: `${lineHeight}px`,
-        WebkitLineClamp: `${lines}`,
-    };
-
-    const styleExpanded = {
-        height: `${scrollHeight}px`,
-        lineHeight: `${lineHeight}px`,
-        WebkitLineClamp: 'none',
-    };
-
-    return (
-        <div className="mx_RoomSummaryCard_infoTopic">
-            <div ref={checkScrollHeight}
-                className="mx_RoomSummaryCard_infoTopic_text"
-                style={isExpanded ? styleExpanded : styleNotExpanded}>
-                { body }
-            </div>
-            { isOverflow && <ToggleButton isExpanded={isExpanded} onClick={handleToggle} /> }
-        </div>
-    );
-};
-
 const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const cli = useContext(MatrixClientContext);
 
@@ -362,8 +301,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const pinningEnabled = useFeatureEnabled("feature_pinning");
     const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
 
+    const topic = useTopic(room);
+    const topicAsHtml = topicToHtml(topic?.text, topic?.html);
+
     return <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
-        <InfoTopic room={room} />
+        <ExpandableBox body={topicAsHtml} className="" lines={3} />
         <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
             <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
                 { _t("People") }
