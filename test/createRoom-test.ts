@@ -18,6 +18,7 @@ import { mocked, Mocked } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { IDevice } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -27,12 +28,33 @@ import { JitsiCall, ElementCall } from "../src/models/Call";
 import createRoom, { canEncryptToAllUsers } from '../src/createRoom';
 
 describe("createRoom", () => {
+    const userId1 = "@user1:example.com";
+    const userId2 = "@user2:example.com";
     mockPlatformPeg();
-
     let client: Mocked<MatrixClient>;
+
+    const itShouldNotDownloadKeys = () => {
+        it("should not downloadKeys", () => {
+            expect(client.downloadKeys).not.toHaveBeenCalled();
+        });
+    };
+
+    const createRoomWithInvites = async () => {
+        await createRoom({
+            encryption: true,
+            createOpts: {
+                invite: [
+                    userId1,
+                    userId2,
+                ],
+            },
+        });
+    };
+
     beforeEach(() => {
         stubClient();
         client = mocked(MatrixClientPeg.get());
+        jest.spyOn(logger, "warn");
     });
 
     afterEach(() => jest.clearAllMocks());
@@ -108,6 +130,62 @@ describe("createRoom", () => {
 
         expect(createJitsiCallSpy).not.toHaveBeenCalled();
         expect(createElementCallSpy).not.toHaveBeenCalled();
+    });
+
+    describe("when creating a non-encrypted room", () => {
+        beforeEach(async () => {
+            await createRoom({});
+        });
+
+        itShouldNotDownloadKeys();
+    });
+
+    describe("when creating an encrypted room without createOpts", () => {
+        beforeEach(async () => {
+            await createRoom({ encryption: true });
+        });
+
+        itShouldNotDownloadKeys();
+    });
+
+    describe("when creating an encrypted room without createOpts.invite", () => {
+        beforeEach(async () => {
+            await createRoom({ encryption: true, createOpts: { } });
+        });
+
+        itShouldNotDownloadKeys();
+    });
+
+    describe("when creating an encrypted room with empty invites", () => {
+        beforeEach(async () => {
+            await createRoom({ encryption: true, createOpts: { } });
+        });
+
+        itShouldNotDownloadKeys();
+    });
+
+    describe("when create an encrypted room with invites", () => {
+        beforeEach(async () => {
+            await createRoomWithInvites();
+        });
+
+        it("should download the keys", () => {
+            expect(client.downloadKeys).toHaveBeenCalledWith([
+                userId1,
+                userId2,
+            ]);
+        });
+    });
+
+    describe("when download keys raises an error", () => {
+        beforeEach(async () => {
+            client.downloadKeys.mockRejectedValue("error");
+            await createRoomWithInvites();
+        });
+
+        it("should log the error", () => {
+            expect(logger.warn).toHaveBeenCalledWith("Error downloading keys while creating room", "error");
+        });
     });
 });
 

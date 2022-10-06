@@ -256,6 +256,17 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     let modal;
     if (opts.spinner) modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
 
+    if (opts.encryption && opts.createOpts?.invite?.length > 0) {
+        // Download the keys of the invitees if the room is to be encrypted.
+        // This is necessary to enable encryption when sending messages quickly after room creation.
+
+        try {
+            await client.downloadKeys(opts.createOpts.invite);
+        } catch (err) {
+            logger.warn("Error downloading keys while creating room", err);
+        }
+    }
+
     let roomId: string;
     let room: Promise<Room>;
     return client.createRoom(createOpts).catch(function(err) {
