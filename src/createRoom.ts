@@ -172,6 +172,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     } else if (SettingsStore.getValue("feature_group_calls")) {
         createOpts.power_level_content_override = {
             events: {
+                ...DEFAULT_EVENT_POWER_LEVELS,
                 // Element Call should be disabled by default
                 [ElementCall.MEMBER_EVENT_TYPE.name]: 100,
                 // Make sure only admins can enable it
