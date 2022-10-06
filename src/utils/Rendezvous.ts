@@ -60,10 +60,6 @@ export class Rendezvous {
         return !this.cli;
     }
 
-    private get isExistingDevice(): boolean {
-        return !this.isNewDevice;
-    }
-
     private async areIntentsIncompatible(theirIntent: RendezvousIntent): Promise<boolean> {
         const incompatible = theirIntent === this.ourIntent;
 
@@ -203,8 +199,11 @@ export class Rendezvous {
         });
 
         // await confirmation of verification
-        // eslint-disable-next-line camelcase
-        const { verifying_device_id: verifyingDeviceId, master_key: masterKey, verifying_device_key: verifyingDeviceKey } = await this.channel.receive();
+        const {
+            verifying_device_id: verifyingDeviceId,
+            master_key: masterKey,
+            verifying_device_key: verifyingDeviceKey,
+        } = await this.channel.receive();
 
         const verifyingDeviceFromServer =
             client.crypto.deviceList.getStoredDevice(userId, verifyingDeviceId);
@@ -307,7 +306,9 @@ export class Rendezvous {
     private async checkAndCrossSignDevice(deviceInfo: DeviceInfo) {
         // check that keys received from the server for the new device match those received from the device itself
         if (deviceInfo.getFingerprint() !== this.newDeviceKey) {
-            throw new Error(`New device has different keys than expected: ${this.newDeviceKey} vs ${deviceInfo.getFingerprint()}`);
+            throw new Error(
+                `New device has different keys than expected: ${this.newDeviceKey} vs ${deviceInfo.getFingerprint()}`,
+            );
         }
 
         // mark the device as verified locally + cross sign

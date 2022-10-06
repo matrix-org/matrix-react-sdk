@@ -139,7 +139,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 fallbackServer,
             );
 
-            const channel = new ECDHv1RendezvousChannel(transport, this.props.client);
+            const channel = new ECDHv1RendezvousChannel(transport);
 
             const generatedRendezvous = new Rendezvous(channel, this.props.client);
 
@@ -211,7 +211,10 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.reset();
             }
 
-            const { channel, intent: theirIntent } = await buildChannelFromCode(scannedCode, this.onCancelled, this.props.client);
+            const { channel, intent: theirIntent } = await buildChannelFromCode(
+                scannedCode,
+                this.onCancelled,
+            );
 
             const scannedRendezvous = new Rendezvous(channel, this.props.client);
             this.setState({
