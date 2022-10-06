@@ -1046,7 +1046,7 @@
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Hint: Begin your message with <code>//</code> to start it with a slash.",
     "Send as message": "Send as message",
     "Connecting": "Connecting",
-    "Unfortunately, you cannot join this call since it is already full": "Unfortunately, you cannot join this call since it is already full",
+    "Sorry - this call is currently full": "Sorry - this call is currently full",
     "Audio devices": "Audio devices",
     "Mute microphone": "Mute microphone",
     "Unmute microphone": "Unmute microphone",
