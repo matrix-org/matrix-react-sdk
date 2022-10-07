@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Room, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
@@ -73,15 +73,18 @@ const testMessages = function(this: CryptoTestContext) {
 };
 
 const bobJoin = function(this: CryptoTestContext) {
-    cy.wrap(new Promise<void>((resolve) => {
+    cy.window({ log: false }).then(async win => {
         const bobRooms = this.bob.getRooms();
-        if (bobRooms.length) {
-            resolve();
+        if (!bobRooms.length) {
+            await new Promise<void>(resolve => {
+                const onMembership = (_event) => {
+                    this.bob.off(win.matrixcs.RoomMemberEvent.Membership, onMembership);
+                    resolve();
+                };
+                this.bob.on(win.matrixcs.RoomMemberEvent.Membership, onMembership);
+            });
         }
-        this.bob.on(RoomMemberEvent.Membership, (event) => {
-            resolve();
-        });
-    })).then(() => {
+    }).then(() => {
         cy.botJoinRoomByName(this.bob, "Alice").as("bobsRoom");
     });
 
