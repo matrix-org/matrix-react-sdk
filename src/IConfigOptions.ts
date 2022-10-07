@@ -117,10 +117,10 @@ export interface IConfigOptions {
         obey_asserted_identity?: boolean; // MSC3086
     };
     element_call: {
-        url: string;
-        use_exclusively: boolean;
+        url?: string;
+        use_exclusively?: boolean;
         participant_limit?: number;
-        brand: string;
+        brand?: string;
     };
 
     logout_redirect_url?: string;
