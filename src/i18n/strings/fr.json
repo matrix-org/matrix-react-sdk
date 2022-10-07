@@ -3600,5 +3600,9 @@
     "Video call started": "Appel vidéo commencé",
     "Unknown room": "Salon inconnu",
     "Video call started in %(roomName)s. (not supported by this browser)": "Appel vidéo commencé dans %(roomName)s. (non supporté par ce navigateur)",
-    "Video call started in %(roomName)s.": "Appel vidéo commencé dans %(roomName)s."
+    "Video call started in %(roomName)s.": "Appel vidéo commencé dans %(roomName)s.",
+    "Close call": "Raccrocher",
+    "Layout type": "Type de mise en page",
+    "Spotlight": "Projecteur",
+    "Freedom": "Liberté"
 }
