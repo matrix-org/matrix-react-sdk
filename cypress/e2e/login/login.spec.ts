@@ -40,7 +40,7 @@ describe("Login", () => {
             cy.registerUser(synapse, username, password);
         });
 
-        it.only("logs in with an existing account and lands on the home screen", () => {
+        it("logs in with an existing account and lands on the home screen", () => {
             cy.injectAxe();
 
             cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
