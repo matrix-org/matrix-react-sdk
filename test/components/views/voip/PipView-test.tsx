@@ -40,6 +40,7 @@ import ActiveWidgetStore from "../../../../src/stores/ActiveWidgetStore";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
+import { ViewRoomPayload } from "../../../../src/dispatcher/payloads/ViewRoomPayload";
 
 const PipView = wrapInMatrixClientContext(UnwrappedPipView);
 
@@ -83,6 +84,13 @@ describe("PipView", () => {
 
     const renderPip = () => { render(<PipView />); };
 
+    const viewRoom = (roomId: string) =>
+        defaultDispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: roomId,
+            metricsTrigger: undefined,
+        }, true);
+
     const withCall = async (fn: () => Promise<void>): Promise<void> => {
         MockedCall.create(room, "1");
         const call = CallStore.instance.getCall(room.roomId);
@@ -105,6 +113,13 @@ describe("PipView", () => {
         ActiveWidgetStore.instance.destroyPersistentWidget(widget.id, room.roomId);
     };
 
+    const withWidget = (fn: () => void): void => {
+        act(() => ActiveWidgetStore.instance.setWidgetPersistence("1", room.roomId, true));
+        fn();
+        cleanup();
+        ActiveWidgetStore.instance.destroyPersistentWidget("1", room.roomId);
+    };
+
     it("hides if there's no content", () => {
         renderPip();
         expect(screen.queryByRole("complementary")).toBeNull();
@@ -114,10 +129,10 @@ describe("PipView", () => {
         renderPip();
 
         await withCall(async () => {
-            // PiP should exist
             screen.getByRole("complementary");
-            // Should show the room name
             screen.getByText(room.roomId);
+            expect(screen.queryByRole("button", { name: "Pin" })).toBeNull();
+            expect(screen.queryByRole("button", { name: /return/i })).toBeNull();
 
             // The maximise button should jump to the call
             const dispatcherSpy = jest.fn();
@@ -129,6 +144,32 @@ describe("PipView", () => {
                 view_call: true,
             }));
             defaultDispatcher.unregister(dispatcherRef);
+        });
+    });
+
+    it("shows a persistent widget with pin and maximise buttons when viewing the room", () => {
+        viewRoom(room.roomId);
+        renderPip();
+
+        withWidget(() => {
+            screen.getByRole("complementary");
+            screen.getByText(room.roomId);
+            screen.getByRole("button", { name: "Pin" });
+            screen.getByRole("button", { name: "Fill screen" });
+            expect(screen.queryByRole("button", { name: /return/i })).toBeNull();
+        });
+    });
+
+    it("shows a persistent widget with a return button when not viewing the room", () => {
+        viewRoom("!2:example.org");
+        renderPip();
+
+        withWidget(() => {
+            screen.getByRole("complementary");
+            screen.getByText(room.roomId);
+            expect(screen.queryByRole("button", { name: "Pin" })).toBeNull();
+            expect(screen.queryByRole("button", { name: "Fill screen" })).toBeNull();
+            screen.getByRole("button", { name: /return/i });
         });
     });
 });
