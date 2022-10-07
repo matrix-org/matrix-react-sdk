@@ -120,6 +120,7 @@ export interface IConfigOptions {
         url: string;
         use_exclusively: boolean;
         participant_limit?: number;
+        brand: string;
     };
 
     logout_redirect_url?: string;

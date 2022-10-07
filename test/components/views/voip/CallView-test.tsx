@@ -92,7 +92,7 @@ describe("CallLobby", () => {
 
         beforeEach(() => {
             MockedCall.create(room, "1");
-            const maybeCall = CallStore.instance.get(room.roomId);
+            const maybeCall = CallStore.instance.getCall(room.roomId);
             if (!(maybeCall instanceof MockedCall)) throw new Error("Failed to create call");
             call = maybeCall;
 
@@ -171,7 +171,7 @@ describe("CallLobby", () => {
             const carol = mkRoomMember(room.roomId, "@carol:example.org");
 
             SdkConfig.put({
-                "element_call": { participant_limit: 2, url: "", use_exclusively: false },
+                "element_call": { participant_limit: 2, url: "", use_exclusively: false, brand: "Element Call" },
             });
             call.participants = new Set([bob, carol]);
 
@@ -190,8 +190,8 @@ describe("CallLobby", () => {
             expect(Call.get(room)).toBeNull();
 
             fireEvent.click(screen.getByRole("button", { name: "Join" }));
-            await waitFor(() => expect(CallStore.instance.get(room.roomId)).not.toBeNull());
-            const call = CallStore.instance.get(room.roomId)!;
+            await waitFor(() => expect(CallStore.instance.getCall(room.roomId)).not.toBeNull());
+            const call = CallStore.instance.getCall(room.roomId)!;
 
             const widget = new Widget(call.widget);
             WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {
