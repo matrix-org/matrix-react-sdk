@@ -3595,5 +3595,12 @@
     "Video call started": "Videoanruf hat begonnen",
     "Unknown room": "Unbekannter Raum",
     "Video call started in %(roomName)s. (not supported by this browser)": "Ein Videoanruf hat in %(roomName)s begonnen. (Von diesem Browser nicht unterstützt)",
-    "Video call started in %(roomName)s.": "Ein Videoanruf hat in %(roomName)s begonnen."
+    "Video call started in %(roomName)s.": "Ein Videoanruf hat in %(roomName)s begonnen.",
+    "Fill screen": "Bildschirmfüllend",
+    "Freedom": "Freiraum",
+    "Spotlight": "Rampenlicht",
+    "Room info": "Raum-Info",
+    "View chat timeline": "Nachrichtenverlauf anzeigen",
+    "Close call": "Anruf schließen",
+    "Layout type": "Anordnungsart"
 }
