@@ -3178,6 +3178,7 @@
     "The other device isn't signed in.": "The other device isn't signed in.",
     "The request was cancelled.": "The request was cancelled.",
     "An unexpected error occurred.": "An unexpected error occurred.",
+    "The homeserver doesn't support signing in another device.": "The homeserver doesn't support signing in another device.",
     "Connection unsuccessful": "Connection unsuccessful",
     "Secure connection established": "Secure connection established",
     "Check your signed in device, the code below should be displayed:": "Check your signed in device, the code below should be displayed:",
