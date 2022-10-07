@@ -92,6 +92,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    VoiceAndVideo,
     Moderation,
     Analytics,
     MessagePreviews,
@@ -111,6 +112,7 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Spaces]: _td("Spaces"),
     [LabGroup.Widgets]: _td("Widgets"),
     [LabGroup.Rooms]: _td("Rooms"),
+    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
     [LabGroup.MessagePreviews]: _td("Message Previews"),
@@ -191,7 +193,7 @@ export type ISetting = IBaseSetting | IFeature;
 export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_video_rooms": {
         isFeature: true,
-        labsGroup: LabGroup.Rooms,
+        labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("Video rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -426,8 +428,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_element_call_video_rooms": {
         isFeature: true,
         supportedLevels: LEVELS_FEATURE,
-        labsGroup: LabGroup.Rooms,
+        labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("Element Call video rooms"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
+    "feature_group_calls": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("New group call experience"),
         controller: new ReloadOnChangeController(),
         default: false,
     },
@@ -730,6 +740,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Send analytics data'),
         default: null,
     },
+    "deviceClientInformationOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td(
+            `Record the client name, version, and url ` +
+            `to recognise sessions more easily in session manager`,
+        ),
+        default: false,
+    },
     "FTUE.useCaseSelection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
@@ -780,6 +798,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new NotificationsEnabledController(),
+    },
+    "deviceNotificationsEnabled": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: true,
     },
     "notificationSound": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
