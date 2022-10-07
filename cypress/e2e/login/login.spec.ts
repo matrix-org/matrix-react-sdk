@@ -40,7 +40,7 @@ describe("Login", () => {
             cy.registerUser(synapse, username, password);
         });
 
-        it("logs in with an existing account and lands on the home screen", () => {
+        it.only("logs in with an existing account and lands on the home screen", () => {
             cy.injectAxe();
 
             cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
@@ -58,7 +58,7 @@ describe("Login", () => {
             cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
-            cy.url().should('contain', '/#/home');
+            cy.url().should('contain', '/#/home', { timeout: 30000 });
             cy.stopMeasuring("from-submit-to-home");
         });
     });
