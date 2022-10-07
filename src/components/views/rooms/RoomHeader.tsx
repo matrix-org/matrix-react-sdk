@@ -230,7 +230,9 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const isVideoRoom = useMemo(() => videoRoomsEnabled && calcIsVideoRoom(room), [videoRoomsEnabled, room]);
-    const useElementCallExclusively = useMemo(() => SdkConfig.get("element_call").use_exclusively, []);
+    const useElementCallExclusively = useMemo(() => {
+        return SdkConfig.get("element_call").use_exclusively ?? DEFAULTS.element_call.use_exclusively;
+    }, []);
 
     const hasLegacyCall = useEventEmitterState(
         LegacyCallHandler.instance,
