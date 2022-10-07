@@ -3605,5 +3605,12 @@
     "Layout type": "Anordnungsart",
     "Client": "Anwendung",
     "Model": "Modell",
-    "Operating system": "Betriebssystem"
+    "Operating system": "Betriebssystem",
+    "Call type": "Anrufart",
+    "You do not have sufficient permissions to change this.": "Du hast nicht die erforderlichen Berechtigungen, um dies zu ändern.",
+    "Start %(brand)s calls": "Beginne %(brand)s-Anrufe",
+    "Video call (%(brand)s)": "Videoanruf (%(brand)s)",
+    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s ist Ende-zu-Ende-verschlüsselt, allerdings noch auf eine geringere Anzahl Benutzer beschränkt.",
+    "Enable %(brand)s as an additional calling option in this room": "Verwende %(brand)s als alternative Anrufoption in diesem Raum",
+    "Join %(brand)s calls": "Trete %(brand)s-Anrufen bei"
 }
