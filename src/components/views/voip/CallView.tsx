@@ -201,7 +201,7 @@ export const Lobby: FC<LobbyProps> = ({ room, callIsFull, connect, children }) =
 
     const tooltip = useMemo(() => {
         if (connecting) return _t("Connecting");
-        if (callIsFull) return _t("Sorry - this call is currently full");
+        if (callIsFull) return _t("Sorry — this call is currently full");
     }, [connecting, callIsFull]);
 
     return <div className="mx_CallView_lobby">
