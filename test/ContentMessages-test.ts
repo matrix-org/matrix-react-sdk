@@ -15,10 +15,14 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { IImageInfo, ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IImageInfo, ISendEventResponse, MatrixClient, Upload } from "matrix-js-sdk/src/matrix";
+import encrypt from "matrix-encrypt-attachment";
 
-import ContentMessages from "../src/ContentMessages";
+import ContentMessages, { uploadFile } from "../src/ContentMessages";
 import { doMaybeLocalRoomAction } from "../src/utils/local-room";
+import { createTestClient } from "./test-utils";
+
+jest.mock("matrix-encrypt-attachment", () => ({ encryptAttachment: jest.fn().mockResolvedValue({}) }));
 
 jest.mock("../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -64,5 +68,51 @@ describe("ContentMessages", () => {
             );
             expect(client.sendStickerMessage).toHaveBeenCalledWith(roomId, null, stickerUrl, imageInfo, text);
         });
+    });
+});
+
+describe("uploadFile", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    const client = createTestClient();
+
+    it("should not encrypt the file if the room isn't encrypted", async () => {
+        mocked(client.isRoomEncrypted).mockReturnValue(false);
+        mocked(client.uploadContent).mockReturnValue({
+            promise: Promise.resolve({ content_uri: "mxc://server/file" }),
+        } as Upload);
+        const progressHandler = jest.fn();
+        const file = new Blob([]);
+
+        const res = await uploadFile(client, "!roomId:server", file, progressHandler);
+
+        expect(res.url).toBe("mxc://server/file");
+        expect(res.file).toBeFalsy();
+        expect(encrypt.encryptAttachment).not.toHaveBeenCalled();
+        expect(client.uploadContent).toHaveBeenCalledWith(file, { progressHandler });
+    });
+
+    it("should encrypt the file if the room is encrypted", async () => {
+        mocked(client.isRoomEncrypted).mockReturnValue(true);
+        mocked(client.uploadContent).mockReturnValue({
+            promise: Promise.resolve({ content_uri: "mxc://server/file" }),
+        } as Upload);
+        const progressHandler = jest.fn();
+        const file = new Blob(["123"]);
+
+        const res = await uploadFile(client, "!roomId:server", file, progressHandler);
+
+        expect(res.url).toBeFalsy();
+        expect(res.file).toEqual(expect.objectContaining({
+            url: "mxc://server/file",
+        }));
+        expect(encrypt.encryptAttachment).toHaveBeenCalled();
+        expect(client.uploadContent).toHaveBeenCalledWith(expect.any(Blob), {
+            progressHandler,
+            includeFilename: false,
+        });
+        expect(mocked(client.uploadContent).mock.calls[0][0]).not.toBe(file);
     });
 });
