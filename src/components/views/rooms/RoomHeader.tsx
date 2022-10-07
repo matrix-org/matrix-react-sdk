@@ -52,7 +52,7 @@ import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { isVideoRoom as calcIsVideoRoom } from "../../../utils/video-rooms";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../../LegacyCallHandler";
 import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
-import SdkConfig from "../../../SdkConfig";
+import SdkConfig, { DEFAULTS } from "../../../SdkConfig";
 import { useEventEmitterState, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import { useWidgets } from "../right_panel/RoomSummaryCard";
 import { WidgetType } from "../../../widgets/WidgetType";
@@ -195,7 +195,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
     let menu: JSX.Element | null = null;
     if (menuOpen) {
         const buttonRect = buttonRef.current!.getBoundingClientRect();
-        const brand = SdkConfig.get("element_call").brand;
+        const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
         menu = <IconizedContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
             <IconizedContextMenuOptionList>
                 <IconizedContextMenuOption label={_t("Video call (Jitsi)")} onClick={onJitsiClick} />
