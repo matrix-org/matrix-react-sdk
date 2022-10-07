@@ -19,25 +19,16 @@ import React from "react";
 import { mount } from 'enzyme';
 
 import ExpandableBox from "../../../../src/components/views/elements/ExpandableBox";
-import { mockPlatformPeg, unmockPlatformPeg } from '../../../test-utils';
 
 describe('<ExpandableBox />', () => {
     const defaultProps = {
         body: "Here is a bit of text.",
-        className: '',
+        className: 'mx_Icon_16',
         lines: 3,
     };
 
     const getComponent = (props = {}) =>
         mount(<ExpandableBox {...defaultProps} {...props} />);
-
-    beforeEach(() => {
-        mockPlatformPeg();
-    });
-
-    afterAll(() => {
-        unmockPlatformPeg();
-    });
 
     it('renders at all', () => {
         const component = getComponent();
@@ -46,7 +37,29 @@ describe('<ExpandableBox />', () => {
 
     it('renders no button if not overflowing', () => {
         const component = getComponent();
-        expect(component.find('.mx_RoomSummaryCard_infoTopic_toggle').exists).toBeTruthy();
+        expect(component.find('.mx_RoomSummaryCard_infoTopic_toggle').exists()).toBeFalsy();
+    });
+
+    it('renders button if overflowing', () => {
+        const component = getComponent({ lines: -1 });
+        expect(component).toMatchSnapshot();
+        expect(component.find('.mx_RoomSummaryCard_infoTopic_toggle').exists()).toBeTruthy();
+    });
+
+    it('toggle button toggles style', () => {
+        const component = getComponent({ lines: -1 });
+
+        component.find('.mx_RoomSummaryCard_infoTopic_toggle').simulate('click');
+
+        let webkitLineClampfff = (component.find('.mx_RoomSummaryCard_infoTopic_text').getDOMNode<HTMLElement>()
+            .style as any).WebkitLineClamp;
+        expect(webkitLineClampfff).toEqual("unset");
+
+        component.find('.mx_RoomSummaryCard_infoTopic_toggle').simulate('click');
+
+        webkitLineClampfff = (component.find('.mx_RoomSummaryCard_infoTopic_text').getDOMNode<HTMLElement>()
+            .style as any).WebkitLineClamp;
+        expect(webkitLineClampfff).toEqual("-1");
     });
 
     // TODO: Somehow restrict the width of the component to get the ToggleButton to render

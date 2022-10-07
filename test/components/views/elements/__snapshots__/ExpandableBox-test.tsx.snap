@@ -3,14 +3,14 @@
 exports[`<ExpandableBox /> renders at all 1`] = `
 <ExpandableBox
   body="Here is a bit of text."
-  className=""
+  className="mx_Icon_16"
   lines={3}
 >
   <div
     className="mx_RoomSummaryCard_infoTopic"
   >
     <div
-      className="mx_RoomSummaryCard_infoTopic_text"
+      className="mx_RoomSummaryCard_infoTopic_text mx_Icon_16"
       style={
         Object {
           "WebkitLineClamp": "3",
@@ -20,6 +20,41 @@ exports[`<ExpandableBox /> renders at all 1`] = `
     >
       Here is a bit of text.
     </div>
+  </div>
+</ExpandableBox>
+`;
+
+exports[`<ExpandableBox /> renders button if overflowing 1`] = `
+<ExpandableBox
+  body="Here is a bit of text."
+  className="mx_Icon_16"
+  lines={-1}
+>
+  <div
+    className="mx_RoomSummaryCard_infoTopic"
+  >
+    <div
+      className="mx_RoomSummaryCard_infoTopic_text mx_Icon_16"
+      style={
+        Object {
+          "WebkitLineClamp": "-1",
+          "lineHeight": "16px",
+        }
+      }
+    >
+      Here is a bit of text.
+    </div>
+    <ToggleButton
+      isExpanded={false}
+      onClick={[Function]}
+    >
+      <button
+        className="mx_RoomSummaryCard_infoTopic_toggle"
+        onClick={[Function]}
+      >
+        More
+      </button>
+    </ToggleButton>
   </div>
 </ExpandableBox>
 `;
