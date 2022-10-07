@@ -28,6 +28,6 @@ export default defineConfig({
         },
         baseUrl: 'http://localhost:8080',
         experimentalSessionAndOrigin: true,
-        specPattern: 'cypress/stress/**/*.{js,jsx,ts,tsx}',
+        specPattern: 'cypress/stress/**/*.{ts,tsx}',
     },
 });
