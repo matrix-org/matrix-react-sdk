@@ -3610,5 +3610,12 @@
     "Operating system": "Операційна система",
     "Model": "Модель",
     "Client": "Клієнт",
-    "Fill screen": "Заповнити екран"
+    "Fill screen": "Заповнити екран",
+    "Video call (%(brand)s)": "Відеовиклик (%(brand)s)",
+    "Call type": "Тип викликів",
+    "You do not have sufficient permissions to change this.": "Ви не маєте достатніх повноважень, щоб змінити це.",
+    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s наскрізно зашифровано, але наразі обмежений меншою кількістю користувачів.",
+    "Enable %(brand)s as an additional calling option in this room": "Увімкнути %(brand)s додатковою опцією викликів у цій кімнаті",
+    "Join %(brand)s calls": "Приєднатися до %(brand)s викликів",
+    "Start %(brand)s calls": "Розпочати %(brand)s викликів"
 }
