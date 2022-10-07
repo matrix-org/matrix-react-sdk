@@ -17,6 +17,8 @@ limitations under the License.
 import classNames from "classnames";
 import React, { useCallback, useState } from "react";
 
+import { _t } from "../../../languageHandler";
+
 interface ExpandableBoxProps {
     body: React.ReactNode;
     className: string;// How many? 3?
@@ -36,7 +38,7 @@ const ExpandableBox: React.FC<ExpandableBoxProps> = ({ body, className, lines = 
     const ToggleButton = ({ isExpanded, onClick }) => {
         return (
             <button className="mx_RoomSummaryCard_infoTopic_toggle" onClick={onClick}>
-                { isExpanded ? "Less" : "More" }
+                { isExpanded ? _t("Less") : _t("More") }
             </button>
         );
     };
