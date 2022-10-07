@@ -107,7 +107,7 @@ describe("uploadFile", () => {
         expect(res.url).toBe("mxc://server/file");
         expect(res.file).toBeFalsy();
         expect(encrypt.encryptAttachment).not.toHaveBeenCalled();
-        expect(client.uploadContent).toHaveBeenCalledWith(file, { progressHandler });
+        expect(client.uploadContent).toHaveBeenCalledWith(file, expect.objectContaining({ progressHandler }));
     });
 
     it("should encrypt the file if the room is encrypted", async () => {
@@ -127,15 +127,15 @@ describe("uploadFile", () => {
             url: "mxc://server/file",
         }));
         expect(encrypt.encryptAttachment).toHaveBeenCalled();
-        expect(client.uploadContent).toHaveBeenCalledWith(expect.any(Blob), {
+        expect(client.uploadContent).toHaveBeenCalledWith(expect.any(Blob), expect.objectContaining({
             progressHandler,
-            abortController: expect.any(AbortController),
             includeFilename: false,
-        });
+        }));
         expect(mocked(client.uploadContent).mock.calls[0][0]).not.toBe(file);
     });
 
     it("should throw UploadCanceledError upon aborting the upload", async () => {
+        mocked(client.isRoomEncrypted).mockReturnValue(false);
         const deferred = defer<UploadResponse>();
         mocked(client.uploadContent).mockReturnValue(deferred.promise);
         const file = new Blob([]);
