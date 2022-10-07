@@ -122,9 +122,7 @@ Cypress.Commands.add("botJoinRoom", (cli: MatrixClient, roomId: string): Chainab
 });
 
 Cypress.Commands.add("botJoinRoomByName", (cli: MatrixClient, roomName: string): Chainable<Room> => {
-    const room = cli.getRooms().find((r) => {
-        return r.getDefaultRoomName(cli.getUserId()) === roomName;
-    });
+    const room = cli.getRooms().find((r) => r.getDefaultRoomName(cli.getUserId()) === roomName);
 
     if (room) {
         return cy.botJoinRoom(cli, room.roomId);
