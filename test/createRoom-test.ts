@@ -86,7 +86,7 @@ describe("createRoom", () => {
                     [ElementCall.MEMBER_EVENT_TYPE.name]: callMemberPower,
                 },
             },
-        }]] = client.createRoom.mock.calls as any; // no good type
+        }]] = client.createRoom.mock.calls;
 
         // We should have had enough power to be able to set up the call
         expect(userPower).toBeGreaterThanOrEqual(callPower);
@@ -125,7 +125,7 @@ describe("createRoom", () => {
                     [ElementCall.MEMBER_EVENT_TYPE.name]: callMemberPower,
                 },
             },
-        }]] = client.createRoom.mock.calls as any; // no good type
+        }]] = client.createRoom.mock.calls;
 
         expect(callPower).toBe(100);
         expect(callMemberPower).toBe(100);
