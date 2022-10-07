@@ -137,7 +137,6 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
-import { createLocalNotificationSettingsIfNeeded } from '../../utils/notifications';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -189,8 +188,6 @@ interface IState {
     currentRoomId?: string;
     // If we're trying to just view a user ID (i.e. /user URL), this is it
     currentUserId?: string;
-    // Group ID for legacy "communities don't exist" page
-    currentGroupId?: string;
     // this is persisted as mx_lhs_size, loaded in LoggedInView
     collapseLhs: boolean;
     // Parameters used in the registration dance with the IS
@@ -400,8 +397,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.startPageChangeTimer();
         }
     }
-
-    private get cli(): MatrixClient { return MatrixClientPeg.get(); }
 
     public componentDidMount(): void {
         window.addEventListener("resize", this.onWindowResized);
@@ -682,9 +677,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_legacy_group':
-                this.viewLegacyGroup(payload.groupId);
-                break;
             case Action.ViewUserSettings: {
                 const tabPayload = payload as OpenToTabPayload;
                 Modal.createDialog(UserSettingsDialog,
@@ -1026,16 +1018,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
     }
 
-    private viewLegacyGroup(groupId: string) {
-        this.setStateForNewView({
-            view: Views.LOGGED_IN,
-            currentRoomId: null,
-            currentGroupId: groupId,
-        });
-        this.notifyNewScreen('group/' + groupId);
-        this.setPage(PageType.LegacyGroupView);
-    }
-
     private async createRoom(defaultPublic = false, defaultName?: string, type?: RoomType) {
         const modal = Modal.createDialog(CreateRoomDialog, {
             type,
@@ -1260,8 +1242,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.themeWatcher.recheck();
         StorageManager.tryPersistStorage();
 
-        this.cli.on(ClientEvent.Sync, this.onInitialSync);
-
         if (
             MatrixClientPeg.currentUserIsJustRegistered() &&
             SettingsStore.getValue("FTUE.useCaseSelection") === null
@@ -1287,14 +1267,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return this.onShowPostLoginScreen();
         }
     }
-
-    private onInitialSync = (): void => {
-        if (this.cli.isInitialSyncComplete()) {
-            this.cli.off(ClientEvent.Sync, this.onInitialSync);
-        }
-
-        createLocalNotificationSettingsIfNeeded(this.cli);
-    };
 
     private async onShowPostLoginScreen(useCase?: UseCase) {
         if (useCase) {
@@ -1815,12 +1787,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: 'view_user_info',
                 userId: userId,
                 subAction: params.action,
-            });
-        } else if (screen.indexOf('group/') === 0) {
-            const groupId = screen.substring(6);
-            dis.dispatch({
-                action: 'view_legacy_group',
-                groupId: groupId,
             });
         } else {
             logger.info("Ignoring showScreen for '%s'", screen);

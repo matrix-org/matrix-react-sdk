@@ -125,7 +125,7 @@ Cypress.Commands.add("startDM", (name: string) => {
         .should("have.focus")
         .type("Hey!{enter}");
     cy.contains(".mx_EventTile_body", "Hey!");
-    cy.get(".mx_RoomSublist[aria-label=People]").should("contain", name);
+    cy.contains(".mx_RoomSublist[aria-label=People]", name);
 });
 
 describe("Spotlight", () => {
@@ -162,7 +162,7 @@ describe("Spotlight", () => {
                 cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
                     cy.createRoom({ name: room1Name, visibility: Visibility.Public }).then(_room1Id => {
                         room1Id = _room1Id;
-                        cy.inviteUser(room1Id, bot1.getUserId());
+                        bot1.joinRoom(room1Id);
                         cy.visit("/#/room/" + room1Id);
                     });
                     bot2.createRoom({ name: room2Name, visibility: Visibility.Public })
@@ -365,7 +365,10 @@ describe("Spotlight", () => {
                     cy.spotlightSearch().clear().type(bot1.getUserId());
                     cy.wait(1000); // wait for the dialog code to settle
                     cy.spotlightResults().should("have.length", 2);
-                    cy.spotlightResults().eq(0).should("contain", groupDm.name);
+                    cy.contains(
+                        ".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option",
+                        groupDm.name,
+                    );
                 });
 
                 // Search for ByteBot by id, should return group DM and user
@@ -374,7 +377,10 @@ describe("Spotlight", () => {
                     cy.spotlightSearch().clear().type(bot2.getUserId());
                     cy.wait(1000); // wait for the dialog code to settle
                     cy.spotlightResults().should("have.length", 2);
-                    cy.spotlightResults().eq(0).should("contain", groupDm.name);
+                    cy.contains(
+                        ".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option",
+                        groupDm.name,
+                    );
                 });
             });
     });
