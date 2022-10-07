@@ -167,14 +167,11 @@ describe("CallLobby", () => {
         });
 
         it("disables join button when the participant limit has been exceeded", async () => {
-            const sdkConfigCopy = SdkConfig.get();
             const bob = mkRoomMember(room.roomId, "@bob:example.org");
             const carol = mkRoomMember(room.roomId, "@carol:example.org");
 
-            jest.spyOn(SdkConfig, "get").mockImplementation((name: string) => {
-                if (name === "element_call") return { participant_limit: 2 };
-                if (Boolean(name)) return sdkConfigCopy[name];
-                return sdkConfigCopy;
+            SdkConfig.put({
+                "element_call": { participant_limit: 2, url: "", use_exclusively: false },
             });
             call.participants = new Set([bob, carol]);
 
