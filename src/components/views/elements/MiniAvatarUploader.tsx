@@ -74,7 +74,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({
                 if (!ev.target.files?.length) return;
                 setBusy(true);
                 const file = ev.target.files[0];
-                const { content_uri: uri } = await cli.uploadContent(file).promise;
+                const { content_uri: uri } = await cli.uploadContent(file);
                 await setAvatarUrl(uri);
                 setBusy(false);
             }}

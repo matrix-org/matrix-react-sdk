@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient, Upload } from "matrix-js-sdk/src/matrix";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { IDevice } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 
@@ -111,7 +111,7 @@ describe("createRoom", () => {
     });
 
     it("should upload avatar if one is passed", async () => {
-        client.uploadContent.mockReturnValue({ promise: Promise.resolve({ content_uri: "mxc://foobar" }) } as Upload);
+        client.uploadContent.mockResolvedValue({ content_uri: "mxc://foobar" });
         const avatar = new File([], "avatar.png");
         await createRoom({ avatar });
         expect(client.createRoom).toHaveBeenCalledWith(expect.objectContaining({

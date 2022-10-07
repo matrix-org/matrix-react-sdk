@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { IImageInfo, ISendEventResponse, MatrixClient, Upload } from "matrix-js-sdk/src/matrix";
-import encrypt from "matrix-encrypt-attachment";
+import { IImageInfo, ISendEventResponse, MatrixClient, UploadResponse } from "matrix-js-sdk/src/matrix";
+import { defer } from "matrix-js-sdk/src/utils";
+import encrypt, { IEncryptedFile } from "matrix-encrypt-attachment";
 
-import ContentMessages, { uploadFile } from "../src/ContentMessages";
+import ContentMessages, { UploadCanceledError, uploadFile } from "../src/ContentMessages";
 import { doMaybeLocalRoomAction } from "../src/utils/local-room";
 import { createTestClient } from "./test-utils";
 
@@ -69,6 +70,23 @@ describe("ContentMessages", () => {
             expect(client.sendStickerMessage).toHaveBeenCalledWith(roomId, null, stickerUrl, imageInfo, text);
         });
     });
+
+    describe("getCurrentUploads", () => {
+        beforeEach(() => {
+            mocked(doMaybeLocalRoomAction).mockImplementation((
+                roomId: string,
+                fn: (actualRoomId: string) => Promise<ISendEventResponse>,
+            ) => fn(roomId));
+        });
+
+        it("should return only uploads for the given relation", async () => {
+            // await contentMessages.sendContentListToRoom([]);
+        });
+
+        it("should return only uploads for no relation when not passed one", () => {
+
+        });
+    });
 });
 
 describe("uploadFile", () => {
@@ -80,9 +98,7 @@ describe("uploadFile", () => {
 
     it("should not encrypt the file if the room isn't encrypted", async () => {
         mocked(client.isRoomEncrypted).mockReturnValue(false);
-        mocked(client.uploadContent).mockReturnValue({
-            promise: Promise.resolve({ content_uri: "mxc://server/file" }),
-        } as Upload);
+        mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
         const progressHandler = jest.fn();
         const file = new Blob([]);
 
@@ -96,9 +112,11 @@ describe("uploadFile", () => {
 
     it("should encrypt the file if the room is encrypted", async () => {
         mocked(client.isRoomEncrypted).mockReturnValue(true);
-        mocked(client.uploadContent).mockReturnValue({
-            promise: Promise.resolve({ content_uri: "mxc://server/file" }),
-        } as Upload);
+        mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
+        mocked(encrypt.encryptAttachment).mockResolvedValue({
+            data: new ArrayBuffer(123),
+            info: {} as IEncryptedFile,
+        });
         const progressHandler = jest.fn();
         const file = new Blob(["123"]);
 
@@ -111,8 +129,20 @@ describe("uploadFile", () => {
         expect(encrypt.encryptAttachment).toHaveBeenCalled();
         expect(client.uploadContent).toHaveBeenCalledWith(expect.any(Blob), {
             progressHandler,
+            abortController: expect.any(AbortController),
             includeFilename: false,
         });
         expect(mocked(client.uploadContent).mock.calls[0][0]).not.toBe(file);
+    });
+
+    it("should throw UploadCanceledError upon aborting the upload", async () => {
+        const deferred = defer<UploadResponse>();
+        mocked(client.uploadContent).mockReturnValue(deferred.promise);
+        const file = new Blob([]);
+
+        const prom = uploadFile(client, "!roomId:server", file);
+        mocked(client.uploadContent).mock.calls[0][1].abortController.abort();
+        deferred.resolve({ content_uri: "mxc://foo/bar" });
+        await expect(prom).rejects.toThrowError(UploadCanceledError);
     });
 });

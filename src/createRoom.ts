@@ -235,7 +235,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     if (opts.avatar) {
         let url = opts.avatar;
         if (opts.avatar instanceof File) {
-            ({ content_uri: url } = await client.uploadContent(opts.avatar).promise);
+            ({ content_uri: url } = await client.uploadContent(opts.avatar));
         }
 
         createOpts.initial_state.push({

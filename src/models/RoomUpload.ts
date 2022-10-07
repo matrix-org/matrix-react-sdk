@@ -14,26 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IEventRelation, Upload } from "matrix-js-sdk/src/matrix";
+import { IEventRelation, UploadProgress } from "matrix-js-sdk/src/matrix";
 
 import { IEncryptedFile } from "../customisations/models/IMediaEventContent";
 
 export class RoomUpload {
-    private fileUpload: Upload;
-    private abortController = new AbortController();
+    private uploaded = 0;
+    public readonly abortController = new AbortController();
 
     constructor(
         public readonly roomId: string,
         public readonly fileName: string,
         public readonly relation?: IEventRelation,
-        public readonly fileSize?: number,
+        public fileSize = 0,
     ) {}
 
-    public associate(upload: Upload): void {
-        this.fileUpload = upload;
-        if (this.cancelled) {
-            upload.abortController.abort();
-        }
+    public onProgress(progress: UploadProgress) {
+        this.uploaded = progress.loaded;
+        this.fileSize = progress.total;
     }
 
     public abort(): void {
@@ -41,15 +39,15 @@ export class RoomUpload {
     }
 
     public get cancelled(): boolean {
-        return this.fileUpload?.abortController.signal.aborted ?? this.abortController.signal.aborted;
+        return this.abortController.signal.aborted;
     }
 
     public get total(): number {
-        return this.fileUpload?.total ?? this.fileSize ?? 0;
+        return this.fileSize;
     }
 
     public get loaded(): number {
-        return this.fileUpload?.loaded ?? 0;
+        return this.uploaded;
     }
 
     promise: Promise<{ url?: string, file?: IEncryptedFile }>;

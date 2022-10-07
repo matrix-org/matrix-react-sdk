@@ -115,7 +115,7 @@ export default class ChangeAvatar extends React.Component<IProps, IState> {
         this.setState({
             phase: Phases.Uploading,
         });
-        const httpPromise = MatrixClientPeg.get().uploadContent(file).promise.then(({ content_uri: url }) => {
+        const httpPromise = MatrixClientPeg.get().uploadContent(file).then(({ content_uri: url }) => {
             newUrl = url;
             if (this.props.room) {
                 return MatrixClientPeg.get().sendStateEvent(

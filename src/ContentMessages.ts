@@ -22,7 +22,7 @@ import encrypt from "matrix-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation, ISendEventResponse, MatrixEvent, Upload, UploadOpts } from "matrix-js-sdk/src/matrix";
+import { IEventRelation, ISendEventResponse, MatrixEvent, UploadOpts } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
@@ -281,8 +281,6 @@ export async function uploadFile(
 ): Promise<{ url?: string, file?: IEncryptedFile }> {
     const abortController = new AbortController();
 
-    let upload: Upload;
-
     // If the room is encrypted then encrypt the file before uploading it.
     if (matrixClient.isRoomEncrypted(roomId)) {
         // First read the file into memory.
@@ -295,17 +293,16 @@ export async function uploadFile(
 
         // Pass the encrypted data as a Blob to the uploader.
         const blob = new Blob([encryptResult.data]);
-        upload = matrixClient.uploadContent(blob, {
+
+        const { content_uri: url } = await matrixClient.uploadContent(blob, {
             progressHandler,
+            abortController,
             includeFilename: false,
         });
-
-        const { content_uri: url } = await upload.promise;
         if (abortController.signal.aborted) throw new UploadCanceledError();
 
-        // If the attachment is encrypted then bundle the URL along
-        // with the information needed to decrypt the attachment and
-        // add it under a file key.
+        // If the attachment is encrypted then bundle the URL along with the information
+        // needed to decrypt the attachment and add it under a file key.
         return {
             file: {
                 ...encryptResult.info,
@@ -313,12 +310,10 @@ export async function uploadFile(
             } as IEncryptedFile,
         };
     } else {
-        const upload = matrixClient.uploadContent(file, { progressHandler });
-        return upload.promise.then(function({ content_uri: url }) {
-            if (abortController.signal.aborted) throw new UploadCanceledError();
-            // If the attachment isn't encrypted then include the URL directly.
-            return { url };
-        }) as Promise<{ url: string }>;
+        const { content_uri: url } = await matrixClient.uploadContent(file, { progressHandler, abortController });
+        if (abortController.signal.aborted) throw new UploadCanceledError();
+        // If the attachment isn't encrypted then include the URL directly.
+        return { url };
     }
 }
 
@@ -458,13 +453,13 @@ export default class ContentMessages {
         dis.dispatch<UploadCanceledPayload>({ action: Action.UploadCanceled, upload });
     }
 
-    private async sendContentToRoom(
+    public async sendContentToRoom(
         file: File,
         roomId: string,
         relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
         replyToEvent: MatrixEvent | undefined,
-        promBefore: Promise<any>,
+        promBefore?: Promise<any>,
     ) {
         const fileName = file.name || _t("Attachment");
         const content: Omit<IMediaEventContent, "info"> & { info: Partial<IMediaEventInfo> } = {
@@ -495,7 +490,8 @@ export default class ContentMessages {
         this.inprogress.push(upload);
         dis.dispatch<UploadStartedPayload>({ action: Action.UploadStarted, upload });
 
-        function onProgress() {
+        function onProgress(progress) {
+            upload.onProgress(progress);
             dis.dispatch<UploadProgressPayload>({ action: Action.UploadProgress, upload });
         }
 
@@ -533,7 +529,7 @@ export default class ContentMessages {
 
             if (upload.cancelled) throw new UploadCanceledError();
             // Await previous message being sent into the room
-            await promBefore;
+            if (promBefore) await promBefore;
 
             if (upload.cancelled) throw new UploadCanceledError();
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
