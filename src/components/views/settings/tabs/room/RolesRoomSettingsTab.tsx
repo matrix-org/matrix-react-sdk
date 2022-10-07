@@ -32,6 +32,7 @@ import SettingsFieldset from '../../SettingsFieldset';
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
 import { ElementCall } from "../../../../../models/Call";
+import SdkConfig from "../../../../../SdkConfig";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -259,8 +260,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         }
         // MSC3401: Native Group VoIP signaling
         if (SettingsStore.getValue("feature_group_calls")) {
-            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start Element calls");
-            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join Element calls");
+            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start %(brand)s calls");
+            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join %(brand)s calls");
         }
 
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {
@@ -445,7 +446,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             let label = plEventsToLabels[eventType];
             if (label) {
-                label = _t(label);
+                const brand = SdkConfig.get("element_call").brand;
+                label = _t(label, { brand });
             } else {
                 label = _t("Send %(eventType)s events", { eventType });
             }
