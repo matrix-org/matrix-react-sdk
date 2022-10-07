@@ -3607,5 +3607,8 @@
     "Video call started": "Videohovor byl zahájen",
     "Unknown room": "Neznámá místnost",
     "Video call started in %(roomName)s. (not supported by this browser)": "Videohovor byl zahájen v %(roomName)s. (není podporováno tímto prohlížečem)",
-    "Video call started in %(roomName)s.": "Videohovor byl zahájen v %(roomName)s."
+    "Video call started in %(roomName)s.": "Videohovor byl zahájen v %(roomName)s.",
+    "Operating system": "Operační systém",
+    "Model": "Model",
+    "Client": "Klient"
 }
