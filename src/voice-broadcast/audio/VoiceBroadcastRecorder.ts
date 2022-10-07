@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Optional } from "matrix-events-sdk";
+import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
 import { VoiceRecording } from "../../audio/VoiceRecording";
 import SdkConfig, { DEFAULTS } from "../../SdkConfig";
@@ -23,6 +24,10 @@ import { IDestroyable } from "../../utils/IDestroyable";
 
 export enum VoiceBroadcastRecorderEvent {
     ChunkRecorded = "chunk_recorded",
+}
+
+interface EventMap {
+    [VoiceBroadcastRecorderEvent.ChunkRecorded]: (chunk: ChunkRecordedPayload) => void;
 }
 
 export interface ChunkRecordedPayload {
@@ -35,7 +40,9 @@ export interface ChunkRecordedPayload {
  * Subscribe with on(VoiceBroadcastRecordingEvents.ChunkRecorded, (payload: ChunkRecordedPayload) => {})
  * to retrieve chunks while recording.
  */
-export class VoiceBroadcastRecorder implements IDestroyable {
+export class VoiceBroadcastRecorder
+    extends TypedEventEmitter<VoiceBroadcastRecorderEvent, EventMap>
+    implements IDestroyable {
     private headers = new Uint8Array(0);
     private chunkBuffer = new Uint8Array(0);
     private previousChunkEndTimePosition = 0;
@@ -45,6 +52,7 @@ export class VoiceBroadcastRecorder implements IDestroyable {
         private voiceRecording: VoiceRecording,
         public readonly targetChunkLength: number,
     ) {
+        super();
         this.voiceRecording.onDataAvailable = this.onDataAvailable;
     }
 
@@ -58,16 +66,6 @@ export class VoiceBroadcastRecorder implements IDestroyable {
     public async stop(): Promise<Optional<ChunkRecordedPayload>> {
         await this.voiceRecording.stop();
         return this.extractChunk();
-    }
-
-    public on(event: string | symbol, listener: (...args: any[]) => void): this {
-        this.voiceRecording.on(event, listener);
-        return this;
-    }
-
-    public off(event: string | symbol, listener: (...args: any[]) => void): this {
-        this.voiceRecording.off(event, listener);
-        return this;
     }
 
     public get contentType(): string {
@@ -125,13 +123,14 @@ export class VoiceBroadcastRecorder implements IDestroyable {
             return;
         }
 
-        this.voiceRecording.emit(
+        this.emit(
             VoiceBroadcastRecorderEvent.ChunkRecorded,
             this.extractChunk(),
         );
     }
 
     public destroy(): void {
+        this.removeAllListeners();
         this.voiceRecording.destroy();
     }
 }

@@ -59,7 +59,8 @@ describe("VoiceBroadcastRecorder", () => {
         const contentType = "test content type";
 
         let voiceRecording: VoiceRecording;
-        let voiceBroadcastRecording: VoiceBroadcastRecorder;
+        let voiceBroadcastRecorder: VoiceBroadcastRecorder;
+        let onChunkRecorded: (chunk: ChunkRecordedPayload) => void;
 
         const itShouldNotEmitAChunkRecordedEvent = () => {
             it("should not emit a ChunkRecorded event", () => {
@@ -81,31 +82,24 @@ describe("VoiceBroadcastRecorder", () => {
                 destroy: jest.fn(),
                 recorderSeconds: 23,
             } as unknown as VoiceRecording;
-            voiceBroadcastRecording = new VoiceBroadcastRecorder(voiceRecording, chunkLength);
+            voiceBroadcastRecorder = new VoiceBroadcastRecorder(voiceRecording, chunkLength);
+            jest.spyOn(voiceBroadcastRecorder, "removeAllListeners");
+            onChunkRecorded = jest.fn();
+            voiceBroadcastRecorder.on(VoiceBroadcastRecorderEvent.ChunkRecorded, onChunkRecorded);
         });
 
-        it("on should forward the call to VoiceRecording", () => {
-            const callback = () => {};
-            const result = voiceBroadcastRecording.on("test on", callback);
-            expect(voiceRecording.on).toHaveBeenCalledWith("test on", callback);
-            expect(result).toBe(voiceBroadcastRecording);
-        });
-
-        it("off should forward the call to VoiceRecording", () => {
-            const callback = () => {};
-            const result = voiceBroadcastRecording.off("test off", callback);
-            expect(voiceRecording.off).toHaveBeenCalledWith("test off", callback);
-            expect(result).toBe(voiceBroadcastRecording);
+        afterEach(() => {
+            voiceBroadcastRecorder.destroy();
         });
 
         it("start should forward the call to VoiceRecording.start", async () => {
-            await voiceBroadcastRecording.start();
+            await voiceBroadcastRecorder.start();
             expect(voiceRecording.start).toHaveBeenCalled();
         });
 
         describe("stop", () => {
             beforeEach(async () => {
-                await voiceBroadcastRecording.stop();
+                await voiceBroadcastRecorder.stop();
             });
 
             it("should forward the call to VoiceRecording.stop", async () => {
@@ -115,13 +109,22 @@ describe("VoiceBroadcastRecorder", () => {
             itShouldNotEmitAChunkRecordedEvent();
         });
 
-        it("destroy should forward the call to VoiceRecording.destroy", () => {
-            voiceBroadcastRecording.destroy();
-            expect(voiceRecording.destroy).toHaveBeenCalled();
+        describe("when calling destroy", () => {
+            beforeEach(() => {
+                voiceBroadcastRecorder.destroy();
+            });
+
+            it("should call VoiceRecording.destroy", () => {
+                expect(voiceRecording.destroy).toHaveBeenCalled();
+            });
+
+            it("should remove all listeners", () => {
+                expect(voiceBroadcastRecorder.removeAllListeners).toHaveBeenCalled();
+            });
         });
 
         it("contentType should return the value from VoiceRecording", () => {
-            expect(voiceBroadcastRecording.contentType).toBe(contentType);
+            expect(voiceBroadcastRecorder.contentType).toBe(contentType);
         });
 
         describe("when the first page from recorder has been received", () => {
@@ -154,7 +157,7 @@ describe("VoiceBroadcastRecorder", () => {
                 let stopPayload: ChunkRecordedPayload;
 
                 beforeEach(async () => {
-                    stopPayload = await voiceBroadcastRecording.stop();
+                    stopPayload = await voiceBroadcastRecorder.stop();
                 });
 
                 it("should return the remaining chunk", () => {
@@ -185,18 +188,16 @@ describe("VoiceBroadcastRecorder", () => {
             });
 
             it("should emit ChunkRecorded events", () => {
-                expect(voiceRecording.emit).toHaveBeenNthCalledWith(
+                expect(onChunkRecorded).toHaveBeenNthCalledWith(
                     1,
-                    VoiceBroadcastRecorderEvent.ChunkRecorded,
                     {
                         buffer: concat(headers1, headers2, chunk1),
                         length: 42,
                     },
                 );
 
-                expect(voiceRecording.emit).toHaveBeenNthCalledWith(
+                expect(onChunkRecorded).toHaveBeenNthCalledWith(
                     2,
-                    VoiceBroadcastRecorderEvent.ChunkRecorded,
                     {
                         buffer: concat(headers1, headers2, chunk2a, chunk2b),
                         length: 72 - 42, // 72 (position at second chunk) - 42 (position of first chunk)
