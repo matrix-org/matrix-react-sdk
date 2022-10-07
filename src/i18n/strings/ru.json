@@ -3547,7 +3547,7 @@
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s или %(copyButton)s",
     "Sign out of this session": "Выйти из этой сессии",
     "Please be aware that session names are also visible to people you communicate with": "Пожалуйста, имейте в виду, что названия сессий также видны людям, с которыми вы общаетесь",
-    "Push notifications": "Push-уведомления",
+    "Push notifications": "Уведомления",
     "Receive push notifications on this session.": "Получать push-уведомления в этой сессии.",
     "Toggle push notifications on this session.": "Push-уведомления для этой сессии.",
     "Enable notifications for this device": "Уведомления для этой сессии",
