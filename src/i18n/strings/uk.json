@@ -3600,5 +3600,15 @@
     "Video call started": "Відеовиклик розпочато",
     "Unknown room": "Невідома кімната",
     "Video call started in %(roomName)s. (not supported by this browser)": "Відеовиклик розпочато о %(roomName)s. (не підтримується цим браузером)",
-    "Video call started in %(roomName)s.": "Відеовиклик розпочато о %(roomName)s."
+    "Video call started in %(roomName)s.": "Відеовиклик розпочато о %(roomName)s.",
+    "Room info": "Відомості про кімнату",
+    "View chat timeline": "Переглянути стрічку бесіди",
+    "Close call": "Закрити виклик",
+    "Layout type": "Тип макета",
+    "Spotlight": "У фокусі",
+    "Freedom": "Свобода",
+    "Operating system": "Операційна система",
+    "Model": "Модель",
+    "Client": "Клієнт",
+    "Fill screen": "Заповнити екран"
 }
