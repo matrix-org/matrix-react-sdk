@@ -204,7 +204,7 @@ Cypress.Commands.add("setDisplayName", (name: string): Chainable<{}> => {
 
 Cypress.Commands.add("uploadContent", (file: FileType, opts?: UploadOpts): Chainable<Awaited<Upload["promise"]>> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
-        return cli.uploadContent(file, opts).promise;
+        return cli.uploadContent(file, opts);
     });
 });
 
