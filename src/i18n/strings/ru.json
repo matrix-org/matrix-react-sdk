@@ -3557,5 +3557,6 @@
     "%(selectedDeviceCount)s sessions selected": "Выбрано сессий: %(selectedDeviceCount)s",
     "Application": "Приложение",
     "Version": "Версия",
-    "URL": "URL-адрес"
+    "URL": "URL-адрес",
+    "Client": "Клиент"
 }
