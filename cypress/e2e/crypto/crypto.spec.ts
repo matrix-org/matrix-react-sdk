@@ -60,7 +60,6 @@ const testMessages = function(this: CryptoTestContext) {
     // check the invite message
     cy.contains(".mx_EventTile_body", "Hey!").closest(".mx_EventTile").within(() => {
         cy.get(".mx_EventTile_e2eIcon_warning").should("not.exist");
-        cy.get(".mx_EventTile_receiptSent").should("exist");
     });
 
     // Bob sends a response
@@ -143,7 +142,7 @@ describe("Cryptography", function() {
         cy.stopSynapse(this.synapse);
     });
 
-    xit("setting up secure key backup should work", () => {
+    it("setting up secure key backup should work", () => {
         cy.openUserSettings("Security & Privacy");
         cy.contains(".mx_AccessibleButton", "Set up Secure Backup").click();
         cy.get(".mx_Dialog").within(() => {
@@ -169,6 +168,6 @@ describe("Cryptography", function() {
         checkDMRoom();
         bobJoin.call(this);
         testMessages.call(this);
-        // verify.call(this);
+        verify.call(this);
     });
 });
