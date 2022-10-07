@@ -3588,5 +3588,9 @@
     "Turn off to disable notifications on all your devices and sessions": "Matikan untuk menonaktifkan notifikasi pada semua perangkat dan sesi Anda",
     "Enable notifications for this account": "Aktifkan notifikasi untuk akun ini",
     "Video call ended": "Panggilan video berakhir",
-    "%(name)s started a video call": "%(name)s memulai sebuah panggilan video"
+    "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
+    "URL": "URL",
+    "Version": "Versi",
+    "Application": "Aplikasi",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Rekam nama, versi, dan URL klien untuk dapat mengenal sesi dengan lebih muda dalam pengelola sesi"
 }
