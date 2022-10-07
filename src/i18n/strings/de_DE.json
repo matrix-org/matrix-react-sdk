@@ -3602,5 +3602,8 @@
     "Room info": "Raum-Info",
     "View chat timeline": "Nachrichtenverlauf anzeigen",
     "Close call": "Anruf schließen",
-    "Layout type": "Anordnungsart"
+    "Layout type": "Anordnungsart",
+    "Client": "Anwendung",
+    "Model": "Modell",
+    "Operating system": "Betriebssystem"
 }
