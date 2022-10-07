@@ -39,7 +39,6 @@ describe('<ExpandableBox />', () => {
         unmockPlatformPeg();
     });
 
-
     it('renders at all', () => {
         const component = getComponent();
         expect(component).toMatchSnapshot();
