@@ -44,7 +44,7 @@ import Modal from '../../../../../../src/Modal';
 import LogoutDialog from '../../../../../../src/components/views/dialogs/LogoutDialog';
 import {
     DeviceSecurityVariation,
-    DeviceWithVerification,
+    ExtendedDevice,
 } from '../../../../../../src/components/views/settings/devices/types';
 import { INACTIVE_DEVICE_AGE_MS } from '../../../../../../src/components/views/settings/devices/filter';
 
@@ -87,10 +87,10 @@ describe('<SessionManagerTab />', () => {
         deleteMultipleDevices: jest.fn(),
         generateClientSecret: jest.fn(),
         setDeviceDetails: jest.fn(),
+        getAccountData: jest.fn(),
         doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(true),
         getPushers: jest.fn(),
         setPusher: jest.fn(),
-        getAccountData: jest.fn(),
         setLocalNotificationSettings: jest.fn(),
     });
 
@@ -104,7 +104,7 @@ describe('<SessionManagerTab />', () => {
 
     const toggleDeviceDetails = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
-        deviceId: DeviceWithVerification['device_id'],
+        deviceId: ExtendedDevice['device_id'],
     ) => {
         // open device detail
         const tile = getByTestId(`device-tile-${deviceId}`);
@@ -114,7 +114,7 @@ describe('<SessionManagerTab />', () => {
 
     const toggleDeviceSelection = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
-        deviceId: DeviceWithVerification['device_id'],
+        deviceId: ExtendedDevice['device_id'],
     ) => {
         const checkbox = getByTestId(`device-tile-checkbox-${deviceId}`);
         fireEvent.click(checkbox);
@@ -135,7 +135,7 @@ describe('<SessionManagerTab />', () => {
 
     const isDeviceSelected = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
-        deviceId: DeviceWithVerification['device_id'],
+        deviceId: ExtendedDevice['device_id'],
     ): boolean => !!(getByTestId(`device-tile-checkbox-${deviceId}`) as HTMLInputElement).checked;
 
     const isSelectAllChecked = (
@@ -241,6 +241,48 @@ describe('<SessionManagerTab />', () => {
 
         expect(mockCrossSigningInfo.checkDeviceTrust).toHaveBeenCalledTimes(2);
         expect(getByTestId(`device-tile-${alicesDevice.device_id}`)).toMatchSnapshot();
+    });
+
+    it('extends device with client information when available', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+        mockClient.getAccountData.mockImplementation((eventType: string) => {
+            const content = {
+                name: 'Element Web',
+                version: '1.2.3',
+                url: 'test.com',
+            };
+            return new MatrixEvent({
+                type: eventType,
+                content,
+            });
+        });
+
+        const { getByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        // twice for each device
+        expect(mockClient.getAccountData).toHaveBeenCalledTimes(4);
+
+        toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+        // application metadata section rendered
+        expect(getByTestId('device-detail-metadata-application')).toBeTruthy();
+    });
+
+    it('renders devices without available client information without error', async () => {
+        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
+
+        const { getByTestId, queryByTestId } = render(getComponent());
+
+        await act(async () => {
+            await flushPromisesWithFakeTimers();
+        });
+
+        toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+        // application metadata section not rendered
+        expect(queryByTestId('device-detail-metadata-application')).toBeFalsy();
     });
 
     it('renders current session section with an unverified session', async () => {
