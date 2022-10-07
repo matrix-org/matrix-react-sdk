@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient, Room, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
+
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { MatrixClient, Room, RoomEvent, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
