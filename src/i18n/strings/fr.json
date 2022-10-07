@@ -3601,11 +3601,11 @@
     "Unknown room": "Salon inconnu",
     "Video call started in %(roomName)s. (not supported by this browser)": "Appel vidéo commencé dans %(roomName)s. (non supporté par ce navigateur)",
     "Video call started in %(roomName)s.": "Appel vidéo commencé dans %(roomName)s.",
-    "Close call": "Raccrocher",
+    "Close call": "Terminer l’appel",
     "Layout type": "Type de mise en page",
     "Spotlight": "Projecteur",
     "Freedom": "Liberté",
-    "Fill screen": "Remplissage de l'écran",
-    "Room info": "Information(s) sur le salon",
+    "Fill screen": "Remplir l’écran",
+    "Room info": "Information du salon",
     "View chat timeline": "Afficher la chronologie du chat"
 }
