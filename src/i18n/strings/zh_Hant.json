@@ -3588,5 +3588,17 @@
     "Enable notifications for this account": "為此帳號啟用通知",
     "%(selectedDeviceCount)s sessions selected": "已選取 %(selectedDeviceCount)s 個工作階段",
     "Video call ended": "視訊通話已結束",
-    "%(name)s started a video call": "%(name)s 開始了視訊通話"
+    "%(name)s started a video call": "%(name)s 開始了視訊通話",
+    "URL": "URL",
+    "Version": "版本",
+    "Application": "應用程式",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "記錄客戶端名稱、版本與 URL，以便在工作階段管理程式更輕鬆地識別工作階段",
+    "Unknown session type": "未知工作階段類型",
+    "Web session": "網頁工作階段",
+    "Mobile session": "行動裝置工作階段",
+    "Desktop session": "桌面工作階段",
+    "Video call started": "視訊通話已開始",
+    "Unknown room": "未知的聊天室",
+    "Video call started in %(roomName)s. (not supported by this browser)": "視訊通話在 %(roomName)s 開始。（此瀏覽器不支援）",
+    "Video call started in %(roomName)s.": "視訊通話在 %(roomName)s 開始。"
 }
