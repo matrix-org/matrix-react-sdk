@@ -634,7 +634,7 @@ export class PartCreator {
     }
 
     private static isRegionalIndicator(c: string): boolean {
-        return c.length == 2 && 127462 < c.codePointAt(0) && c.codePointAt(0) < 127488;
+        return c.length == 2 && 0x1F1E6 <= c.codePointAt(0) && c.codePointAt(0) <= 0x1F1FF;
     }
 
     public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
