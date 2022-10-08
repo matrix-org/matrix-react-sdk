@@ -49,8 +49,8 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 // (with plenty of false positives, but that's OK)
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
-// Regex pattern for Emoji Separator unicode characters (Zero-Width joiner and Zero-Width space)
-const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B/\s]/g;
+// Regex pattern for non-emoji characters that can appear in an "all-emoji" message (Zero-Width Joiner, Zero-Width Space, other whitespace)
+const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
 
