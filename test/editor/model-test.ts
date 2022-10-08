@@ -326,21 +326,26 @@ describe('editor/model', function() {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([], pc, renderer);
-            const regionalEmojiF = String.fromCodePoint(127467);
+            const regionalEmojiA = String.fromCodePoint(127462);
+            const regionalEmojiZ = String.fromCodePoint(127487);
             const caret = new DocumentOffset(0, true);
-
+            const regionalEmojis = [];
+            regionalEmojis.push(regionalEmojiA);
+            regionalEmojis.push(regionalEmojiZ);
             for (let i = 0; i < 2; i++) {
                 const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
                 model.transform(() => {
-                    const addedLen = model.insert(pc.plainWithEmoji(regionalEmojiF), position);
+                    const addedLen = model.insert(pc.plainWithEmoji(regionalEmojis[i]), position);
                     caret.offset += addedLen;
                     return model.positionForOffset(caret.offset, true);
                 });
             }
 
-            expect(model.parts.length).toBeGreaterThanOrEqual(2);
+            expect(model.parts.length).toBeGreaterThanOrEqual(4);
             expect(model.parts[0].type).toBe("emoji");
             expect(model.parts[1].type).not.toBe("emoji");
+            expect(model.parts[2].type).toBe("emoji");
+            expect(model.parts[3].type).not.toBe("emoji");
         });
     });
 });
