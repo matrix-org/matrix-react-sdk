@@ -415,7 +415,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             if (this.state.generatedRendezvous) {
                 const code = <div>
                     <div className="mx_Centre">
-                        <QRCode data={this.state.generatedRendezvous.code} className="mx_QRCode" />
+                        <QRCode data={[{ data: Buffer.from(this.state.generatedRendezvous.code), mode: 'byte' }]} className="mx_QRCode" />
                     </div>
                 </div>;
 
