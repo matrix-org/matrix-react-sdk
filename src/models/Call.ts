@@ -17,7 +17,7 @@ limitations under the License.
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 import { logger } from "matrix-js-sdk/src/logger";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
@@ -606,8 +606,11 @@ export interface ElementCallMemberContent {
 export class ElementCall extends Call {
     public static readonly CALL_EVENT_TYPE = new NamespacedValue(null, "org.matrix.msc3401.call");
     public static readonly MEMBER_EVENT_TYPE = new NamespacedValue(null, "org.matrix.msc3401.call.member");
+    private static readonly DUPLICATE_CALL_DEVICE_EVENT_TYPE = "io.element.duplicate_call_device";
     public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
+    private kickedOutByAnotherDevice = false;
+    private connectionTime: number | null = null;
     private participantsExpirationTimer: number | null = null;
     private terminationTimer: number | null = null;
 
@@ -785,6 +788,16 @@ export class ElementCall extends Call {
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
     ): Promise<void> {
+        this.kickedOutByAnotherDevice = false;
+        this.client.on(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
+
+        this.connectionTime = Date.now();
+        await this.client.sendToDevice(ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE, {
+            [this.client.getUserId()]: {
+                "*": { device_id: this.client.getDeviceId(), timestamp: this.connectionTime },
+            },
+        });
+
         try {
             await this.messaging!.transport.send(ElementWidgetActions.JoinCall, {
                 audioInput: audioInput?.label ?? null,
@@ -808,6 +821,7 @@ export class ElementCall extends Call {
     }
 
     public setDisconnected() {
+        this.client.off(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
@@ -850,6 +864,8 @@ export class ElementCall extends Call {
     }
 
     private async terminate(): Promise<void> {
+        if (this.kickedOutByAnotherDevice) return;
+
         await this.client.sendStateEvent(
             this.roomId,
             ElementCall.CALL_EVENT_TYPE.name,
@@ -866,6 +882,19 @@ export class ElementCall extends Call {
             this.groupCall.getType(), this.groupCall.getStateKey()!,
         );
         if ("m.terminated" in newGroupCall.getContent()) this.destroy();
+    };
+
+    private onToDeviceEvent = (event: MatrixEvent): void => {
+        if (event.getType() !== ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE) return;
+
+        const content = event.getContent();
+
+        if (content.device_id === this.client.getDeviceId()) return;
+
+        if (content.timestamp > this.connectionTime) {
+            this.kickedOutByAnotherDevice = true;
+            this.disconnect();
+        }
     };
 
     private onConnectionState = (state: ConnectionState, prevState: ConnectionState) => {
