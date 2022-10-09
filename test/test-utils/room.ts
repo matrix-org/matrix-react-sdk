@@ -20,12 +20,13 @@ import {
     MatrixEvent,
     EventType,
     Room,
+    Membership,
 } from "matrix-js-sdk/src/matrix";
 
 import { mkEvent } from "./test-utils";
 
 export const makeMembershipEvent = (
-    roomId: string, userId: string, membership = 'join',
+    roomId: string, userId: string, membership = Membership.Join,
 ) => mkEvent({
     event: true,
     type: EventType.RoomMember,

@@ -24,6 +24,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -233,7 +234,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
 
     let rooms = useMemo(() => sortRooms(
         cli.getVisibleRooms().filter(
-            room => room.getMyMembership() === "join" && !room.isSpaceRoom(),
+            room => room.getMyMembership() === Membership.Join && !room.isSpaceRoom(),
         ),
     ), [cli]);
 

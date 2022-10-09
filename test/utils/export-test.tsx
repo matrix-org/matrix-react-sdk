@@ -16,17 +16,18 @@ limitations under the License.
 
 import { renderToString } from "react-dom/server";
 import {
+    EventType,
     IContent,
     MatrixClient,
     MatrixEvent,
+    Membership,
+    RelationType,
     Room,
     RoomMember,
-    RelationType,
-    EventType,
 } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
-import { IExportOptions, ExportType, ExportFormat } from "../../src/utils/exportUtils/exportUtils";
+import { ExportFormat, ExportType, IExportOptions } from "../../src/utils/exportUtils/exportUtils";
 import PlainTextExporter from "../../src/utils/exportUtils/PlainTextExport";
 import HTMLExporter from "../../src/utils/exportUtils/HtmlExport";
 import * as TestUtilsMatrix from '../test-utils';
@@ -183,8 +184,8 @@ describe('export', function() {
                     getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
                 } as unknown as RoomMember,
                 ts: ts0 + i*1000,
-                mship: 'join',
-                prevMship: 'join',
+                mship: Membership.Join,
+                prevMship: Membership.Join,
                 name: 'A user',
             }));
         }

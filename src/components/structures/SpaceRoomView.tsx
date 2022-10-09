@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
+import { JoinRule, Membership, Preset } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import React, { RefObject, useCallback, useContext, useRef, useState } from "react";
@@ -229,7 +229,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
         );
     }
 
-    const hasAddRoomPermissions = myMembership === "join" &&
+    const hasAddRoomPermissions = myMembership === Membership.Join &&
         space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
 
     let addRoomButton;
@@ -665,7 +665,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     private renderBody() {
         switch (this.state.phase) {
             case Phase.Landing:
-                if (this.state.myMembership === "join") {
+                if (this.state.myMembership === Membership.Join) {
                     return <SpaceLanding space={this.props.space} />;
                 } else {
                     return <RoomPreviewCard

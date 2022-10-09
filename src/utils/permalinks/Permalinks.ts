@@ -20,6 +20,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import MatrixToPermalinkConstructor, { baseUrl as matrixtoBaseUrl } from "./MatrixToPermalinkConstructor";
@@ -185,7 +186,7 @@ export class RoomPermalinkCreator {
                     const entries = Object.entries(users);
                     const allowedEntries = entries.filter(([userId]) => {
                         const member = this.room.getMember(userId);
-                        if (!member || member.membership !== "join") {
+                        if (!member || member.membership !== Membership.Join) {
                             return false;
                         }
                         const serverName = getServerName(userId);

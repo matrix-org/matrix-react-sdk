@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IPublicRoomsChunkRoom } from "matrix-js-sdk/src/client";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import BaseAvatar from "../avatars/BaseAvatar";
 import { mediaFromMxc } from "../../../customisations/Media";
@@ -52,7 +53,7 @@ export const PublicRoomTile = ({
     useEffect(() => {
         const clientRoom = client.getRoom(room.room_id);
 
-        setHasJoinedRoom(clientRoom?.getMyMembership() === "join");
+        setHasJoinedRoom(clientRoom?.getMyMembership() === Membership.Join);
 
         let name = room.name || getDisplayAliasForRoom(room) || _t('Unnamed room');
         if (name.length > MAX_NAME_LENGTH) {

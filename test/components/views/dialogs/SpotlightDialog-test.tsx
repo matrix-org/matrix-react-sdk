@@ -17,7 +17,7 @@ limitations under the License.
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
 import { mocked } from "jest-mock";
-import { IProtocol, IPublicRoomsChunkRoom, MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import { IProtocol, IPublicRoomsChunkRoom, MatrixClient, Membership, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
 import React from "react";
 import { act } from "react-dom/test-utils";
@@ -25,7 +25,7 @@ import sanitizeHtml from "sanitize-html";
 
 import SpotlightDialog, { Filter } from "../../../../src/components/views/dialogs/spotlight/SpotlightDialog";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoom";
+import { LOCAL_ROOM_ID_PREFIX, LocalRoom } from "../../../../src/models/LocalRoom";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { mkRoom, stubClient } from "../../../test-utils";
@@ -132,9 +132,9 @@ describe("Spotlight Dialog", () => {
     beforeEach(() => {
         mockedClient = mockClient({ rooms: [testPublicRoom], users: [testPerson] });
         testRoom = mkRoom(mockedClient, "!test23:example.com");
-        mocked(testRoom.getMyMembership).mockReturnValue("join");
+        mocked(testRoom.getMyMembership).mockReturnValue(Membership.Join);
         testLocalRoom = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test23", mockedClient, mockedClient.getUserId());
-        testLocalRoom.updateMyMembership("join");
+        testLocalRoom.updateMyMembership(Membership.Join);
         mocked(mockedClient.getVisibleRooms).mockReturnValue([testRoom, testLocalRoom]);
 
         jest.spyOn(DMRoomMap, "shared").mockReturnValue({

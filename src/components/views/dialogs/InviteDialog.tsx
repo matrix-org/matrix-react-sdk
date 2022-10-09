@@ -20,6 +20,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { logger } from "matrix-js-sdk/src/logger";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
 import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
@@ -39,11 +40,7 @@ import { buildActivityScores, buildMemberScores, compareMembers } from "../../..
 import { abbreviateUrl } from "../../../utils/UrlUtils";
 import IdentityAuthClient from "../../../IdentityAuthClient";
 import { humanizeTime } from "../../../utils/humanize";
-import {
-    IInviteResult,
-    inviteMultipleToRoom,
-    showAnyInviteErrors,
-} from "../../../RoomInvite";
+import { IInviteResult, inviteMultipleToRoom, showAnyInviteErrors } from "../../../RoomInvite";
 import { Action } from "../../../dispatcher/actions";
 import { DefaultTagID } from "../../../stores/room-list/models";
 import RoomListStore from "../../../stores/room-list/RoomListStore";
@@ -323,10 +320,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (props.roomId) {
             const room = MatrixClientPeg.get().getRoom(props.roomId);
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
-            room.getMembersWithMembership('invite').forEach(m => alreadyInvited.add(m.userId));
-            room.getMembersWithMembership('join').forEach(m => alreadyInvited.add(m.userId));
+            room.getMembersWithMembership(Membership.Invite).forEach(m => alreadyInvited.add(m.userId));
+            room.getMembersWithMembership(Membership.Join).forEach(m => alreadyInvited.add(m.userId));
             // add banned users, so we don't try to invite them
-            room.getMembersWithMembership('ban').forEach(m => alreadyInvited.add(m.userId));
+            room.getMembersWithMembership(Membership.Ban).forEach(m => alreadyInvited.add(m.userId));
         }
 
         this.state = {

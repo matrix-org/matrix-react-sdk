@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MouseEvent, ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef } from "react";
+import React, { ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef, MouseEvent } from "react";
 import classNames from "classnames";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import RoomAvatar from "../avatars/RoomAvatar";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -80,7 +81,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
     let notifBadge;
     if (notificationState) {
         let ariaLabel = _t("Jump to first unread room.");
-        if (space?.getMyMembership() === "invite") {
+        if (space?.getMyMembership() === Membership.Invite) {
             ariaLabel = _t("Jump to first invite.");
         }
 
@@ -337,7 +338,11 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     isNarrow={isPanelCollapsed}
                     avatarSize={isNested ? 24 : 32}
                     onKeyDown={this.onKeyDown}
-                    ContextMenuComponent={this.props.space.getMyMembership() === "join" ? SpaceContextMenu : undefined}
+                    ContextMenuComponent={
+                        this.props.space.getMyMembership() === Membership.Join
+                            ? SpaceContextMenu
+                            : undefined
+                    }
                 >
                     { toggleCollapseButton }
                 </SpaceButton>

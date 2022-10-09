@@ -24,7 +24,7 @@ import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-membe
 import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
 import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { throttle } from 'lodash';
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { JoinRule, Membership } from "matrix-js-sdk/src/@types/partials";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -151,7 +151,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(this.props.roomId);
             const membership = room && room.getMyMembership();
-            if (membership === "join") {
+            if (membership === Membership.Join) {
                 this.setState({ loading: true });
                 try {
                     await room.loadMembersIfNeeded();
@@ -216,7 +216,7 @@ export default class MemberList extends React.Component<IProps, IState> {
     };
 
     private onMyMembership = (room: Room, membership: string, oldMembership: string): void => {
-        if (room.roomId === this.props.roomId && membership === "join") {
+        if (room.roomId === this.props.roomId && membership === Membership.Join) {
             this.showMembersAccordingToMembershipWithLL();
         }
     };

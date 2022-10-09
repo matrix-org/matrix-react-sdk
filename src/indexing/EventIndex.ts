@@ -27,6 +27,7 @@ import { IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { Membership } from "matrix-js-sdk/src/matrix";
 
 import PlatformPeg from "../PlatformPeg";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -516,7 +517,7 @@ export default class EventIndex extends EventEmitter {
 
             stateEvents.forEach(ev => {
                 if (ev.event.content &&
-                    ev.event.content.membership === "join") {
+                    ev.event.content.membership === Membership.Join) {
                     profiles[ev.event.sender] = {
                         displayname: ev.event.content.displayname,
                         avatar_url: ev.event.content.avatar_url,
@@ -732,7 +733,7 @@ export default class EventIndex extends EventEmitter {
             const memberEvent = eventMapper(
                 {
                     content: {
-                        membership: "join",
+                        membership: Membership.Join,
                         avatar_url: e.profile.avatar_url,
                         displayname: e.profile.displayname,
                     },

@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { FC, useContext, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { JoinRule, Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -73,7 +73,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
 
     let inviterSection: JSX.Element | null = null;
     let joinButtons: JSX.Element;
-    if (myMembership === "join") {
+    if (myMembership === Membership.Join) {
         joinButtons = (
             <AccessibleButton
                 kind="danger_outline"
@@ -87,7 +87,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                 { _t("Leave") }
             </AccessibleButton>
         );
-    } else if (myMembership === "invite") {
+    } else if (myMembership === Membership.Invite) {
         const inviteSender = room.getMember(cli.getUserId()!)?.events.member?.getSender();
 
         if (inviteSender) {
@@ -169,7 +169,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
             roomName: room.name,
         });
     } else if (isVideoRoom && !videoRoomsEnabled) {
-        notice = myMembership === "join"
+        notice = myMembership === Membership.Join
             ? _t("To view, please enable video rooms in Labs first")
             : _t("To join, please enable video rooms in Labs first");
 

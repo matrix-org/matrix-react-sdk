@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { inviteUsersToRoom } from "../RoomInvite";
 import Modal, { IHandle } from "../Modal";
@@ -70,8 +71,8 @@ export async function upgradeRoom(
     let toInvite: string[] = [];
     if (inviteUsers) {
         toInvite = [
-            ...room.getMembersWithMembership("join"),
-            ...room.getMembersWithMembership("invite"),
+            ...room.getMembersWithMembership(Membership.Join),
+            ...room.getMembersWithMembership(Membership.Invite),
         ].map(m => m.userId).filter(m => m !== cli.getUserId());
     }
 

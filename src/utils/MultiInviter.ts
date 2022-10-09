@@ -19,7 +19,7 @@ import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
+import { HistoryVisibility, Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import { AddressType, getAddressType } from '../UserAddress';
@@ -155,12 +155,12 @@ export default class MultiInviter {
             if (!room) throw new Error("Room not found");
 
             const member = room.getMember(addr);
-            if (member?.membership === "join") {
+            if (member?.membership === Membership.Join) {
                 throw new MatrixError({
                     errcode: USER_ALREADY_JOINED,
                     error: "Member already joined",
                 });
-            } else if (member?.membership === "invite") {
+            } else if (member?.membership === Membership.Invite) {
                 throw new MatrixError({
                     errcode: USER_ALREADY_INVITED,
                     error: "Member already invited",

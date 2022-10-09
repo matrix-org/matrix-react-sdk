@@ -19,6 +19,7 @@ import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
 import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import BaseCard from "./BaseCard";
 import ResizeNotifier from '../../../utils/ResizeNotifier';
@@ -210,7 +211,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         const isUploading = ContentMessages.sharedInstance().getCurrentUploads(this.props.composerRelation).length > 0;
 
         const myMembership = this.props.room.getMyMembership();
-        const showComposer = myMembership === "join";
+        const showComposer = myMembership === Membership.Join;
 
         return (
             <RoomContext.Provider value={{

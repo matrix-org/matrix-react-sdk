@@ -268,6 +268,7 @@ Response:
 
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { logger } from "matrix-js-sdk/src/logger";
+import { Membership } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
@@ -330,7 +331,7 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     if (room) {
         // if they are already invited or joined we can resolve immediately.
         const member = room.getMember(userId);
-        if (member && ["join", "invite"].includes(member.membership)) {
+        if (member && [Membership.Join, Membership.Invite].includes(member.membership)) {
             sendResponse(event, {
                 success: true,
             });
@@ -609,7 +610,7 @@ function canSendEvent(event: MessageEvent<any>, roomId: string): void {
         sendError(event, _t('This room is not recognised.'));
         return;
     }
-    if (room.getMyMembership() !== "join") {
+    if (room.getMyMembership() !== Membership.Join) {
         sendError(event, _t('You are not in this room.'));
         return;
     }

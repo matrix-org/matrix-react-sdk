@@ -17,13 +17,10 @@ limitations under the License.
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ReactDOM from 'react-dom';
-import {
-    PendingEventOrdering,
-    Room,
-    RoomMember,
-} from 'matrix-js-sdk/src/matrix';
+import { Membership, PendingEventOrdering, Room, RoomMember } from 'matrix-js-sdk/src/matrix';
 
 import * as TestUtils from '../../../test-utils';
+import { getMockClientWithEventEmitter, mockClientMethodsUser } from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import dis from '../../../../src/dispatcher/dispatcher';
 import DMRoomMap from '../../../../src/utils/DMRoomMap';
@@ -33,7 +30,6 @@ import RoomListLayoutStore from "../../../../src/stores/room-list/RoomListLayout
 import RoomList from "../../../../src/components/views/rooms/RoomList";
 import RoomSublist from "../../../../src/components/views/rooms/RoomSublist";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
-import { getMockClientWithEventEmitter, mockClientMethodsUser } from '../../../test-utils';
 import ResizeNotifier from '../../../../src/utils/ResizeNotifier';
 
 function generateRoomId() {
@@ -103,16 +99,16 @@ describe('RoomList', () => {
 
         // Mock joined member
         myMember = new RoomMember(movingRoomId, myUserId);
-        myMember.membership = 'join';
-        movingRoom.updateMyMembership('join');
+        myMember.membership = Membership.Join;
+        movingRoom.updateMyMembership(Membership.Join);
         movingRoom.getMember = (userId) => ({
             [client.credentials.userId]: myMember,
         }[userId]);
 
         otherRoom = createRoom({ name: 'Other room' });
         myOtherMember = new RoomMember(otherRoom.roomId, myUserId);
-        myOtherMember.membership = 'join';
-        otherRoom.updateMyMembership('join');
+        myOtherMember.membership = Membership.Join;
+        otherRoom.updateMyMembership(Membership.Join);
         otherRoom.getMember = (userId) => ({
             [client.credentials.userId]: myOtherMember,
         }[userId]);

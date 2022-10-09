@@ -18,13 +18,10 @@ import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { IJoinRuleEventContent, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { IJoinRuleEventContent, JoinRule, Membership } from "matrix-js-sdk/src/@types/partials";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import classNames from 'classnames';
-import {
-    RoomPreviewOpts,
-    RoomViewLifecycle,
-} from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
+import { RoomPreviewOpts, RoomViewLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -255,7 +252,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         }
         const memberEvent = myMember.events.member;
         const memberContent = memberEvent.getContent();
-        return memberContent.membership === "invite" && memberContent.is_direct;
+        return memberContent.membership === Membership.Invite && memberContent.is_direct;
     }
 
     private makeScreenAfterLogin(): { screen: string, params: Record<string, any> } {

@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Membership } from "matrix-js-sdk/src/matrix";
 
 /**
  * Approximation of a membership status for a given room.
@@ -62,10 +63,10 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     return split;
 }
 
-export function getEffectiveMembership(membership: string): EffectiveMembership {
-    if (membership === 'invite') {
+export function getEffectiveMembership(membership: Membership): EffectiveMembership {
+    if (membership === Membership.Invite) {
         return EffectiveMembership.Invite;
-    } else if (membership === 'join') {
+    } else if (membership === Membership.Join) {
         // TODO: Include knocks? Update docs as needed in the enum. https://github.com/vector-im/element-web/issues/14237
         return EffectiveMembership.Join;
     } else {
@@ -74,7 +75,7 @@ export function getEffectiveMembership(membership: string): EffectiveMembership 
     }
 }
 
-export function isJoinedOrNearlyJoined(membership: string): boolean {
+export function isJoinedOrNearlyJoined(membership: Membership): boolean {
     const effective = getEffectiveMembership(membership);
     return effective === EffectiveMembership.Join || effective === EffectiveMembership.Invite;
 }

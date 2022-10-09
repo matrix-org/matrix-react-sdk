@@ -23,14 +23,16 @@ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { NamespacedValue } from "matrix-js-sdk/src/NamespacedValue";
 import { IWidgetApiRequest, MatrixWidgetType } from "matrix-widget-api";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
-import type EventEmitter from "events";
-import type { IMyDevice } from "matrix-js-sdk/src/client";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { ClientWidgetApi } from "matrix-widget-api";
+import type { Room } from "matrix-js-sdk/src/models/room";
+import type { IMyDevice } from "matrix-js-sdk/src/client";
+import type EventEmitter from "events";
+import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { IApp } from "../stores/WidgetStore";
+import WidgetStore from "../stores/WidgetStore";
 import SdkConfig, { DEFAULTS } from "../SdkConfig";
 import SettingsStore from "../settings/SettingsStore";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../MediaDeviceHandler";
@@ -38,7 +40,6 @@ import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
 import { WidgetType } from "../widgets/WidgetType";
 import { ElementWidgetActions } from "../stores/widgets/ElementWidgetActions";
-import WidgetStore from "../stores/WidgetStore";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
 
@@ -179,7 +180,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
      *     returns null, the update is skipped.
      */
     protected async updateDevices(fn: (devices: string[]) => (string[] | null)): Promise<void> {
-        if (this.room.getMyMembership() !== "join") return;
+        if (this.room.getMyMembership() !== Membership.Join) return;
 
         const devices = fn(this.getDevices(this.client.getUserId()!));
         if (devices) {
@@ -326,8 +327,8 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.emit(CallEvent.Destroy);
     }
 
-    private onMyMembership = async (_room: Room, membership: string) => {
-        if (membership !== "join") this.setDisconnected();
+    private onMyMembership = async (_room: Room, membership: Membership) => {
+        if (membership !== Membership.Join) this.setDisconnected();
     };
 
     private beforeUnload = () => this.setDisconnected();
@@ -395,7 +396,7 @@ export class JitsiCall extends Call {
                 devices = devices.filter(d => d !== this.client.getDeviceId());
             }
             // Must have a connected device and still be joined to the room
-            if (devices.length && member?.membership === "join") {
+            if (devices.length && member?.membership === Membership.Join) {
                 members.add(member);
                 if (expiresAt < allExpireAt) allExpireAt = expiresAt;
             }
@@ -721,7 +722,7 @@ export class ElementCall extends Call {
                 devices = devices.filter(d => d.device_id !== this.client.getDeviceId());
             }
             // Must have a connected device and still be joined to the room
-            if (devices.length && member?.membership === "join") {
+            if (devices.length && member?.membership === Membership.Join) {
                 members.add(member);
                 if (expiresAt < allExpireAt) allExpireAt = expiresAt;
             }

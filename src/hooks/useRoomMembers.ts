@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { useState } from "react";
+import { Membership } from "matrix-js-sdk/src/matrix";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
@@ -41,8 +42,8 @@ export const useRoomMemberCount = (room: Room, throttleWait = 250): number => {
 };
 
 // Hook to simplify watching the local user's membership in a room
-export const useMyRoomMembership = (room: Room): string => {
-    const [membership, setMembership] = useState<string>(room.getMyMembership());
+export const useMyRoomMembership = (room: Room): Membership => {
+    const [membership, setMembership] = useState<Membership>(room.getMyMembership());
     useTypedEventEmitter(room, RoomEvent.MyMembership, () => {
         setMembership(room.getMyMembership());
     });

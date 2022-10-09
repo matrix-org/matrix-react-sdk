@@ -19,6 +19,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { User } from "matrix-js-sdk/src/models/user";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
@@ -90,7 +91,7 @@ const NewRoomIntro = () => {
             { caption && <p>{ caption }</p> }
         </React.Fragment>;
     } else {
-        const inRoom = room && room.getMyMembership() === "join";
+        const inRoom = room && room.getMyMembership() === Membership.Join;
         const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
         const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getUserId());
 

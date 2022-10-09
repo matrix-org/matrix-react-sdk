@@ -20,6 +20,7 @@ import React, { ComponentProps } from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
@@ -406,7 +407,7 @@ export default class EventListSummary extends React.Component<IProps> {
                         }
                     case 'leave':
                         if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
-                            if (e.mxEvent.getPrevContent().membership === "invite") {
+                            if (e.mxEvent.getPrevContent().membership === Membership.Invite) {
                                 return TransitionType.InviteReject;
                             }
                             return TransitionType.Left;

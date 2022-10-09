@@ -24,6 +24,7 @@ import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import QueryMatcher from './QueryMatcher';
@@ -159,7 +160,7 @@ export default class UserProvider extends AutocompleteProvider {
 
         const currentUserId = MatrixClientPeg.get().credentials.userId;
         this.users = this.room.getJoinedMembers().filter(({ userId }) => userId !== currentUserId);
-        this.users = this.users.concat(this.room.getMembersWithMembership("invite"));
+        this.users = this.users.concat(this.room.getMembersWithMembership(Membership.Invite));
 
         this.users = sortBy(this.users, (member) => 1E20 - lastSpoken[member.userId] || 1E20);
 

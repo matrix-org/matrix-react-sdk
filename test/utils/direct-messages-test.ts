@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { ClientEvent, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, MatrixClient, Membership, Room } from "matrix-js-sdk/src/matrix";
 
 import DMRoomMap from "../../src/utils/DMRoomMap";
 import { createTestClient } from "../test-utils";
-import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../../src/models/LocalRoom";
+import { LOCAL_ROOM_ID_PREFIX, LocalRoom, LocalRoomState } from "../../src/models/LocalRoom";
 import * as dmModule from "../../src/utils/direct-messages";
 import dis from "../../src/dispatcher/dispatcher";
 import { Action } from "../../src/dispatcher/actions";
@@ -79,7 +79,7 @@ describe("direct-messages", () => {
         });
 
         room1 = new Room("!room1:example.com", mockClient, userId1);
-        room1.getMyMembership = () => "join";
+        room1.getMyMembership = () => Membership.Join;
 
         localRoom = new LocalRoom(LOCAL_ROOM_ID_PREFIX + "test", mockClient, userId1);
 

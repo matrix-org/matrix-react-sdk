@@ -18,15 +18,15 @@ import React from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { GuestAccess, HistoryVisibility, JoinRule, Membership } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import {
     M_EMOTE,
-    M_NOTICE,
     M_MESSAGE,
-    MessageEvent,
-    M_POLL_START,
+    M_NOTICE,
     M_POLL_END,
+    M_POLL_START,
+    MessageEvent,
     PollStartEvent,
 } from "matrix-events-sdk";
 
@@ -100,7 +100,7 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
     const reason = content.reason;
 
     switch (content.membership) {
-        case 'invite': {
+        case Membership.Invite: {
             const threePidContent = content.third_party_invite;
             if (threePidContent) {
                 if (threePidContent.display_name) {
@@ -115,12 +115,12 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
                 return () => _t('%(senderName)s invited %(targetName)s', { senderName, targetName });
             }
         }
-        case 'ban':
+        case Membership.Ban:
             return () => reason
                 ? _t('%(senderName)s banned %(targetName)s: %(reason)s', { senderName, targetName, reason })
                 : _t('%(senderName)s banned %(targetName)s', { senderName, targetName });
-        case 'join':
-            if (prevContent && prevContent.membership === 'join') {
+        case Membership.Join:
+            if (prevContent && prevContent.membership === Membership.Join) {
                 if (prevContent.displayname && content.displayname && prevContent.displayname !== content.displayname) {
                     return () => _t('%(oldDisplayName)s changed their display name to %(displayName)s', {
                         // We're taking the display namke directly from the event content here so we need
@@ -156,18 +156,18 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
                 if (!ev.target) logger.warn("Join message has no target! -- " + ev.getContent().state_key);
                 return () => _t('%(targetName)s joined the room', { targetName });
             }
-        case 'leave':
+        case Membership.Leave:
             if (ev.getSender() === ev.getStateKey()) {
-                if (prevContent.membership === "invite") {
+                if (prevContent.membership === Membership.Invite) {
                     return () => _t('%(targetName)s rejected the invitation', { targetName });
                 } else {
                     return () => reason
                         ? _t('%(targetName)s left the room: %(reason)s', { targetName, reason })
                         : _t('%(targetName)s left the room', { targetName });
                 }
-            } else if (prevContent.membership === "ban") {
+            } else if (prevContent.membership === Membership.Ban) {
                 return () => _t('%(senderName)s unbanned %(targetName)s', { senderName, targetName });
-            } else if (prevContent.membership === "invite") {
+            } else if (prevContent.membership === Membership.Invite) {
                 return () => reason
                     ? _t('%(senderName)s withdrew %(targetName)s\'s invitation: %(reason)s', {
                         senderName,
@@ -175,7 +175,7 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
                         reason,
                     })
                     : _t('%(senderName)s withdrew %(targetName)s\'s invitation', { senderName, targetName });
-            } else if (prevContent.membership === "join") {
+            } else if (prevContent.membership === Membership.Join) {
                 return () => reason
                     ? _t('%(senderName)s removed %(targetName)s: %(reason)s', {
                         senderName,

@@ -31,6 +31,7 @@ import {
     IEventRelation,
     IUnsigned,
     IPusher,
+    Membership,
 } from 'matrix-js-sdk/src/matrix';
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -251,7 +252,7 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
     if (!mxEvent.sender && opts.user && opts.room) {
         mxEvent.sender = {
             userId: opts.user,
-            membership: "join",
+            membership: Membership.Join,
             name: opts.user,
             rawDisplayName: opts.user,
             roomId: opts.room,
@@ -303,8 +304,8 @@ export function mkPresence(opts) {
  */
 export function mkMembership(opts: MakeEventPassThruProps & {
     room: Room["roomId"];
-    mship: string;
-    prevMship?: string;
+    mship: Membership;
+    prevMship?: Membership;
     name?: string;
     url?: string;
     skey?: string;
@@ -336,7 +337,7 @@ export function mkMembership(opts: MakeEventPassThruProps & {
     return e;
 }
 
-export function mkRoomMember(roomId: string, userId: string, membership = "join"): RoomMember {
+export function mkRoomMember(roomId: string, userId: string, membership = Membership.Join): RoomMember {
     return {
         userId,
         membership,
@@ -414,7 +415,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         hasMembershipState: () => null,
         getVersion: () => '1',
         shouldUpgradeToVersion: () => null,
-        getMyMembership: jest.fn().mockReturnValue("join"),
+        getMyMembership: jest.fn().mockReturnValue(Membership.Join),
         maySendMessage: jest.fn().mockReturnValue(true),
         currentState: {
             getStateEvents: jest.fn(),

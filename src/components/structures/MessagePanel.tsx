@@ -27,6 +27,7 @@ import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
 import { ReadReceipt } from 'matrix-js-sdk/src/models/read-receipt';
 import { ListenerMap } from 'matrix-js-sdk/src/models/typed-event-emitter';
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -35,7 +36,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
-import EventTile, { UnwrappedEventTile, IReadReceiptProps } from "../views/rooms/EventTile";
+import EventTile, { IReadReceiptProps, UnwrappedEventTile } from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -1089,7 +1090,7 @@ class CreationGrouper extends BaseGrouper {
             return false;
         }
         if (ev.getType() === EventType.RoomMember
-            && (ev.getStateKey() !== createEvent.getSender() || ev.getContent()["membership"] !== "join")) {
+            && (ev.getStateKey() !== createEvent.getSender() || ev.getContent()["membership"] !== Membership.Join)) {
             return false;
         }
 

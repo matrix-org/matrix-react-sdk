@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Membership, Room } from "matrix-js-sdk/src/matrix";
 
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import { createTestClient, makeMembershipEvent } from "../../test-utils";
@@ -46,32 +46,32 @@ describe("findDMForUser", () => {
         mocked(getFunctionalMembers).mockReturnValue([botId]);
 
         room1 = new Room("!room1:example.com", mockClient, userId1);
-        room1.getMyMembership = () => "join";
+        room1.getMyMembership = () => Membership.Join;
         room1.currentState.setStateEvents([
-            makeMembershipEvent(room1.roomId, userId1, "join"),
-            makeMembershipEvent(room1.roomId, userId2, "join"),
+            makeMembershipEvent(room1.roomId, userId1, Membership.Join),
+            makeMembershipEvent(room1.roomId, userId2, Membership.Join),
         ]);
 
         // this should not be a DM room because it is a local room
         room2 = new LocalRoom("!room2:example.com", mockClient, userId1);
-        room2.getMyMembership = () => "join";
+        room2.getMyMembership = () => Membership.Join;
         room2.getLastActiveTimestamp = () => 100;
 
         room3 = new Room("!room3:example.com", mockClient, userId1);
-        room3.getMyMembership = () => "join";
+        room3.getMyMembership = () => Membership.Join;
         room3.currentState.setStateEvents([
-            makeMembershipEvent(room3.roomId, userId1, "join"),
-            makeMembershipEvent(room3.roomId, userId2, "join"),
+            makeMembershipEvent(room3.roomId, userId1, Membership.Join),
+            makeMembershipEvent(room3.roomId, userId2, Membership.Join),
             // Adding the bot user here. Should be excluded when determining if the room is a DM.
-            makeMembershipEvent(room3.roomId, botId, "join"),
+            makeMembershipEvent(room3.roomId, botId, Membership.Join),
         ]);
 
         // this should not be a DM room because it has only one joined user
         room4 = new Room("!room4:example.com", mockClient, userId1);
-        room4.getMyMembership = () => "join";
+        room4.getMyMembership = () => Membership.Join;
         room4.currentState.setStateEvents([
-            makeMembershipEvent(room4.roomId, userId1, "invite"),
-            makeMembershipEvent(room4.roomId, userId2, "join"),
+            makeMembershipEvent(room4.roomId, userId1, Membership.Invite),
+            makeMembershipEvent(room4.roomId, userId2, Membership.Join),
         ]);
 
         // this should not be a DM room because it has no users

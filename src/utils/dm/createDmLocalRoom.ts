@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
-import { EventType, KNOWN_SAFE_ROOM_VERSION, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, KNOWN_SAFE_ROOM_VERSION, MatrixClient, MatrixEvent, Membership } from "matrix-js-sdk/src/matrix";
 
-import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../src/models/LocalRoom";
+import { LOCAL_ROOM_ID_PREFIX, LocalRoom } from "../../../src/models/LocalRoom";
 import { determineCreateRoomEncryptionOption, Member } from "../../../src/utils/direct-messages";
 
 /**
@@ -76,7 +76,7 @@ export async function createDmLocalRoom(
         type: EventType.RoomMember,
         content: {
             displayname: userId,
-            membership: "join",
+            membership: Membership.Join,
         },
         state_key: userId,
         user_id: userId,
@@ -91,7 +91,7 @@ export async function createDmLocalRoom(
             content: {
                 displayname: target.name,
                 avatar_url: target.getMxcAvatarUrl(),
-                membership: "invite",
+                membership: Membership.Invite,
                 isDirect: true,
             },
             state_key: target.userId,
@@ -104,7 +104,7 @@ export async function createDmLocalRoom(
             content: {
                 displayname: target.name,
                 avatar_url: target.getMxcAvatarUrl(),
-                membership: "join",
+                membership: Membership.Join,
             },
             state_key: target.userId,
             sender: target.userId,
@@ -113,7 +113,7 @@ export async function createDmLocalRoom(
     });
 
     localRoom.targets = targets;
-    localRoom.updateMyMembership("join");
+    localRoom.updateMyMembership(Membership.Join);
     localRoom.addLiveEvents(events);
     localRoom.currentState.setStateEvents(events);
     localRoom.name = localRoom.getDefaultRoomName(client.getUserId());

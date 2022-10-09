@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { Membership } from "matrix-js-sdk/src/matrix";
 
-import { stubClient, mkRoom, mkMessage } from "../../../test-utils";
+import { mkMessage, mkRoom, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import "../../../../src/stores/room-list/RoomListStore";
 import { RecentAlgorithm } from "../../../../src/stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
-import { EffectiveMembership } from "../../../../src/utils/membership";
 
 describe("RecentAlgorithm", () => {
     let algorithm;
@@ -50,7 +50,7 @@ describe("RecentAlgorithm", () => {
                 event: true,
             });
 
-            room.getMyMembership = () => "join";
+            room.getMyMembership = () => Membership.Join;
 
             room.addLiveEvents([event1]);
             expect(algorithm.getLastTs(room, "@jane:matrix.org")).toBe(5);
@@ -70,7 +70,7 @@ describe("RecentAlgorithm", () => {
 
         it("works when not a member", () => {
             const room = mkRoom(cli, "!new:example.org");
-            room.getMyMembership.mockReturnValue(EffectiveMembership.Invite);
+            room.getMyMembership.mockReturnValue(Membership.Invite);
             expect(algorithm.getLastTs(room, "@john:matrix.org")).toBe(Number.MAX_SAFE_INTEGER);
         });
     });
@@ -80,8 +80,8 @@ describe("RecentAlgorithm", () => {
             const room1 = new Room("room1", cli, "@bob:matrix.org");
             const room2 = new Room("room2", cli, "@bob:matrix.org");
 
-            room1.getMyMembership = () => "join";
-            room2.getMyMembership = () => "join";
+            room1.getMyMembership = () => Membership.Join;
+            room2.getMyMembership = () => Membership.Join;
 
             const evt = mkMessage({
                 room: room1.roomId,
@@ -108,8 +108,8 @@ describe("RecentAlgorithm", () => {
             const room1 = new Room("room1", cli, "@bob:matrix.org");
             const room2 = new Room("room2", cli, "@bob:matrix.org");
 
-            room1.getMyMembership = () => "join";
-            room2.getMyMembership = () => "join";
+            room1.getMyMembership = () => Membership.Join;
+            room2.getMyMembership = () => Membership.Join;
 
             const evt = mkMessage({
                 room: room1.roomId,

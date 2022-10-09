@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Membership, Room } from "matrix-js-sdk/src/matrix";
 
 import DMRoomMap from "../DMRoomMap";
 import { isLocalRoom } from "../localRoom/isLocalRoom";
@@ -37,7 +37,7 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
         // a DM is a room of two people that contains those two people exactly. This does mean
         // that bots, assistants, etc will ruin a room's DM-ness, though this is a problem for
         // canonical DMs to solve.
-        if (r && r.getMyMembership() === "join") {
+        if (r && r.getMyMembership() === Membership.Join) {
             if (isLocalRoom(r)) return false;
 
             const functionalUsers = getFunctionalMembers(r);

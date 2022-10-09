@@ -17,8 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import request from "browser-request";
+import { ISendEventResponse, MatrixClient, Membership, Room } from "matrix-js-sdk/src/matrix";
 
-import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
@@ -94,7 +94,7 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: CreateBotOpts): 
 
             if (opts.autoAcceptInvites) {
                 cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
-                    if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                    if (member.membership === Membership.Invite && member.userId === cli.getUserId()) {
                         cli.joinRoom(member.roomId);
                     }
                 });

@@ -18,7 +18,7 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from "react-dom";
 import { EventEmitter } from "events";
-import { Room, RoomMember } from 'matrix-js-sdk/src/matrix';
+import { Membership, Room, RoomMember } from 'matrix-js-sdk/src/matrix';
 import FakeTimers from '@sinonjs/fake-timers';
 import { render } from '@testing-library/react';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
@@ -34,7 +34,7 @@ import {
     makeBeaconInfoEvent,
     mockClientMethodsEvents,
     mockClientMethodsUser,
-} from '../../test-utils';
+} from "../../test-utils";
 import ResizeNotifier from '../../../src/utils/ResizeNotifier';
 import { IRoomState } from '../../../src/components/structures/RoomView';
 
@@ -162,8 +162,8 @@ describe('MessagePanel', function() {
                 event: true, room: "!room:id", user: "@user:id",
                 target: bobMember,
                 ts: ts0 + i*1000,
-                mship: 'join',
-                prevMship: 'join',
+                mship: Membership.Join,
+                prevMship: Membership.Join,
                 name: 'A user',
             }));
         }
@@ -188,8 +188,8 @@ describe('MessagePanel', function() {
                 event: true, room: "!room:id", user: "@user:id",
                 target: bobMember,
                 ts: ts0 + i * 1000,
-                mship: 'join',
-                prevMship: 'join',
+                mship: Membership.Join,
+                prevMship: Membership.Join,
                 name: 'A user',
             }));
         }
@@ -227,7 +227,7 @@ describe('MessagePanel', function() {
                 user: alice,
                 target: aliceMember,
                 ts: ts0 + 1,
-                mship: 'join',
+                mship: Membership.Join,
                 name: 'Alice',
             }),
             mkEvent({
@@ -267,7 +267,7 @@ describe('MessagePanel', function() {
                 skey: "@bob:example.org",
                 target: bobMember,
                 ts: ts0 + 5,
-                mship: 'invite',
+                mship: Membership.Invite,
                 name: 'Bob',
             }),
         ];
@@ -519,8 +519,8 @@ describe('MessagePanel', function() {
                 user: "@user:id",
                 target: bobMember,
                 ts: Date.now(),
-                mship: 'join',
-                prevMship: 'join',
+                mship: Membership.Join,
+                prevMship: Membership.Join,
                 name: 'A user',
             }),
         ];
@@ -548,8 +548,8 @@ describe('MessagePanel', function() {
                 user: "@user:id",
                 target: bobMember,
                 ts: Date.now(),
-                mship: 'join',
-                prevMship: 'join',
+                mship: Membership.Join,
+                prevMship: Membership.Join,
                 name: 'A user',
             }),
             ...events,

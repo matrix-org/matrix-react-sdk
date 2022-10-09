@@ -36,7 +36,7 @@ import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
-import { HistoryVisibility } from 'matrix-js-sdk/src/@types/partials';
+import { HistoryVisibility, Membership } from 'matrix-js-sdk/src/@types/partials';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { _t } from '../../languageHandler';
@@ -1376,7 +1376,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (room) {
             const me = this.context.getUserId();
             const canReact = (
-                room.getMyMembership() === "join" &&
+                room.getMyMembership() === Membership.Join &&
                 room.currentState.maySendEvent(EventType.Reaction, me)
             );
             const canSendMessages = room.maySendMessage();
@@ -1408,7 +1408,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private updateDMState() {
         const room = this.state.room;
-        if (room.getMyMembership() != "join") {
+        if (room.getMyMembership() != Membership.Join) {
             return;
         }
         const dmInviter = room.getDMInviter();
@@ -1461,7 +1461,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     action: Action.JoinRoom,
                     roomId: this.getRoomId(),
                     opts: { inviteSignUrl: signUrl },
-                    metricsTrigger: this.state.room?.getMyMembership() === "invite" ? "Invite" : "RoomPreview",
+                    metricsTrigger: this.state.room?.getMyMembership() === Membership.Invite ? "Invite" : "RoomPreview",
                 });
                 return Promise.resolve();
             });
@@ -2054,7 +2054,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const myMembership = this.state.room.getMyMembership();
         if (
             isVideoRoom(this.state.room)
-            && !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
+            && !(SettingsStore.getValue("feature_video_rooms") && myMembership === Membership.Join)
         ) {
             return <ErrorBoundary>
                 <div className="mx_MainSplit">
@@ -2068,7 +2068,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
 
         // SpaceRoomView handles invites itself
-        if (myMembership === "invite" && !this.state.room.isSpaceRoom()) {
+        if (myMembership === Membership.Invite && !this.state.room.isSpaceRoom()) {
             if (this.state.joining || this.state.rejecting) {
                 return (
                     <ErrorBoundary>
@@ -2138,7 +2138,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             isStatusAreaExpanded = this.state.statusBarVisible;
             statusBar = <RoomStatusBar
                 room={this.state.room}
-                isPeeking={myMembership !== "join"}
+                isPeeking={myMembership !== Membership.Join}
                 onInviteClick={this.onInviteClick}
                 onVisible={this.onStatusBarVisible}
                 onHidden={this.onStatusBarHidden}
@@ -2178,7 +2178,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             />;
         } else if (showRoomUpgradeBar) {
             aux = <RoomUpgradeWarningBar room={this.state.room} />;
-        } else if (myMembership !== "join") {
+        } else if (myMembership !== Membership.Join) {
             // We do have a room object for this room, but we're not currently in it.
             // We may have a 3rd party invite to it.
             let inviterName = undefined;

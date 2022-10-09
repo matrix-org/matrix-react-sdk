@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import {
-    Room,
     Beacon,
     BeaconEvent,
     getBeaconInfoIdentifier,
     MatrixEvent,
-    RoomStateEvent,
+    Membership,
+    Room,
     RoomMember,
+    RoomStateEvent,
 } from "matrix-js-sdk/src/matrix";
 import { makeBeaconContent, makeBeaconInfoContent } from "matrix-js-sdk/src/content-helpers";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
@@ -35,11 +36,7 @@ import {
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from "../test-utils";
-import {
-    makeBeaconInfoEvent,
-    mockGeolocation,
-    watchPositionMockImplementation,
-} from "../test-utils/beacon";
+import { makeBeaconInfoEvent, mockGeolocation, watchPositionMockImplementation } from "../test-utils/beacon";
 import { getMockClientWithEventEmitter } from "../test-utils/client";
 
 // modern fake timers and lodash.debounce are a faff
@@ -643,7 +640,7 @@ describe('OwnBeaconStore', () => {
 
         it('destroys and removes beacons when current user leaves room', async () => {
             // alice leaves room1
-            const membershipEvent = makeMembershipEvent(room1Id, aliceId, 'leave');
+            const membershipEvent = makeMembershipEvent(room1Id, aliceId, Membership.Leave);
             const member = new RoomMember(room1Id, aliceId);
             member.setMembershipEvent(membershipEvent);
 

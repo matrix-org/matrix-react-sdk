@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
+import { JoinRule, Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { calculateRoomVia } from "./permalinks/Permalinks";
 import Modal from "../Modal";
@@ -41,7 +41,7 @@ import { OpenAddExistingToSpaceDialogPayload } from "../dispatcher/payloads/Open
 
 export const shouldShowSpaceSettings = (space: Room) => {
     const userId = space.client.getUserId();
-    return space.getMyMembership() === "join"
+    return space.getMyMembership() === Membership.Join
         && (space.currentState.maySendStateEvent(EventType.RoomAvatar, userId)
             || space.currentState.maySendStateEvent(EventType.RoomName, userId)
             || space.currentState.maySendStateEvent(EventType.RoomTopic, userId)
@@ -86,7 +86,7 @@ export const showCreateNewRoom = async (space: Room, type?: RoomType): Promise<b
 
 export const shouldShowSpaceInvite = (space: Room) =>
     (
-        (space?.getMyMembership() === "join" && space.canInvite(space.client.getUserId())) ||
+        (space?.getMyMembership() === Membership.Join && space.canInvite(space.client.getUserId())) ||
         space.getJoinRule() === JoinRule.Public
     ) && shouldShowComponent(UIComponent.InviteUsers);
 

@@ -20,6 +20,7 @@ import ReactDOM from 'react-dom';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { User } from "matrix-js-sdk/src/models/user";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import * as TestUtils from '../../../test-utils';
@@ -70,7 +71,7 @@ describe('MemberList', () => {
         const usersPerLevel = 2;
         for (let i = 0; i < usersPerLevel; i++) {
             const adminUser = new RoomMember(memberListRoom.roomId, `@admin${i}:localhost`);
-            adminUser.membership = "join";
+            adminUser.membership = Membership.Join;
             adminUser.powerLevel = 100;
             adminUser.user = new User(adminUser.userId);
             adminUser.user.currentlyActive = true;
@@ -80,7 +81,7 @@ describe('MemberList', () => {
             adminUsers.push(adminUser);
 
             const moderatorUser = new RoomMember(memberListRoom.roomId, `@moderator${i}:localhost`);
-            moderatorUser.membership = "join";
+            moderatorUser.membership = Membership.Join;
             moderatorUser.powerLevel = 50;
             moderatorUser.user = new User(moderatorUser.userId);
             moderatorUser.user.currentlyActive = true;
@@ -90,7 +91,7 @@ describe('MemberList', () => {
             moderatorUsers.push(moderatorUser);
 
             const defaultUser = new RoomMember(memberListRoom.roomId, `@default${i}:localhost`);
-            defaultUser.membership = "join";
+            defaultUser.membership = Membership.Join;
             defaultUser.powerLevel = 0;
             defaultUser.user = new User(defaultUser.userId);
             defaultUser.user.currentlyActive = true;

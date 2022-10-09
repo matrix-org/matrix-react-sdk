@@ -18,6 +18,7 @@ import React from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Membership } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -109,12 +110,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
 
-    private onMyMembership = (room: Room, membership: string): void => {
+    private onMyMembership = (room: Room, membership: Membership): void => {
         if (room.isSpaceRoom()) {
             return;
         }
 
-        if (membership === "invite") {
+        if (membership === Membership.Invite) {
             this.addInvitedRoom(room);
         } else if (this.state.invitedRoomIds.has(room.roomId)) {
             // The user isn't invited anymore
@@ -153,7 +154,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     private getInvitedRooms = (): Room[] => {
         return MatrixClientPeg.get().getRooms().filter((r) => {
-            return r.hasMembershipState(MatrixClientPeg.get().getUserId(), "invite");
+            return r.hasMembershipState(MatrixClientPeg.get().getUserId(), Membership.Invite);
         });
     };
 

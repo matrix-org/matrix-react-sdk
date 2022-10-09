@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { ContextType } from 'react';
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from "../../../../../languageHandler";
 import RoomProfileSettings from "../../../room_settings/RoomProfileSettings";
@@ -69,7 +70,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
             null;
 
         let leaveSection;
-        if (room.getMyMembership() === "join") {
+        if (room.getMyMembership() === Membership.Join) {
             leaveSection = <>
                 <span className='mx_SettingsTab_subheading'>{ _t("Leave room") }</span>
                 <div className='mx_SettingsTab_section'>

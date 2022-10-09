@@ -12,12 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {
-    Room,
-    RoomMember,
-    EventType,
-    MatrixEvent,
-} from 'matrix-js-sdk/src/matrix';
+import { EventType, MatrixEvent, Membership, Room, RoomMember } from 'matrix-js-sdk/src/matrix';
 
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import {
@@ -45,7 +40,7 @@ describe('Permalinks', function() {
     function mockRoom(
         roomId: Room['roomId'], members: RoomMember[], serverACLContent?: { deny?: string[], allow?: string[]},
     ): Room {
-        members.forEach(m => m.membership = "join");
+        members.forEach(m => m.membership = Membership.Join);
         const powerLevelsUsers = members.reduce((pl, member) => {
             if (Number.isFinite(member.powerLevel)) {
                 pl[member.userId] = member.powerLevel;
@@ -133,11 +128,11 @@ describe('Permalinks', function() {
         const creator = new RoomPermalinkCreator(room, null);
         creator.load();
         expect(creator.serverCandidates[0]).toBe("pl_95");
-        member95.membership = "left";
+        member95.membership = Membership.Leave;
         // @ts-ignore illegal private property
         creator.onRoomStateUpdate();
         expect(creator.serverCandidates[0]).toBe("pl_75");
-        member95.membership = "join";
+        member95.membership = Membership.Join;
         // @ts-ignore illegal private property
         creator.onRoomStateUpdate();
         expect(creator.serverCandidates[0]).toBe("pl_95");

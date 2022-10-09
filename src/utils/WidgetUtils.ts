@@ -21,9 +21,9 @@ import { IWidget, IWidgetData } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, Membership, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { randomString, randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
+import { randomLowercaseString, randomString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import PlatformPeg from '../PlatformPeg';
@@ -81,7 +81,7 @@ export default class WidgetUtils {
             return false;
         }
 
-        if (room.getMyMembership() !== "join") {
+        if (room.getMyMembership() !== Membership.Join) {
             logger.warn(`User ${me} is not in room ${roomId}`);
             return false;
         }

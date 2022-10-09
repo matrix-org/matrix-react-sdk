@@ -32,7 +32,7 @@ import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { IHierarchyRelation, IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Membership } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { sortBy, uniqBy } from "lodash";
 import { GuestAccess, HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
@@ -100,7 +100,7 @@ const Tile: React.FC<ITileProps> = ({
     const cli = useContext(MatrixClientContext);
     const [joinedRoom, setJoinedRoom] = useState<Room>(() => {
         const cliRoom = cli.getRoom(room.room_id);
-        return cliRoom?.getMyMembership() === "join" ? cliRoom : null;
+        return cliRoom?.getMyMembership() === Membership.Join ? cliRoom : null;
     });
     const joinedRoomName = useTypedEventEmitterState(joinedRoom, RoomEvent.Name, room => room?.name);
     const name = joinedRoomName || room.name || room.canonical_alias || room.aliases?.[0]
@@ -760,7 +760,7 @@ const SpaceHierarchy = ({
             if (!hierarchy || (loading && !rooms?.length)) {
                 content = <Spinner />;
             } else {
-                const hasPermissions = space?.getMyMembership() === "join" &&
+                const hasPermissions = space?.getMyMembership() === Membership.Join &&
                     space.currentState.maySendStateEvent(EventType.SpaceChild, cli.getUserId());
 
                 let results: JSX.Element;

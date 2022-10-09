@@ -22,6 +22,7 @@ import { PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Widget } from "matrix-widget-api";
+import { Membership } from "matrix-js-sdk/src/matrix";
 
 import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
@@ -80,7 +81,7 @@ const setUpClientRoomAndStores = (): {
             default: return null;
         }
     });
-    jest.spyOn(room, "getMyMembership").mockReturnValue("join");
+    jest.spyOn(room, "getMyMembership").mockReturnValue(Membership.Join);
 
     client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
     client.getRooms.mockReturnValue([room]);
@@ -325,14 +326,14 @@ describe("JitsiCall", () => {
         it("disconnects when we leave the room", async () => {
             await call.connect();
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "leave");
+            room.emit(RoomEvent.MyMembership, room, Membership.Leave);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("remains connected if we stay in the room", async () => {
             await call.connect();
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "join");
+            room.emit(RoomEvent.MyMembership, room, Membership.Join);
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
@@ -674,14 +675,14 @@ describe("ElementCall", () => {
         it("disconnects when we leave the room", async () => {
             await call.connect();
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "leave");
+            room.emit(RoomEvent.MyMembership, room, Membership.Leave);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("remains connected if we stay in the room", async () => {
             await call.connect();
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "join");
+            room.emit(RoomEvent.MyMembership, room, Membership.Join);
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 

@@ -20,6 +20,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { _t, _td } from '../../../languageHandler';
 import BaseDialog from "./BaseDialog";
@@ -128,7 +129,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
     onFinished,
 }) => {
     const cli = useContext(MatrixClientContext);
-    const visibleRooms = useMemo(() => cli.getVisibleRooms().filter(r => r.getMyMembership() === "join"), [cli]);
+    const visibleRooms = useMemo(() => cli.getVisibleRooms().filter(r => r.getMyMembership() === Membership.Join), [cli]);
 
     const scrollRef = useRef<AutoHideScrollbar<"div">>();
     const [scrollState, setScrollState] = useState<IScrollState>({

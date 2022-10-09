@@ -19,6 +19,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 import { throttle } from "lodash";
 
 import { _t, _td } from "../../../../../languageHandler";
@@ -378,7 +379,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             }
         }
 
-        const banned = room.getMembersWithMembership("ban");
+        const banned = room.getMembersWithMembership(Membership.Ban);
         let bannedUsersSection;
         if (banned.length) {
             const canBanUsers = currentUserLevel >= banLevel;

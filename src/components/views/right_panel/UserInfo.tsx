@@ -29,6 +29,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 
 import dis from '../../../dispatcher/dispatcher';
 import Modal from '../../../Modal';
@@ -560,7 +561,7 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
     const cli = useContext(MatrixClientContext);
 
     // check if user can be kicked/disinvited
-    if (member.membership !== "invite" && member.membership !== "join") return null;
+    if (member.membership !== Membership.Invite && member.membership !== Membership.Join) return null;
 
     const onKick = async () => {
         const { finished } = Modal.createDialog(
@@ -568,12 +569,12 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
             {
                 member,
                 action: room.isSpaceRoom() ?
-                    member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
-                    : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room"),
-                title: member.membership === "invite"
+                    member.membership === Membership.Invite ? _t("Disinvite from space") : _t("Remove from space")
+                    : member.membership === Membership.Invite ? _t("Disinvite from room") : _t("Remove from room"),
+                title: member.membership === Membership.Invite
                     ? _t("Disinvite from %(roomName)s", { roomName: room.name })
                     : _t("Remove from %(roomName)s", { roomName: room.name }),
-                askReason: member.membership === "join",
+                askReason: member.membership === Membership.Join,
                 danger: true,
                 // space-specific props
                 space: room,
@@ -755,7 +756,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
     const cli = useContext(MatrixClientContext);
 
     // Don't show the mute/unmute option if the user is not in the room
-    if (member.membership !== "join") return null;
+    if (member.membership !== Membership.Join) return null;
 
     const muted = isMuted(member, powerLevels);
     const onMuteToggle = async () => {

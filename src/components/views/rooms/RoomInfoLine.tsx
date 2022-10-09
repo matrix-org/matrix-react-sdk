@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { FC } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { JoinRule, Membership } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from "../../../languageHandler";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
@@ -24,7 +24,7 @@ import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePha
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { useRoomState } from "../../../hooks/useRoomState";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
-import { useRoomMemberCount, useMyRoomMembership } from "../../../hooks/useRoomMembers";
+import { useMyRoomMembership, useRoomMemberCount } from "../../../hooks/useRoomMembers";
 import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
@@ -34,7 +34,7 @@ interface IProps {
 const RoomInfoLine: FC<IProps> = ({ room }) => {
     // summary will begin as undefined whilst loading and go null if it fails to load or we are not invited.
     const summary = useAsyncMemo(async () => {
-        if (room.getMyMembership() !== "invite") return null;
+        if (room.getMyMembership() !== Membership.Invite) return null;
         try {
             return room.client.getRoomSummary(room.roomId);
         } catch (e) {
@@ -62,7 +62,7 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
     }
 
     let members: JSX.Element;
-    if (membership === "invite" && summary) {
+    if (membership === Membership.Invite && summary) {
         // Don't trust local state and instead use the summary API
         members = <span className="mx_RoomInfoLine_members">
             { _t("%(count)s members", { count: summary.num_joined_members }) }

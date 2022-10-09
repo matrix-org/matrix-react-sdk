@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { FC, HTMLAttributes, useContext } from "react";
+import { Membership } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { sortBy } from "lodash";
@@ -39,7 +40,7 @@ const RoomFacePile: FC<IProps> = (
     { room, onlyKnownUsers = true, numShown = DEFAULT_NUM_FACES, ...props },
 ) => {
     const cli = useContext(MatrixClientContext);
-    const isJoined = room.getMyMembership() === "join";
+    const isJoined = room.getMyMembership() === Membership.Join;
     let members = useRoomMembers(room);
     const count = members.length;
 

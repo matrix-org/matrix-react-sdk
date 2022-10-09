@@ -18,7 +18,7 @@ import { WebSearch as WebSearchEvent } from "@matrix-org/analytics-events/types/
 import classNames from "classnames";
 import { capitalize, sum } from "lodash";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
-import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
+import { IPublicRoomsChunkRoom, MatrixClient, Membership, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { normalize } from "matrix-js-sdk/src/utils";
 import React, {
@@ -249,7 +249,7 @@ const findVisibleRooms = (cli: MatrixClient): Room[] => {
         if (isLocalRoom(room)) return false;
 
         // TODO we may want to put invites in their own list
-        return room.getMyMembership() === "join" || room.getMyMembership() == "invite";
+        return room.getMyMembership() === Membership.Join || room.getMyMembership() == Membership.Invite;
     });
 };
 
@@ -642,7 +642,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 // world readable, a modal will appear asking you to register first. If
                 // it is readable, the preview appears as normal.
                 const showViewButton = (
-                    clientRoom?.getMyMembership() === "join" ||
+                    clientRoom?.getMyMembership() === Membership.Join ||
                     result.publicRoom.world_readable ||
                     cli.isGuest()
                 );

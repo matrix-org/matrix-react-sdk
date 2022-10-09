@@ -19,6 +19,7 @@ import { PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Widget } from "matrix-widget-api";
+import { Membership } from "matrix-js-sdk/src/matrix";
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import type { ClientWidgetApi } from "matrix-widget-api";
@@ -74,7 +75,7 @@ describe("Algorithm", () => {
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
         client.reEmitter.reEmit(roomWithCall, [RoomStateEvent.Events]);
 
-        for (const room of client.getRooms()) jest.spyOn(room, "getMyMembership").mockReturnValue("join");
+        for (const room of client.getRooms()) jest.spyOn(room, "getMyMembership").mockReturnValue(Membership.Join);
         algorithm.setKnownRooms(client.getRooms());
 
         setupAsyncStoreWithClient(CallStore.instance, client);
