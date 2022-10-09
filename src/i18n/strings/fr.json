@@ -3607,5 +3607,16 @@
     "Freedom": "Liberté",
     "Fill screen": "Remplir l’écran",
     "Room info": "Information du salon",
-    "View chat timeline": "Afficher la chronologie du chat"
+    "View chat timeline": "Afficher la chronologie du chat",
+    "Video call (%(brand)s)": "Appel vidéo (%(brand)s)",
+    "Operating system": "Système d’exploitation",
+    "Model": "Modèle",
+    "Client": "Client",
+    "Call type": "Type d’appel",
+    "You do not have sufficient permissions to change this.": "Vous n’avez pas assez de permissions pour changer ceci.",
+    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s est chiffré de bout en bout, mais n’est actuellement utilisable qu’avec un petit nombre d’utilisateurs.",
+    "Enable %(brand)s as an additional calling option in this room": "Activer %(brand)s comme une option supplémentaire d’appel dans ce salon",
+    "Join %(brand)s calls": "Rejoindre des appels %(brand)s",
+    "Start %(brand)s calls": "Démarrer des appels %(brand)s",
+    "Sorry — this call is currently full": "Désolé — Cet appel est actuellement complet"
 }
