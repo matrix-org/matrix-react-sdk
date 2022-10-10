@@ -33,18 +33,18 @@ describe('ScalarAuthClient', function() {
 
     let client;
     beforeEach(function() {
-        window.localStorage.setItem("mx_scalar_token", "brokentoken");
+        jest.clearAllMocks();
         client = stubClient();
     });
 
     it('should request a new token if the old one fails', async function() {
-        const sac = new ScalarAuthClient(apiUrl, uiUrl);
+        const sac = new ScalarAuthClient(apiUrl + 0, uiUrl);
 
-        fetchMock.get("https://test.com/api/account?scalar_token=brokentoken&v=1.1", {
+        fetchMock.get("https://test.com/api0/account?scalar_token=brokentoken&v=1.1", {
             body: { message: "Invalid token" },
         });
 
-        fetchMock.get("https://test.com/api/account?scalar_token=wokentoken&v=1.1", {
+        fetchMock.get("https://test.com/api0/account?scalar_token=wokentoken&v=1.1", {
             body: { user_id: client.getUserId() },
         });
 
@@ -64,9 +64,9 @@ describe('ScalarAuthClient', function() {
 
     describe("exchangeForScalarToken", () => {
         it("should return `scalar_token` from API /register", async () => {
-            const sac = new ScalarAuthClient(apiUrl, uiUrl);
+            const sac = new ScalarAuthClient(apiUrl + 1, uiUrl);
 
-            fetchMock.post("https://test.com/api/register?v=1.1", {
+            fetchMock.postOnce("https://test.com/api1/register?v=1.1", {
                 body: { scalar_token: "stoken" },
             });
 
@@ -74,9 +74,9 @@ describe('ScalarAuthClient', function() {
         });
 
         it("should throw upon non-20x code", async () => {
-            const sac = new ScalarAuthClient(apiUrl, uiUrl);
+            const sac = new ScalarAuthClient(apiUrl + 2, uiUrl);
 
-            fetchMock.post("https://test.com/api/register?v=1.1", {
+            fetchMock.postOnce("https://test.com/api2/register?v=1.1", {
                 status: 500,
             });
 
@@ -84,9 +84,9 @@ describe('ScalarAuthClient', function() {
         });
 
         it("should throw if scalar_token is missing in response", async () => {
-            const sac = new ScalarAuthClient(apiUrl, uiUrl);
+            const sac = new ScalarAuthClient(apiUrl + 3, uiUrl);
 
-            fetchMock.post("https://test.com/api/register?v=1.1", {
+            fetchMock.postOnce("https://test.com/api3/register?v=1.1", {
                 body: {},
             });
 
@@ -96,35 +96,35 @@ describe('ScalarAuthClient', function() {
 
     describe("registerForToken", () => {
         it("should call `termsInteractionCallback` upon M_TERMS_NOT_SIGNED error", async () => {
-            const sac = new ScalarAuthClient(apiUrl, uiUrl);
+            const sac = new ScalarAuthClient(apiUrl + 4, uiUrl);
             const termsInteractionCallback = jest.fn();
             sac.setTermsInteractionCallback(termsInteractionCallback);
-            fetchMock.get("https://test.com/api/account?scalar_token=testtoken&v=1.1", {
+            fetchMock.get("https://test.com/api4/account?scalar_token=testtoken1&v=1.1", {
                 body: { errcode: "M_TERMS_NOT_SIGNED" },
             });
-            sac.exchangeForScalarToken = jest.fn(() => Promise.resolve("testtoken"));
+            sac.exchangeForScalarToken = jest.fn(() => Promise.resolve("testtoken1"));
             mocked(client.getTerms).mockResolvedValue({ policies: [] });
 
-            await expect(sac.registerForToken()).resolves.toBe("testtoken");
+            await expect(sac.registerForToken()).resolves.toBe("testtoken1");
         });
 
         it("should throw upon non-20x code", async () => {
-            const sac = new ScalarAuthClient(apiUrl, uiUrl);
-            fetchMock.get("https://test.com/api/account?scalar_token=testtoken&v=1.1", {
+            const sac = new ScalarAuthClient(apiUrl + 5, uiUrl);
+            fetchMock.get("https://test.com/api5/account?scalar_token=testtoken2&v=1.1", {
                 body: { errcode: "SERVER_IS_SAD" },
                 status: 500,
             });
-            sac.exchangeForScalarToken = jest.fn(() => Promise.resolve("testtoken"));
+            sac.exchangeForScalarToken = jest.fn(() => Promise.resolve("testtoken2"));
 
             await expect(sac.registerForToken()).rejects.toBeTruthy();
         });
 
         it("should throw if user_id is missing from response", async () => {
-            const sac = new ScalarAuthClient(apiUrl, uiUrl);
-            fetchMock.get("https://test.com/api/account?scalar_token=testtoken&v=1.1", {
+            const sac = new ScalarAuthClient(apiUrl + 6, uiUrl);
+            fetchMock.get("https://test.com/api6/account?scalar_token=testtoken3&v=1.1", {
                 body: {},
             });
-            sac.exchangeForScalarToken = jest.fn(() => Promise.resolve("testtoken"));
+            sac.exchangeForScalarToken = jest.fn(() => Promise.resolve("testtoken3"));
 
             await expect(sac.registerForToken()).rejects.toThrow("Missing user_id in response");
         });
@@ -134,23 +134,23 @@ describe('ScalarAuthClient', function() {
         let sac: ScalarAuthClient;
 
         beforeEach(async () => {
-            window.localStorage.setItem("mx_scalar_token", "wokentoken");
             SdkConfig.put({
-                integrations_rest_url: apiUrl,
+                integrations_rest_url: apiUrl + 7,
                 integrations_ui_url: uiUrl,
             });
 
-            fetchMock.get("https://test.com/api/account?scalar_token=wokentoken&v=1.1", {
+            window.localStorage.setItem("mx_scalar_token_at_https://test.com/api7", "wokentoken1");
+            fetchMock.get("https://test.com/api7/account?scalar_token=wokentoken1&v=1.1", {
                 body: { user_id: client.getUserId() },
             });
 
-            sac = new ScalarAuthClient(apiUrl, uiUrl);
+            sac = new ScalarAuthClient(apiUrl + 7, uiUrl);
             await sac.connect();
         });
 
         it("should return `cached_title` from API /widgets/title_lookup", async () => {
             const url = "google.com";
-            fetchMock.get("https://test.com/api/widgets/title_lookup?scalar_token=wokentoken&curl=" + url, {
+            fetchMock.get("https://test.com/api7/widgets/title_lookup?scalar_token=wokentoken1&curl=" + url, {
                 body: {
                     page_title_cache_item: {
                         cached_title: "Google",
@@ -162,8 +162,8 @@ describe('ScalarAuthClient', function() {
         });
 
         it("should throw upon non-20x code", async () => {
-            const url = "google.com";
-            fetchMock.get("https://test.com/api/widgets/title_lookup?scalar_token=wokentoken&curl=" + url, {
+            const url = "yahoo.com";
+            fetchMock.get("https://test.com/api7/widgets/title_lookup?scalar_token=wokentoken1&curl=" + url, {
                 status: 500,
             });
 

@@ -54,7 +54,7 @@ describe("InviteDialog", () => {
         }),
         getOpenIdToken: jest.fn().mockResolvedValue({}),
         getIdentityAccount: jest.fn().mockResolvedValue({}),
-        getTerms: jest.fn().mockResolvedValue({}),
+        getTerms: jest.fn().mockResolvedValue({ policies: [] }),
     });
 
     beforeEach(() => {
