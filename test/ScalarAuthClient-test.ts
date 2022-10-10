@@ -14,13 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import fetchMock from "fetch-mock-jest";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
+
 import ScalarAuthClient from '../src/ScalarAuthClient';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import { stubClient } from './test-utils';
 
 describe('ScalarAuthClient', function() {
-    const apiUrl = 'test.com/api';
-    const uiUrl = 'test.com/app';
+    const apiUrl = 'https://test.com/api';
+    const uiUrl = 'https:/test.com/app';
+    const tokenObject = {
+        access_token: "token",
+        token_type: "Bearer",
+        matrix_server_name: "localhost",
+        expires_in: 999,
+    };
+
     beforeEach(function() {
         window.localStorage.getItem = jest.fn((arg) => {
             if (arg === "mx_scalar_token") return "brokentoken";
@@ -31,23 +41,18 @@ describe('ScalarAuthClient', function() {
     it('should request a new token if the old one fails', async function() {
         const sac = new ScalarAuthClient(apiUrl, uiUrl);
 
-        // @ts-ignore unhappy with Promise calls
-        jest.spyOn(sac, 'getAccountName').mockImplementation((arg: string) => {
-            switch (arg) {
-                case "brokentoken":
-                    return Promise.reject({
-                        message: "Invalid token",
-                    });
-                case "wokentoken":
-                default:
-                    return Promise.resolve(MatrixClientPeg.get().getUserId());
-            }
+        fetchMock.get("https://test.com/api/account?scalar_token=brokentoken&v=1.1", {
+            throws: new MatrixError({ message: "Invalid token" }),
         });
 
-        MatrixClientPeg.get().getOpenIdToken = jest.fn().mockResolvedValue('this is your openid token');
+        fetchMock.get("https://test.com/api/account?scalar_token=wokentoken&v=1.1", {
+            body: { user_id: MatrixClientPeg.get().getUserId() },
+        });
+
+        MatrixClientPeg.get().getOpenIdToken = jest.fn().mockResolvedValue(tokenObject);
 
         sac.exchangeForScalarToken = jest.fn((arg) => {
-            if (arg === "this is your openid token") return Promise.resolve("wokentoken");
+            if (arg === tokenObject) return Promise.resolve("wokentoken");
         });
 
         await sac.connect();
@@ -56,5 +61,17 @@ describe('ScalarAuthClient', function() {
         expect(sac.hasCredentials).toBeTruthy();
         // @ts-ignore private property
         expect(sac.scalarToken).toEqual('wokentoken');
+    });
+
+    describe("exchangeForScalarToken", () => {
+        it("should return `scalar_token` from API /register", async () => {
+            const sac = new ScalarAuthClient(apiUrl, uiUrl);
+
+            fetchMock.post("https://test.com/api/register?v=1.1", {
+                body: { scalar_token: "stoken" },
+            });
+
+            await expect(sac.exchangeForScalarToken(tokenObject)).resolves.toBe("stoken");
+        });
     });
 });

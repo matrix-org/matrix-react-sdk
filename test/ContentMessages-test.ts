@@ -162,6 +162,17 @@ describe("ContentMessages", () => {
                 msgtype: "m.audio",
             }));
         });
+
+        it("should default to name 'Attachment' if file doesn't have a name", async () => {
+            mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
+            const file = new File([], "", { type: "text/plain" });
+            await contentMessages.sendContentToRoom(file, roomId, undefined, client, undefined);
+            expect(client.sendMessage).toHaveBeenCalledWith(roomId, null, expect.objectContaining({
+                url: "mxc://server/file",
+                msgtype: "m.file",
+                body: "Attachment",
+            }));
+        });
     });
 
     describe("getCurrentUploads", () => {
@@ -204,6 +215,22 @@ describe("ContentMessages", () => {
             expect(uploads[0].relation).toEqual(undefined);
             expect(uploads[0].fileName).toEqual("file2");
             await Promise.all([p1, p2]);
+        });
+    });
+
+    describe("cancelUpload", () => {
+        it("should cancel in-flight upload", async () => {
+            const deferred = defer<UploadResponse>();
+            mocked(client.uploadContent).mockReturnValue(deferred.promise);
+            const file1 = new File([], "file1");
+            const prom = contentMessages.sendContentToRoom(file1, roomId, undefined, client, undefined);
+            const { abortController } = mocked(client.uploadContent).mock.calls[0][1];
+            expect(abortController.signal.aborted).toBeFalsy();
+            const [upload] = contentMessages.getCurrentUploads();
+            contentMessages.cancelUpload(upload);
+            expect(abortController.signal.aborted).toBeTruthy();
+            deferred.resolve({} as UploadResponse);
+            await prom;
         });
     });
 });

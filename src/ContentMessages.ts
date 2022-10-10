@@ -269,6 +269,7 @@ function readFileAsArrayBuffer(file: File | Blob): Promise<ArrayBuffer> {
  * @param {File} file The file to upload.
  * @param {Function?} progressHandler optional callback to be called when a chunk of
  *    data is uploaded.
+ * @param {AbortController?} controller optional abortController to use for this upload.
  * @return {Promise} A promise that resolves with an object.
  *  If the file is unencrypted then the object will have a "url" key.
  *  If the file is encrypted then the object will have a "file" key.
@@ -278,8 +279,9 @@ export async function uploadFile(
     roomId: string,
     file: File | Blob,
     progressHandler?: UploadOpts["progressHandler"],
+    controller?: AbortController,
 ): Promise<{ url?: string, file?: IEncryptedFile }> {
-    const abortController = new AbortController();
+    const abortController = controller ?? new AbortController();
 
     // If the room is encrypted then encrypt the file before uploading it.
     if (matrixClient.isRoomEncrypted(roomId)) {
@@ -523,7 +525,7 @@ export default class ContentMessages {
             }
 
             if (upload.cancelled) throw new UploadCanceledError();
-            const result = await uploadFile(matrixClient, roomId, file, onProgress);
+            const result = await uploadFile(matrixClient, roomId, file, onProgress, upload.abortController);
             content.file = result.file;
             content.url = result.url;
 

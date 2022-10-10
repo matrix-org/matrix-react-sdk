@@ -18,6 +18,7 @@ import url from 'url';
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IOpenIDToken } from 'matrix-js-sdk/src/matrix';
 
 import SettingsStore from "./settings/SettingsStore";
 import { Service, startTermsFlow, TermsInteractionCallback, TermsNotSignedError } from './Terms';
@@ -182,7 +183,7 @@ export default class ScalarAuthClient {
         });
     }
 
-    public async exchangeForScalarToken(openidTokenObject: any): Promise<string> {
+    public async exchangeForScalarToken(openidTokenObject: IOpenIDToken): Promise<string> {
         const scalarRestUrl = new URL(this.apiUrl + "/register");
         scalarRestUrl.searchParams.set("v", imApiVersion);
 
