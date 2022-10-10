@@ -57,7 +57,7 @@ describe('ScalarAuthClient', function() {
 
         await sac.connect();
 
-        expect(sac.exchangeForScalarToken).toBeCalledWith('this is your openid token');
+        expect(sac.exchangeForScalarToken).toBeCalledWith(tokenObject);
         expect(sac.hasCredentials).toBeTruthy();
         // @ts-ignore private property
         expect(sac.scalarToken).toEqual('wokentoken');
