@@ -20,6 +20,7 @@ import fetchMock from "fetch-mock-jest";
 import ScalarAuthClient from '../src/ScalarAuthClient';
 import { stubClient } from './test-utils';
 import SdkConfig from "../src/SdkConfig";
+import { WidgetType } from "../src/widgets/WidgetType";
 
 describe('ScalarAuthClient', function() {
     const apiUrl = 'https://test.com/api';
@@ -168,6 +169,44 @@ describe('ScalarAuthClient', function() {
             });
 
             await expect(sac.getScalarPageTitle(url)).rejects.toThrow("Scalar request failed: 500");
+        });
+    });
+
+    describe("disableWidgetAssets", () => {
+        let sac: ScalarAuthClient;
+
+        beforeEach(async () => {
+            SdkConfig.put({
+                integrations_rest_url: apiUrl + 8,
+                integrations_ui_url: uiUrl,
+            });
+
+            window.localStorage.setItem("mx_scalar_token_at_https://test.com/api8", "wokentoken1");
+            fetchMock.get("https://test.com/api8/account?scalar_token=wokentoken1&v=1.1", {
+                body: { user_id: client.getUserId() },
+            });
+
+            sac = new ScalarAuthClient(apiUrl + 8, uiUrl);
+            await sac.connect();
+        });
+
+        it("should send state=disable to API /widgets/set_assets_state", async () => {
+            fetchMock.get("https://test.com/api8/widgets/set_assets_state?scalar_token=wokentoken1" +
+                "&widget_type=m.custom&widget_id=id1&state=disable", {
+                body: "OK",
+            });
+
+            await expect(sac.disableWidgetAssets(WidgetType.CUSTOM, "id1")).resolves.toBeUndefined();
+        });
+
+        it("should throw upon non-20x code", async () => {
+            fetchMock.get("https://test.com/api8/widgets/set_assets_state?scalar_token=wokentoken1" +
+                "&widget_type=m.custom&widget_id=id2&state=disable", {
+                status: 500,
+            });
+
+            await expect(sac.disableWidgetAssets(WidgetType.CUSTOM, "id2"))
+                .rejects.toThrow("Scalar request failed: 500");
         });
     });
 });
