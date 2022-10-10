@@ -58,15 +58,16 @@ const getDeviceType = (
     return DeviceType.Unknown;
 };
 
+interface CustomValues {
+    customDeviceModel?: string;
+    customDeviceOS?: string;
+}
 /**
  * Some mobile model and OS strings are not recognised
  * by the UA parsing library
  * check they exist by hand
  */
-const checkForCustomValues = (userAgent: string): {
-    customDeviceModel?: string;
-    customDeviceOS?: string;
-} => {
+const checkForCustomValues = (userAgent: string): CustomValues => {
     if (userAgent.includes(BROWSER_KEYWORD)) {
         return {};
     }
@@ -97,12 +98,15 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
     const device = parser.getDevice();
     const operatingSystem = parser.getOS();
 
+    const deviceType = getDeviceType(userAgent, device, browser, operatingSystem);
     const deviceOperatingSystem = concatenateNameAndVersion(operatingSystem.name, operatingSystem.version);
     const deviceModel = concatenateNameAndVersion(device.vendor, device.model);
     const client = concatenateNameAndVersion(browser.name, browser.version);
 
-    const { customDeviceModel, customDeviceOS } = checkForCustomValues(userAgent);
-    const deviceType = getDeviceType(userAgent, device, browser, operatingSystem);
+    // only try to parse custom model and OS when device type is known
+    const { customDeviceModel, customDeviceOS } = deviceType !== DeviceType.Unknown
+        ? checkForCustomValues(userAgent)
+        : {} as CustomValues;
 
     return {
         deviceType,

@@ -106,10 +106,13 @@ const MISC_UA = [
     "Curl Client/1.0",
     "banana",
     "",
+    // fluffy chat ios
+    "Dart/2.18 (dart:io)",
 ];
 
 const MISC_EXPECTED_RESULT = [
     makeDeviceExtendedInfo(DeviceType.Unknown, "Apple Apple TV", undefined, undefined, undefined),
+    makeDeviceExtendedInfo(DeviceType.Unknown, undefined, undefined, undefined, undefined),
     makeDeviceExtendedInfo(DeviceType.Unknown, undefined, undefined, undefined, undefined),
     makeDeviceExtendedInfo(DeviceType.Unknown, undefined, undefined, undefined, undefined),
     makeDeviceExtendedInfo(DeviceType.Unknown, undefined, undefined, undefined, undefined),
