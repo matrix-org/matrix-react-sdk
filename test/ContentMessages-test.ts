@@ -173,6 +173,21 @@ describe("ContentMessages", () => {
                 body: "Attachment",
             }));
         });
+
+        it("should keep RoomUpload's total and loaded values up to date", async () => {
+            mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
+            const file = new File([], "", { type: "text/plain" });
+            const prom = contentMessages.sendContentToRoom(file, roomId, undefined, client, undefined);
+            const [upload] = contentMessages.getCurrentUploads();
+
+            expect(upload.loaded).toBe(0);
+            expect(upload.total).toBe(file.size);
+            const { progressHandler } = mocked(client.uploadContent).mock.calls[0][1];
+            progressHandler({ loaded: 123, total: 1234 });
+            expect(upload.loaded).toBe(123);
+            expect(upload.total).toBe(1234);
+            await prom;
+        });
     });
 
     describe("getCurrentUploads", () => {
