@@ -346,19 +346,24 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             }
         }
 
+        const useNewSessionManager = SettingsStore.getValue("feature_new_device_manager");
+        const devicesSection = useNewSessionManager ? <>
+        <div className="mx_SettingsTab_heading">{ _t("Where you're signed in") }</div>
+        <div className="mx_SettingsTab_section">
+            <span className="mx_SettingsTab_subsectionText">
+                { _t(
+                    "Manage your signed-in devices below. " +
+                    "A device's name is visible to people you communicate with.",
+                ) }
+            </span>
+            <DevicesPanel />
+        </div>
+        </> : null;
+
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                 { warning }
-                <div className="mx_SettingsTab_heading">{ _t("Where you're signed in") }</div>
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subsectionText">
-                        { _t(
-                            "Manage your signed-in devices below. " +
-                            "A device's name is visible to people you communicate with.",
-                        ) }
-                    </span>
-                    <DevicesPanel />
-                </div>
+                { devicesSection }
                 <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
                 <div className="mx_SettingsTab_section">
                     { secureBackup }

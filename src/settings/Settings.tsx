@@ -468,7 +468,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Experimental,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new session manager (under active development)"),
+        displayName: _td("Use new session manager"),
         default: false,
         betaInfo: {
             title: _td('New session manager'),
