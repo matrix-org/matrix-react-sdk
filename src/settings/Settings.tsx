@@ -472,7 +472,19 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         betaInfo: {
             title: _td('New session manager'),
-            caption: () => _td('TODO'),
+            caption: () => <>
+                <p>
+                    { _td('Have greater visibility and control over all your sessions.') }
+                </p>
+                <p>
+                    { _td(
+                        'Our new sessions manager provides better visibility of all your sessions, '
+                        + 'and greater control over them including the ability to remotely toggle push notifications.',
+                    )
+                    }
+                </p>
+
+            </>,
         },
     },
     "baseFontSize": {
