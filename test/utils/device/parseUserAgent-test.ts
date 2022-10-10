@@ -70,8 +70,8 @@ const DESKTOP_UA = [
     "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) ElementNightly/2022091301 Chrome/104.0.5112.102 Electron/20.1.1 Safari/537.36",
 ];
 const DESKTOP_EXPECTED_RESULT = [
-    makeDeviceExtendedInfo(DeviceType.Desktop, undefined, "Mac OS 10.15.7", "Electron", "20"),
-    makeDeviceExtendedInfo(DeviceType.Desktop, undefined, "Windows 10", "Electron", "20"),
+    makeDeviceExtendedInfo(DeviceType.Desktop, undefined, "Mac OS 10.15.7", "Electron", "20.1.1"),
+    makeDeviceExtendedInfo(DeviceType.Desktop, undefined, "Windows 10", "Electron", "20.1.1"),
 ];
 
 const WEB_UA = [
@@ -88,16 +88,16 @@ const WEB_UA = [
 ];
 
 const WEB_EXPECTED_RESULT = [
-    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Mac OS 10.15.7", "Chrome", "104"),
-    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Windows 10", "Chrome", "104"),
-    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Mac OS 10.10", "Firefox", "39"),
-    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Mac OS 10.10.2", "Safari", "8"),
-    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Windows Vista", "Firefox", "40"),
-    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Windows 10", "Edge", "12"),
+    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Mac OS 10.15.7", "Chrome", "104.0.5112.102"),
+    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Windows 10", "Chrome", "104.0.5112.102"),
+    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Mac OS 10.10", "Firefox", "39.0"),
+    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Mac OS 10.10.2", "Safari", "8.0.3"),
+    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Windows Vista", "Firefox", "40.0"),
+    makeDeviceExtendedInfo(DeviceType.Web, undefined, "Windows 10", "Edge", "12.246"),
     // using mobile browser
-    makeDeviceExtendedInfo(DeviceType.Web, "Apple iPad", "iOS 8.4.1", "Mobile Safari", "8"),
-    makeDeviceExtendedInfo(DeviceType.Web, "Apple iPhone", "iOS 8.4.1", "Mobile Safari", "8"),
-    makeDeviceExtendedInfo(DeviceType.Web, "Samsung SM-G973U", "Android 9", "Chrome", "69"),
+    makeDeviceExtendedInfo(DeviceType.Web, "Apple iPad", "iOS 8.4.1", "Mobile Safari", "8.0"),
+    makeDeviceExtendedInfo(DeviceType.Web, "Apple iPhone", "iOS 8.4.1", "Mobile Safari", "8.0"),
+    makeDeviceExtendedInfo(DeviceType.Web, "Samsung SM-G973U", "Android 9", "Chrome", "69.0.3497.100"),
 
 ];
 

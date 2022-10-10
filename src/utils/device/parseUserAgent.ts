@@ -99,7 +99,7 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
 
     const deviceOperatingSystem = concatenateNameAndVersion(operatingSystem.name, operatingSystem.version);
     const deviceModel = concatenateNameAndVersion(device.vendor, device.model);
-    const client = concatenateNameAndVersion(browser.name, browser.major || browser.version);
+    const client = concatenateNameAndVersion(browser.name, browser.version);
 
     const { customDeviceModel, customDeviceOS } = checkForCustomValues(userAgent);
     const deviceType = getDeviceType(userAgent, device, browser, operatingSystem);
