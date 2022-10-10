@@ -42,7 +42,10 @@ import { Action } from "./dispatcher/actions";
 import { isLoggedIn } from "./utils/login";
 import SdkConfig from "./SdkConfig";
 import PlatformPeg from "./PlatformPeg";
-import { recordClientInformation } from "./utils/device/clientInformation";
+import {
+    recordClientInformation,
+    removeClientInformation,
+} from "./utils/device/clientInformation";
 import SettingsStore, { CallbackFn } from "./settings/SettingsStore";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
@@ -368,25 +371,26 @@ export default class DeviceListener {
 
         this.shouldRecordClientInformation = !!newValue;
 
-        if (this.shouldRecordClientInformation && !prevValue) {
+        if (this.shouldRecordClientInformation !== prevValue) {
             this.recordClientInformation();
         }
     };
 
     private recordClientInformation = async () => {
-        if (!this.shouldRecordClientInformation) {
-            return;
-        }
         try {
-            await recordClientInformation(
-                MatrixClientPeg.get(),
-                SdkConfig.get(),
-                PlatformPeg.get(),
-            );
+            if (!this.shouldRecordClientInformation) {
+                await removeClientInformation(MatrixClientPeg.get());
+            } else {
+                await recordClientInformation(
+                    MatrixClientPeg.get(),
+                    SdkConfig.get(),
+                    PlatformPeg.get(),
+                );
+            }
         } catch (error) {
             // this is a best effort operation
             // log the error without rethrowing
-            logger.error('Failed to record client information', error);
+            logger.error('Failed to update client information', error);
         }
     };
 }
