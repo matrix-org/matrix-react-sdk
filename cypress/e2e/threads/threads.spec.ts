@@ -83,8 +83,9 @@ describe("Threads", () => {
         let roomId: string;
         cy.createRoom({}).then(_roomId => {
             roomId = _roomId;
-            cy.inviteUser(roomId, bot.getUserId());
-            bot.joinRoom(roomId);
+            cy.inviteUser(roomId, bot.getUserId()).then(() => {
+                bot.joinRoom(roomId);
+            });
             cy.visit("/#/room/" + roomId);
         });
 
