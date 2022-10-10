@@ -93,7 +93,7 @@ export default class DeviceListener {
         );
         this.dispatcherRef = dis.register(this.onAction);
         this.recheck();
-        this.recordClientInformation();
+        this.updateClientInformation();
     }
 
     public stop() {
@@ -219,7 +219,7 @@ export default class DeviceListener {
     private onAction = ({ action }: ActionPayload) => {
         if (action !== Action.OnLoggedIn) return;
         this.recheck();
-        this.recordClientInformation();
+        this.updateClientInformation();
     };
 
     // The server doesn't tell us when key backup is set up, so we poll
@@ -372,20 +372,20 @@ export default class DeviceListener {
         this.shouldRecordClientInformation = !!newValue;
 
         if (this.shouldRecordClientInformation !== prevValue) {
-            this.recordClientInformation();
+            this.updateClientInformation();
         }
     };
 
-    private recordClientInformation = async () => {
+    private updateClientInformation = async () => {
         try {
-            if (!this.shouldRecordClientInformation) {
-                await removeClientInformation(MatrixClientPeg.get());
-            } else {
+            if (this.shouldRecordClientInformation) {
                 await recordClientInformation(
                     MatrixClientPeg.get(),
                     SdkConfig.get(),
                     PlatformPeg.get(),
                 );
+            } else {
+                await removeClientInformation(MatrixClientPeg.get());
             }
         } catch (error) {
             // this is a best effort operation
