@@ -22,7 +22,7 @@ import encrypt from "matrix-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation, ISendEventResponse, MatrixEvent, UploadOpts } from "matrix-js-sdk/src/matrix";
+import { IEventRelation, ISendEventResponse, MatrixEvent, UploadOpts, UploadProgress } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
@@ -70,7 +70,7 @@ interface IMediaConfig {
  */
 async function loadImageElement(imageFile: File) {
     // Load the file into an html element
-    const img = document.createElement("img");
+    const img = new Image();
     const objectUrl = URL.createObjectURL(imageFile);
     const imgPromise = new Promise((resolve, reject) => {
         img.onload = function() {
@@ -85,7 +85,7 @@ async function loadImageElement(imageFile: File) {
 
     // check for hi-dpi PNGs and fudge display resolution as needed.
     // this is mainly needed for macOS screencaps
-    let parsePromise;
+    let parsePromise: Promise<boolean>;
     if (imageFile.type === "image/png") {
         // in practice macOS happens to order the chunks so they fall in
         // the first 0x1000 bytes (thanks to a massive ICC header).
@@ -490,7 +490,7 @@ export default class ContentMessages {
         this.inprogress.push(upload);
         dis.dispatch<UploadStartedPayload>({ action: Action.UploadStarted, upload });
 
-        function onProgress(progress) {
+        function onProgress(progress: UploadProgress) {
             upload.onProgress(progress);
             dis.dispatch<UploadProgressPayload>({ action: Action.UploadProgress, upload });
         }
