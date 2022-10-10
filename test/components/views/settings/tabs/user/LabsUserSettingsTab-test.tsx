@@ -27,7 +27,6 @@ import {
 import SdkConfig from '../../../../../../src/SdkConfig';
 
 describe('<SecurityUserSettingsTab />', () => {
-
     const sdkConfigSpy = jest.spyOn(SdkConfig, 'get');
 
     const defaultProps = {
