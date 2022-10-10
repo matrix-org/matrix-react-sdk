@@ -163,7 +163,12 @@ exports[`<SecurityUserSettingsTab /> renders settings marked as beta as beta car
         <div
           class="mx_BetaCard_caption"
         >
-          TODO
+          <p>
+            Have greater visibility and control over all your sessions.
+          </p>
+          <p>
+            Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.
+          </p>
         </div>
         <div
           class="mx_BetaCard_buttons"
