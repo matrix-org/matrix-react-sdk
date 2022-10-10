@@ -71,6 +71,7 @@ export const mockClientMethodsUser = (userId = '@alice:domain') => ({
     credentials: { userId },
     getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
     getAccessToken: jest.fn(),
+    getDeviceId: jest.fn(),
 });
 
 /**
@@ -94,6 +95,21 @@ export const mockClientMethodsServer = (): Partial<Record<MethodKeysOf<MatrixCli
     getIdentityServerUrl: jest.fn(),
     getHomeserverUrl: jest.fn(),
     getCapabilities: jest.fn().mockReturnValue({}),
+    getClientWellKnown: jest.fn().mockReturnValue({}),
     doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
+});
+
+export const mockClientMethodsDevice = (
+    deviceId = 'test-device-id',
+): Partial<Record<MethodKeysOf<MatrixClient>, unknown>> => ({
+    getDeviceId: jest.fn().mockReturnValue(deviceId),
+    getDeviceEd25519Key: jest.fn(),
+    getDevices: jest.fn().mockResolvedValue({ devices: [] }),
+});
+
+export const mockClientMethodsCrypto = (): Partial<Record<MethodKeysOf<MatrixClient>, unknown>> => ({
+    isCryptoEnabled: jest.fn(),
+    getCrossSigningCacheCallbacks: jest.fn(),
+    checkKeyBackup: jest.fn(),
 });
 
