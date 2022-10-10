@@ -213,7 +213,7 @@
     "%(senderName)s removed the main address for this room.": "%(senderName)s вилучає основу адресу цієї кімнати.",
     "Someone": "Хтось",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s надіслав(-ла) запрошення %(targetDisplayName)s приєднатися до кімнати.",
-    "Default": "Типово",
+    "Default": "Типовий",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s зробив(-ла) майбутню історію кімнати видимою для всіх учасників з моменту, коли вони приєдналися.",
     "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s робить майбутню історію кімнати видимою для всіх учасників від часу їхнього приєднання.",
     "%(senderName)s made future room history visible to all room members.": "%(senderName)s зробив(-ла) майбутню історію видимою для всіх учасників кімнати.",
