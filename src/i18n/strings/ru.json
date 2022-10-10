@@ -1516,7 +1516,7 @@
     "Favourited": "В избранном",
     "Room options": "Настройки комнаты",
     "Welcome to %(appName)s": "Добро пожаловать в %(appName)s",
-    "Create a Group Chat": "Создать групповой чат",
+    "Create a Group Chat": "Создать комнату",
     "All settings": "Все настройки",
     "Feedback": "Отзыв",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
@@ -2831,7 +2831,7 @@
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Теперь ваше новое устройство проверено. Оно имеет доступ к вашим зашифрованным сообщениям, и другие пользователи будут воспринимать его как доверенное.",
     "Verify with another device": "Заверить с помощью другого устройства",
     "Someone already has that username, please try another.": "У кого-то уже есть такое имя пользователя, пожалуйста, попробуйте другое.",
-    "Device verified": "Устройство заверено",
+    "Device verified": "Сессия заверена",
     "Verify this device": "Заверьте эту сессию",
     "Unable to verify this device": "Не удалось проверить это устройство",
     "Show all threads": "Показать все обсуждения",
@@ -3558,5 +3558,6 @@
     "Application": "Приложение",
     "Version": "Версия",
     "URL": "URL-адрес",
-    "Client": "Клиент"
+    "Client": "Клиент",
+    "Room info": "О комнате"
 }
