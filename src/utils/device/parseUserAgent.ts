@@ -99,7 +99,14 @@ export const parseUserAgent = (userAgent?: string): ExtendedDeviceInformation =>
     const operatingSystem = parser.getOS();
 
     const deviceType = getDeviceType(userAgent, device, browser, operatingSystem);
-    const deviceOperatingSystem = concatenateNameAndVersion(operatingSystem.name, operatingSystem.version);
+
+    // OSX versions are frozen at 10.15.17 in UA strings https://chromestatus.com/feature/5452592194781184
+    // ignore OS version in browser based sessions
+    const shouldIgnoreOSVersion = deviceType === DeviceType.Web || deviceType === DeviceType.Desktop;
+    const deviceOperatingSystem = concatenateNameAndVersion(
+        operatingSystem.name,
+        shouldIgnoreOSVersion ? undefined : operatingSystem.version,
+    );
     const deviceModel = concatenateNameAndVersion(device.vendor, device.model);
     const client = concatenateNameAndVersion(browser.name, browser.version);
 
