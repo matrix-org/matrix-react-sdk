@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { MethodKeysOf, mocked, MockedObject } from "jest-mock";
+import { MethodKeysOf, mocked, MockedObject, PropertyKeysOf } from "jest-mock";
 import { MatrixClient, User } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
@@ -107,9 +107,18 @@ export const mockClientMethodsDevice = (
     getDevices: jest.fn().mockResolvedValue({ devices: [] }),
 });
 
-export const mockClientMethodsCrypto = (): Partial<Record<MethodKeysOf<MatrixClient>, unknown>> => ({
+export const mockClientMethodsCrypto = (): Partial<Record<
+    MethodKeysOf<MatrixClient> & PropertyKeysOf<MatrixClient>, unknown>
+> => ({
     isCryptoEnabled: jest.fn(),
+    isSecretStorageReady: jest.fn(),
+    isKeyBackupKeyStored: jest.fn(),
     getCrossSigningCacheCallbacks: jest.fn(),
-    checkKeyBackup: jest.fn(),
+    getStoredCrossSigningForUser: jest.fn(),
+    checkKeyBackup: jest.fn().mockReturnValue({}),
+    crypto: {
+        getSessionBackupPrivateKey: jest.fn(),
+        secretStorage: { hasKey: jest.fn() },
+    },
 });
 
