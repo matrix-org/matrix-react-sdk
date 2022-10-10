@@ -124,7 +124,7 @@ Cypress.Commands.add("startDM", (name: string) => {
     cy.get(".mx_BasicMessageComposer_input")
         .should("have.focus")
         .type("Hey!{enter}");
-    cy.contains(".mx_EventTile_body", "Hey!");
+    cy.contains(".mx_EventTile_body", "Hey!", { timeout: 20000 });
     cy.contains(".mx_RoomSublist[aria-label=People]", name);
 });
 
