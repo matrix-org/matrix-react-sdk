@@ -470,6 +470,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Use new session manager (under active development)"),
         default: false,
+        betaInfo: {
+            title: _td('New session manager'),
+            caption: () => _td('TODO'),
+        },
     },
     "baseFontSize": {
         displayName: _td("Font size"),
