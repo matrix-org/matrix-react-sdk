@@ -114,6 +114,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
     return (
         <div
             className="mx_RoomLiveShareWarning mx_RoomCallBanner"
+            data-test-id='room-call-banner'
             onClick={onClick}
         >
             <div className="mx_RoomCallBanner_text">
