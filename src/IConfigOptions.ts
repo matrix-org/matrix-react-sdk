@@ -185,6 +185,7 @@ export interface IConfigOptions {
     login_with_qr?: {
         disabled?: boolean;
         default_http_transport_server?: string;
+        enable_scanning?: boolean;
     };
 }
 

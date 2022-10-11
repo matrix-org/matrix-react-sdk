@@ -54,14 +54,19 @@ interface IState {
     mediaPermissionError?: boolean;
     mode: Mode;
     scanning: boolean;
+    scanningEnabled: boolean;
 }
 
 export default class LoginWithQR extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
 
+        const scanningEnabled = SdkConfig.get().login_with_qr?.enable_scanning;
+        const mode = !this.isNewDevice && scanningEnabled ? Mode.SCAN : Mode.SHOW;
+
         this.state = {
-            mode: this.isNewDevice ? Mode.SHOW : Mode.SCAN,
+            mode,
+            scanningEnabled,
             scanning: false,
         };
 
@@ -443,17 +448,19 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             } else {
                 main = <div className="mx_LoginWithQR_spinner"><Spinner /></div>;
             }
-            buttons = <>
-                <div className="mx_LoginWithQR_separator">
-                    { _t("Need an alternative method?") }
-                </div>
-                <AccessibleButton
-                    kind="primary_outline"
-                    onClick={this.onScanQRCodeClicked}
-                >
-                    { _t("Scan QR code") }
-                </AccessibleButton>
-            </>;
+            if (this.state.scanningEnabled) {
+                buttons = <>
+                    <div className="mx_LoginWithQR_separator">
+                        { _t("Need an alternative method?") }
+                    </div>
+                    <AccessibleButton
+                        kind="primary_outline"
+                        onClick={this.onScanQRCodeClicked}
+                    >
+                        { _t("Scan QR code") }
+                    </AccessibleButton>
+                </>;
+            }
         } else if (this.state.mode === Mode.SCAN) {
             title = this.isExistingDevice? _t("Link a device") : _t("Sign in with QR code");
             if (!this.state.scanning) {
