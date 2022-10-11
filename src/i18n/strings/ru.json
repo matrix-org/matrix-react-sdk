@@ -3559,5 +3559,6 @@
     "Version": "Версия",
     "URL": "URL-адрес",
     "Client": "Клиент",
-    "Room info": "О комнате"
+    "Room info": "О комнате",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Редактор «Что видишь, то и получишь» (скоро появится режим обычного текста) (в активной разработке)"
 }
