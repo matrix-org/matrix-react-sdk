@@ -606,7 +606,7 @@ export interface ElementCallMemberContent {
 export class ElementCall extends Call {
     public static readonly CALL_EVENT_TYPE = new NamespacedValue(null, "org.matrix.msc3401.call");
     public static readonly MEMBER_EVENT_TYPE = new NamespacedValue(null, "org.matrix.msc3401.call.member");
-    private static readonly DUPLICATE_CALL_DEVICE_EVENT_TYPE = "io.element.duplicate_call_device";
+    public static readonly DUPLICATE_CALL_DEVICE_EVENT_TYPE = "io.element.duplicate_call_device";
     public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
     private kickedOutByAnotherDevice = false;
@@ -859,13 +859,16 @@ export class ElementCall extends Call {
     }
 
     private get mayTerminate(): boolean {
-        return this.groupCall.getContent()["m.intent"] !== "m.room"
-            && this.room.currentState.mayClientSendStateEvent(ElementCall.CALL_EVENT_TYPE.name, this.client);
+        if (this.kickedOutByAnotherDevice) return false;
+        if (this.groupCall.getContent()["m.intent"] === "m.room") return false;
+        if (
+            !this.room.currentState.mayClientSendStateEvent(ElementCall.CALL_EVENT_TYPE.name, this.client)
+        ) return false;
+
+        return true;
     }
 
     private async terminate(): Promise<void> {
-        if (this.kickedOutByAnotherDevice) return;
-
         await this.client.sendStateEvent(
             this.roomId,
             ElementCall.CALL_EVENT_TYPE.name,
@@ -885,16 +888,14 @@ export class ElementCall extends Call {
     };
 
     private onToDeviceEvent = (event: MatrixEvent): void => {
-        if (event.getType() !== ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE) return;
-
         const content = event.getContent();
-
+        if (event.getType() !== ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE) return;
+        if (event.getSender() !== this.client.getUserId()) return;
         if (content.device_id === this.client.getDeviceId()) return;
+        if (content.timestamp <= this.connectionTime) return;
 
-        if (content.timestamp > this.connectionTime) {
-            this.kickedOutByAnotherDevice = true;
-            this.disconnect();
-        }
+        this.kickedOutByAnotherDevice = true;
+        this.disconnect();
     };
 
     private onConnectionState = (state: ConnectionState, prevState: ConnectionState) => {
