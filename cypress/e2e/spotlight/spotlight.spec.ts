@@ -124,7 +124,8 @@ Cypress.Commands.add("startDM", (name: string) => {
     cy.get(".mx_BasicMessageComposer_input")
         .should("have.focus")
         .type("Hey!{enter}");
-    cy.contains(".mx_EventTile_body", "Hey!");
+    // The DM room is created at this point, this can take a little bit of time
+    cy.contains(".mx_EventTile_body", "Hey!", { timeout: 30000 });
     cy.contains(".mx_RoomSublist[aria-label=People]", name);
 });
 
@@ -345,7 +346,7 @@ describe("Spotlight", () => {
             .type("Hey!{enter}");
 
         // Assert DM exists by checking for the first message and the room being in the room list
-        cy.contains(".mx_EventTile_body", "Hey!");
+        cy.contains(".mx_EventTile_body", "Hey!", { timeout: 30000 });
         cy.get(".mx_RoomSublist[aria-label=People]").should("contain", bot2Name);
 
         // Invite BotBob into existing DM with ByteBot
