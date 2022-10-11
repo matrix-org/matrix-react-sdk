@@ -44,6 +44,7 @@ export class VoiceBroadcastRecording
     implements IDestroyable {
     private state: VoiceBroadcastInfoState;
     private recorder: VoiceBroadcastRecorder;
+    private sequence = 1;
 
     public constructor(
         public readonly infoEvent: MatrixEvent,
@@ -131,6 +132,9 @@ export class VoiceBroadcastRecording
         content["m.relates_to"] = {
             rel_type: RelationType.Reference,
             event_id: this.infoEvent.getId(),
+        };
+        content["io.element.voice_broadcast_chunk"] = {
+            sequence: this.sequence++,
         };
 
         await this.client.sendMessage(this.infoEvent.getRoomId(), content);

@@ -255,6 +255,9 @@ describe("VoiceBroadcastRecording", () => {
                             ["org.matrix.msc1767.text"]: "Voice message",
                             ["org.matrix.msc3245.voice"]: {},
                             url: "mxc://example.com/vb",
+                            ["io.element.voice_broadcast_chunk"]: {
+                                sequence: 1,
+                            },
                         },
                     );
                 });
@@ -262,6 +265,10 @@ describe("VoiceBroadcastRecording", () => {
 
             describe("and calling stop", () => {
                 beforeEach(async () => {
+                    await onChunkRecorded({
+                        buffer: new Uint8Array([1, 2, 3]),
+                        length: 23,
+                    });
                     mocked(voiceBroadcastRecorder.stop).mockResolvedValue({
                         buffer: new Uint8Array([4, 5, 6]),
                         length: 42,
@@ -309,6 +316,9 @@ describe("VoiceBroadcastRecording", () => {
                             ["org.matrix.msc1767.text"]: "Voice message",
                             ["org.matrix.msc3245.voice"]: {},
                             url: "mxc://example.com/vb",
+                            ["io.element.voice_broadcast_chunk"]: {
+                                sequence: 2,
+                            },
                         },
                     );
                 });
