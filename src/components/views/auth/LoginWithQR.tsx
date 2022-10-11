@@ -99,6 +99,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         if (this.rendezvous) {
             this.rendezvous.onCancelled = undefined;
             this.rendezvous.channel.transport.onCancelled = undefined;
+            // calling cancel will call close() as well to clean up the resources
             void this.rendezvous.userCancelled();
         }
     }
