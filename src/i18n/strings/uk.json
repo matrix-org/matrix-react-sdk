@@ -3618,5 +3618,6 @@
     "Enable %(brand)s as an additional calling option in this room": "Увімкнути %(brand)s додатковою опцією викликів у цій кімнаті",
     "Join %(brand)s calls": "Приєднатися до %(brand)s викликів",
     "Start %(brand)s calls": "Розпочати %(brand)s викликів",
-    "Sorry — this call is currently full": "Перепрошуємо, цей виклик заповнено"
+    "Sorry — this call is currently full": "Перепрошуємо, цей виклик заповнено",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Редактор Wysiwyg (скоро з'явиться режим звичайного тексту) (в активній розробці)"
 }
