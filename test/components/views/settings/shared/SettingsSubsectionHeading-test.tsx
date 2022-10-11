@@ -17,7 +17,7 @@ limitations under the License.
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import SettingsSubsectionHeading from '../../../../../src/components/views/settings/shared/SettingsSubsectionHeading';
+import { SettingsSubsectionHeading } from '../../../../../src/components/views/settings/shared/SettingsSubsectionHeading';
 
 describe('<SettingsSubsectionHeading />', () => {
     const defaultProps = {

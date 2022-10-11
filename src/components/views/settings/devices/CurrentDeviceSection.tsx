@@ -20,7 +20,7 @@ import { LocalNotificationSettings } from 'matrix-js-sdk/src/@types/local_notifi
 import { _t } from '../../../../languageHandler';
 import Spinner from '../../elements/Spinner';
 import SettingsSubsection from '../shared/SettingsSubsection';
-import SettingsSubsectionHeading from '../shared/SettingsSubsectionHeading';
+import { SettingsSubsectionHeading } from '../shared/SettingsSubsectionHeading';
 import DeviceDetails from './DeviceDetails';
 import DeviceExpandDetailsButton from './DeviceExpandDetailsButton';
 import DeviceTile from './DeviceTile';
