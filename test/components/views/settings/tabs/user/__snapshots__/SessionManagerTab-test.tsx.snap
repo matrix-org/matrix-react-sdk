@@ -89,6 +89,17 @@ exports[`<SessionManagerTab /> renders current session section with a verified s
     >
       Current session
     </h3>
+    <div
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="mx_AccessibleButton"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="mx_KebabContextMenu_icon"
+      />
+    </div>
   </div>
   <div
     class="mx_SettingsSubsection_content"
@@ -199,6 +210,17 @@ exports[`<SessionManagerTab /> renders current session section with an unverifie
     >
       Current session
     </h3>
+    <div
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="mx_AccessibleButton"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="mx_KebabContextMenu_icon"
+      />
+    </div>
   </div>
   <div
     class="mx_SettingsSubsection_content"
