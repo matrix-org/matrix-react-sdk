@@ -3582,8 +3582,8 @@
     "Failed to set pusher state": "Nepodařilo se nastavit stav push oznámení",
     "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s vybraných relací",
     "Receive push notifications on this session.": "Přijímat push oznámení v této relaci.",
-    "Toggle push notifications on this session.": "Přepnout push notifikace v této relaci.",
-    "Push notifications": "Push notifikace",
+    "Toggle push notifications on this session.": "Přepnout push oznámení v této relaci.",
+    "Push notifications": "Push oznámení",
     "Enable notifications for this device": "Povolit oznámení pro toto zařízení",
     "Turn off to disable notifications on all your devices and sessions": "Vypnutím zakážete oznámení na všech zařízeních a relacích",
     "Enable notifications for this account": "Povolit oznámení pro tento účet",
@@ -3618,5 +3618,10 @@
     "Enable %(brand)s as an additional calling option in this room": "Povolit %(brand)s jako další možnost volání v této místnosti",
     "Join %(brand)s calls": "Připojit se k %(brand)s volání",
     "Start %(brand)s calls": "Zahájit %(brand)s volání",
-    "Sorry — this call is currently full": "Omlouváme se — tento hovor je v současné době plný"
+    "Sorry — this call is currently full": "Omlouváme se — tento hovor je v současné době plný",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Náš nový správce relací poskytuje lepší přehled o všech relacích a lepší kontrolu nad nimi, včetně možnosti vzdáleně přepínat push oznámení.",
+    "Have greater visibility and control over all your sessions.": "Získejte větší přehled a kontrolu nad všemi relacemi.",
+    "New session manager": "Nový správce relací",
+    "Use new session manager": "Použít nový správce relací",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Wysiwyg editor (textový režim již brzy) (v aktivním vývoji)"
 }
