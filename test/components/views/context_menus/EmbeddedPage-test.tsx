@@ -35,6 +35,24 @@ describe("<EmbeddedPage />", () => {
 
         const { asFragment } = render(<EmbeddedPage url="https://home.page" />);
         await screen.findByText("Przeglądaj pokoje");
+        expect(_t).toHaveBeenCalledWith("Explore rooms");
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should show error if unable to load", async () => {
+        mocked(_t).mockReturnValue("Couldn't load page");
+        fetchMock.get("https://other.page", {
+            status: 404,
+        });
+
+        const { asFragment } = render(<EmbeddedPage url="https://other.page" />);
+        await screen.findByText("Couldn't load page");
+        expect(_t).toHaveBeenCalledWith("Couldn't load page");
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should render nothing if no url given", () => {
+        const { asFragment } = render(<EmbeddedPage />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
