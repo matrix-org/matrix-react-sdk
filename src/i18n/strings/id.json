@@ -3618,5 +3618,6 @@
     "Video call started": "Panggilan video dimulai",
     "Unknown room": "Ruangan yang tidak diketahui",
     "Video call started in %(roomName)s. (not supported by this browser)": "Panggilan video dimulai di %(roomName)s. (tidak didukung oleh peramban ini)",
-    "Video call started in %(roomName)s.": "Panggilan video dimulai di %(roomName)s."
+    "Video call started in %(roomName)s.": "Panggilan video dimulai di %(roomName)s.",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Komposer WYSIWYG (mode teks biasa akan datang) (dalam pengembangan aktif)"
 }
