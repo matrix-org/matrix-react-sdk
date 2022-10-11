@@ -28,8 +28,6 @@ import {
     showDialog as showAnalyticsLearnMoreDialog,
 } from "../components/views/dialogs/AnalyticsLearnMoreDialog";
 import { Action } from "../dispatcher/actions";
-import { SnakedObject } from "../utils/SnakedObject";
-import { IConfigOptions } from "../IConfigOptions";
 import SettingsStore from "../settings/SettingsStore";
 
 const onAccept = () => {
