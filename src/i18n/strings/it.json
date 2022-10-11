@@ -3610,5 +3610,14 @@
     "Client": "Client",
     "Fill screen": "Riempi schermo",
     "Video call started": "Videochiamata iniziata",
-    "Unknown room": "Stanza sconosciuta"
+    "Unknown room": "Stanza sconosciuta",
+    "Video call (%(brand)s)": "Videochiamata (%(brand)s)",
+    "Call type": "Tipo chiamata",
+    "You do not have sufficient permissions to change this.": "Non hai autorizzazioni sufficienti per cambiarlo.",
+    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s è crittografato end-to-end, ma attualmente è limitato ad un minore numero di utenti.",
+    "Enable %(brand)s as an additional calling option in this room": "Attiva %(brand)s come opzione di chiamata aggiuntiva in questa stanza",
+    "Join %(brand)s calls": "Entra in chiamate di %(brand)s",
+    "Start %(brand)s calls": "Inizia chiamate di %(brand)s",
+    "Sorry — this call is currently full": "Spiacenti — questa chiamata è piena",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Compositore wysiwyg (modalità a testo semplice in arrivo) (in sviluppo attivo)"
 }
