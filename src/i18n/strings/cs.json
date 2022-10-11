@@ -3610,5 +3610,13 @@
     "Video call started in %(roomName)s.": "Videohovor byl zahájen v %(roomName)s.",
     "Operating system": "Operační systém",
     "Model": "Model",
-    "Client": "Klient"
+    "Client": "Klient",
+    "Video call (%(brand)s)": "Videohovor (%(brand)s)",
+    "Call type": "Typ volání",
+    "You do not have sufficient permissions to change this.": "Ke změně nemáte dostatečná oprávnění.",
+    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s je koncově šifrovaný, ale v současné době je omezen na menší počet uživatelů.",
+    "Enable %(brand)s as an additional calling option in this room": "Povolit %(brand)s jako další možnost volání v této místnosti",
+    "Join %(brand)s calls": "Připojit se k %(brand)s volání",
+    "Start %(brand)s calls": "Zahájit %(brand)s volání",
+    "Sorry — this call is currently full": "Omlouváme se — tento hovor je v současné době plný"
 }
