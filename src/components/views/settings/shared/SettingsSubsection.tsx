@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { HTMLAttributes } from "react";
 
-import SettingsSubsectionHeading from "./SettingsSubsectionHeading";
+import { SettingsSubsectionHeading } from "./SettingsSubsectionHeading";
 
 export interface SettingsSubsectionProps extends HTMLAttributes<HTMLDivElement> {
     heading: string | React.ReactNode;

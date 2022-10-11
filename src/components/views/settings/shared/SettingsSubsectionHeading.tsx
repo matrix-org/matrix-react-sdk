@@ -29,5 +29,3 @@ export const SettingsSubsectionHeading: React.FC<SettingsSubsectionHeadingProps>
         { children }
     </div>
 );
-
-export default SettingsSubsectionHeading;
