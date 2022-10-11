@@ -78,16 +78,7 @@ const onLearnMorePreviouslyOptedIn = () => {
 const TOAST_KEY = "analytics";
 
 export function getPolicyUrl(): Optional<string> {
-    const policyUrl = SdkConfig.get("privacy_policy_url");
-    if (policyUrl) return policyUrl;
-
-    // Try get from legacy config location
-    const piwikConfig = SdkConfig.get("piwik");
-    let piwik: Optional<SnakedObject<Extract<IConfigOptions["piwik"], object>>>;
-    if (typeof piwikConfig === 'object') {
-        piwik = new SnakedObject(piwikConfig);
-    }
-    return piwik?.get("policy_url");
+    return SdkConfig.get("privacy_policy_url");
 }
 
 export const showToast = (): void => {
