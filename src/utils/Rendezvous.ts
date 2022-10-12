@@ -78,26 +78,82 @@ export class Rendezvous {
     }
 
     async startAfterShowingCode(): Promise<string | undefined> {
+        return this.start();
+    }
+
+    async startAfterScanningCode(theirIntent: RendezvousIntent): Promise<string | undefined> {
+        return this.start(theirIntent);
+    }
+
+    private async start(theirIntent?: RendezvousIntent): Promise<string | undefined> {
+        const didScan = !!theirIntent;
+
         const checksum = await this.channel.connect();
 
         logger.info(`Connected to secure channel with checksum: ${checksum}`);
 
-        // first step is always to receive a m.login.start event from scanning party
-        const { type, intent: theirIntent } = await this.channel.receive();
-
-        if (type === PayloadType.Finish) {
-            if (theirIntent) {
-                const incompatibleIntents = await this.areIntentsIncompatible(theirIntent);
-                if (!incompatibleIntents) {
-                    await this.channel.cancel(RendezvousCancellationReason.Unknown);
-                }
+        if (didScan) {
+            if (await this.areIntentsIncompatible(theirIntent)) {
+                // a m.login.finish event is sent as part of areIntentsIncompatible
+                return undefined;
             }
-            return undefined;
         }
 
-        if (type !== PayloadType.Start) {
-            await this.channel.cancel(RendezvousCancellationReason.Unknown);
-            return undefined;
+        if (this.cli) {
+            if (didScan) {
+                await this.channel.receive(); // wait for ack
+            }
+
+            // determine available protocols
+            if (!(await this.cli.doesServerSupportUnstableFeature('org.matrix.msc3882'))) {
+                logger.info("Server doesn't support MSC3882");
+                await this.send({ type: PayloadType.Finish, outcome: 'unsupported' });
+                await this.cancel(RendezvousCancellationReason.HomeserverLacksSupport);
+                return undefined;
+            }
+
+            await this.send({ type: PayloadType.Progress, protocols: ['login_token'] });
+
+            logger.info('Waiting for other device to chose protocol');
+            const { type, protocol, outcome } = await this.channel.receive();
+
+            if (type === PayloadType.Finish) {
+                // new device decided not to complete
+                switch (outcome ?? '') {
+                    case 'unsupported':
+                        await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
+                        break;
+                    default:
+                        await this.cancel(RendezvousCancellationReason.Unknown);
+                }
+                return undefined;
+            }
+
+            if (type !== PayloadType.Progress) {
+                await this.cancel(RendezvousCancellationReason.Unknown);
+                return undefined;
+            }
+
+            if (protocol !== 'login_token') {
+                await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
+                return undefined;
+            }
+        } else {
+            if (!didScan) {
+                logger.info("Sending ack");
+                await this.send({ type: PayloadType.Progress });
+            }
+
+            logger.info("Waiting for protocols");
+            const { protocols } = await this.channel.receive();
+
+            if (!Array.isArray(protocols) || !protocols.includes('login_token')) {
+                await this.send({ type: PayloadType.Finish, outcome: 'unsupported' });
+                await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
+                return undefined;
+            }
+
+            await this.send({ type: PayloadType.Progress, protocol: "login_token" });
         }
 
         return checksum;
@@ -107,64 +163,14 @@ export class Rendezvous {
         await this.channel.send({ type, ...payload });
     }
 
-    async startAfterScanningCode(theirIntent: RendezvousIntent): Promise<string | undefined> {
-        const checksum = await this.channel.connect();
-
-        logger.info(`Connected to secure channel with checksum: ${checksum}`);
-
-        if (await this.areIntentsIncompatible(theirIntent)) {
-            return undefined;
-        }
-
-        await this.send({ type: PayloadType.Start, intent: this.ourIntent });
-
-        return checksum;
-    }
-
     async completeOnNewDevice(): Promise<IMatrixClientCreds | undefined> {
-        // alert(`Secure connection established. The code ${digits} should be displayed on your other device`);
-
-        logger.info('Waiting for protocols and homeserver');
-
-        const { type: type1, homeserver, outcome: outcome1, protocols } = await this.channel.receive();
-
-        if (type1 === PayloadType.Finish) {
-            switch (outcome1 ?? '') {
-                case 'declined':
-                    logger.info('Other device declined the linking');
-                    await this.cancel(RendezvousCancellationReason.UserDeclined);
-                    break;
-                case 'unsupported':
-                    logger.info('Other device declined the linking');
-                    await this.cancel(RendezvousCancellationReason.HomeserverLacksSupport);
-                    break;
-                default:
-                    await this.cancel(RendezvousCancellationReason.Unknown);
-            }
-            return undefined;
-        }
-
-        if (type1 !== PayloadType.Progress) {
-            logger.info(`Received unexpected payload: ${type1}`);
-            await this.cancel(RendezvousCancellationReason.Unknown);
-            return undefined;
-        }
-
-        if (!Array.isArray(protocols) || !protocols.includes('login_token')) {
-            await this.send({ type: PayloadType.Finish, outcome: 'unsupported' });
-            await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
-            return undefined;
-        }
-
-        await this.send({ type: PayloadType.Progress, protocol: 'login_token' });
-
         logger.info('Waiting for login_token');
 
         // eslint-disable-next-line camelcase
-        const { type: type2, login_token, outcome: outcome2 } = await this.channel.receive();
+        const { type, login_token, outcome, homeserver } = await this.channel.receive();
 
-        if (type2 === PayloadType.Finish) {
-            switch (outcome2 ?? '') {
+        if (type === PayloadType.Finish) {
+            switch (outcome ?? '') {
                 case 'unsupported':
                     await this.cancel(RendezvousCancellationReason.HomeserverLacksSupport);
                     break;
@@ -236,42 +242,6 @@ export class Rendezvous {
     async confirmLoginOnExistingDevice(): Promise<string | undefined> {
         const client = this.cli;
 
-        const homeserver = client.baseUrl;
-        const user = client.getUserId();
-
-        if (!(await client.doesServerSupportUnstableFeature('org.matrix.msc3882'))) {
-            logger.info("Server doesn't support MSC3882");
-            await this.send({ type: PayloadType.Finish, outcome: 'unsupported', user, homeserver });
-            await this.cancel(RendezvousCancellationReason.HomeserverLacksSupport);
-            return undefined;
-        }
-
-        await this.send({ type: PayloadType.Progress, protocols: ['login_token'], user, homeserver });
-
-        const { type, protocol, outcome: outcome1 } = await this.channel.receive();
-
-        if (type === PayloadType.Finish) {
-            // new device decided not to complete
-            switch (outcome1 ?? '') {
-                case 'unsupported':
-                    await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
-                    break;
-                default:
-                    await this.cancel(RendezvousCancellationReason.Unknown);
-            }
-            return undefined;
-        }
-
-        if (type !== PayloadType.Progress) {
-            await this.cancel(RendezvousCancellationReason.Unknown);
-            return undefined;
-        }
-
-        if (protocol !== 'login_token') {
-            await this.cancel(RendezvousCancellationReason.UnsupportedAlgorithm);
-            return undefined;
-        }
-
         logger.info("Requesting login token");
 
         const loginTokenResponse = await client.requestLoginToken();
@@ -284,7 +254,7 @@ export class Rendezvous {
         const { login_token } = loginTokenResponse as LoginTokenPostResponse;
 
         // eslint-disable-next-line camelcase
-        await this.send({ type: PayloadType.Progress, login_token });
+        await this.send({ type: PayloadType.Progress, login_token, homeserver: client.baseUrl });
 
         logger.info('Waiting for outcome');
         const res = await this.channel.receive();
@@ -374,5 +344,9 @@ export class Rendezvous {
 
     async cancel(reason: RendezvousCancellationReason) {
         await this.channel.cancel(reason);
+    }
+
+    async close() {
+        await this.channel.close();
     }
 }
