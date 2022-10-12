@@ -5,13 +5,26 @@ exports[`VoiceBroadcastHeader when rendering a live broadcast header with broadc
   <div
     class="mx_VoiceBroadcastHeader"
   >
-    <div
-      data-testid="member-avatar"
+    <span
+      class="mx_BaseAvatar"
+      role="presentation"
     >
-      test user
-      ,
-      @user:example.com
-    </div>
+      <span
+        aria-hidden="true"
+        class="mx_BaseAvatar_initial"
+        style="font-size: 26px; width: 40px; line-height: 40px;"
+      >
+        T
+      </span>
+      <img
+        alt=""
+        aria-hidden="true"
+        class="mx_BaseAvatar_image"
+        src="data:image/png;base64,00"
+        style="width: 40px; height: 40px;"
+        title="@user:example.com"
+      />
+    </span>
     <div
       class="mx_VoiceBroadcastHeader_content"
     >
@@ -28,20 +41,26 @@ exports[`VoiceBroadcastHeader when rendering a live broadcast header with broadc
       <div
         class="mx_VoiceBroadcastHeader_line"
       >
-        <div
-          data-testid="icon"
-        >
-          type: 
-          0
-          , colour: 
-          compound-secondary-content
-        </div>
+        <i
+          aria-hidden="true"
+          class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
+          role="presentation"
+          style="mask-image: url(\\"image-file-stub\\");"
+        />
         Voice broadcast
       </div>
     </div>
     <div
-      data-testid="live-badge"
-    />
+      class="mx_LiveBadge"
+    >
+      <i
+        aria-hidden="true"
+        class="mx_Icon mx_Icon_16 mx_Icon_live-badge"
+        role="presentation"
+        style="mask-image: url(\\"image-file-stub\\");"
+      />
+      Live
+    </div>
   </div>
 </div>
 `;
@@ -51,13 +70,26 @@ exports[`VoiceBroadcastHeader when rendering a non-live broadcast header should 
   <div
     class="mx_VoiceBroadcastHeader"
   >
-    <div
-      data-testid="member-avatar"
+    <span
+      class="mx_BaseAvatar"
+      role="presentation"
     >
-      test user
-      ,
-      @user:example.com
-    </div>
+      <span
+        aria-hidden="true"
+        class="mx_BaseAvatar_initial"
+        style="font-size: 26px; width: 40px; line-height: 40px;"
+      >
+        T
+      </span>
+      <img
+        alt=""
+        aria-hidden="true"
+        class="mx_BaseAvatar_image"
+        src="data:image/png;base64,00"
+        style="width: 40px; height: 40px;"
+        title="@user:example.com"
+      />
+    </span>
     <div
       class="mx_VoiceBroadcastHeader_content"
     >

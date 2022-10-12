@@ -16,35 +16,7 @@ import { Container } from "react-dom";
 import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { render, RenderResult } from "@testing-library/react";
 
-import MemberAvatar from "../../../../src/components/views/avatars/MemberAvatar";
 import { VoiceBroadcastHeader } from "../../../../src/voice-broadcast";
-import { Icon } from "../../../../src/components/atoms/Icon";
-
-jest.mock("../../../../src/components/views/avatars/MemberAvatar", () => ({
-    __esModule: true,
-    default: ({ member, fallbackUserId }: React.ComponentProps<typeof MemberAvatar>) => {
-        return <div data-testid="member-avatar">
-            { member.name },
-            { fallbackUserId }
-        </div>;
-    },
-}));
-
-jest.mock("../../../../src/voice-broadcast/components/atoms/LiveBadge", () => ({
-    LiveBadge: () => {
-        return <div data-testid="live-badge" />;
-    },
-}));
-
-jest.mock("../../../../src/components/atoms/Icon", () => ({
-    ...jest.requireActual("../../../../src/components/atoms/Icon") as object,
-    Icon: ({ type, colour }: React.ComponentProps<typeof Icon>) => {
-        return <div data-testid="icon">
-            type: { type },
-            colour: { colour }
-        </div>;
-    },
-}));
 
 describe("VoiceBroadcastHeader", () => {
     const userId = "@user:example.com";
