@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import shouldHideEvent from './shouldHideEvent';
@@ -79,9 +80,16 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
             return false;
         }
     } else {
-        const threadState = RoomNotificationStateStore.instance.getThreadsRoomState(room);
-        if (threadState.color > 0) {
-            return true;
+        const cli = room.client;
+        if (cli.canSupport.get(Feature.ThreadUnreadNotifications) === ServerSupport.Unsupported) {
+            const threadState = RoomNotificationStateStore.instance.getThreadsRoomState(room);
+            if (threadState.color > 0) {
+                return true;
+            }
+        } else {
+            if (room.hasThreadUnreadNotification()) {
+                return true;
+            }
         }
     }
 
