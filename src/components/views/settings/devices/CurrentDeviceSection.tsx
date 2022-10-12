@@ -74,6 +74,7 @@ const CurrentDeviceSectionHeading: React.FC<CurrentDeviceSectionHeadingProps> = 
             disabled={disabled}
             title={_t('Options')}
             options={menuOptions}
+            data-testid='current-session-menu'
         />
     </SettingsSubsectionHeading>;
 };
