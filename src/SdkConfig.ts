@@ -46,6 +46,15 @@ export const DEFAULTS: IConfigOptions = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
+    // TODO remove these defaults
+    login_with_qr: {
+        login: {
+            enable_showing: true,
+        },
+        reciprocate: {
+            enable_showing: true,
+        },
+    },
 };
 
 export default class SdkConfig {
