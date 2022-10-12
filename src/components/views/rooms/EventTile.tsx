@@ -27,6 +27,7 @@ import { NotificationCountType, Room, RoomEvent } from 'matrix-js-sdk/src/models
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import { Feature, ServerSupport } from 'matrix-js-sdk/src/feature';
 
 import { Icon as LinkIcon } from '../../../../res/img/element-icons/link.svg';
 import { Icon as ViewInRoomIcon } from '../../../../res/img/element-icons/view-in-room.svg';
@@ -84,6 +85,7 @@ import { useTooltip } from "../../../utils/useTooltip";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { ElementCall } from "../../../models/Call";
+import { UnreadNotificationBadge } from './NotificationBadge/UnreadNotificationBadge';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -394,7 +396,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
-            if (this.thread) {
+            if (this.thread && !this.supportsThreadNotifications) {
                 this.setupNotificationListener(this.thread);
             }
         }
@@ -405,33 +407,40 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         room?.on(ThreadEvent.New, this.onNewThread);
     }
 
+    private get supportsThreadNotifications(): boolean {
+        const client = MatrixClientPeg.get();
+        return client.canSupport.get(Feature.ThreadUnreadNotifications) !== ServerSupport.Unsupported
+    }
+
     private setupNotificationListener(thread: Thread): void {
-        const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(thread.room);
-
-        this.threadState = notifications.getThreadRoomState(thread);
-
-        this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
-        this.onThreadStateUpdate();
+        if (!this.supportsThreadNotifications) {
+            const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(thread.room);
+            this.threadState = notifications.getThreadRoomState(thread);
+            this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
+            this.onThreadStateUpdate();
+        }
     }
 
     private onThreadStateUpdate = (): void => {
-        let threadNotification = null;
-        switch (this.threadState?.color) {
-            case NotificationColor.Grey:
-                threadNotification = NotificationCountType.Total;
-                break;
-            case NotificationColor.Red:
-                threadNotification = NotificationCountType.Highlight;
-                break;
-        }
+        if (!this.supportsThreadNotifications) {
+            let threadNotification = null;
+            switch (this.threadState?.color) {
+                case NotificationColor.Grey:
+                    threadNotification = NotificationCountType.Total;
+                    break;
+                case NotificationColor.Red:
+                    threadNotification = NotificationCountType.Highlight;
+                    break;
+            }
 
-        this.setState({
-            threadNotification,
-        });
+            this.setState({
+                threadNotification,
+            });
+        }
     };
 
     private updateThread = (thread: Thread) => {
-        if (thread !== this.state.thread) {
+        if (thread !== this.state.thread && !this.supportsThreadNotifications) {
             if (this.threadState) {
                 this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
             }
@@ -1345,6 +1354,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 ]);
             }
             case TimelineRenderingType.ThreadsList: {
+                const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
                     React.createElement(this.props.as || "li", {
@@ -1358,7 +1368,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "data-shape": this.context.timelineRenderingType,
                         "data-self": isOwnEvent,
                         "data-has-reply": !!replyChain,
-                        "data-notification": this.state.threadNotification,
+                        "data-notification": !this.supportsThreadNotifications
+                            ? this.state.threadNotification
+                            : undefined,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
@@ -1406,6 +1418,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                             </RovingAccessibleTooltipButton>
                         </Toolbar>
                         { msgOption }
+                        <UnreadNotificationBadge
+                            room={room}
+                            threadId={this.props.mxEvent.getId()} />
                     </>)
                 );
             }

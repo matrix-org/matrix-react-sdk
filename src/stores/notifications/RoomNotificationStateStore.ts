@@ -17,6 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 import { ClientEvent } from "matrix-js-sdk/src/client";
+import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -28,7 +29,6 @@ import { SummarizedNotificationState } from "./SummarizedNotificationState";
 import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
 import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 interface IState {}
 
@@ -49,15 +49,6 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private constructor() {
         super(defaultDispatcher, {});
     }
-
-    // Optimistically setting to true
-    public static hasThreadNotificationSupport = true;
-    public static checkThreadNotificationsSupport = async (): Promise<void> => {
-        const cli = MatrixClientPeg.get();
-        const unstableFeature = await cli.doesServerSupportUnstableFeature("org.matrix.msc3773");
-        const stableSupport = await cli.isVersionSupported("v1.4");
-        this.hasThreadNotificationSupport = unstableFeature || stableSupport;
-    };
 
     /**
      * Gets a snapshot of notification state for all visible rooms. The number of states recorded
@@ -96,18 +87,25 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      */
     public getRoomState(room: Room): RoomNotificationState {
         if (!this.roomMap.has(room)) {
-            // Not very elegant, but that way we ensure that we start tracking
-            // threads notification at the same time at rooms.
-            // There are multiple entry points, and it's unclear which one gets
-            // called first
-            const threadState = new ThreadsRoomNotificationState(room);
-            this.roomThreadsMap.set(room, threadState);
+            let threadState;
+            if (room.client.canSupport.get(Feature.ThreadUnreadNotifications) === ServerSupport.Unsupported) {
+                // Not very elegant, but that way we ensure that we start tracking
+                // threads notification at the same time at rooms.
+                // There are multiple entry points, and it's unclear which one gets
+                // called first
+                const threadState = new ThreadsRoomNotificationState(room);
+                this.roomThreadsMap.set(room, threadState);
+            }
             this.roomMap.set(room, new RoomNotificationState(room, threadState));
         }
         return this.roomMap.get(room);
     }
 
-    public getThreadsRoomState(room: Room): ThreadsRoomNotificationState {
+    public getThreadsRoomState(room: Room): ThreadsRoomNotificationState | null {
+        if (room.client.canSupport.get(Feature.ThreadUnreadNotifications) !== ServerSupport.Unsupported) {
+            return null;
+        }
+
         if (!this.roomThreadsMap.has(room)) {
             this.roomThreadsMap.set(room, new ThreadsRoomNotificationState(room));
         }
