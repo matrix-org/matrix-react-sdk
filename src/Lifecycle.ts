@@ -825,8 +825,6 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
         await MatrixClientPeg.assign();
     }
 
-    await RoomNotificationStateStore.checkThreadNotificationsSupport();
-
     // Run the migrations after the MatrixClientPeg has been assigned
     SettingsStore.runMigrations();
 

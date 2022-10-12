@@ -81,7 +81,7 @@ import { NetworkDropdown } from "../../directory/NetworkDropdown";
 import AccessibleButton from "../../elements/AccessibleButton";
 import LabelledCheckbox from "../../elements/LabelledCheckbox";
 import Spinner from "../../elements/Spinner";
-import NotificationBadge from "../../rooms/NotificationBadge";
+import NotificationBadge from "../../rooms/NotificationBadge/NotificationBadge";
 import BaseDialog from "../BaseDialog";
 import FeedbackDialog from "../FeedbackDialog";
 import { IDialogProps } from "../IDialogProps";

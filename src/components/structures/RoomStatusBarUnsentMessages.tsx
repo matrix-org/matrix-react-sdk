@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactElement } from "react";
 
 import { StaticNotificationState } from "../../stores/notifications/StaticNotificationState";
-import NotificationBadge from "../views/rooms/NotificationBadge";
+import NotificationBadge from "../views/rooms/NotificationBadge/NotificationBadge";
 
 interface RoomStatusBarUnsentMessagesProps {
     title: string;

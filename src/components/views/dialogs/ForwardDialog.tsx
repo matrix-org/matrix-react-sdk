@@ -39,7 +39,7 @@ import { Alignment } from '../elements/Tooltip';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
-import NotificationBadge from "../rooms/NotificationBadge";
+import NotificationBadge from "../rooms/NotificationBadge/NotificationBadge";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { sortRooms } from "../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
 import QueryMatcher from "../../../autocomplete/QueryMatcher";
