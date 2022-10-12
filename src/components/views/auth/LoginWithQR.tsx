@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { buildChannelFromCode, RendezvousCancellationReason } from 'matrix-js-sdk/src/rendezvous';
+import { buildChannelFromCode, Rendezvous, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
 import { SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
 import { ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
 import { QrReader, OnResultFunction } from 'react-qr-reader';
@@ -24,7 +24,6 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from '../elements/AccessibleButton';
-import { Rendezvous } from '../../../utils/Rendezvous';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import QRCode from '../elements/QRCode';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
@@ -36,6 +35,7 @@ import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.s
 import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
 import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
+import { setLoggedIn } from '../../../Lifecycle';
 
 export enum Mode {
     SCAN = "scan",
@@ -55,7 +55,7 @@ interface IState {
     generatedRendezvous?: Rendezvous;
     scannedCode?: string;
     confirmationDigits?: string;
-    cancelled?: RendezvousCancellationReason;
+    cancelled?: RendezvousFailureReason;
     mediaPermissionError?: boolean;
     scanning: boolean;
 }
@@ -82,15 +82,15 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private async updateMode(mode: Mode) {
         if (mode === Mode.SCAN) {
             if (this.state.generatedRendezvous) {
-                this.state.generatedRendezvous.onCancelled = undefined;
-                this.state.generatedRendezvous.channel.transport.onCancelled = undefined;
+                this.state.generatedRendezvous.onFailure = undefined;
+                this.state.generatedRendezvous.channel.transport.onFailure = undefined;
                 await this.state.generatedRendezvous.userCancelled();
                 this.setState({ generatedRendezvous: undefined });
             }
         } else {
             if (this.state.scannedRendezvous) {
-                this.state.scannedRendezvous.onCancelled = undefined;
-                this.state.scannedRendezvous.channel.transport.onCancelled = undefined;
+                this.state.scannedRendezvous.onFailure = undefined;
+                this.state.scannedRendezvous.channel.transport.onFailure = undefined;
                 await this.state.scannedRendezvous.userCancelled();
                 this.setState({ scannedRendezvous: undefined });
             }
@@ -104,8 +104,8 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         if (this.rendezvous) {
-            this.rendezvous.onCancelled = undefined;
-            this.rendezvous.channel.transport.onCancelled = undefined;
+            this.rendezvous.onFailure = undefined;
+            this.rendezvous.channel.transport.onFailure = undefined;
             // calling cancel will call close() as well to clean up the resources
             void this.rendezvous.userCancelled();
         }
@@ -140,18 +140,18 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             const fallbackServer = SdkConfig.get().login_with_qr?.default_http_transport_server
                 ?? 'https://rendezvous.lab.element.dev'; // FIXME: remove this default value
 
-            const transport = new SimpleHttpRendezvousTransport(
-                this.onCancelled,
-                this.props.client,
-                this.props.serverConfig?.hsUrl,
-                fallbackServer,
-            );
+            const transport = new SimpleHttpRendezvousTransport({
+                onFailure: this.onFailure,
+                client: this.props.client,
+                hsUrl: this.props.serverConfig?.hsUrl,
+                fallbackRzServer: fallbackServer,
+            });
 
             const channel = new ECDHv1RendezvousChannel(transport);
 
             const generatedRendezvous = new Rendezvous(channel, this.props.client);
 
-            generatedRendezvous.onCancelled = this.onCancelled;
+            generatedRendezvous.onFailure = this.onFailure;
             await generatedRendezvous.generateCode();
             logger.info(generatedRendezvous.code);
             this.setState({
@@ -163,8 +163,15 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             this.setState({ confirmationDigits });
 
             if (this.isNewDevice) {
-                const res = await generatedRendezvous.completeOnNewDevice();
-                if (res) {
+                const creds = await generatedRendezvous.completeLoginOnNewDevice();
+                if (creds) {
+                    await setLoggedIn({
+                        accessToken: creds.accessToken,
+                        userId: creds.userId,
+                        deviceId: creds.deviceId,
+                        homeserverUrl: creds.homeserverUrl,
+                    });
+                    await generatedRendezvous.completeVerificationOnNewDevice(MatrixClientPeg.get());
                     this.props.onFinished(true);
                     defaultDispatcher.dispatch({
                         action: Action.ViewHomePage,
@@ -174,12 +181,12 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         } catch (e) {
             logger.error(e);
             if (this.rendezvous) {
-                await this.rendezvous.cancel(RendezvousCancellationReason.Unknown);
+                await this.rendezvous.cancel(RendezvousFailureReason.Unknown);
             }
         }
     };
 
-    private onCancelled = (reason: RendezvousCancellationReason) => {
+    private onFailure = (reason: RendezvousFailureReason) => {
         logger.info(`Rendezvous cancelled: ${reason}`);
         this.setState({ cancelled: reason });
     };
@@ -207,7 +214,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         // try {
         //     const parsed = JSON.parse(scannedCode);
         // } catch (err) {
-        //     this.setState({ cancelled: RendezvousCancellationReason.InvalidCode });
+        //     this.setState({ cancelled: RendezvousFailureReason.InvalidCode });
         //     return;
         // }
         try {
@@ -221,7 +228,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             const { channel, intent: theirIntent } = await buildChannelFromCode(
                 scannedCode,
-                this.onCancelled,
+                this.onFailure,
             );
 
             const scannedRendezvous = new Rendezvous(channel, this.props.client);
@@ -235,8 +242,15 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             this.setState({ confirmationDigits });
 
             if (this.isNewDevice) {
-                const res = await scannedRendezvous.completeOnNewDevice();
-                if (res) {
+                const creds = await scannedRendezvous.completeLoginOnNewDevice();
+                if (creds) {
+                    await setLoggedIn({
+                        accessToken: creds.accessToken,
+                        userId: creds.userId,
+                        deviceId: creds.deviceId,
+                        homeserverUrl: creds.homeserverUrl,
+                    });
+                    await scannedRendezvous.completeVerificationOnNewDevice(MatrixClientPeg.get());
                     this.props.onFinished(true);
                     defaultDispatcher.dispatch({
                         action: Action.ViewHomePage,
@@ -318,31 +332,31 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         if (this.state.cancelled) {
             let cancellationMessage: string;
             switch (this.state.cancelled) {
-                case RendezvousCancellationReason.Expired:
+                case RendezvousFailureReason.Expired:
                     cancellationMessage = _t("The linking wasn't completed in the required time.");
                     break;
-                case RendezvousCancellationReason.InvalidCode:
+                case RendezvousFailureReason.InvalidCode:
                     cancellationMessage = _t("The scanned code is invalid.");
                     break;
-                case RendezvousCancellationReason.UnsupportedAlgorithm:
+                case RendezvousFailureReason.UnsupportedAlgorithm:
                     cancellationMessage = _t("Linking with this device is not supported.");
                     break;
-                case RendezvousCancellationReason.UserDeclined:
+                case RendezvousFailureReason.UserDeclined:
                     cancellationMessage = _t("The request was declined on the other device.");
                     break;
-                case RendezvousCancellationReason.OtherDeviceAlreadySignedIn:
+                case RendezvousFailureReason.OtherDeviceAlreadySignedIn:
                     cancellationMessage = _t("The other device is already signed in.");
                     break;
-                case RendezvousCancellationReason.OtherDeviceNotSignedIn:
+                case RendezvousFailureReason.OtherDeviceNotSignedIn:
                     cancellationMessage = _t("The other device isn't signed in.");
                     break;
-                case RendezvousCancellationReason.UserCancelled:
+                case RendezvousFailureReason.UserCancelled:
                     cancellationMessage = _t("The request was cancelled.");
                     break;
-                case RendezvousCancellationReason.Unknown:
+                case RendezvousFailureReason.Unknown:
                     cancellationMessage = _t("An unexpected error occurred.");
                     break;
-                case RendezvousCancellationReason.HomeserverLacksSupport:
+                case RendezvousFailureReason.HomeserverLacksSupport:
                     cancellationMessage = _t("The homeserver doesn't support signing in another device.");
                     break;
                 default:
