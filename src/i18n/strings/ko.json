@@ -1342,5 +1342,12 @@
     "Create a Group Chat": "그룹 대화 생성하기",
     "Send a Direct Message": "다이렉트 메세지 보내기",
     "Now, let's help you get started": "지금 시작할 수 있도록 도와드릴께요",
-    "Welcome %(name)s": "환영합니다 %(name)s님"
+    "Welcome %(name)s": "환영합니다 %(name)s님",
+    "Click the button below to confirm adding this phone number.": "",
+    "Confirm adding phone number": "",
+    "Confirm adding this phone number by using Single Sign On to prove your identity.": "",
+    "Click the button below to confirm adding this email address.": "",
+    "Confirm adding email": "",
+    "Single Sign On": "",
+    "Confirm adding this email address by using Single Sign On to prove your identity.": ""
 }
