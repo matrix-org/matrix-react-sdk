@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { render, screen, act, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import { mocked, Mocked } from "jest-mock";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
@@ -82,7 +81,7 @@ describe("CallEvent", () => {
         ));
 
         MockedCall.create(room, "1");
-        const maybeCall = CallStore.instance.get(room.roomId);
+        const maybeCall = CallStore.instance.getCall(room.roomId);
         if (!(maybeCall instanceof MockedCall)) throw new Error("Failed to create call");
         call = maybeCall;
 
@@ -113,7 +112,7 @@ describe("CallEvent", () => {
     });
 
     it("shows placeholder info if the call isn't loaded yet", () => {
-        jest.spyOn(CallStore.instance, "get").mockReturnValue(null);
+        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(null);
         jest.advanceTimersByTime(90000);
         renderEvent();
 
