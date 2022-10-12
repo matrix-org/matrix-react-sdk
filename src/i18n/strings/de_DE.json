@@ -3613,5 +3613,10 @@
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s ist Ende-zu-Ende-verschlüsselt, allerdings noch auf eine geringere Anzahl Benutzer beschränkt.",
     "Enable %(brand)s as an additional calling option in this room": "Verwende %(brand)s als alternative Anrufoption in diesem Raum",
     "Join %(brand)s calls": "Trete %(brand)s-Anrufen bei",
-    "Sorry — this call is currently full": "Entschuldigung — dieser Anruf ist aktuell besetzt"
+    "Sorry — this call is currently full": "Entschuldigung — dieser Anruf ist aktuell besetzt",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "WYSIWYG-Eingabe (demnächst mit Klartextmodus) (in aktiver Entwicklung)",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Unsere neue Sitzungsverwaltung bietet bessere Übersicht und Kontrolle über all deine Sitzungen, inklusive der Möglichkeit, aus der Ferne Push-Benachrichtigungen umzuschalten.",
+    "Have greater visibility and control over all your sessions.": "Bessere Übersicht und Kontrolle über all deine Sitzungen.",
+    "New session manager": "Neue Sitzungsverwaltung",
+    "Use new session manager": "Neue Sitzungsverwaltung nutzen"
 }
