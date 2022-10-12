@@ -409,7 +409,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
     private get supportsThreadNotifications(): boolean {
         const client = MatrixClientPeg.get();
-        return client.canSupport.get(Feature.ThreadUnreadNotifications) !== ServerSupport.Unsupported
+        return client.canSupport.get(Feature.ThreadUnreadNotifications) !== ServerSupport.Unsupported;
     }
 
     private setupNotificationListener(thread: Thread): void {
