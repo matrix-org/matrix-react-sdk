@@ -445,12 +445,8 @@ export class StopGapWidgetDriver extends WidgetDriver {
             eventId,
             relationType ?? null,
             eventType ?? null,
-            {
-                from,
-                to,
-                limit,
-                dir,
-            });
+            { from, to, limit, dir },
+        );
 
         return {
             chunk: events.map(e => e.getEffectiveEvent()),
