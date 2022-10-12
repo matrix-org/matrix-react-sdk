@@ -49,6 +49,14 @@ export const DEFAULTS: IConfigOptions = {
     voice_broadcast: {
         chunk_length: 60 * 1000, // one minute
     },
+    login_with_qr: { // TODO remove these defaults before merging:
+        login: {
+            enable_showing: true,
+        },
+        reciprocate: {
+            enable_showing: true,
+        },
+    },
 };
 
 export default class SdkConfig {

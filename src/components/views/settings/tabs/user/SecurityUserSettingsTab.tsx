@@ -38,6 +38,8 @@ import InlineSpinner from "../../../elements/InlineSpinner";
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
 import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
+import SdkConfig from '../../../../../SdkConfig';
+import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
 
 interface IIgnoredUserProps {
     userId: string;
@@ -72,6 +74,7 @@ interface IState {
     waitingUnignored: string[];
     managingInvites: boolean;
     invitedRoomIds: Set<string>;
+    showLoginWithQR: Mode | null;
 }
 
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
@@ -88,6 +91,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             waitingUnignored: [],
             managingInvites: false,
             invitedRoomIds,
+            showLoginWithQR: null,
         };
     }
 
@@ -251,6 +255,18 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         );
     }
 
+    private onShowQRClicked = (): void => {
+        this.setState({ showLoginWithQR: Mode.SHOW });
+    };
+
+    private onScanQRClicked = (): void => {
+        this.setState({ showLoginWithQR: Mode.SCAN });
+    };
+
+    private onLoginWithQRFinished = (): void => {
+        this.setState({ showLoginWithQR: null });
+    };
+
     public render(): JSX.Element {
         const secureBackup = (
             <div className='mx_SettingsTab_section'>
@@ -365,19 +381,64 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 </div>
             </>;
 
+        let loginWithQRSection: JSX.Element | undefined;
+
+        if (SdkConfig.get().login_with_qr?.reciprocate?.enable_scanning ||
+            SdkConfig.get().login_with_qr?.reciprocate?.enable_showing) {
+            const features = SdkConfig.get().login_with_qr?.reciprocate;
+            let description: string;
+            if (features.enable_scanning && features.enable_showing) {
+                description = _t("You can use this device to sign in a new device with a QR code. There are two ways " +
+                "to do this:");
+            } else if (features.enable_scanning) {
+                description = _t("You can use this device to sign in a new device with a QR code. You will need to " +
+                "use this device to scan the QR code shown on your other device that's signed out.");
+            } else {
+                description = _t("You can use this device to sign in a new device with a QR code. You will need to " +
+                "scan the QR code shown on this device with your device that's signed out.");
+            }
+
+            const scanQR = features.enable_scanning ? <AccessibleButton
+                onClick={this.onScanQRClicked}
+                kind="primary"
+            >Scan QR Code</AccessibleButton> : null;
+
+            const showQR = features.enable_showing ? <AccessibleButton
+                onClick={this.onShowQRClicked}
+                kind={features.enable_scanning ? "primary_outline" : "primary"}
+            >Show QR Code</AccessibleButton> : null;
+
+            loginWithQRSection = <>
+                <div className="mx_SettingsTab_subheading">{ _t("Sign in with QR code") }</div>
+                <div className="mx_SettingsTab_section mx_SecurityUserSettingsTab_loginWithQr">
+                    <p className="mx_SettingsTab_subsectionText">{ description }</p>
+                    { scanQR }
+                    { showQR }
+                </div>
+            </>;
+        }
+
+        const client = MatrixClientPeg.get();
+
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
-                { warning }
-                { devicesSection }
-                <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
-                <div className="mx_SettingsTab_section">
-                    { secureBackup }
-                    { eventIndex }
-                    { crossSigning }
-                    <CryptographyPanel />
-                </div>
-                { privacySection }
-                { advancedSection }
+                { this.state.showLoginWithQR ?
+                    <LoginWithQR onFinished={this.onLoginWithQRFinished} device="existing" mode={this.state.showLoginWithQR} client={client} /> :
+                    <>
+                        { warning }
+                        { devicesSection }
+                        { loginWithQRSection }
+                        <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
+                        <div className="mx_SettingsTab_section">
+                            { secureBackup }
+                            { eventIndex }
+                            { crossSigning }
+                            <CryptographyPanel />
+                        </div>
+                        { privacySection }
+                        { advancedSection }
+                    </>
+                }
             </div>
         );
     }

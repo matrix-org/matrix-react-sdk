@@ -38,6 +38,8 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import LoginWithQR, { Mode } from '../../views/auth/LoginWithQR';
+import { Icon as QRIcon } from '../../../../res/img/element-icons/qrcode.svg';
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -98,6 +100,7 @@ interface IState {
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
     serverDeadError?: ReactNode;
+    loginWithQrInProgress: boolean;
 }
 
 /*
@@ -128,6 +131,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             serverIsAlive: true,
             serverErrorIsFatal: false,
             serverDeadError: "",
+            loginWithQrInProgress: false,
         };
 
         // map from login step type to a function which will render a control
@@ -140,6 +144,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             'm.login.cas': () => this.renderSsoStep("cas"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.sso': () => this.renderSsoStep("sso"),
+            'loginWithQR': () => this.renderLoginWithQRStep(),
         };
     }
 
@@ -497,10 +502,16 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // this is the ideal order we want to show the flows in
         const order = [
             "m.login.password",
+            "loginWithQR",
             "m.login.sso",
         ];
 
-        const flows = order.map(type => this.state.flows.find(flow => flow.type === type)).filter(Boolean);
+        const qrSupported = SdkConfig.get().login_with_qr?.login?.enable_showing;
+
+        const flows = order.map(type =>
+            (type === 'loginWithQR' && qrSupported)
+                ? { type: 'loginWithQR' } : this.state.flows.find(flow => flow.type === type),
+        ).filter(Boolean);
         return <React.Fragment>
             { flows.map(flow => {
                 const stepRenderer = this.stepRendererMap[flow.type];
@@ -541,6 +552,32 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 primary={!this.state.flows.find(flow => flow.type === "m.login.password")}
             />
         );
+    };
+
+    private startLoginWithQR = () => {
+        this.setState({ loginWithQrInProgress: true });
+    };
+
+    private renderLoginWithQRStep = () => {
+        return (
+            <>
+                <p className="mx_Login_withQR_or">or</p>
+                <AccessibleButton
+                    className="mx_Login_withQR"
+                    kind="primary_outline"
+                    onClick={this.startLoginWithQR}
+                >
+                    <QRIcon />
+                    { _t("Sign in with QR code") }
+                </AccessibleButton>
+            </>
+        );
+    };
+
+    private onLoginWithQRFinished = (success: boolean) => {
+        if (!success) {
+            this.setState({ loginWithQrInProgress: false });
+        }
     };
 
     render() {
@@ -599,20 +636,26 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         return (
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
-                <AuthBody>
-                    <h1>
-                        { _t('Sign in') }
-                        { loader }
-                    </h1>
-                    { errorTextSection }
-                    { serverDeadSection }
-                    <ServerPicker
-                        serverConfig={this.props.serverConfig}
-                        onServerConfigChange={this.props.onServerConfigChange}
-                    />
-                    { this.renderLoginComponentForFlows() }
-                    { footer }
-                </AuthBody>
+                { this.state.loginWithQrInProgress ?
+                    <AuthBody>
+                        <LoginWithQR device="new" onFinished={this.onLoginWithQRFinished} mode={Mode.SHOW} serverConfig={this.props.serverConfig} />
+                    </AuthBody>
+                    :
+                    <AuthBody>
+                        <h1>
+                            { _t('Sign in') }
+                            { loader }
+                        </h1>
+                        { errorTextSection }
+                        { serverDeadSection }
+                        <ServerPicker
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.props.onServerConfigChange}
+                        />
+                        { this.renderLoginComponentForFlows() }
+                        { footer }
+                    </AuthBody>
+                }
             </AuthPage>
         );
     }
