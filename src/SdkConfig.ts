@@ -46,8 +46,7 @@ export const DEFAULTS: IConfigOptions = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
-    // TODO remove these defaults
-    login_with_qr: {
+    login_with_qr: { // TODO remove these defaults before merging:
         login: {
             enable_showing: true,
         },
