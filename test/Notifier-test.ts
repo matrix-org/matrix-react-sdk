@@ -61,10 +61,10 @@ describe("Notifier", () => {
             isGuest: jest.fn().mockReturnValue(false),
             getAccountData: jest.fn().mockImplementation(eventType => accountDataStore[eventType]),
             setAccountData: jest.fn().mockImplementation((eventType, content) => {
-                accountDataStore[eventType] = new MatrixEvent({
+                accountDataStore[eventType] = content ? new MatrixEvent({
                     type: eventType,
                     content,
-                });
+                }) : undefined;
             }),
             decryptEventIfNeeded: jest.fn(),
             getRoom: jest.fn(),
@@ -87,10 +87,11 @@ describe("Notifier", () => {
 
     describe("_displayPopupNotification", () => {
         it.each([
-            { silenced: true, count: 0 },
-            { silenced: false, count: 1 },
-        ])("does not dispatch when notifications are silenced", ({ silenced, count }) => {
-            mockClient.setAccountData(accountDataEventKey, { is_silenced: silenced });
+            { event: { is_silenced: true }, count: 0 },
+            { event: { is_silenced: false }, count: 1 },
+            { event: undefined, count: 1 },
+        ])("does not dispatch when notifications are silenced", ({ event, count }) => {
+            mockClient.setAccountData(accountDataEventKey, event);
             Notifier._displayPopupNotification(testEvent, testRoom);
             expect(MockPlatform.displayNotification).toHaveBeenCalledTimes(count);
         });
@@ -98,14 +99,15 @@ describe("Notifier", () => {
 
     describe("_playAudioNotification", () => {
         it.each([
-            { silenced: true, count: 0 },
-            { silenced: false, count: 1 },
-        ])("does not dispatch when notifications are silenced", ({ silenced, count }) => {
+            { event: { is_silenced: true }, count: 0 },
+            { event: { is_silenced: false }, count: 1 },
+            { event: undefined, count: 1 },
+        ])("does not dispatch when notifications are silenced", ({ event, count }) => {
             // It's not ideal to only look at whether this function has been called
             // but avoids starting to look into DOM stuff
             Notifier.getSoundForRoom = jest.fn();
 
-            mockClient.setAccountData(accountDataEventKey, { is_silenced: silenced });
+            mockClient.setAccountData(accountDataEventKey, event);
             Notifier._playAudioNotification(testEvent, testRoom);
             expect(Notifier.getSoundForRoom).toHaveBeenCalledTimes(count);
         });
