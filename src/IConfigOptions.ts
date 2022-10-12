@@ -186,7 +186,7 @@ export interface IConfigOptions {
         // length per voice chunk in seconds
         chunk_length?: number;
     };
-    
+
     login_with_qr?: {
         login?: {
             enable_showing?: boolean;
