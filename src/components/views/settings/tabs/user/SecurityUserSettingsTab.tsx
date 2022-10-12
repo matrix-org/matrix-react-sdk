@@ -39,7 +39,7 @@ import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
 import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
 import SdkConfig from '../../../../../SdkConfig';
-import LoginWithQR from '../../../auth/LoginWithQR';
+import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
 
 interface IIgnoredUserProps {
     userId: string;
@@ -74,7 +74,7 @@ interface IState {
     waitingUnignored: string[];
     managingInvites: boolean;
     invitedRoomIds: Set<string>;
-    showLoginWithQR: boolean;
+    showLoginWithQR: Mode | null;
 }
 
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
@@ -91,7 +91,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             waitingUnignored: [],
             managingInvites: false,
             invitedRoomIds,
-            showLoginWithQR: false,
+            showLoginWithQR: null,
         };
     }
 
@@ -255,12 +255,16 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         );
     }
 
-    private onLoginWithQRClicked = (): void => {
-        this.setState({ showLoginWithQR: true });
+    private onShowQRClicked = (): void => {
+        this.setState({ showLoginWithQR: Mode.SHOW });
+    };
+
+    private onScanQRClicked = (): void => {
+        this.setState({ showLoginWithQR: Mode.SCAN });
     };
 
     private onLoginWithQRFinished = (): void => {
-        this.setState({ showLoginWithQR: false });
+        this.setState({ showLoginWithQR: null });
     };
 
     public render(): JSX.Element {
@@ -358,13 +362,40 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             }
         }
 
-        let loginWithQRButton: JSX.Element | undefined;
+        let loginWithQRSection: JSX.Element | undefined;
 
-        if (!SdkConfig.get().login_with_qr?.disabled) {
-            loginWithQRButton = <AccessibleButton
-                onClick={this.onLoginWithQRClicked}
+        if (SdkConfig.get().login_with_qr?.reciprocate?.enable_scanning ||
+            SdkConfig.get().login_with_qr?.reciprocate?.enable_showing) {
+            const features = SdkConfig.get().login_with_qr?.reciprocate;
+            let description: string = _t("You can use this device to sign in a new device with a QR code. ");
+            if (features.enable_scanning && features.enable_showing) {
+                description += _t("There are two ways to do this:");
+            } else if (features.enable_scanning) {
+                description += _t(" You will need to use this device to scan the QR code shown on your other device " +
+                    "that’s signed out.");
+            } else {
+                description += _t("You will need to scan the QR code shown on this device with your device " +
+                    "that’s signed out.");
+            }
+
+            const scanQR = features.enable_scanning ? <AccessibleButton
+                onClick={this.onScanQRClicked}
                 kind="primary"
-            >Link a device</AccessibleButton>;
+            >Scan QR Code</AccessibleButton> : null;
+
+            const showQR = features.enable_showing ? <AccessibleButton
+                onClick={this.onShowQRClicked}
+                kind={features.enable_scanning ? "primary_outline" : "primary"}
+            >Show QR Code</AccessibleButton> : null;
+
+            loginWithQRSection = <>
+                <div className="mx_SettingsTab_subheading">{ _t("Sign in with QR code") }</div>
+                <div className="mx_SettingsTab_section mx_SecurityUserSettingsTab_loginWithQr">
+                    <p className="mx_SettingsTab_subsectionText">{ description }</p>
+                    { scanQR }
+                    { showQR }
+                </div>
+            </>;
         }
 
         const client = MatrixClientPeg.get();
@@ -391,11 +422,11 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                 { this.state.showLoginWithQR ?
-                    <LoginWithQR onFinished={this.onLoginWithQRFinished} device="existing" client={client} /> :
+                    <LoginWithQR onFinished={this.onLoginWithQRFinished} device="existing" mode={this.state.showLoginWithQR} client={client} /> :
                     <>
                         { warning }
-                        { loginWithQRButton }
                         { devicesSection }
+                        { loginWithQRSection }
                         <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
                         <div className="mx_SettingsTab_section">
                             { secureBackup }

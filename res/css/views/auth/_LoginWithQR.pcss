@@ -75,6 +75,14 @@ limitations under the License.
         padding: 20px 0;
         margin: 26px 0;
     }
+
+    .mx_LoginWithQR_buttons {
+        text-align: center;
+    }
+
+    .mx_LoginWithQR_qrWrapper {
+        display: flex;
+    }
 }
 
 .mx_LoginWithQR {
@@ -82,11 +90,39 @@ limitations under the License.
     display: flex;
     flex-direction: column;
 
+    h1 > svg {
+        &.normal {
+            color: #737D8C;
+        }
+        &.error {
+            color: #FF5B55;
+        }
+        &.success {
+            color: #0DBD8B;
+        }
+        height: 1.3em;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
     .mx_LoginWithQR_confirmationDigits {
         text-align: center;
         margin: 50px auto;
         font-weight: 600;
         font-size: $font-24px;
+        color: #17191C;
+    }
+
+    .mx_LoginWithQR_confirmationAlert {
+        border: 1px solid #C1C6CD;
+        border-radius: 8px;
+        padding: 8px;
+        line-height: 1.5em;
+        display: flex;
+        
+        svg {
+            height: 30px;
+        }
     }
 
     .mx_LoginWithQR_separator {
@@ -103,16 +139,16 @@ limitations under the License.
     }
 
     .mx_LoginWithQR_BackButton {
-        left: 0;
-
-        &::before {
-            transform: rotate(90deg);
-            mask-size: 22px;
-            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+        height: 12px;
+        margin-bottom: 24px;
+        svg {
+            height: 100%;
         }
     }
 
     .mx_LoginWithQR_main {
+        display: flex;
+        flex-direction: column;
         flex-grow: 1;
     }
 
@@ -151,6 +187,7 @@ limitations under the License.
     }
 
     .mx_LoginWithQR_spinner {
+        flex-grow: 1;
         display: flex;
         justify-content: center;
         align-items: center;

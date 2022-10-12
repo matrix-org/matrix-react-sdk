@@ -32,16 +32,21 @@ import { Action } from '../../../dispatcher/actions';
 import SdkConfig from '../../../SdkConfig';
 import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 import Spinner from '../elements/Spinner';
+import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.svg";
+import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
+import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
+import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
 
-enum Mode {
-    SCAN,
-    SHOW,
+export enum Mode {
+    SCAN = "scan",
+    SHOW = "show",
 }
 
 interface IProps {
     device: 'new' | 'existing';
     serverConfig?: ValidatedServerConfig;
     client?: MatrixClient;
+    mode: Mode;
     onFinished(...args: any): void;
 }
 
@@ -52,32 +57,29 @@ interface IState {
     confirmationDigits?: string;
     cancelled?: RendezvousCancellationReason;
     mediaPermissionError?: boolean;
-    mode: Mode;
     scanning: boolean;
-    scanningEnabled: boolean;
 }
 
 export default class LoginWithQR extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
 
-        const scanningEnabled = SdkConfig.get().login_with_qr?.enable_scanning;
-        const mode = !this.isNewDevice && scanningEnabled ? Mode.SCAN : Mode.SHOW;
-
         this.state = {
-            mode,
-            scanningEnabled,
             scanning: false,
         };
-
-        void this.updateMode(this.state.mode, false);
     }
 
-    private async updateMode(mode: Mode, setState = true) {
-        if (setState) {
-            this.setState({ mode });
-        }
+    componentDidMount(): void {
+        void this.updateMode(this.props.mode);
+    }
 
+    componentDidUpdate(prevProps: Readonly<IProps>): void {
+        if (prevProps.mode !== this.props.mode) {
+            void this.updateMode(this.props.mode);
+        }
+    }
+
+    private async updateMode(mode: Mode) {
         if (mode === Mode.SCAN) {
             if (this.state.generatedRendezvous) {
                 this.state.generatedRendezvous.onCancelled = undefined;
@@ -96,7 +98,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     }
 
-    private get rendezvous(): Rendezvous {
+    private get rendezvous(): Rendezvous | undefined {
         return this.state.generatedRendezvous ?? this.state.scannedRendezvous;
     }
 
@@ -248,7 +250,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     private cancelClicked = () => {
         void (async () => {
-            await this.rendezvous.userCancelled();
+            await this.rendezvous?.userCancelled();
             this.reset();
             this.props.onFinished(false);
         })();
@@ -256,7 +258,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     private declineClicked = () => {
         void (async () => {
-            await this.rendezvous.declineLoginOnExistingDevice();
+            await this.rendezvous?.declineLoginOnExistingDevice();
             this.reset();
             this.props.onFinished(false);
         })();
@@ -265,7 +267,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private tryAgainClicked = () => {
         this.reset();
 
-        if (this.state.mode === Mode.SHOW) {
+        if (this.props.mode === Mode.SHOW) {
             void this.generateCode();
         }
     };
@@ -301,14 +303,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         this.props.onFinished(false);
     };
 
-    private onScanQRCodeClicked = () => {
-        void this.updateMode(Mode.SCAN);
-    };
-
-    private onShowQRCodeClicked = () => {
-        void this.updateMode(Mode.SHOW);
-    };
-
     private onDoScanQRClicked = () => {
         this.setState({ scanning: true });
         void this.requestMediaPermissions();
@@ -316,6 +310,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     render() {
         let title: string;
+        let titleIcon: JSX.Element | undefined;
         let main: JSX.Element | undefined;
         let buttons: JSX.Element | undefined;
         let backButton = true;
@@ -354,7 +349,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     cancellationMessage = _t("The request was cancelled.");
                     break;
             }
-            title = _t("Connection unsuccessful");
+            title = _t("Connection failed");
+            titleIcon = <WarningBadge className="error" />;
+            backButton = false;
             main = <p>{ cancellationMessage }</p>;
             buttons = <>
                 <AccessibleButton
@@ -370,16 +367,16 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     { _t("Cancel") }
                 </AccessibleButton>
             </>;
-            backButton = false;
         } else if (this.state.confirmationDigits) {
-            title = _t("Secure connection established");
+            title = _t("Devices connected");
+            titleIcon = <DevicesIcon className="normal" />;
+            backButton = false;
             if (this.isNewDevice) {
                 main = <>
-                    <p>{ _t("Check your signed in device, the code below should be displayed:") }</p>
+                    <p>{ _t("Check your mobile device, the code below should be displayed. Confirm that the code below matches with that device:") }</p>
                     <div className="mx_LoginWithQR_confirmationDigits">
                         { this.state.confirmationDigits }
                     </div>
-                    <p>{ _t("If the code above matches the code on your other device, then confirm the sign in on that device.") }</p>
                 </>;
                 buttons = <>
                     <div className="mx_LoginWithQR_separator">
@@ -394,11 +391,16 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 </>;
             } else {
                 main = <>
-                    <p>{ _t("Check your other device - the code below should be displayed. If the code below matches the code on your other device then press confirm to link devices:") }</p>
+                    <p>{ _t("Confirm that the code below matches with your mobile device:") }</p>
                     <div className="mx_LoginWithQR_confirmationDigits">
                         { this.state.confirmationDigits }
                     </div>
-                    <p>{ _t("Please ensure that you know the origin of this code. By linking devices, you will provide someone with full access to your account.") }</p>
+                    <div className="mx_LoginWithQR_confirmationAlert">
+                        <div>
+                            <InfoIcon />
+                        </div>
+                        <div>{ _t("Please ensure that you know the origin of this code. By linking devices, you will provide someone with full access to your account.") }</div>
+                    </div>
                 </>;
 
                 buttons = <>
@@ -416,71 +418,61 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     </AccessibleButton>
                 </>;
             }
-        } else if (this.state.mode === Mode.SHOW) {
-            title = this.isExistingDevice ? _t("Link a device") : _t("Sign in with QR code");
+        } else if (this.props.mode === Mode.SHOW) {
+            title =_t("Sign in with QR code");
             if (this.state.generatedRendezvous) {
-                const code = <div>
-                    <div className="mx_Centre">
-                        <QRCode data={[{ data: Buffer.from(this.state.generatedRendezvous.code), mode: 'byte' }]} className="mx_QRCode" />
-                    </div>
+                const code = <div className="mx_LoginWithQR_qrWrapper">
+                    <QRCode data={[{ data: Buffer.from(this.state.generatedRendezvous.code), mode: 'byte' }]} className="mx_QRCode" />
                 </div>;
 
                 if (this.isExistingDevice) {
                     main = <>
                         <p>{ _t("Scan the QR code below with your device that’s signed out.") }</p>
                         <ol>
-                            <li>{ _t("Open Element on your other device") }</li>
-                            <li>{ _t("Select ‘Sign in with QR code’") }</li>
+                            <li>{ _t("Start at the sign in screen") }</li>
+                            <li>{ _t("Select ‘Scan QR code’") }</li>
                         </ol>
                         { code }
                     </>;
                 } else {
                     main = <>
-                        <p>{ _t("Scan the QR code below with your other device signed in to Element to sign in instantly.") }</p>
+                        <p>{ _t("Scan the QR code below with your device that's already signed in:") }</p>
                         <ol>
-                            <li>{ _t("Open Element on your other device") }</li>
+                            <li>{ _t("Open the app on your mobile device") }</li>
                             <li>{ _t("Go to Settings -> Security & Privacy") }</li>
-                            <li>{ _t("Select ‘Link a device’") }</li>
+                            <li>{ _t("Select ‘Scan QR code’") }</li>
                         </ol>
                         { code }
                     </>;
                 }
             } else {
                 main = <div className="mx_LoginWithQR_spinner"><Spinner /></div>;
-            }
-            if (this.state.scanningEnabled) {
                 buttons = <>
-                    <div className="mx_LoginWithQR_separator">
-                        { _t("Need an alternative method?") }
-                    </div>
                     <AccessibleButton
                         kind="primary_outline"
-                        onClick={this.onScanQRCodeClicked}
+                        onClick={this.cancelClicked}
                     >
-                        { _t("Scan QR code") }
+                        { _t("Cancel") }
                     </AccessibleButton>
                 </>;
             }
-        } else if (this.state.mode === Mode.SCAN) {
-            title = this.isExistingDevice? _t("Link a device") : _t("Sign in with QR code");
+        } else if (this.props.mode === Mode.SCAN) {
+            title = _t("Sign in with QR code");
             if (!this.state.scanning) {
                 if (this.isExistingDevice) {
                     main = <>
                         <p>
-                            <span>{ _t("Use the camera on this device to scan the QR code shown on your other device signed in to Element.") }</span>
-                            <span> { _t("To get the QR code:") }</span>
+                            <span>{ _t("Use the camera on this device to scan the QR code shown on your other device:") }</span>
                         </p>
                         <ol>
-                            <li>{ _t("Open Element on your other device") }</li>
-                            <li>{ _t("Select ‘Sign in with QR code’") }</li>
-                            <li>{ _t("Select ‘Show QR code on this device’") }</li>
+                            <li>{ _t("Start at the sign in screen") }</li>
+                            <li>{ _t("Select ‘Show QR code’") }</li>
                         </ol>
                     </>;
                 } else {
                     main = <>
                         <p>
-                            <span>{ _t("Use the camera on this device to scan the QR code shown on your other device.") }</span>
-                            <span> { _t("To get the QR code:") }</span>
+                            <span>{ _t("Use the camera on this device to scan the QR code shown on your signed in device:") }</span>
                         </p>
                         <ol>
                             <li>{ _t("Open Element on your other device") }</li>
@@ -497,15 +489,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     >
                         { _t("Scan QR code") }
                     </AccessibleButton>
-                    <div className="mx_LoginWithQR_separator">
-                        { _t("Need an alternative method?") }
-                    </div>
-                    <AccessibleButton
-                        kind="primary_outline"
-                        onClick={this.onShowQRCodeClicked}
-                    >
-                        { _t("Show QR code on this device") }
-                    </AccessibleButton>
                 </>;
             } else {
                 main = <>
@@ -517,12 +500,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                         ViewFinder={this.viewFinder}
                     />
                 </>;
-                buttons = <AccessibleButton
-                    kind="primary_outline"
-                    onClick={this.cancelClicked}
-                >
-                    { _t("Cancel") }
-                </AccessibleButton>;
             }
         }
 
@@ -530,14 +507,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             <div className="mx_LoginWithQR">
                 <div>
                     { backButton ?
-                        <AccessibleButton className="mx_LoginWithQR_BackButton" onClick={this.onBackClick} title="Back">Back</AccessibleButton>
+                        <AccessibleButton className="mx_LoginWithQR_BackButton" onClick={this.onBackClick} title="Back"><BackButtonIcon /></AccessibleButton>
                         : null }
-                    <h1>{ title }</h1>
+                    <h1>{ titleIcon }{ title }</h1>
                 </div>
                 <div className="mx_LoginWithQR_main">
                     { main }
                 </div>
-                <div>
+                <div className="mx_LoginWithQR_buttons">
                     { buttons }
                 </div>
             </div>

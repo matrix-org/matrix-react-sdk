@@ -183,9 +183,14 @@ export interface IConfigOptions {
     dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
 
     login_with_qr?: {
-        disabled?: boolean;
+        login?: {
+            enable_showing?: boolean;
+        };
+        reciprocate?: {
+            enable_showing?: boolean;
+            enable_scanning?: boolean;
+        };
         default_http_transport_server?: string;
-        enable_scanning?: boolean;
     };
 }
 
