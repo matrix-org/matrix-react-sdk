@@ -48,41 +48,79 @@ import SettingsStore from "../settings/SettingsStore";
 import { awaitRoomDownSync } from "../utils/RoomUpgrade";
 import { UPDATE_EVENT } from "./AsyncStore";
 import { Stores } from "../contexts/SDKContext";
+import { CallStore } from "./CallStore";
 
 const NUM_JOIN_RETRY = 5;
 
-const INITIAL_STATE = {
-    // Whether we're joining the currently viewed room (see isJoining())
+interface State {
+    /**
+     * Whether we're joining the currently viewed (see isJoining())
+     */
+    joining: boolean;
+    /**
+     * Any error that has occurred during joining
+     */
+    joinError: Error | null;
+    /**
+     * The ID of the room currently being viewed
+     */
+    roomId: string | null;
+    /**
+     * The ID of the room being subscribed to (in Sliding Sync)
+     */
+    subscribingRoomId: string | null;
+    /**
+     * The event to scroll to when the room is first viewed
+     */
+    initialEventId: string | null;
+    initialEventPixelOffset: number | null;
+    /**
+     * Whether to highlight the initial event
+     */
+    isInitialEventHighlighted: boolean;
+    /**
+     * Whether to scroll the initial event into view
+     */
+    initialEventScrollIntoView: boolean;
+    /**
+     * The alias of the room (or null if not originally specified in view_room)
+     */
+    roomAlias: string | null;
+    /**
+     * Whether the current room is loading
+     */
+    roomLoading: boolean;
+    /**
+     * Any error that has occurred during loading
+     */
+    roomLoadError: MatrixError | null;
+    replyingToEvent: MatrixEvent | null;
+    shouldPeek: boolean;
+    viaServers: string[];
+    wasContextSwitch: boolean;
+    /**
+     * Whether we're viewing a call or call lobby in this room
+     */
+    viewingCall: boolean;
+}
+
+const INITIAL_STATE: State = {
     joining: false,
-    // Any error that has occurred during joining
-    joinError: null as Error,
-    // The room ID of the room currently being viewed
-    roomId: null as string,
-    // The room ID being subscribed to (in Sliding Sync)
-    subscribingRoomId: null as string,
-
-    // The event to scroll to when the room is first viewed
-    initialEventId: null as string,
-    initialEventPixelOffset: null as number,
-    // Whether to highlight the initial event
+    joinError: null,
+    roomId: null,
+    subscribingRoomId: null,
+    initialEventId: null,
+    initialEventPixelOffset: null,
     isInitialEventHighlighted: false,
-    // whether to scroll `event_id` into view
     initialEventScrollIntoView: true,
-
-    // The room alias of the room (or null if not originally specified in view_room)
-    roomAlias: null as string,
-    // Whether the current room is loading
+    roomAlias: null,
     roomLoading: false,
-    // Any error that has occurred during loading
-    roomLoadError: null as MatrixError,
-
-    replyingToEvent: null as MatrixEvent,
-
+    roomLoadError: null,
+    replyingToEvent: null,
     shouldPeek: false,
-
-    viaServers: [] as string[],
-
+    viaServers: [],
     wasContextSwitch: false,
+    viewingCall: false,
 };
 
 type Listener = (isActive: boolean) => void;
@@ -117,7 +155,7 @@ export class RoomViewStore extends EventEmitter {
         this.emit(roomId, isActive);
     }
 
-    private setState(newState: Partial<typeof INITIAL_STATE>): void {
+    private setState(newState: Partial<State>): void {
         // If values haven't changed, there's nothing to do.
         // This only tries a shallow comparison, so unchanged objects will slip
         // through, but that's probably okay for now.
@@ -169,6 +207,7 @@ export class RoomViewStore extends EventEmitter {
                     roomAlias: null,
                     viaServers: [],
                     wasContextSwitch: false,
+                    viewingCall: false,
                 });
                 break;
             case Action.ViewRoomError:
@@ -245,6 +284,8 @@ export class RoomViewStore extends EventEmitter {
 
     private async viewRoom(payload: ViewRoomPayload): Promise<void> {
         if (payload.room_id) {
+            const room = MatrixClientPeg.get().getRoom(payload.room_id);
+
             if (payload.metricsTrigger !== null && payload.room_id !== this.state.roomId) {
                 let activeSpace: ViewRoomEvent["activeSpace"];
                 if (this.stores.spaceStore.activeSpace === MetaSpace.Home) {
@@ -262,10 +303,11 @@ export class RoomViewStore extends EventEmitter {
                     trigger: payload.metricsTrigger,
                     viaKeyboard: payload.metricsViaKeyboard,
                     isDM: !!DMRoomMap.shared().getUserIdForRoomId(payload.room_id),
-                    isSpace: MatrixClientPeg.get().getRoom(payload.room_id)?.isSpaceRoom(),
+                    isSpace: room?.isSpaceRoom(),
                     activeSpace,
                 });
             }
+
             if (SettingsStore.getValue("feature_sliding_sync") && this.state.roomId !== payload.room_id) {
                 if (this.state.subscribingRoomId && this.state.subscribingRoomId !== payload.room_id) {
                     // unsubscribe from this room, but don't await it as we don't care when this gets done.
@@ -283,6 +325,7 @@ export class RoomViewStore extends EventEmitter {
                     roomLoadError: null,
                     viaServers: payload.via_servers,
                     wasContextSwitch: payload.context_switch,
+                    viewingCall: payload.view_call ?? false,
                 });
                 // set this room as the room subscription. We need to await for it as this will fetch
                 // all room state for this room, which is required before we get the state below.
@@ -300,11 +343,11 @@ export class RoomViewStore extends EventEmitter {
                 return;
             }
 
-            const newState = {
+            const newState: Partial<State> = {
                 roomId: payload.room_id,
-                roomAlias: payload.room_alias,
-                initialEventId: payload.event_id,
-                isInitialEventHighlighted: payload.highlighted,
+                roomAlias: payload.room_alias ?? null,
+                initialEventId: payload.event_id ?? null,
+                isInitialEventHighlighted: payload.highlighted ?? false,
                 initialEventScrollIntoView: payload.scroll_into_view ?? true,
                 roomLoading: false,
                 roomLoadError: null,
@@ -314,8 +357,13 @@ export class RoomViewStore extends EventEmitter {
                 joining: payload.joining || false,
                 // Reset replyingToEvent because we don't want cross-room because bad UX
                 replyingToEvent: null,
-                viaServers: payload.via_servers,
-                wasContextSwitch: payload.context_switch,
+                viaServers: payload.via_servers ?? [],
+                wasContextSwitch: payload.context_switch ?? false,
+                viewingCall: payload.view_call ?? (
+                    payload.room_id === this.state.roomId
+                        ? this.state.viewingCall
+                        : CallStore.instance.getActiveCall(payload.room_id) !== null
+                ),
             };
 
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
@@ -348,13 +396,14 @@ export class RoomViewStore extends EventEmitter {
                     roomId: null,
                     initialEventId: null,
                     initialEventPixelOffset: null,
-                    isInitialEventHighlighted: null,
+                    isInitialEventHighlighted: false,
                     initialEventScrollIntoView: true,
                     roomAlias: payload.room_alias,
                     roomLoading: true,
                     roomLoadError: null,
                     viaServers: payload.via_servers,
                     wasContextSwitch: payload.context_switch,
+                    viewingCall: payload.view_call ?? false,
                 });
                 try {
                     const result = await MatrixClientPeg.get().getRoomIdForAlias(payload.room_alias);
@@ -573,5 +622,9 @@ export class RoomViewStore extends EventEmitter {
 
     public getWasContextSwitch(): boolean {
         return this.state.wasContextSwitch;
+    }
+
+    public isViewingCall(): boolean {
+        return this.state.viewingCall;
     }
 }

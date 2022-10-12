@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VoiceBroadcastRecordingBody when rendered should render the expected HTML 1`] = `
+<div>
+  <div
+    class="mx_VoiceBroadcastRecordingBody"
+  >
+    <div
+      data-testid="voice-broadcast-header"
+    >
+      live: 
+      , sender: 
+      @user:example.com
+      , room name: 
+      test room name
+    </div>
+  </div>
+</div>
+`;

@@ -32,6 +32,9 @@ export const DEFAULTS: IConfigOptions = {
     },
     element_call: {
         url: "https://call.element.io",
+        use_exclusively: false,
+        participant_limit: 8,
+        brand: "Element Call",
     },
 
     // @ts-ignore - we deliberately use the camelCase version here so we trigger
@@ -43,7 +46,9 @@ export const DEFAULTS: IConfigOptions = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
-    spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
+    voice_broadcast: {
+        chunk_length: 60 * 1000, // one minute
+    },
 };
 
 export default class SdkConfig {
