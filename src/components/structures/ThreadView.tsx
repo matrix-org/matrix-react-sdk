@@ -20,7 +20,6 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
-import { IRelationsRequestOpts } from 'matrix-js-sdk/src/@types/requests';
 import { logger } from 'matrix-js-sdk/src/logger';
 import classNames from 'classnames';
 
@@ -195,9 +194,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 thread,
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
-                await thread.fetchInitialEvents();
-                this.nextBatch = thread.liveTimeline.getPaginationToken(Direction.Backward);
-                this.timelinePanel.current?.refreshTimeline();
+                this.timelinePanel.current?.refreshTimeline(this.props.initialEvent?.getId());
             });
         }
     };
@@ -242,35 +239,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
-    private nextBatch: string;
-
     private onPaginationRequest = async (
         timelineWindow: TimelineWindow | null,
         direction = Direction.Backward,
         limit = 20,
     ): Promise<boolean> => {
-        if (!Thread.hasServerSideSupport) {
-            timelineWindow.extend(direction, limit);
-            return true;
-        }
-
-        const opts: IRelationsRequestOpts = {
-            limit,
-        };
-
-        if (this.nextBatch) {
-            opts.from = this.nextBatch;
-        }
-
-        const { nextBatch } = await this.state.thread.fetchEvents(opts);
-
-        this.nextBatch = nextBatch;
-
-        // Advances the marker on the TimelineWindow to define the correct
-        // window of events to display on screen
-        timelineWindow.extend(direction, limit);
-
-        return !!nextBatch;
+        return timelineWindow.paginate(direction, limit);
     };
 
     private onFileDrop = (dataTransfer: DataTransfer) => {
