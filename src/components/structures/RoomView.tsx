@@ -514,7 +514,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private getMainSplitContentType = (room: Room) => {
         if (
-            (SettingsStore.getValue("feature_group_calls") && RoomViewStore.instance.isViewingCall())
+            (SettingsStore.getValue("feature_group_calls") && this.context.roomViewStore.isViewingCall())
             || isVideoRoom(room)
         ) {
             return MainSplitContentType.Call;

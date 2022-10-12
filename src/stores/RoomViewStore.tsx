@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
+import * as utils from 'matrix-js-sdk/src/utils';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
@@ -131,7 +132,7 @@ type Listener = (isActive: boolean) => void;
 export class RoomViewStore extends EventEmitter {
     // initialize state as a copy of the initial state. We need to copy else one RVS can talk to
     // another RVS via INITIAL_STATE as they share the same underlying object. Mostly relevant for tests.
-    private state = JSON.parse(JSON.stringify(INITIAL_STATE));
+    private state = utils.deepCopy(INITIAL_STATE);
 
     private dis: MatrixDispatcher;
     private dispatchToken: string;
