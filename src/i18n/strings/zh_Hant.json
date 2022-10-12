@@ -3618,5 +3618,6 @@
     "Join %(brand)s calls": "加入 %(brand)s 通話",
     "Start %(brand)s calls": "開始 %(brand)s 通話",
     "Fill screen": "填滿螢幕",
-    "Sorry — this call is currently full": "抱歉 — 此通話目前已滿"
+    "Sorry — this call is currently full": "抱歉 — 此通話目前已滿",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "所見即所得編輯器（純文字模式即將推出）（正在積極開發中）"
 }
