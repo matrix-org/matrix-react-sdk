@@ -431,8 +431,12 @@ export const Notifier = {
         const room = MatrixClientPeg.get().getRoom(roomId);
 
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
+
+        console.log('here', actions);
         if (actions?.notify) {
             this._performCustomEventHandling(ev);
+
+            console.log('hello???');
 
             if (RoomViewStore.instance.getRoomId() === room.roomId &&
                 UserActivity.sharedInstance().userActiveRecently() &&
