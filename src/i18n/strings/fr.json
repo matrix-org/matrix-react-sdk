@@ -3618,5 +3618,10 @@
     "Enable %(brand)s as an additional calling option in this room": "Activer %(brand)s comme une option supplémentaire d’appel dans ce salon",
     "Join %(brand)s calls": "Rejoindre des appels %(brand)s",
     "Start %(brand)s calls": "Démarrer des appels %(brand)s",
-    "Sorry — this call is currently full": "Désolé — Cet appel est actuellement complet"
+    "Sorry — this call is currently full": "Désolé — Cet appel est actuellement complet",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Notre nouveau gestionnaire de sessions fournit une meilleure visibilité sur toutes vos sessions, et un plus grand contrôle sur ces dernières avec la possibilité de désactiver à distance les notifications push.",
+    "Have greater visibility and control over all your sessions.": "Ayez une meilleur visibilité et plus de contrôle sur toutes vos sessions.",
+    "New session manager": "Nouveau gestionnaire de sessions",
+    "Use new session manager": "Utiliser le nouveau gestionnaire de session",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Compositeur Wysiwyg (le mode texte brut arrive prochainement) (en cours de développement)"
 }
