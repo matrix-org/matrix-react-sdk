@@ -53,7 +53,6 @@ export const startNewVoiceBroadcastRecording = async (
                 client,
             );
             recordingsStore.setCurrent(recording);
-            recording.start();
             resolve(recording);
         }
     };

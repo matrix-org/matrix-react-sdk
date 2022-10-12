@@ -81,15 +81,11 @@ exports[`<SessionManagerTab /> renders current session section with a verified s
   class="mx_SettingsSubsection"
   data-testid="current-session-section"
 >
-  <div
-    class="mx_SettingsSubsectionHeading"
+  <h3
+    class="mx_Heading_h3 mx_SettingsSubsection_heading"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
-    >
-      Current session
-    </h3>
-  </div>
+    Current session
+  </h3>
   <div
     class="mx_SettingsSubsection_content"
   >
@@ -191,15 +187,11 @@ exports[`<SessionManagerTab /> renders current session section with an unverifie
   class="mx_SettingsSubsection"
   data-testid="current-session-section"
 >
-  <div
-    class="mx_SettingsSubsectionHeading"
+  <h3
+    class="mx_Heading_h3 mx_SettingsSubsection_heading"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
-    >
-      Current session
-    </h3>
-  </div>
+    Current session
+  </h3>
   <div
     class="mx_SettingsSubsection_content"
   >

@@ -16,22 +16,17 @@ limitations under the License.
 
 import React, { HTMLAttributes } from "react";
 
-import { SettingsSubsectionHeading } from "./SettingsSubsectionHeading";
+import Heading from "../../typography/Heading";
 
 export interface SettingsSubsectionProps extends HTMLAttributes<HTMLDivElement> {
-    heading: string | React.ReactNode;
+    heading: string;
     description?: string | React.ReactNode;
     children?: React.ReactNode;
 }
 
 const SettingsSubsection: React.FC<SettingsSubsectionProps> = ({ heading, description, children, ...rest }) => (
     <div {...rest} className="mx_SettingsSubsection">
-        { typeof heading === 'string'
-            ? <SettingsSubsectionHeading heading={heading} />
-            : <>
-                { heading }
-            </>
-        }
+        <Heading className="mx_SettingsSubsection_heading" size='h3'>{ heading }</Heading>
         { !!description && <div className="mx_SettingsSubsection_description">{ description }</div> }
         <div className="mx_SettingsSubsection_content">
             { children }

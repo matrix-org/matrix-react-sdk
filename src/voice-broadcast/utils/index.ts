@@ -14,14 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SettingsSubsectionHeading {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: $spacing-8;
-
-    gap: $spacing-8;
-}
-
-.mx_SettingsSubsectionHeading_heading {
-    flex: 1 1 100%;
-}
+export * from "./shouldDisplayAsVoiceBroadcastTile";
+export * from "./startNewVoiceBroadcastRecording";

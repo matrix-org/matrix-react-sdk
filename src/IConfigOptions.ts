@@ -182,11 +182,6 @@ export interface IConfigOptions {
     sync_timeline_limit?: number;
     dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
 
-    voice_broadcast?: {
-        // length per voice chunk in seconds
-        chunk_length?: number;
-    };
-
     login_with_qr?: {
         login?: {
             enable_showing?: boolean;

@@ -14,23 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SettingsSubsection {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.mx_SettingsSubsection_heading {
-    padding-bottom: $spacing-8;
-}
-
-.mx_SettingsSubsection_description {
-    width: 100%;
-    box-sizing: inherit;
-    line-height: $font-24px;
-    margin-bottom: $spacing-32;
-    color: $secondary-content;
-}
-
-.mx_SettingsSubsection_content {
-    width: 100%;
-}
+export * from "./VoiceBroadcastRecordingsStore";
