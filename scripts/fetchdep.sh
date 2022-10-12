@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -x
 
 deforg="$1"
 defrepo="$2"
