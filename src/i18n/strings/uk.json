@@ -3619,5 +3619,9 @@
     "Join %(brand)s calls": "Приєднатися до %(brand)s викликів",
     "Start %(brand)s calls": "Розпочати %(brand)s викликів",
     "Sorry — this call is currently full": "Перепрошуємо, цей виклик заповнено",
-    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Редактор Wysiwyg (скоро з'явиться режим звичайного тексту) (в активній розробці)"
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Редактор Wysiwyg (скоро з'явиться режим звичайного тексту) (в активній розробці)",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Наш новий менеджер сеансів забезпечує кращу видимість всіх ваших сеансів і більший контроль над ними, зокрема можливість віддаленого перемикання push-сповіщень.",
+    "Have greater visibility and control over all your sessions.": "Майте кращу видимість і контроль над усіма вашими сеансами.",
+    "New session manager": "Новий менеджер сеансів",
+    "Use new session manager": "Використовувати новий менеджер сеансів"
 }
