@@ -3562,5 +3562,11 @@
     "Room info": "О комнате",
     "Wysiwyg composer (plain text mode coming soon) (under active development)": "Редактор «Что видишь, то и получишь» (скоро появится режим обычного текста) (в активной разработке)",
     "New session manager": "Новый менеджер сессий",
-    "Operating system": "Операционная система"
+    "Operating system": "Операционная система",
+    "Element Call video rooms": "Видеокомнаты Element Call",
+    "Video call (Jitsi)": "Видеозвонок (Jitsi)",
+    "Unknown session type": "Неизвестный тип сессии",
+    "Unknown room": "Неизвестная комната",
+    "View chat timeline": "Посмотреть ленту сообщений",
+    "Model": "Модель"
 }
