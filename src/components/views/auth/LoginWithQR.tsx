@@ -12,7 +12,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { buildChannelFromCode, Rendezvous, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
+import { buildChannelFromCode, MSC3906Rendezvous, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
 import { MSC3886SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
 import { MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
 import { QrReader, OnResultFunction } from 'react-qr-reader';
@@ -48,8 +48,8 @@ interface IProps {
 }
 
 interface IState {
-    scannedRendezvous?: Rendezvous;
-    generatedRendezvous?: Rendezvous;
+    scannedRendezvous?: MSC3906Rendezvous;
+    generatedRendezvous?: MSC3906Rendezvous;
     scannedCode?: string;
     confirmationDigits?: string;
     cancelled?: RendezvousFailureReason;
@@ -102,7 +102,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     }
 
-    private get rendezvous(): Rendezvous | undefined {
+    private get rendezvous(): MSC3906Rendezvous | undefined {
         return this.state.generatedRendezvous ?? this.state.scannedRendezvous;
     }
 
@@ -154,7 +154,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             const channel = new MSC3903ECDHv1RendezvousChannel(transport);
 
-            const generatedRendezvous = new Rendezvous(channel, this.props.client);
+            const generatedRendezvous = new MSC3906Rendezvous(channel, this.props.client);
 
             generatedRendezvous.onFailure = this.onFailure;
             await generatedRendezvous.generateCode();
@@ -237,7 +237,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 MatrixClientPeg.get()?.http.fetch,
             );
 
-            const scannedRendezvous = new Rendezvous(channel, this.props.client);
+            const scannedRendezvous = new MSC3906Rendezvous(channel, this.props.client);
             this.setState({
                 scannedCode,
                 scannedRendezvous,
