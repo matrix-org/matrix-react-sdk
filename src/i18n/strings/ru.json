@@ -3575,5 +3575,15 @@
     "Use new session manager": "Использовать новый менеджер сессий",
     "Sign out all other sessions": "Выйти из всех других сессий",
     "Voice broadcasts": "Аудиопередачи",
-    "Voice broadcast": "Аудиопередача"
+    "Voice broadcast": "Аудиопередача",
+    "Have greater visibility and control over all your sessions.": "Получите наилучшую видимость и контроль над всеми вашими сеансами.",
+    "New group call experience": "Новый опыт группового вызова",
+    "Sliding Sync mode (under active development, cannot be disabled)": "Скользящий режим синхронизации (в активной разработке, не может быть отключен)",
+    "Video call started": "Начался видеозвонок",
+    "Video call started in %(roomName)s. (not supported by this browser)": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)",
+    "Video call started in %(roomName)s.": "Видеовызов начался в %(roomName)s.",
+    "You need to be able to kick users to do that.": "Вы должны иметь возможность пинать пользователей, чтобы сделать это.",
+    "Inviting %(user)s and %(count)s others|one": "Приглашающий %(user)s и 1 других",
+    "Inviting %(user)s and %(count)s others|other": "Приглашение %(user)s и %(count)s других",
+    "Inviting %(user1)s and %(user2)s": "Приглашение %(user1)s и %(user2)s"
 }
