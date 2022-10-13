@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Call, ConnectionState, ElementCall, Layout } from "../models/Call";
@@ -57,11 +57,11 @@ export const useFull = (call: Call): boolean => {
     );
 };
 
-export const useIsAlreadyParticipant = (call: Call) => {
+export const useIsAlreadyParticipant = (call: Call): boolean => {
     const client = MatrixClientPeg.get();
     const participants = useParticipants(call);
 
-    return participants.has(client.getRoom(call.roomId).getMember(client.getUserId()));
+    return useMemo(() => participants.has(client.getRoom(call.roomId).getMember(client.getUserId())));
 };
 
 export const useJoinCallButtonTooltip = (call: Call): string | null => {
