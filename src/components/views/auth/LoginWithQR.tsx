@@ -130,7 +130,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             this.props.onFinished(true);
             return;
         }
-        const didCrossSign = await this.rendezvous.crossSign();
+        const didCrossSign = await this.rendezvous.verifyNewDeviceOnExistingDevice();
         if (didCrossSign) {
             // alert(`New device signed in, cross signed and marked as known: ${newDeviceId}`);
         } else {
