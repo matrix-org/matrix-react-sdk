@@ -61,7 +61,9 @@ export const useIsAlreadyParticipant = (call: Call): boolean => {
     const client = MatrixClientPeg.get();
     const participants = useParticipants(call);
 
-    return useMemo(() => participants.has(client.getRoom(call.roomId).getMember(client.getUserId())));
+    return useMemo(() => {
+        return participants.has(client.getRoom(call.roomId).getMember(client.getUserId()));
+    }, [participants, client, call]);
 };
 
 export const useJoinCallButtonTooltip = (call: Call): string | null => {
