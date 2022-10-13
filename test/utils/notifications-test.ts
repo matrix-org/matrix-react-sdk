@@ -31,8 +31,7 @@ jest.mock("../../src/settings/SettingsStore");
 describe('notifications', () => {
     let accountDataStore = {};
     let mockClient;
-
-    const accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
+    let accountDataEventKey;
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -47,6 +46,7 @@ describe('notifications', () => {
             }),
         });
         accountDataStore = {};
+        accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
         mocked(SettingsStore).getValue.mockReturnValue(false);
     });
 
