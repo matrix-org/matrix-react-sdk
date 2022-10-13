@@ -14,18 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { useWysiwyg } from "@matrix-org/matrix-wysiwyg";
 
-import defaultDispatcher from '../../../../dispatcher/dispatcher';
-import { Action } from '../../../../dispatcher/actions';
-import { ActionPayload } from '../../../../dispatcher/payloads';
 import { RoomPermalinkCreator } from '../../../../utils/permalinks/Permalinks';
-import { TimelineRenderingType, useRoomContext } from '../../../../contexts/RoomContext';
 import { sendMessage } from './message';
-import { useDispatcher } from "../../../../hooks/useDispatcher";
 import { useMatrixClientContext } from '../../../../contexts/MatrixClientContext';
+import { useRoomContext } from '../../../../contexts/RoomContext';
+import { useWysiwygActionHandler } from './useWysiwygActionHandler';
 
 interface WysiwygProps {
     disabled?: boolean;
@@ -42,7 +39,6 @@ export function WysiwygComposer(
 ) {
     const roomContext = useRoomContext();
     const mxClient = useMatrixClientContext();
-    const timeoutId = useRef<number>();
 
     const [content, setContent] = useState<string>();
     const { ref, isWysiwygReady, wysiwyg } = useWysiwyg({ onChange: (_content) => {
@@ -56,34 +52,7 @@ export function WysiwygComposer(
         ref.current?.focus();
     }, [content, mxClient, roomContext, wysiwyg, props, ref]);
 
-    useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
-        // don't let the user into the composer if it is disabled - all of these branches lead
-        // to the cursor being in the composer
-        if (disabled) return;
-
-        const context = payload.context ?? TimelineRenderingType.Room;
-
-        switch (payload.action) {
-            case 'reply_to_event':
-            case Action.FocusSendMessageComposer:
-                if (context === roomContext.timelineRenderingType) {
-                    // Immediately set the focus, so if you start typing it
-                    // will appear in the composer
-                    ref.current?.focus();
-                    // If we call focus immediate, the focus _is_ in the right
-                    // place, but the cursor is invisible, presumably because
-                    // some other event is still processing.
-                    // The following line ensures that the cursor is actually
-                    // visible in composer.
-                    if (timeoutId.current) {
-                        clearTimeout(timeoutId.current);
-                    }
-                    timeoutId.current = setTimeout(() => ref.current?.focus(), 200);
-                }
-                break;
-            // TODO: case Action.ComposerInsert: - see SendMessageComposer
-        }
-    });
+    useWysiwygActionHandler(disabled, ref);
 
     return (
         <div className="mx_WysiwygComposer">
