@@ -2884,5 +2884,6 @@
     "In %(spaceName)s and %(count)s other spaces.|one": "Em %(spaceName)s e %(count)s outro espaço.",
     "In %(spaceName)s and %(count)s other spaces.|zero": "No espaço %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.|other": "Em %(spaceName)s e %(count)s outros espaços.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s."
+    "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s.",
+    "Empty room (was %(oldName)s)": "Sala vazia (era %(oldName)s)"
 }
