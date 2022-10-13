@@ -57,6 +57,13 @@ interface IState {
     scanning: boolean;
 }
 
+/**
+ * A component that allows sign in and E2EE set up with a QR code.
+ *
+ * It implements both `login.start` and `login-reciprocate` capabilities as well as both scanning and showing QR codes.
+ *
+ * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
+ */
 export default class LoginWithQR extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
