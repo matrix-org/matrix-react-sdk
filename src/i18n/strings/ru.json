@@ -3585,5 +3585,9 @@
     "You need to be able to kick users to do that.": "Вы должны иметь возможность пинать пользователей, чтобы сделать это.",
     "Inviting %(user)s and %(count)s others|one": "Приглашающий %(user)s и 1 других",
     "Inviting %(user)s and %(count)s others|other": "Приглашение %(user)s и %(count)s других",
-    "Inviting %(user1)s and %(user2)s": "Приглашение %(user1)s и %(user2)s"
+    "Inviting %(user1)s and %(user2)s": "Приглашение %(user1)s и %(user2)s",
+    "Fill screen": "Заполнить экран",
+    "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Запишите имя клиента, версию и URL-адрес, чтобы легче распознавать сеансы в диспетчере сеансов",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Наш новый менеджер сеансов обеспечивает лучшую видимость всех ваших сеансов и больший контроль над ними, включая возможность удаленного переключения push-уведомлений."
 }
