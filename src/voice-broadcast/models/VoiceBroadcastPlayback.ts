@@ -70,7 +70,7 @@ export class VoiceBroadcastPlayback
         this.emit(VoiceBroadcastPlaybackEvent.StateChanged, state);
     }
 
-    destroy(): void {
+    public destroy(): void {
         this.removeAllListeners();
     }
 }
