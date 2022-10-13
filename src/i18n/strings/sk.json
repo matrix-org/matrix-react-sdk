@@ -3618,5 +3618,10 @@
     "Join %(brand)s calls": "Pripojiť sa k %(brand)s hovorom",
     "Start %(brand)s calls": "Spustiť %(brand)s hovory",
     "Fill screen": "Vyplniť obrazovku",
-    "Sorry — this call is currently full": "Prepáčte — tento hovor je momentálne obsadený"
+    "Sorry — this call is currently full": "Prepáčte — tento hovor je momentálne obsadený",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Náš nový správca relácií poskytuje lepší prehľad o všetkých vašich reláciách a lepšiu kontrolu nad nimi vrátane možnosti vzdialene prepínať push oznámenia.",
+    "Have greater visibility and control over all your sessions.": "Majte lepší prehľad a kontrolu nad všetkými reláciami.",
+    "New session manager": "Nový správca relácií",
+    "Use new session manager": "Použiť nového správcu relácií",
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Wysiwyg composer (textový režim už čoskoro) (v štádiu aktívneho vývoja)"
 }
