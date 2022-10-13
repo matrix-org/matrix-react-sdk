@@ -50,7 +50,7 @@ describe('<DeviceTile />', () => {
         const onClick = jest.fn();
         const { getByTestId } = render(getComponent({ onClick }));
         expect(
-            getByTestId('device-tile-123').className.includes('mx_DeviceTile_interactive')
+            getByTestId('device-tile-123').className.includes('mx_DeviceTile_interactive'),
         ).toBeTruthy();
     });
 

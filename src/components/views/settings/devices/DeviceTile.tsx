@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { Fragment } from "react";
+import classNames from "classnames";
 
 import { Icon as InactiveIcon } from '../../../../../res/img/element-icons/settings/inactive.svg';
 import { _t } from "../../../../languageHandler";
@@ -23,7 +24,6 @@ import Heading from "../../typography/Heading";
 import { INACTIVE_DEVICE_AGE_DAYS, isDeviceInactive } from "./filter";
 import { ExtendedDevice } from "./types";
 import { DeviceTypeIcon } from "./DeviceTypeIcon";
-import classNames from "classnames";
 import { preventDefaultWrapper } from "../../../../utils/NativeEventUtils";
 export interface DeviceTileProps {
     device: ExtendedDevice;
