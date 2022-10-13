@@ -15,12 +15,16 @@ limitations under the License.
 */
 
 import React, { useCallback, useState } from 'react';
-import { useWysiwyg } from "@matrix-org/matrix-wysiwyg";
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { useWysiwyg } from "@matrix-org/matrix-wysiwyg";
 
-import { useRoomContext } from '../../../../contexts/RoomContext';
-import { sendMessage } from './message';
+import defaultDispatcher from '../../../../dispatcher/dispatcher';
+import { Action } from '../../../../dispatcher/actions';
+import { ActionPayload } from '../../../../dispatcher/payloads';
 import { RoomPermalinkCreator } from '../../../../utils/permalinks/Permalinks';
+import { TimelineRenderingType, useRoomContext } from '../../../../contexts/RoomContext';
+import { sendMessage } from './message';
+import { useDispatcher } from "../../../../hooks/useDispatcher";
 import { useMatrixClientContext } from '../../../../contexts/MatrixClientContext';
 
 interface WysiwygProps {
@@ -50,6 +54,32 @@ export function WysiwygComposer(
         wysiwyg.clear();
         ref.current?.focus();
     }, [content, mxClient, roomContext, wysiwyg, props, ref]);
+
+    useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
+        // don't let the user into the composer if it is disabled - all of these branches lead
+        // to the cursor being in the composer
+        if (disabled) return;
+
+        const context = payload.context ?? TimelineRenderingType.Room;
+
+        switch (payload.action) {
+            case 'reply_to_event':
+            case Action.FocusSendMessageComposer:
+                if (context === roomContext.timelineRenderingType) {
+                    // Immediately set the focus, so if you start typing it
+                    // will appear in the composer
+                    ref.current?.focus();
+                    // If we call focus immediate, the focus _is_ in the right
+                    // place, but the cursor is invisible, presumably because
+                    // some other event is still processing.
+                    // The following line ensures that the cursor is actually
+                    // visible in composer.
+                    setTimeout(() => ref.current?.focus(), 200);
+                }
+                break;
+            // TODO: case Action.ComposerInsert: - see SendMessageComposer
+        }
+    });
 
     return (
         <div className="mx_WysiwygComposer">
