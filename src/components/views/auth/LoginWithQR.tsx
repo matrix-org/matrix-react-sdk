@@ -13,8 +13,8 @@ limitations under the License.
 
 import React from 'react';
 import { buildChannelFromCode, Rendezvous, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
-import { SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
-import { ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
+import { MSC3886SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
+import { MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
 import { QrReader, OnResultFunction } from 'react-qr-reader';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
@@ -144,7 +144,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             const fallbackServer = SdkConfig.get().login_with_qr?.default_http_transport_server
                 ?? 'https://rendezvous.lab.element.dev'; // FIXME: remove this default value
 
-            const transport = new SimpleHttpRendezvousTransport({
+            const transport = new MSC3886SimpleHttpRendezvousTransport({
                 onFailure: this.onFailure,
                 client: this.props.client,
                 hsUrl: this.props.serverConfig?.hsUrl,
@@ -152,7 +152,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 fetchFn: MatrixClientPeg.get()?.http.fetch,
             });
 
-            const channel = new ECDHv1RendezvousChannel(transport);
+            const channel = new MSC3903ECDHv1RendezvousChannel(transport);
 
             const generatedRendezvous = new Rendezvous(channel, this.props.client);
 
