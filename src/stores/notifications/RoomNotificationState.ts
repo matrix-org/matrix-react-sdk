@@ -40,7 +40,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.on(RoomEvent.MyMembership, this.handleMembershipUpdate);
         this.room.on(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
         if (cli.canSupport.get(Feature.ThreadUnreadNotifications) === ServerSupport.Unsupported) {
-            this.threadsState.on(NotificationStateEvents.Update, this.handleThreadsUpdate);
+            this.threadsState?.on(NotificationStateEvents.Update, this.handleThreadsUpdate);
         }
         cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         cli.on(ClientEvent.AccountData, this.handleAccountDataUpdate);
