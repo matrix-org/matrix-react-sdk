@@ -3619,5 +3619,9 @@
     "Start %(brand)s calls": "開始 %(brand)s 通話",
     "Fill screen": "填滿螢幕",
     "Sorry — this call is currently full": "抱歉 — 此通話目前已滿",
-    "Wysiwyg composer (plain text mode coming soon) (under active development)": "所見即所得編輯器（純文字模式即將推出）（正在積極開發中）"
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "所見即所得編輯器（純文字模式即將推出）（正在積極開發中）",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "我們的新工作階段管理程式可讓您更好地了解您的所有工作階段，並更好地控制它們，包含遠端切換推播通知的能力。",
+    "Have greater visibility and control over all your sessions.": "對您所有的工作階段有更大的能見度與控制。",
+    "New session manager": "新的工作階段管理程式",
+    "Use new session manager": "使用新的工作階段管理程式"
 }
