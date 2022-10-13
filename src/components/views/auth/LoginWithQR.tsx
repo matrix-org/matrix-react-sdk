@@ -149,7 +149,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 client: this.props.client,
                 hsUrl: this.props.serverConfig?.hsUrl,
                 fallbackRzServer: fallbackServer,
-                fetchFn: MatrixClientPeg.get()?.http.fetch,
             });
 
             const channel = new MSC3903ECDHv1RendezvousChannel(transport);
@@ -234,7 +233,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             const { channel, intent: theirIntent } = await buildChannelFromCode(
                 scannedCode,
                 this.onFailure,
-                MatrixClientPeg.get()?.http.fetch,
             );
 
             const scannedRendezvous = new MSC3906Rendezvous(channel, this.props.client);
