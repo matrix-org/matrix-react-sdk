@@ -30,21 +30,23 @@ jest.mock("../../src/settings/SettingsStore");
 
 describe('notifications', () => {
     let accountDataStore = {};
-    const mockClient = getMockClientWithEventEmitter({
-        isGuest: jest.fn().mockReturnValue(false),
-        getAccountData: jest.fn().mockImplementation(eventType => accountDataStore[eventType]),
-        setAccountData: jest.fn().mockImplementation((eventType, content) => {
-            accountDataStore[eventType] = new MatrixEvent({
-                type: eventType,
-                content,
-            });
-        }),
-    });
-
-    const accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
+    let mockClient;
+    let accountDataEventKey;
 
     beforeEach(() => {
+        jest.clearAllMocks();
+        mockClient = getMockClientWithEventEmitter({
+            isGuest: jest.fn().mockReturnValue(false),
+            getAccountData: jest.fn().mockImplementation(eventType => accountDataStore[eventType]),
+            setAccountData: jest.fn().mockImplementation((eventType, content) => {
+                accountDataStore[eventType] = new MatrixEvent({
+                    type: eventType,
+                    content,
+                });
+            }),
+        });
         accountDataStore = {};
+        accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
         mocked(SettingsStore).getValue.mockReturnValue(false);
     });
 
@@ -53,6 +55,13 @@ describe('notifications', () => {
             await createLocalNotificationSettingsIfNeeded(mockClient);
             const event = mockClient.getAccountData(accountDataEventKey);
             expect(event?.getContent().is_silenced).toBe(true);
+        });
+
+        it('does not do anything for guests', async () => {
+            mockClient.isGuest.mockReset().mockReturnValue(true);
+            await createLocalNotificationSettingsIfNeeded(mockClient);
+            const event = mockClient.getAccountData(accountDataEventKey);
+            expect(event).toBeFalsy();
         });
 
         it.each(deviceNotificationSettingsKeys)(
@@ -81,8 +90,8 @@ describe('notifications', () => {
     });
 
     describe('localNotificationsAreSilenced', () => {
-        it('defaults to true when no setting exists', () => {
-            expect(localNotificationsAreSilenced(mockClient)).toBeTruthy();
+        it('defaults to false when no setting exists', () => {
+            expect(localNotificationsAreSilenced(mockClient)).toBeFalsy();
         });
         it('checks the persisted value', () => {
             mockClient.setAccountData(accountDataEventKey, { is_silenced: true });

@@ -31,6 +31,9 @@ export function getLocalNotificationAccountDataEventType(deviceId: string): stri
 }
 
 export async function createLocalNotificationSettingsIfNeeded(cli: MatrixClient): Promise<void> {
+    if (cli.isGuest()) {
+        return;
+    }
     const eventType = getLocalNotificationAccountDataEventType(cli.deviceId);
     const event = cli.getAccountData(eventType);
     // New sessions will create an account data event to signify they support
@@ -51,5 +54,5 @@ export async function createLocalNotificationSettingsIfNeeded(cli: MatrixClient)
 export function localNotificationsAreSilenced(cli: MatrixClient): boolean {
     const eventType = getLocalNotificationAccountDataEventType(cli.deviceId);
     const event = cli.getAccountData(eventType);
-    return event?.getContent<LocalNotificationSettings>()?.is_silenced ?? true;
+    return event?.getContent<LocalNotificationSettings>()?.is_silenced ?? false;
 }
