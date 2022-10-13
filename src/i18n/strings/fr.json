@@ -3623,5 +3623,6 @@
     "Have greater visibility and control over all your sessions.": "Ayez une meilleur visibilité et plus de contrôle sur toutes vos sessions.",
     "New session manager": "Nouveau gestionnaire de sessions",
     "Use new session manager": "Utiliser le nouveau gestionnaire de session",
-    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Compositeur Wysiwyg (le mode texte brut arrive prochainement) (en cours de développement)"
+    "Wysiwyg composer (plain text mode coming soon) (under active development)": "Compositeur Wysiwyg (le mode texte brut arrive prochainement) (en cours de développement)",
+    "Sign out all other sessions": "Déconnecter toutes les autres sessions"
 }
