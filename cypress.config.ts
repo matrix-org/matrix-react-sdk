@@ -31,7 +31,7 @@ export default defineConfig({
         specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
     },
     retries: {
-        runMode: 2,
+        runMode: 4,
         openMode: 0,
     },
 });
