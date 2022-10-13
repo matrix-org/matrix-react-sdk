@@ -2502,5 +2502,6 @@
     "Jump to the given date in the timeline": "پرش به تاریخ تعیین شده در جدول زمانی",
     "Failed to invite users to %(roomName)s": "افزودن کاربران به %(roomName)s با شکست روبرو شد",
     "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "شما قصد دسترسی به لینک انجمن%(groupId)s را دارید. <br/> انجمن ها دیگر پشتیبانی نمی شوند و با فضاها جایگزین شده اند.<br2/><a> در مورد فضا بیشتر بدانید</a>",
-    "That link is no longer supported": "لینک موردنظر دیگر پشتیبانی نمی شود"
+    "That link is no longer supported": "لینک موردنظر دیگر پشتیبانی نمی شود",
+    "Inviting %(user)s and %(count)s others|other": "دعوت کردن %(user)s و %(count)s دیگر"
 }
