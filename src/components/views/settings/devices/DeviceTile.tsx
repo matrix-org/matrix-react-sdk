@@ -23,6 +23,8 @@ import Heading from "../../typography/Heading";
 import { INACTIVE_DEVICE_AGE_DAYS, isDeviceInactive } from "./filter";
 import { ExtendedDevice } from "./types";
 import { DeviceTypeIcon } from "./DeviceTypeIcon";
+import classNames from "classnames";
+import { preventDefaultWrapper } from "../../../../utils/NativeEventUtils";
 export interface DeviceTileProps {
     device: ExtendedDevice;
     isSelected?: boolean;
@@ -88,13 +90,20 @@ const DeviceTile: React.FC<DeviceTileProps> = ({
             { id: 'deviceId', value: device.device_id },
         ];
 
-    return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
+    return <div
+        className={classNames(
+            "mx_DeviceTile",
+            { "mx_DeviceTile_interactive": !!onClick },
+        )}
+        data-testid={`device-tile-${device.device_id}`}
+        onClick={onClick}
+    >
         <DeviceTypeIcon
             isVerified={device.isVerified}
             isSelected={isSelected}
             deviceType={device.deviceType}
         />
-        <div className="mx_DeviceTile_info" onClick={onClick}>
+        <div className="mx_DeviceTile_info">
             <DeviceTileName device={device} />
             <div className="mx_DeviceTile_metadata">
                 { metadata.map(({ id, value }, index) =>
@@ -107,7 +116,7 @@ const DeviceTile: React.FC<DeviceTileProps> = ({
                 ) }
             </div>
         </div>
-        <div className="mx_DeviceTile_actions">
+        <div className="mx_DeviceTile_actions" onClick={preventDefaultWrapper(() => {})}>
             { children }
         </div>
     </div>;
