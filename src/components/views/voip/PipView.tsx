@@ -154,7 +154,7 @@ export default class PipView extends React.Component<IProps, IState> {
     public componentWillUnmount() {
         LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCalls);
         LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
-        MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
+        MatrixClientPeg.get()?.removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         RoomViewStore.instance.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         const room = MatrixClientPeg.get().getRoom(this.state.viewedRoomId);
         if (room) {
