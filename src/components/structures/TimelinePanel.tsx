@@ -994,7 +994,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
                         if (
                             !sendRRs
-                            && !cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")
+                            && !(await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable"))
+                            && !(await cli.isVersionSupported("v1.4"))
                         ) return;
                         try {
                             return await cli.sendReadReceipt(
@@ -1361,7 +1362,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) return;
 
             this.setState({ timelineLoading: false });
-            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}: ${error}`);
+            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}`, error);
 
             let onFinished: () => void;
 
