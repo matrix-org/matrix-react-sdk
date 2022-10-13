@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { useWysiwyg } from "@matrix-org/matrix-wysiwyg";
 
@@ -42,6 +42,7 @@ export function WysiwygComposer(
 ) {
     const roomContext = useRoomContext();
     const mxClient = useMatrixClientContext();
+    const timeoutId = useRef<number>();
 
     const [content, setContent] = useState<string>();
     const { ref, isWysiwygReady, wysiwyg } = useWysiwyg({ onChange: (_content) => {
@@ -74,7 +75,10 @@ export function WysiwygComposer(
                     // some other event is still processing.
                     // The following line ensures that the cursor is actually
                     // visible in composer.
-                    setTimeout(() => ref.current?.focus(), 200);
+                    if (timeoutId.current) {
+                        clearTimeout(timeoutId.current);
+                    }
+                    timeoutId.current = setTimeout(() => ref.current?.focus(), 200);
                 }
                 break;
             // TODO: case Action.ComposerInsert: - see SendMessageComposer
