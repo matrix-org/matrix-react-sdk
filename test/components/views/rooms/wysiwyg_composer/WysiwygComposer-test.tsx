@@ -14,16 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { act, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import React from "react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 
-import { IRoomState } from "../../../../../src/components/structures/RoomView";
-import RoomContext, { TimelineRenderingType } from "../../../../../src/contexts/RoomContext";
-import { Layout } from "../../../../../src/settings/enums/Layout";
-import { createTestClient, mkEvent, mkStubRoom } from "../../../../test-utils";
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
+import RoomContext, { TimelineRenderingType } from "../../../../../src/contexts/RoomContext";
+import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../../src/dispatcher/actions";
+import { IRoomState } from "../../../../../src/components/structures/RoomView";
+import { Layout } from "../../../../../src/settings/enums/Layout";
 import { WysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/WysiwygComposer";
+import { createTestClient, mkEvent, mkStubRoom } from "../../../../test-utils";
 
 let callOnChange: (content: string) => void;
 
@@ -95,7 +97,7 @@ describe('WysiwygComposer', () => {
     };
 
     let sendMessage: () => void;
-    const customRender = (onChange = (content: string) => void 0, disabled = false) => {
+    const customRender = (onChange = (_content: string) => void 0, disabled = false) => {
         return render(
             <MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={defaultRoomContext}>
@@ -143,6 +145,21 @@ describe('WysiwygComposer', () => {
         };
         expect(mockClient.sendMessage).toBeCalledWith('myfakeroom', null, expectedContent);
         expect(screen.getByRole('textbox')).toHaveFocus();
+    });
+
+    it('Should focus when receiving an Action.FocusSendMessageComposer action', async () => {
+        // Given we don't have focus
+        customRender(null, false).container;
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+
+        // When we send the right action
+        defaultDispatcher.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: null,
+        });
+
+        // Then the component gets the focus
+        await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
     });
 });
 
