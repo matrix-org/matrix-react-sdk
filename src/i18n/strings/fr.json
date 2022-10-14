@@ -3624,5 +3624,7 @@
     "New session manager": "Nouveau gestionnaire de sessions",
     "Use new session manager": "Utiliser le nouveau gestionnaire de session",
     "Wysiwyg composer (plain text mode coming soon) (under active development)": "Compositeur Wysiwyg (le mode texte brut arrive prochainement) (en cours de développement)",
-    "Sign out all other sessions": "Déconnecter toutes les autres sessions"
+    "Sign out all other sessions": "Déconnecter toutes les autres sessions",
+    "resume voice broadcast": "continuer la diffusion audio",
+    "pause voice broadcast": "mettre en pause la diffusion audio"
 }
