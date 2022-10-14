@@ -30,7 +30,7 @@ export const StopButton: React.FC<Props> = ({
     return <AccessibleButton
         className="mx_BroadcastPlaybackControlButton"
         onClick={onClick}
-        aria-label={_t(" stop voice broadcast")}
+        aria-label={_t("stop voice broadcast")}
     >
         <Icon
             colour={IconColour.CompoundSecondaryContent}
