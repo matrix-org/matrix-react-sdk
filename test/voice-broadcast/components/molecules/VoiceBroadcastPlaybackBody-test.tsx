@@ -71,7 +71,7 @@ describe("VoiceBroadcastPlaybackBody", () => {
             });
 
             it("should stop the recording", () => {
-                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Playing);
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
             });
         });
     });
