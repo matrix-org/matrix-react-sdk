@@ -186,13 +186,37 @@ describe("VoiceBroadcastPlayback", () => {
             expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
         });
 
-        describe("and calling toggle", () => {
+        describe("and calling pause", () => {
+            beforeEach(() => {
+                playback.pause();
+            });
+
+            itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Paused);
+            itShouldEmitAStateChangedEvent(VoiceBroadcastPlaybackState.Paused);
+        });
+    });
+
+    describe("when calling toggle for the first time", () => {
+        beforeEach(async () => {
+            await playback.toggle();
+        });
+
+        itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+
+        describe("and calling toggle a second time", () => {
             beforeEach(async () => {
                 await playback.toggle();
             });
 
-            itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Stopped);
-            itShouldEmitAStateChangedEvent(VoiceBroadcastPlaybackState.Stopped);
+            itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Paused);
+
+            describe("and calling toggle a third time", () => {
+                beforeEach(async () => {
+                    await playback.toggle();
+                });
+
+                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+            });
         });
     });
 

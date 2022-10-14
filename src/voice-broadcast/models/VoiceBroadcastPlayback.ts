@@ -188,13 +188,38 @@ export class VoiceBroadcastPlayback
         }
     }
 
+    public pause(): void {
+        if (!this.currentlyPlaying) return;
+
+        this.setState(VoiceBroadcastPlaybackState.Paused);
+        this.currentlyPlaying.pause();
+    }
+
+    public resume(): void {
+        if (!this.currentlyPlaying) return;
+
+        this.setState(VoiceBroadcastPlaybackState.Playing);
+        this.currentlyPlaying.play();
+    }
+
+    /**
+     * Toggles the playback:
+     * stopped → playing
+     * playing → paused
+     * paused → playing
+     */
     public async toggle() {
         if (this.state === VoiceBroadcastPlaybackState.Stopped) {
             await this.start();
             return;
         }
 
-        this.stop();
+        if (this.state === VoiceBroadcastPlaybackState.Paused) {
+            this.resume();
+            return;
+        }
+
+        this.pause();
     }
 
     public getState(): VoiceBroadcastPlaybackState {
