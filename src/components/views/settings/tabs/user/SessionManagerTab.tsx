@@ -173,6 +173,10 @@ const SessionManagerTab: React.FC = () => {
         setSelectedDeviceIds([]);
     }, [filter, setSelectedDeviceIds]);
 
+    const signOutAllOtherSessions = shouldShowOtherSessions ? () => {
+        onSignOutOtherDevices(Object.keys(otherDevices));
+    }: undefined;
+
     const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
 
     return signInWithQrMode ?
@@ -193,6 +197,7 @@ const SessionManagerTab: React.FC = () => {
                 saveDeviceName={(deviceName) => saveDeviceName(currentDeviceId, deviceName)}
                 onVerifyCurrentDevice={onVerifyCurrentDevice}
                 onSignOutCurrentDevice={onSignOutCurrentDevice}
+                signOutAllOtherSessions={signOutAllOtherSessions}
             />
             {
                 shouldShowOtherSessions &&
@@ -215,7 +220,9 @@ const SessionManagerTab: React.FC = () => {
                         setSelectedDeviceIds={setSelectedDeviceIds}
                         onFilterChange={setFilter}
                         onDeviceExpandToggle={onDeviceExpandToggle}
-                        onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
+                        onRequestDeviceVerification={
+                            requestDeviceVerification ? onTriggerDeviceVerification : undefined
+                        }
                         onSignOutDevices={onSignOutOtherDevices}
                         saveDeviceName={saveDeviceName}
                         setPushNotifications={setPushNotifications}
@@ -224,7 +231,7 @@ const SessionManagerTab: React.FC = () => {
                     />
                 </SettingsSubsection>
             }
-            <LoginWithQRSection onScanQr={() => setSignInWithQrMode(Mode.SCAN)} onShowQr={() => setSignInWithQrMode(Mode.SHOW)}/>
+            <LoginWithQRSection onScanQr={() => setSignInWithQrMode(Mode.SCAN)} onShowQr={() => setSignInWithQrMode(Mode.SHOW)} />
         </SettingsTab>
     ;
 };

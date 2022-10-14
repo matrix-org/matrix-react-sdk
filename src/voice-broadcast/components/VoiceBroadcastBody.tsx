@@ -14,42 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React from "react";
+import { MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
 
 import {
-    VoiceBroadcastInfoState,
     VoiceBroadcastRecordingBody,
     VoiceBroadcastRecordingsStore,
-    VoiceBroadcastRecording,
-    VoiceBroadcastRecordingEvent,
+    shouldDisplayAsVoiceBroadcastRecordingTile,
+    VoiceBroadcastInfoEventType,
+    VoiceBroadcastPlaybacksStore,
+    VoiceBroadcastPlaybackBody,
+    VoiceBroadcastInfoState,
 } from "..";
 import { IBodyProps } from "../../components/views/messages/IBodyProps";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 
 export const VoiceBroadcastBody: React.FC<IBodyProps> = ({ mxEvent }) => {
     const client = MatrixClientPeg.get();
     const room = client.getRoom(mxEvent.getRoomId());
-    const recording = VoiceBroadcastRecordingsStore.instance().getByInfoEvent(mxEvent, client);
-    const [recordingState, setRecordingState] = useState(recording.getState());
-
-    useTypedEventEmitter(
-        recording,
-        VoiceBroadcastRecordingEvent.StateChanged,
-        (state: VoiceBroadcastInfoState, _recording: VoiceBroadcastRecording) => {
-            setRecordingState(state);
-        },
+    const relations = room?.getUnfilteredTimelineSet()?.relations?.getChildEventsForEvent(
+        mxEvent.getId(),
+        RelationType.Reference,
+        VoiceBroadcastInfoEventType,
     );
+    const relatedEvents = relations?.getRelations();
+    const state = !relatedEvents?.find((event: MatrixEvent) => {
+        return event.getContent()?.state === VoiceBroadcastInfoState.Stopped;
+    }) ? VoiceBroadcastInfoState.Started : VoiceBroadcastInfoState.Stopped;
 
-    const stopVoiceBroadcast = () => {
-        if (recordingState !== VoiceBroadcastInfoState.Started) return;
-        recording.stop();
-    };
+    if (shouldDisplayAsVoiceBroadcastRecordingTile(state, client, mxEvent)) {
+        const recording = VoiceBroadcastRecordingsStore.instance().getByInfoEvent(mxEvent, client);
+        return <VoiceBroadcastRecordingBody
+            recording={recording}
+        />;
+    }
 
-    return <VoiceBroadcastRecordingBody
-        onClick={stopVoiceBroadcast}
-        live={recordingState === VoiceBroadcastInfoState.Started}
-        sender={mxEvent.sender}
-        roomName={room.name}
+    const playback = VoiceBroadcastPlaybacksStore.instance().getByInfoEvent(mxEvent);
+    return <VoiceBroadcastPlaybackBody
+        playback={playback}
     />;
 };

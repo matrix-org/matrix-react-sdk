@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-module.exports = {
-    env: {
-        mocha: true,
-    },
+.mx_VoiceBroadcastPlaybackBody {
+    background-color: $quinary-content;
+    border-radius: 8px;
+    display: inline-block;
+    padding: 12px;
+}
 
-    // mocha defines a 'this'
-    rules: {
-        "@babel/no-invalid-this": "off",
-    },
-};
+.mx_VoiceBroadcastPlaybackBody_controls {
+    display: flex;
+    justify-content: center;
+}

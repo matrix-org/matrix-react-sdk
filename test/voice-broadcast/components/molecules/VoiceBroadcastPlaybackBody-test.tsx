@@ -15,27 +15,26 @@ limitations under the License.
 */
 
 import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastInfoEventType,
-    VoiceBroadcastInfoState,
-    VoiceBroadcastRecording,
-    VoiceBroadcastRecordingBody,
+    VoiceBroadcastPlayback,
+    VoiceBroadcastPlaybackBody,
+    VoiceBroadcastPlaybackState,
 } from "../../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../../test-utils";
 
-describe("VoiceBroadcastRecordingBody", () => {
+describe("VoiceBroadcastPlaybackBody", () => {
     const userId = "@user:example.com";
     const roomId = "!room:example.com";
-    let client: MatrixClient;
     let infoEvent: MatrixEvent;
-    let recording: VoiceBroadcastRecording;
+    let playback: VoiceBroadcastPlayback;
 
     beforeAll(() => {
-        client = stubClient();
+        stubClient();
         infoEvent = mkEvent({
             event: true,
             type: VoiceBroadcastInfoEventType,
@@ -43,41 +42,28 @@ describe("VoiceBroadcastRecordingBody", () => {
             room: roomId,
             user: userId,
         });
-        recording = new VoiceBroadcastRecording(infoEvent, client);
+        playback = new VoiceBroadcastPlayback(infoEvent);
     });
 
-    describe("when rendering a live broadcast", () => {
+    describe("when rendering a broadcast", () => {
         let renderResult: RenderResult;
 
         beforeEach(() => {
-            renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
+            renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
         });
 
-        it("should render the expected HTML", () => {
+        it("should render as expected", () => {
             expect(renderResult.container).toMatchSnapshot();
         });
 
-        describe("and clicked", () => {
+        describe("and clicking the play button", () => {
             beforeEach(async () => {
-                await userEvent.click(renderResult.getByText("My room"));
+                await userEvent.click(renderResult.getByLabelText("resume voice broadcast"));
             });
 
             it("should stop the recording", () => {
-                expect(recording.getState()).toBe(VoiceBroadcastInfoState.Stopped);
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Playing);
             });
-        });
-    });
-
-    describe("when rendering a non-live broadcast", () => {
-        let renderResult: RenderResult;
-
-        beforeEach(() => {
-            recording.stop();
-            renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
-        });
-
-        it("should not render the live badge", () => {
-            expect(renderResult.queryByText("Live")).toBeFalsy();
         });
     });
 });

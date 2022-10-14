@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VoiceBroadcastRecordingBody when rendering a live broadcast should render the expected HTML 1`] = `
+exports[`VoiceBroadcastPlaybackBody when rendering a broadcast should render as expected 1`] = `
 <div>
   <div
-    class="mx_VoiceBroadcastRecordingBody"
+    class="mx_VoiceBroadcastPlaybackBody"
   >
     <div
       class="mx_VoiceBroadcastHeader"
@@ -41,17 +41,34 @@ exports[`VoiceBroadcastRecordingBody when rendering a live broadcast should rend
         >
           My room
         </div>
+        <div
+          class="mx_VoiceBroadcastHeader_line"
+        >
+          <i
+            aria-hidden="true"
+            class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
+            role="presentation"
+            style="mask-image: url(\\"image-file-stub\\");"
+          />
+          Voice broadcast
+        </div>
       </div>
+    </div>
+    <div
+      class="mx_VoiceBroadcastPlaybackBody_controls"
+    >
       <div
-        class="mx_LiveBadge"
+        aria-label="resume voice broadcast"
+        class="mx_AccessibleButton mx_BroadcastPlaybackControlButton"
+        role="button"
+        tabindex="0"
       >
         <i
           aria-hidden="true"
-          class="mx_Icon mx_Icon_16 mx_Icon_live-badge"
+          class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
           role="presentation"
           style="mask-image: url(\\"image-file-stub\\");"
         />
-        Live
       </div>
     </div>
   </div>
