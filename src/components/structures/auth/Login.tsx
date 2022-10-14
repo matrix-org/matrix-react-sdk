@@ -499,19 +499,25 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     renderLoginComponentForFlows() {
         if (!this.state.flows) return null;
 
+        const qrFeatureEnabled = SettingsStore.getValue("feature_signin_with_qr_code");
         // this is the ideal order we want to show the flows in
-        const order = [
+        const order = qrFeatureEnabled ? [
             "m.login.password",
             "loginWithQR",
             "m.login.sso",
+        ] : [
+            "m.login.password",
+            "m.login.sso",
         ];
 
-        const qrSupported = SdkConfig.get().login_with_qr?.login?.enable_showing;
+        const qrSupported = qrFeatureEnabled && SdkConfig.get().login_with_qr?.login?.enable_showing;
 
-        const flows = order.map(type =>
-            (type === 'loginWithQR' && qrSupported)
-                ? { type: 'loginWithQR' } : this.state.flows.find(flow => flow.type === type),
-        ).filter(Boolean);
+        const flows = order.map(type => {
+            if (qrSupported && type === 'loginWithQR') {
+                return { type: 'loginWithQR' };
+            }
+            return this.state.flows.find(flow => flow.type === type);
+        }).filter(Boolean);
         return <React.Fragment>
             { flows.map(flow => {
                 const stepRenderer = this.stepRendererMap[flow.type];
@@ -559,6 +565,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     };
 
     private renderLoginWithQRStep = () => {
+        if (!SettingsStore.getValue("feature_signin_with_qr_code")) {
+            return null;
+        }
+
         return (
             <>
                 <p className="mx_Login_withQR_or">or</p>
@@ -636,7 +646,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         return (
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
-                { this.state.loginWithQrInProgress ?
+                { SettingsStore.getValue("feature_signin_with_qr_code") && this.state.loginWithQrInProgress ?
                     <AuthBody>
                         <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={Mode.SHOW} serverConfig={this.props.serverConfig} />
                     </AuthBody>

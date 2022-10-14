@@ -34,6 +34,7 @@ import { deleteDevicesWithInteractiveAuth } from '../../devices/deleteDevices';
 import SettingsTab from '../SettingsTab';
 import LoginWithQRSection from '../../devices/LoginWithQRSection';
 import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
+import SettingsStore from '../../../../../settings/SettingsStore';
 
 const useSignOut = (
     matrixClient: MatrixClient,
@@ -179,7 +180,9 @@ const SessionManagerTab: React.FC = () => {
 
     const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
 
-    return signInWithQrMode ?
+    const signinWithQrEnabled = SettingsStore.getValue("feature_signin_with_qr_code");
+
+    return signinWithQrEnabled && signInWithQrMode ?
         <LoginWithQR mode={signInWithQrMode} onFinished={() => setSignInWithQrMode(null)} client={matrixClient} />
         :
         <SettingsTab heading={_t('Sessions')}>
@@ -231,7 +234,11 @@ const SessionManagerTab: React.FC = () => {
                     />
                 </SettingsSubsection>
             }
-            <LoginWithQRSection onScanQr={() => setSignInWithQrMode(Mode.SCAN)} onShowQr={() => setSignInWithQrMode(Mode.SHOW)} />
+            { signinWithQrEnabled ?
+                <LoginWithQRSection onScanQr={() => setSignInWithQrMode(Mode.SCAN)} onShowQr={() => setSignInWithQrMode(Mode.SHOW)} />
+                : null
+            }
+
         </SettingsTab>
     ;
 };

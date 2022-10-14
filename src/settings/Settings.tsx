@@ -494,6 +494,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             </>,
         },
     },
+    "feature_signin_with_qr_code": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Enable sign in with QR code from session manager (requires compatible homeserver)"),
+        default: false,
+    },
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

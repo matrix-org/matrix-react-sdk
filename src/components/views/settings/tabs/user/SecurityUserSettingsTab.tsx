@@ -363,6 +363,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         const useNewSessionManager = SettingsStore.getValue("feature_new_device_manager");
+        const signinWithQrEnabled = SettingsStore.getValue("feature_signin_with_qr_code");
         const devicesSection = useNewSessionManager
             ? null
             : <>
@@ -379,16 +380,19 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     </span>
                     <DevicesPanel />
                 </div>
-                <LoginWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked} />
+                { signinWithQrEnabled ?
+                    <LoginWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked} />
+                    : null
+                }
             </>;
 
         const client = MatrixClientPeg.get();
 
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
-                { this.state.showLoginWithQR ?
-                    <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={this.state.showLoginWithQR} client={client} /> :
-                    <>
+                { signinWithQrEnabled && this.state.showLoginWithQR ?
+                    <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={this.state.showLoginWithQR} client={client} />
+                    : <>
                         { warning }
                         { devicesSection }
                         <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>

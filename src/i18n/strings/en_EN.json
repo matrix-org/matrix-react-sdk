@@ -929,6 +929,7 @@
     "New session manager": "New session manager",
     "Have greater visibility and control over all your sessions.": "Have greater visibility and control over all your sessions.",
     "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.",
+    "Enable sign in with QR code from session manager (requires compatible homeserver)": "Enable sign in with QR code from session manager (requires compatible homeserver)",
     "Font size": "Font size",
     "Use custom size": "Use custom size",
     "Enable Emoji suggestions while typing": "Enable Emoji suggestions while typing",
