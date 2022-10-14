@@ -18,13 +18,11 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
-import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import shouldHideEvent from './shouldHideEvent';
 import { haveRendererForEvent } from "./events/EventTileFactory";
 import SettingsStore from "./settings/SettingsStore";
-import { RoomNotificationStateStore } from "./stores/notifications/RoomNotificationStateStore";
 
 /**
  * Returns true if this event arriving in a room should affect the room's
@@ -78,18 +76,6 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
         //             https://github.com/vector-im/element-web/issues/3363
         if (room.timeline.length && room.timeline[room.timeline.length - 1].getSender() === myUserId) {
             return false;
-        }
-    } else {
-        const cli = room.client;
-        if (cli.canSupport.get(Feature.ThreadUnreadNotifications) === ServerSupport.Unsupported) {
-            const threadState = RoomNotificationStateStore.instance.getThreadsRoomState(room);
-            if (threadState.color > 0) {
-                return true;
-            }
-        } else {
-            if (room.hasThreadUnreadNotification()) {
-                return true;
-            }
         }
     }
 
