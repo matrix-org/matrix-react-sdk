@@ -3589,5 +3589,6 @@
     "Fill screen": "Заполнить экран",
     "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Запишите имя клиента, версию и URL-адрес, чтобы легче распознавать сеансы в диспетчере сеансов",
-    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Наш новый менеджер сеансов обеспечивает лучшую видимость всех ваших сеансов и больший контроль над ними, включая возможность удаленного переключения push-уведомлений."
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Наш новый менеджер сеансов обеспечивает лучшую видимость всех ваших сеансов и больший контроль над ними, включая возможность удаленного переключения push-уведомлений.",
+    "Try out the rich text editor (plain text mode coming soon)": "Попробуйте визуальный редактор текста (скоро появится обычный текстовый режим)"
 }
