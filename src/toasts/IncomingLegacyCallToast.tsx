@@ -85,6 +85,7 @@ export default class IncomingLegacyCallToast extends React.Component<IProps, ISt
         const call = this.props.call;
         const room = MatrixClientPeg.get().getRoom(LegacyCallHandler.instance.roomIdForCall(call));
         const isVoice = call.type === CallType.Voice;
+        const callForcedSilent = LegacyCallHandler.instance.isForcedSilent();
 
         const contentClass = classNames("mx_IncomingLegacyCallToast_content", {
             "mx_IncomingLegacyCallToast_content_voice": isVoice,
@@ -128,6 +129,7 @@ export default class IncomingLegacyCallToast extends React.Component<IProps, ISt
             </div>
             <AccessibleTooltipButton
                 className={silenceClass}
+                disabled={callForcedSilent}
                 onClick={this.onSilenceClick}
                 title={this.state.silenced ? _t("Sound on") : _t("Silence call")}
             />
