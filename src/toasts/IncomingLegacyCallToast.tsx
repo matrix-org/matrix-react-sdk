@@ -90,7 +90,7 @@ export default class IncomingLegacyCallToast extends React.Component<IProps, ISt
         let silenceButtonTooltip = this.state.silenced ? _t("Sound on") : _t("Silence call");
         if (callForcedSilent) {
             silenceButtonTooltip = _t("Notifications silenced");
-        } 
+        }
 
         const contentClass = classNames("mx_IncomingLegacyCallToast_content", {
             "mx_IncomingLegacyCallToast_content_voice": isVoice,
