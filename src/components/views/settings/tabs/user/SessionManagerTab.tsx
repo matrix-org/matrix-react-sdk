@@ -176,7 +176,7 @@ const SessionManagerTab: React.FC = () => {
     const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
 
     return signInWithQrMode ?
-        <LoginWithQR mode={signInWithQrMode} onFinished={() => setSignInWithQrMode(null)} device="existing" client={matrixClient} />
+        <LoginWithQR mode={signInWithQrMode} onFinished={() => setSignInWithQrMode(null)} client={matrixClient} />
         :
         <SettingsTab heading={_t('Sessions')}>
             <SecurityRecommendations

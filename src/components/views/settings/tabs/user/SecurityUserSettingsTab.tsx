@@ -387,7 +387,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                 { this.state.showLoginWithQR ?
-                    <LoginWithQR onFinished={this.onLoginWithQRFinished} device="existing" mode={this.state.showLoginWithQR} client={client} /> :
+                    <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={this.state.showLoginWithQR} client={client} /> :
                     <>
                         { warning }
                         { devicesSection }

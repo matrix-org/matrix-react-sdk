@@ -323,7 +323,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     private cancelButton = () => <AccessibleButton
         kind="primary_outline"
-        onClick={this.onBackClick}
+        onClick={this.cancelClicked}
     >
         { _t("Cancel") }
     </AccessibleButton>;
@@ -392,7 +392,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     >
                         { _t("Try again") }
                     </AccessibleButton>
-                    { this.cancelButton()}
+                    { this.cancelButton() }
                 </>;
                 break;
             case Phase.CONNECTED:
