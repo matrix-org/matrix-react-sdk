@@ -41,6 +41,7 @@ import { ElementWidgetActions } from "../stores/widgets/ElementWidgetActions";
 import WidgetStore from "../stores/WidgetStore";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
+import PlatformPeg from "../PlatformPeg";
 
 const TIMEOUT_MS = 16000;
 
@@ -631,6 +632,8 @@ export class ElementCall extends Call {
             embed: "",
             preload: "",
             hideHeader: "",
+            // Currently, the screen-sharing support is the same is it is for Jitsi
+            hideScreensharing: PlatformPeg.get().supportsJitsiScreensharing() ? null : "",
             userId: client.getUserId()!,
             deviceId: client.getDeviceId(),
             roomId: groupCall.getRoomId()!,
