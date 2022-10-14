@@ -48,33 +48,26 @@ export default class LoginWithQRSection extends React.Component<IProps, IState> 
     }
 
     public render(): JSX.Element {
-        if (!SdkConfig.get().login_with_qr?.reciprocate?.enable_scanning &&
-            !SdkConfig.get().login_with_qr?.reciprocate?.enable_showing) {
+        const features = SdkConfig.get().login_with_qr?.reciprocate;
+        const offerScanQr = features.enable_scanning;
+        const offerShowQr = features.enable_showing;
+
+        if (!offerScanQr && !offerShowQr) {
             return null;
         }
 
-        const features = SdkConfig.get().login_with_qr?.reciprocate;
         let description: string;
-        if (features.enable_scanning && features.enable_showing) {
+
+        if (offerScanQr && offerShowQr) {
             description = _t("You can use this device to sign in a new device with a QR code. There are two ways " +
             "to do this:");
-        } else if (features.enable_scanning) {
+        } else if (offerScanQr) {
             description = _t("You can use this device to sign in a new device with a QR code. You will need to " +
             "use this device to scan the QR code shown on your other device that's signed out.");
         } else {
             description = _t("You can use this device to sign in a new device with a QR code. You will need to " +
             "scan the QR code shown on this device with your device that's signed out.");
         }
-
-        const scanQR = features.enable_scanning ? <AccessibleButton
-            onClick={this.props.onScanQr}
-            kind="primary"
-        >{ _t("Scan QR code") }</AccessibleButton> : null;
-
-        const showQR = features.enable_showing ? <AccessibleButton
-            onClick={this.props.onShowQr}
-            kind={features.enable_scanning ? "primary_outline" : "primary"}
-        >{ _t("Show QR code") }</AccessibleButton> : null;
 
         return <SettingsSubsection
             heading={_t('Sign in with QR code')}
@@ -84,8 +77,14 @@ export default class LoginWithQRSection extends React.Component<IProps, IState> 
                 { this.state.supported === true &&
                     <>
                         <p className="mx_SettingsTab_subsectionText">{ description }</p>
-                        { scanQR }
-                        { showQR }
+                        { offerScanQr && <AccessibleButton
+                            onClick={this.props.onScanQr}
+                            kind="primary"
+                        >{ _t("Scan QR code") }</AccessibleButton> }
+                        { offerShowQr && <AccessibleButton
+                            onClick={this.props.onShowQr}
+                            kind={features.enable_scanning ? "primary_outline" : "primary"}
+                        >{ _t("Show QR code") }</AccessibleButton> }
                     </>
                 }
                 { this.state.supported === false &&
