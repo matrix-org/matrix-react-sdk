@@ -3621,5 +3621,7 @@
     "Use new session manager": "Neue Sitzungsverwaltung nutzen",
     "Sign out all other sessions": "Alle anderen Sitzungen abmelden",
     "pause voice broadcast": "Sprachübertragung pausieren",
-    "resume voice broadcast": "Sprachübertragung fortsetzen"
+    "resume voice broadcast": "Sprachübertragung fortsetzen",
+    "Italic": "Kursiv",
+    "Underline": "Unterstreichen"
 }
