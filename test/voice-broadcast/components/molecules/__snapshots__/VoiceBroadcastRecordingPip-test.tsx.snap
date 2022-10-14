@@ -53,7 +53,7 @@ exports[`VoiceBroadcastRecordingPip when rendering should create the expected re
       class="mx_VoiceBroadcastRecordingPip_controls"
     >
       <div
-        aria-label=" stop voice broadcast"
+        aria-label="stop voice broadcast"
         class="mx_AccessibleButton mx_BroadcastPlaybackControlButton"
         role="button"
         tabindex="0"
