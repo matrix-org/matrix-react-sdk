@@ -146,7 +146,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     private generateCode = async () => {
         try {
-            const fallbackServer = SdkConfig.get().login_with_qr?.default_http_transport_server;
+            const fallbackServer = SdkConfig.get().login_with_qr?.fallback_http_transport_server;
 
             const transport = new MSC3886SimpleHttpRendezvousTransport({
                 onFailure: this.onFailure,

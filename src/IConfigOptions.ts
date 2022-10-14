@@ -192,7 +192,7 @@ export interface IConfigOptions {
             enable_showing?: boolean;
             enable_scanning?: boolean;
         };
-        default_http_transport_server?: string;
+        fallback_http_transport_server?: string;
     };
 }
 
