@@ -3624,5 +3624,10 @@
     "Have greater visibility and control over all your sessions.": "Майте кращу видимість і контроль над усіма вашими сеансами.",
     "New session manager": "Новий менеджер сеансів",
     "Use new session manager": "Використовувати новий менеджер сеансів",
-    "Sign out all other sessions": "Вийти з усіх інших сеансів"
+    "Sign out all other sessions": "Вийти з усіх інших сеансів",
+    "Underline": "Підкреслений",
+    "Italic": "Курсив",
+    "Try out the rich text editor (plain text mode coming soon)": "Спробуйте розширений текстовий редактор (незабаром з'явиться режим звичайного тексту)",
+    "resume voice broadcast": "поновити голосове мовлення",
+    "pause voice broadcast": "призупинити голосове мовлення"
 }
