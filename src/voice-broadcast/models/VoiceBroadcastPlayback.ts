@@ -54,6 +54,7 @@ export class VoiceBroadcastPlayback
     implements IDestroyable {
     private state = VoiceBroadcastPlaybackState.Stopped;
     private chunkEvents = new Map<string, MatrixEvent>();
+    /** Holds the playback qeue with a 1-based index (sequence number) */
     private queue: Playback[] = [];
     private currentlyPlaying: Playback;
     private relations: Relations;
@@ -165,12 +166,14 @@ export class VoiceBroadcastPlayback
             await this.loadChunks();
         }
 
-        if (this.queue.length === 0) {
+        if (this.queue.length === 0 || !this.queue[1]) {
+            // set to stopped fi the queue is empty of the first chunk (sequence number: 1-based index) is missing
             this.setState(VoiceBroadcastPlaybackState.Stopped);
             return;
         }
 
         this.setState(VoiceBroadcastPlaybackState.Playing);
+        // index of the first schunk is the first sequence number
         const first = this.queue[1];
         this.currentlyPlaying = first;
         await first.play();
@@ -237,6 +240,7 @@ export class VoiceBroadcastPlayback
 
     private destroyQueue(): void {
         this.queue.forEach(p => p.destroy());
+        this.queue = [];
     }
 
     public destroy(): void {

@@ -23,7 +23,6 @@ import {
     VoiceBroadcastInfoEventType,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackBody,
-    VoiceBroadcastPlaybackState,
 } from "../../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../../test-utils";
 
@@ -52,6 +51,7 @@ describe("VoiceBroadcastPlaybackBody", () => {
             user: userId,
         });
         playback = new VoiceBroadcastPlayback(infoEvent, client);
+        jest.spyOn(playback, "toggle");
     });
 
     describe("when rendering a broadcast", () => {
@@ -70,8 +70,8 @@ describe("VoiceBroadcastPlaybackBody", () => {
                 await userEvent.click(renderResult.getByLabelText("resume voice broadcast"));
             });
 
-            it("should stop the recording", () => {
-                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
+            it("should toggle the recording", () => {
+                expect(playback.toggle).toHaveBeenCalled();
             });
         });
     });
