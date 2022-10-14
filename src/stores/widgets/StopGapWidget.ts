@@ -282,7 +282,7 @@ export class StopGapWidget extends EventEmitter {
         this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
         this.messaging.on(`action:${ElementWidgetActions.JoinCall}`, () => {
-            // stop voice broadcast recording when joining a call
+            // stop voice broadcast recording when any widget sends a "join"
             VoiceBroadcastRecordingsStore.instance().getCurrent()?.stop();
         });
 
