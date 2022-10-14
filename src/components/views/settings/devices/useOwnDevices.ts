@@ -38,6 +38,7 @@ import { getDeviceClientInformation } from "../../../../utils/device/clientInfor
 import { DevicesDictionary, ExtendedDevice, ExtendedDeviceAppInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 import { parseUserAgent } from "../../../../utils/device/parseUserAgent";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 const isDeviceVerified = (
     matrixClient: MatrixClient,
@@ -178,6 +179,12 @@ export const useOwnDevices = (): DevicesState => {
     useEffect(() => {
         refreshDevices();
     }, [refreshDevices]);
+
+    useEventEmitter(matrixClient, CryptoEvent.DevicesUpdated, (users: string[]): void => {
+        if (users.includes(userId)) {
+            refreshDevices();
+        }
+    });
 
     useEventEmitter(matrixClient, ClientEvent.AccountData, (event: MatrixEvent): void => {
         const type = event.getType();

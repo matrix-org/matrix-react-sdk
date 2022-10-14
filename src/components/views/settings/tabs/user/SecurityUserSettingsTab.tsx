@@ -40,6 +40,7 @@ import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/Ana
 import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
 import SdkConfig from '../../../../../SdkConfig';
 import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
+import SignInWithQRSection from '../../devices/SignInWithQRSection';
 
 interface IIgnoredUserProps {
     userId: string;
@@ -379,44 +380,8 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     </span>
                     <DevicesPanel />
                 </div>
+                <SignInWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked}/>
             </>;
-
-        let loginWithQRSection: JSX.Element | undefined;
-
-        if (SdkConfig.get().login_with_qr?.reciprocate?.enable_scanning ||
-            SdkConfig.get().login_with_qr?.reciprocate?.enable_showing) {
-            const features = SdkConfig.get().login_with_qr?.reciprocate;
-            let description: string;
-            if (features.enable_scanning && features.enable_showing) {
-                description = _t("You can use this device to sign in a new device with a QR code. There are two ways " +
-                "to do this:");
-            } else if (features.enable_scanning) {
-                description = _t("You can use this device to sign in a new device with a QR code. You will need to " +
-                "use this device to scan the QR code shown on your other device that's signed out.");
-            } else {
-                description = _t("You can use this device to sign in a new device with a QR code. You will need to " +
-                "scan the QR code shown on this device with your device that's signed out.");
-            }
-
-            const scanQR = features.enable_scanning ? <AccessibleButton
-                onClick={this.onScanQRClicked}
-                kind="primary"
-            >Scan QR Code</AccessibleButton> : null;
-
-            const showQR = features.enable_showing ? <AccessibleButton
-                onClick={this.onShowQRClicked}
-                kind={features.enable_scanning ? "primary_outline" : "primary"}
-            >Show QR Code</AccessibleButton> : null;
-
-            loginWithQRSection = <>
-                <div className="mx_SettingsTab_subheading">{ _t("Sign in with QR code") }</div>
-                <div className="mx_SettingsTab_section mx_SecurityUserSettingsTab_loginWithQr">
-                    <p className="mx_SettingsTab_subsectionText">{ description }</p>
-                    { scanQR }
-                    { showQR }
-                </div>
-            </>;
-        }
 
         const client = MatrixClientPeg.get();
 
@@ -427,7 +392,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <>
                         { warning }
                         { devicesSection }
-                        { loginWithQRSection }
                         <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
                         <div className="mx_SettingsTab_section">
                             { secureBackup }
