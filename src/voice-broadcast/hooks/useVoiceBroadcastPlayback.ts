@@ -16,36 +16,34 @@ limitations under the License.
 
 import { useState } from "react";
 
-import {
-    VoiceBroadcastInfoState,
-    VoiceBroadcastRecording,
-    VoiceBroadcastRecordingEvent,
-    VoiceBroadcastRecordingsStore,
-} from "..";
 import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
+import {
+    VoiceBroadcastPlayback,
+    VoiceBroadcastPlaybackEvent,
+    VoiceBroadcastPlaybackState,
+} from "..";
 
-export const useVoiceBroadcastRecording = (recording: VoiceBroadcastRecording) => {
+export const useVoiceBroadcastPlayback = (playback: VoiceBroadcastPlayback) => {
     const client = MatrixClientPeg.get();
-    const room = client.getRoom(recording.infoEvent.getRoomId());
-    const stopRecording = () => {
-        recording.stop();
-        VoiceBroadcastRecordingsStore.instance().clearCurrent();
+    const room = client.getRoom(playback.infoEvent.getRoomId());
+    const playbackToggle = () => {
+        playback.toggle();
     };
 
-    const [live, setLive] = useState(recording.getState() === VoiceBroadcastInfoState.Started);
+    const [playbackState, setPlaybackState] = useState(playback.getState());
     useTypedEventEmitter(
-        recording,
-        VoiceBroadcastRecordingEvent.StateChanged,
-        (state: VoiceBroadcastInfoState, _recording: VoiceBroadcastRecording) => {
-            setLive(state === VoiceBroadcastInfoState.Started);
+        playback,
+        VoiceBroadcastPlaybackEvent.StateChanged,
+        (state: VoiceBroadcastPlaybackState, _playback: VoiceBroadcastPlayback) => {
+            setPlaybackState(state);
         },
     );
 
     return {
-        live,
-        room,
-        sender: recording.infoEvent.sender,
-        stopRecording,
+        room: room,
+        sender: playback.infoEvent.sender,
+        toggle: playbackToggle,
+        playbackState,
     };
 };
