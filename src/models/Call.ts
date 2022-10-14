@@ -632,12 +632,14 @@ export class ElementCall extends Call {
             embed: "",
             preload: "",
             hideHeader: "",
-            // Currently, the screen-sharing support is the same is it is for Jitsi
-            hideScreensharing: PlatformPeg.get().supportsJitsiScreensharing() ? null : "",
             userId: client.getUserId()!,
             deviceId: client.getDeviceId(),
             roomId: groupCall.getRoomId()!,
         });
+        // Currently, the screen-sharing support is the same is it is for Jitsi
+        if (!PlatformPeg.get().supportsJitsiScreensharing()) {
+            params.append("hideScreensharing", "");
+        }
         url.hash = `#?${params.toString()}`;
 
         // To use Element Call without touching room state, we create a virtual
