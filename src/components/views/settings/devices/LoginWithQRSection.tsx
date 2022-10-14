@@ -20,7 +20,6 @@ import { _t } from '../../../../languageHandler';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import SdkConfig from '../../../../SdkConfig';
 import AccessibleButton from '../../elements/AccessibleButton';
-import Spinner from '../../elements/Spinner';
 import SettingsSubsection from '../shared/SettingsSubsection';
 
 interface IProps {
@@ -29,7 +28,8 @@ interface IProps {
 }
 
 interface IState {
-    supported: boolean | null;
+    msc3882Supported: boolean | null;
+    msc3886Supported: boolean | null;
 }
 
 export default class LoginWithQRSection extends React.Component<IProps, IState> {
@@ -37,21 +37,31 @@ export default class LoginWithQRSection extends React.Component<IProps, IState> 
         super(props);
 
         this.state = {
-            supported: null,
+            msc3882Supported: null,
+            msc3886Supported: null,
         };
     }
 
     public componentDidMount(): void {
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3882").then((supported) => {
-            this.setState({ supported });
+        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3882"). then((msc3882Supported) => {
+            this.setState({ msc3882Supported });
+        });
+        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3886").then((msc3886Supported) => {
+            this.setState({ msc3886Supported });
         });
     }
 
     public render(): JSX.Element {
         const features = SdkConfig.get().login_with_qr?.reciprocate;
-        const offerScanQr = features.enable_scanning;
-        const offerShowQr = features.enable_showing;
 
+        // Needs to be enabled as a feature + server support MSC3882:
+        const offerScanQr = features.enable_scanning && this.state.msc3882Supported;
+
+        // Needs to be enabled as a feature + server support MSC3886 or have a default rendezvous server configured:
+        const offerShowQr = features.enable_showing && this.state.msc3882Supported &&
+            (this.state.msc3886Supported || !!SdkConfig.get().login_with_qr?.fallback_http_transport_server);
+
+        // don't show anything if no method is available
         if (!offerScanQr && !offerShowQr) {
             return null;
         }
@@ -73,23 +83,15 @@ export default class LoginWithQRSection extends React.Component<IProps, IState> 
             heading={_t('Sign in with QR code')}
         >
             <div className="mx_LoginWithQRSection">
-                { this.state.supported === null && <Spinner /> }
-                { this.state.supported === true &&
-                    <>
-                        <p className="mx_SettingsTab_subsectionText">{ description }</p>
-                        { offerScanQr && <AccessibleButton
-                            onClick={this.props.onScanQr}
-                            kind="primary"
-                        >{ _t("Scan QR code") }</AccessibleButton> }
-                        { offerShowQr && <AccessibleButton
-                            onClick={this.props.onShowQr}
-                            kind={features.enable_scanning ? "primary_outline" : "primary"}
-                        >{ _t("Show QR code") }</AccessibleButton> }
-                    </>
-                }
-                { this.state.supported === false &&
-                    <p className="mx_SettingsTab_subsectionText">{ _t("This homeserver doesn't support signing in with QR codes.") }</p>
-                }
+                <p className="mx_SettingsTab_subsectionText">{ description }</p>
+                { offerScanQr && <AccessibleButton
+                    onClick={this.props.onScanQr}
+                    kind="primary"
+                >{ _t("Scan QR code") }</AccessibleButton> }
+                { offerShowQr && <AccessibleButton
+                    onClick={this.props.onShowQr}
+                    kind={features.enable_scanning ? "primary_outline" : "primary"}
+                >{ _t("Show QR code") }</AccessibleButton> }
             </div>
         </SettingsSubsection>;
     }
