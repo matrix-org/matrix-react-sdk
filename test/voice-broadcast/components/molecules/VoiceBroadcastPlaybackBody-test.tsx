@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -38,11 +38,12 @@ jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
 describe("VoiceBroadcastPlaybackBody", () => {
     const userId = "@user:example.com";
     const roomId = "!room:example.com";
+    let client: MatrixClient;
     let infoEvent: MatrixEvent;
     let playback: VoiceBroadcastPlayback;
 
     beforeAll(() => {
-        stubClient();
+        client = stubClient();
         infoEvent = mkEvent({
             event: true,
             type: VoiceBroadcastInfoEventType,
@@ -50,7 +51,7 @@ describe("VoiceBroadcastPlaybackBody", () => {
             room: roomId,
             user: userId,
         });
-        playback = new VoiceBroadcastPlayback(infoEvent);
+        playback = new VoiceBroadcastPlayback(infoEvent, client);
     });
 
     describe("when rendering a broadcast", () => {
