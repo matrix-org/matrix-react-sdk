@@ -145,6 +145,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     };
 
     private generateCode = async () => {
+        let rendezvous: MSC3906Rendezvous;
         try {
             const fallbackServer = SdkConfig.get().login_with_qr?.fallback_http_transport_server;
 
@@ -157,17 +158,22 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             const channel = new MSC3903ECDHv1RendezvousChannel(transport);
 
-            const rendezvous = new MSC3906Rendezvous(channel, this.props.client);
+            rendezvous = new MSC3906Rendezvous(channel, this.props.client);
 
             rendezvous.onFailure = this.onFailure;
             await rendezvous.generateCode();
-            logger.info(rendezvous.code);
             this.setState({
                 phase: Phase.SHOWING_QR,
                 rendezvous,
                 failureReason: undefined,
             });
+        } catch (e) {
+            logger.error('Error whilst generating QR code', e);
+            this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.HomeserverLacksSupport });
+            return;
+        }
 
+        try {
             const confirmationDigits = await rendezvous.startAfterShowingCode();
             this.setState({ phase: Phase.CONNECTED, confirmationDigits });
 
@@ -188,10 +194,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 }
             }
         } catch (e) {
-            logger.error(e);
+            logger.error('Error whilst doing QR login', e);
             if (this.state.rendezvous) {
                 await this.state.rendezvous.cancel(RendezvousFailureReason.Unknown);
             }
+            this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.Unknown });
         }
     };
 
