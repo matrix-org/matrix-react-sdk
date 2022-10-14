@@ -31,6 +31,7 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
@@ -38,7 +39,6 @@ import { getDeviceClientInformation } from "../../../../utils/device/clientInfor
 import { DevicesDictionary, ExtendedDevice, ExtendedDeviceAppInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 import { parseUserAgent } from "../../../../utils/device/parseUserAgent";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 const isDeviceVerified = (
     matrixClient: MatrixClient,
