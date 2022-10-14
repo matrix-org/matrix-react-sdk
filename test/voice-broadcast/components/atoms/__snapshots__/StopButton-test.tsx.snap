@@ -3,7 +3,7 @@
 exports[`StopButton should render as expected 1`] = `
 <div>
   <div
-    aria-label=" stop voice broadcast"
+    aria-label="stop voice broadcast"
     class="mx_AccessibleButton mx_BroadcastPlaybackControlButton"
     role="button"
     tabindex="0"
