@@ -3626,5 +3626,8 @@
     "Use new session manager": "Gunakan pengelola sesi baru",
     "Sign out all other sessions": "Keluarkan semua sesi lain",
     "resume voice broadcast": "lanjutkan siaran suara",
-    "pause voice broadcast": "jeda siaran suara"
+    "pause voice broadcast": "jeda siaran suara",
+    "Underline": "Garis Bawah",
+    "Italic": "Miring",
+    "Try out the rich text editor (plain text mode coming soon)": "Coba editor teks kaya (mode teks biasa akan datang)"
 }
