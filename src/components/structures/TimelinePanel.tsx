@@ -1409,6 +1409,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // quite slow. So we detect that situation and shortcut straight to
         // calling _reloadEvents and updating the state.
 
+        // This is a hot-path optimization by skipping a promise tick
+        // by repeating a no-op sync branch in
+        // TimelineSet.getTimelineForEvent & MatrixClient.getEventTimeline
+        if (this.props.timelineSet.getTimelineForEvent(eventId)) {
+            // if we've got an eventId, and the timeline exists, we can skip
+            // the promise tick.
+            this.timelineWindow.load(eventId, INITIAL_SIZE);
+            // in this branch this method will happen in sync time
+            onLoaded();
+            return;
+        }
+
         const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
         this.buildLegacyCallEventGroupers();
         this.setState({
