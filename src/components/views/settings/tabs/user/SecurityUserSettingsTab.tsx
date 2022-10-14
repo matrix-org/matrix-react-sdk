@@ -379,7 +379,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     </span>
                     <DevicesPanel />
                 </div>
-                <LoginWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked}/>
+                <LoginWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked} />
             </>;
 
         const client = MatrixClientPeg.get();
