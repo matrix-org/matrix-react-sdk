@@ -25,11 +25,6 @@ export const getReferenceRelationsForEvent = (
     client: MatrixClient,
 ): Relations | undefined => {
     const room = client.getRoom(event.getRoomId());
-
-    if (!room) {
-        return;
-    }
-
     return room?.getUnfilteredTimelineSet()?.relations?.getChildEventsForEvent(
         event.getId(),
         RelationType.Reference,
