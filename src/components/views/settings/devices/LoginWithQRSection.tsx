@@ -32,7 +32,7 @@ interface IState {
     supported: boolean | null;
 }
 
-export default class SignInWithQRSection extends React.Component<IProps, IState> {
+export default class LoginWithQRSection extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
@@ -78,19 +78,20 @@ export default class SignInWithQRSection extends React.Component<IProps, IState>
 
         return <SettingsSubsection
             heading={_t('Sign in with QR code')}
-            className="mx_SignInWithQRSection"
         >
-            { this.state.supported === null && <Spinner /> }
-            { this.state.supported === true &&
-                <>
-                    <p className="mx_SettingsTab_subsectionText">{ description }</p>
-                    { scanQR }
-                    { showQR }
-                </>
-            }
-            { this.state.supported === false &&
-                <p className="mx_SettingsTab_subsectionText">{ _t("This homeserver doesn't support signing in with QR codes.") }</p>
-            }
+            <div className="mx_LoginWithQRSection">
+                { this.state.supported === null && <Spinner /> }
+                { this.state.supported === true &&
+                    <>
+                        <p className="mx_SettingsTab_subsectionText">{ description }</p>
+                        { scanQR }
+                        { showQR }
+                    </>
+                }
+                { this.state.supported === false &&
+                    <p className="mx_SettingsTab_subsectionText">{ _t("This homeserver doesn't support signing in with QR codes.") }</p>
+                }
+            </div>
         </SettingsSubsection>;
     }
 }

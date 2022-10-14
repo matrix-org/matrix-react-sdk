@@ -38,9 +38,8 @@ import InlineSpinner from "../../../elements/InlineSpinner";
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
 import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
-import SdkConfig from '../../../../../SdkConfig';
 import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
-import SignInWithQRSection from '../../devices/SignInWithQRSection';
+import LoginWithQRSection from '../../devices/LoginWithQRSection';
 
 interface IIgnoredUserProps {
     userId: string;
@@ -380,7 +379,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     </span>
                     <DevicesPanel />
                 </div>
-                <SignInWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked}/>
+                <LoginWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked}/>
             </>;
 
         const client = MatrixClientPeg.get();

@@ -638,7 +638,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 { this.state.loginWithQrInProgress ?
                     <AuthBody>
-                        <LoginWithQR device="new" onFinished={this.onLoginWithQRFinished} mode={Mode.SHOW} serverConfig={this.props.serverConfig} />
+                        <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={Mode.SHOW} serverConfig={this.props.serverConfig} />
                     </AuthBody>
                     :
                     <AuthBody>

@@ -11,6 +11,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_LoginWithQRSection .mx_AccessibleButton {
+    margin-right: 10px;
+}
+
 .mx_AuthPage .mx_LoginWithQR {
     .mx_AccessibleButton {
         display: block !important;
@@ -69,7 +73,7 @@ limitations under the License.
     }
 
     .mx_QRCode {
-        padding: 20px 0;
+        padding: 0 40px;
         margin: 26px 0;
     }
 
@@ -86,6 +90,12 @@ limitations under the License.
     min-height: 350px;
     display: flex;
     flex-direction: column;
+
+    .mx_LoginWithQR_centreTitle {
+        h1 {
+            text-align: centre;
+        }
+    }
 
     h1 > svg {
         &.normal {

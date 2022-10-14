@@ -32,7 +32,7 @@ import SecurityRecommendations from '../../devices/SecurityRecommendations';
 import { DeviceSecurityVariation, ExtendedDevice } from '../../devices/types';
 import { deleteDevicesWithInteractiveAuth } from '../../devices/deleteDevices';
 import SettingsTab from '../SettingsTab';
-import SignInWithQRSection from '../../devices/SignInWithQRSection';
+import LoginWithQRSection from '../../devices/LoginWithQRSection';
 import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
 
 const useSignOut = (
@@ -224,7 +224,7 @@ const SessionManagerTab: React.FC = () => {
                     />
                 </SettingsSubsection>
             }
-            <SignInWithQRSection onScanQr={() => setSignInWithQrMode(Mode.SCAN)} onShowQr={() => setSignInWithQrMode(Mode.SHOW)}/>
+            <LoginWithQRSection onScanQr={() => setSignInWithQrMode(Mode.SCAN)} onShowQr={() => setSignInWithQrMode(Mode.SHOW)}/>
         </SettingsTab>
     ;
 };
