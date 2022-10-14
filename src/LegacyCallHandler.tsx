@@ -589,8 +589,6 @@ export default class LegacyCallHandler extends EventEmitter {
                     action.value === "ring"
                 ));
 
-                console.log('hhhh', { pushRuleEnabled, tweakSetToRing });
-
                 if (pushRuleEnabled && tweakSetToRing && !this.isForcedSilent()) {
                     this.play(AudioID.Ring);
                 } else {
