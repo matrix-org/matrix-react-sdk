@@ -157,8 +157,9 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         if (!this.supportsThreadNotifications) {
             this.threadNotificationState?.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         } else {
-            this.props.room?.off(RoomEvent.UnreadNotifications, this.onNotificationUpdate);
+            this.props.room?.on(RoomEvent.UnreadNotifications, this.onNotificationUpdate);
         }
+        this.onNotificationUpdate();
         RoomNotificationStateStore.instance.on(UPDATE_STATUS_INDICATOR, this.onUpdateStatus);
     }
 
@@ -177,22 +178,26 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         if (!this.supportsThreadNotifications) {
             threadNotificationColor = this.threadNotificationState.color;
         } else {
-            switch (this.props.room.getThreadsAggregateNotificationType()) {
-                case NotificationCountType.Highlight:
-                    threadNotificationColor = NotificationColor.Red;
-                    break;
-                case NotificationCountType.Total:
-                    threadNotificationColor = NotificationColor.Grey;
-                    break;
-                default:
-                    threadNotificationColor = NotificationColor.None;
-            }
+            threadNotificationColor = this.notificationColor;
         }
+
+        // console.log
         // XXX: why don't we read from this.state.threadNotificationColor in the render methods?
         this.setState({
             threadNotificationColor,
         });
     };
+
+    private get notificationColor(): NotificationColor {
+        switch (this.props.room.threadsAggregateNotificationType) {
+            case NotificationCountType.Highlight:
+                return NotificationColor.Red;
+            case NotificationCountType.Total:
+                return NotificationColor.Grey;
+            default:
+                return NotificationColor.None;
+        }
+    }
 
     private onUpdateStatus = (notificationState: SummarizedNotificationState): void => {
         // XXX: why don't we read from this.state.globalNotificationCount in the render methods?
@@ -287,12 +292,13 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 ? <HeaderButton
                     key={RightPanelPhases.ThreadPanel}
                     name="threadsButton"
+                    data-testid="threadsButton"
                     title={_t("Threads")}
                     onClick={this.onThreadsPanelClicked}
                     isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
-                    isUnread={this.threadNotificationState?.color > 0}
+                    isUnread={this.state.threadNotificationColor > 0}
                 >
-                    <UnreadIndicator color={this.threadNotificationState?.color} />
+                    <UnreadIndicator color={this.state.threadNotificationColor} />
                 </HeaderButton>
                 : null,
         );
