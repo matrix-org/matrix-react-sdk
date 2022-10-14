@@ -30,8 +30,10 @@ export * from "./models/VoiceBroadcastRecording";
 export * from "./stores/VoiceBroadcastRecordingsStore";
 export * from "./utils/shouldDisplayAsVoiceBroadcastTile";
 export * from "./utils/startNewVoiceBroadcastRecording";
+export * from "./hooks/useVoiceBroadcastRecording";
 
 export const VoiceBroadcastInfoEventType = "io.element.voice_broadcast_info";
+export const VoiceBroadcastChunkEventType = "io.element.voice_broadcast_chunk";
 
 export enum VoiceBroadcastInfoState {
     Started = "started",
