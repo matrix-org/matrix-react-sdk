@@ -3626,5 +3626,10 @@
     "Wysiwyg composer (plain text mode coming soon) (under active development)": "Compositeur Wysiwyg (le mode texte brut arrive prochainement) (en cours de développement)",
     "Sign out all other sessions": "Déconnecter toutes les autres sessions",
     "resume voice broadcast": "continuer la diffusion audio",
-    "pause voice broadcast": "mettre en pause la diffusion audio"
+    "pause voice broadcast": "mettre en pause la diffusion audio",
+    "Underline": "Souligné",
+    "Italic": "Italique",
+    "You have already joined this call from another device": "Vous avez déjà rejoint cet appel depuis un autre appareil",
+    "Try out the rich text editor (plain text mode coming soon)": "Essayer l’éditeur de texte formaté (le mode texte brut arrive bientôt)",
+    "stop voice broadcast": "arrêter la diffusion audio"
 }
