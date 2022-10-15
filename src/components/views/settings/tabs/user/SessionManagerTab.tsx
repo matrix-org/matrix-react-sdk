@@ -235,7 +235,7 @@ const SessionManagerTab: React.FC = () => {
                 </SettingsSubsection>
             }
             { signinWithQrEnabled ?
-                <LoginWithQRSection onScanQr={() => setSignInWithQrMode(Mode.SCAN)} onShowQr={() => setSignInWithQrMode(Mode.SHOW)} />
+                <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.SHOW)} />
                 : null
             }
 

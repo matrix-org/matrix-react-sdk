@@ -259,10 +259,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         this.setState({ showLoginWithQR: Mode.SHOW });
     };
 
-    private onScanQRClicked = (): void => {
-        this.setState({ showLoginWithQR: Mode.SCAN });
-    };
-
     private onLoginWithQRFinished = (): void => {
         this.setState({ showLoginWithQR: null });
     };
@@ -381,7 +377,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <DevicesPanel />
                 </div>
                 { signinWithQrEnabled ?
-                    <LoginWithQRSection onScanQr={this.onScanQRClicked} onShowQr={this.onShowQRClicked} />
+                    <LoginWithQRSection onShowQr={this.onShowQRClicked} />
                     : null
                 }
             </>;

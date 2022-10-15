@@ -185,12 +185,8 @@ export interface IConfigOptions {
     };
 
     login_with_qr?: {
-        login?: {
-            enable_showing?: boolean;
-        };
         reciprocate?: {
             enable_showing?: boolean;
-            enable_scanning?: boolean;
         };
         fallback_http_transport_server?: string;
     };

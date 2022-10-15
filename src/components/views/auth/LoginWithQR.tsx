@@ -12,10 +12,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { buildChannelFromCode, MSC3906Rendezvous, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
+import { MSC3906Rendezvous, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
 import { MSC3886SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
 import { MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
-import { QrReader, OnResultFunction } from 'react-qr-reader';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 
@@ -23,8 +22,6 @@ import { _t } from "../../../languageHandler";
 import AccessibleButton from '../elements/AccessibleButton';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import QRCode from '../elements/QRCode';
-import defaultDispatcher from '../../../dispatcher/dispatcher';
-import { Action } from '../../../dispatcher/actions';
 import SdkConfig from '../../../SdkConfig';
 import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 import Spinner from '../elements/Spinner';
@@ -32,17 +29,13 @@ import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.s
 import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
 import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
-import { setLoggedIn } from '../../../Lifecycle';
 
 export enum Mode {
-    SCAN = "scan",
     SHOW = "show",
 }
 
 enum Phase {
     LOADING,
-    SCAN_INSTRUCTIONS,
-    SCANNING_QR,
     SHOWING_QR,
     CONNECTING,
     CONNECTED,
@@ -61,7 +54,6 @@ interface IProps {
 interface IState {
     phase: Phase;
     rendezvous?: MSC3906Rendezvous;
-    lastScannedCode?: string;
     confirmationDigits?: string;
     failureReason?: RendezvousFailureReason;
     mediaPermissionError?: boolean;
@@ -98,13 +90,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         if (this.state.rendezvous) {
             this.state.rendezvous.onFailure = undefined;
             this.state.rendezvous.channel.transport.onFailure = undefined;
-            await this.state.rendezvous.userCancelled();
+            await this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled);
             this.setState({ rendezvous: undefined });
         }
         if (mode === Mode.SHOW) {
             await this.generateCode();
-        } else {
-            this.setState({ phase: Phase.SCAN_INSTRUCTIONS });
         }
     }
 
@@ -115,7 +105,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // eslint-disable-next-line react/no-direct-mutation-state
             this.state.rendezvous.channel.transport.onFailure = undefined;
             // calling cancel will call close() as well to clean up the resources
-            void this.state.rendezvous.userCancelled();
+            void this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled);
         }
     }
 
@@ -152,7 +142,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             const transport = new MSC3886SimpleHttpRendezvousTransport({
                 onFailure: this.onFailure,
                 client: this.props.client,
-                hsUrl: this.props.serverConfig?.hsUrl,
                 fallbackRzServer: fallbackServer,
             });
 
@@ -176,23 +165,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         try {
             const confirmationDigits = await rendezvous.startAfterShowingCode();
             this.setState({ phase: Phase.CONNECTED, confirmationDigits });
-
-            if (this.isNewDevice) {
-                const creds = await rendezvous.completeLoginOnNewDevice();
-                if (creds) {
-                    await setLoggedIn({
-                        accessToken: creds.accessToken,
-                        userId: creds.userId,
-                        deviceId: creds.deviceId,
-                        homeserverUrl: creds.homeserverUrl,
-                    });
-                    await rendezvous.completeVerificationOnNewDevice(MatrixClientPeg.get());
-                    this.props.onFinished(true);
-                    defaultDispatcher.dispatch({
-                        action: Action.ViewHomePage,
-                    });
-                }
-            }
         } catch (e) {
             logger.error('Error whilst doing QR login', e);
             if (this.state.rendezvous) {
@@ -212,7 +184,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             rendezvous: undefined,
             confirmationDigits: undefined,
             failureReason: undefined,
-            lastScannedCode: undefined,
         });
     }
 
@@ -224,56 +195,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         return !this.props.client;
     }
 
-    private processScannedCode = async (scannedCode: string) => {
-        try {
-            if (this.state.lastScannedCode === scannedCode) {
-                return; // suppress duplicate scans
-            }
-            if (this.state.rendezvous) {
-                await this.state.rendezvous.userCancelled();
-                this.reset();
-            }
-
-            const { channel, intent: theirIntent } = await buildChannelFromCode(
-                scannedCode,
-                this.onFailure,
-            );
-
-            const rendezvous = new MSC3906Rendezvous(channel, this.props.client);
-            this.setState({
-                phase: Phase.CONNECTING,
-                lastScannedCode: scannedCode,
-                rendezvous,
-                failureReason: undefined,
-            });
-
-            const confirmationDigits = await rendezvous.startAfterScanningCode(theirIntent);
-            this.setState({ phase: Phase.CONNECTED, confirmationDigits });
-
-            if (this.isNewDevice) {
-                const creds = await rendezvous.completeLoginOnNewDevice();
-                if (creds) {
-                    await setLoggedIn({
-                        accessToken: creds.accessToken,
-                        userId: creds.userId,
-                        deviceId: creds.deviceId,
-                        homeserverUrl: creds.homeserverUrl,
-                    });
-                    await rendezvous.completeVerificationOnNewDevice(MatrixClientPeg.get());
-                    this.props.onFinished(true);
-                    defaultDispatcher.dispatch({
-                        action: Action.ViewHomePage,
-                    });
-                }
-            }
-        } catch (e) {
-            alert(e);
-        }
-    };
-
     private cancelClicked = () => {
         void (async () => {
-            await this.state.rendezvous?.userCancelled();
+            await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
             this.reset();
             this.props.onFinished(false);
         })();
@@ -293,39 +217,10 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         void this.updateMode(this.props.mode);
     };
 
-    private onQrResult: OnResultFunction = (result, error) => {
-        if (result) {
-            this.processScannedCode(result.getText());
-        }
-    };
-
-    private viewFinder() {
-        return <svg viewBox="0 0 100 100" className="mx_QRViewFinder">
-            <path fill="none" d="M10,0 L0,0 L0,10" />
-            <path fill="none" d="M0,90 L0,100 L10,100" />
-            <path fill="none" d="M90,100 L100,100 L100,90" />
-            <path fill="none" d="M100,10 L100,0 L90,0" />
-        </svg>;
-    }
-
-    private requestMediaPermissions = async () => {
-        try {
-            await navigator.mediaDevices.getUserMedia({ video: true });
-            this.setState({ mediaPermissionError: false });
-        } catch (err) {
-            this.setState({ mediaPermissionError: true });
-        }
-    };
-
     private onBackClick = () => {
-        void this.state.rendezvous?.userCancelled();
+        void this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
 
         this.props.onFinished(false);
-    };
-
-    private onDoScanQRClicked = () => {
-        this.setState({ phase: Phase.SCANNING_QR });
-        void this.requestMediaPermissions();
     };
 
     private cancelButton = () => <AccessibleButton
@@ -480,52 +375,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     main = this.simpleSpinner();
                     buttons = this.cancelButton();
                 }
-                break;
-            case Phase.SCAN_INSTRUCTIONS:
-                title = _t("Sign in with QR code");
-                if (this.isExistingDevice) {
-                    main = <>
-                        <p>
-                            <span>{ _t("Use the camera on this device to scan the QR code shown on your other device:") }</span>
-                        </p>
-                        <ol>
-                            <li>{ _t("Start at the sign in screen") }</li>
-                            <li>{ _t("Select 'Show QR code'") }</li>
-                        </ol>
-                    </>;
-                } else {
-                    main = <>
-                        <p>
-                            <span>{ _t("Use the camera on this device to scan the QR code shown on your signed in device:") }</span>
-                        </p>
-                        <ol>
-                            <li>{ _t("Open Element on your other device") }</li>
-                            <li>{ _t("Go to Settings -> Security & Privacy") }</li>
-                            <li>{ _t("Select 'Link a device'") }</li>
-                            <li>{ _t("Select 'Show QR code on this device'") }</li>
-                        </ol>
-                    </>;
-                }
-                buttons = <>
-                    <AccessibleButton
-                        kind="primary"
-                        onClick={this.onDoScanQRClicked}
-                    >
-                        { _t("Scan QR code") }
-                    </AccessibleButton>
-                </>;
-                break;
-            case Phase.SCANNING_QR:
-                title =_t("Sign in with QR code");
-                main = <>
-                    <p>{ _t("Line up the QR code in the square below:") }</p>
-                    <QrReader
-                        className="mx_LoginWithQR_QRScanner"
-                        constraints={{}}
-                        onResult={this.onQrResult}
-                        ViewFinder={this.viewFinder}
-                    />
-                </>;
                 break;
             case Phase.LOADING:
                 main = this.simpleSpinner();
