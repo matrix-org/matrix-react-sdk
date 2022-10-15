@@ -27,10 +27,7 @@ import {
 import { stubClient } from '../test-utils';
 
 describe('languageHandler', function() {
-    /*
-      See /__mocks__/browser-request.js/ for how we are stubbing out translations
-      to provide fixture data for these tests
-     */
+    // See setupLanguage.ts for how we are stubbing out translations to provide fixture data for these tests
     const basicString = 'Rooms';
     const selfClosingTagSub = 'Accept <policyLink /> to continue:';
     const textInTagSub = '<a>Upgrade</a> to your own domain';
@@ -103,6 +100,16 @@ describe('languageHandler', function() {
         ],
     ];
 
+    let oldNodeEnv;
+    beforeAll(() => {
+        oldNodeEnv = process.env.NODE_ENV;
+        process.env.NODE_ENV = "test";
+    });
+
+    afterAll(() => {
+        process.env.NODE_ENV = oldNodeEnv;
+    });
+
     describe('when translations exist in language', () => {
         beforeEach(function(done) {
             stubClient();
@@ -118,7 +125,7 @@ describe('languageHandler', function() {
             }).then(done);
         });
 
-        it.each(testCasesEn)("%s", async (_d, translationString, variables, tags, result) => {
+        it.each(testCasesEn)("%s", (_d, translationString, variables, tags, result) => {
             expect(_t(translationString, variables, tags)).toEqual(result);
         });
 
@@ -140,9 +147,9 @@ describe('languageHandler', function() {
     });
 
     describe('for a non-en language', () => {
-        beforeEach(async () => {
+        beforeEach(() => {
             stubClient();
-            await setLanguage('lv');
+            setLanguage('lv');
             // counterpart doesnt expose any way to restore default config
             // missingEntryGenerator is mocked in the root setup file
             // reset to default here
@@ -181,7 +188,7 @@ describe('languageHandler', function() {
                 });
                 it.each(pluralCases)(
                     "%s",
-                    async (_d, translationString, variables, tags, result) => {
+                    (_d, translationString, variables, tags, result) => {
                         expect(_t(translationString, variables, tags)).toEqual(result);
                     },
                 );
@@ -195,7 +202,7 @@ describe('languageHandler', function() {
                 });
                 it.each(pluralCases)(
                     "%s and translates with fallback locale, attributes fallback locale",
-                    async (_d, translationString, variables, tags, result) => {
+                    (_d, translationString, variables, tags, result) => {
                         expect(_tDom(translationString, variables, tags)).toEqual(<span lang="en">{ result }</span>);
                     },
                 );
@@ -206,7 +213,7 @@ describe('languageHandler', function() {
             describe('_t', () => {
                 it.each(testCasesEn)(
                     "%s and translates with fallback locale",
-                    async (_d, translationString, variables, tags, result) => {
+                    (_d, translationString, variables, tags, result) => {
                         expect(_t(translationString, variables, tags)).toEqual(result);
                     },
                 );
@@ -215,7 +222,7 @@ describe('languageHandler', function() {
             describe('_tDom()', () => {
                 it.each(testCasesEn)(
                     "%s and translates with fallback locale, attributes fallback locale",
-                    async (_d, translationString, variables, tags, result) => {
+                    (_d, translationString, variables, tags, result) => {
                         expect(_tDom(translationString, variables, tags)).toEqual(<span lang="en">{ result }</span>);
                     },
                 );
@@ -224,12 +231,12 @@ describe('languageHandler', function() {
     });
 
     describe('when languages dont load', () => {
-        it('_t', async () => {
+        it('_t', () => {
             const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
             expect(_t(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(STRING_NOT_IN_THE_DICTIONARY);
         });
 
-        it('_tDom', async () => {
+        it('_tDom', () => {
             const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
             expect(_tDom(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(
                 <span lang="en">{ STRING_NOT_IN_THE_DICTIONARY }</span>);
