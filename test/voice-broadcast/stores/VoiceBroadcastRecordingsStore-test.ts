@@ -76,7 +76,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
         });
 
         it("should return it as current", () => {
-            expect(recordings.current).toBe(recording);
+            expect(recordings.getCurrent()).toBe(recording);
         });
 
         it("should return it by id", () => {
@@ -95,6 +95,20 @@ describe("VoiceBroadcastRecordingsStore", () => {
 
             it("should not emit a CurrentChanged event", () => {
                 expect(onCurrentChanged).not.toHaveBeenCalled();
+            });
+        });
+
+        describe("and calling clearCurrent()", () => {
+            beforeEach(() => {
+                recordings.clearCurrent();
+            });
+
+            it("should clear the current recording", () => {
+                expect(recordings.getCurrent()).toBeNull();
+            });
+
+            it("should emit a current changed event", () => {
+                expect(onCurrentChanged).toHaveBeenCalledWith(null);
             });
         });
     });

@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-module.exports = {
-    env: {
-        mocha: true,
-    },
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-    // mocha defines a 'this'
-    rules: {
-        "@babel/no-invalid-this": "off",
-    },
+import { VoiceBroadcastInfoState } from "..";
+
+export const shouldDisplayAsVoiceBroadcastRecordingTile = (
+    state: VoiceBroadcastInfoState,
+    client: MatrixClient,
+    event: MatrixEvent,
+): boolean => {
+    const userId = client.getUserId();
+    return !!userId
+        && userId === event.getSender()
+        && state !== VoiceBroadcastInfoState.Stopped;
 };
