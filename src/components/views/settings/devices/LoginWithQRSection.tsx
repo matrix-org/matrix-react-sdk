@@ -54,7 +54,7 @@ export default class LoginWithQRSection extends React.Component<IProps, IState> 
         const features = SdkConfig.get().login_with_qr?.reciprocate;
 
         // Needs to be enabled as a feature + server support MSC3886 or have a default rendezvous server configured:
-        const offerShowQr = features.enable_showing && this.state.msc3882Supported &&
+        const offerShowQr = features?.enable_showing && this.state.msc3882Supported &&
             (this.state.msc3886Supported || !!SdkConfig.get().login_with_qr?.fallback_http_transport_server);
 
         // don't show anything if no method is available
