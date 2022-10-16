@@ -17,6 +17,8 @@ import { MSC3886SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvo
 import { MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { IAuthData } from 'matrix-js-sdk/src/matrix';
+import { LoginTokenPostResponse } from 'matrix-js-sdk/src/@types/auth';
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from '../elements/AccessibleButton';
@@ -27,8 +29,6 @@ import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.s
 import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
 import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
-import { LoginTokenPostResponse } from 'matrix-js-sdk/src/@types/auth';
-import { IAuthData } from 'matrix-js-sdk';
 
 export enum Mode {
     SHOW = "show",
