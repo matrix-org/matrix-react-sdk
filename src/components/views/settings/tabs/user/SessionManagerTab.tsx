@@ -230,9 +230,7 @@ const SessionManagerTab: React.FC = () => {
                     setSelectedDeviceIds={setSelectedDeviceIds}
                     onFilterChange={setFilter}
                     onDeviceExpandToggle={onDeviceExpandToggle}
-                    onRequestDeviceVerification={
-                        requestDeviceVerification ? onTriggerDeviceVerification : undefined
-                    }
+                    onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
                     onSignOutDevices={onSignOutOtherDevices}
                     saveDeviceName={saveDeviceName}
                     setPushNotifications={setPushNotifications}
