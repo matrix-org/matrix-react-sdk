@@ -17,8 +17,6 @@ import { MSC3886SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvo
 import { MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { IAuthData } from 'matrix-js-sdk/src/matrix';
-import { LoginTokenPostResponse } from 'matrix-js-sdk/src/@types/auth';
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from '../elements/AccessibleButton';
@@ -29,6 +27,7 @@ import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.s
 import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
 import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
+import { wrapRequestWithDialog } from '../../../utils/UserInteractiveAuth';
 
 export enum Mode {
     SHOW = "show",
@@ -114,36 +113,37 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
         this.setState({ phase: Phase.LOADING });
 
-        logger.info("Requesting login token");
+        try {
+            logger.info("Requesting login token");
 
-        const loginTokenResponse = await this.props.client.requestLoginToken();
+            const { login_token: loginToken } = await wrapRequestWithDialog(this.props.client.requestLoginToken, {
+                matrixClient: this.props.client,
+                title: _t("Sign in new device"),
+            })();
 
-        if (typeof (loginTokenResponse as IAuthData).session === 'string') {
-            // TODO: handle UIA response
-            throw new Error("UIA isn't supported yet");
-        }
+            this.setState({ phase: Phase.WAITING_FOR_DEVICE });
 
-        const { login_token: loginToken } = loginTokenResponse as LoginTokenPostResponse;
-
-        this.setState({ phase: Phase.WAITING_FOR_DEVICE });
-
-        const newDeviceId = await this.state.rendezvous.approveLoginOnExistingDevice(loginToken);
-        if (!newDeviceId) {
-            // user denied
-            return;
-        }
-        if (!this.props.client.crypto) {
-            // alert(`New device signed in: ${newDeviceId}. Not signing cross-signing as no crypto setup`);
+            const newDeviceId = await this.state.rendezvous.approveLoginOnExistingDevice(loginToken);
+            if (!newDeviceId) {
+                // user denied
+                return;
+            }
+            if (!this.props.client.crypto) {
+                // alert(`New device signed in: ${newDeviceId}. Not signing cross-signing as no crypto setup`);
+                this.props.onFinished(true);
+                return;
+            }
+            const didCrossSign = await this.state.rendezvous.verifyNewDeviceOnExistingDevice();
+            if (didCrossSign) {
+                // alert(`New device signed in, cross signed and marked as known: ${newDeviceId}`);
+            } else {
+                // alert(`New device signed in, but no keys received for cross signing: ${newDeviceId}`);
+            }
             this.props.onFinished(true);
-            return;
+        } catch (e) {
+            logger.error('Error whilst approving sign in', e);
+            this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.Unknown });
         }
-        const didCrossSign = await this.state.rendezvous.verifyNewDeviceOnExistingDevice();
-        if (didCrossSign) {
-            // alert(`New device signed in, cross signed and marked as known: ${newDeviceId}`);
-        } else {
-            // alert(`New device signed in, but no keys received for cross signing: ${newDeviceId}`);
-        }
-        this.props.onFinished(true);
     };
 
     private generateCode = async () => {
