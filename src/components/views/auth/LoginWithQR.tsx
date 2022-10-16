@@ -194,14 +194,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         });
     }
 
-    private get isExistingDevice(): boolean {
-        return !!this.props.client;
-    }
-
-    private get isNewDevice(): boolean {
-        return !this.props.client;
-    }
-
     private cancelClicked = () => {
         void (async () => {
             await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
@@ -308,48 +300,33 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 title = _t("Devices connected");
                 titleIcon = <DevicesIcon className="normal" />;
                 backButton = false;
-                if (this.isNewDevice) {
-                    main = <>
-                        <p>{ _t("Check that the same code is shown on your other device before proceeding:") }</p>
-                        <div className="mx_LoginWithQR_confirmationDigits">
-                            { this.state.confirmationDigits }
+                main = <>
+                    <p>{ _t("Check that the code below matches with your other device:") }</p>
+                    <div className="mx_LoginWithQR_confirmationDigits">
+                        { this.state.confirmationDigits }
+                    </div>
+                    <div className="mx_LoginWithQR_confirmationAlert">
+                        <div>
+                            <InfoIcon />
                         </div>
-                    </>;
-                    buttons = <>
-                        <div className="mx_LoginWithQR_separator">
-                            { _t("No match?") }
-                        </div>
-                        { this.cancelButton() }
-                    </>;
-                } else {
-                    main = <>
-                        <p>{ _t("Check that the code below matches with your other device:") }</p>
-                        <div className="mx_LoginWithQR_confirmationDigits">
-                            { this.state.confirmationDigits }
-                        </div>
-                        <div className="mx_LoginWithQR_confirmationAlert">
-                            <div>
-                                <InfoIcon />
-                            </div>
-                            <div>{ _t("By approving access for this device, it will have full access to your account.") }</div>
-                        </div>
-                    </>;
+                        <div>{ _t("By approving access for this device, it will have full access to your account.") }</div>
+                    </div>
+                </>;
 
-                    buttons = <>
-                        <AccessibleButton
-                            kind="primary_outline"
-                            onClick={this.declineClicked}
-                        >
-                            { _t("Cancel") }
-                        </AccessibleButton>
-                        <AccessibleButton
-                            kind="primary"
-                            onClick={this.approveLogin}
-                        >
-                            { _t("Approve") }
-                        </AccessibleButton>
-                    </>;
-                }
+                buttons = <>
+                    <AccessibleButton
+                        kind="primary_outline"
+                        onClick={this.declineClicked}
+                    >
+                        { _t("Cancel") }
+                    </AccessibleButton>
+                    <AccessibleButton
+                        kind="primary"
+                        onClick={this.approveLogin}
+                    >
+                        { _t("Approve") }
+                    </AccessibleButton>
+                </>;
                 break;
             case Phase.SHOWING_QR:
                 title =_t("Sign in with QR code");
@@ -357,27 +334,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     const code = <div className="mx_LoginWithQR_qrWrapper">
                         <QRCode data={[{ data: Buffer.from(this.state.rendezvous.code), mode: 'byte' }]} className="mx_QRCode" />
                     </div>;
-
-                    if (this.isExistingDevice) {
-                        main = <>
-                            <p>{ _t("Scan the QR code below with your device that's signed out.") }</p>
-                            <ol>
-                                <li>{ _t("Start at the sign in screen") }</li>
-                                <li>{ _t("Select 'Scan QR code'") }</li>
-                            </ol>
-                            { code }
-                        </>;
-                    } else {
-                        main = <>
-                            <p>{ _t("Scan the QR code below with your device that's already signed in:") }</p>
-                            <ol>
-                                <li>{ _t("Open the app on your other device") }</li>
-                                <li>{ _t("Go to Settings -> Security & Privacy") }</li>
-                                <li>{ _t("Select 'Scan QR code'") }</li>
-                            </ol>
-                            { code }
-                        </>;
-                    }
+                    main = <>
+                        <p>{ _t("Scan the QR code below with your device that's signed out.") }</p>
+                        <ol>
+                            <li>{ _t("Start at the sign in screen") }</li>
+                            <li>{ _t("Select 'Scan QR code'") }</li>
+                        </ol>
+                        { code }
+                    </>;
                 } else {
                     main = this.simpleSpinner();
                     buttons = this.cancelButton();
