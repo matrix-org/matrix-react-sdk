@@ -339,6 +339,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                         <ol>
                             <li>{ _t("Start at the sign in screen") }</li>
                             <li>{ _t("Select 'Scan QR code'") }</li>
+                            <li>{ _t("Review and approve the sign in") }</li>
                         </ol>
                         { code }
                     </>;
