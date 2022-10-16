@@ -62,6 +62,12 @@ export function formatRange(range: Range, action: Formatting): void {
         case Formatting.InsertLink:
             formatRangeAsLink(range);
             break;
+        case Formatting.BulletedList:
+            formatRangeAsList(range, "- ");
+            break;
+        case Formatting.NumberedList:
+            formatRangeAsList(range, "1. ");
+            break;
     }
 }
 
@@ -130,11 +136,15 @@ const isFormattable = (_index: number, offset: number, part: Part) => {
     return part.text[offset] !== " " && part.type === Type.Plain;
 };
 
-export function selectRangeOfWordAtCaret(range: Range): void {
+const isText = (_index: number, _offset: number, part: Part) => {
+    return !isNL(part);
+};
+
+export function selectRangeOfWordAtCaret(range: Range, predicate = isFormattable): void {
     // Select right side of word
-    range.expandForwardsWhile(isFormattable);
+    range.expandForwardsWhile(predicate);
     // Select left side of word
-    range.expandBackwardsWhile(isFormattable);
+    range.expandBackwardsWhile(predicate);
     // Trim possibly selected new lines
     range.trim();
 }
@@ -173,6 +183,33 @@ export function formatRangeAsQuote(range: Range): void {
         parts.push(partCreator.newline());
     }
     parts.push(partCreator.newline());
+    replaceRangeAndExpandSelection(range, parts);
+}
+
+export function formatRangeAsList(range: Range, prefix: string): void {
+    // possible prefixes are "- " for bulleted lists and "1. " for numbered lists
+
+    if (!rangeStartsAtBeginningOfLine(range) || !rangeEndsAtEndOfLine(range)) {
+        selectRangeOfWordAtCaret(range, isText); // expand range to include complete lines
+    }
+    const { model, parts } = range;
+    const { partCreator } = model;
+    const beginningOfLineParts = parts.filter((p, index) => // filter out each non starting part
+        !isNL(p) && (parts[index - 1] ? isNL(parts[index - 1]) : true));
+    const isList = beginningOfLineParts.every(p => p.text.startsWith(prefix));
+
+    // insert or remove prefix at beginning of every non-newline
+    if (!isList) {
+        for (let i = 0; i < parts.length; ++i) {
+            if (i === 0) parts.splice(i, 0, partCreator.plain(prefix));
+            if (isNL(parts[i]) && !isNL(parts[i + 1])) { // do not format newlines
+                parts.splice(i + 1, 0, partCreator.plain(prefix));
+            }
+        }
+    } else {
+        parts.filter(part => part.text.startsWith(prefix)).forEach(p => p.remove(0, prefix.length));
+    }
+
     replaceRangeAndExpandSelection(range, parts);
 }
 

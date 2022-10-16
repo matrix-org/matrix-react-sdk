@@ -15,12 +15,16 @@
 ## Formatting
 
  - When selecting text, a formatting bar appears above the selection.
- - The formatting bar allows to format the selected test as:
-    bold, italic, strikethrough, a block quote, and a code block (inline if no linebreak is selected).
+ - The formatting bar allows to format the selected text as:
+    bold, italic, strikethrough, a block quote, a link, a bulleted or numbered list, and a code block (inline if no linebreak is selected).
  - Formatting is applied as markdown syntax.
  - Hitting ctrl/cmd+B also marks the selected text as bold
  - Hitting ctrl/cmd+I also marks the selected text as italic
- - Hitting ctrl/cmd+> also marks the selected text as a blockquote
+ - Hitting ctrl/cmd+E also marks the selected text as a link
+ - Hitting ctrl/cmd+shift+> also marks the selected text as a blockquote
+ - Hitting ctrl/cmd+shift+L also marks the selected text as a link
+ - Hitting ctrl/cmd+shift+B also marks the line(s) containing the caret or the selected text as a bulleted list
+ - Hitting ctrl/cmd+shift+N also marks the line(s) containing the caret or the selected text as a numbered list
 
 ## Misc
 

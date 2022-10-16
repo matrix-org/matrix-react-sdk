@@ -47,6 +47,10 @@ export enum KeyBindingAction {
     FormatCode = 'KeyBinding.FormatCode',
     /** Format the current selection as quote */
     FormatQuote = 'KeyBinding.toggleQuoteInComposer',
+    /** Format the current selection as bulleted list */
+    FormatBulletedList = 'KeyBinding.toggleBulletedListInComposer',
+    /** Format the current selection as numbered list */
+    FormatNumberedList = 'KeyBinding.toggleNumberedListInComposer',
     /** Undo the last editing */
     EditUndo = 'KeyBinding.editUndoInComposer',
     /** Redo editing */
@@ -216,6 +220,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.FormatQuote,
             KeyBindingAction.FormatLink,
             KeyBindingAction.FormatCode,
+            KeyBindingAction.FormatBulletedList,
+            KeyBindingAction.FormatNumberedList,
             KeyBindingAction.EditUndo,
             KeyBindingAction.EditRedo,
             KeyBindingAction.MoveCursorToStart,
@@ -358,6 +364,22 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.L,
         },
         displayName: _td("Toggle Link"),
+    },
+    [KeyBindingAction.FormatBulletedList]: {
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.B,
+        },
+        displayName: _td("Toggle Bulleted List"),
+    },
+    [KeyBindingAction.FormatNumberedList]: {
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.N,
+        },
+        displayName: _td("Toggle Numbered List"),
     },
     [KeyBindingAction.CancelReplyOrEdit]: {
         default: {

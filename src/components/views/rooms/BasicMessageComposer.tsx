@@ -548,6 +548,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.InsertLink);
                 handled = true;
                 break;
+            case KeyBindingAction.FormatBulletedList:
+                this.onFormatAction(Formatting.BulletedList);
+                handled = true;
+                break;
+            case KeyBindingAction.FormatNumberedList:
+                this.onFormatAction(Formatting.NumberedList);
+                handled = true;
+                break;
             case KeyBindingAction.EditRedo:
                 if (this.historyManager.canRedo()) {
                     const { parts, caret } = this.historyManager.redo();
@@ -756,6 +764,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             [Formatting.Code]: ctrlShortcutLabel("E"),
             [Formatting.Quote]: ctrlShortcutLabel(">", true),
             [Formatting.InsertLink]: ctrlShortcutLabel("L", true),
+            [Formatting.BulletedList]: ctrlShortcutLabel("B", true),
+            [Formatting.NumberedList]: ctrlShortcutLabel("N", true),
         };
 
         const { completionIndex } = this.state;

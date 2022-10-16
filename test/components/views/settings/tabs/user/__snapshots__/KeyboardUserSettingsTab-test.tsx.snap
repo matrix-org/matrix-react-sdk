@@ -169,6 +169,58 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
         <div
           class="mx_KeyboardShortcut_shortcutRow"
         >
+          Toggle Bulleted List
+          <div
+            class="mx_KeyboardShortcut"
+          >
+            <kbd>
+               
+              Ctrl
+               
+            </kbd>
+            +
+            <kbd>
+               
+              Shift
+               
+            </kbd>
+            +
+            <kbd>
+               
+              b
+               
+            </kbd>
+          </div>
+        </div>
+        <div
+          class="mx_KeyboardShortcut_shortcutRow"
+        >
+          Toggle Numbered List
+          <div
+            class="mx_KeyboardShortcut"
+          >
+            <kbd>
+               
+              Ctrl
+               
+            </kbd>
+            +
+            <kbd>
+               
+              Shift
+               
+            </kbd>
+            +
+            <kbd>
+               
+              n
+               
+            </kbd>
+          </div>
+        </div>
+        <div
+          class="mx_KeyboardShortcut_shortcutRow"
+        >
           Undo edit
           <div
             class="mx_KeyboardShortcut"

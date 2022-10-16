@@ -27,6 +27,8 @@ export enum Formatting {
     Code = "code",
     Quote = "quote",
     InsertLink = "insert_link",
+    BulletedList = "bulleted_list",
+    NumberedList = "numbered_list",
 }
 
 interface IProps {
@@ -57,6 +59,8 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
             <FormatButton label={_t("Code block")} onClick={() => this.props.onAction(Formatting.Code)} icon="Code" shortcut={this.props.shortcuts.code} visible={this.state.visible} />
             <FormatButton label={_t("Quote")} onClick={() => this.props.onAction(Formatting.Quote)} icon="Quote" shortcut={this.props.shortcuts.quote} visible={this.state.visible} />
             <FormatButton label={_t("Insert link")} onClick={() => this.props.onAction(Formatting.InsertLink)} icon="InsertLink" shortcut={this.props.shortcuts.insert_link} visible={this.state.visible} />
+            <FormatButton label={_t("Bulleted list")} onClick={() => this.props.onAction(Formatting.BulletedList)} icon="BulletedList" shortcut={this.props.shortcuts.bulleted_list} visible={this.state.visible} />
+            <FormatButton label={_t("Numbered list")} onClick={() => this.props.onAction(Formatting.NumberedList)} icon="NumberedList" shortcut={this.props.shortcuts.numbered_list} visible={this.state.visible} />
         </div>);
     }
 

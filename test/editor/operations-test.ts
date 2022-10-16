@@ -20,6 +20,7 @@ import {
     formatRange,
     formatRangeAsCode,
     formatRangeAsLink,
+    formatRangeAsList,
     selectRangeOfWordAtCaret,
     toggleInlineFormat,
 } from "../../src/editor/operations";
@@ -94,6 +95,189 @@ describe("editor/operations: formatting operations", () => {
             formatRangeAsLink(range, text);
             expect(renderer.caret.offset).toBe(4 + expectation.indexOf("|"));
             expect(model.parts[0].text).toBe("foo " + expectation.replace("|", "") + " bar");
+        });
+    });
+
+    describe("formatRangeAsList", () => {
+        const bulletPrefix = "- ";
+        const numberPrefix = "1. "; // testing both possible prefixes
+        it("formats a single selected line", () => {
+            const model = new EditorModel([
+                pc.plain("hello world!"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(0, false),
+                model.positionForOffset(12, false));
+
+            expect(range.parts[0].text).toBe("hello world!");
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+            formatRangeAsList(range, bulletPrefix);
+            expect(model.serializeParts()).toEqual([{ "text": "- hello world!", "type": "plain" }]);
+            formatRangeAsList(range, bulletPrefix); // remove formatting
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+        });
+        it("formats a single line at caret position without previous selection", () => {
+            const model = new EditorModel([
+                pc.plain("hello world!"),
+            ], pc, renderer);
+
+            let range = model.startRange(model.positionForOffset(3, false));
+
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+            formatRangeAsList(range, numberPrefix);
+            expect(model.serializeParts()).toEqual([{ "text": "1. hello world!", "type": "plain" }]);
+            formatRangeAsList(range, numberPrefix); // remove formatting
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+
+            range = model.startRange(model.positionForOffset(0, false)); // beginning of line
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+            formatRangeAsList(range, bulletPrefix);
+            expect(model.serializeParts()).toEqual([{ "text": "- hello world!", "type": "plain" }]);
+            formatRangeAsList(range, bulletPrefix); // remove formatting
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+
+            range = model.startRange(model.getPositionAtEnd()); // end of line
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+            formatRangeAsList(range, numberPrefix);
+            expect(model.serializeParts()).toEqual([{ "text": "1. hello world!", "type": "plain" }]);
+            formatRangeAsList(range, numberPrefix); // remove formatting
+            expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
+        });
+        it("formats a line containing non-text parts like pills or emojis", () => {
+            const model = new EditorModel([
+                pc.plain("hello there "),
+                pc.atRoomPill("@room"),
+                pc.plain(", would you like some "),
+                pc.emoji(":pizza:"),
+                pc.plain("?"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(0, false),
+                model.getPositionAtEnd());
+
+            expect(range.parts.map(p => p.text).join("")).toBe("hello there @room, would you like some :pizza:?");
+            expect(model.serializeParts()).toEqual([
+                { "text": "hello there ", "type": "plain" },
+                { "text": "@room", "type": "at-room-pill" },
+                { "text": ", would you like some ", "type": "plain" },
+                { "text": ":pizza:", "type": "emoji" },
+                { "text": "?", "type": "plain" },
+            ]);
+            formatRangeAsList(range, bulletPrefix);
+            expect(model.serializeParts()).toEqual([
+                { "text": "- hello there ", "type": "plain" },
+                { "text": "@room", "type": "at-room-pill" },
+                { "text": ", would you like some ", "type": "plain" },
+                { "text": ":pizza:", "type": "emoji" },
+                { "text": "?", "type": "plain" },
+            ]);
+        });
+        it("formats multiple selected lines", () => {
+            const model = new EditorModel([
+                pc.plain("lorem ipsum,"),
+                pc.newline(),
+                pc.plain("dolor sit"),
+                pc.newline(),
+                pc.plain("amet?"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(0, false),
+                model.getPositionAtEnd());
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "dolor sit", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "amet?", "type": "plain" },
+            ]);
+
+            formatRangeAsList(range, bulletPrefix);
+            expect(model.serializeParts()).toEqual([
+                { "text": "- lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "- dolor sit", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "- amet?", "type": "plain" },
+            ]);
+            formatRangeAsList(range, bulletPrefix); // remove formatting
+            expect(model.serializeParts()).toEqual([
+                { "text": "lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "dolor sit", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "amet?", "type": "plain" },
+            ]);
+        });
+        it("formats multiple complete lines when beginning and end are only partially selected", () => {
+            const model = new EditorModel([
+                pc.plain("lorem ipsum,"),
+                pc.newline(),
+                pc.plain("dolor sit!"),
+                pc.newline(),
+                pc.plain("amet?"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(3, false),
+                model.positionForOffset(25, false));
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "dolor sit!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "amet?", "type": "plain" },
+            ]);
+
+            formatRangeAsList(range, numberPrefix);
+            expect(model.serializeParts()).toEqual([
+                { "text": "1. lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "1. dolor sit!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "1. amet?", "type": "plain" },
+            ]);
+
+            formatRangeAsList(range, numberPrefix); // remove formatting
+            expect(model.serializeParts()).toEqual([
+                { "text": "lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "dolor sit!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "amet?", "type": "plain" },
+            ]);
+        });
+        it("does not format blank lines between paragraphs", () => {
+            const model = new EditorModel([
+                pc.plain("lorem ipsum,"),
+                pc.newline(),
+                pc.newline(),
+                pc.plain("dolor sit!"),
+                pc.newline(),
+                pc.plain("amet?"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(3, false),
+                model.positionForOffset(25, false));
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "dolor sit!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "amet?", "type": "plain" },
+            ]);
+
+            formatRangeAsList(range, bulletPrefix);
+            expect(model.serializeParts()).toEqual([
+                { "text": "- lorem ipsum,", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "- dolor sit!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "- amet?", "type": "plain" },
+            ]);
         });
     });
 
