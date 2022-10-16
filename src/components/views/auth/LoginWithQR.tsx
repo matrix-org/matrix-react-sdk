@@ -129,16 +129,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 return;
             }
             if (!this.props.client.crypto) {
-                // alert(`New device signed in: ${newDeviceId}. Not signing cross-signing as no crypto setup`);
+                // no E2EE to set up
                 this.props.onFinished(true);
                 return;
             }
-            const didCrossSign = await this.state.rendezvous.verifyNewDeviceOnExistingDevice();
-            if (didCrossSign) {
-                // alert(`New device signed in, cross signed and marked as known: ${newDeviceId}`);
-            } else {
-                // alert(`New device signed in, but no keys received for cross signing: ${newDeviceId}`);
-            }
+            await this.state.rendezvous.verifyNewDeviceOnExistingDevice();
             this.props.onFinished(true);
         } catch (e) {
             logger.error('Error whilst approving sign in', e);
