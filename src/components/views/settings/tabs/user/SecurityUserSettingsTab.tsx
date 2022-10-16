@@ -380,31 +380,32 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <DevicesPanel />
                 </div>
                 { signinWithQrEnabled ?
-                    <LoginWithQRSection onShowQr={this.onShowQRClicked} versions={this.state.versions}/>
+                    <LoginWithQRSection onShowQr={this.onShowQRClicked} versions={this.state.versions} />
                     : null
                 }
             </>;
 
         const client = MatrixClientPeg.get();
 
+        if (signinWithQrEnabled && this.state.showLoginWithQR) {
+            return <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
+                <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={this.state.showLoginWithQR} client={client} />
+            </div>;
+        }
+
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
-                { signinWithQrEnabled && this.state.showLoginWithQR ?
-                    <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={this.state.showLoginWithQR} client={client} />
-                    : <>
-                        { warning }
-                        { devicesSection }
-                        <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
-                        <div className="mx_SettingsTab_section">
-                            { secureBackup }
-                            { eventIndex }
-                            { crossSigning }
-                            <CryptographyPanel />
-                        </div>
-                        { privacySection }
-                        { advancedSection }
-                    </>
-                }
+                { warning }
+                { devicesSection }
+                <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
+                <div className="mx_SettingsTab_section">
+                    { secureBackup }
+                    { eventIndex }
+                    { crossSigning }
+                    <CryptographyPanel />
+                </div>
+                { privacySection }
+                { advancedSection }
             </div>
         );
     }

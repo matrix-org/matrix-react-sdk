@@ -184,65 +184,68 @@ const SessionManagerTab: React.FC = () => {
 
     const signinWithQrEnabled = SettingsStore.getValue("feature_signin_with_qr_code");
 
-    return signinWithQrEnabled && signInWithQrMode ?
-        <LoginWithQR mode={signInWithQrMode} onFinished={() => setSignInWithQrMode(null)} client={matrixClient} />
-        :
-        <SettingsTab heading={_t('Sessions')}>
-            <SecurityRecommendations
-                devices={devices}
-                goToFilteredList={onGoToFilteredList}
-                currentDeviceId={currentDeviceId}
-            />
-            <CurrentDeviceSection
-                device={currentDevice}
-                localNotificationSettings={localNotificationSettings.get(currentDeviceId)}
-                setPushNotifications={setPushNotifications}
-                isSigningOut={signingOutDeviceIds.includes(currentDeviceId)}
-                isLoading={isLoadingDeviceList}
-                saveDeviceName={(deviceName) => saveDeviceName(currentDeviceId, deviceName)}
-                onVerifyCurrentDevice={onVerifyCurrentDevice}
-                onSignOutCurrentDevice={onSignOutCurrentDevice}
-                signOutAllOtherSessions={signOutAllOtherSessions}
-            />
-            {
-                shouldShowOtherSessions &&
-                <SettingsSubsection
-                    heading={_t('Other sessions')}
-                    description={_t(
-                        `For best security, verify your sessions and sign out ` +
-                        `from any session that you don't recognize or use anymore.`,
-                    )}
-                    data-testid='other-sessions-section'
-                >
-                    <FilteredDeviceList
-                        devices={otherDevices}
-                        pushers={pushers}
-                        localNotificationSettings={localNotificationSettings}
-                        filter={filter}
-                        expandedDeviceIds={expandedDeviceIds}
-                        signingOutDeviceIds={signingOutDeviceIds}
-                        selectedDeviceIds={selectedDeviceIds}
-                        setSelectedDeviceIds={setSelectedDeviceIds}
-                        onFilterChange={setFilter}
-                        onDeviceExpandToggle={onDeviceExpandToggle}
-                        onRequestDeviceVerification={
-                            requestDeviceVerification ? onTriggerDeviceVerification : undefined
-                        }
-                        onSignOutDevices={onSignOutOtherDevices}
-                        saveDeviceName={saveDeviceName}
-                        setPushNotifications={setPushNotifications}
-                        ref={filteredDeviceListRef}
-                        supportsMSC3881={supportsMSC3881}
-                    />
-                </SettingsSubsection>
-            }
-            { signinWithQrEnabled ?
-                <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.SHOW)} versions={clientVersions} />
-                : null
-            }
+    if (signinWithQrEnabled && signInWithQrMode) {
+        return <LoginWithQR
+            mode={signInWithQrMode}
+            onFinished={() => setSignInWithQrMode(null)}
+            client={matrixClient}
+        />;
+    }
 
-        </SettingsTab>
-    ;
+    return <SettingsTab heading={_t('Sessions')}>
+        <SecurityRecommendations
+            devices={devices}
+            goToFilteredList={onGoToFilteredList}
+            currentDeviceId={currentDeviceId}
+        />
+        <CurrentDeviceSection
+            device={currentDevice}
+            localNotificationSettings={localNotificationSettings.get(currentDeviceId)}
+            setPushNotifications={setPushNotifications}
+            isSigningOut={signingOutDeviceIds.includes(currentDeviceId)}
+            isLoading={isLoadingDeviceList}
+            saveDeviceName={(deviceName) => saveDeviceName(currentDeviceId, deviceName)}
+            onVerifyCurrentDevice={onVerifyCurrentDevice}
+            onSignOutCurrentDevice={onSignOutCurrentDevice}
+            signOutAllOtherSessions={signOutAllOtherSessions}
+        />
+        {
+            shouldShowOtherSessions &&
+            <SettingsSubsection
+                heading={_t('Other sessions')}
+                description={_t(
+                    `For best security, verify your sessions and sign out ` +
+                    `from any session that you don't recognize or use anymore.`,
+                )}
+                data-testid='other-sessions-section'
+            >
+                <FilteredDeviceList
+                    devices={otherDevices}
+                    pushers={pushers}
+                    localNotificationSettings={localNotificationSettings}
+                    filter={filter}
+                    expandedDeviceIds={expandedDeviceIds}
+                    signingOutDeviceIds={signingOutDeviceIds}
+                    selectedDeviceIds={selectedDeviceIds}
+                    setSelectedDeviceIds={setSelectedDeviceIds}
+                    onFilterChange={setFilter}
+                    onDeviceExpandToggle={onDeviceExpandToggle}
+                    onRequestDeviceVerification={
+                        requestDeviceVerification ? onTriggerDeviceVerification : undefined
+                    }
+                    onSignOutDevices={onSignOutOtherDevices}
+                    saveDeviceName={saveDeviceName}
+                    setPushNotifications={setPushNotifications}
+                    ref={filteredDeviceListRef}
+                    supportsMSC3881={supportsMSC3881}
+                />
+            </SettingsSubsection>
+        }
+        { signinWithQrEnabled ?
+            <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.SHOW)} versions={clientVersions} />
+            : null
+        }
+    </SettingsTab>;
 };
 
 export default SessionManagerTab;
