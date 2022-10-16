@@ -27,6 +27,8 @@ import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.s
 import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
 import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
+import { LoginTokenPostResponse } from 'matrix-js-sdk/src/@types/auth';
+import { IAuthData } from 'matrix-js-sdk';
 
 export enum Mode {
     SHOW = "show",
@@ -110,8 +112,22 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         if (!this.state.rendezvous) {
             throw new Error('Rendezvous not found');
         }
+        this.setState({ phase: Phase.LOADING });
+
+        logger.info("Requesting login token");
+
+        const loginTokenResponse = await this.props.client.requestLoginToken();
+
+        if (typeof (loginTokenResponse as IAuthData).session === 'string') {
+            // TODO: handle UIA response
+            throw new Error("UIA isn't supported yet");
+        }
+
+        const { login_token: loginToken } = loginTokenResponse as LoginTokenPostResponse;
+
         this.setState({ phase: Phase.WAITING_FOR_DEVICE });
-        const newDeviceId = await this.state.rendezvous.confirmLoginOnExistingDevice();
+
+        const newDeviceId = await this.state.rendezvous.approveLoginOnExistingDevice(loginToken);
         if (!newDeviceId) {
             // user denied
             return;
