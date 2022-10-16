@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoginWithQR /> device connected 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="mx_AccessibleButton mx_LoginWithQR_BackButton"
+        role="button"
+        tabindex="0"
+        title="Back"
+      >
+        <div />
+      </div>
+      <h1 />
+    </div>
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_spinner"
+      >
+        <div>
+          <div
+            class="mx_Spinner"
+          >
+            <div
+              aria-label="Loading..."
+              class="mx_Spinner_icon"
+              role="progressbar"
+              style="width: 32px; height: 32px;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQR /> no support 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR"
+  >
+    <div
+      class="mx_LoginWithQR_centreTitle"
+    >
+      <h1>
+        <div
+          class="error"
+        />
+        Connection failed
+      </h1>
+    </div>
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <p>
+        The homeserver doesn't support signing in another device.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    >
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        role="button"
+        tabindex="0"
+      >
+        Try again
+      </div>
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        role="button"
+        tabindex="0"
+      >
+        Cancel
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQR /> show qr 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR"
+  >
+    <div
+      class=""
+    >
+      <h1>
+        <div
+          class="normal"
+        />
+        Devices connected
+      </h1>
+    </div>
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <p>
+        Check that the code below matches with your other device:
+      </p>
+      <div
+        class="mx_LoginWithQR_confirmationDigits"
+      >
+        1234-4567-7890
+      </div>
+      <div
+        class="mx_LoginWithQR_confirmationAlert"
+      >
+        <div>
+          <div />
+        </div>
+        <div>
+          By approving access for this device, it will have full access to your account.
+        </div>
+      </div>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    >
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        role="button"
+        tabindex="0"
+      >
+        Cancel
+      </div>
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        role="button"
+        tabindex="0"
+      >
+        Approve
+      </div>
+    </div>
+  </div>
+</div>
+`;
