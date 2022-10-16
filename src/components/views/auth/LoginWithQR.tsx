@@ -152,11 +152,10 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 fallbackRzServer: fallbackServer,
             });
 
-            const channel = new MSC3903ECDHv1RendezvousChannel(transport);
+            const channel = new MSC3903ECDHv1RendezvousChannel(transport, undefined, this.onFailure);
 
-            rendezvous = new MSC3906Rendezvous(channel, this.props.client);
+            rendezvous = new MSC3906Rendezvous(channel, this.props.client, this.onFailure);
 
-            rendezvous.onFailure = this.onFailure;
             await rendezvous.generateCode();
             this.setState({
                 phase: Phase.SHOWING_QR,
@@ -174,10 +173,10 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             this.setState({ phase: Phase.CONNECTED, confirmationDigits });
         } catch (e) {
             logger.error('Error whilst doing QR login', e);
-            if (this.state.rendezvous) {
-                await this.state.rendezvous.cancel(RendezvousFailureReason.Unknown);
+            // only set to error phase if it hasn't already been set by onFailure or similar
+            if (this.state.phase !== Phase.ERROR) {
+                this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.Unknown });
             }
-            this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.Unknown });
         }
     };
 
