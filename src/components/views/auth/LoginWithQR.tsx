@@ -20,10 +20,8 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from '../elements/AccessibleButton';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import QRCode from '../elements/QRCode';
 import SdkConfig from '../../../SdkConfig';
-import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
 import Spinner from '../elements/Spinner';
 import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.svg";
 import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
@@ -45,8 +43,7 @@ enum Phase {
 }
 
 interface IProps {
-    serverConfig?: ValidatedServerConfig;
-    client?: MatrixClient;
+    client: MatrixClient;
     mode: Mode;
     onFinished(...args: any): void;
 }
@@ -119,8 +116,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // user denied
             return;
         }
-        const cli = MatrixClientPeg.get();
-        if (!cli.crypto) {
+        if (!this.props.client.crypto) {
             // alert(`New device signed in: ${newDeviceId}. Not signing cross-signing as no crypto setup`);
             this.props.onFinished(true);
             return;

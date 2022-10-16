@@ -16,46 +16,35 @@ limitations under the License.
 
 import React from 'react';
 
+import type { IServerVersions } from 'matrix-js-sdk/src/matrix';
 import { _t } from '../../../../languageHandler';
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import SdkConfig from '../../../../SdkConfig';
 import AccessibleButton from '../../elements/AccessibleButton';
 import SettingsSubsection from '../shared/SettingsSubsection';
 
 interface IProps {
     onShowQr: () => void;
+    versions: IServerVersions;
 }
 
-interface IState {
-    msc3882Supported: boolean | null;
-    msc3886Supported: boolean | null;
-}
+interface IState {}
 
 export default class LoginWithQRSection extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            msc3882Supported: null,
-            msc3886Supported: null,
-        };
-    }
-
-    public componentDidMount(): void {
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3882"). then((msc3882Supported) => {
-            this.setState({ msc3882Supported });
-        });
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3886").then((msc3886Supported) => {
-            this.setState({ msc3886Supported });
-        });
+        this.state = {};
     }
 
     public render(): JSX.Element {
         const features = SdkConfig.get().login_with_qr?.reciprocate;
 
+        const msc3882Supported = !!this.props.versions?.unstable_features?.['org.matrix.msc3882'];
+        const msc3886Supported = !!this.props.versions?.unstable_features?.['org.matrix.msc3886'];
+
         // Needs to be enabled as a feature + server support MSC3886 or have a default rendezvous server configured:
-        const offerShowQr = features?.enable_showing && this.state.msc3882Supported &&
-            (this.state.msc3886Supported || !!SdkConfig.get().login_with_qr?.fallback_http_transport_server);
+        const offerShowQr = features?.enable_showing && msc3882Supported &&
+            (msc3886Supported || !!SdkConfig.get().login_with_qr?.fallback_http_transport_server);
 
         // don't show anything if no method is available
         if (!offerShowQr) {

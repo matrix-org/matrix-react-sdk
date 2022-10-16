@@ -35,6 +35,7 @@ import SettingsTab from '../SettingsTab';
 import LoginWithQRSection from '../../devices/LoginWithQRSection';
 import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
 import SettingsStore from '../../../../../settings/SettingsStore';
+import { useAsyncMemo } from '../../../../../hooks/useAsyncMemo';
 
 const useSignOut = (
     matrixClient: MatrixClient,
@@ -107,6 +108,7 @@ const SessionManagerTab: React.FC = () => {
     const matrixClient = useContext(MatrixClientContext);
     const userId = matrixClient.getUserId();
     const currentUserMember = userId && matrixClient.getUser(userId) || undefined;
+    const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
 
     const onDeviceExpandToggle = (deviceId: ExtendedDevice['device_id']): void => {
         if (expandedDeviceIds.includes(deviceId)) {
@@ -235,7 +237,7 @@ const SessionManagerTab: React.FC = () => {
                 </SettingsSubsection>
             }
             { signinWithQrEnabled ?
-                <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.SHOW)} />
+                <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.SHOW)} versions={clientVersions} />
                 : null
             }
 

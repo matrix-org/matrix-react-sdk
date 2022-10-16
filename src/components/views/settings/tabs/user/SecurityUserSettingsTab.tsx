@@ -40,6 +40,7 @@ import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/Ana
 import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
 import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
 import LoginWithQRSection from '../../devices/LoginWithQRSection';
+import type { IServerVersions } from 'matrix-js-sdk/src/matrix';
 
 interface IIgnoredUserProps {
     userId: string;
@@ -75,6 +76,7 @@ interface IState {
     managingInvites: boolean;
     invitedRoomIds: Set<string>;
     showLoginWithQR: Mode | null;
+    versions?: IServerVersions;
 }
 
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
@@ -106,6 +108,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on(RoomEvent.MyMembership, this.onMyMembership);
+        MatrixClientPeg.get().getVersions().then(versions => this.setState({ versions }));
     }
 
     public componentWillUnmount(): void {
@@ -377,7 +380,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <DevicesPanel />
                 </div>
                 { signinWithQrEnabled ?
-                    <LoginWithQRSection onShowQr={this.onShowQRClicked} />
+                    <LoginWithQRSection onShowQr={this.onShowQRClicked} versions={this.state.versions}/>
                     : null
                 }
             </>;
