@@ -32,7 +32,7 @@ limitations under the License.
         &::before, &::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid #E3E8F0;
+            border-bottom: 1px solid $quinary-content;
         }
 
         &:not(:empty) {
@@ -65,7 +65,7 @@ limitations under the License.
     }
 
     .mx_QRCode {
-        padding: 0 40px;
+        padding: 12px 40px;
         margin: 26px 0;
     }
 
@@ -91,13 +91,13 @@ limitations under the License.
 
     h1 > svg {
         &.normal {
-            color: #737D8C;
+            color: $secondary-content;
         }
         &.error {
-            color: #FF5B55;
+            color: $alert;
         }
         &.success {
-            color: #0DBD8B;
+            color: $accent;
         }
         height: 1.3em;
         margin-right: 8px;
@@ -109,11 +109,11 @@ limitations under the License.
         margin: 50px auto;
         font-weight: 600;
         font-size: $font-24px;
-        color: #17191C;
+        color: $primary-content;
     }
 
     .mx_LoginWithQR_confirmationAlert {
-        border: 1px solid #C1C6CD;
+        border: 1px solid $quaternary-content;
         border-radius: 8px;
         padding: 8px;
         line-height: 1.5em;
@@ -133,7 +133,7 @@ limitations under the License.
         padding-inline-start: 0;
 
         li::marker {
-            color: #0DBD8B;
+            color: $accent;
         }
     }
 
@@ -152,7 +152,7 @@ limitations under the License.
     }
 
     .mx_QRCode {
-        border: 1px solid #E3E8F0;
+        border: 1px solid $quinary-content;
         border-radius: 8px;
         display: flex;
         justify-content: center;
