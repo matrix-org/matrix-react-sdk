@@ -19,12 +19,12 @@ import { mocked } from 'jest-mock';
 import React from 'react';
 import { sleep } from 'matrix-js-sdk/src/utils';
 import { act } from 'react-dom/test-utils';
+import { MSC3906Rendezvous } from 'matrix-js-sdk/src/rendezvous';
 
 import LoginWithQR, { Mode } from '../../../../../src/components/views/auth/LoginWithQR';
 import type { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import type { SAS } from 'matrix-js-sdk/src/crypto/verification/SAS';
 import SdkConfig from '../../../../../src/SdkConfig';
-import { MSC3906Rendezvous } from 'matrix-js-sdk/src/rendezvous';
 
 function makeClient() {
     return mocked({
