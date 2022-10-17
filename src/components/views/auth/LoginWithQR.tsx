@@ -185,7 +185,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         this.setState({ phase: Phase.ERROR, failureReason: reason });
     };
 
-    reset() {
+    public reset() {
         this.setState({
             rendezvous: undefined,
             confirmationDigits: undefined,
