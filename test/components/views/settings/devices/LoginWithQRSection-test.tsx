@@ -63,81 +63,85 @@ describe('<LoginWithQRSection />', () => {
     const getComponent = (props = {}) =>
         (<LoginWithQRSection {...defaultProps} {...props} />);
 
-    it('no support - all', () => {
-        const { container } = render(getComponent());
-        expect(container).toMatchSnapshot();
+    describe('should not render', () => {
+        it('no support at all', () => {
+            const { container } = render(getComponent());
+            expect(container).toMatchSnapshot();
+        });
+
+        it('only sdk enabled', () => {
+            SdkConfig.put({
+                login_with_qr: {
+                    reciprocate: {
+                        enable_showing: true,
+                    },
+                },
+            });
+            const { container } = render(getComponent());
+            expect(container).toMatchSnapshot();
+        });
+
+        it('only sdk + feature enabled', async () => {
+            SdkConfig.put({
+                login_with_qr: {
+                    reciprocate: {
+                        enable_showing: true,
+                    },
+                },
+            });
+            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
+            const { container } = render(getComponent());
+            expect(container).toMatchSnapshot();
+        });
+
+        it('only sdk + feature + MSC3882 enabled', async () => {
+            SdkConfig.put({
+                login_with_qr: {
+                    reciprocate: {
+                        enable_showing: true,
+                    },
+                },
+            });
+            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
+            const { container } = render(getComponent({ versions: makeVersions({ 'org.matrix.msc3882': true }) }));
+            expect(container).toMatchSnapshot();
+        });
     });
 
-    it('no support - sdk', () => {
-        SdkConfig.put({
-            login_with_qr: {
-                reciprocate: {
-                    enable_showing: true,
+    describe('should render panel', () => {
+        it('enabled by sdk + feature + MSC3882 + MSC3886', async () => {
+            SdkConfig.put({
+                login_with_qr: {
+                    reciprocate: {
+                        enable_showing: true,
+                    },
                 },
-            },
-        });
-        const { container } = render(getComponent());
-        expect(container).toMatchSnapshot();
-    });
-
-    it('no support - sdk + feature', async () => {
-        SdkConfig.put({
-            login_with_qr: {
-                reciprocate: {
-                    enable_showing: true,
-                },
-            },
-        });
-        await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
-        const { container } = render(getComponent());
-        expect(container).toMatchSnapshot();
-    });
-
-    it('no support - sdk + feature + MSC3882', async () => {
-        SdkConfig.put({
-            login_with_qr: {
-                reciprocate: {
-                    enable_showing: true,
-                },
-            },
-        });
-        await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
-        const { container } = render(getComponent({ versions: makeVersions({ 'org.matrix.msc3882': true }) }));
-        expect(container).toMatchSnapshot();
-    });
-
-    it('supported - sdk + feature + MSC3882 + MSC3886', async () => {
-        SdkConfig.put({
-            login_with_qr: {
-                reciprocate: {
-                    enable_showing: true,
-                },
-            },
-        });
-        await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
-        const { container } = render(getComponent({ versions: makeVersions({
-            'org.matrix.msc3882': true,
-            'org.matrix.msc3886': true,
-        }) }));
-        expect(container).toMatchSnapshot();
-    });
-
-    it('supported - sdk + feature + MSC3882 + fallback', async () => {
-        SdkConfig.put({
-            login_with_qr: {
-                reciprocate: {
-                    enable_showing: true,
-                },
-                fallback_http_transport_server: 'https://rzserver',
-            },
-        });
-        await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
-        const { container } = render(getComponent({
-            versions: makeVersions({
+            });
+            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
+            const { container } = render(getComponent({ versions: makeVersions({
                 'org.matrix.msc3882': true,
-                'org.matrix.msc3886': false,
-            }),
-        }));
-        expect(container).toMatchSnapshot();
+                'org.matrix.msc3886': true,
+            }) }));
+            expect(container).toMatchSnapshot();
+        });
+
+        it('enabled by sdk + feature + MSC3882 + fallback', async () => {
+            SdkConfig.put({
+                login_with_qr: {
+                    reciprocate: {
+                        enable_showing: true,
+                    },
+                    fallback_http_transport_server: 'https://rzserver',
+                },
+            });
+            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
+            const { container } = render(getComponent({
+                versions: makeVersions({
+                    'org.matrix.msc3882': true,
+                    'org.matrix.msc3886': false,
+                }),
+            }));
+            expect(container).toMatchSnapshot();
+        });
     });
 });

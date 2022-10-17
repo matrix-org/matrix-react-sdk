@@ -72,7 +72,7 @@ describe('<LoginWithQR />', () => {
     const getComponent = (props: { client: MatrixClient }) =>
         (<LoginWithQR {...defaultProps} {...props} />);
 
-    it('no support', async () => {
+    it('no content in case of no support', async () => {
         const { container } = render(getComponent({ client }));
         await act(async () => {
             await sleep(1000);
@@ -80,7 +80,7 @@ describe('<LoginWithQR />', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('device connected', async () => {
+    it('show device connected confirmation screen', async () => {
         SdkConfig.put({
             login_with_qr: {
                 reciprocate: {
