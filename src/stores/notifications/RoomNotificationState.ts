@@ -37,6 +37,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.on(RoomEvent.Redaction, this.handleRoomEventUpdate);
         this.room.on(RoomEvent.MyMembership, this.handleMembershipUpdate);
         this.room.on(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
+        this.room.on(RoomEvent.UnreadNotifications, this.handleNotificationCountUpdate);
         if (threadsState) {
             threadsState.on(NotificationStateEvents.Update, this.handleThreadsUpdate);
         }
@@ -80,6 +81,10 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     };
 
     private handleMembershipUpdate = () => {
+        this.updateNotificationState();
+    };
+
+    private handleNotificationCountUpdate = () => {
         this.updateNotificationState();
     };
 
