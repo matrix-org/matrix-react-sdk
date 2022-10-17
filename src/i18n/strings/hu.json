@@ -3630,5 +3630,6 @@
     "Call type": "Hívás típusa",
     "You do not have sufficient permissions to change this.": "Nincs megfelelő jogosultság a megváltoztatáshoz.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s végpontok között titkosított de jelenleg csak kevés számú résztvevővel működik.",
-    "Enable %(brand)s as an additional calling option in this room": "%(brand)s engedélyezése mint további opció hívásokhoz a szobában"
+    "Enable %(brand)s as an additional calling option in this room": "%(brand)s engedélyezése mint további opció hívásokhoz a szobában",
+    "Notifications silenced": "Értesítések elnémítva"
 }
