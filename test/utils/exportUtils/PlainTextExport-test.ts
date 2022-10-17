@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createTestClient, mkStubRoom } from "../../test-utils";
+import { createTestClient, mkStubRoom, REPEATABLE_DATE } from "../../test-utils";
 import { ExportType, IExportOptions } from "../../../src/utils/exportUtils/exportUtils";
 import PlainTextExporter from "../../../src/utils/exportUtils/PlainTextExport";
-import { REPEATABLE_DATE } from "../../test-utils/date";
 
 describe("PlainTextExport", () => {
     beforeEach(() => {

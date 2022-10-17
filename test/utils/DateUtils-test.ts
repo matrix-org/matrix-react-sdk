@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { formatSeconds, formatRelativeTime, formatDuration, formatFullDateNoDayISO } from "../../src/DateUtils";
-import { REPEATABLE_DATE } from "../test-utils/date";
+import { REPEATABLE_DATE } from "../test-utils";
 
 describe("formatSeconds", () => {
     it("correctly formats time with hours", () => {

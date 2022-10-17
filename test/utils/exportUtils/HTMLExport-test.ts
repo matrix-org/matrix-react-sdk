@@ -16,9 +16,8 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 
-import { createTestClient, mkStubRoom } from "../../test-utils";
+import { createTestClient, mkStubRoom, REPEATABLE_DATE } from "../../test-utils";
 import { ExportType, IExportOptions } from "../../../src/utils/exportUtils/exportUtils";
-import { REPEATABLE_DATE } from "../../test-utils/date";
 import SdkConfig from "../../../src/SdkConfig";
 import HTMLExporter from "../../../src/utils/exportUtils/HtmlExport";
 
