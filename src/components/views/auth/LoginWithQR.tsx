@@ -199,26 +199,24 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         });
     }
 
-    private cancelClicked = () => {
-        void (async () => {
-            await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
-            this.reset();
-            this.props.onFinished(false);
-        })();
-    };
-
-    private declineClicked = () => {
-        void (async () => {
-            await this.state.rendezvous?.declineLoginOnExistingDevice();
-            this.reset();
-            this.props.onFinished(false);
-        })();
-    };
-
-    private tryAgainClicked = () => {
+    private cancelClicked = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
         this.reset();
+        this.props.onFinished(false);
+    };
 
-        void this.updateMode(this.props.mode);
+    private declineClicked = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await this.state.rendezvous?.declineLoginOnExistingDevice();
+        this.reset();
+        this.props.onFinished(false);
+    };
+
+    private tryAgainClicked = async (e: React.FormEvent) => {
+        e.preventDefault();
+        this.reset();
+        await this.updateMode(this.props.mode);
     };
 
     private onBackClick = () => {
