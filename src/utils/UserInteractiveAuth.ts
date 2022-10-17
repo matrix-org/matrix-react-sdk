@@ -28,7 +28,6 @@ export function wrapRequestWithDialog<R, A = any>(
 ): ((...args: A[]) => Promise<R>) {
     return async function(...args): Promise<R> {
         return new Promise((resolve, reject) => {
-            console.log(opts);
             const boundFunction = requestFunction.bind(opts.matrixClient) as FunctionWithUIA<R, A>;
             boundFunction(undefined, ...args)
                 .then((res) => resolve(res as R))
