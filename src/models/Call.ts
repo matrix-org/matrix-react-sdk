@@ -41,6 +41,8 @@ import { ElementWidgetActions } from "../stores/widgets/ElementWidgetActions";
 import WidgetStore from "../stores/WidgetStore";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
+import PlatformPeg from "../PlatformPeg";
+import { getCurrentLanguage } from "../languageHandler";
 
 const TIMEOUT_MS = 16000;
 
@@ -625,7 +627,7 @@ export class ElementCall extends Call {
 
     private constructor(public readonly groupCall: MatrixEvent, client: MatrixClient) {
         // Splice together the Element Call URL for this call
-        const url = new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url);
+        const url = new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!);
         url.pathname = "/room";
         const params = new URLSearchParams({
             embed: "",
@@ -634,7 +636,13 @@ export class ElementCall extends Call {
             userId: client.getUserId()!,
             deviceId: client.getDeviceId(),
             roomId: groupCall.getRoomId()!,
+            baseUrl: client.baseUrl,
+            lang: getCurrentLanguage().replace("_", "-"),
         });
+        // Currently, the screen-sharing support is the same is it is for Jitsi
+        if (!PlatformPeg.get().supportsJitsiScreensharing()) {
+            params.append("hideScreensharing", "");
+        }
         url.hash = `#?${params.toString()}`;
 
         // To use Element Call without touching room state, we create a virtual
