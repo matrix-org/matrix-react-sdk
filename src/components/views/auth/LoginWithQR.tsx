@@ -237,7 +237,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         </div>;
     };
 
-    render() {
+    public render() {
         let title: string;
         let titleIcon: JSX.Element | undefined;
         let main: JSX.Element | undefined;
