@@ -65,7 +65,7 @@ interface IState {
  * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
  */
 export default class LoginWithQR extends React.Component<IProps, IState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {
