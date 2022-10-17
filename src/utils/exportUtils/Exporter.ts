@@ -75,9 +75,18 @@ export default abstract class Exporter {
         this.files.push(file);
     }
 
+    protected santizeFileName(filename: string): string {
+        filename = filename.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        filename = filename.replace(/\s+/gim, "-");
+        filename = filename.replace(/[^a-z0-9.,_-]/gim, "");
+        return filename.trim();
+    }
+
     protected async downloadZIP(): Promise<string | void> {
         const brand = SdkConfig.get().brand;
-        const filenameWithoutExt = `${brand} - Chat Export - ${formatFullDateNoDay(new Date())}`;
+        const filenameWithoutExt = this.santizeFileName(
+            `${brand} - ${this.room.name} - Chat Export - ${formatFullDateNoDay(new Date())}`,
+        );
         const filename = `${filenameWithoutExt}.zip`;
         const { default: JSZip } = await import('jszip');
 
