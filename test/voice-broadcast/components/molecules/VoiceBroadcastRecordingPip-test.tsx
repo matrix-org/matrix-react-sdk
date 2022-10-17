@@ -13,16 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+//
 
 import React from "react";
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { render, RenderResult } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastInfoEventType,
-    VoiceBroadcastPlayback,
-    VoiceBroadcastPlaybackBody,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingPip,
 } from "../../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../../test-utils";
 
@@ -34,12 +34,12 @@ jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
     }),
 }));
 
-describe("VoiceBroadcastPlaybackBody", () => {
+describe("VoiceBroadcastRecordingPip", () => {
     const userId = "@user:example.com";
     const roomId = "!room:example.com";
     let client: MatrixClient;
     let infoEvent: MatrixEvent;
-    let playback: VoiceBroadcastPlayback;
+    let recording: VoiceBroadcastRecording;
 
     beforeAll(() => {
         client = stubClient();
@@ -50,29 +50,18 @@ describe("VoiceBroadcastPlaybackBody", () => {
             room: roomId,
             user: userId,
         });
-        playback = new VoiceBroadcastPlayback(infoEvent, client);
-        jest.spyOn(playback, "toggle");
+        recording = new VoiceBroadcastRecording(infoEvent, client);
     });
 
-    describe("when rendering a broadcast", () => {
+    describe("when rendering", () => {
         let renderResult: RenderResult;
 
         beforeEach(() => {
-            renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+            renderResult = render(<VoiceBroadcastRecordingPip recording={recording} />);
         });
 
-        it("should render as expected", () => {
+        it("should create the expected result", () => {
             expect(renderResult.container).toMatchSnapshot();
-        });
-
-        describe("and clicking the play button", () => {
-            beforeEach(async () => {
-                await userEvent.click(renderResult.getByLabelText("resume voice broadcast"));
-            });
-
-            it("should toggle the recording", () => {
-                expect(playback.toggle).toHaveBeenCalled();
-            });
         });
     });
 });
