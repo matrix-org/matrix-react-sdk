@@ -3631,5 +3631,6 @@
     "resume voice broadcast": "поновити голосове мовлення",
     "pause voice broadcast": "призупинити голосове мовлення",
     "You have already joined this call from another device": "Ви вже приєдналися до цього виклику з іншого пристрою",
-    "stop voice broadcast": "припинити голосове мовлення"
+    "stop voice broadcast": "припинити голосове мовлення",
+    "Notifications silenced": "Сповіщення стишено"
 }
