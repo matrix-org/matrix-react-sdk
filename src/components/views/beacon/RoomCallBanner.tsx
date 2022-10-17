@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Fragment, useCallback } from "react";
+import React, { useCallback } from "react";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
@@ -23,7 +23,7 @@ import dispatcher, { defaultDispatcher } from "../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
 import { Call, ConnectionState, ElementCall } from "../../../models/Call";
-import { useCall, useConnectionState } from "../../../hooks/useCall";
+import { useCall } from "../../../hooks/useCall";
 import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import {
