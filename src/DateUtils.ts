@@ -177,6 +177,10 @@ export function formatFullDateNoDay(date: Date) {
     });
 }
 
+export function formatFullDateNoDayISO(date: Date) {
+    return date.toISOString();
+}
+
 export function formatFullDateNoDayNoTime(date: Date) {
     return (
         date.getFullYear() +

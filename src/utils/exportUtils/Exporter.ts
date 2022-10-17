@@ -25,7 +25,7 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { decryptFile } from "../DecryptFile";
 import { mediaFromContent } from "../../customisations/Media";
-import { formatFullDateNoDay } from "../../DateUtils";
+import { formatFullDateNoDay, formatFullDateNoDayISO } from "../../DateUtils";
 import { isVoiceMessage } from "../EventUtils";
 import { IMediaEventContent } from "../../customisations/models/IMediaEventContent";
 import { _t } from "../../languageHandler";
@@ -84,6 +84,9 @@ export default abstract class Exporter {
 
     protected async downloadZIP(): Promise<string | void> {
         const brand = SdkConfig.get().brand;
+        // TR - 9142
+        const filenameWithoutExt = `${brand} - ${this.room.name} - Chat Export -${formatFullDateNoDayISO(new Date())}`;
+        // TR - 7992
         const filenameWithoutExt = this.santizeFileName(
             `${brand} - ${this.room.name} - Chat Export - ${formatFullDateNoDay(new Date())}`,
         );
