@@ -20,7 +20,7 @@ import type { Room } from "matrix-js-sdk/src/models/room";
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { mkEvent } from "./test-utils";
-import { Call, ConnectionState, ElementCall, JitsiCall } from "../../src/models/Call";
+import { Call, ElementCall, JitsiCall } from "../../src/models/Call";
 
 export class MockedCall extends Call {
     public static readonly EVENT_TYPE = "org.example.mocked_call";
