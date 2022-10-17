@@ -37,7 +37,7 @@ interface EventMap {
 export class RelationsHelper
     extends TypedEventEmitter<RelationsHelperEvent, EventMap>
     implements IDestroyable {
-    private relations: Relations;
+    private relations?: Relations;
 
     public constructor(
         private event: MatrixEvent,
