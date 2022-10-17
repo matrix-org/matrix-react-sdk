@@ -146,7 +146,7 @@ describe('WysiwygComposer', () => {
 
     it('Should focus when receiving an Action.FocusSendMessageComposer action', async () => {
         // Given we don't have focus
-        customRender(null, false).container;
+        customRender(() => {}, false).container;
         expect(screen.getByRole('textbox')).not.toHaveFocus();
 
         // When we send the right action
