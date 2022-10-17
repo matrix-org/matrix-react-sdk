@@ -40,7 +40,6 @@ import {
 } from "../../../test-utils";
 import RoomCallBanner from "../../../../src/components/views/beacon/RoomCallBanner";
 import { CallStore } from "../../../../src/stores/CallStore";
-import { CallView as _CallView } from "../../../../src/components/views/voip/CallView";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { RoomViewStore } from "../../../../src/stores/RoomViewStore";
