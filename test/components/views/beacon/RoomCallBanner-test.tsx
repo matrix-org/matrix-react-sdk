@@ -43,6 +43,7 @@ import { CallStore } from "../../../../src/stores/CallStore";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { RoomViewStore } from "../../../../src/stores/RoomViewStore";
+import { ConnectionState } from "../../../../src/models/Call";
 
 describe("<RoomCallBanner />", () => {
     let client: Mocked<MatrixClient>;
@@ -123,7 +124,14 @@ describe("<RoomCallBanner />", () => {
             await screen.findByText("Join");
         });
 
-        it("dont show banner if the call is shown", async () => {
+        it("doesn't show banner if the call is connected", async () => {
+            call.setConnectionState(ConnectionState.Connected);
+            await renderBanner();
+            const banner = await screen.queryByText("Video call");
+            expect(banner).toBeFalsy();
+        });
+
+        it("doesn't show banner if the call is shown", async () => {
             jest.spyOn(RoomViewStore.instance, 'isViewingCall').mockReturnValue(true);
             await renderBanner();
             const banner = await screen.queryByText("Video call");

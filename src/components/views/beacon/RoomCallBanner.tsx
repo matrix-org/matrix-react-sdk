@@ -118,10 +118,10 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
         return null;
     }
 
-    // split into outer/inner to avoid watching various parts if there is no call
+    // Split into outer/inner to avoid watching various parts if there is no call
     if (call) {
-        // No banner if the call is not connected
-        if (call.connectionState !== ConnectionState.Disconnected) {return null;}
+        // No banner if the call is connected (or connecting/disconnecting)
+        if (call.connectionState !== ConnectionState.Disconnected) return null;
 
         return <RoomCallBannerInner call={call} roomId={roomId} />;
     }
