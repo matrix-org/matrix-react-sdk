@@ -579,7 +579,7 @@ export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<
         setIsOpen(false);
     };
 
-    return [button.current && isOpen, button, open, close, setIsOpen];
+    return [button.current ? isOpen : false, button, open, close, setIsOpen];
 };
 
 // XXX: Deprecated, used only for dynamic Tooltips. Avoid using at all costs.

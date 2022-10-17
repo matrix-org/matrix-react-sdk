@@ -231,7 +231,7 @@ const CreateSpaceButton = ({
         role="treeitem"
     >
         <SpaceButton
-            data-test-id='create-space-button'
+            data-testid='create-space-button'
             className={classNames("mx_SpaceButton_new", {
                 mx_SpaceButton_newCancel: menuDisplayed,
             })}
