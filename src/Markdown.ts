@@ -67,6 +67,21 @@ function isMultiLine(node: commonmark.Node): boolean {
     return par.firstChild != par.lastChild;
 }
 
+/*
+ * Returns true if node is part of a list
+ * or false otherwise.
+ */
+function isNodeInList(node: commonmark.Node): boolean {
+    let par = node;
+    while (par.parent) {
+        if (par.type === "list") {
+            return true;
+        }
+        par = par.parent;
+    }
+    return false;
+}
+
 function getTextUntilEndOrLinebreak(node: commonmark.Node) {
     let currentNode = node;
     let text = '';
@@ -278,7 +293,9 @@ export default class Markdown {
             // However, if it's a blockquote, adds a p tag anyway
             // in order to avoid deviation to commonmark and unexpected
             // results when parsing the formatted HTML.
-            if (node.parent.type === 'block_quote'|| isMultiLine(node)) {
+            // If the node is part of a list, avoid wrapping each node element
+            // in a p tag.
+            if (node.parent.type === 'block_quote'|| (isMultiLine(node) && !isNodeInList(node))) {
                 realParagraph.call(this, node, entering);
             }
         };
