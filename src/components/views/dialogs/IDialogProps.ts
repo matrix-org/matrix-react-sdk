@@ -16,4 +16,5 @@ limitations under the License.
 
 export interface IDialogProps {
     onFinished(...args: any): void;
+    setModalHidden?(hidden: boolean): void;
 }

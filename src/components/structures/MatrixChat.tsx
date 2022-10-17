@@ -130,6 +130,7 @@ import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import { CallStore } from "../../stores/CallStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
+import ModalContainer from './ModalContainer';
 import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
@@ -198,9 +199,6 @@ interface IState {
     register_session_id?: string;
     // eslint-disable-next-line camelcase
     register_id_sid?: string;
-    // When showing Modal dialogs we need to set aria-hidden on the root app element
-    // and disable it when there are no dialogs
-    hideToSRUsers: boolean;
     syncError?: MatrixError;
     resizeNotifier: ResizeNotifier;
     serverConfig?: ValidatedServerConfig;
@@ -245,8 +243,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.state = {
             view: Views.LOADING,
             collapseLhs: false,
-
-            hideToSRUsers: false,
 
             syncError: null, // If the current syncing status is ERROR, the error object, otherwise null.
             resizeNotifier: new ResizeNotifier(),
@@ -794,16 +790,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case 'send_event':
                 this.onSendEvent(payload.room_id, payload.event);
-                break;
-            case 'aria_hide_main_app':
-                this.setState({
-                    hideToSRUsers: true,
-                });
-                break;
-            case 'aria_unhide_main_app':
-                this.setState({
-                    hideToSRUsers: false,
-                });
                 break;
             case Action.PseudonymousAnalyticsAccept:
                 hideAnalyticsToast();
@@ -2088,6 +2074,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         return <ErrorBoundary>
             { view }
+            <ModalContainer matrixClient={MatrixClientPeg.get()} />
         </ErrorBoundary>;
     }
 }

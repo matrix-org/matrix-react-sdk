@@ -19,7 +19,6 @@ import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
-    MatrixClient,
     MatrixEvent,
     Room,
     RoomMember,
@@ -42,6 +41,7 @@ import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
 import { BeaconDisplayStatus } from '../../../../src/components/views/beacon/displayStatus';
 import BeaconListItem from '../../../../src/components/views/beacon/BeaconListItem';
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 describe('<BeaconViewDialog />', () => {
     // 14.03.2022 16:15
@@ -88,11 +88,13 @@ describe('<BeaconViewDialog />', () => {
     const defaultProps = {
         onFinished: jest.fn(),
         roomId,
-        matrixClient: mockClient as MatrixClient,
     };
 
     const getComponent = (props = {}) =>
-        mount(<BeaconViewDialog {...defaultProps} {...props} />);
+        mount(<BeaconViewDialog {...defaultProps} {...props} />, {
+            wrappingComponent: MatrixClientContext.Provider,
+            wrappingComponentProps: { value: mockClient },
+        });
 
     const openSidebar = (component: ReactWrapper) => act(() => {
         findByTestId(component, 'beacon-view-dialog-open-sidebar').at(0).simulate('click');

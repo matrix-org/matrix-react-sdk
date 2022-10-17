@@ -173,6 +173,10 @@ declare global {
         setSinkId(outputId: string): void;
     }
 
+    interface HTMLDialogElement {
+        oncancel?(ev: Event);
+    }
+
     // Add Chrome-specific `instant` ScrollBehaviour
     type _ScrollBehavior = ScrollBehavior | "instant";
 

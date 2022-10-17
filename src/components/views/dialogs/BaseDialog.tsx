@@ -17,19 +17,13 @@ limitations under the License.
 */
 
 import React from 'react';
-import FocusLock from 'react-focus-lock';
 import classNames from 'classnames';
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from "../../../languageHandler";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Heading from '../typography/Heading';
 import { IDialogProps } from "./IDialogProps";
 import { PosthogScreenTracker, ScreenName } from "../../../PosthogTrackers";
-import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps extends IDialogProps {
     // Whether the dialog should have a 'close' button that will
@@ -81,34 +75,9 @@ interface IProps extends IDialogProps {
  * dialog on escape.
  */
 export default class BaseDialog extends React.Component<IProps> {
-    private matrixClient: MatrixClient;
-
     public static defaultProps = {
         hasCancel: true,
         fixedWidth: true,
-    };
-
-    constructor(props) {
-        super(props);
-
-        this.matrixClient = MatrixClientPeg.get();
-    }
-
-    private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
-        if (this.props.onKeyDown) {
-            this.props.onKeyDown(e);
-        }
-
-        const action = getKeyBindingsManager().getAccessibilityAction(e);
-        switch (action) {
-            case KeyBindingAction.Escape:
-                if (!this.props.hasCancel) break;
-
-                e.stopPropagation();
-                e.preventDefault();
-                this.props.onFinished(false);
-                break;
-        }
     };
 
     private onCancelClick = (e: ButtonEvent): void => {
@@ -128,8 +97,7 @@ export default class BaseDialog extends React.Component<IProps> {
             headerImage = <img className="mx_Dialog_titleImage" src={this.props.headerImage} alt="" />;
         }
 
-        const lockProps = {
-            "onKeyDown": this.onKeyDown,
+        const props = {
             "role": "dialog",
             // This should point to a node describing the dialog.
             // If we were about to completely follow this recommendation we'd need to
@@ -141,36 +109,33 @@ export default class BaseDialog extends React.Component<IProps> {
         };
 
         if (this.props["aria-label"]) {
-            lockProps["aria-label"] = this.props["aria-label"];
+            props["aria-label"] = this.props["aria-label"];
         } else {
-            lockProps["aria-labelledby"] = "mx_BaseDialog_title";
+            props["aria-labelledby"] = "mx_BaseDialog_title";
         }
 
-        return (
-            <MatrixClientContext.Provider value={this.matrixClient}>
-                <PosthogScreenTracker screenName={this.props.screenName} />
-                <FocusLock
-                    returnFocus={true}
-                    lockProps={lockProps}
-                    className={classNames({
-                        [this.props.className]: true,
-                        'mx_Dialog_fixedWidth': this.props.fixedWidth,
-                    })}
-                >
-                    <div className={classNames('mx_Dialog_header', {
-                        'mx_Dialog_headerWithButton': !!this.props.headerButton,
-                        'mx_Dialog_headerWithCancel': !!cancelButton,
-                    })}>
-                        <Heading size='h2' className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
-                            { headerImage }
-                            { this.props.title }
-                        </Heading>
-                        { this.props.headerButton }
-                        { cancelButton }
-                    </div>
-                    { this.props.children }
-                </FocusLock>
-            </MatrixClientContext.Provider>
-        );
+        return <>
+            <PosthogScreenTracker screenName={this.props.screenName} />
+            <div
+                {...props}
+                className={classNames({
+                    [this.props.className]: true,
+                    'mx_Dialog_fixedWidth': this.props.fixedWidth,
+                })}
+            >
+                <div className={classNames('mx_Dialog_header', {
+                    'mx_Dialog_headerWithButton': !!this.props.headerButton,
+                    'mx_Dialog_headerWithCancel': !!cancelButton,
+                })}>
+                    <Heading size='h2' className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
+                        { headerImage }
+                        { this.props.title }
+                    </Heading>
+                    { this.props.headerButton }
+                    { cancelButton }
+                </div>
+                { this.props.children }
+            </div>
+        </>;
     }
 }
