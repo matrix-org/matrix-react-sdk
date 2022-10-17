@@ -92,7 +92,7 @@ describe('<LoginWithQR />', () => {
 
         jest.spyOn(MSC3906Rendezvous.prototype, 'generateCode').mockImplementation(
             async function(this: MSC3906Rendezvous) {
-                this.code = 'mock-code';
+                (this as any).code = 'mock-code';
             },
         );
 

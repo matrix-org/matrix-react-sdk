@@ -93,7 +93,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         this.setState({ phase: Phase.Loading });
         if (this.state.rendezvous) {
             this.state.rendezvous.onFailure = undefined;
-            this.state.rendezvous.channel.transport.onFailure = undefined;
             await this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled);
             this.setState({ rendezvous: undefined });
         }
@@ -106,8 +105,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         if (this.state.rendezvous) {
             // eslint-disable-next-line react/no-direct-mutation-state
             this.state.rendezvous.onFailure = undefined;
-            // eslint-disable-next-line react/no-direct-mutation-state
-            this.state.rendezvous.channel.transport.onFailure = undefined;
             // calling cancel will call close() as well to clean up the resources
             void this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled);
         }
