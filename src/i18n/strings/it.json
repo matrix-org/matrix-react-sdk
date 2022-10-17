@@ -3629,5 +3629,8 @@
     "Italic": "Corsivo",
     "Try out the rich text editor (plain text mode coming soon)": "Prova l'editor in rich text (il testo semplice è in arrivo)",
     "resume voice broadcast": "riprendi broadcast voce",
-    "pause voice broadcast": "sospendi broadcast voce"
+    "pause voice broadcast": "sospendi broadcast voce",
+    "You have already joined this call from another device": "Sei già in questa chiamata in un altro dispositivo",
+    "Notifications silenced": "Notifiche silenziose",
+    "stop voice broadcast": "ferma broadcast voce"
 }
