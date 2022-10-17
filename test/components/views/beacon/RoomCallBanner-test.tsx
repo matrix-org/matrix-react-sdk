@@ -45,7 +45,7 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { RoomViewStore } from "../../../../src/stores/RoomViewStore";
 import { ConnectionState } from "../../../../src/models/Call";
 
-describe("<RoomLiveShareWarning />", () => {
+describe("<RoomCallBanner />", () => {
     let client: Mocked<MatrixClient>;
     let room: Room;
     let alice: RoomMember;
