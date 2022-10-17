@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { mocked } from "jest-mock";
+
 import { createTestClient, mkStubRoom } from "../../test-utils";
 import { ExportType, IExportOptions } from "../../../src/utils/exportUtils/exportUtils";
 import { REPEATABLE_DATE } from "../../test-utils/date";
 import SdkConfig from "../../../src/SdkConfig";
-import { mocked } from "jest-mock";
 import HTMLExporter from "../../../src/utils/exportUtils/HtmlExport";
 
 describe("HTMLExport", () => {

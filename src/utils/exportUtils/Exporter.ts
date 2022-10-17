@@ -20,6 +20,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { saveAs } from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
+import sanitizeFilename from "sanitize-filename";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { ExportType, IExportOptions } from "./exportUtils";
@@ -30,7 +31,6 @@ import { isVoiceMessage } from "../EventUtils";
 import { IMediaEventContent } from "../../customisations/models/IMediaEventContent";
 import { _t } from "../../languageHandler";
 import SdkConfig from "../../SdkConfig";
-import sanitizeFilename from "sanitize-filename";
 
 type BlobFile = {
     name: string;
@@ -80,7 +80,7 @@ export default abstract class Exporter {
         this.files.push(file);
     }
 
-    protected makeFileNameNoExtension(brand: string = "matrix"): string {
+    protected makeFileNameNoExtension(brand = "matrix"): string {
         // First try to use the real name of the room, then a translated copy of a generic name,
         // then finally hardcoded default to guarantee we'll have a name.
         const safeRoomName = sanitizeFilename(this.room.name ?? _t("Unnamed Room")).trim() || "Unnamed Room";
