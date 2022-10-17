@@ -121,23 +121,22 @@ describe("<RoomCallBanner />", () => {
 
         it("shows Join button if the user has not joined", async () => {
             await renderBanner();
-            const videoCallLabel = await screen.findByText("Join");
-            expect(videoCallLabel.innerHTML).toBe("Join");
+            await screen.findByText("Join");
         });
 
         it("shows Leave button if the user has not joined", async () => {
             call.setConnectionState(ConnectionState.Connected);
             await renderBanner();
-            const videoCallLabel = await screen.findByText("Leave");
-            expect(videoCallLabel.innerHTML).toBe("Leave");
+            await screen.findByText("Leave");
         });
 
         it("dont show banner if the call is shown", async () => {
-            jest.spyOn(RoomViewStore.instance, 'isViewingCall').mockReturnValue(false);
+            jest.spyOn(RoomViewStore.instance, 'isViewingCall').mockReturnValue(true);
             await renderBanner();
-            const videoCallLabel = await screen.findByText("Video call");
-            expect(videoCallLabel.innerHTML).toBe("Video call");
+            const banner = await screen.queryByText("Video call");
+            expect(banner).toBeFalsy();
         });
     });
+
     // TODO: add live location share warning test (should not render if there is an active live location share)
 });

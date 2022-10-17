@@ -31,7 +31,6 @@ import {
     OwnBeaconStoreEvent,
 } from "../../../stores/OwnBeaconStore";
 import { CallDurationFromEvent } from "../voip/CallDuration";
-import { MockedCall } from "../../../../test/test-utils/call";
 
 interface RoomCallBannerProps {
     roomId: Room["roomId"];
@@ -42,14 +41,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
     roomId,
     call,
 }) => {
-    let callEvent: MatrixEvent | null = null;
-
-    if (!!(call as ElementCall).groupCall) {
-        callEvent = (call as ElementCall).groupCall;
-    }
-    if (!!(call as MockedCall).event) {
-        callEvent = (call as MockedCall).event;
-    }
+    const callEvent: MatrixEvent | null = (call as ElementCall)?.groupCall;
 
     const connect = useCallback(
         (ev: ButtonEvent) => {
@@ -72,7 +64,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
         [call],
     );
 
-    const onClick = () => {
+    const onClick = useCallback(() => {
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
@@ -81,9 +73,11 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
             scroll_into_view: true,
             highlighted: true,
         });
-    };
+    }, [callEvent, roomId]);
 
-    let [buttonText, buttonKind, onButtonClick] = [null, null, null, null];
+    let buttonText: string;
+    let buttonKind: string;
+    let onButtonClick: (ev: ButtonEvent) => void;
 
     switch (call.connectionState) {
         case ConnectionState.Disconnected:
@@ -119,7 +113,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
 
     return (
         <div
-            className="mx_RoomLiveShareWarning mx_RoomCallBanner"
+            className="mx_RoomCallBanner"
             onClick={onClick}
         >
             <div className="mx_RoomCallBanner_text">
@@ -128,8 +122,6 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
             </div>
 
             <AccessibleButton
-                className="mx_RoomCallBanner_button"
-                data-test-id="room-live-share-primary-button"
                 onClick={onButtonClick}
                 kind={buttonKind}
                 element="button"

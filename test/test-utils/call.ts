@@ -61,6 +61,10 @@ export class MockedCall extends Call {
         })]);
     }
 
+    public get groupCall(): MatrixEvent {
+        return this.event;
+    }
+
     public get participants(): Set<RoomMember> {
         return super.participants;
     }
