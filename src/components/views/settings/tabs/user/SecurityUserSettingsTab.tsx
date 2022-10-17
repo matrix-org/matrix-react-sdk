@@ -259,7 +259,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     private onShowQRClicked = (): void => {
-        this.setState({ showLoginWithQR: Mode.SHOW });
+        this.setState({ showLoginWithQR: Mode.Show });
     };
 
     private onLoginWithQRFinished = (): void => {

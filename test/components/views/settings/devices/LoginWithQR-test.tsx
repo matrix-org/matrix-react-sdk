@@ -48,7 +48,7 @@ function makeClient() {
 describe('<LoginWithQR />', () => {
     const client = makeClient();
     const defaultProps = {
-        mode: Mode.SHOW,
+        mode: Mode.Show,
         onFinished: () => {},
     };
 

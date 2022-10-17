@@ -240,7 +240,7 @@ const SessionManagerTab: React.FC = () => {
             </SettingsSubsection>
         }
         { signinWithQrEnabled ?
-            <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.SHOW)} versions={clientVersions} />
+            <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.Show)} versions={clientVersions} />
             : null
         }
     </SettingsTab>;

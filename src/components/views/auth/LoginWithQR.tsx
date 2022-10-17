@@ -29,18 +29,24 @@ import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
 import { wrapRequestWithDialog } from '../../../utils/UserInteractiveAuth';
 
+/**
+ * The intention of this enum is to have a mode that scans a QR code instead of generating one.
+ */
 export enum Mode {
-    SHOW = "show",
+    /**
+     * A QR code with be generated and shown
+     */
+    Show = "show",
 }
 
 enum Phase {
-    LOADING,
-    SHOWING_QR,
-    CONNECTING,
-    CONNECTED,
-    WAITING_FOR_DEVICE,
-    VERIFYING,
-    ERROR,
+    Loading,
+    ShowingQR,
+    Connecting,
+    Connected,
+    WaitingForDevice,
+    Verifying,
+    Error,
 }
 
 interface IProps {
@@ -69,7 +75,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            phase: Phase.LOADING,
+            phase: Phase.Loading,
         };
     }
 
@@ -84,14 +90,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     }
 
     private async updateMode(mode: Mode) {
-        this.setState({ phase: Phase.LOADING });
+        this.setState({ phase: Phase.Loading });
         if (this.state.rendezvous) {
             this.state.rendezvous.onFailure = undefined;
             this.state.rendezvous.channel.transport.onFailure = undefined;
             await this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled);
             this.setState({ rendezvous: undefined });
         }
-        if (mode === Mode.SHOW) {
+        if (mode === Mode.Show) {
             await this.generateCode();
         }
     }
@@ -111,7 +117,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         if (!this.state.rendezvous) {
             throw new Error('Rendezvous not found');
         }
-        this.setState({ phase: Phase.LOADING });
+        this.setState({ phase: Phase.Loading });
 
         try {
             logger.info("Requesting login token");
@@ -121,7 +127,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 title: _t("Sign in new device"),
             })();
 
-            this.setState({ phase: Phase.WAITING_FOR_DEVICE });
+            this.setState({ phase: Phase.WaitingForDevice });
 
             const newDeviceId = await this.state.rendezvous.approveLoginOnExistingDevice(loginToken);
             if (!newDeviceId) {
@@ -137,7 +143,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             this.props.onFinished(true);
         } catch (e) {
             logger.error('Error whilst approving sign in', e);
-            this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.Unknown });
+            this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
         }
     };
 
@@ -158,31 +164,31 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             await rendezvous.generateCode();
             this.setState({
-                phase: Phase.SHOWING_QR,
+                phase: Phase.ShowingQR,
                 rendezvous,
                 failureReason: undefined,
             });
         } catch (e) {
             logger.error('Error whilst generating QR code', e);
-            this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.HomeserverLacksSupport });
+            this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.HomeserverLacksSupport });
             return;
         }
 
         try {
             const confirmationDigits = await rendezvous.startAfterShowingCode();
-            this.setState({ phase: Phase.CONNECTED, confirmationDigits });
+            this.setState({ phase: Phase.Connected, confirmationDigits });
         } catch (e) {
             logger.error('Error whilst doing QR login', e);
             // only set to error phase if it hasn't already been set by onFailure or similar
-            if (this.state.phase !== Phase.ERROR) {
-                this.setState({ phase: Phase.ERROR, failureReason: RendezvousFailureReason.Unknown });
+            if (this.state.phase !== Phase.Error) {
+                this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
             }
         }
     };
 
     private onFailure = (reason: RendezvousFailureReason) => {
         logger.info(`Rendezvous failed: ${reason}`);
-        this.setState({ phase: Phase.ERROR, failureReason: reason });
+        this.setState({ phase: Phase.Error, failureReason: reason });
     };
 
     public reset() {
@@ -247,7 +253,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         let centreTitle = false;
 
         switch (this.state.phase) {
-            case Phase.ERROR:
+            case Phase.Error:
                 switch (this.state.failureReason) {
                     case RendezvousFailureReason.Expired:
                         cancellationMessage = _t("The linking wasn't completed in the required time.");
@@ -295,7 +301,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     { this.cancelButton() }
                 </>;
                 break;
-            case Phase.CONNECTED:
+            case Phase.Connected:
                 title = _t("Devices connected");
                 titleIcon = <DevicesIcon className="normal" />;
                 backButton = false;
@@ -327,7 +333,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     </AccessibleButton>
                 </>;
                 break;
-            case Phase.SHOWING_QR:
+            case Phase.ShowingQR:
                 title =_t("Sign in with QR code");
                 if (this.state.rendezvous) {
                     const code = <div className="mx_LoginWithQR_qrWrapper">
@@ -347,18 +353,18 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     buttons = this.cancelButton();
                 }
                 break;
-            case Phase.LOADING:
+            case Phase.Loading:
                 main = this.simpleSpinner();
                 break;
-            case Phase.CONNECTING:
+            case Phase.Connecting:
                 main = this.simpleSpinner(_t("Connecting..."));
                 buttons = this.cancelButton();
                 break;
-            case Phase.WAITING_FOR_DEVICE:
+            case Phase.WaitingForDevice:
                 main = this.simpleSpinner(_t("Waiting for device to sign in"));
                 buttons = this.cancelButton();
                 break;
-            case Phase.VERIFYING:
+            case Phase.Verifying:
                 title = _t("Success");
                 centreTitle = true;
                 main = this.simpleSpinner(_t("Completing set up of your new device"));
