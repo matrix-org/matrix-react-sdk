@@ -21,10 +21,12 @@ import { Relations } from "matrix-js-sdk/src/models/relations";
 import { Playback, PlaybackState } from "../../../src/audio/Playback";
 import { PlaybackManager } from "../../../src/audio/PlaybackManager";
 import { getReferenceRelationsForEvent } from "../../../src/events";
+import { RelationsHelperEvent } from "../../../src/events/RelationsHelper";
 import { MediaEventHelper } from "../../../src/utils/MediaEventHelper";
 import {
     VoiceBroadcastChunkEventType,
     VoiceBroadcastInfoEventType,
+    VoiceBroadcastInfoState,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
@@ -50,15 +52,19 @@ describe("VoiceBroadcastPlayback", () => {
     let chunk0Event: MatrixEvent;
     let chunk1Event: MatrixEvent;
     let chunk2Event: MatrixEvent;
+    let chunk3Event: MatrixEvent;
     const chunk0Data = new ArrayBuffer(1);
     const chunk1Data = new ArrayBuffer(2);
     const chunk2Data = new ArrayBuffer(3);
+    const chunk3Data = new ArrayBuffer(3);
     let chunk0Helper: MediaEventHelper;
     let chunk1Helper: MediaEventHelper;
     let chunk2Helper: MediaEventHelper;
+    let chunk3Helper: MediaEventHelper;
     let chunk0Playback: Playback;
     let chunk1Playback: Playback;
     let chunk2Playback: Playback;
+    let chunk3Playback: Playback;
 
     const itShouldSetTheStateTo = (state: VoiceBroadcastPlaybackState) => {
         it(`should set the state to ${state}`, () => {
@@ -100,34 +106,56 @@ describe("VoiceBroadcastPlayback", () => {
         };
     };
 
-    beforeAll(() => {
-        client = stubClient();
-        infoEvent = mkEvent({
+    const mkInfoEvent = (state: VoiceBroadcastInfoState) => {
+        return mkEvent({
             event: true,
             type: VoiceBroadcastInfoEventType,
             user: userId,
             room: roomId,
-            content: {},
+            content: {
+                state,
+            },
         });
+    };
+
+    const mkPlayback = () => {
+        const playback = new VoiceBroadcastPlayback(infoEvent, client);
+        jest.spyOn(playback, "removeAllListeners");
+        playback.on(VoiceBroadcastPlaybackEvent.StateChanged, onStateChanged);
+        return playback;
+    };
+
+    const setUpChunkEvents = (chunkEvents: MatrixEvent[]) => {
+        const relations = new Relations(RelationType.Reference, EventType.RoomMessage, client);
+        jest.spyOn(relations, "getRelations").mockReturnValue(chunkEvents);
+        mocked(getReferenceRelationsForEvent).mockReturnValue(relations);
+    };
+
+    beforeAll(() => {
+        client = stubClient();
 
         // crap event to test 0 as first sequence number
         chunk0Event = mkChunkEvent(0);
         chunk1Event = mkChunkEvent(1);
         chunk2Event = mkChunkEvent(2);
+        chunk3Event = mkChunkEvent(3);
 
         chunk0Helper = mkChunkHelper(chunk0Data);
         chunk1Helper = mkChunkHelper(chunk1Data);
         chunk2Helper = mkChunkHelper(chunk2Data);
+        chunk3Helper = mkChunkHelper(chunk3Data);
 
         chunk0Playback = createTestPlayback();
         chunk1Playback = createTestPlayback();
         chunk2Playback = createTestPlayback();
+        chunk3Playback = createTestPlayback();
 
         jest.spyOn(PlaybackManager.instance, "createPlaybackInstance").mockImplementation(
             (buffer: ArrayBuffer, _waveForm?: number[]) => {
                 if (buffer === chunk0Data) return chunk0Playback;
                 if (buffer === chunk1Data) return chunk1Playback;
                 if (buffer === chunk2Data) return chunk2Playback;
+                if (buffer === chunk3Data) return chunk3Playback;
             },
         );
 
@@ -135,132 +163,205 @@ describe("VoiceBroadcastPlayback", () => {
             if (event === chunk0Event) return chunk0Helper;
             if (event === chunk1Event) return chunk1Helper;
             if (event === chunk2Event) return chunk2Helper;
+            if (event === chunk3Event) return chunk3Helper;
         });
     });
 
     beforeEach(() => {
+        jest.clearAllMocks();
         onStateChanged = jest.fn();
-
-        playback = new VoiceBroadcastPlayback(infoEvent, client);
-        jest.spyOn(playback, "removeAllListeners");
-        playback.on(VoiceBroadcastPlaybackEvent.StateChanged, onStateChanged);
     });
 
-    describe("when there is only a 0 sequence event", () => {
+    describe("when there is a running broadcast without chunks yet", () => {
         beforeEach(() => {
-            const relations = new Relations(RelationType.Reference, EventType.RoomMessage, client);
-            jest.spyOn(relations, "getRelations").mockReturnValue([chunk0Event]);
-            mocked(getReferenceRelationsForEvent).mockReturnValue(relations);
+            infoEvent = mkInfoEvent(VoiceBroadcastInfoState.Running);
+            playback = mkPlayback();
+            setUpChunkEvents([]);
         });
 
-        describe("when calling start", () => {
+        describe("and calling start", () => {
             beforeEach(async () => {
                 await playback.start();
             });
 
-            itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Stopped);
-        });
-    });
-
-    describe("when there are some chunks", () => {
-        beforeEach(() => {
-            const relations = new Relations(RelationType.Reference, EventType.RoomMessage, client);
-            jest.spyOn(relations, "getRelations").mockReturnValue([chunk2Event, chunk1Event]);
-            mocked(getReferenceRelationsForEvent).mockReturnValue(relations);
-        });
-
-        it("should expose the info event", () => {
-            expect(playback.infoEvent).toBe(infoEvent);
-        });
-
-        it("should be in state Stopped", () => {
-            expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
-        });
-
-        describe("when calling start", () => {
-            beforeEach(async () => {
-                await playback.start();
+            it("should be in buffering state", () => {
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Buffering);
             });
 
-            itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
-
-            it("should play the chunks", () => {
-                // assert that the first chunk is being played
-                expect(chunk1Playback.play).toHaveBeenCalled();
-                expect(chunk2Playback.play).not.toHaveBeenCalled();
-
-                // simulate end of first chunk
-                chunk1Playback.emit(PlaybackState.Stopped);
-
-                // assert that the second chunk is being played
-                expect(chunk2Playback.play).toHaveBeenCalled();
-
-                // simulate end of second chunk
-                chunk2Playback.emit(PlaybackState.Stopped);
-
-                // assert that the entire playback is now in stopped state
-                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
-            });
-
-            describe("and calling pause", () => {
+            describe("and receiving the first chunk", () => {
                 beforeEach(() => {
-                    playback.pause();
+                    // TODO Michael W: Use RelationsHelper
+                    // @ts-ignore
+                    playback.chunkRelationHelper.emit(RelationsHelperEvent.Add, chunk1Event);
                 });
 
-                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Paused);
-                itShouldEmitAStateChangedEvent(VoiceBroadcastPlaybackState.Paused);
+                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+
+                it("should play the first chunk", () => {
+                    expect(chunk1Playback.play).toHaveBeenCalled();
+                });
             });
         });
+    });
 
-        describe("when calling toggle for the first time", () => {
+    describe("when there is a running voice broadcast with some chunks", () => {
+        beforeEach(() => {
+            infoEvent = mkInfoEvent(VoiceBroadcastInfoState.Running);
+            playback = mkPlayback();
+            setUpChunkEvents([chunk2Event, chunk0Event, chunk1Event]);
+        });
+
+        describe("and calling start", () => {
             beforeEach(async () => {
-                await playback.toggle();
+                await playback.start();
             });
 
-            itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+            it("should play the last chunk", () => {
+                // assert that the last chunk is played first
+                expect(chunk2Playback.play).toHaveBeenCalled();
+                expect(chunk1Playback.play).not.toHaveBeenCalled();
+            });
 
-            describe("and calling toggle a second time", () => {
-                beforeEach(async () => {
-                    await playback.toggle();
+            describe("and the playback of the last chunk ended", () => {
+                beforeEach(() => {
+                    chunk2Playback.emit(PlaybackState.Stopped);
                 });
 
-                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Paused);
+                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Buffering);
 
-                describe("and calling toggle a third time", () => {
-                    beforeEach(async () => {
-                        await playback.toggle();
+                describe("and the next chunk arrived", () => {
+                    beforeEach(() => {
+                        // TODO Michael W: Use RelationsHelper
+                        // @ts-ignore
+                        playback.chunkRelationHelper.emit(RelationsHelperEvent.Add, chunk3Event);
                     });
 
                     itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+
+                    it("should play the next chunk", () => {
+                        expect(chunk3Playback.play).toHaveBeenCalled();
+                    });
                 });
             });
         });
+    });
 
-        describe("when calling stop", () => {
+    describe("when there is a stopped voice broadcast", () => {
+        beforeEach(() => {
+            infoEvent = mkInfoEvent(VoiceBroadcastInfoState.Stopped);
+            playback = mkPlayback();
+        });
+
+        describe("and there is only a 0 sequence event", () => {
             beforeEach(() => {
-                playback.stop();
+                setUpChunkEvents([chunk0Event]);
+            });
+
+            describe("and calling start", () => {
+                beforeEach(async () => {
+                    await playback.start();
+                });
+
+                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Buffering);
+            });
+        });
+
+        describe("and there are some chunks", () => {
+            beforeEach(() => {
+                setUpChunkEvents([chunk2Event, chunk0Event, chunk1Event]);
+            });
+
+            it("should expose the info event", () => {
+                expect(playback.infoEvent).toBe(infoEvent);
             });
 
             itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Stopped);
 
-            describe("and calling toggle", () => {
+            describe("and calling start", () => {
                 beforeEach(async () => {
-                    mocked(onStateChanged).mockReset();
+                    await playback.start();
+                });
+
+                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+
+                it("should play the chunks beginning with the first one", () => {
+                    // assert that the first chunk is being played
+                    expect(chunk1Playback.play).toHaveBeenCalled();
+                    expect(chunk2Playback.play).not.toHaveBeenCalled();
+
+                    // simulate end of first chunk
+                    chunk1Playback.emit(PlaybackState.Stopped);
+
+                    // assert that the second chunk is being played
+                    expect(chunk2Playback.play).toHaveBeenCalled();
+
+                    // simulate end of second chunk
+                    chunk2Playback.emit(PlaybackState.Stopped);
+
+                    // assert that the entire playback is now in stopped state
+                    expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
+                });
+
+                describe("and calling pause", () => {
+                    beforeEach(() => {
+                        playback.pause();
+                    });
+
+                    itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Paused);
+                    itShouldEmitAStateChangedEvent(VoiceBroadcastPlaybackState.Paused);
+                });
+            });
+
+            describe("and calling toggle for the first time", () => {
+                beforeEach(async () => {
                     await playback.toggle();
                 });
 
                 itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
-                itShouldEmitAStateChangedEvent(VoiceBroadcastPlaybackState.Playing);
-            });
-        });
 
-        describe("when calling destroy", () => {
-            beforeEach(() => {
-                playback.destroy();
+                describe("and calling toggle a second time", () => {
+                    beforeEach(async () => {
+                        await playback.toggle();
+                    });
+
+                    itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Paused);
+
+                    describe("and calling toggle a third time", () => {
+                        beforeEach(async () => {
+                            await playback.toggle();
+                        });
+
+                        itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+                    });
+                });
             });
 
-            it("should call removeAllListeners", () => {
-                expect(playback.removeAllListeners).toHaveBeenCalled();
+            describe("and calling stop", () => {
+                beforeEach(() => {
+                    playback.stop();
+                });
+
+                itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Stopped);
+
+                describe("and calling toggle", () => {
+                    beforeEach(async () => {
+                        mocked(onStateChanged).mockReset();
+                        await playback.toggle();
+                    });
+
+                    itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+                    itShouldEmitAStateChangedEvent(VoiceBroadcastPlaybackState.Playing);
+                });
+            });
+
+            describe("and calling destroy", () => {
+                beforeEach(() => {
+                    playback.destroy();
+                });
+
+                it("should call removeAllListeners", () => {
+                    expect(playback.removeAllListeners).toHaveBeenCalled();
+                });
             });
         });
     });
