@@ -27,14 +27,12 @@ import { Layout } from "../../../../../src/settings/enums/Layout";
 import { WysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/WysiwygComposer";
 import { createTestClient, mkEvent, mkStubRoom } from "../../../../test-utils";
 
-let callOnChange: (content: string) => void;
-
 // The wysiwyg fetch wasm bytes and a specific workaround is needed to make it works in a node (jest) environnement
 // See https://github.com/matrix-org/matrix-wysiwyg/blob/main/platforms/web/test.setup.ts
 jest.mock("@matrix-org/matrix-wysiwyg", () => ({
-    useWysiwyg: ({ onChange }) => {
-        callOnChange = onChange;
-        return { ref: { current: null }, isWysiwygReady: true, wysiwyg: { clear: () => void 0 } };
+    useWysiwyg: () => {
+        return { ref: { current: null }, content: '<b>html</b>', isWysiwygReady: true, wysiwyg: { clear: () => void 0 },
+            formattingStates: { bold: 'enabled', italic: 'enabled', underline: 'enabled', strikeThrough: 'enabled' } };
     },
 }));
 
@@ -124,7 +122,7 @@ describe('WysiwygComposer', () => {
             expect(content).toBe((html));
             done();
         });
-        act(() => callOnChange(html));
+    //    act(() => callOnChange(html));
     });
 
     it('Should send message, call clear and focus the textbox', async () => {
@@ -132,7 +130,6 @@ describe('WysiwygComposer', () => {
         const html = '<b>html</b>';
         await new Promise((resolve) => {
             customRender(() => resolve(null));
-            act(() => callOnChange(html));
         });
         act(() => sendMessage());
 
