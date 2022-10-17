@@ -77,7 +77,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         void this.updateMode(this.props.mode);
     }
 
-    componentDidUpdate(prevProps: Readonly<IProps>): void {
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
         if (prevProps.mode !== this.props.mode) {
             void this.updateMode(this.props.mode);
         }
