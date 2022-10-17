@@ -43,6 +43,7 @@ import { CallStore } from "../../../../src/stores/CallStore";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { RoomViewStore } from "../../../../src/stores/RoomViewStore";
+import { ConnectionState } from "../../../../src/models/Call";
 
 describe("<RoomLiveShareWarning />", () => {
     let client: Mocked<MatrixClient>;
@@ -119,11 +120,19 @@ describe("<RoomLiveShareWarning />", () => {
             expect(videoCallLabel.innerHTML).toBe("Video call");
         });
 
-        it("show Join button if the user has not joined", async () => {
+        it("shows Join button if the user has not joined", async () => {
             await renderBanner();
             const videoCallLabel = await screen.findByText("Join");
             expect(videoCallLabel.innerHTML).toBe("Join");
         });
+
+        it("shows Leave button if the user has not joined", async () => {
+            call.setConnectionState(ConnectionState.Connected);
+            await renderBanner();
+            const videoCallLabel = await screen.findByText("Leave");
+            expect(videoCallLabel.innerHTML).toBe("Leave");
+        });
+
         it("dont show banner if the call is shown", async () => {
             jest.spyOn(RoomViewStore.instance, 'isViewingCall').mockReturnValue(false);
             await renderBanner();
