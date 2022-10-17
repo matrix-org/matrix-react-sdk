@@ -61,7 +61,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
                 metricsTrigger: undefined,
             });
         },
-        [roomId]
+        [roomId],
     );
 
     const disconnect = useCallback(
@@ -69,7 +69,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
             ev.preventDefault();
             call?.disconnect();
         },
-        [call]
+        [call],
     );
 
     const onClick = () => {
@@ -135,7 +135,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
                 element="button"
                 disabled={false}
             >
-                {buttonText}
+                { buttonText }
             </AccessibleButton>
         </div>
     );
@@ -152,13 +152,13 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
     const isMonitoringLiveLocation = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.MonitoringLivePosition,
-        () => OwnBeaconStore.instance.isMonitoringLiveLocation
+        () => OwnBeaconStore.instance.isMonitoringLiveLocation,
     );
 
     const liveBeaconIds = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.LivenessChange,
-        () => OwnBeaconStore.instance.getLiveBeaconIds(roomId)
+        () => OwnBeaconStore.instance.getLiveBeaconIds(roomId),
     );
 
     if (isMonitoringLiveLocation && liveBeaconIds.length) {

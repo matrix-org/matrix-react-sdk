@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { mount } from "enzyme";
 import {
     Room,
     PendingEventOrdering,
@@ -24,6 +23,14 @@ import {
     RoomMember,
     RoomStateEvent,
 } from "matrix-js-sdk/src/matrix";
+import { ClientWidgetApi, Widget } from "matrix-widget-api";
+import {
+    cleanup,
+    render,
+    screen,
+} from "@testing-library/react";
+import { mocked, Mocked } from "jest-mock";
+
 import {
     mkRoomMember,
     MockedCall,
@@ -34,36 +41,18 @@ import {
 import RoomCallBanner from "../../../../src/components/views/beacon/RoomCallBanner";
 import { CallStore } from "../../../../src/stores/CallStore";
 import { CallView as _CallView } from "../../../../src/components/views/voip/CallView";
-
-import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
-import {
-    cleanup,
-    render,
-    screen,
-} from "@testing-library/react";
-import { mocked, Mocked } from "jest-mock";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { RoomViewStore } from "../../../../src/stores/RoomViewStore";
-
 
 describe("<RoomLiveShareWarning />", () => {
     let client: Mocked<MatrixClient>;
     let room: Room;
     let alice: RoomMember;
     useMockedCalls();
-    
 
     const defaultProps = {
         roomId: "!1:example.org",
-    };
-    const getComponent = (props = {}) => {
-        let component;
-        // component updates on render therefore wrap in act
-        act(() => {
-            component = mount(<RoomCallBanner {...defaultProps} {...props} />);
-        });
-        return component;
     };
 
     beforeEach(() => {
@@ -76,11 +65,11 @@ describe("<RoomLiveShareWarning />", () => {
         });
         alice = mkRoomMember(room.roomId, "@alice:example.org");
         jest.spyOn(room, "getMember").mockImplementation((userId) =>
-            userId === alice.userId ? alice : null
+            userId === alice.userId ? alice : null,
         );
 
         client.getRoom.mockImplementation((roomId) =>
-            roomId === room.roomId ? room : null
+            roomId === room.roomId ? room : null,
         );
         client.getRooms.mockReturnValue([room]);
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
@@ -99,9 +88,9 @@ describe("<RoomLiveShareWarning />", () => {
     };
 
     it("renders nothing when there is no call", async () => {
-        
-        let component = getComponent();
-        expect(component.html()).toBe(null);
+        await renderBanner();
+        const banner = await screen.queryByText("VideoCall");
+        expect(banner).toBeFalsy();
     });
 
     describe("call started", () => {
@@ -111,8 +100,7 @@ describe("<RoomLiveShareWarning />", () => {
         beforeEach(() => {
             MockedCall.create(room, "1");
             const maybeCall = CallStore.instance.getCall(room.roomId);
-            if (!(maybeCall instanceof MockedCall))
-                throw new Error("Failed to create call");
+            if (!(maybeCall instanceof MockedCall)) {throw new Error("Failed to create call");}
             call = maybeCall;
 
             widget = new Widget(call.widget);
@@ -128,19 +116,19 @@ describe("<RoomLiveShareWarning />", () => {
 
         it("renders if there is a call", async () => {
             await renderBanner();
-            let videoCallLabel = await screen.findByText("Video call");
+            const videoCallLabel = await screen.findByText("Video call");
             expect(videoCallLabel.innerHTML).toBe("Video call");
         });
 
         it("show Join button if the user has not joined", async () => {
             await renderBanner();
-            let videoCallLabel = await screen.findByText("Join");
+            const videoCallLabel = await screen.findByText("Join");
             expect(videoCallLabel.innerHTML).toBe("Join");
         });
         it("dont show banner if the call is shown", async () => {
             jest.spyOn(RoomViewStore.instance, 'isViewingCall').mockReturnValue(false);
             await renderBanner();
-            let videoCallLabel = await screen.findByText("Video call");
+            const videoCallLabel = await screen.findByText("Video call");
             expect(videoCallLabel.innerHTML).toBe("Video call");
         });
     });
