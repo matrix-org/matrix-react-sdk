@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,6 +36,10 @@ export default class JSONExporter extends Exporter {
         setProgressText: React.Dispatch<React.SetStateAction<string>>,
     ) {
         super(room, exportType, exportOptions, setProgressText);
+    }
+
+    public get destinationFileName(): string {
+        return this.makeFileNameNoExtension() + ".json";
     }
 
     protected createJSONString(): string {
@@ -108,7 +112,7 @@ export default class JSONExporter extends Exporter {
             this.addFile("export.json", new Blob([text]));
             await this.downloadZIP();
         } else {
-            const fileName = this.makeFileNameNoExtension() + ".json";
+            const fileName = this.destinationFileName;
             this.downloadPlainText(fileName, text);
         }
 

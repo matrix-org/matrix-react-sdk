@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -58,6 +58,10 @@ export default abstract class Exporter {
         window.addEventListener("beforeunload", this.onBeforeUnload);
     }
 
+    public get destinationFileName(): string {
+        return this.makeFileNameNoExtension(SdkConfig.get().brand) + ".zip";
+    }
+
     protected onBeforeUnload(e: BeforeUnloadEvent): string {
         e.preventDefault();
         return e.returnValue = _t("Are you sure you want to exit during this export?");
@@ -76,17 +80,19 @@ export default abstract class Exporter {
         this.files.push(file);
     }
 
-    protected makeFileNameNoExtension(brand?: string = "matrix"): string {
-        const safeRoomName = sanitizeFilename(this.room.name ?? _t("Unnamed Room"));
+    protected makeFileNameNoExtension(brand: string = "matrix"): string {
+        // First try to use the real name of the room, then a translated copy of a generic name,
+        // then finally hardcoded default to guarantee we'll have a name.
+        const safeRoomName = sanitizeFilename(this.room.name ?? _t("Unnamed Room")).trim() || "Unnamed Room";
         const safeDate = formatFullDateNoDayISO(new Date())
             .replace(/:/g, '-'); // ISO format automatically removes a lot of stuff for us
-        return `${brand} - ${safeRoomName} - Chat Export - ${safeDate}`;
+        const safeBrand = sanitizeFilename(brand);
+        return `${safeBrand} - ${safeRoomName} - Chat Export - ${safeDate}`;
     }
 
     protected async downloadZIP(): Promise<string | void> {
-        const brand = SdkConfig.get().brand;
-        const filenameWithoutExt = this.makeFileNameNoExtension(brand);
-        const filename = `${filenameWithoutExt}.zip`;
+        const filename = this.destinationFileName;
+        const filenameWithoutExt = filename.substring(0, filename.length - 4); // take off the .zip
         const { default: JSZip } = await import('jszip');
 
         const zip = new JSZip();
