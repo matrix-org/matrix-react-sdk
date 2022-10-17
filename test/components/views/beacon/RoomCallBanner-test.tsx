@@ -131,5 +131,6 @@ describe("<RoomCallBanner />", () => {
         });
     });
 
+    // TODO: test clicking buttons
     // TODO: add live location share warning test (should not render if there is an active live location share)
 });

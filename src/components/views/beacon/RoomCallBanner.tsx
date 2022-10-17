@@ -23,7 +23,7 @@ import dispatcher, { defaultDispatcher } from "../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
 import { Call, ConnectionState, ElementCall } from "../../../models/Call";
-import { useCall } from "../../../hooks/useCall";
+import { useCall, useConnectionState } from "../../../hooks/useCall";
 import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import {
@@ -66,8 +66,6 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
             highlighted: true,
         });
     }, [callEvent, roomId]);
-
-    if (!call) return <Fragment />;
 
     return (
         <div
@@ -123,9 +121,8 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
     // split into outer/inner to avoid watching various parts if there is no call
     if (call) {
         // No banner if the call is not connected
-        if (call.connectionState !== ConnectionState.Disconnected) {
-            return null;
-        }
+        if (call.connectionState !== ConnectionState.Disconnected) {return null;}
+
         return <RoomCallBannerInner call={call} roomId={roomId} />;
     }
     return null;
