@@ -144,6 +144,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
 interface Props {
     roomId: Room["roomId"];
 }
+
 const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
     const call = useCall(roomId);
 
