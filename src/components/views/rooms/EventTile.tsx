@@ -476,6 +476,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         room?.off(ThreadEvent.New, this.onNewThread);
+        room?.off(ThreadEvent.Delete, this.onThreadDeleted);
         if (this.threadState) {
             this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
         }
@@ -494,6 +495,16 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             this.updateThread(thread);
             const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
             room.off(ThreadEvent.New, this.onNewThread);
+            room.on(ThreadEvent.Delete, this.onThreadDeleted);
+        }
+    };
+
+    private onThreadDeleted = (thread: Thread) => {
+        if (thread.id === this.props.mxEvent.getId()) {
+            this.updateThread(thread);
+            const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+            room.on(ThreadEvent.New, this.onNewThread);
+            room.off(ThreadEvent.Delete, this.onThreadDeleted);
         }
     };
 
