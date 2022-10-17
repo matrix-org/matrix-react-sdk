@@ -98,7 +98,6 @@ interface IState {
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
     serverDeadError?: ReactNode;
-    loginWithQrInProgress: boolean;
 }
 
 /*
@@ -129,7 +128,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             serverIsAlive: true,
             serverErrorIsFatal: false,
             serverDeadError: "",
-            loginWithQrInProgress: false,
         };
 
         // map from login step type to a function which will render a control
