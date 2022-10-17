@@ -42,7 +42,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
     roomId,
     call,
 }) => {
-    let callEvent: MatrixEvent = null;
+    let callEvent: MatrixEvent | null = null;
 
     if (!!(call as ElementCall).groupCall) {
         callEvent = (call as ElementCall).groupCall;
