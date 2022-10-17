@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
@@ -26,12 +26,12 @@ import {
     VoiceBroadcastRecordingBody,
     VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecording,
-    shouldDisplayAsVoiceBroadcastRecordingTile,
     VoiceBroadcastPlaybackBody,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybacksStore,
 } from "../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../test-utils";
+import { RelationsHelper } from "../../../src/events/RelationsHelper";
 
 jest.mock("../../../src/voice-broadcast/components/molecules/VoiceBroadcastRecordingBody", () => ({
     VoiceBroadcastRecordingBody: jest.fn(),
@@ -41,9 +41,7 @@ jest.mock("../../../src/voice-broadcast/components/molecules/VoiceBroadcastPlayb
     VoiceBroadcastPlaybackBody: jest.fn(),
 }));
 
-jest.mock("../../../src/voice-broadcast/utils/shouldDisplayAsVoiceBroadcastRecordingTile", () => ({
-    shouldDisplayAsVoiceBroadcastRecordingTile: jest.fn(),
-}));
+jest.mock("../../../src/events/RelationsHelper");
 
 describe("VoiceBroadcastBody", () => {
     const roomId = "!room:example.com";
@@ -111,22 +109,36 @@ describe("VoiceBroadcastBody", () => {
 
     describe("when displaying a voice broadcast recording", () => {
         beforeEach(() => {
-            mocked(shouldDisplayAsVoiceBroadcastRecordingTile).mockReturnValue(true);
+            renderVoiceBroadcast();
         });
 
         it("should render a voice broadcast recording body", () => {
-            renderVoiceBroadcast();
             screen.getByTestId("voice-broadcast-recording-body");
+        });
+
+        describe("and the recordings ends", () => {
+            beforeEach(() => {
+                const stoppedEvent = mkVoiceBroadcastInfoEvent(VoiceBroadcastInfoState.Stopped);
+                const relationsHelper = mocked(RelationsHelper).mock.instances[5];
+                act(() => {
+                    // @ts-ignore
+                    mocked(relationsHelper.on).mock.calls[0][1](stoppedEvent);
+                });
+            });
+
+            it("should render a voice broadcast playback body", () => {
+                screen.getByTestId("voice-broadcast-playback-body");
+            });
         });
     });
 
     describe("when displaying a voice broadcast playback", () => {
         beforeEach(() => {
-            mocked(shouldDisplayAsVoiceBroadcastRecordingTile).mockReturnValue(false);
+            mocked(client).getUserId.mockReturnValue("@other:example.com");
+            renderVoiceBroadcast();
         });
 
         it("should render a voice broadcast playback body", () => {
-            renderVoiceBroadcast();
             screen.getByTestId("voice-broadcast-playback-body");
         });
     });
