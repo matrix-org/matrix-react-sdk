@@ -31,6 +31,7 @@ import {
     OwnBeaconStoreEvent,
 } from "../../../stores/OwnBeaconStore";
 import { CallDurationFromEvent } from "../voip/CallDuration";
+import { MockedCall } from "../../../../test/test-utils/call";
 
 interface RoomCallBannerProps {
     roomId: Room["roomId"];
@@ -43,8 +44,11 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
 }) => {
     let callEvent: MatrixEvent = null;
 
-    if (call instanceof ElementCall) {
-        callEvent = call.groupCall;
+    if (!!(call as ElementCall).groupCall) {
+        callEvent = (call as ElementCall).groupCall;
+    }
+    if (!!(call as MockedCall).event) {
+        callEvent = (call as MockedCall).event;
     }
 
     const connect = useCallback(
@@ -67,6 +71,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
         },
         [call]
     );
+
     const onClick = () => {
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
@@ -79,6 +84,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
     };
 
     let [buttonText, buttonKind, onButtonClick] = [null, null, null, null];
+
     switch (call.connectionState) {
         case ConnectionState.Disconnected:
             [buttonText, buttonKind, onButtonClick] = [
@@ -114,7 +120,6 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
     return (
         <div
             className="mx_RoomLiveShareWarning mx_RoomCallBanner"
-            data-test-id='room-call-banner'
             onClick={onClick}
         >
             <div className="mx_RoomCallBanner_text">
