@@ -158,5 +158,43 @@ describe('WysiwygComposer', () => {
         // Then the component gets the focus
         await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
     });
+
+    it('Should focus when receiving a reply_to_event action', async () => {
+        // Given we don't have focus
+        customRender(() => {}, false);
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+
+        // When we send the right action
+        defaultDispatcher.dispatch({
+            action: "reply_to_event",
+            context: null,
+        });
+
+        // Then the component gets the focus
+        await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
+    });
+
+    it('Should not focus when disabled', async () => {
+        // Given we don't have focus and we are disabled
+        customRender(() => {}, true);
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+
+        // When we send an action that would cause us to get focus
+        defaultDispatcher.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: null,
+        });
+        // (Send a second event to exercise the clearTimeout logic)
+        defaultDispatcher.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: null,
+        });
+
+        // Wait for event dispatch to happen
+        await new Promise((r) => setTimeout(r, 200));
+
+        // Then we don't get it because we are disabled
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+    });
 });
 

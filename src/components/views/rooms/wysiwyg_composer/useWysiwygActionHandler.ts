@@ -20,9 +20,8 @@ import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { Action } from "../../../../dispatcher/actions";
 import { ActionPayload } from "../../../../dispatcher/payloads";
 import { IRoomState } from "../../../structures/RoomView";
-import { TimelineRenderingType } from "../../../../contexts/RoomContext";
+import { TimelineRenderingType, useRoomContext } from "../../../../contexts/RoomContext";
 import { useDispatcher } from "../../../../hooks/useDispatcher";
-import { useRoomContext } from "../../../../contexts/RoomContext";
 
 export function useWysiwygActionHandler(
     disabled: boolean,
