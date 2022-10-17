@@ -177,7 +177,13 @@ export function formatFullDateNoDay(date: Date) {
     });
 }
 
-export function formatFullDateNoDayISO(date: Date) {
+/**
+ * Returns an ISO date string without textual description of the date (ie: no "Wednesday" or
+ * similar)
+ * @param date The date to format.
+ * @returns The date string in ISO format.
+ */
+export function formatFullDateNoDayISO(date: Date): string {
     return date.toISOString();
 }
 
