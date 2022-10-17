@@ -73,7 +73,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         };
     }
 
-    componentDidMount(): void {
+    public componentDidMount(): void {
         void this.updateMode(this.props.mode);
     }
 
