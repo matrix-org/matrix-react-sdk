@@ -69,7 +69,7 @@ export const LocationButton: React.FC<IProps> = ({ roomId, sender, menuPosition,
             iconClassName="mx_MessageComposer_location"
             onClick={openMenu}
             title={_t("Location")}
-            innerRef={button}
+            inputRef={button}
         />
 
         { contextMenu }
