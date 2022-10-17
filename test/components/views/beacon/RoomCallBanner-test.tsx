@@ -89,7 +89,7 @@ describe("<RoomCallBanner />", () => {
 
     it("renders nothing when there is no call", async () => {
         await renderBanner();
-        const banner = await screen.queryByText("VideoCall");
+        const banner = await screen.queryByText("Video call");
         expect(banner).toBeFalsy();
     });
 
