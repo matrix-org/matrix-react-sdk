@@ -123,7 +123,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
             onClick={onClick}
         >
             <div className="mx_RoomCallBanner_text">
-                <span className="mx_RoomCallBanner_label">Video call</span>
+                <span className="mx_RoomCallBanner_label">{ _t("Video call") }</span>
                 <CallDurationFromEvent mxEvent={callEvent} />
             </div>
 
