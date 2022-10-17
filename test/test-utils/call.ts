@@ -72,10 +72,6 @@ export class MockedCall extends Call {
         super.participants = value;
     }
 
-    public setConnectionState(value: ConnectionState) {
-        super.connectionState = value;
-    }
-
     // No action needed for any of the following methods since this is just a mock
     protected getDevices(): string[] { return []; }
     protected async setDevices(): Promise<void> { }

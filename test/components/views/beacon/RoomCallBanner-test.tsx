@@ -43,7 +43,6 @@ import { CallStore } from "../../../../src/stores/CallStore";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { RoomViewStore } from "../../../../src/stores/RoomViewStore";
-import { ConnectionState } from "../../../../src/models/Call";
 
 describe("<RoomCallBanner />", () => {
     let client: Mocked<MatrixClient>;
@@ -122,12 +121,6 @@ describe("<RoomCallBanner />", () => {
         it("shows Join button if the user has not joined", async () => {
             await renderBanner();
             await screen.findByText("Join");
-        });
-
-        it("shows Leave button if the user has not joined", async () => {
-            call.setConnectionState(ConnectionState.Connected);
-            await renderBanner();
-            await screen.findByText("Leave");
         });
 
         it("dont show banner if the call is shown", async () => {

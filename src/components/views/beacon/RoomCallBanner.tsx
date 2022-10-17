@@ -56,14 +56,6 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
         [roomId],
     );
 
-    const disconnect = useCallback(
-        (ev: ButtonEvent) => {
-            ev.preventDefault();
-            call?.disconnect();
-        },
-        [call],
-    );
-
     const onClick = useCallback(() => {
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
@@ -75,40 +67,6 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
         });
     }, [callEvent, roomId]);
 
-    let buttonText: string;
-    let buttonKind: string;
-    let onButtonClick: (ev: ButtonEvent) => void;
-
-    switch (call.connectionState) {
-        case ConnectionState.Disconnected:
-            [buttonText, buttonKind, onButtonClick] = [
-                _t("Join"),
-                "primary",
-                connect,
-            ];
-            break;
-        case ConnectionState.Connecting:
-            [buttonText, buttonKind, onButtonClick] = [
-                _t("Join"),
-                "primary",
-                null,
-            ];
-            break;
-        case ConnectionState.Connected:
-            [buttonText, buttonKind, onButtonClick] = [
-                _t("Leave"),
-                "danger",
-                disconnect,
-            ];
-            break;
-        case ConnectionState.Disconnecting:
-            [buttonText, buttonKind, onButtonClick] = [
-                _t("Leave"),
-                "danger",
-                null,
-            ];
-            break;
-    }
     if (!call) return <Fragment />;
 
     return (
@@ -122,12 +80,12 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
             </div>
 
             <AccessibleButton
-                onClick={onButtonClick}
-                kind={buttonKind}
+                onClick={connect}
+                kind="primary"
                 element="button"
                 disabled={false}
             >
-                { buttonText }
+                { _t("Join") }
             </AccessibleButton>
         </div>
     );
@@ -164,6 +122,10 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
 
     // split into outer/inner to avoid watching various parts if there is no call
     if (call) {
+        // No banner if the call is not connected
+        if (call.connectionState !== ConnectionState.Disconnected) {
+            return null;
+        }
         return <RoomCallBannerInner call={call} roomId={roomId} />;
     }
     return null;
