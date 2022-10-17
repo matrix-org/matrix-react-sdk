@@ -116,8 +116,7 @@ describe("<RoomCallBanner />", () => {
 
         it("renders if there is a call", async () => {
             await renderBanner();
-            const videoCallLabel = await screen.findByText("Video call");
-            expect(videoCallLabel.innerHTML).toBe("Video call");
+            await screen.findByText("Video call");
         });
 
         it("shows Join button if the user has not joined", async () => {
