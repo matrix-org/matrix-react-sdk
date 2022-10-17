@@ -20,7 +20,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import React from "react";
 
 import Exporter from "./Exporter";
-import { formatFullDateNoDayISO } from "../../DateUtils";
 import { _t } from "../../languageHandler";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
@@ -137,12 +136,7 @@ export default class PlainTextExporter extends Exporter {
             this.addFile("export.txt", new Blob([text]));
             await this.downloadZIP();
         } else {
-            // TR - 9142
-            const fileName = `matrix-${this.room.name}-export-${formatFullDateNoDayISO(new Date())}.txt`;
-            // TR - 7992
-            const fileName = this.santizeFileName(
-                `matrix-${this.room.name}-export-${formatFullDateNoDay(new Date())}.txt`,
-            );
+            const fileName = this.makeFileNameNoExtension() + ".txt";
             this.downloadPlainText(fileName, text);
         }
 

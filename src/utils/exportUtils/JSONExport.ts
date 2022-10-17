@@ -20,7 +20,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Exporter from "./Exporter";
-import { formatFullDateNoDayISO, formatFullDateNoDayNoTime } from "../../DateUtils";
+import { formatFullDateNoDayNoTime } from "../../DateUtils";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { _t } from "../../languageHandler";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
@@ -108,12 +108,7 @@ export default class JSONExporter extends Exporter {
             this.addFile("export.json", new Blob([text]));
             await this.downloadZIP();
         } else {
-            // TR - 9142
-            const fileName = `matrix-${this.room.name}-export-${formatFullDateNoDayISO(new Date())}.json`;
-            // TR - 7992
-            const fileName = this.santizeFileName(
-                `matrix-${this.room.name}-export-${formatFullDateNoDay(new Date())}.json`,
-            );
+            const fileName = this.makeFileNameNoExtension() + ".json";
             this.downloadPlainText(fileName, text);
         }
 

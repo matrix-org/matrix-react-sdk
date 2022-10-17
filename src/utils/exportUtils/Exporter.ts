@@ -30,6 +30,7 @@ import { isVoiceMessage } from "../EventUtils";
 import { IMediaEventContent } from "../../customisations/models/IMediaEventContent";
 import { _t } from "../../languageHandler";
 import SdkConfig from "../../SdkConfig";
+import sanitizeFilename from "sanitize-filename";
 
 type BlobFile = {
     name: string;
@@ -75,21 +76,16 @@ export default abstract class Exporter {
         this.files.push(file);
     }
 
-    protected santizeFileName(filename: string): string {
-        filename = filename.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-        filename = filename.replace(/\s+/gim, "-");
-        filename = filename.replace(/[^a-z0-9.,_-]/gim, "");
-        return filename.trim();
+    protected makeFileNameNoExtension(brand?: string = "matrix"): string {
+        const safeRoomName = sanitizeFilename(this.room.name ?? _t("Unnamed Room"));
+        const safeDate = formatFullDateNoDayISO(new Date())
+            .replace(/:/g, '-'); // ISO format automatically removes a lot of stuff for us
+        return `${brand} - ${safeRoomName} - Chat Export - ${safeDate}`;
     }
 
     protected async downloadZIP(): Promise<string | void> {
         const brand = SdkConfig.get().brand;
-        // TR - 9142
-        const filenameWithoutExt = `${brand} - ${this.room.name} - Chat Export -${formatFullDateNoDayISO(new Date())}`;
-        // TR - 7992
-        const filenameWithoutExt = this.santizeFileName(
-            `${brand} - ${this.room.name} - Chat Export - ${formatFullDateNoDay(new Date())}`,
-        );
+        const filenameWithoutExt = this.makeFileNameNoExtension(brand);
         const filename = `${filenameWithoutExt}.zip`;
         const { default: JSZip } = await import('jszip');
 
