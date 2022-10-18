@@ -27,13 +27,9 @@ interface IProps {
     versions: IServerVersions;
 }
 
-interface IState {}
-
-export default class LoginWithQRSection extends React.Component<IProps, IState> {
+export default class LoginWithQRSection extends React.Component<IProps> {
     public constructor(props: IProps) {
         super(props);
-
-        this.state = {};
     }
 
     public render(): JSX.Element {
