@@ -184,10 +184,18 @@ const SessionManagerTab: React.FC = () => {
 
     const showQrCodeEnabled = SettingsStore.getValue("feature_qr_signin_reciprocate_show");
 
+    const onQrFinish = useCallback(() => {
+        setSignInWithQrMode(null);
+    }, [setSignInWithQrMode]);
+
+    const onShowQrClicked = useCallback(() => {
+        setSignInWithQrMode(Mode.Show);
+    }, [setSignInWithQrMode]);
+
     if (showQrCodeEnabled && signInWithQrMode) {
         return <LoginWithQR
             mode={signInWithQrMode}
-            onFinished={() => setSignInWithQrMode(null)}
+            onFinished={onQrFinish}
             client={matrixClient}
         />;
     }
@@ -240,7 +248,7 @@ const SessionManagerTab: React.FC = () => {
             </SettingsSubsection>
         }
         { showQrCodeEnabled ?
-            <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.Show)} versions={clientVersions} />
+            <LoginWithQRSection onShowQr={onShowQrClicked} versions={clientVersions} />
             : null
         }
     </SettingsTab>;
