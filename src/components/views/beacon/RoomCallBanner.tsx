@@ -24,7 +24,6 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
 import { Call, ConnectionState, ElementCall } from "../../../models/Call";
 import { useCall } from "../../../hooks/useCall";
-import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import {
     OwnBeaconStore,
