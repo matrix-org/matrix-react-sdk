@@ -3631,5 +3631,6 @@
     "Try out the rich text editor (plain text mode coming soon)": "試用格式化文字編輯器（純文字模式即將推出）",
     "stop voice broadcast": "停止語音廣播",
     "resume voice broadcast": "恢復語音廣播",
-    "pause voice broadcast": "暫停語音廣播"
+    "pause voice broadcast": "暫停語音廣播",
+    "Notifications silenced": "通知已靜音"
 }
