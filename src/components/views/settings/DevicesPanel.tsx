@@ -21,12 +21,12 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { CryptoEvent } from 'matrix-js-sdk/src/crypto';
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import DevicesPanelEntry from "./DevicesPanelEntry";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
 import { deleteDevicesWithInteractiveAuth } from './devices/deleteDevices';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 interface IProps {
     className?: string;
@@ -41,6 +41,8 @@ interface IState {
 }
 
 export default class DevicesPanel extends React.Component<IProps, IState> {
+    static contextType = MatrixClientContext;
+    context!: React.ContextType<typeof MatrixClientContext>;
     private unmounted = false;
 
     constructor(props: IProps) {
@@ -53,24 +55,22 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        const cli = MatrixClientPeg.get();
-        cli.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
+        this.context.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
         this.loadDevices();
     }
 
     public componentWillUnmount(): void {
-        const cli = MatrixClientPeg.get();
-        cli.off(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
+        this.context.off(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
         this.unmounted = true;
     }
 
     private onDevicesUpdated = (users: string[]) => {
-        if (!users.includes(MatrixClientPeg.get().getUserId())) return;
+        if (!users.includes(this.context.getUserId())) return;
         this.loadDevices();
     };
 
     private loadDevices(): void {
-        const cli = MatrixClientPeg.get();
+        const cli = this.context;
         cli.getDevices().then(
             (resp) => {
                 if (this.unmounted) { return; }
@@ -121,7 +121,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
 
     private isDeviceVerified(device: IMyDevice): boolean | null {
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = this.context;
             const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
             return this.state.crossSigningInfo.checkDeviceTrust(
                 this.state.crossSigningInfo,
@@ -194,7 +194,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
 
         try {
             await deleteDevicesWithInteractiveAuth(
-                MatrixClientPeg.get(),
+                this.context,
                 this.state.selectedDevices,
                 (success) => {
                     if (success) {
@@ -218,7 +218,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     };
 
     private renderDevice = (device: IMyDevice): JSX.Element => {
-        const myDeviceId = MatrixClientPeg.get().getDeviceId();
+        const myDeviceId = this.context.getDeviceId();
         const myDevice = this.state.devices.find((device) => (device.device_id === myDeviceId));
 
         const isOwnDevice = device.device_id === myDeviceId;
@@ -256,7 +256,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
             return <Spinner />;
         }
 
-        const myDeviceId = MatrixClientPeg.get().getDeviceId();
+        const myDeviceId = this.context.getDeviceId();
         const myDevice = devices.find((device) => (device.device_id === myDeviceId));
 
         if (!myDevice) {
