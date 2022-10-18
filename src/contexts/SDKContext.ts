@@ -37,9 +37,9 @@ SDKContext.displayName = "SDKContext";
  */
 export class SdkContextClass {
     /**
-     * The global Stores instance. This is a temporary measure whilst so many stores remain global
-     * as well. Over time, these stores should accept a `Stores` in their constructor. When all
-     * stores do this, this static variable can be deleted.
+     * The global SdkContextClass instance. This is a temporary measure whilst so many stores remain global
+     * as well. Over time, these stores should accept a `SdkContextClass` instance in their constructor.
+     * When all stores do this, this static variable can be deleted.
      */
     public static readonly instance = new SdkContextClass();
 
@@ -49,7 +49,7 @@ export class SdkContextClass {
     // this Context.
     public client?: MatrixClient;
 
-    // All protected fields to make it easier to derive OverridableStores
+    // All protected fields to make it easier to derive test stores
     protected _RightPanelStore?: RightPanelStore;
     protected _RoomNotificationStateStore?: RoomNotificationStateStore;
     protected _RoomViewStore?: RoomViewStore;
