@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MSC3906Rendezvous, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
+import { MSC3906Rendezvous, MSC3906RendezvousPayload, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
 import { MSC3886SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
-import { MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
+import { MSC3903ECDHPayload, MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 
@@ -149,12 +149,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private generateCode = async () => {
         let rendezvous: MSC3906Rendezvous;
         try {
-            const transport = new MSC3886SimpleHttpRendezvousTransport({
+            const transport = new MSC3886SimpleHttpRendezvousTransport<MSC3903ECDHPayload>({
                 onFailure: this.onFailure,
                 client: this.props.client,
             });
 
-            const channel = new MSC3903ECDHv1RendezvousChannel(transport, undefined, this.onFailure);
+            const channel = new MSC3903ECDHv1RendezvousChannel<MSC3906RendezvousPayload>(
+                transport, undefined, this.onFailure,
+            );
 
             rendezvous = new MSC3906Rendezvous(channel, this.props.client, this.onFailure);
 
