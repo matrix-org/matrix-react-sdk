@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<LoginWithQRSection /> no support - all 1`] = `<div />`;
+exports[`<LoginWithQRSection /> should not render no support at all 1`] = `<div />`;
 
-exports[`<LoginWithQRSection /> no support - sdk + feature + MSC3882 1`] = `<div />`;
+exports[`<LoginWithQRSection /> should not render only sdk + feature + MSC3882 enabled 1`] = `<div />`;
 
-exports[`<LoginWithQRSection /> no support - sdk + feature 1`] = `<div />`;
+exports[`<LoginWithQRSection /> should not render only sdk + feature enabled 1`] = `<div />`;
 
-exports[`<LoginWithQRSection /> no support - sdk 1`] = `<div />`;
+exports[`<LoginWithQRSection /> should not render only sdk enabled 1`] = `<div />`;
 
-exports[`<LoginWithQRSection /> supported - sdk + feature + MSC3882 + MSC3886 1`] = `
+exports[`<LoginWithQRSection /> should render panel enabled by sdk + feature + MSC3882 + MSC3886 1`] = `
 <div>
   <div
     class="mx_SettingsSubsection"
@@ -46,7 +46,7 @@ exports[`<LoginWithQRSection /> supported - sdk + feature + MSC3882 + MSC3886 1`
 </div>
 `;
 
-exports[`<LoginWithQRSection /> supported - sdk + feature + MSC3882 + fallback 1`] = `
+exports[`<LoginWithQRSection /> should render panel enabled by sdk + feature + MSC3882 + fallback 1`] = `
 <div>
   <div
     class="mx_SettingsSubsection"
