@@ -153,7 +153,7 @@ Cypress.Commands.add("openRoomSettings", (tab?: string): Chainable<JQuery<HTMLEl
 
 Cypress.Commands.add("switchTab", (tab: string): Chainable<JQuery<HTMLElement>> => {
     return cy.get(".mx_TabbedView_tabLabels").within(() => {
-        cy.get(".mx_TabbedView_tabLabel").contains(tab).click();
+        cy.contains(".mx_TabbedView_tabLabel", tab).click();
     });
 });
 
