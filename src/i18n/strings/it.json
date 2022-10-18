@@ -3632,5 +3632,8 @@
     "pause voice broadcast": "sospendi broadcast voce",
     "You have already joined this call from another device": "Sei già in questa chiamata in un altro dispositivo",
     "Notifications silenced": "Notifiche silenziose",
-    "stop voice broadcast": "ferma broadcast voce"
+    "stop voice broadcast": "ferma broadcast voce",
+    "Yes, stop broadcast": "Sì, ferma il broadcast",
+    "Are you sure you want to stop your live broadcast?This will end the broadcast and the full recording will be available in the room.": "Vuoi davvero fermare il tuo broadcast in diretta? Verrà terminato il broadcast e la registrazione completa sarà disponibile nella stanza.",
+    "Stop live broadcasting?": "Fermare il broadcast in diretta?"
 }
