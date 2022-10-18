@@ -93,6 +93,22 @@ describe("VoiceBroadcastPlayback", () => {
         });
     };
 
+    // file name fallback sequence number
+    const mkFallbackChunkEvent = (sequence: number) => {
+        return mkEvent({
+            event: true,
+            user: client.getUserId(),
+            room: roomId,
+            type: EventType.RoomMessage,
+            content: {
+                msgtype: MsgType.Audio,
+                ["org.matrix.msc1767.file"]: {
+                    name: `Voice Broadcast Part (${sequence}).ogg`,
+                },
+            },
+        });
+    };
+
     const mkChunkHelper = (data: ArrayBuffer): MediaEventHelper => {
         return {
             sourceBlob: {
@@ -137,7 +153,7 @@ describe("VoiceBroadcastPlayback", () => {
         // crap event to test 0 as first sequence number
         chunk0Event = mkChunkEvent(0);
         chunk1Event = mkChunkEvent(1);
-        chunk2Event = mkChunkEvent(2);
+        chunk2Event = mkFallbackChunkEvent(2);
         chunk3Event = mkChunkEvent(3);
 
         chunk0Helper = mkChunkHelper(chunk0Data);

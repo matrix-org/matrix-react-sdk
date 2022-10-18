@@ -146,7 +146,7 @@ export class VoiceBroadcastPlayback
     }
 
     private async enqueueChunk(chunkEvent: MatrixEvent) {
-        const sequenceNumber = parseInt(chunkEvent.getContent()?.[VoiceBroadcastChunkEventType]?.sequence, 10);
+        const sequenceNumber = this.extractSequenceFromChunkEvent(chunkEvent);
         if (isNaN(sequenceNumber) || sequenceNumber < 1) return;
 
         const helper = new MediaEventHelper(chunkEvent);
@@ -157,6 +157,31 @@ export class VoiceBroadcastPlayback
         playback.clockInfo.populatePlaceholdersFrom(chunkEvent);
         this.queue[sequenceNumber - 1] = playback; // -1 because the sequence number starts at 1
         playback.on(UPDATE_EVENT, (state) => this.onPlaybackStateChange(playback, state));
+    }
+
+    /**
+     * Tries to extract the sequence number from a chunk event:
+     * - try to extract the explicit sequence number
+     * - fall back to parse it from the file name
+     */
+    private extractSequenceFromChunkEvent(chunkEvent: MatrixEvent): number {
+        const sequenceNumber = parseInt(chunkEvent.getContent()?.[VoiceBroadcastChunkEventType]?.sequence, 10);
+
+        if (!isNaN(sequenceNumber)) {
+            return sequenceNumber;
+        }
+
+        const fileName = String(chunkEvent.getContent()?.["org.matrix.msc1767.file"]?.name);
+
+        if (fileName.startsWith("Voice Broadcast Part")) {
+            const fallbackSequenceNumber = parseInt(String(fileName).match(/\d/)[0]);
+
+            if (!isNaN(fallbackSequenceNumber)) {
+                return fallbackSequenceNumber;
+            }
+        }
+
+        return NaN;
     }
 
     private async onPlaybackStateChange(playback: Playback, newState: PlaybackState) {

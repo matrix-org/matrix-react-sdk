@@ -21,6 +21,7 @@ const roomId = "!room:example.com";
 
 describe("pickFactory", () => {
     let voiceBroadcastChunkEvent: MatrixEvent;
+    let voiceBroadcastFallbackChunkEvent: MatrixEvent;
     let audioMessageEvent: MatrixEvent;
     let client: MatrixClient;
 
@@ -34,6 +35,18 @@ describe("pickFactory", () => {
             content: {
                 msgtype: MsgType.Audio,
                 [VoiceBroadcastChunkEventType]: {},
+            },
+        });
+        voiceBroadcastFallbackChunkEvent = mkEvent({
+            event: true,
+            type: EventType.RoomMessage,
+            user: client.getUserId(),
+            room: roomId,
+            content: {
+                msgtype: MsgType.Audio,
+                ["org.matrix.msc1767.file"]: {
+                    name: "Voice Broadcast Part (1).ogg",
+                },
             },
         });
         audioMessageEvent = mkEvent({
@@ -63,6 +76,10 @@ describe("pickFactory", () => {
             expect(pickFactory(voiceBroadcastChunkEvent, client, true)).toBeInstanceOf(Function);
         });
 
+        it("should return a function for a voice broadcast fallback event", () => {
+            expect(pickFactory(voiceBroadcastFallbackChunkEvent, client, true)).toBeInstanceOf(Function);
+        });
+
         it("should return a function for an audio message event", () => {
             expect(pickFactory(audioMessageEvent, client, true)).toBeInstanceOf(Function);
         });
@@ -71,6 +88,10 @@ describe("pickFactory", () => {
     describe("when not showing hidden events", () => {
         it("should return undefined for a voice broadcast event", () => {
             expect(pickFactory(voiceBroadcastChunkEvent, client, false)).toBeUndefined();
+        });
+
+        it("should return undefined for a voice broadcast fallback event", () => {
+            expect(pickFactory(voiceBroadcastFallbackChunkEvent, client, false)).toBeUndefined();
         });
 
         it("should return a function for an audio message event", () => {

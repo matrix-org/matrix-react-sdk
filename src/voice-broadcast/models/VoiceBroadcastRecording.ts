@@ -134,6 +134,7 @@ export class VoiceBroadcastRecording
     }
 
     private async sendVoiceMessage(chunk: ChunkRecordedPayload, url: string, file: IEncryptedFile): Promise<void> {
+        const sequence = this.sequence++;
         const content = createVoiceMessageContent(
             url,
             this.getRecorder().contentType,
@@ -141,12 +142,13 @@ export class VoiceBroadcastRecording
             chunk.buffer.length,
             file,
         );
+        content["org.matrix.msc1767.file"].name = `Voice Broadcast Part (${sequence}).ogg`,
         content["m.relates_to"] = {
             rel_type: RelationType.Reference,
             event_id: this.infoEvent.getId(),
         };
         content["io.element.voice_broadcast_chunk"] = {
-            sequence: this.sequence++,
+            sequence: sequence,
         };
 
         await this.client.sendMessage(this.infoEvent.getRoomId(), content);

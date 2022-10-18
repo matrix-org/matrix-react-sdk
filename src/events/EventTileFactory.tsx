@@ -253,7 +253,15 @@ export function pickFactory(
         return noEventFactoryFactory();
     }
 
-    if (mxEvent.getContent()[VoiceBroadcastChunkEventType]) {
+    const content = mxEvent.getContent();
+
+    if (
+        content[VoiceBroadcastChunkEventType]
+        || (
+            content?.msgtype === MsgType.Audio
+            && String(content?.["org.matrix.msc1767.file"]?.name).startsWith("Voice Broadcast Part")
+        )
+    ) {
         // hide voice broadcast chunks
         return noEventFactoryFactory();
     }
