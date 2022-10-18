@@ -21,7 +21,6 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { _t } from "../../../languageHandler";
 import AccessibleButton from '../elements/AccessibleButton';
 import QRCode from '../elements/QRCode';
-import SdkConfig from '../../../SdkConfig';
 import Spinner from '../elements/Spinner';
 import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.svg";
 import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";

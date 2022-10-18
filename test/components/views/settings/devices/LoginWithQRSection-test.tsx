@@ -21,7 +21,6 @@ import React from 'react';
 
 import LoginWithQRSection from '../../../../../src/components/views/settings/devices/LoginWithQRSection';
 import { MatrixClientPeg } from '../../../../../src/MatrixClientPeg';
-import SdkConfig from '../../../../../src/SdkConfig';
 import { SettingLevel } from '../../../../../src/settings/SettingLevel';
 import SettingsStore from '../../../../../src/settings/SettingsStore';
 
