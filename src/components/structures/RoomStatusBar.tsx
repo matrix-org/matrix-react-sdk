@@ -39,7 +39,7 @@ export function getUnsentMessages(room: Room, threadId?: string): MatrixEvent[] 
     return room.getPendingEvents().filter(function(ev) {
         const isNotSent = ev.status === EventStatus.NOT_SENT;
         const belongsToTheThread = threadId === ev.threadRootId;
-        return isNotSent && (threadId && belongsToTheThread);
+        return isNotSent && (!threadId || belongsToTheThread);
     });
 }
 
