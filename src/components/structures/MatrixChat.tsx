@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -137,6 +137,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -188,8 +189,6 @@ interface IState {
     currentRoomId?: string;
     // If we're trying to just view a user ID (i.e. /user URL), this is it
     currentUserId?: string;
-    // Group ID for legacy "communities don't exist" page
-    currentGroupId?: string;
     // this is persisted as mx_lhs_size, loaded in LoggedInView
     collapseLhs: boolean;
     // Parameters used in the registration dance with the IS
@@ -338,14 +337,19 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // the old creds, but rather go straight to the relevant page
                 const firstScreen = this.screenAfterLogin ? this.screenAfterLogin.screen : null;
 
-                if (firstScreen === 'login' ||
-                    firstScreen === 'register' ||
-                    firstScreen === 'forgot_password') {
-                    this.showScreenAfterLogin();
-                    return;
+                const restoreSuccess = await this.loadSession();
+                if (restoreSuccess) {
+                    return true;
                 }
 
-                return this.loadSession();
+                if (firstScreen === 'login' ||
+                    firstScreen === 'register' ||
+                    firstScreen === 'forgot_password'
+                ) {
+                    this.showScreenAfterLogin();
+                }
+
+                return false;
             });
         }
 
@@ -471,7 +475,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         return { serverConfig: props };
     }
 
-    private loadSession() {
+    private loadSession(): Promise<boolean> {
         // the extra Promise.resolve() ensures that synchronous exceptions hit the same codepath as
         // asynchronous ones.
         return Promise.resolve().then(() => {
@@ -491,6 +495,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     dis.dispatch({ action: "view_welcome_page" });
                 }
             }
+            return loadedSession;
         });
         // Note we don't catch errors from this: we catch everything within
         // loadSession as there's logic there to ask the user if they want
@@ -679,9 +684,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_legacy_group':
-                this.viewLegacyGroup(payload.groupId);
+            case Action.ViewUserDeviceSettings: {
+                viewUserDeviceSettings(SettingsStore.getValue("feature_new_device_manager"));
                 break;
+            }
             case Action.ViewUserSettings: {
                 const tabPayload = payload as OpenToTabPayload;
                 Modal.createDialog(UserSettingsDialog,
@@ -1021,16 +1027,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.setState({ currentUserId: userId });
             this.setPage(PageType.UserView);
         });
-    }
-
-    private viewLegacyGroup(groupId: string) {
-        this.setStateForNewView({
-            view: Views.LOGGED_IN,
-            currentRoomId: null,
-            currentGroupId: groupId,
-        });
-        this.notifyNewScreen('group/' + groupId);
-        this.setPage(PageType.LegacyGroupView);
     }
 
     private async createRoom(defaultPublic = false, defaultName?: string, type?: RoomType) {
@@ -1802,12 +1798,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: 'view_user_info',
                 userId: userId,
                 subAction: params.action,
-            });
-        } else if (screen.indexOf('group/') === 0) {
-            const groupId = screen.substring(6);
-            dis.dispatch({
-                action: 'view_legacy_group',
-                groupId: groupId,
             });
         } else {
             logger.info("Ignoring showScreen for '%s'", screen);

@@ -21,10 +21,26 @@ limitations under the License.
 
 import { RelationType } from "matrix-js-sdk/src/matrix";
 
-export * from "./components";
-export * from "./utils";
+export * from "./models/VoiceBroadcastPlayback";
+export * from "./models/VoiceBroadcastRecording";
+export * from "./audio/VoiceBroadcastRecorder";
+export * from "./components/VoiceBroadcastBody";
+export * from "./components/atoms/LiveBadge";
+export * from "./components/atoms/PlaybackControlButton";
+export * from "./components/atoms/StopButton";
+export * from "./components/atoms/VoiceBroadcastHeader";
+export * from "./components/molecules/VoiceBroadcastPlaybackBody";
+export * from "./components/molecules/VoiceBroadcastRecordingBody";
+export * from "./components/molecules/VoiceBroadcastRecordingPip";
+export * from "./hooks/useVoiceBroadcastRecording";
+export * from "./stores/VoiceBroadcastPlaybacksStore";
+export * from "./stores/VoiceBroadcastRecordingsStore";
+export * from "./utils/shouldDisplayAsVoiceBroadcastRecordingTile";
+export * from "./utils/shouldDisplayAsVoiceBroadcastTile";
+export * from "./utils/startNewVoiceBroadcastRecording";
 
 export const VoiceBroadcastInfoEventType = "io.element.voice_broadcast_info";
+export const VoiceBroadcastChunkEventType = "io.element.voice_broadcast_chunk";
 
 export enum VoiceBroadcastInfoState {
     Started = "started",
@@ -34,8 +50,9 @@ export enum VoiceBroadcastInfoState {
 }
 
 export interface VoiceBroadcastInfoEventContent {
+    device_id: string;
     state: VoiceBroadcastInfoState;
-    chunk_length: number;
+    chunk_length?: number;
     ["m.relates_to"]?: {
         rel_type: RelationType;
         event_id: string;

@@ -711,7 +711,7 @@ export const Commands = [
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
-            let targetRoomId;
+            let targetRoomId: string;
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
@@ -725,16 +725,11 @@ export const Commands = [
                     // Try to find a room with this alias
                     const rooms = cli.getRooms();
                     for (let i = 0; i < rooms.length; i++) {
-                        const aliasEvents = rooms[i].currentState.getStateEvents('m.room.aliases');
-                        for (let j = 0; j < aliasEvents.length; j++) {
-                            const aliases = aliasEvents[j].getContent().aliases || [];
-                            for (let k = 0; k < aliases.length; k++) {
-                                if (aliases[k] === roomAlias) {
-                                    targetRoomId = rooms[i].roomId;
-                                    break;
-                                }
-                            }
-                            if (targetRoomId) break;
+                        if (rooms[i].getCanonicalAlias() === roomAlias ||
+                            rooms[i].getAltAliases().includes(roomAlias)
+                        ) {
+                            targetRoomId = rooms[i].roomId;
+                            break;
                         }
                         if (targetRoomId) break;
                     }
@@ -1104,12 +1099,13 @@ export const Commands = [
 
                 MatrixClientPeg.get().forceDiscardSession(roomId);
 
-                // noinspection JSIgnoredPromiseFromCall
-                MatrixClientPeg.get().crypto.ensureOlmSessionsForUsers(room.getMembers().map(m => m.userId), true);
+                return success(room.getEncryptionTargetMembers().then(members => {
+                    // noinspection JSIgnoredPromiseFromCall
+                    MatrixClientPeg.get().crypto.ensureOlmSessionsForUsers(members.map(m => m.userId), true);
+                }));
             } catch (e) {
                 return reject(e.message);
             }
-            return success();
         },
         category: CommandCategories.advanced,
         renderingTypes: [TimelineRenderingType.Room],

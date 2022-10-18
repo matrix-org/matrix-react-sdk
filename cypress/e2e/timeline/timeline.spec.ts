@@ -91,11 +91,11 @@ describe("Timeline", () => {
 
     describe("useOnlyCurrentProfiles", () => {
         beforeEach(() => {
-            cy.uploadContent(OLD_AVATAR).then((url) => {
+            cy.uploadContent(OLD_AVATAR).then(({ content_uri: url }) => {
                 oldAvatarUrl = url;
                 cy.setAvatarUrl(url);
             });
-            cy.uploadContent(NEW_AVATAR).then((url) => {
+            cy.uploadContent(NEW_AVATAR).then(({ content_uri: url }) => {
                 newAvatarUrl = url;
             });
         });
@@ -271,7 +271,7 @@ describe("Timeline", () => {
             cy.get(".mx_RoomHeader_searchButton").click();
             cy.get(".mx_SearchBar_input input").type("Message{enter}");
 
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual)").find(".mx_EventTile_searchHighlight").should("exist");
+            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
             cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
         });
 
@@ -329,7 +329,7 @@ describe("Timeline", () => {
             cy.getComposer().type(`${MESSAGE}{enter}`);
 
             // Reply to the message
-            cy.get(".mx_RoomView_body").contains(".mx_EventTile_line", "Hello world").within(() => {
+            cy.contains(".mx_RoomView_body .mx_EventTile_line", "Hello world").within(() => {
                 cy.get('[aria-label="Reply"]').click({ force: true }); // Cypress has no ability to hover
             });
         };

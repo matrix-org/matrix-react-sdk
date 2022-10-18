@@ -55,10 +55,10 @@ import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { Features } from '../../../settings/Settings';
 import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
 import {
-    VoiceBroadcastInfoEventContent,
-    VoiceBroadcastInfoEventType,
-    VoiceBroadcastInfoState,
+    startNewVoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStore,
 } from '../../../voice-broadcast';
+import { WysiwygComposer } from './wysiwyg_composer/WysiwygComposer';
 
 let instanceCount = 0;
 
@@ -106,6 +106,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
+    private composerSendMessage?: () => void;
 
     private _voiceRecording: Optional<VoiceMessageRecording>;
 
@@ -314,11 +315,18 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         this.messageComposerInput.current?.sendMessage();
+        this.composerSendMessage?.();
     };
 
     private onChange = (model: EditorModel) => {
         this.setState({
             isComposerEmpty: model.isEmpty,
+        });
+    };
+
+    private onWysiwygChange = (content: string) => {
+        this.setState({
+            isComposerEmpty: content?.length === 0,
         });
     };
 
@@ -381,6 +389,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     }
 
     public render() {
+        const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
         const controls = [
             this.props.e2eStatus ?
                 <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
@@ -395,20 +404,35 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
         if (canSendMessages) {
-            controls.push(
-                <SendMessageComposer
-                    ref={this.messageComposerInput}
-                    key="controls_input"
-                    room={this.props.room}
-                    placeholder={this.renderPlaceholderText()}
-                    permalinkCreator={this.props.permalinkCreator}
-                    relation={this.props.relation}
-                    replyToEvent={this.props.replyToEvent}
-                    onChange={this.onChange}
-                    disabled={this.state.haveRecording}
-                    toggleStickerPickerOpen={this.toggleStickerPickerOpen}
-                />,
-            );
+            if (isWysiwygComposerEnabled) {
+                controls.push(
+                    <WysiwygComposer key="controls_input"
+                        disabled={this.state.haveRecording}
+                        onChange={this.onWysiwygChange}
+                        permalinkCreator={this.props.permalinkCreator}
+                        relation={this.props.relation}
+                        replyToEvent={this.props.replyToEvent}>
+                        { (sendMessage) => {
+                            this.composerSendMessage = sendMessage;
+                        } }
+                    </WysiwygComposer>,
+                );
+            } else {
+                controls.push(
+                    <SendMessageComposer
+                        ref={this.messageComposerInput}
+                        key="controls_input"
+                        room={this.props.room}
+                        placeholder={this.renderPlaceholderText()}
+                        permalinkCreator={this.props.permalinkCreator}
+                        relation={this.props.relation}
+                        replyToEvent={this.props.replyToEvent}
+                        onChange={this.onChange}
+                        disabled={this.state.haveRecording}
+                        toggleStickerPickerOpen={this.toggleStickerPickerOpen}
+                    />,
+                );
+            }
 
             controls.push(<VoiceRecordComposerTile
                 key="controls_voice_record"
@@ -478,6 +502,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             "mx_MessageComposer": true,
             "mx_MessageComposer--compact": this.props.compact,
             "mx_MessageComposer_e2eStatus": this.props.e2eStatus != undefined,
+            "mx_MessageComposer_wysiwyg": isWysiwygComposerEnabled,
         });
 
         return (
@@ -508,16 +533,11 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
                             showVoiceBroadcastButton={this.showVoiceBroadcastButton}
-                            onStartVoiceBroadcastClick={async () => {
-                                const client = MatrixClientPeg.get();
-                                client.sendStateEvent(
+                            onStartVoiceBroadcastClick={() => {
+                                startNewVoiceBroadcastRecording(
                                     this.props.room.roomId,
-                                    VoiceBroadcastInfoEventType,
-                                    {
-                                        state: VoiceBroadcastInfoState.Started,
-                                        chunk_length: 300,
-                                    } as VoiceBroadcastInfoEventContent,
-                                    client.getUserId(),
+                                    MatrixClientPeg.get(),
+                                    VoiceBroadcastRecordingsStore.instance(),
                                 );
                                 this.toggleButtonMenu();
                             }}
