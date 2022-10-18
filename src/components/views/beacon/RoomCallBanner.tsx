@@ -31,6 +31,7 @@ import {
     OwnBeaconStoreEvent,
 } from "../../../stores/OwnBeaconStore";
 import { CallDurationFromEvent } from "../voip/CallDuration";
+import { Stores } from "../../../contexts/SDKContext";
 
 interface RoomCallBannerProps {
     roomId: Room["roomId"];
@@ -114,7 +115,7 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
     }
 
     // Check if the call is already showing. No banner is needed in this case.
-    if (RoomViewStore.instance.isViewingCall()) {
+    if (Stores.instance.roomViewStore.isViewingCall()) {
         return null;
     }
 
