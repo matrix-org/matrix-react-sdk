@@ -499,7 +499,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         labsGroup: LabGroup.Experimental,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td(
-            "Allow a QR code to be shown in session manager to sign in a another device " +
+            "Allow a QR code to be shown in session manager to sign in another device " +
             "(requires compatible homeserver)",
         ),
         default: false,
