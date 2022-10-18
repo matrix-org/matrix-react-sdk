@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
@@ -26,18 +26,29 @@ import {
     VoiceBroadcastRecordingBody,
     VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecording,
+    VoiceBroadcastPlaybackBody,
+    VoiceBroadcastPlayback,
+    VoiceBroadcastPlaybacksStore,
 } from "../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../test-utils";
+import { RelationsHelper } from "../../../src/events/RelationsHelper";
 
 jest.mock("../../../src/voice-broadcast/components/molecules/VoiceBroadcastRecordingBody", () => ({
     VoiceBroadcastRecordingBody: jest.fn(),
 }));
+
+jest.mock("../../../src/voice-broadcast/components/molecules/VoiceBroadcastPlaybackBody", () => ({
+    VoiceBroadcastPlaybackBody: jest.fn(),
+}));
+
+jest.mock("../../../src/events/RelationsHelper");
 
 describe("VoiceBroadcastBody", () => {
     const roomId = "!room:example.com";
     let client: MatrixClient;
     let infoEvent: MatrixEvent;
     let testRecording: VoiceBroadcastRecording;
+    let testPlayback: VoiceBroadcastPlayback;
 
     const mkVoiceBroadcastInfoEvent = (state: VoiceBroadcastInfoState) => {
         return mkEvent({
@@ -66,9 +77,16 @@ describe("VoiceBroadcastBody", () => {
         client = stubClient();
         infoEvent = mkVoiceBroadcastInfoEvent(VoiceBroadcastInfoState.Started);
         testRecording = new VoiceBroadcastRecording(infoEvent, client);
+        testPlayback = new VoiceBroadcastPlayback(infoEvent, client);
         mocked(VoiceBroadcastRecordingBody).mockImplementation(({ recording }) => {
             if (testRecording === recording) {
                 return <div data-testid="voice-broadcast-recording-body" />;
+            }
+        });
+
+        mocked(VoiceBroadcastPlaybackBody).mockImplementation(({ playback }) => {
+            if (testPlayback === playback) {
+                return <div data-testid="voice-broadcast-playback-body" />;
             }
         });
 
@@ -79,12 +97,51 @@ describe("VoiceBroadcastBody", () => {
                 }
             },
         );
+
+        jest.spyOn(VoiceBroadcastPlaybacksStore.instance(), "getByInfoEvent").mockImplementation(
+            (getEvent: MatrixEvent) => {
+                if (getEvent === infoEvent) {
+                    return testPlayback;
+                }
+            },
+        );
     });
 
-    describe("when rendering a voice broadcast", () => {
-        it("should render a voice broadcast recording body", () => {
+    describe("when displaying a voice broadcast recording", () => {
+        beforeEach(() => {
             renderVoiceBroadcast();
+        });
+
+        it("should render a voice broadcast recording body", () => {
             screen.getByTestId("voice-broadcast-recording-body");
+        });
+
+        describe("and the recordings ends", () => {
+            beforeEach(() => {
+                const stoppedEvent = mkVoiceBroadcastInfoEvent(VoiceBroadcastInfoState.Stopped);
+                // get the RelationsHelper instanced used in VoiceBroadcastBody
+                const relationsHelper = mocked(RelationsHelper).mock.instances[5];
+                act(() => {
+                    // invoke the callback of the VoiceBroadcastBody hook to simulate an ended broadcast
+                    // @ts-ignore
+                    mocked(relationsHelper.on).mock.calls[0][1](stoppedEvent);
+                });
+            });
+
+            it("should render a voice broadcast playback body", () => {
+                screen.getByTestId("voice-broadcast-playback-body");
+            });
+        });
+    });
+
+    describe("when displaying a voice broadcast playback", () => {
+        beforeEach(() => {
+            mocked(client).getUserId.mockReturnValue("@other:example.com");
+            renderVoiceBroadcast();
+        });
+
+        it("should render a voice broadcast playback body", () => {
+            screen.getByTestId("voice-broadcast-playback-body");
         });
     });
 });
