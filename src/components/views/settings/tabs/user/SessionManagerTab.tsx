@@ -182,9 +182,9 @@ const SessionManagerTab: React.FC = () => {
 
     const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
 
-    const signinWithQrEnabled = SettingsStore.getValue("feature_signin_with_qr_code");
+    const showQrCodeEnabled = SettingsStore.getValue("feature_qr_signin_reciprocate_show");
 
-    if (signinWithQrEnabled && signInWithQrMode) {
+    if (showQrCodeEnabled && signInWithQrMode) {
         return <LoginWithQR
             mode={signInWithQrMode}
             onFinished={() => setSignInWithQrMode(null)}
@@ -239,7 +239,7 @@ const SessionManagerTab: React.FC = () => {
                 />
             </SettingsSubsection>
         }
-        { signinWithQrEnabled ?
+        { showQrCodeEnabled ?
             <LoginWithQRSection onShowQr={() => setSignInWithQrMode(Mode.Show)} versions={clientVersions} />
             : null
         }

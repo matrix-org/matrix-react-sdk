@@ -183,13 +183,6 @@ export interface IConfigOptions {
         // length per voice chunk in seconds
         chunk_length?: number;
     };
-
-    login_with_qr?: {
-        reciprocate?: {
-            enable_showing?: boolean;
-        };
-        fallback_http_transport_server?: string;
-    };
 }
 
 export interface ISsoRedirectOptions {

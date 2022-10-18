@@ -64,9 +64,6 @@ describe('<LoginWithQR />', () => {
     });
 
     beforeEach(() => {
-        SdkConfig.put({
-            login_with_qr: {},
-        });
     });
 
     const getComponent = (props: { client: MatrixClient }) =>
@@ -77,30 +74,6 @@ describe('<LoginWithQR />', () => {
         await act(async () => {
             await sleep(1000);
         });
-        expect(container).toMatchSnapshot();
-    });
-
-    it('show device connected confirmation screen', async () => {
-        SdkConfig.put({
-            login_with_qr: {
-                reciprocate: {
-                    enable_showing: true,
-                },
-                fallback_http_transport_server: 'https://rzserver',
-            },
-        });
-
-        jest.spyOn(MSC3906Rendezvous.prototype, 'generateCode').mockImplementation(
-            async function(this: MSC3906Rendezvous) {
-                (this as any).code = 'mock-code';
-            },
-        );
-
-        jest.spyOn(MSC3906Rendezvous.prototype, 'startAfterShowingCode').mockImplementation(async function() {
-            return '1234-4567-7890';
-        });
-
-        const { container } = render(getComponent({ client }));
         expect(container).toMatchSnapshot();
     });
 });

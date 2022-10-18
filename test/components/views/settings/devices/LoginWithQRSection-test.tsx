@@ -69,78 +69,26 @@ describe('<LoginWithQRSection />', () => {
             expect(container).toMatchSnapshot();
         });
 
-        it('only sdk enabled', () => {
-            SdkConfig.put({
-                login_with_qr: {
-                    reciprocate: {
-                        enable_showing: true,
-                    },
-                },
-            });
+        it('feature enabled', async () => {
+            await SettingsStore.setValue('feature_qr_signin_reciprocate_show', null, SettingLevel.DEVICE, true);
             const { container } = render(getComponent());
             expect(container).toMatchSnapshot();
         });
 
-        it('only sdk + feature enabled', async () => {
-            SdkConfig.put({
-                login_with_qr: {
-                    reciprocate: {
-                        enable_showing: true,
-                    },
-                },
-            });
-            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
-            const { container } = render(getComponent());
-            expect(container).toMatchSnapshot();
-        });
-
-        it('only sdk + feature + MSC3882 enabled', async () => {
-            SdkConfig.put({
-                login_with_qr: {
-                    reciprocate: {
-                        enable_showing: true,
-                    },
-                },
-            });
-            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
+        it('only feature + MSC3882 enabled', async () => {
+            await SettingsStore.setValue('feature_qr_signin_reciprocate_show', null, SettingLevel.DEVICE, true);
             const { container } = render(getComponent({ versions: makeVersions({ 'org.matrix.msc3882': true }) }));
             expect(container).toMatchSnapshot();
         });
     });
 
     describe('should render panel', () => {
-        it('enabled by sdk + feature + MSC3882 + MSC3886', async () => {
-            SdkConfig.put({
-                login_with_qr: {
-                    reciprocate: {
-                        enable_showing: true,
-                    },
-                },
-            });
-            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
+        it('enabled by feature + MSC3882 + MSC3886', async () => {
+            await SettingsStore.setValue('feature_qr_signin_reciprocate_show', null, SettingLevel.DEVICE, true);
             const { container } = render(getComponent({ versions: makeVersions({
                 'org.matrix.msc3882': true,
                 'org.matrix.msc3886': true,
             }) }));
-            expect(container).toMatchSnapshot();
-        });
-
-        it('enabled by sdk + feature + MSC3882 + fallback', async () => {
-            SdkConfig.put({
-                login_with_qr: {
-                    reciprocate: {
-                        enable_showing: true,
-                    },
-                    fallback_http_transport_server: 'https://rzserver',
-                },
-            });
-            await SettingsStore.setValue('feature_signin_with_qr_code', null, SettingLevel.DEVICE, true);
-            const { container } = render(getComponent({
-                versions: makeVersions({
-                    'org.matrix.msc3882': true,
-                    'org.matrix.msc3886': false,
-                }),
-            }));
             expect(container).toMatchSnapshot();
         });
     });
