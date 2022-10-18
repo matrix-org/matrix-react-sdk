@@ -28,20 +28,20 @@ import SpaceStore, { SpaceStoreClass } from "../stores/spaces/SpaceStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 import WidgetStore from "../stores/WidgetStore";
 
-export const SDKContext = createContext<Stores>(undefined);
+export const SDKContext = createContext<SdkContextClass>(undefined);
 SDKContext.displayName = "SDKContext";
 
 /**
  * A class which lazily initialises stores as and when they are requested, ensuring they remain
  * as singletons scoped to this object.
  */
-export class Stores {
+export class SdkContextClass {
     /**
      * The global Stores instance. This is a temporary measure whilst so many stores remain global
      * as well. Over time, these stores should accept a `Stores` in their constructor. When all
      * stores do this, this static variable can be deleted.
      */
-    public static readonly instance = new Stores();
+    public static readonly instance = new SdkContextClass();
 
     // Optional as we don't have a client on initial load if unregistered. This should be set
     // when the MatrixClient is first acquired in the dispatcher event Action.OnLoggedIn.

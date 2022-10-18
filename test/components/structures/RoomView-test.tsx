@@ -41,7 +41,7 @@ import { LocalRoom, LocalRoomState } from "../../../src/models/LocalRoom";
 import { DirectoryMember } from "../../../src/utils/direct-messages";
 import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
-import { Stores, SDKContext } from "../../../src/contexts/SDKContext";
+import { SdkContextClass, SDKContext } from "../../../src/contexts/SDKContext";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -49,7 +49,7 @@ describe("RoomView", () => {
     let cli: MockedObject<MatrixClient>;
     let room: Room;
     let roomCount = 0;
-    let stores: Stores;
+    let stores: SdkContextClass;
 
     beforeEach(async () => {
         mockPlatformPeg({ reload: () => {} });
@@ -64,7 +64,7 @@ describe("RoomView", () => {
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
         DMRoomMap.makeShared();
-        stores = new Stores();
+        stores = new SdkContextClass();
         stores.client = cli;
         stores.rightPanelStore.useUnitTestClient(cli);
     });

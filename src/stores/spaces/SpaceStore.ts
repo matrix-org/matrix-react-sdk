@@ -63,7 +63,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
 import { AfterLeaveRoomPayload } from "../../dispatcher/payloads/AfterLeaveRoomPayload";
-import { Stores } from "../../contexts/SDKContext";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 interface IState { }
 
@@ -797,7 +797,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.updateNotificationStates(notificationStatesToUpdate);
     };
 
-    private switchSpaceIfNeeded = (roomId = Stores.instance.roomViewStore.getRoomId()) => {
+    private switchSpaceIfNeeded = (roomId = SdkContextClass.instance.roomViewStore.getRoomId()) => {
         if (!this.isRoomInSpace(this.activeSpace, roomId) && !this.matrixClient.getRoom(roomId)?.isSpaceRoom()) {
             this.switchToRelatedSpace(roomId);
         }
@@ -848,7 +848,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 }
 
                 // if the room currently being viewed was just joined then switch to its related space
-                if (newMembership === "join" && room.roomId === Stores.instance.roomViewStore.getRoomId()) {
+                if (newMembership === "join" && room.roomId === SdkContextClass.instance.roomViewStore.getRoomId()) {
                     this.switchSpaceIfNeeded(room.roomId);
                 }
             }
@@ -875,7 +875,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.emit(room.roomId);
         }
 
-        if (membership === "join" && room.roomId === Stores.instance.roomViewStore.getRoomId()) {
+        if (membership === "join" && room.roomId === SdkContextClass.instance.roomViewStore.getRoomId()) {
             // if the user was looking at the space and then joined: select that space
             this.setActiveSpace(room.roomId, false);
         } else if (membership === "leave" && room.roomId === this.activeSpace) {

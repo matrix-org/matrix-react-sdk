@@ -30,7 +30,7 @@ import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
 import { LISTS_LOADING_EVENT } from "./RoomListStore";
 import { UPDATE_EVENT } from "../AsyncStore";
-import { Stores } from "../../contexts/SDKContext";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 interface IState {
     // state is tracked in underlying classes
@@ -207,7 +207,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
 
         // this room will not move due to it being viewed: it is sticky. This can be null to indicate
         // no sticky room if you aren't viewing a room.
-        this.stickyRoomId = Stores.instance.roomViewStore.getRoomId();
+        this.stickyRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
         let stickyRoomNewIndex = -1;
         const stickyRoomOldIndex = (tagMap[tagId] || []).findIndex((room) => {
             return room.roomId === this.stickyRoomId;
@@ -273,7 +273,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
 
     private onRoomViewStoreUpdated() {
         // we only care about this to know when the user has clicked on a room to set the stickiness value
-        if (Stores.instance.roomViewStore.getRoomId() === this.stickyRoomId) {
+        if (SdkContextClass.instance.roomViewStore.getRoomId() === this.stickyRoomId) {
             return;
         }
 
@@ -303,7 +303,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             }
         }
         // in the event we didn't call refreshOrderedLists, it helps to still remember the sticky room ID.
-        this.stickyRoomId = Stores.instance.roomViewStore.getRoomId();
+        this.stickyRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
 
         if (hasUpdatedAnyList) {
             this.emit(LISTS_UPDATE_EVENT);
@@ -314,7 +314,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         logger.info("SlidingRoomListStore.onReady");
         // permanent listeners: never get destroyed. Could be an issue if we want to test this in isolation.
         SlidingSyncManager.instance.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
-        Stores.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdated.bind(this));
+        SdkContextClass.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdated.bind(this));
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated.bind(this));
         if (SpaceStore.instance.activeSpace) {
             this.onSelectedSpaceUpdated(SpaceStore.instance.activeSpace, false);

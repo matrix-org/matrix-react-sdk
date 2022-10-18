@@ -61,7 +61,7 @@ import IconizedContextMenu, {
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
-import { Stores } from "../../../contexts/SDKContext";
+import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -421,7 +421,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
-        Stores.instance.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         SpaceStore.instance.on(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.updateLists);
         this.favouriteMessageWatcher =
@@ -436,19 +436,19 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
         SettingsStore.unwatchSetting(this.favouriteMessageWatcher);
         defaultDispatcher.unregister(this.dispatcherRef);
-        Stores.instance.roomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
 
     private onRoomViewStoreUpdate = () => {
         this.setState({
-            currentRoomId: Stores.instance.roomViewStore.getRoomId(),
+            currentRoomId: SdkContextClass.instance.roomViewStore.getRoomId(),
         });
     };
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === Action.ViewRoomDelta) {
             const viewRoomDeltaPayload = payload as ViewRoomDeltaPayload;
-            const currentRoomId = Stores.instance.roomViewStore.getRoomId();
+            const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
                 defaultDispatcher.dispatch<ViewRoomPayload>({

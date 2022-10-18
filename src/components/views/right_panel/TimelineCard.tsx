@@ -41,7 +41,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import Measured from '../elements/Measured';
 import Heading from '../typography/Heading';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import { Stores } from '../../../contexts/SDKContext';
+import { SdkContextClass } from '../../../contexts/SDKContext';
 
 interface IProps {
     room: Room;
@@ -91,7 +91,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        Stores.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction);
         this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[,,, value]) =>
             this.setState({ showReadReceipts: value as boolean }),
@@ -102,7 +102,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        Stores.instance.roomViewStore.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
         if (this.readReceiptsSettingWatcher) {
             SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
@@ -116,9 +116,9 @@ export default class TimelineCard extends React.Component<IProps, IState> {
 
     private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
         const newState: Pick<IState, any> = {
-            initialEventId: Stores.instance.roomViewStore.getInitialEventId(),
-            isInitialEventHighlighted: Stores.instance.roomViewStore.isInitialEventHighlighted(),
-            replyToEvent: Stores.instance.roomViewStore.getQuotingEvent(),
+            initialEventId: SdkContextClass.instance.roomViewStore.getInitialEventId(),
+            isInitialEventHighlighted: SdkContextClass.instance.roomViewStore.isInitialEventHighlighted(),
+            replyToEvent: SdkContextClass.instance.roomViewStore.getQuotingEvent(),
         };
 
         this.setState(newState);

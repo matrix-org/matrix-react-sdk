@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Stores } from "../src/contexts/SDKContext";
+import { SdkContextClass } from "../src/contexts/SDKContext";
 import { PosthogAnalytics } from "../src/PosthogAnalytics";
 import { SlidingSyncManager } from "../src/SlidingSyncManager";
 import { RoomNotificationStateStore } from "../src/stores/notifications/RoomNotificationStateStore";
@@ -28,7 +28,7 @@ import WidgetStore from "../src/stores/WidgetStore";
  * A class which provides the same API as Stores but adds additional unsafe setters which can
  * replace individual stores. This is useful for tests which need to mock out stores.
  */
-export class TestStores extends Stores {
+export class TestStores extends SdkContextClass {
     public _RightPanelStore?: RightPanelStore;
     public _RoomNotificationStateStore?: RoomNotificationStateStore;
     public _RoomViewStore?: RoomViewStore;

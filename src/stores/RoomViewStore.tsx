@@ -48,7 +48,7 @@ import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChang
 import SettingsStore from "../settings/SettingsStore";
 import { awaitRoomDownSync } from "../utils/RoomUpgrade";
 import { UPDATE_EVENT } from "./AsyncStore";
-import { Stores } from "../contexts/SDKContext";
+import { SdkContextClass } from "../contexts/SDKContext";
 import { CallStore } from "./CallStore";
 
 const NUM_JOIN_RETRY = 5;
@@ -138,7 +138,7 @@ export class RoomViewStore extends EventEmitter {
     private dispatchToken: string;
 
     public constructor(
-        dis: MatrixDispatcher, private readonly stores: Stores,
+        dis: MatrixDispatcher, private readonly stores: SdkContextClass,
     ) {
         super();
         this.resetDispatcher(dis);

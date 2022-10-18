@@ -46,7 +46,7 @@ import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
-import { Stores } from "./contexts/SDKContext";
+import { SdkContextClass } from "./contexts/SDKContext";
 import { localNotificationsAreSilenced } from "./utils/notifications";
 import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
 import ToastStore from "./stores/ToastStore";
@@ -435,7 +435,7 @@ export const Notifier = {
         if (actions?.notify) {
             this._performCustomEventHandling(ev);
 
-            if (Stores.instance.roomViewStore.getRoomId() === room.roomId &&
+            if (SdkContextClass.instance.roomViewStore.getRoomId() === room.roomId &&
                 UserActivity.sharedInstance().userActiveRecently() &&
                 !Modal.hasDialogs()
             ) {

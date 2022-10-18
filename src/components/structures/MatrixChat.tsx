@@ -137,7 +137,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
-import { Stores, SDKContext } from '../../contexts/SDKContext';
+import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
 import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
 
 // legacy export
@@ -239,11 +239,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private readonly dispatcherRef: string;
     private readonly themeWatcher: ThemeWatcher;
     private readonly fontWatcher: FontWatcher;
-    private readonly stores: Stores;
+    private readonly stores: SdkContextClass;
 
     constructor(props: IProps) {
         super(props);
-        this.stores = Stores.instance;
+        this.stores = SdkContextClass.instance;
         this.stores.constructEagerStores();
 
         this.state = {

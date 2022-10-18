@@ -277,7 +277,7 @@ import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { WidgetType } from "./widgets/WidgetType";
 import { objectClone } from "./utils/objects";
 import { EffectiveMembership, getEffectiveMembership } from './utils/membership';
-import { Stores } from './contexts/SDKContext';
+import { SdkContextClass } from './contexts/SDKContext';
 
 enum Action {
     CloseScalar = "close_scalar",
@@ -721,7 +721,7 @@ const onMessage = function(event: MessageEvent<any>): void {
         }
     }
 
-    if (roomId !== Stores.instance.roomViewStore.getRoomId()) {
+    if (roomId !== SdkContextClass.instance.roomViewStore.getRoomId()) {
         sendError(event, _t('Room %(roomId)s not visible', { roomId: roomId }));
         return;
     }

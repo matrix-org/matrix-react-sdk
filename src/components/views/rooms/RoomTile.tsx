@@ -47,7 +47,7 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { RoomTileCallSummary } from "./RoomTileCallSummary";
 import { RoomGeneralContextMenu } from "../context_menus/RoomGeneralContextMenu";
 import { CallStore, CallStoreEvent } from "../../../stores/CallStore";
-import { Stores } from "../../../contexts/SDKContext";
+import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps {
     room: Room;
@@ -86,7 +86,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         super(props);
 
         this.state = {
-            selected: Stores.instance.roomViewStore.getRoomId() === this.props.room.roomId,
+            selected: SdkContextClass.instance.roomViewStore.getRoomId() === this.props.room.roomId,
             notificationsMenuPosition: null,
             generalMenuPosition: null,
             call: CallStore.instance.getCall(this.props.room.roomId),
@@ -146,7 +146,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             this.scrollIntoView();
         }
 
-        Stores.instance.roomViewStore.addRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
+        SdkContextClass.instance.roomViewStore.addRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         MessagePreviewStore.instance.on(
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
@@ -163,7 +163,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     }
 
     public componentWillUnmount() {
-        Stores.instance.roomViewStore.removeRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
+        SdkContextClass.instance.roomViewStore.removeRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
         MessagePreviewStore.instance.off(
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
             this.onRoomPreviewChanged,

@@ -50,7 +50,7 @@ import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog"
 import { createThumbnail } from "./utils/image-media";
 import { attachRelation } from "./components/views/rooms/SendMessageComposer";
 import { doMaybeLocalRoomAction } from "./utils/local-room";
-import { Stores } from "./contexts/SDKContext";
+import { SdkContextClass } from "./contexts/SDKContext";
 
 // scraped out of a macOS hidpi (5660ppm) screenshot png
 //                  5669 px (x-axis)      , 5669 px (y-axis)      , per metre
@@ -361,7 +361,7 @@ export default class ContentMessages {
             return;
         }
 
-        const replyToEvent = Stores.instance.roomViewStore.getQuotingEvent();
+        const replyToEvent = SdkContextClass.instance.roomViewStore.getQuotingEvent();
         if (!this.mediaConfig) { // hot-path optimization to not flash a spinner if we don't need to
             const modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
             await this.ensureMediaConfigFetched(matrixClient);

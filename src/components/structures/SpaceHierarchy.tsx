@@ -66,7 +66,7 @@ import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { Alignment } from "../views/elements/Tooltip";
 import { getTopic } from "../../hooks/room/useTopic";
-import { Stores } from "../../contexts/SDKContext";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 interface IProps {
     space: Room;
@@ -378,7 +378,7 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
             metricsTrigger: "SpaceHierarchy",
         });
     }, err => {
-        Stores.instance.roomViewStore.showJoinRoomError(err, roomId);
+        SdkContextClass.instance.roomViewStore.showJoinRoomError(err, roomId);
     });
 
     return prom;

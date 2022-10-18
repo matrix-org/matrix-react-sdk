@@ -33,7 +33,7 @@ import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/Activ
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import { Stores } from '../../../contexts/SDKContext';
+import { SdkContextClass } from '../../../contexts/SDKContext';
 import { CallStore } from "../../../stores/CallStore";
 import {
     VoiceBroadcastRecording,
@@ -129,7 +129,7 @@ class PipView extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        const roomId = Stores.instance.roomViewStore.getRoomId();
+        const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
 
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(roomId);
 
@@ -147,7 +147,7 @@ class PipView extends React.Component<IProps, IState> {
     public componentDidMount() {
         LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCalls);
         LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
-        Stores.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         const room = MatrixClientPeg.get()?.getRoom(this.state.viewedRoomId);
         if (room) {
@@ -164,7 +164,7 @@ class PipView extends React.Component<IProps, IState> {
         LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
         const cli = MatrixClientPeg.get();
         cli?.removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
-        Stores.instance.roomViewStore.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         const room = cli?.getRoom(this.state.viewedRoomId);
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
@@ -186,7 +186,7 @@ class PipView extends React.Component<IProps, IState> {
     private onMove = () => this.movePersistedElement.current?.();
 
     private onRoomViewStoreUpdate = () => {
-        const newRoomId = Stores.instance.roomViewStore.getRoomId();
+        const newRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
         const oldRoomId = this.state.viewedRoomId;
         if (newRoomId === oldRoomId) return;
         // The WidgetLayoutStore observer always tracks the currently viewed Room,

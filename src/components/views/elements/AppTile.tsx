@@ -49,7 +49,7 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from '../../../dispatcher/actions';
 import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
 import { WidgetMessagingStore } from '../../../stores/widgets/WidgetMessagingStore';
-import { Stores } from '../../../contexts/SDKContext';
+import { SdkContextClass } from '../../../contexts/SDKContext';
 
 interface IProps {
     app: IApp;
@@ -175,7 +175,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         );
         if (isActiveWidget) {
             // We just left the room that the active widget was from.
-            if (this.props.room && Stores.instance.roomViewStore.getRoomId() !== this.props.room.roomId) {
+            if (this.props.room && SdkContextClass.instance.roomViewStore.getRoomId() !== this.props.room.roomId) {
                 // If we are not actively looking at the room then destroy this widget entirely.
                 this.endWidgetActions();
             } else if (WidgetType.JITSI.matches(this.props.app.type)) {
