@@ -30,9 +30,12 @@ import {
     EventType,
     IEventRelation,
     IUnsigned,
+    IPusher,
 } from 'matrix-js-sdk/src/matrix';
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
+import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
+import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import { makeType } from "../../src/utils/TypeUtils";
@@ -156,8 +159,9 @@ export function createTestClient(): MatrixClient {
         getOpenIdToken: jest.fn().mockResolvedValue(undefined),
         registerWithIdentityServer: jest.fn().mockResolvedValue({}),
         getIdentityAccount: jest.fn().mockResolvedValue({}),
-        getTerms: jest.fn().mockResolvedValueOnce(undefined),
+        getTerms: jest.fn().mockResolvedValue({ policies: [] }),
         doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(undefined),
+        isVersionSupported: jest.fn().mockResolvedValue(undefined),
         getPushRules: jest.fn().mockResolvedValue(undefined),
         getPushers: jest.fn().mockResolvedValue({ pushers: [] }),
         getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
@@ -174,9 +178,21 @@ export function createTestClient(): MatrixClient {
         sendToDevice: jest.fn().mockResolvedValue(undefined),
         queueToDevice: jest.fn().mockResolvedValue(undefined),
         encryptAndSendToDevices: jest.fn().mockResolvedValue(undefined),
+
+        getMediaHandler: jest.fn().mockReturnValue({
+            setVideoInput: jest.fn(),
+            setAudioInput: jest.fn(),
+        } as unknown as MediaHandler),
+        uploadContent: jest.fn(),
+        getEventMapper: () => (opts) => new MatrixEvent(opts),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
+
+    client.canSupport = new Map();
+    Object.keys(Feature).forEach(feature => {
+        client.canSupport.set(feature as Feature, ServerSupport.Stable);
+    });
 
     Object.defineProperty(client, "pollingTurnServers", {
         configurable: true,
@@ -400,7 +416,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getMembers: jest.fn().mockReturnValue([]),
         getPendingEvents: () => [],
         getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
-        getUnfilteredTimelineSet: () => null,
+        getUnfilteredTimelineSet: jest.fn(),
         findEventById: () => null,
         getAccountData: () => null,
         hasMembershipState: () => null,
@@ -541,3 +557,14 @@ export const mkSpace = (
     )));
     return space;
 };
+
+export const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
+    app_display_name: "app",
+    app_id: "123",
+    data: {},
+    device_display_name: "name",
+    kind: "http",
+    lang: "en",
+    pushkey: "pushpush",
+    ...extra,
+});

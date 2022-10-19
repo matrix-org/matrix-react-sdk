@@ -40,7 +40,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { Direction } from "matrix-js-sdk/src/matrix";
 
-import SdkConfig from "../../SdkConfig";
+import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import Modal from "../../Modal";
@@ -53,9 +53,9 @@ import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
 import SettingsStore from "../../settings/SettingsStore";
-import { RoomViewStore } from "../RoomViewStore";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { navigateToPermalink } from "../../utils/permalinks/navigator";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 // TODO: Purge this from the universe
 
@@ -104,7 +104,10 @@ export class StopGapWidgetDriver extends WidgetDriver {
             // Auto-approve the legacy visibility capability. We send it regardless of capability.
             // Widgets don't technically need to request this capability, but Scalar still does.
             this.allowedCapabilities.add("visibility");
-        } else if (virtual && new URL(SdkConfig.get("element_call").url).origin === this.forWidget.origin) {
+        } else if (
+            virtual
+            && new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url).origin === this.forWidget.origin
+        ) {
             // This is a trusted Element Call widget that we control
             this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);
             this.allowedCapabilities.add(MatrixCapabilities.MSC3846TurnServers);
@@ -207,7 +210,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         targetRoomId: string = null,
     ): Promise<ISendEventDetails> {
         const client = MatrixClientPeg.get();
-        const roomId = targetRoomId || RoomViewStore.instance.getRoomId();
+        const roomId = targetRoomId || SdkContextClass.instance.roomViewStore.getRoomId();
 
         if (!client || !roomId) throw new Error("Not in a room or not attached to a client");
 
@@ -288,7 +291,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         const targetRooms = roomIds
             ? (roomIds.includes(Symbols.AnyRoom) ? client.getVisibleRooms() : roomIds.map(r => client.getRoom(r)))
-            : [client.getRoom(RoomViewStore.instance.getRoomId())];
+            : [client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId())];
         return targetRooms.filter(r => !!r);
     }
 
@@ -427,14 +430,13 @@ export class StopGapWidgetDriver extends WidgetDriver {
     ): Promise<IReadEventRelationsResult> {
         const client = MatrixClientPeg.get();
         const dir = direction as Direction;
-        roomId = roomId ?? RoomViewStore.instance.getRoomId() ?? undefined;
+        roomId = roomId ?? SdkContextClass.instance.roomViewStore.getRoomId() ?? undefined;
 
         if (typeof roomId !== "string") {
             throw new Error('Error while reading the current room');
         }
 
         const {
-            originalEvent,
             events,
             nextBatch,
             prevBatch,
@@ -447,11 +449,10 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 from,
                 to,
                 limit,
-                direction: dir,
+                dir,
             });
 
         return {
-            originalEvent: originalEvent?.getEffectiveEvent(),
             chunk: events.map(e => e.getEffectiveEvent()),
             nextBatch,
             prevBatch,

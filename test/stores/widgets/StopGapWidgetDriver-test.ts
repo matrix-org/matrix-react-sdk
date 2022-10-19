@@ -20,8 +20,8 @@ import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Direction, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Widget, MatrixWidgetType, WidgetKind, WidgetDriver, ITurnServer } from "matrix-widget-api";
 
+import { SdkContextClass } from "../../../src/contexts/SDKContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
-import { RoomViewStore } from "../../../src/stores/RoomViewStore";
 import { StopGapWidgetDriver } from "../../../src/stores/widgets/StopGapWidgetDriver";
 import { stubClient } from "../../test-utils";
 
@@ -201,7 +201,7 @@ describe("StopGapWidgetDriver", () => {
         beforeEach(() => { driver = mkDefaultDriver(); });
 
         it('reads related events from the current room', async () => {
-            jest.spyOn(RoomViewStore.instance, 'getRoomId').mockReturnValue('!this-room-id');
+            jest.spyOn(SdkContextClass.instance.roomViewStore, 'getRoomId').mockReturnValue('!this-room-id');
 
             client.relations.mockResolvedValue({
                 originalEvent: new MatrixEvent(),
@@ -209,31 +209,12 @@ describe("StopGapWidgetDriver", () => {
             });
 
             await expect(driver.readEventRelations('$event')).resolves.toEqual({
-                originalEvent: expect.objectContaining({ content: {} }),
                 chunk: [],
                 nextBatch: undefined,
                 prevBatch: undefined,
             });
 
             expect(client.relations).toBeCalledWith('!this-room-id', '$event', null, null, {});
-        });
-
-        it('reads related events if the original event is missing', async () => {
-            client.relations.mockResolvedValue({
-                // the relations function can return an undefined event, even
-                // though the typings don't permit an undefined value.
-                originalEvent: undefined as any,
-                events: [],
-            });
-
-            await expect(driver.readEventRelations('$event', '!room-id')).resolves.toEqual({
-                originalEvent: undefined,
-                chunk: [],
-                nextBatch: undefined,
-                prevBatch: undefined,
-            });
-
-            expect(client.relations).toBeCalledWith('!room-id', '$event', null, null, {});
         });
 
         it('reads related events from a selected room', async () => {
@@ -244,7 +225,6 @@ describe("StopGapWidgetDriver", () => {
             });
 
             await expect(driver.readEventRelations('$event', '!room-id')).resolves.toEqual({
-                originalEvent: expect.objectContaining({ content: {} }),
                 chunk: [
                     expect.objectContaining({ content: {} }),
                     expect.objectContaining({ content: {} }),
@@ -272,7 +252,6 @@ describe("StopGapWidgetDriver", () => {
                 25,
                 'f',
             )).resolves.toEqual({
-                originalEvent: expect.objectContaining({ content: {} }),
                 chunk: [],
                 nextBatch: undefined,
                 prevBatch: undefined,
@@ -287,7 +266,7 @@ describe("StopGapWidgetDriver", () => {
                     limit: 25,
                     from: 'from-token',
                     to: 'to-token',
-                    direction: Direction.Forward,
+                    dir: Direction.Forward,
                 },
             );
         });

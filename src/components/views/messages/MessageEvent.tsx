@@ -42,6 +42,7 @@ import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
 import { IEventTileOps } from "../rooms/EventTile";
+import { VoiceBroadcastBody, VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from '../../../voice-broadcast';
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
@@ -170,6 +171,13 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 (type === EventType.RoomMessage && msgtype === MsgType.Location)
             ) {
                 BodyType = MLocationBody;
+            }
+
+            if (
+                type === VoiceBroadcastInfoEventType
+                && content?.state === VoiceBroadcastInfoState.Started
+            ) {
+                BodyType = VoiceBroadcastBody;
             }
         }
 
