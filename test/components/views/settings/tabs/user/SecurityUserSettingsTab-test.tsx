@@ -51,9 +51,9 @@ describe('<SecurityUserSettingsTab />', () => {
         }),
     });
 
-    const getComponent = (props: { onShowQr?: () => void } = {}) =>
+    const getComponent = () =>
         <MatrixClientContext.Provider value={mockClient}>
-            <SecurityUserSettingsTab {...defaultProps} {...props} />
+            <SecurityUserSettingsTab {...defaultProps} />
         </MatrixClientContext.Provider>;
 
     const settingsValueSpy = jest.spyOn(SettingsStore, 'getValue');
