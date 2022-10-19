@@ -23,12 +23,9 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import { TestSdkContext } from "../../TestSdkContext";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { SdkContextClass } from "../../../src/contexts/SDKContext";
+import { stubClient } from "../../test-utils";
 
-jest.mock("../../../src/settings/SettingsStore", () => ({
-    getValue: jest.fn(),
-    setValue: jest.fn(),
-    monitorSetting: jest.fn(),
-}));
+jest.mock("../../../src/settings/SettingsStore");
 
 describe("WidgetPermissionStore", () => {
     let widgetPermissionStore: WidgetPermissionStore;
@@ -57,11 +54,7 @@ describe("WidgetPermissionStore", () => {
             settings[settingName] = value;
             return Promise.resolve();
         });
-        mockClient = {
-            getUserId: () => {
-                return userId;
-            },
-        } as unknown as MatrixClient;
+        mockClient = stubClient();
         const context = new TestSdkContext();
         context.client = mockClient;
         widgetPermissionStore = new WidgetPermissionStore(context);
