@@ -89,9 +89,16 @@ export default class ThreadView extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
+        const thread = this.props.room.getThread(this.props.mxEvent.getId());
+
+        this.setupThreadListeners(thread);
         this.state = {
             layout: SettingsStore.getValue("layout"),
             narrow: false,
+            thread,
+            lastReply: thread?.lastReply((ev: MatrixEvent) => {
+                return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
+            }),
         };
 
         this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
@@ -192,27 +199,24 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private updateThreadRelation = (): void => {
         this.setState({
-            lastReply: this.state.thread?.lastReply((ev: MatrixEvent) => {
-                return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
-            }),
+            lastReply: this.threadLastReply,
         });
     };
+
+    private get threadLastReply(): MatrixEvent | undefined {
+        return this.state.thread?.lastReply((ev: MatrixEvent) => {
+            return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
+        });
+    }
 
     private updateThread = (thread?: Thread) => {
         if (this.state.thread === thread) return;
 
-        if (this.state.thread) {
-            this.state.thread.off(ThreadEvent.NewReply, this.updateThreadRelation);
-            this.props.room.off(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
-        }
+        this.setupThreadListeners(thread, this.state.thread);
         if (thread) {
-            thread.on(ThreadEvent.NewReply, this.updateThreadRelation);
-            this.props.room.on(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
             this.setState({
                 thread,
-                lastReply: thread?.lastReply((ev: MatrixEvent) => {
-                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
-                }),
+                lastReply: this.threadLastReply,
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
                 await thread.fetchInitialEvents();
@@ -222,6 +226,17 @@ export default class ThreadView extends React.Component<IProps, IState> {
             });
         }
     };
+
+    private setupThreadListeners(thread?: Thread | undefined, oldThread?: Thread | undefined): void {
+        if (oldThread) {
+            this.state.thread.off(ThreadEvent.NewReply, this.updateThreadRelation);
+            this.props.room.off(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
+        }
+        if (thread) {
+            thread.on(ThreadEvent.NewReply, this.updateThreadRelation);
+            this.props.room.on(RoomEvent.LocalEchoUpdated, this.updateThreadRelation);
+        }
+    }
 
     private resetJumpToEvent = (event?: string): void => {
         if (this.props.initialEvent && this.props.initialEventScrollIntoView &&
