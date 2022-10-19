@@ -3632,5 +3632,15 @@
     "pause voice broadcast": "призупинити голосове мовлення",
     "You have already joined this call from another device": "Ви вже приєдналися до цього виклику з іншого пристрою",
     "stop voice broadcast": "припинити голосове мовлення",
-    "Notifications silenced": "Сповіщення стишено"
+    "Notifications silenced": "Сповіщення стишено",
+    "Sign in with QR code": "Увійти за допомогою QR-коду",
+    "Browser": "Браузер",
+    "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Дозволити показ QR-коду в менеджері сеансів для входу на іншому пристрої (потрібен сумісний домашній сервер)",
+    "Yes, stop broadcast": "Так, припинити мовлення",
+    "Are you sure you want to stop your live broadcast?This will end the broadcast and the full recording will be available in the room.": "Ви впевнені, що хочете припинити голосове мовлення? На цьому трансляція завершиться, і повний запис буде доступний у кімнаті.",
+    "Stop live broadcasting?": "Припинити голосове мовлення?",
+    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Хтось інший вже записує голосову трансляцію. Зачекайте, поки вона завершиться, щоб почати нову.",
+    "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Ви не маєте необхідних дозволів для початку голосового мовлення в цій кімнаті. Зверніться до адміністратора кімнати, щоб оновити ваші дозволи.",
+    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Ви вже записуєте голосову трансляцію. Завершіть поточну трансляцію, щоб розпочати нову.",
+    "Can't start a new voice broadcast": "Не вдалося розпочати нову голосове мовлення"
 }
