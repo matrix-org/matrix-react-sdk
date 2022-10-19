@@ -31,7 +31,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     mxEvent: MatrixEvent;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     onMenuToggle?: (open: boolean) => void;
 }
 
@@ -64,12 +64,14 @@ const ThreadListContextMenu: React.FC<IProps> = ({
         closeThreadOptions();
     }, [mxEvent, closeThreadOptions]);
 
-    const copyLinkToThread = useCallback(async (evt: ButtonEvent) => {
-        evt.preventDefault();
-        evt.stopPropagation();
-        const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
-        await copyPlaintext(matrixToUrl);
-        closeThreadOptions();
+    const copyLinkToThread = useCallback(async (evt: ButtonEvent | undefined) => {
+        if (permalinkCreator) {
+            evt?.preventDefault();
+            evt?.stopPropagation();
+            const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
+            await copyPlaintext(matrixToUrl);
+            closeThreadOptions();
+        }
     }, [mxEvent, closeThreadOptions, permalinkCreator]);
 
     useEffect(() => {
@@ -102,11 +104,13 @@ const ThreadListContextMenu: React.FC<IProps> = ({
                      label={_t("View in room")}
                      iconClassName="mx_ThreadPanel_viewInRoom"
                  /> }
-                <IconizedContextMenuOption
-                    onClick={(e) => copyLinkToThread(e)}
-                    label={_t("Copy link to thread")}
-                    iconClassName="mx_ThreadPanel_copyLinkToThread"
-                />
+                { permalinkCreator &&
+                    <IconizedContextMenuOption
+                        onClick={(e) => copyLinkToThread(e)}
+                        label={_t("Copy link to thread")}
+                        iconClassName="mx_ThreadPanel_copyLinkToThread"
+                    />
+                }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>) }
     </React.Fragment>;
