@@ -3630,5 +3630,8 @@
     "Notifications silenced": "Benachrichtigungen stummgeschaltet",
     "Are you sure you want to stop your live broadcast?This will end the broadcast and the full recording will be available in the room.": "Willst du die Sprachübertragung wirklich beenden? Damit endet auch die Aufnahme.",
     "Yes, stop broadcast": "Ja, Sprachübertragung beenden",
-    "Stop live broadcasting?": "Sprachübertragung beenden?"
+    "Stop live broadcasting?": "Sprachübertragung beenden?",
+    "Sign in with QR code": "Mit QR-Code anmelden",
+    "Browser": "Browser",
+    "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Erlaube es andere Geräte mittels QR-Code in der Sitzungsverwaltung anzumelden (kompatibler Heim-Server benötigt)"
 }
