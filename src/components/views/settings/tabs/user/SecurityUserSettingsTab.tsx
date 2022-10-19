@@ -363,6 +363,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
         const useNewSessionManager = SettingsStore.getValue("feature_new_device_manager");
         const showQrCodeEnabled = SettingsStore.getValue("feature_qr_signin_reciprocate_show");
+
         const devicesSection = useNewSessionManager
             ? null
             : <>
