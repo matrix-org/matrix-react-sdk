@@ -3631,5 +3631,10 @@
     "You do not have sufficient permissions to change this.": "Nincs megfelelő jogosultság a megváltoztatáshoz.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s végpontok között titkosított de jelenleg csak kevés számú résztvevővel működik.",
     "Enable %(brand)s as an additional calling option in this room": "%(brand)s engedélyezése mint további opció hívásokhoz a szobában",
-    "Notifications silenced": "Értesítések elnémítva"
+    "Notifications silenced": "Értesítések elnémítva",
+    "Stop live broadcasting?": "Megszakítja az élő közvetítést?",
+    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Valaki már elindított egy hang közvetítést. Várja meg a közvetítés végét az új indításához.",
+    "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Nincs jogosultsága hang közvetítést indítani ebben a szobában. Vegye fel a kapcsolatot a szoba adminisztrátorával a szükséges jogosultság megszerzéséhez.",
+    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Egy hang közvetítés már folyamatban van. Először fejezze be a jelenlegi közvetítést egy új indításához.",
+    "Can't start a new voice broadcast": "Az új hang közvetítés nem indítható el"
 }
