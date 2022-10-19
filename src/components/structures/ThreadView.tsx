@@ -22,6 +22,7 @@ import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { IRelationsRequestOpts } from 'matrix-js-sdk/src/@types/requests';
 import { logger } from 'matrix-js-sdk/src/logger';
+import classNames from 'classnames';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
@@ -50,10 +51,10 @@ import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import Measured from '../views/elements/Measured';
 import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
-import { RoomViewStore } from '../../stores/RoomViewStore';
 import Spinner from "../views/elements/Spinner";
 import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import Heading from '../views/typography/Heading';
+import { SdkContextClass } from '../../contexts/SDKContext';
 
 interface IProps {
     room: Room;
@@ -112,7 +113,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         room.removeListener(ThreadEvent.New, this.onNewThread);
         SettingsStore.unwatchSetting(this.layoutWatcherRef);
 
-        const hasRoomChanged = RoomViewStore.instance.getRoomId() !== roomId;
+        const hasRoomChanged = SdkContextClass.instance.roomViewStore.getRoomId() !== roomId;
         if (this.props.isInitialEventHighlighted && !hasRoomChanged) {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
@@ -328,8 +329,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 <TimelinePanel
                     key={this.state.thread.id}
                     ref={this.timelinePanel}
-                    showReadReceipts={false} // Hide the read receipts
-                    // until homeservers speak threads language
+                    showReadReceipts={true}
                     manageReadReceipts={true}
                     manageReadMarkers={true}
                     sendReadReceiptOnLoad={true}
@@ -366,7 +366,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 narrow: this.state.narrow,
             }}>
                 <BaseCard
-                    className="mx_ThreadView mx_ThreadPanel"
+                    className={classNames("mx_ThreadView mx_ThreadPanel", {
+                        mx_ThreadView_narrow: this.state.narrow,
+                    })}
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}

@@ -113,7 +113,7 @@ import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
 import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
-import CallHandler from "../../CallHandler";
+import LegacyCallHandler from "../../LegacyCallHandler";
 import { showSpaceInvite } from "../../utils/space";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -127,7 +127,7 @@ import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStart
 import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
-import VideoChannelStore from "../../stores/VideoChannelStore";
+import { CallStore } from "../../stores/CallStore";
 import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
 import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
@@ -138,6 +138,8 @@ import SpotlightDialog, { Filter } from '../views/dialogs/spotlight/SpotlightDia
 import { OpenSpotlightPayload } from '../../dispatcher/payloads/OpenSpotlightPayload';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
+import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -189,8 +191,6 @@ interface IState {
     currentRoomId?: string;
     // If we're trying to just view a user ID (i.e. /user URL), this is it
     currentUserId?: string;
-    // Group ID for legacy "communities don't exist" page
-    currentGroupId?: string;
     // this is persisted as mx_lhs_size, loaded in LoggedInView
     collapseLhs: boolean;
     // Parameters used in the registration dance with the IS
@@ -240,9 +240,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private readonly dispatcherRef: string;
     private readonly themeWatcher: ThemeWatcher;
     private readonly fontWatcher: FontWatcher;
+    private readonly stores: SdkContextClass;
 
     constructor(props: IProps) {
         super(props);
+        this.stores = SdkContextClass.instance;
+        this.stores.constructEagerStores();
 
         this.state = {
             view: Views.LOADING,
@@ -339,14 +342,19 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // the old creds, but rather go straight to the relevant page
                 const firstScreen = this.screenAfterLogin ? this.screenAfterLogin.screen : null;
 
-                if (firstScreen === 'login' ||
-                    firstScreen === 'register' ||
-                    firstScreen === 'forgot_password') {
-                    this.showScreenAfterLogin();
-                    return;
+                const restoreSuccess = await this.loadSession();
+                if (restoreSuccess) {
+                    return true;
                 }
 
-                return this.loadSession();
+                if (firstScreen === 'login' ||
+                    firstScreen === 'register' ||
+                    firstScreen === 'forgot_password'
+                ) {
+                    this.showScreenAfterLogin();
+                }
+
+                return false;
             });
         }
 
@@ -472,7 +480,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         return { serverConfig: props };
     }
 
-    private loadSession() {
+    private loadSession(): Promise<boolean> {
         // the extra Promise.resolve() ensures that synchronous exceptions hit the same codepath as
         // asynchronous ones.
         return Promise.resolve().then(() => {
@@ -492,6 +500,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     dis.dispatch({ action: "view_welcome_page" });
                 }
             }
+            return loadedSession;
         });
         // Note we don't catch errors from this: we catch everything within
         // loadSession as there's logic there to ask the user if they want
@@ -577,9 +586,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             case 'logout':
-                CallHandler.instance.hangupAllCalls();
-                if (VideoChannelStore.instance.connected) VideoChannelStore.instance.setDisconnected();
-                Lifecycle.logout();
+                LegacyCallHandler.instance.hangupAllCalls();
+                Promise.all([...CallStore.instance.activeCalls].map(call => call.disconnect()))
+                    .finally(() => Lifecycle.logout());
                 break;
             case 'require_registration':
                 startAnyRegistrationFlow(payload as any);
@@ -680,9 +689,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_legacy_group':
-                this.viewLegacyGroup(payload.groupId);
+            case Action.ViewUserDeviceSettings: {
+                viewUserDeviceSettings(SettingsStore.getValue("feature_new_device_manager"));
                 break;
+            }
             case Action.ViewUserSettings: {
                 const tabPayload = payload as OpenToTabPayload;
                 Modal.createDialog(UserSettingsDialog,
@@ -758,6 +768,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 Modal.createDialog(DialPadModal, {}, "mx_Dialog_dialPadWrapper");
                 break;
             case Action.OnLoggedIn:
+                this.stores.client = MatrixClientPeg.get();
                 if (
                     // Skip this handling for token login as that always calls onLoggedIn itself
                     !this.tokenLogin &&
@@ -1023,16 +1034,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.setState({ currentUserId: userId });
             this.setPage(PageType.UserView);
         });
-    }
-
-    private viewLegacyGroup(groupId: string) {
-        this.setStateForNewView({
-            view: Views.LOGGED_IN,
-            currentRoomId: null,
-            currentGroupId: groupId,
-        });
-        this.notifyNewScreen('group/' + groupId);
-        this.setPage(PageType.LegacyGroupView);
     }
 
     private async createRoom(defaultPublic = false, defaultName?: string, type?: RoomType) {
@@ -1808,12 +1809,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 userId: userId,
                 subAction: params.action,
             });
-        } else if (screen.indexOf('group/') === 0) {
-            const groupId = screen.substring(6);
-            dis.dispatch({
-                action: 'view_legacy_group',
-                groupId: groupId,
-            });
         } else {
             logger.info("Ignoring showScreen for '%s'", screen);
         }
@@ -2102,7 +2097,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         return <ErrorBoundary>
-            { view }
+            <SDKContext.Provider value={this.stores}>
+                { view }
+            </SDKContext.Provider>
         </ErrorBoundary>;
     }
 }

@@ -16,14 +16,13 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
-import { IUpload, RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
+import { RecordingState } from "../../../audio/VoiceRecording";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import LiveRecordingWaveform from "../audio_messages/LiveRecordingWaveform";
 import LiveRecordingClock from "../audio_messages/LiveRecordingClock";
@@ -44,6 +43,8 @@ import { attachRelation } from "./SendMessageComposer";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import RoomContext from "../../../contexts/RoomContext";
+import { IUpload, VoiceMessageRecording } from "../../../audio/VoiceMessageRecording";
+import { createVoiceMessageContent } from "../../../utils/createVoiceMessageContent";
 
 interface IProps {
     room: Room;
@@ -53,7 +54,7 @@ interface IProps {
 }
 
 interface IState {
-    recorder?: VoiceRecording;
+    recorder?: VoiceMessageRecording;
     recordingPhase?: RecordingState;
     didUploadFail?: boolean;
 }
@@ -64,6 +65,7 @@ interface IState {
 export default class VoiceRecordComposerTile extends React.PureComponent<IProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
+    private voiceRecordingId: string;
 
     public constructor(props: IProps) {
         super(props);
@@ -71,10 +73,12 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         this.state = {
             recorder: null, // no recording started by default
         };
+
+        this.voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
     }
 
     public componentDidMount() {
-        const recorder = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const recorder = VoiceRecordingStore.instance.getActiveRecording(this.voiceRecordingId);
         if (recorder) {
             if (recorder.isRecording || !recorder.hasRecording) {
                 logger.warn("Cached recording hasn't ended yet and might cause issues");
@@ -87,7 +91,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
     public async componentWillUnmount() {
         // Stop recording, but keep the recording memory (don't dispose it). This is to let the user
         // come back and finish working with it.
-        const recording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const recording = VoiceRecordingStore.instance.getActiveRecording(this.voiceRecordingId);
         await recording?.stop();
 
         // Clean up our listeners by binding a falsy recorder
@@ -106,7 +110,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         let upload: IUpload;
         try {
-            upload = await this.state.recorder.upload(this.props.room.roomId);
+            upload = await this.state.recorder.upload(this.voiceRecordingId);
         } catch (e) {
             logger.error("Error uploading voice message:", e);
 
@@ -118,36 +122,14 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         try {
             // noinspection ES6MissingAwait - we don't care if it fails, it'll get queued.
-            const content = {
-                "body": "Voice message",
-                //"msgtype": "org.matrix.msc2516.voice",
-                "msgtype": MsgType.Audio,
-                "url": upload.mxc,
-                "file": upload.encrypted,
-                "info": {
-                    duration: Math.round(this.state.recorder.durationSeconds * 1000),
-                    mimetype: this.state.recorder.contentType,
-                    size: this.state.recorder.contentLength,
-                },
-
-                // MSC1767 + Ideals of MSC2516 as MSC3245
-                // https://github.com/matrix-org/matrix-doc/pull/3245
-                "org.matrix.msc1767.text": "Voice message",
-                "org.matrix.msc1767.file": {
-                    url: upload.mxc,
-                    file: upload.encrypted,
-                    name: "Voice message.ogg",
-                    mimetype: this.state.recorder.contentType,
-                    size: this.state.recorder.contentLength,
-                },
-                "org.matrix.msc1767.audio": {
-                    duration: Math.round(this.state.recorder.durationSeconds * 1000),
-
-                    // https://github.com/matrix-org/matrix-doc/pull/3246
-                    waveform: this.state.recorder.getPlayback().thumbnailWaveform.map(v => Math.round(v * 1024)),
-                },
-                "org.matrix.msc3245.voice": {}, // No content, this is a rendering hint
-            };
+            const content = createVoiceMessageContent(
+                upload.mxc,
+                this.state.recorder.contentType,
+                Math.round(this.state.recorder.durationSeconds * 1000),
+                this.state.recorder.contentLength,
+                upload.encrypted,
+                this.state.recorder.getPlayback().thumbnailWaveform.map(v => Math.round(v * 1024)),
+            );
 
             attachRelation(content, relation);
             if (replyToEvent) {
@@ -179,7 +161,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
     }
 
     private async disposeRecording() {
-        await VoiceRecordingStore.instance.disposeRecording(this.props.room.roomId);
+        await VoiceRecordingStore.instance.disposeRecording(this.voiceRecordingId);
 
         // Reset back to no recording, which means no phase (ie: restart component entirely)
         this.setState({ recorder: null, recordingPhase: null, didUploadFail: false });
@@ -232,8 +214,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         try {
             // stop any noises which might be happening
             PlaybackManager.instance.pauseAllExcept(null);
-
-            const recorder = VoiceRecordingStore.instance.startRecording(this.props.room.roomId);
+            const recorder = VoiceRecordingStore.instance.startRecording(this.voiceRecordingId);
             await recorder.start();
 
             this.bindNewRecorder(recorder);
@@ -244,11 +225,11 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             accessError();
 
             // noinspection ES6MissingAwait - if this goes wrong we don't want it to affect the call stack
-            VoiceRecordingStore.instance.disposeRecording(this.props.room.roomId);
+            VoiceRecordingStore.instance.disposeRecording(this.voiceRecordingId);
         }
     };
 
-    private bindNewRecorder(recorder: Optional<VoiceRecording>) {
+    private bindNewRecorder(recorder: Optional<VoiceMessageRecording>) {
         if (this.state.recorder) {
             this.state.recorder.off(UPDATE_EVENT, this.onRecordingUpdate);
         }

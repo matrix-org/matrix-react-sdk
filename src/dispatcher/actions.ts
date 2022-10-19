@@ -41,6 +41,11 @@ export enum Action {
     ViewUserSettings = "view_user_settings",
 
     /**
+     * Open the user device settings. No additional payload information required.
+     */
+    ViewUserDeviceSettings = "view_user_device_settings",
+
+    /**
      * Opens the spotlight search. Can be used with a OpenSpotlightPayload
      */
     OpenSpotlight = "open_spotlight",

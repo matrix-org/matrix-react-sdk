@@ -51,8 +51,8 @@ import HostSignupContainer from '../views/host_signup/HostSignupContainer';
 import { getKeyBindingsManager } from '../../KeyBindingsManager';
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
-import CallHandler, { CallHandlerEvent } from '../../CallHandler';
-import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
+import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../LegacyCallHandler';
+import AudioFeedArrayForLegacyCall from '../views/voip/AudioFeedArrayForLegacyCall';
 import { OwnProfileStore } from '../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RoomView from './RoomView';
@@ -67,7 +67,6 @@ import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
-import LegacyGroupView from "./LegacyGroupView";
 import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 import { UserOnboardingPage } from '../views/user-onboarding/UserOnboardingPage';
@@ -103,8 +102,6 @@ interface IProps {
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props on MatrixChat
-
-    currentGroupId?: string;
 }
 
 interface IState {
@@ -146,7 +143,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
             usageLimitDismissed: false,
-            activeCalls: CallHandler.instance.getAllActiveCalls(),
+            activeCalls: LegacyCallHandler.instance.getAllActiveCalls(),
         };
 
         // stash the MatrixClient in case we log out before we are unmounted
@@ -163,7 +160,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     componentDidMount() {
         document.addEventListener('keydown', this.onNativeKeyDown, false);
-        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.onCallState);
+        LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallState, this.onCallState);
 
         this.updateServerNoticeEvents();
 
@@ -195,7 +192,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.onNativeKeyDown, false);
-        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.onCallState);
+        LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.onCallState);
         this._matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
         this._matrixClient.removeListener(ClientEvent.Sync, this.onSync);
         this._matrixClient.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
@@ -207,7 +204,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     }
 
     private onCallState = (): void => {
-        const activeCalls = CallHandler.instance.getAllActiveCalls();
+        const activeCalls = LegacyCallHandler.instance.getAllActiveCalls();
         if (activeCalls === this.state.activeCalls) return;
         this.setState({ activeCalls });
     };
@@ -641,10 +638,6 @@ class LoggedInView extends React.Component<IProps, IState> {
             case PageTypes.UserView:
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
                 break;
-
-            case PageTypes.LegacyGroupView:
-                pageElement = <LegacyGroupView groupId={this.props.currentGroupId} />;
-                break;
         }
 
         const wrapperClasses = classNames({
@@ -658,7 +651,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const audioFeedArraysForCalls = this.state.activeCalls.map((call) => {
             return (
-                <AudioFeedArrayForCall call={call} key={call.callId} />
+                <AudioFeedArrayForLegacyCall call={call} key={call.callId} />
             );
         });
 

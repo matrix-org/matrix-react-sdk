@@ -39,7 +39,6 @@ import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
 import * as StorageManager from './utils/StorageManager';
 import SettingsStore from "./settings/SettingsStore";
-import TypingStore from "./stores/TypingStore";
 import ToastStore from "./stores/ToastStore";
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { Mjolnir } from "./mjolnir/Mjolnir";
@@ -48,7 +47,7 @@ import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
 import { PosthogAnalytics } from "./PosthogAnalytics";
-import CallHandler from './CallHandler';
+import LegacyCallHandler from './LegacyCallHandler';
 import LifecycleCustomisations from "./customisations/Lifecycle";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import { _t } from "./languageHandler";
@@ -59,11 +58,10 @@ import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialo
 import { setSentryUser } from "./sentry";
 import SdkConfig from "./SdkConfig";
 import { DialogOpener } from "./utils/DialogOpener";
-import VideoChannelStore from "./stores/VideoChannelStore";
-import { fixStuckDevices } from "./utils/VideoChannelUtils";
 import { Action } from "./dispatcher/actions";
 import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
+import { SdkContextClass } from './contexts/SDKContext';
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -428,7 +426,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
     const { hsUrl, isUrl, hasAccessToken, accessToken, userId, deviceId, isGuest } = await getStoredSessionVars();
 
     if (hasAccessToken && !accessToken) {
-        abortLogin();
+        await abortLogin();
     }
 
     if (accessToken && userId && hsUrl) {
@@ -701,7 +699,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
         } catch (e) {
             localStorage.setItem("mx_access_token", credentials.accessToken);
         }
-        if (localStorage.getItem("mx_has_pickle_key")) {
+        if (localStorage.getItem("mx_has_pickle_key") === "true") {
             logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
         }
     }
@@ -741,7 +739,7 @@ export function logout(): void {
     _isLoggingOut = true;
     const client = MatrixClientPeg.get();
     PlatformPeg.get().destroyPickleKey(client.getUserId(), client.getDeviceId());
-    client.logout(undefined, true).then(onLoggedOut, (err) => {
+    client.logout(true).then(onLoggedOut, (err) => {
         // Just throwing an error here is going to be very unhelpful
         // if you're trying to log out because your server's down and
         // you want to log into a different server, so just forget the
@@ -799,7 +797,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     dis.dispatch({ action: 'will_start_client' }, true);
 
     // reset things first just in case
-    TypingStore.sharedInstance().reset();
+    SdkContextClass.instance.typingStore.reset();
     ToastStore.sharedInstance().reset();
 
     DialogOpener.instance.prepare();
@@ -808,7 +806,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     DMRoomMap.makeShared().start();
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
-    CallHandler.instance.start();
+    LegacyCallHandler.instance.start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -839,11 +837,6 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
 
     // Now that we have a MatrixClientPeg, update the Jitsi info
     Jitsi.getInstance().start();
-
-    // In case we disconnected uncleanly from a video room, clean up the stuck device
-    if (VideoChannelStore.instance.roomId) {
-        fixStuckDevices(MatrixClientPeg.get().getRoom(VideoChannelStore.instance.roomId), false);
-    }
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
@@ -932,9 +925,9 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
  */
 export function stopMatrixClient(unsetClient = true): void {
     Notifier.stop();
-    CallHandler.instance.stop();
+    LegacyCallHandler.instance.stop();
     UserActivity.sharedInstance().stop();
-    TypingStore.sharedInstance().reset();
+    SdkContextClass.instance.typingStore.reset();
     Presence.stop();
     ActiveWidgetStore.instance.stop();
     IntegrationManagers.sharedInstance().stopWatching();

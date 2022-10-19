@@ -16,10 +16,8 @@ limitations under the License.
 
 import * as Recorder from 'opus-recorder';
 import encoderPath from 'opus-recorder/dist/encoderWorker.min.js';
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { SimpleObservable } from "matrix-widget-api";
 import EventEmitter from "events";
-import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MediaDeviceHandler from "../MediaDeviceHandler";
@@ -27,9 +25,7 @@ import { IDestroyable } from "../utils/IDestroyable";
 import { Singleflight } from "../utils/Singleflight";
 import { PayloadEvent, WORKLET_NAME } from "./consts";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
-import { Playback } from "./Playback";
 import { createAudioContext } from "./compat";
-import { uploadFile } from "../ContentMessages";
 import { FixedRollingArray } from "../utils/FixedRollingArray";
 import { clamp } from "../utils/numbers";
 import mxRecorderWorkletPath from "./RecorderWorklet";
@@ -55,11 +51,6 @@ export enum RecordingState {
     Uploaded = "uploaded",
 }
 
-export interface IUpload {
-    mxc?: string; // for unencrypted uploads
-    encrypted?: IEncryptedFile;
-}
-
 export class VoiceRecording extends EventEmitter implements IDestroyable {
     private recorder: Recorder;
     private recorderContext: AudioContext;
@@ -67,24 +58,14 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
     private recorderStream: MediaStream;
     private recorderWorklet: AudioWorkletNode;
     private recorderProcessor: ScriptProcessorNode;
-    private buffer = new Uint8Array(0); // use this.audioBuffer to access
-    private lastUpload: IUpload;
     private recording = false;
     private observable: SimpleObservable<IRecordingUpdate>;
-    private amplitudes: number[] = []; // at each second mark, generated
-    private playback: Playback;
+    public amplitudes: number[] = []; // at each second mark, generated
     private liveWaveform = new FixedRollingArray(RECORDING_PLAYBACK_SAMPLES, 0);
-
-    public constructor(private client: MatrixClient) {
-        super();
-    }
+    public onDataAvailable: (data: ArrayBuffer) => void;
 
     public get contentType(): string {
         return "audio/ogg";
-    }
-
-    public get contentLength(): number {
-        return this.buffer.length;
     }
 
     public get durationSeconds(): number {
@@ -165,13 +146,9 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
                 encoderComplexity: 3, // 0-10, 10 is slow and high quality.
                 resampleQuality: 3, // 0-10, 10 is slow and high quality
             });
-            this.recorder.ondataavailable = (a: ArrayBuffer) => {
-                const buf = new Uint8Array(a);
-                const newBuf = new Uint8Array(this.buffer.length + buf.length);
-                newBuf.set(this.buffer, 0);
-                newBuf.set(buf, this.buffer.length);
-                this.buffer = newBuf;
-            };
+
+            // not using EventEmitter here because it leads to detached bufferes
+            this.recorder.ondataavailable = (data: ArrayBuffer) => this?.onDataAvailable(data);
         } catch (e) {
             logger.error("Error starting recording: ", e);
             if (e instanceof DOMException) { // Unhelpful DOMExceptions are common - parse them sanely
@@ -191,12 +168,6 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         }
     }
 
-    private get audioBuffer(): Uint8Array {
-        // We need a clone of the buffer to avoid accidentally changing the position
-        // on the real thing.
-        return this.buffer.slice(0);
-    }
-
     public get liveData(): SimpleObservable<IRecordingUpdate> {
         if (!this.recording) throw new Error("No observable when not recording");
         return this.observable;
@@ -204,10 +175,6 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
 
     public get isSupported(): boolean {
         return !!Recorder.isRecordingSupported();
-    }
-
-    public get hasRecording(): boolean {
-        return this.buffer.length > 0;
     }
 
     private onAudioProcess = (ev: AudioProcessingEvent) => {
@@ -236,9 +203,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         // In testing, recorder time and worker time lag by about 400ms, which is roughly the
         // time needed to encode a sample/frame.
         //
-        // Ref for recorderSeconds: https://github.com/chris-rudmin/opus-recorder#instance-fields
-        const recorderSeconds = this.recorder.encodedSamplePosition / 48000;
-        const secondsLeft = TARGET_MAX_LENGTH - recorderSeconds;
+        const secondsLeft = TARGET_MAX_LENGTH - this.recorderSeconds;
         if (secondsLeft < 0) { // go over to make sure we definitely capture that last frame
             // noinspection JSIgnoredPromiseFromCall - we aren't concerned with it overlapping
             this.stop();
@@ -250,10 +215,14 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         }
     };
 
+    /**
+     * {@link https://github.com/chris-rudmin/opus-recorder#instance-fields ref for recorderSeconds}
+    */
+    public get recorderSeconds() {
+        return this.recorder.encodedSamplePosition / 48000;
+    }
+
     public async start(): Promise<void> {
-        if (this.lastUpload || this.hasRecording) {
-            throw new Error("Recording already prepared");
-        }
         if (this.recording) {
             throw new Error("Recording already in progress");
         }
@@ -267,7 +236,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         this.emit(RecordingState.Started);
     }
 
-    public async stop(): Promise<Uint8Array> {
+    public async stop(): Promise<void> {
         return Singleflight.for(this, "stop").do(async () => {
             if (!this.recording) {
                 throw new Error("No recording to stop");
@@ -293,54 +262,16 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             this.recording = false;
             await this.recorder.close();
             this.emit(RecordingState.Ended);
-
-            return this.audioBuffer;
         });
-    }
-
-    /**
-     * Gets a playback instance for this voice recording. Note that the playback will not
-     * have been prepared fully, meaning the `prepare()` function needs to be called on it.
-     *
-     * The same playback instance is returned each time.
-     *
-     * @returns {Playback} The playback instance.
-     */
-    public getPlayback(): Playback {
-        this.playback = Singleflight.for(this, "playback").do(() => {
-            return new Playback(this.audioBuffer.buffer, this.amplitudes); // cast to ArrayBuffer proper;
-        });
-        return this.playback;
     }
 
     public destroy() {
         // noinspection JSIgnoredPromiseFromCall - not concerned about stop() being called async here
         this.stop();
         this.removeAllListeners();
+        this.onDataAvailable = undefined;
         Singleflight.forgetAllFor(this);
         // noinspection JSIgnoredPromiseFromCall - not concerned about being called async here
-        this.playback?.destroy();
         this.observable.close();
-    }
-
-    public async upload(inRoomId: string): Promise<IUpload> {
-        if (!this.hasRecording) {
-            throw new Error("No recording available to upload");
-        }
-
-        if (this.lastUpload) return this.lastUpload;
-
-        try {
-            this.emit(RecordingState.Uploading);
-            const { url: mxc, file: encrypted } = await uploadFile(this.client, inRoomId, new Blob([this.audioBuffer], {
-                type: this.contentType,
-            }));
-            this.lastUpload = { mxc, encrypted };
-            this.emit(RecordingState.Uploaded);
-        } catch (e) {
-            this.emit(RecordingState.Ended);
-            throw e;
-        }
-        return this.lastUpload;
     }
 }

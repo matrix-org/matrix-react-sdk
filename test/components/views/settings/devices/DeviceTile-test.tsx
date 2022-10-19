@@ -19,12 +19,14 @@ import { render } from '@testing-library/react';
 import { IMyDevice } from 'matrix-js-sdk/src/matrix';
 
 import DeviceTile from '../../../../../src/components/views/settings/devices/DeviceTile';
+import { DeviceType } from '../../../../../src/utils/device/parseUserAgent';
 
 describe('<DeviceTile />', () => {
     const defaultProps = {
         device: {
             device_id: '123',
             isVerified: false,
+            deviceType: DeviceType.Unknown,
         },
     };
     const getComponent = (props = {}) => (
@@ -42,6 +44,14 @@ describe('<DeviceTile />', () => {
     it('renders a device with no metadata', () => {
         const { container } = render(getComponent());
         expect(container).toMatchSnapshot();
+    });
+
+    it('applies interactive class when tile has click handler', () => {
+        const onClick = jest.fn();
+        const { getByTestId } = render(getComponent({ onClick }));
+        expect(
+            getByTestId('device-tile-123').className.includes('mx_DeviceTile_interactive'),
+        ).toBeTruthy();
     });
 
     it('renders a verified device with no metadata', () => {
