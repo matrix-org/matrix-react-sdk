@@ -3653,6 +3653,10 @@
     "Linking with this device is not supported.": "",
     "The scanned code is invalid.": "",
     "The linking wasn't completed in the required time.": "",
-    "Sign in new device": "",
-    "Show QR code": ""
+    "Sign in new device": "Neues Gerät anmelden",
+    "Show QR code": "",
+    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Jemand anderes nimmt bereits eine Sprachübertragung auf. Warte auf das Ende der Übertragung bevor du eine neue startest.",
+    "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Du hast nicht die nötigen Berechtigungen um eine Sprachübertragung in diesem Raum zu starten. Kontaktiere einen Raumadministrator um deine Berechtigungen anzupassen.",
+    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Du zeichnest bereits eine Sprachübertragung auf. Bitte beende die laufende Übertragung um eine neue zu beginnen.",
+    "Can't start a new voice broadcast": "Sprachübertragung konnte nicht gestartet werden"
 }
