@@ -25,11 +25,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a broadcast should render as 
         <div
           class="mx_VoiceBroadcastHeader_line"
         >
-          <i
-            aria-hidden="true"
-            class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
-            role="presentation"
-            style="mask-image: url(\\"image-file-stub\\");"
+          <div
+            class="mx_Icon mx_Icon_16"
           />
           <span>
             @user:example.com
@@ -38,11 +35,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a broadcast should render as 
         <div
           class="mx_VoiceBroadcastHeader_line"
         >
-          <i
-            aria-hidden="true"
-            class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
-            role="presentation"
-            style="mask-image: url(\\"image-file-stub\\");"
+          <div
+            class="mx_Icon mx_Icon_16"
           />
           Voice broadcast
         </div>
@@ -50,11 +44,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a broadcast should render as 
       <div
         class="mx_LiveBadge"
       >
-        <i
-          aria-hidden="true"
-          class="mx_Icon mx_Icon_16 mx_Icon_live-badge"
-          role="presentation"
-          style="mask-image: url(\\"image-file-stub\\");"
+        <div
+          class="mx_Icon mx_Icon_16"
         />
         Live
       </div>
@@ -63,16 +54,13 @@ exports[`VoiceBroadcastPlaybackBody when rendering a broadcast should render as 
       class="mx_VoiceBroadcastPlaybackBody_controls"
     >
       <div
-        aria-label="resume voice broadcast"
-        class="mx_AccessibleButton mx_BroadcastPlaybackControlButton"
+        aria-label="play voice broadcast"
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
         role="button"
         tabindex="0"
       >
-        <i
-          aria-hidden="true"
-          class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
-          role="presentation"
-          style="mask-image: url(\\"image-file-stub\\");"
+        <div
+          class="mx_Icon mx_Icon_16"
         />
       </div>
     </div>
@@ -105,11 +93,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
         <div
           class="mx_VoiceBroadcastHeader_line"
         >
-          <i
-            aria-hidden="true"
-            class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
-            role="presentation"
-            style="mask-image: url(\\"image-file-stub\\");"
+          <div
+            class="mx_Icon mx_Icon_16"
           />
           <span>
             @user:example.com
@@ -118,11 +103,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
         <div
           class="mx_VoiceBroadcastHeader_line"
         >
-          <i
-            aria-hidden="true"
-            class="mx_Icon mx_Icon_16 mx_Icon_compound-secondary-content"
-            role="presentation"
-            style="mask-image: url(\\"image-file-stub\\");"
+          <div
+            class="mx_Icon mx_Icon_16"
           />
           Voice broadcast
         </div>
@@ -130,11 +112,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
       <div
         class="mx_LiveBadge"
       >
-        <i
-          aria-hidden="true"
-          class="mx_Icon mx_Icon_16 mx_Icon_live-badge"
-          role="presentation"
-          style="mask-image: url(\\"image-file-stub\\");"
+        <div
+          class="mx_Icon mx_Icon_16"
         />
         Live
       </div>

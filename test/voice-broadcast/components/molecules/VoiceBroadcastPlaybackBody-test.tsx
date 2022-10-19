@@ -86,7 +86,7 @@ describe("VoiceBroadcastPlaybackBody", () => {
 
         describe("and clicking the play button", () => {
             beforeEach(async () => {
-                await userEvent.click(renderResult.getByLabelText("resume voice broadcast"));
+                await userEvent.click(renderResult.getByLabelText("play voice broadcast"));
             });
 
             it("should toggle the recording", () => {
