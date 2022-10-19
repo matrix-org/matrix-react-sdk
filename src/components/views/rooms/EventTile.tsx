@@ -941,6 +941,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 rightClick={true}
                 reactions={this.state.reactions}
                 link={this.state.contextMenu.link}
+                getRelationsForEvent={this.props.getRelationsForEvent}
             />
         );
     }

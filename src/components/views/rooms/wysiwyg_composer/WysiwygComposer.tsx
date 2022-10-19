@@ -15,15 +15,17 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect } from 'react';
-import { useWysiwyg } from "@matrix-org/matrix-wysiwyg";
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { useWysiwyg, Wysiwyg, WysiwygInputEvent } from "@matrix-org/matrix-wysiwyg";
 
-import { useRoomContext } from '../../../../contexts/RoomContext';
-import { sendMessage } from './message';
-import { RoomPermalinkCreator } from '../../../../utils/permalinks/Permalinks';
-import { useMatrixClientContext } from '../../../../contexts/MatrixClientContext';
-import { FormattingButtons } from './FormattingButtons';
 import { Editor } from './Editor';
+import { FormattingButtons } from './FormattingButtons';
+import { RoomPermalinkCreator } from '../../../../utils/permalinks/Permalinks';
+import { sendMessage } from './message';
+import { useMatrixClientContext } from '../../../../contexts/MatrixClientContext';
+import { useRoomContext } from '../../../../contexts/RoomContext';
+import { useWysiwygActionHandler } from './useWysiwygActionHandler';
+import { useSettingValue } from '../../../../hooks/useSettings';
 
 interface WysiwygProps {
     disabled?: boolean;
@@ -40,8 +42,27 @@ export function WysiwygComposer(
 ) {
     const roomContext = useRoomContext();
     const mxClient = useMatrixClientContext();
+    const ctrlEnterToSend = useSettingValue("MessageComposerInput.ctrlEnterToSend");
 
-    const { ref, isWysiwygReady, content, formattingStates, wysiwyg } = useWysiwyg();
+    function inputEventProcessor(event: WysiwygInputEvent, wysiwyg: Wysiwyg): WysiwygInputEvent | null {
+        if (event instanceof ClipboardEvent) {
+            return event;
+        }
+
+        if (
+            (event.inputType === 'insertParagraph' && !ctrlEnterToSend) ||
+            event.inputType === 'sendMessage'
+        ) {
+            sendMessage(content, { mxClient, roomContext, ...props });
+            wysiwyg.actions.clear();
+            ref.current?.focus();
+            return null;
+        }
+
+        return event;
+    }
+
+    const { ref, isWysiwygReady, content, formattingStates, wysiwyg } = useWysiwyg({ inputEventProcessor });
 
     useEffect(() => {
         if (!disabled && content !== null) {
@@ -54,6 +75,8 @@ export function WysiwygComposer(
         wysiwyg.clear();
         ref.current?.focus();
     }, [content, mxClient, roomContext, wysiwyg, props, ref]);
+
+    useWysiwygActionHandler(disabled, ref);
 
     return (
         <div className="mx_WysiwygComposer">

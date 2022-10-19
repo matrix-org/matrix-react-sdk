@@ -14,22 +14,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import "@testing-library/jest-dom";
 import React from "react";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { InputEventProcessor, Wysiwyg, WysiwygProps } from "@matrix-org/matrix-wysiwyg";
 
-import { IRoomState } from "../../../../../src/components/structures/RoomView";
-import RoomContext, { TimelineRenderingType } from "../../../../../src/contexts/RoomContext";
-import { Layout } from "../../../../../src/settings/enums/Layout";
-import { createTestClient, mkEvent, mkStubRoom } from "../../../../test-utils";
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
+import RoomContext, { TimelineRenderingType } from "../../../../../src/contexts/RoomContext";
+import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../../src/dispatcher/actions";
+import { IRoomState } from "../../../../../src/components/structures/RoomView";
+import { Layout } from "../../../../../src/settings/enums/Layout";
 import { WysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/WysiwygComposer";
+import { createTestClient, mkEvent, mkStubRoom } from "../../../../test-utils";
+import SettingsStore from "../../../../../src/settings/SettingsStore";
+
+// Work around missing ClipboardEvent type
+class MyClipbardEvent {}
+window.ClipboardEvent = MyClipbardEvent as any;
+
+let inputEventProcessor: InputEventProcessor | null = null;
 
 // The wysiwyg fetch wasm bytes and a specific workaround is needed to make it works in a node (jest) environnement
 // See https://github.com/matrix-org/matrix-wysiwyg/blob/main/platforms/web/test.setup.ts
 jest.mock("@matrix-org/matrix-wysiwyg", () => ({
-    useWysiwyg: () => {
-        return { ref: { current: null }, content: '<b>html</b>', isWysiwygReady: true, wysiwyg: { clear: () => void 0 },
-            formattingStates: { bold: 'enabled', italic: 'enabled', underline: 'enabled', strikeThrough: 'enabled' } };
+    useWysiwyg: (props: WysiwygProps) => {
+        inputEventProcessor = props.inputEventProcessor ?? null;
+        return {
+            ref: { current: null },
+            content: '<b>html</b>',
+            isWysiwygReady: true,
+            wysiwyg: { clear: () => void 0 },
+            formattingStates: {
+                bold: 'enabled',
+                italic: 'enabled',
+                underline: 'enabled',
+                strikeThrough: 'enabled',
+            },
+        };
     },
 }));
 
@@ -69,7 +91,6 @@ describe('WysiwygComposer', () => {
         statusBarVisible: false,
         canReact: false,
         canSendMessages: false,
-        canSendVoiceBroadcasts: false,
         layout: Layout.Group,
         lowBandwidth: false,
         alwaysShowTimestamps: false,
@@ -92,7 +113,7 @@ describe('WysiwygComposer', () => {
     };
 
     let sendMessage: () => void;
-    const customRender = (onChange = (content: string) => void 0, disabled = false) => {
+    const customRender = (onChange = (_content: string) => void 0, disabled = false) => {
         return render(
             <MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={defaultRoomContext}>
@@ -139,6 +160,116 @@ describe('WysiwygComposer', () => {
         };
         expect(mockClient.sendMessage).toBeCalledWith('myfakeroom', null, expectedContent);
         expect(screen.getByRole('textbox')).toHaveFocus();
+    });
+
+    it('Should focus when receiving an Action.FocusSendMessageComposer action', async () => {
+        // Given we don't have focus
+        customRender(() => {}, false);
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+
+        // When we send the right action
+        defaultDispatcher.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: null,
+        });
+
+        // Then the component gets the focus
+        await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
+    });
+
+    it('Should focus when receiving a reply_to_event action', async () => {
+        // Given we don't have focus
+        customRender(() => {}, false);
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+
+        // When we send the right action
+        defaultDispatcher.dispatch({
+            action: "reply_to_event",
+            context: null,
+        });
+
+        // Then the component gets the focus
+        await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
+    });
+
+    it('Should not focus when disabled', async () => {
+        // Given we don't have focus and we are disabled
+        customRender(() => {}, true);
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+
+        // When we send an action that would cause us to get focus
+        defaultDispatcher.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: null,
+        });
+        // (Send a second event to exercise the clearTimeout logic)
+        defaultDispatcher.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: null,
+        });
+
+        // Wait for event dispatch to happen
+        await new Promise((r) => setTimeout(r, 200));
+
+        // Then we don't get it because we are disabled
+        expect(screen.getByRole('textbox')).not.toHaveFocus();
+    });
+
+    it('sends a message when Enter is pressed', async () => {
+        // Given a composer
+        customRender(() => {}, false);
+
+        // When we tell its inputEventProcesser that the user pressed Enter
+        const event = new InputEvent("insertParagraph", { inputType: "insertParagraph" });
+        const wysiwyg = { actions: { clear: () => {} } } as Wysiwyg;
+        inputEventProcessor(event, wysiwyg);
+
+        // Then it sends a message
+        expect(mockClient.sendMessage).toBeCalledWith(
+            "myfakeroom",
+            null,
+            {
+                "body": "<b>html</b>",
+                "format": "org.matrix.custom.html",
+                "formatted_body": "<b>html</b>",
+                "msgtype": "m.text",
+            },
+        );
+        // TODO: plain text body above is wrong - will be fixed when we provide markdown for it
+    });
+
+    describe('when settings require Ctrl+Enter to send', () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+                if (name === "MessageComposerInput.ctrlEnterToSend") return true;
+            });
+        });
+
+        it('does not send a message when Enter is pressed', async () => {
+            // Given a composer
+            customRender(() => {}, false);
+
+            // When we tell its inputEventProcesser that the user pressed Enter
+            const event = new InputEvent("input", { inputType: "insertParagraph" });
+            const wysiwyg = { actions: { clear: () => {} } } as Wysiwyg;
+            inputEventProcessor(event, wysiwyg);
+
+            // Then it does not send a message
+            expect(mockClient.sendMessage).toBeCalledTimes(0);
+        });
+
+        it('sends a message when Ctrl+Enter is pressed', async () => {
+            // Given a composer
+            customRender(() => {}, false);
+
+            // When we tell its inputEventProcesser that the user pressed Ctrl+Enter
+            const event = new InputEvent("input", { inputType: "sendMessage" });
+            const wysiwyg = { actions: { clear: () => {} } } as Wysiwyg;
+            inputEventProcessor(event, wysiwyg);
+
+            // Then it sends a message
+            expect(mockClient.sendMessage).toBeCalledTimes(1);
+        });
     });
 });
 

@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { mocked } from "jest-mock";
 
 import {
     VoiceBroadcastInfoEventType,
@@ -38,11 +39,13 @@ jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
 describe("VoiceBroadcastPlaybackBody", () => {
     const userId = "@user:example.com";
     const roomId = "!room:example.com";
+    let client: MatrixClient;
     let infoEvent: MatrixEvent;
     let playback: VoiceBroadcastPlayback;
+    let renderResult: RenderResult;
 
     beforeAll(() => {
-        stubClient();
+        client = stubClient();
         infoEvent = mkEvent({
             event: true,
             type: VoiceBroadcastInfoEventType,
@@ -50,12 +53,29 @@ describe("VoiceBroadcastPlaybackBody", () => {
             room: roomId,
             user: userId,
         });
-        playback = new VoiceBroadcastPlayback(infoEvent);
+    });
+
+    beforeEach(() => {
+        playback = new VoiceBroadcastPlayback(infoEvent, client);
+        jest.spyOn(playback, "toggle");
+        jest.spyOn(playback, "getState");
+    });
+
+    describe("when rendering a buffering voice broadcast", () => {
+        beforeEach(() => {
+            mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Buffering);
+        });
+
+        beforeEach(() => {
+            renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+        });
+
+        it("should render as expected", () => {
+            expect(renderResult.container).toMatchSnapshot();
+        });
     });
 
     describe("when rendering a broadcast", () => {
-        let renderResult: RenderResult;
-
         beforeEach(() => {
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
         });
@@ -69,8 +89,8 @@ describe("VoiceBroadcastPlaybackBody", () => {
                 await userEvent.click(renderResult.getByLabelText("resume voice broadcast"));
             });
 
-            it("should stop the recording", () => {
-                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Playing);
+            it("should toggle the recording", () => {
+                expect(playback.toggle).toHaveBeenCalled();
             });
         });
     });
