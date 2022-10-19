@@ -102,6 +102,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
 
             it("and calling it again should work", () => {
                 recordings.clearCurrent();
+                expect(recordings.getCurrent()).toBeNull();
             });
         });
 
