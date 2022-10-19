@@ -95,4 +95,4 @@ export function getRoomContext(room: Room, override: Partial<IRoomState>): IRoom
 
         ...override,
     };
-};
+}

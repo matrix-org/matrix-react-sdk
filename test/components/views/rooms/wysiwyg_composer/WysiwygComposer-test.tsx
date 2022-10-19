@@ -20,11 +20,10 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import { InputEventProcessor, Wysiwyg, WysiwygProps } from "@matrix-org/matrix-wysiwyg";
 
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
-import RoomContext, { TimelineRenderingType } from "../../../../../src/contexts/RoomContext";
+import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
 import { IRoomState } from "../../../../../src/components/structures/RoomView";
-import { Layout } from "../../../../../src/settings/enums/Layout";
 import { WysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/WysiwygComposer";
 import { createTestClient, getRoomContext, mkEvent, mkStubRoom } from "../../../../test-utils";
 import SettingsStore from "../../../../../src/settings/SettingsStore";
