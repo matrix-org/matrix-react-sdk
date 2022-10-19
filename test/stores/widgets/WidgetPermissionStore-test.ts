@@ -22,6 +22,7 @@ import { OIDCState, WidgetPermissionStore } from "../../../src/stores/widgets/Wi
 import SettingsStore from "../../../src/settings/SettingsStore";
 import { TestSdkContext } from "../../TestSdkContext";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { SdkContextClass } from "../../../src/contexts/SDKContext";
 
 jest.mock("../../../src/settings/SettingsStore", () => ({
     getValue: jest.fn(),
@@ -82,6 +83,15 @@ describe("WidgetPermissionStore", () => {
         ).toEqual(OIDCState.Denied);
     });
 
+    it("should update OIDCState for a widget", () => {
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Allowed);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Denied);
+        // check it remembered the latest value
+        expect(
+            widgetPermissionStore.getOIDCState(w, WidgetKind.Account, null),
+        ).toEqual(OIDCState.Denied);
+    });
+
     it("should scope the location for a widget when setting OIDC state", () => {
         // allow this widget for this room
         widgetPermissionStore.setOIDCState(w, WidgetKind.Room, roomId, OIDCState.Allowed);
@@ -93,5 +103,12 @@ describe("WidgetPermissionStore", () => {
         expect(
             widgetPermissionStore.getOIDCState(w, WidgetKind.Account, roomId),
         ).toEqual(OIDCState.Unknown);
+    });
+    it("is created once in SdkContextClass", () => {
+        const context = new SdkContextClass();
+        const store = context.widgetPermissionStore;
+        expect(store).toBeDefined();
+        const store2 = context.widgetPermissionStore;
+        expect(store2).toStrictEqual(store);
     });
 });
