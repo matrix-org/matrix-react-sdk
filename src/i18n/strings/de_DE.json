@@ -3650,7 +3650,7 @@
     "The other device isn't signed in.": "Das andere Gerät ist nicht angemeldet.",
     "The other device is already signed in.": "Das andere Gerät ist bereits angemeldet.",
     "The request was declined on the other device.": "Die Anfrage wurde auf dem anderen Gerät abgelehnt.",
-    "Linking with this device is not supported.": "Verbindung mit diesem Gerät nicht unterstützt.",
+    "Linking with this device is not supported.": "Die Verbindung mit diesem Gerät wird nicht unterstützt.",
     "The scanned code is invalid.": "Der gescannte Code ist ungültig.",
     "The linking wasn't completed in the required time.": "Die Verbindung konnte nicht in der erforderlichen Zeit hergestellt werden.",
     "Sign in new device": "Neues Gerät anmelden",
