@@ -3636,11 +3636,11 @@
     "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Erlaube es andere Geräte mittels QR-Code in der Sitzungsverwaltung anzumelden (kompatibler Heim-Server benötigt)",
     "Completing set up of your new device": "Schließe Anmeldung deines neuen Gerätes ab",
     "Waiting for device to sign in": "Warte auf Anmeldung des Gerätes",
-    "Connecting...": "Verbinde...",
+    "Connecting...": "Verbinde …",
     "Review and approve the sign in": "Überprüfe und genehmige die Anmeldung",
-    "Select 'Scan QR code'": "Wähle „QR-Code scannen“",
+    "Select 'Scan QR code'": "Wähle „QR-Code einlesen“",
     "Start at the sign in screen": "Beginne auf dem Anmeldebildschirm",
-    "Scan the QR code below with your device that's signed out.": "Scanne den unten angezeigten QR-Code mit deinem nicht angemeldeten Gerät.",
+    "Scan the QR code below with your device that's signed out.": "Lese den folgenden QR-Code mit deinem nicht angemeldeten Gerät ein.",
     "By approving access for this device, it will have full access to your account.": "Indem du den Zugriff dieses Gerätes bestätigst, erhält es vollen Zugang zu deinem Account.",
     "Check that the code below matches with your other device:": "Überprüfe, dass der unten angezeigte Code mit deinem anderen Gerät übereinstimmt:",
     "Devices connected": "Geräte verbunden",
@@ -3654,9 +3654,10 @@
     "The scanned code is invalid.": "",
     "The linking wasn't completed in the required time.": "",
     "Sign in new device": "Neues Gerät anmelden",
-    "Show QR code": "",
+    "Show QR code": "QR-Code anzeigen",
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Jemand anderes nimmt bereits eine Sprachübertragung auf. Warte auf das Ende der Übertragung bevor du eine neue startest.",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Du hast nicht die nötigen Berechtigungen um eine Sprachübertragung in diesem Raum zu starten. Kontaktiere einen Raumadministrator um deine Berechtigungen anzupassen.",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Du zeichnest bereits eine Sprachübertragung auf. Bitte beende die laufende Übertragung um eine neue zu beginnen.",
-    "Can't start a new voice broadcast": "Sprachübertragung konnte nicht gestartet werden"
+    "Can't start a new voice broadcast": "Sprachübertragung konnte nicht gestartet werden",
+    "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Du kannst dieses Gerät verwenden, um ein neues Gerät per QR-Code anzumelden. Dazu musst du den auf diesem Gerät angezeigten QR-Code mit deinem nicht angemeldeten Gerät einlesen."
 }
