@@ -597,7 +597,7 @@ export class RoomViewStore extends EventEmitter {
     //         // Not joined
     //     }
     // } else {
-    //     if (Stores.instance.roomViewStore.isJoining()) {
+    //     if (this.stores.roomViewStore.isJoining()) {
     //         // show spinner
     //     } else {
     //         // show join prompt
