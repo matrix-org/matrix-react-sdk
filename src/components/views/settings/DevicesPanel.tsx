@@ -41,8 +41,8 @@ interface IState {
 }
 
 export default class DevicesPanel extends React.Component<IProps, IState> {
-    static contextType = MatrixClientContext;
-    context!: React.ContextType<typeof MatrixClientContext>;
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
     private unmounted = false;
 
     constructor(props: IProps) {
