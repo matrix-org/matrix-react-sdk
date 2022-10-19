@@ -18,7 +18,9 @@ exports[`<LoginWithQR /> no content in case of no support 1`] = `
     <div
       class="mx_LoginWithQR_main"
     >
-      <p>
+      <p
+        data-testid="cancellation-message"
+      >
         The homeserver doesn't support signing in another device.
       </p>
     </div>
