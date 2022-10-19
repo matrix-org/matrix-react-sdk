@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, useState } from 'react';
 import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { logger } from "matrix-js-sdk/src/logger";
 import classNames from 'classnames';
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import LegacyCallView from "./LegacyCallView";
-import { RoomViewStore } from '../../../stores/RoomViewStore';
 import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
 import PersistentApp from "../elements/PersistentApp";
-import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import PictureInPictureDragger from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
@@ -35,6 +33,15 @@ import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/Activ
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
+import { SdkContextClass } from '../../../contexts/SDKContext';
+import { CallStore } from "../../../stores/CallStore";
+import {
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingPip,
+    VoiceBroadcastRecordingsStore,
+    VoiceBroadcastRecordingsStoreEvent,
+} from '../../../voice-broadcast';
+import { useTypedEventEmitter } from '../../../hooks/useEventEmitter';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -46,6 +53,7 @@ const SHOW_CALL_IN_STATES = [
 ];
 
 interface IProps {
+    voiceBroadcastRecording?: VoiceBroadcastRecording;
 }
 
 interface IState {
@@ -115,14 +123,13 @@ function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall
  * and all widgets that are active but not shown in any other possible container.
  */
 
-export default class PipView extends React.Component<IProps, IState> {
-    private settingsWatcherRef: string;
+class PipView extends React.Component<IProps, IState> {
     private movePersistedElement = createRef<() => void>();
 
     constructor(props: IProps) {
         super(props);
 
-        const roomId = RoomViewStore.instance.getRoomId();
+        const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
 
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(roomId);
 
@@ -140,7 +147,7 @@ export default class PipView extends React.Component<IProps, IState> {
     public componentDidMount() {
         LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCalls);
         LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
-        RoomViewStore.instance.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        SdkContextClass.instance.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         const room = MatrixClientPeg.get()?.getRoom(this.state.viewedRoomId);
         if (room) {
@@ -155,10 +162,10 @@ export default class PipView extends React.Component<IProps, IState> {
     public componentWillUnmount() {
         LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallChangeRoom, this.updateCalls);
         LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.updateCalls);
-        MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
-        RoomViewStore.instance.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
-        SettingsStore.unwatchSetting(this.settingsWatcherRef);
-        const room = MatrixClientPeg.get().getRoom(this.state.viewedRoomId);
+        const cli = MatrixClientPeg.get();
+        cli?.removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
+        SdkContextClass.instance.roomViewStore.removeListener(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        const room = cli?.getRoom(this.state.viewedRoomId);
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
@@ -179,7 +186,7 @@ export default class PipView extends React.Component<IProps, IState> {
     private onMove = () => this.movePersistedElement.current?.();
 
     private onRoomViewStoreUpdate = () => {
-        const newRoomId = RoomViewStore.instance.getRoomId();
+        const newRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
         const oldRoomId = this.state.viewedRoomId;
         if (newRoomId === oldRoomId) return;
         // The WidgetLayoutStore observer always tracks the currently viewed Room,
@@ -278,6 +285,14 @@ export default class PipView extends React.Component<IProps, IState> {
         });
     };
 
+    private onViewCall = (): void =>
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: this.state.persistentRoomId,
+            view_call: true,
+            metricsTrigger: undefined,
+        });
+
     // Accepts a persistentWidgetId to be able to skip awaiting the setState for persistentWidgetId
     public updateShowWidgetInPip(
         persistentWidgetId = this.state.persistentWidgetId,
@@ -323,18 +338,19 @@ export default class PipView extends React.Component<IProps, IState> {
                 mx_LegacyCallView_large: !pipMode,
             });
             const roomId = this.state.persistentRoomId;
-            const roomForWidget = MatrixClientPeg.get().getRoom(roomId);
+            const roomForWidget = MatrixClientPeg.get().getRoom(roomId)!;
             const viewingCallRoom = this.state.viewedRoomId === roomId;
+            const isCall = CallStore.instance.getActiveCall(roomId) !== null;
 
-            pipContent = ({ onStartMoving, _onResize }) =>
+            pipContent = ({ onStartMoving }) =>
                 <div className={pipViewClasses}>
                     <LegacyCallViewHeader
                         onPipMouseDown={(event) => { onStartMoving(event); this.onStartMoving.bind(this)(); }}
                         pipMode={pipMode}
                         callRooms={[roomForWidget]}
-                        onExpand={!viewingCallRoom && this.onExpand}
-                        onPin={viewingCallRoom && this.onPin}
-                        onMaximize={viewingCallRoom && this.onMaximize}
+                        onExpand={!isCall && !viewingCallRoom ? this.onExpand : undefined}
+                        onPin={!isCall && viewingCallRoom ? this.onPin : undefined}
+                        onMaximize={isCall ? this.onViewCall : viewingCallRoom ? this.onMaximize : undefined}
                     />
                     <PersistentApp
                         persistentWidgetId={this.state.persistentWidgetId}
@@ -343,6 +359,14 @@ export default class PipView extends React.Component<IProps, IState> {
                         movePersistedElement={this.movePersistedElement}
                     />
                 </div>;
+        }
+
+        if (this.props.voiceBroadcastRecording) {
+            pipContent = ({ onStartMoving }) => <div onMouseDown={onStartMoving}>
+                <VoiceBroadcastRecordingPip
+                    recording={this.props.voiceBroadcastRecording}
+                />
+            </div>;
         }
 
         if (!!pipContent) {
@@ -359,3 +383,27 @@ export default class PipView extends React.Component<IProps, IState> {
         return null;
     }
 }
+
+const PipViewHOC: React.FC<IProps> = (props) => {
+    // TODO Michael W: extract to custom hook
+
+    const voiceBroadcastRecordingsStore = VoiceBroadcastRecordingsStore.instance();
+    const [voiceBroadcastRecording, setVoiceBroadcastRecording] = useState(
+        voiceBroadcastRecordingsStore.getCurrent(),
+    );
+
+    useTypedEventEmitter(
+        voiceBroadcastRecordingsStore,
+        VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
+        (recording: VoiceBroadcastRecording) => {
+            setVoiceBroadcastRecording(recording);
+        },
+    );
+
+    return <PipView
+        voiceBroadcastRecording={voiceBroadcastRecording}
+        {...props}
+    />;
+};
+
+export default PipViewHOC;

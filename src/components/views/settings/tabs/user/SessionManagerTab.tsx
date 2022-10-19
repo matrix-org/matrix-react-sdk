@@ -29,19 +29,23 @@ import { useOwnDevices } from '../../devices/useOwnDevices';
 import { FilteredDeviceList } from '../../devices/FilteredDeviceList';
 import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
 import SecurityRecommendations from '../../devices/SecurityRecommendations';
-import { DeviceSecurityVariation, DeviceWithVerification } from '../../devices/types';
+import { DeviceSecurityVariation, ExtendedDevice } from '../../devices/types';
 import { deleteDevicesWithInteractiveAuth } from '../../devices/deleteDevices';
 import SettingsTab from '../SettingsTab';
+import LoginWithQRSection from '../../devices/LoginWithQRSection';
+import LoginWithQR, { Mode } from '../../../auth/LoginWithQR';
+import SettingsStore from '../../../../../settings/SettingsStore';
+import { useAsyncMemo } from '../../../../../hooks/useAsyncMemo';
 
 const useSignOut = (
     matrixClient: MatrixClient,
     onSignoutResolvedCallback: () => Promise<void>,
 ): {
         onSignOutCurrentDevice: () => void;
-        onSignOutOtherDevices: (deviceIds: DeviceWithVerification['device_id'][]) => Promise<void>;
-        signingOutDeviceIds: DeviceWithVerification['device_id'][];
+        onSignOutOtherDevices: (deviceIds: ExtendedDevice['device_id'][]) => Promise<void>;
+        signingOutDeviceIds: ExtendedDevice['device_id'][];
     } => {
-    const [signingOutDeviceIds, setSigningOutDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
+    const [signingOutDeviceIds, setSigningOutDeviceIds] = useState<ExtendedDevice['device_id'][]>([]);
 
     const onSignOutCurrentDevice = () => {
         Modal.createDialog(
@@ -53,7 +57,7 @@ const useSignOut = (
         );
     };
 
-    const onSignOutOtherDevices = async (deviceIds: DeviceWithVerification['device_id'][]) => {
+    const onSignOutOtherDevices = async (deviceIds: ExtendedDevice['device_id'][]) => {
         if (!deviceIds.length) {
             return;
         }
@@ -96,16 +100,17 @@ const SessionManagerTab: React.FC = () => {
         supportsMSC3881,
     } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
-    const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
-    const [selectedDeviceIds, setSelectedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
+    const [expandedDeviceIds, setExpandedDeviceIds] = useState<ExtendedDevice['device_id'][]>([]);
+    const [selectedDeviceIds, setSelectedDeviceIds] = useState<ExtendedDevice['device_id'][]>([]);
     const filteredDeviceListRef = useRef<HTMLDivElement>(null);
     const scrollIntoViewTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
     const matrixClient = useContext(MatrixClientContext);
     const userId = matrixClient.getUserId();
     const currentUserMember = userId && matrixClient.getUser(userId) || undefined;
+    const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
 
-    const onDeviceExpandToggle = (deviceId: DeviceWithVerification['device_id']): void => {
+    const onDeviceExpandToggle = (deviceId: ExtendedDevice['device_id']): void => {
         if (expandedDeviceIds.includes(deviceId)) {
             setExpandedDeviceIds(expandedDeviceIds.filter(id => id !== deviceId));
         } else {
@@ -136,7 +141,7 @@ const SessionManagerTab: React.FC = () => {
         );
     };
 
-    const onTriggerDeviceVerification = useCallback((deviceId: DeviceWithVerification['device_id']) => {
+    const onTriggerDeviceVerification = useCallback((deviceId: ExtendedDevice['device_id']) => {
         if (!requestDeviceVerification) {
             return;
         }
@@ -171,6 +176,30 @@ const SessionManagerTab: React.FC = () => {
         setSelectedDeviceIds([]);
     }, [filter, setSelectedDeviceIds]);
 
+    const signOutAllOtherSessions = shouldShowOtherSessions ? () => {
+        onSignOutOtherDevices(Object.keys(otherDevices));
+    }: undefined;
+
+    const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
+
+    const showQrCodeEnabled = SettingsStore.getValue("feature_qr_signin_reciprocate_show");
+
+    const onQrFinish = useCallback(() => {
+        setSignInWithQrMode(null);
+    }, [setSignInWithQrMode]);
+
+    const onShowQrClicked = useCallback(() => {
+        setSignInWithQrMode(Mode.Show);
+    }, [setSignInWithQrMode]);
+
+    if (showQrCodeEnabled && signInWithQrMode) {
+        return <LoginWithQR
+            mode={signInWithQrMode}
+            onFinished={onQrFinish}
+            client={matrixClient}
+        />;
+    }
+
     return <SettingsTab heading={_t('Sessions')}>
         <SecurityRecommendations
             devices={devices}
@@ -186,6 +215,7 @@ const SessionManagerTab: React.FC = () => {
             saveDeviceName={(deviceName) => saveDeviceName(currentDeviceId, deviceName)}
             onVerifyCurrentDevice={onVerifyCurrentDevice}
             onSignOutCurrentDevice={onSignOutCurrentDevice}
+            signOutAllOtherSessions={signOutAllOtherSessions}
         />
         {
             shouldShowOtherSessions &&
@@ -216,6 +246,10 @@ const SessionManagerTab: React.FC = () => {
                     supportsMSC3881={supportsMSC3881}
                 />
             </SettingsSubsection>
+        }
+        { showQrCodeEnabled ?
+            <LoginWithQRSection onShowQr={onShowQrClicked} versions={clientVersions} />
+            : null
         }
     </SettingsTab>;
 };

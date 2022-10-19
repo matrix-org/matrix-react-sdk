@@ -72,7 +72,6 @@ describe('<SendMessageComposer/>', () => {
         statusBarVisible: false,
         canReact: false,
         canSendMessages: false,
-        canSendVoiceBroadcasts: false,
         layout: Layout.Group,
         lowBandwidth: false,
         alwaysShowTimestamps: false,
@@ -91,6 +90,7 @@ describe('<SendMessageComposer/>', () => {
         canSelfRedact: false,
         resizing: false,
         narrow: false,
+        activeCall: null,
     };
     describe("createMessageContent", () => {
         const permalinkCreator = jest.fn() as any;

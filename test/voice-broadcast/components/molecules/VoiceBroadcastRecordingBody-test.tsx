@@ -14,82 +14,62 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
-import { mocked } from "jest-mock";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import { VoiceBroadcastRecordingBody } from "../../../../src/voice-broadcast";
-import MemberAvatar from "../../../../src/components/views/avatars/MemberAvatar";
+import {
+    VoiceBroadcastInfoEventType,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingBody,
+} from "../../../../src/voice-broadcast";
+import { mkEvent, stubClient } from "../../../test-utils";
 
-jest.mock("../../../../src/components/views/avatars/MemberAvatar", () => jest.fn());
+// mock RoomAvatar, because it is doing too much fancy stuff
+jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
+    __esModule: true,
+    default: jest.fn().mockImplementation(({ room }) => {
+        return <div data-testid="room-avatar">room avatar: { room.name }</div>;
+    }),
+}));
 
 describe("VoiceBroadcastRecordingBody", () => {
-    const title = "Test Title";
     const userId = "@user:example.com";
-    const roomMember = new RoomMember("!room:example.com", userId);
-    let onClick: MouseEventHandler<HTMLDivElement>;
+    const roomId = "!room:example.com";
+    let client: MatrixClient;
+    let infoEvent: MatrixEvent;
+    let recording: VoiceBroadcastRecording;
 
-    beforeEach(() => {
-        onClick = jest.fn();
-        // @ts-ignore
-        mocked(MemberAvatar).mockReturnValue(<div data-testid="member-avatar" />);
+    beforeAll(() => {
+        client = stubClient();
+        infoEvent = mkEvent({
+            event: true,
+            type: VoiceBroadcastInfoEventType,
+            content: {},
+            room: roomId,
+            user: userId,
+        });
+        recording = new VoiceBroadcastRecording(infoEvent, client);
     });
 
-    describe("when rendered", () => {
+    describe("when rendering a live broadcast", () => {
         let renderResult: RenderResult;
 
         beforeEach(() => {
-            renderResult = render(
-                <VoiceBroadcastRecordingBody
-                    onClick={onClick}
-                    title={title}
-                    userId={userId}
-                    live={true}
-                    member={roomMember}
-                />,
-            );
+            renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
         });
 
         it("should render the expected HTML", () => {
             expect(renderResult.container).toMatchSnapshot();
         });
-
-        it("should pass the props to MemberAvatar", () => {
-            expect(mocked(MemberAvatar)).toHaveBeenCalledWith(
-                {
-                    member: roomMember,
-                    fallbackUserId: userId,
-                },
-                {},
-            );
-        });
-
-        describe("and clicked", () => {
-            beforeEach(async () => {
-                await userEvent.click(renderResult.getByText(title));
-            });
-
-            it("should call the onClick prop", () => {
-                expect(onClick).toHaveBeenCalled();
-            });
-        });
     });
 
-    describe("when non-live rendered", () => {
+    describe("when rendering a non-live broadcast", () => {
         let renderResult: RenderResult;
 
         beforeEach(() => {
-            renderResult = render(
-                <VoiceBroadcastRecordingBody
-                    onClick={onClick}
-                    title={title}
-                    userId={userId}
-                    live={false}
-                    member={roomMember}
-                />,
-            );
+            recording.stop();
+            renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
         });
 
         it("should not render the live badge", () => {

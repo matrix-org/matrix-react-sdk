@@ -22,7 +22,13 @@ import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { ConnectionState } from "../../../models/Call";
 import { Call, CallEvent, ElementCall, isConnected } from "../../../models/Call";
-import { useCall, useConnectionState, useParticipants } from "../../../hooks/useCall";
+import {
+    useCall,
+    useConnectionState,
+    useJoinCallButtonDisabled,
+    useJoinCallButtonTooltip,
+    useParticipants,
+} from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
 import { _t } from "../../../languageHandler";
@@ -35,7 +41,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { aboveLeftOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
 import { Alignment } from "../elements/Tooltip";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -110,10 +116,12 @@ const MAX_FACES = 8;
 interface LobbyProps {
     room: Room;
     connect: () => Promise<void>;
+    joinCallButtonTooltip?: string;
+    joinCallButtonDisabled?: boolean;
     children?: ReactNode;
 }
 
-export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
+export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabled, joinCallButtonTooltip, connect, children }) => {
     const [connecting, setConnecting] = useState(false);
     const me = useMemo(() => room.getMember(room.myUserId)!, [room]);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -233,14 +241,15 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
                 />
             </div>
         </div>
-        <AccessibleButton
+        <AccessibleTooltipButton
             className="mx_CallView_connectButton"
             kind="primary"
-            disabled={connecting}
+            disabled={connecting || joinCallButtonDisabled}
             onClick={onConnectClick}
-        >
-            { _t("Join") }
-        </AccessibleButton>
+            label={_t("Join")}
+            tooltip={connecting ? _t("Connecting") : joinCallButtonTooltip}
+            alignment={Alignment.Bottom}
+        />
     </div>;
 };
 
@@ -321,6 +330,8 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
     const cli = useContext(MatrixClientContext);
     const connected = isConnected(useConnectionState(call));
     const participants = useParticipants(call);
+    const joinCallButtonTooltip = useJoinCallButtonTooltip(call);
+    const joinCallButtonDisabled = useJoinCallButtonDisabled(call);
 
     const connect = useCallback(async () => {
         // Disconnect from any other active calls first, since we don't yet support holding
@@ -344,7 +355,14 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
             </div>;
         }
 
-        lobby = <Lobby room={room} connect={connect}>{ facePile }</Lobby>;
+        lobby = <Lobby
+            room={room}
+            connect={connect}
+            joinCallButtonTooltip={joinCallButtonTooltip}
+            joinCallButtonDisabled={joinCallButtonDisabled}
+        >
+            { facePile }
+        </Lobby>;
     }
 
     return <div className="mx_CallView">

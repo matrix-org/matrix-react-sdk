@@ -39,6 +39,16 @@ import { SendMessageComposer } from "../../../../src/components/views/rooms/Send
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { addTextToComposer } from "../../../test-utils/composer";
 import UIStore, { UI_EVENTS } from "../../../../src/stores/UIStore";
+import { WysiwygComposer } from "../../../../src/components/views/rooms/wysiwyg_composer/WysiwygComposer";
+
+// The wysiwyg fetch wasm bytes and a specific workaround is needed to make it works in a node (jest) environnement
+// See https://github.com/matrix-org/matrix-wysiwyg/blob/main/platforms/web/test.setup.ts
+jest.mock("@matrix-org/matrix-wysiwyg", () => ({
+    useWysiwyg: () => {
+        return { ref: { current: null }, isWysiwygReady: true, wysiwyg: { clear: () => void 0 },
+            formattingStates: { bold: 'enabled', italic: 'enabled', underline: 'enabled', strikeThrough: 'enabled' } };
+    },
+}));
 
 describe("MessageComposer", () => {
     stubClient();
@@ -137,7 +147,7 @@ describe("MessageComposer", () => {
 
                     beforeEach(() => {
                         SettingsStore.setValue(setting, null, SettingLevel.DEVICE, value);
-                        wrapper = wrapAndRender({ room, showVoiceBroadcastButton: true });
+                        wrapper = wrapAndRender({ room });
                     });
 
                     it(`should pass the prop ${prop} = ${value}`, () => {
@@ -161,17 +171,6 @@ describe("MessageComposer", () => {
                         });
                     });
                 });
-            });
-        });
-
-        [false, undefined].forEach((value) => {
-            it(`should pass showVoiceBroadcastButton = false if the MessageComposer prop is ${value}`, () => {
-                SettingsStore.setValue(Features.VoiceBroadcast, null, SettingLevel.DEVICE, true);
-                const wrapper = wrapAndRender({
-                    room,
-                    showVoiceBroadcastButton: value,
-                });
-                expect(wrapper.find(MessageComposerButtons).props().showVoiceBroadcastButton).toBe(false);
             });
         });
 
@@ -345,6 +344,16 @@ describe("MessageComposer", () => {
             const wrapper = wrapAndRender({ room: localRoom });
             expect(wrapper.find(MessageComposerButtons).props().showStickersButton).toBe(false);
         });
+    });
+
+    it('should render WysiwygComposer', () => {
+        const room = mkStubRoom("!roomId:server", "Room 1", cli);
+
+        SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, true);
+        const wrapper = wrapAndRender({ room });
+
+        SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, false);
+        expect(wrapper.find(WysiwygComposer)).toBeTruthy();
     });
 });
 
