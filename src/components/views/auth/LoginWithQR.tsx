@@ -82,12 +82,12 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        void this.updateMode(this.props.mode);
+        this.updateMode(this.props.mode).then(() => {});
     }
 
     public componentDidUpdate(prevProps: Readonly<IProps>): void {
         if (prevProps.mode !== this.props.mode) {
-            void this.updateMode(this.props.mode);
+            this.updateMode(this.props.mode).then(() => {});
         }
     }
 
@@ -108,7 +108,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // eslint-disable-next-line react/no-direct-mutation-state
             this.state.rendezvous.onFailure = undefined;
             // calling cancel will call close() as well to clean up the resources
-            void this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled);
+            this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled).then(() => {});
         }
     }
 
@@ -217,8 +217,8 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         await this.updateMode(this.props.mode);
     };
 
-    private onBackClick = () => {
-        void this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
+    private onBackClick = async () => {
+        await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
 
         this.props.onFinished(false);
     };
