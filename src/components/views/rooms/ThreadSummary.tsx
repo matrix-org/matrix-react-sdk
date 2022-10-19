@@ -94,7 +94,7 @@ export const ThreadMessagePreview = ({ thread, showDisplayname = false }: IPrevi
         await cli.decryptEventIfNeeded(lastReply);
         return MessagePreviewStore.instance.generatePreviewForEvent(lastReply);
     }, [lastReply, content]);
-    if (!preview) return null;
+    if (!preview || !lastReply) return null;
 
     return <>
         <MemberAvatar
