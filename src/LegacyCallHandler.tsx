@@ -62,6 +62,7 @@ import { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialogTypes
 import { OpenInviteDialogPayload } from "./dispatcher/payloads/OpenInviteDialogPayload";
 import { findDMForUser } from './utils/dm/findDMForUser';
 import { getJoinedNonFunctionalMembers } from './utils/room/getJoinedNonFunctionalMembers';
+import { localNotificationsAreSilenced } from './utils/notifications';
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -184,6 +185,11 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     }
 
+    public isForcedSilent(): boolean {
+        const cli = MatrixClientPeg.get();
+        return localNotificationsAreSilenced(cli);
+    }
+
     public silenceCall(callId: string): void {
         this.silencedCalls.add(callId);
         this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
@@ -194,13 +200,14 @@ export default class LegacyCallHandler extends EventEmitter {
     }
 
     public unSilenceCall(callId: string): void {
+        if (this.isForcedSilent) return;
         this.silencedCalls.delete(callId);
         this.emit(LegacyCallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
         this.play(AudioID.Ring);
     }
 
     public isCallSilenced(callId: string): boolean {
-        return this.silencedCalls.has(callId);
+        return this.isForcedSilent() || this.silencedCalls.has(callId);
     }
 
     /**
@@ -582,7 +589,7 @@ export default class LegacyCallHandler extends EventEmitter {
                     action.value === "ring"
                 ));
 
-                if (pushRuleEnabled && tweakSetToRing) {
+                if (pushRuleEnabled && tweakSetToRing && !this.isForcedSilent()) {
                     this.play(AudioID.Ring);
                 } else {
                     this.silenceCall(call.callId);
@@ -820,10 +827,10 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     }
 
-    public placeCall(roomId: string, type?: CallType, transferee?: MatrixCall): void {
+    public async placeCall(roomId: string, type?: CallType, transferee?: MatrixCall): Promise<void> {
         // We might be using managed hybrid widgets
         if (isManagedHybridWidgetEnabled()) {
-            addManagedHybridWidget(roomId);
+            await addManagedHybridWidget(roomId);
             return;
         }
 
@@ -870,9 +877,9 @@ export default class LegacyCallHandler extends EventEmitter {
         } else if (members.length === 2) {
             logger.info(`Place ${type} call in ${roomId}`);
 
-            this.placeMatrixCall(roomId, type, transferee);
+            await this.placeMatrixCall(roomId, type, transferee);
         } else { // > 2
-            this.placeJitsiCall(roomId, type);
+            await this.placeJitsiCall(roomId, type);
         }
     }
 
