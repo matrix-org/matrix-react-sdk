@@ -316,12 +316,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
                 buttons = <>
                     <AccessibleButton
+                        data-testid="decline-login-button"
                         kind="primary_outline"
                         onClick={this.declineClicked}
                     >
                         { _t("Cancel") }
                     </AccessibleButton>
                     <AccessibleButton
+                        data-testid="approve-login-button"
                         kind="primary"
                         onClick={this.approveLogin}
                     >
@@ -371,7 +373,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             <div className="mx_LoginWithQR">
                 <div className={centreTitle ? "mx_LoginWithQR_centreTitle" : ""}>
                     { backButton ?
-                        <AccessibleButton className="mx_LoginWithQR_BackButton" onClick={this.onBackClick} title="Back"><BackButtonIcon /></AccessibleButton>
+                        <AccessibleButton
+                            data-testid="back-button"
+                            className="mx_LoginWithQR_BackButton"
+                            onClick={this.onBackClick}
+                            title="Back"
+                        >
+                            <BackButtonIcon />
+                        </AccessibleButton>
                         : null }
                     <h1>{ titleIcon }{ title }</h1>
                 </div>
