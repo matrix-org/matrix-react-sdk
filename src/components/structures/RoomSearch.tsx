@@ -21,7 +21,6 @@ import { ALTERNATE_KEY_NAME } from "../../accessibility/KeyboardShortcuts";
 import { Action } from "../../dispatcher/actions";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
-import { OpenSpotlightPayload } from "../../dispatcher/payloads/OpenSpotlightPayload";
 import { IS_MAC, Key } from "../../Keyboard";
 import { _t } from "../../languageHandler";
 import AccessibleButton from "../views/elements/AccessibleButton";
