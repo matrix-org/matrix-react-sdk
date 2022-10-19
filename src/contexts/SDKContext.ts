@@ -60,8 +60,6 @@ export class SdkContextClass {
     protected _SpaceStore?: SpaceStoreClass;
     protected _LegacyCallHandler?: LegacyCallHandler;
 
-    constructor() {}
-
     /**
      * Automatically construct stores which need to be created eagerly so they can register with
      * the dispatcher.
