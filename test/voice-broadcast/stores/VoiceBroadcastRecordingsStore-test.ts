@@ -25,15 +25,6 @@ import {
 } from "../../../src/voice-broadcast";
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 
-jest.mock("../../../src/voice-broadcast/models/VoiceBroadcastRecording.ts", () => ({
-    VoiceBroadcastRecording: jest.fn().mockImplementation(
-        (
-            infoEvent: MatrixEvent,
-            client: MatrixClient,
-        ) => ({ infoEvent, client }),
-    ),
-}));
-
 describe("VoiceBroadcastRecordingsStore", () => {
     const roomId = "!room:example.com";
     let client: MatrixClient;
@@ -58,15 +49,14 @@ describe("VoiceBroadcastRecordingsStore", () => {
             room: roomId,
             content: {},
         });
-        recording = {
-            infoEvent,
-        } as unknown as VoiceBroadcastRecording;
+        recording = new VoiceBroadcastRecording(infoEvent, client);
         recordings = new VoiceBroadcastRecordingsStore();
         onCurrentChanged = jest.fn();
         recordings.on(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, onCurrentChanged);
     });
 
     afterEach(() => {
+        recording.destroy();
         recordings.off(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, onCurrentChanged);
     });
 
@@ -111,6 +101,16 @@ describe("VoiceBroadcastRecordingsStore", () => {
                 expect(onCurrentChanged).toHaveBeenCalledWith(null);
             });
         });
+
+        describe("and the recording stops", () => {
+            beforeEach(() => {
+                recording.stop();
+            });
+
+            it("should clear the current recording", () => {
+                expect(recordings.getCurrent()).toBeNull();
+            });
+        });
     });
 
     describe("getByInfoEventId", () => {
@@ -133,10 +133,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
             });
 
             it("should return the recording", () => {
-                expect(returnedRecording).toEqual({
-                    infoEvent,
-                    client,
-                });
+                expect(returnedRecording.infoEvent).toBe(infoEvent);
             });
         });
     });
