@@ -14,15 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { mocked } from 'jest-mock';
 import React from 'react';
-import { sleep } from 'matrix-js-sdk/src/utils';
-import { act } from 'react-dom/test-utils';
 
 import LoginWithQR, { Mode } from '../../../../../src/components/views/auth/LoginWithQR';
 import type { MatrixClient } from 'matrix-js-sdk/src/matrix';
-import type { SAS } from 'matrix-js-sdk/src/crypto/verification/SAS';
 
 function makeClient() {
     return mocked({
@@ -50,28 +47,12 @@ describe('<LoginWithQR />', () => {
         onFinished: () => {},
     };
 
-    beforeAll(() => {
-        global.Olm = {
-            SAS: jest.fn().mockImplementation(() => {
-                return {
-                    get_pubkey: jest.fn().mockReturnValue('mock-public-key'),
-                    free: jest.fn(),
-                } as unknown as SAS;
-            }),
-        } as unknown as typeof global.Olm;
-    });
-
-    beforeEach(() => {
-    });
-
     const getComponent = (props: { client: MatrixClient }) =>
         (<LoginWithQR {...defaultProps} {...props} />);
 
     it('no content in case of no support', async () => {
         const { container } = render(getComponent({ client }));
-        await act(async () => {
-            await sleep(1000);
-        });
+        await waitFor(() => screen.getAllByTestId('cancellation-message').length === 1);
         expect(container).toMatchSnapshot();
     });
 });

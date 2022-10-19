@@ -286,7 +286,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 centreTitle = true;
                 titleIcon = <WarningBadge className="error" />;
                 backButton = false;
-                main = <p>{ cancellationMessage }</p>;
+                main = <p data-testid="cancellation-message">{ cancellationMessage }</p>;
                 buttons = <>
                     <AccessibleButton
                         kind="primary"
