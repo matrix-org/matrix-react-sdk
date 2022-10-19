@@ -3642,7 +3642,7 @@
     "By approving access for this device, it will have full access to your account.": "Lubades ligipääsu sellele seadmele, annad talle ka täismahulise ligipääsu oma kasutajakontole.",
     "Check that the code below matches with your other device:": "Kontrolli, et järgnev kood klapib teises seadmes kuvatava koodiga:",
     "Devices connected": "Seadmed on ühendatud",
-    "The homeserver doesn't support signing in another device.": "Koduserver ei toeta muude seadmete võrku logimise võimnalust.",
+    "The homeserver doesn't support signing in another device.": "Koduserver ei toeta muude seadmete võrku logimise võimalust.",
     "An unexpected error occurred.": "Tekkis teadmata viga.",
     "The request was cancelled.": "Päring katkestati.",
     "The other device isn't signed in.": "Teine seade ei ole võrku loginud.",
@@ -3654,5 +3654,14 @@
     "Sign in new device": "Logi sisse uus seade",
     "Show QR code": "Näita QR-koodi",
     "Sign in with QR code": "Logi sisse QR-koodi abil",
-    "Browser": "Brauser"
+    "Browser": "Brauser",
+    "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Sa saad kasutada seda seadet mõne muu seadme logimiseks Matrix'i võrku QR-koodi alusel. Selleks skaneeri võrgust väljalogitud seadmega seda QR-koodi.",
+    "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Teise seadme sisselogimiseks luba QR-koodi kuvamine sessioonihalduris (eeldab, et koduserver sellist võimalust toetab)",
+    "Yes, stop broadcast": "Jah, lõpeta",
+    "Are you sure you want to stop your live broadcast?This will end the broadcast and the full recording will be available in the room.": "Kas sa oled kindel, et soovid otseeetri lõpetada? Sellega ringhäälingukõne salvestamine lõppeb ja salvestis on kättesaadav kõigile jututoas.",
+    "Stop live broadcasting?": "Kas lõpetame otseeetri?",
+    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Keegi juba salvestab ringhäälingukõnet. Uue ringhäälingukõne salvestamiseks palun oota, kuni see teine ringhäälingukõne on lõppenud.",
+    "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Sul pole piisavalt õigusi selles jututoas ringhäälingukõne algatamiseks. Õiguste lisamiseks palun võta ühendust jututoa haldajaga.",
+    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Sa juba salvestad ringhäälingukõnet. Uue alustamiseks palun lõpeta eelmine salvestus.",
+    "Can't start a new voice broadcast": "Uue ringhäälingukõne alustamine pole võimalik"
 }
