@@ -139,7 +139,7 @@ import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
 import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
-import { findRoomLiveVoiceBroadcastFromUserAndDevice, resumeVoiceBroadcastInRoom } from '../../voice-broadcast';
+import { VoiceBroadcastResumer } from '../../voice-broadcast';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -235,6 +235,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private focusComposer: boolean;
     private subTitleStatus: string;
     private prevWindowWidth: number;
+    private voiceBroadcastResumer: VoiceBroadcastResumer;
 
     private readonly loggedInView: React.RefObject<LoggedInViewType>;
     private readonly dispatcherRef: string;
@@ -434,6 +435,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
+        if (this.voiceBroadcastResumer) this.voiceBroadcastResumer.destroy();
     }
 
     private onWindowResized = (): void => {
@@ -1535,17 +1537,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
 
         cli.on(ClientEvent.Room, (room) => {
-            const voiceBroadcastState = findRoomLiveVoiceBroadcastFromUserAndDevice(
-                room,
-                cli.getUserId(),
-                cli.getDeviceId(),
-            );
-
-            if (voiceBroadcastState) {
-                // resume live broadcast in paused state
-                resumeVoiceBroadcastInRoom(voiceBroadcastState, room, cli);
-            }
-
             if (MatrixClientPeg.get().isCryptoEnabled()) {
                 const blacklistEnabled = SettingsStore.getValueAt(
                     SettingLevel.ROOM_DEVICE,
@@ -1630,6 +1621,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 });
             }
         });
+
+        this.voiceBroadcastResumer = new VoiceBroadcastResumer(cli);
     }
 
     /**

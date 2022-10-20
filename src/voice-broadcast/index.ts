@@ -41,6 +41,7 @@ export * from "./utils/resumeVoiceBroadcastInRoom";
 export * from "./utils/shouldDisplayAsVoiceBroadcastRecordingTile";
 export * from "./utils/shouldDisplayAsVoiceBroadcastTile";
 export * from "./utils/startNewVoiceBroadcastRecording";
+export * from "./utils/VoiceBroadcastResumer";
 
 export const VoiceBroadcastInfoEventType = "io.element.voice_broadcast_info";
 export const VoiceBroadcastChunkEventType = "io.element.voice_broadcast_chunk";
