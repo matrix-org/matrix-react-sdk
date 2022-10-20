@@ -73,6 +73,7 @@ function SendButton(props: ISendButtonProps) {
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
             title={props.title ?? _t('Send message')}
+            data-testid="sendmessagebtn"
         />
     );
 }
@@ -85,7 +86,6 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
-    showVoiceBroadcastButton?: boolean;
 }
 
 interface IState {
@@ -384,11 +384,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return this.state.showStickersButton && !isLocalRoom(this.props.room);
     }
 
-    private get showVoiceBroadcastButton(): boolean {
-        return this.props.showVoiceBroadcastButton && this.state.showVoiceBroadcastButton;
-    }
-
     public render() {
+        const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
         const controls = [
             this.props.e2eStatus ?
                 <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
@@ -403,8 +400,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
         if (canSendMessages) {
-            const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
-
             if (isWysiwygComposerEnabled) {
                 controls.push(
                     <WysiwygComposer key="controls_input"
@@ -503,6 +498,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             "mx_MessageComposer": true,
             "mx_MessageComposer--compact": this.props.compact,
             "mx_MessageComposer_e2eStatus": this.props.e2eStatus != undefined,
+            "mx_MessageComposer_wysiwyg": isWysiwygComposerEnabled,
         });
 
         return (
@@ -532,10 +528,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
-                            showVoiceBroadcastButton={this.showVoiceBroadcastButton}
+                            showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
                             onStartVoiceBroadcastClick={() => {
                                 startNewVoiceBroadcastRecording(
-                                    this.props.room.roomId,
+                                    this.props.room,
                                     MatrixClientPeg.get(),
                                     VoiceBroadcastRecordingsStore.instance(),
                                 );

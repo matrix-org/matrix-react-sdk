@@ -14,14 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useState } from 'react';
-import { useWysiwyg } from "@matrix-org/matrix-wysiwyg";
+import React, { useCallback, useEffect } from 'react';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { useWysiwyg, Wysiwyg, WysiwygInputEvent } from "@matrix-org/matrix-wysiwyg";
 
-import { useRoomContext } from '../../../../contexts/RoomContext';
-import { sendMessage } from './message';
+import { Editor } from './Editor';
+import { FormattingButtons } from './FormattingButtons';
 import { RoomPermalinkCreator } from '../../../../utils/permalinks/Permalinks';
+import { sendMessage } from './message';
 import { useMatrixClientContext } from '../../../../contexts/MatrixClientContext';
+import { useRoomContext } from '../../../../contexts/RoomContext';
+import { useWysiwygActionHandler } from './useWysiwygActionHandler';
+import { useSettingValue } from '../../../../hooks/useSettings';
 
 interface WysiwygProps {
     disabled?: boolean;
@@ -38,12 +42,33 @@ export function WysiwygComposer(
 ) {
     const roomContext = useRoomContext();
     const mxClient = useMatrixClientContext();
+    const ctrlEnterToSend = useSettingValue("MessageComposerInput.ctrlEnterToSend");
 
-    const [content, setContent] = useState<string>();
-    const { ref, isWysiwygReady, wysiwyg } = useWysiwyg({ onChange: (_content) => {
-        setContent(_content);
-        onChange(_content);
-    } });
+    function inputEventProcessor(event: WysiwygInputEvent, wysiwyg: Wysiwyg): WysiwygInputEvent | null {
+        if (event instanceof ClipboardEvent) {
+            return event;
+        }
+
+        if (
+            (event.inputType === 'insertParagraph' && !ctrlEnterToSend) ||
+            event.inputType === 'sendMessage'
+        ) {
+            sendMessage(content, { mxClient, roomContext, ...props });
+            wysiwyg.actions.clear();
+            ref.current?.focus();
+            return null;
+        }
+
+        return event;
+    }
+
+    const { ref, isWysiwygReady, content, formattingStates, wysiwyg } = useWysiwyg({ inputEventProcessor });
+
+    useEffect(() => {
+        if (!disabled && content !== null) {
+            onChange(content);
+        }
+    }, [onChange, content, disabled]);
 
     const memoizedSendMessage = useCallback(() => {
         sendMessage(content, { mxClient, roomContext, ...props });
@@ -51,20 +76,12 @@ export function WysiwygComposer(
         ref.current?.focus();
     }, [content, mxClient, roomContext, wysiwyg, props, ref]);
 
+    useWysiwygActionHandler(disabled, ref);
+
     return (
         <div className="mx_WysiwygComposer">
-            <div className="mx_WysiwygComposer_container">
-                <div className="mx_WysiwygComposer_content"
-                    ref={ref}
-                    contentEditable={!disabled && isWysiwygReady}
-                    role="textbox"
-                    aria-multiline="true"
-                    aria-autocomplete="list"
-                    aria-haspopup="listbox"
-                    dir="auto"
-                    aria-disabled={disabled || !isWysiwygReady}
-                />
-            </div>
+            <FormattingButtons composer={wysiwyg} formattingStates={formattingStates} />
+            <Editor ref={ref} disabled={!isWysiwygReady || disabled} />
             { children?.(memoizedSendMessage) }
         </div>
     );

@@ -34,6 +34,7 @@ import {
 import SessionManagerTab from '../../../../../../src/components/views/settings/tabs/user/SessionManagerTab';
 import MatrixClientContext from '../../../../../../src/contexts/MatrixClientContext';
 import {
+    flushPromises,
     flushPromisesWithFakeTimers,
     getMockClientWithEventEmitter,
     mkPusher,
@@ -47,6 +48,7 @@ import {
     ExtendedDevice,
 } from '../../../../../../src/components/views/settings/devices/types';
 import { INACTIVE_DEVICE_AGE_MS } from '../../../../../../src/components/views/settings/devices/filter';
+import SettingsStore from '../../../../../../src/settings/SettingsStore';
 
 mockPlatformPeg();
 
@@ -69,7 +71,7 @@ describe('<SessionManagerTab />', () => {
     };
 
     const alicesInactiveDevice = {
-        device_id: 'alices_older_mobile_device',
+        device_id: 'alices_older_inactive_mobile_device',
         last_seen_ts: Date.now() - (INACTIVE_DEVICE_AGE_MS + 1000),
     };
 
@@ -92,6 +94,7 @@ describe('<SessionManagerTab />', () => {
         getPushers: jest.fn(),
         setPusher: jest.fn(),
         setLocalNotificationSettings: jest.fn(),
+        getVersions: jest.fn().mockResolvedValue({}),
     });
 
     const defaultProps = {};
@@ -105,7 +108,7 @@ describe('<SessionManagerTab />', () => {
     const toggleDeviceDetails = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
         deviceId: ExtendedDevice['device_id'],
-    ) => {
+    ): void => {
         // open device detail
         const tile = getByTestId(`device-tile-${deviceId}`);
         const toggle = tile.querySelector('[aria-label="Toggle device details"]') as Element;
@@ -115,9 +118,16 @@ describe('<SessionManagerTab />', () => {
     const toggleDeviceSelection = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
         deviceId: ExtendedDevice['device_id'],
-    ) => {
+    ): void => {
         const checkbox = getByTestId(`device-tile-checkbox-${deviceId}`);
         fireEvent.click(checkbox);
+    };
+
+    const getDeviceTile = (
+        getByTestId: ReturnType<typeof render>['getByTestId'],
+        deviceId: ExtendedDevice['device_id'],
+    ): HTMLElement => {
+        return getByTestId(`device-tile-${deviceId}`);
     };
 
     const setFilter = async (
@@ -749,6 +759,7 @@ describe('<SessionManagerTab />', () => {
             it('deletes multiple devices', async () => {
                 mockClient.getDevices.mockResolvedValue({ devices: [
                     alicesDevice, alicesMobileDevice, alicesOlderMobileDevice,
+                    alicesInactiveDevice,
                 ] });
                 mockClient.deleteMultipleDevices.mockResolvedValue({});
 
@@ -762,6 +773,24 @@ describe('<SessionManagerTab />', () => {
                 toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
 
                 fireEvent.click(getByTestId('sign-out-selection-cta'));
+
+                // buttons disabled in list header
+                expect(getByTestId('sign-out-selection-cta').getAttribute('aria-disabled')).toBeTruthy();
+                expect(getByTestId('cancel-selection-cta').getAttribute('aria-disabled')).toBeTruthy();
+                // spinner rendered in list header
+                expect(getByTestId('sign-out-selection-cta').querySelector('.mx_Spinner')).toBeTruthy();
+
+                // spinners on signing out devices
+                expect(getDeviceTile(
+                    getByTestId, alicesMobileDevice.device_id,
+                ).querySelector('.mx_Spinner')).toBeTruthy();
+                expect(getDeviceTile(
+                    getByTestId, alicesOlderMobileDevice.device_id,
+                ).querySelector('.mx_Spinner')).toBeTruthy();
+                // no spinner for device that is not signing out
+                expect(getDeviceTile(
+                    getByTestId, alicesInactiveDevice.device_id,
+                ).querySelector('.mx_Spinner')).toBeFalsy();
 
                 // delete called with both ids
                 expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
@@ -1114,5 +1143,51 @@ describe('<SessionManagerTab />', () => {
         });
 
         expect(checkbox.getAttribute('aria-checked')).toEqual("false");
+    });
+
+    describe('QR code login', () => {
+        const settingsValueSpy = jest.spyOn(SettingsStore, 'getValue');
+
+        beforeEach(() => {
+            settingsValueSpy.mockClear().mockReturnValue(false);
+            // enable server support for qr login
+            mockClient.getVersions.mockResolvedValue({
+                versions: [],
+                unstable_features: {
+                    'org.matrix.msc3882': true,
+                    'org.matrix.msc3886': true,
+                },
+            });
+        });
+
+        it('does not render qr code login section when disabled', () => {
+            settingsValueSpy.mockReturnValue(false);
+            const { queryByText } = render(getComponent());
+
+            expect(settingsValueSpy).toHaveBeenCalledWith('feature_qr_signin_reciprocate_show');
+
+            expect(queryByText('Sign in with QR code')).toBeFalsy();
+        });
+
+        it('renders qr code login section when enabled', async () => {
+            settingsValueSpy.mockImplementation(settingName => settingName === 'feature_qr_signin_reciprocate_show');
+            const { getByText } = render(getComponent());
+
+            // wait for versions call to settle
+            await flushPromises();
+
+            expect(getByText('Sign in with QR code')).toBeTruthy();
+        });
+
+        it('enters qr code login section when show QR code button clicked', async () => {
+            settingsValueSpy.mockImplementation(settingName => settingName === 'feature_qr_signin_reciprocate_show');
+            const { getByText, getByTestId } = render(getComponent());
+            // wait for versions call to settle
+            await flushPromises();
+
+            fireEvent.click(getByText('Show QR code'));
+
+            expect(getByTestId("login-with-qr")).toBeTruthy();
+        });
     });
 });

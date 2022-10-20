@@ -16,16 +16,22 @@ limitations under the License.
 
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastInfoEventType,
-    VoiceBroadcastInfoState,
     VoiceBroadcastRecording,
     VoiceBroadcastRecordingBody,
 } from "../../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../../test-utils";
+
+// mock RoomAvatar, because it is doing too much fancy stuff
+jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
+    __esModule: true,
+    default: jest.fn().mockImplementation(({ room }) => {
+        return <div data-testid="room-avatar">room avatar: { room.name }</div>;
+    }),
+}));
 
 describe("VoiceBroadcastRecordingBody", () => {
     const userId = "@user:example.com";
@@ -55,16 +61,6 @@ describe("VoiceBroadcastRecordingBody", () => {
 
         it("should render the expected HTML", () => {
             expect(renderResult.container).toMatchSnapshot();
-        });
-
-        describe("and clicked", () => {
-            beforeEach(async () => {
-                await userEvent.click(renderResult.getByText("My room"));
-            });
-
-            it("should stop the recording", () => {
-                expect(recording.getState()).toBe(VoiceBroadcastInfoState.Stopped);
-            });
         });
     });
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent, MatrixEventEvent, RelationType } from "matrix-js-sdk/src/matrix";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
 import {
@@ -30,6 +30,8 @@ import { uploadFile } from "../../ContentMessages";
 import { IEncryptedFile } from "../../customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../utils/createVoiceMessageContent";
 import { IDestroyable } from "../../utils/IDestroyable";
+import dis from "../../dispatcher/dispatcher";
+import { ActionPayload } from "../../dispatcher/payloads";
 
 export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
@@ -45,6 +47,7 @@ export class VoiceBroadcastRecording
     private state: VoiceBroadcastInfoState;
     private recorder: VoiceBroadcastRecorder;
     private sequence = 1;
+    private dispatcherRef: string;
 
     public constructor(
         public readonly infoEvent: MatrixEvent,
@@ -62,8 +65,10 @@ export class VoiceBroadcastRecording
         this.state = !relatedEvents?.find((event: MatrixEvent) => {
             return event.getContent()?.state === VoiceBroadcastInfoState.Stopped;
         }) ? VoiceBroadcastInfoState.Started : VoiceBroadcastInfoState.Stopped;
-
         // TODO Michael W: add listening for updates
+
+        this.infoEvent.on(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
+        this.dispatcherRef = dis.register(this.onAction);
     }
 
     public async start(): Promise<void> {
@@ -71,10 +76,37 @@ export class VoiceBroadcastRecording
     }
 
     public async stop(): Promise<void> {
+        if (this.state === VoiceBroadcastInfoState.Stopped) return;
+
         this.setState(VoiceBroadcastInfoState.Stopped);
         await this.stopRecorder();
-        await this.sendStoppedStateEvent();
+        await this.sendInfoStateEvent(VoiceBroadcastInfoState.Stopped);
     }
+
+    public async pause(): Promise<void> {
+        // stopped or already paused recordings cannot be paused
+        if ([VoiceBroadcastInfoState.Stopped, VoiceBroadcastInfoState.Paused].includes(this.state)) return;
+
+        this.setState(VoiceBroadcastInfoState.Paused);
+        await this.stopRecorder();
+        await this.sendInfoStateEvent(VoiceBroadcastInfoState.Paused);
+    }
+
+    public async resume(): Promise<void> {
+        if (this.state !== VoiceBroadcastInfoState.Paused) return;
+
+        this.setState(VoiceBroadcastInfoState.Running);
+        await this.getRecorder().start();
+        await this.sendInfoStateEvent(VoiceBroadcastInfoState.Running);
+    }
+
+    public toggle = async (): Promise<void> => {
+        if (this.getState() === VoiceBroadcastInfoState.Paused) return this.resume();
+
+        if ([VoiceBroadcastInfoState.Started, VoiceBroadcastInfoState.Running].includes(this.getState())) {
+            return this.pause();
+        }
+    };
 
     public getState(): VoiceBroadcastInfoState {
         return this.state;
@@ -95,8 +127,25 @@ export class VoiceBroadcastRecording
             this.recorder.stop();
         }
 
+        this.infoEvent.off(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
         this.removeAllListeners();
+        dis.unregister(this.dispatcherRef);
     }
+
+    private onBeforeRedaction = () => {
+        if (this.getState() !== VoiceBroadcastInfoState.Stopped) {
+            this.setState(VoiceBroadcastInfoState.Stopped);
+            // destroy cleans up everything
+            this.destroy();
+        }
+    };
+
+    private onAction = (payload: ActionPayload) => {
+        if (payload.action !== "call_state") return;
+
+        // stop on any call action
+        this.stop();
+    };
 
     private setState(state: VoiceBroadcastInfoState): void {
         this.state = state;
@@ -140,14 +189,14 @@ export class VoiceBroadcastRecording
         await this.client.sendMessage(this.infoEvent.getRoomId(), content);
     }
 
-    private async sendStoppedStateEvent(): Promise<void> {
+    private async sendInfoStateEvent(state: VoiceBroadcastInfoState): Promise<void> {
         // TODO Michael W: add error handling for state event
         await this.client.sendStateEvent(
             this.infoEvent.getRoomId(),
             VoiceBroadcastInfoEventType,
             {
                 device_id: this.client.getDeviceId(),
-                state: VoiceBroadcastInfoState.Stopped,
+                state,
                 ["m.relates_to"]: {
                     rel_type: RelationType.Reference,
                     event_id: this.infoEvent.getId(),

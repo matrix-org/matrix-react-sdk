@@ -28,6 +28,7 @@ import {
     mkPusher,
     mockClientMethodsUser,
 } from "../../../test-utils";
+import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 
 describe('<DevicesPanel />', () => {
     const userId = '@alice:server.org';
@@ -46,7 +47,10 @@ describe('<DevicesPanel />', () => {
         setPusher: jest.fn(),
     });
 
-    const getComponent = () => <DevicesPanel />;
+    const getComponent = () =>
+        <MatrixClientContext.Provider value={mockClient}>
+            <DevicesPanel />
+        </MatrixClientContext.Provider>;
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -197,7 +201,7 @@ describe('<DevicesPanel />', () => {
 
             await flushPromises();
             // modal rendering has some weird sleeps
-            await sleep(10);
+            await sleep(20);
 
             // close the modal without submission
             act(() => {
