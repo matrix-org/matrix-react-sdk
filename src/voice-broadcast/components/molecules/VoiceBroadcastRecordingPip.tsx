@@ -25,7 +25,7 @@ import { useVoiceBroadcastRecording } from "../../hooks/useVoiceBroadcastRecordi
 import { VoiceBroadcastHeader } from "../atoms/VoiceBroadcastHeader";
 import { Icon as StopIcon } from "../../../../res/img/element-icons/Stop.svg";
 import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
-import { Icon as PlayIcon } from "../../../../res/img/element-icons/play.svg";
+import { Icon as RecordIcon } from "../../../../res/img/element-icons/Record.svg";
 import { _t } from "../../../languageHandler";
 
 interface VoiceBroadcastRecordingPipProps {
@@ -43,7 +43,12 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
     } = useVoiceBroadcastRecording(recording);
 
     const toggleControl = recordingState === VoiceBroadcastInfoState.Paused
-        ? <VoiceBroadcastControl onClick={toggleRecording} icon={PlayIcon} label={_t("resume voice broadcast")} />
+        ? <VoiceBroadcastControl
+            className="mx_VoiceBroadcastControl-recording"
+            onClick={toggleRecording}
+            icon={RecordIcon}
+            label={_t("resume voice broadcast")}
+        />
         : <VoiceBroadcastControl onClick={toggleRecording} icon={PauseIcon} label={_t("pause voice broadcast")} />;
 
     return <div

@@ -19,18 +19,20 @@ import React from "react";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
 
 interface Props {
+    className?: string;
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
     label: string;
     onClick: () => void;
 }
 
 export const VoiceBroadcastControl: React.FC<Props> = ({
+    className = "",
     icon: Icon,
     label,
     onClick,
 }) => {
     return <AccessibleButton
-        className="mx_VoiceBroadcastControl"
+        className={`mx_VoiceBroadcastControl ${className}`}
         onClick={onClick}
         aria-label={label}
     >
