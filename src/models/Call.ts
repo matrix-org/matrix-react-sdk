@@ -830,8 +830,9 @@ export class ElementCall extends Call {
     public setDisconnected() {
         this.client.off(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-        this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
-        this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
+        this.messaging!.off(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
+        this.messaging!.off(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
+        this.messaging!.off(`action:${ElementWidgetActions.Screenshare}`, this.onSpotlightLayout);
         super.setDisconnected();
     }
 
