@@ -110,7 +110,6 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                             { shouldWarn && <span className="mx_SettingsTab_microcopy_warning">
                                 { _t("WARNING:") } { " " }
                             </span> }
-
                             { description }
                         </div> }
                         { disabledDescription }
