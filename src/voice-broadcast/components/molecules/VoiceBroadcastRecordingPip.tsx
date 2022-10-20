@@ -18,11 +18,15 @@ import React from "react";
 
 import {
     VoiceBroadcastControl,
+    VoiceBroadcastInfoState,
     VoiceBroadcastRecording,
 } from "../..";
 import { useVoiceBroadcastRecording } from "../../hooks/useVoiceBroadcastRecording";
 import { VoiceBroadcastHeader } from "../atoms/VoiceBroadcastHeader";
 import { Icon as StopIcon } from "../../../../res/img/element-icons/Stop.svg";
+import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
+import { Icon as PlayIcon } from "../../../../res/img/element-icons/play.svg";
+import { _t } from "../../../languageHandler";
 
 interface VoiceBroadcastRecordingPipProps {
     recording: VoiceBroadcastRecording;
@@ -31,10 +35,16 @@ interface VoiceBroadcastRecordingPipProps {
 export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProps> = ({ recording }) => {
     const {
         live,
-        sender,
+        recordingState,
         room,
+        sender,
         stopRecording,
+        toggleRecording,
     } = useVoiceBroadcastRecording(recording);
+
+    const toggleControl = recordingState === VoiceBroadcastInfoState.Paused
+        ? <VoiceBroadcastControl onClick={toggleRecording} icon={PlayIcon} label={_t("resume voice broadcast")} />
+        : <VoiceBroadcastControl onClick={toggleRecording} icon={PauseIcon} label={_t("pause voice broadcast")} />;
 
     return <div
         className="mx_VoiceBroadcastRecordingPip"
@@ -46,6 +56,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         />
         <hr className="mx_VoiceBroadcastRecordingPip_divider" />
         <div className="mx_VoiceBroadcastRecordingPip_controls">
+            { toggleControl }
             <VoiceBroadcastControl
                 icon={StopIcon}
                 label="Stop Recording"
