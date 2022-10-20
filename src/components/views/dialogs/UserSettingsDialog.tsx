@@ -28,7 +28,6 @@ import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserS
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
 import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
-import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
@@ -37,20 +36,7 @@ import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
 import SessionManagerTab from '../settings/tabs/user/SessionManagerTab';
 import { UserTab } from "./UserTab";
-
-/**
- * Returns null if labs are disabled and no betas exist
- */
-const getLabsTabLabel = (): string | null => {
-    const showLabs = SdkConfig.get("show_labs_settings");
-    const showBetas = SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k));
-
-    if (showBetas && showLabs) return _td("Betas & Labs");
-    else if (showBetas) return _td("Betas");
-    else if (showLabs) return _td("Labs");
-
-    return null;
-};
+import SdkConfig from "../../../SdkConfig";
 
 interface IProps extends IDialogProps {
     initialTabId?: UserTab;
@@ -165,10 +151,13 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 undefined,
             ));
         }
-        if (getLabsTabLabel()) {
+        if (
+            SdkConfig.get("show_labs_settings")
+            || SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k))
+        ) {
             tabs.push(new Tab(
                 UserTab.Labs,
-                getLabsTabLabel(),
+                _td("Labs"),
                 "mx_UserSettingsDialog_labsIcon",
                 <LabsUserSettingsTab />,
                 "UserSettingsLabs",
