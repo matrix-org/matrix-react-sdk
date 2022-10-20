@@ -128,6 +128,24 @@ describe("PollCreateDialog", () => {
         expect(dialog.html()).toMatchSnapshot();
     });
 
+    it("renders the correct number of allowed selections", () => {
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        dialog.find("div.mx_PollCreateDialog_addOption").simulate("click");
+        expect(dialog.find("select").at(1).children().length).toEqual(3);
+    });
+
+    it("allows setting the number of allowed selections", () => {
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        changeMaxSelections(dialog, 2);
+        expect(
+            dialog.find('select').at(1).prop("value"),
+        ).toEqual("2");
+    });
+
     it("doesn't allow submitting until there are options", () => {
         const dialog = mount(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
@@ -156,7 +174,7 @@ describe("PollCreateDialog", () => {
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find('select').at(0).prop("value"),
         ).toEqual(M_POLL_KIND_DISCLOSED.name);
         expect(
             dialog.find('p').text(),
@@ -169,7 +187,7 @@ describe("PollCreateDialog", () => {
         );
         changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find('select').at(0).prop("value"),
         ).toEqual(M_POLL_KIND_UNDISCLOSED.name);
         expect(
             dialog.find('p').text(),
@@ -183,7 +201,7 @@ describe("PollCreateDialog", () => {
         changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
         changeKind(dialog, M_POLL_KIND_DISCLOSED.name);
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find('select').at(0).prop("value"),
         ).toEqual(M_POLL_KIND_DISCLOSED.name);
         expect(
             dialog.find('p').text(),
@@ -209,7 +227,7 @@ describe("PollCreateDialog", () => {
         );
 
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find('select').at(0).prop("value"),
         ).toEqual(M_POLL_KIND_UNDISCLOSED.name);
         expect(
             dialog.find('p').text(),
@@ -345,7 +363,14 @@ function changeValue(wrapper: ReactWrapper, labelText: string, value: string) {
 }
 
 function changeKind(wrapper: ReactWrapper, value: string) {
-    wrapper.find("select").simulate(
+    wrapper.find("select").at(0).simulate(
+        "change",
+        { target: { value: value } },
+    );
+}
+
+function changeMaxSelections(wrapper: ReactWrapper, value: number) {
+    wrapper.find("select").at(1).simulate(
         "change",
         { target: { value: value } },
     );

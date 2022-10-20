@@ -34,6 +34,7 @@ exports[`MPollBody renders a finished poll 1`] = `
             },
           ],
           "kind": "org.matrix.msc3381.poll.disclosed",
+          "max_selections": undefined,
           "question": {
             "org.matrix.msc1767.text": "What should we order for the party?",
           },
@@ -349,6 +350,7 @@ exports[`MPollBody renders a finished poll with multiple winners 1`] = `
             },
           ],
           "kind": "org.matrix.msc3381.poll.disclosed",
+          "max_selections": undefined,
           "question": {
             "org.matrix.msc1767.text": "What should we order for the party?",
           },
@@ -664,6 +666,7 @@ exports[`MPollBody renders a finished poll with no votes 1`] = `
             },
           ],
           "kind": "org.matrix.msc3381.poll.disclosed",
+          "max_selections": undefined,
           "question": {
             "org.matrix.msc1767.text": "What should we order for the party?",
           },
@@ -979,6 +982,7 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
             },
           ],
           "kind": "org.matrix.msc3381.poll.disclosed",
+          "max_selections": undefined,
           "question": {
             "org.matrix.msc1767.text": "What should we order for the party?",
           },
@@ -1029,6 +1033,8 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -1116,6 +1122,8 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -1203,6 +1211,8 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -1290,6 +1300,8 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -1394,6 +1406,7 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
             },
           ],
           "kind": "org.matrix.msc3381.poll.disclosed",
+          "max_selections": undefined,
           "question": {
             "org.matrix.msc1767.text": "What should we order for the party?",
           },
@@ -1444,6 +1457,8 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="1 vote"
@@ -1533,6 +1548,8 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="0 votes"
@@ -1622,6 +1639,8 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
             }
           }
           checked={true}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="3 votes"
@@ -1711,6 +1730,8 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="1 vote"
@@ -1817,6 +1838,7 @@ exports[`MPollBody renders a poll with no votes 1`] = `
             },
           ],
           "kind": "org.matrix.msc3381.poll.disclosed",
+          "max_selections": undefined,
           "question": {
             "org.matrix.msc1767.text": "What should we order for the party?",
           },
@@ -1867,6 +1889,8 @@ exports[`MPollBody renders a poll with no votes 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -1954,6 +1978,8 @@ exports[`MPollBody renders a poll with no votes 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -2041,6 +2067,8 @@ exports[`MPollBody renders a poll with no votes 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -2128,6 +2156,8 @@ exports[`MPollBody renders a poll with no votes 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText=""
@@ -2232,6 +2262,7 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
             },
           ],
           "kind": "org.matrix.msc3381.poll.disclosed",
+          "max_selections": undefined,
           "question": {
             "org.matrix.msc1767.text": "What should we order for the party?",
           },
@@ -2282,6 +2313,8 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="0 votes"
@@ -2371,6 +2404,8 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="0 votes"
@@ -2460,6 +2495,8 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
             }
           }
           checked={false}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="2 votes"
@@ -2549,6 +2586,8 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
             }
           }
           checked={true}
+          maxSelections={1}
+          onMultiSelection={[Function]}
           onOptionSelected={[Function]}
           pollId="$mypoll"
           votesText="1 vote"
