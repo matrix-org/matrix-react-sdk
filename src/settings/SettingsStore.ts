@@ -295,6 +295,16 @@ export default class SettingsStore {
         return SETTINGS[settingName].isFeature;
     }
 
+    /**
+     * Determines if a setting should have a warning sign in the microcopy
+     * @param {string} settingName The setting to look up.
+     * @return {boolean} True if the setting is a feature.
+     */
+    public static shouldWarn(settingName: string): boolean {
+        if (!SETTINGS[settingName]) return false;
+        return SETTINGS[settingName].shouldWarn;
+    }
+
     public static getBetaInfo(settingName: string): ISetting["betaInfo"] {
         // consider a beta disabled if the config is explicitly set to false, in which case treat as normal Labs flag
         if (SettingsStore.isFeature(settingName)

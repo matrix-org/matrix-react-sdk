@@ -179,6 +179,9 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         extraSettings?: string[];
         requiresRefresh?: boolean;
     };
+
+    // Whether the setting should have a warning sign in the microcopy
+    shouldWarn?: boolean;
 }
 
 export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
@@ -244,8 +247,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_report_to_moderators": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        displayName: _td("Report to moderators prototype. " +
-            "In rooms that support moderation, the `report` button will let you report abuse to room moderators"),
+        displayName: _td("Report to moderators"),
+        description: _td(
+            "In rooms that support moderation, "
+            +"the “Report” button will let you report abuse to room moderators.",
+        ),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -306,7 +312,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_wysiwyg_composer": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        displayName: _td("Try out the rich text editor (plain text mode coming soon)"),
+        displayName: _td("Rich text editor"),
+        description: _td("Use rich text instead of Markdown in the message composer. Plain text mode coming soon."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -320,7 +327,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_mjolnir": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        displayName: _td("Try out new ways to ignore people (experimental)"),
+        displayName: _td("New ways to ignore people"),
+        description: _td("Highly experimental."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -399,7 +407,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open (defaults to room member list)"),
+        displayName: _td("Right panel stays open"),
+        description: _td("Defaults to room member list."),
         default: false,
     },
     "feature_jump_to_date": {
@@ -424,7 +433,9 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Sliding Sync mode (under active development, cannot be disabled)'),
+        displayName: _td('Sliding Sync mode'),
+        description: _td("Under active development, cannot be disabled."),
+        shouldWarn: true,
         default: false,
         controller: new SlidingSyncController(),
     },
@@ -452,23 +463,25 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td(
-            "Live Location Sharing (temporary implementation: locations persist in room history)",
-        ),
+        displayName: _td("Live Location Sharing"),
+        description: _td("Temporary implementation. Locations persist in room history."),
+        shouldWarn: true,
         default: false,
     },
     "feature_favourite_messages": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Favourite Messages (under active development)"),
+        displayName: _td("Favourite Messages"),
+        description: _td("Under active development."),
         default: false,
     },
     [Features.VoiceBroadcast]: {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Voice broadcast (under active development)"),
+        displayName: _td("Voice broadcast"),
+        description: _td("Under active development"),
         default: false,
     },
     "feature_new_device_manager": {
@@ -896,7 +909,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "lowBandwidth": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Low bandwidth mode (requires compatible homeserver)'),
+        displayName: _td('Low bandwidth mode'),
+        description: _td("Requires compatible homeserver."),
         default: false,
         controller: new ReloadOnChangeController(),
     },

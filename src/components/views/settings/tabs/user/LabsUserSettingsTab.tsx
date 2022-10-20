@@ -19,7 +19,6 @@ import { sortBy } from "lodash";
 
 import { _t } from "../../../../../languageHandler";
 import SettingsStore from "../../../../../settings/SettingsStore";
-import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
@@ -27,24 +26,6 @@ import SettingsFlag from '../../../elements/SettingsFlag';
 import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
 import { LabGroup, labGroupNames } from "../../../../../settings/Settings";
 import { EnhancedMap } from "../../../../../utils/maps";
-
-interface ILabsSettingToggleProps {
-    featureId: string;
-}
-
-export class LabsSettingToggle extends React.Component<ILabsSettingToggleProps> {
-    private onChange = async (checked: boolean): Promise<void> => {
-        await SettingsStore.setValue(this.props.featureId, null, SettingLevel.DEVICE, checked);
-        this.forceUpdate();
-    };
-
-    public render(): JSX.Element {
-        const label = SettingsStore.getDisplayName(this.props.featureId);
-        const value = SettingsStore.getValue(this.props.featureId);
-        const canChange = SettingsStore.canSetValue(this.props.featureId, null, SettingLevel.DEVICE);
-        return <LabelledToggleSwitch value={value} label={label} onChange={this.onChange} disabled={!canChange} />;
-    }
-}
 
 interface IState {
     showJumpToDate: boolean;
@@ -93,7 +74,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
             labs.forEach(f => {
                 groups.getOrCreate(SettingsStore.getLabGroup(f), []).push(
-                    <LabsSettingToggle featureId={f} key={f} />,
+                    <SettingsFlag level={SettingLevel.DEVICE} name={f} key={f} />,
                 );
             });
 

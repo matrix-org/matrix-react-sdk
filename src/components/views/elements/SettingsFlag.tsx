@@ -84,6 +84,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
             ? _t(this.props.label)
             : SettingsStore.getDisplayName(this.props.name, this.props.level);
         const description = SettingsStore.getDescription(this.props.name);
+        const shouldWarn = SettingsStore.shouldWarn(this.props.name);
 
         let disabledDescription: JSX.Element;
         if (this.props.disabled && this.props.disabledDescription) {
@@ -106,6 +107,10 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                     <label className="mx_SettingsFlag_label">
                         <span className="mx_SettingsFlag_labelText">{ label }</span>
                         { description && <div className="mx_SettingsFlag_microcopy">
+                            { shouldWarn && <span className="mx_SettingsTab_microcopy_warning">
+                                { _t("WARNING:") } { " " }
+                            </span> }
+
                             { description }
                         </div> }
                         { disabledDescription }
