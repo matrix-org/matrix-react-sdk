@@ -106,6 +106,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
+        if (this.state.thread) {
+            this.postThreadUpdate(this.state.thread);
+        }
         this.setupThread(this.props.mxEvent);
         this.dispatcherRef = dis.register(this.onAction);
 
@@ -217,12 +220,14 @@ export default class ThreadView extends React.Component<IProps, IState> {
             this.setState({
                 thread,
                 lastReply: this.threadLastReply,
-            }, async () => {
-                thread.emit(ThreadEvent.ViewThread);
-                this.timelinePanel.current?.refreshTimeline(this.props.initialEvent?.getId());
-            });
+            }, async () => this.postThreadUpdate(thread));
         }
     };
+
+    private async postThreadUpdate(thread: Thread): Promise<void> {
+        thread.emit(ThreadEvent.ViewThread);
+        this.timelinePanel.current?.refreshTimeline(this.props.initialEvent?.getId());
+    }
 
     private setupThreadListeners(thread?: Thread | undefined, oldThread?: Thread | undefined): void {
         if (oldThread) {

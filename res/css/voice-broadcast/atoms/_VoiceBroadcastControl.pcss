@@ -14,22 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceBroadcastRecordingPip {
-    background-color: $system;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px 0 #0000004a;
-    display: inline-block;
-    padding: $spacing-12;
-}
-
-.mx_VoiceBroadcastRecordingPip_divider {
-    background-color: $quinary-content;
-    border: 0;
-    height: 1px;
-    margin: $spacing-12 0;
-}
-
-.mx_VoiceBroadcastRecordingPip_controls {
+.mx_VoiceBroadcastControl {
+    align-items: center;
+    background-color: $background;
+    border-radius: 50%;
+    color: $secondary-content;
     display: flex;
-    justify-content: space-around;
+    height: 32px;
+    justify-content: center;
+    margin-bottom: $spacing-8;
+    width: 32px;
+}
+
+.mx_VoiceBroadcastControl-recording {
+    color: $alert;
 }

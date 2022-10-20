@@ -14,22 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceBroadcastRecordingPip {
-    background-color: $system;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px 0 #0000004a;
-    display: inline-block;
-    padding: $spacing-12;
-}
+import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 
-.mx_VoiceBroadcastRecordingPip_divider {
-    background-color: $quinary-content;
-    border: 0;
-    height: 1px;
-    margin: $spacing-12 0;
-}
-
-.mx_VoiceBroadcastRecordingPip_controls {
-    display: flex;
-    justify-content: space-around;
-}
+/**
+ * Returns the target chunk length for voice broadcasts:
+ * - Tries to get the value from the voice_broadcast.chunk_length config
+ * - If that fails from DEFAULTS
+ * - If that fails fall back to 120 (two minutes)
+ */
+export const getChunkLength = (): number => {
+    return SdkConfig.get("voice_broadcast")?.chunk_length
+        || DEFAULTS.voice_broadcast?.chunk_length
+        || 120;
+};
