@@ -55,7 +55,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 0 broadcast should render a
     >
       <div
         aria-label="resume voice broadcast"
-        class="mx_AccessibleButton mx_VoiceBroadcastControl "
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
         role="button"
         tabindex="0"
       >
@@ -123,7 +123,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 1 broadcast should render a
     >
       <div
         aria-label="pause voice broadcast"
-        class="mx_AccessibleButton mx_VoiceBroadcastControl "
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
         role="button"
         tabindex="0"
       >

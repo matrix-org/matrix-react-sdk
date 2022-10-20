@@ -4,7 +4,7 @@ exports[`VoiceBroadcastControl when rendering it should render as expected 1`] =
 <div>
   <div
     aria-label="test label"
-    class="mx_AccessibleButton mx_VoiceBroadcastControl "
+    class="mx_AccessibleButton mx_VoiceBroadcastControl"
     role="button"
     tabindex="0"
   >

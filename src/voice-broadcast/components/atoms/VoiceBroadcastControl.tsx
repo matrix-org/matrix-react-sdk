@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import classNames from "classnames";
 import React from "react";
 
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
@@ -32,7 +33,7 @@ export const VoiceBroadcastControl: React.FC<Props> = ({
     onClick,
 }) => {
     return <AccessibleButton
-        className={`mx_VoiceBroadcastControl ${className}`}
+        className={classNames("mx_VoiceBroadcastControl", className)}
         onClick={onClick}
         aria-label={label}
     >

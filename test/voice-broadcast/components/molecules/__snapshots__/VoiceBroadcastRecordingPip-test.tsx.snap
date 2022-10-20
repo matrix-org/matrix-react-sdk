@@ -60,7 +60,7 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
       </div>
       <div
         aria-label="Stop Recording"
-        class="mx_AccessibleButton mx_VoiceBroadcastControl "
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
         role="button"
         tabindex="0"
       >
@@ -123,7 +123,7 @@ exports[`VoiceBroadcastRecordingPip when rendering a started recording should re
     >
       <div
         aria-label="pause voice broadcast"
-        class="mx_AccessibleButton mx_VoiceBroadcastControl "
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
         role="button"
         tabindex="0"
       >
@@ -133,7 +133,7 @@ exports[`VoiceBroadcastRecordingPip when rendering a started recording should re
       </div>
       <div
         aria-label="Stop Recording"
-        class="mx_AccessibleButton mx_VoiceBroadcastControl "
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
         role="button"
         tabindex="0"
       >
