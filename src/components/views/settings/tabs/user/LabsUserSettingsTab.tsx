@@ -154,25 +154,39 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
 
         return (
             <div className="mx_SettingsTab mx_LabsUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Betas") }</div>
+                <div className="mx_SettingsTab_heading">{ _t("Upcoming features") }</div>
                 <div className='mx_SettingsTab_subsectionText'>
                     {
-                        _t('Feeling experimental? Betas are the best way to get things early, ' +
-                            'test out new features and help shape them before they actually launch. ' +
-                            '<a>Learn more</a>.', {}, {
-                            'a': (sub) => {
-                                return <a
-                                    href="https://github.com/vector-im/element-web/blob/develop/docs/betas.md"
-                                    rel='noreferrer noopener'
-                                    target='_blank'
-                                >{ sub }</a>;
-                            },
-                        })
+                        _t(
+                            "What's next for Element? "
+                            + "Labs are the best way to get things early, "
+                            + "test out new features and help shape them before they actually launch.",
+                        )
                     }
                 </div>
                 { betaSection }
                 { labsSections && <>
-                    <div className="mx_SettingsTab_heading">{ _t("Labs") }</div>
+                    <div className="mx_SettingsTab_heading">{ _t("Early previews") }</div>
+                    <div className='mx_SettingsTab_subsectionText'>
+                        {
+                            _t(
+                                "Feeling experimental? "
+                                + "Try out our latest ideas in development. "
+                                + "These features are not finalised; "
+                                + "they may be unstable, may change, or may be dropped altogether. "
+                                + "<a>Learn more</a>.",
+                                {},
+                                {
+                                    'a': (sub) => {
+                                        return <a
+                                            href="https://github.com/vector-im/element-web/blob/develop/docs/labs.md"
+                                            rel='noreferrer noopener'
+                                            target='_blank'
+                                        >{ sub }</a>;
+                                    },
+                                })
+                        }
+                    </div>
                     { labsSections }
                 </> }
             </div>
