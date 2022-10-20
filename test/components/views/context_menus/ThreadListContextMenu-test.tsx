@@ -22,7 +22,9 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import React from "react";
 
-import ThreadListContextMenu, { ThreadListContextMenuProps } from "../../../../src/components/views/context_menus/ThreadListContextMenu";
+import ThreadListContextMenu, {
+    ThreadListContextMenuProps,
+} from "../../../../src/components/views/context_menus/ThreadListContextMenu";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { stubClient } from "../../../test-utils/test-utils";
