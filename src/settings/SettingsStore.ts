@@ -298,7 +298,7 @@ export default class SettingsStore {
     /**
      * Determines if a setting should have a warning sign in the microcopy
      * @param {string} settingName The setting to look up.
-     * @return {boolean} True if the setting is a feature.
+     * @return {boolean} True if the setting should have a warning sign.
      */
     public static shouldWarn(settingName: string): boolean {
         if (!SETTINGS[settingName]) return false;
