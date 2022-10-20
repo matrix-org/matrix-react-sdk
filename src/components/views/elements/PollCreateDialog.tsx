@@ -25,6 +25,7 @@ import {
     PollStartEvent,
 } from "matrix-events-sdk";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { range } from "lodash";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
@@ -51,6 +52,7 @@ interface IState extends IScrollableBaseState {
     question: string;
     options: string[];
     busy: boolean;
+    max_selections?: number;
     kind: KNOWN_POLL_KIND;
     autoFocusTarget: FocusTarget;
 }
@@ -85,6 +87,7 @@ function editingInitialState(editingMxEvent: MatrixEvent): IState {
         question: poll.question.text,
         options: poll.answers.map(ans => ans.text),
         busy: false,
+        max_selections: poll.maxSelections,
         kind: poll.kind,
         autoFocusTarget: FocusTarget.Topic,
     };
@@ -138,11 +141,25 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         });
     };
 
+    private maxSelections = () => {
+        const count = range(1, this.state.options.length + 1);
+        const options = count.map((number) => {
+            return <option
+                key={number}
+                value={number}
+            >
+                { number }
+            </option>;
+        });
+        return options;
+    };
+
     private createEvent(): IPartialEvent<object> {
         const pollStart = PollStartEvent.from(
             this.state.question.trim(),
             this.state.options.map(a => a.trim()).filter(a => !!a),
             this.state.kind,
+            this.state.max_selections,
         ).serialize();
 
         if (!this.props.editingMxEvent) {
@@ -270,6 +287,15 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 this.state.busy &&
                     <div className="mx_PollCreateDialog_busy"><Spinner /></div>
             }
+            <h2>{ _t("Number of allowed selections") }</h2>
+            <Field
+                className="mx_PollCreateDialog_maxSelections"
+                element="select"
+                value={String(this.state.max_selections)}
+                onChange={this.onMaxSelectionsChange}
+            >
+                { this.maxSelections() }
+            </Field>
         </div>;
     }
 
@@ -281,6 +307,10 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                     : M_POLL_KIND_UNDISCLOSED
             ),
         });
+    };
+
+    onMaxSelectionsChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        this.setState({ max_selections: Number(e.target.value) });
     };
 }
 

@@ -1015,6 +1015,100 @@ describe("MPollBody", () => {
         const body = newMPollBody(votes, ends, null, false);
         expect(body.html()).toMatchSnapshot();
     });
+
+    describe("multiple selection poll", () => {
+        it("should render checkboxes", () => {
+            const maxSelections = 2;
+            const body = newMPollBody([], [], null, true, maxSelections);
+            expect(body.find('input[type="checkbox"]')).toHaveLength(4);
+        });
+
+        it("should be revertable to a regular poll by editing", () => {
+            const pollEvent = new MatrixEvent({
+                "type": M_POLL_START.name,
+                "event_id": "$mypoll",
+                "room_id": "#myroom:example.com",
+                "content": newPollStart(null, null, true, 3),
+            });
+            let body = newMPollBodyFromEvent(pollEvent, []);
+            expect(body.find('input[type="checkbox"]')).toHaveLength(4);
+            const replacingEvent = new MatrixEvent({
+                "type": M_POLL_START.name,
+                "event_id": "$mypollreplacement",
+                "room_id": "#myroom:example.com",
+                "content": {
+                    "m.new_content": newPollStart(null, null, true, 1),
+                },
+            });
+            pollEvent.makeReplaced(replacingEvent);
+            body = newMPollBodyFromEvent(pollEvent, []);
+            expect(body.find('input[type="radio"]')).toHaveLength(4);
+        });
+
+        it("should allow voting for more than one option", () => {
+            const maxSelections = 4;
+            const votes = [
+                responseEvent("@me:example.com", "italian"),
+            ];
+            const body = newMPollBody(votes, [], null, true, maxSelections);
+
+            clickCheckbox(body, "pizza");
+            clickCheckbox(body, "poutine");
+            expect(body.find(".mx_MPollBody_option_checked")).toHaveLength(3);
+        });
+
+        it("should display the correct amount of votes remaining", () => {
+            const maxSelections = 2;
+            const votes = [
+                responseEvent("@me:example.com", "italian"),
+            ];
+            const body = newMPollBody(votes, [], null, true, maxSelections);
+
+            expect(body.find(".mx_MPollBody_totalVotes").text()).toBe("Based on 1 vote - you have 1 vote remaining");
+            clickCheckbox(body, "poutine");
+            expect(body.find(".mx_MPollBody_totalVotes").text()).toBe("Based on 2 votes - you have no votes remaining");
+        });
+
+        it("should deselect a checked option if clicked", () => {
+            const maxSelections = 2;
+            const votes = [
+                responseEvent("@me:example.com", "pizza"),
+            ];
+            const body = newMPollBody(votes, [], null, true, maxSelections);
+
+            expect(body.find(".mx_MPollBody_option_checked")).toHaveLength(1);
+            clickCheckbox(body, "pizza");
+            expect(body.find(".mx_MPollBody_option_checked")).toHaveLength(0);
+        });
+
+        it("should not allow voting if poll has ended", () => {
+            const maxSelections = 2;
+            const votes = [
+                responseEvent("@me:example.com", "pizza"),
+            ];
+            const ends = [
+                endEvent("@me:example.com", 12),
+            ];
+            const body = newMPollBody(votes, ends, null, true, maxSelections);
+
+            clickCheckbox(body, "poutine");
+            expect(mockClient.sendEvent).not.toHaveBeenCalled();
+            expect(body.find(".mx_MPollBody_option_checked")).toHaveLength(1);
+        });
+
+        it("should not allow voting if there are no votes remaining", () => {
+            const maxSelections = 3;
+            const votes = [
+                responseEvent("@me:example.com", "italian"),
+            ];
+            const body = newMPollBody(votes, [], null, true, maxSelections);
+
+            clickCheckbox(body, "pizza");
+            clickCheckbox(body, "poutine");
+            clickCheckbox(body, "wings");
+            expect(body.find(".mx_MPollBody_option_checked")).toHaveLength(3);
+        });
+    });
 });
 
 function newVoteRelations(relationEvents: Array<MatrixEvent>): Relations {
@@ -1041,12 +1135,13 @@ function newMPollBody(
     endEvents: Array<MatrixEvent> = [],
     answers?: POLL_ANSWER[],
     disclosed = true,
+    maxSelections?: number,
 ): ReactWrapper {
     const mxEvent = new MatrixEvent({
         "type": M_POLL_START.name,
         "event_id": "$mypoll",
         "room_id": "#myroom:example.com",
-        "content": newPollStart(answers, null, disclosed),
+        "content": newPollStart(answers, null, disclosed, maxSelections),
     });
     return newMPollBodyFromEvent(mxEvent, relationEvents, endEvents);
 }
@@ -1095,6 +1190,12 @@ function clickRadio(wrapper: ReactWrapper, value: string) {
     div.simulate("click");
 }
 
+function clickCheckbox(wrapper: ReactWrapper, value: string) {
+    const div = wrapper.find('div.mx_MPollBody_option').findWhere(w => w.key() === value);
+    expect(div).toHaveLength(1);
+    div.simulate("click");
+}
+
 function clickEndedOption(wrapper: ReactWrapper, value: string) {
     const div = wrapper.find(`div[data-value="${value}"]`);
     expect(div).toHaveLength(1);
@@ -1133,6 +1234,7 @@ function newPollStart(
     answers?: POLL_ANSWER[],
     question?: string,
     disclosed = true,
+    maxSelections?: number,
 ): M_POLL_START_EVENT_CONTENT {
     if (!answers) {
         answers = [
@@ -1164,6 +1266,7 @@ function newPollStart(
                     : M_POLL_KIND_UNDISCLOSED.name
             ),
             "answers": answers,
+            "max_selections": maxSelections,
         },
         [M_TEXT.name]: fallback,
     };
