@@ -29,7 +29,7 @@ import { WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
-interface IProps {
+export interface ThreadListContextMenuProps {
     mxEvent: MatrixEvent;
     permalinkCreator?: RoomPermalinkCreator;
     onMenuToggle?: (open: boolean) => void;
@@ -43,7 +43,7 @@ const contextMenuBelow = (elementRect: DOMRect) => {
     return { left, top, chevronFace };
 };
 
-const ThreadListContextMenu: React.FC<IProps> = ({
+const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
     mxEvent,
     permalinkCreator,
     onMenuToggle,
@@ -89,6 +89,7 @@ const ThreadListContextMenu: React.FC<IProps> = ({
             title={_t("Thread options")}
             isExpanded={menuDisplayed}
             inputRef={button}
+            data-testid="threadlist-dropdown-button"
         />
         { menuDisplayed && (<IconizedContextMenu
             onFinished={closeThreadOptions}
@@ -106,6 +107,7 @@ const ThreadListContextMenu: React.FC<IProps> = ({
                  /> }
                 { permalinkCreator &&
                     <IconizedContextMenuOption
+                        data-testid="copy-thread-link"
                         onClick={(e) => copyLinkToThread(e)}
                         label={_t("Copy link to thread")}
                         iconClassName="mx_ThreadPanel_copyLinkToThread"
