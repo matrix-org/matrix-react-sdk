@@ -214,7 +214,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         this.setupThreadListeners(thread, this.state.thread);
         if (thread) {
-            // throw new Error("Test");
             this.setState({
                 thread,
                 lastReply: this.threadLastReply,
