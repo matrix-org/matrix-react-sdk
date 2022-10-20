@@ -304,6 +304,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private get threadRelation(): IEventRelation {
+        console.log('test');
         const relation = {
             "rel_type": THREAD_RELATION_TYPE.name,
             "event_id": this.state.thread?.id,
