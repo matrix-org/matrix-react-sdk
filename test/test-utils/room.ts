@@ -72,7 +72,6 @@ export function getRoomContext(room: Room, override: Partial<IRoomState>): IRoom
         statusBarVisible: false,
         canReact: false,
         canSendMessages: false,
-        canSendVoiceBroadcasts: false,
         layout: Layout.Group,
         lowBandwidth: false,
         alwaysShowTimestamps: false,
