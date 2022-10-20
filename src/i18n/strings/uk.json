@@ -3664,5 +3664,6 @@
     "The linking wasn't completed in the required time.": "У встановлені терміни з'єднання не було виконано.",
     "Sign in new device": "Увійти на новому пристрої",
     "Show QR code": "Показати QR-код",
-    "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Ви можете використовувати цей пристрій для входу на новому пристрої за допомогою QR-коду. Вам потрібно буде сканувати QR-код, показаний на цьому пристрої, своїм пристроєм, на якому ви вийшли."
+    "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Ви можете використовувати цей пристрій для входу на новому пристрої за допомогою QR-коду. Вам потрібно буде сканувати QR-код, показаний на цьому пристрої, своїм пристроєм, на якому ви вийшли.",
+    "play voice broadcast": "відтворити голосове повідомлення"
 }
