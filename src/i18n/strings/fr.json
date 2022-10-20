@@ -3664,5 +3664,6 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Une autre personne est déjà en train de réaliser une diffusion audio. Attendez que sa diffusion audio soit terminée pour en démarrer une nouvelle.",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Vous n’avez pas les permissions requises pour démarrer une nouvelle diffusion audio dans ce salon. Contactez un administrateur du salon pour mettre-à-jour vos permissions.",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Vous êtes déjà en train de réaliser une diffusion audio. Veuillez terminer votre diffusion audio actuelle pour en démarrer une nouvelle.",
-    "Can't start a new voice broadcast": "Impossible de commencer une nouvelle diffusion audio"
+    "Can't start a new voice broadcast": "Impossible de commencer une nouvelle diffusion audio",
+    "play voice broadcast": "lire la diffusion audio"
 }
