@@ -35,6 +35,8 @@ export * from "./hooks/useVoiceBroadcastRecording";
 export * from "./stores/VoiceBroadcastPlaybacksStore";
 export * from "./stores/VoiceBroadcastRecordingsStore";
 export * from "./utils/hasRoomLiveVoiceBroadcast";
+export * from "./utils/findRoomLiveVoiceBroadcastFromUserAndDevice";
+export * from "./utils/resumeVoiceBroadcastInRoom";
 export * from "./utils/shouldDisplayAsVoiceBroadcastRecordingTile";
 export * from "./utils/shouldDisplayAsVoiceBroadcastTile";
 export * from "./utils/startNewVoiceBroadcastRecording";

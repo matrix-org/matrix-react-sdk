@@ -139,6 +139,7 @@ import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
 import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
+import { findRoomLiveVoiceBroadcastFromUserAndDevice, resumeVoiceBroadcastInRoom } from '../../voice-broadcast';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1534,6 +1535,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
 
         cli.on(ClientEvent.Room, (room) => {
+            const voiceBroadcastState = findRoomLiveVoiceBroadcastFromUserAndDevice(
+                room,
+                cli.getUserId(),
+                cli.getDeviceId(),
+            );
+
+            if (voiceBroadcastState) {
+                // resume live broadcast in paused state
+                resumeVoiceBroadcastInRoom(voiceBroadcastState, room, cli);
+            }
+
             if (MatrixClientPeg.get().isCryptoEnabled()) {
                 const blacklistEnabled = SettingsStore.getValueAt(
                     SettingLevel.ROOM_DEVICE,
