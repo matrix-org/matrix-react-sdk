@@ -212,7 +212,6 @@ export class VoiceBroadcastRecording
         }
 
         try {
-            console.log("miw stop recorder");
             const lastChunk = await this.recorder.stop();
             if (lastChunk) {
                 await this.onChunkRecorded(lastChunk);
