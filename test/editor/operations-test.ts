@@ -111,7 +111,7 @@ describe("editor/operations: formatting operations", () => {
 
             expect(range.parts[0].text).toBe("hello world!");
             expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
-            formatRangeAsList(range, bulletPrefix);
+            formatRange(range, Formatting.BulletedList);
             expect(model.serializeParts()).toEqual([{ "text": "- hello world!", "type": "plain" }]);
             formatRangeAsList(range, bulletPrefix); // remove formatting
             expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
@@ -124,7 +124,7 @@ describe("editor/operations: formatting operations", () => {
             let range = model.startRange(model.positionForOffset(3, false));
 
             expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
-            formatRangeAsList(range, numberPrefix);
+            formatRange(range, Formatting.NumberedList);
             expect(model.serializeParts()).toEqual([{ "text": "1. hello world!", "type": "plain" }]);
             formatRangeAsList(range, numberPrefix); // remove formatting
             expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);

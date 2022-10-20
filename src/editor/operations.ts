@@ -201,11 +201,11 @@ export function formatRangeAsList(range: Range, prefix: string): void {
     // insert or remove prefix at beginning of every non-newline
     if (!isList) {
         for (let i = 0; i < parts.length; ++i) {
-            if (i === 0) parts.splice(i, 0, partCreator.plain(prefix));
             if (isNL(parts[i]) && !isNL(parts[i + 1])) { // do not format newlines
                 parts.splice(i + 1, 0, partCreator.plain(prefix));
             }
         }
+        parts.unshift(partCreator.plain(prefix));
     } else {
         parts.filter(part => part.text.startsWith(prefix)).forEach(p => p.remove(0, prefix.length));
     }
