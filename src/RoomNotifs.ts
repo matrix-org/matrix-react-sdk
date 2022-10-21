@@ -80,12 +80,12 @@ export function setRoomNotifsState(roomId: string, newState: RoomNotifState): Pr
 
 export function getUnreadNotificationCount(
     room: Room,
-    type: NotificationCountType | null = null,
+    type: NotificationCountType,
     threadId?: string,
 ): number {
     let notificationCount = (!!threadId
         ? room.getThreadUnreadNotificationCount(threadId, type)
-        : room.getUnreadNotificationCount(type)) ?? 0;
+        : room.getUnreadNotificationCount(type));
 
     // Check notification counts in the old room just in case there's some lost
     // there. We only go one level down to avoid performance issues, and theory
@@ -97,7 +97,7 @@ export function getUnreadNotificationCount(
         if (oldRoom) {
             const oldNotificationCount = (!!threadId
                 ? oldRoom.getThreadUnreadNotificationCount(threadId, NotificationCountType.Highlight)
-                : oldRoom.getUnreadNotificationCount(NotificationCountType.Highlight)) ?? 0;
+                : oldRoom.getUnreadNotificationCount(NotificationCountType.Highlight));
 
             // We only ever care if there's highlights in the old room. No point in
             // notifying the user for unread messages because they would have extreme
