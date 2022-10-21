@@ -176,6 +176,10 @@ describe("MessageComposer", () => {
         });
 
         describe("location button", () => {
+            afterEach(function() {
+                SdkConfig.unset(); // we touch the config, so clean up
+            });
+
             it("should not be rendered when the map server is not configured", () => {
                 const wrapper = wrapAndRender({ room });
                 expect(wrapper.find(MessageComposerButtons).props().showLocationButton).toBe(false);
@@ -183,7 +187,7 @@ describe("MessageComposer", () => {
 
             it("should be rendered when the map server is configured", () => {
                 SdkConfig.put({
-                    map_style_url: "hello",
+                    map_style_url: "https://my-map-server.example.org",
                 });
                 const wrapper = wrapAndRender({ room });
                 expect(wrapper.find(MessageComposerButtons).props().showLocationButton).toBe(true);
