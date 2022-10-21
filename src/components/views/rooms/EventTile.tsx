@@ -115,7 +115,7 @@ export interface IEventTileType extends React.Component {
     getEventTileOps?(): IEventTileOps;
 }
 
-interface IProps {
+export interface EventTileProps {
     // the MatrixEvent to show
     mxEvent: MatrixEvent;
 
@@ -250,7 +250,7 @@ interface IState {
 }
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
-export class UnwrappedEventTile extends React.Component<IProps, IState> {
+export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     private tile = React.createRef<IEventTileType>();
@@ -269,7 +269,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    constructor(props: EventTileProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         const thread = this.thread;
@@ -453,7 +453,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line
-    UNSAFE_componentWillReceiveProps(nextProps: IProps) {
+    UNSAFE_componentWillReceiveProps(nextProps: EventTileProps) {
         // re-check the sender verification as outgoing events progress through
         // the send process.
         if (nextProps.eventSendStatus !== this.props.eventSendStatus) {
@@ -461,7 +461,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
     }
 
-    shouldComponentUpdate(nextProps: IProps, nextState: IState): boolean {
+    shouldComponentUpdate(nextProps: EventTileProps, nextState: IState): boolean {
         if (objectHasDiff(this.state, nextState)) {
             return true;
         }
@@ -490,7 +490,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
     }
 
-    componentDidUpdate(prevProps: IProps, prevState: IState, snapshot) {
+    componentDidUpdate() {
         // If we're not listening for receipts and expect to be, register a listener.
         if (!this.isListeningForReceipts && (this.shouldShowSentReceipt || this.shouldShowSendingReceipt)) {
             MatrixClientPeg.get().on(RoomEvent.Receipt, this.onRoomReceipt);
@@ -676,7 +676,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }, this.props.onHeightChanged); // Decryption may have caused a change in size
     }
 
-    private propsEqual(objA: IProps, objB: IProps): boolean {
+    private propsEqual(objA: EventTileProps, objB: EventTileProps): boolean {
         const keysA = Object.keys(objA);
         const keysB = Object.keys(objB);
 
@@ -1527,7 +1527,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 }
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
-const SafeEventTile = forwardRef((props: IProps, ref: RefObject<UnwrappedEventTile>) => {
+const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
     return <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
         <UnwrappedEventTile ref={ref} {...props} />
     </TileErrorBoundary>;

@@ -189,7 +189,7 @@ export function StatelessNotificationBadge({
     }
 
     return (
-        <div className={classes}>
+        <div className={classes} data-test-id="unread-notification-badge">
             <span className="mx_NotificationBadge_count">{ symbol }</span>
         </div>
     );
