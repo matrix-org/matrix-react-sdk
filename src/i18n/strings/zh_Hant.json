@@ -3664,5 +3664,6 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "其他人已在錄製語音廣播。等待他們的語音廣播結束以開始新的語音廣播。",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "您沒有在此聊天室內開始語音廣播所需的權限。請聯絡聊天室管理員升級您的權限。",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "您已經開始錄製語音廣播。請結束您目前的語音廣播以開始新的語音廣播。",
-    "Can't start a new voice broadcast": "無法啟動新的語音廣播"
+    "Can't start a new voice broadcast": "無法啟動新的語音廣播",
+    "play voice broadcast": "播放語音廣播"
 }
