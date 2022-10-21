@@ -21,7 +21,7 @@ import {
     RovingAccessibleButton,
     RovingAccessibleTooltipButton,
 } from "../../../accessibility/RovingTabIndex";
-import NotificationBadge from "./NotificationBadge/NotificationBadge";
+import NotificationBadge from "./NotificationBadge";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import { ButtonEvent } from "../elements/AccessibleButton";
 

@@ -24,7 +24,7 @@ import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import RoomAvatar from "./RoomAvatar";
-import NotificationBadge from '../rooms/NotificationBadge/NotificationBadge';
+import NotificationBadge from '../rooms/NotificationBadge';
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import { isPresenceEnabled } from "../../../utils/presence";

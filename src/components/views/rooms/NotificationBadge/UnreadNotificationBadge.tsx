@@ -18,7 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import React from "react";
 
 import { useUnreadNotifications } from "../../../../hooks/useUnreadNotifications";
-import { StatelessNotificationBadge } from "./NotificationBadge";
+import { StatelessNotificationBadge } from "./StatelessNotificationBadge";
 
 interface Props {
     room: Room;

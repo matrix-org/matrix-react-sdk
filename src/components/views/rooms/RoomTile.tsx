@@ -32,7 +32,7 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { RoomNotifState } from "../../../RoomNotifs";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { RoomNotificationContextMenu } from "../context_menus/RoomNotificationContextMenu";
-import NotificationBadge from "./NotificationBadge/NotificationBadge";
+import NotificationBadge from "./NotificationBadge";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationState, NotificationStateEvents } from "../../../stores/notifications/NotificationState";

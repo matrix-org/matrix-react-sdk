@@ -19,7 +19,7 @@ import React from "react";
 
 import {
     StatelessNotificationBadge,
-} from "../../../../../src/components/views/rooms/NotificationBadge/NotificationBadge";
+} from "../../../../../src/components/views/rooms/NotificationBadge/StatelessNotificationBadge";
 import { NotificationColor } from "../../../../../src/stores/notifications/NotificationColor";
 
 describe("NotificationBadge", () => {
