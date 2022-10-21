@@ -138,6 +138,7 @@ import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
 import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
+import { VoiceBroadcastResumer } from '../../voice-broadcast';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -233,6 +234,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private focusComposer: boolean;
     private subTitleStatus: string;
     private prevWindowWidth: number;
+    private voiceBroadcastResumer: VoiceBroadcastResumer;
 
     private readonly loggedInView: React.RefObject<LoggedInViewType>;
     private readonly dispatcherRef: string;
@@ -432,6 +434,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
+        if (this.voiceBroadcastResumer) this.voiceBroadcastResumer.destroy();
     }
 
     private onWindowResized = (): void => {
@@ -1617,6 +1620,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 });
             }
         });
+
+        this.voiceBroadcastResumer = new VoiceBroadcastResumer(cli);
     }
 
     /**
