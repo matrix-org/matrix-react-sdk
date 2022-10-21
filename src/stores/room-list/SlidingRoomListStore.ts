@@ -346,6 +346,14 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         const oldSpace = filters.spaces?.[0];
         filters.spaces = (activeSpace && activeSpace != MetaSpace.Home) ? [activeSpace] : undefined;
         if (oldSpace !== activeSpace) {
+            // include subspaces in this list
+            SpaceStore.instance.traverseSpace(activeSpace, (roomId: string) => {
+                if (roomId === activeSpace) {
+                    return;
+                }
+                filters.spaces.push(roomId); // add subspace
+            }, false);
+
             this.emit(LISTS_LOADING_EVENT, tagId, true);
             SlidingSyncManager.instance.ensureListRegistered(
                 SlidingSyncManager.instance.getOrAllocateListIndex(tagId),
