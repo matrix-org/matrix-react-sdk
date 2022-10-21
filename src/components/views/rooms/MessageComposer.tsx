@@ -59,6 +59,7 @@ import {
     VoiceBroadcastRecordingsStore,
 } from '../../../voice-broadcast';
 import { WysiwygComposer } from './wysiwyg_composer/WysiwygComposer';
+import { findMapStyleUrl } from '../../../utils/location';
 
 let instanceCount = 0;
 
@@ -494,6 +495,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
 
+        let isMapConfigured;
+        try {
+            findMapStyleUrl();
+            isMapConfigured = true;
+        } catch (e) {
+            isMapConfigured = false;
+        }
+        const showLocationButton = !window.electron && isMapConfigured;
+
         const classes = classNames({
             "mx_MessageComposer": true,
             "mx_MessageComposer--compact": this.props.compact,
@@ -524,7 +534,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                                 }
                             }}
                             setStickerPickerOpen={this.setStickerPickerOpen}
-                            showLocationButton={!window.electron}
+                            showLocationButton={showLocationButton}
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
