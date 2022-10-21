@@ -60,8 +60,8 @@ export const useUnreadNotifications = (room: Room, threadId?: string): {
             setCount(0);
             setColor(NotificationColor.None);
         } else {
-            const redNotifs = getUnreadNotificationCount(room, NotificationCountType.Highlight, threadId) ?? 0;
-            const greyNotifs = getUnreadNotificationCount(room, NotificationCountType.Total, threadId) ?? 0;
+            const redNotifs = getUnreadNotificationCount(room, NotificationCountType.Highlight, threadId);
+            const greyNotifs = getUnreadNotificationCount(room, NotificationCountType.Total, threadId);
 
             const trueCount = greyNotifs || redNotifs;
             setCount(trueCount);

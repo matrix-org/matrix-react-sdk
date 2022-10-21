@@ -15,16 +15,25 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, render } from "@testing-library/react";
+import "jest-mock";
+import { screen, act, render } from "@testing-library/react";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { mocked } from "jest-mock";
+import { mocked, MockedFunction } from "jest-mock";
+import { EventStatus } from "matrix-js-sdk/src/models/event-status";
 
 import {
     UnreadNotificationBadge,
 } from "../../../../../src/components/views/rooms/NotificationBadge/UnreadNotificationBadge";
-import { stubClient } from "../../../../test-utils/test-utils";
+import { mkMessage, stubClient } from "../../../../test-utils/test-utils";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
+import * as RoomNotifs from "../../../../../src/RoomNotifs";
+
+jest.mock("../../../../../src/RoomNotifs");
+jest.mock('../../../../../src/RoomNotifs', () => ({
+    ...(jest.requireActual('../../../../../src/RoomNotifs')),
+    getRoomNotifsState: jest.fn(),
+}));
 
 const ROOM_ID = "!roomId:example.org";
 let THREAD_ID;
@@ -51,6 +60,8 @@ describe("UnreadNotificationBadge", () => {
 
         room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Total, 1);
         room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Highlight, 0);
+
+        jest.spyOn(RoomNotifs, "getRoomNotifsState").mockReturnValue(RoomNotifs.RoomNotifState.AllMessages);
     });
 
     it("renders unread notification badge", () => {
@@ -86,5 +97,36 @@ describe("UnreadNotificationBadge", () => {
             const { container } = render(getComponent(THREAD_ID));
             expect(container.querySelector(".mx_NotificationBadge_visible")).toBeFalsy();
         });
+    });
+
+    it("adds a warning for unsent messages", () => {
+        const evt = mkMessage({
+            room: room.roomId,
+            user: "@alice:example.org",
+            msg: "Hello world!",
+            event: true,
+        });
+        evt.status = EventStatus.NOT_SENT;
+
+        room.addPendingEvent(evt, "123");
+
+        render(getComponent());
+
+        expect(screen.queryByText("!")).not.toBeNull();
+    });
+
+    it("adds a warning for invites", () => {
+        jest.spyOn(room, "getMyMembership").mockReturnValue("invite");
+        render(getComponent());
+        expect(screen.queryByText("!")).not.toBeNull();
+    });
+
+    it("hides counter for muted rooms", () => {
+        jest.spyOn(RoomNotifs, "getRoomNotifsState")
+            .mockReset()
+            .mockReturnValue(RoomNotifs.RoomNotifState.Mute);
+
+        const { container } = render(getComponent());
+        expect(container.querySelector(".mx_NotificationBadge")).toBeNull();
     });
 });
