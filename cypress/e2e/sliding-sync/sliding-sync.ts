@@ -212,7 +212,7 @@ describe("Sliding Sync", () => {
         cy.contains(".mx_RoomTile", "Test Room").should("not.have.class", "mx_NotificationBadge_count");
     });
 
-    it("should not show unread indicators", () => { // TODO: for now. Later we should.
+    it.only("should not show unread indicators", () => { // TODO: for now. Later we should.
         createAndJoinBob();
 
         // disable notifs in this room (TODO: CS API call?)
@@ -235,7 +235,7 @@ describe("Sliding Sync", () => {
             "Test Room", "Dummy",
         ]);
 
-        cy.contains(".mx_RoomTile", "Test Room").get(".mx_NotificationBadge").should("not.exist");
+        cy.contains(".mx_RoomTile", "Test Room").get(".mx_NotificationBadge").should("not.be.visible");
     });
 
     it("should update user settings promptly", () => {
