@@ -19,7 +19,7 @@ import "jest-mock";
 import { screen, act, render } from "@testing-library/react";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { mocked, MockedFunction } from "jest-mock";
+import { mocked } from "jest-mock";
 import { EventStatus } from "matrix-js-sdk/src/models/event-status";
 
 import {
@@ -31,7 +31,7 @@ import * as RoomNotifs from "../../../../../src/RoomNotifs";
 
 jest.mock("../../../../../src/RoomNotifs");
 jest.mock('../../../../../src/RoomNotifs', () => ({
-    ...(jest.requireActual('../../../../../src/RoomNotifs')),
+    ...(jest.requireActual('../../../../../src/RoomNotifs') as Object),
     getRoomNotifsState: jest.fn(),
 }));
 
