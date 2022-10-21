@@ -38,7 +38,7 @@ interface IState {
 
 export const SlidingSyncSortToFilter: Record<SortAlgorithm, string[]> = {
     [SortAlgorithm.Alphabetic]: ["by_name", "by_recency"],
-    [SortAlgorithm.Recent]: ["by_highlight_count", "by_notification_count", "by_recency"],
+    [SortAlgorithm.Recent]: ["by_notification_level", "by_recency"],
     [SortAlgorithm.Manual]: ["by_recency"],
 };
 
@@ -48,21 +48,18 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
     },
     [DefaultTagID.Favourite]: {
         tags: ["m.favourite"],
-        is_tombstoned: false,
     },
     // TODO https://github.com/vector-im/element-web/issues/23207
     // DefaultTagID.SavedItems,
     [DefaultTagID.DM]: {
         is_dm: true,
         is_invite: false,
-        is_tombstoned: false,
         // If a DM has a Favourite & Low Prio tag then it'll be shown in those lists instead
         not_tags: ["m.favourite", "m.lowpriority"],
     },
     [DefaultTagID.Untagged]: {
         is_dm: false,
         is_invite: false,
-        is_tombstoned: false,
         not_room_types: ["m.space"],
         not_tags: ["m.favourite", "m.lowpriority"],
         // spaces filter added dynamically
@@ -71,7 +68,6 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
         tags: ["m.lowpriority"],
         // If a room has both Favourite & Low Prio tags then it'll be shown under Favourites
         not_tags: ["m.favourite"],
-        is_tombstoned: false,
     },
     // TODO https://github.com/vector-im/element-web/issues/23207
     // DefaultTagID.ServerNotice,
