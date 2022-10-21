@@ -115,8 +115,8 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const { notification, showUnsentTooltip, onClick } = this.props;
 
-        let label;
-        let tooltip;
+        let label: string;
+        let tooltip: JSX.Element;
         if (showUnsentTooltip && this.state.showTooltip && notification.color === NotificationColor.Unsent) {
             label = _t("Message didn't send. Click for info.");
             tooltip = <Tooltip className="mx_RoleButton_tooltip" label={label} />;
@@ -143,7 +143,7 @@ interface Props {
     onClick?: (ev: MouseEvent) => void;
     onMouseOver?: (ev: MouseEvent) => void;
     onMouseLeave?: (ev: MouseEvent) => void;
-    children?: React.ReactChildren;
+    children?: React.ReactChildren | JSX.Element;
     label?: string;
 }
 
