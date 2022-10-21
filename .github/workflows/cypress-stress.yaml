@@ -1,0 +1,37 @@
+# Triggers weekly on a Friday morning at 05:30 UTC
+name: Cypress Stress Tests
+
+on:
+  workflow_dispatch
+  schedule:
+    - cron: '30 5 * * Fri'
+jobs:
+  tests:
+    name: "Run Stress Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v4.1.1
+        with:
+          browser: chrome
+          start: npx serve -p 8080 webapp
+          wait-on: 'http://localhost:8080'
+          record: true
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+          # Use existing chromium rather than downloading another
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Upload Artifact
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-results
+          path: |
+            cypress/screenshots
+            cypress/videos
+            cypress/synapselogs
