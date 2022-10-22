@@ -3133,5 +3133,6 @@
     "Video rooms": "Videohuoneet",
     "Moderation": "Moderointi",
     "You were disconnected from the call. (Error: %(message)s)": "Yhteytesi puheluun katkaistiin. (Virhe: %(message)s)",
-    "See when people join, leave, or are invited to this room": "Näe milloin ihmiset liittyvät, poistuvat tai tulevat kutsutuiksi tähän huoneeseen"
+    "See when people join, leave, or are invited to this room": "Näe milloin ihmiset liittyvät, poistuvat tai tulevat kutsutuiksi tähän huoneeseen",
+    "Layout type": "Asettelun tyyppi"
 }
