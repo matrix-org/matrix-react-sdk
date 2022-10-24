@@ -73,7 +73,7 @@ export default class QuestionDialog extends React.Component<IQuestionDialogProps
                 hasCancel={this.props.hasCancelButton}
                 fixedWidth={this.props.fixedWidth}
             >
-                <div className="mx_Dialog_content" id='mx_Dialog_content'>
+                <div data-testid='kerry-test' className="mx_Dialog_content" id='mx_Dialog_content'>
                     { this.props.description }
                 </div>
                 <DialogButtons primaryButton={this.props.button || _t('OK')}

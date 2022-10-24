@@ -32,6 +32,7 @@ exports[`<ChangelogDialog /> should fetch github proxy url for each repo with ol
     </div>
     <div
       class="mx_Dialog_content"
+      data-testid="kerry-test"
       id="mx_Dialog_content"
     >
       <div
@@ -111,14 +112,14 @@ exports[`<ChangelogDialog /> should fetch github proxy url for each repo with ol
         class="mx_Dialog_buttons_row"
       >
         <button
-          data-test-id="dialog-cancel-button"
+          data-testid="dialog-cancel-button"
           type="button"
         >
           Cancel
         </button>
         <button
           class="mx_Dialog_primary"
-          data-test-id="dialog-primary-button"
+          data-testid="dialog-primary-button"
           type="button"
         >
           Update
