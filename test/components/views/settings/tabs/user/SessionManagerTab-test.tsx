@@ -157,7 +157,7 @@ describe('<SessionManagerTab />', () => {
         confirm = true,
     ): Promise<void> => {
         // modal has sleeps in rendering process :(
-        await sleep(10);
+        await sleep(100);
         const buttonId = confirm ? 'dialog-primary-button' : 'dialog-cancel-button';
         fireEvent.click(getByTestId(buttonId));
 
