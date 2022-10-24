@@ -3202,10 +3202,10 @@
     "Ready for secure messaging": "Valmis turvalliseen viestintään",
     "All": "Kaikki",
     "No sessions found.": "Istuntoja ei löytynyt.",
-    "No inactive sessions found.": "Toimettomia istuntoja ei löytynyt.",
+    "No inactive sessions found.": "Passiivisia istuntoja ei löytynyt.",
     "No unverified sessions found.": "Vahvistamattomia istuntoja ei löytynyt.",
     "No verified sessions found.": "Vahvistettuja istuntoja ei löytynyt.",
-    "Inactive sessions": "Toimettomat istunnot",
+    "Inactive sessions": "Passiiviset istunnot",
     "Unverified sessions": "Vahvistamattomat istunnot",
     "Verified sessions": "Vahvistetut istunnot",
     "Verify or sign out from this session for best security and reliability.": "Vahvista tämä istunto tai kirjaudu ulos siitä tietoturvan ja luotettavuuden parantamiseksi.",
@@ -3218,7 +3218,7 @@
     "Desktop session": "Työpöytäistunto",
     "Unverified": "Vahvistamaton",
     "Verified": "Vahvistettu",
-    "Inactive for %(inactiveAgeDays)s+ days": "Käyttämättä %(inactiveAgeDays)s+ päivää",
+    "Inactive for %(inactiveAgeDays)s+ days": "Passiivinen %(inactiveAgeDays)s+ päivää",
     "Sign out of this session": "Kirjaudu ulos tästä istunnosta",
     "Receive push notifications on this session.": "Vastaanota push-ilmoituksia tässä istunnossa.",
     "Push notifications": "Push-ilmoitukset",
@@ -3329,5 +3329,7 @@
     "Use the “+” button in the room section of the left panel.": "Käytä “+”-painiketta vasemman paneelin huoneosiossa.",
     "A new way to chat over voice and video in %(brand)s.": "Uusi tapa keskustella äänen ja videon välityksellä %(brand)sissä.",
     "In %(spaceName)s and %(count)s other spaces.|one": "Avaruudessa %(spaceName)s ja %(count)s muussa avaruudessa.",
-    "In %(spaceName)s and %(count)s other spaces.|other": "Avaruudessa %(spaceName)s ja %(count)s muussa avaruudessa."
+    "In %(spaceName)s and %(count)s other spaces.|other": "Avaruudessa %(spaceName)s ja %(count)s muussa avaruudessa.",
+    "Get notifications as set up in your <a>settings</a>": "Vastaanota ilmoitukset <a>asetuksissa</a> määrittämälläsi tavalla",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore": "Kirjaudu ulos vanhoista istunnoista (%(inactiveAgeDays)s päivää tai vanhemmat), joita et enää käytä"
 }
