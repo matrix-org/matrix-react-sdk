@@ -39,7 +39,6 @@ import { useAsyncMemo } from '../../../../../hooks/useAsyncMemo';
 import QuestionDialog from '../../../dialogs/QuestionDialog';
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
-    // const message = sessionsToSignOutCount ?
     const { finished } = Modal.createDialog(QuestionDialog, {
         title: _t("Sign out"),
         description: (
