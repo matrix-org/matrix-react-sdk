@@ -20,7 +20,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { IPassphraseInfo } from 'matrix-js-sdk/src/crypto/api';
 
-import { findByAttr, findByTestId, getMockClientWithEventEmitter, unmockClientPeg } from '../../../test-utils';
+import { findByAttr, getMockClientWithEventEmitter, unmockClientPeg } from '../../../test-utils';
 import { findById, flushPromises } from '../../../test-utils';
 import AccessSecretStorageDialog from "../../../../src/components/views/dialogs/security/AccessSecretStorageDialog";
 

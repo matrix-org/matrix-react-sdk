@@ -32,7 +32,6 @@ exports[`<ChangelogDialog /> should fetch github proxy url for each repo with ol
     </div>
     <div
       class="mx_Dialog_content"
-      data-testid="kerry-test"
       id="mx_Dialog_content"
     >
       <div
