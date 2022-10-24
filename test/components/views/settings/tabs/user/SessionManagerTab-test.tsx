@@ -201,6 +201,10 @@ describe('<SessionManagerTab />', () => {
                     });
                 }
             });
+
+        // sometimes a verification modal is in modal state when these tests run
+        // make sure the coast is clear
+        Modal.closeCurrentModal('');
     });
 
     it('renders spinner while devices load', () => {
