@@ -253,16 +253,13 @@ describe("Notifier", () => {
         });
 
         const callOnEvent = (type?: string) => {
-            const callEvent = {
-                getContent: () => { },
-                getRoomId: () => roomId,
-                isBeingDecrypted: () => false,
-                isDecryptionFailure: () => false,
-                getSender: () => "@alice:foo",
-                getType: () => type ?? ElementCall.CALL_EVENT_TYPE.name,
-                getStateKey: () => "state_key",
-            } as unknown as MatrixEvent;
-
+            const callEvent = mkEvent({
+                type: type ?? ElementCall.CALL_EVENT_TYPE.name,
+                user: "@alice:foo",
+                room: roomId,
+                content: {},
+                event: true,
+            });
             Notifier.onEvent(callEvent);
             return callEvent;
         };
