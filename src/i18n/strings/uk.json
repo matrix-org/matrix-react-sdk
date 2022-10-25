@@ -3665,5 +3665,7 @@
     "Sign in new device": "Увійти на новому пристрої",
     "Show QR code": "Показати QR-код",
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Ви можете використовувати цей пристрій для входу на новому пристрої за допомогою QR-коду. Вам потрібно буде сканувати QR-код, показаний на цьому пристрої, своїм пристроєм, на якому ви вийшли.",
-    "play voice broadcast": "відтворити голосове повідомлення"
+    "play voice broadcast": "відтворити голосове повідомлення",
+    "Are you sure you want to sign out of %(count)s sessions?|one": "Ви впевнені, що хочете вийти з %(count)s сеансів?",
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Ви впевнені, що хочете вийти з %(count)s сеансів?"
 }
