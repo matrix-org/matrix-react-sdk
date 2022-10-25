@@ -3361,5 +3361,19 @@
     "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
     "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
     "You may contact me if you want to follow up or to let me test out upcoming ideas": "Voitte olla yhteydessä minuun, jos haluatte keskustella palautteesta tai antaa minun testata tulevia ideoita",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Alustasi ja käyttäjänimesi huomataan, jotta palautteesi on meille mahdollisimman käyttökelpoista."
+    "Your platform and username will be noted to help us use your feedback as much as we can.": "Alustasi ja käyttäjänimesi huomataan, jotta palautteesi on meille mahdollisimman käyttökelpoista.",
+    "For best security, sign out from any session that you don't recognize or use anymore.": "Parhaan turvallisuuden takaamiseksi kirjaudu ulos istunnoista, joita et tunnista tai et enää käytä.",
+    "Voice broadcasts": "Äänen yleislähetykset",
+    "Voice broadcast (under active development)": "Äänen yleislähetys (aktiivisen kehityksen alaisena)",
+    "Voice broadcast": "Äänen yleislähetys",
+    "pause voice broadcast": "keskeytä äänen yleislähetys",
+    "resume voice broadcast": "palaa äänen yleislähetykseen",
+    "play voice broadcast": "toista äänen yleislähetys",
+    "Yes, stop broadcast": "Kyllä, pysäytä yleislähetys",
+    "Stop live broadcasting?": "Pysäytetäänkö liveyleislähetys?",
+    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Joku toinen tallentaa jo äänen yleislähetystä. Odota äänen yleislähetyksen päättymistä, jotta voit aloittaa uuden.",
+    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Tallennat jo äänen yleislähetystä. Lopeta nykyinen äänen yleislähetys aloittaaksesi uuden.",
+    "Can't start a new voice broadcast": "Uutta äänen yleislähetystä ei voi käynnistää",
+    "Command error: Unable to find rendering type (%(renderingType)s)": "Komentovirhe: Renderöintityyppiä (%(renderingType)s) ei löydy",
+    "You need to be able to kick users to do that.": "Sinun täytyy pystyä potkia käyttäjiä voidaksesi tehdä tuon."
 }
