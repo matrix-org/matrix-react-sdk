@@ -156,35 +156,8 @@ const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) 
         </div>
         ;
     }
-    switch (filter) {
-        case DeviceSecurityVariation.Unverified:
-            return <div className='mx_FilteredDeviceList_securityCard'>
-                <DeviceSecurityCard
-                    variation={DeviceSecurityVariation.Unverified}
-                    heading={_t('Unverified sessions')}
-                    description={_t(
-                        `Verify your sessions for enhanced secure messaging or sign out`
-                    + ` from those you don't recognize or use anymore.`,
-                    )}
-                />
-            </div>
-            ;
-        case DeviceSecurityVariation.Inactive:
-            return <div className='mx_FilteredDeviceList_securityCard'>
-                <DeviceSecurityCard
-                    variation={DeviceSecurityVariation.Inactive}
-                    heading={_t('Inactive sessions')}
-                    description={_t(
-                        `Consider signing out from old sessions ` +
-                    `(%(inactiveAgeDays)s days or older) you don't use anymore`,
-                        { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
-                    )}
-                />
-            </div>
-            ;
-        default:
-            return null;
-    }
+
+    return null;
 };
 
 const getNoResultsMessage = (filter?: DeviceSecurityVariation): string => {
