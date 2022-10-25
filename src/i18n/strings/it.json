@@ -3665,5 +3665,7 @@
     "Browser": "Browser",
     "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Permetti la visualizzazione di un codice QR nel gestore di sessioni per accedere in un altro dispositivo (richiede homeserver compatibile)",
     "play voice broadcast": "avvia trasmissione vocale",
-    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Qualcun altro sta già registrando una trasmissione vocale. Aspetta che finisca prima di iniziarne una nuova."
+    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Qualcun altro sta già registrando una trasmissione vocale. Aspetta che finisca prima di iniziarne una nuova.",
+    "Are you sure you want to sign out of %(count)s sessions?|one": "Vuoi davvero disconnetterti da %(count)s sessione?",
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Vuoi davvero disconnetterti da %(count)s sessioni?"
 }
