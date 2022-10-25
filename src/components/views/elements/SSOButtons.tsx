@@ -23,7 +23,7 @@ import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
 import { _t } from "../../../languageHandler";
-import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "../../../Login";
+import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "matrix-js-sdk/src/@types/auth";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
