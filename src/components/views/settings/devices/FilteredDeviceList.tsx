@@ -117,7 +117,7 @@ const securityCardContent: Record<DeviceSecurityVariation, {
          title: _t('Inactive sessions'),
          description: _t(
              `Consider signing out from old sessions ` +
-        `(%(inactiveAgeDays)s days or older) you don't use anymore`,
+        `(%(inactiveAgeDays)s days or older) you don't use anymore.`,
              { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
          ),
          learnMoreDescription: <>
