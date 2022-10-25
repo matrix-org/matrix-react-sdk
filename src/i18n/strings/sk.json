@@ -3664,5 +3664,6 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Niekto iný už nahráva hlasové vysielanie. Počkajte, kým sa skončí jeho hlasové vysielanie, a potom spustite nové.",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Nemáte požadované oprávnenia na spustenie hlasového vysielania v tejto miestnosti. Obráťte sa na správcu miestnosti, aby vám rozšíril oprávnenia.",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Už nahrávate hlasové vysielanie. Ukončite aktuálne hlasové vysielanie a spustite nové.",
-    "Can't start a new voice broadcast": "Nemôžete spustiť nové hlasové vysielanie"
+    "Can't start a new voice broadcast": "Nemôžete spustiť nové hlasové vysielanie",
+    "play voice broadcast": "spustiť hlasové vysielanie"
 }
