@@ -1105,7 +1105,7 @@
     "Remove %(count)s messages|one": "Eine Nachricht entfernen",
     "Remove recent messages": "Kürzlich gesendete Nachrichten entfernen",
     "You're previewing %(roomName)s. Want to join it?": "Du erkundest den Raum %(roomName)s. Willst du ihn betreten?",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|one": "%(senderName)s hat die alternative Adresse 2%(addresses)s für diesen Raum hinzugefügt.",
+    "%(senderName)s added the alternative addresses %(addresses)s for this room.|one": "%(senderName)s hat die alternative Adresse %(addresses)s für diesen Raum hinzugefügt.",
     "%(senderName)s changed the addresses for this room.": "%(senderName)s hat die Adresse für diesen Raum geändert.",
     "Displays information about a user": "Zeigt Informationen über Benutzer",
     "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": "%(senderDisplayName)s hat den Raumnamen von %(oldRoomName)s zu %(newRoomName)s geändert.",
