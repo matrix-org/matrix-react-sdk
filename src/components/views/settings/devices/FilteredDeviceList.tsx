@@ -101,7 +101,6 @@ const securityCardContent: Record<DeviceSecurityVariation, {
             `sign out from those you don't recognize or use anymore.`,
          ),
          learnMoreDescription: <>
-
              <p>{ _t('Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.') }
              </p>
              <p>
