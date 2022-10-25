@@ -551,7 +551,11 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
     private renderThreadInfo(): React.ReactNode {
         if (this.state.thread?.id === this.props.mxEvent.getId()) {
-            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
+            return <ThreadSummary
+                mxEvent={this.props.mxEvent}
+                thread={this.state.thread}
+                data-testid="thread-summary"
+            />;
         }
 
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
