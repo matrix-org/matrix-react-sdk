@@ -437,7 +437,9 @@ export const Notifier = {
 
             const store = SdkContextClass.instance.roomViewStore;
             const isViewingRoom = store.getRoomId() === room.roomId;
-            const threadId: string | undefined = ev.getThread()?.id;
+            const threadId: string | undefined = ev.getId() !== ev.threadRootId
+                ? ev.threadRootId
+                : undefined;
             const isViewingThread = store.getThreadId() === threadId;
 
             const isViewingEventTimeline = isViewingRoom && (!threadId || isViewingThread);
