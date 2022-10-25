@@ -440,7 +440,7 @@ export const Notifier = {
             const threadId: string | undefined = ev.getThread()?.id;
             const isViewingThread = store.getThreadId() === threadId;
 
-            const isViewingEventTimeline = (isViewingRoom && !threadId) || (threadId && isViewingThread);
+            const isViewingEventTimeline = isViewingRoom && (!threadId || isViewingThread);
 
             if (isViewingEventTimeline &&
                 UserActivity.sharedInstance().userActiveRecently() &&
