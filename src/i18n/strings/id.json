@@ -3665,5 +3665,7 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Ada orang lain yang saat ini merekam sebuah siaran suara. Tunggu siaran suaranya berakhir untuk memulai yang baru.",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Anda tidak memiliki izin untuk memulai sebuah siaran suara di ruangan ini. Hubungi sebuah administrator ruangan untuk meningkatkan izin Anda.",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Anda saat ini merekam sebuah siaran suara. Mohon akhiri siaran suara Anda saat ini untuk memulai yang baru.",
-    "Can't start a new voice broadcast": "Tidak dapat memulai sebuah siaran suara baru"
+    "Can't start a new voice broadcast": "Tidak dapat memulai sebuah siaran suara baru",
+    "Are you sure you want to sign out of %(count)s sessions?|one": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?",
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?"
 }
