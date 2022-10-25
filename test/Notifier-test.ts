@@ -99,7 +99,9 @@ describe("Notifier", () => {
 
         Notifier.isBodyEnabled = jest.fn().mockReturnValue(true);
 
-        mockClient.getRoom.mockImplementation(id => id === roomId ? testRoom : new Room(id, mockClient, mockClient.getUserId()));
+        mockClient.getRoom.mockImplementation(id => {
+            return id === roomId ? testRoom : new Room(id, mockClient, mockClient.getUserId());
+        });
     });
 
     describe('triggering notification from events', () => {
