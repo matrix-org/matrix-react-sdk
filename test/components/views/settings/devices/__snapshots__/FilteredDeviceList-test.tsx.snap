@@ -38,7 +38,7 @@ HTMLCollection [
           class="mx_DeviceSecurityCard_description"
         >
           <span>
-            Consider signing out from old sessions (90 days or older) you don't use anymore
+            Consider signing out from old sessions (90 days or older) you don't use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
