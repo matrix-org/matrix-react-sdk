@@ -394,7 +394,7 @@ describe("Notifier", () => {
             expect(Notifier._displayPopupNotification).toHaveBeenCalledTimes(1);
         });
 
-        it.only("should a pop-up for thread event", async () => {
+        it("should a pop-up for thread event", async () => {
             const { events, rootEvent } = mkThread({
                 room: testRoom,
                 client: mockClient,
