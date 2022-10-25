@@ -3665,5 +3665,7 @@
     "Sign in with QR code": "Přihlásit se pomocí QR kódu",
     "Browser": "Prohlížeč",
     "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Povolit zobrazení QR kódu ve správci relací pro přihlášení do jiného zařízení (vyžaduje kompatibilní domovský server)",
-    "play voice broadcast": "přehrát hlasové vysílání"
+    "play voice broadcast": "přehrát hlasové vysílání",
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Opravdu se chcete odhlásit z %(count)s relací?",
+    "Are you sure you want to sign out of %(count)s sessions?|one": "Opravdu se chcete odhlásit z %(count)s relace?"
 }
