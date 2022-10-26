@@ -47,4 +47,16 @@ describe('<PowerSelector />', () => {
         expect(option.selected).toBeTruthy();
         expect(fn).not.toHaveBeenCalled();
     });
+
+    it("should call onChange when custom input is blurred with a number in it", async () => {
+        const fn = jest.fn();
+        render(<PowerSelector value={25} maxValue={100} usersDefault={0} onChange={fn} powerLevelKey="key" />);
+
+        const input = screen.getByLabelText("Power level");
+        fireEvent.change(input, { target: { value: 40 } });
+        fireEvent.blur(input);
+
+        await screen.findByDisplayValue(40);
+        expect(fn).toHaveBeenCalledWith(40, "key");
+    });
 });
