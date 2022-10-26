@@ -18,7 +18,9 @@ import { SlidingSync, SlidingSyncEvent } from 'matrix-js-sdk/src/sliding-sync';
 import { Room } from 'matrix-js-sdk/src/matrix';
 
 import {
-    LISTS_UPDATE_EVENT, SlidingRoomListStoreClass, SlidingSyncSortToFilter
+    LISTS_UPDATE_EVENT,
+    SlidingRoomListStoreClass,
+    SlidingSyncSortToFilter,
 } from "../../../src/stores/room-list/SlidingRoomListStore";
 import { SpaceStoreClass } from "../../../src/stores/spaces/SpaceStore";
 import { MockEventEmitter, stubClient, untilEmission } from "../../test-utils";
