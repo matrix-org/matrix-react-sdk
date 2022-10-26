@@ -831,7 +831,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
 
         const receiptDestination: ReadReceipt<string, ListenerMap<string>> = this.context.threadId
-            ? room.getThread(this.context.threadId) ?? room
+            ? room.getThread(this.context.threadId)
             : room;
 
         const receipts: IReadReceiptProps[] = [];
