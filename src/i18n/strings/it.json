@@ -3667,5 +3667,6 @@
     "play voice broadcast": "avvia trasmissione vocale",
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Qualcun altro sta già registrando una trasmissione vocale. Aspetta che finisca prima di iniziarne una nuova.",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Vuoi davvero disconnetterti da %(count)s sessione?",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "Vuoi davvero disconnetterti da %(count)s sessioni?"
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Vuoi davvero disconnetterti da %(count)s sessioni?",
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Le sessioni verificate hanno effettuato l'accesso con le tue credenziali e sono state verificate, usando la frase segreta o la verifica incrociata."
 }
