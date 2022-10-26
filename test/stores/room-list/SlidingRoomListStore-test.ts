@@ -15,6 +15,7 @@ limitations under the License.
 */
 import { mocked } from 'jest-mock';
 import { SlidingSync } from 'matrix-js-sdk/src/sliding-sync';
+import { Room } from 'matrix-js-sdk/src/matrix';
 
 import { SlidingRoomListStoreClass, SlidingSyncSortToFilter } from "../../../src/stores/room-list/SlidingRoomListStore";
 import { SpaceStoreClass } from "../../../src/stores/spaces/SpaceStore";
@@ -36,6 +37,7 @@ describe("SlidingRoomListStore", () => {
     let context: TestSdkContext;
     let dis: MatrixDispatcher;
     let activeSpace: string;
+    let tagIdToIndex = {};
 
     beforeEach(async () => {
         context = new TestSdkContext();
@@ -53,24 +55,24 @@ describe("SlidingRoomListStore", () => {
         context._RoomViewStore = mocked(new MockEventEmitter({
             getRoomId: jest.fn(),
         }) as unknown as RoomViewStore);
+
+        let index = 0;
+        tagIdToIndex = {};
+        mocked(context._SlidingSyncManager.getOrAllocateListIndex).mockImplementation((listId: string): number => {
+            if (tagIdToIndex[listId] != null) {
+                return tagIdToIndex[listId];
+            }
+            tagIdToIndex[listId] = index;
+            index++;
+            return index;
+        });
+
         dis = new MatrixDispatcher();
         store = new SlidingRoomListStoreClass(dis, context);
     });
 
     describe("spaces", () => {
-        let tagIdToIndex = {};
-
         beforeEach(() => {
-            let index = 0;
-            tagIdToIndex = {};
-            mocked(context._SlidingSyncManager.getOrAllocateListIndex).mockImplementation((listId: string): number => {
-                if (tagIdToIndex[listId] != null) {
-                    return tagIdToIndex[listId];
-                }
-                tagIdToIndex[listId] = index;
-                index++;
-                return index;
-            });
             mocked(context._SlidingSyncManager.ensureListRegistered).mockResolvedValue({
                 ranges: [[0, 10]],
             });
@@ -98,6 +100,7 @@ describe("SlidingRoomListStore", () => {
                 },
             );
         });
+
         it("alters 'filters.spaces' on the DefaultTagID.Untagged list if it loads with an active space", async () => {
             // change the active space before we are ready
             const spaceRoomId = "!foo2:bar";
@@ -114,6 +117,40 @@ describe("SlidingRoomListStore", () => {
                         spaces: [spaceRoomId],
                     }),
                 }),
+            );
+        });
+
+        it("includes subspaces in 'filters.spaces' when the selected space has subspaces", async () => {
+            await store.start(); // call onReady
+            const spaceRoomId = "!foo:bar";
+            const subSpace1 = "!ss1:bar";
+            const subSpace2 = "!ss2:bar";
+
+            const p = untilEmission(store, LISTS_LOADING_EVENT, (listName, isLoading) => {
+                return listName === DefaultTagID.Untagged && !isLoading;
+            });
+
+            mocked(context._SpaceStore.traverseSpace).mockImplementation(
+                (spaceId: string, fn: (roomId: string) => void) => {
+                    if (spaceId === spaceRoomId) {
+                        fn(subSpace1);
+                        fn(subSpace2);
+                    }
+                },
+            );
+
+            // change the active space
+            activeSpace = spaceRoomId;
+            context._SpaceStore.emit(UPDATE_SELECTED_SPACE, spaceRoomId, false);
+            await p;
+
+            expect(context._SlidingSyncManager.ensureListRegistered).toHaveBeenCalledWith(
+                tagIdToIndex[DefaultTagID.Untagged],
+                {
+                    filters: expect.objectContaining({
+                        spaces: [spaceRoomId, subSpace1, subSpace2],
+                    }),
+                },
             );
         });
     });
@@ -135,5 +172,45 @@ describe("SlidingRoomListStore", () => {
             sort: SlidingSyncSortToFilter[SortAlgorithm.Recent],
         });
         expect(store.getTagSorting(tagId)).toEqual(SortAlgorithm.Recent);
+    });
+
+    it("getTagsForRoom gets the tags for the room", async () => {
+        mocked(context._SlidingSyncManager.ensureListRegistered).mockResolvedValue({
+            ranges: [[0, 10]],
+        });
+        await store.start();
+        const untaggedIndex = context._SlidingSyncManager.getOrAllocateListIndex(DefaultTagID.Untagged);
+        const favIndex = context._SlidingSyncManager.getOrAllocateListIndex(DefaultTagID.Favourite);
+        const roomA = "!a:localhost";
+        const roomB = "!b:localhost";
+        const indexToListData = {
+            [untaggedIndex]: {
+                joinedCount: 10,
+                roomIndexToRoomId: {
+                    0: roomA,
+                    1: roomB,
+                },
+            },
+            [favIndex]: {
+                joinedCount: 2,
+                roomIndexToRoomId: {
+                    0: roomB,
+                },
+            },
+        };
+        mocked(context._SlidingSyncManager.slidingSync.getListData).mockImplementation((i: number) => {
+            return indexToListData[i] || null;
+        });
+
+        expect(store.getTagsForRoom(new Room(roomA, context.client, context.client.getUserId()))).toEqual(
+            [DefaultTagID.Untagged],
+        );
+        expect(store.getTagsForRoom(new Room(roomB, context.client, context.client.getUserId()))).toEqual(
+            [DefaultTagID.Favourite, DefaultTagID.Untagged],
+        );
+    });
+
+    it("emits LISTS_UPDATE_EVENT when slidingSync lists update", async () => {
+
     });
 });

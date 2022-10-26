@@ -169,9 +169,12 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         const tags: TagID[] = [];
         for (const tagId in this.tagIdToSortAlgo) {
             const index = this.context.slidingSyncManager.getOrAllocateListIndex(tagId);
-            const { roomIndexToRoomId } = this.context.slidingSyncManager.slidingSync.getListData(index);
-            for (const roomIndex in roomIndexToRoomId) {
-                const roomId = roomIndexToRoomId[roomIndex];
+            const listData = this.context.slidingSyncManager.slidingSync.getListData(index);
+            if (!listData) {
+                continue;
+            }
+            for (const roomIndex in listData.roomIndexToRoomId) {
+                const roomId = listData.roomIndexToRoomId[roomIndex];
                 if (roomId === room.roomId) {
                     tags.push(tagId);
                     break;
