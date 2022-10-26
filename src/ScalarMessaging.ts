@@ -651,7 +651,7 @@ function returnStateEvent(event: MessageEvent<any>, roomId: string, eventType: s
 
 async function getOpenIdToken(event: MessageEvent<any>) {
     try {
-        const tokenObject = MatrixClientPeg.get().getOpenIdToken();
+        const tokenObject = await MatrixClientPeg.get().getOpenIdToken();
         sendResponse(event, tokenObject);
     } catch (ex) {
         logger.warn("Unable to fetch openId token.", ex);
