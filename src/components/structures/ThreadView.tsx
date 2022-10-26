@@ -18,8 +18,6 @@ import React, { createRef, KeyboardEvent } from 'react';
 import { Thread, THREAD_RELATION_TYPE, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
-import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { logger } from 'matrix-js-sdk/src/logger';
 import classNames from 'classnames';
 
@@ -290,14 +288,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
-    private onPaginationRequest = async (
-        timelineWindow: TimelineWindow | null,
-        direction = Direction.Backward,
-        limit = 20,
-    ): Promise<boolean> => {
-        return timelineWindow.paginate(direction, limit);
-    };
-
     private onFileDrop = (dataTransfer: DataTransfer) => {
         const roomId = this.props.mxEvent.getRoomId();
         if (roomId) {
@@ -380,7 +370,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     highlightedEventId={highlightedEventId}
                     eventScrollIntoView={this.props.initialEventScrollIntoView}
                     onEventScrolledIntoView={this.resetJumpToEvent}
-                    onPaginationRequest={this.onPaginationRequest}
                 />
             </>;
         } else {
