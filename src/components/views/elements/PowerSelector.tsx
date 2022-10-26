@@ -44,7 +44,7 @@ interface IProps {
 }
 
 interface IState {
-    levelRoleMap: {};
+    levelRoleMap: Partial<Record<number | "undefined", string>>;
     // List of power levels to show in the drop-down
     options: number[];
 
@@ -125,7 +125,11 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         event.preventDefault();
         event.stopPropagation();
 
-        this.props.onChange(this.state.customValue, this.props.powerLevelKey);
+        if (this.state.customValue) {
+            this.props.onChange(this.state.customValue, this.props.powerLevelKey);
+        } else {
+            this.initStateFromProps(this.props); // reset, invalid input
+        }
     };
 
     private onCustomKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
