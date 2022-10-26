@@ -78,8 +78,8 @@ export default class EmojiProvider extends AutocompleteProvider {
     matcher: QueryMatcher<ISortedEmoji>;
     nameMatcher: QueryMatcher<ISortedEmoji>;
     private readonly recentlyUsed: IEmoji[];
-    private emotes: Map<string,object>;
-    private emotesPromise: Promise<object>;
+    private emotes: Map<string, string>;
+    private emotesPromise: Promise<Map<string, string>>;
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
@@ -101,7 +101,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     private async decryptEmotes(emotes: Object, roomId: string) {
-        const decryptede=new Map();
+        const decryptede=new Map<string, string>();
         const client = MatrixClientPeg.get();
         let durl = "";
         const isEnc=client.isRoomEncrypted(roomId);
