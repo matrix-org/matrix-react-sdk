@@ -3662,5 +3662,11 @@
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Du kannst dieses Gerät verwenden, um ein neues Gerät per QR-Code anzumelden. Dazu musst du den auf diesem Gerät angezeigten QR-Code mit deinem nicht angemeldeten Gerät einlesen.",
     "play voice broadcast": "Sprachübertragung wiedergeben",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Bist du sicher, dass du dich von %(count)s Sitzung abmelden möchtest?",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "Bist du sicher, dass du dich von %(count)s Sitzungen abmelden möchtest?"
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Bist du sicher, dass du dich von %(count)s Sitzungen abmelden möchtest?",
+    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Inaktive Sitzungen sind jene, die du schon seit geraumer Zeit nicht mehr verwendet hast, aber nach wie vor Verschlüsselungs-Schlüssel erhalten.",
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Du solltest besonders sicher gehen, dass du diese Sitzungen kennst, da sie die unbefugte Nutzung deines Kontos durch Dritte bedeuten könnten.",
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Nicht verifizierte Sitzungen sind jene, die mit deinen Daten angemeldet, aber nicht quer signiert wurden.",
+    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Dies bedeutet, dass sie die Verschlüsselungs-Schlüssel für deine vorherigen Nachrichten besitzen und anderen Gewissheit geben, dass sie wirklich mit dir kommunizieren.",
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Verifizierte Sitzungen wurden mit deinen Daten angemeldet und anschließend verifiziert, entweder mit einer Sicherheitspassphrase oder durch Quersignierung.",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Erwäge, dich aus alten (%(inactiveAgeDays)s Tage oder mehr), nicht mehr verwendeten Sitzungen abzumelden."
 }
