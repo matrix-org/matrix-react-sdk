@@ -133,16 +133,15 @@ const securityCardContent: Record<DeviceSecurityVariation, {
      },
  };
 
+const isSecurityVariation = (filter?: DeviceFilterKey): filter is DeviceSecurityVariation =>
+    Object.values<string>(DeviceSecurityVariation).includes(filter);
+
 const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) => {
-    if ([
-        DeviceSecurityVariation.Unverified,
-        DeviceSecurityVariation.Verified,
-        DeviceSecurityVariation.Inactive,
-    ].includes(filter as DeviceSecurityVariation)) {
+    if (isSecurityVariation(filter)) {
         const { title, description, learnMoreDescription } = securityCardContent[filter];
         return <div className='mx_FilteredDeviceList_securityCard'>
             <DeviceSecurityCard
-                variation={DeviceSecurityVariation.Verified}
+                variation={filter}
                 heading={title}
                 description={<span>
                     { description }
