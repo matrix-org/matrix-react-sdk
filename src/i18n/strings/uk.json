@@ -3667,5 +3667,14 @@
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Ви можете використовувати цей пристрій для входу на новому пристрої за допомогою QR-коду. Вам потрібно буде сканувати QR-код, показаний на цьому пристрої, своїм пристроєм, на якому ви вийшли.",
     "play voice broadcast": "відтворити голосове повідомлення",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Ви впевнені, що хочете вийти з %(count)s сеансів?",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "Ви впевнені, що хочете вийти з %(count)s сеансів?"
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Ви впевнені, що хочете вийти з %(count)s сеансів?",
+    "Show formatting": "Показати форматування",
+    "Show plain text": "Показати звичайний текст",
+    "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "Вилучення неактивних сеансів посилює безпеку і швидкодію, а також полегшує виявлення підозрілих нових сеансів.",
+    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Неактивні сеанси — це сеанси, які ви не використовували протягом певного часу, але вони продовжують отримувати ключі шифрування.",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Обміркуйте можливість виходу зі старих сеансів (%(inactiveAgeDays)s днів або більше), якими ви більше не користуєтесь.",
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Ви повинні бути впевнені, що розпізнаєте ці сеанси, оскільки вони можуть бути несанкціонованим використанням вашого облікового запису.",
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Не звірені сеанси — це сеанси, які увійшли в систему з вашими обліковими даними, але не пройшли перехресну перевірку.",
+    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Це означає, що вони зберігають ключі шифрування ваших попередніх повідомлень і підтверджують іншим користувачам, з якими ви спілкуєтеся, що ці сеанси дійсно належать вам.",
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Звірені сеанси увійшли в систему з вашими обліковими даними, а потім були перевірені або за допомогою вашої безпечної парольної фрази, або за допомогою перехресної перевірки."
 }
