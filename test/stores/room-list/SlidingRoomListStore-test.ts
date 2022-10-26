@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { mocked } from 'jest-mock';
-import { SlidingSync } from 'matrix-js-sdk/src/sliding-sync';
+import { SlidingSync, SlidingSyncEvent } from 'matrix-js-sdk/src/sliding-sync';
 import { Room } from 'matrix-js-sdk/src/matrix';
 
-import { SlidingRoomListStoreClass, SlidingSyncSortToFilter } from "../../../src/stores/room-list/SlidingRoomListStore";
+import { LISTS_UPDATE_EVENT, SlidingRoomListStoreClass, SlidingSyncSortToFilter } from "../../../src/stores/room-list/SlidingRoomListStore";
 import { SpaceStoreClass } from "../../../src/stores/spaces/SpaceStore";
 import { MockEventEmitter, stubClient, untilEmission } from "../../test-utils";
 import { TestSdkContext } from '../../TestSdkContext';
@@ -28,6 +28,7 @@ import { SortAlgorithm } from '../../../src/stores/room-list/algorithms/models';
 import { DefaultTagID, TagID } from '../../../src/stores/room-list/models';
 import { UPDATE_SELECTED_SPACE } from '../../../src/stores/spaces';
 import { LISTS_LOADING_EVENT } from '../../../src/stores/room-list/RoomListStore';
+import { UPDATE_EVENT } from '../../../src/stores/AsyncStore';
 
 jest.mock('../../../src/SlidingSyncManager');
 const MockSlidingSyncManager = <jest.Mock<SlidingSyncManager>><unknown>SlidingSyncManager;
@@ -56,6 +57,7 @@ describe("SlidingRoomListStore", () => {
             getRoomId: jest.fn(),
         }) as unknown as RoomViewStore);
 
+        // mock implementations to allow the store to map tag IDs to sliding sync list indexes and vice versa
         let index = 0;
         tagIdToIndex = {};
         mocked(context._SlidingSyncManager.getOrAllocateListIndex).mockImplementation((listId: string): number => {
@@ -66,17 +68,24 @@ describe("SlidingRoomListStore", () => {
             index++;
             return index;
         });
+        mocked(context.slidingSyncManager.listIdForIndex).mockImplementation((i) => {
+            for (const tagId in tagIdToIndex) {
+                const j = tagIdToIndex[tagId];
+                if (i === j) {
+                    return tagId;
+                }
+            }
+            return null;
+        });
+        mocked(context._SlidingSyncManager.ensureListRegistered).mockResolvedValue({
+            ranges: [[0, 10]],
+        });
 
         dis = new MatrixDispatcher();
         store = new SlidingRoomListStoreClass(dis, context);
     });
 
     describe("spaces", () => {
-        beforeEach(() => {
-            mocked(context._SlidingSyncManager.ensureListRegistered).mockResolvedValue({
-                ranges: [[0, 10]],
-            });
-        });
 
         it("alters 'filters.spaces' on the DefaultTagID.Untagged list when the selected space changes", async () => {
             await store.start(); // call onReady
@@ -157,9 +166,6 @@ describe("SlidingRoomListStore", () => {
 
     it("setTagSorting alters the 'sort' option in the list", async () => {
         mocked(context._SlidingSyncManager.getOrAllocateListIndex).mockReturnValue(0);
-        mocked(context._SlidingSyncManager.ensureListRegistered).mockResolvedValue({
-            ranges: [[0, 10]],
-        });
         const tagId: TagID = "foo";
         await store.setTagSorting(tagId, SortAlgorithm.Alphabetic);
         expect(context._SlidingSyncManager.ensureListRegistered).toBeCalledWith(0, {
@@ -175,9 +181,6 @@ describe("SlidingRoomListStore", () => {
     });
 
     it("getTagsForRoom gets the tags for the room", async () => {
-        mocked(context._SlidingSyncManager.ensureListRegistered).mockResolvedValue({
-            ranges: [[0, 10]],
-        });
         await store.start();
         const untaggedIndex = context._SlidingSyncManager.getOrAllocateListIndex(DefaultTagID.Untagged);
         const favIndex = context._SlidingSyncManager.getOrAllocateListIndex(DefaultTagID.Favourite);
@@ -211,6 +214,105 @@ describe("SlidingRoomListStore", () => {
     });
 
     it("emits LISTS_UPDATE_EVENT when slidingSync lists update", async () => {
-
+        await store.start();
+        const roomA = "!a:localhost";
+        const roomB = "!b:localhost";
+        const roomC = "!c:localhost";
+        const tagId = DefaultTagID.Favourite;
+        const listIndex = context.slidingSyncManager.getOrAllocateListIndex(tagId);
+        const joinCount = 10;
+        const roomIndexToRoomId = { // mixed to ensure we sort
+            1: roomB,
+            2: roomC,
+            0: roomA,
+        }
+        const rooms = [
+            new Room(roomA, context.client, context.client.getUserId()),
+            new Room(roomB, context.client, context.client.getUserId()),
+            new Room(roomC, context.client, context.client.getUserId()),
+        ];
+        mocked(context.client.getRoom).mockImplementation((roomId: string) => {
+            switch(roomId) {
+                case roomA:
+                    return rooms[0];
+                case roomB:
+                    return rooms[1];
+                case roomC:
+                    return rooms[2];
+            }
+            return null;
+        });
+        const p = untilEmission(store, LISTS_UPDATE_EVENT);
+        context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, listIndex, joinCount, roomIndexToRoomId);
+        await p;
+        expect(store.getCount(tagId)).toEqual(joinCount);
+        expect(store.orderedLists[tagId]).toEqual(rooms);
     });
+
+    it("sets the sticky room on the basis of the viewed room in RoomViewStore", async() => {
+        await store.start();
+        // seed the store with 3 rooms
+        const roomIdA = "!a:localhost";
+        const roomIdB = "!b:localhost";
+        const roomIdC = "!c:localhost";
+        const tagId = DefaultTagID.Favourite;
+        const listIndex = context.slidingSyncManager.getOrAllocateListIndex(tagId);
+        const joinCount = 10;
+        const roomIndexToRoomId = { // mixed to ensure we sort
+            1: roomIdB,
+            2: roomIdC,
+            0: roomIdA,
+        }
+        const roomA = new Room(roomIdA, context.client, context.client.getUserId());
+        const roomB = new Room(roomIdB, context.client, context.client.getUserId());
+        const roomC = new Room(roomIdC, context.client, context.client.getUserId())
+        mocked(context.client.getRoom).mockImplementation((roomId: string) => {
+            switch(roomId) {
+                case roomIdA:
+                    return roomA;
+                case roomIdB:
+                    return roomB;
+                case roomIdC:
+                    return roomC;
+            }
+            return null;
+        });
+        mocked(context._SlidingSyncManager.slidingSync.getListData).mockImplementation((i: number) => {
+            if (i !== listIndex) {
+                return null;
+            }
+            return {
+                roomIndexToRoomId: roomIndexToRoomId,
+                joinedCount: joinCount,
+            };
+        });
+        let p = untilEmission(store, LISTS_UPDATE_EVENT);
+        context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, listIndex, joinCount, roomIndexToRoomId);
+        await p;
+        expect(store.orderedLists[tagId]).toEqual([roomA, roomB, roomC]);
+
+        // make roomB sticky and inform the store
+        mocked(context.roomViewStore.getRoomId).mockReturnValue(roomIdB);
+        context.roomViewStore.emit(UPDATE_EVENT);
+
+        // bump room C to the top, room B should not move from i=1 despite the list update saying to
+        roomIndexToRoomId[0] = roomIdC;
+        roomIndexToRoomId[1] = roomIdA;
+        roomIndexToRoomId[2] = roomIdB;
+        p = untilEmission(store, LISTS_UPDATE_EVENT);
+        context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, listIndex, joinCount, roomIndexToRoomId);
+        await p;
+
+        // check that B didn't move and that A was put below B
+        expect(store.orderedLists[tagId]).toEqual([roomC, roomB, roomA]);
+
+        // make room C sticky: rooms should move as a result, without needing an additional list update
+        mocked(context.roomViewStore.getRoomId).mockReturnValue(roomIdC);
+        p = untilEmission(store, LISTS_UPDATE_EVENT);
+        context.roomViewStore.emit(UPDATE_EVENT);
+        await p;
+        expect(store.orderedLists[tagId].map((r)=>r.roomId)).toEqual([roomC, roomA, roomB].map((r)=>r.roomId));
+    });
+
+
 });

@@ -294,8 +294,11 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
                 // resort it based on the slidingSync view of the list. This may cause this old sticky
                 // room to cease to exist.
                 const index = this.context.slidingSyncManager.getOrAllocateListIndex(tagId);
-                const { roomIndexToRoomId } = this.context.slidingSyncManager.slidingSync.getListData(index);
-                this.refreshOrderedLists(tagId, roomIndexToRoomId);
+                const listData = this.context.slidingSyncManager.slidingSync.getListData(index);
+                if (!listData) {
+                    continue;
+                }
+                this.refreshOrderedLists(tagId, listData.roomIndexToRoomId);
                 hasUpdatedAnyList = true;
             }
         }
