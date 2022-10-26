@@ -3667,5 +3667,12 @@
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Anda saat ini merekam sebuah siaran suara. Mohon akhiri siaran suara Anda saat ini untuk memulai yang baru.",
     "Can't start a new voice broadcast": "Tidak dapat memulai sebuah siaran suara baru",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?"
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?",
+    "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "Mengeluarkan sesi yang tidak aktif meningkatkan keamanan dan performa, dan membuatnya lebih mudah untuk Anda untuk mengenal jika sebuah sesi baru itu mencurigakan.",
+    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Sesi tidak aktif adalah sesi yang Anda belum gunakan dalam beberapa waktu, tetapi mereka masih mendapatkan kunci enkripsi.",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Pertimbangkan untuk mengeluarkan sesi lama (%(inactiveAgeDays)s hari atau lebih) yang Anda tidak gunakan lagi.",
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Anda seharusnya yakin bahwa Anda mengenal sesi ini karena mereka dapat berarti bahwa seseorang telah menggunakan akun Anda tanpa diketahui.",
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Sesi yang belum diverifikasi adalah sesi yang telah masuk dengan kredensial Anda tetapi belum diverifikasi secara silang.",
+    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Ini berarti mereka memegang kunci enkripsi untuk pesan Anda sebelumnya, dan mengonfirmasi ke pengguna lain bahwa Anda yang berkomunikasi dengan sesi ini benar-benar Anda.",
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Sesi yang terverifikasi telah masuk dengan kredensial Anda lalu telah diverifikasi menggunakan frasa keamanan Anda atau memverifikasi secara silang."
 }
