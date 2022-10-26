@@ -174,7 +174,7 @@ describe("RecentAlgorithm", () => {
                 // replies are 1ms after each other
                 ts: 50,
             });
-            room2.addLiveEvents([threadReply]);
+            room1.addLiveEvents([threadReply]);
 
             expect(algorithm.sortRooms([room1, room2])).toEqual([room1, room2]);
         });
