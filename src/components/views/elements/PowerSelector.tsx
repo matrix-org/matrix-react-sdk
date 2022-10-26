@@ -51,7 +51,6 @@ interface IState {
     customValue: number;
     selectValue: number | string;
     custom?: boolean;
-    customLevel?: number;
 }
 
 export default class PowerSelector extends React.Component<IProps, IState> {
@@ -101,7 +100,7 @@ export default class PowerSelector extends React.Component<IProps, IState> {
             levelRoleMap,
             options,
             custom: isCustom,
-            customLevel: newProps.value,
+            customValue: newProps.value,
             selectValue: isCustom ? CUSTOM_VALUE : newProps.value,
         });
     }
