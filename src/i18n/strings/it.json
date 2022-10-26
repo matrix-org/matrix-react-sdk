@@ -3668,5 +3668,8 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Qualcun altro sta già registrando una trasmissione vocale. Aspetta che finisca prima di iniziarne una nuova.",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Vuoi davvero disconnetterti da %(count)s sessione?",
     "Are you sure you want to sign out of %(count)s sessions?|other": "Vuoi davvero disconnetterti da %(count)s sessioni?",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Le sessioni verificate hanno effettuato l'accesso con le tue credenziali e sono state verificate, usando la frase segreta o la verifica incrociata."
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Le sessioni verificate hanno effettuato l'accesso con le tue credenziali e sono state verificate, usando la frase segreta o la verifica incrociata.",
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Dovresti essere particolarmente certo di riconoscere queste sessioni dato che potrebbero rappresentare un uso non autorizzato del tuo account.",
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Le sessioni non verificate sono quelle che hanno effettuato l'accesso con le tue credenziali ma non sono state verificate.",
+    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Ciò significa che hanno le chiavi di crittografia dei tuoi messaggi passati e confermano agli altri utenti con cui comunichi che in queste sessioni ci sei davvero tu."
 }
