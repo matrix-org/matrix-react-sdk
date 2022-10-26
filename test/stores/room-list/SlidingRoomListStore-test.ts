@@ -17,7 +17,9 @@ import { mocked } from 'jest-mock';
 import { SlidingSync, SlidingSyncEvent } from 'matrix-js-sdk/src/sliding-sync';
 import { Room } from 'matrix-js-sdk/src/matrix';
 
-import { LISTS_UPDATE_EVENT, SlidingRoomListStoreClass, SlidingSyncSortToFilter } from "../../../src/stores/room-list/SlidingRoomListStore";
+import {
+    LISTS_UPDATE_EVENT, SlidingRoomListStoreClass, SlidingSyncSortToFilter
+} from "../../../src/stores/room-list/SlidingRoomListStore";
 import { SpaceStoreClass } from "../../../src/stores/spaces/SpaceStore";
 import { MockEventEmitter, stubClient, untilEmission } from "../../test-utils";
 import { TestSdkContext } from '../../TestSdkContext';
@@ -86,7 +88,6 @@ describe("SlidingRoomListStore", () => {
     });
 
     describe("spaces", () => {
-
         it("alters 'filters.spaces' on the DefaultTagID.Untagged list when the selected space changes", async () => {
             await store.start(); // call onReady
             const spaceRoomId = "!foo:bar";
@@ -225,14 +226,14 @@ describe("SlidingRoomListStore", () => {
             1: roomB,
             2: roomC,
             0: roomA,
-        }
+        };
         const rooms = [
             new Room(roomA, context.client, context.client.getUserId()),
             new Room(roomB, context.client, context.client.getUserId()),
             new Room(roomC, context.client, context.client.getUserId()),
         ];
         mocked(context.client.getRoom).mockImplementation((roomId: string) => {
-            switch(roomId) {
+            switch (roomId) {
                 case roomA:
                     return rooms[0];
                 case roomB:
@@ -249,7 +250,7 @@ describe("SlidingRoomListStore", () => {
         expect(store.orderedLists[tagId]).toEqual(rooms);
     });
 
-    it("sets the sticky room on the basis of the viewed room in RoomViewStore", async() => {
+    it("sets the sticky room on the basis of the viewed room in RoomViewStore", async () => {
         await store.start();
         // seed the store with 3 rooms
         const roomIdA = "!a:localhost";
@@ -262,12 +263,12 @@ describe("SlidingRoomListStore", () => {
             1: roomIdB,
             2: roomIdC,
             0: roomIdA,
-        }
+        };
         const roomA = new Room(roomIdA, context.client, context.client.getUserId());
         const roomB = new Room(roomIdB, context.client, context.client.getUserId());
-        const roomC = new Room(roomIdC, context.client, context.client.getUserId())
+        const roomC = new Room(roomIdC, context.client, context.client.getUserId());
         mocked(context.client.getRoom).mockImplementation((roomId: string) => {
-            switch(roomId) {
+            switch (roomId) {
                 case roomIdA:
                     return roomA;
                 case roomIdB:
@@ -311,8 +312,6 @@ describe("SlidingRoomListStore", () => {
         p = untilEmission(store, LISTS_UPDATE_EVENT);
         context.roomViewStore.emit(UPDATE_EVENT);
         await p;
-        expect(store.orderedLists[tagId].map((r)=>r.roomId)).toEqual([roomC, roomA, roomB].map((r)=>r.roomId));
+        expect(store.orderedLists[tagId].map((r) => r.roomId)).toEqual([roomC, roomA, roomB].map((r) => r.roomId));
     });
-
-
 });
