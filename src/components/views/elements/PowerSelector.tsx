@@ -125,7 +125,7 @@ export default class PowerSelector extends React.Component<IProps, IState> {
         event.preventDefault();
         event.stopPropagation();
 
-        if (this.state.customValue) {
+        if (Number.isFinite(this.state.customValue)) {
             this.props.onChange(this.state.customValue, this.props.powerLevelKey);
         } else {
             this.initStateFromProps(this.props); // reset, invalid input
