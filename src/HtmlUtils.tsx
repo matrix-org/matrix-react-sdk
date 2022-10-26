@@ -438,7 +438,7 @@ interface IOpts {
     returnString?: boolean;
     forComposerQuote?: boolean;
     ref?: React.Ref<HTMLSpanElement>;
-    emotes?: Dictionary<string>;
+    emotes?: Map<string,string>;
 }
 
 export interface IOptsReturnNode extends IOpts {
