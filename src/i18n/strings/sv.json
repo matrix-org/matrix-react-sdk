@@ -3456,5 +3456,9 @@
     "Inviting %(user1)s and %(user2)s": "Bjuder in %(user1)s och %(user2)s",
     "%(user)s and %(count)s others|one": "%(user)s och 1 till",
     "%(user)s and %(count)s others|other": "%(user)s och %(count)s till",
-    "%(user1)s and %(user2)s": "%(user1)s och %(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s och %(user2)s",
+    "Stop live broadcasting?": "Avsluta livesändning?",
+    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Någon annan spelar redan in en röstsändning. Vänta på att deras röstsändning tar slut för att starta en ny.",
+    "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Du är inte behörig att starta en röstsändning i det här rummet. Kontakta en rumsadministratör för att uppgradera dina behörigheter.",
+    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Du spelar redan in en röstsändning. Avsluta din nuvarande röstsändning för att påbörja en ny."
 }
