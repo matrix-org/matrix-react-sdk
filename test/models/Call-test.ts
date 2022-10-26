@@ -18,10 +18,11 @@ import EventEmitter from "events";
 import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { PendingEventOrdering } from "matrix-js-sdk/src/client";
+import { ClientEvent, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Widget } from "matrix-widget-api";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
@@ -37,6 +38,8 @@ import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingSt
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../src/stores/ActiveWidgetStore";
 import { ElementWidgetActions } from "../../src/stores/widgets/ElementWidgetActions";
 import SettingsStore from "../../src/settings/SettingsStore";
+import Modal, { IHandle } from "../../src/Modal";
+import PlatformPeg from "../../src/PlatformPeg";
 
 jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
     [MediaDeviceKindEnum.AudioInput]: [
@@ -85,6 +88,7 @@ const setUpClientRoomAndStores = (): {
     client.getRoom.mockImplementation(roomId => roomId === room.roomId ? room : null);
     client.getRooms.mockReturnValue([room]);
     client.getUserId.mockReturnValue(alice.userId);
+    client.getDeviceId.mockReturnValue("alices_device");
     client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
     client.sendStateEvent.mockImplementation(async (roomId, eventType, content, stateKey = "") => {
         if (roomId !== room.roomId) throw new Error("Unknown room");
@@ -805,6 +809,81 @@ describe("ElementCall", () => {
             call.off(CallEvent.Layout, onLayout);
         });
 
+        describe("screensharing", () => {
+            it("passes source id if we can get it", async () => {
+                const sourceId = "source_id";
+                jest.spyOn(Modal, "createDialog").mockReturnValue(
+                    { finished: new Promise((r) => r([sourceId])) } as IHandle<any[]>,
+                );
+                jest.spyOn(PlatformPeg.get(), "supportsDesktopCapturer").mockReturnValue(true);
+
+                await call.connect();
+
+                messaging.emit(
+                    `action:${ElementWidgetActions.ScreenshareRequest}`,
+                    new CustomEvent("widgetapirequest", { detail: {} }),
+                );
+
+                await waitFor(() => {
+                    expect(messaging!.transport.reply).toHaveBeenCalledWith(
+                        expect.objectContaining({}),
+                        expect.objectContaining({ pending: true }),
+                    );
+                });
+
+                await waitFor(() => {
+                    expect(messaging!.transport.send).toHaveBeenCalledWith(
+                        "io.element.screenshare_start", expect.objectContaining({ desktopCapturerSourceId: sourceId }),
+                    );
+                });
+            });
+
+            it("sends ScreenshareStop if we couldn't get a source id", async () => {
+                jest.spyOn(Modal, "createDialog").mockReturnValue(
+                    { finished: new Promise((r) => r([null])) } as IHandle<any[]>,
+                );
+                jest.spyOn(PlatformPeg.get(), "supportsDesktopCapturer").mockReturnValue(true);
+
+                await call.connect();
+
+                messaging.emit(
+                    `action:${ElementWidgetActions.ScreenshareRequest}`,
+                    new CustomEvent("widgetapirequest", { detail: {} }),
+                );
+
+                await waitFor(() => {
+                    expect(messaging!.transport.reply).toHaveBeenCalledWith(
+                        expect.objectContaining({}),
+                        expect.objectContaining({ pending: true }),
+                    );
+                });
+
+                await waitFor(() => {
+                    expect(messaging!.transport.send).toHaveBeenCalledWith(
+                        "io.element.screenshare_stop", expect.objectContaining({ }),
+                    );
+                });
+            });
+
+            it("replies with pending: false if we don't support desktop capturer", async () => {
+                jest.spyOn(PlatformPeg.get(), "supportsDesktopCapturer").mockReturnValue(false);
+
+                await call.connect();
+
+                messaging.emit(
+                    `action:${ElementWidgetActions.ScreenshareRequest}`,
+                    new CustomEvent("widgetapirequest", { detail: {} }),
+                );
+
+                await waitFor(() => {
+                    expect(messaging!.transport.reply).toHaveBeenCalledWith(
+                        expect.objectContaining({}),
+                        expect.objectContaining({ pending: false }),
+                    );
+                });
+            });
+        });
+
         it("ends the call immediately if we're the last participant to leave", async () => {
             await call.connect();
             const onDestroy = jest.fn();
@@ -812,6 +891,77 @@ describe("ElementCall", () => {
             await call.disconnect();
             expect(onDestroy).toHaveBeenCalled();
             call.off(CallEvent.Destroy, onDestroy);
+        });
+
+        describe("being kicked out by another device", () => {
+            const onDestroy = jest.fn();
+
+            beforeEach(async () => {
+                await call.connect();
+                call.on(CallEvent.Destroy, onDestroy);
+
+                jest.advanceTimersByTime(100);
+                jest.clearAllMocks();
+            });
+
+            afterEach(() => {
+                call.off(CallEvent.Destroy, onDestroy);
+            });
+
+            it("does not terminate the call if we are the last", async () => {
+                client.emit(ClientEvent.ToDeviceEvent, {
+                    getType: () => (ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE),
+                    getContent: () => ({ device_id: "random_device_id", timestamp: Date.now() }),
+                    getSender: () => (client.getUserId()),
+                } as MatrixEvent);
+
+                expect(client.sendStateEvent).not.toHaveBeenCalled();
+                expect(
+                    [ConnectionState.Disconnecting, ConnectionState.Disconnected].includes(call.connectionState),
+                ).toBeTruthy();
+            });
+
+            it("ignores messages from our device", async () => {
+                client.emit(ClientEvent.ToDeviceEvent, {
+                    getSender: () => (client.getUserId()),
+                    getType: () => (ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE),
+                    getContent: () => ({ device_id: client.getDeviceId(), timestamp: Date.now() }),
+                } as MatrixEvent);
+
+                expect(client.sendStateEvent).not.toHaveBeenCalled();
+                expect(
+                    [ConnectionState.Disconnecting, ConnectionState.Disconnected].includes(call.connectionState),
+                ).toBeFalsy();
+                expect(onDestroy).not.toHaveBeenCalled();
+            });
+
+            it("ignores messages from other users", async () => {
+                client.emit(ClientEvent.ToDeviceEvent, {
+                    getSender: () => (bob.userId),
+                    getType: () => (ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE),
+                    getContent: () => ({ device_id: "random_device_id", timestamp: Date.now() }),
+                } as MatrixEvent);
+
+                expect(client.sendStateEvent).not.toHaveBeenCalled();
+                expect(
+                    [ConnectionState.Disconnecting, ConnectionState.Disconnected].includes(call.connectionState),
+                ).toBeFalsy();
+                expect(onDestroy).not.toHaveBeenCalled();
+            });
+
+            it("ignores messages from the past", async () => {
+                client.emit(ClientEvent.ToDeviceEvent, {
+                    getSender: () => (client.getUserId()),
+                    getType: () => (ElementCall.DUPLICATE_CALL_DEVICE_EVENT_TYPE),
+                    getContent: () => ({ device_id: "random_device_id", timestamp: 0 }),
+                } as MatrixEvent);
+
+                expect(client.sendStateEvent).not.toHaveBeenCalled();
+                expect(
+                    [ConnectionState.Disconnecting, ConnectionState.Disconnected].includes(call.connectionState),
+                ).toBeFalsy();
+                expect(onDestroy).not.toHaveBeenCalled();
+            });
         });
 
         it("ends the call after a random delay if the last participant leaves without ending it", async () => {

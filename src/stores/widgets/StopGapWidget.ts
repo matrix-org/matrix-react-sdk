@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import {
     ClientWidgetApi,
     IModalWidgetOpenRequest,
+    IRoomEvent,
     IStickerActionRequest,
     IStickyActionRequest,
     ITemplateParams,
@@ -41,7 +42,6 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { _t } from "../../languageHandler";
 import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
-import { RoomViewStore } from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { OwnProfileStore } from "../OwnProfileStore";
 import WidgetUtils from '../../utils/WidgetUtils';
@@ -65,6 +65,8 @@ import { arrayFastClone } from "../../utils/arrays";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import Modal from "../../Modal";
 import ErrorDialog from "../../components/views/dialogs/ErrorDialog";
+import { SdkContextClass } from "../../contexts/SDKContext";
+import { VoiceBroadcastRecordingsStore } from "../../voice-broadcast";
 
 // TODO: Destroy all of this code
 
@@ -184,7 +186,7 @@ export class StopGapWidget extends EventEmitter {
 
         if (this.roomId) return this.roomId;
 
-        return RoomViewStore.instance.getRoomId();
+        return SdkContextClass.instance.roomViewStore.getRoomId();
     }
 
     public get widgetApi(): ClientWidgetApi {
@@ -280,6 +282,10 @@ export class StopGapWidget extends EventEmitter {
         });
         this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
+        this.messaging.on(`action:${ElementWidgetActions.JoinCall}`, () => {
+            // stop voice broadcast recording when any widget sends a "join"
+            VoiceBroadcastRecordingsStore.instance().getCurrent()?.stop();
+        });
 
         // Always attach a handler for ViewRoom, but permission check it internally
         this.messaging.on(`action:${ElementWidgetActions.ViewRoom}`, (ev: CustomEvent<IViewRoomApiRequest>) => {
@@ -376,7 +382,7 @@ export class StopGapWidget extends EventEmitter {
 
                     // noinspection JSIgnoredPromiseFromCall
                     IntegrationManagers.sharedInstance().getPrimaryManager().open(
-                        this.client.getRoom(RoomViewStore.instance.getRoomId()),
+                        this.client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId()),
                         `type_${integType}`,
                         integId,
                     );
@@ -460,7 +466,7 @@ export class StopGapWidget extends EventEmitter {
     private onToDeviceEvent = async (ev: MatrixEvent) => {
         await this.client.decryptEventIfNeeded(ev);
         if (ev.isDecryptionFailure()) return;
-        await this.messaging.feedToDevice(ev.getEffectiveEvent(), ev.isEncrypted());
+        await this.messaging.feedToDevice(ev.getEffectiveEvent() as IRoomEvent, ev.isEncrypted());
     };
 
     private feedEvent(ev: MatrixEvent) {
@@ -504,7 +510,7 @@ export class StopGapWidget extends EventEmitter {
         this.readUpToMap[ev.getRoomId()] = ev.getId();
 
         const raw = ev.getEffectiveEvent();
-        this.messaging.feedEvent(raw, this.eventListenerRoomId).catch(e => {
+        this.messaging.feedEvent(raw as IRoomEvent, this.eventListenerRoomId).catch(e => {
             logger.error("Error sending event to widget: ", e);
         });
     }

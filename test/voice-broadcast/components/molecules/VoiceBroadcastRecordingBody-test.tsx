@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import {
@@ -51,7 +50,7 @@ describe("VoiceBroadcastRecordingBody", () => {
             room: roomId,
             user: userId,
         });
-        recording = new VoiceBroadcastRecording(infoEvent, client);
+        recording = new VoiceBroadcastRecording(infoEvent, client, VoiceBroadcastInfoState.Resumed);
     });
 
     describe("when rendering a live broadcast", () => {
@@ -63,16 +62,6 @@ describe("VoiceBroadcastRecordingBody", () => {
 
         it("should render the expected HTML", () => {
             expect(renderResult.container).toMatchSnapshot();
-        });
-
-        describe("and clicked", () => {
-            beforeEach(async () => {
-                await userEvent.click(renderResult.getByText("My room"));
-            });
-
-            it("should stop the recording", () => {
-                expect(recording.getState()).toBe(VoiceBroadcastInfoState.Stopped);
-            });
         });
     });
 

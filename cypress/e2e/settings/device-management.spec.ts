@@ -74,17 +74,18 @@ describe("Device manager", () => {
         cy.get('.mx_FilteredDeviceList_list').find('.mx_FilteredDeviceList_listItem').should('have.length', 3);
 
         // select two sessions
-        cy.get('.mx_FilteredDeviceList_list .mx_FilteredDeviceList_listItem').first().click();
-        cy.get('.mx_FilteredDeviceList_list .mx_FilteredDeviceList_listItem').last().click();
+        cy.get('.mx_FilteredDeviceList_list .mx_FilteredDeviceList_listItem .mx_Checkbox').first().click();
+        cy.get('.mx_FilteredDeviceList_list .mx_FilteredDeviceList_listItem .mx_Checkbox').last().click();
         // sign out from list selection action buttons
         cy.get('[data-testid="sign-out-selection-cta"]').click();
+        cy.get('[data-testid="dialog-primary-button"]').click();
         // list updated after sign out
         cy.get('.mx_FilteredDeviceList_list').find('.mx_FilteredDeviceList_listItem').should('have.length', 1);
         // security recommendation count updated
         cy.get('[data-testid="unverified-devices-cta"]').should('have.text', 'View all (1)');
 
         const sessionName = `Alice's device`;
-        // select the first session
+        // open the first session
         cy.get('.mx_FilteredDeviceList_list .mx_FilteredDeviceList_listItem').first().within(() => {
             cy.get('[aria-label="Toggle device details"]').click();
 
@@ -106,6 +107,8 @@ describe("Device manager", () => {
             // sign out using the device details sign out
             cy.get('[data-testid="device-detail-sign-out-cta"]').click();
         });
+        // confirm the signout
+        cy.get('[data-testid="dialog-primary-button"]').click();
 
         // no other sessions or security recommendations sections when only one session
         cy.contains('Other sessions').should('not.exist');

@@ -26,16 +26,22 @@ export * from "./models/VoiceBroadcastRecording";
 export * from "./audio/VoiceBroadcastRecorder";
 export * from "./components/VoiceBroadcastBody";
 export * from "./components/atoms/LiveBadge";
-export * from "./components/atoms/PlaybackControlButton";
+export * from "./components/atoms/VoiceBroadcastControl";
 export * from "./components/atoms/VoiceBroadcastHeader";
 export * from "./components/molecules/VoiceBroadcastPlaybackBody";
 export * from "./components/molecules/VoiceBroadcastRecordingBody";
+export * from "./components/molecules/VoiceBroadcastRecordingPip";
+export * from "./hooks/useVoiceBroadcastRecording";
 export * from "./stores/VoiceBroadcastPlaybacksStore";
 export * from "./stores/VoiceBroadcastRecordingsStore";
+export * from "./utils/getChunkLength";
+export * from "./utils/hasRoomLiveVoiceBroadcast";
+export * from "./utils/findRoomLiveVoiceBroadcastFromUserAndDevice";
+export * from "./utils/resumeVoiceBroadcastInRoom";
 export * from "./utils/shouldDisplayAsVoiceBroadcastRecordingTile";
 export * from "./utils/shouldDisplayAsVoiceBroadcastTile";
 export * from "./utils/startNewVoiceBroadcastRecording";
-export * from "./hooks/useVoiceBroadcastRecording";
+export * from "./utils/VoiceBroadcastResumer";
 
 export const VoiceBroadcastInfoEventType = "io.element.voice_broadcast_info";
 export const VoiceBroadcastChunkEventType = "io.element.voice_broadcast_chunk";
@@ -43,7 +49,7 @@ export const VoiceBroadcastChunkEventType = "io.element.voice_broadcast_chunk";
 export enum VoiceBroadcastInfoState {
     Started = "started",
     Paused = "paused",
-    Running = "running",
+    Resumed = "resumed",
     Stopped = "stopped",
 }
 

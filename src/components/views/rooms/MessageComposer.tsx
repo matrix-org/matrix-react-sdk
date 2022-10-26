@@ -58,7 +58,8 @@ import {
     startNewVoiceBroadcastRecording,
     VoiceBroadcastRecordingsStore,
 } from '../../../voice-broadcast';
-import { WysiwygComposer } from './wysiwyg_composer/WysiwygComposer';
+import { SendWysiwygComposer, sendMessage } from './wysiwyg_composer/';
+import { MatrixClientProps, withMatrixClientHOC } from '../../../contexts/MatrixClientContext';
 
 let instanceCount = 0;
 
@@ -73,11 +74,12 @@ function SendButton(props: ISendButtonProps) {
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
             title={props.title ?? _t('Send message')}
+            data-testid="sendmessagebtn"
         />
     );
 }
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
@@ -85,10 +87,10 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
-    showVoiceBroadcastButton?: boolean;
 }
 
 interface IState {
+    composerContent: string;
     isComposerEmpty: boolean;
     haveRecording: boolean;
     recordingTimeLeftSeconds?: number;
@@ -100,13 +102,12 @@ interface IState {
     showVoiceBroadcastButton: boolean;
 }
 
-export default class MessageComposer extends React.Component<IProps, IState> {
+export class MessageComposer extends React.Component<IProps, IState> {
     private dispatcherRef?: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
-    private composerSendMessage?: () => void;
 
     private _voiceRecording: Optional<VoiceMessageRecording>;
 
@@ -124,6 +125,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         this.state = {
             isComposerEmpty: true,
+            composerContent: '',
             haveRecording: false,
             recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
             isMenuOpen: false,
@@ -315,7 +317,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         this.messageComposerInput.current?.sendMessage();
-        this.composerSendMessage?.();
+
+        const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
+        if (isWysiwygComposerEnabled) {
+            const { permalinkCreator, relation, replyToEvent } = this.props;
+            sendMessage(this.state.composerContent,
+                { mxClient: this.props.mxClient, roomContext: this.context, permalinkCreator, relation, replyToEvent });
+            dis.dispatch({ action: Action.ClearAndFocusSendMessageComposer });
+        }
     };
 
     private onChange = (model: EditorModel) => {
@@ -326,6 +335,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onWysiwygChange = (content: string) => {
         this.setState({
+            composerContent: content,
             isComposerEmpty: content?.length === 0,
         });
     };
@@ -384,10 +394,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return this.state.showStickersButton && !isLocalRoom(this.props.room);
     }
 
-    private get showVoiceBroadcastButton(): boolean {
-        return this.props.showVoiceBroadcastButton && this.state.showVoiceBroadcastButton;
-    }
-
     public render() {
         const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
         const controls = [
@@ -406,16 +412,11 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         if (canSendMessages) {
             if (isWysiwygComposerEnabled) {
                 controls.push(
-                    <WysiwygComposer key="controls_input"
+                    <SendWysiwygComposer key="controls_input"
                         disabled={this.state.haveRecording}
                         onChange={this.onWysiwygChange}
-                        permalinkCreator={this.props.permalinkCreator}
-                        relation={this.props.relation}
-                        replyToEvent={this.props.replyToEvent}>
-                        { (sendMessage) => {
-                            this.composerSendMessage = sendMessage;
-                        } }
-                    </WysiwygComposer>,
+                        onSend={this.sendMessage}
+                    />,
                 );
             } else {
                 controls.push(
@@ -532,10 +533,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
-                            showVoiceBroadcastButton={this.showVoiceBroadcastButton}
+                            showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
                             onStartVoiceBroadcastClick={() => {
                                 startNewVoiceBroadcastRecording(
-                                    this.props.room.roomId,
+                                    this.props.room,
                                     MatrixClientPeg.get(),
                                     VoiceBroadcastRecordingsStore.instance(),
                                 );
@@ -555,3 +556,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         );
     }
 }
+
+const MessageComposerWithMatrixClient = withMatrixClientHOC(MessageComposer);
+export default MessageComposerWithMatrixClient;
