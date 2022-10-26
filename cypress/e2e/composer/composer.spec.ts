@@ -65,7 +65,7 @@ describe("Composer", () => {
         });
 
         it("should allow user to input emoji via graphical picker", () => {
-            cy.openMessageComposerOptions().within(() => {
+            cy.getComposer(false).within(() => {
                 cy.get('[aria-label="Emoji"]').click();
             });
 
