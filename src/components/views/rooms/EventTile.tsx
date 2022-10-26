@@ -485,7 +485,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         room?.off(ThreadEvent.New, this.onNewThread);
-        room?.off(ThreadEvent.Delete, this.onThreadDeleted);
         if (this.threadState) {
             this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
         }
@@ -504,16 +503,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             this.updateThread(thread);
             const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
             room.off(ThreadEvent.New, this.onNewThread);
-            room.on(ThreadEvent.Delete, this.onThreadDeleted);
-        }
-    };
-
-    private onThreadDeleted = (thread: Thread) => {
-        if (thread.id === this.props.mxEvent.getId()) {
-            this.updateThread(thread);
-            const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-            room.on(ThreadEvent.New, this.onNewThread);
-            room.off(ThreadEvent.Delete, this.onThreadDeleted);
         }
     };
 
@@ -1543,9 +1532,11 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
 const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
-    return <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
-        <UnwrappedEventTile ref={ref} {...props} />
-    </TileErrorBoundary>;
+    return <>
+        <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+            <UnwrappedEventTile ref={ref} {...props} />
+        </TileErrorBoundary>
+    </>;
 });
 export default SafeEventTile;
 
