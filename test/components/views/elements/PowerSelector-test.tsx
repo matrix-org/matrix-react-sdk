@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { fireEvent, render, screen} from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import PowerSelector from "../../../../src/components/views/elements/PowerSelector";
 
