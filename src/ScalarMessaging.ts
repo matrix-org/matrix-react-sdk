@@ -715,6 +715,9 @@ const onMessage = function(event: MessageEvent<any>): void {
         } else if (event.data.action === Action.SetWidget) {
             setWidget(event, null);
             return;
+        } else if (event.data.action === Action.GetOpenIdToken) {
+            getOpenIdToken(event);
+            return;
         } else {
             sendError(event, _t('Missing room_id in request'));
             return;
@@ -775,9 +778,6 @@ const onMessage = function(event: MessageEvent<any>): void {
             break;
         case Action.SetBotPower:
             setBotPower(event, roomId, userId, event.data.level, event.data.ignoreIfGreater);
-            break;
-        case Action.GetOpenIdToken:
-            getOpenIdToken(event);
             break;
         default:
             logger.warn("Unhandled postMessage event with action '" + event.data.action +"'");
