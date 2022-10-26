@@ -3445,5 +3445,16 @@
     "Exit fullscreen": "Gå ur fullskärm",
     "Enter fullscreen": "Gå till fullskärm",
     "Map feedback": "Kartuåterkoppling",
-    "Toggle attribution": "Växla tillskrivning"
+    "Toggle attribution": "Växla tillskrivning",
+    "Can't start a new voice broadcast": "Kan inte starta en ny röstsändning",
+    "Video call started in %(roomName)s. (not supported by this browser)": "Videosamtal startade i %(roomName)s. (stöds inte av den här webbläsaren)",
+    "Video call started in %(roomName)s.": "Videosamtal startade i %(roomName)s.",
+    "You need to be able to kick users to do that.": "Du behöver kunna kicka användare för att göra det.",
+    "Empty room (was %(oldName)s)": "Tomt rum (var %(oldName)s)",
+    "Inviting %(user)s and %(count)s others|one": "Bjuder in %(user)s och 1 till",
+    "Inviting %(user)s and %(count)s others|other": "Bjuder in %(user)s och %(count)s till",
+    "Inviting %(user1)s and %(user2)s": "Bjuder in %(user1)s och %(user2)s",
+    "%(user)s and %(count)s others|one": "%(user)s och 1 till",
+    "%(user)s and %(count)s others|other": "%(user)s och %(count)s till",
+    "%(user1)s and %(user2)s": "%(user1)s och %(user2)s"
 }

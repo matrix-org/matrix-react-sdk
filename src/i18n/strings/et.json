@@ -3663,5 +3663,8 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Keegi juba salvestab ringhäälingukõnet. Uue ringhäälingukõne salvestamiseks palun oota, kuni see teine ringhäälingukõne on lõppenud.",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Sul pole piisavalt õigusi selles jututoas ringhäälingukõne algatamiseks. Õiguste lisamiseks palun võta ühendust jututoa haldajaga.",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Sa juba salvestad ringhäälingukõnet. Uue alustamiseks palun lõpeta eelmine salvestus.",
-    "Can't start a new voice broadcast": "Uue ringhäälingukõne alustamine pole võimalik"
+    "Can't start a new voice broadcast": "Uue ringhäälingukõne alustamine pole võimalik",
+    "play voice broadcast": "esita ringhäälingukõnet",
+    "Are you sure you want to sign out of %(count)s sessions?|one": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?",
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?"
 }
