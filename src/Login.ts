@@ -24,13 +24,6 @@ import { ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
 
-export {
-    IdentityProviderBrand,
-    IIdentityProvider,
-    ISSOFlow,
-    LoginFlow,
-} from "matrix-js-sdk/src/@types/auth";
-
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
 }
@@ -169,7 +162,7 @@ export default class Login {
  * @param {string} loginType the type of login to do
  * @param {ILoginParams} loginParams the parameters for the login
  *
- * @returns {MatrixClientCreds}
+ * @returns {IMatrixClientCreds}
  */
 export async function sendLoginRequest(
     hsUrl: string,

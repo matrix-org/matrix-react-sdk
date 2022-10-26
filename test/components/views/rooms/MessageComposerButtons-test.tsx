@@ -250,7 +250,6 @@ function createRoomState(room: Room, narrow: boolean): IRoomState {
         statusBarVisible: false,
         canReact: false,
         canSendMessages: false,
-        canSendVoiceBroadcasts: false,
         layout: Layout.Group,
         lowBandwidth: false,
         alwaysShowTimestamps: false,
@@ -268,6 +267,7 @@ function createRoomState(room: Room, narrow: boolean): IRoomState {
         liveTimeline: undefined,
         resizing: false,
         narrow,
+        activeCall: null,
     };
 }
 

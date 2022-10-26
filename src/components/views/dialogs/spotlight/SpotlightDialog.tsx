@@ -66,7 +66,7 @@ import { BreadcrumbsStore } from "../../../../stores/BreadcrumbsStore";
 import { RoomNotificationState } from "../../../../stores/notifications/RoomNotificationState";
 import { RoomNotificationStateStore } from "../../../../stores/notifications/RoomNotificationStateStore";
 import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
-import { RoomViewStore } from "../../../../stores/RoomViewStore";
+import { SdkContextClass } from "../../../../contexts/SDKContext";
 import { getMetaSpaceName } from "../../../../stores/spaces";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
 import { DirectoryMember, Member, startDmOnFirstMessage } from "../../../../utils/direct-messages";
@@ -93,6 +93,7 @@ import { TooltipOption } from "./TooltipOption";
 import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
 import { useSlidingSyncRoomSearch } from "../../../../hooks/useSlidingSyncRoomSearch";
 import { shouldShowFeedback } from "../../../../utils/Feedback";
+import RoomAvatar from "../../avatars/RoomAvatar";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -656,6 +657,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
                     }, true, ev.type !== "click");
                 };
+
                 return (
                     <Option
                         id={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}`}
@@ -674,13 +676,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         aria-describedby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_alias`}
                         aria-details={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_details`}
                     >
-                        <BaseAvatar
+                        <RoomAvatar
                             className="mx_SearchResultAvatar"
-                            url={result?.publicRoom?.avatar_url
-                                ? mediaFromMxc(result?.publicRoom?.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
-                                : null}
-                            name={result.publicRoom.name}
-                            idName={result.publicRoom.room_id}
+                            oobData={{
+                                roomId: result.publicRoom.room_id,
+                                name: result.publicRoom.name,
+                                avatarUrl: result.publicRoom.avatar_url,
+                                roomType: result.publicRoom.room_type,
+                            }}
                             width={AVATAR_SIZE}
                             height={AVATAR_SIZE}
                         />
@@ -1060,7 +1063,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 </h4>
                 <div>
                     { BreadcrumbsStore.instance.rooms
-                        .filter(r => r.roomId !== RoomViewStore.instance.getRoomId())
+                        .filter(r => r.roomId !== SdkContextClass.instance.roomViewStore.getRoomId())
                         .map(room => (
                             <TooltipOption
                                 id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}

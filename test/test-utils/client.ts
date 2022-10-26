@@ -15,10 +15,31 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { MethodKeysOf, mocked, MockedObject } from "jest-mock";
+import { MethodKeysOf, mocked, MockedObject, PropertyKeysOf } from "jest-mock";
+import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { MatrixClient, User } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
+
+/**
+ * Mocked generic class with a real EventEmitter.
+ * Useful for mocks which need event emitters.
+ */
+export class MockEventEmitter<T> extends EventEmitter {
+    /**
+     * Construct a new event emitter with additional properties/functions. The event emitter functions
+     * like .emit and .on will be real.
+     * @param mockProperties An object with the mock property or function implementations. 'getters'
+     * are correctly cloned to this event emitter.
+     */
+    constructor(mockProperties: Partial<Record<MethodKeysOf<T>|PropertyKeysOf<T>, unknown>> = {}) {
+        super();
+        // We must use defineProperties and not assign as the former clones getters correctly,
+        // whereas the latter invokes the getter and sets the return value permanently on the
+        // destination object.
+        Object.defineProperties(this, Object.getOwnPropertyDescriptors(mockProperties));
+    }
+}
 
 /**
  * Mock client with real event emitter
@@ -50,6 +71,11 @@ export const getMockClientWithEventEmitter = (
     const mock = mocked(new MockClientWithEventEmitter(mockProperties) as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mock);
+
+    mock.canSupport = new Map();
+    Object.keys(Feature).forEach(feature => {
+        mock.canSupport.set(feature as Feature, ServerSupport.Stable);
+    });
     return mock;
 };
 
@@ -71,6 +97,8 @@ export const mockClientMethodsUser = (userId = '@alice:domain') => ({
     credentials: { userId },
     getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
     getAccessToken: jest.fn(),
+    getDeviceId: jest.fn(),
+    getAccountData: jest.fn(),
 });
 
 /**
@@ -94,6 +122,37 @@ export const mockClientMethodsServer = (): Partial<Record<MethodKeysOf<MatrixCli
     getIdentityServerUrl: jest.fn(),
     getHomeserverUrl: jest.fn(),
     getCapabilities: jest.fn().mockReturnValue({}),
+    getClientWellKnown: jest.fn().mockReturnValue({}),
     doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
+    getVersions: jest.fn().mockResolvedValue({}),
+    isFallbackICEServerAllowed: jest.fn(),
+});
+
+export const mockClientMethodsDevice = (
+    deviceId = 'test-device-id',
+): Partial<Record<MethodKeysOf<MatrixClient>, unknown>> => ({
+    getDeviceId: jest.fn().mockReturnValue(deviceId),
+    getDeviceEd25519Key: jest.fn(),
+    getDevices: jest.fn().mockResolvedValue({ devices: [] }),
+});
+
+export const mockClientMethodsCrypto = (): Partial<Record<
+    MethodKeysOf<MatrixClient> & PropertyKeysOf<MatrixClient>, unknown>
+> => ({
+    isCryptoEnabled: jest.fn(),
+    isSecretStorageReady: jest.fn(),
+    isCrossSigningReady: jest.fn(),
+    isKeyBackupKeyStored: jest.fn(),
+    getCrossSigningCacheCallbacks: jest.fn().mockReturnValue({ getCrossSigningKeyCache: jest.fn() }),
+    getStoredCrossSigningForUser: jest.fn(),
+    checkKeyBackup: jest.fn().mockReturnValue({}),
+    crypto: {
+        getSessionBackupPrivateKey: jest.fn(),
+        secretStorage: { hasKey: jest.fn() },
+        crossSigningInfo: {
+            getId: jest.fn(),
+            isStoredInSecretStorage: jest.fn(),
+        },
+    },
 });
 
