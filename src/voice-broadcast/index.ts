@@ -37,7 +37,6 @@ export * from "./stores/VoiceBroadcastRecordingsStore";
 export * from "./utils/getChunkLength";
 export * from "./utils/hasRoomLiveVoiceBroadcast";
 export * from "./utils/findRoomLiveVoiceBroadcastFromUserAndDevice";
-export * from "./utils/resumeVoiceBroadcastInRoom";
 export * from "./utils/shouldDisplayAsVoiceBroadcastRecordingTile";
 export * from "./utils/shouldDisplayAsVoiceBroadcastTile";
 export * from "./utils/startNewVoiceBroadcastRecording";
@@ -57,6 +56,7 @@ export interface VoiceBroadcastInfoEventContent {
     device_id: string;
     state: VoiceBroadcastInfoState;
     chunk_length?: number;
+    last_chunk_sequence?: number;
     ["m.relates_to"]?: {
         rel_type: RelationType;
         event_id: string;
