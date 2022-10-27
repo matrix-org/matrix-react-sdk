@@ -3666,5 +3666,9 @@
     "Can't start a new voice broadcast": "Uue ringhäälingukõne alustamine pole võimalik",
     "play voice broadcast": "esita ringhäälingukõnet",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?"
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?",
+    "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Muu hulgas selle alusel saavad nad olla kindlad, et nad tõesti suhtlevad sinuga, kuid samas nad näevad nimesid, mida sa siia sisestad.",
+    "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Nii otsesuhtluse osapooled kui jututubades osalejad näevad sinu kõikide sessioonide loendit.",
+    "Renaming sessions": "Sessioonide nimede muutmine",
+    "Please be aware that session names are also visible to people you communicate with.": "Palun arvesta, et sessioonide nimed on näha ka kõikidele osapooltele, kellega sa suhtled."
 }
