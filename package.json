@@ -248,7 +248,8 @@
       "text-summary",
       "lcov"
     ],
-    "testResultsProcessor": "jest-sonar-reporter"
+    "testResultsProcessor": "jest-sonar-reporter",
+    "reporters": ["default", ["<rootDir>/test/reporter.js", { "numTests": 10 }]]
   },
   "jestSonar": {
     "reportPath": "coverage",
