@@ -3667,5 +3667,18 @@
     "Can't start a new voice broadcast": "Impossible de commencer une nouvelle diffusion audio",
     "play voice broadcast": "lire la diffusion audio",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Voulez-vous vraiment déconnecter %(count)s session ?",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "Voulez-vous vraiment déconnecter %(count)s de vos sessions ?"
+    "Are you sure you want to sign out of %(count)s sessions?|other": "Voulez-vous vraiment déconnecter %(count)s de vos sessions ?",
+    "Show formatting": "Afficher le formatage",
+    "Show plain text": "Afficher le texte brut",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Pensez à déconnecter les anciennes sessions (%(inactiveAgeDays)s jours ou plus) que vous n’utilisez plus.",
+    "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "Supprimer les sessions inactives améliore la sécurité et les performance, et vous permets plus facilement d’identifier une nouvelle session suspicieuse.",
+    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Les sessions inactives sont des sessions que vous n’avez pas utilisées depuis un certain temps, mais elles reçoivent toujours les clés de chiffrement.",
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Vous devriez vous tout particulièrement vous assurer que vous connaissez ces sessions, car elles peuvent représenter un usage frauduleux de votre compte.",
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Les sessions non vérifiées se sont identifiées avec vos identifiants mais n’ont pas fait de vérification croisée.",
+    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Cela veut dire qu’elles possèdent les clés de chiffrement de vos messages précédents, et assurent aux autres utilisateurs qui communiquent avec vous au travers de ces sessions que c’est vraiment vous.",
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Les sessions vérifiées se sont identifiées avec vos identifiants et ont été vérifiées, soit à l’aide de votre phrase secrète de sécurité, soit par vérification croisée.",
+    "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Cela leur donne un gage de confiance qu’il parle vraiment avec vous, mais cela veut également dire qu’ils pourront voir le nom de la session que vous choisirez ici.",
+    "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Dans vos conversations privées et vos salons, les autres utilisateurs pourront voir la liste complète de vos sessions.",
+    "Renaming sessions": "Renommer les sessions",
+    "Please be aware that session names are also visible to people you communicate with.": "Soyez conscient que les noms de sessions sont également visibles pour les personnes avec lesquelles vous communiquez."
 }
