@@ -342,7 +342,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         searchProfileInfo,
         searchParams,
     );
-    const isSlidingSyncEnabled = SettingsStore.getValue("feature_sliding_sync");
+    const isSlidingSyncEnabled = false; // SettingsStore.getValue("feature_sliding_sync");
     let {
         loading: slidingSyncRoomSearchLoading,
         rooms: slidingSyncRooms,
