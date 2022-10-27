@@ -26,7 +26,7 @@ jobs:
         run: "./scripts/ci/install-deps.sh --ignore-scripts"
 
       - name: Run tests with coverage
-        run: "yarn coverage --ci --silent > /dev/null 2>&1"
+        run: "yarn test --coverage --ci --reporters=jest-silent-reporter '--reporters=<rootDir>/test/reporter.js'"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
