@@ -268,8 +268,11 @@ export class SlidingSyncManager {
     /**
      * Retrieve all rooms on the user's account. Used for pre-populating the local search cache.
      * Retrieval is gradual over time.
+     * @param batchSize The number of rooms to return in each request.
+     * @param gapBetweenRequestsMs The number of milliseconds to wait between requests.
      */
     public async startSpidering(batchSize: number, gapBetweenRequestsMs: number) {
+        await sleep(gapBetweenRequestsMs); // wait a bit as this is called on first render so let's let things load
         const listIndex = this.getOrAllocateListIndex(SlidingSyncManager.ListSearch);
         let startIndex = batchSize;
         let hasMore = true;
