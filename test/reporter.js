@@ -19,34 +19,56 @@ class JestSlowTestReporter {
         this._globalConfig = globalConfig;
         this._options = options;
         this._slowTests = [];
+        this._slowTestSuites = [];
     }
 
     onRunComplete() {
-        console.log();
-        this._slowTests.sort((a, b) => b.duration - a.duration);
-        const rootPathRegex = new RegExp(`^${process.cwd()}`);
-        const slowestTests = this._slowTests.slice(0, this._options.numTests || 10);
-        const slowTestTime = this._slowTestTime(slowestTests);
-        const allTestTime = this._allTestTime();
-        const percentTime = (slowTestTime / allTestTime) * 100;
+        const displayResult = (result, isTestSuite) => {
+            if (!isTestSuite) console.log();
 
-        console.log(
-            `Top ${slowestTests.length} slowest examples (${slowTestTime / 1000} seconds,` +
-          ` ${percentTime.toFixed(1)}% of total time):`,
-        );
+            result.sort((a, b) => b.duration - a.duration);
+            const rootPathRegex = new RegExp(`^${process.cwd()}`);
+            const slowestTests = result.slice(0, this._options.numTests || 10);
+            const slowTestTime = this._slowTestTime(slowestTests);
+            const allTestTime = this._allTestTime(result);
+            const percentTime = (slowTestTime / allTestTime) * 100;
 
-        for (let i = 0; i < slowestTests.length; i++) {
-            const duration = slowestTests[i].duration;
-            const fullName = slowestTests[i].fullName;
-            const filePath = slowestTests[i].filePath.replace(rootPathRegex, '.');
+            if (isTestSuite) {
+                console.log(
+                    `Top ${slowestTests.length} slowest test suites (${slowTestTime / 1000} seconds,` +
+              ` ${percentTime.toFixed(1)}% of total time):`,
+                );
+            } else {
+                console.log(
+                    `Top ${slowestTests.length} slowest tests (${slowTestTime / 1000} seconds,` +
+              ` ${percentTime.toFixed(1)}% of total time):`,
+                );
+            }
 
-            console.log(`  ${fullName}`);
-            console.log(`    ${duration / 1000} seconds ${filePath}`);
-        }
-        console.log();
+            for (let i = 0; i < slowestTests.length; i++) {
+                const duration = slowestTests[i].duration;
+                const filePath = slowestTests[i].filePath.replace(rootPathRegex, '.');
+
+                if (isTestSuite) {
+                    console.log(`  ${duration / 1000} seconds ${filePath}`);
+                } else {
+                    const fullName = slowestTests[i].fullName;
+                    console.log(`  ${fullName}`);
+                    console.log(`    ${duration / 1000} seconds ${filePath}`);
+                }
+            }
+            console.log();
+        };
+
+        displayResult(this._slowTests);
+        displayResult(this._slowTestSuites, true);
     }
 
     onTestResult(test, testResult) {
+        this._slowTestSuites.push({
+            duration: testResult.perfStats.runtime,
+            filePath: testResult.testFilePath,
+        });
         for (let i = 0; i < testResult.testResults.length; i++) {
             this._slowTests.push({
                 duration: testResult.testResults[i].duration,
@@ -64,10 +86,10 @@ class JestSlowTestReporter {
         return slowTestTime;
     }
 
-    _allTestTime() {
+    _allTestTime(result) {
         let allTestTime = 0;
-        for (let i = 0; i < this._slowTests.length; i++) {
-            allTestTime += this._slowTests[i].duration;
+        for (let i = 0; i < result.length; i++) {
+            allTestTime += result[i].duration;
         }
         return allTestTime;
     }
