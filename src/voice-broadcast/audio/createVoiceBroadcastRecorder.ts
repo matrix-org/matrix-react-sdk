@@ -14,17 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceBroadcastControl {
-    align-items: center;
-    background-color: $background;
-    border-radius: 50%;
-    color: $secondary-content;
-    display: flex;
-    height: 32px;
-    justify-content: center;
-    width: 32px;
-}
+import { getChunkLength, VoiceBroadcastRecorder } from "..";
+import { VoiceRecording } from "../../audio/VoiceRecording";
 
-.mx_VoiceBroadcastControl-recording {
-    color: $alert;
-}
+export const createVoiceBroadcastRecorder = (): VoiceBroadcastRecorder => {
+    const voiceRecording = new VoiceRecording();
+    voiceRecording.disableMaxLength();
+    return new VoiceBroadcastRecorder(voiceRecording, getChunkLength());
+};

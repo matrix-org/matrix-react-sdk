@@ -16,9 +16,9 @@ limitations under the License.
 
 import { Optional } from "matrix-events-sdk";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { SimpleObservable } from "matrix-widget-api";
 
-import { getChunkLength } from "..";
-import { VoiceRecording } from "../../audio/VoiceRecording";
+import { IRecordingUpdate, VoiceRecording } from "../../audio/VoiceRecording";
 import { concat } from "../../utils/arrays";
 import { IDestroyable } from "../../utils/IDestroyable";
 import { Singleflight } from "../../utils/Singleflight";
@@ -68,11 +68,27 @@ export class VoiceBroadcastRecorder
         await this.voiceRecording.stop();
         // forget about that call, so that we can stop it again later
         Singleflight.forgetAllFor(this.voiceRecording);
-        return this.extractChunk();
+        const lastChunk = this.extractChunk();
+        this.clearRecordingData();
+        return lastChunk;
     }
 
     public get contentType(): string {
         return this.voiceRecording.contentType;
+    }
+
+    public get liveData(): SimpleObservable<IRecordingUpdate> {
+        return this.voiceRecording.liveData;
+    }
+
+    public get recorderSeconds(): number {
+        return this.voiceRecording.recorderSeconds;
+    }
+
+    private clearRecordingData(): void {
+        this.headers = new Uint8Array(0);
+        this.pagesFromRecorderCount = 0;
+        this.previousChunkEndTimePosition = 0;
     }
 
     private get chunkLength(): number {
@@ -137,9 +153,3 @@ export class VoiceBroadcastRecorder
         this.voiceRecording.destroy();
     }
 }
-
-export const createVoiceBroadcastRecorder = (): VoiceBroadcastRecorder => {
-    const voiceRecording = new VoiceRecording();
-    voiceRecording.disableMaxLength();
-    return new VoiceBroadcastRecorder(voiceRecording, getChunkLength());
-};

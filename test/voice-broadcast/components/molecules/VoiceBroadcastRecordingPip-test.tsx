@@ -16,18 +16,21 @@ limitations under the License.
 //
 
 import React from "react";
-import { render, RenderResult, screen } from "@testing-library/react";
+import { act, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
+import { SimpleObservable } from "matrix-widget-api";
 
 import {
     VoiceBroadcastInfoState,
     VoiceBroadcastRecording,
+    VoiceBroadcastRecordingEvent,
     VoiceBroadcastRecordingPip,
 } from "../../../../src/voice-broadcast";
 import { stubClient } from "../../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../../utils/test-utils";
+import { IRecordingUpdate } from "../../../../src/audio/VoiceRecording";
 
 // mock RoomAvatar, because it is doing too much fancy stuff
 jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
@@ -37,7 +40,16 @@ jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
     }),
 }));
 
-jest.mock("../../../../src/audio/VoiceRecording");
+const mockLiveData = new SimpleObservable<IRecordingUpdate>();
+
+jest.mock("../../../../src/voice-broadcast/audio/VoiceBroadcastRecorder", () => ({
+    ...jest.requireActual("../../../../src/voice-broadcast/audio/VoiceBroadcastRecorder") as object,
+    VoiceBroadcastRecorder: jest.fn().mockImplementation(() => ({
+        liveData: mockLiveData,
+        on: jest.fn(),
+        start: jest.fn(),
+    })),
+}));
 
 describe("VoiceBroadcastRecordingPip", () => {
     const roomId = "!room:example.com";
@@ -55,6 +67,10 @@ describe("VoiceBroadcastRecordingPip", () => {
         );
         recording = new VoiceBroadcastRecording(infoEvent, client, state);
         renderResult = render(<VoiceBroadcastRecordingPip recording={recording} />);
+        act(() => {
+            // simulate time of 23:42
+            recording.emit(VoiceBroadcastRecordingEvent.TimeChanged, 23 * 60 + 42);
+        });
     };
 
     beforeAll(() => {

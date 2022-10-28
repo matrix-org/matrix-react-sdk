@@ -26,6 +26,7 @@ import {
     Room,
 } from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
+import { SimpleObservable } from "matrix-widget-api";
 
 import { uploadFile } from "../../../src/ContentMessages";
 import { IEncryptedFile } from "../../../src/customisations/models/IMediaEventContent";
@@ -43,11 +44,9 @@ import {
 } from "../../../src/voice-broadcast";
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 import dis from "../../../src/dispatcher/dispatcher";
+import { IRecordingUpdate } from "../../../src/audio/VoiceRecording";
 
-jest.mock("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder", () => ({
-    ...jest.requireActual("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder") as object,
-    createVoiceBroadcastRecorder: jest.fn(),
-}));
+jest.mock("../../../src/voice-broadcast/audio/createVoiceBroadcastRecorder");
 
 jest.mock("../../../src/ContentMessages", () => ({
     uploadFile: jest.fn(),
@@ -66,6 +65,7 @@ describe("VoiceBroadcastRecording", () => {
     let infoEvent: MatrixEvent;
     let voiceBroadcastRecording: VoiceBroadcastRecording;
     let onStateChanged: (state: VoiceBroadcastInfoState) => void;
+    let onTimeChanged: (time: number) => void;
     let voiceBroadcastRecorder: VoiceBroadcastRecorder;
     let onChunkRecorded: (chunk: ChunkRecordedPayload) => Promise<void>;
 
@@ -82,6 +82,7 @@ describe("VoiceBroadcastRecording", () => {
     const setUpVoiceBroadcastRecording = () => {
         voiceBroadcastRecording = new VoiceBroadcastRecording(infoEvent, client);
         voiceBroadcastRecording.on(VoiceBroadcastRecordingEvent.StateChanged, onStateChanged);
+        voiceBroadcastRecording.on(VoiceBroadcastRecordingEvent.TimeChanged, onTimeChanged);
         jest.spyOn(voiceBroadcastRecording, "destroy");
         jest.spyOn(voiceBroadcastRecording, "removeAllListeners");
     };
@@ -120,12 +121,15 @@ describe("VoiceBroadcastRecording", () => {
             }
         });
         onStateChanged = jest.fn();
+        onTimeChanged = jest.fn();
         voiceBroadcastRecorder = {
             contentType: "audio/ogg",
             on: jest.fn(),
             off: jest.fn(),
             start: jest.fn(),
             stop: jest.fn(),
+            recorderSeconds: 0,
+            liveData: new SimpleObservable<IRecordingUpdate>(),
         } as unknown as VoiceBroadcastRecorder;
         mocked(createVoiceBroadcastRecorder).mockReturnValue(voiceBroadcastRecorder);
         onChunkRecorded = jest.fn();
@@ -242,8 +246,29 @@ describe("VoiceBroadcastRecording", () => {
                 itShouldBeInState(VoiceBroadcastInfoState.Stopped);
             });
 
+            describe("and the recorder progresses", () => {
+                beforeEach(() => {
+                    voiceBroadcastRecorder.liveData.update({
+                        waveform: [],
+                        timeSeconds: 7.77,
+                    });
+                });
+
+                it("should emit the new time", () => {
+                    expect(onTimeChanged).toHaveBeenCalledWith(7);
+                });
+            });
+
             describe("and a chunk has been recorded", () => {
                 beforeEach(async () => {
+                    // @ts-ignore
+                    voiceBroadcastRecorder.recorderSeconds = 23;
+
+                    voiceBroadcastRecorder.liveData.update({
+                        waveform: [],
+                        timeSeconds: 23,
+                    });
+
                     await onChunkRecorded({
                         buffer: new Uint8Array([1, 2, 3]),
                         length: 23,

@@ -33,13 +33,16 @@ import { createVoiceMessageContent } from "../../utils/createVoiceMessageContent
 import { IDestroyable } from "../../utils/IDestroyable";
 import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
+import { IRecordingUpdate } from "../../audio/VoiceRecording";
 
 export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
+    TimeChanged = "time_changed",
 }
 
 interface EventMap {
     [VoiceBroadcastRecordingEvent.StateChanged]: (state: VoiceBroadcastInfoState) => void;
+    [VoiceBroadcastRecordingEvent.TimeChanged]: (time: number) => void;
 }
 
 export class VoiceBroadcastRecording
@@ -49,6 +52,7 @@ export class VoiceBroadcastRecording
     private recorder: VoiceBroadcastRecorder;
     private sequence = 1;
     private dispatcherRef: string;
+    private lastStopTime = 0;
 
     public constructor(
         public readonly infoEvent: MatrixEvent,
@@ -83,7 +87,7 @@ export class VoiceBroadcastRecording
     }
 
     public async start(): Promise<void> {
-        return this.getRecorder().start();
+        return this.startRecorder();
     }
 
     public async stop(): Promise<void> {
@@ -107,7 +111,7 @@ export class VoiceBroadcastRecording
         if (this.state !== VoiceBroadcastInfoState.Paused) return;
 
         this.setState(VoiceBroadcastInfoState.Resumed);
-        await this.getRecorder().start();
+        await this.startRecorder();
         await this.sendInfoStateEvent(VoiceBroadcastInfoState.Resumed);
     }
 
@@ -218,6 +222,16 @@ export class VoiceBroadcastRecording
         );
     }
 
+    private async startRecorder(): Promise<void> {
+        await this.getRecorder().start();
+        this.recorder.liveData.onUpdate(this.onLiveDataUpdate);
+    }
+
+    private onLiveDataUpdate = (data: IRecordingUpdate): void => {
+        const time = this.lastStopTime + Math.floor(data.timeSeconds);
+        this.emit(VoiceBroadcastRecordingEvent.TimeChanged, time);
+    };
+
     private async stopRecorder(): Promise<void> {
         if (!this.recorder) {
             return;
@@ -225,6 +239,8 @@ export class VoiceBroadcastRecording
 
         try {
             const lastChunk = await this.recorder.stop();
+            this.lastStopTime += this.recorder.recorderSeconds;
+
             if (lastChunk) {
                 await this.onChunkRecorded(lastChunk);
             }

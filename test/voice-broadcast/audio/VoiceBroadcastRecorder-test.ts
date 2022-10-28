@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
+import { SimpleObservable } from "matrix-widget-api";
 
-import { VoiceRecording } from "../../../src/audio/VoiceRecording";
+import { IRecordingUpdate, VoiceRecording } from "../../../src/audio/VoiceRecording";
 import SdkConfig from "../../../src/SdkConfig";
 import { concat } from "../../../src/utils/arrays";
 import {
@@ -80,6 +81,8 @@ describe("VoiceBroadcastRecorder", () => {
             voiceRecording.recorderSeconds = 23;
             // @ts-ignore
             voiceRecording.contentType = contentType;
+            // @ts-ignore
+            voiceRecording.liveData = new SimpleObservable<IRecordingUpdate>();
 
             voiceBroadcastRecorder = new VoiceBroadcastRecorder(voiceRecording, chunkLength);
             jest.spyOn(voiceBroadcastRecorder, "removeAllListeners");
@@ -91,17 +94,22 @@ describe("VoiceBroadcastRecorder", () => {
             voiceBroadcastRecorder.destroy();
         });
 
-        it("start should forward the call to VoiceRecording.start", async () => {
-            await voiceBroadcastRecorder.start();
-            expect(voiceRecording.start).toHaveBeenCalled();
+        describe("when calling start", () => {
+            beforeEach(async () => {
+                await voiceBroadcastRecorder.start();
+            });
+
+            it("the call should be forwarded to VoiceRecording.start", async () => {
+                expect(voiceRecording.start).toHaveBeenCalled();
+            });
         });
 
-        describe("stop", () => {
+        describe("when calling stop", () => {
             beforeEach(async () => {
                 await voiceBroadcastRecorder.stop();
             });
 
-            it("should forward the call to VoiceRecording.stop", async () => {
+            it("the call should be forwarded VoiceRecording.stop", async () => {
                 expect(voiceRecording.stop).toHaveBeenCalled();
             });
 
@@ -120,6 +128,14 @@ describe("VoiceBroadcastRecorder", () => {
             it("should remove all listeners", () => {
                 expect(voiceBroadcastRecorder.removeAllListeners).toHaveBeenCalled();
             });
+        });
+
+        it("liveData should return the value from VoiceRecording", () => {
+            expect(voiceBroadcastRecorder.liveData).toBe(voiceRecording.liveData);
+        });
+
+        it("recorderSeconds should return the value from VoiceRecording", () => {
+            expect(voiceBroadcastRecorder.recorderSeconds).toBe(23);
         });
 
         it("contentType should return the value from VoiceRecording", () => {
@@ -202,6 +218,31 @@ describe("VoiceBroadcastRecorder", () => {
                         length: 72 - 42, // 72 (position at second chunk) - 42 (position of first chunk)
                     },
                 );
+            });
+
+            describe("and restarting the recorder and receiving another chunk", () => {
+                beforeEach(async () => {
+                    await voiceBroadcastRecorder.stop();
+                    await voiceBroadcastRecorder.start();
+                    jest.clearAllMocks();
+
+                    // simulate first chunk
+                    voiceRecording.onDataAvailable(headers1);
+                    voiceRecording.onDataAvailable(headers2);
+                    // set recorder seconds to something greater than the test chunk length of 30
+                    // @ts-ignore
+                    voiceRecording.recorderSeconds = 42;
+                    voiceRecording.onDataAvailable(chunk1);
+                });
+
+                it("should emit a ChunkRecorded event", () => {
+                    expect(onChunkRecorded).toHaveBeenCalledWith(
+                        {
+                            buffer: concat(headers1, headers2, chunk1),
+                            length: 42,
+                        },
+                    );
+                });
             });
         });
     });

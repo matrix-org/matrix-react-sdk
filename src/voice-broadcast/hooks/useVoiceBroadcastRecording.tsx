@@ -56,6 +56,15 @@ export const useVoiceBroadcastRecording = (recording: VoiceBroadcastRecording) =
         }
     };
 
+    const [recordingLength, setRecordingLength] = useState(0);
+    useTypedEventEmitter(
+        recording,
+        VoiceBroadcastRecordingEvent.TimeChanged,
+        (time: number) => {
+            setRecordingLength(time);
+        },
+    );
+
     const [recordingState, setRecordingState] = useState(recording.getState());
     useTypedEventEmitter(
         recording,
@@ -73,6 +82,7 @@ export const useVoiceBroadcastRecording = (recording: VoiceBroadcastRecording) =
 
     return {
         live,
+        recordingLength,
         recordingState,
         room,
         sender: recording.infoEvent.sender,

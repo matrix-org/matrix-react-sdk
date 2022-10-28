@@ -27,6 +27,7 @@ import { Icon as StopIcon } from "../../../../res/img/element-icons/Stop.svg";
 import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
 import { Icon as RecordIcon } from "../../../../res/img/element-icons/Record.svg";
 import { _t } from "../../../languageHandler";
+import Clock from "../../../components/views/audio_messages/Clock";
 
 interface VoiceBroadcastRecordingPipProps {
     recording: VoiceBroadcastRecording;
@@ -35,6 +36,7 @@ interface VoiceBroadcastRecordingPipProps {
 export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProps> = ({ recording }) => {
     const {
         live,
+        recordingLength,
         recordingState,
         room,
         sender,
@@ -62,6 +64,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         <hr className="mx_VoiceBroadcastBody_divider" />
         <div className="mx_VoiceBroadcastBody_controls">
             { toggleControl }
+            <Clock seconds={recordingLength} />
             <VoiceBroadcastControl
                 icon={StopIcon}
                 label="Stop Recording"
