@@ -34,7 +34,7 @@ import {
 } from "matrix-widget-api";
 import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
@@ -47,15 +47,15 @@ import Modal from "../../Modal";
 import WidgetOpenIDPermissionsDialog from "../../components/views/dialogs/WidgetOpenIDPermissionsDialog";
 import WidgetCapabilitiesPromptDialog from "../../components/views/dialogs/WidgetCapabilitiesPromptDialog";
 import { WidgetPermissionCustomisations } from "../../customisations/WidgetPermissions";
-import { OIDCState, WidgetPermissionStore } from "./WidgetPermissionStore";
+import { OIDCState } from "./WidgetPermissionStore";
 import { WidgetType } from "../../widgets/WidgetType";
 import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
 import SettingsStore from "../../settings/SettingsStore";
-import { RoomViewStore } from "../RoomViewStore";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { navigateToPermalink } from "../../utils/permalinks/navigator";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 // TODO: Purge this from the universe
 
@@ -113,6 +113,12 @@ export class StopGapWidgetDriver extends WidgetDriver {
             this.allowedCapabilities.add(MatrixCapabilities.MSC3846TurnServers);
             this.allowedCapabilities.add(`org.matrix.msc2762.timeline:${inRoomId}`);
 
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forRoomEvent(EventDirection.Send, "org.matrix.rageshake_request").raw,
+            );
+            this.allowedCapabilities.add(
+                WidgetEventCapability.forRoomEvent(EventDirection.Receive, "org.matrix.rageshake_request").raw,
+            );
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomMember).raw,
             );
@@ -210,7 +216,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         targetRoomId: string = null,
     ): Promise<ISendEventDetails> {
         const client = MatrixClientPeg.get();
-        const roomId = targetRoomId || RoomViewStore.instance.getRoomId();
+        const roomId = targetRoomId || SdkContextClass.instance.roomViewStore.getRoomId();
 
         if (!client || !roomId) throw new Error("Not in a room or not attached to a client");
 
@@ -291,7 +297,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         const targetRooms = roomIds
             ? (roomIds.includes(Symbols.AnyRoom) ? client.getVisibleRooms() : roomIds.map(r => client.getRoom(r)))
-            : [client.getRoom(RoomViewStore.instance.getRoomId())];
+            : [client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId())];
         return targetRooms.filter(r => !!r);
     }
 
@@ -304,7 +310,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
 
         const rooms = this.pickRooms(roomIds);
-        const allResults: IEvent[] = [];
+        const allResults: IRoomEvent[] = [];
         for (const room of rooms) {
             const results: MatrixEvent[] = [];
             const events = room.getLiveTimeline().getEvents(); // timelines are most recent last
@@ -317,7 +323,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 results.push(ev);
             }
 
-            results.forEach(e => allResults.push(e.getEffectiveEvent()));
+            results.forEach(e => allResults.push(e.getEffectiveEvent() as IRoomEvent));
         }
         return allResults;
     }
@@ -331,7 +337,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
 
         const rooms = this.pickRooms(roomIds);
-        const allResults: IEvent[] = [];
+        const allResults: IRoomEvent[] = [];
         for (const room of rooms) {
             const results: MatrixEvent[] = [];
             const state: Map<string, MatrixEvent> = room.currentState.events.get(eventType);
@@ -344,13 +350,13 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 }
             }
 
-            results.slice(0, limitPerRoom).forEach(e => allResults.push(e.getEffectiveEvent()));
+            results.slice(0, limitPerRoom).forEach(e => allResults.push(e.getEffectiveEvent() as IRoomEvent));
         }
         return allResults;
     }
 
     public async askOpenID(observer: SimpleObservable<IOpenIDUpdate>) {
-        const oidcState = WidgetPermissionStore.instance.getOIDCState(
+        const oidcState = SdkContextClass.instance.widgetPermissionStore.getOIDCState(
             this.forWidget, this.forWidgetKind, this.inRoomId,
         );
 
@@ -430,7 +436,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
     ): Promise<IReadEventRelationsResult> {
         const client = MatrixClientPeg.get();
         const dir = direction as Direction;
-        roomId = roomId ?? RoomViewStore.instance.getRoomId() ?? undefined;
+        roomId = roomId ?? SdkContextClass.instance.roomViewStore.getRoomId() ?? undefined;
 
         if (typeof roomId !== "string") {
             throw new Error('Error while reading the current room');
@@ -445,15 +451,11 @@ export class StopGapWidgetDriver extends WidgetDriver {
             eventId,
             relationType ?? null,
             eventType ?? null,
-            {
-                from,
-                to,
-                limit,
-                dir,
-            });
+            { from, to, limit, dir },
+        );
 
         return {
-            chunk: events.map(e => e.getEffectiveEvent()),
+            chunk: events.map(e => e.getEffectiveEvent() as IRoomEvent),
             nextBatch,
             prevBatch,
         };
