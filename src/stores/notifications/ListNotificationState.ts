@@ -20,11 +20,15 @@ import { NotificationColor } from "./NotificationColor";
 import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
 import { NotificationState, NotificationStateEvents } from "./NotificationState";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export type FetchRoomFn = (room: Room) => RoomNotificationState;
 
 export class ListNotificationState extends NotificationState {
-    private rooms: Room[] = [];
+    // Only store room ids instead of hole rooms. The only time we need more than the room
+    // ids is when calling the FetchRoomFn. It also allows to performantly copy a given rooms array
+    // instead of storing a reference to it, which avoids potential side effects.
+    private roomIds: string[] = [];
     private states: { [roomId: string]: RoomNotificationState } = {};
 
     constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
@@ -38,24 +42,25 @@ export class ListNotificationState extends NotificationState {
     public setRooms(rooms: Room[]) {
         // If we're only concerned about the tile count, don't bother setting up listeners.
         if (this.byTileCount) {
-            this.rooms = rooms;
+            this.roomIds = this.getRoomIdsFromRooms(rooms);
             this.calculateTotalState();
             return;
         }
 
-        const oldRooms = this.rooms;
-        const diff = arrayDiff(oldRooms, rooms);
-        this.rooms = rooms;
-        for (const oldRoom of diff.removed) {
-            const state = this.states[oldRoom.roomId];
+        const oldRooms = this.roomIds;
+        const diff = arrayDiff(oldRooms, this.getRoomIdsFromRooms(rooms));
+        this.roomIds = this.getRoomIdsFromRooms(rooms);
+        for (const oldRoomId of diff.removed) {
+            const state = this.states[oldRoomId];
             if (!state) continue; // We likely just didn't have a badge (race condition)
-            delete this.states[oldRoom.roomId];
+            delete this.states[oldRoomId];
             state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
-        for (const newRoom of diff.added) {
-            const state = this.getRoomFn(newRoom);
+        for (const newRoomId of diff.added) {
+            const client = MatrixClientPeg.get();
+            const state = this.getRoomFn(client.getRoom(newRoomId));
             state.on(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
-            this.states[newRoom.roomId] = state;
+            this.states[newRoomId] = state;
         }
 
         this.calculateTotalState();
@@ -84,7 +89,7 @@ export class ListNotificationState extends NotificationState {
 
         if (this.byTileCount) {
             this._color = NotificationColor.Red;
-            this._count = this.rooms.length;
+            this._count = this.roomIds.length;
         } else {
             this._count = 0;
             this._color = NotificationColor.None;
@@ -97,5 +102,9 @@ export class ListNotificationState extends NotificationState {
         // finally, publish an update if needed
         this.emitIfUpdated(snapshot);
     }
+
+    private getRoomIdsFromRooms = (rooms: Room[]) => {
+        return rooms.map((room: Room) => room.roomId);
+    };
 }
 
