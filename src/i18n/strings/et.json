@@ -3672,12 +3672,12 @@
     "Renaming sessions": "Sessioonide nimede muutmine",
     "Please be aware that session names are also visible to people you communicate with.": "Palun arvesta, et sessioonide nimed on näha ka kõikidele osapooltele, kellega sa suhtled.",
     "Show formatting": "Näita vormingut",
-    "Show plain text": "Näita tavalist teksti",
-    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Vanadest seanssidest (%(inactiveAgeDays)s päeva või vanemad), mida te enam ei kasuta, maksab kaaluda välja logimist.",
-    "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "Mitteaktiivsete seansside eemaldamine parandab turvalisust ja jõudlust ning lihtsustab potentsiaalselt kahtlaste seansside tuvastamist.",
-    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Mitteaktiivsed seansid on seansid, mida ei ole mõnda aega kasutanud, kuid need saavad jätkuvalt krüpteerimisvõtmeid.",
-    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Peaksid kindlaks tegema, et need sessioonid on tuttavad, sest need võivad kujutada endast potentsiaalselt konto volitamata kasutamist.",
-    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Kontrollimata sessioonid on sessioonid, kuhu on sinu volitustega sisse logitud, kuid mida ei ole ristkontrolliga kontrollitud.",
-    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "See tähendab, et neil on sinu eelmiste sõnumite krüpteerimisvõtmed ja nad kinnitavad teistele kasutajatele, kellega te suhtlete, et suhtlus on turvaline.",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Kontrollitud seanss on see, kuhu on sinu kasutajatunnustega sisse logitud ja mida on kontrollitud turvalise salasõna või ristkontrolli abil."
+    "Show plain text": "Näita vormindamata teksti",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Võimalusel logi välja vanadest seanssidest (%(inactiveAgeDays)s päeva või vanemad), mida sa enam ei kasuta.",
+    "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "Mitteaktiivsete seansside eemaldamine parandab turvalisust ja jõudlust ning lihtsustab võimalike kahtlaste seansside tuvastamist.",
+    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Mitteaktiivsed seansid on seansid, mida sa ei ole mõnda aega kasutanud, kuid neil jätkuvalt lubatakse laadida krüptimisvõtmeid.",
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Kuna nende näol võib olla tegemist võimaliku konto volitamata kasutamisega, siis palun tee kindlaks, et need sessioonid on sulle tuttavad.",
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Kontrollimata sessioonid on sessioonid, kuhu on sinu volitustega sisse logitud, kuid mida ei ole risttuvastamisega kontrollitud.",
+    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "See tähendab, et neil on sinu eelmiste sõnumite krüpteerimisvõtmed ja nad kinnitavad teistele kasutajatele, kellega sa suhtled, et suhtlus on turvaline.",
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Kontrollitud seanss on see, kuhu on sinu kasutajatunnustega sisse logitud ja mida on kontrollitud sinu salafraasi või risttunnustamise abil."
 }
