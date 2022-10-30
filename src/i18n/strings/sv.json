@@ -3481,5 +3481,6 @@
     "New session manager": "Ny sessionshanterare",
     "Use new session manager": "Använd ny sessionshanterare",
     "Voice broadcast (under active development)": "Röstsändning (under aktiv utveckling)",
-    "New group call experience": "Ny gruppsamtalsupplevelse"
+    "New group call experience": "Ny gruppsamtalsupplevelse",
+    "Record the client name, version, and url to recognise sessions more easily in session manager": "Spara klientens namn, version och URL för att lättare känna igen sessioner i sessionshanteraren"
 }
