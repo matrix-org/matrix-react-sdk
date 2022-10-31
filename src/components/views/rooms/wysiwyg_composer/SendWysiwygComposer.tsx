@@ -20,6 +20,10 @@ import { useWysiwygSendActionHandler } from './hooks/useWysiwygSendActionHandler
 import { WysiwygComposer } from './components/WysiwygComposer';
 import { PlainTextComposer } from './components/PlainTextComposer';
 import { ComposerFunctions } from './types';
+import { E2EStatus } from '../../../../utils/ShieldUtils';
+import E2EIcon from '../E2EIcon';
+import { EmojiButton } from '../EmojiButton';
+import { AboveLeftOf } from '../../../structures/ContextMenu';
 
 interface ContentProps {
     disabled: boolean;
@@ -37,14 +41,23 @@ interface SendWysiwygComposerProps {
     initialContent?: string;
     isRichTextEnabled: boolean;
     disabled?: boolean;
+    e2eStatus?: E2EStatus;
     onChange: (content: string) => void;
     onSend: () => void;
+    menuPosition: AboveLeftOf;
 }
 
-export function SendWysiwygComposer({ isRichTextEnabled, ...props }: SendWysiwygComposerProps) {
+export function SendWysiwygComposer(
+    { isRichTextEnabled, e2eStatus, menuPosition, ...props }: SendWysiwygComposerProps) {
     const Composer = isRichTextEnabled ? WysiwygComposer : PlainTextComposer;
 
-    return <Composer className="mx_SendWysiwygComposer" {...props}>
+    return <Composer
+        className="mx_SendWysiwygComposer"
+        leftComponent={e2eStatus && <E2EIcon key="e2eIcon"status={e2eStatus} />}
+        // TODO add emoji support
+        rightComponent={<EmojiButton menuPosition={menuPosition} addEmoji={() => void 0} />}
+        {...props}
+    >
         { (ref, composerFunctions) => (
             <Content disabled={props.disabled} ref={ref} composerFunctions={composerFunctions} />
         ) }

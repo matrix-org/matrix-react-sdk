@@ -1,0 +1,13 @@
+@import "./_MessageComposerButton.pcss";
+
+.mx_EmojiButton {
+    @mixin composerButton;
+}
+
+.mx_EmojiButton_highlight {
+    @mixin composerButtonHighLight;
+}
+
+.mx_EmojiButton_icon::before {
+    mask-image: url('$(res)/img/element-icons/room/composer/emoji.svg');
+}

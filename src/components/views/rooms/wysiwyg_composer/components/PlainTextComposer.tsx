@@ -29,6 +29,8 @@ interface PlainTextComposerProps {
     onSend: () => void;
     initialContent?: string;
     className?: string;
+    leftComponent?: ReactNode;
+    rightComponent?: ReactNode;
     children?: (
         ref: MutableRefObject<HTMLDivElement | null>,
         composerFunctions: ComposerFunctions,
@@ -36,7 +38,15 @@ interface PlainTextComposerProps {
 }
 
 export function PlainTextComposer({
-    className, disabled, onSend, onChange, children, initialContent }: PlainTextComposerProps,
+    className,
+    disabled,
+    onSend,
+    onChange,
+    children,
+    initialContent,
+    leftComponent,
+    rightComponent,
+}: PlainTextComposerProps,
 ) {
     const { ref, onInput, onPaste, onKeyDown } = usePlainTextListeners(onChange, onSend);
     const composerFunctions = useComposerFunctions(ref);
@@ -50,7 +60,7 @@ export function PlainTextComposer({
         onPaste={onPaste}
         onKeyDown={onKeyDown}
     >
-        <Editor ref={ref} disabled={disabled} />
+        <Editor ref={ref} disabled={disabled} leftComponent={leftComponent} rightComponent={rightComponent} />
         { children?.(ref, composerFunctions) }
     </div>;
 }

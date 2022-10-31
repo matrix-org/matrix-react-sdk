@@ -420,18 +420,32 @@ export class MessageComposer extends React.Component<IProps, IState> {
         return this.state.showStickersButton && !isLocalRoom(this.props.room);
     }
 
+    private getMenuPosition() {
+        if (this.ref.current) {
+            const hasFormattingButtons = this.state.isWysiwygLabEnabled && this.state.isRichTextEnabled;
+            const contentRect = this.ref.current.getBoundingClientRect();
+            // Here we need to remove the all the extra space above the editor
+            // Instead of doing a querySelector or pass a ref to find the compute the height formatting buttons
+            // We are using an arbitrary value, the formatting buttons height doesn't change during the lifecycle of the component
+            // It's easier to just use a constant here instead of an over-engineering way to find the height
+            const heightToRemove = hasFormattingButtons ? 45 : 0;
+            const fixedRect = new DOMRect(
+                contentRect.x,
+                contentRect.y + heightToRemove,
+                contentRect.width,
+                contentRect.height - heightToRemove);
+            return aboveLeftOf(fixedRect);
+        }
+    }
+
     public render() {
+        const hasE2EIcon = Boolean(!this.state.isWysiwygLabEnabled && this.props.e2eStatus);
         const controls = [
-            this.props.e2eStatus ?
-                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
-                null,
+            hasE2EIcon &&
+                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" />,
         ];
 
-        let menuPosition: AboveLeftOf | undefined;
-        if (this.ref.current) {
-            const contentRect = this.ref.current.getBoundingClientRect();
-            menuPosition = aboveLeftOf(contentRect);
-        }
+        const menuPosition = this.getMenuPosition();
 
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
         if (canSendMessages) {
@@ -443,6 +457,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         onSend={this.sendMessage}
                         isRichTextEnabled={this.state.isRichTextEnabled}
                         initialContent={this.state.initialComposerContent}
+                        e2eStatus={this.props.e2eStatus}
+                        menuPosition={menuPosition}
                     />,
                 );
             } else {
@@ -529,8 +545,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const classes = classNames({
             "mx_MessageComposer": true,
             "mx_MessageComposer--compact": this.props.compact,
-            "mx_MessageComposer_e2eStatus": this.props.e2eStatus != undefined,
-            "mx_MessageComposer_wysiwyg": this.state.isWysiwygLabEnabled && this.state.isRichTextEnabled,
+            "mx_MessageComposer_e2eStatus": hasE2EIcon,
+            "mx_MessageComposer_wysiwyg": this.state.isWysiwygLabEnabled,
         });
 
         return (
@@ -559,7 +575,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                             showLocationButton={!window.electron}
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
-                            showComposerModeButton={this.state.isWysiwygLabEnabled}
                             isRichTextEnabled={this.state.isRichTextEnabled}
                             onComposerModeClick={this.onRichTextToggle}
                             toggleButtonMenu={this.toggleButtonMenu}
