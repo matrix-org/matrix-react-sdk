@@ -32,7 +32,7 @@ describe("StatelessNotificationBadge", () => {
             />,
         );
         expect(
-            container.querySelector("mx_NotificationBadge_highlighted"),
+            container.querySelector(".mx_NotificationBadge_highlighted"),
         ).not.toBe(null);
     });
 });
