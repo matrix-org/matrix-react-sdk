@@ -143,7 +143,7 @@ export function createTestClient(): MatrixClient {
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
-        getSyncState: () => "SYNCING",
+        getSyncState: jest.fn().mockReturnValue("SYNCING"),
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
         isGuest: jest.fn().mockReturnValue(false),
         getRoomHierarchy: jest.fn().mockReturnValue({
@@ -212,6 +212,7 @@ type MakeEventPassThruProps = {
 };
 type MakeEventProps = MakeEventPassThruProps & {
     type: string;
+    redacts?: string;
     content: IContent;
     room?: Room["roomId"]; // to-device messages are roomless
     // eslint-disable-next-line camelcase
@@ -245,6 +246,7 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
         event_id: "$" + Math.random() + "-" + Math.random(),
         origin_server_ts: opts.ts ?? 0,
         unsigned: opts.unsigned,
+        redacts: opts.redacts,
     };
     if (opts.skey !== undefined) {
         event.state_key = opts.skey;
