@@ -277,33 +277,39 @@ export class SlidingSyncManager {
         const listIndex = this.getOrAllocateListIndex(SlidingSyncManager.ListSearch);
         let startIndex = batchSize;
         let hasMore = true;
+        let firstTime = true;
         while (hasMore) {
             const endIndex = startIndex + batchSize-1;
             try {
-                await this.slidingSync.setList(listIndex, {
-                    // e.g [0,19] [20,39] then [0,19] [40,59]. We keep [0,20] constantly to ensure
-                    // any changes to the list whilst spidering are caught.
-                    ranges: [[0, batchSize-1], [startIndex, endIndex]],
-                    sort: [
-                        "by_recency", // this list isn't shown on the UI so just sorting by timestamp is enough
-                    ],
-                    timeline_limit: 0, // we only care about the room details, not messages in the room
-                    required_state: [
-                        [EventType.RoomJoinRules, ""], // the public icon on the room list
-                        [EventType.RoomAvatar, ""], // any room avatar
-                        [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
-                        [EventType.RoomEncryption, ""], // lets rooms be configured for E2EE correctly
-                        [EventType.RoomCreate, ""], // for isSpaceRoom checks
-                        [EventType.RoomMember, this.client.getUserId()!], // lets the client calculate that we are in fact in the room
-                    ],
-                    // we don't include_old_rooms here in an effort to reduce the impact of spidering all rooms
-                    // on the user's account. This means some data in the search dialog results may be inaccurate
-                    // e.g membership of space, but this will be corrected when the user clicks on the room
-                    // as the direct room subscription does include old room iterations.
-                    filters: { // we get spaces via a different list, so filter them out
-                        not_room_types: ["m.space"],
-                    },
-                });
+                const ranges = [[0, batchSize-1], [startIndex, endIndex]];
+                if (firstTime) {
+                    await this.slidingSync.setList(listIndex, {
+                        // e.g [0,19] [20,39] then [0,19] [40,59]. We keep [0,20] constantly to ensure
+                        // any changes to the list whilst spidering are caught.
+                        ranges: ranges,
+                        sort: [
+                            "by_recency", // this list isn't shown on the UI so just sorting by timestamp is enough
+                        ],
+                        timeline_limit: 0, // we only care about the room details, not messages in the room
+                        required_state: [
+                            [EventType.RoomJoinRules, ""], // the public icon on the room list
+                            [EventType.RoomAvatar, ""], // any room avatar
+                            [EventType.RoomTombstone, ""], // lets JS SDK hide rooms which are dead
+                            [EventType.RoomEncryption, ""], // lets rooms be configured for E2EE correctly
+                            [EventType.RoomCreate, ""], // for isSpaceRoom checks
+                            [EventType.RoomMember, this.client.getUserId()!], // lets the client calculate that we are in fact in the room
+                        ],
+                        // we don't include_old_rooms here in an effort to reduce the impact of spidering all rooms
+                        // on the user's account. This means some data in the search dialog results may be inaccurate
+                        // e.g membership of space, but this will be corrected when the user clicks on the room
+                        // as the direct room subscription does include old room iterations.
+                        filters: { // we get spaces via a different list, so filter them out
+                            not_room_types: ["m.space"],
+                        },
+                    });
+                } else {
+                    await this.slidingSync.setListRanges(listIndex, ranges);
+                }
                 // gradually request more over time
                 await sleep(gapBetweenRequestsMs);
             } catch (err) {
@@ -312,6 +318,7 @@ export class SlidingSyncManager {
             }
             hasMore = (endIndex+1) < this.slidingSync.getListData(listIndex)?.joinedCount;
             startIndex += batchSize;
+            firstTime = false;
         }
     }
 }

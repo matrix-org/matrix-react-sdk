@@ -39,6 +39,7 @@ describe('SlidingSyncManager', () => {
             const gapMs = 1;
             const batchSize = 10;
             mocked(slidingSync.setList).mockResolvedValue("yep");
+            mocked(slidingSync.setListRanges).mockResolvedValue("yep");
             mocked(slidingSync.getListData).mockImplementation((i) => {
                 return {
                     joinedCount: 64,
@@ -51,13 +52,21 @@ describe('SlidingSyncManager', () => {
                 [10, 19], [20, 29], [30, 39], [40, 49], [50, 59], [60, 69],
             ];
             expect(slidingSync.getListData).toBeCalledTimes(wantWindows.length);
-            expect(slidingSync.setList).toBeCalledTimes(wantWindows.length);
-            wantWindows.forEach((range) => {
-                expect(slidingSync.setList).toBeCalledWith(
+            expect(slidingSync.setList).toBeCalledTimes(1);
+            expect(slidingSync.setListRanges).toBeCalledTimes(wantWindows.length-1);
+            wantWindows.forEach((range, i) => {
+                if (i === 0) {
+                    expect(slidingSync.setList).toBeCalledWith(
+                        manager.getOrAllocateListIndex(SlidingSyncManager.ListSearch),
+                        expect.objectContaining({
+                            ranges: [[0, batchSize-1], range],
+                        }),
+                    );
+                    return;
+                }
+                expect(slidingSync.setListRanges).toBeCalledWith(
                     manager.getOrAllocateListIndex(SlidingSyncManager.ListSearch),
-                    expect.objectContaining({
-                        ranges: [[0, batchSize-1], range],
-                    }),
+                    [[0, batchSize-1], range],
                 );
             });
         });
