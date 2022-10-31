@@ -115,6 +115,7 @@ export class SlidingSyncManager {
         this.slidingSync = new SlidingSync(
             proxyUrl, [], DEFAULT_ROOM_SUBSCRIPTION_INFO, client, SLIDING_SYNC_TIMEOUT_MS,
         );
+        // set the space list
         this.slidingSync.setList(this.getOrAllocateListIndex(SlidingSyncManager.ListSpaces), {
             ranges: [[0, 20]],
             sort: [
