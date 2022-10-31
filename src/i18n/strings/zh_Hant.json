@@ -3665,5 +3665,20 @@
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "您沒有在此聊天室內開始語音廣播所需的權限。請聯絡聊天室管理員升級您的權限。",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "您已經開始錄製語音廣播。請結束您目前的語音廣播以開始新的語音廣播。",
     "Can't start a new voice broadcast": "無法啟動新的語音廣播",
-    "play voice broadcast": "播放語音廣播"
+    "play voice broadcast": "播放語音廣播",
+    "Show formatting": "顯示格式",
+    "Show plain text": "顯示純文字",
+    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "考慮登出您不再使用的舊工作階段 (%(inactiveAgeDays)s天或更舊）。",
+    "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "刪除不活躍的工作階段可以改善安全性與效能，並讓您可以輕鬆識別新的工作階段是否可疑。",
+    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "不活躍工作階段是您一段時間未使用的工作階段，但它們會繼續接收加密金鑰。",
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "您應特別確定您可以識別這些工作階段，因為它們可能代表未經授權使用您的帳號。",
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "未經驗證的工作階段是使用您的憑證登入但尚未經過交叉驗證的工作階段。",
+    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "這代表了他們持有您之前訊息的加密金鑰，並向您正在與之通訊的其他使用者確認這些工作階段確實是您。",
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "已驗證的工作階段已使用您的憑證登入，然後使用您的安全密碼或透過交叉驗證進行驗證。",
+    "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "這讓他們確定他們真的在與您交談，但這也代表了他們可以看到您在此處輸入的工作階段名稱。",
+    "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "您加入的直接訊息與聊天室中的其他使用者可以檢視您的工作階段的完整清單。",
+    "Renaming sessions": "重新命名工作階段",
+    "Please be aware that session names are also visible to people you communicate with.": "請注意，與您交談的人也可以看到工作階段名稱。",
+    "Are you sure you want to sign out of %(count)s sessions?|one": "您確定您想要登出 %(count)s 個工作階段嗎？",
+    "Are you sure you want to sign out of %(count)s sessions?|other": "您確定您想要登出 %(count)s 個工作階段嗎？"
 }
