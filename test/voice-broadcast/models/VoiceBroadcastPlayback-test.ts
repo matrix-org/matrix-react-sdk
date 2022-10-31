@@ -301,6 +301,21 @@ describe("VoiceBroadcastPlayback", () => {
                     stopPlayback();
                     itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Stopped);
                 });
+
+                describe("and calling destroy", () => {
+                    beforeEach(() => {
+                        playback.destroy();
+                    });
+
+                    it("should call removeAllListeners", () => {
+                        expect(playback.removeAllListeners).toHaveBeenCalled();
+                    });
+
+                    it("should call destroy on the playbacks", () => {
+                        expect(chunk1Playback.destroy).toHaveBeenCalled();
+                        expect(chunk2Playback.destroy).toHaveBeenCalled();
+                    });
+                });
             });
 
             describe("and calling toggle for the first time", () => {
@@ -340,16 +355,6 @@ describe("VoiceBroadcastPlayback", () => {
 
                     itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
                     itShouldEmitAStateChangedEvent(VoiceBroadcastPlaybackState.Playing);
-                });
-            });
-
-            describe("and calling destroy", () => {
-                beforeEach(() => {
-                    playback.destroy();
-                });
-
-                it("should call removeAllListeners", () => {
-                    expect(playback.removeAllListeners).toHaveBeenCalled();
                 });
             });
         });

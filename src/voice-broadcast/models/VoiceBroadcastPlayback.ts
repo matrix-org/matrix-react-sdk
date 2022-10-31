@@ -303,7 +303,7 @@ export class VoiceBroadcastPlayback
         this.removeAllListeners();
 
         this.chunkEvents = new VoiceBroadcastChunkEvents();
-        this.playbacks.forEach(p => p.destroy);
+        this.playbacks.forEach(p => p.destroy());
         this.playbacks = new Map<string, Playback>();
     }
 }
