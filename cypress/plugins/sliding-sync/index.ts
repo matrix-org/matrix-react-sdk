@@ -22,7 +22,8 @@ import { dockerExec, dockerIp, dockerRun, dockerStop } from "../docker";
 import { getFreePort } from "../utils/port";
 import { SynapseInstance } from "../synapsedocker";
 
-// A cypress plugins to add command to start & stop https://github.com/matrix-org/sliding-sync
+// A cypress plugin to add command to start & stop https://github.com/matrix-org/sliding-sync
+// SLIDING_SYNC_PROXY_TAG env used as the docker tag to use for `ghcr.io/matrix-org/sliding-sync-proxy` image.
 
 export interface ProxyInstance {
     containerId: string;
