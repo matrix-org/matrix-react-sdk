@@ -247,7 +247,8 @@ describe('<LoginWithQR />', () => {
         const onFinished = jest.fn();
         // @ts-ignore
         client.crypto = {};
-        jest.spyOn(MSC3906Rendezvous.prototype, 'verifyNewDeviceOnExistingDevice').mockImplementation(() => unresolvedPromise());
+        jest.spyOn(MSC3906Rendezvous.prototype, 'verifyNewDeviceOnExistingDevice')
+            .mockImplementation(() => unresolvedPromise());
         render(getComponent({ client, onFinished }));
         const rendezvous = mocked(MSC3906Rendezvous).mock.instances[0];
 
