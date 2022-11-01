@@ -78,12 +78,19 @@ export default class MemberList extends React.Component<IProps, IState> {
     private mounted = false;
     private collator: Intl.Collator;
     private sortNames = new Map<RoomMember, string>(); // RoomMember -> sortName
+    private isLazyLoadingMembersEnabled = false;
 
     constructor(props) {
         super(props);
 
         const cli = MatrixClientPeg.get();
-        if (cli.hasLazyLoadMembersEnabled()) {
+        this.isLazyLoadingMembersEnabled = cli.hasLazyLoadMembersEnabled();
+        if (SettingsStore.getValue("feature_sliding_sync")) {
+            // only unencrypted rooms use lazy loading
+            this.isLazyLoadingMembersEnabled = !cli.isRoomEncrypted(this.props.roomId);
+            console.log("sliding sync LL enabled: ", this.isLazyLoadingMembersEnabled);
+        }
+        if (this.isLazyLoadingMembersEnabled) {
             // show an empty list
             this.state = this.getMembersState([]);
         } else {
@@ -100,7 +107,7 @@ export default class MemberList extends React.Component<IProps, IState> {
     UNSAFE_componentWillMount() {
         const cli = MatrixClientPeg.get();
         this.mounted = true;
-        if (cli.hasLazyLoadMembersEnabled()) {
+        if (this.isLazyLoadingMembersEnabled) {
             this.showMembersAccordingToMembershipWithLL();
             cli.on(RoomEvent.MyMembership, this.onMyMembership);
         } else {
@@ -146,8 +153,7 @@ export default class MemberList extends React.Component<IProps, IState> {
      * or show the members available so far if the user is invited
      */
     private async showMembersAccordingToMembershipWithLL(): Promise<void> {
-        const cli = MatrixClientPeg.get();
-        if (cli.hasLazyLoadMembersEnabled()) {
+        if (this.isLazyLoadingMembersEnabled) {
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(this.props.roomId);
             const membership = room && room.getMyMembership();

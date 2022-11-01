@@ -276,9 +276,15 @@ export class SlidingSyncManager {
             subscriptions.delete(roomId);
         }
         const room = this.client.getRoom(roomId);
-        const isEncrypted = room?.currentState?.getStateEvents(EventType.RoomEncryption, "") != null;
-        logger.log("SlidingSync setRoomVisible:", roomId, visible, "encrypted:", isEncrypted);
-        if (!isEncrypted) {
+        let shouldLazyLoad = !this.client.isRoomEncrypted(roomId);
+        if (!room) {
+            // default to safety: request all state if we can't work it out. This can happen if you
+            // refresh the app whilst viewing a room: we call setRoomVisible before we know anything
+            // about the room.
+            shouldLazyLoad = false;
+        }
+        logger.log("SlidingSync setRoomVisible:", roomId, visible, "shouldLazyLoad:", shouldLazyLoad);
+        if (shouldLazyLoad) {
             // lazy load this room
             this.slidingSync.useCustomSubscription(roomId, UNENCRYPTED_SUBSCRIPTION_NAME);
         }
