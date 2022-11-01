@@ -23,22 +23,20 @@ import React, {
     LegacyRef,
     forwardRef,
     RefObject,
+    useContext,
 } from "react";
 import classNames from "classnames";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import RoomAvatar from "../avatars/RoomAvatar";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { SpaceKey } from "../../../stores/spaces";
-import SpaceTreeLevelLayoutStore from "../../../stores/spaces/SpaceTreeLevelLayoutStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import { toRightOf, useContextMenu } from "../../structures/ContextMenu";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
@@ -48,6 +46,7 @@ import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { SDKContext } from "../../../contexts/SDKContext";
 
 interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick"> {
     space?: Room;
@@ -77,6 +76,7 @@ export const SpaceButton = forwardRef<HTMLElement, IButtonProps>(({
     ContextMenuComponent,
     ...props
 }, ref: RefObject<HTMLElement>) => {
+    const context = useContext(SDKContext);
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLElement>(ref);
     const [onFocus, isActive] = useRovingTabIndex(handle);
     const tabIndex = isActive ? 0 : -1;
@@ -96,7 +96,7 @@ export const SpaceButton = forwardRef<HTMLElement, IButtonProps>(({
         const jumpToNotification = (ev: MouseEvent) => {
             ev.stopPropagation();
             ev.preventDefault();
-            SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId);
+            context.spaceStore.setActiveRoomInSpace(spaceKey ?? space.roomId);
         };
 
         notifBadge = <div className="mx_SpacePanel_badgeContainer">
@@ -121,7 +121,7 @@ export const SpaceButton = forwardRef<HTMLElement, IButtonProps>(({
     }
 
     const viewSpaceHome = () => defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space.roomId });
-    const activateSpace = () => SpaceStore.instance.setActiveSpace(spaceKey ?? space.roomId);
+    const activateSpace = () => context.spaceStore.setActiveSpace(spaceKey ?? space.roomId);
     const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
 
     return (
@@ -179,14 +179,18 @@ interface IItemState {
 }
 
 export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
-    static contextType = MatrixClientContext;
+    static contextType = SDKContext;
 
     private buttonRef = createRef<HTMLDivElement>();
+    context!: React.ContextType<typeof SDKContext>;
 
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
+        // TODO: why do we need to set this - this.context is undefined if we don't, even though
+        // we are setting contextType :(
+        this.context = context;
 
-        const collapsed = SpaceTreeLevelLayoutStore.instance.getSpaceCollapsedState(
+        const collapsed = this.context.spaceTreeLevelLayoutStore.getSpaceCollapsedState(
             props.space.roomId,
             this.props.parents,
             !props.isNested, // default to collapsed for root items
@@ -198,12 +202,12 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
             childSpaces: this.childSpaces,
         };
 
-        SpaceStore.instance.on(this.props.space.roomId, this.onSpaceUpdate);
+        this.context.spaceStore.on(this.props.space.roomId, this.onSpaceUpdate);
         this.props.space.on(RoomEvent.Name, this.onRoomNameChange);
     }
 
     componentWillUnmount() {
-        SpaceStore.instance.off(this.props.space.roomId, this.onSpaceUpdate);
+        this.context.spaceStore.off(this.props.space.roomId, this.onSpaceUpdate);
         this.props.space.off(RoomEvent.Name, this.onRoomNameChange);
     }
 
@@ -220,7 +224,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
     };
 
     private get childSpaces() {
-        return SpaceStore.instance.getChildSpaces(this.props.space.roomId)
+        return this.context.spaceStore.getChildSpaces(this.props.space.roomId)
             .filter(s => !this.props.parents?.has(s.roomId));
     }
 
@@ -234,7 +238,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         }
         const newCollapsedState = !this.isCollapsed;
 
-        SpaceTreeLevelLayoutStore.instance.setSpaceCollapsedState(
+        this.context.spaceTreeLevelLayoutStore.setSpaceCollapsedState(
             this.props.space.roomId,
             this.props.parents,
             newCollapsedState,
@@ -300,7 +304,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
 
         const notificationState = isInvite
             ? StaticNotificationState.forSymbol("!", NotificationColor.Red)
-            : SpaceStore.instance.getNotificationState(space.roomId);
+            : this.context.spaceStore.getNotificationState(space.roomId);
 
         const hasChildren = this.state.childSpaces?.length;
 

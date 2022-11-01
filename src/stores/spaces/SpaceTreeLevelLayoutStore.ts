@@ -1,5 +1,6 @@
 /*
 Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,14 +27,6 @@ const getSpaceCollapsedKey = (roomId: string, parents: Set<string>): string => {
 };
 
 export default class SpaceTreeLevelLayoutStore {
-    private static internalInstance: SpaceTreeLevelLayoutStore;
-
-    public static get instance(): SpaceTreeLevelLayoutStore {
-        if (!SpaceTreeLevelLayoutStore.internalInstance) {
-            SpaceTreeLevelLayoutStore.internalInstance = new SpaceTreeLevelLayoutStore();
-        }
-        return SpaceTreeLevelLayoutStore.internalInstance;
-    }
 
     public setSpaceCollapsedState(roomId: string, parents: Set<string>, collapsed: boolean) {
         // XXX: localStorage doesn't allow booleans

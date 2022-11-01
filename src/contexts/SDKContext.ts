@@ -25,6 +25,7 @@ import { RoomNotificationStateStore } from "../stores/notifications/RoomNotifica
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import { RoomViewStore } from "../stores/RoomViewStore";
 import SpaceStore, { SpaceStoreClass } from "../stores/spaces/SpaceStore";
+import SpaceTreeLevelLayoutStore from "../stores/spaces/SpaceTreeLevelLayoutStore";
 import TypingStore from "../stores/TypingStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 import { WidgetPermissionStore } from "../stores/widgets/WidgetPermissionStore";
@@ -61,6 +62,7 @@ export class SdkContextClass {
     protected _PosthogAnalytics?: PosthogAnalytics;
     protected _SlidingSyncManager?: SlidingSyncManager;
     protected _SpaceStore?: SpaceStoreClass;
+    protected _SpaceTreeLevelLayoutStore?: SpaceTreeLevelLayoutStore;
     protected _LegacyCallHandler?: LegacyCallHandler;
     protected _TypingStore?: TypingStore;
 
@@ -133,6 +135,12 @@ export class SdkContextClass {
             this._SpaceStore = SpaceStore.instance;
         }
         return this._SpaceStore;
+    }
+    public get spaceTreeLevelLayoutStore(): SpaceTreeLevelLayoutStore {
+        if (!this._SpaceTreeLevelLayoutStore) {
+            this._SpaceTreeLevelLayoutStore = new SpaceTreeLevelLayoutStore();
+        }
+        return this._SpaceTreeLevelLayoutStore;
     }
     public get typingStore(): TypingStore {
         if (!this._TypingStore) {
