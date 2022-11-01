@@ -88,7 +88,6 @@ export default class MemberList extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_sliding_sync")) {
             // only unencrypted rooms use lazy loading
             this.isLazyLoadingMembersEnabled = !cli.isRoomEncrypted(this.props.roomId);
-            console.log("sliding sync LL enabled: ", this.isLazyLoadingMembersEnabled);
         }
         if (this.isLazyLoadingMembersEnabled) {
             // show an empty list
