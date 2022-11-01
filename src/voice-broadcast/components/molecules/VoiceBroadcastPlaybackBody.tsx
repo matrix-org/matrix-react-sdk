@@ -29,7 +29,6 @@ import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
 import { _t } from "../../../languageHandler";
 import Clock from "../../../components/views/audio_messages/Clock";
 import SeekBar from "../../../components/views/audio_messages/SeekBar";
-import { PlaybackState } from "../../../audio/Playback";
 
 interface VoiceBroadcastPlaybackBodyProps {
     playback: VoiceBroadcastPlayback;
@@ -89,7 +88,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
                 { control }
             </div>
             <div className="mx_VoiceBroadcastBody_timerow">
-                <SeekBar playbackPhase={PlaybackState.Playing} playback={playback} />
+                <SeekBar playback={playback} />
                 <Clock seconds={duration} />
             </div>
         </div>
