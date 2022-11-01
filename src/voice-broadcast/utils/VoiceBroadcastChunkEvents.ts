@@ -75,10 +75,10 @@ export class VoiceBroadcastChunkEvents {
     public findByTime(time: number): MatrixEvent | null {
         let lengthSoFar = 0;
 
-        for (let i = 0; i <= this.events.length; i++) {
+        for (let i = 0; i < this.events.length; i++) {
             lengthSoFar += this.calculateChunkLength(this.events[i]);
 
-            if (lengthSoFar > time) {
+            if (lengthSoFar >= time) {
                 return this.events[i];
             }
         }
