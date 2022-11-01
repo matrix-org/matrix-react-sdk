@@ -36,6 +36,7 @@ export enum VoiceBroadcastPlaybackState {
     Paused,
     Playing,
     Stopped,
+    Buffering,
 }
 
 export enum VoiceBroadcastPlaybackEvent {
@@ -46,7 +47,10 @@ export enum VoiceBroadcastPlaybackEvent {
 
 interface EventMap {
     [VoiceBroadcastPlaybackEvent.LengthChanged]: (length: number) => void;
-    [VoiceBroadcastPlaybackEvent.StateChanged]: (state: VoiceBroadcastPlaybackState) => void;
+    [VoiceBroadcastPlaybackEvent.StateChanged]: (
+        state: VoiceBroadcastPlaybackState,
+        playback: VoiceBroadcastPlayback
+    ) => void;
     [VoiceBroadcastPlaybackEvent.InfoStateChanged]: (state: VoiceBroadcastInfoState) => void;
 }
 
@@ -91,7 +95,7 @@ export class VoiceBroadcastPlayback
         this.chunkRelationHelper.emitCurrent();
     }
 
-    private addChunkEvent(event: MatrixEvent): boolean {
+    private addChunkEvent = async (event: MatrixEvent): Promise<boolean> => {
         const eventId = event.getId();
 
         if (!eventId
@@ -102,8 +106,17 @@ export class VoiceBroadcastPlayback
         }
 
         this.chunkEvents.set(eventId, event);
+
+        if (this.getState() !== VoiceBroadcastPlaybackState.Stopped) {
+            await this.enqueueChunk(event);
+        }
+
+        if (this.getState() === VoiceBroadcastPlaybackState.Buffering) {
+            await this.start();
+        }
+
         return true;
-    }
+    };
 
     private addInfoEvent = (event: MatrixEvent): void => {
         if (this.lastInfoEvent && this.lastInfoEvent.getTs() >= event.getTs()) {
@@ -149,20 +162,30 @@ export class VoiceBroadcastPlayback
         playback.on(UPDATE_EVENT, (state) => this.onPlaybackStateChange(playback, state));
     }
 
-    private onPlaybackStateChange(playback: Playback, newState: PlaybackState) {
+    private async onPlaybackStateChange(playback: Playback, newState: PlaybackState) {
         if (newState !== PlaybackState.Stopped) {
             return;
         }
 
-        const next = this.queue[this.queue.indexOf(playback) + 1];
+        await this.playNext(playback);
+    }
+
+    private async playNext(current: Playback): Promise<void> {
+        const next = this.queue[this.queue.indexOf(current) + 1];
 
         if (next) {
+            this.setState(VoiceBroadcastPlaybackState.Playing);
             this.currentlyPlaying = next;
-            next.play();
+            await next.play();
             return;
         }
 
-        this.setState(VoiceBroadcastPlaybackState.Stopped);
+        if (this.getInfoState() === VoiceBroadcastInfoState.Stopped) {
+            this.setState(VoiceBroadcastPlaybackState.Stopped);
+        } else {
+            // No more chunks available, although the broadcast is not finished → enter buffering state.
+            this.setState(VoiceBroadcastPlaybackState.Buffering);
+        }
     }
 
     public async start(): Promise<void> {
@@ -174,14 +197,14 @@ export class VoiceBroadcastPlayback
             ? 0 // start at the beginning for an ended voice broadcast
             : this.queue.length - 1; // start at the current chunk for an ongoing voice broadcast
 
-        if (this.queue.length === 0 || !this.queue[toPlayIndex]) {
-            this.setState(VoiceBroadcastPlaybackState.Stopped);
+        if (this.queue[toPlayIndex]) {
+            this.setState(VoiceBroadcastPlaybackState.Playing);
+            this.currentlyPlaying = this.queue[toPlayIndex];
+            await this.currentlyPlaying.play();
             return;
         }
 
-        this.setState(VoiceBroadcastPlaybackState.Playing);
-        this.currentlyPlaying = this.queue[toPlayIndex];
-        await this.currentlyPlaying.play();
+        this.setState(VoiceBroadcastPlaybackState.Buffering);
     }
 
     public get length(): number {
@@ -197,14 +220,20 @@ export class VoiceBroadcastPlayback
     }
 
     public pause(): void {
-        if (!this.currentlyPlaying) return;
+        // stopped voice broadcasts cannot be paused
+        if (this.getState() === VoiceBroadcastPlaybackState.Stopped) return;
 
         this.setState(VoiceBroadcastPlaybackState.Paused);
+        if (!this.currentlyPlaying) return;
         this.currentlyPlaying.pause();
     }
 
     public resume(): void {
-        if (!this.currentlyPlaying) return;
+        if (!this.currentlyPlaying) {
+            // no playback to resume, start from the beginning
+            this.start();
+            return;
+        }
 
         this.setState(VoiceBroadcastPlaybackState.Playing);
         this.currentlyPlaying.play();
@@ -240,7 +269,7 @@ export class VoiceBroadcastPlayback
         }
 
         this.state = state;
-        this.emit(VoiceBroadcastPlaybackEvent.StateChanged, state);
+        this.emit(VoiceBroadcastPlaybackEvent.StateChanged, state, this);
     }
 
     public getInfoState(): VoiceBroadcastInfoState {

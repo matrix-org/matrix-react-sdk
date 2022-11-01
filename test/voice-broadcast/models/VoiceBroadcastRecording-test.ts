@@ -20,6 +20,7 @@ import {
     EventType,
     MatrixClient,
     MatrixEvent,
+    MatrixEventEvent,
     MsgType,
     RelationType,
     Room,
@@ -81,12 +82,32 @@ describe("VoiceBroadcastRecording", () => {
     const setUpVoiceBroadcastRecording = () => {
         voiceBroadcastRecording = new VoiceBroadcastRecording(infoEvent, client);
         voiceBroadcastRecording.on(VoiceBroadcastRecordingEvent.StateChanged, onStateChanged);
+        jest.spyOn(voiceBroadcastRecording, "destroy");
         jest.spyOn(voiceBroadcastRecording, "removeAllListeners");
     };
 
     const itShouldBeInState = (state: VoiceBroadcastInfoState) => {
         it(`should be in state stopped ${state}`, () => {
             expect(voiceBroadcastRecording.getState()).toBe(state);
+        });
+    };
+
+    const itShouldSendAnInfoEvent = (state: VoiceBroadcastInfoState, lastChunkSequence: number) => {
+        it(`should send a ${state} info event`, () => {
+            expect(client.sendStateEvent).toHaveBeenCalledWith(
+                roomId,
+                VoiceBroadcastInfoEventType,
+                {
+                    device_id: client.getDeviceId(),
+                    state,
+                    last_chunk_sequence: lastChunkSequence,
+                    ["m.relates_to"]: {
+                        rel_type: RelationType.Reference,
+                        event_id: infoEvent.getId(),
+                    },
+                } as VoiceBroadcastInfoEventContent,
+                client.getUserId(),
+            );
         });
     };
 
@@ -182,22 +203,7 @@ describe("VoiceBroadcastRecording", () => {
                 voiceBroadcastRecording.stop();
             });
 
-            it("should send a stopped Voice Broadcast Info event", () => {
-                expect(mocked(client.sendStateEvent)).toHaveBeenCalledWith(
-                    roomId,
-                    VoiceBroadcastInfoEventType,
-                    {
-                        device_id: client.getDeviceId(),
-                        state: VoiceBroadcastInfoState.Stopped,
-                        ["m.relates_to"]: {
-                            rel_type: RelationType.Reference,
-                            event_id: infoEvent.getId(),
-                        },
-                    },
-                    client.getUserId(),
-                );
-            });
-
+            itShouldSendAnInfoEvent(VoiceBroadcastInfoState.Stopped, 1);
             itShouldBeInState(VoiceBroadcastInfoState.Stopped);
 
             it("should emit a stopped state changed event", () => {
@@ -212,6 +218,18 @@ describe("VoiceBroadcastRecording", () => {
 
             it("should start the recorder", () => {
                 expect(voiceBroadcastRecorder.start).toHaveBeenCalled();
+            });
+
+            describe("and the info event is redacted", () => {
+                beforeEach(() => {
+                    infoEvent.emit(MatrixEventEvent.BeforeRedaction, null, null);
+                });
+
+                itShouldBeInState(VoiceBroadcastInfoState.Stopped);
+
+                it("should destroy the recording", () => {
+                    expect(voiceBroadcastRecording.destroy).toHaveBeenCalled();
+                });
             });
 
             describe("and receiving a call action", () => {
@@ -341,6 +359,26 @@ describe("VoiceBroadcastRecording", () => {
                 });
             });
 
+            describe.each([
+                ["pause", async () => voiceBroadcastRecording.pause()],
+                ["toggle", async () => voiceBroadcastRecording.toggle()],
+            ])("and calling %s", (_case: string, action: Function) => {
+                beforeEach(async () => {
+                    await action();
+                });
+
+                itShouldBeInState(VoiceBroadcastInfoState.Paused);
+                itShouldSendAnInfoEvent(VoiceBroadcastInfoState.Paused, 1);
+
+                it("should stop the recorder", () => {
+                    expect(mocked(voiceBroadcastRecorder.stop)).toHaveBeenCalled();
+                });
+
+                it("should emit a paused state changed event", () => {
+                    expect(onStateChanged).toHaveBeenCalledWith(VoiceBroadcastInfoState.Paused);
+                });
+            });
+
             describe("and calling destroy", () => {
                 beforeEach(() => {
                     voiceBroadcastRecording.destroy();
@@ -356,6 +394,32 @@ describe("VoiceBroadcastRecording", () => {
                 });
             });
         });
+
+        describe("and it is in paused state", () => {
+            beforeEach(async () => {
+                await voiceBroadcastRecording.pause();
+            });
+
+            describe.each([
+                ["resume", async () => voiceBroadcastRecording.resume()],
+                ["toggle", async () => voiceBroadcastRecording.toggle()],
+            ])("and calling %s", (_case: string, action: Function) => {
+                beforeEach(async () => {
+                    await action();
+                });
+
+                itShouldBeInState(VoiceBroadcastInfoState.Resumed);
+                itShouldSendAnInfoEvent(VoiceBroadcastInfoState.Resumed, 1);
+
+                it("should start the recorder", () => {
+                    expect(mocked(voiceBroadcastRecorder.start)).toHaveBeenCalled();
+                });
+
+                it(`should emit a ${VoiceBroadcastInfoState.Resumed} state changed event`, () => {
+                    expect(onStateChanged).toHaveBeenCalledWith(VoiceBroadcastInfoState.Resumed);
+                });
+            });
+        });
     });
 
     describe("when created for a Voice Broadcast Info with a Stopped relation", () => {
@@ -363,7 +427,7 @@ describe("VoiceBroadcastRecording", () => {
             infoEvent = mkVoiceBroadcastInfoEvent({
                 device_id: client.getDeviceId(),
                 state: VoiceBroadcastInfoState.Started,
-                chunk_length: 300,
+                chunk_length: 120,
             });
 
             const relationsContainer = {

@@ -29,12 +29,13 @@ import {
     MatrixEvent,
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
+    IAuthData,
 } from 'matrix-js-sdk/src/matrix';
 
 import SessionManagerTab from '../../../../../../src/components/views/settings/tabs/user/SessionManagerTab';
 import MatrixClientContext from '../../../../../../src/contexts/MatrixClientContext';
 import {
-    flushPromisesWithFakeTimers,
+    flushPromises,
     getMockClientWithEventEmitter,
     mkPusher,
     mockClientMethodsUser,
@@ -47,6 +48,7 @@ import {
     ExtendedDevice,
 } from '../../../../../../src/components/views/settings/devices/types';
 import { INACTIVE_DEVICE_AGE_MS } from '../../../../../../src/components/views/settings/devices/filter';
+import SettingsStore from '../../../../../../src/settings/SettingsStore';
 
 mockPlatformPeg();
 
@@ -92,6 +94,7 @@ describe('<SessionManagerTab />', () => {
         getPushers: jest.fn(),
         setPusher: jest.fn(),
         setLocalNotificationSettings: jest.fn(),
+        getVersions: jest.fn().mockResolvedValue({}),
     });
 
     const defaultProps = {};
@@ -135,7 +138,7 @@ describe('<SessionManagerTab />', () => {
 
         fireEvent.click(dropdown as Element);
         // tick to let dropdown render
-        await flushPromisesWithFakeTimers();
+        await flushPromises();
 
         fireEvent.click(container.querySelector(`#device-list-filter__${option}`) as Element);
     });
@@ -148,6 +151,19 @@ describe('<SessionManagerTab />', () => {
     const isSelectAllChecked = (
         getByTestId: ReturnType<typeof render>['getByTestId'],
     ): boolean => !!(getByTestId('device-select-all-checkbox') as HTMLInputElement).checked;
+
+    const confirmSignout = async (
+        getByTestId: ReturnType<typeof render>['getByTestId'],
+        confirm = true,
+    ): Promise<void> => {
+        // modal has sleeps in rendering process :(
+        await sleep(100);
+        const buttonId = confirm ? 'dialog-primary-button' : 'dialog-cancel-button';
+        fireEvent.click(getByTestId(buttonId));
+
+        // flush the confirmation promise
+        await flushPromises();
+    };
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -185,6 +201,10 @@ describe('<SessionManagerTab />', () => {
                     });
                 }
             });
+
+        // sometimes a verification modal is in modal state when these tests run
+        // make sure the coast is clear
+        Modal.closeCurrentModal('');
     });
 
     it('renders spinner while devices load', () => {
@@ -198,7 +218,7 @@ describe('<SessionManagerTab />', () => {
         expect(mockClient.getDevices).toHaveBeenCalled();
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
         expect(container.getElementsByClassName('mx_Spinner').length).toBeFalsy();
     });
@@ -210,7 +230,7 @@ describe('<SessionManagerTab />', () => {
         const { container } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
         expect(container.getElementsByClassName('mx_Spinner').length).toBeFalsy();
     });
@@ -223,7 +243,7 @@ describe('<SessionManagerTab />', () => {
         render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         // called for each device despite error
@@ -243,7 +263,7 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         expect(mockCrossSigningInfo.checkDeviceTrust).toHaveBeenCalledTimes(2);
@@ -267,7 +287,7 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         // twice for each device
@@ -284,7 +304,7 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId, queryByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         toggleDeviceDetails(getByTestId, alicesDevice.device_id);
@@ -297,7 +317,7 @@ describe('<SessionManagerTab />', () => {
         const { queryByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         expect(queryByTestId('other-sessions-section')).toBeFalsy();
@@ -310,7 +330,7 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         expect(getByTestId('other-sessions-section')).toBeTruthy();
@@ -321,13 +341,13 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId, container } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         fireEvent.click(getByTestId('unverified-devices-cta'));
 
         // our session manager waits a tick for rerender
-        await flushPromisesWithFakeTimers();
+        await flushPromises();
 
         // unverified filter is set
         expect(container.querySelector('.mx_FilteredDeviceListHeader')).toMatchSnapshot();
@@ -343,7 +363,7 @@ describe('<SessionManagerTab />', () => {
             mockClient.getDevices.mockResolvedValue({ devices: [] });
             const { getByTestId } = render(getComponent());
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             expect(getByTestId('current-session-menu').getAttribute('aria-disabled')).toBeTruthy();
@@ -354,7 +374,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             expect(getByTestId('current-session-section')).toMatchSnapshot();
@@ -366,7 +386,7 @@ describe('<SessionManagerTab />', () => {
             const modalSpy = jest.spyOn(Modal, 'createDialog');
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             // click verify button from current session section
@@ -384,7 +404,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             expect(getByTestId('current-session-section')).toMatchSnapshot();
@@ -399,7 +419,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             const otherSessionsSection = getByTestId('other-sessions-section');
@@ -415,7 +435,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId, queryByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceDetails(getByTestId, alicesOlderMobileDevice.device_id);
@@ -446,7 +466,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId, queryByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceDetails(getByTestId, alicesOlderMobileDevice.device_id);
@@ -472,7 +492,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
@@ -501,7 +521,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
@@ -531,7 +551,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceDetails(getByTestId, alicesDevice.device_id);
@@ -550,7 +570,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId, getByLabelText } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             fireEvent.click(getByTestId('current-session-menu'));
@@ -565,7 +585,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId, queryByLabelText } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             fireEvent.click(getByTestId('current-session-menu'));
@@ -579,11 +599,12 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId, getByLabelText } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             fireEvent.click(getByTestId('current-session-menu'));
             fireEvent.click(getByLabelText('Sign out all other sessions'));
+            await confirmSignout(getByTestId);
 
             // other devices deleted, excluding current device
             expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith([
@@ -608,7 +629,7 @@ describe('<SessionManagerTab />', () => {
                 const { getByTestId } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
@@ -619,6 +640,8 @@ describe('<SessionManagerTab />', () => {
                 ) as Element;
                 fireEvent.click(signOutButton);
 
+                await confirmSignout(getByTestId);
+
                 // sign out button is disabled with spinner
                 expect((deviceDetails.querySelector(
                     '[data-testid="device-detail-sign-out-cta"]',
@@ -628,10 +651,35 @@ describe('<SessionManagerTab />', () => {
                     [alicesMobileDevice.device_id], undefined,
                 );
 
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
 
                 // devices refreshed
                 expect(mockClient.getDevices).toHaveBeenCalled();
+            });
+
+            it('deletes a device when interactive auth is not required', async () => {
+                const { getByTestId } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromises();
+                });
+
+                toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+                const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
+                const signOutButton = deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element;
+                fireEvent.click(signOutButton);
+
+                await confirmSignout(getByTestId, false);
+
+                // doesnt enter loading state
+                expect((deviceDetails.querySelector(
+                    '[data-testid="device-detail-sign-out-cta"]',
+                ) as Element).getAttribute('aria-disabled')).toEqual(null);
+                // delete not called
+                expect(mockClient.deleteMultipleDevices).not.toHaveBeenCalled();
             });
 
             it('deletes a device when interactive auth is required', async () => {
@@ -649,7 +697,7 @@ describe('<SessionManagerTab />', () => {
                 const { getByTestId, getByLabelText } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 // reset mock count after initial load
@@ -662,8 +710,9 @@ describe('<SessionManagerTab />', () => {
                     '[data-testid="device-detail-sign-out-cta"]',
                 ) as Element;
                 fireEvent.click(signOutButton);
+                await confirmSignout(getByTestId);
 
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
                 // modal rendering has some weird sleeps
                 await sleep(100);
 
@@ -680,7 +729,7 @@ describe('<SessionManagerTab />', () => {
                     fireEvent.submit(getByLabelText('Password'));
                 });
 
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
 
                 // called again with auth
                 expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith([alicesMobileDevice.device_id],
@@ -705,7 +754,7 @@ describe('<SessionManagerTab />', () => {
                 const { getByTestId, getByLabelText } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
@@ -715,13 +764,14 @@ describe('<SessionManagerTab />', () => {
                     '[data-testid="device-detail-sign-out-cta"]',
                 ) as Element;
                 fireEvent.click(signOutButton);
+                await confirmSignout(getByTestId);
 
                 // button is loading
                 expect((deviceDetails.querySelector(
                     '[data-testid="device-detail-sign-out-cta"]',
                 ) as Element).getAttribute('aria-disabled')).toEqual("true");
 
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
 
                 // Modal rendering has some weird sleeps.
                 // Resetting ourselves twice in the main loop gives modal the chance to settle.
@@ -740,7 +790,7 @@ describe('<SessionManagerTab />', () => {
                     fireEvent.click(getByLabelText('Close dialog'));
                 });
 
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
 
                 // not called again
                 expect(mockClient.deleteMultipleDevices).toHaveBeenCalledTimes(1);
@@ -758,18 +808,29 @@ describe('<SessionManagerTab />', () => {
                     alicesDevice, alicesMobileDevice, alicesOlderMobileDevice,
                     alicesInactiveDevice,
                 ] });
-                mockClient.deleteMultipleDevices.mockResolvedValue({});
+                // get a handle for resolving the delete call
+                // because promise flushing after the confirm modal is resolving this too
+                // and we want to test the loading state here
+                let resolveDeleteRequest;
+                mockClient.deleteMultipleDevices.mockImplementation(() => {
+                    const promise = new Promise<IAuthData>(resolve => {
+                        resolveDeleteRequest = resolve;
+                    });
+                    return promise;
+                });
 
                 const { getByTestId } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
                 toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
 
                 fireEvent.click(getByTestId('sign-out-selection-cta'));
+
+                await confirmSignout(getByTestId);
 
                 // buttons disabled in list header
                 expect(getByTestId('sign-out-selection-cta').getAttribute('aria-disabled')).toBeTruthy();
@@ -797,6 +858,8 @@ describe('<SessionManagerTab />', () => {
                     ],
                     undefined,
                 );
+
+                resolveDeleteRequest?.();
             });
         });
     });
@@ -816,15 +879,15 @@ describe('<SessionManagerTab />', () => {
             fireEvent.change(input, { target: { value: newDeviceName } });
             fireEvent.click(getByTestId('device-rename-submit-cta'));
 
-            await flushPromisesWithFakeTimers();
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
+            await flushPromises();
         };
 
         it('renames current session', async () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             const newDeviceName = 'new device name';
@@ -841,7 +904,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             const newDeviceName = 'new device name';
@@ -858,7 +921,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             await updateDeviceName(getByTestId, alicesDevice, alicesDevice.display_name);
@@ -872,7 +935,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             await updateDeviceName(getByTestId, alicesDevice, '');
@@ -888,13 +951,13 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             const newDeviceName = 'new device name';
             await updateDeviceName(getByTestId, alicesDevice, newDeviceName);
 
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
 
             expect(logSpy).toHaveBeenCalledWith("Error setting session display name", error);
 
@@ -914,7 +977,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId, getByText } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
@@ -938,7 +1001,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId, getByText } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
@@ -958,7 +1021,7 @@ describe('<SessionManagerTab />', () => {
             const { getByTestId } = render(getComponent());
 
             await act(async () => {
-                await flushPromisesWithFakeTimers();
+                await flushPromises();
             });
 
             toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
@@ -967,7 +1030,7 @@ describe('<SessionManagerTab />', () => {
             fireEvent.click(getByTestId('unverified-devices-cta'));
 
             // our session manager waits a tick for rerender
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
 
             // unselected
             expect(isDeviceSelected(getByTestId, alicesOlderMobileDevice.device_id)).toBeFalsy();
@@ -978,7 +1041,7 @@ describe('<SessionManagerTab />', () => {
                 const { getByTestId, getByText } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 fireEvent.click(getByTestId('device-select-all-checkbox'));
@@ -996,7 +1059,7 @@ describe('<SessionManagerTab />', () => {
                 const { getByTestId, getByText } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 toggleDeviceSelection(getByTestId, alicesMobileDevice.device_id);
@@ -1016,7 +1079,7 @@ describe('<SessionManagerTab />', () => {
                 const { getByTestId, getByText } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 fireEvent.click(getByTestId('device-select-all-checkbox'));
@@ -1039,7 +1102,7 @@ describe('<SessionManagerTab />', () => {
                 const { getByTestId, container } = render(getComponent());
 
                 await act(async () => {
-                    await flushPromisesWithFakeTimers();
+                    await flushPromises();
                 });
 
                 // filter for inactive sessions
@@ -1052,6 +1115,7 @@ describe('<SessionManagerTab />', () => {
 
                 // sign out of all selected sessions
                 fireEvent.click(getByTestId('sign-out-selection-cta'));
+                await confirmSignout(getByTestId);
 
                 // only called with session from active filter
                 expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
@@ -1068,7 +1132,7 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
@@ -1089,7 +1153,7 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         toggleDeviceDetails(getByTestId, alicesDevice.device_id);
@@ -1113,7 +1177,7 @@ describe('<SessionManagerTab />', () => {
         const { getByTestId } = render(getComponent());
 
         await act(async () => {
-            await flushPromisesWithFakeTimers();
+            await flushPromises();
         });
 
         toggleDeviceDetails(getByTestId, alicesDevice.device_id);
@@ -1140,5 +1204,51 @@ describe('<SessionManagerTab />', () => {
         });
 
         expect(checkbox.getAttribute('aria-checked')).toEqual("false");
+    });
+
+    describe('QR code login', () => {
+        const settingsValueSpy = jest.spyOn(SettingsStore, 'getValue');
+
+        beforeEach(() => {
+            settingsValueSpy.mockClear().mockReturnValue(false);
+            // enable server support for qr login
+            mockClient.getVersions.mockResolvedValue({
+                versions: [],
+                unstable_features: {
+                    'org.matrix.msc3882': true,
+                    'org.matrix.msc3886': true,
+                },
+            });
+        });
+
+        it('does not render qr code login section when disabled', () => {
+            settingsValueSpy.mockReturnValue(false);
+            const { queryByText } = render(getComponent());
+
+            expect(settingsValueSpy).toHaveBeenCalledWith('feature_qr_signin_reciprocate_show');
+
+            expect(queryByText('Sign in with QR code')).toBeFalsy();
+        });
+
+        it('renders qr code login section when enabled', async () => {
+            settingsValueSpy.mockImplementation(settingName => settingName === 'feature_qr_signin_reciprocate_show');
+            const { getByText } = render(getComponent());
+
+            // wait for versions call to settle
+            await flushPromises();
+
+            expect(getByText('Sign in with QR code')).toBeTruthy();
+        });
+
+        it('enters qr code login section when show QR code button clicked', async () => {
+            settingsValueSpy.mockImplementation(settingName => settingName === 'feature_qr_signin_reciprocate_show');
+            const { getByText, getByTestId } = render(getComponent());
+            // wait for versions call to settle
+            await flushPromises();
+
+            fireEvent.click(getByText('Show QR code'));
+
+            expect(getByTestId("login-with-qr")).toBeTruthy();
+        });
     });
 });
