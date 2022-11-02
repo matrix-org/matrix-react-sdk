@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, ReactNode } from 'react';
 import classNames from 'classnames';
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -440,17 +440,17 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
     public render() {
         const hasE2EIcon = Boolean(!this.state.isWysiwygLabEnabled && this.props.e2eStatus);
-        const controls = [
-            hasE2EIcon &&
-                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" />,
-        ];
+        const e2eIcon = hasE2EIcon &&
+                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" />;
 
+        const controls: ReactNode[] = [];
         const menuPosition = this.getMenuPosition();
 
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
+        let composer: ReactNode;
         if (canSendMessages) {
             if (this.state.isWysiwygLabEnabled) {
-                controls.push(
+                composer =
                     <SendWysiwygComposer key="controls_input"
                         disabled={this.state.haveRecording}
                         onChange={this.onWysiwygChange}
@@ -459,10 +459,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         initialContent={this.state.initialComposerContent}
                         e2eStatus={this.props.e2eStatus}
                         menuPosition={menuPosition}
-                    />,
-                );
+                    />;
             } else {
-                controls.push(
+                composer =
                     <SendMessageComposer
                         ref={this.messageComposerInput}
                         key="controls_input"
@@ -474,8 +473,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         onChange={this.onChange}
                         disabled={this.state.haveRecording}
                         toggleStickerPickerOpen={this.toggleStickerPickerOpen}
-                    />,
-                );
+                    />;
             }
 
             controls.push(<VoiceRecordComposerTile
@@ -557,8 +555,10 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         replyToEvent={this.props.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
-                        { controls }
+                        { e2eIcon }
+                        { composer }
                         <div className="mx_MessageComposer_actions">
+                            { controls }
                             { canSendMessages && <MessageComposerButtons
                                 addEmoji={this.addEmoji}
                                 haveRecording={this.state.haveRecording}
