@@ -23,17 +23,7 @@ limitations under the License.
     line-height: $font-18px;
     justify-content: center;
     margin-right: 6px;
-    /* don't grow wider than available space */
-    min-width: 0;
     gap: 8px;
-
-    .mx_E2EIcon {
-        margin-bottom: 5px;
-    }
-
-    .mx_E2EIcon_normal::after {
-        background-color: $quaternary-content;
-    }
 
     .mx_WysiwygComposer_Editor {
         border: 1px solid;
@@ -41,10 +31,22 @@ limitations under the License.
         padding: 8px 14px 8px;
         display: flex;
         align-items: flex-end;
-        gap: 14px;
+        gap: 10px;
+
+        .mx_E2EIcon {
+            margin: 0 0 5px 0;
+        }
+
+        .mx_E2EIcon_normal::after {
+            background-color: $quaternary-content;
+        }
 
         &[data-is-expanded="true"] {
             border-radius: 14px;
+
+            .mx_E2EIcon {
+                margin: 0 0 3px 0;
+            }
         }
 
         &[data-is-expanded="false"] {
@@ -57,6 +59,8 @@ limitations under the License.
             flex-direction: column;
             min-height: 22px;
             margin-bottom: 2px;
+            /* don't grow wider than available space */
+            min-width: 0;
 
             .mx_WysiwygComposer_Editor_content {
                 /* this will center the contenteditable */
