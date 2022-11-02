@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import classNames from 'classnames';
 import React, { MutableRefObject, ReactNode } from 'react';
 
 import { useComposerFunctions } from '../hooks/useComposerFunctions';
+import { useIsFocused } from '../hooks/useIsFocused';
 import { usePlainTextInitialization } from '../hooks/usePlainTextInitialization';
 import { usePlainTextListeners } from '../hooks/usePlainTextListeners';
 import { useSetCursorPosition } from '../hooks/useSetCursorPosition';
@@ -52,10 +54,13 @@ export function PlainTextComposer({
     const composerFunctions = useComposerFunctions(ref);
     usePlainTextInitialization(initialContent, ref);
     useSetCursorPosition(disabled, ref);
+    const { isFocused, onFocus } = useIsFocused();
 
     return <div
         data-testid="PlainTextComposer"
-        className={className}
+        className={classNames(className, { [`${className}-focused`]: isFocused })}
+        onFocus={onFocus}
+        onBlur={onFocus}
         onInput={onInput}
         onPaste={onPaste}
         onKeyDown={onKeyDown}

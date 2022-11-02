@@ -16,11 +16,13 @@ limitations under the License.
 
 import React, { memo, MutableRefObject, ReactNode, useEffect } from 'react';
 import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
+import classNames from 'classnames';
 
 import { FormattingButtons } from './FormattingButtons';
 import { Editor } from './Editor';
 import { useInputEventProcessor } from '../hooks/useInputEventProcessor';
 import { useSetCursorPosition } from '../hooks/useSetCursorPosition';
+import { useIsFocused } from '../hooks/useIsFocused';
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -62,8 +64,10 @@ export const WysiwygComposer = memo(function WysiwygComposer(
     const isReady = isWysiwygReady && !disabled;
     useSetCursorPosition(!isReady, ref);
 
+    const { isFocused, onFocus } = useIsFocused();
+
     return (
-        <div data-testid="WysiwygComposer" className={className}>
+        <div data-testid="WysiwygComposer" className={classNames(className, { [`${className}-focused`]: isFocused })} onFocus={onFocus} onBlur={onFocus}>
             <FormattingButtons composer={wysiwyg} formattingStates={formattingStates} />
             <Editor ref={ref} disabled={!isReady} leftComponent={leftComponent} rightComponent={rightComponent} />
             { children?.(ref, wysiwyg) }
