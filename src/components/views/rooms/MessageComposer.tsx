@@ -31,7 +31,7 @@ import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink, RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import E2EIcon from './E2EIcon';
 import SettingsStore from "../../../settings/SettingsStore";
-import { aboveLeftOf, AboveLeftOf } from "../../structures/ContextMenu";
+import { aboveLeftOf } from "../../structures/ContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
@@ -428,7 +428,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             // Instead of doing a querySelector or pass a ref to find the compute the height formatting buttons
             // We are using an arbitrary value, the formatting buttons height doesn't change during the lifecycle of the component
             // It's easier to just use a constant here instead of an over-engineering way to find the height
-            const heightToRemove = hasFormattingButtons ? 45 : 0;
+            const heightToRemove = hasFormattingButtons ? 36 : 0;
             const fixedRect = new DOMRect(
                 contentRect.x,
                 contentRect.y + heightToRemove,
