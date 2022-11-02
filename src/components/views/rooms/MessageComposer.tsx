@@ -558,43 +558,45 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        { canSendMessages && <MessageComposerButtons
-                            addEmoji={this.addEmoji}
-                            haveRecording={this.state.haveRecording}
-                            isMenuOpen={this.state.isMenuOpen}
-                            isStickerPickerOpen={this.state.isStickerPickerOpen}
-                            menuPosition={menuPosition}
-                            relation={this.props.relation}
-                            onRecordStartEndClick={() => {
-                                this.voiceRecordingButton.current?.onRecordStartEndClick();
-                                if (this.context.narrow) {
+                        <div className="mx_MessageComposer_actions">
+                            { canSendMessages && <MessageComposerButtons
+                                addEmoji={this.addEmoji}
+                                haveRecording={this.state.haveRecording}
+                                isMenuOpen={this.state.isMenuOpen}
+                                isStickerPickerOpen={this.state.isStickerPickerOpen}
+                                menuPosition={menuPosition}
+                                relation={this.props.relation}
+                                onRecordStartEndClick={() => {
+                                    this.voiceRecordingButton.current?.onRecordStartEndClick();
+                                    if (this.context.narrow) {
+                                        this.toggleButtonMenu();
+                                    }
+                                }}
+                                setStickerPickerOpen={this.setStickerPickerOpen}
+                                showLocationButton={!window.electron}
+                                showPollsButton={this.state.showPollsButton}
+                                showStickersButton={this.showStickersButton}
+                                isRichTextEnabled={this.state.isRichTextEnabled}
+                                onComposerModeClick={this.onRichTextToggle}
+                                toggleButtonMenu={this.toggleButtonMenu}
+                                showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
+                                onStartVoiceBroadcastClick={() => {
+                                    startNewVoiceBroadcastRecording(
+                                        this.props.room,
+                                        MatrixClientPeg.get(),
+                                        VoiceBroadcastRecordingsStore.instance(),
+                                    );
                                     this.toggleButtonMenu();
-                                }
-                            }}
-                            setStickerPickerOpen={this.setStickerPickerOpen}
-                            showLocationButton={!window.electron}
-                            showPollsButton={this.state.showPollsButton}
-                            showStickersButton={this.showStickersButton}
-                            isRichTextEnabled={this.state.isRichTextEnabled}
-                            onComposerModeClick={this.onRichTextToggle}
-                            toggleButtonMenu={this.toggleButtonMenu}
-                            showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
-                            onStartVoiceBroadcastClick={() => {
-                                startNewVoiceBroadcastRecording(
-                                    this.props.room,
-                                    MatrixClientPeg.get(),
-                                    VoiceBroadcastRecordingsStore.instance(),
-                                );
-                                this.toggleButtonMenu();
-                            }}
-                        /> }
-                        { showSendButton && (
-                            <SendButton
-                                key="controls_send"
-                                onClick={this.sendMessage}
-                                title={this.state.haveRecording ? _t("Send voice message") : undefined}
-                            />
-                        ) }
+                                }}
+                            /> }
+                            { showSendButton && (
+                                <SendButton
+                                    key="controls_send"
+                                    onClick={this.sendMessage}
+                                    title={this.state.haveRecording ? _t("Send voice message") : undefined}
+                                />
+                            ) }
+                        </div>
                     </div>
                 </div>
             </div>

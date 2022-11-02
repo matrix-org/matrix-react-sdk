@@ -61,6 +61,12 @@ limitations under the License.
     width: 100%;
 }
 
+.mx_MessageComposer_actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .mx_MessageComposer .mx_MessageComposer_avatar {
     position: absolute;
     left: 26px;
@@ -178,7 +184,6 @@ limitations under the License.
 
 .mx_MessageComposer_button {
     @mixin composerButton;
-    margin-right: 6px;
 
     &:last-child {
         margin-right: auto;
@@ -210,12 +215,8 @@ limitations under the License.
         align-items: flex-end;
     }
 
-    .mx_MessageComposer_button {
-        margin-bottom: 9px;
-    }
-
-    .mx_MessageComposer_sendMessage {
-        margin-bottom: 7px;
+    .mx_MessageComposer_actions {
+        height: 44px;
     }
 }
 
