@@ -39,7 +39,7 @@ describe('<IncomingLegacyCallToast />', () => {
     const mockRoom = new Room('!room:server.org', mockClient, userId);
     mockClient.deviceId = deviceId;
 
-    const call = new MatrixCall({ client: mockClient, roomId: room.roomId });
+    const call = new MatrixCall({ client: mockClient, roomId: mockRoom.roomId });
     const defaultProps = {
         call,
     };
