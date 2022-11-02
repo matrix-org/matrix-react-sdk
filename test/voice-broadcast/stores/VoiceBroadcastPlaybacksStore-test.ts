@@ -45,6 +45,9 @@ describe("VoiceBroadcastPlaybacksStore", () => {
 
     beforeEach(() => {
         client = stubClient();
+        mocked(client.relations).mockClear();
+        mocked(client.relations).mockResolvedValue({ events: [] });
+
         room = mkStubRoom(roomId, "test room", client);
         mocked(client.getRoom).mockImplementation((roomId: string) => {
             if (roomId === room.roomId) {

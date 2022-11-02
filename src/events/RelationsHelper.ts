@@ -87,6 +87,32 @@ export class RelationsHelper
         this.relations?.getRelations()?.forEach(e => this.emit(RelationsHelperEvent.Add, e));
     }
 
+    public getCurrent(): MatrixEvent[] {
+        return this.relations?.getRelations() || [];
+    }
+
+    /**
+     * Fetches all related events from the server and emits them.
+     */
+    public async emitFetchCurrent(): Promise<void> {
+        let nextBatch: string | null = null;
+
+        do {
+            const response = await this.client.relations(
+                this.event.getRoomId(),
+                this.event.getId(),
+                this.relationType,
+                this.relationEventType,
+                {
+                    from: nextBatch,
+                    limit: 120, // 120 = 240 * 60 s / 120 s (default chunk length)
+                },
+            );
+            nextBatch = response?.nextBatch;
+            response?.events.forEach(e => this.emit(RelationsHelperEvent.Add, e));
+        } while (nextBatch);
+    }
+
     public destroy(): void {
         this.removeAllListeners();
         this.event.off(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);

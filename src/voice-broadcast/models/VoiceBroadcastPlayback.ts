@@ -32,7 +32,6 @@ import { MediaEventHelper } from "../../utils/MediaEventHelper";
 import { IDestroyable } from "../../utils/IDestroyable";
 import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "..";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
-import { getReferenceRelationsForEvent } from "../../events";
 import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 
 export enum VoiceBroadcastPlaybackState {
@@ -96,8 +95,20 @@ export class VoiceBroadcastPlayback
             VoiceBroadcastInfoEventType,
             this.client,
         );
-        this.infoRelationHelper.on(RelationsHelperEvent.Add, this.addInfoEvent);
-        this.infoRelationHelper.emitCurrent();
+        this.infoRelationHelper.getCurrent().forEach(this.addInfoEvent);
+
+        if (this.infoState !== VoiceBroadcastInfoState.Stopped) {
+            // Only required if not stopped. Stopped is the final state.
+            this.infoRelationHelper.on(RelationsHelperEvent.Add, this.addInfoEvent);
+
+            try {
+                this.infoRelationHelper.emitFetchCurrent();
+            } catch (err) {
+                logger.warn("error fetching server side relation for voice broadcast info", err);
+                // fall back to local events
+                this.infoRelationHelper.emitCurrent();
+            }
+        }
 
         this.chunkRelationHelper = new RelationsHelper(
             this.infoEvent,
@@ -106,7 +117,15 @@ export class VoiceBroadcastPlayback
             this.client,
         );
         this.chunkRelationHelper.on(RelationsHelperEvent.Add, this.addChunkEvent);
-        this.chunkRelationHelper.emitCurrent();
+
+        try {
+            // TODO Michael W: only fetch events if needed, blocked by PSF-1708
+            this.chunkRelationHelper.emitFetchCurrent();
+        } catch (err) {
+            logger.warn("error fetching server side relation for voice broadcast chunks", err);
+            // fall back to local events
+            this.chunkRelationHelper.emitCurrent();
+        }
     }
 
     private addChunkEvent = async (event: MatrixEvent): Promise<boolean> => {
@@ -150,20 +169,16 @@ export class VoiceBroadcastPlayback
         this.setInfoState(state);
     };
 
-    private async loadChunks(): Promise<void> {
-        const relations = getReferenceRelationsForEvent(this.infoEvent, EventType.RoomMessage, this.client);
-        const chunkEvents = relations?.getRelations();
+    private async enqueueChunks(): Promise<void> {
+        const promises = [];
 
-        if (!chunkEvents) {
-            return;
-        }
+        this.chunkEvents.getEvents().forEach((event: MatrixEvent) => {
+            if (!this.playbacks.has(event.getId())) {
+                promises.push(this.enqueueChunk(event));
+            }
+        });
 
-        this.chunkEvents.addEvents(chunkEvents);
-        this.setDuration(this.chunkEvents.getLength());
-
-        for (const chunkEvent of chunkEvents) {
-            await this.enqueueChunk(chunkEvent);
-        }
+        await Promise.all(promises);
     }
 
     private async enqueueChunk(chunkEvent: MatrixEvent) {
@@ -317,10 +332,7 @@ export class VoiceBroadcastPlayback
     }
 
     public async start(): Promise<void> {
-        if (this.playbacks.size === 0) {
-            await this.loadChunks();
-        }
-
+        await this.enqueueChunks();
         const chunkEvents = this.chunkEvents.getEvents();
 
         const toPlay = this.getInfoState() === VoiceBroadcastInfoState.Stopped

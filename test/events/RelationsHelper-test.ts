@@ -28,13 +28,14 @@ import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RelationsContainer } from "matrix-js-sdk/src/models/relations-container";
 
 import { RelationsHelper, RelationsHelperEvent } from "../../src/events/RelationsHelper";
-import { mkEvent, mkStubRoom, stubClient } from "../test-utils";
+import { mkEvent, mkRelationsContainer, mkStubRoom, stubClient } from "../test-utils";
 
 describe("RelationsHelper", () => {
     const roomId = "!room:example.com";
     let event: MatrixEvent;
     let relatedEvent1: MatrixEvent;
     let relatedEvent2: MatrixEvent;
+    let relatedEvent3: MatrixEvent;
     let room: Room;
     let client: MatrixClient;
     let relationsHelper: RelationsHelper;
@@ -46,6 +47,7 @@ describe("RelationsHelper", () => {
 
     beforeEach(() => {
         client = stubClient();
+        mocked(client.relations).mockClear();
         room = mkStubRoom(roomId, "test room", client);
         mocked(client.getRoom).mockImplementation((getRoomId: string) => {
             if (getRoomId === roomId) {
@@ -64,27 +66,37 @@ describe("RelationsHelper", () => {
             type: EventType.RoomMessage,
             room: roomId,
             user: client.getUserId(),
-            content: {},
+            content: { relatedEvent: 1 },
         });
         relatedEvent2 = mkEvent({
             event: true,
             type: EventType.RoomMessage,
             room: roomId,
             user: client.getUserId(),
-            content: {},
+            content: { relatedEvent: 2 },
+        });
+        relatedEvent3 = mkEvent({
+            event: true,
+            type: EventType.RoomMessage,
+            room: roomId,
+            user: client.getUserId(),
+            content: { relatedEvent: 3 },
         });
         onAdd = jest.fn();
+        relationsContainer = mkRelationsContainer();
         // TODO Michael W: create test utils, remove casts
-        relationsContainer = {
-            getChildEventsForEvent: jest.fn(),
-        } as unknown as RelationsContainer;
         relations = {
             getRelations: jest.fn(),
             on: jest.fn().mockImplementation((type, l) => relationsOnAdd = l),
+            off: jest.fn(),
         } as unknown as Relations;
         timelineSet = {
             relations: relationsContainer,
         } as unknown as EventTimelineSet;
+    });
+
+    afterEach(() => {
+        relationsHelper.destroy();
     });
 
     describe("when there is an event without relations", () => {
@@ -114,6 +126,34 @@ describe("RelationsHelper", () => {
 
             it("should emit the new event", () => {
                 expect(onAdd).toHaveBeenCalledWith(relatedEvent2);
+            });
+        });
+    });
+
+    describe("when there is an event with two pages server side relations", () => {
+        beforeEach(() => {
+            mocked(client.relations)
+                .mockResolvedValueOnce({
+                    events: [relatedEvent1, relatedEvent2],
+                    nextBatch: "next",
+                })
+                .mockResolvedValueOnce({
+                    events: [relatedEvent3],
+                    nextBatch: null,
+                });
+            relationsHelper = new RelationsHelper(event, RelationType.Reference, EventType.RoomMessage, client);
+            relationsHelper.on(RelationsHelperEvent.Add, onAdd);
+        });
+
+        describe("emitFetchCurrent", () => {
+            beforeEach(async () => {
+                await relationsHelper.emitFetchCurrent();
+            });
+
+            it("should emit the server side events", () => {
+                expect(onAdd).toHaveBeenCalledWith(relatedEvent1);
+                expect(onAdd).toHaveBeenCalledWith(relatedEvent2);
+                expect(onAdd).toHaveBeenCalledWith(relatedEvent3);
             });
         });
     });
