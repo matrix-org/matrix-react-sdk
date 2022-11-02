@@ -15,10 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
-import { logger } from "matrix-js-sdk/src/logger";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -26,9 +25,7 @@ import BaseAvatar from "./BaseAvatar";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { CardContext } from '../right_panel/context';
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import SettingsStore from "../../../settings/SettingsStore";
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import { useRoomMemberProfile } from '../../../hooks/room/useRoomMemberProfile';
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember | null;
@@ -54,60 +51,33 @@ export default function MemberAvatar({
     viewUserOnClick,
     ...props
 }: IProps) {
-    const cli = useContext(MatrixClientContext);
     const card = useContext(CardContext);
-    const roomContext = useContext(RoomContext);
 
-    const [name, setName] = useState<string | undefined>();
-    const [title, setTitle] = useState<string | undefined>();
-    const [imageUrl, setImageUrl] = useState<string | undefined>();
-    const [userId, setUserId] = useState<string | undefined>();
+    const member = useRoomMemberProfile({
+        userId: props.member?.userId,
+        member: props.member,
+        forceHistorical: props.forceHistorical,
+    });
 
-    useEffect(() => {
-        let member = props.member;
-
-        const useOnlyCurrentProfiles = (member && !props.forceHistorical
-            && SettingsStore.getValue("useOnlyCurrentProfiles"))
-            || roomContext?.timelineRenderingType === TimelineRenderingType.ThreadsList
-            || roomContext?.timelineRenderingType === TimelineRenderingType.Thread;
-
-        if (useOnlyCurrentProfiles) {
-            const room = cli.getRoom(member.roomId);
-            if (room) {
-                member = room.getMember(member.userId);
-            }
-        }
-        if (member?.name) {
-            const userTitle = UserIdentifierCustomisations.getDisplayUserIdentifier(
-                member.userId, { roomId: member?.roomId },
+    const name = member?.name ?? props.fallbackUserId;
+    let title: string = props.title;
+    let imageUrl: string | undefined;
+    if (member?.name) {
+        if (member.getMxcAvatarUrl()) {
+            imageUrl = mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
+                width,
+                height,
+                resizeMethod,
             );
-            if (member.getMxcAvatarUrl()) {
-                setImageUrl(mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
-                    width,
-                    height,
-                    resizeMethod,
-                ));
-            }
-            setName(member.name);
-            setTitle(props.title || userTitle);
-        } else if (props.fallbackUserId) {
-            setName(props.fallbackUserId);
-            setTitle(props.fallbackUserId);
-        } else {
-            logger.error("MemberAvatar called somehow with null member or fallbackUserId");
         }
 
-        setUserId(member?.userId ?? props.fallbackUserId);
-    }, [cli,
-        height,
-        props.fallbackUserId,
-        props.forceHistorical,
-        props.member,
-        props.title,
-        resizeMethod,
-        roomContext?.timelineRenderingType,
-        width,
-    ]);
+        if (!title) {
+            title = UserIdentifierCustomisations.getDisplayUserIdentifier(
+                member.userId, { roomId: member?.roomId },
+            ) ?? props.fallbackUserId;
+        }
+    }
+    const userId = member?.userId ?? props.fallbackUserId;
 
     return (
         <BaseAvatar
