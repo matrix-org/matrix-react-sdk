@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { forwardRef, memo, ReactNode, RefObject } from 'react';
 
-import { useIsExpanded } from '../hooks/useIsExpended';
+import { useIsExpanded } from '../hooks/useIsExpanded';
 
 const HEIGHT_BREAKING_POINT = 20;
 
