@@ -53,7 +53,7 @@ export function SendWysiwygComposer(
 
     return <Composer
         className="mx_SendWysiwygComposer"
-        leftComponent={e2eStatus && <E2EIcon key="e2eIcon"status={e2eStatus} />}
+        leftComponent={e2eStatus && <E2EIcon status={e2eStatus} />}
         // TODO add emoji support
         rightComponent={<EmojiButton menuPosition={menuPosition} addEmoji={() => void 0} />}
         {...props}
