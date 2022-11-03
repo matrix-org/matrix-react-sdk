@@ -364,7 +364,7 @@ interface WysiwygToggleButtonProps {
 }
 
 function ComposerModeButton({ isRichTextEnabled, onClick }: WysiwygToggleButtonProps) {
-    const title = isRichTextEnabled ? _t("Show plain text") : _t("Show formatting");
+    const title = isRichTextEnabled ? _t("Hide formatting") : _t("Show formatting");
 
     return <CollapsibleButton
         className="mx_MessageComposer_button"

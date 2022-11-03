@@ -32,6 +32,14 @@ declare global {
     }
 }
 
+const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
+Cypress.on('uncaught:exception', (err) => {
+    /* returning false here prevents Cypress from failing the test */
+    if (resizeObserverLoopErrRe.test(err.message)) {
+        return false;
+    }
+});
+
 Cypress.Commands.add("getComposer", (isRightPanel?: boolean): Chainable<JQuery> => {
     const panelClass = isRightPanel ? '.mx_RightPanel' : '.mx_RoomView_body';
     return cy.get(`${panelClass} .mx_MessageComposer`);
