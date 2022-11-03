@@ -706,9 +706,6 @@ const onMessage = function(event: MessageEvent<any>): void {
 
     if (!roomId) {
         // These APIs don't require roomId
-        // Get and set user widgets (not associated with a specific room)
-        // If roomId is specified, it must be validated, so room-based widgets agreed
-        // handled further down.
         if (event.data.action === Action.GetWidgets) {
             getWidgets(event, null);
             return;
