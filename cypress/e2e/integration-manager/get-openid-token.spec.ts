@@ -126,7 +126,7 @@ describe("Integration Manager: Get OpenID Token", () => {
         cy.stopWebServers();
     });
 
-    it("should obtain an openID token", () => {
+    it("should successfully obtain an openID token", () => {
         cy.all([
             cy.get<{}>("@integrationManager"),
         ]).then(() => {
