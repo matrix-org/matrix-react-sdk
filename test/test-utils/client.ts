@@ -72,6 +72,7 @@ export const getMockClientWithEventEmitter = (
 
     jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mock);
 
+    // @ts-ignore simplified test stub
     mock.canSupport = new Map();
     Object.keys(Feature).forEach(feature => {
         mock.canSupport.set(feature as Feature, ServerSupport.Stable);
