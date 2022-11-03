@@ -22,7 +22,7 @@ limitations under the License.
     }
 }
 
-@define-mixin composerButton {
+@define-mixin composerButton $border-radius,$hover-color {
     --size: 26px;
     position: relative;
     cursor: pointer;
@@ -30,7 +30,7 @@ limitations under the License.
     line-height: var(--size);
     width: auto;
     padding-left: var(--size);
-    border-radius: 50%;
+    border-radius: $border-radius;
 
     &::before {
         content: '';
@@ -53,6 +53,16 @@ limitations under the License.
         z-index: 0;
         width: var(--size);
         height: var(--size);
-        border-radius: 50%;
+        border-radius: $border-radius;
+    }
+
+    &:hover {
+        &::after {
+            background: rgba($hover-color, 0.1);
+        }
+
+        &::before {
+            background-color: $hover-color;
+        }
     }
 }
