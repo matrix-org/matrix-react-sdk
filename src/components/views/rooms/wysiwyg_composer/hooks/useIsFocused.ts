@@ -14,26 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { FocusEvent, useCallback, useEffect, useState } from "react";
+import { FocusEvent, useCallback, useRef, useState } from "react";
 
 export function useIsFocused() {
     const [isFocused, setIsFocused] = useState(false);
-
-    const [timeoutID, setTimeoutID] = useState<number>();
-    useEffect(() => {
-        return () => clearTimeout(timeoutID);
-    }, [timeoutID]);
+    const timeoutIDRef = useRef<number>();
 
     const onFocus = useCallback((event: FocusEvent<HTMLElement>) => {
+        clearTimeout(timeoutIDRef.current);
         if (event.type === 'focus') {
             setIsFocused(true);
         } else {
+            console.log('blur');
             // To avoid a blink when we switch mode between plain text and rich text mode
             // We delay the unfocused action
-            setTimeoutID(setTimeout(() => setIsFocused(false), 1000));
+            timeoutIDRef.current = setTimeout(() => setIsFocused(false), 100);
         }
-        setIsFocused(event.type === 'focus');
-    }, [setIsFocused]);
+    }, [setIsFocused, timeoutIDRef]);
 
     return { isFocused, onFocus };
 }
