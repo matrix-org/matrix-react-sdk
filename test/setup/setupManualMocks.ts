@@ -31,6 +31,29 @@ class ResizeObserver {
 }
 window.ResizeObserver = ResizeObserver;
 
+// Stub DOMRect
+class DOMRect {
+    x = 0;
+    y = 0;
+    top = 0;
+    bottom = 0;
+    left = 0;
+    right = 0;
+    height = 0;
+    width = 0;
+
+    static fromRect() {
+        return new DOMRect();
+    }
+    toJSON() {}
+}
+
+window.DOMRect = DOMRect;
+
+// Work around missing ClipboardEvent type
+class MyClipboardEvent {}
+window.ClipboardEvent = MyClipboardEvent as any;
+
 // matchMedia is not included in jsdom
 const mockMatchMedia = jest.fn().mockImplementation(query => ({
     matches: false,

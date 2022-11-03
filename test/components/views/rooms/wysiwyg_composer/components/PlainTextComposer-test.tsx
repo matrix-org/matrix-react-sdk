@@ -21,10 +21,6 @@ import userEvent from "@testing-library/user-event";
 import { PlainTextComposer }
     from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/PlainTextComposer";
 
-// Work around missing ClipboardEvent type
-class MyClipboardEvent {}
-window.ClipboardEvent = MyClipboardEvent as any;
-
 describe('PlainTextComposer', () => {
     const customRender = (
         onChange = (_content: string) => void 0,
@@ -90,5 +86,41 @@ describe('PlainTextComposer', () => {
 
         // Then
         expect(screen.getByRole('textbox').innerHTML).toBeFalsy();
+    });
+
+    it('Should have data-is-expanded when it has two lines', async () => {
+        let resizeHandler;
+        let editor;
+        const resizeObserver = ResizeObserver;
+        global.ResizeObserver = jest.fn((handler) => {
+            resizeHandler = handler;
+            return {
+                observe: (element) => {
+                    editor = element;
+                },
+                unobserve: jest.fn(),
+                disconnect: jest.fn(),
+            };
+        },
+        );
+
+        //When
+        render(
+            <PlainTextComposer onChange={jest.fn()} onSend={jest.fn()} />,
+        );
+
+        console.log(screen.getByTestId('WysiwygComposerEditor'), screen.getByTestId('WysiwygComposerEditor').dataset);
+
+        // Then
+        expect(screen.getByTestId('WysiwygComposerEditor').attributes['data-is-expanded'].value).toBe('false');
+        expect(editor).toBe(screen.getByRole('textbox'));
+
+        // When
+        resizeHandler([{ contentBoxSize: [{ blockSize: 100 }] }]);
+
+        // Then
+        expect(screen.getByTestId('WysiwygComposerEditor').attributes['data-is-expanded'].value).toBe('true');
+
+        global.ResizeObserver = resizeObserver;
     });
 });

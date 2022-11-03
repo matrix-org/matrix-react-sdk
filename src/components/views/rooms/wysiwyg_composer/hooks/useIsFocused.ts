@@ -25,7 +25,6 @@ export function useIsFocused() {
         if (event.type === 'focus') {
             setIsFocused(true);
         } else {
-            console.log('blur');
             // To avoid a blink when we switch mode between plain text and rich text mode
             // We delay the unfocused action
             timeoutIDRef.current = setTimeout(() => setIsFocused(false), 100);

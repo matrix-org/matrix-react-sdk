@@ -32,7 +32,11 @@ export const Editor = memo(
         ) {
             const isExpanded = useIsExpanded(ref, HEIGHT_BREAKING_POINT);
 
-            return <div className="mx_WysiwygComposer_Editor" data-is-expanded={isExpanded}>
+            return <div
+                data-testid="WysiwygComposerEditor"
+                className="mx_WysiwygComposer_Editor"
+                data-is-expanded={isExpanded}
+            >
                 { leftComponent }
                 <div className="mx_WysiwygComposer_Editor_container">
                     <div className="mx_WysiwygComposer_Editor_content"
