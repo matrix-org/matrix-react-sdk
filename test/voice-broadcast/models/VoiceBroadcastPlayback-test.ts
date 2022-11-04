@@ -41,6 +41,7 @@ jest.mock("../../../src/utils/MediaEventHelper", () => ({
 
 describe("VoiceBroadcastPlayback", () => {
     const userId = "@user:example.com";
+    let deviceId: string;
     const roomId = "!room:example.com";
     let client: MatrixClient;
     let infoEvent: MatrixEvent;
@@ -95,7 +96,7 @@ describe("VoiceBroadcastPlayback", () => {
     const mkChunkHelper = (data: ArrayBuffer): MediaEventHelper => {
         return {
             sourceBlob: {
-                cachedValue: null,
+                cachedValue: new Blob(),
                 done: false,
                 value: {
                     // @ts-ignore
@@ -110,7 +111,7 @@ describe("VoiceBroadcastPlayback", () => {
             roomId,
             state,
             userId,
-            client.getDeviceId(),
+            deviceId,
         );
     };
 
@@ -130,6 +131,7 @@ describe("VoiceBroadcastPlayback", () => {
 
     beforeAll(() => {
         client = stubClient();
+        deviceId = client.getDeviceId() || "";
 
         chunk1Event = mkVoiceBroadcastChunkEvent(userId, roomId, chunk1Length, 1);
         chunk2Event = mkVoiceBroadcastChunkEvent(userId, roomId, chunk2Length, 2);
@@ -148,6 +150,8 @@ describe("VoiceBroadcastPlayback", () => {
                 if (buffer === chunk1Data) return chunk1Playback;
                 if (buffer === chunk2Data) return chunk2Playback;
                 if (buffer === chunk3Data) return chunk3Playback;
+
+                throw new Error("unexpected buffer");
             },
         );
 

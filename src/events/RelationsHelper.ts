@@ -38,6 +38,8 @@ export class RelationsHelper
     extends TypedEventEmitter<RelationsHelperEvent, EventMap>
     implements IDestroyable {
     private relations?: Relations;
+    private eventId: string;
+    private roomId: string;
 
     public constructor(
         private event: MatrixEvent,
@@ -46,6 +48,21 @@ export class RelationsHelper
         private client: MatrixClient,
     ) {
         super();
+
+        const eventId = event.getId();
+
+        if (!eventId) {
+            throw new Error("unable to create RelationsHelper: missing event ID");
+        }
+
+        const roomId = event.getRoomId();
+
+        if (!roomId) {
+            throw new Error("unable to create RelationsHelper: missing room ID");
+        }
+
+        this.eventId = eventId;
+        this.roomId = roomId;
         this.setUpRelations();
     }
 
@@ -73,7 +90,7 @@ export class RelationsHelper
     private setRelations(): void {
         const room = this.client.getRoom(this.event.getRoomId());
         this.relations = room?.getUnfilteredTimelineSet()?.relations?.getChildEventsForEvent(
-            this.event.getId(),
+            this.eventId,
             this.relationType,
             this.relationEventType,
         );
@@ -94,18 +111,18 @@ export class RelationsHelper
     /**
      * Fetches all related events from the server and emits them.
      */
-    public async emitFetchCurrent(): Promise<void> {
-        let nextBatch: string | null = null;
+    public async emitFetchCurrent(limit = 50): Promise<void> {
+        let nextBatch: string | undefined = undefined;
 
         do {
             const response = await this.client.relations(
-                this.event.getRoomId(),
-                this.event.getId(),
+                this.roomId,
+                this.eventId,
                 this.relationType,
                 this.relationEventType,
                 {
                     from: nextBatch,
-                    limit: 120, // 120 = 240 * 60 s / 120 s (default chunk length)
+                    limit,
                 },
             );
             nextBatch = response?.nextBatch;

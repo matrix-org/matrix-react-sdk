@@ -120,7 +120,8 @@ export class VoiceBroadcastPlayback
 
         try {
             // TODO Michael W: only fetch events if needed, blocked by PSF-1708
-            this.chunkRelationHelper.emitFetchCurrent();
+            // 120 = 240 * 60 s / 120 s (default chunk length)
+            this.chunkRelationHelper.emitFetchCurrent(120);
         } catch (err) {
             logger.warn("error fetching server side relation for voice broadcast chunks", err);
             // fall back to local events
@@ -170,10 +171,10 @@ export class VoiceBroadcastPlayback
     };
 
     private async enqueueChunks(): Promise<void> {
-        const promises = [];
+        const promises: Promise<void>[] = [];
 
         this.chunkEvents.getEvents().forEach((event: MatrixEvent) => {
-            if (!this.playbacks.has(event.getId())) {
+            if (!this.playbacks.has(event.getId() || "")) {
                 promises.push(this.enqueueChunk(event));
             }
         });
@@ -181,7 +182,7 @@ export class VoiceBroadcastPlayback
         await Promise.all(promises);
     }
 
-    private async enqueueChunk(chunkEvent: MatrixEvent) {
+    private async enqueueChunk(chunkEvent: MatrixEvent): Promise<void> {
         const eventId = chunkEvent.getId();
 
         if (!eventId) {

@@ -32,6 +32,7 @@ import { mkEvent, mkRelationsContainer, mkStubRoom, stubClient } from "../test-u
 
 describe("RelationsHelper", () => {
     const roomId = "!room:example.com";
+    let userId: string;
     let event: MatrixEvent;
     let relatedEvent1: MatrixEvent;
     let relatedEvent2: MatrixEvent;
@@ -47,39 +48,42 @@ describe("RelationsHelper", () => {
 
     beforeEach(() => {
         client = stubClient();
+        userId = client.getUserId() || "";
         mocked(client.relations).mockClear();
         room = mkStubRoom(roomId, "test room", client);
-        mocked(client.getRoom).mockImplementation((getRoomId: string) => {
+        mocked(client.getRoom).mockImplementation((getRoomId: string | undefined) => {
             if (getRoomId === roomId) {
                 return room;
             }
+
+            return null;
         });
         event = mkEvent({
             event: true,
             type: EventType.RoomMessage,
             room: roomId,
-            user: client.getUserId(),
+            user: userId,
             content: {},
         });
         relatedEvent1 = mkEvent({
             event: true,
             type: EventType.RoomMessage,
             room: roomId,
-            user: client.getUserId(),
+            user: userId,
             content: { relatedEvent: 1 },
         });
         relatedEvent2 = mkEvent({
             event: true,
             type: EventType.RoomMessage,
             room: roomId,
-            user: client.getUserId(),
+            user: userId,
             content: { relatedEvent: 2 },
         });
         relatedEvent3 = mkEvent({
             event: true,
             type: EventType.RoomMessage,
             room: roomId,
-            user: client.getUserId(),
+            user: userId,
             content: { relatedEvent: 3 },
         });
         onAdd = jest.fn();
