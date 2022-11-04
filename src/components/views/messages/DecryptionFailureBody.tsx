@@ -19,6 +19,7 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import { IBodyProps } from "./IBodyProps";
 
+// A placeholder element for messages that could not be decrypted
 export default class DecryptionFailureBody extends React.Component<Partial<IBodyProps>> {
     render() {
         return (

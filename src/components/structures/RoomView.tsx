@@ -228,6 +228,7 @@ export interface IRoomState {
     threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
+    // List of undecryptable events currently visible on-screen
     visibleDecryptionFailures?: MatrixEvent[];
 }
 

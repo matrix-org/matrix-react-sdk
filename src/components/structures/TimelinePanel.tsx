@@ -1584,6 +1584,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
             : null;
     }
 
+    /**
+     * Get a list of undecryptable events currently visible on-screen.
+     *
+     * @returns {MatrixEvent[] | null} A list of undecryptable events, or null if
+     *     the list of events could not be determined.
+     */
     public getVisibleDecryptionFailures(): MatrixEvent[] | null {
         const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;

@@ -41,21 +41,29 @@ const WAIT_PERIOD = 5000;
 export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     const context = useContext(MatrixClientContext);
 
+    // Display a spinner for a few seconds before presenting an error message,
+    // in case keys are about to arrive
     const [waiting, setWaiting] = useState<boolean>(true);
     useEffect(() => {
         const timeout = setTimeout(() => setWaiting(false), WAIT_PERIOD);
         return () => clearTimeout(timeout);
     }, []);
 
+    // Is this device unverified?
     const [needsVerification, setNeedsVerification] = useState<boolean>(false);
+    // Does this user have verified devices other than this device?
     const [hasOtherVerifiedDevices, setHasOtherVerifiedDevices] = useState<boolean>(false);
+    // Does this user have key backups?
     const [hasKeyBackup, setHasKeyBackup] = useState<boolean>(false);
 
+    // Keep track of session IDs we've re-sent key requests for
     const [requestedSessions, setRequestedSessions] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         if (needsVerification || !hasOtherVerifiedDevices) return;
 
+        // Aggregate session IDs of undecryptable messages, and resend key requests
+        // for any sessions we weren't already handling.
         const newRequestedSessions = new Set<string>();
         for (const event of failures) {
             const sessionId = event.getWireContent().session_id;
@@ -74,6 +82,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         }
     }, [needsVerification, hasOtherVerifiedDevices, failures, room, requestedSessions, context]);
 
+    // Recheck which devices are verified and whether we have key backups
     const updateDeviceInfo = useCallback(async () => {
         context.crypto.deviceList.invalidateUserDeviceList(context.getUserId());
         await context.crypto.deviceList.refreshOutdatedDeviceLists();
