@@ -88,7 +88,7 @@ export class VoiceBroadcastPlayback
         this.setUpRelationsHelper();
     }
 
-    private setUpRelationsHelper(): void {
+    private async setUpRelationsHelper(): Promise<void> {
         this.infoRelationHelper = new RelationsHelper(
             this.infoEvent,
             RelationType.Reference,
@@ -102,7 +102,7 @@ export class VoiceBroadcastPlayback
             this.infoRelationHelper.on(RelationsHelperEvent.Add, this.addInfoEvent);
 
             try {
-                this.infoRelationHelper.emitFetchCurrent();
+                await this.infoRelationHelper.emitFetchCurrent();
             } catch (err) {
                 logger.warn("error fetching server side relation for voice broadcast info", err);
                 // fall back to local events
@@ -120,7 +120,7 @@ export class VoiceBroadcastPlayback
 
         try {
             // TODO Michael W: only fetch events if needed, blocked by PSF-1708
-            this.chunkRelationHelper.emitFetchCurrent();
+            await this.chunkRelationHelper.emitFetchCurrent();
         } catch (err) {
             logger.warn("error fetching server side relation for voice broadcast chunks", err);
             // fall back to local events
