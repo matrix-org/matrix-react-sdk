@@ -146,9 +146,13 @@ describe("Decryption Failures", () => {
 
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_button").click();
 
-        cy.get(".mx_CreateSecretStorageDialog button.mx_Dialog_primary").click();
-        cy.get(".mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn").click();
-        cy.get("button.mx_Dialog_primary").click();
+        cy.get(".mx_Dialog").within(() => {
+            cy.contains(".mx_Dialog_primary", "Continue").click();
+            cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
+            // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
+            cy.contains(".mx_AccessibleButton", "Download").click();
+            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+        });
 
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
             .should("have.text", "Requesting keys to decrypt messages...");
