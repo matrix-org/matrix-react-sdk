@@ -203,8 +203,9 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         }
 
         if (!error) {
-            setError(error);
             onFinished(true);
+        } else {
+            setError(error);
         }
     };
 
