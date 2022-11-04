@@ -1584,7 +1584,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             : null;
     }
 
-    public getVisibleDecryptionFailures(): MatrixEvent[] {
+    public getVisibleDecryptionFailures(): MatrixEvent[] | null {
         const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;
 
@@ -1594,9 +1594,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         let enteredVisibleRange = false;
 
-        const result = [];
+        const result: MatrixEvent[] = [];
         for (const ev of this.state.liveEvents) {
-            const node = messagePanel.getNodeForEventId(ev.getId());
+            const eventId = ev.getId();
+            if (!eventId) continue;
+            const node = messagePanel.getNodeForEventId(eventId);
             if (!node) continue;
 
             const boundingRect = node.getBoundingClientRect();

@@ -19,7 +19,7 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import { IBodyProps } from "./IBodyProps";
 
-export default class DecryptionFailureBody extends React.Component<IBodyProps> {
+export default class DecryptionFailureBody extends React.Component<Partial<IBodyProps>> {
     render() {
         return (
             <div className="mx_DecryptionFailureBody mx_EventTile_content">

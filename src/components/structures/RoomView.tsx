@@ -2167,7 +2167,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const hiddenHighlightCount = this.getHiddenHighlightCount();
 
-        let aux = null;
+        let aux: JSX.Element | undefined;
         let previewBar;
         if (this.state.timelineRenderingType === TimelineRenderingType.Search) {
             aux = <SearchBar
@@ -2219,7 +2219,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     ) }
                 </AccessibleButton>
             );
-        } else if (this.state.visibleDecryptionFailures.length > 0) {
+        } else if (this.state.visibleDecryptionFailures && this.state.visibleDecryptionFailures.length > 0) {
             aux = <DecryptionFailureBar
                 failures={this.state.visibleDecryptionFailures}
                 room={this.state.room}
