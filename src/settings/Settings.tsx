@@ -41,6 +41,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import SlidingSyncController from './controllers/SlidingSyncController';
 import ThreadBetaController from './controllers/ThreadBetaController';
 import { FontWatcher } from "./watchers/FontWatcher";
 
@@ -91,6 +92,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    VoiceAndVideo,
     Moderation,
     Analytics,
     MessagePreviews,
@@ -100,12 +102,17 @@ export enum LabGroup {
     Developer,
 }
 
+export enum Features {
+    VoiceBroadcast = "feature_voice_broadcast",
+}
+
 export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Messaging]: _td("Messaging"),
     [LabGroup.Profile]: _td("Profile"),
     [LabGroup.Spaces]: _td("Spaces"),
     [LabGroup.Widgets]: _td("Widgets"),
     [LabGroup.Rooms]: _td("Rooms"),
+    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
     [LabGroup.MessagePreviews]: _td("Message Previews"),
@@ -186,7 +193,7 @@ export type ISetting = IBaseSetting | IFeature;
 export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_video_rooms": {
         isFeature: true,
-        labsGroup: LabGroup.Rooms,
+        labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("Video rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -295,6 +302,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             requiresRefresh: true,
         },
 
+    },
+    "feature_wysiwyg_composer": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("Try out the rich text editor (plain text mode coming soon)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
     },
     "feature_state_counters": {
         isFeature: true,
@@ -406,6 +420,34 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Send read receipts"),
         default: true,
     },
+    "feature_sliding_sync": {
+        isFeature: true,
+        labsGroup: LabGroup.Developer,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td('Sliding Sync mode (under active development, cannot be disabled)'),
+        default: false,
+        controller: new SlidingSyncController(),
+    },
+    "feature_sliding_sync_proxy_url": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: "",
+    },
+    "feature_element_call_video_rooms": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("Element Call video rooms"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
+    "feature_group_calls": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("New group call experience"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -422,11 +464,44 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Favourite Messages (under active development)"),
         default: false,
     },
+    [Features.VoiceBroadcast]: {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Voice broadcast (under active development)"),
+        default: false,
+    },
     "feature_new_device_manager": {
         isFeature: true,
         labsGroup: LabGroup.Experimental,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new session manager (under active development)"),
+        displayName: _td("Use new session manager"),
+        default: false,
+        betaInfo: {
+            title: _td('New session manager'),
+            caption: () => <>
+                <p>
+                    { _td('Have greater visibility and control over all your sessions.') }
+                </p>
+                <p>
+                    { _td(
+                        'Our new sessions manager provides better visibility of all your sessions, '
+                        + 'and greater control over them including the ability to remotely toggle push notifications.',
+                    )
+                    }
+                </p>
+
+            </>,
+        },
+    },
+    "feature_qr_signin_reciprocate_show": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td(
+            "Allow a QR code to be shown in session manager to sign in another device " +
+            "(requires compatible homeserver)",
+        ),
         default: false,
     },
     "baseFontSize": {
@@ -698,6 +773,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Send analytics data'),
         default: null,
     },
+    "deviceClientInformationOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td(
+            `Record the client name, version, and url ` +
+            `to recognise sessions more easily in session manager`,
+        ),
+        default: false,
+    },
     "FTUE.useCaseSelection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
@@ -748,6 +831,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new NotificationsEnabledController(),
+    },
+    "deviceNotificationsEnabled": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: true,
     },
     "notificationSound": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
@@ -962,9 +1049,9 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },
-    "videoChannelRoomId": {
+    "activeCallRoomIds": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: null,
+        default: [],
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

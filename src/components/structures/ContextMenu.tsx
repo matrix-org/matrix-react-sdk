@@ -92,6 +92,9 @@ export interface IProps extends IPosition {
     // within an existing FocusLock e.g inside a modal.
     focusLock?: boolean;
 
+    // call onFinished on any interaction with the menu
+    closeOnInteraction?: boolean;
+
     // Function to be called on menu close
     onFinished();
     // on resize callback
@@ -186,6 +189,10 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
     private onClick = (ev: React.MouseEvent) => {
         // Don't allow clicks to escape the context menu wrapper
         ev.stopPropagation();
+
+        if (this.props.closeOnInteraction) {
+            this.props.onFinished?.();
+        }
     };
 
     // We now only handle closing the ContextMenu in this keyDown handler.
@@ -397,6 +404,13 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             </FocusLock>;
         }
 
+        // filter props that are invalid for DOM elements
+        const {
+            hasBackground: _hasBackground, // eslint-disable-line @typescript-eslint/no-unused-vars
+            onFinished: _onFinished, // eslint-disable-line @typescript-eslint/no-unused-vars
+            ...divProps
+        } = props;
+
         return (
             <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.onKeyDown}>
                 { ({ onKeyDownHandler }) => (
@@ -413,7 +427,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
                             style={menuStyle}
                             ref={this.collectContextMenuRect}
                             role={managed ? "menu" : undefined}
-                            {...props}
+                            {...divProps}
                         >
                             { body }
                         </div>
@@ -551,8 +565,13 @@ type ContextMenuTuple<T> = [
     (val: boolean) => void,
 ];
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
-export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<T> => {
-    const button = useRef<T>(null);
+export const useContextMenu = <T extends any = HTMLElement>(inputRef?: RefObject<T>): ContextMenuTuple<T> => {
+    let button = useRef<T>(null);
+    if (inputRef) {
+        // if we are given a ref, use it instead of ours
+        button = inputRef;
+    }
+
     const [isOpen, setIsOpen] = useState(false);
     const open = (ev?: SyntheticEvent) => {
         ev?.preventDefault();
@@ -565,7 +584,7 @@ export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<
         setIsOpen(false);
     };
 
-    return [isOpen, button, open, close, setIsOpen];
+    return [button.current ? isOpen : false, button, open, close, setIsOpen];
 };
 
 // XXX: Deprecated, used only for dynamic Tooltips. Avoid using at all costs.

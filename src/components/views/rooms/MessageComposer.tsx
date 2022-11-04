@@ -37,7 +37,7 @@ import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
-import { RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
+import { RecordingState } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { E2EStatus } from '../../../utils/ShieldUtils';
@@ -52,6 +52,15 @@ import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { Features } from '../../../settings/Settings';
+import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
+import {
+    startNewVoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStore,
+} from '../../../voice-broadcast';
+import { SendWysiwygComposer, sendMessage } from './wysiwyg_composer/';
+import { MatrixClientProps, withMatrixClientHOC } from '../../../contexts/MatrixClientContext';
+import { htmlToPlainText } from '../../../utils/room/htmlToPlaintext';
 
 let instanceCount = 0;
 
@@ -66,11 +75,12 @@ function SendButton(props: ISendButtonProps) {
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
             title={props.title ?? _t('Send message')}
+            data-testid="sendmessagebtn"
         />
     );
 }
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
@@ -81,6 +91,7 @@ interface IProps {
 }
 
 interface IState {
+    composerContent: string;
     isComposerEmpty: boolean;
     haveRecording: boolean;
     recordingTimeLeftSeconds?: number;
@@ -89,22 +100,28 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+    showVoiceBroadcastButton: boolean;
+    isWysiwygLabEnabled: boolean;
+    isRichTextEnabled: boolean;
+    initialComposerContent: string;
 }
 
-export default class MessageComposer extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+export class MessageComposer extends React.Component<IProps, IState> {
+    private dispatcherRef?: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
-    private _voiceRecording: Optional<VoiceRecording>;
+    private _voiceRecording: Optional<VoiceMessageRecording>;
 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
         compact: false,
+        showVoiceBroadcastButton: false,
+        isRichTextEnabled: true,
     };
 
     public constructor(props: IProps) {
@@ -113,25 +130,32 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         this.state = {
             isComposerEmpty: true,
+            composerContent: '',
             haveRecording: false,
-            recordingTimeLeftSeconds: null, // when set to a number, shows a toast
+            recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
+            showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
+            isWysiwygLabEnabled: SettingsStore.getValue<boolean>("feature_wysiwyg_composer"),
+            isRichTextEnabled: true,
+            initialComposerContent: '',
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
+        SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
+        SettingsStore.monitorSetting("feature_wysiwyg_composer", null);
     }
 
-    private get voiceRecording(): Optional<VoiceRecording> {
+    private get voiceRecording(): Optional<VoiceMessageRecording> {
         return this._voiceRecording;
     }
 
-    private set voiceRecording(rec: Optional<VoiceRecording>) {
+    private set voiceRecording(rec: Optional<VoiceMessageRecording>) {
         if (this._voiceRecording) {
             this._voiceRecording.off(RecordingState.Started, this.onRecordingStarted);
             this._voiceRecording.off(RecordingState.EndingSoon, this.onRecordingEndingSoon);
@@ -153,7 +177,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.waitForOwnMember();
-        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
+        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current!);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
         this.updateRecordingState(); // grab any cached recordings
     }
@@ -199,13 +223,25 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         }
                         break;
                     }
+                    case Features.VoiceBroadcast: {
+                        if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
+                            this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
+                        }
+                        break;
+                    }
+                    case "feature_wysiwyg_composer": {
+                        if (this.state.isWysiwygLabEnabled !== settingUpdatedPayload.newValue) {
+                            this.setState({ isWysiwygLabEnabled: Boolean(settingUpdatedPayload.newValue) });
+                        }
+                        break;
+                    }
                 }
             }
         }
     };
 
     private waitForOwnMember() {
-        // if we have the member already, do that
+        // If we have the member already, do that
         const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
@@ -242,6 +278,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
+
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -295,6 +332,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         this.messageComposerInput.current?.sendMessage();
+
+        if (this.state.isWysiwygLabEnabled) {
+            const { permalinkCreator, relation, replyToEvent } = this.props;
+            sendMessage(this.state.composerContent,
+                this.state.isRichTextEnabled,
+                { mxClient: this.props.mxClient, roomContext: this.context, permalinkCreator, relation, replyToEvent });
+            dis.dispatch({ action: Action.ClearAndFocusSendMessageComposer });
+            this.setState({ composerContent: '', initialComposerContent: '' });
+        }
     };
 
     private onChange = (model: EditorModel) => {
@@ -303,12 +349,30 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
+    private onWysiwygChange = (content: string) => {
+        this.setState({
+            composerContent: content,
+            isComposerEmpty: content?.length === 0,
+        });
+    };
+
+    private onRichTextToggle = () => {
+        this.setState(state => ({
+            isRichTextEnabled: !state.isRichTextEnabled,
+            initialComposerContent: !state.isRichTextEnabled ?
+                state.composerContent :
+                // TODO when available use rust model plain text
+                htmlToPlainText(state.composerContent),
+        }));
+    };
+
     private onVoiceStoreUpdate = () => {
         this.updateRecordingState();
     };
 
     private updateRecordingState() {
-        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         if (this.voiceRecording) {
             // If the recording has already started, it's probably a cached one.
             if (this.voiceRecording.hasRecording && !this.voiceRecording.isRecording) {
@@ -323,7 +387,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onRecordingStarted = () => {
         // update the recording instance, just in case
-        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        const voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
+        this.voiceRecording = VoiceRecordingStore.instance.getActiveRecording(voiceRecordingId);
         this.setState({
             haveRecording: !!this.voiceRecording,
         });
@@ -370,20 +435,32 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
         if (canSendMessages) {
-            controls.push(
-                <SendMessageComposer
-                    ref={this.messageComposerInput}
-                    key="controls_input"
-                    room={this.props.room}
-                    placeholder={this.renderPlaceholderText()}
-                    permalinkCreator={this.props.permalinkCreator}
-                    relation={this.props.relation}
-                    replyToEvent={this.props.replyToEvent}
-                    onChange={this.onChange}
-                    disabled={this.state.haveRecording}
-                    toggleStickerPickerOpen={this.toggleStickerPickerOpen}
-                />,
-            );
+            if (this.state.isWysiwygLabEnabled) {
+                controls.push(
+                    <SendWysiwygComposer key="controls_input"
+                        disabled={this.state.haveRecording}
+                        onChange={this.onWysiwygChange}
+                        onSend={this.sendMessage}
+                        isRichTextEnabled={this.state.isRichTextEnabled}
+                        initialContent={this.state.initialComposerContent}
+                    />,
+                );
+            } else {
+                controls.push(
+                    <SendMessageComposer
+                        ref={this.messageComposerInput}
+                        key="controls_input"
+                        room={this.props.room}
+                        placeholder={this.renderPlaceholderText()}
+                        permalinkCreator={this.props.permalinkCreator}
+                        relation={this.props.relation}
+                        replyToEvent={this.props.replyToEvent}
+                        onChange={this.onChange}
+                        disabled={this.state.haveRecording}
+                        toggleStickerPickerOpen={this.toggleStickerPickerOpen}
+                    />,
+                );
+            }
 
             controls.push(<VoiceRecordComposerTile
                 key="controls_voice_record"
@@ -424,8 +501,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         let recordingTooltip;
-        const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
-        if (secondsLeft) {
+        if (this.state.recordingTimeLeftSeconds) {
+            const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = <Tooltip
                 label={_t("%(seconds)ss left", { seconds: secondsLeft })}
                 alignment={Alignment.Top}
@@ -453,6 +530,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             "mx_MessageComposer": true,
             "mx_MessageComposer--compact": this.props.compact,
             "mx_MessageComposer_e2eStatus": this.props.e2eStatus != undefined,
+            "mx_MessageComposer_wysiwyg": this.state.isWysiwygLabEnabled && this.state.isRichTextEnabled,
         });
 
         return (
@@ -481,7 +559,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showLocationButton={!window.electron}
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
+                            showComposerModeButton={this.state.isWysiwygLabEnabled}
+                            isRichTextEnabled={this.state.isRichTextEnabled}
+                            onComposerModeClick={this.onRichTextToggle}
                             toggleButtonMenu={this.toggleButtonMenu}
+                            showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
+                            onStartVoiceBroadcastClick={() => {
+                                startNewVoiceBroadcastRecording(
+                                    this.props.room,
+                                    MatrixClientPeg.get(),
+                                    VoiceBroadcastRecordingsStore.instance(),
+                                );
+                                this.toggleButtonMenu();
+                            }}
                         /> }
                         { showSendButton && (
                             <SendButton
@@ -496,3 +586,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         );
     }
 }
+
+const MessageComposerWithMatrixClient = withMatrixClientHOC(MessageComposer);
+export default MessageComposerWithMatrixClient;

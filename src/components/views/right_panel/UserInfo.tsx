@@ -36,7 +36,6 @@ import { _t } from '../../../languageHandler';
 import DMRoomMap from '../../../utils/DMRoomMap';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import SdkConfig from '../../../SdkConfig';
-import { RoomViewStore } from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon from "../rooms/E2EIcon";
@@ -48,7 +47,6 @@ import EncryptionPanel from "./EncryptionPanel";
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import { legacyVerifyUser, verifyDevice, verifyUser } from '../../../verification';
 import { Action } from "../../../dispatcher/actions";
-import { UserTab } from "../dialogs/UserTab";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
 import BaseCard from "./BaseCard";
 import { E2EStatus } from "../../../utils/ShieldUtils";
@@ -78,6 +76,7 @@ import UserIdentifierCustomisations from '../../../customisations/UserIdentifier
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from '../../../utils/direct-messages';
+import { SdkContextClass } from '../../../contexts/SDKContext';
 
 export interface IDevice {
     deviceId: string;
@@ -413,7 +412,7 @@ const UserOptionsSection: React.FC<{
         }
 
         if (canInvite && (member?.membership ?? 'leave') === 'leave' && shouldShowComponent(UIComponent.InviteUsers)) {
-            const roomId = member && member.roomId ? member.roomId : RoomViewStore.instance.getRoomId();
+            const roomId = member && member.roomId ? member.roomId : SdkContextClass.instance.roomViewStore.getRoomId();
             const onInviteUserButton = async (ev: ButtonEvent) => {
                 try {
                     // We use a MultiInviter to re-use the invite logic, even though we're only inviting one user.
@@ -1331,8 +1330,7 @@ const BasicUserInfo: React.FC<{
                 className="mx_UserInfo_field"
                 onClick={() => {
                     dis.dispatch({
-                        action: Action.ViewUserSettings,
-                        initialTabId: UserTab.Security,
+                        action: Action.ViewUserDeviceSettings,
                     });
                 }}
             >

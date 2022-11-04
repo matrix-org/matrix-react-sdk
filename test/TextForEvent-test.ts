@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixClient, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import TestRenderer from 'react-test-renderer';
 import { ReactElement } from "react";
+import { mocked } from "jest-mock";
 
 import { getSenderName, textForEvent } from "../src/TextForEvent";
 import SettingsStore from "../src/settings/SettingsStore";
-import { createTestClient } from './test-utils';
+import { createTestClient, stubClient } from './test-utils';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import UserIdentifierCustomisations from '../src/customisations/UserIdentifier';
+import { ElementCall } from "../src/models/Call";
 
 jest.mock("../src/settings/SettingsStore");
 jest.mock('../src/customisations/UserIdentifier', () => ({
@@ -174,14 +176,17 @@ describe('TextForEvent', () => {
         const userA = {
             id: '@a',
             name: 'Alice',
+            rawDisplayName: 'Alice',
         };
         const userB = {
             id: '@b',
-            name: 'Bob',
+            name: 'Bob (@b)',
+            rawDisplayName: 'Bob',
         };
         const userC = {
             id: '@c',
-            name: 'Carl',
+            name: 'Bob (@c)',
+            rawDisplayName: 'Bob',
         };
         interface PowerEventProps {
             usersDefault?: number;
@@ -191,19 +196,23 @@ describe('TextForEvent', () => {
         }
         const mockPowerEvent = ({
             usersDefault, prevDefault, users, prevUsers,
-        }: PowerEventProps): MatrixEvent => new MatrixEvent({
-            type: EventType.RoomPowerLevels,
-            sender: userA.id,
-            state_key: "",
-            content: {
-                users_default: usersDefault,
-                users,
-            },
-            prev_content: {
-                users: prevUsers,
-                users_default: prevDefault,
-            },
-        });
+        }: PowerEventProps): MatrixEvent => {
+            const mxEvent = new MatrixEvent({
+                type: EventType.RoomPowerLevels,
+                sender: userA.id,
+                state_key: "",
+                content: {
+                    users_default: usersDefault,
+                    users,
+                },
+                prev_content: {
+                    users: prevUsers,
+                    users_default: prevDefault,
+                },
+            });
+            mxEvent.sender = { name: userA.name } as RoomMember;
+            return mxEvent;
+        };
 
         beforeAll(() => {
             mockClient = createTestClient();
@@ -256,7 +265,7 @@ describe('TextForEvent', () => {
                     [userB.id]: 50,
                 },
             });
-            const expectedText = "@a changed the power level of @b from Moderator to Admin.";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Admin.";
             expect(textForEvent(event)).toEqual(expectedText);
         });
 
@@ -271,7 +280,7 @@ describe('TextForEvent', () => {
                     [userB.id]: 50,
                 },
             });
-            const expectedText = "@a changed the power level of @b from Moderator to Default.";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Default.";
             expect(textForEvent(event)).toEqual(expectedText);
         });
 
@@ -284,7 +293,7 @@ describe('TextForEvent', () => {
                     [userB.id]: 50,
                 },
             });
-            const expectedText = "@a changed the power level of @b from Moderator to Custom (-1).";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Custom (-1).";
             expect(textForEvent(event)).toEqual(expectedText);
         });
 
@@ -299,27 +308,9 @@ describe('TextForEvent', () => {
                     [userC.id]: 101,
                 },
             });
-            const expectedText =
-                "@a changed the power level of @b from Moderator to Admin, @c from Custom (101) to Moderator.";
+            const expectedText = "Alice changed the power level of Bob (@b) from Moderator to Admin,"
+                + " Bob (@c) from Custom (101) to Moderator.";
             expect(textForEvent(event)).toEqual(expectedText);
-        });
-
-        it("uses userIdentifier customisation", () => {
-            (UserIdentifierCustomisations.getDisplayUserIdentifier as jest.Mock)
-                .mockImplementation(userId => 'customised ' + userId);
-            const event = mockPowerEvent({
-                users: {
-                    [userB.id]: 100,
-                },
-                prevUsers: {
-                    [userB.id]: 50,
-                },
-            });
-            // uses customised user id
-            const expectedText = "@a changed the power level of customised @b from Moderator to Admin.";
-            expect(textForEvent(event)).toEqual(expectedText);
-            expect(UserIdentifierCustomisations.getDisplayUserIdentifier)
-                .toHaveBeenCalledWith(userB.id, { roomId: event.getRoomId() });
         });
     });
 
@@ -453,6 +444,44 @@ describe('TextForEvent', () => {
 
         it("returns correct message for normal message", () => {
             expect(textForEvent(messageEvent)).toEqual('@a: test message');
+        });
+    });
+
+    describe("textForCallEvent()", () => {
+        let mockClient: MatrixClient;
+        let callEvent: MatrixEvent;
+
+        beforeEach(() => {
+            stubClient();
+            mockClient = MatrixClientPeg.get();
+
+            mocked(mockClient.getRoom).mockReturnValue({
+                name: "Test room",
+            } as unknown as Room);
+
+            callEvent = {
+                getRoomId: jest.fn(),
+                getType: jest.fn(),
+                isState: jest.fn().mockReturnValue(true),
+            } as unknown as MatrixEvent;
+        });
+
+        describe.each(ElementCall.CALL_EVENT_TYPE.names)("eventType=%s", (eventType: string) => {
+            beforeEach(() => {
+                mocked(callEvent).getType.mockReturnValue(eventType);
+            });
+
+            it("returns correct message for call event when supported", () => {
+                expect(textForEvent(callEvent)).toEqual('Video call started in Test room.');
+            });
+
+            it("returns correct message for call event when supported", () => {
+                mocked(mockClient).supportsVoip.mockReturnValue(false);
+
+                expect(textForEvent(callEvent)).toEqual(
+                    'Video call started in Test room. (not supported by this browser)',
+                );
+            });
         });
     });
 });

@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { ISendEventResponse, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
+import { ISendEventResponse, MatrixClient, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
 // eslint-disable-next-line deprecate/import
 import { mount } from 'enzyme';
 import { mocked } from "jest-mock";
@@ -40,6 +40,7 @@ import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { mockPlatformPeg } from "../../../test-utils/platform";
 import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
+import { addTextToComposer } from "../../../test-utils/composer";
 
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -89,6 +90,7 @@ describe('<SendMessageComposer/>', () => {
         canSelfRedact: false,
         resizing: false,
         narrow: false,
+        activeCall: null,
     };
     describe("createMessageContent", () => {
         const permalinkCreator = jest.fn() as any;
@@ -185,20 +187,6 @@ describe('<SendMessageComposer/>', () => {
         beforeEach(() => {
             localStorage.clear();
             spyDispatcher.mockReset();
-        });
-
-        const addTextToComposer = (wrapper, text) => act(() => {
-            // couldn't get input event on contenteditable to work
-            // paste works without illegal private method access
-            const pasteEvent = {
-                clipboardData: {
-                    types: [],
-                    files: [],
-                    getData: type => type === "text/plain" ? text : undefined,
-                },
-            };
-            wrapper.find('[role="textbox"]').simulate('paste', pasteEvent);
-            wrapper.update();
         });
 
         const defaultProps = {
@@ -303,7 +291,7 @@ describe('<SendMessageComposer/>', () => {
 
         it('correctly sets the editorStateKey for threads', () => {
             const relation = {
-                rel_type: "m.thread",
+                rel_type: RelationType.Thread,
                 event_id: "myFakeThreadId",
             };
             const includeReplyLegacyFallback = false;

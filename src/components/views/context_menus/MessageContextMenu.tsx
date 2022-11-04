@@ -73,7 +73,7 @@ const ReplyInThreadButton = ({ mxEvent, closeMenu }: IReplyInThreadButton) => {
     const relationType = mxEvent?.getRelation()?.rel_type;
 
     // Can't create a thread from an event with an existing relation
-    if (Boolean(relationType) && relationType !== RelationType.Thread) return;
+    if (Boolean(relationType) && relationType !== RelationType.Thread) return null;
 
     const onClick = (): void => {
         if (!localStorage.getItem("mx_seen_feature_thread")) {
@@ -382,7 +382,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     public render(): JSX.Element {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
-        const { mxEvent, rightClick, link, eventTileOps, reactions, collapseReplyChain } = this.props;
+        const {
+            mxEvent, rightClick, link, eventTileOps, reactions, collapseReplyChain,
+            ...other
+        } = this.props;
+        delete other.getRelationsForEvent;
+        delete other.permalinkCreator;
+
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
         const contentActionable = isContentActionable(mxEvent);
@@ -747,7 +753,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return (
             <React.Fragment>
                 <IconizedContextMenu
-                    {...this.props}
+                    {...other}
                     className="mx_MessageContextMenu"
                     compact={true}
                     data-testid="mx_MessageContextMenu"

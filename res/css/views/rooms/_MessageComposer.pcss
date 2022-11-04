@@ -233,6 +233,17 @@ limitations under the License.
     }
 }
 
+/*
+    The wysisyg composer increase the size of the MessageComposer. We temporary move the buttons
+    Soon the dom structure of the MessageComposer will change with the next evolution of the wysiwyg composer
+    and this workaround will disappear
+*/
+.mx_MessageComposer_wysiwyg {
+    .mx_MessageComposer_e2eIcon.mx_E2EIcon,.mx_MessageComposer_button, .mx_MessageComposer_sendMessage {
+        margin-top: 28px;
+    }
+}
+
 .mx_MessageComposer_upload::before {
     mask-image: url('$(res)/img/element-icons/room/composer/attach.svg');
 }
@@ -245,8 +256,20 @@ limitations under the License.
     mask-image: url('$(res)/img/voip/mic-on-mask.svg');
 }
 
+.mx_MessageComposer_voiceBroadcast::before {
+    mask-image: url('$(res)/img/element-icons/live.svg');
+}
+
 .mx_MessageComposer_emoji::before {
     mask-image: url('$(res)/img/element-icons/room/composer/emoji.svg');
+}
+
+.mx_MessageComposer_plain_text::before {
+    mask-image: url('$(res)/img/element-icons/room/composer/plain_text.svg');
+}
+
+.mx_MessageComposer_rich_text::before {
+    mask-image: url('$(res)/img/element-icons/room/composer/rich_text.svg');
 }
 
 .mx_MessageComposer_location::before {

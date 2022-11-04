@@ -30,6 +30,12 @@ export const DEFAULTS: IConfigOptions = {
     jitsi: {
         preferred_domain: "meet.element.io",
     },
+    element_call: {
+        url: "https://call.element.io",
+        use_exclusively: false,
+        participant_limit: 8,
+        brand: "Element Call",
+    },
 
     // @ts-ignore - we deliberately use the camelCase version here so we trigger
     // the fallback behaviour. If we used the snake_case version then we'd break
@@ -40,7 +46,9 @@ export const DEFAULTS: IConfigOptions = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
-    spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
+    voice_broadcast: {
+        chunk_length: 120, // two minutes
+    },
 };
 
 export default class SdkConfig {
@@ -79,14 +87,8 @@ export default class SdkConfig {
         return val === undefined ? undefined : null;
     }
 
-    public static put(cfg: IConfigOptions) {
-        const defaultKeys = Object.keys(DEFAULTS);
-        for (let i = 0; i < defaultKeys.length; ++i) {
-            if (cfg[defaultKeys[i]] === undefined) {
-                cfg[defaultKeys[i]] = DEFAULTS[defaultKeys[i]];
-            }
-        }
-        SdkConfig.setInstance(cfg);
+    public static put(cfg: Partial<IConfigOptions>) {
+        SdkConfig.setInstance({ ...DEFAULTS, ...cfg });
     }
 
     /**
@@ -97,9 +99,7 @@ export default class SdkConfig {
     }
 
     public static add(cfg: Partial<IConfigOptions>) {
-        const liveConfig = SdkConfig.get();
-        const newConfig = Object.assign({}, liveConfig, cfg);
-        SdkConfig.put(newConfig);
+        SdkConfig.put({ ...SdkConfig.get(), ...cfg });
     }
 }
 

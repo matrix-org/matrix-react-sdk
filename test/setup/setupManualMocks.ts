@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import fetchMock from "fetch-mock-jest";
 import { TextDecoder, TextEncoder } from "util";
 
 // jest 27 removes setImmediate from jsdom
@@ -45,6 +46,7 @@ global.matchMedia = mockMatchMedia;
 
 // maplibre requires a createObjectURL mock
 global.URL.createObjectURL = jest.fn();
+global.URL.revokeObjectURL = jest.fn();
 
 // polyfilling TextEncoder as it is not available on JSDOM
 // view https://github.com/facebook/jest/issues/9983
@@ -53,3 +55,9 @@ global.TextDecoder = TextDecoder;
 
 // prevent errors whenever a component tries to manually scroll.
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
+
+// set up fetch API mock
+fetchMock.config.overwriteRoutes = false;
+fetchMock.catch("");
+fetchMock.get("/image-file-stub", "image file stub");
+window.fetch = fetchMock.sandbox();
