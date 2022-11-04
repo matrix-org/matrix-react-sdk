@@ -729,13 +729,9 @@ export const Commands = [
 
                     // Try to find a room with this alias
                     const rooms = cli.getRooms();
-                    for (const room of rooms) {
-                        if (room.getCanonicalAlias() === roomAlias || room.getAltAliases().includes(roomAlias)) {
-                            targetRoomId = room.roomId;
-                            break;
-                        }
-                        if (targetRoomId) break;
-                    }
+                    targetRoomId = rooms.find(room => {
+                        return room.getCanonicalAlias() === roomAlias || room.getAltAliases().includes(roomAlias);
+                    })?.roomId;
                     if (!targetRoomId) {
                         return reject(
                             newTranslatableError(
