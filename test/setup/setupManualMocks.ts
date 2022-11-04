@@ -74,6 +74,7 @@ global.URL.revokeObjectURL = jest.fn();
 // polyfilling TextEncoder as it is not available on JSDOM
 // view https://github.com/facebook/jest/issues/9983
 global.TextEncoder = TextEncoder;
+// @ts-ignore
 global.TextDecoder = TextDecoder;
 
 // prevent errors whenever a component tries to manually scroll.
@@ -83,4 +84,5 @@ window.HTMLElement.prototype.scrollIntoView = jest.fn();
 fetchMock.config.overwriteRoutes = false;
 fetchMock.catch("");
 fetchMock.get("/image-file-stub", "image file stub");
+// @ts-ignore
 window.fetch = fetchMock.sandbox();
