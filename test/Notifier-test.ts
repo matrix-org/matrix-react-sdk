@@ -159,7 +159,7 @@ describe("Notifier", () => {
         it('does not create notifications for own event', () => {
             const ownEvent = new MatrixEvent({ sender: userId });
 
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, ownEvent);
 
             expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
@@ -174,7 +174,7 @@ describe("Notifier", () => {
                 },
             });
 
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
@@ -182,7 +182,7 @@ describe("Notifier", () => {
         });
 
         it('creates desktop notification when enabled', () => {
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             expect(MockPlatform.displayNotification).toHaveBeenCalledWith(
@@ -195,7 +195,7 @@ describe("Notifier", () => {
         });
 
         it('creates a loud notification when enabled', () => {
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             expect(MockPlatform.loudNotification).toHaveBeenCalledWith(
@@ -211,7 +211,7 @@ describe("Notifier", () => {
                 },
             });
 
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             // desktop notification created
