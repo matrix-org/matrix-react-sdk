@@ -2219,8 +2219,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     ) }
                 </AccessibleButton>
             );
-        } else if (this.state.visibleDecryptionFailures && this.state.visibleDecryptionFailures.length > 0) {
-            aux = <DecryptionFailureBar
+        }
+
+        let decryptionFailureBar: JSX.Element | undefined;
+        if (this.state.visibleDecryptionFailures && this.state.visibleDecryptionFailures.length > 0) {
+            decryptionFailureBar = <DecryptionFailureBar
                 failures={this.state.visibleDecryptionFailures}
                 room={this.state.room}
             />;
@@ -2246,6 +2249,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 resizeNotifier={this.props.resizeNotifier}
             >
                 { aux }
+                { decryptionFailureBar }
             </AuxPanel>
         );
 
