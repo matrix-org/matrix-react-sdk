@@ -300,7 +300,7 @@ export default class SettingsStore {
      * @param {string} settingName The setting to look up.
      * @return {boolean} True if the setting should have a warning sign.
      */
-    public static shouldWarn(settingName: string): boolean {
+    public static shouldHaveWarning(settingName: string): boolean {
         if (!SETTINGS[settingName]) return false;
         return SETTINGS[settingName].shouldWarn;
     }

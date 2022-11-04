@@ -139,9 +139,10 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 <div className='mx_SettingsTab_subsectionText'>
                     {
                         _t(
-                            "What's next for Element? "
+                            "What's next for %(brand)s? "
                             + "Labs are the best way to get things early, "
                             + "test out new features and help shape them before they actually launch.",
+                            { brand: SdkConfig.get("brand") },
                         )
                     }
                 </div>

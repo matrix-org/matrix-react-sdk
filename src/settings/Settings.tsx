@@ -328,7 +328,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
         displayName: _td("New ways to ignore people"),
-        description: _td("Highly experimental."),
+        description: _td("Currently experimental."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -913,6 +913,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         description: _td("Requires compatible homeserver."),
         default: false,
         controller: new ReloadOnChangeController(),
+        shouldWarn: true,
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
