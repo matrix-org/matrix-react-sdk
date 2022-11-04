@@ -1059,7 +1059,7 @@
     "You should:": "Sa peaksid:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "kontrollima kas mõni brauseriplugin takistab ühendust isikutuvastusserveriga (nagu näiteks Privacy Badger)",
     "contact the administrators of identity server <idserver />": "võtma ühendust isikutuvastusserveri <idserver /> haldajaga",
-    "wait and try again later": "ootama ja proovima hiljem uuesti",
+    "wait and try again later": "oota ja proovi hiljem uuesti",
     "Disconnect anyway": "Ikkagi katkesta ühendus",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Sa jätkuvalt <b>jagad oma isikuandmeid</b> isikutuvastusserveriga <idserver />.",
     "Go back": "Mine tagasi",
