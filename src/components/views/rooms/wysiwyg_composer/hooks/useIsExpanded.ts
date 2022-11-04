@@ -22,8 +22,10 @@ export function useIsExpanded(ref: MutableRefObject<HTMLElement | null>, breakin
         if (ref.current) {
             const editor = ref.current;
             const resizeObserver = new ResizeObserver(entries => {
-                const height = entries[0]?.contentBoxSize?.[0].blockSize;
-                setIsExpanded(height >= breakingPoint);
+                requestAnimationFrame(() => {
+                    const height = entries[0]?.contentBoxSize?.[0].blockSize;
+                    setIsExpanded(height >= breakingPoint);
+                });
             });
 
             resizeObserver.observe(editor);
