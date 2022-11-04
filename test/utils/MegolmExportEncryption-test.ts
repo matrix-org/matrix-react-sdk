@@ -76,6 +76,7 @@ describe('MegolmExportEncryption', function() {
         window.crypto = {
             getRandomValues,
             randomUUID: jest.fn().mockReturnValue("not-random-uuid"),
+            subtle: webCrypto.subtle,
         };
         // @ts-ignore for some reason including it in the object above gets ignored
         window.crypto.subtle = webCrypto.subtle;
