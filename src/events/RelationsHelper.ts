@@ -111,7 +111,7 @@ export class RelationsHelper
     /**
      * Fetches all related events from the server and emits them.
      */
-    public async emitFetchCurrent(limit = 50): Promise<void> {
+    public async emitFetchCurrent(): Promise<void> {
         let nextBatch: string | undefined = undefined;
 
         do {
@@ -122,7 +122,7 @@ export class RelationsHelper
                 this.relationEventType,
                 {
                     from: nextBatch,
-                    limit,
+                    limit: 50,
                 },
             );
             nextBatch = response?.nextBatch;

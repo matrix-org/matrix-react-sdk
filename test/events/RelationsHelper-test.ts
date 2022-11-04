@@ -100,7 +100,27 @@ describe("RelationsHelper", () => {
     });
 
     afterEach(() => {
-        relationsHelper.destroy();
+        relationsHelper?.destroy();
+    });
+
+    describe("when there is an event without ID", () => {
+        it("should raise an error", () => {
+            jest.spyOn(event, "getId").mockReturnValue(undefined);
+
+            expect(() => {
+                new RelationsHelper(event, RelationType.Reference, EventType.RoomMessage, client);
+            }).toThrowError("unable to create RelationsHelper: missing event ID");
+        });
+    });
+
+    describe("when there is an event without room ID", () => {
+        it("should raise an error", () => {
+            jest.spyOn(event, "getRoomId").mockReturnValue(undefined);
+
+            expect(() => {
+                new RelationsHelper(event, RelationType.Reference, EventType.RoomMessage, client);
+            }).toThrowError("unable to create RelationsHelper: missing room ID");
+        });
     });
 
     describe("when there is an event without relations", () => {

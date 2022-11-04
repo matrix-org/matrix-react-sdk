@@ -120,8 +120,7 @@ export class VoiceBroadcastPlayback
 
         try {
             // TODO Michael W: only fetch events if needed, blocked by PSF-1708
-            // 120 = 240 * 60 s / 120 s (default chunk length)
-            this.chunkRelationHelper.emitFetchCurrent(120);
+            this.chunkRelationHelper.emitFetchCurrent();
         } catch (err) {
             logger.warn("error fetching server side relation for voice broadcast chunks", err);
             // fall back to local events
