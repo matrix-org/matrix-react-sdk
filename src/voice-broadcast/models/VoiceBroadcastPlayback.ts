@@ -212,12 +212,12 @@ export class VoiceBroadcastPlayback
         }
     }
 
-    private async onPlaybackStateChange(event: MatrixEvent, newState: PlaybackState) {
+    private onPlaybackStateChange = async (event: MatrixEvent, newState: PlaybackState): Promise<void> => {
         if (event !== this.currentlyPlaying) return;
         if (newState !== PlaybackState.Stopped) return;
 
         await this.playNext();
-    }
+    };
 
     private async playNext(): Promise<void> {
         if (!this.currentlyPlaying) return;
