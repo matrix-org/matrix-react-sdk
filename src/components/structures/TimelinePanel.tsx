@@ -64,6 +64,9 @@ const READ_RECEIPT_INTERVAL_MS = 500;
 
 const READ_MARKER_DEBOUNCE_MS = 100;
 
+// How far off-screen a decryption failure can be for it to still count as "visible"
+const VISIBLE_DECRYPTION_FAILURE_MARGIN = 100;
+
 const debuglog = (...args: any[]) => {
     if (SettingsStore.getValue("debug_timeline_panel")) {
         logger.log.call(console, "TimelinePanel debuglog:", ...args);
@@ -1597,6 +1600,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
         if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
         const wrapperRect = messagePanelNode.getBoundingClientRect();
+        const screenTop = wrapperRect.top - VISIBLE_DECRYPTION_FAILURE_MARGIN;
+        const screenBottom = wrapperRect.bottom + VISIBLE_DECRYPTION_FAILURE_MARGIN;
 
         let enteredVisibleRange = false;
 
@@ -1608,7 +1613,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (!node) continue;
 
             const boundingRect = node.getBoundingClientRect();
-            if (boundingRect.top <= wrapperRect.bottom && boundingRect.bottom >= wrapperRect.top) {
+            if (boundingRect.top <= screenBottom && boundingRect.bottom >= screenTop) {
                 enteredVisibleRange = true;
                 if (ev.isDecryptionFailure()) result.push(ev);
             } else if (enteredVisibleRange) {
