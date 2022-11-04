@@ -89,8 +89,8 @@ describe('PlainTextComposer', () => {
     });
 
     it('Should have data-is-expanded when it has two lines', async () => {
-        let resizeHandler;
-        let editor;
+        let resizeHandler: ResizeObserverCallback;
+        let editor: Element;
         const resizeObserver = ResizeObserver;
         global.ResizeObserver = jest.fn((handler) => {
             resizeHandler = handler;
@@ -109,14 +109,15 @@ describe('PlainTextComposer', () => {
             <PlainTextComposer onChange={jest.fn()} onSend={jest.fn()} />,
         );
 
-        console.log(screen.getByTestId('WysiwygComposerEditor'), screen.getByTestId('WysiwygComposerEditor').dataset);
-
         // Then
         expect(screen.getByTestId('WysiwygComposerEditor').attributes['data-is-expanded'].value).toBe('false');
         expect(editor).toBe(screen.getByRole('textbox'));
 
         // When
-        resizeHandler([{ contentBoxSize: [{ blockSize: 100 }] }]);
+        resizeHandler(
+            [{ contentBoxSize: [{ blockSize: 100 }] } as unknown as ResizeObserverEntry],
+            {} as ResizeObserver,
+        );
 
         // Then
         expect(screen.getByTestId('WysiwygComposerEditor').attributes['data-is-expanded'].value).toBe('true');

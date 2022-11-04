@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { FocusEvent, useCallback, useRef, useState } from "react";
+import { FocusEvent, useCallback, useEffect, useRef, useState } from "react";
 
 export function useIsFocused() {
     const [isFocused, setIsFocused] = useState(false);
     const timeoutIDRef = useRef<number>();
 
+    useEffect(() => () => clearTimeout(timeoutIDRef.current), [timeoutIDRef]);
     const onFocus = useCallback((event: FocusEvent<HTMLElement>) => {
         clearTimeout(timeoutIDRef.current);
         if (event.type === 'focus') {

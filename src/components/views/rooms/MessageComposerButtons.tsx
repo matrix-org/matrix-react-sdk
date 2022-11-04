@@ -77,9 +77,9 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     let moreButtons: ReactElement[];
     if (narrow) {
         mainButtons = [
-            !isWysiwygLabEnabled && emojiButton(props),
-            isWysiwygLabEnabled &&
-                <ComposerModeButton key="composerModeButton" isRichTextEnabled={props.isRichTextEnabled} onClick={props.onComposerModeClick} />,
+            isWysiwygLabEnabled ?
+                <ComposerModeButton key="composerModeButton" isRichTextEnabled={props.isRichTextEnabled} onClick={props.onComposerModeClick} /> :
+                emojiButton(props),
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
@@ -91,9 +91,9 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
     } else {
         mainButtons = [
-            !isWysiwygLabEnabled && emojiButton(props),
-            isWysiwygLabEnabled &&
-                <ComposerModeButton key="composerModeButton" isRichTextEnabled={props.isRichTextEnabled} onClick={props.onComposerModeClick} />,
+            isWysiwygLabEnabled ?
+                <ComposerModeButton key="composerModeButton" isRichTextEnabled={props.isRichTextEnabled} onClick={props.onComposerModeClick} /> :
+                emojiButton(props),
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
