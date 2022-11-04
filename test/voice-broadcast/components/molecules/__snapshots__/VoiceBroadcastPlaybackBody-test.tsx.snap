@@ -3,7 +3,7 @@
 exports[`VoiceBroadcastPlaybackBody when rendering a 0 broadcast should render as expected 1`] = `
 <div>
   <div
-    class="mx_VoiceBroadcastPlaybackBody"
+    class="mx_VoiceBroadcastBody"
   >
     <div
       class="mx_VoiceBroadcastHeader"
@@ -51,7 +51,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 0 broadcast should render a
       </div>
     </div>
     <div
-      class="mx_VoiceBroadcastPlaybackBody_controls"
+      class="mx_VoiceBroadcastBody_controls"
     >
       <div
         aria-label="resume voice broadcast"
@@ -64,6 +64,25 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 0 broadcast should render a
         />
       </div>
     </div>
+    <div
+      class="mx_VoiceBroadcastBody_timerow"
+    >
+      <input
+        class="mx_SeekBar"
+        max="1"
+        min="0"
+        step="0.001"
+        style="--fillTo: 0;"
+        tabindex="0"
+        type="range"
+        value="0"
+      />
+      <span
+        class="mx_Clock"
+      >
+        23:42
+      </span>
+    </div>
   </div>
 </div>
 `;
@@ -71,7 +90,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 0 broadcast should render a
 exports[`VoiceBroadcastPlaybackBody when rendering a 1 broadcast should render as expected 1`] = `
 <div>
   <div
-    class="mx_VoiceBroadcastPlaybackBody"
+    class="mx_VoiceBroadcastBody"
   >
     <div
       class="mx_VoiceBroadcastHeader"
@@ -119,7 +138,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 1 broadcast should render a
       </div>
     </div>
     <div
-      class="mx_VoiceBroadcastPlaybackBody_controls"
+      class="mx_VoiceBroadcastBody_controls"
     >
       <div
         aria-label="pause voice broadcast"
@@ -132,6 +151,25 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 1 broadcast should render a
         />
       </div>
     </div>
+    <div
+      class="mx_VoiceBroadcastBody_timerow"
+    >
+      <input
+        class="mx_SeekBar"
+        max="1"
+        min="0"
+        step="0.001"
+        style="--fillTo: 0;"
+        tabindex="0"
+        type="range"
+        value="0"
+      />
+      <span
+        class="mx_Clock"
+      >
+        23:42
+      </span>
+    </div>
   </div>
 </div>
 `;
@@ -139,7 +177,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 1 broadcast should render a
 exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast should render as expected 1`] = `
 <div>
   <div
-    class="mx_VoiceBroadcastPlaybackBody"
+    class="mx_VoiceBroadcastBody"
   >
     <div
       class="mx_VoiceBroadcastHeader"
@@ -187,7 +225,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
       </div>
     </div>
     <div
-      class="mx_VoiceBroadcastPlaybackBody_controls"
+      class="mx_VoiceBroadcastBody_controls"
     >
       <div
         class="mx_Spinner"
@@ -200,6 +238,112 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
           style="width: 32px; height: 32px;"
         />
       </div>
+    </div>
+    <div
+      class="mx_VoiceBroadcastBody_timerow"
+    >
+      <input
+        class="mx_SeekBar"
+        max="1"
+        min="0"
+        step="0.001"
+        style="--fillTo: 0;"
+        tabindex="0"
+        type="range"
+        value="0"
+      />
+      <span
+        class="mx_Clock"
+      >
+        23:42
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`VoiceBroadcastPlaybackBody when rendering a stopped broadcast and the length updated should render as expected 1`] = `
+<div>
+  <div
+    class="mx_VoiceBroadcastBody"
+  >
+    <div
+      class="mx_VoiceBroadcastHeader"
+    >
+      <div
+        data-testid="room-avatar"
+      >
+        room avatar: 
+        My room
+      </div>
+      <div
+        class="mx_VoiceBroadcastHeader_content"
+      >
+        <div
+          class="mx_VoiceBroadcastHeader_room"
+        >
+          My room
+        </div>
+        <div
+          class="mx_VoiceBroadcastHeader_line"
+        >
+          <div
+            class="mx_Icon mx_Icon_16"
+          />
+          <span>
+            @user:example.com
+          </span>
+        </div>
+        <div
+          class="mx_VoiceBroadcastHeader_line"
+        >
+          <div
+            class="mx_Icon mx_Icon_16"
+          />
+          Voice broadcast
+        </div>
+      </div>
+      <div
+        class="mx_LiveBadge"
+      >
+        <div
+          class="mx_Icon mx_Icon_16"
+        />
+        Live
+      </div>
+    </div>
+    <div
+      class="mx_VoiceBroadcastBody_controls"
+    >
+      <div
+        aria-label="play voice broadcast"
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_16"
+        />
+      </div>
+    </div>
+    <div
+      class="mx_VoiceBroadcastBody_timerow"
+    >
+      <input
+        class="mx_SeekBar"
+        max="1"
+        min="0"
+        step="0.001"
+        style="--fillTo: 0;"
+        tabindex="0"
+        type="range"
+        value="0"
+      />
+      <span
+        class="mx_Clock"
+      >
+        00:42
+      </span>
     </div>
   </div>
 </div>

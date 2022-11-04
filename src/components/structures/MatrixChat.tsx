@@ -24,7 +24,6 @@ import {
     MatrixEventEvent,
 } from 'matrix-js-sdk/src/matrix';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
-import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
@@ -139,6 +138,7 @@ import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
 import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
+import { VoiceBroadcastResumer } from '../../voice-broadcast';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -202,7 +202,7 @@ interface IState {
     // When showing Modal dialogs we need to set aria-hidden on the root app element
     // and disable it when there are no dialogs
     hideToSRUsers: boolean;
-    syncError?: MatrixError;
+    syncError?: Error;
     resizeNotifier: ResizeNotifier;
     serverConfig?: ValidatedServerConfig;
     ready: boolean;
@@ -234,6 +234,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private focusComposer: boolean;
     private subTitleStatus: string;
     private prevWindowWidth: number;
+    private voiceBroadcastResumer: VoiceBroadcastResumer;
 
     private readonly loggedInView: React.RefObject<LoggedInViewType>;
     private readonly dispatcherRef: string;
@@ -433,6 +434,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
+        if (this.voiceBroadcastResumer) this.voiceBroadcastResumer.destroy();
     }
 
     private onWindowResized = (): void => {
@@ -1454,7 +1456,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (data.error instanceof InvalidStoreError) {
                     Lifecycle.handleInvalidStoreError(data.error);
                 }
-                this.setState({ syncError: data.error || {} as MatrixError });
+                this.setState({ syncError: data.error });
             } else if (this.state.syncError) {
                 this.setState({ syncError: null });
             }
@@ -1618,6 +1620,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 });
             }
         });
+
+        this.voiceBroadcastResumer = new VoiceBroadcastResumer(cli);
     }
 
     /**
