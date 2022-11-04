@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, RefObject } from 'react';
+import React, { ForwardedRef, forwardRef, MutableRefObject } from 'react';
 
 import { useWysiwygSendActionHandler } from './hooks/useWysiwygSendActionHandler';
 import { WysiwygComposer } from './components/WysiwygComposer';
@@ -26,13 +26,16 @@ import { EmojiButton } from '../EmojiButton';
 import { AboveLeftOf } from '../../../structures/ContextMenu';
 
 interface ContentProps {
-    disabled: boolean;
+    disabled?: boolean;
     composerFunctions: ComposerFunctions;
 }
 
 const Content = forwardRef<HTMLElement, ContentProps>(
-    function Content({ disabled, composerFunctions }: ContentProps, forwardRef: RefObject<HTMLElement>) {
-        useWysiwygSendActionHandler(disabled, forwardRef, composerFunctions);
+    function Content(
+        { disabled = false, composerFunctions }: ContentProps,
+        forwardRef: ForwardedRef<HTMLElement>,
+    ) {
+        useWysiwygSendActionHandler(disabled, forwardRef as MutableRefObject<HTMLElement>, composerFunctions);
         return null;
     },
 );
@@ -55,7 +58,7 @@ export function SendWysiwygComposer(
         className="mx_SendWysiwygComposer"
         leftComponent={e2eStatus && <E2EIcon status={e2eStatus} />}
         // TODO add emoji support
-        rightComponent={<EmojiButton menuPosition={menuPosition} addEmoji={() => void 0} />}
+        rightComponent={<EmojiButton menuPosition={menuPosition} addEmoji={() => false} />}
         {...props}
     >
         { (ref, composerFunctions) => (

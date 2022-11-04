@@ -89,8 +89,8 @@ describe('PlainTextComposer', () => {
     });
 
     it('Should have data-is-expanded when it has two lines', async () => {
-        let resizeHandler: ResizeObserverCallback;
-        let editor: Element;
+        let resizeHandler: ResizeObserverCallback = jest.fn();
+        let editor: Element | null = null;
         const resizeObserver = ResizeObserver;
         global.ResizeObserver = jest.fn((handler) => {
             resizeHandler = handler;

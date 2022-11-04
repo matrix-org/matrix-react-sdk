@@ -34,7 +34,7 @@ export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonP
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu: React.ReactElement | null = null;
-    if (menuDisplayed) {
+    if (menuDisplayed && button.current) {
         const position = (
             menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
         );

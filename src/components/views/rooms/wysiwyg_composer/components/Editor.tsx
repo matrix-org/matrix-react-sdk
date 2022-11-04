@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, memo, ReactNode, RefObject } from 'react';
+import React, { forwardRef, memo, MutableRefObject, ReactNode } from 'react';
 
 import { useIsExpanded } from '../hooks/useIsExpanded';
 
@@ -28,9 +28,9 @@ interface EditorProps {
 
 export const Editor = memo(
     forwardRef<HTMLDivElement, EditorProps>(
-        function Editor({ disabled, leftComponent, rightComponent }: EditorProps, ref: RefObject<HTMLDivElement>,
+        function Editor({ disabled, leftComponent, rightComponent }: EditorProps, ref,
         ) {
-            const isExpanded = useIsExpanded(ref, HEIGHT_BREAKING_POINT);
+            const isExpanded = useIsExpanded(ref as MutableRefObject<HTMLDivElement | null>, HEIGHT_BREAKING_POINT);
 
             return <div
                 data-testid="WysiwygComposerEditor"
@@ -40,7 +40,7 @@ export const Editor = memo(
                 { leftComponent }
                 <div className="mx_WysiwygComposer_Editor_container">
                     <div className="mx_WysiwygComposer_Editor_content"
-                        ref={ref!}
+                        ref={ref}
                         contentEditable={!disabled}
                         role="textbox"
                         aria-multiline="true"

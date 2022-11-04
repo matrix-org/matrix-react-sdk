@@ -449,7 +449,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
         let composer: ReactNode;
         if (canSendMessages) {
-            if (this.state.isWysiwygLabEnabled) {
+            if (this.state.isWysiwygLabEnabled && menuPosition) {
                 composer =
                     <SendWysiwygComposer key="controls_input"
                         disabled={this.state.haveRecording}

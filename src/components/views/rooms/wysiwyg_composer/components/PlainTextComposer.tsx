@@ -28,7 +28,7 @@ import { Editor } from "./Editor";
 interface PlainTextComposerProps {
     disabled?: boolean;
     onChange?: (content: string) => void;
-    onSend: () => void;
+    onSend?: () => void;
     initialContent?: string;
     className?: string;
     leftComponent?: ReactNode;
@@ -41,7 +41,7 @@ interface PlainTextComposerProps {
 
 export function PlainTextComposer({
     className,
-    disabled,
+    disabled = false,
     onSend,
     onChange,
     children,
