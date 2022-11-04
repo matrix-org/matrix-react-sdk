@@ -302,7 +302,7 @@ export default class SettingsStore {
      */
     public static shouldHaveWarning(settingName: string): boolean {
         if (!SETTINGS[settingName]) return false;
-        return SETTINGS[settingName].shouldWarn;
+        return SETTINGS[settingName].shouldWarn ?? false;
     }
 
     public static getBetaInfo(settingName: string): ISetting["betaInfo"] {

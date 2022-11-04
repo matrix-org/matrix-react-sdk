@@ -122,12 +122,13 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
-export type SettingValueType = boolean |
-    number |
-    string |
-    number[] |
-    string[] |
-    Record<string, unknown>;
+export type SettingValueType = boolean
+    | number
+    | string
+    | number[]
+    | string[]
+    | Record<string, unknown>
+    | null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;

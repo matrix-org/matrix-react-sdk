@@ -86,7 +86,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         const description = SettingsStore.getDescription(this.props.name);
         const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
 
-        let disabledDescription: JSX.Element;
+        let disabledDescription: JSX.Element | null = null;
         if (this.props.disabled && this.props.disabledDescription) {
             disabledDescription = <div className="mx_SettingsFlag_microcopy">
                 { this.props.disabledDescription }
