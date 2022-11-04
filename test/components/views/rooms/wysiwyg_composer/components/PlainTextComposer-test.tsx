@@ -91,8 +91,7 @@ describe('PlainTextComposer', () => {
     it('Should have data-is-expanded when it has two lines', async () => {
         let resizeHandler: ResizeObserverCallback = jest.fn();
         let editor: Element | null = null;
-        const resizeObserver = ResizeObserver;
-        global.ResizeObserver = jest.fn((handler) => {
+        jest.spyOn(global, 'ResizeObserver').mockImplementation((handler) => {
             resizeHandler = handler;
             return {
                 observe: (element) => {
@@ -103,6 +102,10 @@ describe('PlainTextComposer', () => {
             };
         },
         );
+        jest.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => {
+            cb(0);
+            return 0;
+        });
 
         //When
         render(
@@ -118,10 +121,12 @@ describe('PlainTextComposer', () => {
             [{ contentBoxSize: [{ blockSize: 100 }] } as unknown as ResizeObserverEntry],
             {} as ResizeObserver,
         );
+        jest.runAllTimers();
 
         // Then
         expect(screen.getByTestId('WysiwygComposerEditor').attributes['data-is-expanded'].value).toBe('true');
 
-        global.ResizeObserver = resizeObserver;
+        (global.ResizeObserver as jest.Mock).mockRestore();
+        (global.requestAnimationFrame as jest.Mock).mockRestore();
     });
 });
