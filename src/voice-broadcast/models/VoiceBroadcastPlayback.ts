@@ -23,13 +23,14 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 import { SimpleObservable } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { Playback, PlaybackInterface, PlaybackState } from "../../audio/Playback";
 import { PlaybackManager } from "../../audio/PlaybackManager";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { MediaEventHelper } from "../../utils/MediaEventHelper";
 import { IDestroyable } from "../../utils/IDestroyable";
-import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "..";
+import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "..";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
 import { getReferenceRelationsForEvent } from "../../events";
 import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
@@ -62,18 +63,22 @@ export class VoiceBroadcastPlayback
     extends TypedEventEmitter<VoiceBroadcastPlaybackEvent, EventMap>
     implements IDestroyable, PlaybackInterface {
     private state = VoiceBroadcastPlaybackState.Stopped;
-    private infoState: VoiceBroadcastInfoState;
     private chunkEvents = new VoiceBroadcastChunkEvents();
     private playbacks = new Map<string, Playback>();
     private currentlyPlaying: MatrixEvent | null = null;
-    private lastInfoEvent: MatrixEvent;
-    private chunkRelationHelper: RelationsHelper;
-    private infoRelationHelper: RelationsHelper;
     /** @var total duration of all chunks in milliseconds */
     private duration = 0;
     /** @var current playback position in milliseconds */
     private position = 0;
     public readonly liveData = new SimpleObservable<number[]>();
+
+    // set vial addInfoEvent() in constructor
+    private infoState!: VoiceBroadcastInfoState;
+    private lastInfoEvent!: MatrixEvent;
+
+    // set via setUpRelationsHelper() in constructor
+    private chunkRelationHelper!: RelationsHelper;
+    private infoRelationHelper!: RelationsHelper;
 
     public constructor(
         public readonly infoEvent: MatrixEvent,
@@ -162,8 +167,12 @@ export class VoiceBroadcastPlayback
     }
 
     private async enqueueChunk(chunkEvent: MatrixEvent) {
-        const sequenceNumber = parseInt(chunkEvent.getContent()?.[VoiceBroadcastChunkEventType]?.sequence, 10);
-        if (isNaN(sequenceNumber) || sequenceNumber < 1) return;
+        const eventId = chunkEvent.getId();
+
+        if (!eventId) {
+            logger.warn("got voice broadcast chunk event without ID", this.infoEvent, chunkEvent);
+            return;
+        }
 
         const helper = new MediaEventHelper(chunkEvent);
         const blob = await helper.sourceBlob.value;
@@ -171,7 +180,7 @@ export class VoiceBroadcastPlayback
         const playback = PlaybackManager.instance.createPlaybackInstance(buffer);
         await playback.prepare();
         playback.clockInfo.populatePlaceholdersFrom(chunkEvent);
-        this.playbacks.set(chunkEvent.getId(), playback);
+        this.playbacks.set(eventId, playback);
         playback.on(UPDATE_EVENT, (state) => this.onPlaybackStateChange(chunkEvent, state));
         playback.clockInfo.liveData.onUpdate(([position]) => {
             this.onPlaybackPositionUpdate(chunkEvent, position);
@@ -239,7 +248,25 @@ export class VoiceBroadcastPlayback
     private async playEvent(event: MatrixEvent): Promise<void> {
         this.setState(VoiceBroadcastPlaybackState.Playing);
         this.currentlyPlaying = event;
-        await this.playbacks.get(event.getId())?.play();
+        await this.getPlaybackForEvent(event)?.play();
+    }
+
+    private getPlaybackForEvent(event: MatrixEvent): Playback | undefined {
+        const eventId = event.getId();
+
+        if (!eventId) {
+            logger.warn("event without id occurred");
+            return;
+        }
+
+        const playback = this.playbacks.get(eventId);
+
+        if (!playback) {
+            // logging error, because this should not happen
+            logger.warn("unable to find playback for event", event);
+        }
+
+        return playback;
     }
 
     public get currentState(): PlaybackState {
@@ -260,11 +287,20 @@ export class VoiceBroadcastPlayback
 
         if (!event) return;
 
-        const currentPlayback = this.playbacks.get(this.currentlyPlaying.getId());
-        const skipToPlayback = this.playbacks.get(event.getId());
+        const currentPlayback = this.currentlyPlaying
+            ? this.getPlaybackForEvent(this.currentlyPlaying)
+            : null;
+
+        const skipToPlayback = this.getPlaybackForEvent(event);
+
+        if (!skipToPlayback) {
+            logger.error("voice broadcast chunk to skip to not found", event);
+            return;
+        }
+
         this.currentlyPlaying = event;
 
-        if (currentPlayback !== skipToPlayback) {
+        if (currentPlayback && currentPlayback !== skipToPlayback) {
             currentPlayback.off(UPDATE_EVENT, this.onPlaybackStateChange);
             await currentPlayback.stop();
             currentPlayback.on(UPDATE_EVENT, this.onPlaybackStateChange);
@@ -291,7 +327,7 @@ export class VoiceBroadcastPlayback
             ? chunkEvents[0] // start at the beginning for an ended voice broadcast
             : chunkEvents[chunkEvents.length - 1]; // start at the current chunk for an ongoing voice broadcast
 
-        if (this.playbacks.has(toPlay?.getId())) {
+        if (this.playbacks.has(toPlay?.getId() || "")) {
             return this.playEvent(toPlay);
         }
 
@@ -310,7 +346,7 @@ export class VoiceBroadcastPlayback
 
         this.setState(VoiceBroadcastPlaybackState.Paused);
         if (!this.currentlyPlaying) return;
-        this.playbacks.get(this.currentlyPlaying.getId()).pause();
+        this.getPlaybackForEvent(this.currentlyPlaying)?.pause();
     }
 
     public resume(): void {
@@ -321,7 +357,7 @@ export class VoiceBroadcastPlayback
         }
 
         this.setState(VoiceBroadcastPlaybackState.Playing);
-        this.playbacks.get(this.currentlyPlaying.getId()).play();
+        this.getPlaybackForEvent(this.currentlyPlaying)?.play();
     }
 
     /**
