@@ -30,10 +30,6 @@ describe("NotificatinSettingsTab", () => {
         return render(<NotificationSettingsTab roomId={roomId} closeSettingsFn={() => { }} />);
     };
 
-    const getElementOfSelector = (tab: RenderResult, selector: string) => {
-        return tab.container.querySelector(selector);
-    };
-
     beforeEach(() => {
         stubClient();
         cli = MatrixClientPeg.get();
@@ -42,12 +38,15 @@ describe("NotificatinSettingsTab", () => {
         NotificationSettingsTab.contextType = React.createContext(cli);
     });
 
-    it("should prevent »Settings« link click from bubbling up to radio buttons", async () => {
+    it("should prevent »Settings« link click from bubbling up to radio buttons", () => {
         const tab = renderTab();
         const event = new MouseEvent("click", { bubbles: true });
         Object.assign(event, { preventDefault: jest.fn() });
 
-        fireEvent(getElementOfSelector(tab, "div.mx_AccessibleButton"), event);
+        const settingsLink = tab.container.querySelector("div.mx_AccessibleButton");
+        if (!settingsLink) throw new Error("settings link does not exist.");
+
+        fireEvent(settingsLink, event);
         expect(event.preventDefault).toHaveBeenCalledTimes(1);
     });
 });
