@@ -365,7 +365,7 @@ export default class SettingsStore {
     public static getValueAt(
         level: SettingLevel,
         settingName: string,
-        roomId: string = null,
+        roomId: string | null = null,
         explicit = false,
         excludeDefault = false,
     ): any {
