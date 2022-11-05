@@ -1,0 +1,53 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import React from "react";
+import { fireEvent, render, RenderResult } from "@testing-library/react";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+
+import NotificationSettingsTab from "../../../../../../src/components/views/settings/tabs/room/NotificationSettingsTab";
+import { mkStubRoom, stubClient } from "../../../../../test-utils";
+import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
+
+describe("NotificatinSettingsTab", () => {
+    const roomId = "!room:example.com";
+    let cli: MatrixClient;
+
+    const renderTab = (): RenderResult => {
+        return render(<NotificationSettingsTab roomId={roomId} closeSettingsFn={() => { }} />);
+    };
+
+    const getElementOfSelector = (tab: RenderResult, selector: string) => {
+        return tab.container.querySelector(selector);
+    };
+
+    beforeEach(() => {
+        stubClient();
+        cli = MatrixClientPeg.get();
+        mkStubRoom(roomId, "test room", cli);
+
+        NotificationSettingsTab.contextType = React.createContext(cli);
+    });
+
+    it("should prevent »Settings« link click from bubbling up to radio buttons", async () => {
+        const tab = renderTab();
+        const event = new MouseEvent("click", { bubbles: true });
+        Object.assign(event, { preventDefault: jest.fn() });
+
+        fireEvent(getElementOfSelector(tab, "div.mx_AccessibleButton"), event);
+        expect(event.preventDefault).toHaveBeenCalledTimes(1);
+    });
+});
