@@ -430,7 +430,7 @@ export default class SettingsStore {
     private static getFinalValue(
         setting: ISetting,
         level: SettingLevel,
-        roomId: string,
+        roomId: string | null,
         calculatedValue: any,
         calculatedAtLevel: SettingLevel,
     ): any {
