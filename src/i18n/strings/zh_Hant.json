@@ -3680,5 +3680,6 @@
     "Renaming sessions": "重新命名工作階段",
     "Please be aware that session names are also visible to people you communicate with.": "請注意，與您交談的人也可以看到工作階段名稱。",
     "Are you sure you want to sign out of %(count)s sessions?|one": "您確定您想要登出 %(count)s 個工作階段嗎？",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "您確定您想要登出 %(count)s 個工作階段嗎？"
+    "Are you sure you want to sign out of %(count)s sessions?|other": "您確定您想要登出 %(count)s 個工作階段嗎？",
+    "Hide formatting": "隱藏格式化"
 }
