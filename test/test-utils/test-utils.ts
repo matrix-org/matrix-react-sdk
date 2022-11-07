@@ -191,6 +191,7 @@ export function createTestClient(): MatrixClient {
         } as unknown as MediaHandler),
         uploadContent: jest.fn(),
         getEventMapper: () => (opts) => new MatrixEvent(opts),
+        leaveRoomChain: jest.fn(roomId => ({ [roomId]: null })),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
