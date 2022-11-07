@@ -74,7 +74,7 @@ describe("VoiceBroadcastBody", () => {
         mocked(client.relations).mockClear();
         mocked(client.relations).mockResolvedValue({ events: [] });
         room = new Room(roomId, client, userId);
-        mocked(client.getRoom).mockImplementation((getRoomId: string | undefined) => {
+        mocked(client.getRoom).mockImplementation((getRoomId?: string) => {
             if (getRoomId === roomId) return room;
             return null;
         });

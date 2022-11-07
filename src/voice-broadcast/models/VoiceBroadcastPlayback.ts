@@ -170,13 +170,12 @@ export class VoiceBroadcastPlayback
     };
 
     private async enqueueChunks(): Promise<void> {
-        const promises: Promise<void>[] = [];
-
-        this.chunkEvents.getEvents().forEach((event: MatrixEvent) => {
+        const promises = this.chunkEvents.getEvents().reduce((promises, event: MatrixEvent) => {
             if (!this.playbacks.has(event.getId() || "")) {
                 promises.push(this.enqueueChunk(event));
             }
-        });
+            return promises;
+        }, [] as Promise<void>[]);
 
         await Promise.all(promises);
     }

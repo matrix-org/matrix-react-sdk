@@ -51,7 +51,7 @@ describe("RelationsHelper", () => {
         userId = client.getUserId() || "";
         mocked(client.relations).mockClear();
         room = mkStubRoom(roomId, "test room", client);
-        mocked(client.getRoom).mockImplementation((getRoomId: string | undefined) => {
+        mocked(client.getRoom).mockImplementation((getRoomId?: string) => {
             if (getRoomId === roomId) {
                 return room;
             }
