@@ -716,7 +716,7 @@ export const Commands = [
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
-            let targetRoomId: string;
+            let targetRoomId: string | undefined;
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
