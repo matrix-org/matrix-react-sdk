@@ -20,10 +20,7 @@ import { SimpleObservable } from "matrix-widget-api";
 import { Playback, PlaybackState } from "../../src/audio/Playback";
 import { PlaybackClock } from "../../src/audio/PlaybackClock";
 import { UPDATE_EVENT } from "../../src/stores/AsyncStore";
-
-type PublicInterface<T> = {
-    [P in keyof T]: T[P];
-};
+import { PublicInterface } from "../@types/common";
 
 export const createTestPlayback = (): Playback => {
     const eventEmitter = new EventEmitter();
@@ -63,6 +60,9 @@ export const createTestPlayback = (): Playback => {
         eventNames: eventEmitter.eventNames.bind(eventEmitter),
         prependListener: eventEmitter.prependListener.bind(eventEmitter),
         prependOnceListener: eventEmitter.prependOnceListener.bind(eventEmitter),
+        liveData: new SimpleObservable<number[]>(),
+        durationSeconds: 31415,
+        timeSeconds: 3141,
     } as PublicInterface<Playback> as Playback;
 };
 
