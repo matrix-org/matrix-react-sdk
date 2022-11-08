@@ -91,7 +91,7 @@ export type GetRelationsForEvent = (
     eventId: string,
     relationType: RelationType | string,
     eventType: EventType | string,
-) => Relations | undefined;
+) => Relations | null | undefined;
 
 // Our component structure for EventTiles on the timeline is:
 //
