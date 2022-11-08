@@ -424,7 +424,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 if (messagePanelNode) {
                     const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
                     renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
-                        return renderedEvent.getAttribute('data-event-id');
+                        return renderedEvent.getAttribute('data-event-id')!;
                     });
                 }
             }
@@ -816,7 +816,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // We could skip an update if the power level change didn't cross the
         // threshold for `VISIBILITY_CHANGE_TYPE`.
         for (const event of this.state.events) {
-            const tile = this.messagePanel.current?.getTileForEventId(event.getId());
+            const stateEventId = event.getId();
+            if (!stateEventId) {
+                continue;
+            }
+
+            const tile = this.messagePanel.current?.getTileForEventId(stateEventId);
             if (!tile) {
                 // The event is not visible, nothing to re-render.
                 continue;

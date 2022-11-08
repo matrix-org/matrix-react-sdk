@@ -145,7 +145,7 @@ interface IProps {
 
     // the userid of our user. This is used to suppress the read marker
     // for pending messages.
-    ourUserId?: string;
+    ourUserId: string | null | undefined;
 
     // whether the timeline can visually go back any further
     canBackPaginate?: boolean;
@@ -159,7 +159,7 @@ interface IProps {
     stickyBottom?: boolean;
 
     // className for the panel
-    className: string;
+    className?: string;
 
     // show twelve hour timestamps
     isTwelveHour?: boolean;
@@ -173,7 +173,7 @@ interface IProps {
     // which layout to use
     layout?: Layout;
 
-    resizeNotifier: ResizeNotifier;
+    resizeNotifier?: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
     editState?: EditorStateTransfer;
 
