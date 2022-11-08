@@ -263,7 +263,7 @@ function setupRoomWithHistoricalMessagesAndMarker({
         const resp = await asMatrixClient.createRoom({
             preset: win.matrixcs.Preset.PublicChat,
             name: "test-msc2716",
-            room_version: "org.matrix.msc2716v3",
+            room_version: "org.matrix.msc2716v4",
         });
         cy.wrap(resp.room_id).as('roomId');
     });
