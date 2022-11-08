@@ -145,7 +145,7 @@ interface IProps {
 
     // the userid of our user. This is used to suppress the read marker
     // for pending messages.
-    ourUserId: string | null | undefined;
+    ourUserId?: string | null | undefined;
 
     // whether the timeline can visually go back any further
     canBackPaginate?: boolean;
@@ -186,7 +186,7 @@ interface IProps {
     // helper function to access relations for an event
     onUnfillRequest?(backwards: boolean, scrollToken: string): void;
 
-    getRelationsForEvent?(eventId: string, relationType: string, eventType: string): Relations;
+    getRelationsForEvent?(eventId: string, relationType: string, eventType: EventType | string): Relations;
 
     hideThreadedMessages?: boolean;
     disableGrouping?: boolean;
