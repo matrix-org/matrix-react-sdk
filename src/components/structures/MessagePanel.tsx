@@ -186,7 +186,7 @@ interface IProps {
     // helper function to access relations for an event
     onUnfillRequest?(backwards: boolean, scrollToken: string): void;
 
-    getRelationsForEvent?(eventId: string, relationType: string, eventType: string): Relations;
+    getRelationsForEvent?(eventId: string, relationType: string, eventType: EventType | string): Relations | undefined;
 
     hideThreadedMessages?: boolean;
     disableGrouping?: boolean;

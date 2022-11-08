@@ -87,7 +87,11 @@ import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from './NotificationBadge/UnreadNotificationBadge';
 
-export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
+export type GetRelationsForEvent = (
+    eventId: string,
+    relationType: string,
+    eventType: EventType | string,
+) => Relations | undefined;
 
 // Our component structure for EventTiles on the timeline is:
 //
