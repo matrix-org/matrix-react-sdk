@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
-import { Relations } from 'matrix-js-sdk/src/models/relations';
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
