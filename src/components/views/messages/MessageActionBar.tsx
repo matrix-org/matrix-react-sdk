@@ -59,6 +59,7 @@ import { Action } from '../../../dispatcher/actions';
 import SdkConfig from "../../../SdkConfig";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
+import { GetRelationsForEvent } from '../rooms/EventTile';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -67,11 +68,7 @@ interface IOptionsButtonProps {
     getReplyChain: () => ReplyChain;
     permalinkCreator: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: string,
-        eventType: string
-    ) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 const OptionsButton: React.FC<IOptionsButtonProps> = ({
@@ -307,11 +304,7 @@ interface IMessageActionBarProps {
     onFocusChange?: (menuDisplayed: boolean) => void;
     toggleThreadExpanded: () => void;
     isQuoteExpanded?: boolean;
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: RelationType | string,
-        eventType: string
-    ) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 export default class MessageActionBar extends React.PureComponent<IMessageActionBarProps> {

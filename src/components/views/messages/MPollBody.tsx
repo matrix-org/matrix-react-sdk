@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
+import { RelationsEvent } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
     M_POLL_END,
@@ -49,11 +49,7 @@ interface IState {
 }
 
 export function createVoteRelations(
-    getRelationsForEvent: (
-        eventId: string,
-        relationType: string,
-        eventType: string
-    ) => Relations,
+    getRelationsForEvent: GetRelationsForEvent,
     eventId: string,
 ) {
     return new RelatedRelations([
@@ -73,11 +69,7 @@ export function createVoteRelations(
 export function findTopAnswer(
     pollEvent: MatrixEvent,
     matrixClient: MatrixClient,
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: string,
-        eventType: string
-    ) => Relations,
+    getRelationsForEvent?: GetRelationsForEvent,
 ): string {
     if (!getRelationsForEvent) {
         return "";
@@ -132,11 +124,7 @@ export function findTopAnswer(
 export function isPollEnded(
     pollEvent: MatrixEvent,
     matrixClient: MatrixClient,
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: string,
-        eventType: string
-    ) => Relations,
+    getRelationsForEvent?: GetRelationsForEvent,
 ): boolean {
     if (!getRelationsForEvent) {
         return false;

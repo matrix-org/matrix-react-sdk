@@ -33,6 +33,7 @@ import MFileBody from "../messages/MFileBody";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
+import { GetRelationsForEvent } from "../rooms/EventTile";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -41,9 +42,7 @@ interface IProps {
     highlightLink?: string;
     onHeightChanged?(): void;
     toggleExpandedQuote?: () => void;
-    getRelationsForEvent?: (
-        (eventId: string, relationType: string, eventType: string) => Relations
-    );
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 export default class ReplyTile extends React.PureComponent<IProps> {
