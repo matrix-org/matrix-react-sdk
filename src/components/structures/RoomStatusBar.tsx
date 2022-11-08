@@ -310,7 +310,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             } else {
                 title = _t(
                     "Your message wasn't sent because it ran into a M_RESOURCE_LIMIT_EXCEEDED error. " +
-                    "We were unable to determine the exact type of error because the response did not include it." +
+                    "We were unable to determine the exact type of error because the response did not include it. " +
                     "Contact your homeserver administrator.",
                 );
             }
