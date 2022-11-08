@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { mount } from "enzyme";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { act } from 'react-dom/test-utils';
 import { Room } from "matrix-js-sdk/src/models/room";
 import { PendingEventOrdering } from 'matrix-js-sdk/src/client';
@@ -31,6 +31,7 @@ import { getUnsentMessages } from "../../../src/components/structures/RoomStatus
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { mkEvent, stubClient } from "../../test-utils/test-utils";
 import { mkThread } from "../../test-utils/threads";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 // Fake date to give a predictable snapshot
 const realDateNow = Date.now;
@@ -51,6 +52,14 @@ describe("RoomStatusBar", () => {
         stubClient();
         client = MatrixClientPeg.get();
     });
+
+    const customRender = (room: Room) => {
+        return render(
+            <MatrixClientContext.Provider value={client}>
+                <RoomStatusBar room={room} />
+            </MatrixClientContext.Provider>,
+        );
+    };
 
     describe("getUnsentMessages", () => {
         const ROOM_ID = "!roomId:example.org";
@@ -119,11 +128,8 @@ describe("RoomStatusBar", () => {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
 
-        const wrapper = mount(<RoomStatusBar room={r1} />, {
-            wrappingComponent: MatrixClientContext.Provider,
-            wrappingComponentProps: { value: client },
-        });
-        expect(wrapper).toMatchSnapshot();
+        const wrapper = customRender(r1);
+        expect(wrapper.asFragment()).toMatchSnapshot();
     });
 
     describe('connectivity lost bar', () => {
@@ -140,11 +146,8 @@ describe("RoomStatusBar", () => {
                 pendingEventOrdering: PendingEventOrdering.Detached,
             });
 
-            const wrapper = mount(<RoomStatusBar room={r1} />, {
-                wrappingComponent: MatrixClientContext.Provider,
-                wrappingComponentProps: { value: client },
-            });
-            expect(wrapper).toMatchSnapshot();
+            const wrapper = customRender(r1);
+            expect(wrapper.asFragment()).toMatchSnapshot();
         });
 
         it('connectivity lost bar has priority over the timeline refresh bar', () => {
@@ -164,11 +167,8 @@ describe("RoomStatusBar", () => {
             // Show timeline needs refresh bar
             r1.setTimelineNeedsRefresh(true);
 
-            const wrapper = mount(<RoomStatusBar room={r1} />, {
-                wrappingComponent: MatrixClientContext.Provider,
-                wrappingComponentProps: { value: client },
-            });
-            expect(wrapper).toMatchSnapshot();
+            const wrapper = customRender(r1);
+            expect(wrapper.asFragment()).toMatchSnapshot();
         });
     });
 
@@ -180,11 +180,8 @@ describe("RoomStatusBar", () => {
             // Show timeline needs refresh bar
             r1.setTimelineNeedsRefresh(true);
 
-            const wrapper = mount(<RoomStatusBar room={r1} />, {
-                wrappingComponent: MatrixClientContext.Provider,
-                wrappingComponentProps: { value: client },
-            });
-            expect(wrapper).toMatchSnapshot();
+            const wrapper = customRender(r1);
+            expect(wrapper.asFragment()).toMatchSnapshot();
         });
 
         it('should refresh timeline for room when button clicked', () => {
@@ -196,61 +193,68 @@ describe("RoomStatusBar", () => {
 
             r1.refreshLiveTimeline = jest.fn();
 
-            const wrapper = mount(<RoomStatusBar room={r1} />, {
-                wrappingComponent: MatrixClientContext.Provider,
-                wrappingComponentProps: { value: client },
+            const wrapper = customRender(r1);
+
+            act(() => {
+                fireEvent.click(wrapper.getByTestId('refresh-timeline-button'));
             });
 
-            const refreshTimelineButton = wrapper.find('AccessibleButton.mx_RoomStatusBar_refreshTimelineBtn');
-            refreshTimelineButton.simulate('click');
+            // Make sure that the SDK was called to refresh the timeline
+            expect(r1.refreshLiveTimeline).toHaveBeenCalled();
+        });
+
+        it('should show error state with option to submit debug logs ' +
+           'in timeline refresh bar when something went wrong while refreshing', async () => {
+            const r1 = new Room("r1", client, "@name:example.com", {
+                pendingEventOrdering: PendingEventOrdering.Detached,
+            });
+            // Show timeline needs refresh bar
+            r1.setTimelineNeedsRefresh(true);
+
+            const wrapper = customRender(r1);
+
+            r1.refreshLiveTimeline = jest.fn().mockRejectedValue(new Error('Fake error in test'));
+            act(() => {
+                fireEvent.click(wrapper.getByTestId('refresh-timeline-button'));
+            });
 
             // Make sure that the SDK was called to refresh the timeline
             expect(r1.refreshLiveTimeline).toHaveBeenCalled();
 
-            // Expect the refresh timeline bar to be hidden now
-            expect(wrapper).toMatchSnapshot();
-        });
+            // Expect error to be shown. We have to wait for the UI to transition.
+            await waitFor(() => expect(wrapper.getByTestId('historical-import-detected-error-content')).toBeDefined());
 
-        it('should show error state with option to submit debug logs ' +
-           'in timeline refresh bar when something went wrong while refreshing', () => {
-            const r1 = new Room("r1", client, "@name:example.com", {
-                pendingEventOrdering: PendingEventOrdering.Detached,
-            });
-            // Show timeline needs refresh bar
-            r1.setTimelineNeedsRefresh(true);
-
-            const wrapper = mount(<RoomStatusBar room={r1} />, {
-                wrappingComponent: MatrixClientContext.Provider,
-                wrappingComponentProps: { value: client },
-            });
-            act(() => {
-                wrapper.setState({
-                    refreshError: new Error('Fake error in test'),
-                });
-            });
-            expect(wrapper).toMatchSnapshot();
+            // Expect an option to submit debug logs to be shown
+            expect(wrapper.getByTestId('historical-import-detected-error-submit-debug-logs-button')).toBeDefined();
         });
 
         it('should show error state without submit debug logs option ' +
-           'in timeline refresh bar when ConnectionError while refreshing', () => {
+           'in timeline refresh bar when ConnectionError while refreshing', async () => {
             const r1 = new Room("r1", client, "@name:example.com", {
                 pendingEventOrdering: PendingEventOrdering.Detached,
             });
             // Show timeline needs refresh bar
             r1.setTimelineNeedsRefresh(true);
 
-            const wrapper = mount(<RoomStatusBar room={r1} />, {
-                wrappingComponent: MatrixClientContext.Provider,
-                wrappingComponentProps: { value: client },
-            });
+            const wrapper = customRender(r1);
+
+            const connectionError = new Error('Fake connection error in test');
+            connectionError.name = "ConnectionError";
+            r1.refreshLiveTimeline = jest.fn().mockRejectedValue(connectionError);
             act(() => {
-                const connectionError = new Error('Fake connection error in test');
-                connectionError.name = "ConnectionError";
-                wrapper.setState({
-                    refreshError: connectionError,
-                });
+                fireEvent.click(wrapper.getByTestId('refresh-timeline-button'));
             });
-            expect(wrapper).toMatchSnapshot();
+
+            // Make sure that the SDK was called to refresh the timeline
+            expect(r1.refreshLiveTimeline).toHaveBeenCalled();
+
+            // Expect error to be shown
+            await waitFor(() => expect(wrapper.getByTestId('historical-import-detected-error-content')).toBeDefined());
+
+            // The submit debug logs option should *NOT* be shown.
+            //
+            // We have to use `queryBy` so that it can return `null` for something that does not exist.
+            expect(wrapper.queryByTestId('historical-import-detected-error-submit-debug-logs-button]')).toBeNull();
         });
     });
 });

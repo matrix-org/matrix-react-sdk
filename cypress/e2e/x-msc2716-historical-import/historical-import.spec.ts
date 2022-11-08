@@ -235,7 +235,7 @@ function sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient) {
     });
 
     // Ensure the "History import detected" notice is shown
-    cy.get(`[data-test-id="historical-import-detected-status-bar"]`).should("exist");
+    cy.get(`[data-testid="historical-import-detected-status-bar"]`).should("exist");
 }
 
 /**
@@ -412,7 +412,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Ensure historical messages are now shown
         cy.all([
@@ -437,7 +437,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Ensure historical messages are now shown
         cy.all([
@@ -459,7 +459,7 @@ describe("MSC2716: Historical Import", () => {
         sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient);
 
         // Press "Refresh timeline"
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Ensure all of the messages still show afterwards
         cy.all([
@@ -511,7 +511,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Wait for the timeline to go blank (meaning it was reset)
         // and in the middle of the refrsehing timeline function.
@@ -611,13 +611,13 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Make sure the request was intercepted and thew an error
         cy.wait('@contextRequestThatWillTryToMakeNewTimeline').its('response.statusCode').should('eq', 500);
 
         // Make sure we tell the user that an error happened
-        cy.get(`[data-test-id="historical-import-detected-error-content"]`).should("exist");
+        cy.get(`[data-testid="historical-import-detected-error-content"]`).should("exist");
 
         // Allow the requests to succeed now
         cy.all([
@@ -636,7 +636,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline" again, this time the network request should succeed
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Make sure the request was intercepted and succeeded
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
@@ -741,7 +741,7 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Press "Refresh timeline"
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Make sure the request was intercepted and thew an error
         cy.wait('@contextRequestThatWillTryToMakeNewTimeline').its('response.statusCode').should('eq', 500);
@@ -775,7 +775,7 @@ describe("MSC2716: Historical Import", () => {
         // draw from locally. So `MatrixClient::fetchLatestLiveTimeline()` will
         // fetch the latest from `/messages?dir=b` which will return
         // `eventIdThreadedMessage` as the latest event in the room.
-        cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+        cy.get(`[data-testid="refresh-timeline-button"]`).click();
 
         // Make sure the request was intercepted and succeeded
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
