@@ -18,7 +18,7 @@ import { EventEmitter } from "events";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { Direction, EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { IEvent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventTimelineSet, IRoomTimelineData } from 'matrix-js-sdk/src/models/event-timeline-set';
 import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
 import { TimelineIndex, TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
@@ -27,12 +27,13 @@ import { IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { SyncState } from "matrix-js-sdk/src/sync";
 
 import PlatformPeg from "../PlatformPeg";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
-import { ICrawlerCheckpoint, ILoadArgs, ISearchArgs } from "./BaseEventIndexManager";
+import { ICrawlerCheckpoint, IEventAndProfile, IIndexStats, ILoadArgs, ISearchArgs } from "./BaseEventIndexManager";
 
 // The time in ms that the crawler will wait loop iterations if there
 // have not been any checkpoints to consume in the last iteration.
@@ -45,6 +46,11 @@ interface ICrawler {
     cancel(): void;
 }
 
+interface Profile {
+    displayname?: string;
+    avatar_url?: string;
+}
+
 /*
  * Event indexing class that wraps the platform specific event indexing.
  */
@@ -53,7 +59,7 @@ export default class EventIndex extends EventEmitter {
     private crawler: ICrawler = null;
     private currentCheckpoint: ICrawlerCheckpoint = null;
 
-    public async init() {
+    public async init(): Promise<void> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
 
         this.crawlerCheckpoints = await indexManager.loadCheckpoints();
@@ -65,7 +71,7 @@ export default class EventIndex extends EventEmitter {
     /**
      * Register event listeners that are necessary for the event index to work.
      */
-    public registerListeners() {
+    public registerListeners(): void {
         const client = MatrixClientPeg.get();
 
         client.on(ClientEvent.Sync, this.onSync);
@@ -77,7 +83,7 @@ export default class EventIndex extends EventEmitter {
     /**
      * Remove the event index specific event listeners.
      */
-    public removeListeners() {
+    public removeListeners(): void {
         const client = MatrixClientPeg.get();
         if (client === null) return;
 
@@ -90,18 +96,14 @@ export default class EventIndex extends EventEmitter {
     /**
      * Get crawler checkpoints for the encrypted rooms and store them in the index.
      */
-    public async addInitialCheckpoints() {
+    public async addInitialCheckpoints(): Promise<void> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         const client = MatrixClientPeg.get();
         const rooms = client.getRooms();
 
-        const isRoomEncrypted = (room) => {
-            return client.isRoomEncrypted(room.roomId);
-        };
-
         // We only care to crawl the encrypted rooms, non-encrypted
         // rooms can use the search provided by the homeserver.
-        const encryptedRooms = rooms.filter(isRoomEncrypted);
+        const encryptedRooms = rooms.filter((room: Room) => client.isRoomEncrypted(room.roomId));
 
         logger.log("EventIndex: Adding initial crawler checkpoints");
 
@@ -155,10 +157,10 @@ export default class EventIndex extends EventEmitter {
      *     - Every other sync, tell the event index to commit all the queued up
      *         live events
      */
-    private onSync = async (state: string, prevState: string, data: object) => {
+    private onSync = async (state: SyncState, prevState: SyncState): Promise<void> => {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
 
-        if (prevState === "PREPARED" && state === "SYNCING") {
+        if (prevState === SyncState.Prepared && state === SyncState.Syncing) {
             // If our indexer is empty we're most likely running Element the
             // first time with indexing support or running it with an
             // initial sync. Add checkpoints to crawl our encrypted rooms.
@@ -169,7 +171,7 @@ export default class EventIndex extends EventEmitter {
             return;
         }
 
-        if (prevState === "SYNCING" && state === "SYNCING") {
+        if (prevState === SyncState.Syncing && state === SyncState.Syncing) {
             // A sync was done, presumably we queued up some live events,
             // commit them now.
             await indexManager.commitLiveEvents();
@@ -190,7 +192,7 @@ export default class EventIndex extends EventEmitter {
         toStartOfTimeline: boolean,
         removed: boolean,
         data: IRoomTimelineData,
-    ) => {
+    ): Promise<void> => {
         if (!room) return; // notification timeline, we'll get this event again with a room specific timeline
 
         const client = MatrixClientPeg.get();
@@ -212,7 +214,7 @@ export default class EventIndex extends EventEmitter {
         await this.addLiveEventToIndex(ev);
     };
 
-    private onRoomStateEvent = async (ev: MatrixEvent, state: RoomState) => {
+    private onRoomStateEvent = async (ev: MatrixEvent, state: RoomState): Promise<void> => {
         if (!MatrixClientPeg.get().isRoomEncrypted(state.roomId)) return;
 
         if (ev.getType() === EventType.RoomEncryption && !(await this.isRoomIndexed(state.roomId))) {
@@ -225,7 +227,7 @@ export default class EventIndex extends EventEmitter {
      * Removes a redacted event from our event index.
      * We cannot rely on Room.redaction as this only fires if the redaction applied to an event the js-sdk has loaded.
      */
-    private redactEvent = async (ev: MatrixEvent) => {
+    private redactEvent = async (ev: MatrixEvent): Promise<void> => {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
 
         try {
@@ -241,12 +243,11 @@ export default class EventIndex extends EventEmitter {
      * Listens for timeline resets that are caused by a limited timeline to
      * re-add checkpoints for rooms that need to be crawled again.
      */
-    private onTimelineReset = async (room: Room, timelineSet: EventTimelineSet, resetAllTimelines: boolean) => {
+    private onTimelineReset = async (room: Room): Promise<void> => {
         if (room === null) return;
         if (!MatrixClientPeg.get().isRoomEncrypted(room.roomId)) return;
 
-        logger.log("EventIndex: Adding a checkpoint because of a limited timeline",
-            room.roomId);
+        logger.log("EventIndex: Adding a checkpoint because of a limited timeline", room.roomId);
 
         this.addRoomCheckpoint(room.roomId, false);
     };
@@ -289,7 +290,7 @@ export default class EventIndex extends EventEmitter {
         return validEventType && validMsgType && hasContentValue;
     }
 
-    private eventToJson(ev: MatrixEvent) {
+    private eventToJson(ev: MatrixEvent): IEvent {
         const jsonEvent: any = ev.toJSON();
         const e = ev.isEncrypted() ? jsonEvent.decrypted : jsonEvent;
 
@@ -321,7 +322,7 @@ export default class EventIndex extends EventEmitter {
      *
      * @param {MatrixEvent} ev The event that should be added to the index.
      */
-    private async addLiveEventToIndex(ev: MatrixEvent) {
+    private async addLiveEventToIndex(ev: MatrixEvent): Promise<void> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
 
         if (!this.isValidEvent(ev)) return;
@@ -340,11 +341,11 @@ export default class EventIndex extends EventEmitter {
      * Emmit that the crawler has changed the checkpoint that it's currently
      * handling.
      */
-    private emitNewCheckpoint() {
+    private emitNewCheckpoint(): void {
         this.emit("changedCheckpoint", this.currentRoom());
     }
 
-    private async addEventsFromLiveTimeline(timeline: EventTimeline) {
+    private async addEventsFromLiveTimeline(timeline: EventTimeline): Promise<void> {
         const events = timeline.getEvents();
 
         for (let i = 0; i < events.length; i++) {
@@ -353,7 +354,7 @@ export default class EventIndex extends EventEmitter {
         }
     }
 
-    private async addRoomCheckpoint(roomId: string, fullCrawl = false) {
+    private async addRoomCheckpoint(roomId: string, fullCrawl = false): Promise<void> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         const client = MatrixClientPeg.get();
         const room = client.getRoom(roomId);
@@ -403,7 +404,7 @@ export default class EventIndex extends EventEmitter {
      * crawl, otherwise create a new checkpoint and push it to the
      * crawlerCheckpoints queue, so we go through them in a round-robin way.
      */
-    private async crawlerFunc() {
+    private async crawlerFunc(): Promise<void> {
         let cancelled = false;
 
         const client = MatrixClientPeg.get();
@@ -512,15 +513,15 @@ export default class EventIndex extends EventEmitter {
                 stateEvents = res.state.map(eventMapper);
             }
 
-            const profiles = {};
+            const profiles = new Map<string, Profile>();
 
             stateEvents.forEach(ev => {
                 if (ev.event.content &&
                     ev.event.content.membership === "join") {
-                    profiles[ev.event.sender] = {
+                    profiles.set(ev.event.sender, {
                         displayname: ev.event.content.displayname,
                         avatar_url: ev.event.content.avatar_url,
-                    };
+                    });
                 }
             });
 
@@ -547,18 +548,12 @@ export default class EventIndex extends EventEmitter {
             // Let us convert the events back into a format that EventIndex can
             // consume.
             const events = filteredEvents.map((ev) => {
-                const e = this.eventToJson(ev);
-
-                let profile = {};
-                if (e.sender in profiles) profile = profiles[e.sender];
-                const object = {
-                    event: e,
-                    profile: profile,
-                };
-                return object;
+                const event = this.eventToJson(ev);
+                const profile = profiles.get(event.sender) ?? {};
+                return { event, profile } as IEventAndProfile;
             });
 
-            let newCheckpoint;
+            let newCheckpoint: ICrawlerCheckpoint;
 
             // The token can be null for some reason. Don't create a checkpoint
             // in that case since adding it to the db will fail.
@@ -585,8 +580,7 @@ export default class EventIndex extends EventEmitter {
                     }
                 }
 
-                const eventsAlreadyAdded = await indexManager.addHistoricEvents(
-                    events, newCheckpoint, checkpoint);
+                const eventsAlreadyAdded = await indexManager.addHistoricEvents(events, newCheckpoint, checkpoint);
 
                 // We didn't get a valid new checkpoint from the server, nothing
                 // to do here anymore.
@@ -625,7 +619,7 @@ export default class EventIndex extends EventEmitter {
     /**
      * Start the crawler background task.
      */
-    public startCrawler() {
+    public startCrawler(): void {
         if (this.crawler !== null) return;
         this.crawlerFunc();
     }
@@ -633,7 +627,7 @@ export default class EventIndex extends EventEmitter {
     /**
      * Stop the crawler background task.
      */
-    public stopCrawler() {
+    public stopCrawler(): void {
         if (this.crawler === null) return;
         this.crawler.cancel();
     }
@@ -644,7 +638,7 @@ export default class EventIndex extends EventEmitter {
      * This removes all the MatrixClient event listeners, stops the crawler
      * task, and closes the index.
      */
-    public async close() {
+    public async close(): Promise<void> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         this.removeListeners();
         this.stopCrawler();
@@ -691,13 +685,13 @@ export default class EventIndex extends EventEmitter {
         limit = 10,
         fromEvent: string = null,
         direction: string = EventTimeline.BACKWARDS,
-    ) {
+    ): Promise<MatrixEvent[]> {
         const client = MatrixClientPeg.get();
         const indexManager = PlatformPeg.get().getEventIndexingManager();
 
         const loadArgs: ILoadArgs = {
             roomId: room.roomId,
-            limit: limit,
+            limit,
         };
 
         if (fromEvent) {
@@ -705,7 +699,7 @@ export default class EventIndex extends EventEmitter {
             loadArgs.direction = direction;
         }
 
-        let events;
+        let events: IEventAndProfile[];
 
         // Get our events from the event index.
         try {
@@ -718,7 +712,7 @@ export default class EventIndex extends EventEmitter {
         const eventMapper = client.getEventMapper();
 
         // Turn the events into MatrixEvent objects.
-        const matrixEvents = events.map(e => {
+        return events.map(e => {
             const matrixEvent = eventMapper(e.event);
 
             const member = new RoomMember(room.roomId, matrixEvent.getSender());
@@ -752,14 +746,12 @@ export default class EventIndex extends EventEmitter {
 
             return matrixEvent;
         });
-
-        return matrixEvents;
     }
 
     /**
      * Fill a timeline with events that contain URLs.
      *
-     * @param {TimelineSet} timelineSet The TimelineSet the Timeline belongs to,
+     * @param {EventTimelineSet} timelineSet The TimelineSet the Timeline belongs to,
      * used to check if we're adding duplicate events.
      *
      * @param {Timeline} timeline The Timeline which should be filed with
@@ -790,7 +782,7 @@ export default class EventIndex extends EventEmitter {
         limit = 10,
         fromEvent: string = null,
         direction: string = EventTimeline.BACKWARDS,
-    ) {
+    ): Promise<boolean> {
         const matrixEvents = await this.loadFileEvents(room, limit, fromEvent, direction);
 
         // If this is a normal fill request, not a pagination request, we need
@@ -848,7 +840,12 @@ export default class EventIndex extends EventEmitter {
      * @returns {Promise<boolean>} Resolves to a boolean which is true if more
      * events were successfully retrieved.
      */
-    public paginateTimelineWindow(room: Room, timelineWindow: TimelineWindow, direction: Direction, limit: number) {
+    public paginateTimelineWindow(
+        room: Room,
+        timelineWindow: TimelineWindow,
+        direction: Direction,
+        limit: number,
+    ): Promise<boolean> {
         const tl = timelineWindow.getTimelineIndex(direction);
 
         if (!tl) return Promise.resolve(false);
@@ -864,7 +861,7 @@ export default class EventIndex extends EventEmitter {
             room: Room,
             direction: Direction,
             limit: number,
-        ) => {
+        ): Promise<boolean> => {
             const timeline = timelineIndex.timeline;
             const timelineSet = timeline.getTimelineSet();
             const token = timeline.getPaginationToken(direction);
@@ -893,10 +890,10 @@ export default class EventIndex extends EventEmitter {
     /**
      * Get statistical information of the index.
      *
-     * @return {Promise<IndexStats>} A promise that will resolve to the index
+     * @return {Promise<IIndexStats>} A promise that will resolve to the index
      * statistics.
      */
-    public async getStats() {
+    public async getStats(): Promise<IIndexStats> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         return indexManager.getStats();
     }
@@ -910,7 +907,7 @@ export default class EventIndex extends EventEmitter {
      * @return {Promise<boolean>} Returns true if the index contains events for
      * the given room, false otherwise.
      */
-    public async isRoomIndexed(roomId) {
+    public async isRoomIndexed(roomId: string): Promise<boolean> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         return indexManager.isRoomIndexed(roomId);
     }
@@ -921,7 +918,7 @@ export default class EventIndex extends EventEmitter {
      * @returns {Room} A MatrixRoom that is being currently crawled, null
      * if no room is currently being crawled.
      */
-    public currentRoom() {
+    public currentRoom(): Room {
         if (this.currentCheckpoint === null && this.crawlerCheckpoints.length === 0) {
             return null;
         }
@@ -935,9 +932,9 @@ export default class EventIndex extends EventEmitter {
         }
     }
 
-    public crawlingRooms() {
-        const totalRooms = new Set();
-        const crawlingRooms = new Set();
+    public crawlingRooms(): { crawlingRooms: Set<string>, totalRooms: Set<string> } {
+        const totalRooms = new Set<string>();
+        const crawlingRooms = new Set<string>();
 
         this.crawlerCheckpoints.forEach((checkpoint, index) => {
             crawlingRooms.add(checkpoint.roomId);
@@ -950,11 +947,7 @@ export default class EventIndex extends EventEmitter {
         const client = MatrixClientPeg.get();
         const rooms = client.getRooms();
 
-        const isRoomEncrypted = (room: Room) => {
-            return client.isRoomEncrypted(room.roomId);
-        };
-
-        const encryptedRooms = rooms.filter(isRoomEncrypted);
+        const encryptedRooms = rooms.filter((room: Room) => client.isRoomEncrypted(room.roomId));
         encryptedRooms.forEach((room, index) => {
             totalRooms.add(room.roomId);
         });
