@@ -678,7 +678,7 @@ describe("MSC2716: Historical Import", () => {
         });
     });
 
-    it("Perfectly resolves timelines when refresh fails and then another refresh causes `getLatestTimeline()` " +
+    it("Perfectly resolves timelines when refresh fails and then another refresh causes `fetchLatestLiveTimeline()` " +
         "finds a threaded event", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
@@ -751,13 +751,34 @@ describe("MSC2716: Historical Import", () => {
         cy.get('[data-test-id="message-list"] [data-event-id]')
             .should('not.exist');
 
+        // Allow the requests to succeed now
+        cy.all([
+            cy.get<string>("@roomId"),
+            cy.get<string>("@eventIdThreadedMessage"),
+        ]).then(async ([roomId, eventIdThreadedMessage]) => {
+            // We're using `eventIdThreadedMessage` here because it's the latest event in
+            // the room which `/messages?dir=b` will find from the refresh timeline ->
+            // `client.fetchLatestLiveTimeline(...)` logic.
+            const prefix = '/_matrix/client/r0';
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(eventIdThreadedMessage)}`;
+            const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
+            cy.intercept(contextUrl, async (req) => {
+                // Passthrough. We can't just omit this callback because the
+                // other intercept will take precedent for some reason.
+                req.reply();
+            }).as('contextRequestThatWillMakeNewTimeline');
+        });
+
         // Press "Refresh timeline" again, this time the network request should succeed.
         //
         // Since the timeline is now blank, we have no most recent event to
-        // draw from locally. So `MatrixClient::getLatestTimeline` will
-        // fetch the latest from `/messages` which will return
+        // draw from locally. So `MatrixClient::fetchLatestLiveTimeline()` will
+        // fetch the latest from `/messages?dir=b` which will return
         // `eventIdThreadedMessage` as the latest event in the room.
         cy.get(`[data-test-id="refresh-timeline-button"]`).click();
+
+        // Make sure the request was intercepted and succeeded
+        cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
 
         // Make sure sync pagination still works by seeing a new message show up
         cy.get<string>("@roomId").then(async (roomId) => {
