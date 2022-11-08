@@ -34,7 +34,7 @@ import {
     RoomType,
 } from 'matrix-js-sdk/src/matrix';
 import {
-    ISyncStateData, SyncState,
+    SyncState,
 } from 'matrix-js-sdk/src/sync';
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -146,8 +146,8 @@ export function createTestClient(): MatrixClient {
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
-        getSyncState: (): SyncState => SyncState.Syncing,
-        getSyncStateData: (): ISyncStateData => ({}),
+        getSyncState: jest.fn().mockReturnValue(SyncState.Syncing),
+        getSyncStateData: jest.fn().mockReturnValue({}),
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
         isGuest: jest.fn().mockReturnValue(false),
         getRoomHierarchy: jest.fn().mockReturnValue({
