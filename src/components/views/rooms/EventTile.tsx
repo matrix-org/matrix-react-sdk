@@ -17,7 +17,7 @@ limitations under the License.
 
 import React, { createRef, forwardRef, MouseEvent, RefObject } from 'react';
 import classNames from "classnames";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -89,7 +89,7 @@ import { UnreadNotificationBadge } from './NotificationBadge/UnreadNotificationB
 
 export type GetRelationsForEvent = (
     eventId: string,
-    relationType: string,
+    relationType: RelationType | string,
     eventType: EventType | string,
 ) => Relations | undefined;
 
