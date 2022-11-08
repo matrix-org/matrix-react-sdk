@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { RelationsEvent } from 'matrix-js-sdk/src/models/relations';
+import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
     M_POLL_END,
@@ -52,7 +53,7 @@ export function createVoteRelations(
     getRelationsForEvent: GetRelationsForEvent,
     eventId: string,
 ) {
-    const relationsList = [];
+    const relationsList: Relations[] = [];
 
     const pollResponseRelations = getRelationsForEvent(
         eventId,
@@ -84,9 +85,18 @@ export function findTopAnswer(
         return "";
     }
 
+    const pollEventId = pollEvent.getId();
+    if (!pollEventId) {
+        logger.warn(
+            "findTopAnswer: Poll event needs an event ID to fetch relations in order to determine " +
+            "the top answer - assuming no best answer",
+        );
+        return "";
+    }
+
     const poll = pollEvent.unstableExtensibleEvent as PollStartEvent;
     if (!poll?.isEquivalentTo(M_POLL_START)) {
-        console.warn("Failed to parse poll to determine top answer - assuming no best answer");
+        logger.warn("Failed to parse poll to determine top answer - assuming no best answer");
         return "";
     }
 
@@ -96,18 +106,27 @@ export function findTopAnswer(
 
     const voteRelations = createVoteRelations(getRelationsForEvent, pollEvent.getId());
 
-    const endRelations = new RelatedRelations([
-        getRelationsForEvent(
-            pollEvent.getId(),
-            "m.reference",
-            M_POLL_END.name,
-        ),
-        getRelationsForEvent(
-            pollEvent.getId(),
-            "m.reference",
-            M_POLL_END.altName,
-        ),
-    ]);
+    const relationsList: Relations[] = [];
+
+    const pollEndRelations = getRelationsForEvent(
+        pollEventId,
+        "m.reference",
+        M_POLL_END.name,
+    );
+    if (pollEndRelations) {
+        relationsList.push(pollEndRelations);
+    }
+
+    const pollEndAltRelations = getRelationsForEvent(
+        pollEventId,
+        "m.reference",
+        M_POLL_END.altName,
+    );
+    if (pollEndAltRelations) {
+        relationsList.push(pollEndAltRelations);
+    }
+
+    const endRelations = new RelatedRelations(relationsList);
 
     const userVotes: Map<string, UserVote> = collectUserVotes(
         allVotes(pollEvent, matrixClient, voteRelations, endRelations),
@@ -139,6 +158,15 @@ export function isPollEnded(
         return false;
     }
 
+    const pollEventId = pollEvent.getId();
+    if (!pollEventId) {
+        logger.warn(
+            "isPollEnded: Poll event must have event ID in order to determine whether it has ended " +
+            "- assuming poll has not ended",
+        );
+        return false;
+    }
+
     const roomCurrentState = matrixClient.getRoom(pollEvent.getRoomId()).currentState;
     function userCanRedact(endEvent: MatrixEvent) {
         return roomCurrentState.maySendRedactionForEvent(
@@ -147,10 +175,10 @@ export function isPollEnded(
         );
     }
 
-    const relationsList = [];
+    const relationsList: Relations[] = [];
 
     const pollEndRelations = getRelationsForEvent(
-        pollEvent.getId(),
+        pollEventId,
         "m.reference",
         M_POLL_END.name,
     );
@@ -159,7 +187,7 @@ export function isPollEnded(
     }
 
     const pollEndAltRelations = getRelationsForEvent(
-        pollEvent.getId(),
+        pollEventId,
         "m.reference",
         M_POLL_END.altName,
     );
@@ -341,10 +369,15 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
     private fetchRelations(eventType: NamespacedValue<string, string>): RelatedRelations | null {
         if (this.props.getRelationsForEvent) {
-            const relationsList = [];
+            const relationsList: Relations[] = [];
+
+            const eventId = this.props.mxEvent.getId();
+            if (!eventId) {
+                return null;
+            }
 
             const relations = this.props.getRelationsForEvent(
-                this.props.mxEvent.getId(),
+                eventId,
                 "m.reference",
                 eventType.name,
             );
@@ -353,7 +386,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
             }
 
             const altRelations = this.props.getRelationsForEvent(
-                this.props.mxEvent.getId(),
+                eventId,
                 "m.reference",
                 eventType.altName,
             );
