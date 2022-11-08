@@ -241,9 +241,7 @@ export default class EventIndex extends EventEmitter {
      * Listens for timeline resets that are caused by a limited timeline to
      * re-add checkpoints for rooms that need to be crawled again.
      */
-    private onTimelineReset = async (
-        room: Room | undefined | null,
-    ) => {
+    private onTimelineReset = async (room: Room | undefined) => {
         if (!room) return;
         if (!MatrixClientPeg.get().isRoomEncrypted(room.roomId)) return;
 
