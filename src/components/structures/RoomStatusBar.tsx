@@ -291,7 +291,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 const adminContact = resourceLimitError.data.admin_contact;
                 title = messageForResourceLimitError(
                     limitType,
-                    adminContact,
+                    adminContact ?? null,
                     {
                         'monthly_active_user': _td(
                             "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. " +

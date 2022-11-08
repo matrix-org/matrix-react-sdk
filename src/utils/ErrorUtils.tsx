@@ -35,7 +35,7 @@ import { _t, _td, Tags, TranslatedString } from '../languageHandler';
  */
 export function messageForResourceLimitError(
     limitType: string,
-    adminContact?: string,
+    adminContact: string | null,
     strings: Record<string, string>,
     extraTranslations?: Tags,
 ): TranslatedString {
