@@ -170,13 +170,13 @@ Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{
     });
 });
 
-Cypress.Commands.add("joinRoom", (roomId: string, opts?: IJoinRoomOpts): Chainable<{}> => {
+Cypress.Commands.add("joinRoom", (roomIdOrAlias: string, opts?: IJoinRoomOpts): Chainable<{}> => {
     cy.getClient().then(async (cli: MatrixClient) => {
-        return cli.joinRoom(roomId, opts);
+        return cli.joinRoom(roomIdOrAlias, opts);
     });
 
     // Wait for the room to be available locally
-    return cy.waitForRoom(roomId);
+    return cy.waitForRoom(roomIdOrAlias);
 });
 
 Cypress.Commands.add("waitForRoom", (roomId: string): Chainable<string> => {
@@ -256,8 +256,4 @@ Cypress.Commands.add("bootstrapCrossSigning", () => {
             authUploadDeviceSigningKeys: async func => { await func({}); },
         });
     });
-});
-
-Cypress.Commands.add("joinRoom", (roomIdOrAlias: string): Chainable<Room> => {
-    return cy.getClient().then(cli => cli.joinRoom(roomIdOrAlias));
 });
