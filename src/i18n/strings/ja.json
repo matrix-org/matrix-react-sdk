@@ -3201,5 +3201,6 @@
     "Mute microphone": "マイクをミュート",
     "Unmute microphone": "ミュート解除",
     "Turn off camera": "カメラを無効にする",
-    "Turn on camera": "カメラを有効にする"
+    "Turn on camera": "カメラを有効にする",
+    "%(user1)s and %(user2)s": "%(user1)sと%(user2)s"
 }
