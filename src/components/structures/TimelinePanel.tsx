@@ -237,8 +237,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private readonly dispatcherRef: string;
     private timelineWindow?: TimelineWindow;
     private unmounted = false;
-    private readReceiptActivityTimer?: Timer;
-    private readMarkerActivityTimer?: Timer;
+    private readReceiptActivityTimer: Timer | null = null;
+    private readMarkerActivityTimer: Timer | null = null;
 
     // A map of <callId, LegacyCallEventGrouper>
     private callEventGroupers = new Map<string, LegacyCallEventGrouper>();
@@ -416,7 +416,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // Get the list of actually rendered events seen in the DOM.
         // This is useful to know for sure what's being shown on screen.
         // And we can suss out any corrupted React `key` problems.
-        let renderedEventIds: string[];
+        let renderedEventIds: string[] = [];
         try {
             const messagePanel = this.messagePanel.current;
             if (messagePanel) {
@@ -434,8 +434,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         // Get the list of events and threads for the room as seen by the
         // matrix-js-sdk.
-        let serializedEventIdsFromTimelineSets: { [key: string]: string[] }[];
-        let serializedEventIdsFromThreadsTimelineSets: { [key: string]: string[] }[];
+        let serializedEventIdsFromTimelineSets: { [key: string]: string[] }[] = [];
+        let serializedEventIdsFromThreadsTimelineSets: { [key: string]: string[] }[] = [];
         const serializedThreadsMap: { [key: string]: any } = {};
         if (room) {
             const timelineSets = room.getTimelineSets();
@@ -467,13 +467,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
             }
         }
 
-        let timelineWindowEventIds: string[];
+        let timelineWindowEventIds: string[] = [];
         try {
             timelineWindowEventIds = this.timelineWindow?.getEvents().map(ev => ev.getId()!) ?? [];
         } catch (err) {
             logger.error(`onDumpDebugLogs: Failed to get event IDs from the timelineWindow`, err);
         }
-        let pendingEventIds: string[];
+        let pendingEventIds: string[] = [];
         try {
             pendingEventIds = this.props.timelineSet.getPendingEvents().map(ev => ev.getId()!);
         } catch (err) {
@@ -765,7 +765,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
     };
 
-    public canResetTimeline = () => this.messagePanel?.current?.isAtBottom();
+    public canResetTimeline = () => !!this.messagePanel?.current?.isAtBottom();
 
     private onRoomRedaction = (ev: MatrixEvent, room: Room): void => {
         if (this.unmounted) return;
@@ -791,9 +791,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return;
         }
 
+        const eventId = ev.getId();
+        if (!eventId) {
+            return;
+        }
+
         // we could skip an update if the event isn't in our timeline,
         // but that's probably an early optimisation.
-        const tile = this.messagePanel.current?.getTileForEventId(ev.getId());
+        const tile = this.messagePanel.current?.getTileForEventId(eventId);
         if (tile) {
             tile.forceUpdate();
         }
@@ -1800,7 +1805,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // the HS and fetch the latest events, so we are effectively forward paginating.
         const forwardPaginating = (
             this.state.forwardPaginating ||
-            ['PREPARED', 'CATCHUP'].includes(this.state.clientSyncState)
+            ['PREPARED', 'CATCHUP'].includes(this.state.clientSyncState!)
         );
         const events = this.state.firstVisibleEventIndex
             ? this.state.events.slice(this.state.firstVisibleEventIndex)

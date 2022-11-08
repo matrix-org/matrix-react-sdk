@@ -253,8 +253,8 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
         let title;
 
-        let consentError: MatrixError | undefined = null;
-        let resourceLimitError: MatrixError | undefined = null;
+        let consentError: MatrixError | undefined;
+        let resourceLimitError: MatrixError | undefined;
         for (const m of unsentMessages) {
             if (m.error && m.error.errcode === 'M_CONSENT_NOT_GIVEN') {
                 consentError = m.error;
@@ -286,24 +286,34 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 );
             }
         } else if (resourceLimitError) {
-            title = messageForResourceLimitError(
-                resourceLimitError.data.limit_type,
-                resourceLimitError.data.admin_contact,
-                {
-                    'monthly_active_user': _td(
-                        "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. " +
-                        "Please <a>contact your service administrator</a> to continue using the service.",
-                    ),
-                    'hs_disabled': _td(
-                        "Your message wasn't sent because this homeserver has been blocked by its administrator. " +
-                        "Please <a>contact your service administrator</a> to continue using the service.",
-                    ),
-                    '': _td(
-                        "Your message wasn't sent because this homeserver has exceeded a resource limit. " +
-                        "Please <a>contact your service administrator</a> to continue using the service.",
-                    ),
-                },
-            );
+            const limitType = resourceLimitError.data.limit_type;
+            if (limitType) {
+                const adminContact = resourceLimitError.data.admin_contact;
+                title = messageForResourceLimitError(
+                    limitType,
+                    adminContact,
+                    {
+                        'monthly_active_user': _td(
+                            "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. " +
+                            "Please <a>contact your service administrator</a> to continue using the service.",
+                        ),
+                        'hs_disabled': _td(
+                            "Your message wasn't sent because this homeserver has been blocked by its administrator. " +
+                            "Please <a>contact your service administrator</a> to continue using the service.",
+                        ),
+                        '': _td(
+                            "Your message wasn't sent because this homeserver has exceeded a resource limit. " +
+                            "Please <a>contact your service administrator</a> to continue using the service.",
+                        ),
+                    },
+                );
+            } else {
+                title = _t(
+                    "Your message wasn't sent because it ran into a M_RESOURCE_LIMIT_EXCEEDED error. " +
+                    "We were unable to determine the exact type of error because the response did not include it." +
+                    "Contact your homeserver administrator.",
+                );
+            }
         } else {
             title = _t('Some of your messages have not been sent');
         }
@@ -423,7 +433,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         });
     };
 
-    public render(): JSX.Element {
+    public render(): JSX.Element | null {
         if (this.shouldShowConnectionError()) {
             return (
                 <div className="mx_RoomStatusBar">

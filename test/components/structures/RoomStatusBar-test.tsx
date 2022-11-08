@@ -31,7 +31,6 @@ import { getUnsentMessages } from "../../../src/components/structures/RoomStatus
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { mkEvent, stubClient } from "../../test-utils/test-utils";
 import { mkThread } from "../../test-utils/threads";
-import { sleep } from "matrix-js-sdk/src/utils";
 
 // Fake date to give a predictable snapshot
 const realDateNow = Date.now;
