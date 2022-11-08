@@ -321,8 +321,9 @@ describe("MPollBody", () => {
         const votes = [responseEvent("@me:example.com", "pizza", 100)];
         const body = newMPollBody(votes);
         const props: IBodyProps = body.instance().props as IBodyProps;
-        const voteRelations: Relations = props.getRelationsForEvent(
+        const voteRelations = props.getRelationsForEvent(
             "$mypoll", "m.reference", M_POLL_RESPONSE.name);
+        expect(voteRelations).toBeDefined();
         clickRadio(body, "pizza");
 
         // When a new vote from me comes in
@@ -344,6 +345,7 @@ describe("MPollBody", () => {
         const props: IBodyProps = body.instance().props as IBodyProps;
         const voteRelations: Relations = props.getRelationsForEvent(
             "$mypoll", "m.reference", M_POLL_RESPONSE.name);
+        expect(voteRelations).toBeDefined();
         clickRadio(body, "pizza");
 
         // When a new vote from someone else comes in
