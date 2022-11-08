@@ -186,7 +186,7 @@ interface IState {
     forwardPaginating: boolean;
 
     // cache of matrixClient.getSyncState() (but from the 'sync' event)
-    clientSyncState: SyncState;
+    clientSyncState: SyncState | null;
 
     // should the event tiles have twelve hour times
     isTwelveHour: boolean;
@@ -237,8 +237,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private readonly dispatcherRef: string;
     private timelineWindow?: TimelineWindow;
     private unmounted = false;
-    private readReceiptActivityTimer: Timer;
-    private readMarkerActivityTimer: Timer;
+    private readReceiptActivityTimer?: Timer;
+    private readMarkerActivityTimer?: Timer;
 
     // A map of <callId, LegacyCallEventGrouper>
     private callEventGroupers = new Map<string, LegacyCallEventGrouper>();
@@ -253,7 +253,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // but for now we just do it per room for simplicity.
         let initialReadMarker: string | null = null;
         if (this.props.manageReadMarkers) {
-            const readmarker = this.props.timelineSet.room.getAccountData('m.fully_read');
+            const readmarker = this.props.timelineSet.room?.getAccountData('m.fully_read');
             if (readmarker) {
                 initialReadMarker = readmarker.getContent().event_id;
             } else {
@@ -283,7 +283,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.get();
         cli.on(RoomEvent.Timeline, this.onRoomTimeline);
         cli.on(RoomEvent.TimelineReset, this.onRoomTimelineReset);
-        this.props.timelineSet.room.on(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+        const room = this.props.timelineSet.room;
+        if (room) {
+            room.on(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+        }
         cli.on(RoomEvent.Redaction, this.onRoomRedaction);
         if (SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
             // Make sure that events are re-rendered when their visibility-pending-moderation changes.
@@ -345,8 +348,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
     public componentDidUpdate(prevProps: IProps): void {
         // When the room changes, setup the new listener
         if (prevProps.timelineSet.room !== this.props.timelineSet.room) {
-            prevProps.timelineSet.room.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
-            this.props.timelineSet.room.on(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+            const prevRoom = prevProps.timelineSet.room;
+            if (prevRoom) {
+                prevRoom.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+            }
+            const newRoom = this.props.timelineSet.room;
+            if (newRoom) {
+                newRoom.on(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+            }
         }
     }
 
@@ -383,7 +392,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(ClientEvent.Sync, this.onSync);
         }
 
-        this.props.timelineSet.room.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+        const room = this.props.timelineSet.room;
+        if (room) {
+            room.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+        }
     }
 
     /**
@@ -457,13 +469,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         let timelineWindowEventIds: string[];
         try {
-            timelineWindowEventIds = this.timelineWindow.getEvents().map(ev => ev.getId());
+            timelineWindowEventIds = this.timelineWindow?.getEvents().map(ev => ev.getId()!) ?? [];
         } catch (err) {
             logger.error(`onDumpDebugLogs: Failed to get event IDs from the timelineWindow`, err);
         }
         let pendingEventIds: string[];
         try {
-            pendingEventIds = this.props.timelineSet.getPendingEvents().map(ev => ev.getId());
+            pendingEventIds = this.props.timelineSet.getPendingEvents().map(ev => ev.getId()!);
         } catch (err) {
             logger.error(`onDumpDebugLogs: Failed to get pending event IDs`, err);
         }
@@ -753,7 +765,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
     };
 
-    public canResetTimeline = () => this.messagePanel?.current.isAtBottom();
+    public canResetTimeline = () => this.messagePanel?.current?.isAtBottom();
 
     private onRoomRedaction = (ev: MatrixEvent, room: Room): void => {
         if (this.unmounted) return;

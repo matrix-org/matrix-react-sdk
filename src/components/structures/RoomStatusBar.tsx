@@ -19,6 +19,7 @@ import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from 'matrix-js-sdk/src/logger';
+import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 import { _t, _td } from '../../languageHandler';
 import Resend from '../../Resend';
@@ -103,7 +104,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             isResending: false,
             timelineNeedsRefresh: this.props.room.getTimelineNeedsRefresh(),
             isRefreshing: false,
-            refreshError: null,
+            refreshError: undefined,
         };
     }
 
@@ -171,7 +172,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     private onRefreshTimelineClick = async (): Promise<void> => {
         this.setState({
             isRefreshing: true,
-            refreshError: null,
+            refreshError: undefined,
         });
         try {
             // Empty out the current timeline and re-request it
@@ -183,7 +184,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         } catch (err) {
             logger.error('Error while refresing the timeline:', err);
             this.setState({
-                refreshError: err,
+                refreshError: err as Error,
             });
         } finally {
             this.setState({
@@ -252,8 +253,8 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
         let title;
 
-        let consentError = null;
-        let resourceLimitError = null;
+        let consentError: MatrixError | undefined = null;
+        let resourceLimitError: MatrixError | undefined = null;
         for (const m of unsentMessages) {
             if (m.error && m.error.errcode === 'M_CONSENT_NOT_GIVEN') {
                 consentError = m.error;
@@ -264,17 +265,26 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             }
         }
         if (consentError) {
-            title = _t(
-                "You can't send any messages until you review and agree to " +
-                "<consentLink>our terms and conditions</consentLink>.",
-                {},
-                {
-                    'consentLink': (sub) =>
-                        <a href={consentError.data && consentError.data.consent_uri} target="_blank">
-                            { sub }
-                        </a>,
-                },
-            );
+            const consentUri = consentError.data.consent_uri;
+            if (consentUri) {
+                title = _t(
+                    "You can't send any messages until you review and agree to " +
+                    "<consentLink>the terms and conditions</consentLink>.",
+                    {},
+                    {
+                        'consentLink': (sub) =>
+                            <a href={consentUri} target="_blank">
+                                { sub }
+                            </a>,
+                    },
+                );
+            } else {
+                title = _t(
+                    "You can't send any messages until you review and agree to " +
+                    "the terms and conditions but the homeserver did not provide " +
+                    "a link to consent. Contact your homeserver administrator.",
+                );
+            }
         } else if (resourceLimitError) {
             title = messageForResourceLimitError(
                 resourceLimitError.data.limit_type,
@@ -340,7 +350,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             </>;
         }
 
-        let errorContent: JSX.Element;
+        let errorContent: JSX.Element = <></>;
         if (this.state.refreshError) {
             let errorTextContent;
             let submitDebugLogsTextContent;
