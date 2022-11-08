@@ -85,7 +85,7 @@ export default function MemberAvatar({
             width={width}
             height={height}
             resizeMethod={resizeMethod}
-            name={name}
+            name={name ?? ""}
             title={props.hideTitle ? undefined : title}
             idName={userId}
             url={imageUrl}
