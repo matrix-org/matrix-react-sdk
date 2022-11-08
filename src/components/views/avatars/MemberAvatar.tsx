@@ -60,11 +60,11 @@ export default function MemberAvatar({
     });
 
     const name = member?.name ?? props.fallbackUserId;
-    let title: string = props.title;
+    let title: string | undefined = props.title;
     let imageUrl: string | undefined;
     if (member?.name) {
         if (member.getMxcAvatarUrl()) {
-            imageUrl = mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
+            imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
                 width,
                 height,
                 resizeMethod,
@@ -73,7 +73,7 @@ export default function MemberAvatar({
 
         if (!title) {
             title = UserIdentifierCustomisations.getDisplayUserIdentifier(
-                member.userId, { roomId: member?.roomId },
+                member?.userId ?? "", { roomId: member?.roomId ?? "" },
             ) ?? props.fallbackUserId;
         }
     }

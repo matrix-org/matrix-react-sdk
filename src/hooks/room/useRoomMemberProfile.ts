@@ -26,10 +26,10 @@ export function useRoomMemberProfile({
     forceHistorical = false,
 }: {
     userId: string | undefined;
-    member?: RoomMember;
+    member?: RoomMember | null;
     forceHistorical?: boolean;
-}): RoomMember {
-    const [member, setMember] = useState<RoomMember | undefined>(propMember);
+}): RoomMember | undefined | null {
+    const [member, setMember] = useState<RoomMember | undefined | null>(propMember);
 
     const context = useContext(RoomContext);
     const useOnlyCurrentProfiles = useSettingValue("useOnlyCurrentProfiles");
@@ -38,7 +38,7 @@ export function useRoomMemberProfile({
         const threadContexts = [TimelineRenderingType.ThreadsList, TimelineRenderingType.Thread];
         if ((propMember && !forceHistorical && useOnlyCurrentProfiles)
             || threadContexts.includes(context?.timelineRenderingType)) {
-            setMember(context.room.getMember(userId));
+            setMember(context?.room?.getMember(userId));
         }
     }, [forceHistorical, propMember, context.room, context?.timelineRenderingType, useOnlyCurrentProfiles, userId]);
 
