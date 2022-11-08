@@ -408,7 +408,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         !entry.query?.some(q => q.includes(lcQuery))
                     ) return; // bail, does not match query
                 } else if (isMemberResult(entry)) {
-                    if (!entry.query?.some(q => q.includes(lcQuery))) return; // bail, does not match query
+                    // Do not filter users
                 } else if (isPublicRoomResult(entry)) {
                     if (!entry.query?.some(q => q.includes(lcQuery))) return; // bail, does not match query
                 } else {
