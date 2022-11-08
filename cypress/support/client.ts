@@ -52,10 +52,10 @@ declare global {
             inviteUser(roomId: string, userId: string): Chainable<{}>;
             /**
              * Joins the current user to the given room.
-             * @param roomId the id of the room to join
+             * @param roomIdOrAlias the id or alias of the room to join
              * @param opts the options when joining a room
              */
-            joinRoom(roomId: string, opts?: IJoinRoomOpts): Chainable<{}>;
+            joinRoom(roomIdOrAlias: string, opts?: IJoinRoomOpts): Chainable<{}>;
             /**
              * Waits for the given room to be synced locally
              * @param roomId the id of the room to wait for locally
@@ -135,11 +135,6 @@ declare global {
              * Boostraps cross-signing.
              */
             bootstrapCrossSigning(): Chainable<void>;
-            /**
-             * Joins the given room by alias or ID
-             * @param roomIdOrAlias the id or alias of the room to join
-             */
-            joinRoom(roomIdOrAlias: string): Chainable<Room>;
         }
     }
 }
