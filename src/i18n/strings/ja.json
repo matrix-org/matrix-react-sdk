@@ -3201,5 +3201,15 @@
     "Mute microphone": "マイクをミュート",
     "Unmute microphone": "ミュート解除",
     "Turn off camera": "カメラを無効にする",
-    "Turn on camera": "カメラを有効にする"
+    "Turn on camera": "カメラを有効にする",
+    "%(user1)s and %(user2)s": "%(user1)sと%(user2)s",
+    "Video call started in %(roomName)s. (not supported by this browser)": "ビデオ通話が%(roomName)sで開始しました。（このブラウザーではサポートされていません）",
+    "Video call started in %(roomName)s.": "ビデオ通話が%(roomName)sで開始しました。",
+    "You need to be able to kick users to do that.": "それをするためにユーザーをキックできる必要があります。",
+    "Empty room (was %(oldName)s)": "空のルーム（以前の名前は%(oldName)s）",
+    "Inviting %(user)s and %(count)s others|one": "%(user)sと1人を招待しています",
+    "Inviting %(user)s and %(count)s others|other": "%(user)sと%(count)s人を招待しています",
+    "Inviting %(user1)s and %(user2)s": "%(user1)sと%(user2)sを招待しています",
+    "%(user)s and %(count)s others|one": "%(user)sと1名",
+    "%(user)s and %(count)s others|other": "%(user)sと%(count)s名"
 }
