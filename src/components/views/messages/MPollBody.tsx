@@ -52,18 +52,27 @@ export function createVoteRelations(
     getRelationsForEvent: GetRelationsForEvent,
     eventId: string,
 ) {
-    return new RelatedRelations([
-        getRelationsForEvent(
-            eventId,
-            "m.reference",
-            M_POLL_RESPONSE.name,
-        ),
-        getRelationsForEvent(
-            eventId,
-            "m.reference",
-            M_POLL_RESPONSE.altName,
-        ),
-    ]);
+    const relationsList = [];
+
+    const pollResponseRelations = getRelationsForEvent(
+        eventId,
+        "m.reference",
+        M_POLL_RESPONSE.name,
+    );
+    if (pollResponseRelations) {
+        relationsList.push(pollResponseRelations);
+    }
+
+    const pollResposnseAltRelations = getRelationsForEvent(
+        eventId,
+        "m.reference",
+        M_POLL_RESPONSE.altName,
+    );
+    if (pollResposnseAltRelations) {
+        relationsList.push(pollResposnseAltRelations);
+    }
+
+    return new RelatedRelations(relationsList);
 }
 
 export function findTopAnswer(
@@ -138,18 +147,27 @@ export function isPollEnded(
         );
     }
 
-    const endRelations = new RelatedRelations([
-        getRelationsForEvent(
-            pollEvent.getId(),
-            "m.reference",
-            M_POLL_END.name,
-        ),
-        getRelationsForEvent(
-            pollEvent.getId(),
-            "m.reference",
-            M_POLL_END.altName,
-        ),
-    ]);
+    const relationsList = [];
+
+    const pollEndRelations = getRelationsForEvent(
+        pollEvent.getId(),
+        "m.reference",
+        M_POLL_END.name,
+    );
+    if (pollEndRelations) {
+        relationsList.push(pollEndRelations);
+    }
+
+    const pollEndAltRelations = getRelationsForEvent(
+        pollEvent.getId(),
+        "m.reference",
+        M_POLL_END.altName,
+    );
+    if (pollEndAltRelations) {
+        relationsList.push(pollEndAltRelations);
+    }
+
+    const endRelations = new RelatedRelations(relationsList);
 
     if (!endRelations) {
         return false;
@@ -323,18 +341,27 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
     private fetchRelations(eventType: NamespacedValue<string, string>): RelatedRelations | null {
         if (this.props.getRelationsForEvent) {
-            return new RelatedRelations([
-                this.props.getRelationsForEvent(
-                    this.props.mxEvent.getId(),
-                    "m.reference",
-                    eventType.name,
-                ),
-                this.props.getRelationsForEvent(
-                    this.props.mxEvent.getId(),
-                    "m.reference",
-                    eventType.altName,
-                ),
-            ]);
+            const relationsList = [];
+
+            const relations = this.props.getRelationsForEvent(
+                this.props.mxEvent.getId(),
+                "m.reference",
+                eventType.name,
+            );
+            if (relations) {
+                relationsList.push(relations);
+            }
+
+            const altRelations = this.props.getRelationsForEvent(
+                this.props.mxEvent.getId(),
+                "m.reference",
+                eventType.altName,
+            );
+            if (altRelations) {
+                relationsList.push(altRelations);
+            }
+
+            return new RelatedRelations(relationsList);
         } else {
             return null;
         }
