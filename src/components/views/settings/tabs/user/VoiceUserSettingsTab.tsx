@@ -205,6 +205,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                             this.setState({ audioAutoGainControl: MediaDeviceHandler.getAudioAutoGainControl() });
                         }}
                         label={_t("Automatically adjust the microphone volume")}
+                        data-testid='voice-auto-gain'
                     />
                 </div>
                 <div className="mx_SettingsTab_section">
@@ -224,6 +225,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                                 this.setState({ audioNoiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression() });
                             }}
                             label={_t("Noise suppression")}
+                            data-testid='voice-noise-suppression'
                         />
                         <LabelledToggleSwitch
                             value={this.state.audioEchoCancellation}
@@ -232,6 +234,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                                 this.setState({ audioEchoCancellation: MediaDeviceHandler.getAudioEchoCancellation() });
                             }}
                             label={_t("Echo cancellation")}
+                            data-testid='voice-echo-cancellation'
                         />
                     </div>
                     <div className="mx_SettingsTab_section">
