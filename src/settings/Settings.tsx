@@ -127,7 +127,8 @@ export type SettingValueType = boolean |
     string |
     number[] |
     string[] |
-    Record<string, unknown>;
+    Record<string, unknown> |
+    null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
