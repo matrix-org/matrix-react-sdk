@@ -132,7 +132,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
 
 interface IReactButtonProps {
     mxEvent: MatrixEvent;
-    reactions: Relations;
+    reactions?: Relations | null | undefined;
     onFocusChange: (menuDisplayed: boolean) => void;
 }
 

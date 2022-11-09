@@ -65,7 +65,7 @@ interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
     // The Relations model from the JS SDK for reactions to `mxEvent`
-    reactions?: Relations;
+    reactions?: Relations | null | undefined;
 }
 
 interface IState {
