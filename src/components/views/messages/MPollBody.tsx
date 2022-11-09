@@ -486,7 +486,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const totalVotes = this.totalVotes(votes);
         const winCount = Math.max(...votes.values());
         const userId = this.context.getUserId();
-        const myVote = userVotes.get(userId)?.answers[0];
+        const myVote = userVotes?.get(userId)?.answers[0];
         const disclosed = M_POLL_KIND_DISCLOSED.matches(poll.kind.name);
 
         // Disclosed: votes are hidden until I vote or the poll ends
