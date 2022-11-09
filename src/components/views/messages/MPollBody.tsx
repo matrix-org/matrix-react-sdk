@@ -443,7 +443,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const newEvents: MatrixEvent[] = this.state.voteRelations.getRelations()
             .filter(isPollResponse)
             .filter((mxEvent: MatrixEvent) =>
-                !this.seenEventIds.includes(mxEvent.getId()));
+                !this.seenEventIds.includes(mxEvent.getId()!));
         let newSelected = this.state.selected;
 
         if (newEvents.length > 0) {
