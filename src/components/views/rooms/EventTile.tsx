@@ -237,7 +237,7 @@ interface IState {
     // Whether onRequestKeysClick has been called since mounting.
     previouslyRequestedKeys: boolean;
     // The Relations model from the JS SDK for reactions to `mxEvent`
-    reactions?: Relations;
+    reactions?: Relations | null | undefined;
 
     hover: boolean;
 
