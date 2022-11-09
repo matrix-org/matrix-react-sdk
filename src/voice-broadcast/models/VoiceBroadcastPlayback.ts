@@ -129,12 +129,8 @@ export class VoiceBroadcastPlayback
     }
 
     private addChunkEvent = async (event: MatrixEvent): Promise<boolean> => {
-        const eventId = event.getId();
-
-        if (
-            !eventId
-            || event.getContent()?.msgtype !== MsgType.Audio // don't add non-audio event
-        ) {
+        if (event.getContent()?.msgtype !== MsgType.Audio) {
+            // skip non-audio event
             return false;
         }
 
