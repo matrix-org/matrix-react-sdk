@@ -296,7 +296,7 @@ const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
 
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
-    reactions?: Relations;
+    reactions?: Relations | null | undefined;
     // TODO: Types
     getTile: () => any | null;
     getReplyChain: () => ReplyChain | undefined;
