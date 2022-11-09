@@ -1298,7 +1298,7 @@
     "Strikethrough": "Durchgestrichen",
     "Code block": "Quelltextblock",
     "Loading …": "Laden …",
-    "Join the conversation with an account": "Unterhaltung mit einem Konto betreten",
+    "Join the conversation with an account": "An Unterhaltung mit einem Konto teilnehmen",
     "Re-join": "Erneut betreten",
     "You were banned from %(roomName)s by %(memberName)s": "Du wurdest von %(memberName)s aus %(roomName)s verbannt",
     "Something went wrong with your invite to %(roomName)s": "Bei deiner Einladung zu %(roomName)s ist ein Fehler aufgetreten",
@@ -3675,5 +3675,6 @@
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Dies gibt ihnen die Gewissheit, dass sie auch wirklich mit dir kommunizieren, allerdings bedeutet es auch, dass sie die Sitzungsnamen sehen können, die du hier eingibst.",
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Andere Benutzer in Direktnachrichten oder von dir betretenen Räumen können die volle Liste deiner Sitzungen sehen.",
     "Renaming sessions": "Sitzungen umbenennen",
-    "Please be aware that session names are also visible to people you communicate with.": "Sei dir bitte bewusst, dass Sitzungsnamen auch für Personen, mit denen du kommunizierst, sichtbar sind."
+    "Please be aware that session names are also visible to people you communicate with.": "Sei dir bitte bewusst, dass Sitzungsnamen auch für Personen, mit denen du kommunizierst, sichtbar sind.",
+    "Hide formatting": "Formatierung ausblenden"
 }
