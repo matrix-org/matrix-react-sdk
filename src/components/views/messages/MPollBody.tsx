@@ -130,8 +130,6 @@ export function findTopAnswer(
 
     const userVotes: Map<string, UserVote> = collectUserVotes(
         allVotes(pollEvent, matrixClient, voteRelations, endRelations),
-        null,
-        null,
     );
 
     const votes: Map<string, number> = countVotes(userVotes, poll);
