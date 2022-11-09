@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
 
@@ -59,25 +59,37 @@ export default function MemberAvatar({
         forceHistorical: props.forceHistorical,
     });
 
-    const name = member?.name ?? props.fallbackUserId;
-    let title: string | undefined = props.title;
-    let imageUrl: string | undefined;
-    if (member?.name) {
-        if (member.getMxcAvatarUrl()) {
-            imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
-                width,
-                height,
-                resizeMethod,
-            );
-        }
+    const [name, setName] = useState<string>();
+    const [imageUrl, setImageUrl] = useState<string>();
+    const [title, setTitle] = useState<string>();
 
-        if (!title) {
-            title = UserIdentifierCustomisations.getDisplayUserIdentifier(
-                member?.userId ?? "", { roomId: member?.roomId ?? "" },
-            ) ?? props.fallbackUserId;
+    useEffect(() => {
+        setName(member?.name ?? props.fallbackUserId);
+    }, [member?.name, props.fallbackUserId]);
+
+    useEffect(() => {
+        if (member?.name) {
+            if (member.getMxcAvatarUrl()) {
+                setImageUrl(mediaFromMxc(member.getMxcAvatarUrl()!).getThumbnailOfSourceHttp(
+                    width,
+                    height,
+                    resizeMethod,
+                ));
+            }
         }
-    }
-    const userId = member?.userId ?? props.fallbackUserId;
+    }, [height, member, resizeMethod, width]);
+
+    useEffect(() => {
+        let title: string | undefined = props.title;
+        if (member?.name) {
+            if (!title) {
+                title = UserIdentifierCustomisations.getDisplayUserIdentifier!(
+                    member?.userId ?? "", { roomId: member?.roomId ?? "" },
+                ) ?? props.fallbackUserId;
+            }
+        }
+        setTitle(title);
+    }, [member?.name, member?.roomId, member?.userId, props.fallbackUserId, props.title]);
 
     return (
         <BaseAvatar
@@ -87,7 +99,7 @@ export default function MemberAvatar({
             resizeMethod={resizeMethod}
             name={name ?? ""}
             title={props.hideTitle ? undefined : title}
-            idName={userId}
+            idName={member?.userId ?? props.fallbackUserId}
             url={imageUrl}
             onClick={viewUserOnClick ? () => {
                 dis.dispatch({
