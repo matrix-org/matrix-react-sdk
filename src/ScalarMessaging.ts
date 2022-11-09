@@ -376,7 +376,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
     });
 }
 
-function setWidget(event: MessageEvent<any>, roomId: string): void {
+function setWidget(event: MessageEvent<any>, roomId?: string): void {
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
