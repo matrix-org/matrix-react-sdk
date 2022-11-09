@@ -104,7 +104,7 @@ export function findTopAnswer(
         return poll.answers.find(a => a.id === answerId)?.text ?? "";
     };
 
-    const voteRelations = createVoteRelations(getRelationsForEvent, pollEvent.getId());
+    const voteRelations = createVoteRelations(getRelationsForEvent, pollEventId);
 
     const relationsList: Relations[] = [];
 
@@ -130,7 +130,7 @@ export function findTopAnswer(
 
     const userVotes: Map<string, UserVote> = collectUserVotes(
         allVotes(pollEvent, matrixClient, voteRelations, endRelations),
-        matrixClient.getUserId(),
+        null,
         null,
     );
 
@@ -167,7 +167,16 @@ export function isPollEnded(
         return false;
     }
 
-    const roomCurrentState = matrixClient.getRoom(pollEvent.getRoomId()).currentState;
+    const roomId = pollEvent.getRoomId();
+    if (!pollEventId) {
+        logger.warn(
+            "isPollEnded: Poll event must have room ID in order to determine whether it has ended " +
+            "- assuming poll has not ended",
+        );
+        return false;
+    }
+
+    const roomCurrentState = matrixClient.getRoom(roomId).currentState;
     function userCanRedact(endEvent: MatrixEvent) {
         return roomCurrentState.maySendRedactionForEvent(
             pollEvent,
@@ -209,7 +218,10 @@ export function isPollEnded(
 export function pollAlreadyHasVotes(mxEvent: MatrixEvent, getRelationsForEvent?: GetRelationsForEvent): boolean {
     if (!getRelationsForEvent) return false;
 
-    const voteRelations = createVoteRelations(getRelationsForEvent, mxEvent.getId());
+    const eventId = mxEvent.getId();
+    if (!eventId) return false;
+
+    const voteRelations = createVoteRelations(getRelationsForEvent, eventId);
     return voteRelations.getRelations().length > 0;
 }
 
@@ -385,13 +397,16 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 relationsList.push(relations);
             }
 
-            const altRelations = this.props.getRelationsForEvent(
-                eventId,
-                "m.reference",
-                eventType.altName,
-            );
-            if (altRelations) {
-                relationsList.push(altRelations);
+            // If there is an alternatve experimental event type, also look for that
+            if (eventType.altName) {
+                const altRelations = this.props.getRelationsForEvent(
+                    eventId,
+                    "m.reference",
+                    eventType.altName,
+                );
+                if (altRelations) {
+                    relationsList.push(altRelations);
+                }
             }
 
             return new RelatedRelations(relationsList);
@@ -703,11 +718,15 @@ function isPollResponse(responseEvent: MatrixEvent): boolean {
 
 /**
  * Figure out the correct vote for each user.
+ * @param userResponses current vote responses in the poll
+ * @param {string?} userId The userId for which the `selected` option will apply to.
+ *                  Should be set to the current user ID.
+ * @param {string?} selected Local echo selected option for the userId
  * @returns a Map of user ID to their vote info
  */
 function collectUserVotes(
     userResponses: Array<UserVote>,
-    userId: string,
+    userId?: string,
     selected?: string,
 ): Map<string, UserVote> {
     const userVotes: Map<string, UserVote> = new Map();
@@ -719,7 +738,7 @@ function collectUserVotes(
         }
     }
 
-    if (selected) {
+    if (selected && userId) {
         userVotes.set(userId, new UserVote(0, userId, [selected]));
     }
 
