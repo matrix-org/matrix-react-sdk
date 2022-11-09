@@ -3676,5 +3676,17 @@
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Andere Benutzer in Direktnachrichten oder von dir betretenen Räumen können die volle Liste deiner Sitzungen sehen.",
     "Renaming sessions": "Sitzungen umbenennen",
     "Please be aware that session names are also visible to people you communicate with.": "Sei dir bitte bewusst, dass Sitzungsnamen auch für Personen, mit denen du kommunizierst, sichtbar sind.",
-    "Hide formatting": "Formatierung ausblenden"
+    "Hide formatting": "Formatierung ausblenden",
+    "Automatic gain control": "Automatische Lautstärkeregelung",
+    "Allow Peer-to-Peer for 1:1 calls": "Erlaube Peer-to-Peer-Verbindungen für Anrufe in Direktnachrichten",
+    "Connection": "Verbindung",
+    "Voice processing": "Sprachverarbeitung",
+    "Video settings": "Videoeinstellungen",
+    "Automatically adjust the microphone volume": "Gleiche die Mikrofonlautstärke automatisch an",
+    "Voice settings": "Spracheinstellungen",
+    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "Dieser wird nur verwendet, sollte dein Heim-Server keinen bieten. Deine IP-Adresse würde während eines Anrufs geteilt werden.",
+    "Allow fallback call assist server (turn.matrix.org)": "Erlaube Rückfall-Anrufassistenz-Server (turn.matrix.org)",
+    "Noise suppression": "Rauschreduzierung",
+    "Echo cancellation": "Echounterdrückung",
+    "When enabled, the other party might be able to see your IP address": "Wenn aktiviert, könnte die andere Person deine IP-Adresse sehen"
 }
