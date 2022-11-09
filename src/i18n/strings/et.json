@@ -1059,7 +1059,7 @@
     "You should:": "Sa peaksid:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "kontrollima kas mõni brauseriplugin takistab ühendust isikutuvastusserveriga (nagu näiteks Privacy Badger)",
     "contact the administrators of identity server <idserver />": "võtma ühendust isikutuvastusserveri <idserver /> haldajaga",
-    "wait and try again later": "ootama ja proovima hiljem uuesti",
+    "wait and try again later": "oota ja proovi hiljem uuesti",
     "Disconnect anyway": "Ikkagi katkesta ühendus",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Sa jätkuvalt <b>jagad oma isikuandmeid</b> isikutuvastusserveriga <idserver />.",
     "Go back": "Mine tagasi",
@@ -3679,5 +3679,6 @@
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Kuna nende näol võib olla tegemist võimaliku konto volitamata kasutamisega, siis palun tee kindlaks, et need sessioonid on sulle tuttavad.",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Kontrollimata sessioonid on sessioonid, kuhu on sinu volitustega sisse logitud, kuid mida ei ole risttuvastamisega kontrollitud.",
     "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "See tähendab, et neil on sinu eelmiste sõnumite krüpteerimisvõtmed ja nad kinnitavad teistele kasutajatele, kellega sa suhtled, et suhtlus on turvaline.",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Kontrollitud seanss on see, kuhu on sinu kasutajatunnustega sisse logitud ja mida on kontrollitud sinu salafraasi või risttunnustamise abil."
+    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Kontrollitud seanss on see, kuhu on sinu kasutajatunnustega sisse logitud ja mida on kontrollitud sinu salafraasi või risttunnustamise abil.",
+    "Hide formatting": "Peida vormindus"
 }
