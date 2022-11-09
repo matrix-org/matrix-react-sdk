@@ -265,12 +265,8 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
             this.modals.unshift(modal);
         }
 
-        const currentModal = this.getCurrentModal();
         this.reRender();
-
-        if (beforeModal !== currentModal) {
-            this.emit(ModalManagerEvent.Opened);
-        }
+        this.emitIfChanged(beforeModal);
 
         return {
             close: closeDialog,
@@ -288,17 +284,19 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
         this.modals.push(modal);
 
-        const currentModal = this.getCurrentModal();
         this.reRender();
-
-        if (beforeModal !== currentModal) {
-            this.emit(ModalManagerEvent.Opened);
-        }
+        this.emitIfChanged(beforeModal);
 
         return {
             close: closeDialog,
             finished: onFinishedProm,
         };
+    }
+
+    private emitIfChanged(beforeModal?: IModal<any>): void {
+        if (beforeModal !== this.getCurrentModal()) {
+            this.emit(ModalManagerEvent.Opened);
+        }
     }
 
     private onBackgroundClick = () => {
