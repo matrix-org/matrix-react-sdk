@@ -16,6 +16,7 @@ limitations under the License.
 
 // Pull in the encryption lib so that we can decrypt attachments.
 import encrypt from 'matrix-encrypt-attachment';
+import { parseErrorResponse } from 'matrix-js-sdk/src/http-api';
 
 import { mediaFromContent } from "../customisations/Media";
 import { IEncryptedFile, IMediaEventInfo } from "../customisations/models/IMediaEventContent";
@@ -25,6 +26,7 @@ export class DownloadError extends Error {
     constructor(e) {
         super(e.message);
         this.name = "DownloadError";
+        this.stack = e.stack;
     }
 }
 
@@ -32,6 +34,7 @@ export class DecryptError extends Error {
     constructor(e) {
         super(e.message);
         this.name = "DecryptError";
+        this.stack = e.stack;
     }
 }
 
@@ -54,6 +57,9 @@ export async function decryptFile(
     try {
         // Download the encrypted file as an array buffer.
         const response = await media.downloadSource();
+        if (!response.ok) {
+            throw parseErrorResponse(response, await response.text());
+        }
         responseData = await response.arrayBuffer();
     } catch (e) {
         throw new DownloadError(e);
