@@ -3680,5 +3680,17 @@
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Kontrollimata sessioonid on sessioonid, kuhu on sinu volitustega sisse logitud, kuid mida ei ole risttuvastamisega kontrollitud.",
     "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "See tähendab, et neil on sinu eelmiste sõnumite krüpteerimisvõtmed ja nad kinnitavad teistele kasutajatele, kellega sa suhtled, et suhtlus on turvaline.",
     "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Kontrollitud seanss on see, kuhu on sinu kasutajatunnustega sisse logitud ja mida on kontrollitud sinu salafraasi või risttunnustamise abil.",
-    "Hide formatting": "Peida vormindus"
+    "Hide formatting": "Peida vormindus",
+    "Automatic gain control": "Automaatne esitusvaljuse tundlikkus",
+    "Connection": "Ühendus",
+    "Voice processing": "Heli töötlemine",
+    "Video settings": "Videovoo seadistused",
+    "Automatically adjust the microphone volume": "Kohanda mikrofoni valjust automaatelt",
+    "Voice settings": "Heli seadistused",
+    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "On kasutusel vaid siis, kui sinu koduserver sellist teenust ei võimalda. Seeläbi jagatakse kõne ajal sinu seadme IP-aadressi.",
+    "Allow fallback call assist server (turn.matrix.org)": "Luba tagavara-kõnehõlbustusserveri kasutamine (turn.matrix.org)",
+    "Noise suppression": "Müra vähendamine",
+    "Echo cancellation": "Kaja eemaldamine",
+    "When enabled, the other party might be able to see your IP address": "Kui see seadistus on kasutusel, siis teisel osapoolel võib olla võimalik näha sinu seadme IP-aadressi",
+    "Allow Peer-to-Peer for 1:1 calls": "Luba võrdõigusvõrgu loogikat kasutavad omavahelised kõned"
 }
