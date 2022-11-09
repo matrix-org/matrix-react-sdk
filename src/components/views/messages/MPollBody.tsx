@@ -168,7 +168,7 @@ export function isPollEnded(
     }
 
     const roomId = pollEvent.getRoomId();
-    if (!pollEventId) {
+    if (!roomId) {
         logger.warn(
             "isPollEnded: Poll event must have room ID in order to determine whether it has ended " +
             "- assuming poll has not ended",
