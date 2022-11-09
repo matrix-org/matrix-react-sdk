@@ -176,11 +176,12 @@ export function isPollEnded(
         return false;
     }
 
-    const roomCurrentState = matrixClient.getRoom(roomId).currentState;
+    const roomCurrentState = matrixClient.getRoom(roomId)?.currentState;
     function userCanRedact(endEvent: MatrixEvent) {
-        return roomCurrentState.maySendRedactionForEvent(
+        const endEventSender = endEvent.getSender();
+        return endEventSender && roomCurrentState && roomCurrentState.maySendRedactionForEvent(
             pollEvent,
-            endEvent.getSender(),
+            endEventSender,
         );
     }
 
