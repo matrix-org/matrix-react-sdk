@@ -44,7 +44,7 @@ import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IState {
-    selected?: string; // Which option was clicked by the local user
+    selected?: string | null | undefined; // Which option was clicked by the local user
     voteRelations: RelatedRelations; // Voting (response) events
     endRelations: RelatedRelations; // Poll end events
 }
@@ -726,8 +726,8 @@ function isPollResponse(responseEvent: MatrixEvent): boolean {
  */
 function collectUserVotes(
     userResponses: Array<UserVote>,
-    userId?: string,
-    selected?: string,
+    userId?: string | null | undefined,
+    selected?: string | null | undefined,
 ): Map<string, UserVote> {
     const userVotes: Map<string, UserVote> = new Map();
 
