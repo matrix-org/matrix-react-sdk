@@ -162,4 +162,26 @@ describe("<ContextMenu />", () => {
         Modal.createDialog(BaseDialog);
         expect(onFinished).toHaveBeenCalled();
     });
+
+    it("should not automatically close when a modal is opened under the existing one", () => {
+        const targetX = -50;
+        const onFinished = jest.fn();
+
+        Modal.createDialog(BaseDialog);
+        mount(
+            <ContextMenu
+                top={0}
+                right={windowSize - targetX - menuSize}
+                chevronFace={ChevronFace.Bottom}
+                onFinished={onFinished}
+                chevronOffset={targetChevronOffset}
+            />,
+        );
+
+        expect(onFinished).not.toHaveBeenCalled();
+        Modal.createDialog(BaseDialog, {}, "", false, true);
+        expect(onFinished).not.toHaveBeenCalled();
+        Modal.appendDialog(BaseDialog);
+        expect(onFinished).not.toHaveBeenCalled();
+    });
 });
