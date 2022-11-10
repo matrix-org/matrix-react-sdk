@@ -376,7 +376,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
     });
 }
 
-function setWidget(event: MessageEvent<any>, roomId?: string): void {
+function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
@@ -435,6 +435,7 @@ function setWidget(event: MessageEvent<any>, roomId?: string): void {
     } else { // Room widget
         if (!roomId) {
             sendError(event, _t('Missing roomId.'), null);
+            return;
         }
         WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData, widgetAvatarUrl)
             .then(() => {
