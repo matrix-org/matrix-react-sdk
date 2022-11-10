@@ -3695,5 +3695,7 @@
     "Allow Peer-to-Peer for 1:1 calls": "Luba võrdõigusvõrgu loogikat kasutavad omavahelised kõned",
     "Error downloading image": "Pildifaili allalaadimine ei õnnestunud",
     "Unable to show image due to error": "Vea tõttu ei ole võimalik pilti kuvada",
-    "Go live": "Alusta otseeetrit"
+    "Go live": "Alusta otseeetrit",
+    "%(minutes)sm %(seconds)ss left": "jäänud on %(minutes)sm %(seconds)ss",
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "jäänud on %(hours)st %(minutes)sm %(seconds)ss"
 }
