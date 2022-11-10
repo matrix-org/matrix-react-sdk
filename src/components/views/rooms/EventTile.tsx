@@ -540,7 +540,11 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
     private renderThreadInfo(): React.ReactNode {
         if (this.state.thread?.id === this.props.mxEvent.getId()) {
-            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
+            return <ThreadSummary
+                mxEvent={this.props.mxEvent}
+                thread={this.state.thread}
+                data-testid="thread-summary"
+            />;
         }
 
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
@@ -1307,7 +1311,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 ]);
             }
             case TimelineRenderingType.Thread: {
-                const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
                     "ref": this.ref,
                     "className": classes,
@@ -1321,12 +1324,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     "onMouseEnter": () => this.setState({ hover: true }),
                     "onMouseLeave": () => this.setState({ hover: false }),
                 }, [
-                    <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
-                        <RoomAvatar room={room} width={28} height={28} />
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { room ? room.name : '' }
-                        </a>
-                    </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
                         { sender }
@@ -1528,9 +1525,11 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
 const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
-    return <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
-        <UnwrappedEventTile ref={ref} {...props} />
-    </TileErrorBoundary>;
+    return <>
+        <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+            <UnwrappedEventTile ref={ref} {...props} />
+        </TileErrorBoundary>
+    </>;
 });
 export default SafeEventTile;
 
