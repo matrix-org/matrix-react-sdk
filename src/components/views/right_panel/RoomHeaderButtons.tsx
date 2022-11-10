@@ -135,7 +135,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         RightPanelPhases.ThreadPanel,
         RightPanelPhases.ThreadView,
     ];
-    private threadNotificationState: ThreadsRoomNotificationState;
+    private threadNotificationState: ThreadsRoomNotificationState | null;
     private globalNotificationState: SummarizedNotificationState;
 
     private get supportsThreadNotifications(): boolean {
@@ -146,9 +146,9 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     constructor(props: IProps) {
         super(props, HeaderKind.Room);
 
-        if (!this.supportsThreadNotifications) {
-            this.threadNotificationState = RoomNotificationStateStore.instance.getThreadsRoomState(this.props.room);
-        }
+        this.threadNotificationState = !this.supportsThreadNotifications && this.props.room
+            ? RoomNotificationStateStore.instance.getThreadsRoomState(this.props.room)
+            : null;
         this.globalNotificationState = RoomNotificationStateStore.instance.globalState;
     }
 
@@ -176,7 +176,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     private onNotificationUpdate = (): void => {
         let threadNotificationColor: NotificationColor;
         if (!this.supportsThreadNotifications) {
-            threadNotificationColor = this.threadNotificationState.color;
+            threadNotificationColor = this.threadNotificationState?.color ?? NotificationColor.None;
         } else {
             threadNotificationColor = this.notificationColor;
         }
@@ -189,7 +189,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     };
 
     private get notificationColor(): NotificationColor {
-        switch (this.props.room.threadsAggregateNotificationType) {
+        switch (this.props.room?.threadsAggregateNotificationType) {
             case NotificationCountType.Highlight:
                 return NotificationColor.Red;
             case NotificationCountType.Total:
