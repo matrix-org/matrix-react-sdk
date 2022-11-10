@@ -3688,5 +3688,7 @@
     "Allow fallback call assist server (turn.matrix.org)": "Erlaube Rückfall-Anrufassistenz-Server (turn.matrix.org)",
     "Noise suppression": "Rauschreduzierung",
     "Echo cancellation": "Echounterdrückung",
-    "When enabled, the other party might be able to see your IP address": "Wenn aktiviert, könnte die andere Person deine IP-Adresse sehen"
+    "When enabled, the other party might be able to see your IP address": "Wenn aktiviert, könnte die andere Person deine IP-Adresse sehen",
+    "Error downloading image": "Fehler beim Herunterladen des Bildes",
+    "Unable to show image due to error": "Kann Bild aufgrund eines Fehlers nicht anzeigen"
 }
