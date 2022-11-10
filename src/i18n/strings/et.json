@@ -3692,5 +3692,8 @@
     "Noise suppression": "Müra vähendamine",
     "Echo cancellation": "Kaja eemaldamine",
     "When enabled, the other party might be able to see your IP address": "Kui see seadistus on kasutusel, siis teisel osapoolel võib olla võimalik näha sinu seadme IP-aadressi",
-    "Allow Peer-to-Peer for 1:1 calls": "Luba võrdõigusvõrgu loogikat kasutavad omavahelised kõned"
+    "Allow Peer-to-Peer for 1:1 calls": "Luba võrdõigusvõrgu loogikat kasutavad omavahelised kõned",
+    "Error downloading image": "Pildifaili allalaadimine ei õnnestunud",
+    "Unable to show image due to error": "Vea tõttu ei ole võimalik pilti kuvada",
+    "Go live": "Alusta otseeetrit"
 }
