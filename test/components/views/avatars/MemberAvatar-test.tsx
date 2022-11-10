@@ -61,7 +61,7 @@ describe("MemberAvatar", () => {
         jest.spyOn(member, "getMxcAvatarUrl").mockReturnValue("http://placekitten.com/400/400");
     });
 
-    it.only("shows an avatar for useOnlyCurrentProfiles", async () => {
+    it("shows an avatar for useOnlyCurrentProfiles", async () => {
         jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName: string) => {
             return settingName === "useOnlyCurrentProfiles";
         });
