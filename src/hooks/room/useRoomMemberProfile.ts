@@ -36,7 +36,7 @@ export function useRoomMemberProfile({
 
     useEffect(() => {
         const threadContexts = [TimelineRenderingType.ThreadsList, TimelineRenderingType.Thread];
-        if ((propMember && !forceHistorical && useOnlyCurrentProfiles)
+        if ((!forceHistorical && useOnlyCurrentProfiles)
             || threadContexts.includes(context?.timelineRenderingType)) {
             setMember(context?.room?.getMember(userId));
         }

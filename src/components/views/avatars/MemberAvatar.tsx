@@ -91,7 +91,7 @@ export default function MemberAvatar({
         setTitle(title);
     }, [member?.name, member?.roomId, member?.userId, props.fallbackUserId, props.title]);
 
-    return (
+    return member ? (
         <BaseAvatar
             {...props}
             width={width}
@@ -109,5 +109,5 @@ export default function MemberAvatar({
                 });
             } : props.onClick}
         />
-    );
+    ) : null;
 }
