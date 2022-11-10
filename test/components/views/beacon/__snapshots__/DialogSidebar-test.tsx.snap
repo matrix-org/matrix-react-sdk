@@ -44,6 +44,7 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
             alt=""
             aria-hidden="true"
             class="mx_BaseAvatar_image"
+            data-testid="avatar-img"
             src=""
             style="width: 32px; height: 32px;"
           />

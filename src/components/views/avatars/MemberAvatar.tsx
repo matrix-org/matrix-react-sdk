@@ -91,23 +91,21 @@ export default function MemberAvatar({
         setTitle(title);
     }, [member?.name, member?.roomId, member?.userId, props.fallbackUserId, props.title]);
 
-    return member ? (
-        <BaseAvatar
-            {...props}
-            width={width}
-            height={height}
-            resizeMethod={resizeMethod}
-            name={name ?? ""}
-            title={props.hideTitle ? undefined : title}
-            idName={member?.userId ?? props.fallbackUserId}
-            url={imageUrl}
-            onClick={viewUserOnClick ? () => {
-                dis.dispatch({
-                    action: Action.ViewUser,
-                    member: props.member,
-                    push: card.isCard,
-                });
-            } : props.onClick}
-        />
-    ) : null;
+    return <BaseAvatar
+        {...props}
+        width={width}
+        height={height}
+        resizeMethod={resizeMethod}
+        name={name ?? ""}
+        title={props.hideTitle ? undefined : title}
+        idName={member?.userId ?? props.fallbackUserId}
+        url={imageUrl}
+        onClick={viewUserOnClick ? () => {
+            dis.dispatch({
+                action: Action.ViewUser,
+                member: props.member,
+                push: card.isCard,
+            });
+        } : props.onClick}
+    />;
 }
