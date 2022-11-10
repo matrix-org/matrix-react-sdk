@@ -2252,7 +2252,7 @@
     "Connection failed": "Не вдалося зʼєднатися",
     "Their device couldn't start the camera or microphone": "Їхній пристрій не зміг запустити камеру чи мікрофон",
     "An unknown error occurred": "Трапилась невідома помилка",
-    "Call back": "Передзвонити",
+    "Call back": "Перетелефонувати",
     "Automatically invite members from this room to the new one": "Автоматично запросити учасників цієї кімнати до нової",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Зауважте, поліпшення створить нову версію кімнати</b>. Усі наявні повідомлення залишаться в цій архівованій кімнаті.",
     "Anyone will be able to find and join this room.": "Будь-хто зможе знайти цю кімнату й приєднатись.",
@@ -3680,5 +3680,18 @@
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Завдяки цьому у них з'являється впевненість, що вони дійсно розмовляють з вами, а також вони можуть бачити назву сеансу, яку ви вводите тут.",
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Інші користувачі в особистих повідомленнях і кімнатах, до яких ви приєдналися, можуть переглянути список усіх ваших сеансів.",
     "Renaming sessions": "Перейменування сеансів",
-    "Please be aware that session names are also visible to people you communicate with.": "Зауважте, що назви сеансів також бачать люди, з якими ви спілкуєтесь."
+    "Please be aware that session names are also visible to people you communicate with.": "Зауважте, що назви сеансів також бачать люди, з якими ви спілкуєтесь.",
+    "Hide formatting": "Сховати форматування",
+    "Connection": "З'єднання",
+    "Voice processing": "Обробка голосу",
+    "Video settings": "Налаштування відео",
+    "Automatically adjust the microphone volume": "Авторегулювання гучності мікрофона",
+    "Voice settings": "Налаштування голосу",
+    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "Застосовується лише в тому випадку, якщо ваш домашній сервер не пропонує його. Ваша IP-адреса передаватиметься під час виклику.",
+    "Allow fallback call assist server (turn.matrix.org)": "Дозволити запасний сервер підтримки викликів (turn.matrix.org)",
+    "Noise suppression": "Шумопригнічення",
+    "Automatic gain control": "Авторегулювання підсилення",
+    "Echo cancellation": "Пригнічення відлуння",
+    "When enabled, the other party might be able to see your IP address": "Якщо увімкнено, інша сторона зможе бачити вашу IP-адресу",
+    "Allow Peer-to-Peer for 1:1 calls": "Дозволити однорангові виклики 1:1"
 }
