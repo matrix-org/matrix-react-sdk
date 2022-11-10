@@ -119,7 +119,7 @@ const BaseAvatar = (props: IProps) => {
 
     const [imageUrl, onError] = useImageUrl({ url, urls });
 
-    if (!imageUrl && defaultToInitialLetter) {
+    if (!imageUrl && defaultToInitialLetter && name) {
         const initialLetter = AvatarLogic.getInitialLetter(name);
         const textNode = (
             <span
