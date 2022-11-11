@@ -3693,5 +3693,10 @@
     "Echo cancellation": "迴聲消除",
     "Automatic gain control": "自動增益控制",
     "When enabled, the other party might be able to see your IP address": "啟用後，對方可能會看到您的 IP 位置",
-    "Allow Peer-to-Peer for 1:1 calls": "允許點對點的 1:1 通話"
+    "Allow Peer-to-Peer for 1:1 calls": "允許點對點的 1:1 通話",
+    "Error downloading image": "下載圖片時發生錯誤",
+    "Unable to show image due to error": "因為錯誤而無法顯示圖片",
+    "Go live": "開始直播",
+    "%(minutes)sm %(seconds)ss left": "剩餘%(minutes)s分鐘%(seconds)s秒",
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "剩餘%(hours)s小時%(minutes)s分鐘%(seconds)s秒"
 }
