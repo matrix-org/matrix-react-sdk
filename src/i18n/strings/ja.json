@@ -3243,5 +3243,17 @@
     "Video rooms": "ビデオ通話ルーム",
     "You were disconnected from the call. (Error: %(message)s)": "通話から切断されました。（エラー：%(message)s）",
     "Connection lost": "接続が切断されました",
-    "Video": "動画"
+    "Video": "動画",
+    "Room info": "ルーム情報",
+    "Receive push notifications on this session.": "このセッションでプッシュ通知を受信します。",
+    "Push notifications": "プッシュ通知",
+    "Sign out of this session": "このセッションからサインアウト",
+    "Last activity": "最後のアクティビティ",
+    "Other sessions": "他のセッション",
+    "Sign out all other sessions": "他の全てのセッションからサインアウト",
+    "Current session": "現在のセッション",
+    "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "新しいセッションマネージャーは、全セッションを見やすくし、遠隔からプッシュ通知を切り替えるなど、セッションを管理しやすくします。",
+    "New session manager": "新しいセッションマネージャー",
+    "Use new session manager": "新しいセッションマネージャーを使用",
+    "Video room": "ビデオ通話ルーム"
 }
