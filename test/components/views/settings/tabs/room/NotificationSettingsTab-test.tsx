@@ -15,16 +15,20 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult } from "@testing-library/react";
+import { render, RenderResult } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import userEvent from "@testing-library/user-event";
 
 import NotificationSettingsTab from "../../../../../../src/components/views/settings/tabs/room/NotificationSettingsTab";
 import { mkStubRoom, stubClient } from "../../../../../test-utils";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
+import { EchoChamber } from "../../../../../../src/stores/local-echo/EchoChamber";
+import { RoomEchoChamber } from "../../../../../../src/stores/local-echo/RoomEchoChamber";
 
 describe("NotificatinSettingsTab", () => {
     const roomId = "!room:example.com";
     let cli: MatrixClient;
+    let roomProps: RoomEchoChamber;
 
     const renderTab = (): RenderResult => {
         return render(<NotificationSettingsTab roomId={roomId} closeSettingsFn={() => { }} />);
@@ -33,20 +37,22 @@ describe("NotificatinSettingsTab", () => {
     beforeEach(() => {
         stubClient();
         cli = MatrixClientPeg.get();
-        mkStubRoom(roomId, "test room", cli);
+        const room = mkStubRoom(roomId, "test room", cli);
+        roomProps = EchoChamber.forRoom(room);
 
         NotificationSettingsTab.contextType = React.createContext(cli);
     });
 
-    it("should prevent »Settings« link click from bubbling up to radio buttons", () => {
+    it("should prevent »Settings« link click from bubbling up to radio buttons", async () => {
         const tab = renderTab();
-        const event = new MouseEvent("click", { bubbles: true });
-        Object.assign(event, { preventDefault: jest.fn() });
 
-        const settingsLink = tab.container.querySelector("div.mx_AccessibleButton");
+        // settings link of mentions_only volume
+        const settingsLink = tab.container.querySelector(
+            "label.mx_NotificationSettingsTab_mentionsKeywordsEntry div.mx_AccessibleButton");
         if (!settingsLink) throw new Error("settings link does not exist.");
 
-        fireEvent(settingsLink, event);
-        expect(event.preventDefault).toHaveBeenCalledTimes(1);
+        await userEvent.click(settingsLink);
+
+        expect(roomProps.notificationVolume).not.toBe("mentions_only");
     });
 });
