@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent, MatrixEventEvent, RelationType, Room } from "matrix-js-sdk/src/matrix";
+import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { mkMessage, MessageEventProps } from "./test-utils";
 
@@ -78,7 +79,7 @@ export const makeThreadEvents = ({
 
     rootEvent.setUnsigned({
         "m.relations": {
-            "m.thread": {
+            [RelationType.Thread]: {
                 latest_event: events[events.length - 1],
                 count: length,
                 current_user_participated: [...participantUserIds, authorId].includes(currentUserId),
@@ -87,4 +88,45 @@ export const makeThreadEvents = ({
     });
 
     return { rootEvent, events };
+};
+
+type MakeThreadProps = {
+    room: Room;
+    client: MatrixClient;
+    authorId: string;
+    participantUserIds: string[];
+    length?: number;
+    ts?: number;
+};
+
+export const mkThread = ({
+    room,
+    client,
+    authorId,
+    participantUserIds,
+    length = 2,
+    ts = 1,
+}: MakeThreadProps): { thread: Thread, rootEvent: MatrixEvent, events: MatrixEvent[] } => {
+    const { rootEvent, events } = makeThreadEvents({
+        roomId: room.roomId,
+        authorId,
+        participantUserIds,
+        length,
+        ts,
+        currentUserId: client.getUserId(),
+    });
+    expect(rootEvent).toBeTruthy();
+
+    for (const evt of events) {
+        room?.reEmitter.reEmit(evt, [
+            MatrixEventEvent.BeforeRedaction,
+        ]);
+    }
+
+    const thread = room.createThread(rootEvent.getId(), rootEvent, events, true);
+    // So that we do not have to mock the thread loading
+    thread.initialEventsFetched = true;
+    thread.addEvents(events, true);
+
+    return { thread, rootEvent, events };
 };

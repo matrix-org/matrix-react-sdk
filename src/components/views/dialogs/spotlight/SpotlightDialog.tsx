@@ -66,7 +66,7 @@ import { BreadcrumbsStore } from "../../../../stores/BreadcrumbsStore";
 import { RoomNotificationState } from "../../../../stores/notifications/RoomNotificationState";
 import { RoomNotificationStateStore } from "../../../../stores/notifications/RoomNotificationStateStore";
 import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
-import { RoomViewStore } from "../../../../stores/RoomViewStore";
+import { SdkContextClass } from "../../../../contexts/SDKContext";
 import { getMetaSpaceName } from "../../../../stores/spaces";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
 import { DirectoryMember, Member, startDmOnFirstMessage } from "../../../../utils/direct-messages";
@@ -91,8 +91,8 @@ import { RoomResultContextMenus } from "./RoomResultContextMenus";
 import { RoomContextDetails } from "../../rooms/RoomContextDetails";
 import { TooltipOption } from "./TooltipOption";
 import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
-import { useSlidingSyncRoomSearch } from "../../../../hooks/useSlidingSyncRoomSearch";
 import { shouldShowFeedback } from "../../../../utils/Feedback";
+import RoomAvatar from "../../avatars/RoomAvatar";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -341,43 +341,26 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         searchProfileInfo,
         searchParams,
     );
-    const isSlidingSyncEnabled = SettingsStore.getValue("feature_sliding_sync");
-    let {
-        loading: slidingSyncRoomSearchLoading,
-        rooms: slidingSyncRooms,
-        search: searchRoomsServerside,
-    } = useSlidingSyncRoomSearch();
-    useDebouncedCallback(isSlidingSyncEnabled, searchRoomsServerside, searchParams);
-    if (!isSlidingSyncEnabled) {
-        slidingSyncRoomSearchLoading = false;
-    }
 
     const possibleResults = useMemo<Result[]>(
         () => {
             const userResults: IMemberResult[] = [];
-            let roomResults: IRoomResult[];
-            let alreadyAddedUserIds: Set<string>;
-            if (isSlidingSyncEnabled) {
-                // use the rooms sliding sync returned as the server has already worked it out for us
-                roomResults = slidingSyncRooms.map(toRoomResult);
-            } else {
-                roomResults = findVisibleRooms(cli).map(toRoomResult);
-                // If we already have a DM with the user we're looking for, we will
-                // show that DM instead of the user themselves
-                alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
-                    const userId = DMRoomMap.shared().getUserIdForRoomId(result.room.roomId);
-                    if (!userId) return userIds;
-                    if (result.room.getJoinedMemberCount() > 2) return userIds;
-                    userIds.add(userId);
-                    return userIds;
-                }, new Set<string>());
-                for (const user of [...findVisibleRoomMembers(cli), ...users]) {
-                    // Make sure we don't have any user more than once
-                    if (alreadyAddedUserIds.has(user.userId)) continue;
-                    alreadyAddedUserIds.add(user.userId);
+            const roomResults = findVisibleRooms(cli).map(toRoomResult);
+            // If we already have a DM with the user we're looking for, we will
+            // show that DM instead of the user themselves
+            const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
+                const userId = DMRoomMap.shared().getUserIdForRoomId(result.room.roomId);
+                if (!userId) return userIds;
+                if (result.room.getJoinedMemberCount() > 2) return userIds;
+                userIds.add(userId);
+                return userIds;
+            }, new Set<string>());
+            for (const user of [...findVisibleRoomMembers(cli), ...users]) {
+                // Make sure we don't have any user more than once
+                if (alreadyAddedUserIds.has(user.userId)) continue;
+                alreadyAddedUserIds.add(user.userId);
 
-                    userResults.push(toMemberResult(user));
-                }
+                userResults.push(toMemberResult(user));
             }
 
             return [
@@ -401,7 +384,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
         },
-        [cli, users, profile, publicRooms, slidingSyncRooms, isSlidingSyncEnabled, filter],
+        [cli, users, profile, publicRooms, filter],
     );
 
     const results = useMemo<Record<Section, Result[]>>(() => {
@@ -420,13 +403,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
             possibleResults.forEach(entry => {
                 if (isRoomResult(entry)) {
-                    // sliding sync gives the correct rooms in the list so we don't need to filter
-                    if (!isSlidingSyncEnabled) {
-                        if (!entry.room.normalizedName?.includes(normalizedQuery) &&
-                            !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
-                            !entry.query?.some(q => q.includes(lcQuery))
-                        ) return; // bail, does not match query
-                    }
+                    if (!entry.room.normalizedName?.includes(normalizedQuery) &&
+                        !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
+                        !entry.query?.some(q => q.includes(lcQuery))
+                    ) return; // bail, does not match query
                 } else if (isMemberResult(entry)) {
                     if (!entry.query?.some(q => q.includes(lcQuery))) return; // bail, does not match query
                 } else if (isPublicRoomResult(entry)) {
@@ -477,7 +457,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
 
         return results;
-    }, [trimmedQuery, filter, cli, possibleResults, isSlidingSyncEnabled, memberComparator]);
+    }, [trimmedQuery, filter, cli, possibleResults, memberComparator]);
 
     const numResults = sum(Object.values(results).map(it => it.length));
     useWebSearchMetrics(numResults, query.length, true);
@@ -656,6 +636,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
                     }, true, ev.type !== "click");
                 };
+
                 return (
                     <Option
                         id={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}`}
@@ -674,13 +655,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         aria-describedby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_alias`}
                         aria-details={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_details`}
                     >
-                        <BaseAvatar
+                        <RoomAvatar
                             className="mx_SearchResultAvatar"
-                            url={result?.publicRoom?.avatar_url
-                                ? mediaFromMxc(result?.publicRoom?.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
-                                : null}
-                            name={result.publicRoom.name}
-                            idName={result.publicRoom.room_id}
+                            oobData={{
+                                roomId: result.publicRoom.room_id,
+                                name: result.publicRoom.name,
+                                avatarUrl: result.publicRoom.avatar_url,
+                                roomType: result.publicRoom.room_type,
+                            }}
                             width={AVATAR_SIZE}
                             height={AVATAR_SIZE}
                         />
@@ -1060,7 +1042,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 </h4>
                 <div>
                     { BreadcrumbsStore.instance.rooms
-                        .filter(r => r.roomId !== RoomViewStore.instance.getRoomId())
+                        .filter(r => r.roomId !== SdkContextClass.instance.roomViewStore.getRoomId())
                         .map(room => (
                             <TooltipOption
                                 id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
@@ -1233,7 +1215,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     aria-label={_t("Search")}
                     aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                 />
-                { (publicRoomsLoading || peopleLoading || profileLoading || slidingSyncRoomSearchLoading) && (
+                { (publicRoomsLoading || peopleLoading || profileLoading) && (
                     <Spinner w={24} h={24} />
                 ) }
             </div>

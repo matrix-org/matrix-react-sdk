@@ -21,9 +21,9 @@ import { Command, Commands, getCommand } from '../src/SlashCommands';
 import { createTestClient } from './test-utils';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from '../src/models/LocalRoom';
-import { RoomViewStore } from '../src/stores/RoomViewStore';
 import SettingsStore from '../src/settings/SettingsStore';
 import LegacyCallHandler from '../src/LegacyCallHandler';
+import { SdkContextClass } from '../src/contexts/SDKContext';
 
 describe('SlashCommands', () => {
     let client: MatrixClient;
@@ -38,14 +38,14 @@ describe('SlashCommands', () => {
     };
 
     const setCurrentRoom = (): void => {
-        mocked(RoomViewStore.instance.getRoomId).mockReturnValue(roomId);
+        mocked(SdkContextClass.instance.roomViewStore.getRoomId).mockReturnValue(roomId);
         mocked(client.getRoom).mockImplementation((rId: string): Room => {
             if (rId === roomId) return room;
         });
     };
 
     const setCurrentLocalRoon = (): void => {
-        mocked(RoomViewStore.instance.getRoomId).mockReturnValue(localRoomId);
+        mocked(SdkContextClass.instance.roomViewStore.getRoomId).mockReturnValue(localRoomId);
         mocked(client.getRoom).mockImplementation((rId: string): Room => {
             if (rId === localRoomId) return localRoom;
         });
@@ -60,7 +60,7 @@ describe('SlashCommands', () => {
         room = new Room(roomId, client, client.getUserId());
         localRoom = new LocalRoom(localRoomId, client, client.getUserId());
 
-        jest.spyOn(RoomViewStore.instance, "getRoomId");
+        jest.spyOn(SdkContextClass.instance.roomViewStore, "getRoomId");
     });
 
     describe('/topic', () => {
@@ -193,6 +193,36 @@ describe('SlashCommands', () => {
                     expect(command.isEnabled()).toBe(false);
                 });
             });
+        });
+    });
+
+    describe("/part", () => {
+        it("should part room matching alias if found", async () => {
+            const room1 = new Room("room-id", client, client.getUserId());
+            room1.getCanonicalAlias = jest.fn().mockReturnValue("#foo:bar");
+            const room2 = new Room("other-room", client, client.getUserId());
+            room2.getCanonicalAlias = jest.fn().mockReturnValue("#baz:bar");
+            mocked(client.getRooms).mockReturnValue([room1, room2]);
+
+            const command = getCommand("/part #foo:bar");
+            expect(command.cmd).toBeDefined();
+            expect(command.args).toBeDefined();
+            await command.cmd.run("room-id", null, command.args);
+            expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
+        });
+
+        it("should part room matching alt alias if found", async () => {
+            const room1 = new Room("room-id", client, client.getUserId());
+            room1.getAltAliases = jest.fn().mockReturnValue(["#foo:bar"]);
+            const room2 = new Room("other-room", client, client.getUserId());
+            room2.getAltAliases = jest.fn().mockReturnValue(["#baz:bar"]);
+            mocked(client.getRooms).mockReturnValue([room1, room2]);
+
+            const command = getCommand("/part #foo:bar");
+            expect(command.cmd).toBeDefined();
+            expect(command.args).toBeDefined();
+            await command.cmd.run("room-id", null, command.args);
+            expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
         });
     });
 });

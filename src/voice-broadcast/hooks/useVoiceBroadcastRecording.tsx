@@ -20,7 +20,6 @@ import {
     VoiceBroadcastInfoState,
     VoiceBroadcastRecording,
     VoiceBroadcastRecordingEvent,
-    VoiceBroadcastRecordingsStore,
 } from "..";
 import QuestionDialog from "../../components/views/dialogs/QuestionDialog";
 import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
@@ -53,24 +52,39 @@ export const useVoiceBroadcastRecording = (recording: VoiceBroadcastRecording) =
         const confirmed = await showStopBroadcastingDialog();
 
         if (confirmed) {
-            recording.stop();
-            VoiceBroadcastRecordingsStore.instance().clearCurrent();
+            await recording.stop();
         }
     };
 
-    const [live, setLive] = useState(recording.getState() === VoiceBroadcastInfoState.Started);
+    const [recordingState, setRecordingState] = useState(recording.getState());
     useTypedEventEmitter(
         recording,
         VoiceBroadcastRecordingEvent.StateChanged,
         (state: VoiceBroadcastInfoState, _recording: VoiceBroadcastRecording) => {
-            setLive(state === VoiceBroadcastInfoState.Started);
+            setRecordingState(state);
         },
     );
 
+    const [timeLeft, setTimeLeft] = useState(recording.getTimeLeft());
+    useTypedEventEmitter(
+        recording,
+        VoiceBroadcastRecordingEvent.TimeLeftChanged,
+        setTimeLeft,
+    );
+
+    const live = [
+        VoiceBroadcastInfoState.Started,
+        VoiceBroadcastInfoState.Paused,
+        VoiceBroadcastInfoState.Resumed,
+    ].includes(recordingState);
+
     return {
         live,
+        timeLeft,
+        recordingState,
         room,
         sender: recording.infoEvent.sender,
         stopRecording,
+        toggleRecording: recording.toggle,
     };
 };

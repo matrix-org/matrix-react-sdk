@@ -24,13 +24,6 @@ import { ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
 
-export {
-    IdentityProviderBrand,
-    IIdentityProvider,
-    ISSOFlow,
-    LoginFlow,
-} from "matrix-js-sdk/src/@types/auth";
-
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
 }
@@ -82,11 +75,13 @@ export default class Login {
      * @returns {MatrixClient}
      */
     public createTemporaryClient(): MatrixClient {
-        if (this.tempClient) return this.tempClient; // use memoization
-        return this.tempClient = createClient({
-            baseUrl: this.hsUrl,
-            idBaseUrl: this.isUrl,
-        });
+        if (!this.tempClient) {
+            this.tempClient = createClient({
+                baseUrl: this.hsUrl,
+                idBaseUrl: this.isUrl,
+            });
+        }
+        return this.tempClient;
     }
 
     public async getFlows(): Promise<Array<LoginFlow>> {

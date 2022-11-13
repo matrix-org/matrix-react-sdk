@@ -20,6 +20,7 @@ import {
     EventType,
     MatrixClient,
     MatrixEvent,
+    MatrixEventEvent,
     MsgType,
     RelationType,
     Room,
@@ -30,8 +31,9 @@ import { uploadFile } from "../../../src/ContentMessages";
 import { IEncryptedFile } from "../../../src/customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../../src/utils/createVoiceMessageContent";
 import {
-    ChunkRecordedPayload,
     createVoiceBroadcastRecorder,
+    getChunkLength,
+    getMaxBroadcastLength,
     VoiceBroadcastInfoEventContent,
     VoiceBroadcastInfoEventType,
     VoiceBroadcastInfoState,
@@ -42,10 +44,27 @@ import {
 } from "../../../src/voice-broadcast";
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 import dis from "../../../src/dispatcher/dispatcher";
+import { VoiceRecording } from "../../../src/audio/VoiceRecording";
 
 jest.mock("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder", () => ({
     ...jest.requireActual("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder") as object,
     createVoiceBroadcastRecorder: jest.fn(),
+}));
+
+// mock VoiceRecording because it contains all the audio APIs
+jest.mock("../../../src/audio/VoiceRecording", () => ({
+    VoiceRecording: jest.fn().mockReturnValue({
+        disableMaxLength: jest.fn(),
+        liveData: {
+            onUpdate: jest.fn(),
+        },
+        off: jest.fn(),
+        on: jest.fn(),
+        start: jest.fn(),
+        stop: jest.fn(),
+        destroy: jest.fn(),
+        contentType: "audio/ogg",
+    }),
 }));
 
 jest.mock("../../../src/ContentMessages", () => ({
@@ -60,13 +79,13 @@ describe("VoiceBroadcastRecording", () => {
     const roomId = "!room:example.com";
     const uploadedUrl = "mxc://example.com/vb";
     const uploadedFile = { file: true } as unknown as IEncryptedFile;
+    const maxLength = getMaxBroadcastLength();
     let room: Room;
     let client: MatrixClient;
     let infoEvent: MatrixEvent;
     let voiceBroadcastRecording: VoiceBroadcastRecording;
     let onStateChanged: (state: VoiceBroadcastInfoState) => void;
     let voiceBroadcastRecorder: VoiceBroadcastRecorder;
-    let onChunkRecorded: (chunk: ChunkRecordedPayload) => Promise<void>;
 
     const mkVoiceBroadcastInfoEvent = (content: VoiceBroadcastInfoEventContent) => {
         return mkEvent({
@@ -81,12 +100,85 @@ describe("VoiceBroadcastRecording", () => {
     const setUpVoiceBroadcastRecording = () => {
         voiceBroadcastRecording = new VoiceBroadcastRecording(infoEvent, client);
         voiceBroadcastRecording.on(VoiceBroadcastRecordingEvent.StateChanged, onStateChanged);
+        jest.spyOn(voiceBroadcastRecording, "destroy");
+        jest.spyOn(voiceBroadcastRecording, "emit");
         jest.spyOn(voiceBroadcastRecording, "removeAllListeners");
     };
 
     const itShouldBeInState = (state: VoiceBroadcastInfoState) => {
         it(`should be in state stopped ${state}`, () => {
             expect(voiceBroadcastRecording.getState()).toBe(state);
+        });
+    };
+
+    const itShouldSendAnInfoEvent = (state: VoiceBroadcastInfoState, lastChunkSequence: number) => {
+        it(`should send a ${state} info event`, () => {
+            expect(client.sendStateEvent).toHaveBeenCalledWith(
+                roomId,
+                VoiceBroadcastInfoEventType,
+                {
+                    device_id: client.getDeviceId(),
+                    state,
+                    last_chunk_sequence: lastChunkSequence,
+                    ["m.relates_to"]: {
+                        rel_type: RelationType.Reference,
+                        event_id: infoEvent.getId(),
+                    },
+                } as VoiceBroadcastInfoEventContent,
+                client.getUserId(),
+            );
+        });
+    };
+
+    const itShouldSendAVoiceMessage = (data: number[], size: number, duration: number, sequence: number) => {
+        // events contain milliseconds
+        duration *= 1000;
+
+        it("should send a voice message", () => {
+            expect(uploadFile).toHaveBeenCalledWith(
+                client,
+                roomId,
+                new Blob([new Uint8Array(data)], { type: voiceBroadcastRecorder.contentType }),
+            );
+
+            expect(mocked(client.sendMessage)).toHaveBeenCalledWith(
+                roomId,
+                {
+                    body: "Voice message",
+                    file: {
+                        file: true,
+                    },
+                    info: {
+                        duration,
+                        mimetype: "audio/ogg",
+                        size,
+                    },
+                    ["m.relates_to"]: {
+                        event_id: infoEvent.getId(),
+                        rel_type: "m.reference",
+                    },
+                    msgtype: "m.audio",
+                    ["org.matrix.msc1767.audio"]: {
+                        duration,
+                        waveform: undefined,
+                    },
+                    ["org.matrix.msc1767.file"]: {
+                        file: {
+                            file: true,
+                        },
+                        mimetype: "audio/ogg",
+                        name: "Voice message.ogg",
+                        size,
+                        url: "mxc://example.com/vb",
+                    },
+                    ["org.matrix.msc1767.text"]: "Voice message",
+                    ["org.matrix.msc3245.voice"]: {},
+                    url: "mxc://example.com/vb",
+                    ["io.element.voice_broadcast_chunk"]: {
+                        sequence,
+                    },
+                },
+            );
         });
     };
 
@@ -99,25 +191,11 @@ describe("VoiceBroadcastRecording", () => {
             }
         });
         onStateChanged = jest.fn();
-        voiceBroadcastRecorder = {
-            contentType: "audio/ogg",
-            on: jest.fn(),
-            off: jest.fn(),
-            start: jest.fn(),
-            stop: jest.fn(),
-        } as unknown as VoiceBroadcastRecorder;
+        voiceBroadcastRecorder = new VoiceBroadcastRecorder(new VoiceRecording(), getChunkLength());
+        jest.spyOn(voiceBroadcastRecorder, "start");
+        jest.spyOn(voiceBroadcastRecorder, "stop");
+        jest.spyOn(voiceBroadcastRecorder, "destroy");
         mocked(createVoiceBroadcastRecorder).mockReturnValue(voiceBroadcastRecorder);
-        onChunkRecorded = jest.fn();
-
-        mocked(voiceBroadcastRecorder.on).mockImplementation(
-            (event: VoiceBroadcastRecorderEvent, listener: any): VoiceBroadcastRecorder => {
-                if (event === VoiceBroadcastRecorderEvent.ChunkRecorded) {
-                    onChunkRecorded = listener;
-                }
-
-                return voiceBroadcastRecorder;
-            },
-        );
 
         mocked(uploadFile).mockResolvedValue({
             url: uploadedUrl,
@@ -182,22 +260,7 @@ describe("VoiceBroadcastRecording", () => {
                 voiceBroadcastRecording.stop();
             });
 
-            it("should send a stopped Voice Broadcast Info event", () => {
-                expect(mocked(client.sendStateEvent)).toHaveBeenCalledWith(
-                    roomId,
-                    VoiceBroadcastInfoEventType,
-                    {
-                        device_id: client.getDeviceId(),
-                        state: VoiceBroadcastInfoState.Stopped,
-                        ["m.relates_to"]: {
-                            rel_type: RelationType.Reference,
-                            event_id: infoEvent.getId(),
-                        },
-                    },
-                    client.getUserId(),
-                );
-            });
-
+            itShouldSendAnInfoEvent(VoiceBroadcastInfoState.Stopped, 1);
             itShouldBeInState(VoiceBroadcastInfoState.Stopped);
 
             it("should emit a stopped state changed event", () => {
@@ -214,6 +277,18 @@ describe("VoiceBroadcastRecording", () => {
                 expect(voiceBroadcastRecorder.start).toHaveBeenCalled();
             });
 
+            describe("and the info event is redacted", () => {
+                beforeEach(() => {
+                    infoEvent.emit(MatrixEventEvent.BeforeRedaction, null, null);
+                });
+
+                itShouldBeInState(VoiceBroadcastInfoState.Stopped);
+
+                it("should destroy the recording", () => {
+                    expect(voiceBroadcastRecording.destroy).toHaveBeenCalled();
+                });
+            });
+
             describe("and receiving a call action", () => {
                 beforeEach(() => {
                     dis.dispatch({
@@ -224,68 +299,64 @@ describe("VoiceBroadcastRecording", () => {
                 itShouldBeInState(VoiceBroadcastInfoState.Stopped);
             });
 
-            describe("and a chunk has been recorded", () => {
-                beforeEach(async () => {
-                    await onChunkRecorded({
-                        buffer: new Uint8Array([1, 2, 3]),
-                        length: 23,
-                    });
+            describe("and a chunk time update occurs", () => {
+                beforeEach(() => {
+                    voiceBroadcastRecorder.emit(VoiceBroadcastRecorderEvent.CurrentChunkLengthUpdated, 10);
                 });
 
-                it("should send a voice message", () => {
-                    expect(uploadFile).toHaveBeenCalledWith(
-                        client,
-                        roomId,
-                        new Blob([new Uint8Array([1, 2, 3])], { type: voiceBroadcastRecorder.contentType }),
+                it("should update time left", () => {
+                    expect(voiceBroadcastRecording.getTimeLeft()).toBe(maxLength - 10);
+                    expect(voiceBroadcastRecording.emit).toHaveBeenCalledWith(
+                        VoiceBroadcastRecordingEvent.TimeLeftChanged,
+                        maxLength - 10,
                     );
+                });
 
-                    expect(mocked(client.sendMessage)).toHaveBeenCalledWith(
-                        roomId,
+                describe("and a chunk time update occurs, that would increase time left", () => {
+                    beforeEach(() => {
+                        mocked(voiceBroadcastRecording.emit).mockClear();
+                        voiceBroadcastRecorder.emit(VoiceBroadcastRecorderEvent.CurrentChunkLengthUpdated, 5);
+                    });
+
+                    it("should not change time left", () => {
+                        expect(voiceBroadcastRecording.getTimeLeft()).toBe(maxLength - 10);
+                        expect(voiceBroadcastRecording.emit).not.toHaveBeenCalled();
+                    });
+                });
+            });
+
+            describe("and a chunk has been recorded", () => {
+                beforeEach(async () => {
+                    voiceBroadcastRecorder.emit(
+                        VoiceBroadcastRecorderEvent.ChunkRecorded,
                         {
-                            body: "Voice message",
-                            file: {
-                                file: true,
-                            },
-                            info: {
-                                duration: 23000,
-                                mimetype: "audio/ogg",
-                                size: 3,
-                            },
-                            ["m.relates_to"]: {
-                                event_id: infoEvent.getId(),
-                                rel_type: "m.reference",
-                            },
-                            msgtype: "m.audio",
-                            ["org.matrix.msc1767.audio"]: {
-                                duration: 23000,
-                                waveform: undefined,
-                            },
-                            ["org.matrix.msc1767.file"]: {
-                                file: {
-                                    file: true,
-                                },
-                                mimetype: "audio/ogg",
-                                name: "Voice message.ogg",
-                                size: 3,
-                                url: "mxc://example.com/vb",
-                            },
-                            ["org.matrix.msc1767.text"]: "Voice message",
-                            ["org.matrix.msc3245.voice"]: {},
-                            url: "mxc://example.com/vb",
-                            ["io.element.voice_broadcast_chunk"]: {
-                                sequence: 1,
-                            },
+                            buffer: new Uint8Array([1, 2, 3]),
+                            length: 23,
                         },
                     );
+                });
+
+                itShouldSendAVoiceMessage([1, 2, 3], 3, 23, 1);
+
+                describe("and another chunk has been recorded, that exceeds the max time", () => {
+                    beforeEach(() => {
+                        mocked(voiceBroadcastRecorder.stop).mockResolvedValue({
+                            buffer: new Uint8Array([23, 24, 25]),
+                            length: getMaxBroadcastLength(),
+                        });
+                        voiceBroadcastRecorder.emit(
+                            VoiceBroadcastRecorderEvent.CurrentChunkLengthUpdated,
+                            getMaxBroadcastLength(),
+                        );
+                    });
+
+                    itShouldBeInState(VoiceBroadcastInfoState.Stopped);
+                    itShouldSendAVoiceMessage([23, 24, 25], 3, getMaxBroadcastLength(), 2);
                 });
             });
 
             describe("and calling stop", () => {
                 beforeEach(async () => {
-                    await onChunkRecorded({
-                        buffer: new Uint8Array([1, 2, 3]),
-                        length: 23,
-                    });
                     mocked(voiceBroadcastRecorder.stop).mockResolvedValue({
                         buffer: new Uint8Array([4, 5, 6]),
                         length: 42,
@@ -293,51 +364,26 @@ describe("VoiceBroadcastRecording", () => {
                     await voiceBroadcastRecording.stop();
                 });
 
-                it("should send the last chunk", () => {
-                    expect(uploadFile).toHaveBeenCalledWith(
-                        client,
-                        roomId,
-                        new Blob([new Uint8Array([4, 5, 6])], { type: voiceBroadcastRecorder.contentType }),
-                    );
+                itShouldSendAVoiceMessage([4, 5, 6], 3, 42, 1);
+            });
 
-                    expect(mocked(client.sendMessage)).toHaveBeenCalledWith(
-                        roomId,
-                        {
-                            body: "Voice message",
-                            file: {
-                                file: true,
-                            },
-                            info: {
-                                duration: 42000,
-                                mimetype: "audio/ogg",
-                                size: 3,
-                            },
-                            ["m.relates_to"]: {
-                                event_id: infoEvent.getId(),
-                                rel_type: "m.reference",
-                            },
-                            msgtype: "m.audio",
-                            ["org.matrix.msc1767.audio"]: {
-                                duration: 42000,
-                                waveform: undefined,
-                            },
-                            ["org.matrix.msc1767.file"]: {
-                                file: {
-                                    file: true,
-                                },
-                                mimetype: "audio/ogg",
-                                name: "Voice message.ogg",
-                                size: 3,
-                                url: "mxc://example.com/vb",
-                            },
-                            ["org.matrix.msc1767.text"]: "Voice message",
-                            ["org.matrix.msc3245.voice"]: {},
-                            url: "mxc://example.com/vb",
-                            ["io.element.voice_broadcast_chunk"]: {
-                                sequence: 2,
-                            },
-                        },
-                    );
+            describe.each([
+                ["pause", async () => voiceBroadcastRecording.pause()],
+                ["toggle", async () => voiceBroadcastRecording.toggle()],
+            ])("and calling %s", (_case: string, action: Function) => {
+                beforeEach(async () => {
+                    await action();
+                });
+
+                itShouldBeInState(VoiceBroadcastInfoState.Paused);
+                itShouldSendAnInfoEvent(VoiceBroadcastInfoState.Paused, 1);
+
+                it("should stop the recorder", () => {
+                    expect(mocked(voiceBroadcastRecorder.stop)).toHaveBeenCalled();
+                });
+
+                it("should emit a paused state changed event", () => {
+                    expect(onStateChanged).toHaveBeenCalledWith(VoiceBroadcastInfoState.Paused);
                 });
             });
 
@@ -348,11 +394,34 @@ describe("VoiceBroadcastRecording", () => {
 
                 it("should stop the recorder and remove all listeners", () => {
                     expect(mocked(voiceBroadcastRecorder.stop)).toHaveBeenCalled();
-                    expect(mocked(voiceBroadcastRecorder.off)).toHaveBeenCalledWith(
-                        VoiceBroadcastRecorderEvent.ChunkRecorded,
-                        onChunkRecorded,
-                    );
+                    expect(mocked(voiceBroadcastRecorder.destroy)).toHaveBeenCalled();
                     expect(mocked(voiceBroadcastRecording.removeAllListeners)).toHaveBeenCalled();
+                });
+            });
+        });
+
+        describe("and it is in paused state", () => {
+            beforeEach(async () => {
+                await voiceBroadcastRecording.pause();
+            });
+
+            describe.each([
+                ["resume", async () => voiceBroadcastRecording.resume()],
+                ["toggle", async () => voiceBroadcastRecording.toggle()],
+            ])("and calling %s", (_case: string, action: Function) => {
+                beforeEach(async () => {
+                    await action();
+                });
+
+                itShouldBeInState(VoiceBroadcastInfoState.Resumed);
+                itShouldSendAnInfoEvent(VoiceBroadcastInfoState.Resumed, 1);
+
+                it("should start the recorder", () => {
+                    expect(mocked(voiceBroadcastRecorder.start)).toHaveBeenCalled();
+                });
+
+                it(`should emit a ${VoiceBroadcastInfoState.Resumed} state changed event`, () => {
+                    expect(onStateChanged).toHaveBeenCalledWith(VoiceBroadcastInfoState.Resumed);
                 });
             });
         });
@@ -363,7 +432,7 @@ describe("VoiceBroadcastRecording", () => {
             infoEvent = mkVoiceBroadcastInfoEvent({
                 device_id: client.getDeviceId(),
                 state: VoiceBroadcastInfoState.Started,
-                chunk_length: 300,
+                chunk_length: 120,
             });
 
             const relationsContainer = {

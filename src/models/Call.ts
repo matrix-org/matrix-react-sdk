@@ -23,10 +23,10 @@ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { NamespacedValue } from "matrix-js-sdk/src/NamespacedValue";
 import { IWidgetApiRequest, MatrixWidgetType } from "matrix-widget-api";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 
 import type EventEmitter from "events";
 import type { IMyDevice } from "matrix-js-sdk/src/client";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import type { ClientWidgetApi } from "matrix-widget-api";
@@ -43,6 +43,8 @@ import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widge
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
 import PlatformPeg from "../PlatformPeg";
 import { getCurrentLanguage } from "../languageHandler";
+import DesktopCapturerSourcePicker from "../components/views/elements/DesktopCapturerSourcePicker";
+import Modal from "../Modal";
 
 const TIMEOUT_MS = 16000;
 
@@ -639,10 +641,6 @@ export class ElementCall extends Call {
             baseUrl: client.baseUrl,
             lang: getCurrentLanguage().replace("_", "-"),
         });
-        // Currently, the screen-sharing support is the same is it is for Jitsi
-        if (!PlatformPeg.get().supportsJitsiScreensharing()) {
-            params.append("hideScreensharing", "");
-        }
         url.hash = `#?${params.toString()}`;
 
         // To use Element Call without touching room state, we create a virtual
@@ -658,6 +656,7 @@ export class ElementCall extends Call {
             client,
         );
 
+        this.groupCall.on(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
         this.room.on(RoomStateEvent.Update, this.onRoomState);
         this.on(CallEvent.ConnectionState, this.onConnectionState);
         this.on(CallEvent.Participants, this.onParticipants);
@@ -818,6 +817,7 @@ export class ElementCall extends Call {
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
+        this.messaging!.on(`action:${ElementWidgetActions.ScreenshareRequest}`, this.onScreenshareRequest);
     }
 
     protected async performDisconnection(): Promise<void> {
@@ -831,12 +831,14 @@ export class ElementCall extends Call {
     public setDisconnected() {
         this.client.off(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-        this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
-        this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
+        this.messaging!.off(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
+        this.messaging!.off(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
+        this.messaging!.off(`action:${ElementWidgetActions.ScreenshareRequest}`, this.onScreenshareRequest);
         super.setDisconnected();
     }
 
     public destroy() {
+        this.groupCall.off(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
         WidgetStore.instance.removeVirtualWidget(this.widget.id, this.groupCall.getRoomId()!);
         this.room.off(RoomStateEvent.Update, this.onRoomState);
         this.off(CallEvent.ConnectionState, this.onConnectionState);
@@ -884,6 +886,10 @@ export class ElementCall extends Call {
             this.groupCall.getStateKey(),
         );
     }
+
+    private onBeforeRedaction = (): void => {
+        this.disconnect();
+    };
 
     private onRoomState = () => {
         this.updateParticipants();
@@ -950,5 +956,26 @@ export class ElementCall extends Call {
         ev.preventDefault();
         this.layout = Layout.Spotlight;
         await this.messaging!.transport.reply(ev.detail, {}); // ack
+    };
+
+    private onScreenshareRequest = async (ev: CustomEvent<IWidgetApiRequest>) => {
+        ev.preventDefault();
+
+        if (PlatformPeg.get().supportsDesktopCapturer()) {
+            await this.messaging!.transport.reply(ev.detail, { pending: true });
+
+            const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
+            const [source] = await finished;
+
+            if (source) {
+                await this.messaging!.transport.send(ElementWidgetActions.ScreenshareStart, {
+                    desktopCapturerSourceId: source,
+                });
+            } else {
+                await this.messaging!.transport.send(ElementWidgetActions.ScreenshareStop, {});
+            }
+        } else {
+            await this.messaging!.transport.reply(ev.detail, { pending: false });
+        }
     };
 }

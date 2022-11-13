@@ -62,7 +62,6 @@ import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from './contexts/RoomContext';
-import { RoomViewStore } from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
@@ -70,13 +69,14 @@ import VoipUserMapper from './VoipUserMapper';
 import { htmlSerializeFromMdIfNeeded } from './editor/serialize';
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 import { isLocalRoom } from './utils/localRoom/isLocalRoom';
+import { SdkContextClass } from './contexts/SDKContext';
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
     target: HTMLInputElement & EventTarget;
 }
 
-const singleMxcUpload = async (): Promise<any> => {
+const singleMxcUpload = async (): Promise<string | null> => {
     return new Promise((resolve) => {
         const fileSelector = document.createElement('input');
         fileSelector.setAttribute('type', 'file');
@@ -85,8 +85,13 @@ const singleMxcUpload = async (): Promise<any> => {
 
             Modal.createDialog(UploadConfirmDialog, {
                 file,
-                onFinished: (shouldContinue) => {
-                    resolve(shouldContinue ? MatrixClientPeg.get().uploadContent(file) : null);
+                onFinished: async (shouldContinue) => {
+                    if (shouldContinue) {
+                        const { content_uri: uri } = await MatrixClientPeg.get().uploadContent(file);
+                        resolve(uri);
+                    } else {
+                        resolve(null);
+                    }
                 },
             });
         };
@@ -209,7 +214,7 @@ function successSync(value: any) {
 
 const isCurrentLocalRoom = (): boolean => {
     const cli = MatrixClientPeg.get();
-    const room = cli.getRoom(RoomViewStore.instance.getRoomId());
+    const room = cli.getRoom(SdkContextClass.instance.roomViewStore.getRoomId());
     return isLocalRoom(room);
 };
 
@@ -711,7 +716,7 @@ export const Commands = [
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
-            let targetRoomId: string;
+            let targetRoomId: string | undefined;
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
@@ -724,15 +729,9 @@ export const Commands = [
 
                     // Try to find a room with this alias
                     const rooms = cli.getRooms();
-                    for (let i = 0; i < rooms.length; i++) {
-                        if (rooms[i].getCanonicalAlias() === roomAlias ||
-                            rooms[i].getAltAliases().includes(roomAlias)
-                        ) {
-                            targetRoomId = rooms[i].roomId;
-                            break;
-                        }
-                        if (targetRoomId) break;
-                    }
+                    targetRoomId = rooms.find(room => {
+                        return room.getCanonicalAlias() === roomAlias || room.getAltAliases().includes(roomAlias);
+                    })?.roomId;
                     if (!targetRoomId) {
                         return reject(
                             newTranslatableError(
@@ -868,7 +867,7 @@ export const Commands = [
         description: _td('Define the power level of a user'),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
-            const room = cli.getRoom(RoomViewStore.instance.getRoomId());
+            const room = cli.getRoom(SdkContextClass.instance.roomViewStore.getRoomId());
             return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId())
                 && !isLocalRoom(room);
         },
@@ -909,7 +908,7 @@ export const Commands = [
         description: _td('Deops user with given id'),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
-            const room = cli.getRoom(RoomViewStore.instance.getRoomId());
+            const room = cli.getRoom(SdkContextClass.instance.roomViewStore.getRoomId());
             return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId())
                 && !isLocalRoom(room);
         },

@@ -41,17 +41,16 @@ import SettingsStore from "./settings/SettingsStore";
 import { hideToast as hideNotificationsToast } from "./toasts/DesktopNotificationsToast";
 import { SettingLevel } from "./settings/SettingLevel";
 import { isPushNotifyDisabled } from "./settings/controllers/NotificationControllers";
-import { RoomViewStore } from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
-import { localNotificationsAreSilenced } from "./utils/notifications";
+import { SdkContextClass } from "./contexts/SDKContext";
+import { localNotificationsAreSilenced, createLocalNotificationSettingsIfNeeded } from "./utils/notifications";
 import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
 import ToastStore from "./stores/ToastStore";
 import { ElementCall } from "./models/Call";
-import { createLocalNotificationSettingsIfNeeded } from './utils/notifications';
 
 /*
  * Dispatches:
@@ -161,8 +160,8 @@ export const Notifier = {
             return null;
         }
 
-        if (!content.url) {
-            logger.warn(`${roomId} has custom notification sound event, but no url key`);
+        if (typeof content.url !== "string") {
+            logger.warn(`${roomId} has custom notification sound event, but no url string`);
             return null;
         }
 
@@ -435,7 +434,16 @@ export const Notifier = {
         if (actions?.notify) {
             this._performCustomEventHandling(ev);
 
-            if (RoomViewStore.instance.getRoomId() === room.roomId &&
+            const store = SdkContextClass.instance.roomViewStore;
+            const isViewingRoom = store.getRoomId() === room.roomId;
+            const threadId: string | undefined = ev.getId() !== ev.threadRootId
+                ? ev.threadRootId
+                : undefined;
+            const isViewingThread = store.getThreadId() === threadId;
+
+            const isViewingEventTimeline = isViewingRoom && (!threadId || isViewingThread);
+
+            if (isViewingEventTimeline &&
                 UserActivity.sharedInstance().userActiveRecently() &&
                 !Modal.hasDialogs()
             ) {
