@@ -3697,5 +3697,6 @@
     "Unable to show image due to error": "Vea tõttu ei ole võimalik pilti kuvada",
     "Go live": "Alusta otseeetrit",
     "%(minutes)sm %(seconds)ss left": "jäänud on %(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "jäänud on %(hours)st %(minutes)sm %(seconds)ss"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "jäänud on %(hours)st %(minutes)sm %(seconds)ss",
+    "That e-mail address or phone number is already in use.": "See e-posti aadress või telefoninumber on juba kasutusel."
 }
