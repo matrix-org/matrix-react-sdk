@@ -3694,8 +3694,10 @@
     "Noise suppression": "Pengurangan suara bising",
     "Echo cancellation": "Pembatalan gema",
     "Automatic gain control": "Kendali suara otomatis",
-    "When enabled, the other party might be able to see your IP address": "Ketika diaktifkan, pihak lain mungkin dapat melihat alamat IP Anda.",
+    "When enabled, the other party might be able to see your IP address": "Ketika diaktifkan, pihak lain mungkin dapat melihat alamat IP Anda",
     "Go live": "Mulai siaran langsung",
     "%(minutes)sm %(seconds)ss left": "Sisa %(minutes)sm %(seconds)sd",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "Sisa %(hours)sj %(minutes)sm %(seconds)sd"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "Sisa %(hours)sj %(minutes)sm %(seconds)sd",
+    "That e-mail address or phone number is already in use.": "Alamat e-mail atau nomor telepon itu sudah digunakan.",
+    "Allow Peer-to-Peer for 1:1 calls": "Perbolehkan Peer-to-Peer untuk panggilan 1:1"
 }
