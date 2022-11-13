@@ -3698,5 +3698,6 @@
     "Error downloading image": "Помилка завантаження зображення",
     "Unable to show image due to error": "Не вдалося показати зображення через помилку",
     "%(minutes)sm %(seconds)ss left": "Залишилося %(minutes)sхв %(seconds)sс",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "Залишилося %(hours)sгод %(minutes)sхв %(seconds)sс"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "Залишилося %(hours)sгод %(minutes)sхв %(seconds)sс",
+    "That e-mail address or phone number is already in use.": "Ця адреса електронної пошти або номер телефону вже використовується."
 }
