@@ -3693,5 +3693,6 @@
     "Unable to show image due to error": "Kann Bild aufgrund eines Fehlers nicht anzeigen",
     "Go live": "Live schalten",
     "%(minutes)sm %(seconds)ss left": "%(minutes)s m %(seconds)s s verbleibend",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)s h %(minutes)s m %(seconds)s s verbleibend"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)s h %(minutes)s m %(seconds)s s verbleibend",
+    "That e-mail address or phone number is already in use.": "Diese E-Mail-Adresse oder Telefonnummer wird bereits verwendet."
 }
