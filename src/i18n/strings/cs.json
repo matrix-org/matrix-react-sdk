@@ -3698,5 +3698,6 @@
     "Allow Peer-to-Peer for 1:1 calls": "Povolit Peer-to-Peer pro hovory 1:1",
     "Go live": "Přejít naživo",
     "%(minutes)sm %(seconds)ss left": "zbývá %(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "zbývá %(hours)sh %(minutes)sm %(seconds)ss"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "zbývá %(hours)sh %(minutes)sm %(seconds)ss",
+    "That e-mail address or phone number is already in use.": "Tato e-mailová adresa nebo telefonní číslo se již používá."
 }
