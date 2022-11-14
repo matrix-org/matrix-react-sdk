@@ -42,7 +42,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
-import { getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
+import { clearAllNotifications, getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -112,6 +112,8 @@ interface IState {
     desktopNotifications: boolean;
     desktopShowBody: boolean;
     audioNotifications: boolean;
+
+    clearingNotifications: boolean;
 }
 
 export default class Notifications extends React.PureComponent<IProps, IState> {
@@ -126,6 +128,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             desktopNotifications: SettingsStore.getValue("notificationsEnabled"),
             desktopShowBody: SettingsStore.getValue("notificationBodyEnabled"),
             audioNotifications: SettingsStore.getValue("audioNotificationsEnabled"),
+            clearingNotifications: false,
         };
 
         this.settingWatchers = [
@@ -177,8 +180,12 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             ])).reduce((p, c) => Object.assign(c, p), {});
 
             this.setState<keyof Omit<IState,
-                "deviceNotificationsEnabled" | "desktopNotifications" | "desktopShowBody" | "audioNotifications">
-            >({
+                "deviceNotificationsEnabled" |
+                "desktopNotifications" |
+                "desktopShowBody" |
+                "audioNotifications" |
+                "clearingNotifications"
+            >>({
                 ...newState,
                 phase: Phase.Ready,
             });
@@ -433,17 +440,14 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private onClearNotificationsClicked = () => {
-        const client = MatrixClientPeg.get();
-        client.getRooms().forEach(r => {
-            if (r.getUnreadNotificationCount() > 0) {
-                const events = r.getLiveTimeline().getEvents();
-                if (events.length) {
-                    // noinspection JSIgnoredPromiseFromCall
-                    client.sendReadReceipt(events[events.length - 1]);
-                }
-            }
-        });
+    private onClearNotificationsClicked = async (): Promise<void> => {
+        try {
+            this.setState({ clearingNotifications: true });
+            const client = MatrixClientPeg.get();
+            await clearAllNotifications(client);
+        } finally {
+            this.setState({ clearingNotifications: false });
+        }
     };
 
     private async setKeywords(keywords: string[], originalRules: IAnnotatedPushRule[]) {
@@ -605,6 +609,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         ) {
             clearNotifsButton = <AccessibleButton
                 onClick={this.onClearNotificationsClicked}
+                disabled={this.state.clearingNotifications}
                 kind='danger'
                 className='mx_UserNotifSettings_clearNotifsButton'
             >{ _t("Clear notifications") }</AccessibleButton>;
