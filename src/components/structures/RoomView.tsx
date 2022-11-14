@@ -17,9 +17,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// TODO: This component is enormous! There's several things which could stand-alone:
-//  - Search results component
-
 import React, { createRef, ReactElement, ReactNode, RefObject, useContext } from 'react';
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";

@@ -1,8 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2018, 2019 New Vector Ltd
-Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -56,6 +53,8 @@ interface Props {
     onUpdate(inProgress: boolean, results: ISearchResults | null): void;
 }
 
+// XXX: todo: merge overlapping results somehow?
+// XXX: why doesn't searching on name work?
 export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
     term,
     scope,
@@ -169,9 +168,6 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
             return Promise.resolve(false);
         }
     };
-
-    // XXX: todo: merge overlapping results somehow?
-    // XXX: why doesn't searching on name work?
 
     const ret: JSX.Element[] = [];
 
