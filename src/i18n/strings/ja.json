@@ -3265,5 +3265,8 @@
     "Find friends": "友達を見つける",
     "Noise suppression": "雑音抑制",
     "Echo cancellation": "エコーキャンセル",
-    "Automatic gain control": "自動音量調整"
+    "Automatic gain control": "自動音量調整",
+    "Rename session": "セッション名を変更",
+    "Video settings": "ビデオ設定",
+    "Voice settings": "音声の設定"
 }
