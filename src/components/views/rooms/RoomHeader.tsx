@@ -415,7 +415,7 @@ export interface IProps {
     onAppsClick: (() => void) | null;
     e2eStatus: E2EStatus;
     appsShown: boolean;
-    searchInfo: ISearchInfo;
+    searchInfo?: ISearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
     showButtons?: boolean;
     enableRoomOptionsMenu?: boolean;
@@ -699,7 +699,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         // don't display the search count until the search completes and
         // gives us a valid (possibly zero) searchCount.
-        if (this.props.searchInfo && typeof this.props.searchInfo.count === "number") {
+        if (typeof this.props.searchInfo?.count === "number") {
             searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;
                 { _t("(~%(count)s results)", { count: this.props.searchInfo.count }) }
             </div>;
