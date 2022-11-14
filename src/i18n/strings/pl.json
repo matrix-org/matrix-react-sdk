@@ -2089,7 +2089,6 @@
     "In spaces %(space1Name)s and %(space2Name)s.": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "Jump to the given date in the timeline": "Przeskocz do podanej daty w linii czasu",
     "Failed to invite users to %(roomName)s": "Nie udało się zaprosić użytkowników do %(roomName)s",
-    "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Próbujesz dostać się do społeczności przez link (%(groupId)s).<br/>Społeczności nie są już wspierane i zostały zastąpione przez przestrzenie.<br2/><a>Dowiedz się więcej o przestrzeniach tutaj.</a>",
     "Insert a trailing colon after user mentions at the start of a message": "Wstawiaj dwukropek po wzmiance użytkownika na początku wiadomości",
     "A new way to chat over voice and video in %(brand)s.": "Nowy sposób prowadzenia rozmów audio-wideo w %(brand)s.",
     "Mapbox logo": "Logo Mapbox",

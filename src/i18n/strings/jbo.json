@@ -276,7 +276,6 @@
     "Verify your other session using one of the options below.": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
-    "Interactively verify by Emoji": "nu pilno vu'i pa cinmo sinxa lo nu co'a lacri",
     "Done": "nu mo'u co'e",
     "%(displayName)s is typing …": ".i la'o zoi. %(displayName)s .zoi ca'o ciska",
     "%(names)s and %(count)s others are typing …|other": ".i la'o zoi. %(names)s .zoi je %(count)s na du ca'o ciska",
