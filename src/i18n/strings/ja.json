@@ -3255,5 +3255,15 @@
     "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "新しいセッションマネージャーは、全セッションを見やすくし、遠隔からプッシュ通知を切り替えるなど、セッションを管理しやすくします。",
     "New session manager": "新しいセッションマネージャー",
     "Use new session manager": "新しいセッションマネージャーを使用",
-    "Video room": "ビデオ通話ルーム"
+    "Video room": "ビデオ通話ルーム",
+    "Sessions": "セッション",
+    "Spell check": "スペルチェック",
+    "Your password was successfully changed.": "パスワードは問題なく変更されました。",
+    "Developer tools": "開発者ツール",
+    "Welcome": "ようこそ",
+    "Enable notifications": "通知を有効にする",
+    "Find friends": "友達を見つける",
+    "Noise suppression": "雑音抑制",
+    "Echo cancellation": "エコーキャンセル",
+    "Automatic gain control": "自動音量調整"
 }
