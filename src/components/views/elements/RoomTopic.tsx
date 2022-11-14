@@ -82,6 +82,13 @@ export default function RoomTopic({
                         onClick={(ev: MouseEvent) => {
                             if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
                                 modal.close();
+                                const targetLink = ev.target as HTMLLinkElement;
+                                const localHref = tryTransformPermalinkToLocalHref(targetLink.href);
+                                if (localHref !== targetLink.href) {
+                                    // it could be converted to a localHref -> therefore handle locally
+                                    ev.preventDefault();
+                                    window.location.hash = localHref;
+                                }
                             }
                         }}
                     >
