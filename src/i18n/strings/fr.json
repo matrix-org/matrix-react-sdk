@@ -3698,5 +3698,6 @@
     "Allow Peer-to-Peer for 1:1 calls": "Autoriser le pair-à-pair pour les appels en face à face",
     "Go live": "Passer en direct",
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss restantes",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss restantes"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
+    "That e-mail address or phone number is already in use.": "Cette adresse e-mail ou numéro de téléphone est déjà utilisé."
 }
