@@ -3393,5 +3393,11 @@
     "Voice settings": "Ääniasetukset",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Haluatko varmasti kirjautua ulos %(count)s istunnosta?",
     "Are you sure you want to sign out of %(count)s sessions?|other": "Haluatko varmasti kirjautua ulos %(count)s istunnosta?",
-    "Reply in thread": "Vastaa ketjuun"
+    "Reply in thread": "Vastaa ketjuun",
+    "That e-mail address or phone number is already in use.": "Tämä sähköpostiosoite tai puhelinnumero on jo käytössä.",
+    "Exporting your data": "Tietojen vienti",
+    "You can't disable this later. The room will be encrypted but the embedded call will not.": "Et voi poistaa tätä käytöstä myöhemmin. Huone salataan, mutta siihen upotettu puhelu ei ole salattu.",
+    "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play ja the Google Play -logo ovat Google LLC.:n tavaramerkkejä",
+    "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store® ja Apple logo® ovat Apple Inc.:n tavaramerkkejä",
+    "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä"
 }
