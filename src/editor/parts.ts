@@ -634,11 +634,12 @@ export class PartCreator {
     }
 
     private static isRegionalIndicator(c: string): boolean {
-        return c.length == 2 && 0x1F1E6 <= c.codePointAt(0) && c.codePointAt(0) <= 0x1F1FF;
+        const codePoint = c.codePointAt(0) ?? 0;
+        return codePoint && c.length == 2 && 0x1F1E6 <= codePoint && codePoint <= 0x1F1FF;
     }
 
     public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
-        const parts = [];
+        const parts: (PlainPart | EmojiPart)[] = [];
         let plainText = "";
 
         // We use lodash's grapheme splitter to avoid breaking apart compound emojis

@@ -329,7 +329,8 @@ describe('editor/model', function() {
             const regionalEmojiA = String.fromCodePoint(127462);
             const regionalEmojiZ = String.fromCodePoint(127487);
             const caret = new DocumentOffset(0, true);
-            const regionalEmojis = [];
+
+            const regionalEmojis: string[] = [];
             regionalEmojis.push(regionalEmojiA);
             regionalEmojis.push(regionalEmojiZ);
             for (let i = 0; i < 2; i++) {
