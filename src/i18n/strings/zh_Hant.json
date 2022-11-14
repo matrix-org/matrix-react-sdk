@@ -3698,5 +3698,6 @@
     "Unable to show image due to error": "因為錯誤而無法顯示圖片",
     "Go live": "開始直播",
     "%(minutes)sm %(seconds)ss left": "剩餘%(minutes)s分鐘%(seconds)s秒",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "剩餘%(hours)s小時%(minutes)s分鐘%(seconds)s秒"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "剩餘%(hours)s小時%(minutes)s分鐘%(seconds)s秒",
+    "That e-mail address or phone number is already in use.": "該電子郵件地址或電話號碼已被使用。"
 }
