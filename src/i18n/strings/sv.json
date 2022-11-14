@@ -3442,7 +3442,7 @@
     "Video call started": "Videosamtal startat",
     "Unknown room": "Okänt rum",
     "Voice broadcast": "Röstsändning",
-    "Live": "Live",
+    "Live": "Sänder",
     "pause voice broadcast": "pausa röstsändning",
     "resume voice broadcast": "återuppta röstsändning",
     "play voice broadcast": "spela röstsändning",
@@ -3479,5 +3479,15 @@
     "Get stuff done by finding your teammates": "Få saker gjorda genom att hitta dina lagkamrater",
     "Find and invite your co-workers": "Hitta och bjud in dina medarbetare",
     "Find friends": "Hitta vänner",
-    "It’s what you’re here for, so lets get to it": "Det är det du är här för, så låt oss komma i gång"
+    "It’s what you’re here for, so lets get to it": "Det är det du är här för, så låt oss komma i gång",
+    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "Gäller endast om din hemserver inte erbjuder en. Din IP-adress delas under samtal.",
+    "Allow fallback call assist server (turn.matrix.org)": "Tillåt reservserver för samtalsassistans (turn.matrix.org)",
+    "Noise suppression": "Brusreducering",
+    "Echo cancellation": "Ekoreducering",
+    "Automatic gain control": "Automatisk förstärkningskontroll",
+    "When enabled, the other party might be able to see your IP address": "När aktiverat så kan den andra parten kanske se din IP-adress",
+    "Allow Peer-to-Peer for 1:1 calls": "Tillåt peer-to-peer för direktsamtal",
+    "Go live": "Börja sända",
+    "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss kvar",
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)st %(minutes)sm %(seconds)ss kvar"
 }
