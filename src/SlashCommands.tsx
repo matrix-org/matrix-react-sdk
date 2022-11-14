@@ -76,7 +76,7 @@ interface HTMLInputEvent extends Event {
     target: HTMLInputElement & EventTarget;
 }
 
-const singleMxcUpload = async (): Promise<any> => {
+const singleMxcUpload = async (): Promise<string | null> => {
     return new Promise((resolve) => {
         const fileSelector = document.createElement('input');
         fileSelector.setAttribute('type', 'file');
@@ -85,8 +85,13 @@ const singleMxcUpload = async (): Promise<any> => {
 
             Modal.createDialog(UploadConfirmDialog, {
                 file,
-                onFinished: (shouldContinue) => {
-                    resolve(shouldContinue ? MatrixClientPeg.get().uploadContent(file) : null);
+                onFinished: async (shouldContinue) => {
+                    if (shouldContinue) {
+                        const { content_uri: uri } = await MatrixClientPeg.get().uploadContent(file);
+                        resolve(uri);
+                    } else {
+                        resolve(null);
+                    }
                 },
             });
         };
@@ -711,7 +716,7 @@ export const Commands = [
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
-            let targetRoomId: string;
+            let targetRoomId: string | undefined;
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
@@ -724,15 +729,9 @@ export const Commands = [
 
                     // Try to find a room with this alias
                     const rooms = cli.getRooms();
-                    for (let i = 0; i < rooms.length; i++) {
-                        if (rooms[i].getCanonicalAlias() === roomAlias ||
-                            rooms[i].getAltAliases().includes(roomAlias)
-                        ) {
-                            targetRoomId = rooms[i].roomId;
-                            break;
-                        }
-                        if (targetRoomId) break;
-                    }
+                    targetRoomId = rooms.find(room => {
+                        return room.getCanonicalAlias() === roomAlias || room.getAltAliases().includes(roomAlias);
+                    })?.roomId;
                     if (!targetRoomId) {
                         return reject(
                             newTranslatableError(

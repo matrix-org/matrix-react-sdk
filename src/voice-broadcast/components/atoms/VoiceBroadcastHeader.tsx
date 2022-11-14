@@ -17,21 +17,32 @@ import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { LiveBadge } from "../..";
 import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
 import { Icon as MicrophoneIcon } from "../../../../res/img/voip/call-view/mic-on.svg";
+import { Icon as TimerIcon } from "../../../../res/img/element-icons/Timer.svg";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../../../components/views/avatars/RoomAvatar";
+import AccessibleButton from "../../../components/views/elements/AccessibleButton";
+import { Icon as XIcon } from "../../../../res/img/element-icons/cancel-rounded.svg";
+import Clock from "../../../components/views/audio_messages/Clock";
+import { formatTimeLeft } from "../../../DateUtils";
 
 interface VoiceBroadcastHeaderProps {
-    live: boolean;
-    sender: RoomMember;
+    live?: boolean;
+    onCloseClick?: () => void;
     room: Room;
+    sender: RoomMember;
     showBroadcast?: boolean;
+    timeLeft?: number;
+    showClose?: boolean;
 }
 
 export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
-    live,
-    sender,
+    live = false,
+    onCloseClick = () => {},
     room,
+    sender,
     showBroadcast = false,
+    showClose = false,
+    timeLeft,
 }) => {
     const broadcast = showBroadcast
         ? <div className="mx_VoiceBroadcastHeader_line">
@@ -39,7 +50,22 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
             { _t("Voice broadcast") }
         </div>
         : null;
+
     const liveBadge = live ? <LiveBadge /> : null;
+
+    const closeButton = showClose
+        ? <AccessibleButton onClick={onCloseClick}>
+            <XIcon className="mx_Icon mx_Icon_16" />
+        </AccessibleButton>
+        : null;
+
+    const timeLeftLine = timeLeft
+        ? <div className="mx_VoiceBroadcastHeader_line">
+            <TimerIcon className="mx_Icon mx_Icon_16" />
+            <Clock formatFn={formatTimeLeft} seconds={timeLeft} />
+        </div>
+        : null;
+
     return <div className="mx_VoiceBroadcastHeader">
         <RoomAvatar room={room} width={32} height={32} />
         <div className="mx_VoiceBroadcastHeader_content">
@@ -50,8 +76,10 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
                 <MicrophoneIcon className="mx_Icon mx_Icon_16" />
                 <span>{ sender.name }</span>
             </div>
+            { timeLeftLine }
             { broadcast }
         </div>
         { liveBadge }
+        { closeButton }
     </div>;
 };

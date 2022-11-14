@@ -48,6 +48,9 @@ describe("VoiceBroadcastPlaybackBody", () => {
 
     beforeAll(() => {
         client = stubClient();
+        mocked(client.relations).mockClear();
+        mocked(client.relations).mockResolvedValue({ events: [] });
+
         infoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
@@ -60,7 +63,7 @@ describe("VoiceBroadcastPlaybackBody", () => {
         playback = new VoiceBroadcastPlayback(infoEvent, client);
         jest.spyOn(playback, "toggle").mockImplementation(() => Promise.resolve());
         jest.spyOn(playback, "getState");
-        jest.spyOn(playback, "getLength").mockReturnValue((23 * 60 + 42) * 1000); // 23:42
+        jest.spyOn(playback, "durationSeconds", "get").mockReturnValue(23 * 60 + 42); // 23:42
     });
 
     describe("when rendering a buffering voice broadcast", () => {

@@ -139,6 +139,8 @@ import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
 import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
 import { VoiceBroadcastResumer } from '../../voice-broadcast';
+import GenericToast from "../views/toasts/GenericToast";
+import { Linkify } from "../views/elements/Linkify";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -546,8 +548,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private onAction = (payload: ActionPayload): void => {
-        // console.log(`MatrixClientPeg.onAction: ${payload.action}`);
-
         // Start the onboarding process for certain actions
         if (MatrixClientPeg.get()?.isGuest() && ONBOARDING_FLOW_STARTERS.includes(payload.action)) {
             // This will cause `payload` to be dispatched later, once a
@@ -1333,6 +1333,28 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // The toast contains further logic to detect mobile platforms,
             // check if it has been dismissed before, etc.
             showMobileGuideToast();
+        }
+
+        const userNotice = SdkConfig.get("user_notice");
+        if (userNotice) {
+            const key = "user_notice_" + userNotice.title;
+            if (!userNotice.show_once || !localStorage.getItem(key)) {
+                ToastStore.sharedInstance().addOrReplaceToast({
+                    key,
+                    title: userNotice.title,
+                    props: {
+                        description: <Linkify>{ userNotice.description }</Linkify>,
+                        acceptLabel: _t("OK"),
+                        onAccept: () => {
+                            ToastStore.sharedInstance().dismissToast(key);
+                            localStorage.setItem(key, "1");
+                        },
+                    },
+                    component: GenericToast,
+                    className: "mx_AnalyticsToast",
+                    priority: 100,
+                });
+            }
         }
     }
 

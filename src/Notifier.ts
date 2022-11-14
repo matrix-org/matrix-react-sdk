@@ -47,11 +47,10 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
 import { SdkContextClass } from "./contexts/SDKContext";
-import { localNotificationsAreSilenced } from "./utils/notifications";
+import { localNotificationsAreSilenced, createLocalNotificationSettingsIfNeeded } from "./utils/notifications";
 import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
 import ToastStore from "./stores/ToastStore";
 import { ElementCall } from "./models/Call";
-import { createLocalNotificationSettingsIfNeeded } from './utils/notifications';
 
 /*
  * Dispatches:
@@ -161,8 +160,8 @@ export const Notifier = {
             return null;
         }
 
-        if (!content.url) {
-            logger.warn(`${roomId} has custom notification sound event, but no url key`);
+        if (typeof content.url !== "string") {
+            logger.warn(`${roomId} has custom notification sound event, but no url string`);
             return null;
         }
 
