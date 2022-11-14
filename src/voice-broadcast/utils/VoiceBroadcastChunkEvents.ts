@@ -50,13 +50,20 @@ export class VoiceBroadcastChunkEvents {
     }
 
     public includes(event: MatrixEvent): boolean {
-        return !!this.events.find(e => e.getId() === event.getId());
+        return !!this.events.find(e => this.equalByTxnIdOrId(event, e));
     }
 
+    /**
+     * @returns {number} Length in milliseconds
+     */
     public getLength(): number {
         return this.events.reduce((length: number, event: MatrixEvent) => {
             return length + this.calculateChunkLength(event);
         }, 0);
+    }
+
+    public getLengthSeconds(): number {
+        return this.getLength() / 1000;
     }
 
     /**
@@ -93,10 +100,15 @@ export class VoiceBroadcastChunkEvents {
     }
 
     private addOrReplaceEvent = (event: MatrixEvent): boolean => {
-        this.events = this.events.filter(e => e.getId() !== event.getId());
+        this.events = this.events.filter(e => !this.equalByTxnIdOrId(event, e));
         this.events.push(event);
         return true;
     };
+
+    private equalByTxnIdOrId(eventA: MatrixEvent, eventB: MatrixEvent): boolean {
+        return eventA.getTxnId() && eventB.getTxnId() && eventA.getTxnId() === eventB.getTxnId()
+            || eventA.getId() === eventB.getId();
+    }
 
     /**
      * Sort by sequence, if available for all events.

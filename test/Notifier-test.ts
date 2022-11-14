@@ -81,6 +81,7 @@ describe("Notifier", () => {
             decryptEventIfNeeded: jest.fn(),
             getRoom: jest.fn(),
             getPushActionsForEvent: jest.fn(),
+            supportsExperimentalThreads: jest.fn().mockReturnValue(false),
         });
 
         mockClient.pushRules = {
@@ -229,6 +230,15 @@ describe("Notifier", () => {
             mockClient.setAccountData(accountDataEventKey, event);
             Notifier._displayPopupNotification(testEvent, testRoom);
             expect(MockPlatform.displayNotification).toHaveBeenCalledTimes(count);
+        });
+    });
+
+    describe("getSoundForRoom", () => {
+        it("should not explode if given invalid url", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+                return { url: { content_uri: "foobar" } };
+            });
+            expect(Notifier.getSoundForRoom("!roomId:server")).toBeNull();
         });
     });
 
