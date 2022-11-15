@@ -150,7 +150,10 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
     // show searching spinner
     if (results?.count === undefined) {
         return (
-            <div className="mx_RoomView_messagePanel mx_RoomView_messagePanelSearchSpinner" />
+            <div
+                className="mx_RoomView_messagePanel mx_RoomView_messagePanelSearchSpinner"
+                data-testid="messagePanelSearchSpinner"
+            />
         );
     }
 
