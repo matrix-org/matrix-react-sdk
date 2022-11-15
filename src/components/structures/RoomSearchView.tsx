@@ -119,7 +119,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
             }
 
             setHighlights(highlights);
-            setResults(results);
+            setResults({ ...results }); // copy to force a refresh
         }, (error) => {
             if (aborted.current) {
                 logger.error("Discarding stale search results");

@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { mocked, MockedObject } from "jest-mock";
-import { render, screen } from "@testing-library/react";
+import { mocked } from "jest-mock";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { ISearchResults } from "matrix-js-sdk/src/@types/search";
 import { defer } from "matrix-js-sdk/src/utils";
@@ -32,20 +32,28 @@ import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 import { stubClient } from "../../test-utils";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
+import { searchPagination } from "../../../src/Searching";
+
+jest.mock("../../../src/Searching", () => ({
+    searchPagination: jest.fn(),
+}));
 
 describe("<SearchRoomView/>", () => {
     const eventMapper = (obj: Partial<IEvent>) => new MatrixEvent(obj);
     const resizeNotifier = new ResizeNotifier();
-    let client: MockedObject<MatrixClient>;
+    let client: MatrixClient;
     let room: Room;
     let permalinkCreator: RoomPermalinkCreator;
 
     beforeEach(async () => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = MatrixClientPeg.get();
+        client.supportsExperimentalThreads = jest.fn().mockReturnValue(true);
         room = new Room("!room:server", client, client.getUserId());
-        client.getRoom.mockReturnValue(room);
+        mocked(client.getRoom).mockReturnValue(room);
         permalinkCreator = new RoomPermalinkCreator(room, room.roomId);
+
+        jest.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(100);
     });
 
     afterEach(async () => {
@@ -130,7 +138,7 @@ describe("<SearchRoomView/>", () => {
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
-                    scope={SearchScope.All}
+                    scope={SearchScope.Room}
                     promise={Promise.resolve<ISearchResults>({
                         results: [
                             SearchResult.fromJson({
@@ -163,5 +171,77 @@ describe("<SearchRoomView/>", () => {
 
         const text = await screen.findByText("Test");
         expect(text).toHaveClass("mx_EventTile_searchHighlight");
+    });
+
+    it("should show spinner above results when backpaginating", async () => {
+        const searchResults: ISearchResults = {
+            results: [
+                SearchResult.fromJson({
+                    rank: 1,
+                    result: {
+                        room_id: room.roomId,
+                        event_id: "$2",
+                        sender: client.getUserId(),
+                        origin_server_ts: 1,
+                        content: { body: "Foo Test Bar", msgtype: "m.text" },
+                        type: EventType.RoomMessage,
+                    },
+                    context: {
+                        profile_info: {},
+                        events_before: [],
+                        events_after: [],
+                    },
+                }, eventMapper),
+            ],
+            highlights: ["test"],
+            next_batch: "next_batch",
+            count: 2,
+        };
+
+        mocked(searchPagination).mockResolvedValue({
+            ...searchResults,
+            results: [
+                ...searchResults.results,
+                SearchResult.fromJson({
+                    rank: 1,
+                    result: {
+                        room_id: room.roomId,
+                        event_id: "$4",
+                        sender: client.getUserId(),
+                        origin_server_ts: 4,
+                        content: { body: "Potato", msgtype: "m.text" },
+                        type: EventType.RoomMessage,
+                    },
+                    context: {
+                        profile_info: {},
+                        events_before: [],
+                        events_after: [],
+                    },
+                }, eventMapper),
+            ],
+            next_batch: undefined,
+        });
+
+        const { container } = render((
+            <MatrixClientContext.Provider value={client}>
+                <RoomSearchView
+                    term="search term"
+                    scope={SearchScope.All}
+                    promise={Promise.resolve(searchResults)}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={permalinkCreator}
+                    className="someClass"
+                    onUpdate={jest.fn()}
+                />
+            </MatrixClientContext.Provider>
+        ));
+
+        await waitFor(() => expect(container.querySelector(".mx_AutoHideScrollbar")).toBeTruthy());
+        const scrollable = container.querySelector(".mx_AutoHideScrollbar");
+        fireEvent.scroll(scrollable, {});
+
+        await screen.findByRole("progressbar");
+        await screen.findByText("Potato");
+        expect(screen.queryByRole("progressbar")).toBeFalsy();
     });
 });
