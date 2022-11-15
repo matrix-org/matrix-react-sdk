@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { ISearchResults } from "matrix-js-sdk/src/@types/search";
 import { defer } from "matrix-js-sdk/src/utils";
@@ -222,7 +222,7 @@ describe("<SearchRoomView/>", () => {
             next_batch: undefined,
         });
 
-        const { container } = render((
+        render((
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
@@ -235,10 +235,6 @@ describe("<SearchRoomView/>", () => {
                 />
             </MatrixClientContext.Provider>
         ));
-
-        await waitFor(() => expect(container.querySelector(".mx_AutoHideScrollbar")).toBeTruthy());
-        const scrollable = container.querySelector(".mx_AutoHideScrollbar");
-        fireEvent.scroll(scrollable, {});
 
         await screen.findByRole("progressbar");
         await screen.findByText("Potato");
