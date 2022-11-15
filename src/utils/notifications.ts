@@ -73,8 +73,11 @@ export function clearAllNotifications(client: MatrixClient): Promise<Array<{}>> 
                 : lastThreadLastEvent;
 
             if (lastEvent) {
-                const promise = client.sendReadReceipt(lastEvent, ReceiptType.Read, true);
-                promises = [...promises, promise];
+                const receiptType = SettingsStore.getValue("sendReadReceipts", room.roomId)
+                    ? ReceiptType.Read
+                    : ReceiptType.ReadPrivate;
+                const promise = client.sendReadReceipt(lastEvent, receiptType, true);
+                promises.push(promise);
             }
         }
 

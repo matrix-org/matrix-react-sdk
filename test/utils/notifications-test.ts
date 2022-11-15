@@ -120,6 +120,9 @@ describe('notifications', () => {
             room = new Room(ROOM_ID, client, USER_ID);
             sendReadReceiptSpy = jest.spyOn(client, "sendReadReceipt").mockResolvedValue({});
             jest.spyOn(client, "getRooms").mockReturnValue([room]);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "sendReadReceipts";
+            });
         });
 
         it("does not send any requests if everything has been read", () => {
@@ -140,6 +143,23 @@ describe('notifications', () => {
             clearAllNotifications(client);
 
             expect(sendReadReceiptSpy).toBeCalledWith(message, ReceiptType.Read, true);
+        });
+
+        it("sends private read receipts", () => {
+            const message = mkMessage({
+                event: true,
+                room: ROOM_ID,
+                user: USER_ID,
+                ts: 1,
+            });
+            room.addLiveEvents([message]);
+            room.setUnreadNotificationCount(NotificationCountType.Total, 1);
+
+            jest.spyOn(SettingsStore, "getValue").mockReset().mockReturnValue(false);
+
+            clearAllNotifications(client);
+
+            expect(sendReadReceiptSpy).toBeCalledWith(message, ReceiptType.ReadPrivate, true);
         });
     });
 });
