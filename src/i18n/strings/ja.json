@@ -3311,5 +3311,6 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "他の人がすでに音声ブロードキャストを録音しています。新しく始めるにはその音声ブロードキャストが終わるのを待ってください。",
     "Can't start a new voice broadcast": "新しい音声ブロードキャストを開始できません",
     "%(minutes)sm %(seconds)ss left": "残り%(minutes)s分%(seconds)s秒",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "残り%(hours)s時間 %(minutes)s分%(seconds)s秒"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "残り%(hours)s時間 %(minutes)s分%(seconds)s秒",
+    "Exit fullscreen": "全画面を終了"
 }
