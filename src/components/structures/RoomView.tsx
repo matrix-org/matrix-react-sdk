@@ -117,6 +117,7 @@ let debuglog = function(msg: string) {};
 
 const BROWSER_SUPPORTS_SANDBOX = 'sandbox' in document.createElement('iframe');
 
+/* istanbul ignore next */
 if (DEBUG) {
     // using bind means that we get to keep useful line numbers in the console
     debuglog = logger.log.bind(console);

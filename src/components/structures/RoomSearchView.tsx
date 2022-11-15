@@ -37,6 +37,7 @@ import RoomContext from "../../contexts/RoomContext";
 const DEBUG = false;
 let debuglog = function(msg: string) {};
 
+/* istanbul ignore next */
 if (DEBUG) {
     // using bind means that we get to keep useful line numbers in the console
     debuglog = logger.log.bind(console);
@@ -89,7 +90,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
             // whether it was used by the search engine or not.
 
             let highlights = results.highlights;
-            if (highlights.indexOf(term) < 0) {
+            if (!highlights.includes(term)) {
                 highlights = highlights.concat(term);
             }
 
@@ -128,8 +129,8 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
             logger.error("Search failed", error);
             Modal.createDialog(ErrorDialog, {
                 title: _t("Search failed"),
-                description: ((error && error.message) ? error.message :
-                    _t("Server may be unavailable, overloaded, or search timed out :(")),
+                description: error?.message
+                    ?? _t("Server may be unavailable, overloaded, or search timed out :("),
             });
             return false;
         }).finally(() => {
@@ -157,19 +158,19 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
         );
     }
 
-    const onSearchResultsFillRequest = (backwards: boolean): Promise<boolean> => {
+    const onSearchResultsFillRequest = async (backwards: boolean): Promise<boolean> => {
         if (!backwards) {
-            return Promise.resolve(false);
+            return false;
         }
 
-        if (results.next_batch) {
-            debuglog("requesting more search results");
-            const searchPromise = searchPagination(results);
-            return handleSearchResult(searchPromise);
-        } else {
+        if (!results.next_batch) {
             debuglog("no more search results");
-            return Promise.resolve(false);
+            return false;
         }
+
+        debuglog("requesting more search results");
+        const searchPromise = searchPagination(results);
+        return handleSearchResult(searchPromise);
     };
 
     const ret: JSX.Element[] = [];
@@ -184,13 +185,11 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(({
         if (!results?.results?.length) {
             ret.push(<li key="search-top-marker">
                 <h2 className="mx_RoomView_topMarker">{ _t("No results") }</h2>
-            </li>,
-            );
+            </li>);
         } else {
             ret.push(<li key="search-top-marker">
                 <h2 className="mx_RoomView_topMarker">{ _t("No more results") }</h2>
-            </li>,
-            );
+            </li>);
         }
     }
 

@@ -240,4 +240,74 @@ describe("<SearchRoomView/>", () => {
         await screen.findByText("Potato");
         expect(screen.queryByRole("progressbar")).toBeFalsy();
     });
+
+    it("should handle resolutions after unmounting sanely", async () => {
+        const deferred = defer<ISearchResults>();
+
+        const { unmount } = render((
+            <MatrixClientContext.Provider value={client}>
+                <RoomSearchView
+                    term="search term"
+                    scope={SearchScope.All}
+                    promise={deferred.promise}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={permalinkCreator}
+                    className="someClass"
+                    onUpdate={jest.fn()}
+                />
+            </MatrixClientContext.Provider>
+        ));
+
+        unmount();
+        deferred.resolve({
+            results: [],
+            highlights: [],
+        });
+    });
+
+    it("should handle rejections after unmounting sanely", async () => {
+        const deferred = defer<ISearchResults>();
+
+        const { unmount } = render((
+            <MatrixClientContext.Provider value={client}>
+                <RoomSearchView
+                    term="search term"
+                    scope={SearchScope.All}
+                    promise={deferred.promise}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={permalinkCreator}
+                    className="someClass"
+                    onUpdate={jest.fn()}
+                />
+            </MatrixClientContext.Provider>
+        ));
+
+        unmount();
+        deferred.reject({
+            results: [],
+            highlights: [],
+        });
+    });
+
+    it("should show modal if error is encountered", async () => {
+        const deferred = defer<ISearchResults>();
+
+        render((
+            <MatrixClientContext.Provider value={client}>
+                <RoomSearchView
+                    term="search term"
+                    scope={SearchScope.All}
+                    promise={deferred.promise}
+                    resizeNotifier={resizeNotifier}
+                    permalinkCreator={permalinkCreator}
+                    className="someClass"
+                    onUpdate={jest.fn()}
+                />
+            </MatrixClientContext.Provider>
+        ));
+        deferred.reject(new Error("Some error"));
+
+        await screen.findByText("Search failed");
+        await screen.findByText("Some error");
+    });
 });
