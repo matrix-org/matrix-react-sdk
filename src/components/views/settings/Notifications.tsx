@@ -535,7 +535,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private renderTopSection() {
         const masterSwitch = <LabelledToggleSwitch
-            data-test-id='notif-master-switch'
+            data-testid='notif-master-switch'
             value={!this.isInhibited}
             label={_t("Enable notifications for this account")}
             caption={_t("Turn off to disable notifications on all your devices and sessions")}
@@ -550,7 +550,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         const emailSwitches = (this.state.threepids || []).filter(t => t.medium === ThreepidMedium.Email)
             .map(e => <LabelledToggleSwitch
-                data-test-id='notif-email-switch'
+                data-testid='notif-email-switch'
                 key={e.address}
                 value={this.state.pushers.some(p => p.kind === "email" && p.pushkey === e.address)}
                 label={_t("Enable email notifications for %(email)s", { email: e.address })}
@@ -562,7 +562,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             { masterSwitch }
 
             <LabelledToggleSwitch
-                data-test-id='notif-device-switch'
+                data-testid='notif-device-switch'
                 value={this.state.deviceNotificationsEnabled}
                 label={_t("Enable notifications for this device")}
                 onChange={checked => this.updateDeviceNotifications(checked)}
@@ -571,21 +571,21 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
             { this.state.deviceNotificationsEnabled && (<>
                 <LabelledToggleSwitch
-                    data-test-id='notif-setting-notificationsEnabled'
+                    data-testid='notif-setting-notificationsEnabled'
                     value={this.state.desktopNotifications}
                     onChange={this.onDesktopNotificationsChanged}
                     label={_t('Enable desktop notifications for this session')}
                     disabled={this.state.phase === Phase.Persisting}
                 />
                 <LabelledToggleSwitch
-                    data-test-id='notif-setting-notificationBodyEnabled'
+                    data-testid='notif-setting-notificationBodyEnabled'
                     value={this.state.desktopShowBody}
                     onChange={this.onDesktopShowBodyChanged}
                     label={_t('Show message in desktop notification')}
                     disabled={this.state.phase === Phase.Persisting}
                 />
                 <LabelledToggleSwitch
-                    data-test-id='notif-setting-audioNotificationsEnabled'
+                    data-testid='notif-setting-audioNotificationsEnabled'
                     value={this.state.audioNotifications}
                     onChange={this.onAudioNotificationsChanged}
                     label={_t('Enable audible notifications for this session')}
@@ -658,7 +658,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         const fieldsetRows = this.state.vectorPushRules[category].map(r =>
             <fieldset
                 key={category + r.ruleId}
-                data-test-id={category + r.ruleId}
+                data-testid={category + r.ruleId}
                 className='mx_UserNotifSettings_gridRowContainer'
             >
                 <legend className='mx_UserNotifSettings_gridRowLabel'>{ r.description }</legend>
@@ -683,7 +683,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
 
         return <>
-            <div data-test-id={`notif-section-${category}`} className='mx_UserNotifSettings_grid'>
+            <div data-testid={`notif-section-${category}`} className='mx_UserNotifSettings_grid'>
                 <span className='mx_UserNotifSettings_gridRowLabel mx_UserNotifSettings_gridRowHeading'>{ sectionName }</span>
                 <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Off] }</span>
                 <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.On] }</span>
@@ -720,7 +720,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // Ends up default centered
             return <Spinner />;
         } else if (this.state.phase === Phase.Error) {
-            return <p data-test-id='error-message'>{ _t("There was an error loading your notification settings.") }</p>;
+            return <p data-testid='error-message'>{ _t("There was an error loading your notification settings.") }</p>;
         }
 
         return <div className='mx_UserNotifSettings'>
