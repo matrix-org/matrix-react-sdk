@@ -635,7 +635,7 @@ export class PartCreator {
 
     private static isRegionalIndicator(c: string): boolean {
         const codePoint = c.codePointAt(0) ?? 0;
-        return codePoint && c.length == 2 && 0x1F1E6 <= codePoint && codePoint <= 0x1F1FF;
+        return codePoint != 0 && c.length == 2 && 0x1F1E6 <= codePoint && codePoint <= 0x1F1FF;
     }
 
     public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
