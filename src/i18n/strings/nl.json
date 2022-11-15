@@ -1773,7 +1773,6 @@
     "Show %(count)s more|one": "Toon %(count)s meer",
     "Show %(count)s more|other": "Toon %(count)s meer",
     "Show rooms with unread messages first": "Kamers met ongelezen berichten als eerste tonen",
-    "Start a new chat": "Nieuw gesprek beginnen",
     "Show Widgets": "Widgets tonen",
     "Hide Widgets": "Widgets verbergen",
     "This is the start of <roomName/>.": "Dit is het begin van <roomName/>.",

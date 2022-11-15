@@ -1646,7 +1646,6 @@
     "You don't have permission to delete the address.": "Bu adresi silmeye yetkiniz yok.",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Adres oluşturulurken hata ile karşılaşıldı. Sunucu tarafından izin verilmemiş yada geçici bir hata olabilir.",
     "Error creating address": "Adres oluşturulurken hata",
-    "Start a new chat": "Yeni bir sohbet başlat",
     "Explore public rooms": "Herkese açık odaları keşfet",
     "People": "İnsanlar",
     "Show Widgets": "Widgetları Göster",

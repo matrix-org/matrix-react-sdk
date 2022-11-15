@@ -2823,7 +2823,6 @@
     "Join public room": "ເຂົ້າຮ່ວມຫ້ອງສາທາລະນະ",
     "You do not have permissions to add spaces to this space": "ທ່ານບໍ່ມີການອະນຸຍາດໃຫ້ເພີ່ມພື້ນທີ່ໃສ່ພື້ນທີ່ນີ້",
     "Add space": "ເພີ່ມພື້ນທີ່",
-    "Start a new chat": "ເລີ່ມການສົນທະນາໃໝ່",
     "Don't leave any rooms": "ຢ່າອອກຈາກຫ້ອງ",
     "Would you like to leave the rooms in this space?": "ທ່ານຕ້ອງການອອກຈາກຫ້ອງໃນພື້ນທີ່ນີ້ບໍ?",
     "You are about to leave <spaceName/>.": "ທ່ານກຳລັງຈະອອກຈາກ <spaceName/>.",
