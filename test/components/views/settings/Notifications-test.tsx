@@ -20,15 +20,17 @@ import {
     IPusher,
     LOCAL_NOTIFICATION_SETTINGS_PREFIX,
     MatrixEvent,
+    Room,
+    NotificationCountType,
 } from 'matrix-js-sdk/src/matrix';
 import { IThreepid, ThreepidMedium } from 'matrix-js-sdk/src/@types/threepids';
 import { act } from 'react-dom/test-utils';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, getByTestId, render, screen, waitFor } from '@testing-library/react';
 
 import Notifications from '../../../../src/components/views/settings/Notifications';
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { StandardActions } from '../../../../src/notifications/StandardActions';
-import { getMockClientWithEventEmitter } from '../../../test-utils';
+import { getMockClientWithEventEmitter, mkMessage } from '../../../test-utils';
 
 // don't pollute test output with error logs from mock rejections
 jest.mock("matrix-js-sdk/src/logger");
@@ -83,6 +85,8 @@ describe('<Notifications />', () => {
             }
         }),
         setAccountData: jest.fn(),
+        sendReadReceipt: jest.fn(),
+        supportsExperimentalThreads: jest.fn().mockReturnValue(true),
     });
     mockClient.getPushRules.mockResolvedValue(pushRules);
 
@@ -290,6 +294,34 @@ describe('<Notifications />', () => {
             // actions for '.m.rule.room_one_to_one' state is ACTION_DONT_NOTIFY
             expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
                 'global', 'underride', oneToOneRule.rule_id, StandardActions.ACTION_DONT_NOTIFY);
+        });
+    });
+
+    describe("clear all notifications", () => {
+        it("clears all notifications", async () => {
+            const room = new Room("room123", mockClient, "@alice:example.org");
+            mockClient.getRooms.mockReset().mockReturnValue([room]);
+
+            const message = mkMessage({
+                event: true,
+                room: "room123",
+                user: "@alice:example.org",
+                ts: 1,
+            });
+            room.addLiveEvents([message]);
+            room.setUnreadNotificationCount(NotificationCountType.Total, 1);
+
+            const { container } = await getComponentAndWait();
+            const clearNotificationEl = getByTestId(container, "clear-notifications");
+
+            fireEvent.click(clearNotificationEl);
+
+            expect(clearNotificationEl.className).toContain("mx_AccessibleButton_disabled");
+            expect(mockClient.sendReadReceipt).toHaveBeenCalled();
+
+            await waitFor(() => {
+                expect(clearNotificationEl.className).not.toContain("mx_AccessibleButton_disabled");
+            });
         });
     });
 });

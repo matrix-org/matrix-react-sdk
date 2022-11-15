@@ -612,6 +612,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 disabled={this.state.clearingNotifications}
                 kind='danger'
                 className='mx_UserNotifSettings_clearNotifsButton'
+                data-testid="clear-notifications"
             >{ _t("Clear notifications") }</AccessibleButton>;
         }
 
