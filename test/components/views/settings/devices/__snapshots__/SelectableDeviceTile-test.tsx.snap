@@ -15,7 +15,7 @@ exports[`<SelectableDeviceTile /> renders unselected device tile with checkbox 1
     class="mx_SelectableDeviceTile"
   >
     <span
-      class="mx_Checkbox mx_SelectableDeviceTile_checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+      class="mx_SelectableDeviceTile_checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
     >
       <input
         data-testid="device-tile-checkbox-my-device"

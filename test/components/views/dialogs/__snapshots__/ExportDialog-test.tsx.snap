@@ -220,7 +220,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
                   </span>
                 </div>
                 <span
-                  class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                  class="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
                 >
                   <input
                     id="include-attachments"
@@ -445,7 +445,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
                     </span>
                   </div>
                   <span
-                    class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                    class="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
                   >
                     <input
                       id="include-attachments"
@@ -788,7 +788,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
               onChange={[Function]}
             >
               <span
-                className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                className="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
                   checked={false}
@@ -1073,7 +1073,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
                 </span>
               </div>
               <span
-                class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                class="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
                   id="include-attachments"
@@ -1298,7 +1298,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
                   </span>
                 </div>
                 <span
-                  class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                  class="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
                 >
                   <input
                     id="include-attachments"
@@ -1641,7 +1641,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
             onChange={[Function]}
           >
             <span
-              className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+              className="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
             >
               <input
                 checked={false}
@@ -1913,7 +1913,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
               </span>
             </div>
             <span
-              class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+              class="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
             >
               <input
                 id="include-attachments"
@@ -2138,7 +2138,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
                 </span>
               </div>
               <span
-                class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                class="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
                   id="include-attachments"
@@ -2481,7 +2481,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
           onChange={[Function]}
         >
           <span
-            className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+            className="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
           >
             <input
               checked={false}
@@ -2834,7 +2834,7 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
         onChange={[Function]}
       >
         <span
-          className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+          className="mx_ExportDialog_attachments-checkbox mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
         >
           <input
             checked={false}
