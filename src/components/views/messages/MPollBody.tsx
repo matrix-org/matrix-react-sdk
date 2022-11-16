@@ -42,10 +42,9 @@ import ErrorDialog from '../dialogs/ErrorDialog';
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import StyledPollCheckbox from '../elements/StyledPollCheckbox';
+import StyledCheckbox, { CheckboxStyle } from '../elements/StyledCheckbox';
 
 interface IState {
-    selected?: string; // Which option was clicked by the local user
     selections?: string[]; // Holds multiple selections if max_selections > 1
     voteRelations: RelatedRelations; // Voting (response) events
     endRelations: RelatedRelations; // Poll end events
@@ -219,7 +218,6 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         super(props);
 
         this.state = {
-            selected: null,
             selections: [],
             voteRelations: this.fetchVoteRelations(),
             endRelations: this.fetchEndRelations(),
@@ -324,7 +322,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         const response = PollResponseEvent.from([answerId], this.props.mxEvent.getId()).serialize();
         this.sendContextEvent(response);
-        this.setState({ selected: answerId });
+        this.setState({ selections: [answerId] });
     }
 
     private onOptionSelected = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -339,11 +337,10 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const userVotes = this.collectUserVotes();
         const userId = this.context.getUserId();
         const myVotes = userVotes.get(userId)?.answers ?? [];
-        const poll = this.props.mxEvent.unstableExtensibleEvent as PollStartEvent;
 
         if (!myVotes.includes(answerId)) {
-            if (myVotes.length === poll.maxSelections) {
-                //don't allow for voting more than maxSelections
+            if (myVotes.length >= this.maxSelections()) {
+                //don't allow voting for more than maxSelections
                 return;
             }
             myVotes.push(answerId);
@@ -363,6 +360,11 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     private onMultiSelection = (e: React.FormEvent<HTMLInputElement>): void => {
         this.selectMultipleOptions(e.currentTarget.value);
     };
+
+    private maxSelections(): number {
+        const poll = this.props.mxEvent.unstableExtensibleEvent as PollStartEvent;
+        return poll.maxSelections;
+    }
 
     private fetchVoteRelations(): RelatedRelations | null {
         return this.fetchRelations(M_POLL_RESPONSE);
@@ -395,6 +397,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * @returns userId -> UserVote
      */
     private collectUserVotes(): Map<string, UserVote> {
+        const selections = this.maxSelections() > 1 ? null : this.state.selections[0];
         return collectUserVotes(
             allVotes(
                 this.props.mxEvent,
@@ -403,7 +406,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 this.state.endRelations,
             ),
             this.context.getUserId(),
-            this.state.selected,
+            selections,
         );
     }
 
@@ -420,7 +423,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
             .filter(isPollResponse)
             .filter((mxEvent: MatrixEvent) =>
                 !this.seenEventIds.includes(mxEvent.getId()));
-        let newSelected = this.state.selected;
+        let newSelected = this.state.selections[0];
 
         if (newEvents.length > 0) {
             for (const mxEvent of newEvents) {
@@ -431,7 +434,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
         const newEventIds = newEvents.map((mxEvent: MatrixEvent) => mxEvent.getId());
         this.seenEventIds = this.seenEventIds.concat(newEventIds);
-        this.setState({ selected: newSelected });
+        this.setState({ selections: [newSelected] });
     }
 
     private totalVotes(collectedVotes: Map<string, number>): number {
@@ -633,9 +636,10 @@ function LivePollOption(props: ILivePollOptionProps) {
             </div>
         </StyledRadioButton>;
     } else { // allow multiple selections
-        return <StyledPollCheckbox
+        return <StyledCheckbox
             className="mx_MPollBody_live-option"
-            name={props.answer.id}
+            kind={CheckboxStyle.Circle}
+            name={`poll_answer_select-${props.pollId}`}
             value={props.answer.id}
             checked={props.checked}
             onChange={props.onMultiSelection}
@@ -648,7 +652,7 @@ function LivePollOption(props: ILivePollOptionProps) {
                     { props.votesText }
                 </div>
             </div>
-        </StyledPollCheckbox>;
+        </StyledCheckbox>;
     }
 }
 
