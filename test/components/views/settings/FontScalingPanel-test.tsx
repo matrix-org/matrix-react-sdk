@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-// eslint-disable-next-line deprecate/import
-import { mount } from "enzyme";
+import { render } from '@testing-library/react';
 
 import * as TestUtils from "../../../test-utils";
 import FontScalingPanel from '../../../../src/components/views/settings/FontScalingPanel';
@@ -34,7 +33,7 @@ jest.mock(
 describe('FontScalingPanel', () => {
     it('renders the font scaling UI', () => {
         TestUtils.stubClient();
-        const wrapper = mount(
+        const wrapper = render(
             <FontScalingPanel />,
         );
         expect(wrapper).toMatchSnapshot();
