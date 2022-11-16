@@ -19,7 +19,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import AccessibleButton from "../../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import Notifier from "../../../../../Notifier";
 import SettingsStore from '../../../../../settings/SettingsStore';
 import { SettingLevel } from "../../../../../settings/SettingLevel";
@@ -119,7 +119,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
             type = "audio/ogg";
         }
 
-        const url = await MatrixClientPeg.get().uploadContent(
+        const { content_uri: url } = await MatrixClientPeg.get().uploadContent(
             this.state.uploadedFile, {
                 type,
             },
@@ -163,7 +163,9 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         this.forceUpdate();
     };
 
-    private onOpenSettingsClick = () => {
+    private onOpenSettingsClick = (event: ButtonEvent) => {
+        // avoid selecting the radio button
+        event.preventDefault();
         this.props.closeSettingsFn();
         defaultDispatcher.dispatch({
             action: Action.ViewUserSettings,

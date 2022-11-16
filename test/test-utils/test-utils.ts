@@ -32,6 +32,7 @@ import {
     IUnsigned,
     IPusher,
     RoomType,
+    KNOWN_SAFE_ROOM_VERSION,
 } from 'matrix-js-sdk/src/matrix';
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -86,6 +87,7 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        deviceId: "ABCDEFGHI",
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         credentials: { userId: "@userId:matrix.org" },
 
@@ -169,7 +171,9 @@ export function createTestClient(): MatrixClient {
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
-        relations: jest.fn().mockRejectedValue(undefined),
+        relations: jest.fn().mockResolvedValue({
+            events: [],
+        }),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
         hasLazyLoadMembersEnabled: jest.fn().mockReturnValue(false),
         isInitialSyncComplete: jest.fn().mockReturnValue(true),
@@ -184,9 +188,11 @@ export function createTestClient(): MatrixClient {
         getMediaHandler: jest.fn().mockReturnValue({
             setVideoInput: jest.fn(),
             setAudioInput: jest.fn(),
+            setAudioSettings: jest.fn(),
         } as unknown as MediaHandler),
         uploadContent: jest.fn(),
         getEventMapper: () => (opts) => new MatrixEvent(opts),
+        leaveRoomChain: jest.fn(roomId => ({ [roomId]: null })),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -218,6 +224,20 @@ type MakeEventProps = MakeEventPassThruProps & {
     // eslint-disable-next-line camelcase
     prev_content?: IContent;
     unsigned?: IUnsigned;
+};
+
+export const mkRoomCreateEvent = (userId: string, roomId: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomCreate,
+        content: {
+            creator: userId,
+            room_version: KNOWN_SAFE_ROOM_VERSION,
+        },
+        skey: "",
+        user: userId,
+        room: roomId,
+    });
 };
 
 /**
@@ -562,6 +582,19 @@ export const mkSpace = (
         }),
     )));
     return space;
+};
+
+export const mkRoomMemberJoinEvent = (user: string, room: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomMember,
+        content: {
+            membership: "join",
+        },
+        skey: user,
+        user,
+        room,
+    });
 };
 
 export const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
