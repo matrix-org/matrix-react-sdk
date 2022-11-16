@@ -81,17 +81,13 @@ describe("Algorithm", () => {
         setupAsyncStoreWithClient(WidgetMessagingStore.instance, client);
 
         MockedCall.create(roomWithCall, "1");
-        const call = CallStore.instance.get(roomWithCall.roomId);
+        const call = CallStore.instance.getCall(roomWithCall.roomId);
         if (call === null) throw new Error("Failed to create call");
 
         const widget = new Widget(call.widget);
         WidgetMessagingStore.instance.storeMessaging(widget, roomWithCall.roomId, {
             stop: () => {},
         } as unknown as ClientWidgetApi);
-
-        Object.defineProperty(navigator, "mediaDevices", {
-            value: { enumerateDevices: async () => [] },
-        });
 
         // End of setup
 

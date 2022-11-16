@@ -31,9 +31,10 @@ exports[`FontScalingPanel renders the font scaling UI 1`] = `
             <div
               aria-label="Loading..."
               className="mx_Spinner_icon"
+              data-testid="spinner"
               role="progressbar"
               style={
-                Object {
+                {
                   "height": 32,
                   "width": 32,
                 }
@@ -57,7 +58,7 @@ exports[`FontScalingPanel renders the font scaling UI 1`] = `
         onSelectionChange={[Function]}
         value={15}
         values={
-          Array [
+          [
             13,
             14,
             15,
@@ -82,7 +83,7 @@ exports[`FontScalingPanel renders the font scaling UI 1`] = `
                 <div
                   className="mx_Slider_selectionDot"
                   style={
-                    Object {
+                    {
                       "left": "calc(-1.195em + 50%)",
                     }
                   }
@@ -95,7 +96,7 @@ exports[`FontScalingPanel renders the font scaling UI 1`] = `
                 </div>
                 <hr
                   style={
-                    Object {
+                    {
                       "width": "50%",
                     }
                   }

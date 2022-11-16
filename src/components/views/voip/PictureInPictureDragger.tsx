@@ -68,6 +68,8 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         document.addEventListener("mousemove", this.onMoving);
         document.addEventListener("mouseup", this.onEndMoving);
         UIStore.instance.on(UI_EVENTS.Resize, this.onResize);
+        // correctly position the PiP
+        this.snap();
     }
 
     public componentWillUnmount() {
@@ -201,7 +203,7 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         };
 
         return (
-            <div
+            <aside
                 className={this.props.className}
                 style={style}
                 ref={this.callViewWrapper}
@@ -211,7 +213,7 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
                     onStartMoving: this.onStartMoving,
                     onResize: this.onResize,
                 }) }
-            </div>
+            </aside>
         );
     }
 }

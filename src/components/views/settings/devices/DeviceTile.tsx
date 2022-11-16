@@ -15,22 +15,24 @@ limitations under the License.
 */
 
 import React, { Fragment } from "react";
+import classNames from "classnames";
 
 import { Icon as InactiveIcon } from '../../../../../res/img/element-icons/settings/inactive.svg';
 import { _t } from "../../../../languageHandler";
 import { formatDate, formatRelativeTime } from "../../../../DateUtils";
 import Heading from "../../typography/Heading";
 import { INACTIVE_DEVICE_AGE_DAYS, isDeviceInactive } from "./filter";
-import { DeviceWithVerification } from "./types";
-import { DeviceType } from "./DeviceType";
+import { ExtendedDevice } from "./types";
+import { DeviceTypeIcon } from "./DeviceTypeIcon";
+import { preventDefaultWrapper } from "../../../../utils/NativeEventUtils";
 export interface DeviceTileProps {
-    device: DeviceWithVerification;
+    device: ExtendedDevice;
     isSelected?: boolean;
     children?: React.ReactNode;
     onClick?: () => void;
 }
 
-const DeviceTileName: React.FC<{ device: DeviceWithVerification }> = ({ device }) => {
+const DeviceTileName: React.FC<{ device: ExtendedDevice }> = ({ device }) => {
     return <Heading size='h4'>
         { device.display_name || device.device_id }
     </Heading>;
@@ -48,7 +50,7 @@ const formatLastActivity = (timestamp: number, now = new Date().getTime()): stri
     return formatRelativeTime(new Date(timestamp));
 };
 
-const getInactiveMetadata = (device: DeviceWithVerification): { id: string, value: React.ReactNode } | undefined => {
+const getInactiveMetadata = (device: ExtendedDevice): { id: string, value: React.ReactNode } | undefined => {
     const isInactive = isDeviceInactive(device);
 
     if (!isInactive) {
@@ -88,9 +90,20 @@ const DeviceTile: React.FC<DeviceTileProps> = ({
             { id: 'deviceId', value: device.device_id },
         ];
 
-    return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
-        <DeviceType isVerified={device.isVerified} isSelected={isSelected} />
-        <div className="mx_DeviceTile_info" onClick={onClick}>
+    return <div
+        className={classNames(
+            "mx_DeviceTile",
+            { "mx_DeviceTile_interactive": !!onClick },
+        )}
+        data-testid={`device-tile-${device.device_id}`}
+        onClick={onClick}
+    >
+        <DeviceTypeIcon
+            isVerified={device.isVerified}
+            isSelected={isSelected}
+            deviceType={device.deviceType}
+        />
+        <div className="mx_DeviceTile_info">
             <DeviceTileName device={device} />
             <div className="mx_DeviceTile_metadata">
                 { metadata.map(({ id, value }, index) =>
@@ -103,7 +116,7 @@ const DeviceTile: React.FC<DeviceTileProps> = ({
                 ) }
             </div>
         </div>
-        <div className="mx_DeviceTile_actions">
+        <div className="mx_DeviceTile_actions" onClick={preventDefaultWrapper(() => {})}>
             { children }
         </div>
     </div>;

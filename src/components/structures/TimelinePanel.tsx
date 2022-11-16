@@ -645,8 +645,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (data.timeline.getTimelineSet() !== this.props.timelineSet) return;
 
         if (!Thread.hasServerSideSupport && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
-            // const direction = toStartOfTimeline ? Direction.Backward : Direction.Forward;
-            // this.timelineWindow.extend(direction, 1);
             if (toStartOfTimeline && !this.state.canBackPaginate) {
                 this.setState({
                     canBackPaginate: true,
@@ -798,7 +796,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (this.unmounted) return;
 
         // ignore events for other rooms
-        if (replacedEvent.getRoomId() !== this.props.timelineSet.room.roomId) return;
+        if (replacedEvent.getRoomId() !== this.props.timelineSet.room?.roomId) return;
 
         // we could skip an update if the event isn't in our timeline,
         // but that's probably an early optimisation.
@@ -994,7 +992,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
                         if (
                             !sendRRs
-                            && !cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")
+                            && !(await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable"))
+                            && !(await cli.isVersionSupported("v1.4"))
                         ) return;
                         try {
                             return await cli.sendReadReceipt(
@@ -1361,7 +1360,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) return;
 
             this.setState({ timelineLoading: false });
-            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}: ${error}`);
+            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}`, error);
 
             let onFinished: () => void;
 
@@ -1408,24 +1407,28 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // quite slow. So we detect that situation and shortcut straight to
         // calling _reloadEvents and updating the state.
 
-        const timeline = this.props.timelineSet.getTimelineForEvent(eventId);
-        if (timeline) {
-            // This is a hot-path optimization by skipping a promise tick
-            // by repeating a no-op sync branch in TimelineSet.getTimelineForEvent & MatrixClient.getEventTimeline
-            this.timelineWindow.load(eventId, INITIAL_SIZE); // in this branch this method will happen in sync time
+        // This is a hot-path optimization by skipping a promise tick
+        // by repeating a no-op sync branch in
+        // TimelineSet.getTimelineForEvent & MatrixClient.getEventTimeline
+        if (this.props.timelineSet.getTimelineForEvent(eventId)) {
+            // if we've got an eventId, and the timeline exists, we can skip
+            // the promise tick.
+            this.timelineWindow.load(eventId, INITIAL_SIZE);
+            // in this branch this method will happen in sync time
             onLoaded();
-        } else {
-            const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
-            this.buildLegacyCallEventGroupers();
-            this.setState({
-                events: [],
-                liveEvents: [],
-                canBackPaginate: false,
-                canForwardPaginate: false,
-                timelineLoading: true,
-            });
-            prom.then(onLoaded, onError);
+            return;
         }
+
+        const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
+        this.buildLegacyCallEventGroupers();
+        this.setState({
+            events: [],
+            liveEvents: [],
+            canBackPaginate: false,
+            canForwardPaginate: false,
+            timelineLoading: true,
+        });
+        prom.then(onLoaded, onError);
     }
 
     // handle the completion of a timeline load or localEchoUpdate, by
@@ -1442,8 +1445,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     }
 
     // Force refresh the timeline before threads support pending events
-    public refreshTimeline(): void {
-        this.loadTimeline();
+    public refreshTimeline(eventId?: string): void {
+        this.loadTimeline(eventId, undefined, undefined, false);
         this.reloadEvents();
     }
 
