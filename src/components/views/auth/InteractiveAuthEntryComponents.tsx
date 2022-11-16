@@ -19,6 +19,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
 import { logger } from "matrix-js-sdk/src/logger";
 import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from 'react';
+import OtpInput from "react-otp-input";
 
 import EmailPromptIcon from '../../../../res/img/element-icons/email-prompt.svg';
 import { _t } from '../../../languageHandler';
@@ -31,6 +32,7 @@ import Field from '../elements/Field';
 import Spinner from "../elements/Spinner";
 import { Alignment } from "../elements/Tooltip";
 import CaptchaForm from "./CaptchaForm";
+import SdkConfig from "../../../SdkConfig";
 
 /* This file contains a collection of components which are used by the
  * InteractiveAuth to prompt the user to enter the information needed
@@ -527,6 +529,7 @@ interface IMsisdnAuthEntryProps extends IAuthEntryProps {
 interface IMsisdnAuthEntryState {
     token: string;
     requestingToken: boolean;
+    submittingToken: boolean;
     errorText: string;
 }
 
@@ -543,6 +546,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
         this.state = {
             token: '',
             requestingToken: false,
+            submittingToken: false,
             errorText: '',
         };
     }
@@ -574,18 +578,15 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
         });
     }
 
-    private onTokenChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            token: e.target.value,
-        });
-    };
+    onTokenChange = token => this.setState({ token: token, errorText: '' });
 
     private onFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (this.state.token == '') return;
 
         this.setState({
-            errorText: null,
+            errorText: '',
+            submittingToken: true,
         });
 
         try {
@@ -612,6 +613,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                 });
             } else {
                 this.setState({
+                    submittingToken: false,
                     errorText: _t("Token incorrect"),
                 });
             }
@@ -622,12 +624,13 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     };
 
     render() {
+        const otpLength = SdkConfig.get().otp_length;
         if (this.state.requestingToken) {
             return (
                 <Spinner />
             );
         } else {
-            const enableSubmit = Boolean(this.state.token);
+            const enableSubmit = this.state.token.length == otpLength && !this.state.submittingToken;
             const submitClasses = classNames({
                 mx_InteractiveAuthEntryComponents_msisdnSubmit: true,
                 mx_GeneralButton: true,
@@ -649,19 +652,24 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                     <p>{ _t("Please enter the code it contains:") }</p>
                     <div className="mx_InteractiveAuthEntryComponents_msisdnWrapper">
                         <form onSubmit={this.onFormSubmit}>
-                            <input type="text"
-                                className="mx_InteractiveAuthEntryComponents_msisdnEntry"
+                            <OtpInput
                                 value={this.state.token}
                                 onChange={this.onTokenChange}
+                                isInputNum={true}
+                                numInputs={otpLength}
+                                isDisabled={this.state.submittingToken}
+                                hasErrored={!!this.state.errorText}
+                                errorStyle="mx_InteractiveAuthEntryComponents_msisdnEntry_error"
+                                inputStyle="mx_InteractiveAuthEntryComponents_msisdnEntry"
                                 aria-label={_t("Code")}
                             />
                             <br />
-                            <input
+                            { this.state.submittingToken ? <Spinner /> : <input
                                 type="submit"
                                 value={_t("Submit")}
                                 className={submitClasses}
                                 disabled={!enableSubmit}
-                            />
+                            /> }
                         </form>
                         { errorSection }
                     </div>

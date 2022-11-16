@@ -50,6 +50,7 @@ export const DEFAULTS: IConfigOptions = {
         chunk_length: 2 * 60, // two minutes
         max_length: 4 * 60 * 60, // four hours
     },
+    otp_length: 6,
 };
 
 export default class SdkConfig {

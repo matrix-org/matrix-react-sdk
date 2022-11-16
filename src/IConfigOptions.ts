@@ -91,6 +91,8 @@ export interface IConfigOptions {
 
     setting_defaults?: Record<string, any>; // <SettingName, Value>
 
+    otp_length?: number;
+
     integrations_ui_url?: string;
     integrations_rest_url?: string;
     integrations_widgets_urls?: string[];
