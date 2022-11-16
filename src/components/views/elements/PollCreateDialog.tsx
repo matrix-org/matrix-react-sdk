@@ -142,7 +142,9 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     };
 
     private maxSelections = () => {
-        const count = range(1, this.state.options.length + 1);
+        // defaults to 1
+        const limit = this.state.options.filter(a => !!a).length || 1;
+        const count = range(1, limit + 1);
         const options = count.map((number) => {
             return <option
                 key={number}
@@ -287,7 +289,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 this.state.busy &&
                     <div className="mx_PollCreateDialog_busy"><Spinner /></div>
             }
-            <h2>{ _t("Number of allowed selections") }</h2>
+            <h2>{ _t("Number of votes per person") }</h2>
             <Field
                 className="mx_PollCreateDialog_maxSelections"
                 element="select"

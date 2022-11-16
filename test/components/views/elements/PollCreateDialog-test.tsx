@@ -128,15 +128,19 @@ describe("PollCreateDialog", () => {
         expect(dialog.html()).toMatchSnapshot();
     });
 
-    it("renders the correct number of allowed selections", () => {
+    it("shows the correct number of possible votes per person", () => {
         const dialog = mount(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
+        expect(dialog.find("select").at(1).children().length).toEqual(1); // defaults to 1
+        changeValue(dialog, "Option 1", "As many as my neighbour");
+        changeValue(dialog, "Option 2", "The question is meaningless");
         dialog.find("div.mx_PollCreateDialog_addOption").simulate("click");
-        expect(dialog.find("select").at(1).children().length).toEqual(3);
+        changeValue(dialog, "Option 3", "");
+        expect(dialog.find("select").at(1).children().length).toEqual(2); // doesn't count empty options
     });
 
-    it("allows setting the number of allowed selections", () => {
+    it("allows setting the number of allowed votes per person", () => {
         const dialog = mount(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
