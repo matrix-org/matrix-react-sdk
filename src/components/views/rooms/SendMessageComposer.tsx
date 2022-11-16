@@ -167,6 +167,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
 
         window.addEventListener("beforeunload", this.saveStoredEditorState);
+
+        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
+        const parts = this.restoreStoredEditorState(partCreator) || [];
+        this.model = new EditorModel(parts, partCreator);
+        this.dispatcherRef = dis.register(this.onAction);
+        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, 'mx_cider_history_');
     }
 
     public componentDidUpdate(prevProps: ISendMessageComposerProps): void {
@@ -454,15 +460,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         dis.unregister(this.dispatcherRef);
         window.removeEventListener("beforeunload", this.saveStoredEditorState);
         this.saveStoredEditorState();
-    }
-
-    // TODO: [REACT-WARNING] Move this to constructor
-    UNSAFE_componentWillMount() { // eslint-disable-line
-        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
-        const parts = this.restoreStoredEditorState(partCreator) || [];
-        this.model = new EditorModel(parts, partCreator);
-        this.dispatcherRef = dis.register(this.onAction);
-        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, 'mx_cider_history_');
     }
 
     private get editorStateKey() {
