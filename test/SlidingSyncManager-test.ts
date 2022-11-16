@@ -16,10 +16,10 @@ limitations under the License.
 
 import { SlidingSync } from 'matrix-js-sdk/src/sliding-sync';
 import { mocked } from 'jest-mock';
+import { MatrixClient, MatrixEvent, Room } from 'matrix-js-sdk/src/matrix';
 
 import { SlidingSyncManager } from '../src/SlidingSyncManager';
 import { stubClient } from './test-utils';
-import { MatrixClient, MatrixEvent, Room } from 'matrix-js-sdk';
 
 jest.mock('matrix-js-sdk/src/sliding-sync');
 const MockSlidingSync = <jest.Mock<SlidingSync>><unknown>SlidingSync;
