@@ -153,7 +153,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     }
 
     public componentDidUpdate(prevProps) {
-        if (prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl &&
+        if (prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
         ) {
             // Ensure that we end up actually logging in to the right place
