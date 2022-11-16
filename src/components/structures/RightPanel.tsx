@@ -44,6 +44,7 @@ import TimelineCard from '../views/right_panel/TimelineCard';
 import { UPDATE_EVENT } from '../../stores/AsyncStore';
 import { IRightPanelCard, IRightPanelCardState } from '../../stores/right-panel/RightPanelStoreIPanelState';
 import { Action } from '../../dispatcher/actions';
+import UrlPanel from './UrlPanel';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
@@ -219,6 +220,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
             case RightPanelPhases.FilePanel:
                 card = <FilePanel roomId={roomId} resizeNotifier={this.props.resizeNotifier} onClose={this.onClose} />;
+                break;
+            case RightPanelPhases.UrlPanel:
+                card = <UrlPanel roomId={roomId} resizeNotifier={this.props.resizeNotifier} onClose={this.onClose} />;
                 break;
 
             case RightPanelPhases.ThreadView:
