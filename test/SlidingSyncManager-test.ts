@@ -60,6 +60,7 @@ describe('SlidingSyncManager', () => {
                     },
                 }),
             ]);
+            client.store.storeRoom(room);
             const subs = new Set<string>();
             mocked(slidingSync.getRoomSubscriptions).mockReturnValue(subs);
             mocked(slidingSync.modifyRoomSubscriptions).mockResolvedValue("yep");
