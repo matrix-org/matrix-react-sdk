@@ -51,7 +51,7 @@ class DOMRect {
 window.DOMRect = DOMRect;
 
 // Work around missing ClipboardEvent type
-class MyClipboardEvent {}
+class MyClipboardEvent extends Event {}
 window.ClipboardEvent = MyClipboardEvent as any;
 
 // matchMedia is not included in jsdom
