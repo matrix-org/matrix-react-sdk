@@ -37,6 +37,8 @@ import {
 } from './types';
 import { DevicesState } from './useOwnDevices';
 import FilteredDeviceListHeader from './FilteredDeviceListHeader';
+import Spinner from '../../elements/Spinner';
+import { DeviceSecurityLearnMore } from './DeviceSecurityLearnMore';
 
 interface Props {
     devices: DevicesDictionary;
@@ -72,48 +74,53 @@ const getFilteredSortedDevices = (devices: DevicesDictionary, filter?: DeviceSec
 const ALL_FILTER_ID = 'ALL';
 type DeviceFilterKey = DeviceSecurityVariation | typeof ALL_FILTER_ID;
 
+const securityCardContent: Record<DeviceSecurityVariation, {
+    title: string;
+    description: string;
+ }> = {
+     [DeviceSecurityVariation.Verified]: {
+         title: _t('Verified sessions'),
+         description: _t('For best security, sign out from any session that you don\'t recognize or use anymore.'),
+     },
+     [DeviceSecurityVariation.Unverified]: {
+         title: _t('Unverified sessions'),
+         description: _t(
+             `Verify your sessions for enhanced secure messaging or ` +
+            `sign out from those you don't recognize or use anymore.`,
+         ),
+     },
+     [DeviceSecurityVariation.Inactive]: {
+         title: _t('Inactive sessions'),
+         description: _t(
+             `Consider signing out from old sessions ` +
+        `(%(inactiveAgeDays)s days or older) you don't use anymore.`,
+             { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
+         ),
+     },
+ };
+
+const isSecurityVariation = (filter?: DeviceFilterKey): filter is DeviceSecurityVariation =>
+    Object.values<string>(DeviceSecurityVariation).includes(filter);
+
 const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) => {
-    switch (filter) {
-        case DeviceSecurityVariation.Verified:
-            return <div className='mx_FilteredDeviceList_securityCard'>
-                <DeviceSecurityCard
-                    variation={DeviceSecurityVariation.Verified}
-                    heading={_t('Verified sessions')}
-                    description={_t(
-                        `For best security, sign out from any session` +
-                    ` that you don't recognize or use anymore.`,
-                    )}
-                />
-            </div>
-            ;
-        case DeviceSecurityVariation.Unverified:
-            return <div className='mx_FilteredDeviceList_securityCard'>
-                <DeviceSecurityCard
-                    variation={DeviceSecurityVariation.Unverified}
-                    heading={_t('Unverified sessions')}
-                    description={_t(
-                        `Verify your sessions for enhanced secure messaging or sign out`
-                    + ` from those you don't recognize or use anymore.`,
-                    )}
-                />
-            </div>
-            ;
-        case DeviceSecurityVariation.Inactive:
-            return <div className='mx_FilteredDeviceList_securityCard'>
-                <DeviceSecurityCard
-                    variation={DeviceSecurityVariation.Inactive}
-                    heading={_t('Inactive sessions')}
-                    description={_t(
-                        `Consider signing out from old sessions ` +
-                    `(%(inactiveAgeDays)s days or older) you don't use anymore`,
-                        { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
-                    )}
-                />
-            </div>
-            ;
-        default:
-            return null;
+    if (isSecurityVariation(filter)) {
+        const { title, description } = securityCardContent[filter];
+        return <div className='mx_FilteredDeviceList_securityCard'>
+            <DeviceSecurityCard
+                variation={filter}
+                heading={title}
+                description={<span>
+                    { description }
+                    <DeviceSecurityLearnMore
+                        variation={filter}
+                    />
+                </span>}
+            />
+        </div>
+        ;
     }
+
+    return null;
 };
 
 const getNoResultsMessage = (filter?: DeviceSecurityVariation): string => {
@@ -179,9 +186,11 @@ const DeviceListItem: React.FC<{
 }) => <li className='mx_FilteredDeviceList_listItem'>
     <SelectableDeviceTile
         isSelected={isSelected}
-        onClick={toggleSelected}
+        onSelect={toggleSelected}
+        onClick={onDeviceExpandToggle}
         device={device}
     >
+        { isSigningOut && <Spinner w={16} h={16} /> }
         <DeviceExpandDetailsButton
             isExpanded={isExpanded}
             onClick={onDeviceExpandToggle}
@@ -275,6 +284,8 @@ export const FilteredDeviceList =
             }
         };
 
+        const isSigningOut = !!signingOutDeviceIds.length;
+
         return <div className='mx_FilteredDeviceList' ref={ref}>
             <FilteredDeviceListHeader
                 selectedDeviceCount={selectedDeviceIds.length}
@@ -286,14 +297,17 @@ export const FilteredDeviceList =
                         <AccessibleButton
                             data-testid='sign-out-selection-cta'
                             kind='danger_inline'
+                            disabled={isSigningOut}
                             onClick={() => onSignOutDevices(selectedDeviceIds)}
                             className='mx_FilteredDeviceList_headerButton'
                         >
+                            { isSigningOut && <Spinner w={16} h={16} /> }
                             { _t('Sign out') }
                         </AccessibleButton>
                         <AccessibleButton
                             data-testid='cancel-selection-cta'
                             kind='content_inline'
+                            disabled={isSigningOut}
                             onClick={() => setSelectedDeviceIds([])}
                             className='mx_FilteredDeviceList_headerButton'
                         >

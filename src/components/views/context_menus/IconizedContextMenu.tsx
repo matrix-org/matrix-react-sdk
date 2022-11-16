@@ -39,6 +39,7 @@ interface IOptionListProps {
 
 interface IOptionProps extends React.ComponentProps<typeof MenuItem> {
     iconClassName?: string;
+    isDestructive?: boolean;
 }
 
 interface ICheckboxProps extends React.ComponentProps<typeof MenuItemCheckbox> {
@@ -47,7 +48,7 @@ interface ICheckboxProps extends React.ComponentProps<typeof MenuItemCheckbox> {
 }
 
 interface IRadioProps extends React.ComponentProps<typeof MenuItemRadio> {
-    iconClassName: string;
+    iconClassName?: string;
 }
 
 export const IconizedContextMenuRadio: React.FC<IRadioProps> = ({
@@ -66,7 +67,7 @@ export const IconizedContextMenuRadio: React.FC<IRadioProps> = ({
         active={active}
         label={label}
     >
-        <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />
+        { iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} /> }
         <span className="mx_IconizedContextMenu_label">{ label }</span>
         { active && <span className="mx_IconizedContextMenu_icon mx_IconizedContextMenu_checked" /> }
     </MenuItemRadio>;
@@ -112,12 +113,14 @@ export const IconizedContextMenuOption: React.FC<IOptionProps> = ({
     className,
     iconClassName,
     children,
+    isDestructive,
     ...props
 }) => {
     return <MenuItem
         {...props}
         className={classNames(className, {
             mx_IconizedContextMenu_item: true,
+            mx_IconizedContextMenu_itemDestructive: isDestructive,
         })}
         label={label}
     >

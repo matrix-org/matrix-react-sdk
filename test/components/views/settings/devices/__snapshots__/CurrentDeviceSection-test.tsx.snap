@@ -50,6 +50,13 @@ HTMLCollection [
             class="mx_DeviceSecurityCard_description"
           >
             Verify or sign out from this session for best security and reliability.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"
@@ -120,11 +127,29 @@ exports[`<CurrentDeviceSection /> handles when device is falsy 1`] = `
     class="mx_SettingsSubsection"
     data-testid="current-session-section"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsection_heading"
+    <div
+      class="mx_SettingsSubsectionHeading"
     >
-      Current session
-    </h3>
+      <h3
+        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+      >
+        Current session
+      </h3>
+      <div
+        aria-disabled="true"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="mx_AccessibleButton mx_AccessibleButton_disabled"
+        data-testid="current-session-menu"
+        disabled=""
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_KebabContextMenu_icon"
+        />
+      </div>
+    </div>
     <div
       class="mx_SettingsSubsection_content"
     />
@@ -138,16 +163,32 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
     class="mx_SettingsSubsection"
     data-testid="current-session-section"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsection_heading"
+    <div
+      class="mx_SettingsSubsectionHeading"
     >
-      Current session
-    </h3>
+      <h3
+        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+      >
+        Current session
+      </h3>
+      <div
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="mx_AccessibleButton"
+        data-testid="current-session-menu"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_KebabContextMenu_icon"
+        />
+      </div>
+    </div>
     <div
       class="mx_SettingsSubsection_content"
     >
       <div
-        class="mx_DeviceTile"
+        class="mx_DeviceTile mx_DeviceTile_interactive"
         data-testid="device-tile-alices_device"
       >
         <div
@@ -232,6 +273,13 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
             class="mx_DeviceSecurityCard_description"
           >
             Verify or sign out from this session for best security and reliability.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"
@@ -258,16 +306,32 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
     class="mx_SettingsSubsection"
     data-testid="current-session-section"
   >
-    <h3
-      class="mx_Heading_h3 mx_SettingsSubsection_heading"
+    <div
+      class="mx_SettingsSubsectionHeading"
     >
-      Current session
-    </h3>
+      <h3
+        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+      >
+        Current session
+      </h3>
+      <div
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="mx_AccessibleButton"
+        data-testid="current-session-menu"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_KebabContextMenu_icon"
+        />
+      </div>
+    </div>
     <div
       class="mx_SettingsSubsection_content"
     >
       <div
-        class="mx_DeviceTile"
+        class="mx_DeviceTile mx_DeviceTile_interactive"
         data-testid="device-tile-alices_device"
       >
         <div
@@ -352,6 +416,13 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
             class="mx_DeviceSecurityCard_description"
           >
             Verify or sign out from this session for best security and reliability.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
           <div
             class="mx_DeviceSecurityCard_actions"

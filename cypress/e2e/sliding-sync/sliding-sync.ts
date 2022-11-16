@@ -217,7 +217,7 @@ describe("Sliding Sync", () => {
 
         // disable notifs in this room (TODO: CS API call?)
         cy.contains(".mx_RoomTile", "Test Room").find(".mx_RoomTile_notificationsButton").click({ force: true });
-        cy.contains("None").click();
+        cy.contains("Off").click();
 
         // create a new room so we know when the message has been received as it'll re-shuffle the room list
         cy.createRoom({
@@ -293,7 +293,7 @@ describe("Sliding Sync", () => {
         ]);
 
         cy.contains(".mx_RoomTile", "Reject").click();
-        cy.get(".mx_RoomView").contains(".mx_AccessibleButton", "Reject").click();
+        cy.contains(".mx_RoomView .mx_AccessibleButton", "Reject").click();
 
         // wait for the rejected room to disappear
         cy.get(".mx_RoomTile").should('have.length', 3);
@@ -328,8 +328,8 @@ describe("Sliding Sync", () => {
             cy.getClient().then(cli => cli.setRoomTag(roomId, "m.favourite", { order: 0.5 }));
         });
 
-        cy.get('.mx_RoomSublist[aria-label="Favourites"]').contains(".mx_RoomTile", "Favourite DM").should("exist");
-        cy.get('.mx_RoomSublist[aria-label="People"]').contains(".mx_RoomTile", "Favourite DM").should("not.exist");
+        cy.contains('.mx_RoomSublist[aria-label="Favourites"] .mx_RoomTile', "Favourite DM").should("exist");
+        cy.contains('.mx_RoomSublist[aria-label="People"] .mx_RoomTile', "Favourite DM").should("not.exist");
     });
 
     // Regression test for a bug in SS mode, but would be useful to have in non-SS mode too.

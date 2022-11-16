@@ -22,12 +22,18 @@ import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { ConnectionState } from "../../../models/Call";
 import { Call, CallEvent, ElementCall, isConnected } from "../../../models/Call";
-import { useCall, useConnectionState, useParticipants } from "../../../hooks/useCall";
+import {
+    useCall,
+    useConnectionState,
+    useJoinCallButtonDisabled,
+    useJoinCallButtonTooltip,
+    useParticipants,
+} from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
 import { _t } from "../../../languageHandler";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
-import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
+import MediaDeviceHandler from "../../../MediaDeviceHandler";
 import { CallStore } from "../../../stores/CallStore";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
@@ -35,7 +41,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { aboveLeftOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
 import { Alignment } from "../elements/Tooltip";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -110,10 +116,12 @@ const MAX_FACES = 8;
 interface LobbyProps {
     room: Room;
     connect: () => Promise<void>;
+    joinCallButtonTooltip?: string;
+    joinCallButtonDisabled?: boolean;
     children?: ReactNode;
 }
 
-export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
+export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabled, joinCallButtonTooltip, connect, children }) => {
     const [connecting, setConnecting] = useState(false);
     const me = useMemo(() => room.getMember(room.myUserId)!, [room]);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -133,36 +141,38 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
     }, [videoMuted, setVideoMuted]);
 
     const [videoStream, audioInputs, videoInputs] = useAsyncMemo(async () => {
-        let previewStream: MediaStream;
+        let devices = await MediaDeviceHandler.getDevices();
+
+        // We get the preview stream before requesting devices: this is because
+        // we need (in some browsers) an active media stream in order to get
+        // non-blank labels for the devices.
+        let stream: MediaStream | null = null;
         try {
-            // We get the preview stream before requesting devices: this is because
-            // we need (in some browsers) an active media stream in order to get
-            // non-blank labels for the devices. According to the docs, we
-            // need a stream of each type (audio + video) if we want to enumerate
-            // audio & video devices, although this didn't seem to be the case
-            // in practice for me. We request both anyway.
-            // For similar reasons, we also request a stream even if video is muted,
-            // which could be a bit strange but allows us to get the device list
-            // reliably. One option could be to try & get devices without a stream,
-            // then try again with a stream if we get blank deviceids, but... ew.
-            previewStream = await navigator.mediaDevices.getUserMedia({
-                video: { deviceId: videoInputId },
-                audio: { deviceId: MediaDeviceHandler.getAudioInput() },
-            });
+            if (devices.audioinput.length > 0) {
+                // Holding just an audio stream will be enough to get us all device labels, so
+                // if video is muted, don't bother requesting video.
+                stream = await navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: !videoMuted && devices.videoinput.length > 0 && { deviceId: videoInputId },
+                });
+            } else if (devices.videoinput.length > 0) {
+                // We have to resort to a video stream, even if video is supposed to be muted.
+                stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoInputId } });
+            }
         } catch (e) {
             logger.error(`Failed to get stream for device ${videoInputId}`, e);
         }
 
-        const devices = await MediaDeviceHandler.getDevices();
+        // Refresh the devices now that we hold a stream
+        if (stream !== null) devices = await MediaDeviceHandler.getDevices();
 
-        // If video is muted, we don't actually want the stream, so we can get rid of
-        // it now.
+        // If video is muted, we don't actually want the stream, so we can get rid of it now.
         if (videoMuted) {
-            previewStream.getTracks().forEach(t => t.stop());
-            previewStream = undefined;
+            stream?.getTracks().forEach(t => t.stop());
+            stream = null;
         }
 
-        return [previewStream, devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
+        return [stream, devices.audioinput, devices.videoinput];
     }, [videoInputId, videoMuted], [null, [], []]);
 
     const setAudioInput = useCallback((device: MediaDeviceInfo) => {
@@ -180,7 +190,7 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
             videoElement.play();
 
             return () => {
-                videoStream?.getTracks().forEach(track => track.stop());
+                videoStream.getTracks().forEach(track => track.stop());
                 videoElement.srcObject = null;
             };
         }
@@ -233,14 +243,15 @@ export const Lobby: FC<LobbyProps> = ({ room, connect, children }) => {
                 />
             </div>
         </div>
-        <AccessibleButton
+        <AccessibleTooltipButton
             className="mx_CallView_connectButton"
             kind="primary"
-            disabled={connecting}
+            disabled={connecting || joinCallButtonDisabled}
             onClick={onConnectClick}
-        >
-            { _t("Join") }
-        </AccessibleButton>
+            label={_t("Join")}
+            tooltip={connecting ? _t("Connecting") : joinCallButtonTooltip}
+            alignment={Alignment.Bottom}
+        />
     </div>;
 };
 
@@ -321,6 +332,8 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
     const cli = useContext(MatrixClientContext);
     const connected = isConnected(useConnectionState(call));
     const participants = useParticipants(call);
+    const joinCallButtonTooltip = useJoinCallButtonTooltip(call);
+    const joinCallButtonDisabled = useJoinCallButtonDisabled(call);
 
     const connect = useCallback(async () => {
         // Disconnect from any other active calls first, since we don't yet support holding
@@ -344,7 +357,14 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
             </div>;
         }
 
-        lobby = <Lobby room={room} connect={connect}>{ facePile }</Lobby>;
+        lobby = <Lobby
+            room={room}
+            connect={connect}
+            joinCallButtonTooltip={joinCallButtonTooltip ?? undefined}
+            joinCallButtonDisabled={joinCallButtonDisabled}
+        >
+            { facePile }
+        </Lobby>;
     }
 
     return <div className="mx_CallView">

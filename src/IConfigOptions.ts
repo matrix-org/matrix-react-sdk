@@ -117,8 +117,10 @@ export interface IConfigOptions {
         obey_asserted_identity?: boolean; // MSC3086
     };
     element_call: {
-        url: string;
-        use_exclusively: boolean;
+        url?: string;
+        use_exclusively?: boolean;
+        participant_limit?: number;
+        brand?: string;
     };
 
     logout_redirect_url?: string;
@@ -139,9 +141,6 @@ export interface IConfigOptions {
         servers: string[];
     };
 
-    piwik?: false | {
-        policy_url: string; // deprecated in favour of `privacy_policy_url` at root instead
-    };
     posthog?: {
         project_api_key: string;
         api_host: string; // hostname
@@ -179,6 +178,19 @@ export interface IConfigOptions {
 
     sync_timeline_limit?: number;
     dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
+
+    voice_broadcast?: {
+        // length per voice chunk in seconds
+        chunk_length?: number;
+        // max voice broadcast length in seconds
+        max_length?: number;
+    };
+
+    user_notice?: {
+        title: string;
+        description: string;
+        show_once?: boolean;
+    };
 }
 
 export interface ISsoRedirectOptions {

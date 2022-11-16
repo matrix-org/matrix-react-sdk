@@ -57,7 +57,7 @@ type State = Partial<Pick<CSSProperties, "display" | "right" | "top" | "transfor
 
 export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
     private static container: HTMLElement;
-    private parent: Element;
+    private parent: Element | null = null;
 
     // XXX: This is because some components (Field) are unable to `import` the Tooltip class,
     // so we expose the Alignment options off of us statically.
@@ -87,7 +87,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
             capture: true,
         });
 
-        this.parent = ReactDOM.findDOMNode(this).parentNode as Element;
+        this.parent = ReactDOM.findDOMNode(this)?.parentNode as Element ?? null;
 
         this.updatePosition();
     }
@@ -109,7 +109,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
     // positioned, also taking into account any window zoom
     private updatePosition = (): void => {
         // When the tooltip is hidden, no need to thrash the DOM with `style` attribute updates (performance)
-        if (!this.props.visible) return;
+        if (!this.props.visible || !this.parent) return;
 
         const parentBox = this.parent.getBoundingClientRect();
         const width = UIStore.instance.windowWidth;
@@ -149,18 +149,24 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
                 break;
             case Alignment.Top:
                 style.top = baseTop - spacing;
-                style.left = horizontalCenter;
-                style.transform = "translate(-50%, -100%)";
+                // Attempt to center the tooltip on the element while clamping
+                // its horizontal translation to keep it on screen
+                // eslint-disable-next-line max-len
+                style.transform = `translate(max(10px, min(calc(${horizontalCenter}px - 50%), calc(100vw - 100% - 10px))), -100%)`;
                 break;
             case Alignment.Bottom:
                 style.top = baseTop + parentBox.height + spacing;
-                style.left = horizontalCenter;
-                style.transform = "translate(-50%)";
+                // Attempt to center the tooltip on the element while clamping
+                // its horizontal translation to keep it on screen
+                // eslint-disable-next-line max-len
+                style.transform = `translate(max(10px, min(calc(${horizontalCenter}px - 50%), calc(100vw - 100% - 10px))))`;
                 break;
             case Alignment.InnerBottom:
                 style.top = baseTop + parentBox.height - 50;
-                style.left = horizontalCenter;
-                style.transform = "translate(-50%)";
+                // Attempt to center the tooltip on the element while clamping
+                // its horizontal translation to keep it on screen
+                // eslint-disable-next-line max-len
+                style.transform = `translate(max(10px, min(calc(${horizontalCenter}px - 50%), calc(100vw - 100% - 10px))))`;
                 break;
             case Alignment.TopRight:
                 style.top = baseTop - spacing;
