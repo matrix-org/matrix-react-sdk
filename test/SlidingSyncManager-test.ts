@@ -33,6 +33,8 @@ describe('SlidingSyncManager', () => {
         slidingSync = new MockSlidingSync();
         manager = new SlidingSyncManager();
         client = stubClient();
+        // by default the client has no rooms: stubClient magically makes rooms annoyingly.
+        mocked(client.getRoom).mockReturnValue(null);
         manager.configure(client, "invalid");
         manager.slidingSync = slidingSync;
     });
@@ -60,7 +62,12 @@ describe('SlidingSyncManager', () => {
                     },
                 }),
             ]);
-            client.store.storeRoom(room);
+            mocked(client.getRoom).mockImplementation((r: string): Room => {
+                if (roomId === r) {
+                    return room;
+                }
+                return null;
+            });
             const subs = new Set<string>();
             mocked(slidingSync.getRoomSubscriptions).mockReturnValue(subs);
             mocked(slidingSync.modifyRoomSubscriptions).mockResolvedValue("yep");
