@@ -15,21 +15,23 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from "@testing-library/react";
-import { mocked } from 'jest-mock';
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { mocked, MockedObject } from 'jest-mock';
 import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
+import fetchMock from "fetch-mock-jest";
 
 import SdkConfig from '../../../../src/SdkConfig';
-import { mkServerConfig } from "../../../test-utils";
+import { mkServerConfig, mockPlatformPeg, unmockPlatformPeg } from "../../../test-utils";
 import Login from "../../../../src/components/structures/auth/Login";
+import BasePlatform from "../../../../src/BasePlatform";
 
 jest.mock("matrix-js-sdk/src/matrix");
-
-const flushPromises = async () => await new Promise(process.nextTick);
 
 jest.useRealTimers();
 
 describe('Login', function() {
+    let platform: MockedObject<BasePlatform>;
+
     const mockClient = mocked({
         login: jest.fn().mockResolvedValue({}),
         loginFlows: jest.fn(),
@@ -42,11 +44,24 @@ describe('Login', function() {
         });
         mockClient.login.mockClear().mockResolvedValue({});
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
-        mocked(createClient).mockReturnValue(mockClient);
+        mocked(createClient).mockImplementation(opts => {
+            mockClient.idBaseUrl = opts.idBaseUrl;
+            mockClient.baseUrl = opts.baseUrl;
+            return mockClient;
+        });
+        fetchMock.get("https://matrix.org/_matrix/client/versions", {
+            unstable_features: {},
+            versions: [],
+        });
+        platform = mockPlatformPeg({
+            startSingleSignOn: jest.fn(),
+        });
     });
 
     afterEach(function() {
+        fetchMock.restore();
         SdkConfig.unset(); // we touch the config, so clean up
+        unmockPlatformPeg();
     });
 
     function getRawComponent(hsUrl = "https://matrix.org", isUrl = "https://vector.im") {
@@ -68,8 +83,7 @@ describe('Login', function() {
             disable_custom_urls: false,
         });
         const { container } = getComponent();
-
-        await flushPromises();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
         expect(container.querySelector("form")).toBeTruthy();
 
@@ -78,7 +92,7 @@ describe('Login', function() {
 
     it('should show form without change server link when custom URLs disabled', async () => {
         const { container } = getComponent();
-        await flushPromises();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
         expect(container.querySelector("form")).toBeTruthy();
         expect(container.querySelectorAll(".mx_ServerPicker_change")).toHaveLength(0);
@@ -88,7 +102,7 @@ describe('Login', function() {
         mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.sso" }] });
 
         const { container } = getComponent();
-        await flushPromises();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
         const ssoButton = container.querySelector(".mx_SSOButton");
         expect(ssoButton).toBeTruthy();
@@ -98,7 +112,7 @@ describe('Login', function() {
         mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }, { type: "m.login.sso" }] });
 
         const { container } = getComponent();
-        await flushPromises();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
         expect(container.querySelector("form")).toBeTruthy();
 
@@ -124,8 +138,7 @@ describe('Login', function() {
         });
 
         const { container } = getComponent();
-
-        await flushPromises();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
         const ssoButtons = container.querySelectorAll(".mx_SSOButton");
         expect(ssoButtons.length).toBe(3);
@@ -139,10 +152,28 @@ describe('Login', function() {
         });
 
         const { container } = getComponent();
-
-        await flushPromises();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
         const ssoButtons = container.querySelectorAll(".mx_SSOButton");
         expect(ssoButtons.length).toBe(1);
+    });
+
+    it("should handle serverConfig updates correctly", async () => {
+        mockClient.loginFlows.mockResolvedValue({
+            flows: [{
+                "type": "m.login.sso",
+            }],
+        });
+
+        const { container, rerender } = render(getRawComponent());
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+
+        fireEvent.click(container.querySelector(".mx_SSOButton"));
+        expect(platform.startSingleSignOn.mock.calls[0][0].baseUrl).toBe("https://matrix.org");
+
+        rerender(getRawComponent("https://server2"));
+
+        fireEvent.click(container.querySelector(".mx_SSOButton"));
+        expect(platform.startSingleSignOn.mock.calls[1][0].baseUrl).toBe("https://server2");
     });
 });
