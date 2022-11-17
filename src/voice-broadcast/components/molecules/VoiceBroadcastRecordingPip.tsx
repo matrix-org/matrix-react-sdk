@@ -38,7 +38,6 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         timeLeft,
         recordingState,
         room,
-        sender,
         stopRecording,
         toggleRecording,
     } = useVoiceBroadcastRecording(recording);
@@ -56,8 +55,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         className="mx_VoiceBroadcastBody mx_VoiceBroadcastBody--pip"
     >
         <VoiceBroadcastHeader
-            live={live}
-            sender={sender}
+            live={live ? "live" : "grey"}
             room={room}
             timeLeft={timeLeft}
         />

@@ -16,31 +16,16 @@ limitations under the License.
 */
 
 import React from 'react';
-import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
-import SdkConfig from "../../../../../SdkConfig";
 import MediaDeviceHandler, { IMediaDevices, MediaDeviceKindEnum } from "../../../../../MediaDeviceHandler";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import Modal from "../../../../../Modal";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SettingsFlag from '../../../elements/SettingsFlag';
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
-import ErrorDialog from '../../../dialogs/ErrorDialog';
-
-const getDefaultDevice = (devices: Array<Partial<MediaDeviceInfo>>) => {
-    // Note we're looking for a device with deviceId 'default' but adding a device
-    // with deviceId == the empty string: this is because Chrome gives us a device
-    // with deviceId 'default', so we're looking for this, not the one we are adding.
-    if (!devices.some((i) => i.deviceId === 'default')) {
-        devices.unshift({ deviceId: '', label: _t('Default Device') });
-        return '';
-    } else {
-        return 'default';
-    }
-};
+import { requestMediaPermissions } from '../../../../../utils/media/requestMediaPermissions';
 
 interface IState {
     mediaDevices: IMediaDevices;
@@ -90,37 +75,8 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     };
 
     private requestMediaPermissions = async (): Promise<void> => {
-        let constraints;
-        let stream;
-        let error;
-        try {
-            constraints = { video: true, audio: true };
-            stream = await navigator.mediaDevices.getUserMedia(constraints);
-        } catch (err) {
-            // user likely doesn't have a webcam,
-            // we should still allow to select a microphone
-            if (err.name === "NotFoundError") {
-                constraints = { audio: true };
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia(constraints);
-                } catch (err) {
-                    error = err;
-                }
-            } else {
-                error = err;
-            }
-        }
-        if (error) {
-            logger.log("Failed to list userMedia devices", error);
-            const brand = SdkConfig.get().brand;
-            Modal.createDialog(ErrorDialog, {
-                title: _t('No media permissions'),
-                description: _t(
-                    'You may need to manually permit %(brand)s to access your microphone/webcam',
-                    { brand },
-                ),
-            });
-        } else {
+        const stream = await requestMediaPermissions();
+        if (stream) {
             this.refreshMediaDevices(stream);
         }
     };
@@ -148,7 +104,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
         const devices = this.state.mediaDevices[kind].slice(0);
         if (devices.length === 0) return null;
 
-        const defaultDevice = getDefaultDevice(devices);
+        const defaultDevice = MediaDeviceHandler.getDefaultDevice(devices);
         return (
             <Field
                 element="select"
