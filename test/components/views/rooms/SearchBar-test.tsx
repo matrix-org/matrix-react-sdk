@@ -62,7 +62,9 @@ describe("SearchBar", () => {
         const roomButtons = container.querySelectorAll(".mx_SearchBar_button");
         const searchButton = container.querySelectorAll(".mx_SearchBar_searchButton");
         const input = container.querySelector<HTMLInputElement>(".mx_SearchBar_input input");
-        input.value = searchValue;
+        if (input) {
+            input.value = searchValue;
+        }
 
         expect(roomButtons.length).toEqual(2);
 
