@@ -171,6 +171,10 @@ describe('Login', function() {
         fireEvent.click(container.querySelector(".mx_SSOButton"));
         expect(platform.startSingleSignOn.mock.calls[0][0].baseUrl).toBe("https://matrix.org");
 
+        fetchMock.get("https://server2/_matrix/client/versions", {
+            unstable_features: {},
+            versions: [],
+        });
         rerender(getRawComponent("https://server2"));
 
         fireEvent.click(container.querySelector(".mx_SSOButton"));
