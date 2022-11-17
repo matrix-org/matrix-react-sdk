@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../settings/SettingsStore";
 import { SdkContextClass } from "../contexts/SDKContext";
@@ -71,18 +71,7 @@ export class MemberListStore {
 
         if (!this.isLazyLoadingEnabled(roomId) || this.loadedRooms.has(roomId)) {
             // nice and easy, we must already have all the members so just return them.
-            const allMembers = Object.values(room.currentState.members);
-            allMembers.forEach((member) => {
-                // work around a race where you might have a room member object
-                // before the user object exists. This may or may not cause
-                // https://github.com/vector-im/vector-web/issues/186
-                if (!member.user) {
-                    member.user = this.stores.client.getUser(member.userId);
-                }
-                // XXX: this user may have no lastPresenceTs value!
-                // the right solution here is to fix the race rather than leave it as 0
-            });
-            return allMembers;
+            return this.loadMembersInRoom(room);
         }
         // lazy loading is enabled. There are two kinds of lazy loading:
         // - With storage: most members are in indexedDB, we just need a small delta via /members.
@@ -105,6 +94,22 @@ export class MemberListStore {
         // remember that we have loaded the members so we don't hit /members all the time. We
         // will forget this on refresh which is fine as we only store the data in-memory.
         this.loadedRooms.add(roomId);
+        return this.loadMembersInRoom(room);
+    }
+
+    private loadMembersInRoom(room: Room): Array<RoomMember> {
+        const allMembers = Object.values(room.currentState.members);
+        allMembers.forEach((member) => {
+            // work around a race where you might have a room member object
+            // before the user object exists. This may or may not cause
+            // https://github.com/vector-im/vector-web/issues/186
+            if (!member.user) {
+                member.user = this.stores.client.getUser(member.userId);
+            }
+            // XXX: this user may have no lastPresenceTs value!
+            // the right solution here is to fix the race rather than leave it as 0
+        });
+        return allMembers;
     }
 
     /**
