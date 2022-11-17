@@ -67,4 +67,13 @@ describe("NotificatinSettingsTab", () => {
 
         await screen.findByText("custom-sound-123");
     });
+
+    it("should show the currently chosen custom notification sound url if no name", async () => {
+        SettingsStore.setValue("notificationSound", roomId, SettingLevel.ACCOUNT, {
+            url: "mxc://server/custom-sound-123",
+        });
+        renderTab();
+
+        await screen.findByText("http://this.is.a.url/server/custom-sound-123");
+    });
 });
