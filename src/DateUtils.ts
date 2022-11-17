@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -148,6 +149,31 @@ export function formatSeconds(inSeconds: number): string {
     return output;
 }
 
+export function formatTimeLeft(inSeconds: number): string {
+    const hours = Math.floor(inSeconds / (60 * 60)).toFixed(0);
+    const minutes = Math.floor((inSeconds % (60 * 60)) / 60).toFixed(0);
+    const seconds = Math.floor(((inSeconds % (60 * 60)) % 60)).toFixed(0);
+
+    if (hours !== "0") {
+        return _t("%(hours)sh %(minutes)sm %(seconds)ss left", {
+            hours,
+            minutes,
+            seconds,
+        });
+    }
+
+    if (minutes !== "0") {
+        return _t("%(minutes)sm %(seconds)ss left", {
+            minutes,
+            seconds,
+        });
+    }
+
+    return _t("%(seconds)ss left", {
+        seconds,
+    });
+}
+
 const MILLIS_IN_DAY = 86400000;
 function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
     return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
@@ -175,6 +201,16 @@ export function formatFullDateNoDay(date: Date) {
         date: date.toLocaleDateString().replace(/\//g, '-'),
         time: date.toLocaleTimeString().replace(/:/g, '-'),
     });
+}
+
+/**
+ * Returns an ISO date string without textual description of the date (ie: no "Wednesday" or
+ * similar)
+ * @param date The date to format.
+ * @returns The date string in ISO format.
+ */
+export function formatFullDateNoDayISO(date: Date): string {
+    return date.toISOString();
 }
 
 export function formatFullDateNoDayNoTime(date: Date) {

@@ -44,10 +44,10 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { RoomTileCallSummary } from "./RoomTileCallSummary";
 import { RoomGeneralContextMenu } from "../context_menus/RoomGeneralContextMenu";
 import { CallStore, CallStoreEvent } from "../../../stores/CallStore";
+import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps {
     room: Room;
@@ -86,10 +86,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         super(props);
 
         this.state = {
-            selected: RoomViewStore.instance.getRoomId() === this.props.room.roomId,
+            selected: SdkContextClass.instance.roomViewStore.getRoomId() === this.props.room.roomId,
             notificationsMenuPosition: null,
             generalMenuPosition: null,
-            call: CallStore.instance.get(this.props.room.roomId),
+            call: CallStore.instance.getCall(this.props.room.roomId),
             // generatePreview() will return nothing if the user has previews disabled
             messagePreview: "",
         };
@@ -146,7 +146,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             this.scrollIntoView();
         }
 
-        RoomViewStore.instance.addRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
+        SdkContextClass.instance.roomViewStore.addRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         MessagePreviewStore.instance.on(
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
@@ -159,11 +159,11 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         // Recalculate the call for this room, since it could've changed between
         // construction and mounting
-        this.setState({ call: CallStore.instance.get(this.props.room.roomId) });
+        this.setState({ call: CallStore.instance.getCall(this.props.room.roomId) });
     }
 
     public componentWillUnmount() {
-        RoomViewStore.instance.removeRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
+        SdkContextClass.instance.roomViewStore.removeRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
         MessagePreviewStore.instance.off(
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
             this.onRoomPreviewChanged,

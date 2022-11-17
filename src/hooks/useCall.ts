@@ -14,17 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import type { Call, ConnectionState } from "../models/Call";
+import { Call, ConnectionState, ElementCall, Layout } from "../models/Call";
 import { useTypedEventEmitterState } from "./useEventEmitter";
 import { CallEvent } from "../models/Call";
 import { CallStore, CallStoreEvent } from "../stores/CallStore";
 import { useEventEmitter } from "./useEventEmitter";
+import SdkConfig, { DEFAULTS } from "../SdkConfig";
+import { _t } from "../languageHandler";
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 export const useCall = (roomId: string): Call | null => {
-    const [call, setCall] = useState(() => CallStore.instance.get(roomId));
+    const [call, setCall] = useState(() => CallStore.instance.getCall(roomId));
     useEventEmitter(CallStore.instance, CallStoreEvent.Call, (call: Call | null, forRoomId: string) => {
         if (forRoomId === roomId) setCall(call);
     });
@@ -43,4 +46,47 @@ export const useParticipants = (call: Call): Set<RoomMember> =>
         call,
         CallEvent.Participants,
         useCallback(state => state ?? call.participants, [call]),
+    );
+
+export const useFull = (call: Call): boolean => {
+    const participants = useParticipants(call);
+
+    return (
+        participants.size
+        >= (SdkConfig.get("element_call").participant_limit ?? DEFAULTS.element_call.participant_limit)
+    );
+};
+
+export const useIsAlreadyParticipant = (call: Call): boolean => {
+    const client = MatrixClientPeg.get();
+    const participants = useParticipants(call);
+
+    return useMemo(() => {
+        return participants.has(client.getRoom(call.roomId).getMember(client.getUserId()));
+    }, [participants, client, call]);
+};
+
+export const useJoinCallButtonTooltip = (call: Call): string | null => {
+    const isFull = useFull(call);
+    const state = useConnectionState(call);
+    const isAlreadyParticipant = useIsAlreadyParticipant(call);
+
+    if (state === ConnectionState.Connecting) return _t("Connecting");
+    if (isFull) return _t("Sorry — this call is currently full");
+    if (isAlreadyParticipant) return _t("You have already joined this call from another device");
+    return null;
+};
+
+export const useJoinCallButtonDisabled = (call: Call): boolean => {
+    const isFull = useFull(call);
+    const state = useConnectionState(call);
+
+    return isFull || state === ConnectionState.Connecting;
+};
+
+export const useLayout = (call: ElementCall): Layout =>
+    useTypedEventEmitterState(
+        call,
+        CallEvent.Layout,
+        useCallback(state => state ?? call.layout, [call]),
     );

@@ -38,17 +38,12 @@ import { CallView as _CallView } from "../../../../src/components/views/voip/Cal
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { CallStore } from "../../../../src/stores/CallStore";
 import { Call, ConnectionState } from "../../../../src/models/Call";
+import SdkConfig from "../../../../src/SdkConfig";
 
 const CallView = wrapInMatrixClientContext(_CallView);
 
 describe("CallLobby", () => {
     useMockedCalls();
-    Object.defineProperty(navigator, "mediaDevices", {
-        value: {
-            enumerateDevices: jest.fn(),
-            getUserMedia: () => null,
-        },
-    });
     jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
 
     let client: Mocked<MatrixClient>;
@@ -90,7 +85,7 @@ describe("CallLobby", () => {
 
         beforeEach(() => {
             MockedCall.create(room, "1");
-            const maybeCall = CallStore.instance.get(room.roomId);
+            const maybeCall = CallStore.instance.getCall(room.roomId);
             if (!(maybeCall instanceof MockedCall)) throw new Error("Failed to create call");
             call = maybeCall;
 
@@ -163,6 +158,23 @@ describe("CallLobby", () => {
             fireEvent.click(screen.getByRole("button", { name: "Join" }));
             await waitFor(() => expect(connectSpy).toHaveBeenCalled(), { interval: 1 });
         });
+
+        it("disables join button when the participant limit has been exceeded", async () => {
+            const bob = mkRoomMember(room.roomId, "@bob:example.org");
+            const carol = mkRoomMember(room.roomId, "@carol:example.org");
+
+            SdkConfig.put({
+                "element_call": { participant_limit: 2, url: "", use_exclusively: false, brand: "Element Call" },
+            });
+            call.participants = new Set([bob, carol]);
+
+            await renderView();
+            const connectSpy = jest.spyOn(call, "connect");
+            const joinButton = screen.getByRole("button", { name: "Join" });
+            expect(joinButton).toHaveAttribute("aria-disabled", "true");
+            fireEvent.click(joinButton);
+            await waitFor(() => expect(connectSpy).not.toHaveBeenCalled(), { interval: 1 });
+        });
     });
 
     describe("without an existing call", () => {
@@ -171,8 +183,8 @@ describe("CallLobby", () => {
             expect(Call.get(room)).toBeNull();
 
             fireEvent.click(screen.getByRole("button", { name: "Join" }));
-            await waitFor(() => expect(CallStore.instance.get(room.roomId)).not.toBeNull());
-            const call = CallStore.instance.get(room.roomId)!;
+            await waitFor(() => expect(CallStore.instance.getCall(room.roomId)).not.toBeNull());
+            const call = CallStore.instance.getCall(room.roomId)!;
 
             const widget = new Widget(call.widget);
             WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {

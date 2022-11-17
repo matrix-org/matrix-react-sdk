@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ISendEventResponse, MatrixClient, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { ISendEventResponse, MatrixClient, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
 
 import {
@@ -23,28 +23,30 @@ import {
     VoiceBroadcastInfoState,
     VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecording,
+    getChunkLength,
 } from "..";
+import { checkVoiceBroadcastPreConditions } from "./checkVoiceBroadcastPreConditions";
 
-/**
- * Starts a new Voice Broadcast Recording.
- * Sends a voice_broadcast_info state event and waits for the event to actually appear in the room state.
- */
-export const startNewVoiceBroadcastRecording = async (
-    roomId: string,
+const startBroadcast = async (
+    room: Room,
     client: MatrixClient,
     recordingsStore: VoiceBroadcastRecordingsStore,
 ): Promise<VoiceBroadcastRecording> => {
-    const room = client.getRoom(roomId);
-    const { promise, resolve } = defer<VoiceBroadcastRecording>();
-    let result: ISendEventResponse = null;
+    const { promise, resolve, reject } = defer<VoiceBroadcastRecording>();
+
+    const userId = client.getUserId();
+
+    if (!userId) {
+        reject("unable to start voice broadcast if current user is unkonwn");
+        return promise;
+    }
+
+    let result: ISendEventResponse | null = null;
 
     const onRoomStateEvents = () => {
         if (!result) return;
 
-        const voiceBroadcastEvent = room.currentState.getStateEvents(
-            VoiceBroadcastInfoEventType,
-            client.getUserId(),
-        );
+        const voiceBroadcastEvent = room.currentState.getStateEvents(VoiceBroadcastInfoEventType, userId);
 
         if (voiceBroadcastEvent?.getId() === result.event_id) {
             room.off(RoomStateEvent.Events, onRoomStateEvents);
@@ -53,6 +55,7 @@ export const startNewVoiceBroadcastRecording = async (
                 client,
             );
             recordingsStore.setCurrent(recording);
+            recording.start();
             resolve(recording);
         }
     };
@@ -61,14 +64,33 @@ export const startNewVoiceBroadcastRecording = async (
 
     // XXX Michael W: refactor to live event
     result = await client.sendStateEvent(
-        roomId,
+        room.roomId,
         VoiceBroadcastInfoEventType,
         {
+            device_id: client.getDeviceId(),
             state: VoiceBroadcastInfoState.Started,
-            chunk_length: 300,
+            chunk_length: getChunkLength(),
         } as VoiceBroadcastInfoEventContent,
-        client.getUserId(),
+        userId,
     );
 
     return promise;
+};
+
+/**
+ * Starts a new Voice Broadcast Recording, if
+ * - the user has the permissions to do so in the room
+ * - there is no other broadcast being recorded in the room, yet
+ * Sends a voice_broadcast_info state event and waits for the event to actually appear in the room state.
+ */
+export const startNewVoiceBroadcastRecording = async (
+    room: Room,
+    client: MatrixClient,
+    recordingsStore: VoiceBroadcastRecordingsStore,
+): Promise<VoiceBroadcastRecording | null> => {
+    if (!checkVoiceBroadcastPreConditions(room, client, recordingsStore)) {
+        return null;
+    }
+
+    return startBroadcast(room, client, recordingsStore);
 };

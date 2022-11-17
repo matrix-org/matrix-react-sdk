@@ -19,6 +19,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 
 import SelectableDeviceTile from '../../../../../src/components/views/settings/devices/SelectableDeviceTile';
+import { DeviceType } from '../../../../../src/utils/device/parseUserAgent';
 
 describe('<SelectableDeviceTile />', () => {
     const device = {
@@ -26,8 +27,10 @@ describe('<SelectableDeviceTile />', () => {
         device_id: 'my-device',
         last_seen_ip: '123.456.789',
         isVerified: false,
+        deviceType: DeviceType.Unknown,
     };
     const defaultProps = {
+        onSelect: jest.fn(),
         onClick: jest.fn(),
         device,
         children: <div>test</div>,
@@ -46,15 +49,15 @@ describe('<SelectableDeviceTile />', () => {
         expect(container.querySelector(`#device-tile-checkbox-${device.device_id}`)).toMatchSnapshot();
     });
 
-    it('calls onClick on checkbox click', () => {
-        const onClick = jest.fn();
-        const { container } = render(getComponent({ onClick }));
+    it('calls onSelect on checkbox click', () => {
+        const onSelect = jest.fn();
+        const { container } = render(getComponent({ onSelect }));
 
         act(() => {
             fireEvent.click(container.querySelector(`#device-tile-checkbox-${device.device_id}`));
         });
 
-        expect(onClick).toHaveBeenCalled();
+        expect(onSelect).toHaveBeenCalled();
     });
 
     it('calls onClick on device tile info click', () => {

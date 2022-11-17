@@ -31,10 +31,13 @@ import {
     IEventRelation,
     IUnsigned,
     IPusher,
+    RoomType,
+    KNOWN_SAFE_ROOM_VERSION,
 } from 'matrix-js-sdk/src/matrix';
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
+import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import { makeType } from "../../src/utils/TypeUtils";
@@ -84,6 +87,7 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        deviceId: "ABCDEFGHI",
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         credentials: { userId: "@userId:matrix.org" },
 
@@ -141,7 +145,7 @@ export function createTestClient(): MatrixClient {
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
-        getSyncState: () => "SYNCING",
+        getSyncState: jest.fn().mockReturnValue("SYNCING"),
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
         isGuest: jest.fn().mockReturnValue(false),
         getRoomHierarchy: jest.fn().mockReturnValue({
@@ -158,15 +162,18 @@ export function createTestClient(): MatrixClient {
         getOpenIdToken: jest.fn().mockResolvedValue(undefined),
         registerWithIdentityServer: jest.fn().mockResolvedValue({}),
         getIdentityAccount: jest.fn().mockResolvedValue({}),
-        getTerms: jest.fn().mockResolvedValueOnce(undefined),
+        getTerms: jest.fn().mockResolvedValue({ policies: [] }),
         doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(undefined),
+        isVersionSupported: jest.fn().mockResolvedValue(undefined),
         getPushRules: jest.fn().mockResolvedValue(undefined),
         getPushers: jest.fn().mockResolvedValue({ pushers: [] }),
         getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
-        relations: jest.fn().mockRejectedValue(undefined),
+        relations: jest.fn().mockResolvedValue({
+            events: [],
+        }),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
         hasLazyLoadMembersEnabled: jest.fn().mockReturnValue(false),
         isInitialSyncComplete: jest.fn().mockReturnValue(true),
@@ -176,14 +183,24 @@ export function createTestClient(): MatrixClient {
         sendToDevice: jest.fn().mockResolvedValue(undefined),
         queueToDevice: jest.fn().mockResolvedValue(undefined),
         encryptAndSendToDevices: jest.fn().mockResolvedValue(undefined),
+        cancelPendingEvent: jest.fn(),
 
         getMediaHandler: jest.fn().mockReturnValue({
             setVideoInput: jest.fn(),
             setAudioInput: jest.fn(),
+            setAudioSettings: jest.fn(),
         } as unknown as MediaHandler),
+        uploadContent: jest.fn(),
+        getEventMapper: () => (opts) => new MatrixEvent(opts),
+        leaveRoomChain: jest.fn(roomId => ({ [roomId]: null })),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
+
+    client.canSupport = new Map();
+    Object.keys(Feature).forEach(feature => {
+        client.canSupport.set(feature as Feature, ServerSupport.Stable);
+    });
 
     Object.defineProperty(client, "pollingTurnServers", {
         configurable: true,
@@ -201,11 +218,26 @@ type MakeEventPassThruProps = {
 };
 type MakeEventProps = MakeEventPassThruProps & {
     type: string;
+    redacts?: string;
     content: IContent;
     room?: Room["roomId"]; // to-device messages are roomless
     // eslint-disable-next-line camelcase
     prev_content?: IContent;
     unsigned?: IUnsigned;
+};
+
+export const mkRoomCreateEvent = (userId: string, roomId: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomCreate,
+        content: {
+            creator: userId,
+            room_version: KNOWN_SAFE_ROOM_VERSION,
+        },
+        skey: "",
+        user: userId,
+        room: roomId,
+    });
 };
 
 /**
@@ -234,6 +266,7 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
         event_id: "$" + Math.random() + "-" + Math.random(),
         origin_server_ts: opts.ts ?? 0,
         unsigned: opts.unsigned,
+        redacts: opts.redacts,
     };
     if (opts.skey !== undefined) {
         event.state_key = opts.skey;
@@ -438,6 +471,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getAvatarUrl: () => 'mxc://avatar.url/room.png',
         getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
         isSpaceRoom: jest.fn().mockReturnValue(false),
+        getType: jest.fn().mockReturnValue(undefined),
         isElementVideoRoom: jest.fn().mockReturnValue(false),
         getUnreadNotificationCount: jest.fn(() => 0),
         getEventReadUpTo: jest.fn(() => null),
@@ -535,6 +569,7 @@ export const mkSpace = (
 ): MockedObject<Room> => {
     const space = mocked(mkRoom(client, spaceId, rooms));
     space.isSpaceRoom.mockReturnValue(true);
+    space.getType.mockReturnValue(RoomType.Space);
     mocked(space.currentState).getStateEvents.mockImplementation(mockStateEventImplementation(children.map(roomId =>
         mkEvent({
             event: true,
@@ -547,6 +582,19 @@ export const mkSpace = (
         }),
     )));
     return space;
+};
+
+export const mkRoomMemberJoinEvent = (user: string, room: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomMember,
+        content: {
+            membership: "join",
+        },
+        skey: user,
+        user,
+        room,
+    });
 };
 
 export const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({

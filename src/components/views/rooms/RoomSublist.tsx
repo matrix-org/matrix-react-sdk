@@ -274,7 +274,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onListsUpdated = () => {
-        const stateUpdates: IState & any = {}; // &any is to avoid a cast on the initializer
+        const stateUpdates = {} as IState;
 
         const currentRooms = this.state.rooms;
         const newRooms = arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []);
@@ -570,8 +570,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 const slidingList = SlidingSyncManager.instance.slidingSync.getList(slidingSyncIndex);
                 isAlphabetical = slidingList.sort[0] === "by_name";
                 isUnreadFirst = (
-                    slidingList.sort[0] === "by_highlight_count" ||
-                    slidingList.sort[0] === "by_notification_count"
+                    slidingList.sort[0] === "by_notification_level"
                 );
             }
 

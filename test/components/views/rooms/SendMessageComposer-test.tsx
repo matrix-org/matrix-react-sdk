@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { ISendEventResponse, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
 // eslint-disable-next-line deprecate/import
 import { mount } from 'enzyme';
 import { mocked } from "jest-mock";
@@ -72,7 +72,6 @@ describe('<SendMessageComposer/>', () => {
         statusBarVisible: false,
         canReact: false,
         canSendMessages: false,
-        canSendVoiceBroadcasts: false,
         layout: Layout.Group,
         lowBandwidth: false,
         alwaysShowTimestamps: false,
@@ -91,6 +90,7 @@ describe('<SendMessageComposer/>', () => {
         canSelfRedact: false,
         resizing: false,
         narrow: false,
+        activeCall: null,
     };
     describe("createMessageContent", () => {
         const permalinkCreator = jest.fn() as any;
@@ -291,7 +291,7 @@ describe('<SendMessageComposer/>', () => {
 
         it('correctly sets the editorStateKey for threads', () => {
             const relation = {
-                rel_type: "m.thread",
+                rel_type: RelationType.Thread,
                 event_id: "myFakeThreadId",
             };
             const includeReplyLegacyFallback = false;
@@ -303,9 +303,9 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it("correctly sends a message", () => {
-            mocked(doMaybeLocalRoomAction).mockImplementation((
+            mocked(doMaybeLocalRoomAction).mockImplementation(<T extends {}>(
                 roomId: string,
-                fn: (actualRoomId: string) => Promise<ISendEventResponse>,
+                fn: (actualRoomId: string) => Promise<T>,
                 _client?: MatrixClient,
             ) => {
                 return fn(roomId);

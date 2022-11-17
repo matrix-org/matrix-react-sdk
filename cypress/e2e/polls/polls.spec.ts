@@ -94,7 +94,7 @@ describe("Polls", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("Open polls can be created and voted in", () => {
+    it("should be creatable and votable", () => {
         let bot: MatrixClient;
         cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
             bot = _bot;
@@ -105,6 +105,8 @@ describe("Polls", () => {
             roomId = _roomId;
             cy.inviteUser(roomId, bot.getUserId());
             cy.visit('/#/room/' + roomId);
+            // wait until Bob joined
+            cy.contains(".mx_TextualEvent", "BotBob joined the room").should("exist");
         });
 
         cy.openMessageComposerOptions().within(() => {
@@ -120,7 +122,7 @@ describe("Polls", () => {
         createPoll(pollParams);
 
         // Wait for message to send, get its ID and save as @pollId
-        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", pollParams.title)
+        cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", pollParams.title)
             .invoke("attr", "data-scroll-tokens").as("pollId");
 
         cy.get<string>("@pollId").then(pollId => {
@@ -157,21 +159,16 @@ describe("Polls", () => {
         });
     });
 
-    it("displays polls correctly in thread panel", () => {
-        let botBob: MatrixClient;
-        let botCharlie: MatrixClient;
+    it("should be editable from context menu if no votes have been cast", () => {
+        let bot: MatrixClient;
         cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
-            botBob = _bot;
-        });
-        cy.getBot(synapse, { displayName: "BotCharlie" }).then(_bot => {
-            botCharlie = _bot;
+            bot = _bot;
         });
 
         let roomId: string;
         cy.createRoom({}).then(_roomId => {
             roomId = _roomId;
-            cy.inviteUser(roomId, botBob.getUserId());
-            cy.inviteUser(roomId, botCharlie.getUserId());
+            cy.inviteUser(roomId, bot.getUserId());
             cy.visit('/#/room/' + roomId);
         });
 
@@ -187,6 +184,101 @@ describe("Polls", () => {
 
         // Wait for message to send, get its ID and save as @pollId
         cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", pollParams.title)
+            .invoke("attr", "data-scroll-tokens").as("pollId");
+
+        cy.get<string>("@pollId").then(pollId => {
+            // Open context menu
+            getPollTile(pollId).rightclick();
+
+            // Select edit item
+            cy.get('.mx_ContextualMenu').within(() => {
+                cy.get('[aria-label="Edit"]').click();
+            });
+
+            // Expect poll editing dialog
+            cy.get('.mx_PollCreateDialog');
+        });
+    });
+
+    it("should not be editable from context menu if votes have been cast", () => {
+        let bot: MatrixClient;
+        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
+            bot = _bot;
+        });
+
+        let roomId: string;
+        cy.createRoom({}).then(_roomId => {
+            roomId = _roomId;
+            cy.inviteUser(roomId, bot.getUserId());
+            cy.visit('/#/room/' + roomId);
+        });
+
+        cy.openMessageComposerOptions().within(() => {
+            cy.get('[aria-label="Poll"]').click();
+        });
+
+        const pollParams = {
+            title: 'Does the polls feature work?',
+            options: ['Yes', 'No', 'Maybe'],
+        };
+        createPoll(pollParams);
+
+        // Wait for message to send, get its ID and save as @pollId
+        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", pollParams.title)
+            .invoke("attr", "data-scroll-tokens").as("pollId");
+
+        cy.get<string>("@pollId").then(pollId => {
+            // Bot votes 'Maybe' in the poll
+            botVoteForOption(bot, roomId, pollId, pollParams.options[2]);
+
+            // wait for bot's vote to arrive
+            cy.get('.mx_MPollBody_totalVotes').should('contain', '1 vote cast');
+
+            // Open context menu
+            getPollTile(pollId).rightclick();
+
+            // Select edit item
+            cy.get('.mx_ContextualMenu').within(() => {
+                cy.get('[aria-label="Edit"]').click();
+            });
+
+            // Expect error dialog
+            cy.get('.mx_ErrorDialog');
+        });
+    });
+
+    it("should be displayed correctly in thread panel", () => {
+        let botBob: MatrixClient;
+        let botCharlie: MatrixClient;
+        cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
+            botBob = _bot;
+        });
+        cy.getBot(synapse, { displayName: "BotCharlie" }).then(_bot => {
+            botCharlie = _bot;
+        });
+
+        let roomId: string;
+        cy.createRoom({}).then(_roomId => {
+            roomId = _roomId;
+            cy.inviteUser(roomId, botBob.getUserId());
+            cy.inviteUser(roomId, botCharlie.getUserId());
+            cy.visit('/#/room/' + roomId);
+            // wait until the bots joined
+            cy.contains(".mx_TextualEvent", "and one other were invited and joined").should("exist");
+        });
+
+        cy.openMessageComposerOptions().within(() => {
+            cy.get('[aria-label="Poll"]').click();
+        });
+
+        const pollParams = {
+            title: 'Does the polls feature work?',
+            options: ['Yes', 'No', 'Maybe'],
+        };
+        createPoll(pollParams);
+
+        // Wait for message to send, get its ID and save as @pollId
+        cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", pollParams.title)
             .invoke("attr", "data-scroll-tokens").as("pollId");
 
         cy.get<string>("@pollId").then(pollId => {

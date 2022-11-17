@@ -27,7 +27,6 @@ import { _t } from "../languageHandler";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import { isMetaSpace } from "../stores/spaces";
 import SpaceStore from "../stores/spaces/SpaceStore";
-import { RoomViewStore } from "../stores/RoomViewStore";
 import dis from "../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../dispatcher/actions";
@@ -35,6 +34,7 @@ import { ViewHomePagePayload } from "../dispatcher/payloads/ViewHomePagePayload"
 import LeaveSpaceDialog from "../components/views/dialogs/LeaveSpaceDialog";
 import { AfterLeaveRoomPayload } from "../dispatcher/payloads/AfterLeaveRoomPayload";
 import { bulkSpaceBehaviour } from "./space";
+import { SdkContextClass } from "../contexts/SDKContext";
 
 export async function leaveRoomBehaviour(roomId: string, retry = true, spinner = true) {
     let spinnerModal: IHandle<any>;
@@ -128,17 +128,32 @@ export async function leaveRoomBehaviour(roomId: string, retry = true, spinner =
         return;
     }
 
-    if (!isMetaSpace(SpaceStore.instance.activeSpace) &&
-        SpaceStore.instance.activeSpace !== roomId &&
-        RoomViewStore.instance.getRoomId() === roomId
-    ) {
-        dis.dispatch<ViewRoomPayload>({
-            action: Action.ViewRoom,
-            room_id: SpaceStore.instance.activeSpace,
-            metricsTrigger: undefined, // other
-        });
-    } else {
-        dis.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
+    if (SdkContextClass.instance.roomViewStore.getRoomId() === roomId) {
+        // We were viewing the room that was just left. In order to avoid
+        // accidentally viewing the next room in the list and clearing its
+        // notifications, switch to a neutral ground such as the home page or
+        // space landing page.
+        if (isMetaSpace(SpaceStore.instance.activeSpace)) {
+            dis.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
+        } else if (SpaceStore.instance.activeSpace === roomId) {
+            // View the parent space, if there is one
+            const parent = SpaceStore.instance.getCanonicalParent(roomId);
+            if (parent !== null) {
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: parent.roomId,
+                    metricsTrigger: undefined, // other
+                });
+            } else {
+                dis.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
+            }
+        } else {
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: SpaceStore.instance.activeSpace,
+                metricsTrigger: undefined, // other
+            });
+        }
     }
 }
 

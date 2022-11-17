@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import "@testing-library/jest-dom";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 // eslint-disable-next-line deprecate/import
 import { configure } from "enzyme";
 import "blob-polyfill"; // https://github.com/jsdom/jsdom/issues/2555
 
-// Enable the jest & enzyme mocks
-require('jest-fetch-mock').enableMocks();
+// Enable the enzyme mocks
 configure({ adapter: new Adapter() });
 
 // Very carefully enable the mocks for everything else in

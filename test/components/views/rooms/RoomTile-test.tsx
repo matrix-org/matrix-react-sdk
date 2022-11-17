@@ -43,9 +43,6 @@ describe("RoomTile", () => {
     jest.spyOn(PlatformPeg, "get")
         .mockReturnValue({ overrideBrowserShortcuts: () => false } as unknown as BasePlatform);
     useMockedCalls();
-    Object.defineProperty(navigator, "mediaDevices", {
-        value: { enumerateDevices: async () => [] },
-    });
 
     let client: Mocked<MatrixClient>;
 
@@ -77,7 +74,7 @@ describe("RoomTile", () => {
             setupAsyncStoreWithClient(WidgetMessagingStore.instance, client);
 
             MockedCall.create(room, "1");
-            call = CallStore.instance.get(room.roomId) as MockedCall;
+            call = CallStore.instance.getCall(room.roomId) as MockedCall;
 
             widget = new Widget(call.widget);
             WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {

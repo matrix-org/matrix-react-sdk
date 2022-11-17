@@ -75,7 +75,6 @@ const baseEvTypes = new Map<string, React.ComponentType<Partial<IBodyProps>>>([
     [M_POLL_START.altName, MPollBody],
     [M_BEACON_INFO.name, MBeaconBody],
     [M_BEACON_INFO.altName, MBeaconBody],
-    [VoiceBroadcastInfoEventType, VoiceBroadcastBody],
 ]);
 
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
@@ -174,7 +173,10 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 BodyType = MLocationBody;
             }
 
-            if (type === VoiceBroadcastInfoEventType && content?.state === VoiceBroadcastInfoState.Started) {
+            if (
+                type === VoiceBroadcastInfoEventType
+                && content?.state === VoiceBroadcastInfoState.Started
+            ) {
                 BodyType = VoiceBroadcastBody;
             }
         }
