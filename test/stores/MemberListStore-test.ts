@@ -26,6 +26,7 @@ import { TestSdkContext } from "../TestSdkContext";
 describe("MemberListStore", () => {
     const alice = "@alice:bar";
     const bob = "@bob:bar";
+    const charlie = "@charlie:bar";
     const roomId = "!foo:bar";
     let store: MemberListStore;
     let client: MatrixClient;
@@ -76,14 +77,20 @@ describe("MemberListStore", () => {
 
     it("loads members in a room", async () => {
         addMember(room, bob, "invite");
+        addMember(room, charlie, "leave");
 
         const { invited, joined } = await store.loadMemberList(roomId, null);
         expect(invited).toEqual([room.getMember(bob)]);
         expect(joined).toEqual([room.getMember(alice)]);
     });
 
+    it("fails gracefully for invalid rooms", async () => {
+        const { invited, joined } = await store.loadMemberList("!idontexist:bar", null);
+        expect(invited).toEqual([]);
+        expect(joined).toEqual([]);
+    });
+
     it("sorts by power level", async () => {
-        const charlie = "@charlie:bar";
         addMember(room, bob, "join");
         addMember(room, charlie, "join");
         setPowerLevels(room, {
@@ -100,7 +107,6 @@ describe("MemberListStore", () => {
     });
 
     it("sorts by name if power level is equal", async () => {
-        const charlie = "@charlie:bar";
         const doris = "@doris:bar";
         addMember(room, bob, "join");
         addMember(room, charlie, "join");
