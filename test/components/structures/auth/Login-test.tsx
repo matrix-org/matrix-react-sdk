@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-dom/test-utils';
+import React from 'react';
+import { render } from "@testing-library/react";
 import { mocked } from 'jest-mock';
 import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from '../../../../src/SdkConfig';
 import { mkServerConfig } from "../../../test-utils";
 import Login from "../../../../src/components/structures/auth/Login";
-import PasswordLogin from "../../../../src/components/views/auth/PasswordLogin";
 
 jest.mock("matrix-js-sdk/src/matrix");
 
@@ -32,7 +30,6 @@ const flushPromises = async () => await new Promise(process.nextTick);
 jest.useRealTimers();
 
 describe('Login', function() {
-    let parentDiv;
     const mockClient = mocked({
         login: jest.fn().mockResolvedValue({}),
         loginFlows: jest.fn(),
@@ -46,24 +43,23 @@ describe('Login', function() {
         mockClient.login.mockClear().mockResolvedValue({});
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
         mocked(createClient).mockReturnValue(mockClient);
-
-        parentDiv = document.createElement('div');
-        document.body.appendChild(parentDiv);
     });
 
     afterEach(function() {
-        ReactDOM.unmountComponentAtNode(parentDiv);
-        parentDiv.remove();
         SdkConfig.unset(); // we touch the config, so clean up
     });
 
-    function render() {
-        return ReactDOM.render(<Login
-            serverConfig={mkServerConfig("https://matrix.org", "https://vector.im")}
+    function getRawComponent(hsUrl = "https://matrix.org", isUrl = "https://vector.im") {
+        return <Login
+            serverConfig={mkServerConfig(hsUrl, isUrl)}
             onLoggedIn={() => { }}
             onRegisterClick={() => { }}
             onServerConfigChange={() => { }}
-        />, parentDiv) as unknown as Component<any, any, any>;
+        />;
+    }
+
+    function getComponent(hsUrl?: string, isUrl?: string) {
+        return render(getRawComponent(hsUrl, isUrl));
     }
 
     it('should show form with change server link', async () => {
@@ -71,54 +67,42 @@ describe('Login', function() {
             brand: "test-brand",
             disable_custom_urls: false,
         });
-        const root = render();
+        const { container } = getComponent();
 
         await flushPromises();
 
-        const form = ReactTestUtils.findRenderedComponentWithType(
-            root,
-            PasswordLogin,
-        );
-        expect(form).toBeTruthy();
+        expect(container.querySelector("form")).toBeTruthy();
 
-        const changeServerLink = ReactTestUtils.findRenderedDOMComponentWithClass(root, 'mx_ServerPicker_change');
-        expect(changeServerLink).toBeTruthy();
+        expect(container.querySelector(".mx_ServerPicker_change")).toBeTruthy();
     });
 
     it('should show form without change server link when custom URLs disabled', async () => {
-        const root = render();
+        const { container } = getComponent();
         await flushPromises();
 
-        const form = ReactTestUtils.findRenderedComponentWithType(
-            root,
-            PasswordLogin,
-        );
-        expect(form).toBeTruthy();
-
-        const changeServerLinks = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, 'mx_ServerPicker_change');
-        expect(changeServerLinks).toHaveLength(0);
+        expect(container.querySelector("form")).toBeTruthy();
+        expect(container.querySelectorAll(".mx_ServerPicker_change")).toHaveLength(0);
     });
 
     it("should show SSO button if that flow is available", async () => {
         mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.sso" }] });
 
-        const root = render();
+        const { container } = getComponent();
         await flushPromises();
 
-        const ssoButton = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_SSOButton");
+        const ssoButton = container.querySelector(".mx_SSOButton");
         expect(ssoButton).toBeTruthy();
     });
 
     it("should show both SSO button and username+password if both are available", async () => {
         mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }, { type: "m.login.sso" }] });
 
-        const root = render();
+        const { container } = getComponent();
         await flushPromises();
 
-        const form = ReactTestUtils.findRenderedComponentWithType(root, PasswordLogin);
-        expect(form).toBeTruthy();
+        expect(container.querySelector("form")).toBeTruthy();
 
-        const ssoButton = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_SSOButton");
+        const ssoButton = container.querySelector(".mx_SSOButton");
         expect(ssoButton).toBeTruthy();
     });
 
@@ -139,11 +123,11 @@ describe('Login', function() {
             }],
         });
 
-        const root = render();
+        const { container } = getComponent();
 
         await flushPromises();
 
-        const ssoButtons = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, "mx_SSOButton");
+        const ssoButtons = container.querySelectorAll(".mx_SSOButton");
         expect(ssoButtons.length).toBe(3);
     });
 
@@ -154,11 +138,11 @@ describe('Login', function() {
             }],
         });
 
-        const root = render();
+        const { container } = getComponent();
 
         await flushPromises();
 
-        const ssoButtons = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, "mx_SSOButton");
+        const ssoButtons = container.querySelectorAll(".mx_SSOButton");
         expect(ssoButtons.length).toBe(1);
     });
 });
