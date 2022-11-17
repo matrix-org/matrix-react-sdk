@@ -77,25 +77,30 @@ export default function MemberAvatar({
             ) ?? props.fallbackUserId;
         }
     }
-    const userId = member?.userId ?? props.fallbackUserId;
 
-    return (
-        <BaseAvatar
-            {...props}
-            width={width}
-            height={height}
-            resizeMethod={resizeMethod}
-            name={name ?? ""}
-            title={props.hideTitle ? undefined : title}
-            idName={userId}
-            url={imageUrl}
-            onClick={viewUserOnClick ? () => {
-                dis.dispatch({
-                    action: Action.ViewUser,
-                    member: props.member,
-                    push: card.isCard,
-                });
-            } : props.onClick}
-        />
-    );
+    return <BaseAvatar
+        {...props}
+        width={width}
+        height={height}
+        resizeMethod={resizeMethod}
+        name={name ?? ""}
+        title={props.hideTitle ? undefined : title}
+        idName={member?.userId ?? props.fallbackUserId}
+        url={imageUrl}
+        onClick={viewUserOnClick ? () => {
+            dis.dispatch({
+                action: Action.ViewUser,
+                member: props.member,
+                push: card.isCard,
+            });
+        } : props.onClick}
+    />;
+}
+
+export class LegacyMemberAvatar extends React.Component<IProps> {
+    public render(): JSX.Element {
+        return <MemberAvatar {...this.props}>
+            { this.props.children }
+        </MemberAvatar>;
+    }
 }

@@ -1788,10 +1788,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/analytics-events/-/analytics-events-0.3.0.tgz#a428f7e3f164ffadf38f35bc0f0f9a3e47369ce6"
   integrity sha512-f1WIMA8tjNB3V5g1C34yIpIJK47z6IJ4SLiY4j+J9Gw4X8C3TKGTAx563rMcMvW3Uk/PFqnIBXtkavHBXoYJ9A==
 
-"@matrix-org/matrix-wysiwyg@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.3.2.tgz#586f3ad2f4a7bf39d8e2063630c52294c877bcd6"
-  integrity sha512-Q6Ntj2q1/7rVUlro94snn9eZy/3EbrGqaq5nqNMbttXcnFzYtgligDV1avViB4Um6ZRdDOxnQEPkMca/SqYSmw==
+"@matrix-org/matrix-wysiwyg@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.6.0.tgz#f06577eec5a98fa414d2cd66688d32d984544c94"
+  integrity sha512-6wq6RzpGZLxAcczHL7+QuGLJwGcvUSAm1zXd/0FzevfIKORbGKF2uCWgQ4JoZVpe4rbBNJgtPGb1r36W/i66/A==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz":
   version "3.2.8"
@@ -2204,6 +2204,14 @@
     dom-accessibility-api "^0.5.6"
     lodash "^4.17.15"
     redent "^3.0.0"
+
+"@testing-library/react-hooks@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/react-hooks/-/react-hooks-8.0.1.tgz#0924bbd5b55e0c0c0502d1754657ada66947ca12"
+  integrity sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    react-error-boundary "^3.1.0"
 
 "@testing-library/react@^12.1.5":
   version "12.1.5"
@@ -6943,9 +6951,9 @@ listr2@^3.8.3:
     wrap-ansi "^7.0.0"
 
 loader-utils@^2.0.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.3.tgz#d4b15b8504c63d1fc3f2ade52d41bc8459d6ede1"
-  integrity sha512-THWqIsn8QRnvLl0shHYVBN9syumU8pYWEHPTmkiVGd+7K5eFNVSY6AJhRvgGF70gg1Dz+l/k8WicvFCxdEs60A==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.4.tgz#8b5cb38b5c34a9a018ee1fc0e6a066d1dfcc528c"
+  integrity sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==
   dependencies:
     big.js "^5.2.2"
     emojis-list "^3.0.0"
@@ -8184,6 +8192,13 @@ react-dom@17.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     scheduler "^0.20.2"
+
+react-error-boundary@^3.1.0:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"
+  integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
 
 react-focus-lock@^2.5.1:
   version "2.9.1"
