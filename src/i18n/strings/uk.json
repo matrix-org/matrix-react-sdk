@@ -3634,7 +3634,6 @@
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Обміркуйте можливість виходу зі старих сеансів (%(inactiveAgeDays)s днів або більше), якими ви більше не користуєтесь.",
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Ви повинні бути впевнені, що розпізнаєте ці сеанси, оскільки вони можуть бути несанкціонованим використанням вашого облікового запису.",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Не звірені сеанси — це сеанси, які увійшли в систему з вашими обліковими даними, але не пройшли перехресну перевірку.",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Звірені сеанси увійшли в систему з вашими обліковими даними, а потім були перевірені або за допомогою вашої безпечної парольної фрази, або за допомогою перехресної перевірки.",
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Завдяки цьому у них з'являється впевненість, що вони дійсно розмовляють з вами, а також вони можуть бачити назву сеансу, яку ви вводите тут.",
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Інші користувачі в особистих повідомленнях і кімнатах, до яких ви приєдналися, можуть переглянути список усіх ваших сеансів.",
     "Renaming sessions": "Перейменування сеансів",
@@ -3657,5 +3656,7 @@
     "Unable to show image due to error": "Не вдалося показати зображення через помилку",
     "%(minutes)sm %(seconds)ss left": "Залишилося %(minutes)sхв %(seconds)sс",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "Залишилося %(hours)sгод %(minutes)sхв %(seconds)sс",
-    "That e-mail address or phone number is already in use.": "Ця адреса електронної пошти або номер телефону вже використовується."
+    "That e-mail address or phone number is already in use.": "Ця адреса електронної пошти або номер телефону вже використовується.",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Це означає, що у вас є всі ключі, необхідні для розблокування ваших зашифрованих повідомлень і підтвердження іншим користувачам, що ви довіряєте цьому сеансу.",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Звірені сеанси — це будь-який пристрій, на якому ви використовуєте цей обліковий запис після введення парольної фрази або підтвердження вашої особи за допомогою іншого перевіреного сеансу."
 }
