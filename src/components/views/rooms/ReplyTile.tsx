@@ -143,8 +143,8 @@ export default class ReplyTile extends React.PureComponent<IProps> {
                     <MemberAvatar
                         member={mxEvent.sender}
                         fallbackUserId={mxEvent.getSender()}
-                        width={14}
-                        height={14}
+                        width={16}
+                        height={16}
                     />
                     <SenderProfile
                         mxEvent={mxEvent}

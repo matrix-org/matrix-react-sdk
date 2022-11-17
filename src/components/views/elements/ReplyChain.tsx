@@ -24,13 +24,15 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
-import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { makeUserPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import SettingsStore from "../../../settings/SettingsStore";
 import { Layout } from "../../../settings/enums/Layout";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import { Action } from "../../../dispatcher/actions";
 import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
-import { ButtonEvent } from './AccessibleButton';
+import Pill, { PillType } from './Pill';
+import AccessibleButton, { ButtonEvent } from './AccessibleButton';
 import { getParentEventId, shouldDisplayReply } from '../../../utils/Reply';
 import RoomContext from "../../../contexts/RoomContext";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -199,7 +201,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         return getUserNameColorClass(ev.getSender()).replace("Username", "ReplyChain");
     }
 
-    public render(): JSX.Element {
+    render() {
         let header = null;
         if (this.state.err) {
             header = <blockquote className="mx_ReplyChain mx_ReplyChain_error">
@@ -209,19 +211,41 @@ export default class ReplyChain extends React.Component<IProps, IState> {
                 }
             </blockquote>;
         } else if (this.state.loadedEv && shouldDisplayReply(this.state.events[0])) {
-            header = (
-                <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(this.state.loadedEv)}`}>
-                    <button className="mx_ReplyChain_show" onClick={this.onQuoteClick}>
-                        { _t("Expand replies") }
-                    </button>
-                </blockquote>
-            );
+            const ev = this.state.loadedEv;
+            const room = this.matrixClient.getRoom(ev.getRoomId());
+            header = <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(ev)}`}>
+                {
+                    _t('<a>In reply to</a> <pill>', {}, {
+                        'a': (sub) => (
+                            <AccessibleButton
+                                kind="link_inline"
+                                className="mx_ReplyChain_show"
+                                onClick={this.onQuoteClick}
+                            >
+                                { sub }
+                            </AccessibleButton>
+                        ),
+                        'pill': (
+                            <Pill
+                                type={PillType.UserMention}
+                                room={room}
+                                url={makeUserPermalink(ev.getSender())}
+                                shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
+                            />
+                        ),
+                    })
+                }
+            </blockquote>;
         } else if (this.props.forExport) {
             const eventId = getParentEventId(this.props.parentEv);
             header = <p className="mx_ReplyChain_Export">
-                <a className="mx_reply_anchor" href={`#${eventId}`} scroll-to={eventId}>
-                    { _t("Expand replies") }
-                </a>
+                { _t("In reply to <a>this message</a>",
+                    {},
+                    { a: (sub) => (
+                        <a className="mx_reply_anchor" href={`#${eventId}`} scroll-to={eventId}> { sub } </a>
+                    ),
+                    })
+                }
             </p>;
         } else if (this.state.loading) {
             header = <Spinner w={16} h={16} />;

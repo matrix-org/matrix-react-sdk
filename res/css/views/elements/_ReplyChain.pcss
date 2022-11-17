@@ -21,13 +21,13 @@ limitations under the License.
     border-radius: 2px; // TODO: Use a spacing variable
 
     .mx_ReplyChain_show {
-        @mixin ButtonResetDefault;
+        &.mx_AccessibleButton_kind_link_inline {
+            color: unset;
+            white-space: nowrap; /* Enforce 'In reply to' to be a single line */
 
-        cursor: pointer;
-        color: var(--username-color);
-
-        &:hover {
-            opacity: 0.65;
+            &:hover {
+                color: $links;
+            }
         }
     }
 
