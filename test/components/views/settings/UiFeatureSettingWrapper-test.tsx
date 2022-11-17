@@ -35,22 +35,22 @@ describe('<UiFeatureSettingWrapper>', () => {
     });
 
     it('renders children when setting is truthy', () => {
-        const component = getComponent();
+        const { asFragment } = getComponent();
 
-        expect(component).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
         expect(SettingsStore.getValue).toHaveBeenCalledWith(defaultProps.uiFeature);
     });
 
     it('returns null when setting is truthy but children are undefined', () => {
-        const { container } = getComponent({ children: undefined });
+        const { asFragment } = getComponent({ children: undefined });
 
-        expect(container).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('returns null when setting is falsy', () => {
         (SettingsStore.getValue as jest.Mock).mockReturnValue(false);
-        const { container } = getComponent();
+        const { asFragment } = getComponent();
 
-        expect(container).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

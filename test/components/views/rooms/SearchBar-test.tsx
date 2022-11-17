@@ -21,7 +21,6 @@ import SearchBar, { SearchScope } from "../../../../src/components/views/rooms/S
 import { KeyBindingAction } from "../../../../src/accessibility/KeyboardShortcuts";
 
 let mockCurrentEvent = KeyBindingAction.Enter;
-let container: HTMLElement | null = null;
 
 const searchProps = {
     onCancelClick: jest.fn(),
@@ -37,17 +36,13 @@ jest.mock("../../../../src/KeyBindingsManager", () => ({
 }));
 
 describe("SearchBar", () => {
-    beforeEach(() => {
-        const wrapper = render(<SearchBar {...searchProps} />);
-        container = wrapper.container;
-    });
-
     afterEach(() => {
         searchProps.onCancelClick.mockClear();
         searchProps.onSearch.mockClear();
     });
 
     it("must not search when input value is empty", () => {
+        const { container } = render(<SearchBar {...searchProps} />);
         const roomButtons = container.querySelectorAll(".mx_SearchBar_button");
         const searchButton = container.querySelectorAll(".mx_SearchBar_searchButton");
 
@@ -61,6 +56,7 @@ describe("SearchBar", () => {
     });
 
     it("must trigger onSearch when value is not empty", () => {
+        const { container } = render(<SearchBar {...searchProps} />);
         const searchValue = "abcd";
 
         const roomButtons = container.querySelectorAll(".mx_SearchBar_button");
@@ -88,13 +84,14 @@ describe("SearchBar", () => {
 
     it("cancel button and esc key should trigger onCancelClick", async () => {
         mockCurrentEvent = KeyBindingAction.Escape;
+        const { container } = render(<SearchBar {...searchProps} />);
         const cancelButton = container.querySelector(".mx_SearchBar_cancel");
         const input = container.querySelector(".mx_SearchBar_input input");
-        fireEvent.click(cancelButton);
+        fireEvent.click(cancelButton!);
         expect(searchProps.onCancelClick).toHaveBeenCalledTimes(1);
 
-        fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: 'Escape', code: 'Escape', charCode: 27 });
+        fireEvent.focus(input!);
+        fireEvent.keyDown(input!, { key: 'Escape', code: 'Escape', charCode: 27 });
 
         expect(searchProps.onCancelClick).toHaveBeenCalledTimes(2);
     });

@@ -35,7 +35,8 @@ describe("MVideoBody", () => {
     it('does not crash when given a portrait image', () => {
         // Check for an unreliable crash caused by a fractional-sized
         // image dimension being used for a CanvasImageData.
-        expect(makeMVideoBody(720, 1280)).toMatchSnapshot();
+        const { asFragment } = makeMVideoBody(720, 1280);
+        expect(asFragment()).toMatchSnapshot();
         // If we get here, we did not crash.
     });
 });

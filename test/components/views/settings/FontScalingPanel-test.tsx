@@ -33,9 +33,9 @@ jest.mock(
 describe('FontScalingPanel', () => {
     it('renders the font scaling UI', () => {
         TestUtils.stubClient();
-        const wrapper = render(
+        const { asFragment } = render(
             <FontScalingPanel />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

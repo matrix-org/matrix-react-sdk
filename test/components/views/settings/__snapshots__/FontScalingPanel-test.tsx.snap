@@ -1,424 +1,186 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FontScalingPanel renders the font scaling UI 1`] = `
-{
-  "asFragment": [Function],
-  "baseElement": <body>
-    <div>
+<DocumentFragment>
+  <div
+    class="mx_SettingsTab_section mx_FontScalingPanel"
+  >
+    <span
+      class="mx_SettingsTab_subheading"
+    >
+      Font size
+    </span>
+    <div
+      class="mx_FontScalingPanel_preview mx_EventTilePreview_loader"
+    >
       <div
-        class="mx_SettingsTab_section mx_FontScalingPanel"
+        class="mx_Spinner"
       >
-        <span
-          class="mx_SettingsTab_subheading"
-        >
-          Font size
-        </span>
         <div
-          class="mx_FontScalingPanel_preview mx_EventTilePreview_loader"
-        >
+          aria-label="Loading..."
+          class="mx_Spinner_icon"
+          data-testid="spinner"
+          role="progressbar"
+          style="width: 32px; height: 32px;"
+        />
+      </div>
+    </div>
+    <div
+      class="mx_FontScalingPanel_fontSlider"
+    >
+      <div
+        class="mx_FontScalingPanel_fontSlider_smallText"
+      >
+        Aa
+      </div>
+      <div
+        class="mx_Slider"
+      >
+        <div>
           <div
-            class="mx_Spinner"
+            class="mx_Slider_bar"
           >
+            <hr />
             <div
-              aria-label="Loading..."
-              class="mx_Spinner_icon"
-              data-testid="spinner"
-              role="progressbar"
-              style="width: 32px; height: 32px;"
-            />
-          </div>
-        </div>
-        <div
-          class="mx_FontScalingPanel_fontSlider"
-        >
-          <div
-            class="mx_FontScalingPanel_fontSlider_smallText"
-          >
-            Aa
-          </div>
-          <div
-            class="mx_Slider"
-          >
-            <div>
-              <div
-                class="mx_Slider_bar"
-              >
-                <hr />
-                <div
-                  class="mx_Slider_selection"
-                >
-                  <div
-                    class="mx_Slider_selectionDot"
-                    style="left: calc(-1.195em + 50%);"
-                  >
-                    <div
-                      class="mx_Slider_selectionText"
-                    >
-                      15
-                    </div>
-                  </div>
-                  <hr
-                    style="width: 50%;"
-                  />
-                </div>
-              </div>
-              <div
-                class="mx_Slider_dotContainer"
-              >
-                <span
-                  class="mx_Slider_dotValue"
-                >
-                  <div
-                    class="mx_Slider_dot mx_Slider_dotActive"
-                  />
-                  <div
-                    class="mx_Slider_labelContainer"
-                  >
-                    <div
-                      class="mx_Slider_label"
-                    />
-                  </div>
-                </span>
-                <span
-                  class="mx_Slider_dotValue"
-                >
-                  <div
-                    class="mx_Slider_dot mx_Slider_dotActive"
-                  />
-                  <div
-                    class="mx_Slider_labelContainer"
-                  >
-                    <div
-                      class="mx_Slider_label"
-                    />
-                  </div>
-                </span>
-                <span
-                  class="mx_Slider_dotValue"
-                >
-                  <div
-                    class="mx_Slider_dot mx_Slider_dotActive"
-                  />
-                  <div
-                    class="mx_Slider_labelContainer"
-                  >
-                    <div
-                      class="mx_Slider_label"
-                    />
-                  </div>
-                </span>
-                <span
-                  class="mx_Slider_dotValue"
-                >
-                  <div
-                    class="mx_Slider_dot"
-                  />
-                  <div
-                    class="mx_Slider_labelContainer"
-                  >
-                    <div
-                      class="mx_Slider_label"
-                    />
-                  </div>
-                </span>
-                <span
-                  class="mx_Slider_dotValue"
-                >
-                  <div
-                    class="mx_Slider_dot"
-                  />
-                  <div
-                    class="mx_Slider_labelContainer"
-                  >
-                    <div
-                      class="mx_Slider_label"
-                    />
-                  </div>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="mx_FontScalingPanel_fontSlider_largeText"
-          >
-            Aa
-          </div>
-        </div>
-        <span
-          class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
-        >
-          <input
-            id="checkbox_abdefghi"
-            type="checkbox"
-          />
-          <label
-            for="checkbox_abdefghi"
-          >
-            <div
-              class="mx_Checkbox_background"
+              class="mx_Slider_selection"
             >
               <div
-                class="mx_Checkbox_checkmark"
+                class="mx_Slider_selectionDot"
+                style="left: calc(-1.195em + 50%);"
+              >
+                <div
+                  class="mx_Slider_selectionText"
+                >
+                  15
+                </div>
+              </div>
+              <hr
+                style="width: 50%;"
               />
             </div>
-            <div>
-              Use custom size
-            </div>
-          </label>
-        </span>
-        <div
-          class="mx_Field mx_Field_input mx_FontScalingPanel_customFontSizeField"
-        >
-          <input
-            autocomplete="off"
-            disabled=""
-            id="font_size_field"
-            label="Font size"
-            placeholder="15"
-            type="number"
-            value="15"
-          />
-          <label
-            for="font_size_field"
-          >
-            Font size
-          </label>
-        </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="mx_SettingsTab_section mx_FontScalingPanel"
-    >
-      <span
-        class="mx_SettingsTab_subheading"
-      >
-        Font size
-      </span>
-      <div
-        class="mx_FontScalingPanel_preview mx_EventTilePreview_loader"
-      >
-        <div
-          class="mx_Spinner"
-        >
+          </div>
           <div
-            aria-label="Loading..."
-            class="mx_Spinner_icon"
-            data-testid="spinner"
-            role="progressbar"
-            style="width: 32px; height: 32px;"
-          />
-        </div>
-      </div>
-      <div
-        class="mx_FontScalingPanel_fontSlider"
-      >
-        <div
-          class="mx_FontScalingPanel_fontSlider_smallText"
-        >
-          Aa
-        </div>
-        <div
-          class="mx_Slider"
-        >
-          <div>
-            <div
-              class="mx_Slider_bar"
+            class="mx_Slider_dotContainer"
+          >
+            <span
+              class="mx_Slider_dotValue"
             >
-              <hr />
               <div
-                class="mx_Slider_selection"
+                class="mx_Slider_dot mx_Slider_dotActive"
+              />
+              <div
+                class="mx_Slider_labelContainer"
               >
                 <div
-                  class="mx_Slider_selectionDot"
-                  style="left: calc(-1.195em + 50%);"
-                >
-                  <div
-                    class="mx_Slider_selectionText"
-                  >
-                    15
-                  </div>
-                </div>
-                <hr
-                  style="width: 50%;"
+                  class="mx_Slider_label"
                 />
               </div>
-            </div>
-            <div
-              class="mx_Slider_dotContainer"
+            </span>
+            <span
+              class="mx_Slider_dotValue"
             >
-              <span
-                class="mx_Slider_dotValue"
+              <div
+                class="mx_Slider_dot mx_Slider_dotActive"
+              />
+              <div
+                class="mx_Slider_labelContainer"
               >
                 <div
-                  class="mx_Slider_dot mx_Slider_dotActive"
+                  class="mx_Slider_label"
                 />
-                <div
-                  class="mx_Slider_labelContainer"
-                >
-                  <div
-                    class="mx_Slider_label"
-                  />
-                </div>
-              </span>
-              <span
-                class="mx_Slider_dotValue"
+              </div>
+            </span>
+            <span
+              class="mx_Slider_dotValue"
+            >
+              <div
+                class="mx_Slider_dot mx_Slider_dotActive"
+              />
+              <div
+                class="mx_Slider_labelContainer"
               >
                 <div
-                  class="mx_Slider_dot mx_Slider_dotActive"
+                  class="mx_Slider_label"
                 />
-                <div
-                  class="mx_Slider_labelContainer"
-                >
-                  <div
-                    class="mx_Slider_label"
-                  />
-                </div>
-              </span>
-              <span
-                class="mx_Slider_dotValue"
+              </div>
+            </span>
+            <span
+              class="mx_Slider_dotValue"
+            >
+              <div
+                class="mx_Slider_dot"
+              />
+              <div
+                class="mx_Slider_labelContainer"
               >
                 <div
-                  class="mx_Slider_dot mx_Slider_dotActive"
+                  class="mx_Slider_label"
                 />
-                <div
-                  class="mx_Slider_labelContainer"
-                >
-                  <div
-                    class="mx_Slider_label"
-                  />
-                </div>
-              </span>
-              <span
-                class="mx_Slider_dotValue"
+              </div>
+            </span>
+            <span
+              class="mx_Slider_dotValue"
+            >
+              <div
+                class="mx_Slider_dot"
+              />
+              <div
+                class="mx_Slider_labelContainer"
               >
                 <div
-                  class="mx_Slider_dot"
+                  class="mx_Slider_label"
                 />
-                <div
-                  class="mx_Slider_labelContainer"
-                >
-                  <div
-                    class="mx_Slider_label"
-                  />
-                </div>
-              </span>
-              <span
-                class="mx_Slider_dotValue"
-              >
-                <div
-                  class="mx_Slider_dot"
-                />
-                <div
-                  class="mx_Slider_labelContainer"
-                >
-                  <div
-                    class="mx_Slider_label"
-                  />
-                </div>
-              </span>
-            </div>
+              </div>
+            </span>
           </div>
-        </div>
-        <div
-          class="mx_FontScalingPanel_fontSlider_largeText"
-        >
-          Aa
         </div>
       </div>
-      <span
-        class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
-      >
-        <input
-          id="checkbox_abdefghi"
-          type="checkbox"
-        />
-        <label
-          for="checkbox_abdefghi"
-        >
-          <div
-            class="mx_Checkbox_background"
-          >
-            <div
-              class="mx_Checkbox_checkmark"
-            />
-          </div>
-          <div>
-            Use custom size
-          </div>
-        </label>
-      </span>
       <div
-        class="mx_Field mx_Field_input mx_FontScalingPanel_customFontSizeField"
+        class="mx_FontScalingPanel_fontSlider_largeText"
       >
-        <input
-          autocomplete="off"
-          disabled=""
-          id="font_size_field"
-          label="Font size"
-          placeholder="15"
-          type="number"
-          value="15"
-        />
-        <label
-          for="font_size_field"
-        >
-          Font size
-        </label>
+        Aa
       </div>
     </div>
-  </div>,
-  "debug": [Function],
-  "findAllByAltText": [Function],
-  "findAllByDisplayValue": [Function],
-  "findAllByLabelText": [Function],
-  "findAllByPlaceholderText": [Function],
-  "findAllByRole": [Function],
-  "findAllByTestId": [Function],
-  "findAllByText": [Function],
-  "findAllByTitle": [Function],
-  "findByAltText": [Function],
-  "findByDisplayValue": [Function],
-  "findByLabelText": [Function],
-  "findByPlaceholderText": [Function],
-  "findByRole": [Function],
-  "findByTestId": [Function],
-  "findByText": [Function],
-  "findByTitle": [Function],
-  "getAllByAltText": [Function],
-  "getAllByDisplayValue": [Function],
-  "getAllByLabelText": [Function],
-  "getAllByPlaceholderText": [Function],
-  "getAllByRole": [Function],
-  "getAllByTestId": [Function],
-  "getAllByText": [Function],
-  "getAllByTitle": [Function],
-  "getByAltText": [Function],
-  "getByDisplayValue": [Function],
-  "getByLabelText": [Function],
-  "getByPlaceholderText": [Function],
-  "getByRole": [Function],
-  "getByTestId": [Function],
-  "getByText": [Function],
-  "getByTitle": [Function],
-  "queryAllByAltText": [Function],
-  "queryAllByDisplayValue": [Function],
-  "queryAllByLabelText": [Function],
-  "queryAllByPlaceholderText": [Function],
-  "queryAllByRole": [Function],
-  "queryAllByTestId": [Function],
-  "queryAllByText": [Function],
-  "queryAllByTitle": [Function],
-  "queryByAltText": [Function],
-  "queryByDisplayValue": [Function],
-  "queryByLabelText": [Function],
-  "queryByPlaceholderText": [Function],
-  "queryByRole": [Function],
-  "queryByTestId": [Function],
-  "queryByText": [Function],
-  "queryByTitle": [Function],
-  "rerender": [Function],
-  "unmount": [Function],
-}
+    <span
+      class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+    >
+      <input
+        id="checkbox_abdefghi"
+        type="checkbox"
+      />
+      <label
+        for="checkbox_abdefghi"
+      >
+        <div
+          class="mx_Checkbox_background"
+        >
+          <div
+            class="mx_Checkbox_checkmark"
+          />
+        </div>
+        <div>
+          Use custom size
+        </div>
+      </label>
+    </span>
+    <div
+      class="mx_Field mx_Field_input mx_FontScalingPanel_customFontSizeField"
+    >
+      <input
+        autocomplete="off"
+        disabled=""
+        id="font_size_field"
+        label="Font size"
+        placeholder="15"
+        type="number"
+        value="15"
+      />
+      <label
+        for="font_size_field"
+      >
+        Font size
+      </label>
+    </div>
+  </div>
+</DocumentFragment>
 `;

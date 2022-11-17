@@ -33,9 +33,9 @@ jest.mock(
 describe('ThemeChoicePanel', () => {
     it('renders the theme choice UI', () => {
         TestUtils.stubClient();
-        const wrapper = render(
+        const { asFragment } = render(
             <ThemeChoicePanel />,
         );
-        expect(wrapper).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 });

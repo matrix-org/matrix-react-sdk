@@ -76,19 +76,15 @@ describe("ForwardDialog", () => {
         mockClient.getVisibleRooms.mockReturnValue(rooms);
         mockClient.getRoom.mockImplementation(roomId => rooms.find(room => room.roomId === roomId));
 
-        let wrapper: RenderResult;
-        await act(async () => {
-            wrapper = render(
-                <ForwardDialog
-                    matrixClient={mockClient}
-                    event={message}
-                    permalinkCreator={new RoomPermalinkCreator(undefined, sourceRoom)}
-                    onFinished={jest.fn()}
-                />,
-            );
-            // Wait one tick for our profile data to load so the state update happens within act
-            await new Promise(resolve => setImmediate(resolve));
-        });
+        const wrapper: RenderResult = render(
+            <ForwardDialog
+                matrixClient={mockClient}
+                event={message}
+                permalinkCreator={new RoomPermalinkCreator(undefined, sourceRoom)}
+                onFinished={jest.fn()}
+            />,
+        );
+        await new Promise(resolve => setImmediate(resolve));
 
         return wrapper;
     };
@@ -111,7 +107,7 @@ describe("ForwardDialog", () => {
 
         // We would just test SenderProfile for the user ID, but it's stubbed
         const previewAvatar = container.querySelector(".mx_EventTile_avatar .mx_BaseAvatar_image");
-        expect(previewAvatar.getAttribute("title")).toBe("@bob:example.org");
+        expect(previewAvatar?.getAttribute("title")).toBe("@bob:example.org");
     });
 
     it("filters the rooms", async () => {
@@ -230,7 +226,7 @@ describe("ForwardDialog", () => {
         const sendToFirstRoom = (container: HTMLElement): void =>
             act(() => {
                 const sendToFirstRoomButton = container.querySelector(".mx_ForwardList_sendButton");
-                fireEvent.click(sendToFirstRoomButton);
+                fireEvent.click(sendToFirstRoomButton!);
             });
 
         it('converts legacy location events to pin drop shares', async () => {
