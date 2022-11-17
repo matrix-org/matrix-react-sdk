@@ -56,14 +56,15 @@ export class MemberListStore {
         // Filter then sort as it's more efficient than sorting tons of members we will just filter out later.
         // Also sort each group, as there's no point comparing invited/joined users when they aren't in the same list!
         const membersByMembership = this.filterMembers(members, searchQuery);
+        membersByMembership.joined.sort(this.sortMembers);
+        membersByMembership.invited.sort(this.sortMembers);
         return {
-            joined: membersByMembership.joined.sort(this.sortMembers),
-            invited: membersByMembership.invited.sort(this.sortMembers),
+            joined: membersByMembership.joined,
+            invited: membersByMembership.invited,
         };
     }
 
     private async loadMembers(roomId: string): Promise<Array<RoomMember>> {
-        console.log("MemberListStore: loadMembers ", roomId);
         const room = this.stores.client.getRoom(roomId);
         if (!room) {
             return [];
