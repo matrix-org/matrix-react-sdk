@@ -251,7 +251,16 @@
       "text-summary",
       "lcov"
     ],
-    "testResultsProcessor": "@casualbot/jest-sonar-reporter"
+    "testResultsProcessor": "@casualbot/jest-sonar-reporter",
+    "reporters": [
+      "default",
+      [
+        "<rootDir>/test/slowReporter.js",
+        {
+          "numTests": 10
+        }
+      ]
+    ]
   },
   "@casualbot/jest-sonar-reporter": {
     "outputDirectory": "coverage",
