@@ -497,7 +497,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return !shouldHideEvent(mxEv, this.context);
     }
 
-    public readMarkerForEvent(eventId: string, isLastEvent: boolean): ReactNode | null {
+    public readMarkerForEvent(eventId: string, isLastEvent: boolean): ReactNode {
         const visible = !isLastEvent && this.props.readMarkerVisible;
         if (this.props.readMarkerEventId === eventId) {
             let hr;
