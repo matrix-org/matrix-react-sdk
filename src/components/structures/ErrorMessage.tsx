@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { Icon as WarningBadgeIcon } from "../../../res/img/element-icons/warning-badge.svg";
 
 interface ErrorMessageProps {
-    message: string | null;
+    message: string | ReactNode | null;
 }
 
 /**

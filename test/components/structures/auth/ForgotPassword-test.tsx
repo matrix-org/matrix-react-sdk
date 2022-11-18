@@ -24,6 +24,7 @@ import ForgotPassword from "../../../../src/components/structures/auth/ForgotPas
 import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
 import { flushPromisesWithFakeTimers, stubClient } from "../../../test-utils";
 import Modal from "../../../../src/Modal";
+import AutoDiscoveryUtils from "../../../../src/utils/AutoDiscoveryUtils";
 
 jest.mock("matrix-js-sdk/src/matrix", () => ({
     ...jest.requireActual("matrix-js-sdk/src/matrix"),
@@ -53,18 +54,26 @@ describe("<ForgotPassword>", () => {
         });
     };
 
+    beforeEach(() => {
+        client = stubClient();
+        mocked(createClient).mockReturnValue(client);
+
+        serverConfig = new ValidatedServerConfig();
+        serverConfig.hsName = "example.com";
+
+        onComplete = jest.fn();
+
+        jest.spyOn(AutoDiscoveryUtils, "validateServerConfigWithStaticUrls").mockResolvedValue(serverConfig);
+        jest.spyOn(AutoDiscoveryUtils, "authComponentStateForError");
+    });
+
     afterEach(() => {
         // clean up modals
         Modal.closeCurrentModal("force");
     });
 
     beforeAll(() => {
-        client = stubClient();
-        serverConfig = new ValidatedServerConfig();
-        serverConfig.hsName = "example.com";
-        mocked(createClient).mockReturnValue(client);
         jest.useFakeTimers();
-        onComplete = jest.fn();
     });
 
     afterAll(() => {
@@ -122,7 +131,7 @@ describe("<ForgotPassword>", () => {
             });
         });
 
-        describe("when the homeserver is not reachable", () => {
+        describe("when a connection error occurs", () => {
             beforeEach(async () => {
                 await typeIntoField("Email address", testEmail);
                 mocked(client).requestPasswordEmailToken.mockRejectedValue({
@@ -136,6 +145,23 @@ describe("<ForgotPassword>", () => {
                     "Cannot reach homeserver: "
                     + "Ensure you have a stable internet connection, or get in touch with the server admin",
                 )).toBeInTheDocument();
+            });
+        });
+
+        describe("when the server liveness check fails", () => {
+            beforeEach(async () => {
+                await typeIntoField("Email address", testEmail);
+                mocked(AutoDiscoveryUtils.validateServerConfigWithStaticUrls).mockRejectedValue({});
+                mocked(AutoDiscoveryUtils.authComponentStateForError).mockReturnValue({
+                    serverErrorIsFatal: true,
+                    serverIsAlive: false,
+                    serverDeadError: "server down",
+                });
+                await submitForm("Send email");
+            });
+
+            it("should show the server error", () => {
+                expect(screen.queryByText("server down")).toBeInTheDocument();
             });
         });
 

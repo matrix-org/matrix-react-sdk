@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 
 import AccessibleButton from "../../../views/elements/AccessibleButton";
 import { Icon as EMailPromptIcon } from "../../../../../res/img/element-icons/email-prompt.svg";
@@ -26,7 +26,7 @@ import { ErrorMessage } from "../../ErrorMessage";
 
 interface CheckEmailProps {
     email: string;
-    errorText: string | null;
+    errorText: string | ReactNode | null;
     onResendClick: () => Promise<boolean>;
     onSubmitForm: (ev: React.FormEvent) => void;
 }

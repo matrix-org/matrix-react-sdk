@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { createClient } from "matrix-js-sdk/src/matrix";
 
@@ -41,6 +41,7 @@ import { Icon as CheckboxIcon } from "../../../../res/img/element-icons/Checkbox
 import { VerifyEmailModal } from './forgot-password/VerifyEmailModal';
 import Spinner from '../../views/elements/Spinner';
 import { formatSeconds } from '../../../DateUtils';
+import AutoDiscoveryUtils from '../../../utils/AutoDiscoveryUtils';
 
 enum Phase {
     // Show email input
@@ -68,7 +69,14 @@ interface State {
     email: string;
     password: string;
     password2: string;
-    errorText: string | null;
+    errorText: string | ReactNode | null;
+
+    // We perform liveliness checks later, but for now suppress the errors.
+    // We also track the server dead errors independently of the regular errors so
+    // that we can render it differently, and override any other error the user may
+    // be seeing.
+    serverIsAlive: boolean;
+    serverDeadError: string;
 
     serverSupportsControlOfDevicesLogout: boolean;
     logoutDevices: boolean;
@@ -87,6 +95,12 @@ export default class ForgotPassword extends React.Component<Props, State> {
             password: "",
             password2: "",
             errorText: null,
+            // We perform liveliness checks later, but for now suppress the errors.
+            // We also track the server dead errors independently of the regular errors so
+            // that we can render it differently, and override any other error the user may
+            // be seeing.
+            serverIsAlive: true,
+            serverDeadError: "",
             serverSupportsControlOfDevicesLogout: false,
             logoutDevices: false,
         };
@@ -101,8 +115,33 @@ export default class ForgotPassword extends React.Component<Props, State> {
         if (prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
         ) {
+            // Do a liveliness check on the new URLs
+            this.checkServerLiveliness(this.props.serverConfig);
+
             // Do capabilities check on new URLs
             this.checkServerCapabilities(this.props.serverConfig);
+        }
+    }
+
+    private async checkServerLiveliness(serverConfig: ValidatedServerConfig): Promise<void> {
+        try {
+            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
+                serverConfig.hsUrl,
+                serverConfig.isUrl,
+            );
+
+            this.setState({
+                serverIsAlive: true,
+            });
+        } catch (e) {
+            const {
+                serverIsAlive,
+                serverDeadError,
+            } = AutoDiscoveryUtils.authComponentStateForError(e, "forgot_password");
+            this.setState({
+                serverIsAlive,
+                errorText: serverDeadError,
+            });
         }
     }
 
@@ -256,11 +295,21 @@ export default class ForgotPassword extends React.Component<Props, State> {
         modal.close();
     }
 
-    private onSubmitForm = (ev: React.FormEvent): void => {
+    private onSubmitForm = async (ev: React.FormEvent): Promise<void> => {
         ev.preventDefault();
+
+        // Should not happen because of disabled forms, but just return if currently doing an action.
+        if ([Phase.SendingEmail, Phase.ResettingPassword].includes(this.state.phase)) return;
+
         this.setState({
             errorText: "",
         });
+
+        // Refresh the server errors. Just in case the server came back online of went offline.
+        await this.checkServerLiveliness(this.props.serverConfig);
+
+        // Server error
+        if (!this.state.serverIsAlive) return;
 
         switch (this.state.phase) {
             case Phase.EnterEmail:

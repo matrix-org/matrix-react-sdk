@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef } from "react";
+import React, { ReactNode, useRef } from "react";
 
 import { Icon as EMailIcon } from "../../../../../res/img/element-icons/Email-icon.svg";
 import { _t, _td } from '../../../../languageHandler';
@@ -25,7 +25,7 @@ import Field from "../../../views/elements/Field";
 
 interface EnterEmailProps {
     email: string;
-    errorText: string | null;
+    errorText: string | ReactNode | null;
     homeserver: string;
     loading: boolean;
     onInputChanged: (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => void;
