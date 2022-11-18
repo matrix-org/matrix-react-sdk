@@ -3656,5 +3656,7 @@
     "Go live": "Prejsť naživo",
     "%(minutes)sm %(seconds)ss left": "ostáva %(minutes)sm %(seconds)ss",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "ostáva %(hours)sh %(minutes)sm %(seconds)ss",
-    "That e-mail address or phone number is already in use.": "Táto e-mailová adresa alebo telefónne číslo sa už používa."
+    "That e-mail address or phone number is already in use.": "Táto e-mailová adresa alebo telefónne číslo sa už používa.",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Toto znamená, že máte všetky kľúče potrebné na odomknutie zašifrovaných správ a potvrdzujete ostatným používateľom, že tejto relácii dôverujete.",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Overené relácie sú všade tam, kde používate toto konto po zadaní svojho prístupového hesla alebo po potvrdení vašej totožnosti inou overenou reláciou."
 }
