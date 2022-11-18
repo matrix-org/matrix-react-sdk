@@ -566,7 +566,14 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                                         onOptionSelected={this.onOptionSelected}
                                         onMultiSelection={this.onMultiSelection} />
                             ) }
-                            <div className="mx_MPollBody_popularityBackground">
+                            <div
+                                className="mx_MPollBody_popularityBackground"
+                                onClick={() => {
+                                    if (maxSelections > 1) {
+                                        this.selectMultipleOptions(answer.id);
+                                    }
+                                }}
+                            >
                                 <div
                                     className="mx_MPollBody_popularityAmount"
                                     style={{ "width": `${answerPercent}%` }}
