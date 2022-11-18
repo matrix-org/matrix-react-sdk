@@ -25,12 +25,19 @@ limitations under the License.
     .mx_ReadReceiptGroup_button {
         display: inline-flex;
         flex-direction: row;
-        height: 16px;
-        padding: 4px;
-        border-radius: 6px;
 
-        &.mx_AccessibleButton {
-            &:hover {
+        .mx_ReadReceiptGroup_container:not(:empty) {
+            height: 16px;
+            padding: 4px;
+            border-radius: 6px;
+
+            .mx_BaseAvatar {
+                margin: 4px;
+            }
+        }
+
+        &:hover {
+            .mx_ReadReceiptGroup_container {
                 background: $event-selected-color;
             }
         }

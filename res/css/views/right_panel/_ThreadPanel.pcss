@@ -106,7 +106,7 @@ limitations under the License.
         content-visibility: visible;
     }
 
-    .mx_EventTile,
+    .mx_EventTile[data-layout],
     .mx_GenericEventListSummary {
         /* Account for scrollbar when hovering */
         padding-top: 0;
@@ -117,6 +117,27 @@ limitations under the License.
 
         &.mx_EventTile_clamp:hover {
             cursor: pointer;
+        }
+
+        .mx_ReactionsRow {
+            margin-bottom: 0;
+        }
+
+        .mx_EventTile_msgOption {
+            float: none;
+            width: auto;
+            height: auto;
+            line-height: 0;
+
+            .mx_ReadReceiptGroup {
+                inset-block-start: 0;
+            }
+        }
+    }
+
+    .mx_EventTile:not(:last-child) {
+        .mx_ReadReceiptGroup_noReceipts {
+            display: none;
         }
     }
 

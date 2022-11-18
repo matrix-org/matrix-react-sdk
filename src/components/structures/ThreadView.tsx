@@ -353,7 +353,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     ref={this.timelinePanel}
                     showReadReceipts={true}
                     manageReadReceipts={true}
-                    manageReadMarkers={true}
+                    manageReadMarkers={false}
                     sendReadReceiptOnLoad={true}
                     timelineSet={this.state.thread.timelineSet}
                     showUrlPreview={this.context.showUrlPreview}

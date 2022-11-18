@@ -1348,9 +1348,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         <a href={permalink} onClick={this.onPermalinkClicked}>
                             { timestamp }
                         </a>
-                        { msgOption }
                     </div>,
                     reactionsRow,
+                    msgOption,
                 ]);
             }
             case TimelineRenderingType.ThreadsList: {
@@ -1649,7 +1649,7 @@ function SentReceipt({ messageState }: ISentReceiptProps) {
 
     return (
         <div className="mx_EventTile_msgOption">
-            <div className="mx_ReadReceiptGroup">
+            <div className="mx_ReadReceiptGroup mx_ReadReceiptGroup_noReceipts">
                 <div
                     className="mx_ReadReceiptGroup_button"
                     onMouseOver={showTooltip}
