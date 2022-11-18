@@ -33,6 +33,7 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
 import { ElementCall } from "../../../../../models/Call";
 import SdkConfig, { DEFAULTS } from "../../../../../SdkConfig";
+import { AddPrivilegedUsers } from "../../AddPrivilegedUsers";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -470,6 +471,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             <div className="mx_SettingsTab mx_RolesRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Roles & Permissions") }</div>
                 { privilegedUsersSection }
+                { canChangeLevels && <AddPrivilegedUsers room={room} defaultUserLevel={defaultUserLevel} /> }
                 { mutedUsersSection }
                 { bannedUsersSection }
                 <SettingsFieldset

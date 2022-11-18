@@ -1,0 +1,118 @@
+$icon-size: 22px;
+
+.mx_AutocompleteInput {
+    position: relative;
+
+    &_matches {
+        position: absolute;
+        left: 0;
+        right: 0;
+        background-color: $background;
+        border: 1px solid $input-border-color;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        z-index: 1000;
+    }
+
+    &_suggestion {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        position: relative;
+        cursor: pointer;
+
+        > * {
+            user-select: none;
+        }
+
+        &:hover {
+            background-color: $focus-bg-color;
+        }
+
+        &_selected {
+            background-color: $focus-bg-color;
+
+            &::before {
+                content: '';
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-image: url("$(res)/img/element-icons/roomlist/checkmark.svg");
+                mask-size: $icon-size;
+                display: block;
+                width: $icon-size;
+                height: $icon-size;
+                margin: 0 auto;
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: $username-variant1-color;
+            }
+        }
+
+        &_title {
+            margin-right: 8px;
+        }
+
+        &_description {
+            color: grey;
+            font-size: 1.2rem;
+        }
+    }
+
+    &_editor {
+        flex: 1;
+        border-radius: 4px;
+        min-height: 25px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: flex;
+        flex-wrap: wrap;
+        transition: border-color 0.25s;
+        border: 1px solid $input-border-color;
+
+        > input[type="text"] {
+            margin: 6px 0 !important;
+            height: 24px;
+            line-height: $font-24px;
+            font-size: $font-14px;
+            padding-left: 12px;
+            border: 0 !important;
+            outline: 0 !important;
+            resize: none;
+            box-sizing: border-box;
+            min-width: 40%;
+            flex: 1 !important;
+            color: $primary-content !important;
+
+            &::placeholder {
+                color: $primary-content !important;
+                font-weight: normal !important;
+                font-size: 1.4rem;
+            }
+        }
+
+        &_selection {
+            margin: 6px 6px 0 6px;
+            display: flex;
+            min-width: max-content;
+
+            &_pill {
+                background-color: $username-variant1-color;
+                border-radius: 12px;
+                height: 24px;
+                padding-left: 8px;
+                padding-right: 8px;
+                color: #ffffff;
+                display: flex;
+                align-items: center;
+            }
+
+            &_remove {
+                margin-left: 4px;
+                max-height: 24px;
+                line-height: 24px;
+            }
+        }
+    }
+}
