@@ -45,7 +45,7 @@ describe("RightPanel", () => {
 
     let cli: MockedObject<MatrixClient>;
     let context: SdkContextClass;
-    let RightPanel: React.ComponentType<{room: Room, resizeNotifier: ResizeNotifier}>;
+    let RightPanel: React.ComponentType<React.ComponentProps<typeof RightPanelBase>>;
     beforeEach(() => {
         stubClient();
         cli = mocked(MatrixClientPeg.get());
