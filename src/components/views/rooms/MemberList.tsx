@@ -101,7 +101,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.updateListNow(true);
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         this.mounted = false;
         const cli = MatrixClientPeg.get();
         if (cli) {
