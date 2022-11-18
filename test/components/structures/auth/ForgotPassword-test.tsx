@@ -16,13 +16,14 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MatrixClient, createClient } from "matrix-js-sdk/src/matrix";
 
 import ForgotPassword from "../../../../src/components/structures/auth/ForgotPassword";
 import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
 import { flushPromisesWithFakeTimers, stubClient } from "../../../test-utils";
+import Modal from "../../../../src/Modal";
 
 jest.mock("matrix-js-sdk/src/matrix", () => ({
     ...jest.requireActual("matrix-js-sdk/src/matrix"),
@@ -36,6 +37,7 @@ describe("<ForgotPassword>", () => {
     let client: MatrixClient;
     let serverConfig: ValidatedServerConfig;
     let onComplete: () => void;
+    let renderResult: RenderResult;
 
     const typeIntoField = async (label: string, value: string): Promise<void> => {
         await act(async () => {
@@ -50,6 +52,11 @@ describe("<ForgotPassword>", () => {
             await userEvent.click(screen.getByText(submitLabel), { delay: null });
         });
     };
+
+    afterEach(() => {
+        // clean up modals
+        Modal.closeCurrentModal("force");
+    });
 
     beforeAll(() => {
         client = stubClient();
@@ -66,7 +73,7 @@ describe("<ForgotPassword>", () => {
 
     describe("when starting a password reset flow", () => {
         beforeEach(() => {
-            render(<ForgotPassword
+            renderResult = render(<ForgotPassword
                 serverConfig={serverConfig}
                 onComplete={onComplete}
             />);
@@ -80,7 +87,7 @@ describe("<ForgotPassword>", () => {
         describe("and updating the server config", () => {
             beforeEach(() => {
                 serverConfig.hsName = "example2.com";
-                render(<ForgotPassword
+                renderResult.rerender(<ForgotPassword
                     serverConfig={serverConfig}
                     onComplete={onComplete}
                 />);
@@ -247,10 +254,9 @@ describe("<ForgotPassword>", () => {
                                 mocked(client.setPassword).mockResolvedValue({});
                                 // be sure the next set password attempt was sent
                                 jest.advanceTimersByTime(3000);
-                                // for the modal to disappear
+                                // quad flush promises for the modal to disappear
                                 await flushPromisesWithFakeTimers();
                                 await flushPromisesWithFakeTimers();
-                                jest.advanceTimersByTime(500);
                                 await flushPromisesWithFakeTimers();
                                 await flushPromisesWithFakeTimers();
                             });

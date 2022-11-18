@@ -244,8 +244,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
             false,
             false,
             {
-                // this modal cannot be dismissed until reset is done
-                onBeforeClose: async () => this.state.phase === Phase.Done,
+                // this modal cannot be dismissed except reset is done or forced
+                onBeforeClose: async (reason?: string) => {
+                    return this.state.phase === Phase.Done || reason === "force";
+                },
             },
         );
 
