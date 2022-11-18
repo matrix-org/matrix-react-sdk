@@ -72,7 +72,7 @@ describe("ForwardDialog", () => {
     });
     const defaultRooms = ["a", "A", "b"].map(name => mkStubRoom(name, name, mockClient));
 
-    const mountForwardDialog = async (message = defaultMessage, rooms = defaultRooms) => {
+    const mountForwardDialog = (message = defaultMessage, rooms = defaultRooms) => {
         mockClient.getVisibleRooms.mockReturnValue(rooms);
         mockClient.getRoom.mockImplementation(roomId => rooms.find(room => room.roomId === roomId));
 
@@ -84,7 +84,6 @@ describe("ForwardDialog", () => {
                 onFinished={jest.fn()}
             />,
         );
-        await new Promise(resolve => setImmediate(resolve));
 
         return wrapper;
     };
@@ -101,7 +100,7 @@ describe("ForwardDialog", () => {
     });
 
     it("shows a preview with us as the sender", async () => {
-        const { container } = await mountForwardDialog();
+        const { container } = mountForwardDialog();
 
         expect(screen.queryByText("Hello world!")).toBeInTheDocument();
 
@@ -111,7 +110,7 @@ describe("ForwardDialog", () => {
     });
 
     it("filters the rooms", async () => {
-        const { container } = await mountForwardDialog();
+        const { container } = mountForwardDialog();
 
         expect(container.querySelectorAll(".mx_ForwardList_entry")).toHaveLength(3);
 
@@ -123,7 +122,7 @@ describe("ForwardDialog", () => {
 
     it("tracks message sending progress across multiple rooms", async () => {
         mockPlatformPeg();
-        const { container } = await mountForwardDialog();
+        const { container } = mountForwardDialog();
 
         // Make sendEvent require manual resolution so we can see the sending state
         let finishSend;
@@ -186,7 +185,7 @@ describe("ForwardDialog", () => {
             event: true,
         });
 
-        await mountForwardDialog(replyMessage);
+        mountForwardDialog(replyMessage);
 
         expect(screen.queryByText("Hi Alice!", { exact: false })).toBeInTheDocument();
     });
@@ -196,7 +195,7 @@ describe("ForwardDialog", () => {
         readOnlyRoom.maySendMessage = jest.fn().mockReturnValue(false);
         const rooms = [readOnlyRoom, mkStubRoom("b", "b", mockClient)];
 
-        const { container } = await mountForwardDialog(undefined, rooms);
+        const { container } = mountForwardDialog(undefined, rooms);
 
         const [firstButton, secondButton] = container.querySelectorAll<HTMLButtonElement>(".mx_ForwardList_sendButton");
 
@@ -230,7 +229,7 @@ describe("ForwardDialog", () => {
             });
 
         it('converts legacy location events to pin drop shares', async () => {
-            const { container } = await mountForwardDialog(legacyLocationEvent);
+            const { container } = mountForwardDialog(legacyLocationEvent);
 
             expect(container.querySelector(".mx_MLocationBody")).toBeTruthy();
             sendToFirstRoom(container);
@@ -256,7 +255,7 @@ describe("ForwardDialog", () => {
         });
 
         it('removes personal information from static self location shares', async () => {
-            const { container } = await mountForwardDialog(modernLocationEvent);
+            const { container } = mountForwardDialog(modernLocationEvent);
 
             expect(container.querySelector(".mx_MLocationBody")).toBeTruthy();
             sendToFirstRoom(container);
@@ -296,7 +295,7 @@ describe("ForwardDialog", () => {
                 geo_uri: geoUri,
                 [M_TIMESTAMP.name]: timestamp,
             };
-            const { container } = await mountForwardDialog(beaconEvent);
+            const { container } = mountForwardDialog(beaconEvent);
 
             expect(container.querySelector(".mx_MLocationBody")).toBeTruthy();
 
@@ -308,7 +307,7 @@ describe("ForwardDialog", () => {
         });
 
         it('forwards pin drop event', async () => {
-            const { container } = await mountForwardDialog(pinDropLocationEvent);
+            const { container } = mountForwardDialog(pinDropLocationEvent);
 
             expect(container.querySelector(".mx_MLocationBody")).toBeTruthy();
 
