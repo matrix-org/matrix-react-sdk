@@ -3579,8 +3579,6 @@
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Inactieve sessies zijn sessies die u al een tijdje niet hebt gebruikt, maar ze blijven vesleutelingssleutels ontvangen.",
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "U moet er vooral zeker van zijn dat u deze sessies herkent, omdat ze een ongeoorloofd gebruik van uw account kunnen vertegenwoordigen.",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Niet geverifieerde sessies zijn sessies die zijn aangemeld met uw inloggegevens, maar niet zijn geverifieerd.",
-    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Dit betekent dat ze vesleutelingssleutel bevatten voor uw eerdere berichten en bevestigen aan andere gebruikers waarmee u communiceert dat deze sessies echt van u zijn.",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Geverifieerde sessies zijn ingelogd met uw inloggegevens en vervolgens geverifieerd, hetzij met uw veilige wachtwoordzin of door kruisverificatie.",
     "Sign out of this session": "Afmelden voor deze sessie",
     "Receive push notifications on this session.": "Ontvang pushmeldingen voor deze sessie.",
     "Push notifications": "Pushmeldingen",
