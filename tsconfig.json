@@ -18,7 +18,8 @@
       "dom",
       "dom.iterable"
     ],
-    "alwaysStrict": true
+    "alwaysStrict": true,
+    "strictBindCallApply": true
   },
   "include": [
     "./src/**/*.ts",

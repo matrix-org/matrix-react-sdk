@@ -63,7 +63,7 @@ export const createTestPlayback = (): Playback => {
         liveData: new SimpleObservable<number[]>(),
         durationSeconds: 31415,
         timeSeconds: 3141,
-    } as PublicInterface<Playback> as Playback;
+    } as unknown as Playback;
 };
 
 export const createTestPlaybackClock = (): PlaybackClock => {

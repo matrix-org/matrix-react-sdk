@@ -111,7 +111,7 @@ export const CommandCategories = {
 
 export type RunResult = XOR<{ error: Error | ITranslatableError }, { promise: Promise<IContent | undefined> }>;
 
-type RunFn = ((roomId: string, args: string, cmd: string) => RunResult);
+type RunFn = ((roomId: string, args: string) => RunResult);
 
 interface ICommandOpts {
     command: string;
@@ -129,9 +129,9 @@ interface ICommandOpts {
 export class Command {
     public readonly command: string;
     public readonly aliases: string[];
-    public readonly args: undefined | string;
+    public readonly args?: string;
     public readonly description: string;
-    public readonly runFn: undefined | RunFn;
+    public readonly runFn?: RunFn;
     public readonly category: string;
     public readonly hideCompletionAfterSpace: boolean;
     public readonly renderingTypes?: TimelineRenderingType[];
