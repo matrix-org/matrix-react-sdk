@@ -3628,10 +3628,8 @@
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Qualcun altro sta già registrando una trasmissione vocale. Aspetta che finisca prima di iniziarne una nuova.",
     "Are you sure you want to sign out of %(count)s sessions?|one": "Vuoi davvero disconnetterti da %(count)s sessione?",
     "Are you sure you want to sign out of %(count)s sessions?|other": "Vuoi davvero disconnetterti da %(count)s sessioni?",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Le sessioni verificate hanno effettuato l'accesso con le tue credenziali e sono state verificate, usando la frase segreta o la verifica incrociata.",
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Dovresti essere particolarmente certo di riconoscere queste sessioni dato che potrebbero rappresentare un uso non autorizzato del tuo account.",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Le sessioni non verificate sono quelle che hanno effettuato l'accesso con le tue credenziali ma non sono state verificate.",
-    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Ciò significa che hanno le chiavi di crittografia dei tuoi messaggi passati e confermano agli altri utenti con cui comunichi che in queste sessioni ci sei davvero tu.",
     "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "La rimozione delle sessioni inattive migliora la sicurezza e le prestazioni, e ti semplifica identificare se una sessione nuova è sospetta.",
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Le sessioni inattive sono quelle che non usi da un po' di tempo, ma che continuano a ricevere le chiavi di crittografia.",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Considera di disconnettere le vecchie sessioni (%(inactiveAgeDays)s giorni o più) che non usi più.",
@@ -3658,5 +3656,7 @@
     "Go live": "Vai in diretta",
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss rimasti",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)so %(minutes)sm %(seconds)ss rimasti",
-    "That e-mail address or phone number is already in use.": "Quell'indirizzo email o numero di telefono è già in uso."
+    "That e-mail address or phone number is already in use.": "Quell'indirizzo email o numero di telefono è già in uso.",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": ""
 }
