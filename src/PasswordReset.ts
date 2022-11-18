@@ -57,7 +57,7 @@ export default class PasswordReset {
      * @param {boolean} logoutDevices Should all devices be signed out after the reset? Defaults to `true`.
      * @return {Promise} Resolves when the email has been sent. Then call checkEmailLinkClicked().
      */
-    public resetPassword(
+    public async resetPassword(
         emailAddress: string,
         newPassword: string,
         logoutDevices = true,
@@ -65,17 +65,23 @@ export default class PasswordReset {
         this.password = newPassword;
         this.logoutDevices = logoutDevices;
         this.sendAttempt++;
-        return this.client.requestPasswordEmailToken(emailAddress, this.clientSecret, this.sendAttempt).then((res) => {
-            this.sessionId = res.sid;
-            return res;
-        }, function(err) {
+
+        try {
+            const result = await this.client.requestPasswordEmailToken(
+                emailAddress,
+                this.clientSecret,
+                this.sendAttempt,
+            );
+            this.sessionId = result.sid;
+            return result;
+        } catch (err: any) {
             if (err.errcode === 'M_THREEPID_NOT_FOUND') {
                 err.message = _t('This email address was not found');
             } else if (err.httpStatus) {
                 err.message = err.message + ` (Status ${err.httpStatus})`;
             }
             throw err;
-        });
+        }
     }
 
     /**
