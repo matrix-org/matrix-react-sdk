@@ -62,6 +62,7 @@ describe("MemberListStore", () => {
                 event_id: "$2",
             }),
         ]);
+        room.recalculate();
         mocked(client.getRoom).mockImplementation((r: string): Room | null => {
             if (r === roomId) {
                 return room;

@@ -38,7 +38,6 @@ export class MemberListStore {
     public constructor(
         private readonly stores: SdkContextClass,
     ) {
-        this.sortMembers = this.sortMembers.bind(this);
     }
 
     /**
@@ -49,7 +48,7 @@ export class MemberListStore {
      */
     public async loadMemberList(
         roomId: string, searchQuery?: string,
-    ): Promise<{joined: Array<RoomMember>, invited: Array<RoomMember> }> {
+    ): Promise<Record<"joined" | "invited", RoomMember[]>> {
         if (!this.stores.client) {
             return {
                 joined: [],
@@ -62,8 +61,12 @@ export class MemberListStore {
         // Filter then sort as it's more efficient than sorting tons of members we will just filter out later.
         // Also sort each group, as there's no point comparing invited/joined users when they aren't in the same list!
         const membersByMembership = this.filterMembers(members, searchQuery);
-        membersByMembership.joined.sort(this.sortMembers);
-        membersByMembership.invited.sort(this.sortMembers);
+        membersByMembership.joined.sort((a: RoomMember, b: RoomMember) => {
+            return this.sortMembers(a, b);
+        });
+        membersByMembership.invited.sort((a: RoomMember, b: RoomMember) => {
+            return this.sortMembers(a, b);
+        });
         return {
             joined: membersByMembership.joined,
             invited: membersByMembership.invited,
@@ -160,8 +163,8 @@ export class MemberListStore {
      */
     private filterMembers(
         members: Array<RoomMember>, query?: string,
-    ): {joined: Array<RoomMember>, invited: Array<RoomMember>} {
-        const result: {joined: Array<RoomMember>, invited: Array<RoomMember>} = {
+    ): Record<"joined" | "invited", RoomMember[]> {
+        const result: Record<"joined" | "invited", RoomMember[]> = {
             joined: [],
             invited: [],
         };
@@ -171,8 +174,8 @@ export class MemberListStore {
             }
             if (query) {
                 query = query.toLowerCase();
-                const matchesName = m.name.toLowerCase().indexOf(query) !== -1;
-                const matchesId = m.userId.toLowerCase().indexOf(query) !== -1;
+                const matchesName = m.name.toLowerCase().includes(query);
+                const matchesId = m.userId.toLowerCase().includes(query);
                 if (!matchesName && !matchesId) {
                     return;
                 }
