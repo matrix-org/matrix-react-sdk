@@ -3632,7 +3632,6 @@
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "不活躍工作階段是您一段時間未使用的工作階段，但它們會繼續接收加密金鑰。",
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "您應特別確定您可以識別這些工作階段，因為它們可能代表未經授權使用您的帳號。",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "未經驗證的工作階段是使用您的憑證登入但尚未經過交叉驗證的工作階段。",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "已驗證的工作階段已使用您的憑證登入，然後使用您的安全密碼或透過交叉驗證進行驗證。",
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "這讓他們確定他們真的在與您交談，但這也代表了他們可以看到您在此處輸入的工作階段名稱。",
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "您加入的直接訊息與聊天室中的其他使用者可以檢視您的工作階段的完整清單。",
     "Renaming sessions": "重新命名工作階段",
@@ -3657,5 +3656,7 @@
     "Go live": "開始直播",
     "%(minutes)sm %(seconds)ss left": "剩餘%(minutes)s分鐘%(seconds)s秒",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "剩餘%(hours)s小時%(minutes)s分鐘%(seconds)s秒",
-    "That e-mail address or phone number is already in use.": "該電子郵件地址或電話號碼已被使用。"
+    "That e-mail address or phone number is already in use.": "該電子郵件地址或電話號碼已被使用。",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "這代表了您擁有解鎖加密訊息所需的所有金鑰，並向其他使用者確認您信任此工作階段。",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "已驗證的工作階段是在輸入密碼或透過另一個已驗證工作階段確認您的身份後使用此帳號的任何地方。"
 }
