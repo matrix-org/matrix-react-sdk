@@ -39,7 +39,7 @@ describe("MemberListStore", () => {
         context.client = client;
         store = new MemberListStore(context);
         // alice is joined to the room.
-        room = new Room(roomId, client, client.getUserId());
+        room = new Room(roomId, client, client.getUserId()!);
         room.currentState.setStateEvents([
             new MatrixEvent({
                 type: EventType.RoomCreate,
@@ -62,7 +62,7 @@ describe("MemberListStore", () => {
                 event_id: "$2",
             }),
         ]);
-        mocked(client.getRoom).mockImplementation((r: string): Room => {
+        mocked(client.getRoom).mockImplementation((r: string): Room | null => {
             if (r === roomId) {
                 return room;
             }
@@ -79,13 +79,13 @@ describe("MemberListStore", () => {
         addMember(room, bob, "invite");
         addMember(room, charlie, "leave");
 
-        const { invited, joined } = await store.loadMemberList(roomId, null);
+        const { invited, joined } = await store.loadMemberList(roomId);
         expect(invited).toEqual([room.getMember(bob)]);
         expect(joined).toEqual([room.getMember(alice)]);
     });
 
     it("fails gracefully for invalid rooms", async () => {
-        const { invited, joined } = await store.loadMemberList("!idontexist:bar", null);
+        const { invited, joined } = await store.loadMemberList("!idontexist:bar");
         expect(invited).toEqual([]);
         expect(joined).toEqual([]);
     });
@@ -101,7 +101,7 @@ describe("MemberListStore", () => {
             users_default: 10,
         });
 
-        const { invited, joined } = await store.loadMemberList(roomId, null);
+        const { invited, joined } = await store.loadMemberList(roomId);
         expect(invited).toEqual([]);
         expect(joined).toEqual([room.getMember(alice), room.getMember(charlie), room.getMember(bob)]);
     });
@@ -114,13 +114,13 @@ describe("MemberListStore", () => {
             users_default: 10,
         });
 
-        let { invited, joined } = await store.loadMemberList(roomId, null);
+        let { invited, joined } = await store.loadMemberList(roomId);
         expect(invited).toEqual([]);
         expect(joined).toEqual([room.getMember(alice), room.getMember(bob), room.getMember(charlie)]);
 
         // Ensure it sorts by display name if they are set
         addMember(room, doris, "join", "AAAAA");
-        ({ invited, joined } = await store.loadMemberList(roomId, null));
+        ({ invited, joined } = await store.loadMemberList(roomId));
         expect(invited).toEqual([]);
         expect(joined).toEqual(
             [room.getMember(doris), room.getMember(alice), room.getMember(bob), room.getMember(charlie)],
@@ -152,10 +152,10 @@ describe("MemberListStore", () => {
         });
 
         it("calls Room.loadMembersIfNeeded once when enabled", async () => {
-            let { joined } = await store.loadMemberList(roomId, null);
+            let { joined } = await store.loadMemberList(roomId);
             expect(joined).toEqual([room.getMember(alice)]);
             expect(room.loadMembersIfNeeded).toHaveBeenCalledTimes(1);
-            ({ joined } = await store.loadMemberList(roomId, null));
+            ({ joined } = await store.loadMemberList(roomId));
             expect(joined).toEqual([room.getMember(alice)]);
             expect(room.loadMembersIfNeeded).toHaveBeenCalledTimes(1);
         });
@@ -186,7 +186,7 @@ describe("MemberListStore", () => {
                     },
                 ],
             });
-            const { joined } = await store.loadMemberList(roomId, null);
+            const { joined } = await store.loadMemberList(roomId);
             expect(joined).toEqual([room.getMember(alice), room.getMember(bob)]);
             expect(client.members).toHaveBeenCalled();
         });
@@ -195,7 +195,7 @@ describe("MemberListStore", () => {
             client.isRoomEncrypted = jest.fn();
             mocked(client.isRoomEncrypted).mockReturnValue(true);
 
-            const { joined } = await store.loadMemberList(roomId, null);
+            const { joined } = await store.loadMemberList(roomId);
             expect(joined).toEqual([room.getMember(alice)]);
             expect(client.members).not.toHaveBeenCalled();
         });
@@ -213,7 +213,7 @@ function setPowerLevels(room: Room, pl: IContent) {
         type: EventType.RoomPowerLevels,
         state_key: "",
         content: pl,
-        sender: room.getCreator(),
+        sender: room.getCreator()!,
         room_id: room.roomId,
         event_id: "$" + Math.random(),
     }));

@@ -33,7 +33,7 @@ export class MemberListStore {
     // list of room IDs that have been lazy loaded
     private readonly loadedRooms = new Set<string>;
 
-    private collator: Intl.Collator;
+    private collator?: Intl.Collator;
 
     public constructor(
         private readonly stores: SdkContextClass,
@@ -48,8 +48,14 @@ export class MemberListStore {
      * @returns A list of filtered and sorted room members, grouped by membership.
      */
     public async loadMemberList(
-        roomId: string, searchQuery: string,
+        roomId: string, searchQuery?: string,
     ): Promise<{joined: Array<RoomMember>, invited: Array<RoomMember> }> {
+        if (!this.stores.client) {
+            return {
+                joined: [],
+                invited: [],
+            };
+        }
         const language = SettingsStore.getValue("language");
         this.collator = new Intl.Collator(language, { sensitivity: 'base', ignorePunctuation: false });
         const members = await this.loadMembers(roomId);
@@ -65,7 +71,7 @@ export class MemberListStore {
     }
 
     private async loadMembers(roomId: string): Promise<Array<RoomMember>> {
-        const room = this.stores.client.getRoom(roomId);
+        const room = this.stores.client!.getRoom(roomId);
         if (!room) {
             return [];
         }
@@ -83,8 +89,8 @@ export class MemberListStore {
             // pull straight from the server. Don't use a since token as we don't have earlier deltas
             // accumulated.
             room.currentState.markOutOfBandMembersStarted();
-            const response = await this.stores.client.members(roomId, undefined, "leave");
-            const memberEvents = response.chunk.map(this.stores.client.getEventMapper());
+            const response = await this.stores.client!.members(roomId, undefined, "leave");
+            const memberEvents = response.chunk.map(this.stores.client!.getEventMapper());
             room.currentState.setOutOfBandMembers(memberEvents);
         } else {
             // load using traditional lazy loading
@@ -105,7 +111,7 @@ export class MemberListStore {
             // before the user object exists. This may or may not cause
             // https://github.com/vector-im/vector-web/issues/186
             if (!member.user) {
-                member.user = this.stores.client.getUser(member.userId);
+                member.user = this.stores.client!.getUser(member.userId) || undefined;
             }
             // XXX: this user may have no lastPresenceTs value!
             // the right solution here is to fix the race rather than leave it as 0
@@ -122,9 +128,9 @@ export class MemberListStore {
     private isLazyLoadingEnabled(roomId: string): boolean {
         if (SettingsStore.getValue("feature_sliding_sync")) {
             // only unencrypted rooms use lazy loading
-            return !this.stores.client.isRoomEncrypted(roomId);
+            return !this.stores.client!.isRoomEncrypted(roomId);
         }
-        return this.stores.client.hasLazyLoadMembersEnabled();
+        return this.stores.client!.hasLazyLoadMembersEnabled();
     }
 
     /**
@@ -135,12 +141,15 @@ export class MemberListStore {
         if (SettingsStore.getValue("feature_sliding_sync")) {
             return false;
         }
-        return this.stores.client.hasLazyLoadMembersEnabled();
+        return this.stores.client!.hasLazyLoadMembersEnabled();
     }
 
     public isPresenceEnabled(): boolean {
+        if (!this.stores.client) {
+            return true;
+        }
         const enablePresenceByHsUrl = SdkConfig.get("enable_presence_by_hs_url");
-        return enablePresenceByHsUrl?.[this.stores.client.baseUrl] ?? true;
+        return enablePresenceByHsUrl?.[this.stores.client!.baseUrl] ?? true;
     }
 
     /**
@@ -152,7 +161,7 @@ export class MemberListStore {
     private filterMembers(
         members: Array<RoomMember>, query?: string,
     ): {joined: Array<RoomMember>, invited: Array<RoomMember>} {
-        const result = {
+        const result: {joined: Array<RoomMember>, invited: Array<RoomMember>} = {
             joined: [],
             invited: [],
         };
@@ -204,15 +213,15 @@ export class MemberListStore {
 
         // First by presence
         if (showPresence) {
-            const convertPresence = (p) => p === 'unavailable' ? 'online' : p;
-            const presenceIndex = p => {
+            const convertPresence = (p: string): string => p === 'unavailable' ? 'online' : p;
+            const presenceIndex = (p: string): number => {
                 const order = ['active', 'online', 'offline'];
                 const idx = order.indexOf(convertPresence(p));
                 return idx === -1 ? order.length : idx; // unknown states at the end
             };
 
-            const idxA = presenceIndex(userA.currentlyActive ? 'active' : userA.presence);
-            const idxB = presenceIndex(userB.currentlyActive ? 'active' : userB.presence);
+            const idxA = presenceIndex(userA!.currentlyActive ? 'active' : userA!.presence);
+            const idxB = presenceIndex(userB!.currentlyActive ? 'active' : userB!.presence);
             if (idxA !== idxB) {
                 return idxA - idxB;
             }
@@ -224,12 +233,12 @@ export class MemberListStore {
         }
 
         // Third by last active
-        if (showPresence && userA.getLastActiveTs() !== userB.getLastActiveTs()) {
-            return userB.getLastActiveTs() - userA.getLastActiveTs();
+        if (showPresence && userA!.getLastActiveTs() !== userB!.getLastActiveTs()) {
+            return userB!.getLastActiveTs() - userA!.getLastActiveTs();
         }
 
         // Fourth by name (alphabetical)
-        return this.collator.compare(this.canonicalisedName(memberA.name), this.canonicalisedName(memberB.name));
+        return this.collator!.compare(this.canonicalisedName(memberA.name), this.canonicalisedName(memberB.name));
     }
 
     /**
