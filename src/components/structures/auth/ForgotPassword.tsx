@@ -80,18 +80,17 @@ export default class ForgotPassword extends React.Component<Props, State> {
     private fieldPassword: Field | null = null;
     private fieldPasswordConfirm: Field | null = null;
 
-    state: State = {
-        phase: Phase.EnterEmail,
-        email: "",
-        password: "",
-        password2: "",
-        errorText: null,
-        serverSupportsControlOfDevicesLogout: false,
-        logoutDevices: false,
-    };
-
     public constructor(props: Props) {
         super(props);
+        this.state = {
+            phase: Phase.EnterEmail,
+            email: "",
+            password: "",
+            password2: "",
+            errorText: null,
+            serverSupportsControlOfDevicesLogout: false,
+            logoutDevices: false,
+        };
         this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
     }
 
