@@ -26,6 +26,7 @@ import Field from "../../../views/elements/Field";
 interface EnterEmailProps {
     email: string;
     errorText: string | null;
+    homeserver: string;
     loading: boolean;
     onInputChanged: (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => void;
     onSubmitForm: (ev: React.FormEvent) => void;
@@ -37,6 +38,7 @@ interface EnterEmailProps {
 export const EnterEmail: React.FC<EnterEmailProps> = ({
     email,
     errorText,
+    homeserver,
     loading,
     onInputChanged,
     onSubmitForm,
@@ -64,7 +66,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
             {
                 _t(
                     "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.",
-                    { homeserver: "matrix.org" },
+                    { homeserver },
                     { b: t => <b>{ t }</b> },
                 )
             }

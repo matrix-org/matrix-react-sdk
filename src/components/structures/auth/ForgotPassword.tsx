@@ -279,6 +279,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         return <EnterEmail
             email={this.state.email}
             errorText={this.state.errorText}
+            homeserver={this.props.serverConfig.hsName}
             loading={this.state.phase === Phase.SendingEmail}
             onInputChanged={this.onInputChanged}
             onSubmitForm={this.onSubmitForm}

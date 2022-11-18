@@ -55,6 +55,7 @@ describe("<ForgotPassword>", () => {
     beforeAll(() => {
         client = stubClient();
         serverConfig = new ValidatedServerConfig();
+        serverConfig.hsName = "example.com";
         mocked(createClient).mockReturnValue(client);
         jest.useFakeTimers();
         onServerConfigChange = jest.fn();
@@ -74,8 +75,9 @@ describe("<ForgotPassword>", () => {
             />);
         });
 
-        it("should show the email input", () => {
+        it("should show the email input and mention the homeserver", () => {
             expect(screen.getByLabelText("Email address")).toBeInTheDocument();
+            expect(screen.getByText("example.com")).toBeInTheDocument();
         });
 
         describe("when entering a non-email value", () => {
