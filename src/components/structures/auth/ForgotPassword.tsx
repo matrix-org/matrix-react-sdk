@@ -59,7 +59,6 @@ enum Phase {
 
 interface Props {
     serverConfig: ValidatedServerConfig;
-    onServerConfigChange: (serverConfig: ValidatedServerConfig) => void;
     onLoginClick?: () => void;
     onComplete: () => void;
 }
@@ -98,14 +97,13 @@ export default class ForgotPassword extends React.Component<Props, State> {
         this.checkServerCapabilities(this.props.serverConfig);
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line
-    public UNSAFE_componentWillReceiveProps(newProps: Props): void {
-        if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
-            newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
-
-        // Do capabilities check on new URLs
-        this.checkServerCapabilities(newProps.serverConfig);
+    public componentDidUpdate(prevProps: Readonly<Props>) {
+        if (prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
+            prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
+        ) {
+            // Do capabilities check on new URLs
+            this.checkServerCapabilities(this.props.serverConfig);
+        }
     }
 
     private async checkServerCapabilities(serverConfig: ValidatedServerConfig): Promise<void> {
@@ -247,10 +245,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             false,
             {
                 // this modal cannot be dismissed until reset is done
-                onBeforeClose: async () => {
-                    console.log("miw phase", this.state.phase);
-                    return this.state.phase === Phase.Done;
-                },
+                onBeforeClose: async () => this.state.phase === Phase.Done,
             },
         );
 

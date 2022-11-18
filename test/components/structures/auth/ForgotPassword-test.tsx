@@ -35,7 +35,6 @@ describe("<ForgotPassword>", () => {
     const testPassword = "cRaZyP4ssw0rd!";
     let client: MatrixClient;
     let serverConfig: ValidatedServerConfig;
-    let onServerConfigChange: (serverConfig: ValidatedServerConfig) => void;
     let onComplete: () => void;
 
     const typeIntoField = async (label: string, value: string): Promise<void> => {
@@ -58,7 +57,6 @@ describe("<ForgotPassword>", () => {
         serverConfig.hsName = "example.com";
         mocked(createClient).mockReturnValue(client);
         jest.useFakeTimers();
-        onServerConfigChange = jest.fn();
         onComplete = jest.fn();
     });
 
@@ -70,14 +68,27 @@ describe("<ForgotPassword>", () => {
         beforeEach(() => {
             render(<ForgotPassword
                 serverConfig={serverConfig}
-                onServerConfigChange={onServerConfigChange}
                 onComplete={onComplete}
             />);
         });
 
         it("should show the email input and mention the homeserver", () => {
-            expect(screen.getByLabelText("Email address")).toBeInTheDocument();
-            expect(screen.getByText("example.com")).toBeInTheDocument();
+            expect(screen.queryByLabelText("Email address")).toBeInTheDocument();
+            expect(screen.queryByText("example.com")).toBeInTheDocument();
+        });
+
+        describe("and updating the server config", () => {
+            beforeEach(() => {
+                serverConfig.hsName = "example2.com";
+                render(<ForgotPassword
+                    serverConfig={serverConfig}
+                    onComplete={onComplete}
+                />);
+            });
+
+            it("should show the new homeserver server name", () => {
+                expect(screen.queryByText("example2.com")).toBeInTheDocument();
+            });
         });
 
         describe("when entering a non-email value", () => {
@@ -206,7 +217,7 @@ describe("<ForgotPassword>", () => {
                     describe("and submitting it", () => {
                         beforeEach(async () => {
                             await submitForm("Reset password");
-                            // double flash promises for the modal to appear
+                            // double flush promises for the modal to appear
                             await flushPromisesWithFakeTimers();
                             await flushPromisesWithFakeTimers();
                         });
