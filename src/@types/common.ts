@@ -24,6 +24,7 @@ export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 export type ReactAnyComponent = React.Component | React.ExoticComponent;
 
+// Utility type for string dot notation for accessing nested object properties
 // Based on https://stackoverflow.com/a/58436959
 type Join<K, P> = K extends string | number ?
     P extends string | number ?
