@@ -3362,5 +3362,17 @@
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "すでに音声ブロードキャストを録音中です。新しく始めるには今の音声ブロードキャストを終了してください。",
     "Close sidebar": "サイドバーを閉じる",
     "You are sharing your live location": "位置情報（ライブ）を共有中です",
-    "Stop and close": "停止して閉じる"
+    "Stop and close": "停止して閉じる",
+    "Session details": "セッションの詳細",
+    "Operating system": "オペレーティングシステム",
+    "Model": "モデル",
+    "Device": "端末",
+    "URL": "URL",
+    "Application": "アプリケーション",
+    "Renaming sessions": "セッション名を変更",
+    "Call type": "通話の種類",
+    "You do not have sufficient permissions to change this.": "これを変更するのに必要な権限を持っていません。",
+    "Great, that'll help people know it's you": "素晴らしい、他の人があなただと気づく助けになるでしょう",
+    "Show HTML representation of room topics": "ルームのトピックをHTML形式で表示",
+    "Reset bearing to north": "北向きにリセット"
 }
