@@ -80,10 +80,13 @@ export interface IValidationResult {
  *     A validation function that takes in the current input value and returns
  *     the overall validity and a feedback UI that can be rendered for more detail.
  */
-export default function withValidation<T = undefined, D = void>({
+export default function withValidation<T = void, D = void>({
     description, hideDescriptionIfValid, deriveData, rules,
 }: IArgs<T, D>) {
-    return async function onValidate({ value, focused, allowEmpty = true }: IFieldState): Promise<IValidationResult> {
+    return async function onValidate(
+        this: T,
+        { value, focused, allowEmpty = true }: IFieldState,
+    ): Promise<IValidationResult> {
         if (!value && allowEmpty) {
             return {
                 valid: null,
@@ -96,7 +99,7 @@ export default function withValidation<T = undefined, D = void>({
 
         const results: IResult[] = [];
         let valid = true;
-        if (rules && rules.length) {
+        if (rules?.length) {
             for (const rule of rules) {
                 if (!rule.key || !rule.test) {
                     continue;
