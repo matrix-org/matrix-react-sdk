@@ -26,7 +26,7 @@ interface Props extends React.ComponentProps<typeof AccessibleTooltipButton> {
     onClick: () => void;
 }
 
-const DeviceExpandDetailsButton: React.FC<Props> = ({ isExpanded, onClick, ...rest }) => {
+export const DeviceExpandDetailsButton: React.FC<Props> = ({ isExpanded, onClick, ...rest }) => {
     const label = isExpanded ? _t('Hide details') : _t('Show details');
     return <AccessibleTooltipButton
         {...rest}
@@ -41,5 +41,3 @@ const DeviceExpandDetailsButton: React.FC<Props> = ({ isExpanded, onClick, ...re
         <CaretIcon className='mx_DeviceExpandDetailsButton_icon' />
     </AccessibleTooltipButton>;
 };
-
-export default DeviceExpandDetailsButton;
