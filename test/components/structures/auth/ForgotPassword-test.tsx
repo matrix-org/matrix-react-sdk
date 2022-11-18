@@ -23,7 +23,6 @@ import { MatrixClient, createClient } from "matrix-js-sdk/src/matrix";
 import ForgotPassword from "../../../../src/components/structures/auth/ForgotPassword";
 import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
 import { flushPromisesWithFakeTimers, stubClient } from "../../../test-utils";
-import { filterConsoleError } from "../../../test-utils/console";
 
 jest.mock("matrix-js-sdk/src/matrix", () => ({
     ...jest.requireActual("matrix-js-sdk/src/matrix"),
@@ -38,7 +37,6 @@ describe("<ForgotPassword>", () => {
     let serverConfig: ValidatedServerConfig;
     let onServerConfigChange: (serverConfig: ValidatedServerConfig) => void;
     let onComplete: () => void;
-    let restoreConsole: () => void;
 
     const typeIntoField = async (label: string, value: string): Promise<void> => {
         await act(async () => {
@@ -55,11 +53,6 @@ describe("<ForgotPassword>", () => {
     };
 
     beforeAll(() => {
-        restoreConsole = filterConsoleError(
-            // not implemented in js-dom https://github.com/jsdom/jsdom/issues/1937
-            "Not implemented: HTMLFormElement.prototype.requestSubmit",
-        );
-
         client = stubClient();
         serverConfig = new ValidatedServerConfig();
         mocked(createClient).mockReturnValue(client);
@@ -70,7 +63,6 @@ describe("<ForgotPassword>", () => {
 
     afterAll(() => {
         jest.useRealTimers();
-        restoreConsole();
     });
 
     describe("when starting a password reset flow", () => {
