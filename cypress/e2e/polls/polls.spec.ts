@@ -30,8 +30,10 @@ describe("Polls", () => {
     type CreatePollOptions = {
         title: string;
         options: string[];
+        multiSelect?: boolean;
+        maxSelections?: string;
     };
-    const createPoll = ({ title, options }: CreatePollOptions) => {
+    const createPoll = ({ title, options, multiSelect = false, maxSelections }: CreatePollOptions) => {
         if (options.length < 2) {
             throw new Error('Poll must have at least two options');
         }
@@ -47,6 +49,20 @@ describe("Polls", () => {
                 }
                 cy.get(optionId).scrollIntoView().type(option);
             });
+
+            if (multiSelect) {
+                if (!maxSelections) {
+                    cy.get('#mx_Field_2')
+                        .find('option')
+                        .its('length')
+                        .then((length) => {
+                            // select last option
+                            cy.get('#mx_Field_2').select(length - 1);
+                        });
+                } else {
+                    cy.get('#mx_Field_2').select(maxSelections);
+                }
+            }
         });
         cy.get('.mx_Dialog button[type="submit"]').click();
     };
@@ -65,10 +81,33 @@ describe("Polls", () => {
         });
     };
 
-    const botVoteForOption = (bot: MatrixClient, roomId: string, pollId: string, optionText: string): void => {
+    const bots = [];
+    const botVotes = [];
+
+    const botMultiVote = (bot: MatrixClient, optionId: string): void => {
+        // populate botVotes with array(s) for each individual bot holding their answer(s)
+        // allows for testing multiple bot votes
+        if (!bots.includes(bot.credentials)) {
+            bots.push(bot.credentials);
+            botVotes.push([]);
+        }
+        if (!botVotes[bots.indexOf(bot.credentials)].includes(optionId)) {
+            botVotes[bots.indexOf(bot.credentials)].push(optionId);
+        }
+    };
+
+    const botVoteForOption = (bot: MatrixClient, roomId: string, pollId: string, optionText: string,
+        type = "radio"): void => {
         getPollOption(pollId, optionText).within(ref => {
-            cy.get('input[type="radio"]').invoke('attr', 'value').then(optionId => {
-                const pollVote = PollResponseEvent.from([optionId], pollId).serialize();
+            cy.get(`input[type=${type}]`).invoke('attr', 'value').then(optionId => {
+                let answer = [];
+                if (type === "radio") {
+                    answer = [optionId];
+                } else if (!botVotes.includes(optionId)) {
+                    botMultiVote(bot, optionId);
+                    answer = botVotes[bots.indexOf(bot.credentials)];
+                }
+                const pollVote = PollResponseEvent.from(answer, pollId).serialize();
                 bot.sendEvent(
                     roomId,
                     pollVote.type,
@@ -335,6 +374,177 @@ describe("Polls", () => {
             // and in thread view tile
             cy.get('.mx_ThreadView').within(() => {
                 expectVoteCounts();
+            });
+        });
+    });
+
+    describe("Multiple choice polls", () => {
+        beforeEach(() => {
+            botVotes.length = 0;
+            bots.length = 0;
+        });
+
+        it("should be creatable and allow voting for multiple options", () => {
+            let botBob: MatrixClient;
+            let botCharlie: MatrixClient;
+            cy.getBot(synapse, { displayName: "BotBob" }).then(_bot => {
+                botBob = _bot;
+            });
+            cy.getBot(synapse, { displayName: "BotCharlie" }).then(_bot => {
+                botCharlie = _bot;
+            });
+            let roomId: string;
+            cy.createRoom({}).then(_roomId => {
+                roomId = _roomId;
+                cy.inviteUser(roomId, botBob.getUserId());
+                cy.inviteUser(roomId, botCharlie.getUserId());
+                cy.visit('/#/room/' + roomId);
+                // wait until bots joined
+                cy.contains(".mx_TextualEvent", "BotBob and one other were invited and joined").should("exist");
+            });
+
+            cy.openMessageComposerOptions().within(() => {
+                cy.get('[aria-label="Poll"]').click();
+            });
+
+            cy.get('.mx_CompoundDialog').percySnapshotElement('Polls Composer');
+
+            const pollParams = {
+                title: 'Does the polls feature work with multiple selections?',
+                options: ['Yes', 'Indeed', 'Definitely'],
+                multiSelect: true,
+            };
+            createPoll(pollParams);
+
+            // Wait for message to send, get its ID and save as @pollId
+            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", pollParams.title)
+                .invoke("attr", "data-scroll-tokens").as("pollId");
+
+            cy.get<string>("@pollId").then(pollId => {
+                getPollTile(pollId).percySnapshotElement('Polls Timeline tile - no votes',
+                    { percyCSS: hideTimestampCSS });
+
+                // selected max possible number of votes
+                cy.get('.mx_MPollBody_totalVotes').should('contain', 'you have 3 votes remaining');
+
+                // Bob votes 'Yes' in the poll
+                botVoteForOption(botBob, roomId, pollId, pollParams.options[0], "checkbox");
+
+                // Charlie votes for 'Indeed'
+                botVoteForOption(botCharlie, roomId, pollId, pollParams.options[1], "checkbox");
+
+                // no votes shown until I vote, check bots vote has arrived
+                cy.get('.mx_MPollBody_totalVotes').should('contain', '2 votes cast');
+
+                // I vote 'Definitely'
+                getPollOption(pollId, pollParams.options[2]).click('topLeft');
+
+                // 1 vote for each option
+                expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
+                expectPollOptionVoteCount(pollId, pollParams.options[1], 1);
+                expectPollOptionVoteCount(pollId, pollParams.options[2], 1);
+
+                // I vote 'Yes'
+                getPollOption(pollId, pollParams.options[0]).click('left');
+                // I vote 'Indeed'
+                getPollOption(pollId, pollParams.options[1]).click('bottom');
+
+                // I have no votes left
+                cy.get('.mx_MPollBody_totalVotes').should('contain', 'Based on 5 votes - you have no votes remaining');
+
+                // Charlie votes for 'Yes'
+                botVoteForOption(botCharlie, roomId, pollId, pollParams.options[0], "checkbox");
+
+                // each participant has voted for 'Yes'
+                expectPollOptionVoteCount(pollId, pollParams.options[0], 3);
+                // Charlie and I voted 'Indeed'
+                expectPollOptionVoteCount(pollId, pollParams.options[1], 2);
+                // I voted for 'Definitely'
+                expectPollOptionVoteCount(pollId, pollParams.options[2], 1);
+            });
+        });
+
+        it("should have the correct number of possible selections", () => {
+            let roomId: string;
+            cy.createRoom({}).then(_roomId => {
+                roomId = _roomId;
+                cy.visit('/#/room/' + roomId);
+            });
+
+            cy.openMessageComposerOptions().within(() => {
+                cy.get('[aria-label="Poll"]').click();
+            });
+
+            const pollParams = {
+                title: 'Does this count an empty option?',
+                options: ['Nah', 'Nope', ' '],
+                multiSelect: true,
+            };
+            createPoll(pollParams);
+
+            cy.get('.mx_MPollBody_totalVotes').should('contain', 'you have 2 votes remaining');
+        });
+
+        it("should allow deselecting votes to vote for another option", () => {
+            let roomId: string;
+            cy.createRoom({}).then(_roomId => {
+                roomId = _roomId;
+                cy.visit('/#/room/' + roomId);
+            });
+
+            cy.openMessageComposerOptions().within(() => {
+                cy.get('[aria-label="Poll"]').click();
+            });
+
+            cy.get('.mx_CompoundDialog').percySnapshotElement('Polls Composer');
+
+            const pollParams = {
+                title: 'Can I deselect my votes?',
+                options: ['Yes', 'Indeed', 'Definitely'],
+                multiSelect: true,
+                maxSelections: '2',
+            };
+            createPoll(pollParams);
+
+            // Wait for message to send, get its ID and save as @pollId
+            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", pollParams.title)
+                .invoke("attr", "data-scroll-tokens").as("pollId");
+
+            cy.get<string>("@pollId").then(pollId => {
+                // vote 'Yes'
+                getPollOption(pollId, pollParams.options[0]).click('topRight');
+
+                // 1 vote for 'Yes'
+                expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
+                // check correct number of remaining votes
+                cy.get('.mx_MPollBody_totalVotes').should('contain', 'you have 1 vote remaining');
+
+                // also vote for 'Indeed'
+                getPollOption(pollId, pollParams.options[1]).click('center');
+
+                // 1 vote for 'Indeed'
+                expectPollOptionVoteCount(pollId, pollParams.options[1], 1);
+                // check correct number of remaining votes
+                cy.get('.mx_MPollBody_totalVotes').should('contain', 'you have no votes remaining');
+
+                // no further votes allowed
+                getPollOption(pollId, pollParams.options[2]).click('center');
+                // no vote for 'Definitely'
+                expectPollOptionVoteCount(pollId, pollParams.options[2], 0);
+
+                // deselect 'Indeed'
+                getPollOption(pollId, pollParams.options[1]).click('left');
+                // no votes for 'Indeed'
+                expectPollOptionVoteCount(pollId, pollParams.options[1], 0);
+                // check correct number of remaining votes
+                cy.get('.mx_MPollBody_totalVotes').should('contain', 'you have 1 vote remaining');
+
+                // vote for 'Definitely'
+                getPollOption(pollId, pollParams.options[2]).click('right');
+                // 1 vote for 'Definitely'
+                expectPollOptionVoteCount(pollId, pollParams.options[2], 1);
+                // check correct number of remaining votes
+                cy.get('.mx_MPollBody_totalVotes').should('contain', 'you have no votes remaining');
             });
         });
     });

@@ -143,7 +143,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
 
     private maxSelections = () => {
         // defaults to 1
-        const limit = this.state.options.filter(a => !!a).length || 1;
+        const limit = this.state.options.map(a => a.trim()).filter(a => !!a).length || 1;
         const count = range(1, limit + 1);
         const options = count.map((number) => {
             return <option
