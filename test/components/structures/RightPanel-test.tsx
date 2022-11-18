@@ -20,6 +20,7 @@ import { mount } from "enzyme";
 import { jest } from "@jest/globals";
 import { mocked, MockedObject } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import _RightPanel from "../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
@@ -44,7 +45,7 @@ describe("RightPanel", () => {
 
     let cli: MockedObject<MatrixClient>;
     let context: SdkContextClass;
-    let RightPanel: React.ComponentType;
+    let RightPanel: React.ComponentType<{room: Room, resizeNotifier: ResizeNotifier}>;
     beforeEach(() => {
         stubClient();
         cli = mocked(MatrixClientPeg.get());
