@@ -104,6 +104,23 @@ describe("<ForgotPassword>", () => {
             });
         });
 
+        describe("when the homeserver is not reachable", () => {
+            beforeEach(async () => {
+                await typeIntoField("Email address", testEmail);
+                mocked(client).requestPasswordEmailToken.mockRejectedValue({
+                    name: "ConnectionError",
+                });
+                await submitForm("Send email");
+            });
+
+            it("should show an info about that", () => {
+                expect(screen.getByText(
+                    "Cannot reach homeserver: "
+                    + "Ensure you have a stable internet connection, or get in touch with the server admin",
+                )).toBeInTheDocument();
+            });
+        });
+
         describe("when submitting an known email", () => {
             beforeEach(async () => {
                 await typeIntoField("Email address", testEmail);
@@ -218,11 +235,18 @@ describe("<ForgotPassword>", () => {
                             beforeEach(async () => {
                                 mocked(client.setPassword).mockResolvedValue({});
                                 // be sure the next set password attempt was sent
-                                jest.advanceTimersByTime(5000);
+                                jest.advanceTimersByTime(3000);
+                                // for the modal to disappear
+                                await flushPromisesWithFakeTimers();
+                                await flushPromisesWithFakeTimers();
+                                jest.advanceTimersByTime(500);
+                                await flushPromisesWithFakeTimers();
+                                await flushPromisesWithFakeTimers();
                             });
 
-                            it("should display the confirm reset view", () => {
-                                expect(screen.getByText("Your password has been reset.")).toBeInTheDocument();
+                            it("should display the confirm reset view and now show the dialog", () => {
+                                expect(screen.queryByText("Your password has been reset.")).toBeInTheDocument();
+                                expect(screen.queryByText("Verify your email to continue")).not.toBeInTheDocument();
                             });
                         });
                     });

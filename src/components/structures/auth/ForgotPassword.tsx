@@ -161,11 +161,19 @@ export default class ForgotPassword extends React.Component<Props, State> {
                 errorText,
             });
             return;
-        } else {
-            this.setState({
-                errorText: err.message,
-            });
         }
+
+        if (err?.name === "ConnectionError") {
+            this.setState({
+                errorText: _t("Cannot reach homeserver") + ": "
+                    + _t("Ensure you have a stable internet connection, or get in touch with the server admin"),
+            });
+            return;
+        }
+
+        this.setState({
+            errorText: err.message,
+        });
     }
 
     private async onPhaseEmailSentSubmit() {
@@ -238,8 +246,11 @@ export default class ForgotPassword extends React.Component<Props, State> {
             false,
             false,
             {
-                // this modal cannot be dismissed
-                onBeforeClose: async () => this.phase === Phase.Done,
+                // this modal cannot be dismissed until reset is done
+                onBeforeClose: async () => {
+                    console.log("miw phase", this.state.phase);
+                    return this.state.phase === Phase.Done;
+                },
             },
         );
 
