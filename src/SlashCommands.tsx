@@ -143,7 +143,7 @@ export class Command {
         this.aliases = opts.aliases || [];
         this.args = opts.args || "";
         this.description = opts.description;
-        this.runFn = opts.runFn.bind(this);
+        this.runFn = opts.runFn?.bind(this);
         this.category = opts.category || CommandCategories.other;
         this.hideCompletionAfterSpace = opts.hideCompletionAfterSpace || false;
         this._isEnabled = opts.isEnabled;
