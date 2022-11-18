@@ -3656,5 +3656,7 @@
     "Go live": "Vai in diretta",
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss rimasti",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)so %(minutes)sm %(seconds)ss rimasti",
-    "That e-mail address or phone number is already in use.": "Quell'indirizzo email o numero di telefono è già in uso."
+    "That e-mail address or phone number is already in use.": "Quell'indirizzo email o numero di telefono è già in uso.",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": ""
 }
