@@ -16,6 +16,7 @@ limitations under the License.
 
 import fetchMock from "fetch-mock-jest";
 import { TextDecoder, TextEncoder } from "util";
+import fetch from 'node-fetch';
 
 // jest 27 removes setImmediate from jsdom
 // polyfill until setImmediate use in client can be removed
@@ -51,7 +52,7 @@ class DOMRect {
 window.DOMRect = DOMRect;
 
 // Work around missing ClipboardEvent type
-class MyClipboardEvent {}
+class MyClipboardEvent extends Event {}
 window.ClipboardEvent = MyClipboardEvent as any;
 
 // matchMedia is not included in jsdom
@@ -86,6 +87,8 @@ fetchMock.catch("");
 fetchMock.get("/image-file-stub", "image file stub");
 // @ts-ignore
 window.fetch = fetchMock.sandbox();
+
+window.Response = fetch.Response;
 
 // set up mediaDevices mock
 Object.defineProperty(navigator, "mediaDevices", {

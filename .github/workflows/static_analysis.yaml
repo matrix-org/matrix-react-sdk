@@ -46,6 +46,9 @@ jobs:
       checks: write
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Install Deps
+        run: "scripts/ci/layered.sh"
 
       - name: Get diff lines
         id: diff
@@ -75,6 +78,16 @@ jobs:
   i18n_lint:
     name: "i18n Check"
     uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+
+  rethemendex_lint:
+    name: "Rethemendex Check"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - run: ./res/css/rethemendex.sh
+      
+      - run: git diff --exit-code
 
   js_lint:
     name: "ESLint"

@@ -38,18 +38,9 @@ import dis from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
 import { SendMessageComposer } from "../../../../src/components/views/rooms/SendMessageComposer";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
-import { addTextToComposer } from "../../../test-utils/composer";
+import { addTextToComposerEnzyme } from "../../../test-utils/composer";
 import UIStore, { UI_EVENTS } from "../../../../src/stores/UIStore";
 import { SendWysiwygComposer } from "../../../../src/components/views/rooms/wysiwyg_composer";
-
-// The wysiwyg fetch wasm bytes and a specific workaround is needed to make it works in a node (jest) environnement
-// See https://github.com/matrix-org/matrix-wysiwyg/blob/main/platforms/web/test.setup.ts
-jest.mock("@matrix-org/matrix-wysiwyg", () => ({
-    useWysiwyg: () => {
-        return { ref: { current: null }, isWysiwygReady: true, wysiwyg: { clear: () => void 0 },
-            actionStates: { bold: 'enabled', italic: 'enabled', underline: 'enabled', strikeThrough: 'enabled' } };
-    },
-}));
 
 describe("MessageComposer", () => {
     stubClient();
@@ -185,7 +176,7 @@ describe("MessageComposer", () => {
 
             beforeEach(() => {
                 wrapper = wrapAndRender({ room });
-                addTextToComposer(wrapper, "Hello");
+                addTextToComposerEnzyme(wrapper, "Hello");
                 wrapper.update();
             });
 
