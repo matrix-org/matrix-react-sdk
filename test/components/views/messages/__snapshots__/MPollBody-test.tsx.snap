@@ -109,6 +109,7 @@ exports[`MPollBody renders a finished poll 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -171,6 +172,7 @@ exports[`MPollBody renders a finished poll 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -233,6 +235,7 @@ exports[`MPollBody renders a finished poll 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -295,6 +298,7 @@ exports[`MPollBody renders a finished poll 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -425,6 +429,7 @@ exports[`MPollBody renders a finished poll with multiple winners 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -487,6 +492,7 @@ exports[`MPollBody renders a finished poll with multiple winners 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -549,6 +555,7 @@ exports[`MPollBody renders a finished poll with multiple winners 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -611,6 +618,7 @@ exports[`MPollBody renders a finished poll with multiple winners 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -741,6 +749,7 @@ exports[`MPollBody renders a finished poll with no votes 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -803,6 +812,7 @@ exports[`MPollBody renders a finished poll with no votes 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -865,6 +875,7 @@ exports[`MPollBody renders a finished poll with no votes 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -927,6 +938,7 @@ exports[`MPollBody renders a finished poll with no votes 1`] = `
         </EndedPollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1084,6 +1096,7 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1173,6 +1186,7 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1262,6 +1276,7 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1351,6 +1366,7 @@ exports[`MPollBody renders a poll that I have not voted in 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1510,6 +1526,7 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1601,6 +1618,7 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1692,6 +1710,7 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1783,6 +1802,7 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -1940,6 +1960,7 @@ exports[`MPollBody renders a poll with no votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -2029,6 +2050,7 @@ exports[`MPollBody renders a poll with no votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -2118,6 +2140,7 @@ exports[`MPollBody renders a poll with no votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -2207,6 +2230,7 @@ exports[`MPollBody renders a poll with no votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -2366,6 +2390,7 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -2457,6 +2482,7 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -2548,6 +2574,7 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
@@ -2639,6 +2666,7 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
         </LivePollOption>
         <div
           className="mx_MPollBody_popularityBackground"
+          onClick={[Function]}
         >
           <div
             className="mx_MPollBody_popularityAmount"
