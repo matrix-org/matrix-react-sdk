@@ -3489,7 +3489,6 @@
     "Don’t miss a thing by taking %(brand)s with you": "Võta %(brand)s nutiseadmesse kaasa ning ära jäta suhtlemist vahele",
     "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
     "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
-    "Toggle device details": "Näita või peida seadme teave",
     "Filter devices": "Sirvi seadmeid",
     "Inactive for %(inactiveAgeDays)s days or longer": "Pole olnud kasutusel %(inactiveAgeDays)s või enam päeva",
     "Inactive": "Pole pidevas kasutuses",

@@ -3503,7 +3503,6 @@
     "No verified sessions found.": "Nincs ellenőrzött munkamenet.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "A legbiztonságosabb, ha minden olyan munkamenetből kijelentkezel, melyet már nem ismersz fel vagy nem használsz.",
     "Verified sessions": "Ellenőrzött munkamenetek",
-    "Toggle device details": "Az eszköz részleteinek váltogatása",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nyilvános szobához nem javasolt a titkosítás beállítása.</b>Bárki megtalálhatja és csatlakozhat nyilvános szobákhoz, így bárki elolvashatja az üzeneteket bennük. A titkosítás előnyeit így nem jelentkeznek és később ezt nem lehet kikapcsolni. Nyilvános szobákban a titkosított üzenetek az üzenetküldést és fogadást csak lassítják.",
     "We’d appreciate any feedback on how you’re finding %(brand)s.": "Minden visszajelzést örömmel fogadnánk arról, hogy milyen a %(brand)s.",
     "How are you finding %(brand)s so far?": "Hogyan találod eddig a %(brand)s értékeket?",

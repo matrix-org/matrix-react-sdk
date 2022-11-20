@@ -3414,7 +3414,6 @@
     "Unverified": "Nicht verifiziert",
     "Verified": "Verifiziert",
     "Inactive for %(inactiveAgeDays)s+ days": "Seit %(inactiveAgeDays)s+ Tagen inaktiv",
-    "Toggle device details": "Gerätedetails umschalten",
     "Session details": "Sitzungsdetails",
     "IP address": "IP-Adresse",
     "Device": "Gerät",

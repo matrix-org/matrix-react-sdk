@@ -3488,7 +3488,6 @@
     "Unverified": "Niet geverifieerd",
     "Verified": "Geverifieerd",
     "Inactive for %(inactiveAgeDays)s+ days": "Inactief gedurende %(inactiveAgeDays)s+ dagen",
-    "Toggle device details": "Apparaatgegevens wisselen",
     "Session details": "Sessie details",
     "IP address": "IP adres",
     "Device": "Apparaat",
