@@ -57,7 +57,7 @@ const SHOW_CALL_IN_STATES = [
 /**
  * The type of a callback which will create the pip content view.
  */
-type CreatePipContent = (object: IChildrenOptions) => JSX.Element;
+type CreatePipContent = (options: IChildrenOptions) => JSX.Element;
 
 interface IProps {
     voiceBroadcastRecording?: Optional<VoiceBroadcastRecording>;
