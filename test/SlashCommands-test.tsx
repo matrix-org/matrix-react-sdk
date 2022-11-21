@@ -225,4 +225,12 @@ describe('SlashCommands', () => {
             expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
         });
     });
+
+    describe.each([
+        "rainbow",
+        "rainbowme",
+    ])("/%s need args", (commandName: string) => {
+        const command = findCommand(commandName);
+        expect(command.run(roomId, null, null).error).toBe(command.getUsage());
+    });
 });
