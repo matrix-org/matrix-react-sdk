@@ -3659,5 +3659,7 @@
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Dies bedeutet, dass du alle Schlüssel zum Entsperren deiner verschlüsselten Nachrichten hast und anderen bestätigst, dieser Sitzung zu vertrauen.",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Auf verifizierte Sitzungen kannst du überall mit deinem Konto zugreifen, wenn du deine Passphrase eingegeben oder deine Identität mit einer anderen Sitzung verifiziert hast.",
     "Show details": "Details anzeigen",
-    "Hide details": "Details ausblenden"
+    "Hide details": "Details ausblenden",
+    "30s forward": "30s vorspulen",
+    "30s backward": "30s zurückspulen"
 }
