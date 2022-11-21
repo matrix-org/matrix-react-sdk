@@ -25,7 +25,7 @@ import LegacyCallView from "./LegacyCallView";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
 import PersistentApp from "../elements/PersistentApp";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import PictureInPictureDragger, { IChildrenOptions } from './PictureInPictureDragger';
+import PictureInPictureDragger, { CreatePipChildren } from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
 import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
@@ -53,11 +53,6 @@ const SHOW_CALL_IN_STATES = [
     CallState.CreateOffer,
     CallState.WaitLocalMedia,
 ];
-
-/**
- * The type of a callback which will create the pip content view.
- */
-type CreatePipContent = (options: IChildrenOptions) => JSX.Element;
 
 interface IProps {
     voiceBroadcastRecording?: Optional<VoiceBroadcastRecording>;
@@ -337,7 +332,7 @@ class PipView extends React.Component<IProps, IState> {
 
     private createVoiceBroadcastPreRecordingPipContent(
         voiceBroadcastPreRecording: VoiceBroadcastPreRecording,
-    ): CreatePipContent {
+    ): CreatePipChildren {
         return ({ onStartMoving }) => <div onMouseDown={onStartMoving}>
             <VoiceBroadcastPreRecordingPip
                 voiceBroadcastPreRecording={voiceBroadcastPreRecording}
@@ -347,7 +342,7 @@ class PipView extends React.Component<IProps, IState> {
 
     private createVoiceBroadcastRecordingPipContent(
         voiceBroadcastRecording: VoiceBroadcastRecording,
-    ): CreatePipContent {
+    ): CreatePipChildren {
         return ({ onStartMoving }) => <div onMouseDown={onStartMoving}>
             <VoiceBroadcastRecordingPip
                 recording={voiceBroadcastRecording}
@@ -357,7 +352,7 @@ class PipView extends React.Component<IProps, IState> {
 
     public render() {
         const pipMode = true;
-        let pipContent: CreatePipContent | null = null;
+        let pipContent: CreatePipChildren | null = null;
 
         if (this.props.voiceBroadcastPreRecording) {
             pipContent = this.createVoiceBroadcastPreRecordingPipContent(this.props.voiceBroadcastPreRecording);
