@@ -3449,7 +3449,6 @@
     "Inactive": "不活跃",
     "Inactive for %(inactiveAgeDays)s days or longer": "%(inactiveAgeDays)s天或更久不活跃",
     "Filter devices": "筛选设备",
-    "Toggle device details": "切换设备详情",
     "Manually verify by text": "用文本手动验证",
     "Interactively verify by emoji": "用emoji交互式验证",
     "Show: %(instance)s rooms (%(server)s)": "显示：%(instance)s房间（%(server)s）",
