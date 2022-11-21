@@ -3501,7 +3501,6 @@
     "Unverified sessions": "Sesións non verificadas",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Para a mellor seguridade, desconecta calquera outra sesión que xa non recoñezas ou uses.",
     "Verified sessions": "Sesións verificadas",
-    "Toggle device details": "Ver detalles do dispositivo",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Non é recomendable engadir o cifrado a salas públicas.</b> Calquera pode atopar salas públicas, e pode ler as mensaxes nela. Non terás ningún destos beneficios se activas o cifrado, e non poderás retiralo posteriormente. Ademáis ao cifrar as mensaxes dunha sala pública fará que se envíen e reciban máis lentamente.",
     "We’d appreciate any feedback on how you’re finding %(brand)s.": "Agradeceriamos a túa opinión sobre a túa experiencia con %(brand)s.",
     "How are you finding %(brand)s so far?": "Que che parece %(brand)s polo de agora?",
