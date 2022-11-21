@@ -21,6 +21,7 @@ import classnames from 'classnames';
 export enum CheckboxStyle {
     Solid = "solid",
     Outline = "outline",
+    Circle = "circle", // for polls, uses radio button styling
 }
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -49,15 +50,25 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const { children, className, kind = CheckboxStyle.Solid, inputRef, ...otherProps } = this.props;
 
-        const newClassName = classnames(
-            "mx_Checkbox",
-            className,
-            {
+        const additionalClasses = kind === "circle"
+            ? {
+                "mx_StyledRadioButton": true,
+                "mx_StyledRadioButton_disabled": this.props.disabled,
+                "mx_StyledRadioButton_enabled": !this.props.disabled,
+                "mx_StyledRadioButton_checked": this.props.checked,
+            }
+            : {
+                "mx_Checkbox": true,
                 "mx_Checkbox_hasKind": kind,
                 [`mx_Checkbox_kind_${kind}`]: kind,
-            },
+            };
+
+        const newClassName = classnames(
+            className,
+            additionalClasses,
         );
-        return <span className={newClassName}>
+
+        const checkbox = <React.Fragment>
             <input
                 // Pass through the ref - used for keyboard shortcut access to some buttons
                 ref={inputRef}
@@ -65,17 +76,31 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
                 {...otherProps}
                 type="checkbox"
             />
-            <label htmlFor={this.id}>
-                { /* Using the div to center the image */ }
-                <div className="mx_Checkbox_background">
-                    <div className="mx_Checkbox_checkmark" />
-                </div>
-                { !!this.props.children &&
+        </React.Fragment>;
+
+        if (kind === "circle") {
+            return <label className={newClassName}>
+                { checkbox }
+                { /* Used to render the radio button circle */ }
+                <div><div /></div>
+                <div className="mx_StyledRadioButton_content">{ children }</div>
+                <div className="mx_StyledRadioButton_spacer" />
+            </label>;
+        } else {
+            return <span className={newClassName}>
+                { checkbox }
+                <label htmlFor={this.id}>
+                    { /* Using the div to center the image */ }
+                    <div className="mx_Checkbox_background">
+                        <div className="mx_Checkbox_checkmark" />
+                    </div>
+                    { !!this.props.children &&
                     <div>
                         { this.props.children }
                     </div>
-                }
-            </label>
-        </span>;
+                    }
+                </label>
+            </span>;
+        }
     }
 }
