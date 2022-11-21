@@ -54,6 +54,11 @@ const SHOW_CALL_IN_STATES = [
     CallState.WaitLocalMedia,
 ];
 
+/**
+ * Callback to create the pip content view.
+ * Passes down the resize and move callbacks to the child component.
+ * {@link ./PictureInPictureDragger.tsx contains an example usage of it}
+ */
 type CreatePipContent = (object: {
     onStartMoving?: (event: React.MouseEvent<Element, MouseEvent>) => void;
     onResize?: (event: Event) => void;
