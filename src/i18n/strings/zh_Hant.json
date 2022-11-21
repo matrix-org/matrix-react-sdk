@@ -3657,5 +3657,7 @@
     "%(hours)sh %(minutes)sm %(seconds)ss left": "剩餘%(hours)s小時%(minutes)s分鐘%(seconds)s秒",
     "That e-mail address or phone number is already in use.": "該電子郵件地址或電話號碼已被使用。",
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "這代表了您擁有解鎖加密訊息所需的所有金鑰，並向其他使用者確認您信任此工作階段。",
-    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "已驗證的工作階段是在輸入密碼或透過另一個已驗證工作階段確認您的身份後使用此帳號的任何地方。"
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "已驗證的工作階段是在輸入密碼或透過另一個已驗證工作階段確認您的身份後使用此帳號的任何地方。",
+    "Show details": "顯示詳細資訊",
+    "Hide details": "隱藏細節"
 }
