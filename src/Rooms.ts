@@ -29,7 +29,7 @@ import AliasCustomisations from './customisations/Alias';
  * @param {Object} room The room object
  * @returns {string} A display alias for the given room
  */
-export function getDisplayAliasForRoom(room: Room): string {
+export function getDisplayAliasForRoom(room: Room): string | undefined {
     return getDisplayAliasForAliasSet(
         room.getCanonicalAlias(), room.getAltAliases(),
     );
@@ -37,7 +37,7 @@ export function getDisplayAliasForRoom(room: Room): string {
 
 // The various display alias getters should all feed through this one path so
 // there's a single place to change the logic.
-export function getDisplayAliasForAliasSet(canonicalAlias?: string | null, altAliases?: string[]): string {
+export function getDisplayAliasForAliasSet(canonicalAlias?: string | null, altAliases?: string[]): string | undefined {
     if (AliasCustomisations.getDisplayAliasForAliasSet) {
         return AliasCustomisations.getDisplayAliasForAliasSet(canonicalAlias, altAliases);
     }
