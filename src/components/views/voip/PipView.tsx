@@ -55,7 +55,7 @@ const SHOW_CALL_IN_STATES = [
 ];
 
 /**
- * Callback to create the pip content view.
+ * The type of a callback which will create the pip content view.
  * Passes down the resize and move callbacks to the child component.
  * {@link ./PictureInPictureDragger.tsx contains an example usage of it}
  */
