@@ -77,9 +77,7 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
     }, [getSuggestions, selection]);
 
     const focusEditor = () => {
-        if (editorRef && editorRef.current) {
-            editorRef.current.focus();
-        }
+        editorRef?.current?.focus();
     };
 
     const removeSelection = (t: ICompletion) => {

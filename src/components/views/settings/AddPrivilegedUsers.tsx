@@ -45,8 +45,10 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         [room, defaultUserLevel],
     );
 
-    const onSubmit = async () => {
+    const onSubmit = async (event) => {
+        event.preventDefault();
         setIsLoading(true);
+
         const userIds = selectedUsers.map(selectedUser => selectedUser.completionId);
         const powerLevelEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
 
@@ -65,25 +67,27 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
     };
 
     return (
-        <SettingsFieldSet
-            legend={_t('Add privileged users')}
-            description={_t('Give one or multiple users in this room more privileges')}
-        >
+        <form className="mx_SettingsFieldset">
+            <legend className='mx_SettingsFieldset_legend'>{ _t('Add privileged users') }</legend>
+            <div className='mx_SettingsFieldset_description'>
+                { _t('Give one or multiple users in this room more privileges') }
+            </div>
             <AutocompleteInput
                 provider={userProvider.current}
-                placeholder={_t("Search users in this room ...")}
+                placeholder={_t("Search users in this room …")}
                 onSelectionChange={setSelectedUsers}
                 selection={selectedUsers}
                 additionalFilter={filterSuggestions}
             />
             <PowerSelector value={powerLevel} onChange={setPowerLevel} />
             <AccessibleButton
+                type='submit'
                 kind='primary'
                 disabled={!selectedUsers.length || isLoading}
                 onClick={onSubmit}
             >
                 { _t('Apply') }
             </AccessibleButton>
-        </SettingsFieldSet>
+        </form>
     );
 };
