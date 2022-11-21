@@ -3412,5 +3412,14 @@
     "Edit topic": "トピックを編集",
     "Un-maximise": "最大化をやめる",
     "%(displayName)s's live location": "%(displayName)sの位置情報（ライブ）",
-    "You need to have the right permissions in order to share locations in this room.": "このルームで位置情報を共有するには適切な権限を持っていることが必要です。"
+    "You need to have the right permissions in order to share locations in this room.": "このルームで位置情報を共有するには適切な権限を持っていることが必要です。",
+    "Improve your account security by following these recommendations": "これらの勧告に従ってアカウントのセキュリティーを改善",
+    "To view, please enable video rooms in Labs first": "表示するには、まずラボのビデオ通話ルームを有効にして下さい",
+    "Are you sure you're at the right place?": "本当に問題ない場所にいますか？",
+    "Unknown session type": "セッションタイプ不明",
+    "Web session": "Webセッション",
+    "Mobile session": "モバイル端末セッション",
+    "Desktop session": "デスクトップセッション",
+    "Unverified": "未認証",
+    "Verified": "認証済み"
 }
