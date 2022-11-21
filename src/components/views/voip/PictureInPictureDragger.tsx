@@ -34,7 +34,9 @@ const PADDING = {
 };
 
 export interface IChildrenOptions {
+    // a callback which is called when a mouse event (most likely mouse down) occurs at start of moving the pip around
     onStartMoving: (event: React.MouseEvent<Element, MouseEvent>) => void;
+    // a callback which is called when the content fo the pip changes in a way that is likely to cause a resize
     onResize: (event: Event) => void;
 }
 
