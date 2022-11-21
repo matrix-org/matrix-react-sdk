@@ -3659,5 +3659,7 @@
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Toto znamená, že máte všetky kľúče potrebné na odomknutie zašifrovaných správ a potvrdzujete ostatným používateľom, že tejto relácii dôverujete.",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Overené relácie sú všade tam, kde používate toto konto po zadaní svojho prístupového hesla alebo po potvrdení vašej totožnosti inou overenou reláciou.",
     "Show details": "Zobraziť podrobnosti",
-    "Hide details": "Skryť podrobnosti"
+    "Hide details": "Skryť podrobnosti",
+    "30s forward": "30s dopredu",
+    "30s backward": "30s späť"
 }
