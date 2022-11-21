@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode, useRef } from "react";
 
-import { Icon as EMailIcon } from "../../../../../res/img/element-icons/Email-icon.svg";
+import { Icon as EmailIcon } from "../../../../../res/img/element-icons/Email-icon.svg";
 import { _t, _td } from '../../../../languageHandler';
 import EmailField from "../../../views/auth/EmailField";
 import { ErrorMessage } from "../../ErrorMessage";
@@ -60,7 +60,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
     };
 
     return <>
-        <EMailIcon className="mx_AuthBody_icon" />
+        <EmailIcon className="mx_AuthBody_icon" />
         <h1>{ _t("Enter your email to reset password") }</h1>
         <p className="mx_AuthBody_text">
             {
