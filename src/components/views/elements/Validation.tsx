@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* eslint-disable @typescript-eslint/no-invalid-this */
 import React from "react";
 import classNames from "classnames";
 
@@ -46,7 +45,7 @@ interface IArgs<T, D = void> {
 export interface IFieldState {
     value: string;
     focused: boolean;
-    allowEmpty: boolean;
+    allowEmpty?: boolean;
 }
 
 export interface IValidationResult {

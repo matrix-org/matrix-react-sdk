@@ -229,8 +229,15 @@ describe('SlashCommands', () => {
     describe.each([
         "rainbow",
         "rainbowme",
-    ])("/%s need args", (commandName: string) => {
+    ])("/%s", (commandName: string) => {
         const command = findCommand(commandName);
-        expect(command.run(roomId, null, null).error).toBe(command.getUsage());
+
+        it("should return usage if no args", () => {
+            expect(command.run(roomId, null, null).error).toBe(command.getUsage());
+        });
+
+        it("should make things rainbowy", () => {
+            return expect(command.run(roomId, null, "this is a test message").promise).resolves.toMatchSnapshot();
+        });
     });
 });
