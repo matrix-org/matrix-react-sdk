@@ -33,7 +33,7 @@ const PADDING = {
     right: 8,
 };
 
-interface IChildrenOptions {
+export interface IChildrenOptions {
     onStartMoving: (event: React.MouseEvent<Element, MouseEvent>) => void;
     onResize: (event: Event) => void;
 }

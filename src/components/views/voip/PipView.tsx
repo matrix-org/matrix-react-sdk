@@ -25,7 +25,7 @@ import LegacyCallView from "./LegacyCallView";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
 import PersistentApp from "../elements/PersistentApp";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import PictureInPictureDragger from './PictureInPictureDragger';
+import PictureInPictureDragger, { IChildrenOptions } from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
 import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
@@ -56,13 +56,8 @@ const SHOW_CALL_IN_STATES = [
 
 /**
  * The type of a callback which will create the pip content view.
- * Passes down the resize and move callbacks to the child component.
- * {@link ./PictureInPictureDragger.tsx contains an example usage of it}
  */
-type CreatePipContent = (object: {
-    onStartMoving?: (event: React.MouseEvent<Element, MouseEvent>) => void;
-    onResize?: (event: Event) => void;
-}) => JSX.Element;
+type CreatePipContent = (object: IChildrenOptions) => JSX.Element;
 
 interface IProps {
     voiceBroadcastRecording?: Optional<VoiceBroadcastRecording>;
