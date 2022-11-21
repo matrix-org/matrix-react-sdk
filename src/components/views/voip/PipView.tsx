@@ -54,6 +54,11 @@ const SHOW_CALL_IN_STATES = [
     CallState.WaitLocalMedia,
 ];
 
+type CreatePipContent = (object: {
+    onStartMoving?: (event: React.MouseEvent<Element, MouseEvent>) => void;
+    onResize?: (event: Event) => void;
+}) => JSX.Element;
+
 interface IProps {
     voiceBroadcastRecording?: Optional<VoiceBroadcastRecording>;
     voiceBroadcastPreRecording?: Optional<VoiceBroadcastPreRecording>;
@@ -129,7 +134,9 @@ function getPrimarySecondaryCallsForPip(roomId: Optional<string>): [MatrixCall |
  */
 
 class PipView extends React.Component<IProps, IState> {
-    private movePersistedElement = createRef<() => void>();
+    // The cast is not so great, but solves the typing issue for the moment.
+    // Proper solution: use useRef (requires the component to be refactored to a functional component).
+    private movePersistedElement = createRef<() => void>() as React.MutableRefObject<() => void>;
 
     constructor(props: IProps) {
         super(props);
@@ -328,9 +335,37 @@ class PipView extends React.Component<IProps, IState> {
         this.setState({ showWidgetInPip, persistentWidgetId, persistentRoomId });
     }
 
+    private createVoiceBroadcastPreRecordingPipContent(
+        voiceBroadcastPreRecording: VoiceBroadcastPreRecording,
+    ): CreatePipContent {
+        return ({ onStartMoving }) => <div onMouseDown={onStartMoving}>
+            <VoiceBroadcastPreRecordingPip
+                voiceBroadcastPreRecording={voiceBroadcastPreRecording}
+            />
+        </div>;
+    }
+
+    private createVoiceBroadcastRecordingPipContent(
+        voiceBroadcastRecording: VoiceBroadcastRecording,
+    ): CreatePipContent {
+        return ({ onStartMoving }) => <div onMouseDown={onStartMoving}>
+            <VoiceBroadcastRecordingPip
+                recording={voiceBroadcastRecording}
+            />
+        </div>;
+    }
+
     public render() {
         const pipMode = true;
-        let pipContent;
+        let pipContent: CreatePipContent | null = null;
+
+        if (this.props.voiceBroadcastPreRecording) {
+            pipContent = this.createVoiceBroadcastPreRecordingPipContent(this.props.voiceBroadcastPreRecording);
+        }
+
+        if (this.props.voiceBroadcastRecording) {
+            pipContent = this.createVoiceBroadcastRecordingPipContent(this.props.voiceBroadcastRecording);
+        }
 
         if (this.state.primaryCall) {
             // get a ref to call inside the current scope
@@ -359,7 +394,7 @@ class PipView extends React.Component<IProps, IState> {
             pipContent = ({ onStartMoving }) =>
                 <div className={pipViewClasses}>
                     <LegacyCallViewHeader
-                        onPipMouseDown={(event) => { onStartMoving(event); this.onStartMoving.bind(this)(); }}
+                        onPipMouseDown={(event) => { onStartMoving?.(event); this.onStartMoving.bind(this)(); }}
                         pipMode={pipMode}
                         callRooms={[roomForWidget]}
                         onExpand={!isCall && !viewingCallRoom ? this.onExpand : undefined}
@@ -373,26 +408,6 @@ class PipView extends React.Component<IProps, IState> {
                         movePersistedElement={this.movePersistedElement}
                     />
                 </div>;
-        }
-
-        if (this.props.voiceBroadcastPreRecording) {
-            // get a ref to pre-recording inside the current scope
-            const preRecording = this.props.voiceBroadcastPreRecording;
-            pipContent = ({ onStartMoving }) => <div onMouseDown={onStartMoving}>
-                <VoiceBroadcastPreRecordingPip
-                    voiceBroadcastPreRecording={preRecording}
-                />
-            </div>;
-        }
-
-        if (this.props.voiceBroadcastRecording) {
-            // get a ref to recording inside the current scope
-            const recording = this.props.voiceBroadcastRecording;
-            pipContent = ({ onStartMoving }) => <div onMouseDown={onStartMoving}>
-                <VoiceBroadcastRecordingPip
-                    recording={recording}
-                />
-            </div>;
         }
 
         if (!!pipContent) {
