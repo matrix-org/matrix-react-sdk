@@ -3657,5 +3657,9 @@
     "%(hours)sh %(minutes)sm %(seconds)ss left": "jäänud on %(hours)st %(minutes)sm %(seconds)ss",
     "That e-mail address or phone number is already in use.": "See e-posti aadress või telefoninumber on juba kasutusel.",
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "See tähendab, et selles sessioonis on ka kõik vajalikud võtmed krüptitud sõnumite lugemiseks ja teistele kasutajatele kinnitamiseks, et sa usaldad seda sessiooni.",
-    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Verifitseeritud sessioonideks loetakse Element'is või mõnes muus Matrix'i rakenduses selliseid sessioone, kus sa kas oled sisestanud oma salafraasi või tuvastanud end mõne teise oma verifitseeritud sessiooni abil."
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Verifitseeritud sessioonideks loetakse Element'is või mõnes muus Matrix'i rakenduses selliseid sessioone, kus sa kas oled sisestanud oma salafraasi või tuvastanud end mõne teise oma verifitseeritud sessiooni abil.",
+    "Show details": "Näita üksikasju",
+    "Hide details": "Peida üksikasjalik teave",
+    "30s forward": "30s edasi",
+    "30s backward": "30s tagasi"
 }
