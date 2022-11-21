@@ -3659,5 +3659,7 @@
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Це означає, що у вас є всі ключі, необхідні для розблокування ваших зашифрованих повідомлень і підтвердження іншим користувачам, що ви довіряєте цьому сеансу.",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Звірені сеанси — це будь-який пристрій, на якому ви використовуєте цей обліковий запис після введення парольної фрази або підтвердження вашої особи за допомогою іншого перевіреного сеансу.",
     "Show details": "Показати подробиці",
-    "Hide details": "Сховати подробиці"
+    "Hide details": "Сховати подробиці",
+    "30s forward": "Уперед на 30 с",
+    "30s backward": "Назад на 30 с"
 }
