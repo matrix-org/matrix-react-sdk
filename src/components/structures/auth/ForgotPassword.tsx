@@ -133,7 +133,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             this.setState({
                 serverIsAlive: true,
             });
-        } catch (e) {
+        } catch (e: any) {
             const {
                 serverIsAlive,
                 serverDeadError,
