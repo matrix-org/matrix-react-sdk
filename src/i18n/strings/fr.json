@@ -3657,5 +3657,9 @@
     "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
     "That e-mail address or phone number is already in use.": "Cette adresse e-mail ou numéro de téléphone est déjà utilisé.",
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Cela veut dire qu’elles disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateur que vous faites confiance à cette session.",
-    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Les sessions vérifiées sont toutes celles qui utilisent ce compte après avoir saisie la phrase de sécurité ou confirmé votre identité à l’aide d’une autre session vérifiée."
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Les sessions vérifiées sont toutes celles qui utilisent ce compte après avoir saisie la phrase de sécurité ou confirmé votre identité à l’aide d’une autre session vérifiée.",
+    "Show details": "Afficher les détails",
+    "Hide details": "Masquer les détails",
+    "30s forward": "30s en avant",
+    "30s backward": "30s en arrière"
 }
