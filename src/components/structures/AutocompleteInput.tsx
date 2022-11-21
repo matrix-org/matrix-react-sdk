@@ -22,6 +22,7 @@ import { Key } from '../../Keyboard';
 import { ICompletion } from '../../autocomplete/Autocompleter';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import { Icon as PillRemoveIcon } from '../../../res/img/icon-pill-remove.svg';
+import { Icon as CheckmarkIcon } from '../../../res/img/element-icons/roomlist/checkmark.svg';
 
 interface AutocompleteInputProps {
     provider: Autocompleter;
@@ -138,10 +139,10 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
     };
 
     const _renderSuggestion = (s: ICompletion): ReactNode => {
+        const isSelected = _selection.findIndex(selection => selection.completionId === s.completionId) >= 0;
         const classes = classNames({
             'mx_AutocompleteInput_suggestion': true,
-            'mx_AutocompleteInput_suggestion_selected':
-            _selection.findIndex(selection => selection.completionId === s.completionId) >= 0,
+            'mx_AutocompleteInput_suggestion--selected': isSelected,
         });
 
         const withContainer = (children: ReactNode): ReactNode => (
@@ -155,7 +156,10 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
                 key={s.completionId}
                 data-testid={`autocomplete-suggestion-item-${s.completionId}`}
             >
-                { children }
+                <div>
+                    { children }
+                </div>
+                { isSelected && <CheckmarkIcon height={16} width={16} /> }
             </div>
         );
 
