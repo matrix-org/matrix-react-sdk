@@ -3659,5 +3659,7 @@
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Ini berarti bahwa Anda memiliki semua kunci yang dibutuhkan untuk membuka pesan terenkripsi Anda dan mengonfirmasi ke pengguna lain bahwa Anda mempercayai sesi ini.",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Sesi terverifikasi bisa dari menggunakan akun ini setelah memasukkan frasa sandi atau mengonfirmasi identitas Anda dengan sesi terverifikasi lain.",
     "Show details": "Tampilkan detail",
-    "Hide details": "Sembunyikan detail"
+    "Hide details": "Sembunyikan detail",
+    "30s forward": "30d selanjutnya",
+    "30s backward": "30d sebelumnya"
 }
