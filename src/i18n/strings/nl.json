@@ -793,7 +793,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is niet verstuurd omdat deze homeserver een systeembronlimiet heeft overschreden. <a>Neem contact op met je dienstbeheerder</a> om de dienst te blijven gebruiken.",
     "Guest": "Gast",
     "Could not load user profile": "Kon persoonsprofiel niet laden",
-    "Sign in instead": "In plaats daarvan inloggen",
     "Your password has been reset.": "Jouw wachtwoord is opnieuw ingesteld.",
     "Invalid homeserver discovery response": "Ongeldig homeserver-vindbaarheids-antwoord",
     "Invalid identity server discovery response": "Ongeldig identiteitsserver-vindbaarheidsantwoord",

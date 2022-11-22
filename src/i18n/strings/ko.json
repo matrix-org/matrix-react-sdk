@@ -959,7 +959,6 @@
     "You have %(count)s unread notifications in a prior version of this room.|one": "이 방의 이전 버전에서 읽지 않은 %(count)s개의 알림이 있습니다.",
     "Guest": "손님",
     "Could not load user profile": "사용자 프로필을 불러올 수 없음",
-    "A verification email will be sent to your inbox to confirm setting your new password.": "새 비밀번호 설정을 확인할 인증 이메일을 메일함으로 보냈습니다.",
     "Your password has been reset.": "비밀번호가 초기화되었습니다.",
     "Invalid homeserver discovery response": "잘못된 홈서버 검색 응답",
     "Failed to get autodiscovery configuration from server": "서버에서 자동 검색 설정 얻기에 실패함",

@@ -2712,7 +2712,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Це дає змогу експортувати в локальний файл ключі до повідомлень, отриманих вами в зашифрованих кімнатах. Тоді ви зможете імпортувати файл до іншого клієнта Matrix у майбутньому, і той клієнт також зможе розшифрувати ці повідомлення.",
     "Export room keys": "Експортувати ключі кімнат",
     "Your password has been reset.": "Ваш пароль скинуто.",
-    "An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.": "На %(emailAddress)s надіслано лист. Натисніть посилання в ньому, а тоді натисніть нижче.",
     "New passwords must match each other.": "Нові паролі мають збігатися.",
     "The email address linked to your account must be entered.": "Введіть е-пошту, прив'язану до вашого облікового запису.",
     "Really reset verification keys?": "Точно скинути ключі звірки?",

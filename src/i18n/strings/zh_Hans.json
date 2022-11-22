@@ -774,7 +774,6 @@
     "Couldn't load page": "无法加载页面",
     "Guest": "游客",
     "Could not load user profile": "无法加载用户资料",
-    "Sign in instead": "登入",
     "Your password has been reset.": "你的密码已重置。",
     "Invalid homeserver discovery response": "无效的主服务器搜索响应",
     "Invalid identity server discovery response": "无效的身份服务器搜索响应",

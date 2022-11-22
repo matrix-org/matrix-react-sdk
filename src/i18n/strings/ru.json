@@ -891,7 +891,6 @@
     "You have %(count)s unread notifications in a prior version of this room.|one": "В предыдущей версии этой комнаты у вас есть непрочитанное уведомление %(count)s.",
     "Guest": "Гость",
     "Could not load user profile": "Не удалось загрузить профиль пользователя",
-    "Sign in instead": "Войдите, вместо этого",
     "Your password has been reset.": "Ваш пароль был сброшен.",
     "Invalid homeserver discovery response": "Неверный ответ при попытке обнаружения домашнего сервера",
     "Failed to get autodiscovery configuration from server": "Не удалось получить конфигурацию автообнаружения с сервера",

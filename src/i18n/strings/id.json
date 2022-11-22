@@ -2373,7 +2373,6 @@
     "Failed to get autodiscovery configuration from server": "Gagal untuk mendapatkan konfigurasi penemuan otomatis dari server",
     "Invalid homeserver discovery response": "Respons penemuan homeserver tidak absah",
     "Your password has been reset.": "Kata sandi Anda telah diatur ulang.",
-    "A verification email will be sent to your inbox to confirm setting your new password.": "Sebuah email verifikasi akan dikirim ke kotak masuk Anda untuk mengkonfirmasi mengatur kata sandi Anda yang baru.",
     "New passwords must match each other.": "Kata sandi baru harus cocok.",
     "The email address doesn't appear to be valid.": "Alamat email ini tidak terlihat absah.",
     "The email address linked to your account must be entered.": "Alamat email yang tertaut ke akun Anda harus dimasukkan.",

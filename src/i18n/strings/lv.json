@@ -631,7 +631,6 @@
     "Security Phrase": "Slepenā frāze",
     "Confirm": "Apstiprināt",
     "Set a new account password...": "Iestatiet jaunu konta paroli...",
-    "A verification email will be sent to your inbox to confirm setting your new password.": "Apstiprinājuma vēstule tiks nosūtīta uz jūsu epasta adresi, lai apstiprinātu paroles nomaiņu.",
     "Forgot password?": "Aizmirsi paroli?",
     "No homeserver URL provided": "Nav iestatīts bāzes servera URL",
     "Cannot reach homeserver": "Neizdodas savienoties ar bāzes serveri",

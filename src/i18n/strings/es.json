@@ -1449,7 +1449,6 @@
     "Add room": "Añadir una sala",
     "Guest": "Invitado",
     "Could not load user profile": "No se pudo cargar el perfil de usuario",
-    "A verification email will be sent to your inbox to confirm setting your new password.": "Te enviaremos un correo electrónico de verificación para cambiar tu contraseña.",
     "Your password has been reset.": "Su contraseña ha sido restablecida.",
     "Invalid homeserver discovery response": "Respuesta inválida de descubrimiento de servidor base",
     "Failed to get autodiscovery configuration from server": "No se pudo obtener la configuración de autodescubrimiento del servidor",

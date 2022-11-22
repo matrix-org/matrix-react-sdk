@@ -369,7 +369,6 @@
     "The email address linked to your account must be entered.": "Морате унети мејл адресу која је везана за ваш налог.",
     "A new password must be entered.": "Морате унети нову лозинку.",
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
-    "I have verified my email address": "Потврдио сам своју мејл адресу",
     "Return to login screen": "Врати ме на екран за пријаву",
     "Incorrect username and/or password.": "Нетачно корисничко име и/или лозинка.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Знајте да се пријављујете на сервер %(hs)s, не на matrix.org.",

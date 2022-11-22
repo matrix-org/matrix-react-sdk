@@ -415,7 +415,6 @@
     "Invalid homeserver discovery response": "Phản hồi khám phá homeserver không hợp lệ",
     "Return to login screen": "Quay về màn hình đăng nhập",
     "Your password has been reset.": "Mật khẩu của bạn đã được đặt lại.",
-    "An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.": "Một email đã được gửi đến %(emailAddress)s. Khi bạn đã theo liên kết trong đó, hãy nhấp vào bên dưới.",
     "Send Reset Email": "Gửi email để đặt lại",
     "New Password": "mật khẩu mới",
     "New passwords must match each other.": "Các mật khẩu mới phải khớp với nhau.",
