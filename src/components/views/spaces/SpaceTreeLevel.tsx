@@ -139,7 +139,6 @@ export const SpaceButton = forwardRef<HTMLElement, IButtonProps>(({
             inputRef={handle}
             tabIndex={tabIndex}
             onFocus={onFocus}
-            data-testid="space-button"
         >
             { children }
             <div className="mx_SpaceButton_selectionWrapper">
