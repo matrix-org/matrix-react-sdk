@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { render } from "@testing-library/react";
+import { IPublicRoomsChunkRoom } from "matrix-js-sdk/src/client";
 
 import { PublicRoomResultDetails } from "../../../../../src/components/views/dialogs/spotlight/PublicRoomResultDetails";
 
@@ -30,6 +31,34 @@ describe("PublicRoomResultDetails", () => {
                 guest_can_join: false,
                 num_joined_members: 666,
             }}
+            labelId="label-id"
+            descriptionId="description-id"
+            detailsId="details-id"
+        />);
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it.each([
+        { canonical_alias: "canonical-alias" },
+        { aliases: ["alias-from-aliases"] },
+        { name: "name over alias", canonical_alias: "canonical-alias" },
+        {
+            name: "with an overly long name that will be truncated for sure, you can't say anything about it",
+            topic: "with a topic!",
+        },
+        { topic: "Very long topic " + new Array(1337).join("a") },
+    ])("Public room results", (partialPublicRoomChunk: Partial<IPublicRoomsChunkRoom>) => {
+        const roomChunk: IPublicRoomsChunkRoom = {
+            room_id: "room-id",
+            world_readable: true,
+            guest_can_join: false,
+            num_joined_members: 666,
+            ...partialPublicRoomChunk,
+        };
+
+        const { asFragment } = render(<PublicRoomResultDetails
+            room={roomChunk}
             labelId="label-id"
             descriptionId="description-id"
             detailsId="details-id"
