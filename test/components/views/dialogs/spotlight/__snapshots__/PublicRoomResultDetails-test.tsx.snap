@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PublicRoomResultDetails renders 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_SpotlightDialog_result_publicRoomDetails"
+  >
+    <div
+      class="mx_SpotlightDialog_result_publicRoomHeader"
+    >
+      <span
+        class="mx_SpotlightDialog_result_publicRoomName"
+        id="label-id"
+      >
+        hello?
+      </span>
+      <span
+        class="mx_SpotlightDialog_result_publicRoomAlias"
+        id="description-id"
+      >
+        canonical-alias
+      </span>
+    </div>
+    <div
+      class="mx_SpotlightDialog_result_publicRoomDescription"
+      id="details-id"
+    >
+      <span
+        class="mx_SpotlightDialog_result_publicRoomMemberCount"
+      >
+        666 Members
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
