@@ -2373,7 +2373,6 @@
     "Failed to get autodiscovery configuration from server": "Gagal untuk mendapatkan konfigurasi penemuan otomatis dari server",
     "Invalid homeserver discovery response": "Respons penemuan homeserver tidak absah",
     "Your password has been reset.": "Kata sandi Anda telah diatur ulang.",
-    "An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.": "Sebuah email telah dikirim ke %(emailAddress)s. Setelah Anda mengikuti tautannya, klik di bawah.",
     "A verification email will be sent to your inbox to confirm setting your new password.": "Sebuah email verifikasi akan dikirim ke kotak masuk Anda untuk mengkonfirmasi mengatur kata sandi Anda yang baru.",
     "New passwords must match each other.": "Kata sandi baru harus cocok.",
     "The email address doesn't appear to be valid.": "Alamat email ini tidak terlihat absah.",
@@ -3655,5 +3654,19 @@
     "Show details": "Tampilkan detail",
     "Hide details": "Sembunyikan detail",
     "30s forward": "30d selanjutnya",
-    "30s backward": "30d sebelumnya"
+    "30s backward": "30d sebelumnya",
+    "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>": "Kami harus tahu bahwa itu Anda sebelum mengatur ulang kata sandi Anda.\n                    Klik tautan dalam email yang kami sudah kirim ke <b>%(email)s</b>",
+    "Verify your email to continue": "Verifikasi email Anda untuk melanjutkan",
+    "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.": "<b>%(homeserver)s</b> akan mengirim Anda sebuah tautan verifikasi untuk memperbolehkan Anda untuk mengatur ulang kata sandi Anda.",
+    "Enter your email to reset password": "Masukkan email Anda untuk mengatur ulang kata sandi",
+    "Verification link email resent!": "Email tautan verifikasi dikirim ulang!",
+    "Send email": "Kirim email",
+    "Did not receive it?": "Tidak menerimanya?",
+    "Follow the instructions sent to <b>%(email)s</b>": "Ikuti petunjuk yang dikirim ke <b>%(email)s</b>",
+    "Sign out of all devices": "Keluarkan semua perangkat",
+    "Confirm new password": "Konfirmasi kata sandi baru",
+    "Reset your password": "Atur ulang kata sandi Anda",
+    "Reset password": "Atur ulang kata sandi",
+    "Too many attempts in a short time. Retry after %(timeout)s.": "Terlalu banyak upaya dalam waktu yang singkat. Coba lagi setelah %(timeout)s.",
+    "Too many attempts in a short time. Wait some time before trying again.": "Terlalu banyak upaya. Tunggu beberapa waktu sebelum mencoba lagi."
 }
