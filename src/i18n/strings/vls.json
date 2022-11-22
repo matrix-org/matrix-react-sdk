@@ -850,7 +850,6 @@
     "The email address linked to your account must be entered.": "’t E-mailadresse da me joun account verboundn is moet ingegeevn wordn.",
     "A new password must be entered.": "’t Moet e nieuw paswoord ingegeevn wordn.",
     "New passwords must match each other.": "Nieuwe paswoordn moetn overeenkommn.",
-    "An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.": "’t Is een e-mail noar %(emailAddress)s verstuurd gewist. Klikt hieroundern van zodra da je de koppelienge derin gevolgd ghed èt.",
     "Your password has been reset.": "Je paswoord is heringesteld.",
     "Return to login screen": "Were noa ’t anmeldiengsscherm",
     "Invalid homeserver discovery response": "Oungeldig thuusserverountdekkiengsantwoord",

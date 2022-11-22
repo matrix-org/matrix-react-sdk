@@ -900,7 +900,6 @@
     "Sent messages will be stored until your connection has returned.": "Saadetud sõnumid salvestatakse seniks, kuni võrguühendus on taastunud.",
     "You have %(count)s unread notifications in a prior version of this room.|other": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitust.",
     "You have %(count)s unread notifications in a prior version of this room.|one": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitus.",
-    "An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.": "Saatsime kirja %(emailAddress)s aadressile. Kui sa oled klõpsinud kirjas olnud linki, siis jätka alljärgnevaga.",
     "Your password has been reset.": "Sinu salasõna on muudetud.",
     "Dismiss read marker and jump to bottom": "Ära arvesta loetud sõnumite järjehoidjat ning mine kõige lõppu",
     "Jump to oldest unread message": "Mine vanima lugemata sõnumi juurde",
