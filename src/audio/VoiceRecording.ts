@@ -93,8 +93,10 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             this.recorderStream = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     channelCount: CHANNELS,
-                    noiseSuppression: true, // browsers ignore constraints they can't honour
                     deviceId: MediaDeviceHandler.getAudioInput(),
+                    autoGainControl: { ideal: MediaDeviceHandler.getAudioAutoGainControl() },
+                    echoCancellation: { ideal: MediaDeviceHandler.getAudioEchoCancellation() },
+                    noiseSuppression: { ideal: MediaDeviceHandler.getAudioNoiseSuppression() },
                 },
             });
             this.recorderContext = createAudioContext({
