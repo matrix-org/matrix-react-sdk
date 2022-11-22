@@ -27,6 +27,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
+import SettingsFieldset from "./SettingsFieldset";
 
 interface AddPrivilegedUsersProps {
     room: Room;
@@ -66,12 +67,12 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
     };
 
     return (
-        <form className="mx_SettingsFieldset" onSubmit={onSubmit}>
-            <fieldset style={{ width: '100%' }}>
-                <legend className='mx_SettingsFieldset_legend'>{ _t('Add privileged users') }</legend>
-                <div className='mx_SettingsFieldset_description'>
-                    { _t('Give one or multiple users in this room more privileges') }
-                </div>
+        <form style={{ display: 'flex' }} onSubmit={onSubmit}>
+            <SettingsFieldset
+                legend={_t('Add privileged users')}
+                description={_t('Give one or multiple users in this room more privileges')}
+                style={{ flexGrow: 1 }}
+            >
                 <AutocompleteInput
                     provider={userProvider.current}
                     placeholder={_t("Search users in this room …")}
@@ -82,13 +83,14 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
                 <PowerSelector value={powerLevel} onChange={setPowerLevel} />
                 <AccessibleButton
                     type='submit'
+                    element='button'
                     kind='primary'
                     disabled={!selectedUsers.length || isLoading}
-                    onClick={onSubmit}
+                    onClick={null}
                 >
                     { _t('Apply') }
                 </AccessibleButton>
-            </fieldset>
+            </SettingsFieldset>
         </form>
     );
 };
