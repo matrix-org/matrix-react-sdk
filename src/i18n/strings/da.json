@@ -32,7 +32,6 @@
     "Export E2E room keys": "Eksporter E2E rum nøgler",
     "Failed to change password. Is your password correct?": "Kunne ikke ændre adgangskoden. Er din adgangskode rigtig?",
     "Failed to reject invitation": "Kunne ikke afvise invitationen",
-    "Failed to send email": "Kunne ikke sende e-mail",
     "Failed to unban": "Var ikke i stand til at ophæve forbuddet",
     "Favourite": "Favorit",
     "Notifications": "Notifikationer",
@@ -732,7 +731,6 @@
     "Password": "Adgangskode",
     "Your password was successfully changed.": "Din adgangskode blev ændret.",
     "New Password": "Ny adgangskode",
-    "Set a new password": "Sæt en ny adgangskode",
     "Set a new custom sound": "Sæt en ny brugerdefineret lyd",
     "Set a new account password...": "Sæt en ny adgangskode..."
 }
