@@ -2061,7 +2061,6 @@
     "Unverified": "Nepatvirtinta",
     "Verified": "Patvirtinta",
     "Inactive for %(inactiveAgeDays)s+ days": "Neaktyvus %(inactiveAgeDays)s+ dienas",
-    "Toggle device details": "Perjungti įrenginio detales",
     "Sign out of this session": "Atsijungti iš šios sesijos",
     "Session details": "Sesijos detalės",
     "IP address": "IP adresas",
