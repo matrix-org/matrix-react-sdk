@@ -342,7 +342,7 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
         }
     }
 
-    const roomAlias = getDisplayAliasForAliasSet(room?.canonical_alias, room?.aliases) || undefined;
+    const roomAlias = getDisplayAliasForAliasSet(room?.canonical_alias ?? "", room?.aliases ?? []) || undefined;
 
     defaultDispatcher.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,

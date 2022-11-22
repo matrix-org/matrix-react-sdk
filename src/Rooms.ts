@@ -37,11 +37,11 @@ export function getDisplayAliasForRoom(room: Room): string | undefined {
 
 // The various display alias getters should all feed through this one path so
 // there's a single place to change the logic.
-export function getDisplayAliasForAliasSet(canonicalAlias?: string | null, altAliases?: string[]): string | undefined {
+export function getDisplayAliasForAliasSet(canonicalAlias: string, altAliases: string[]): string {
     if (AliasCustomisations.getDisplayAliasForAliasSet) {
         return AliasCustomisations.getDisplayAliasForAliasSet(canonicalAlias, altAliases);
     }
-    return canonicalAlias || altAliases?.[0];
+    return (canonicalAlias || altAliases?.[0]) ?? "";
 }
 
 export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> {

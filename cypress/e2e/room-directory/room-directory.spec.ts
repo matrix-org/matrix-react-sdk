@@ -95,7 +95,7 @@ describe("Room Directory", () => {
 
         cy.get('.mx_SpotlightDialog [aria-label="Search"]').type("{selectAll}{backspace}test1234");
         cy.contains(".mx_SpotlightDialog .mx_SpotlightDialog_result_publicRoomName", name)
-            .should("exist").as("resultRow");
+            .should("exist");
         cy.get(".mx_SpotlightDialog").percySnapshotElement("Room Directory - filtered one result");
         cy.get(".mx_SpotlightDialog .mx_SpotlightDialog_option").find(".mx_AccessibleButton").contains("Join").click();
 
