@@ -3653,5 +3653,19 @@
     "Show details": "Zobraziť podrobnosti",
     "Hide details": "Skryť podrobnosti",
     "30s forward": "30s dopredu",
-    "30s backward": "30s späť"
+    "30s backward": "30s späť",
+    "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>": "Pred obnovením hesla potrebujeme vedieť, že ste to naozaj vy.\n                    Kliknite na odkaz v e-maile, ktorý sme vám práve poslali <b>%(email)s</b>",
+    "Verify your email to continue": "Overte svoj e-mail a pokračujte",
+    "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.": "<b>%(homeserver)s</b> vám pošle overovací odkaz, ktorý vám umožní obnoviť heslo.",
+    "Enter your email to reset password": "Zadajte svoj e-mail na obnovenie hesla",
+    "Send email": "Poslať e-mail",
+    "Verification link email resent!": "E-mail s overovacím odkazom bol znovu odoslaný!",
+    "Did not receive it?": "Nedostali ste ho?",
+    "Follow the instructions sent to <b>%(email)s</b>": "Postupujte podľa pokynov zaslaných na <b>%(email)s</b>",
+    "Sign out of all devices": "Odhlásiť sa zo všetkých zariadení",
+    "Confirm new password": "Potvrdiť nové heslo",
+    "Reset your password": "Obnovte svoje heslo",
+    "Reset password": "Znovu nastaviť heslo",
+    "Too many attempts in a short time. Retry after %(timeout)s.": "Príliš veľa pokusov v krátkom čase. Opakujte pokus po %(timeout)s.",
+    "Too many attempts in a short time. Wait some time before trying again.": "Príliš veľa pokusov v krátkom čase. Pred ďalším pokusom počkajte nejakú dobu."
 }
