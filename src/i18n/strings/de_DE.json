@@ -3414,7 +3414,6 @@
     "Unverified": "Nicht verifiziert",
     "Verified": "Verifiziert",
     "Inactive for %(inactiveAgeDays)s+ days": "Seit %(inactiveAgeDays)s+ Tagen inaktiv",
-    "Toggle device details": "Gerätedetails umschalten",
     "Session details": "Sitzungsdetails",
     "IP address": "IP-Adresse",
     "Device": "Gerät",
@@ -3631,8 +3630,6 @@
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Inaktive Sitzungen sind jene, die du schon seit geraumer Zeit nicht mehr verwendet hast, aber nach wie vor Verschlüsselungs-Schlüssel erhalten.",
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Du solltest besonders sicher gehen, dass du diese Sitzungen kennst, da sie die unbefugte Nutzung deines Kontos durch Dritte bedeuten könnten.",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Nicht verifizierte Sitzungen sind jene, die mit deinen Daten angemeldet, aber nicht quer signiert wurden.",
-    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "Dies bedeutet, dass sie die Verschlüsselungs-Schlüssel für deine vorherigen Nachrichten besitzen und anderen Gewissheit geben, dass sie wirklich mit dir kommunizieren.",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Verifizierte Sitzungen wurden mit deinen Daten angemeldet und anschließend verifiziert, entweder mit einer Sicherheitspassphrase oder durch Quersignierung.",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Erwäge, dich aus alten (%(inactiveAgeDays)s Tage oder mehr), nicht mehr verwendeten Sitzungen abzumelden.",
     "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "Das Entfernen inaktiver Sitzungen verbessert Sicherheit, Leistung und das Erkennen von dubiosen neuen Sitzungen.",
     "Show formatting": "Formatierung anzeigen",
@@ -3658,5 +3655,11 @@
     "Go live": "Live schalten",
     "%(minutes)sm %(seconds)ss left": "%(minutes)s m %(seconds)s s verbleibend",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)s h %(minutes)s m %(seconds)s s verbleibend",
-    "That e-mail address or phone number is already in use.": "Diese E-Mail-Adresse oder Telefonnummer wird bereits verwendet."
+    "That e-mail address or phone number is already in use.": "Diese E-Mail-Adresse oder Telefonnummer wird bereits verwendet.",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Dies bedeutet, dass du alle Schlüssel zum Entsperren deiner verschlüsselten Nachrichten hast und anderen bestätigst, dieser Sitzung zu vertrauen.",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Auf verifizierte Sitzungen kannst du überall mit deinem Konto zugreifen, wenn du deine Passphrase eingegeben oder deine Identität mit einer anderen Sitzung verifiziert hast.",
+    "Show details": "Details anzeigen",
+    "Hide details": "Details ausblenden",
+    "30s forward": "30s vorspulen",
+    "30s backward": "30s zurückspulen"
 }

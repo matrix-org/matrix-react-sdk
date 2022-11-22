@@ -3489,7 +3489,6 @@
     "Don’t miss a thing by taking %(brand)s with you": "Võta %(brand)s nutiseadmesse kaasa ning ära jäta suhtlemist vahele",
     "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
     "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
-    "Toggle device details": "Näita või peida seadme teave",
     "Filter devices": "Sirvi seadmeid",
     "Inactive for %(inactiveAgeDays)s days or longer": "Pole olnud kasutusel %(inactiveAgeDays)s või enam päeva",
     "Inactive": "Pole pidevas kasutuses",
@@ -3638,8 +3637,6 @@
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Mitteaktiivsed seansid on seansid, mida sa ei ole mõnda aega kasutanud, kuid neil jätkuvalt lubatakse laadida krüptimisvõtmeid.",
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Kuna nende näol võib olla tegemist võimaliku konto volitamata kasutamisega, siis palun tee kindlaks, et need sessioonid on sulle tuttavad.",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Kontrollimata sessioonid on sessioonid, kuhu on sinu volitustega sisse logitud, kuid mida ei ole risttuvastamisega kontrollitud.",
-    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "See tähendab, et neil on sinu eelmiste sõnumite krüpteerimisvõtmed ja nad kinnitavad teistele kasutajatele, kellega sa suhtled, et suhtlus on turvaline.",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Kontrollitud seanss on see, kuhu on sinu kasutajatunnustega sisse logitud ja mida on kontrollitud sinu salafraasi või risttunnustamise abil.",
     "Hide formatting": "Peida vormindus",
     "Automatic gain control": "Automaatne esitusvaljuse tundlikkus",
     "Connection": "Ühendus",
@@ -3658,5 +3655,11 @@
     "Go live": "Alusta otseeetrit",
     "%(minutes)sm %(seconds)ss left": "jäänud on %(minutes)sm %(seconds)ss",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "jäänud on %(hours)st %(minutes)sm %(seconds)ss",
-    "That e-mail address or phone number is already in use.": "See e-posti aadress või telefoninumber on juba kasutusel."
+    "That e-mail address or phone number is already in use.": "See e-posti aadress või telefoninumber on juba kasutusel.",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "See tähendab, et selles sessioonis on ka kõik vajalikud võtmed krüptitud sõnumite lugemiseks ja teistele kasutajatele kinnitamiseks, et sa usaldad seda sessiooni.",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Verifitseeritud sessioonideks loetakse Element'is või mõnes muus Matrix'i rakenduses selliseid sessioone, kus sa kas oled sisestanud oma salafraasi või tuvastanud end mõne teise oma verifitseeritud sessiooni abil.",
+    "Show details": "Näita üksikasju",
+    "Hide details": "Peida üksikasjalik teave",
+    "30s forward": "30s edasi",
+    "30s backward": "30s tagasi"
 }

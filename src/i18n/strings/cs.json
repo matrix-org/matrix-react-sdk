@@ -3500,7 +3500,6 @@
     "No verified sessions found.": "Nebyly nalezeny žádné ověřené relace.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Pro nejlepší zabezpečení se odhlaste z každé relace, kterou již nepoznáváte nebo nepoužíváte.",
     "Verified sessions": "Ověřené relace",
-    "Toggle device details": "Přepnutí zobrazení podrobností o zařízení",
     "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
     "Manually verify by text": "Ruční ověření pomocí textu",
     "We’d appreciate any feedback on how you’re finding %(brand)s.": "Budeme rádi za jakoukoli zpětnou vazbu o tom, jak se vám %(brand)s osvědčil.",
@@ -3635,8 +3634,6 @@
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Neaktivní relace jsou relace, které jste po určitou dobu nepoužili, ale nadále dostávají šifrovací klíče.",
     "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": "Měli byste si být jisti, že tyto relace rozpoznáte, protože by mohly představovat neoprávněné použití vašeho účtu.",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Neověřené relace jsou relace, které se přihlásily pomocí vašich přihlašovacích údajů, ale nebyly křížově ověřeny.",
-    "This means they hold encryption keys for your previous messages, and confirm to other users you are communicating with that these sessions are really you.": "To znamená, že uchovávají šifrovací klíče vašich předchozích zpráv a potvrzují ostatním uživatelům, se kterými komunikujete, že tyto relace jste skutečně vy.",
-    "Verified sessions have logged in with your credentials and then been verified, either using your secure passphrase or by cross-verifying.": "Ověřené relace se přihlásily pomocí vašich přihlašovacích údajů a poté byly ověřeny buď pomocí vaší zabezpečené přístupové fráze, nebo křížovým ověřením.",
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "To jim dává jistotu, že skutečně mluví s vámi, ale také to znamená, že vidí název relace, který zde zadáte.",
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Ostatní uživatelé v přímých zprávách a místnostech, ke kterým se připojíte, si mohou prohlédnout úplný seznam vašich relací.",
     "Please be aware that session names are also visible to people you communicate with.": "Uvědomte si, že jména relací jsou viditelná i pro osoby, se kterými komunikujete.",
@@ -3658,5 +3655,11 @@
     "Go live": "Přejít naživo",
     "%(minutes)sm %(seconds)ss left": "zbývá %(minutes)sm %(seconds)ss",
     "%(hours)sh %(minutes)sm %(seconds)ss left": "zbývá %(hours)sh %(minutes)sm %(seconds)ss",
-    "That e-mail address or phone number is already in use.": "Tato e-mailová adresa nebo telefonní číslo se již používá."
+    "That e-mail address or phone number is already in use.": "Tato e-mailová adresa nebo telefonní číslo se již používá.",
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "To znamená, že máte všechny klíče potřebné k odemknutí zašifrovaných zpráv a potvrzení ostatním uživatelům, že této relaci důvěřujete.",
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Ověřené relace jsou všude tam, kde tento účet používáte po zadání své přístupové fráze nebo po potvrzení své totožnosti jinou ověřenou relací.",
+    "Show details": "Zobrazit podrobnosti",
+    "Hide details": "Skrýt podrobnosti",
+    "30s forward": "30s vpřed",
+    "30s backward": "30s zpět"
 }
