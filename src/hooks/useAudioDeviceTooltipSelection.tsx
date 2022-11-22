@@ -22,7 +22,7 @@ import IconizedContextMenu, {
     IconizedContextMenuRadio,
 } from "../components/views/context_menus/IconizedContextMenu";
 import { _t } from "../languageHandler";
-import MediaDeviceHandler from "../MediaDeviceHandler";
+import MediaDeviceHandler, { MediaDeviceKindEnum } from "../MediaDeviceHandler";
 import { requestMediaPermissions } from "../utils/media/requestMediaPermissions";
 
 interface State {
@@ -33,6 +33,7 @@ interface State {
 
 export const useAudioDeviceTooltipSelection = (
     containerRef: MutableRefObject<HTMLElement>,
+    onDeviceChanged?: (device: MediaDeviceInfo) => void,
 ) => {
     const shouldRequestPermissionsRef = useRef<boolean>(true);
     const [state, setState] = useState<State>({
@@ -61,11 +62,18 @@ export const useAudioDeviceTooltipSelection = (
     }
 
     const onDeviceOptionClick = (device: MediaDeviceInfo) => {
+        const shouldNotify = device.deviceId !== state.device?.deviceId;
+        MediaDeviceHandler.instance.setDevice(device.deviceId, MediaDeviceKindEnum.AudioInput);
+
         setState({
             ...state,
             device,
             showDeviceSelect: false,
         });
+
+        if (shouldNotify) {
+            onDeviceChanged?.(device);
+        }
     };
 
     const onSelectDeviceClick = () => {
