@@ -790,7 +790,6 @@
     "Other": "Další možnosti",
     "Couldn't load page": "Nepovedlo se načíst stránku",
     "Guest": "Host",
-    "Sign in instead": "Přihlásit se",
     "Your password has been reset.": "Heslo bylo resetováno.",
     "Sign in with single sign-on": "Přihlásit se přes jednotné přihlašování",
     "Create account": "Vytvořit účet",
@@ -3654,5 +3653,19 @@
     "Show details": "Zobrazit podrobnosti",
     "Hide details": "Skrýt podrobnosti",
     "30s forward": "30s vpřed",
-    "30s backward": "30s zpět"
+    "30s backward": "30s zpět",
+    "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>": "Před obnovením hesla musíme vědět, že jste to vy.\n                    Klikněte na odkaz v e-mailu, který jsme právě odeslali na adresu <b>%(email)s</b>",
+    "Verify your email to continue": "Pro pokračování ověřte svůj e-mail",
+    "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.": "<b>%(homeserver)s</b> vám zašle ověřovací odkaz, který vám umožní obnovit heslo.",
+    "Enter your email to reset password": "Zadejte svůj e-mail pro obnovení hesla",
+    "Send email": "Odeslat e-mail",
+    "Verification link email resent!": "E-mail s ověřovacím odkazem odeslán znovu!",
+    "Did not receive it?": "Neobdrželi jste ho?",
+    "Follow the instructions sent to <b>%(email)s</b>": "Postupujte podle pokynů zaslaných na <b>%(email)s</b>",
+    "Sign out of all devices": "Odhlásit se ze všech zařízení",
+    "Confirm new password": "Potvrďte nové heslo",
+    "Reset your password": "Obnovení vašeho hesla",
+    "Reset password": "Obnovit heslo",
+    "Too many attempts in a short time. Retry after %(timeout)s.": "Příliš mnoho pokusů v krátkém čase. Zkuste to znovu po %(timeout)s.",
+    "Too many attempts in a short time. Wait some time before trying again.": "Příliš mnoho pokusů v krátkém čase. Před dalším pokusem nějakou dobu počkejte."
 }
