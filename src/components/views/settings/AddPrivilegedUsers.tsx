@@ -18,7 +18,6 @@ import React, { useCallback, useContext, useRef, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import SettingsFieldSet from '../../../components/views/settings/SettingsFieldset';
 import { _t } from "../../../languageHandler";
 import { ICompletion } from '../../../autocomplete/Autocompleter';
 import UserProvider from "../../../autocomplete/UserProvider";
@@ -67,27 +66,29 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
     };
 
     return (
-        <form className="mx_SettingsFieldset">
-            <legend className='mx_SettingsFieldset_legend'>{ _t('Add privileged users') }</legend>
-            <div className='mx_SettingsFieldset_description'>
-                { _t('Give one or multiple users in this room more privileges') }
-            </div>
-            <AutocompleteInput
-                provider={userProvider.current}
-                placeholder={_t("Search users in this room …")}
-                onSelectionChange={setSelectedUsers}
-                selection={selectedUsers}
-                additionalFilter={filterSuggestions}
-            />
-            <PowerSelector value={powerLevel} onChange={setPowerLevel} />
-            <AccessibleButton
-                type='submit'
-                kind='primary'
-                disabled={!selectedUsers.length || isLoading}
-                onClick={onSubmit}
-            >
-                { _t('Apply') }
-            </AccessibleButton>
+        <form className="mx_SettingsFieldset" onSubmit={onSubmit}>
+            <fieldset style={{ width: '100%' }}>
+                <legend className='mx_SettingsFieldset_legend'>{ _t('Add privileged users') }</legend>
+                <div className='mx_SettingsFieldset_description'>
+                    { _t('Give one or multiple users in this room more privileges') }
+                </div>
+                <AutocompleteInput
+                    provider={userProvider.current}
+                    placeholder={_t("Search users in this room …")}
+                    onSelectionChange={setSelectedUsers}
+                    selection={selectedUsers}
+                    additionalFilter={filterSuggestions}
+                />
+                <PowerSelector value={powerLevel} onChange={setPowerLevel} />
+                <AccessibleButton
+                    type='submit'
+                    kind='primary'
+                    disabled={!selectedUsers.length || isLoading}
+                    onClick={onSubmit}
+                >
+                    { _t('Apply') }
+                </AccessibleButton>
+            </fieldset>
         </form>
     );
 };

@@ -28,8 +28,8 @@ describe('AutocompleteInput', () => {
         { type: 'user', completion: 'user_2', completionId: '@user_2:host.local', range: { start: 1, end: 1 } },
     ];
 
-    const mockProvider = (data) => ({
-        getCompletions: jest.fn().mockImplementation(async (query) => query ? data : []),
+    const constructMockProvider = (data) => ({
+        getCompletions: jest.fn().mockImplementation(async () => data),
     }) as unknown as AutocompleteProvider;
 
     beforeEach(async () => {
@@ -44,8 +44,17 @@ describe('AutocompleteInput', () => {
     };
 
     it('should render suggestions when a query is set', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
-        render(<AutocompleteInput provider={_mockProvider} placeholder='placeholder' />);
+        const mockProvider = constructMockProvider(mockCompletion);
+        const onSelectionChangeMock = jest.fn();
+
+        render(
+            <AutocompleteInput
+                provider={mockProvider}
+                placeholder='Search ...'
+                selection={[]}
+                onSelectionChange={onSelectionChangeMock}
+            />,
+        );
 
         const input = getEditorInput();
 
@@ -54,14 +63,21 @@ describe('AutocompleteInput', () => {
             fireEvent.change(input, { target: { value: 'user' } });
         });
 
-        await waitFor(() => expect(_mockProvider.getCompletions).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(mockProvider.getCompletions).toHaveBeenCalledTimes(1));
         expect(screen.getByTestId('autocomplete-matches').childNodes).toHaveLength(mockCompletion.length);
     });
 
-    it('should render selection when used as a controlled input', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
+    it('should render selected items passed in via props', async () => {
+        const mockProvider = constructMockProvider(mockCompletion);
+        const onSelectionChangeMock = jest.fn();
+
         render(
-            <AutocompleteInput provider={_mockProvider} placeholder='placeholder' selection={mockCompletion} />,
+            <AutocompleteInput
+                provider={mockProvider}
+                placeholder='Search ...'
+                selection={mockCompletion}
+                onSelectionChange={onSelectionChangeMock}
+            />,
         );
 
         const editor = screen.getByTestId('autocomplete-editor');
@@ -70,12 +86,13 @@ describe('AutocompleteInput', () => {
     });
 
     it('should call onSelectionChange() when an item is removed from selection', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
+        const mockProvider = constructMockProvider(mockCompletion);
         const onSelectionChangeMock = jest.fn();
+
         render(
             <AutocompleteInput
-                provider={_mockProvider}
-                placeholder='placeholder'
+                provider={mockProvider}
+                placeholder='Search ...'
                 selection={mockCompletion}
                 onSelectionChange={onSelectionChangeMock}
             />,
@@ -94,16 +111,19 @@ describe('AutocompleteInput', () => {
     });
 
     it('should render custom selection element when renderSelection() is defined', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
+        const mockProvider = constructMockProvider(mockCompletion);
+        const onSelectionChangeMock = jest.fn();
+
         const renderSelection = () => (
             <span data-testid='custom-selection-element'>custom selection element</span>
         );
 
         render(
             <AutocompleteInput
-                provider={_mockProvider}
-                placeholder='placeholder'
+                provider={mockProvider}
+                placeholder='Search ...'
                 selection={mockCompletion}
+                onSelectionChange={onSelectionChangeMock}
                 renderSelection={renderSelection}
             />,
         );
@@ -112,15 +132,19 @@ describe('AutocompleteInput', () => {
     });
 
     it('should render custom suggestion element when renderSuggestion() is defined', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
+        const mockProvider = constructMockProvider(mockCompletion);
+        const onSelectionChangeMock = jest.fn();
+
         const renderSuggestion = () => (
             <span data-testid='custom-suggestion-element'>custom suggestion element</span>
         );
 
         render(
             <AutocompleteInput
-                provider={_mockProvider}
-                placeholder='placeholder'
+                provider={mockProvider}
+                placeholder='Search ...'
+                selection={mockCompletion}
+                onSelectionChange={onSelectionChangeMock}
                 renderSuggestion={renderSuggestion}
             />,
         );
@@ -132,17 +156,20 @@ describe('AutocompleteInput', () => {
             fireEvent.change(input, { target: { value: 'user' } });
         });
 
-        await waitFor(() => expect(_mockProvider.getCompletions).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(mockProvider.getCompletions).toHaveBeenCalledTimes(1));
         expect(screen.getAllByTestId('custom-suggestion-element')).toHaveLength(mockCompletion.length);
     });
 
     it('should mark selected suggestions as selected', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
+        const mockProvider = constructMockProvider(mockCompletion);
+        const onSelectionChangeMock = jest.fn();
+
         const { container } = render(
             <AutocompleteInput
-                provider={_mockProvider}
-                placeholder='placeholder'
+                provider={mockProvider}
+                placeholder='Search ...'
                 selection={mockCompletion}
+                onSelectionChange={onSelectionChangeMock}
             />,
         );
 
@@ -153,23 +180,25 @@ describe('AutocompleteInput', () => {
             fireEvent.change(input, { target: { value: 'user' } });
         });
 
-        await waitFor(() => expect(_mockProvider.getCompletions).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(mockProvider.getCompletions).toHaveBeenCalledTimes(1));
         const suggestions = await within(container).findAllByTestId('autocomplete-suggestion-item', { exact: false });
         expect(suggestions).toHaveLength(mockCompletion.length);
-        suggestions.map(suggestion => expect(suggestion).toHaveClass('mx_AutocompleteInput_suggestion_selected'));
+        suggestions.map(suggestion => expect(suggestion).toHaveClass('mx_AutocompleteInput_suggestion--selected'));
     });
 
     it('should remove the last added selection when backspace is pressed in empty input', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
+        const mockProvider = constructMockProvider(mockCompletion);
         const onSelectionChangeMock = jest.fn();
+
         render(
             <AutocompleteInput
-                provider={_mockProvider}
-                placeholder='placeholder'
+                provider={mockProvider}
+                placeholder='Search ...'
                 selection={mockCompletion}
                 onSelectionChange={onSelectionChangeMock}
             />,
         );
+
         const input = getEditorInput();
 
         act(() => {
@@ -179,13 +208,15 @@ describe('AutocompleteInput', () => {
         expect(onSelectionChangeMock).toHaveBeenCalledWith([mockCompletion[0]]);
     });
 
-    it('should toggle a selection when a suggestion is clicked', async () => {
-        const _mockProvider = mockProvider(mockCompletion);
+    it('should toggle a selected item when a suggestion is clicked', async () => {
+        const mockProvider = constructMockProvider(mockCompletion);
         const onSelectionChangeMock = jest.fn();
+
         const { container } = render(
             <AutocompleteInput
-                provider={_mockProvider}
-                placeholder='placeholder'
+                provider={mockProvider}
+                placeholder='Search ...'
+                selection={[]}
                 onSelectionChange={onSelectionChangeMock}
             />,
         );
@@ -198,19 +229,12 @@ describe('AutocompleteInput', () => {
         });
 
         const suggestions = await within(container).findAllByTestId('autocomplete-suggestion-item', { exact: false });
-        expect(suggestions).toHaveLength(mockCompletion.length);
 
         act(() => {
             fireEvent.mouseDown(suggestions[0]);
         });
 
         expect(onSelectionChangeMock).toHaveBeenCalledWith([mockCompletion[0]]);
-
-        act(() => {
-            fireEvent.mouseDown(suggestions[0]);
-        });
-
-        expect(onSelectionChangeMock).toHaveBeenCalledWith([]);
     });
 
     afterAll(() => {

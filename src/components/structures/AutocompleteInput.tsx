@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, ReactNode, ChangeEvent, KeyboardEvent, useEffect, useCallback, useRef } from 'react';
+import React, { useState, ReactNode, ChangeEvent, KeyboardEvent, useRef } from 'react';
 import classNames from 'classnames';
 
 import Autocompleter from "../../autocomplete/AutocompleteProvider";
@@ -27,10 +27,10 @@ import { Icon as CheckmarkIcon } from '../../../res/img/element-icons/roomlist/c
 interface AutocompleteInputProps {
     provider: Autocompleter;
     placeholder: string;
+    selection: ICompletion[];
+    onSelectionChange: (selection: ICompletion[]) => void;
     maxSuggestions?: number;
     renderSuggestion?: (s: ICompletion) => ReactNode;
-    selection?: ICompletion[];
-    onSelectionChange?: (selection: ICompletion[]) => void;
     renderSelection?: (m: ICompletion) => ReactNode;
     additionalFilter?: (suggestion: ICompletion) => boolean;
 }
@@ -45,99 +45,74 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
     selection,
     additionalFilter,
 }) => {
-    const [_selection, setSelection] = useState<ICompletion[]>([]);
-    const [suggestions, setSuggestions] = useState<ICompletion[]>([]);
     const [query, setQuery] = useState<string>('');
-    const [focusedElement, setFocusedElement] = useState<HTMLElement>(null);
-
+    const [suggestions, setSuggestions] = useState<ICompletion[]>([]);
+    const [isFocused, setFocused] = useState<boolean>(false);
     const editorContainerRef = useRef<HTMLDivElement>();
     const editorRef = useRef<HTMLInputElement>();
-
-    const getSuggestions = useCallback(async () => {
-        if (query) {
-            let matches = await provider.getCompletions(
-                query,
-                { start: query.length, end: query.length },
-                true,
-                maxSuggestions,
-            );
-            if (additionalFilter) {
-                matches = matches.filter(additionalFilter);
-            }
-            setSuggestions(matches);
-        }
-    }, [query, maxSuggestions, provider, additionalFilter]);
-
-    useEffect(() => {
-        getSuggestions();
-
-        if (selection) {
-            setSelection(selection);
-        }
-    }, [getSuggestions, selection]);
 
     const focusEditor = () => {
         editorRef?.current?.focus();
     };
 
-    const removeSelection = (t: ICompletion) => {
-        const newSelection = _selection.map(s => s);
-        const idx = _selection.findIndex(s => s.completionId === t.completionId);
+    const onQueryChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.trim();
 
-        if (idx >= 0) {
-            newSelection.splice(idx, 1);
-            if (onSelectionChange) {
-                onSelectionChange(newSelection);
-            }
-            setSelection(newSelection);
+        setQuery(value);
+
+        let matches = await provider.getCompletions(
+            query,
+            { start: query.length, end: query.length },
+            true,
+            maxSuggestions,
+        );
+
+        if (additionalFilter) {
+            matches = matches.filter(additionalFilter);
         }
 
-        setQuery('');
+        setSuggestions(matches);
     };
 
-    const onFilterChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        setQuery(e.target.value.trim());
-    };
-
-    const onClickInputArea = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
+    const onClickInputArea = () => {
         focusEditor();
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
         const hasModifiers = e.ctrlKey || e.shiftKey || e.metaKey;
+
         // when the field is empty and the user hits backspace remove the right-most target
-        if (!query && _selection.length > 0 && e.key === Key.BACKSPACE && !hasModifiers) {
-            e.preventDefault();
-            removeSelection(_selection[_selection.length - 1]);
+        if (!query && selection.length > 0 && e.key === Key.BACKSPACE && !hasModifiers) {
+            removeSelection(selection[selection.length - 1]);
         }
     };
 
-    const toggleSelection = (e: ICompletion) => {
-        const newSelection = _selection.map(t => t);
-        const idx = _selection.findIndex(s => s.completionId === e.completionId);
-        if (idx >= 0) {
-            newSelection.splice(idx, 1);
+    const toggleSelection = (completion: ICompletion) => {
+        const newSelection = [...selection];
+        const index = selection.findIndex(selection => selection.completionId === completion.completionId);
+
+        if (index >= 0) {
+            newSelection.splice(index, 1);
         } else {
-            newSelection.push(e);
+            newSelection.push(completion);
         }
 
-        if (onSelectionChange) {
-            onSelectionChange(newSelection);
-        }
-        setSelection(newSelection);
-        setQuery('');
-
+        onSelectionChange(newSelection);
         focusEditor();
     };
 
-    const _renderSuggestion = (s: ICompletion): ReactNode => {
-        const isSelected = _selection.findIndex(selection => selection.completionId === s.completionId) >= 0;
+    const removeSelection = (completion: ICompletion) => {
+        const newSelection = [...selection];
+        const index = selection.findIndex(selection => selection.completionId === completion.completionId);
+
+        if (index >= 0) {
+            newSelection.splice(index, 1);
+            onSelectionChange(newSelection);
+        }
+    };
+
+    const _renderSuggestion = (completion: ICompletion): ReactNode => {
+        const isSelected = selection.findIndex(selection => selection.completionId === completion.completionId) >= 0;
         const classes = classNames({
             'mx_AutocompleteInput_suggestion': true,
             'mx_AutocompleteInput_suggestion--selected': isSelected,
@@ -149,10 +124,10 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
                     e.preventDefault();
                     e.stopPropagation();
 
-                    toggleSelection(s);
+                    toggleSelection(completion);
                 }}
-                key={s.completionId}
-                data-testid={`autocomplete-suggestion-item-${s.completionId}`}
+                key={completion.completionId}
+                data-testid={`autocomplete-suggestion-item-${completion.completionId}`}
             >
                 <div>
                     { children }
@@ -162,13 +137,13 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         );
 
         if (renderSuggestion) {
-            return withContainer(renderSuggestion(s));
+            return withContainer(renderSuggestion(completion));
         }
 
         return withContainer(
             <>
-                <span className='mx_AutocompleteInput_suggestion_title'>{ s.completion }</span>
-                <span className='mx_AutocompleteInput_suggestion_description'>{ s.completionId }</span>
+                <span className='mx_AutocompleteInput_suggestion_title'>{ completion.completion }</span>
+                <span className='mx_AutocompleteInput_suggestion_description'>{ completion.completionId }</span>
             </>,
         );
     };
@@ -202,7 +177,7 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         );
     };
 
-    const hasPlaceholder = (): boolean => _selection.length === 0 && query.length === 0;
+    const hasPlaceholder = (): boolean => selection.length === 0 && query.length === 0;
 
     return (
         <div className="mx_AutocompleteInput">
@@ -212,22 +187,22 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
                 onClick={onClickInputArea}
                 data-testid="autocomplete-editor"
             >
-                { _selection.map(s => _renderSelection(s)) }
+                { selection.map(s => _renderSelection(s)) }
                 <input
+                    ref={editorRef}
                     type="text"
                     onKeyDown={onKeyDown}
-                    onChange={onFilterChange}
+                    onChange={onQueryChange}
                     value={query}
                     autoComplete="off"
                     placeholder={hasPlaceholder() ? placeholder : null}
-                    ref={editorRef}
-                    onFocus={(e) => setFocusedElement(e.target)}
-                    onBlur={() => setFocusedElement(null)}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
                     data-testid="autocomplete-input"
                 />
             </div>
             {
-                (focusedElement === editorRef.current && suggestions.length) ? (
+                (isFocused && suggestions.length) ? (
                     <div
                         className="mx_AutocompleteInput_matches"
                         style={{ top: editorContainerRef.current?.clientHeight }}
