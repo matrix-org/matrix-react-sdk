@@ -26,6 +26,7 @@ import UIStore from "../../stores/UIStore";
 import { checkInputableElement, RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import Modal, { ModalManagerEvent } from "../../Modal";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -127,10 +128,19 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         this.initialFocus = document.activeElement as HTMLElement;
     }
 
-    componentWillUnmount() {
+    public componentDidMount() {
+        Modal.on(ModalManagerEvent.Opened, this.onModalOpen);
+    }
+
+    public componentWillUnmount() {
+        Modal.off(ModalManagerEvent.Opened, this.onModalOpen);
         // return focus to the thing which had it before us
         this.initialFocus.focus();
     }
+
+    private onModalOpen = () => {
+        this.props.onFinished?.();
+    };
 
     private collectContextMenuRect = (element: HTMLDivElement) => {
         // We don't need to clean up when unmounting, so ignore
@@ -183,7 +193,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
     private onFinished = (ev: React.MouseEvent) => {
         ev.stopPropagation();
         ev.preventDefault();
-        if (this.props.onFinished) this.props.onFinished();
+        this.props.onFinished?.();
     };
 
     private onClick = (ev: React.MouseEvent) => {
@@ -462,6 +472,35 @@ export const toRightOf = (elementRect: Pick<DOMRect, "right" | "top" | "height">
     return { left, top, chevronOffset };
 };
 
+export type ToLeftOf = {
+    chevronOffset: number;
+    right: number;
+    top: number;
+};
+
+// Placement method for <ContextMenu /> to position context menu to left of elementRect with chevronOffset
+export const toLeftOf = (elementRect: DOMRect, chevronOffset = 12): ToLeftOf => {
+    const right = UIStore.instance.windowWidth - elementRect.left + window.scrollX - 3;
+    let top = elementRect.top + (elementRect.height / 2) + window.scrollY;
+    top -= chevronOffset + 8; // where 8 is half the height of the chevron
+    return { right, top, chevronOffset };
+};
+
+/**
+ * Placement method for <ContextMenu /> to position context menu of or right of elementRect
+ * depending on which side has more space.
+ */
+export const toLeftOrRightOf = (elementRect: DOMRect, chevronOffset = 12): ToRightOf | ToLeftOf => {
+    const spaceToTheLeft = elementRect.left;
+    const spaceToTheRight = UIStore.instance.windowWidth - elementRect.right;
+
+    if (spaceToTheLeft > spaceToTheRight) {
+        return toLeftOf(elementRect, chevronOffset);
+    }
+
+    return toRightOf(elementRect, chevronOffset);
+};
+
 export type AboveLeftOf = IPosition & {
     chevronFace: ChevronFace;
 };
@@ -524,16 +563,11 @@ export const alwaysAboveLeftOf = (
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonRight = elementRect.right + window.scrollX;
-    const buttonBottom = elementRect.bottom + window.scrollY;
     const buttonTop = elementRect.top + window.scrollY;
     // Align the right edge of the menu to the right edge of the button
     menuOptions.right = UIStore.instance.windowWidth - buttonRight;
-    // Align the menu vertically on whichever side of the button has more space available.
-    if (buttonBottom < UIStore.instance.windowHeight / 2) {
-        menuOptions.top = buttonBottom + vPadding;
-    } else {
-        menuOptions.bottom = (UIStore.instance.windowHeight - buttonTop) + vPadding;
-    }
+    // Align the menu vertically above the menu
+    menuOptions.bottom = (UIStore.instance.windowHeight - buttonTop) + vPadding;
 
     return menuOptions;
 };

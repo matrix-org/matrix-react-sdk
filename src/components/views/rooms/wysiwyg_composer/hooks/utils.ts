@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MutableRefObject } from "react";
+
 import { TimelineRenderingType } from "../../../../../contexts/RoomContext";
 import { IRoomState } from "../../../../structures/RoomView";
 
 export function focusComposer(
-    composerElement: React.MutableRefObject<HTMLElement>,
+    composerElement: MutableRefObject<HTMLElement | null>,
     renderingType: TimelineRenderingType,
     roomContext: IRoomState,
-    timeoutId: React.MutableRefObject<number>,
+    timeoutId: MutableRefObject<number | null>,
 ) {
     if (renderingType === roomContext.timelineRenderingType) {
         // Immediately set the focus, so if you start typing it
@@ -40,4 +42,15 @@ export function focusComposer(
             200,
         );
     }
+}
+
+export function setCursorPositionAtTheEnd(element: HTMLElement) {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    range.collapse(false);
+    const selection = document.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    element.focus();
 }

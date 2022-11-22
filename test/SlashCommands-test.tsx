@@ -195,4 +195,49 @@ describe('SlashCommands', () => {
             });
         });
     });
+
+    describe("/part", () => {
+        it("should part room matching alias if found", async () => {
+            const room1 = new Room("room-id", client, client.getUserId());
+            room1.getCanonicalAlias = jest.fn().mockReturnValue("#foo:bar");
+            const room2 = new Room("other-room", client, client.getUserId());
+            room2.getCanonicalAlias = jest.fn().mockReturnValue("#baz:bar");
+            mocked(client.getRooms).mockReturnValue([room1, room2]);
+
+            const command = getCommand("/part #foo:bar");
+            expect(command.cmd).toBeDefined();
+            expect(command.args).toBeDefined();
+            await command.cmd.run("room-id", null, command.args);
+            expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
+        });
+
+        it("should part room matching alt alias if found", async () => {
+            const room1 = new Room("room-id", client, client.getUserId());
+            room1.getAltAliases = jest.fn().mockReturnValue(["#foo:bar"]);
+            const room2 = new Room("other-room", client, client.getUserId());
+            room2.getAltAliases = jest.fn().mockReturnValue(["#baz:bar"]);
+            mocked(client.getRooms).mockReturnValue([room1, room2]);
+
+            const command = getCommand("/part #foo:bar");
+            expect(command.cmd).toBeDefined();
+            expect(command.args).toBeDefined();
+            await command.cmd.run("room-id", null, command.args);
+            expect(client.leaveRoomChain).toHaveBeenCalledWith("room-id", expect.anything());
+        });
+    });
+
+    describe.each([
+        "rainbow",
+        "rainbowme",
+    ])("/%s", (commandName: string) => {
+        const command = findCommand(commandName);
+
+        it("should return usage if no args", () => {
+            expect(command.run(roomId, null, null).error).toBe(command.getUsage());
+        });
+
+        it("should make things rainbowy", () => {
+            return expect(command.run(roomId, null, "this is a test message").promise).resolves.toMatchSnapshot();
+        });
+    });
 });

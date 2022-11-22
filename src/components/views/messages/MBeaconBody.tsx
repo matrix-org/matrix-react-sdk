@@ -101,8 +101,8 @@ const useUniqueId = (eventId: string): string => {
 // remove related beacon locations on beacon redaction
 const useHandleBeaconRedaction = (
     event: MatrixEvent,
-    getRelationsForEvent: GetRelationsForEvent,
-    cli: MatrixClient,
+    matrixClient: MatrixClient,
+    getRelationsForEvent?: GetRelationsForEvent,
 ): void => {
     const onBeforeBeaconInfoRedaction = useCallback((_event: MatrixEvent, redactionEvent: MatrixEvent) => {
         const relations = getRelationsForEvent ?
@@ -110,14 +110,14 @@ const useHandleBeaconRedaction = (
             undefined;
 
         relations?.getRelations()?.forEach(locationEvent => {
-            cli.redactEvent(
+            matrixClient.redactEvent(
                 locationEvent.getRoomId(),
                 locationEvent.getId(),
                 undefined,
                 redactionEvent.getContent(),
             );
         });
-    }, [event, getRelationsForEvent, cli]);
+    }, [event, matrixClient, getRelationsForEvent]);
 
     useEffect(() => {
         event.addListener(MatrixEventEvent.BeforeRedaction, onBeforeBeaconInfoRedaction);
@@ -151,7 +151,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
     const isOwnBeacon = beacon?.beaconInfoOwner === matrixClient.getUserId();
 
-    useHandleBeaconRedaction(mxEvent, getRelationsForEvent, matrixClient);
+    useHandleBeaconRedaction(mxEvent, matrixClient, getRelationsForEvent);
 
     const onClick = () => {
         if (displayStatus !== BeaconDisplayStatus.Active) {
@@ -171,48 +171,52 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
         );
     };
 
+    let map: JSX.Element;
+    if (displayStatus === BeaconDisplayStatus.Active && !isMapDisplayError) {
+        map = <Map
+            id={mapId}
+            centerGeoUri={latestLocationState.uri}
+            onError={setError}
+            onClick={onClick}
+            className="mx_MBeaconBody_map"
+        >
+            {
+                ({ map }) =>
+                    <SmartMarker
+                        map={map}
+                        id={`${mapId}-marker`}
+                        geoUri={latestLocationState.uri}
+                        roomMember={markerRoomMember}
+                        useMemberColor
+                    />
+            }
+        </Map>;
+    } else if (isMapDisplayError) {
+        map = <MapError
+            error={error.message as LocationShareError}
+            onClick={onClick}
+            className={classNames(
+                'mx_MBeaconBody_mapError',
+                // set interactive class when maximised map can be opened
+                { 'mx_MBeaconBody_mapErrorInteractive':
+                        displayStatus === BeaconDisplayStatus.Active,
+                },
+            )}
+            isMinimised
+        />;
+    } else {
+        map = <MapFallback
+            isLoading={displayStatus === BeaconDisplayStatus.Loading}
+            className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'
+        />;
+    }
+
     return (
         <div
             className='mx_MBeaconBody'
             ref={ref}
         >
-            { (displayStatus === BeaconDisplayStatus.Active && !isMapDisplayError) ?
-                <Map
-                    id={mapId}
-                    centerGeoUri={latestLocationState.uri}
-                    onError={setError}
-                    onClick={onClick}
-                    className="mx_MBeaconBody_map"
-                >
-                    {
-                        ({ map }) =>
-                            <SmartMarker
-                                map={map}
-                                id={`${mapId}-marker`}
-                                geoUri={latestLocationState.uri}
-                                roomMember={markerRoomMember}
-                                useMemberColor
-                            />
-                    }
-                </Map>
-                : isMapDisplayError ?
-                    <MapError
-                        error={error.message as LocationShareError}
-                        onClick={onClick}
-                        className={classNames(
-                            'mx_MBeaconBody_mapError',
-                            // set interactive class when maximised map can be opened
-                            { 'mx_MBeaconBody_mapErrorInteractive':
-                                displayStatus === BeaconDisplayStatus.Active,
-                            },
-                        )}
-                        isMinimised
-                    /> :
-                    <MapFallback
-                        isLoading={displayStatus === BeaconDisplayStatus.Loading}
-                        className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'
-                    />
-            }
+            { map }
             { isOwnBeacon ?
                 <OwnBeaconStatus
                     className='mx_MBeaconBody_chin'

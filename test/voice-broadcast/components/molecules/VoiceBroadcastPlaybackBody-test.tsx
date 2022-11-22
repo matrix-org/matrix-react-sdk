@@ -16,17 +16,20 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { render, RenderResult } from "@testing-library/react";
+import { act, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 
 import {
-    VoiceBroadcastInfoEventType,
+    VoiceBroadcastInfoState,
+    VoiceBroadcastLiveness,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackBody,
+    VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
 } from "../../../../src/voice-broadcast";
-import { mkEvent, stubClient } from "../../../test-utils";
+import { stubClient } from "../../../test-utils";
+import { mkVoiceBroadcastInfoStateEvent } from "../../utils/test-utils";
 
 // mock RoomAvatar, because it is doing too much fancy stuff
 jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
@@ -46,24 +49,30 @@ describe("VoiceBroadcastPlaybackBody", () => {
 
     beforeAll(() => {
         client = stubClient();
-        infoEvent = mkEvent({
-            event: true,
-            type: VoiceBroadcastInfoEventType,
-            content: {},
-            room: roomId,
-            user: userId,
-        });
+        mocked(client.relations).mockClear();
+        mocked(client.relations).mockResolvedValue({ events: [] });
+
+        infoEvent = mkVoiceBroadcastInfoStateEvent(
+            roomId,
+            VoiceBroadcastInfoState.Stopped,
+            userId,
+            client.getDeviceId(),
+        );
     });
 
     beforeEach(() => {
         playback = new VoiceBroadcastPlayback(infoEvent, client);
-        jest.spyOn(playback, "toggle");
+        jest.spyOn(playback, "toggle").mockImplementation(() => Promise.resolve());
+        jest.spyOn(playback, "getLiveness");
         jest.spyOn(playback, "getState");
+        jest.spyOn(playback, "skipTo");
+        jest.spyOn(playback, "durationSeconds", "get").mockReturnValue(23 * 60 + 42); // 23:42
     });
 
     describe("when rendering a buffering voice broadcast", () => {
         beforeEach(() => {
             mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Buffering);
+            mocked(playback.getLiveness).mockReturnValue("live");
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
         });
 
@@ -72,10 +81,59 @@ describe("VoiceBroadcastPlaybackBody", () => {
         });
     });
 
-    describe(`when rendering a ${VoiceBroadcastPlaybackState.Stopped} broadcast`, () => {
+    describe("when rendering a playing broadcast", () => {
+        beforeEach(() => {
+            mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Playing);
+            mocked(playback.getLiveness).mockReturnValue("not-live");
+            renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+        });
+
+        it("should render as expected", () => {
+            expect(renderResult.container).toMatchSnapshot();
+        });
+
+        describe("and being in the middle of the playback", () => {
+            beforeEach(() => {
+                act(() => {
+                    playback.emit(VoiceBroadcastPlaybackEvent.PositionChanged, 10 * 60 * 1000); // 10:00
+                });
+            });
+
+            describe("and clicking 30s backward", () => {
+                beforeEach(async () => {
+                    await act(async () => {
+                        await userEvent.click(screen.getByLabelText("30s backward"));
+                    });
+                });
+
+                it("should seek 30s backward", () => {
+                    expect(playback.skipTo).toHaveBeenCalledWith(9 * 60 + 30);
+                });
+            });
+
+            describe("and clicking 30s forward", () => {
+                beforeEach(async () => {
+                    await act(async () => {
+                        await userEvent.click(screen.getByLabelText("30s forward"));
+                    });
+                });
+
+                it("should seek 30s forward", () => {
+                    expect(playback.skipTo).toHaveBeenCalledWith(10 * 60 + 30);
+                });
+            });
+        });
+    });
+
+    describe(`when rendering a stopped broadcast`, () => {
         beforeEach(() => {
             mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Stopped);
+            mocked(playback.getLiveness).mockReturnValue("not-live");
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+        });
+
+        it("should render as expected", () => {
+            expect(renderResult.container).toMatchSnapshot();
         });
 
         describe("and clicking the play button", () => {
@@ -87,14 +145,27 @@ describe("VoiceBroadcastPlaybackBody", () => {
                 expect(playback.toggle).toHaveBeenCalled();
             });
         });
+
+        describe("and the length updated", () => {
+            beforeEach(() => {
+                act(() => {
+                    playback.emit(VoiceBroadcastPlaybackEvent.LengthChanged, 42000); // 00:42
+                });
+            });
+
+            it("should render the new length", async () => {
+                expect(await screen.findByText("00:42")).toBeInTheDocument();
+            });
+        });
     });
 
     describe.each([
-        VoiceBroadcastPlaybackState.Paused,
-        VoiceBroadcastPlaybackState.Playing,
-    ])("when rendering a %s broadcast", (playbackState: VoiceBroadcastPlaybackState) => {
+        [VoiceBroadcastPlaybackState.Paused, "not-live"],
+        [VoiceBroadcastPlaybackState.Playing, "live"],
+    ])("when rendering a %s/%s broadcast", (state: VoiceBroadcastPlaybackState, liveness: VoiceBroadcastLiveness) => {
         beforeEach(() => {
-            mocked(playback.getState).mockReturnValue(playbackState);
+            mocked(playback.getState).mockReturnValue(state);
+            mocked(playback.getLiveness).mockReturnValue(liveness);
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
         });
 

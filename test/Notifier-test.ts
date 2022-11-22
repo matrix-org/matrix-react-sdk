@@ -81,6 +81,7 @@ describe("Notifier", () => {
             decryptEventIfNeeded: jest.fn(),
             getRoom: jest.fn(),
             getPushActionsForEvent: jest.fn(),
+            supportsExperimentalThreads: jest.fn().mockReturnValue(false),
         });
 
         mockClient.pushRules = {
@@ -158,7 +159,7 @@ describe("Notifier", () => {
         it('does not create notifications for own event', () => {
             const ownEvent = new MatrixEvent({ sender: userId });
 
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, ownEvent);
 
             expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
@@ -173,7 +174,7 @@ describe("Notifier", () => {
                 },
             });
 
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
@@ -181,7 +182,7 @@ describe("Notifier", () => {
         });
 
         it('creates desktop notification when enabled', () => {
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             expect(MockPlatform.displayNotification).toHaveBeenCalledWith(
@@ -194,7 +195,7 @@ describe("Notifier", () => {
         });
 
         it('creates a loud notification when enabled', () => {
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             expect(MockPlatform.loudNotification).toHaveBeenCalledWith(
@@ -210,7 +211,7 @@ describe("Notifier", () => {
                 },
             });
 
-            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing);
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient!.emit(ClientEvent.Event, event);
 
             // desktop notification created
@@ -229,6 +230,15 @@ describe("Notifier", () => {
             mockClient.setAccountData(accountDataEventKey, event);
             Notifier._displayPopupNotification(testEvent, testRoom);
             expect(MockPlatform.displayNotification).toHaveBeenCalledTimes(count);
+        });
+    });
+
+    describe("getSoundForRoom", () => {
+        it("should not explode if given invalid url", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+                return { url: { content_uri: "foobar" } };
+            });
+            expect(Notifier.getSoundForRoom("!roomId:server")).toBeNull();
         });
     });
 
@@ -421,6 +431,13 @@ describe("Notifier", () => {
 
             Notifier._evaluateEvent(events[1]);
             expect(Notifier._displayPopupNotification).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("setPromptHidden", () => {
+        it("should persist by default", () => {
+            Notifier.setPromptHidden(true);
+            expect(localStorage.getItem("notifications_hidden")).toBeTruthy();
         });
     });
 });

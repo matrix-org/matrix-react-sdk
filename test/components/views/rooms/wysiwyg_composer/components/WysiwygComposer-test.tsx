@@ -16,70 +16,20 @@ limitations under the License.
 
 import "@testing-library/jest-dom";
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { InputEventProcessor, Wysiwyg, WysiwygProps } from "@matrix-org/matrix-wysiwyg";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
-import { IRoomState } from "../../../../../../src/components/structures/RoomView";
-import { createTestClient, getRoomContext, mkEvent, mkStubRoom } from "../../../../../test-utils";
-import RoomContext from "../../../../../../src/contexts/RoomContext";
 import { WysiwygComposer }
     from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/WysiwygComposer";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
 
-// Work around missing ClipboardEvent type
-class MyClipboardEvent {}
-window.ClipboardEvent = MyClipboardEvent as any;
-
-let inputEventProcessor: InputEventProcessor | null = null;
-
-// The wysiwyg fetch wasm bytes and a specific workaround is needed to make it works in a node (jest) environnement
-// See https://github.com/matrix-org/matrix-wysiwyg/blob/main/platforms/web/test.setup.ts
-jest.mock("@matrix-org/matrix-wysiwyg", () => ({
-    useWysiwyg: (props: WysiwygProps) => {
-        inputEventProcessor = props.inputEventProcessor ?? null;
-        return {
-            ref: { current: null },
-            content: '<b>html</b>',
-            isWysiwygReady: true,
-            wysiwyg: { clear: () => void 0 },
-            formattingStates: {
-                bold: 'enabled',
-                italic: 'enabled',
-                underline: 'enabled',
-                strikeThrough: 'enabled',
-            },
-        };
-    },
-}));
-
 describe('WysiwygComposer', () => {
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
-    const mockClient = createTestClient();
-    const mockEvent = mkEvent({
-        type: "m.room.message",
-        room: 'myfakeroom',
-        user: 'myfakeuser',
-        content: { "msgtype": "m.text", "body": "Replying to this" },
-        event: true,
-    });
-    const mockRoom = mkStubRoom('myfakeroom', 'myfakeroom', mockClient) as any;
-    mockRoom.findEventById = jest.fn(eventId => {
-        return eventId === mockEvent.getId() ? mockEvent : null;
-    });
-
-    const defaultRoomContext: IRoomState = getRoomContext(mockRoom, {});
-
-    const customRender = (onChange = (_content: string) => void 0, onSend = () => void 0, disabled = false) => {
+    const customRender = (
+        onChange = (_content: string) => void 0,
+        onSend = () => void 0,
+        disabled = false,
+        initialContent?: string) => {
         return render(
-            <MatrixClientContext.Provider value={mockClient}>
-                <RoomContext.Provider value={defaultRoomContext}>
-                    <WysiwygComposer onChange={onChange} onSend={onSend} disabled={disabled} />
-                </RoomContext.Provider>
-            </MatrixClientContext.Provider>,
+            <WysiwygComposer onChange={onChange} onSend={onSend} disabled={disabled} initialContent={initialContent} />,
         );
     };
 
@@ -91,61 +41,85 @@ describe('WysiwygComposer', () => {
         expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "false");
     });
 
-    it('Should call onChange handler', (done) => {
-        const html = '<b>html</b>';
-        customRender((content) => {
-            expect(content).toBe((html));
-            done();
-        }, jest.fn());
-    });
-
-    it('Should call onSend when Enter is pressed ', () => {
-        //When
+    describe('Standard behavior', () => {
+        const onChange = jest.fn();
         const onSend = jest.fn();
-        customRender(jest.fn(), onSend);
+        beforeEach(async () => {
+            customRender(onChange, onSend);
+            await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+        });
 
-        // When we tell its inputEventProcesser that the user pressed Enter
-        const event = new InputEvent("insertParagraph", { inputType: "insertParagraph" });
-        const wysiwyg = { actions: { clear: () => {} } } as Wysiwyg;
-        inputEventProcessor(event, wysiwyg);
+        afterEach(() => {
+            onChange.mockReset();
+            onSend.mockReset();
+        });
 
-        // Then it sends a message
-        expect(onSend).toBeCalledTimes(1);
+        it('Should have contentEditable at true', async () => {
+            // Then
+            await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+        });
+
+        it('Should have focus', async () => {
+            // Then
+            await waitFor(() => expect(screen.getByRole('textbox')).toHaveFocus());
+        });
+
+        it('Should call onChange handler', async () => {
+            // When
+            fireEvent.input(screen.getByRole('textbox'), {
+                data: 'foo bar',
+                inputType: 'insertText',
+            });
+
+            // Then
+            await waitFor(() => expect(onChange).toBeCalledWith('foo bar'));
+        });
+
+        it('Should call onSend when Enter is pressed ', async () => {
+        //When
+            fireEvent(screen.getByRole('textbox'), new InputEvent('input', {
+                inputType: "insertParagraph",
+            }));
+
+            // Then it sends a message
+            await waitFor(() => expect(onSend).toBeCalledTimes(1));
+        });
     });
 
     describe('When settings require Ctrl+Enter to send', () => {
-        beforeEach(() => {
+        const onChange = jest.fn();
+        const onSend = jest.fn();
+        beforeEach(async () => {
             jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
                 if (name === "MessageComposerInput.ctrlEnterToSend") return true;
             });
+            customRender(onChange, onSend);
+            await waitFor(() => expect(screen.getByRole('textbox')).toHaveAttribute('contentEditable', "true"));
+        });
+
+        afterEach(() => {
+            onChange.mockReset();
+            onSend.mockReset();
         });
 
         it('Should not call onSend when Enter is pressed', async () => {
-            // Given a composer
-            const onSend = jest.fn();
-            customRender(() => {}, onSend, false);
-
-            // When we tell its inputEventProcesser that the user pressed Enter
-            const event = new InputEvent("input", { inputType: "insertParagraph" });
-            const wysiwyg = { actions: { clear: () => {} } } as Wysiwyg;
-            inputEventProcessor(event, wysiwyg);
+            // When
+            fireEvent(screen.getByRole('textbox'), new InputEvent('input', {
+                inputType: "insertParagraph",
+            }));
 
             // Then it does not send a message
-            expect(onSend).toBeCalledTimes(0);
+            await waitFor(() => expect(onSend).toBeCalledTimes(0));
         });
 
         it('Should send a message when Ctrl+Enter is pressed', async () => {
-            // Given a composer
-            const onSend = jest.fn();
-            customRender(() => {}, onSend, false);
-
-            // When we tell its inputEventProcesser that the user pressed Ctrl+Enter
-            const event = new InputEvent("input", { inputType: "sendMessage" });
-            const wysiwyg = { actions: { clear: () => {} } } as Wysiwyg;
-            inputEventProcessor(event, wysiwyg);
+            // When
+            fireEvent(screen.getByRole('textbox'), new InputEvent('input', {
+                inputType: "sendMessage",
+            }));
 
             // Then it sends a message
-            expect(onSend).toBeCalledTimes(1);
+            await waitFor(() => expect(onSend).toBeCalledTimes(1));
         });
     });
 });

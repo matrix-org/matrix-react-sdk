@@ -19,7 +19,6 @@ import { useState } from "react";
 import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import {
-    VoiceBroadcastInfoState,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
@@ -41,20 +40,34 @@ export const useVoiceBroadcastPlayback = (playback: VoiceBroadcastPlayback) => {
         },
     );
 
-    const [playbackInfoState, setPlaybackInfoState] = useState(playback.getInfoState());
+    const [duration, setDuration] = useState(playback.durationSeconds);
     useTypedEventEmitter(
         playback,
-        VoiceBroadcastPlaybackEvent.InfoStateChanged,
-        (state: VoiceBroadcastInfoState) => {
-            setPlaybackInfoState(state);
-        },
+        VoiceBroadcastPlaybackEvent.LengthChanged,
+        d => setDuration(d / 1000),
+    );
+
+    const [position, setPosition] = useState(playback.timeSeconds);
+    useTypedEventEmitter(
+        playback,
+        VoiceBroadcastPlaybackEvent.PositionChanged,
+        p => setPosition(p / 1000),
+    );
+
+    const [liveness, setLiveness] = useState(playback.getLiveness());
+    useTypedEventEmitter(
+        playback,
+        VoiceBroadcastPlaybackEvent.LivenessChanged,
+        l => setLiveness(l),
     );
 
     return {
-        live: playbackInfoState !== VoiceBroadcastInfoState.Stopped,
+        duration,
+        liveness: liveness,
+        playbackState,
+        position,
         room: room,
         sender: playback.infoEvent.sender,
         toggle: playbackToggle,
-        playbackState,
     };
 };
