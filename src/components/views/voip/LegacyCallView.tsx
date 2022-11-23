@@ -297,9 +297,12 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
                 const [source] = await finished;
                 if (!source) return;
 
-                isScreensharing = await this.props.call.setScreensharingEnabled(true, {
+                // deliberately reintroduce https://github.com/matrix-org/matrix-react-sdk/pull/9612:
+                // typescript should catch this if we get the modal types working
+                /*isScreensharing = await this.props.call.setScreensharingEnabled(true, {
                     desktopCapturerSourceId: source,
-                });
+                });*/
+                isScreensharing = await this.props.call.setScreensharingEnabled(true, source);
             } else {
                 isScreensharing = await this.props.call.setScreensharingEnabled(true);
             }
