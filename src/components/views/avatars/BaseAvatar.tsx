@@ -18,18 +18,14 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import classNames from 'classnames';
 import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
 import { ClientEvent } from "matrix-js-sdk/src/client";
+import { CpdAvatar } from "compound-react";
 
-import * as AvatarLogic from '../../../Avatar';
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from '../elements/AccessibleButton';
 import RoomContext from "../../../contexts/RoomContext";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
-import { toPx } from "../../../utils/units";
-import { _t } from '../../../languageHandler';
 
 interface IProps {
     name: string; // The name (first initial used as default)
@@ -104,116 +100,25 @@ const BaseAvatar = (props: IProps) => {
     const {
         name,
         idName,
-        title,
         url,
         urls,
         width = 40,
-        height = 40,
-        resizeMethod = "crop", // eslint-disable-line @typescript-eslint/no-unused-vars
-        defaultToInitialLetter = true,
         onClick,
-        inputRef,
         className,
-        ...otherProps
     } = props;
 
     const [imageUrl, onError] = useImageUrl({ url, urls });
 
-    if (!imageUrl && defaultToInitialLetter && name) {
-        const initialLetter = AvatarLogic.getInitialLetter(name);
-        const textNode = (
-            <span
-                className="mx_BaseAvatar_initial"
-                aria-hidden="true"
-                style={{
-                    fontSize: toPx(width * 0.65),
-                    width: toPx(width),
-                    lineHeight: toPx(height),
-                }}
-            >
-                { initialLetter }
-            </span>
-        );
-        const imgNode = (
-            <img
-                className="mx_BaseAvatar_image"
-                src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
-                alt=""
-                title={title}
-                onError={onError}
-                style={{
-                    width: toPx(width),
-                    height: toPx(height),
-                }}
-                aria-hidden="true"
-                data-testid="avatar-img" />
-        );
-
-        if (onClick) {
-            return (
-                <AccessibleButton
-                    aria-label={_t("Avatar")}
-                    aria-live="off"
-                    {...otherProps}
-                    element="span"
-                    className={classNames("mx_BaseAvatar", className)}
-                    onClick={onClick}
-                    inputRef={inputRef}
-                >
-                    { textNode }
-                    { imgNode }
-                </AccessibleButton>
-            );
-        } else {
-            return (
-                <span
-                    className={classNames("mx_BaseAvatar", className)}
-                    ref={inputRef}
-                    {...otherProps}
-                    role="presentation"
-                >
-                    { textNode }
-                    { imgNode }
-                </span>
-            );
-        }
-    }
-
-    if (onClick) {
-        return (
-            <AccessibleButton
-                className={classNames("mx_BaseAvatar mx_BaseAvatar_image", className)}
-                element='img'
-                src={imageUrl}
-                onClick={onClick}
-                onError={onError}
-                style={{
-                    width: toPx(width),
-                    height: toPx(height),
-                }}
-                title={title}
-                alt={_t("Avatar")}
-                inputRef={inputRef}
-                data-testid="avatar-img"
-                {...otherProps} />
-        );
-    } else {
-        return (
-            <img
-                className={classNames("mx_BaseAvatar mx_BaseAvatar_image", className)}
-                src={imageUrl}
-                onError={onError}
-                style={{
-                    width: toPx(width),
-                    height: toPx(height),
-                }}
-                title={title}
-                alt=""
-                ref={inputRef}
-                data-testid="avatar-img"
-                {...otherProps} />
-        );
-    }
+    return <CpdAvatar
+        name={name}
+        idName={idName}
+        renderingType="round"
+        size={width + 'px'}
+        src={imageUrl}
+        onError={onError}
+        onClick={onClick}
+        className={className}
+    />;
 };
 
 export default BaseAvatar;
