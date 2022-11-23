@@ -14,41 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/*
- * Compound icon
+import withValidation from "../../../src/components/views/elements/Validation";
 
- * {@link https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed}
- */
-
-.mx_Icon {
-    box-sizing: border-box;
-    padding: 1px;
-}
-
-.mx_Icon_accent {
-    color: $accent;
-}
-
-.mx_Icon_8 {
-    flex: 0 0 8px;
-    height: 8px;
-    width: 8px;
-}
-
-.mx_Icon_16 {
-    flex: 0 0 16px;
-    height: 16px;
-    width: 16px;
-}
-
-.mx_Icon_24 {
-    flex: 0 0 24px;
-    height: 24px;
-    width: 24px;
-}
-
-.mx_Icon_32 {
-    flex: 0 0 32px;
-    height: 32px;
-    width: 32px;
-}
+describe("Validation", () => {
+    it("should handle 0 rules", () => {
+        const handler = withValidation({
+            rules: [],
+        });
+        return expect(handler({
+            value: "value",
+            focused: true,
+        })).resolves.toEqual(expect.objectContaining({
+            valid: true,
+        }));
+    });
+});
