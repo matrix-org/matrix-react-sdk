@@ -32,4 +32,16 @@ limitations under the License.
             user-select: all;
         }
     }
+
+    .mx_WysiwygComposer_Editor_content_placeholder::before {
+        content: var(--placeholder);
+        /* opacity: 0.333; */
+        width: 0;
+        height: 0;
+        overflow: visible;
+        display: inline-block;
+        pointer-events: none;
+        white-space: nowrap;
+        color: $tertiary-content;
+    }
 }
