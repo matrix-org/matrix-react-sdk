@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, ReactNode, ChangeEvent, KeyboardEvent, useRef } from 'react';
+import React, { useState, ReactNode, ChangeEvent, KeyboardEvent, useRef, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Autocompleter from "../../autocomplete/AutocompleteProvider";
@@ -23,6 +23,7 @@ import { ICompletion } from '../../autocomplete/Autocompleter';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import { Icon as PillRemoveIcon } from '../../../res/img/icon-pill-remove.svg';
 import { Icon as CheckmarkIcon } from '../../../res/img/element-icons/roomlist/checkmark.svg';
+import useFocus from "../../hooks/useFocus";
 
 interface AutocompleteInputProps {
     provider: Autocompleter;
@@ -30,8 +31,8 @@ interface AutocompleteInputProps {
     selection: ICompletion[];
     onSelectionChange: (selection: ICompletion[]) => void;
     maxSuggestions?: number;
-    renderSuggestion?: (s: ICompletion) => ReactNode;
-    renderSelection?: (m: ICompletion) => ReactNode;
+    renderSuggestion?: (s: ICompletion) => ReactElement;
+    renderSelection?: (m: ICompletion) => ReactElement;
     additionalFilter?: (suggestion: ICompletion) => boolean;
 }
 
@@ -47,9 +48,9 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
 }) => {
     const [query, setQuery] = useState<string>('');
     const [suggestions, setSuggestions] = useState<ICompletion[]>([]);
-    const [isFocused, setFocused] = useState<boolean>(false);
-    const editorContainerRef = useRef<HTMLDivElement>();
-    const editorRef = useRef<HTMLInputElement>();
+    const [isFocused, onFocusChangeHandlerFunctions] = useFocus();
+    const editorContainerRef = useRef<HTMLDivElement>(null);
+    const editorRef = useRef<HTMLInputElement>(null);
 
     const focusEditor = () => {
         editorRef?.current?.focus();
@@ -111,72 +112,6 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         }
     };
 
-    const _renderSuggestion = (completion: ICompletion): ReactNode => {
-        const isSelected = selection.findIndex(selection => selection.completionId === completion.completionId) >= 0;
-        const classes = classNames({
-            'mx_AutocompleteInput_suggestion': true,
-            'mx_AutocompleteInput_suggestion--selected': isSelected,
-        });
-
-        const withContainer = (children: ReactNode): ReactNode => (
-            <div className={classes}
-                onMouseDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    toggleSelection(completion);
-                }}
-                key={completion.completionId}
-                data-testid={`autocomplete-suggestion-item-${completion.completionId}`}
-            >
-                <div>
-                    { children }
-                </div>
-                { isSelected && <CheckmarkIcon height={16} width={16} /> }
-            </div>
-        );
-
-        if (renderSuggestion) {
-            return withContainer(renderSuggestion(completion));
-        }
-
-        return withContainer(
-            <>
-                <span className='mx_AutocompleteInput_suggestion_title'>{ completion.completion }</span>
-                <span className='mx_AutocompleteInput_suggestion_description'>{ completion.completionId }</span>
-            </>,
-        );
-    };
-
-    const _renderSelection = (s: ICompletion): ReactNode => {
-        const withContainer = (children: ReactNode): ReactNode => (
-            <span
-                className='mx_AutocompleteInput_editor_selection'
-                key={s.completionId}
-                data-testid={`autocomplete-selection-item-${s.completionId}`}
-            >
-                <span className='mx_AutocompleteInput_editor_selection_pill'>
-                    { children }
-                </span>
-                <AccessibleButton
-                    className='mx_AutocompleteInput_editor_selection_remove'
-                    onClick={() => removeSelection(s)}
-                    data-testid={`autocomplete-selection-remove-button-${s.completionId}`}
-                >
-                    <PillRemoveIcon width={8} height={8} />
-                </AccessibleButton>
-            </span>
-        );
-
-        if (renderSelection) {
-            return withContainer(renderSelection(s));
-        }
-
-        return withContainer(
-            <span className='mx_AutocompleteInput_editor_selection_text'>{ s.completion }</span>,
-        );
-    };
-
     const hasPlaceholder = (): boolean => selection.length === 0 && query.length === 0;
 
     return (
@@ -187,7 +122,16 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
                 onClick={onClickInputArea}
                 data-testid="autocomplete-editor"
             >
-                { selection.map(s => _renderSelection(s)) }
+                {
+                    selection.map(item => (
+                        <SelectionItem
+                            key={item.completionId}
+                            item={item}
+                            onClick={removeSelection}
+                            render={renderSelection}
+                        />
+                    ))
+                }
                 <input
                     ref={editorRef}
                     type="text"
@@ -195,10 +139,9 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
                     onChange={onQueryChange}
                     value={query}
                     autoComplete="off"
-                    placeholder={hasPlaceholder() ? placeholder : null}
-                    onFocus={() => setFocused(true)}
-                    onBlur={() => setFocused(false)}
+                    placeholder={hasPlaceholder() ? placeholder : undefined}
                     data-testid="autocomplete-input"
+                    {...onFocusChangeHandlerFunctions}
                 />
             </div>
             {
@@ -209,11 +152,96 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
                         data-testid="autocomplete-matches"
                     >
                         {
-                            suggestions.map((s) => _renderSuggestion(s))
+                            suggestions.map((item) => (
+                                <SuggestionItem
+                                    key={item.completionId}
+                                    item={item}
+                                    selection={selection}
+                                    onClick={toggleSelection}
+                                    render={renderSuggestion}
+                                />
+                            ))
                         }
                     </div>
                 ) : null
             }
         </div>
+    );
+};
+
+type SelectionItemProps = {
+    item: ICompletion;
+    onClick: (completion: ICompletion) => void;
+    render?: (completion: ICompletion) => ReactElement;
+};
+
+const SelectionItem: React.FC<SelectionItemProps> = ({ item, onClick, render }) => {
+    const withContainer = (children: ReactNode): ReactElement => (
+        <span
+            className='mx_AutocompleteInput_editor_selection'
+            data-testid={`autocomplete-selection-item-${item.completionId}`}
+        >
+            <span className='mx_AutocompleteInput_editor_selection_pill'>
+                { children }
+            </span>
+            <AccessibleButton
+                className='mx_AutocompleteInput_editor_selection_remove'
+                onClick={() => onClick(item)}
+                data-testid={`autocomplete-selection-remove-button-${item.completionId}`}
+            >
+                <PillRemoveIcon width={8} height={8} />
+            </AccessibleButton>
+        </span>
+    );
+
+    if (render) {
+        return withContainer(render(item));
+    }
+
+    return withContainer(
+        <span className='mx_AutocompleteInput_editor_selection_text'>{ item.completion }</span>,
+    );
+};
+
+type SuggestionItemProps = {
+    item: ICompletion;
+    selection: ICompletion[];
+    onClick: (completion: ICompletion) => void;
+    render?: (completion: ICompletion) => ReactElement;
+};
+
+const SuggestionItem: React.FC<SuggestionItemProps> = ({ item, selection, onClick, render }) => {
+    const isSelected = selection.some(selection => selection.completionId === item.completionId);
+    const classes = classNames({
+        'mx_AutocompleteInput_suggestion': true,
+        'mx_AutocompleteInput_suggestion--selected': isSelected,
+    });
+
+    const withContainer = (children: ReactNode): ReactElement => (
+        <div
+            className={classes}
+            // `onClick` cannot be used here as it would lead to focus loss and closing the suggestion list.
+            onMouseDown={(event) => {
+                event.preventDefault();
+                onClick(item);
+            }}
+            data-testid={`autocomplete-suggestion-item-${item.completionId}`}
+        >
+            <div>
+                { children }
+            </div>
+            { isSelected && <CheckmarkIcon height={16} width={16} /> }
+        </div>
+    );
+
+    if (render) {
+        return withContainer(render(item));
+    }
+
+    return withContainer(
+        <>
+            <span className='mx_AutocompleteInput_suggestion_title'>{ item.completion }</span>
+            <span className='mx_AutocompleteInput_suggestion_description'>{ item.completionId }</span>
+        </>,
     );
 };

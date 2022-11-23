@@ -41,7 +41,19 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
     const [powerLevel, setPowerLevel] = useState<number>(defaultUserLevel);
     const [selectedUsers, setSelectedUsers] = useState<ICompletion[]>([]);
     const filterSuggestions = useCallback(
-        (user: ICompletion) => room.getMember(user.completionId)?.powerLevel <= defaultUserLevel,
+        (user: ICompletion) => {
+            if (user.completionId === undefined) {
+                return false;
+            }
+
+            const member = room.getMember(user.completionId);
+
+            if (member === null) {
+                return false;
+            }
+
+            return member.powerLevel <= defaultUserLevel;
+        },
         [room, defaultUserLevel],
     );
 
@@ -53,6 +65,8 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         const powerLevelEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
 
         try {
+            // TODO: Remove @ts-ignore as soon as https://github.com/matrix-org/matrix-js-sdk/pull/2892 is merged.
+            // @ts-ignore
             await client.setPowerLevel(room.roomId, userIds, powerLevel, powerLevelEvent);
             setSelectedUsers([]);
             setPowerLevel(defaultUserLevel);

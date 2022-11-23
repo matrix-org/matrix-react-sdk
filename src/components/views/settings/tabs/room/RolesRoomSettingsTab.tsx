@@ -471,7 +471,11 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             <div className="mx_SettingsTab mx_RolesRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Roles & Permissions") }</div>
                 { privilegedUsersSection }
-                { canChangeLevels && <AddPrivilegedUsers room={room} defaultUserLevel={defaultUserLevel} /> }
+                {
+                    (canChangeLevels && room !== null) && (
+                        <AddPrivilegedUsers room={room} defaultUserLevel={defaultUserLevel} />
+                    )
+                }
                 { mutedUsersSection }
                 { bannedUsersSection }
                 <SettingsFieldset
