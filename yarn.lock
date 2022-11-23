@@ -7157,8 +7157,8 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "21.1.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/c6ee258789c9e01d328b5d9158b5b372e3a0da82"
+  version "21.2.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/b318a77ecef179a6fd288cdf32d3ff9c5e8ea989"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@types/sdp-transform" "^2.4.5"
