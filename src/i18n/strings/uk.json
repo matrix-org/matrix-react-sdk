@@ -2718,7 +2718,6 @@
     "Enter a Security Phrase": "Ввести фразу безпеки",
     "Keep a copy of it somewhere secure, like a password manager or even a safe.": "Зберігайте копію відновлювального ключа в надійному місці, наприклад у менеджері паролів чи навіть у сейфі.",
     "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "Відновлювальний ключ підстраховує вас: можете використати його для відновлення доступу до ваших зашифрованих повідомлень, якщо забудете парольну фразу.",
-    "%(brand)s failed to get the protocol list from the homeserver. The homeserver may be too old to support third party networks.": "%(brand)s не вдалося отримати список протоколів від домашнього сервера. Домашній сервер, схоже, застарів і не підтримує сторонні мережі.",
     "You have no visible notifications.": "У вас нема видимих сповіщень.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо <a>повідомити нас про ваду</a>.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо повідомити нас про ваду.",
