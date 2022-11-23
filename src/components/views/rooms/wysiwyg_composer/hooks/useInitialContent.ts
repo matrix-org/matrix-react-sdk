@@ -42,7 +42,8 @@ function parseEditorStateTransfer(
         // const restoredParts = this.restoreStoredEditorState(partCreator);
 
         if (editorStateTransfer.getEvent().getContent().format === 'org.matrix.custom.html') {
-            return editorStateTransfer.getEvent().getContent().formatted_body || "";
+            return editorStateTransfer.getEvent().getContent().formatted_body.replace(/<mx-reply>.*<\/mx-reply>/, '')
+                || "";
         }
 
         parts = parseEvent(editorStateTransfer.getEvent(), partCreator, {
