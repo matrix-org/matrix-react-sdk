@@ -759,14 +759,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return;
         }
 
-        const threadId = thread.id;
-        if (!threadId) {
-            return;
-        }
-
         // we could skip an update if the event isn't in our timeline,
         // but that's probably an early optimisation.
-        const tile = this.messagePanel.current?.getTileForEventId(threadId);
+        const tile = this.messagePanel.current?.getTileForEventId(thread.id);
         if (tile) {
             tile.forceUpdate();
         }
