@@ -867,7 +867,6 @@
     "Got an account? <a>Sign in</a>": "Vai jums ir konts? <a>Pierakstieties</a>",
     "You have %(count)s unread notifications in a prior version of this room.|one": "Jums ir %(count)s nelasīts paziņojums iepriekšējā šīs istabas versijā.",
     "You have %(count)s unread notifications in a prior version of this room.|other": "Jums ir %(count)s nelasīti paziņojumi iepriekšējā šīs istabas versijā.",
-    "%(brand)s failed to get the public room list.": "%(brand)s neizdevās iegūt publisko istabu sarakstu.",
     "Add a photo so people know it's you.": "Pievienot foto, lai cilvēki zina, ka tas esat jūs.",
     "Great, that'll help people know it's you": "Lieliski, tas ļaus cilvēkiem tevi atpazīt",
     "Couldn't load page": "Neizdevās ielādēt lapu",

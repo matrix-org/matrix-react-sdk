@@ -1501,7 +1501,6 @@
     "Password is allowed, but unsafe": "Esta senha é permitida, mas não é segura",
     "Sign in with SSO": "Faça login com SSO (Login Único)",
     "Couldn't load page": "Não foi possível carregar a página",
-    "Delete the room address %(alias)s and remove %(name)s from the directory?": "Excluir o endereço da sala %(alias)s e remover %(name)s da lista de salas?",
     "View": "Ver",
     "You have %(count)s unread notifications in a prior version of this room.|other": "Você tem %(count)s notificações não lidas em uma versão anterior desta sala.",
     "You have %(count)s unread notifications in a prior version of this room.|one": "Você tem %(count)s notificações não lidas em uma versão anterior desta sala.",

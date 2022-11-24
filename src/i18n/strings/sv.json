@@ -1576,7 +1576,6 @@
     "Create a Group Chat": "Skapa en gruppchatt",
     "Explore rooms": "Utforska rum",
     "%(creator)s created and configured the room.": "%(creator)s skapade och konfigurerade rummet.",
-    "Delete the room address %(alias)s and remove %(name)s from the directory?": "Radera rumsadressen %(alias)s och ta bort %(name)s från den här katalogen?",
     "View": "Visa",
     "You have %(count)s unread notifications in a prior version of this room.|other": "Du har %(count)s olästa aviseringar i en tidigare version av det här rummet.",
     "You have %(count)s unread notifications in a prior version of this room.|one": "Du har %(count)s oläst avisering i en tidigare version av det här rummet.",

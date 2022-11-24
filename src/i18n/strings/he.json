@@ -2129,7 +2129,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ההודעה שלך לא נשלחה מכיוון ששרת הבתים הזה הגיע למגבלת המשתמשים הפעילים החודשיים שלה. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "אינך יכול לשלוח שום הודעה עד שתבדוק ותסכים ל <consentLink> התנאים וההגבלות שלנו </consentLink>.",
     "View": "צפה",
-    "The homeserver may be unavailable or overloaded.": "שרת הבית עשוי להיות לא זמין או עומס יתר.",
     "You have no visible notifications.": "אין לך התראות גלויות.",
     "%(creator)s created and configured the room.": "%(creator)s יצא והגדיר את החדר.",
     "%(creator)s created this DM.": "%(creator)s יצר את DM הזה.",
