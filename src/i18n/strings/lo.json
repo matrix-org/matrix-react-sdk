@@ -1046,7 +1046,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ຂໍ້ຄວາມຂອງທ່ານບໍ່ຖືກສົ່ງເນື່ອງຈາກ homeserver ນີ້ຮອດຂີດຈຳກັດສູງສູດຜູ້ໃຊ້ລາຍເດືອນແລ້ວ. ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ເບິ່ງຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການ.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "ທ່ານບໍ່ສາມາດສົ່ງຂໍ້ຄວາມໄດ້ຈົນກ່ວາທ່ານຈະທົບທວນຄືນ ແລະ ຕົກລົງເຫັນດີກັບ <consentLink>ຂໍ້ກໍານົດແລະເງື່ອນໄຂຂອງພວກເຮົາ</consentLink>.",
     "Create new room": "ສ້າງຫ້ອງໃຫມ່",
-    "%(brand)s failed to get the public room list.": "%(brand)s ບໍ່ສຳເລັດໃນການເອົາລາຍຊື່ຫ້ອງສາທາລະນະ.",
     "You have no visible notifications.": "ທ່ານບໍ່ເຫັນການເເຈ້ງເຕືອນ.",
     "You're all caught up": "ໝົດແລ້ວໝົດເລີຍ",
     "%(creator)s created and configured the room.": "%(creator)s ສ້າງ ແລະ ກຳນົດຄ່າຫ້ອງ.",

@@ -415,7 +415,6 @@
     "Logout": "Logg ut",
     "Invite to this room": "Inviter til dette rommet",
     "Notifications": "Varsel",
-    "Couldn't find a matching Matrix room": "Kunne ikkje finna eit samsvarande Matrix-rom",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan ikkje senda meldingar før du les over og godkjenner våre <consentLink>bruksvilkår</consentLink>.",
     "Connectivity to the server has been lost.": "Tilkoplinga til tenaren vart tapt.",
     "Sent messages will be stored until your connection has returned.": "Sende meldingar vil lagrast lokalt fram til nettverket er oppe att.",

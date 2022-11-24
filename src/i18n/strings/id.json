@@ -2446,7 +2446,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak terkirim karena homeserver ini melebihi sebuah batas sumber daya. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak terkirim karena homesever ini telah mencapat batas Pengguna Aktif Bulanan. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Anda tidak dapat mengirimkan pesan apa saja sampai Anda lihat dan terima <consentLink>syarat dan ketentuan kami</consentLink>.",
-    "%(brand)s failed to get the public room list.": "%(brand)s gagal untuk mendapatkan daftar ruangan publik.",
     "You have no visible notifications.": "Anda tidak memiliki notifikasi.",
     "You're all caught up": "Anda selesai",
     "%(creator)s created and configured the room.": "%(creator)s membuat dan mengatur ruangan ini.",
