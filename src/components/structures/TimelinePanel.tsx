@@ -1329,7 +1329,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
             : undefined;
 
         const onLoaded = () => {
-            console.log('hhh', 'onLOaded???');
             if (this.unmounted) return;
 
             // clear the timeline min-height when (re)loading the timeline

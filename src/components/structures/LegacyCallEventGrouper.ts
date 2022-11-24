@@ -149,6 +149,7 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     };
 
     public answerCall = (): void => {
+        // @TODO(kerrya) make this work when virtual event is merged into main timeline
         LegacyCallHandler.instance.answerCall(this.roomId);
     };
 

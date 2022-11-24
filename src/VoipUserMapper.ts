@@ -107,10 +107,6 @@ export default class VoipUserMapper {
     }
 
     public isVirtualRoom(room: Room): boolean {
-        const virtualRoomId = '!SkzaAmHKzLFuhORXsQ:hs1';
-        if (room.roomId === virtualRoomId) {
-            return true;
-        }
         if (this.nativeRoomForVirtualRoom(room.roomId)) return true;
 
         if (this.virtualToNativeRoomIdCache.has(room.roomId)) return true;
