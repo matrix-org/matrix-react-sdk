@@ -212,32 +212,29 @@ export default class MultiInviter {
 
                 logger.error(err);
 
-                const isSpace = this.roomId && this.matrixClient.getRoom(this.roomId)?.isSpaceRoom();
+                const room = this.roomId && this.matrixClient.getRoom(this.roomId);
+                const isSpace = room?.isSpaceRoom();
+                const isFederated = room?.currentState.getStateEvents(EventType.RoomCreate, '')
+                    ?.getContent()['m.federate'];
 
+                const type = isSpace ? 'space' : 'room';
                 let errorText: string;
                 let fatal = false;
                 switch (err.errcode) {
                     case "M_FORBIDDEN":
-                        if (isSpace) {
-                            errorText = _t('You do not have permission to invite people to this space.');
+                        if (isFederated === false) {
+                            errorText = _t("This %(type)s is unfederated. " +
+                                "You cannot invite people from external servers.", { type });
                         } else {
-                            errorText = _t('You do not have permission to invite people to this room.');
+                            errorText = _t("You do not have permission to invite people to this %(type)s.", { type });
                         }
                         fatal = true;
                         break;
                     case USER_ALREADY_INVITED:
-                        if (isSpace) {
-                            errorText = _t("User is already invited to the space");
-                        } else {
-                            errorText = _t("User is already invited to the room");
-                        }
+                        errorText = _t("User is already invited to the %(type)s", { type });
                         break;
                     case USER_ALREADY_JOINED:
-                        if (isSpace) {
-                            errorText = _t("User is already in the space");
-                        } else {
-                            errorText = _t("User is already in the room");
-                        }
+                        errorText = _t("User is already in the %(type)s", { type });
                         break;
                     case "M_LIMIT_EXCEEDED":
                         // we're being throttled so wait a bit & try again
@@ -264,11 +261,7 @@ export default class MultiInviter {
                         errorText = _t("The user must be unbanned before they can be invited.");
                         break;
                     case "M_UNSUPPORTED_ROOM_VERSION":
-                        if (isSpace) {
-                            errorText = _t("The user's homeserver does not support the version of the space.");
-                        } else {
-                            errorText = _t("The user's homeserver does not support the version of the room.");
-                        }
+                        errorText = _t("The user's homeserver does not support the version of the %(type)s.", { type });
                         break;
                 }
 
