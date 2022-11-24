@@ -216,10 +216,18 @@ describe('TimelinePanel', () => {
 
         const reply1 = new MatrixEvent({
             room_id: room.roomId,
-            event_id: `event_reply_1`,
+            event_id: 'event_reply_1',
             type: EventType.RoomMessage,
             user_id: "userId",
             content: MessageEvent.from(`ReplyEvent1`).serialize().content,
+        });
+
+        const reply2 = new MatrixEvent({
+            room_id: room.roomId,
+            event_id: 'event_reply_2',
+            type: EventType.RoomMessage,
+            user_id: "userId",
+            content: MessageEvent.from(`ReplyEvent2`).serialize().content,
         });
 
         const rootEvent = new MatrixEvent({
@@ -239,31 +247,23 @@ describe('TimelinePanel', () => {
             },
         });
 
-        const reply2 = new MatrixEvent({
-            room_id: room.roomId,
-            event_id: `event_reply_2`,
-            type: EventType.RoomMessage,
-            user_id: "userId",
-            content: MessageEvent.from(`ReplyEvent2`).serialize().content,
-        });
-
-        const eventMap = {
-            [rootEvent.event.event_id]: rootEvent,
-            [reply1.event.event_id]: reply1,
-            [reply2.event.event_id]: reply2,
+        const eventMap: { [key: string]: MatrixEvent } = {
+            [rootEvent.getId()!]: rootEvent,
+            [reply1.getId()!]: reply1,
+            [reply2.getId()!]: reply2,
         };
 
         room.findEventById = (eventId: string) => eventMap[eventId];
         client.fetchRoomEvent = async (roomId: string, eventId: string) =>
-            roomId === room.roomId ? eventMap[eventId]?.event : undefined;
+            roomId === room.roomId ? eventMap[eventId]?.event : {};
 
-        const thread = room.createThread('event_root', rootEvent, [], true);
+        const thread = room.createThread(rootEvent.getId()!, rootEvent, [], true);
         // So that we do not have to mock the thread loading
         thread.initialEventsFetched = true;
         // @ts-ignore
         thread.fetchEditsWhereNeeded = () => Promise.resolve();
         await thread.addEvent(reply1, true);
-        await timeline.addEvent(thread.rootEvent, true);
+        await timeline.addEvent(thread.rootEvent!, true);
 
         const dom = render(
             <MatrixClientContext.Provider value={client}>
