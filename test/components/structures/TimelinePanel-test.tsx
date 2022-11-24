@@ -28,7 +28,9 @@ import {
 } from 'matrix-js-sdk/src/matrix';
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { render, RenderResult } from "@testing-library/react";
+import { FeatureSupport, THREAD_RELATION_TYPE, ThreadFilterType, Thread } from "matrix-js-sdk/src/models/thread";
 
+import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { mkRoom, stubClient } from "../../test-utils";
 import TimelinePanel from '../../../src/components/structures/TimelinePanel';
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
@@ -191,5 +193,101 @@ describe('TimelinePanel', () => {
         props.eventId = events[1].getId();
         rerender(<TimelinePanel {...props} />);
         expect(props.onEventScrolledIntoView).toHaveBeenCalledWith(events[1].getId());
+    });
+
+    it('updates thread previews', async () => {
+        const client = MatrixClientPeg.get();
+
+        Thread.hasServerSideSupport = FeatureSupport.Stable;
+        client.supportsExperimentalThreads = () => true;
+        const getValueCopy = SettingsStore.getValue;
+        SettingsStore.getValue = jest.fn().mockImplementation((name: string) => {
+            if (name === "feature_thread") return true;
+            return getValueCopy(name);
+        });
+
+        const room = new Room("roomId", client, "userId");
+        const allThreads = new EventTimelineSet(room, {
+            pendingEvents: false,
+        }, undefined, undefined, ThreadFilterType.All);
+        const timeline = new EventTimeline(allThreads);
+        allThreads.getLiveTimeline = () => timeline;
+        allThreads.getTimelineForEvent = () => timeline;
+
+        const reply1 = new MatrixEvent({
+            room_id: room.roomId,
+            event_id: `event_reply_1`,
+            type: EventType.RoomMessage,
+            user_id: "userId",
+            content: MessageEvent.from(`ReplyEvent1`).serialize().content,
+        });
+
+        const rootEvent = new MatrixEvent({
+            room_id: room.roomId,
+            event_id: 'event_root',
+            type: EventType.RoomMessage,
+            user_id: "userId",
+            content: MessageEvent.from(`RootEvent`).serialize().content,
+            unsigned: {
+                "m.relations": {
+                    [THREAD_RELATION_TYPE.name]: {
+                        "latest_event": reply1.event,
+                        "count": 1,
+                        "current_user_participated": true,
+                    },
+                },
+            },
+        });
+
+        const reply2 = new MatrixEvent({
+            room_id: room.roomId,
+            event_id: `event_reply_2`,
+            type: EventType.RoomMessage,
+            user_id: "userId",
+            content: MessageEvent.from(`ReplyEvent2`).serialize().content,
+        });
+
+        const eventMap = {
+            [rootEvent.event.event_id]: rootEvent,
+            [reply1.event.event_id]: reply1,
+            [reply2.event.event_id]: reply2,
+        };
+
+        room.findEventById = (eventId: string) => eventMap[eventId];
+        client.fetchRoomEvent = async (roomId: string, eventId: string) =>
+            roomId === room.roomId ? eventMap[eventId]?.event : undefined;
+
+        const thread = room.createThread('event_root', rootEvent, [], true);
+        // So that we do not have to mock the thread loading
+        thread.initialEventsFetched = true;
+        // @ts-ignore
+        thread.fetchEditsWhereNeeded = () => Promise.resolve();
+        await thread.addEvent(reply1, true);
+        await timeline.addEvent(thread.rootEvent, true);
+
+        const dom = render(
+            <MatrixClientContext.Provider value={client}>
+                <TimelinePanel
+                    timelineSet={allThreads}
+                    manageReadReceipts
+                    sendReadReceiptOnLoad
+                />
+            </MatrixClientContext.Provider>,
+        );
+        await dom.findByText("RootEvent");
+        await dom.findByText("ReplyEvent1");
+
+        rootEvent.setUnsigned({
+            "m.relations": {
+                [THREAD_RELATION_TYPE.name]: {
+                    "latest_event": reply2.event,
+                    "count": 2,
+                    "current_user_participated": true,
+                },
+            },
+        });
+
+        await thread.addEvent(reply2, false, true);
+        await dom.findByText("ReplyEvent2");
     });
 });
