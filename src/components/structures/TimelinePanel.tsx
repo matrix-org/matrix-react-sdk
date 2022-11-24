@@ -1429,6 +1429,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return;
         }
 
+        // @TODO(kerrya) do some timestampToEvent here to load the overlay timeline
+        // at kind of the right point
+        // ?
         const prom = this.timelineWindow.load(eventId, INITIAL_SIZE).then(async () => {
             if (this.overlayTimelineWindow) {
                 await this.overlayTimelineWindow?.load(undefined, INITIAL_SIZE);
