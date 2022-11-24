@@ -67,7 +67,7 @@ export const WysiwygComposer = memo(function WysiwygComposer(
     useSetCursorPosition(!isReady, ref);
 
     const { isFocused, onFocus } = useIsFocused();
-    const computedPlaceholder = !Boolean(content) && placeholder || undefined;
+    const computedPlaceholder = !content && placeholder || undefined;
 
     return (
         <div data-testid="WysiwygComposer" className={classNames(className, { [`${className}-focused`]: isFocused })} onFocus={onFocus} onBlur={onFocus}>

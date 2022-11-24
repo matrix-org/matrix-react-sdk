@@ -57,7 +57,7 @@ export function PlainTextComposer({
     usePlainTextInitialization(initialContent, ref);
     useSetCursorPosition(disabled, ref);
     const { isFocused, onFocus } = useIsFocused();
-    const computedPlaceholder = !Boolean(content) && placeholder || undefined;
+    const computedPlaceholder = !content && placeholder || undefined;
 
     return <div
         data-testid="PlainTextComposer"
