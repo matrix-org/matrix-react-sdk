@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactElement } from "react";
+import classNames from "classnames";
 
 import {
     VoiceBroadcastControl,
@@ -26,24 +27,32 @@ import Spinner from "../../../components/views/elements/Spinner";
 import { useVoiceBroadcastPlayback } from "../../hooks/useVoiceBroadcastPlayback";
 import { Icon as PlayIcon } from "../../../../res/img/element-icons/play.svg";
 import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
+import { Icon as Back30sIcon } from "../../../../res/img/element-icons/Back30s.svg";
+import { Icon as Forward30sIcon } from "../../../../res/img/element-icons/Forward30s.svg";
 import { _t } from "../../../languageHandler";
 import Clock from "../../../components/views/audio_messages/Clock";
 import SeekBar from "../../../components/views/audio_messages/SeekBar";
+import { SeekButton } from "../atoms/SeekButton";
+
+const SEEK_TIME = 30;
 
 interface VoiceBroadcastPlaybackBodyProps {
+    pip?: boolean;
     playback: VoiceBroadcastPlayback;
 }
 
 export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProps> = ({
+    pip = false,
     playback,
 }) => {
     const {
         duration,
         liveness,
+        playbackState,
+        position,
         room,
         sender,
         toggle,
-        playbackState,
     } = useVoiceBroadcastPlayback(playback);
 
     let control: React.ReactNode;
@@ -76,8 +85,38 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         />;
     }
 
+    let seekBackwardButton: ReactElement | null = null;
+    let seekForwardButton: ReactElement | null = null;
+
+    if (playbackState !== VoiceBroadcastPlaybackState.Stopped) {
+        const onSeekBackwardButtonClick = () => {
+            playback.skipTo(Math.max(0, position - SEEK_TIME));
+        };
+
+        seekBackwardButton = <SeekButton
+            icon={Back30sIcon}
+            label={_t("30s backward")}
+            onClick={onSeekBackwardButtonClick}
+        />;
+
+        const onSeekForwardButtonClick = () => {
+            playback.skipTo(Math.min(duration, position + SEEK_TIME));
+        };
+
+        seekForwardButton = <SeekButton
+            icon={Forward30sIcon}
+            label={_t("30s forward")}
+            onClick={onSeekForwardButtonClick}
+        />;
+    }
+
+    const classes = classNames({
+        mx_VoiceBroadcastBody: true,
+        ["mx_VoiceBroadcastBody--pip"]: pip,
+    });
+
     return (
-        <div className="mx_VoiceBroadcastBody">
+        <div className={classes}>
             <VoiceBroadcastHeader
                 live={liveness}
                 microphoneLabel={sender?.name}
@@ -85,7 +124,9 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
                 showBroadcast={true}
             />
             <div className="mx_VoiceBroadcastBody_controls">
+                { seekBackwardButton }
                 { control }
+                { seekForwardButton }
             </div>
             <div className="mx_VoiceBroadcastBody_timerow">
                 <SeekBar playback={playback} />
