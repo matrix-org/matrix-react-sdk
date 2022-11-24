@@ -378,10 +378,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         const members = Object.values(buildMemberScores(client)).map(({ member }) => member.userId);
         // users with dm membership
         const roomMembers = Object.keys(DMRoomMap.shared().getUniqueRoomsWithIndividuals());
-        roomMembers.forEach(user => members.push(user));
+        roomMembers.forEach(id => members.push(id));
         // filter duplicates and user IDs from external servers
         const externals = new Set(members.filter(id => !id.includes(homeserver)));
-        externals.forEach(user => excludedTargetIds.add(user));
+        externals.forEach(id => excludedTargetIds.add(id));
     }
 
     public static buildRecents(excludedTargetIds: Set<string>): IRecentUser[] {
