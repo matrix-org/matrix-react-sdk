@@ -147,7 +147,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                         onClick={this.props.callEventGrouper.answerCall}
                         kind="primary"
                     >
-                        <span> { _t("Accept") } </span>
+                        <span> { _t("Accept here") } </span>
                     </AccessibleButton>
                     { this.props.timestamp }
                 </div>

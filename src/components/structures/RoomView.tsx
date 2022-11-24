@@ -111,6 +111,7 @@ import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 import { Call } from "../../models/Call";
 import { RoomSearchView } from './RoomSearchView';
 import eventSearch from "../../Searching";
+import VoipUserMapper from '../../VoipUserMapper';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -145,6 +146,7 @@ enum MainSplitContentType {
 }
 export interface IRoomState {
     room?: Room;
+    virtualRoom?: Room;
     roomId?: string;
     roomAlias?: string;
     roomLoading: boolean;
@@ -656,7 +658,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // NB: This does assume that the roomID will not change for the lifetime of
         // the RoomView instance
         if (initial) {
+            const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room?.roomId);
+
             newState.room = this.context.client.getRoom(newState.roomId);
+            newState.virtualRoom = virtualRoom;
             if (newState.room) {
                 newState.showApps = this.shouldShowApps(newState.room);
                 this.onRoomLoaded(newState.room);
@@ -770,6 +775,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     if (this.unmounted) {
                         return;
                     }
+
                     this.setState({
                         room: room,
                         peekLoading: false,
@@ -1183,6 +1189,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     // after a successful peek, or after we join the room).
     private onRoomLoaded = (room: Room) => {
         if (this.unmounted) return;
+
         // Attach a widget store listener only when we get a room
         this.context.widgetLayoutStore.on(WidgetLayoutStore.emissionForRoom(room), this.onWidgetLayoutChange);
 
@@ -1258,7 +1265,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
-    private onRoom = (room: Room) => {
+    private onRoom = async (room: Room) => {
         if (!room || room.roomId !== this.state.roomId) {
             return;
         }
@@ -1271,11 +1278,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
+        const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room.roomId);
         this.setState({
             room: room,
+            virtualRoom,
         }, () => {
             this.onRoomLoaded(room);
         });
+        console.log('hhh', 'onRoomLoaded', room, virtualRoom);
     };
 
     private onDeviceVerificationChanged = (userId: string) => {
@@ -2096,6 +2106,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             <TimelinePanel
                 ref={this.gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
+                overlayTimelineSet={this.state.virtualRoom?.getUnfilteredTimelineSet()}
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}

@@ -243,9 +243,15 @@ export default class LegacyCallHandler extends EventEmitter {
             dis.dispatch({ action: Action.PstnSupportUpdated });
 
             if (protocols[PROTOCOL_SIP_NATIVE] !== undefined && protocols[PROTOCOL_SIP_VIRTUAL] !== undefined) {
+                console.log('hhh', 'forcing getSupportsVirtualRooms to true');
                 this.supportsSipNativeVirtual = Boolean(
                     protocols[PROTOCOL_SIP_NATIVE] && protocols[PROTOCOL_SIP_VIRTUAL],
-                );
+                ) || true;
+            }
+
+            if (MatrixClientPeg.get().getUserId() === '@kadev1:hs1') {
+                console.log('hhh', 'forcing getSupportsVirtualRooms to true for kadev1');
+                this.supportsSipNativeVirtual = true;
             }
 
             dis.dispatch({ action: Action.VirtualRoomSupportUpdated });

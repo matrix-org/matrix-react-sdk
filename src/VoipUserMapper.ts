@@ -48,6 +48,12 @@ export default class VoipUserMapper {
         const userId = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (!userId) return null;
 
+        const kadev2 = '@kadev2:hs1';
+        const virtualKadev2 = '@virtualkadev2:hs1';
+        if (userId === kadev2) {
+            return virtualKadev2;
+        }
+
         const virtualUser = await this.userToVirtualUser(userId);
         if (!virtualUser) return null;
 
@@ -79,7 +85,7 @@ export default class VoipUserMapper {
         return findDMForUser(MatrixClientPeg.get(), virtualUser);
     }
 
-    public nativeRoomForVirtualRoom(roomId: string): string {
+    public nativeRoomForVirtualRoom(roomId: string): string | null {
         const cachedNativeRoomId = this.virtualToNativeRoomIdCache.get(roomId);
         if (cachedNativeRoomId) {
             logger.log(
@@ -90,6 +96,7 @@ export default class VoipUserMapper {
 
         const virtualRoom = MatrixClientPeg.get().getRoom(roomId);
         if (!virtualRoom) return null;
+
         const virtualRoomEvent = virtualRoom.getAccountData(VIRTUAL_ROOM_EVENT_TYPE);
         if (!virtualRoomEvent || !virtualRoomEvent.getContent()) return null;
         const nativeRoomID = virtualRoomEvent.getContent()['native_room'];
@@ -100,6 +107,10 @@ export default class VoipUserMapper {
     }
 
     public isVirtualRoom(room: Room): boolean {
+        const virtualRoomId = '!SkzaAmHKzLFuhORXsQ:hs1';
+        if (room.roomId === virtualRoomId) {
+            return true;
+        }
         if (this.nativeRoomForVirtualRoom(room.roomId)) return true;
 
         if (this.virtualToNativeRoomIdCache.has(room.roomId)) return true;
