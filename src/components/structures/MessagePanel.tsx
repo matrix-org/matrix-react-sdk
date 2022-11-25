@@ -348,7 +348,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public getTileForEventId(eventId?: string): UnwrappedEventTile | undefined {
-        if (!this.eventTiles || eventId === undefined || eventId === null) {
+        if (!this.eventTiles || !eventId) {
             return undefined;
         }
         return this.eventTiles[eventId];
