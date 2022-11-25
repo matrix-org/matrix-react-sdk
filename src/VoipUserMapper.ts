@@ -48,12 +48,6 @@ export default class VoipUserMapper {
         const userId = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (!userId) return null;
 
-        const kadev2 = '@kadev2:hs1';
-        const virtualKadev2 = '@virtualkadev2:hs1';
-        if (userId === kadev2) {
-            return virtualKadev2;
-        }
-
         const virtualUser = await this.userToVirtualUser(userId);
         if (!virtualUser) return null;
 

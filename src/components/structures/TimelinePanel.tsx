@@ -1477,7 +1477,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         console.log('hhh', 'GET EVENTS', { mainEvents, ids: mainEvents.map(e => e.getId()), overlayEvents });
 
-        // @TODO(kerrya) insert overlay events into mainevent timeline without resorting main
+        // @TODO(kerrya) insert overlay events into mainevent timeline without re-sorting main
         const events = [...overlayEvents, ...mainEvents].sort((a, b) => a.localTimestamp - b.localTimestamp);
 
         // `arrayFastClone` performs a shallow copy of the array
