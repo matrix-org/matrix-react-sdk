@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from "classnames";
-import React, { PropsWithChildren } from 'react';
-
-interface Props {
-    className?: string;
-    flex?: boolean;
-}
-
-export default function AuthBody({ flex, className, children }: PropsWithChildren<Props>) {
-    return <main className={classNames("mx_AuthBody", className, { "mx_AuthBody_flex": flex })}>
-        { children }
-    </main>;
-}
+module.exports = require('matrix-js-sdk/spec/slowReporter');
