@@ -1469,13 +1469,15 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     // get the list of events from the timeline window and the pending event list
     private getEvents(): Pick<IState, "events" | "liveEvents" | "firstVisibleEventIndex"> {
+        // @TODO(kerrya) make this filter generic?
+        const mainEvents: MatrixEvent[] = this.timelineWindow.getEvents();
         const overlayEvents = this.overlayTimelineWindow?.getEvents().filter(
             e => e.getType().startsWith('m.call'),
         ) || [];
-        const mainEvents: MatrixEvent[] = this.timelineWindow.getEvents();
 
         console.log('hhh', 'GET EVENTS', { mainEvents, ids: mainEvents.map(e => e.getId()), overlayEvents });
 
+        // @TODO(kerrya) insert overlay events into mainevent timeline without resorting main
         const events = [...overlayEvents, ...mainEvents].sort((a, b) => a.localTimestamp - b.localTimestamp);
 
         // `arrayFastClone` performs a shallow copy of the array
