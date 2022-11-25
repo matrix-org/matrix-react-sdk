@@ -14,16 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './beacon';
-export * from './client';
-export * from './location';
-export * from './platform';
-export * from './poll';
-export * from './room';
-export * from './test-utils';
-export * from './call';
-export * from './wrappers';
-export * from './utilities';
-export * from './date';
-export * from './relations';
-export * from './console';
+import { VoiceBroadcastPlaybacksStore, VoiceBroadcastPlaybackState } from "..";
+
+export const doClearCurrentVoiceBroadcastPlaybackIfStopped = (
+    voiceBroadcastPlaybacksStore: VoiceBroadcastPlaybacksStore,
+) => {
+    if (voiceBroadcastPlaybacksStore.getCurrent()?.getState() === VoiceBroadcastPlaybackState.Stopped) {
+        // clear current if stopped
+        return;
+    }
+};
