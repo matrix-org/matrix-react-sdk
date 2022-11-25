@@ -30,7 +30,7 @@ interface Props {
 export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({
     voiceBroadcastPreRecording,
 }) => {
-    const pipRef = useRef<HTMLDivElement>(null);
+    const pipRef = useRef<HTMLDivElement | null>(null);
     const { deviceLabel, devicesMenu, onSelectDeviceClick } = useAudioDeviceTooltipSelection(pipRef);
 
     return <div

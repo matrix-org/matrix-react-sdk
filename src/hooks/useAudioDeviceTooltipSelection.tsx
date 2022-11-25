@@ -32,7 +32,7 @@ interface State {
 }
 
 export const useAudioDeviceTooltipSelection = (
-    containerRef: MutableRefObject<HTMLElement>,
+    containerRef: MutableRefObject<HTMLElement | null>,
     onDeviceChanged?: (device: MediaDeviceInfo) => void,
 ) => {
     const shouldRequestPermissionsRef = useRef<boolean>(true);
