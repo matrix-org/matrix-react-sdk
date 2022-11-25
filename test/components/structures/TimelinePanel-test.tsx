@@ -14,27 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import { render, RenderResult } from "@testing-library/react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { MessageEvent } from 'matrix-events-sdk';
+import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import {
     EventTimelineSet,
     EventType,
+    MatrixClient,
     MatrixEvent,
     PendingEventOrdering,
     Room,
 } from 'matrix-js-sdk/src/matrix';
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
-import { render, RenderResult } from "@testing-library/react";
-import { FeatureSupport, THREAD_RELATION_TYPE, ThreadFilterType, Thread } from "matrix-js-sdk/src/models/thread";
+import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import {
+    FeatureSupport,
+    Thread,
+    THREAD_RELATION_TYPE,
+    ThreadEvent,
+    ThreadFilterType,
+} from "matrix-js-sdk/src/models/thread";
+import React from 'react';
 
-import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
-import { mkRoom, stubClient } from "../../test-utils";
 import TimelinePanel from '../../../src/components/structures/TimelinePanel';
+import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import SettingsStore from "../../../src/settings/SettingsStore";
+import { mkRoom, stubClient } from "../../test-utils";
 
 const newReceipt = (eventId: string, userId: string, readTs: number, fullyReadTs: number): MatrixEvent => {
     const receiptContent = {
@@ -195,48 +202,70 @@ describe('TimelinePanel', () => {
         expect(props.onEventScrolledIntoView).toHaveBeenCalledWith(events[1].getId());
     });
 
-    it('updates thread previews', async () => {
-        const client = MatrixClientPeg.get();
+    describe("when a thread updates", () => {
+        let client: MatrixClient;
+        let room: Room;
+        let allThreads: EventTimelineSet;
+        let root: MatrixEvent;
+        let reply1: MatrixEvent;
+        let reply2: MatrixEvent;
 
-        Thread.hasServerSideSupport = FeatureSupport.Stable;
-        client.supportsExperimentalThreads = () => true;
-        const getValueCopy = SettingsStore.getValue;
-        SettingsStore.getValue = jest.fn().mockImplementation((name: string) => {
-            if (name === "feature_thread") return true;
-            return getValueCopy(name);
+        beforeEach(() => {
+            client = MatrixClientPeg.get();
+
+            Thread.hasServerSideSupport = FeatureSupport.Stable;
+            client.supportsExperimentalThreads = () => true;
+            const getValueCopy = SettingsStore.getValue;
+            SettingsStore.getValue = jest.fn().mockImplementation((name: string) => {
+                if (name === "feature_thread") return true;
+                return getValueCopy(name);
+            });
+
+            room = new Room("roomId", client, "userId");
+            allThreads = new EventTimelineSet(room, {
+                pendingEvents: false,
+            }, undefined, undefined, ThreadFilterType.All);
+            const timeline = new EventTimeline(allThreads);
+            allThreads.getLiveTimeline = () => timeline;
+            allThreads.getTimelineForEvent = () => timeline;
+
+            reply1 = new MatrixEvent({
+                room_id: room.roomId,
+                event_id: 'event_reply_1',
+                type: EventType.RoomMessage,
+                user_id: "userId",
+                content: MessageEvent.from(`ReplyEvent1`).serialize().content,
+            });
+
+            reply2 = new MatrixEvent({
+                room_id: room.roomId,
+                event_id: 'event_reply_2',
+                type: EventType.RoomMessage,
+                user_id: "userId",
+                content: MessageEvent.from(`ReplyEvent2`).serialize().content,
+            });
+
+            root = new MatrixEvent({
+                room_id: room.roomId,
+                event_id: 'event_root_1',
+                type: EventType.RoomMessage,
+                user_id: "userId",
+                content: MessageEvent.from(`RootEvent`).serialize().content,
+            });
+
+            const eventMap: { [key: string]: MatrixEvent } = {
+                [root.getId()!]: root,
+                [reply1.getId()!]: reply1,
+                [reply2.getId()!]: reply2,
+            };
+
+            room.findEventById = (eventId: string) => eventMap[eventId];
+            client.fetchRoomEvent = async (roomId: string, eventId: string) =>
+                roomId === room.roomId ? eventMap[eventId]?.event : {};
         });
 
-        const room = new Room("roomId", client, "userId");
-        const allThreads = new EventTimelineSet(room, {
-            pendingEvents: false,
-        }, undefined, undefined, ThreadFilterType.All);
-        const timeline = new EventTimeline(allThreads);
-        allThreads.getLiveTimeline = () => timeline;
-        allThreads.getTimelineForEvent = () => timeline;
-
-        const reply1 = new MatrixEvent({
-            room_id: room.roomId,
-            event_id: 'event_reply_1',
-            type: EventType.RoomMessage,
-            user_id: "userId",
-            content: MessageEvent.from(`ReplyEvent1`).serialize().content,
-        });
-
-        const reply2 = new MatrixEvent({
-            room_id: room.roomId,
-            event_id: 'event_reply_2',
-            type: EventType.RoomMessage,
-            user_id: "userId",
-            content: MessageEvent.from(`ReplyEvent2`).serialize().content,
-        });
-
-        const rootEvent = new MatrixEvent({
-            room_id: room.roomId,
-            event_id: 'event_root',
-            type: EventType.RoomMessage,
-            user_id: "userId",
-            content: MessageEvent.from(`RootEvent`).serialize().content,
-            unsigned: {
+        it('updates thread previews', async () => {
+            root.setUnsigned({
                 "m.relations": {
                     [THREAD_RELATION_TYPE.name]: {
                         "latest_event": reply1.event,
@@ -244,50 +273,103 @@ describe('TimelinePanel', () => {
                         "current_user_participated": true,
                     },
                 },
-            },
-        });
+            });
 
-        const eventMap: { [key: string]: MatrixEvent } = {
-            [rootEvent.getId()!]: rootEvent,
-            [reply1.getId()!]: reply1,
-            [reply2.getId()!]: reply2,
-        };
+            const thread = room.createThread(root.getId()!, root, [], true);
+            // So that we do not have to mock the thread loading
+            thread.initialEventsFetched = true;
+            // @ts-ignore
+            thread.fetchEditsWhereNeeded = () => Promise.resolve();
+            await thread.addEvent(reply1, true);
+            await allThreads.getLiveTimeline().addEvent(thread.rootEvent!, true);
+            const replyToEvent = jest.spyOn(thread, "replyToEvent", "get");
 
-        room.findEventById = (eventId: string) => eventMap[eventId];
-        client.fetchRoomEvent = async (roomId: string, eventId: string) =>
-            roomId === room.roomId ? eventMap[eventId]?.event : {};
+            const dom = render(
+                <MatrixClientContext.Provider value={client}>
+                    <TimelinePanel
+                        timelineSet={allThreads}
+                        manageReadReceipts
+                        sendReadReceiptOnLoad
+                    />
+                </MatrixClientContext.Provider>,
+            );
+            await dom.findByText("RootEvent");
+            await dom.findByText("ReplyEvent1");
+            expect(replyToEvent).toHaveBeenCalled();
 
-        const thread = room.createThread(rootEvent.getId()!, rootEvent, [], true);
-        // So that we do not have to mock the thread loading
-        thread.initialEventsFetched = true;
-        // @ts-ignore
-        thread.fetchEditsWhereNeeded = () => Promise.resolve();
-        await thread.addEvent(reply1, true);
-        await timeline.addEvent(thread.rootEvent!, true);
-
-        const dom = render(
-            <MatrixClientContext.Provider value={client}>
-                <TimelinePanel
-                    timelineSet={allThreads}
-                    manageReadReceipts
-                    sendReadReceiptOnLoad
-                />
-            </MatrixClientContext.Provider>,
-        );
-        await dom.findByText("RootEvent");
-        await dom.findByText("ReplyEvent1");
-
-        rootEvent.setUnsigned({
-            "m.relations": {
-                [THREAD_RELATION_TYPE.name]: {
-                    "latest_event": reply2.event,
-                    "count": 2,
-                    "current_user_participated": true,
+            root.setUnsigned({
+                "m.relations": {
+                    [THREAD_RELATION_TYPE.name]: {
+                        "latest_event": reply2.event,
+                        "count": 2,
+                        "current_user_participated": true,
+                    },
                 },
-            },
+            });
+
+            replyToEvent.mockClear();
+            await thread.addEvent(reply2, false, true);
+            await dom.findByText("RootEvent");
+            await dom.findByText("ReplyEvent2");
+            expect(replyToEvent).toHaveBeenCalled();
         });
 
-        await thread.addEvent(reply2, false, true);
-        await dom.findByText("ReplyEvent2");
+        it('ignores thread updates for unknown threads', async () => {
+            root.setUnsigned({
+                "m.relations": {
+                    [THREAD_RELATION_TYPE.name]: {
+                        "latest_event": reply1.event,
+                        "count": 1,
+                        "current_user_participated": true,
+                    },
+                },
+            });
+
+            const realThread = room.createThread(root.getId()!, root, [], true);
+            // So that we do not have to mock the thread loading
+            realThread.initialEventsFetched = true;
+            // @ts-ignore
+            realThread.fetchEditsWhereNeeded = () => Promise.resolve();
+            await realThread.addEvent(reply1, true);
+            await allThreads.getLiveTimeline().addEvent(realThread.rootEvent!, true);
+            const replyToEvent = jest.spyOn(realThread, "replyToEvent", "get");
+
+            // @ts-ignore
+            const fakeThread1: Thread = {
+                id: undefined,
+                get roomId(): string {
+                    return room.roomId;
+                },
+            };
+
+            const fakeRoom = new Room("thisroomdoesnotexist", client, "userId");
+            // @ts-ignore
+            const fakeThread2: Thread = {
+                id: root.getId(),
+                get roomId(): string {
+                    return fakeRoom.roomId;
+                },
+            };
+
+            const dom = render(
+                <MatrixClientContext.Provider value={client}>
+                    <TimelinePanel
+                        timelineSet={allThreads}
+                        manageReadReceipts
+                        sendReadReceiptOnLoad
+                    />
+                </MatrixClientContext.Provider>,
+            );
+            await dom.findByText("RootEvent");
+            await dom.findByText("ReplyEvent1");
+            expect(replyToEvent).toHaveBeenCalled();
+
+            replyToEvent.mockClear();
+            room.emit(ThreadEvent.Update, fakeThread1);
+            room.emit(ThreadEvent.Update, fakeThread2);
+            await dom.findByText("ReplyEvent1");
+            expect(replyToEvent).not.toHaveBeenCalled();
+            replyToEvent.mockClear();
+        });
     });
 });
