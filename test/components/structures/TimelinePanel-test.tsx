@@ -61,7 +61,7 @@ const getProps = (room: Room, events: MatrixEvent[]): TimelinePanel["props"] => 
     timelineSet.getLiveTimeline = () => timeline;
     timelineSet.getTimelineForEvent = () => timeline;
     timelineSet.getPendingEvents = () => events;
-    timelineSet.room.getEventReadUpTo = () => events[1].getId();
+    timelineSet.room!.getEventReadUpTo = () => events[1].getId() ?? null;
 
     return {
         timelineSet,
@@ -76,7 +76,7 @@ const renderPanel = (room: Room, events: MatrixEvent[]): RenderResult => {
 };
 
 const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
-    const events = [];
+    const events: MatrixEvent[] = [];
     for (let index = 0; index < count; index++) {
         events.push(new MatrixEvent({
             room_id: room.roomId,
@@ -98,7 +98,7 @@ describe('TimelinePanel', () => {
     describe('read receipts and markers', () => {
         it('should forget the read marker when asked to', () => {
             const cli = MatrixClientPeg.get();
-            const readMarkersSent = [];
+            const readMarkersSent: string[] = [];
 
             // Track calls to setRoomReadMarkers
             cli.setRoomReadMarkers = (_roomId, rmEventId, _a, _b) => {
@@ -120,7 +120,7 @@ describe('TimelinePanel', () => {
             });
 
             const roomId = "#room:example.com";
-            const userId = cli.credentials.userId;
+            const userId = cli.credentials.userId!;
             const room = new Room(
                 roomId,
                 cli,
@@ -336,7 +336,7 @@ describe('TimelinePanel', () => {
 
             // @ts-ignore
             const fakeThread1: Thread = {
-                id: undefined,
+                id: undefined!,
                 get roomId(): string {
                     return room.roomId;
                 },
@@ -345,7 +345,7 @@ describe('TimelinePanel', () => {
             const fakeRoom = new Room("thisroomdoesnotexist", client, "userId");
             // @ts-ignore
             const fakeThread2: Thread = {
-                id: root.getId(),
+                id: root.getId()!,
                 get roomId(): string {
                     return fakeRoom.roomId;
                 },
