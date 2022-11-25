@@ -52,7 +52,7 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import Spinner from "../views/elements/Spinner";
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import ErrorDialog from '../views/dialogs/ErrorDialog';
-import LegacyCallEventGrouper, { buildLegacyCallEventGroupers } from "./LegacyCallEventGrouper";
+import LegacyCallEventGrouper, { buildLegacyCallEventGroupers, isCallEventType } from "./LegacyCallEventGrouper";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
@@ -637,10 +637,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
-        if (data.timeline.getTimelineSet() === this.props.overlayTimelineSet) {
-            console.log('hhh', 'ontimeline', ev, data);
-        }
-
         // ignore events for other timeline sets
         if (
             data.timeline.getTimelineSet() !== this.props.timelineSet
@@ -1477,10 +1473,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const mainEvents: MatrixEvent[] = this.timelineWindow.getEvents();
         // @TODO(kerrya) make this filter generic?
         const overlayEvents = this.overlayTimelineWindow?.getEvents().filter(
-            e => e.getType().startsWith('m.call'),
+            e => isCallEventType(e.getType()),
         ) || [];
-
-        console.log('hhh', 'GET EVENTS', { mainEvents, ids: mainEvents.map(e => e.getId()), overlayEvents });
 
         // maintain the main timeline event order as returned from the HS
         // merge overlay events at approximately the right position based on local timestamp

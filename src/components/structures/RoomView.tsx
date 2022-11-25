@@ -1285,7 +1285,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }, () => {
             this.onRoomLoaded(room);
         });
-        console.log('hhh', 'onRoomLoaded', room, virtualRoom);
     };
 
     private onDeviceVerificationChanged = (userId: string) => {

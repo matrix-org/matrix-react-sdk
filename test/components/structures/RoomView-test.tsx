@@ -42,6 +42,7 @@ import { DirectoryMember } from "../../../src/utils/direct-messages";
 import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
 import { SdkContextClass, SDKContext } from "../../../src/contexts/SDKContext";
+import VoipUserMapper from "../../../src/VoipUserMapper";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -67,6 +68,8 @@ describe("RoomView", () => {
         stores = new SdkContextClass();
         stores.client = cli;
         stores.rightPanelStore.useUnitTestClient(cli);
+
+        jest.spyOn(VoipUserMapper.sharedInstance(), 'getVirtualRoomForRoom').mockResolvedValue(null);
     });
 
     afterEach(async () => {
@@ -107,6 +110,8 @@ describe("RoomView", () => {
                 />
             </SDKContext.Provider>,
         );
+        await act(() => Promise.resolve()); // Allow state to settle
+        await act(() => Promise.resolve()); // Allow state to settle
         await act(() => Promise.resolve()); // Allow state to settle
         return roomView;
     };
