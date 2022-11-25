@@ -642,7 +642,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         // ignore events for other timeline sets
-        if (data.timeline.getTimelineSet() !== this.props.timelineSet && data.timeline.getTimelineSet() !== this.props.overlayTimelineSet) return;
+        if (
+            data.timeline.getTimelineSet() !== this.props.timelineSet
+            && data.timeline.getTimelineSet() !== this.props.overlayTimelineSet
+        ) {
+            return;
+        }
 
         if (!Thread.hasServerSideSupport && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
             if (toStartOfTimeline && !this.state.canBackPaginate) {
@@ -1469,16 +1474,27 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     // get the list of events from the timeline window and the pending event list
     private getEvents(): Pick<IState, "events" | "liveEvents" | "firstVisibleEventIndex"> {
-        // @TODO(kerrya) make this filter generic?
         const mainEvents: MatrixEvent[] = this.timelineWindow.getEvents();
+        // @TODO(kerrya) make this filter generic?
         const overlayEvents = this.overlayTimelineWindow?.getEvents().filter(
             e => e.getType().startsWith('m.call'),
         ) || [];
 
         console.log('hhh', 'GET EVENTS', { mainEvents, ids: mainEvents.map(e => e.getId()), overlayEvents });
 
-        // @TODO(kerrya) insert overlay events into mainevent timeline without re-sorting main
-        const events = [...overlayEvents, ...mainEvents].sort((a, b) => a.localTimestamp - b.localTimestamp);
+        // maintain the main timeline event order as returned from the HS
+        // merge overlay events at approximately the right position based on local timestamp
+        const events = overlayEvents.reduce((acc: MatrixEvent[], overlayEvent: MatrixEvent) => {
+            // find the first main tl event with a later timestamp
+            const index = acc.findIndex(event => event.localTimestamp > overlayEvent.localTimestamp);
+            // insert overlay event into timeline at approximately the right place
+            if (index > -1) {
+                acc.splice(index, 0, overlayEvent);
+            } else {
+                acc.push(overlayEvent);
+            }
+            return acc;
+        }, [...mainEvents]);
 
         // `arrayFastClone` performs a shallow copy of the array
         // we want the last event to be decrypted first but displayed last
@@ -1490,7 +1506,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 client.decryptEventIfNeeded(event);
             });
 
-        const firstVisibleEventIndex = this.checkForPreJoinUISI(events);
+        // @TODO(kerrya) should this use the full events array?
+        const firstVisibleEventIndex = this.checkForPreJoinUISI(mainEvents);
 
         // Hold onto the live events separately. The read receipt and read marker
         // should use this list, so that they don't advance into pending events.
