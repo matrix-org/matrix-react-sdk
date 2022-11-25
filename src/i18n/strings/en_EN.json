@@ -706,6 +706,7 @@
     "Not a valid %(brand)s keyfile": "Not a valid %(brand)s keyfile",
     "Authentication check failed: incorrect password?": "Authentication check failed: incorrect password?",
     "Unrecognised address": "Unrecognised address",
+    "This space is unfederated. You cannot invite people from external servers.": "This space is unfederated. You cannot invite people from external servers.",
     "You do not have permission to invite people to this space.": "You do not have permission to invite people to this space.",
     "This room is unfederated. You cannot invite people from external servers.": "This room is unfederated. You cannot invite people from external servers.",
     "You do not have permission to invite people to this room.": "You do not have permission to invite people to this room.",

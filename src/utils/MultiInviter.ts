@@ -222,12 +222,15 @@ export default class MultiInviter {
                 switch (err.errcode) {
                     case "M_FORBIDDEN":
                         if (isSpace) {
-                            errorText = _t('You do not have permission to invite people to this space.');
-                        } else if (isFederated === false) {
-                            errorText = _t("This room is unfederated. " +
-                                "You cannot invite people from external servers.");
+                            errorText = isFederated === false
+                                ? _t("This space is unfederated. " +
+                                    "You cannot invite people from external servers.")
+                                : _t('You do not have permission to invite people to this space.');
                         } else {
-                            errorText = _t('You do not have permission to invite people to this room.');
+                            errorText = isFederated === false
+                                ? _t("This room is unfederated. " +
+                                    "You cannot invite people from external servers.")
+                                : _t('You do not have permission to invite people to this room.');
                         }
                         fatal = true;
                         break;
