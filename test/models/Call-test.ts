@@ -966,7 +966,7 @@ describe("ElementCall", () => {
                 }],
             });
             const expectDevices = (devices: IMyDevice[]) => expect(
-                room.currentState.getStateEvents(ElementCall.MEMBER_EVENT_TYPE.name, alice.userId).getContent(),
+                room.currentState.getStateEvents(ElementCall.MEMBER_EVENT_TYPE.name, alice.userId)?.getContent(),
             ).toEqual({
                 "m.calls": [{
                     "m.call_id": call.groupCall.groupCallId,

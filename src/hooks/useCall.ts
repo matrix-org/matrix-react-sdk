@@ -72,7 +72,7 @@ export const useParticipatingMembers = (call: Call): RoomMember[] => {
 
 export const useFull = (call: Call): boolean => {
     return useParticipantCount(call) >= (
-        SdkConfig.get("element_call").participant_limit ?? DEFAULTS.element_call.participant_limit
+        SdkConfig.get("element_call").participant_limit ?? DEFAULTS.element_call.participant_limit!
     );
 };
 

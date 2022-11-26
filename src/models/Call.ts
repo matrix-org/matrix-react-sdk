@@ -392,7 +392,7 @@ export class JitsiCall extends Call {
         const event = this.room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, this.client.getUserId()!);
         const content = event?.getContent<JitsiCallMemberContent>();
         const expiresAt = typeof content?.expires_ts === "number" ? content.expires_ts : -Infinity;
-        const devices = expiresAt > Date.now() && Array.isArray(content?.devices) ? content.devices : [];
+        const devices = expiresAt > Date.now() && Array.isArray(content?.devices) ? content!.devices : [];
         const newDevices = fn(devices);
 
         if (newDevices !== null) {
@@ -428,13 +428,13 @@ export class JitsiCall extends Call {
     }
 
     private async addOurDevice(): Promise<void> {
-        await this.updateDevices(devices => Array.from(new Set(devices).add(this.client.getDeviceId())));
+        await this.updateDevices(devices => Array.from(new Set(devices).add(this.client.getDeviceId()!)));
     }
 
     private async removeOurDevice(): Promise<void> {
         await this.updateDevices(devices => {
             const devicesSet = new Set(devices);
-            devicesSet.delete(this.client.getDeviceId());
+            devicesSet.delete(this.client.getDeviceId()!);
             return Array.from(devicesSet);
         });
     }
@@ -627,7 +627,7 @@ export class ElementCall extends Call {
             preload: "",
             hideHeader: "",
             userId: client.getUserId()!,
-            deviceId: client.getDeviceId(),
+            deviceId: client.getDeviceId()!,
             roomId: groupCall.room.roomId,
             baseUrl: client.baseUrl,
             lang: getCurrentLanguage().replace("_", "-"),
