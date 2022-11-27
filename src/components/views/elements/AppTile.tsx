@@ -43,13 +43,13 @@ import { IApp } from "../../../stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import { RoomViewStore } from '../../../stores/RoomViewStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from '../../../dispatcher/actions';
 import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
 import { WidgetMessagingStore } from '../../../stores/widgets/WidgetMessagingStore';
+import { SdkContextClass } from '../../../contexts/SDKContext';
 
 interface IProps {
     app: IApp;
@@ -99,7 +99,6 @@ interface IState {
     isUserProfileReady: boolean;
     error: Error;
     menuDisplayed: boolean;
-    widgetPageTitle: string;
     requiresClient: boolean;
 }
 
@@ -175,7 +174,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         );
         if (isActiveWidget) {
             // We just left the room that the active widget was from.
-            if (this.props.room && RoomViewStore.instance.getRoomId() !== this.props.room.roomId) {
+            if (this.props.room && SdkContextClass.instance.roomViewStore.getRoomId() !== this.props.room.roomId) {
                 // If we are not actively looking at the room then destroy this widget entirely.
                 this.endWidgetActions();
             } else if (WidgetType.JITSI.matches(this.props.app.type)) {
@@ -229,7 +228,6 @@ export default class AppTile extends React.Component<IProps, IState> {
             isUserProfileReady: OwnProfileStore.instance.isProfileInfoFetched,
             error: null,
             menuDisplayed: false,
-            widgetPageTitle: this.props.widgetPageTitle,
             requiresClient: this.determineInitialRequiresClientState(),
         };
     }
@@ -351,20 +349,12 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
     };
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    public UNSAFE_componentWillReceiveProps(nextProps: IProps): void { // eslint-disable-line camelcase
-        if (nextProps.app.url !== this.props.app.url) {
-            this.getNewState(nextProps);
+    public componentDidUpdate(prevProps: IProps): void {
+        if (prevProps.app.url !== this.props.app.url) {
+            this.getNewState(this.props);
             if (this.state.hasPermissionToLoad) {
-                this.resetWidget(nextProps);
+                this.resetWidget(this.props);
             }
-        }
-
-        if (nextProps.widgetPageTitle !== this.props.widgetPageTitle) {
-            this.setState({
-                widgetPageTitle: nextProps.widgetPageTitle,
-            });
         }
     }
 
@@ -474,8 +464,8 @@ export default class AppTile extends React.Component<IProps, IState> {
         const name = this.formatAppTileName();
         const titleSpacer = <span>&nbsp;-&nbsp;</span>;
         let title = '';
-        if (this.state.widgetPageTitle && this.state.widgetPageTitle !== this.formatAppTileName()) {
-            title = this.state.widgetPageTitle;
+        if (this.props.widgetPageTitle && this.props.widgetPageTitle !== this.formatAppTileName()) {
+            title = this.props.widgetPageTitle;
         }
 
         return (

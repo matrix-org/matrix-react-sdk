@@ -40,10 +40,34 @@ export const useVoiceBroadcastPlayback = (playback: VoiceBroadcastPlayback) => {
         },
     );
 
+    const [duration, setDuration] = useState(playback.durationSeconds);
+    useTypedEventEmitter(
+        playback,
+        VoiceBroadcastPlaybackEvent.LengthChanged,
+        d => setDuration(d / 1000),
+    );
+
+    const [position, setPosition] = useState(playback.timeSeconds);
+    useTypedEventEmitter(
+        playback,
+        VoiceBroadcastPlaybackEvent.PositionChanged,
+        p => setPosition(p / 1000),
+    );
+
+    const [liveness, setLiveness] = useState(playback.getLiveness());
+    useTypedEventEmitter(
+        playback,
+        VoiceBroadcastPlaybackEvent.LivenessChanged,
+        l => setLiveness(l),
+    );
+
     return {
+        duration,
+        liveness: liveness,
+        playbackState,
+        position,
         room: room,
         sender: playback.infoEvent.sender,
         toggle: playbackToggle,
-        playbackState,
     };
 };

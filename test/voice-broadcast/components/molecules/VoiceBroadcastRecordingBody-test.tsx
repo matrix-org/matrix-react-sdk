@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import {
@@ -51,7 +50,7 @@ describe("VoiceBroadcastRecordingBody", () => {
             room: roomId,
             user: userId,
         });
-        recording = new VoiceBroadcastRecording(infoEvent, client);
+        recording = new VoiceBroadcastRecording(infoEvent, client, VoiceBroadcastInfoState.Resumed);
     });
 
     describe("when rendering a live broadcast", () => {
@@ -61,31 +60,21 @@ describe("VoiceBroadcastRecordingBody", () => {
             renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
         });
 
-        it("should render the expected HTML", () => {
+        it("should render with a red live badge", () => {
             expect(renderResult.container).toMatchSnapshot();
-        });
-
-        describe("and clicked", () => {
-            beforeEach(async () => {
-                await userEvent.click(renderResult.getByText("My room"));
-            });
-
-            it("should stop the recording", () => {
-                expect(recording.getState()).toBe(VoiceBroadcastInfoState.Stopped);
-            });
         });
     });
 
-    describe("when rendering a non-live broadcast", () => {
+    describe("when rendering a paused broadcast", () => {
         let renderResult: RenderResult;
 
-        beforeEach(() => {
-            recording.stop();
+        beforeEach(async () => {
+            await recording.pause();
             renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
         });
 
-        it("should not render the live badge", () => {
-            expect(renderResult.queryByText("Live")).toBeFalsy();
+        it("should render with a grey live badge", () => {
+            expect(renderResult.container).toMatchSnapshot();
         });
     });
 });

@@ -41,17 +41,16 @@ import SettingsStore from "./settings/SettingsStore";
 import { hideToast as hideNotificationsToast } from "./toasts/DesktopNotificationsToast";
 import { SettingLevel } from "./settings/SettingLevel";
 import { isPushNotifyDisabled } from "./settings/controllers/NotificationControllers";
-import { RoomViewStore } from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import LegacyCallHandler from "./LegacyCallHandler";
 import VoipUserMapper from "./VoipUserMapper";
-import { localNotificationsAreSilenced } from "./utils/notifications";
+import { SdkContextClass } from "./contexts/SDKContext";
+import { localNotificationsAreSilenced, createLocalNotificationSettingsIfNeeded } from "./utils/notifications";
 import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
 import ToastStore from "./stores/ToastStore";
 import { ElementCall } from "./models/Call";
-import { createLocalNotificationSettingsIfNeeded } from './utils/notifications';
 
 /*
  * Dispatches:
@@ -161,8 +160,8 @@ export const Notifier = {
             return null;
         }
 
-        if (!content.url) {
-            logger.warn(`${roomId} has custom notification sound event, but no url key`);
+        if (typeof content.url !== "string") {
+            logger.warn(`${roomId} has custom notification sound event, but no url string`);
             return null;
         }
 
@@ -211,7 +210,7 @@ export const Notifier = {
         }
     },
 
-    start: function() {
+    start: function(this: typeof Notifier) {
         // do not re-bind in the case of repeated call
         this.boundOnEvent = this.boundOnEvent || this.onEvent.bind(this);
         this.boundOnSyncStateChange = this.boundOnSyncStateChange || this.onSyncStateChange.bind(this);
@@ -226,7 +225,7 @@ export const Notifier = {
         this.isSyncing = false;
     },
 
-    stop: function() {
+    stop: function(this: typeof Notifier) {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener(ClientEvent.Event, this.boundOnEvent);
             MatrixClientPeg.get().removeListener(RoomEvent.Receipt, this.boundOnRoomReceipt);
@@ -323,7 +322,7 @@ export const Notifier = {
         return SettingsStore.getValue("audioNotificationsEnabled");
     },
 
-    setPromptHidden: function(hidden: boolean, persistent = true) {
+    setPromptHidden: function(this: typeof Notifier, hidden: boolean, persistent = true) {
         this.toolbarHidden = hidden;
 
         hideNotificationsToast();
@@ -344,7 +343,7 @@ export const Notifier = {
                !this.isEnabled() && !this._isPromptHidden();
     },
 
-    _isPromptHidden: function() {
+    _isPromptHidden: function(this: typeof Notifier) {
         // Check localStorage for any such meta data
         if (global.localStorage) {
             return global.localStorage.getItem("notifications_hidden") === "true";
@@ -353,7 +352,7 @@ export const Notifier = {
         return this.toolbarHidden;
     },
 
-    onSyncStateChange: function(state: SyncState, prevState?: SyncState, data?: ISyncStateData) {
+    onSyncStateChange: function(this: typeof Notifier, state: SyncState, prevState?: SyncState, data?: ISyncStateData) {
         if (state === SyncState.Syncing) {
             this.isSyncing = true;
         } else if (state === SyncState.Stopped || state === SyncState.Error) {
@@ -369,7 +368,7 @@ export const Notifier = {
         }
     },
 
-    onEvent: function(ev: MatrixEvent) {
+    onEvent: function(this: typeof Notifier, ev: MatrixEvent) {
         if (!this.isSyncing) return; // don't alert for any messages initially
         if (ev.getSender() === MatrixClientPeg.get().getUserId()) return;
 
@@ -435,7 +434,16 @@ export const Notifier = {
         if (actions?.notify) {
             this._performCustomEventHandling(ev);
 
-            if (RoomViewStore.instance.getRoomId() === room.roomId &&
+            const store = SdkContextClass.instance.roomViewStore;
+            const isViewingRoom = store.getRoomId() === room.roomId;
+            const threadId: string | undefined = ev.getId() !== ev.threadRootId
+                ? ev.threadRootId
+                : undefined;
+            const isViewingThread = store.getThreadId() === threadId;
+
+            const isViewingEventTimeline = isViewingRoom && (!threadId || isViewingThread);
+
+            if (isViewingEventTimeline &&
                 UserActivity.sharedInstance().userActiveRecently() &&
                 !Modal.hasDialogs()
             ) {

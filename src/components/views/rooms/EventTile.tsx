@@ -17,7 +17,7 @@ limitations under the License.
 
 import React, { createRef, forwardRef, MouseEvent, RefObject } from 'react';
 import classNames from "classnames";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -27,6 +27,7 @@ import { NotificationCountType, Room, RoomEvent } from 'matrix-js-sdk/src/models
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import { Feature, ServerSupport } from 'matrix-js-sdk/src/feature';
 
 import { Icon as LinkIcon } from '../../../../res/img/element-icons/link.svg';
 import { Icon as ViewInRoomIcon } from '../../../../res/img/element-icons/view-in-room.svg';
@@ -84,8 +85,13 @@ import { useTooltip } from "../../../utils/useTooltip";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { ElementCall } from "../../../models/Call";
+import { UnreadNotificationBadge } from './NotificationBadge/UnreadNotificationBadge';
 
-export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
+export type GetRelationsForEvent = (
+    eventId: string,
+    relationType: RelationType | string,
+    eventType: EventType | string,
+) => Relations | null | undefined;
 
 // Our component structure for EventTiles on the timeline is:
 //
@@ -113,7 +119,7 @@ export interface IEventTileType extends React.Component {
     getEventTileOps?(): IEventTileOps;
 }
 
-interface IProps {
+export interface EventTileProps {
     // the MatrixEvent to show
     mxEvent: MatrixEvent;
 
@@ -231,7 +237,7 @@ interface IState {
     // Whether onRequestKeysClick has been called since mounting.
     previouslyRequestedKeys: boolean;
     // The Relations model from the JS SDK for reactions to `mxEvent`
-    reactions: Relations;
+    reactions?: Relations | null | undefined;
 
     hover: boolean;
 
@@ -248,7 +254,7 @@ interface IState {
 }
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
-export class UnwrappedEventTile extends React.Component<IProps, IState> {
+export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     private tile = React.createRef<IEventTileType>();
@@ -267,7 +273,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    constructor(props: EventTileProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         const thread = this.thread;
@@ -367,12 +373,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         return true;
     }
 
-    // TODO: [REACT-WARNING] Move into constructor
-    // eslint-disable-next-line
-    UNSAFE_componentWillMount() {
-        this.verifyEvent(this.props.mxEvent);
-    }
-
     componentDidMount() {
         this.suppressReadReceiptAnimation = false;
         const client = MatrixClientPeg.get();
@@ -394,7 +394,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
-            if (this.thread) {
+            if (this.thread && !this.supportsThreadNotifications) {
                 this.setupNotificationListener(this.thread);
             }
         }
@@ -403,35 +403,44 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
         const room = client.getRoom(this.props.mxEvent.getRoomId());
         room?.on(ThreadEvent.New, this.onNewThread);
+
+        this.verifyEvent(this.props.mxEvent);
+    }
+
+    private get supportsThreadNotifications(): boolean {
+        const client = MatrixClientPeg.get();
+        return client.canSupport.get(Feature.ThreadUnreadNotifications) !== ServerSupport.Unsupported;
     }
 
     private setupNotificationListener(thread: Thread): void {
-        const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(thread.room);
-
-        this.threadState = notifications.getThreadRoomState(thread);
-
-        this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
-        this.onThreadStateUpdate();
+        if (!this.supportsThreadNotifications) {
+            const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(thread.room);
+            this.threadState = notifications.getThreadRoomState(thread);
+            this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
+            this.onThreadStateUpdate();
+        }
     }
 
     private onThreadStateUpdate = (): void => {
-        let threadNotification = null;
-        switch (this.threadState?.color) {
-            case NotificationColor.Grey:
-                threadNotification = NotificationCountType.Total;
-                break;
-            case NotificationColor.Red:
-                threadNotification = NotificationCountType.Highlight;
-                break;
-        }
+        if (!this.supportsThreadNotifications) {
+            let threadNotification = null;
+            switch (this.threadState?.color) {
+                case NotificationColor.Grey:
+                    threadNotification = NotificationCountType.Total;
+                    break;
+                case NotificationColor.Red:
+                    threadNotification = NotificationCountType.Highlight;
+                    break;
+            }
 
-        this.setState({
-            threadNotification,
-        });
+            this.setState({
+                threadNotification,
+            });
+        }
     };
 
     private updateThread = (thread: Thread) => {
-        if (thread !== this.state.thread) {
+        if (thread !== this.state.thread && !this.supportsThreadNotifications) {
             if (this.threadState) {
                 this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
             }
@@ -442,17 +451,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         this.setState({ thread });
     };
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line
-    UNSAFE_componentWillReceiveProps(nextProps: IProps) {
-        // re-check the sender verification as outgoing events progress through
-        // the send process.
-        if (nextProps.eventSendStatus !== this.props.eventSendStatus) {
-            this.verifyEvent(nextProps.mxEvent);
-        }
-    }
-
-    shouldComponentUpdate(nextProps: IProps, nextState: IState): boolean {
+    shouldComponentUpdate(nextProps: EventTileProps, nextState: IState): boolean {
         if (objectHasDiff(this.state, nextState)) {
             return true;
         }
@@ -462,9 +461,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         const client = MatrixClientPeg.get();
-        client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
-        client.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
-        client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
+        if (client) {
+            client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+            client.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+            client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
+            const room = client.getRoom(this.props.mxEvent.getRoomId());
+            room?.off(ThreadEvent.New, this.onNewThread);
+        }
         this.isListeningForReceipts = false;
         this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         if (this.props.showReactions) {
@@ -473,19 +476,18 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
-
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        room?.off(ThreadEvent.New, this.onNewThread);
-        if (this.threadState) {
-            this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
-        }
+        this.threadState?.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
     }
 
-    componentDidUpdate(prevProps: IProps, prevState: IState, snapshot) {
+    componentDidUpdate(prevProps: Readonly<EventTileProps>) {
         // If we're not listening for receipts and expect to be, register a listener.
         if (!this.isListeningForReceipts && (this.shouldShowSentReceipt || this.shouldShowSendingReceipt)) {
             MatrixClientPeg.get().on(RoomEvent.Receipt, this.onRoomReceipt);
             this.isListeningForReceipts = true;
+        }
+        // re-check the sender verification as outgoing events progress through the send process.
+        if (prevProps.eventSendStatus !== this.props.eventSendStatus) {
+            this.verifyEvent(this.props.mxEvent);
         }
     }
 
@@ -531,7 +533,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
     private renderThreadInfo(): React.ReactNode {
         if (this.state.thread?.id === this.props.mxEvent.getId()) {
-            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
+            return <ThreadSummary
+                mxEvent={this.props.mxEvent}
+                thread={this.state.thread}
+                data-testid="thread-summary"
+            />;
         }
 
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
@@ -667,7 +673,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }, this.props.onHeightChanged); // Decryption may have caused a change in size
     }
 
-    private propsEqual(objA: IProps, objB: IProps): boolean {
+    private propsEqual(objA: EventTileProps, objB: EventTileProps): boolean {
         const keysA = Object.keys(objA);
         const keysB = Object.keys(objB);
 
@@ -932,6 +938,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 rightClick={true}
                 reactions={this.state.reactions}
                 link={this.state.contextMenu.link}
+                getRelationsForEvent={this.props.getRelationsForEvent}
             />
         );
     }
@@ -1297,7 +1304,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 ]);
             }
             case TimelineRenderingType.Thread: {
-                const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
                     "ref": this.ref,
                     "className": classes,
@@ -1311,12 +1317,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     "onMouseEnter": () => this.setState({ hover: true }),
                     "onMouseLeave": () => this.setState({ hover: false }),
                 }, [
-                    <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
-                        <RoomAvatar room={room} width={28} height={28} />
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { room ? room.name : '' }
-                        </a>
-                    </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
                         { sender }
@@ -1347,6 +1347,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 ]);
             }
             case TimelineRenderingType.ThreadsList: {
+                const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
                     React.createElement(this.props.as || "li", {
@@ -1360,7 +1361,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "data-shape": this.context.timelineRenderingType,
                         "data-self": isOwnEvent,
                         "data-has-reply": !!replyChain,
-                        "data-notification": this.state.threadNotification,
+                        "data-notification": !this.supportsThreadNotifications
+                            ? this.state.threadNotification
+                            : undefined,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
@@ -1408,6 +1411,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                             </RovingAccessibleTooltipButton>
                         </Toolbar>
                         { msgOption }
+                        <UnreadNotificationBadge
+                            room={room}
+                            threadId={this.props.mxEvent.getId()} />
                     </>)
                 );
             }
@@ -1511,10 +1517,12 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 }
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
-const SafeEventTile = forwardRef((props: IProps, ref: RefObject<UnwrappedEventTile>) => {
-    return <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
-        <UnwrappedEventTile ref={ref} {...props} />
-    </TileErrorBoundary>;
+const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<UnwrappedEventTile>) => {
+    return <>
+        <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+            <UnwrappedEventTile ref={ref} {...props} />
+        </TileErrorBoundary>
+    </>;
 });
 export default SafeEventTile;
 

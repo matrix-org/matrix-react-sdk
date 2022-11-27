@@ -1,15 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LiveBadge should render the expected HTML 1`] = `
+exports[`LiveBadge should render as expected with default props 1`] = `
 <div>
   <div
     class="mx_LiveBadge"
   >
-    <i
-      aria-hidden="true"
-      class="mx_Icon mx_Icon_16 mx_Icon_live-badge"
-      role="presentation"
-      style="mask-image: url(\\"image-file-stub\\");"
+    <div
+      class="mx_Icon mx_Icon_16"
+    />
+    Live
+  </div>
+</div>
+`;
+
+exports[`LiveBadge should render in grey as expected 1`] = `
+<div>
+  <div
+    class="mx_LiveBadge mx_LiveBadge--grey"
+  >
+    <div
+      class="mx_Icon mx_Icon_16"
     />
     Live
   </div>

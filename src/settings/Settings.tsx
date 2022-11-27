@@ -127,7 +127,8 @@ export type SettingValueType = boolean |
     string |
     number[] |
     string[] |
-    Record<string, unknown>;
+    Record<string, unknown> |
+    null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
@@ -494,6 +495,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             </>,
         },
     },
+    "feature_qr_signin_reciprocate_show": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td(
+            "Allow a QR code to be shown in session manager to sign in another device " +
+            "(requires compatible homeserver)",
+        ),
+        default: false,
+    },
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -702,10 +713,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "webRtcAllowPeerToPeer": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td(
-            "Allow Peer-to-Peer for 1:1 calls " +
-            "(if you enable this, the other party might be able to see your IP address)",
-        ),
+        displayName: _td("Allow Peer-to-Peer for 1:1 calls"),
+        description: _td("When enabled, the other party might be able to see your IP address"),
         default: true,
         invertedSettingName: 'webRtcForceTURN',
     },
@@ -720,6 +729,21 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "webrtc_videoinput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: "default",
+    },
+    "webrtc_audio_autoGainControl": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Automatic gain control"),
+        default: true,
+    },
+    "webrtc_audio_echoCancellation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Echo cancellation"),
+        default: true,
+    },
+    "webrtc_audio_noiseSuppression": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Noise suppression"),
+        default: true,
     },
     "language": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -892,9 +916,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td(
-            "Allow fallback call assist server turn.matrix.org when your homeserver " +
-            "does not offer one (your IP address would be shared during a call)",
+        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
+        description: _td(
+            "Only applies if your homeserver does not offer one. " +
+            "Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,
