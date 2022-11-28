@@ -134,6 +134,7 @@ describe("startNewVoiceBroadcastRecording", () => {
                         return { event_id: infoEvent.getId()! };
                     },
                 );
+
                 const recording = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
                 expect(recording).not.toBeNull();
 
