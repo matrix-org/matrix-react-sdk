@@ -3460,5 +3460,9 @@
     "Allow Peer-to-Peer for 1:1 calls": "Tillåt peer-to-peer för direktsamtal",
     "Go live": "Börja sända",
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss kvar",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)st %(minutes)sm %(seconds)ss kvar"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)st %(minutes)sm %(seconds)ss kvar",
+    "Secure messaging for friends and family": "Säkra meddelanden för vänner och familj",
+    "Change input device": "Byt ingångsenhet",
+    "30s forward": "30s framåt",
+    "30s backward": "30s bakåt"
 }
