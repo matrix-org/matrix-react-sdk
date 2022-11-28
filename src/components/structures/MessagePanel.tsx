@@ -183,7 +183,7 @@ interface IProps {
     onFillRequest?(backwards: boolean): Promise<boolean>;
 
     // helper function to access relations for an event
-    onUnfillRequest?(backwards: boolean, scrollToken: string): void;
+    onUnfillRequest?(backwards: boolean, scrollToken: string | null): void;
 
     getRelationsForEvent?: GetRelationsForEvent;
 

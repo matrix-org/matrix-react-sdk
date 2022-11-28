@@ -232,7 +232,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         this.scrollTimeout.restart();
         this.saveScrollState();
         this.updatePreventShrinking();
-        this.props.onScroll(ev as Event);
+        this.props.onScroll?.(ev as Event);
         // noinspection JSIgnoredPromiseFromCall
         this.checkFillState();
     };
@@ -462,7 +462,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             this.unfillDebouncer = setTimeout(() => {
                 this.unfillDebouncer = null;
                 debuglog("unfilling now", { backwards, origExcessHeight });
-                this.props.onUnfillRequest?.(backwards, markerScrollToken);
+                this.props.onUnfillRequest?.(backwards, markerScrollToken!);
             }, UNFILL_REQUEST_DEBOUNCE_MS);
         }
     }
@@ -669,7 +669,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             debuglog("unable to save scroll state: found no children in the viewport");
             return;
         }
-        const scrollToken = node.dataset.scrollTokens.split(',')[0];
+        const scrollToken = node!.dataset.scrollTokens.split(',')[0];
         debuglog("saving anchored scroll state to message", scrollToken);
         const bottomOffset = this.topFromBottom(node);
         this.scrollState = {
@@ -778,12 +778,12 @@ export default class ScrollPanel extends React.Component<IProps> {
         }
     }
 
-    private getTrackedNode(): HTMLElement {
+    private getTrackedNode(): HTMLElement | undefined {
         const scrollState = this.scrollState;
         const trackedNode = scrollState.trackedNode;
 
         if (!trackedNode?.parentElement) {
-            let node: HTMLElement | null = null;
+            let node: HTMLElement | undefined = undefined;
             const messages = this.itemlist.current.children;
             const scrollToken = scrollState.trackedScrollToken;
 
@@ -791,7 +791,7 @@ export default class ScrollPanel extends React.Component<IProps> {
                 const m = messages[i] as HTMLElement;
                 // 'data-scroll-tokens' is a DOMString of comma-separated scroll tokens
                 // There might only be one scroll token
-                if (m.dataset.scrollTokens?.split(',').includes(scrollToken)) {
+                if (scrollToken && m.dataset.scrollTokens?.split(',').includes(scrollToken!)) {
                     node = m;
                     break;
                 }
