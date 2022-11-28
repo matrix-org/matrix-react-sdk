@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import {
     VoiceBroadcastControl,
@@ -29,14 +29,15 @@ import { Icon as RecordIcon } from "../../../../res/img/element-icons/Record.svg
 import { Icon as MicrophoneIcon } from "../../../../res/img/element-icons/Mic.svg";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
-import { useAudioDeviceTooltipSelection } from "../../../hooks/useAudioDeviceTooltipSelection";
+import { useAudioDeviceTooltipSelection } from "../../../hooks/useAudioDeviceSelection";
+import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
 
 interface VoiceBroadcastRecordingPipProps {
     recording: VoiceBroadcastRecording;
 }
 
 export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProps> = ({ recording }) => {
-    const pipRef = useRef<HTMLDivElement>(null);
+    const pipRef = useRef<HTMLDivElement | null>(null);
     const {
         live,
         timeLeft,
@@ -45,8 +46,18 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         stopRecording,
         toggleRecording,
     } = useVoiceBroadcastRecording(recording);
+    const { currentDevice, devices, setDevice } = useAudioDeviceTooltipSelection();
 
-    const onDeviceChanged = async () => {
+    const onDeviceSelect = async (device: MediaDeviceInfo) => {
+        setShowDeviceSelect(false);
+
+        if (currentDevice.deviceId === device.deviceId) {
+            // device unchanged
+            return;
+        }
+
+        setDevice(device);
+
         if ([VoiceBroadcastInfoState.Paused, VoiceBroadcastInfoState.Stopped].includes(recordingState)) {
             // Nothing to do in these cases. Resume will use the selected device.
             return;
@@ -57,7 +68,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         await recording.resume();
     };
 
-    const { devicesMenu, onSelectDeviceClick } = useAudioDeviceTooltipSelection(pipRef, onDeviceChanged);
+    const [showDeviceSelect, setShowDeviceSelect] = useState<boolean>(false);
 
     const toggleControl = recordingState === VoiceBroadcastInfoState.Paused
         ? <VoiceBroadcastControl
@@ -82,7 +93,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
             { toggleControl }
             <AccessibleButton
                 aria-label={_t("Change input device")}
-                onClick={onSelectDeviceClick}
+                onClick={() => setShowDeviceSelect(true)}
             >
                 <MicrophoneIcon className="mx_Icon mx_Icon_16 mx_Icon_alert" />
             </AccessibleButton>
@@ -92,6 +103,13 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
                 onClick={stopRecording}
             />
         </div>
-        { devicesMenu }
+        {
+            showDeviceSelect && <DevicesContextMenu
+                containerRef={pipRef}
+                currentDevice={currentDevice}
+                devices={devices}
+                onDeviceSelect={onDeviceSelect}
+            />
+        }
     </div>;
 };

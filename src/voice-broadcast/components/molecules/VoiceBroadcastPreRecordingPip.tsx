@@ -14,14 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { VoiceBroadcastHeader } from "../..";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
 import { VoiceBroadcastPreRecording } from "../../models/VoiceBroadcastPreRecording";
 import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
 import { _t } from "../../../languageHandler";
-import { useAudioDeviceTooltipSelection } from "../../../hooks/useAudioDeviceTooltipSelection";
+import { useAudioDeviceTooltipSelection } from "../../../hooks/useAudioDeviceSelection";
+import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
 
 interface Props {
     voiceBroadcastPreRecording: VoiceBroadcastPreRecording;
@@ -31,7 +32,13 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({
     voiceBroadcastPreRecording,
 }) => {
     const pipRef = useRef<HTMLDivElement | null>(null);
-    const { deviceLabel, devicesMenu, onSelectDeviceClick } = useAudioDeviceTooltipSelection(pipRef);
+    const { currentDevice, currentDeviceLabel, devices, setDevice } = useAudioDeviceTooltipSelection();
+    const [showDeviceSelect, setShowDeviceSelect] = useState<boolean>(false);
+
+    const onDeviceSelect = (device: MediaDeviceInfo | null) => {
+        setShowDeviceSelect(false);
+        setDevice(device);
+    };
 
     return <div
         className="mx_VoiceBroadcastBody mx_VoiceBroadcastBody--pip"
@@ -39,9 +46,9 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({
     >
         <VoiceBroadcastHeader
             onCloseClick={voiceBroadcastPreRecording.cancel}
-            onMicrophoneLineClick={onSelectDeviceClick}
+            onMicrophoneLineClick={() => setShowDeviceSelect(true)}
             room={voiceBroadcastPreRecording.room}
-            microphoneLabel={deviceLabel}
+            microphoneLabel={currentDeviceLabel}
             showClose={true}
         />
         <AccessibleButton
@@ -52,6 +59,13 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({
             <LiveIcon className="mx_Icon mx_Icon_16" />
             { _t("Go live") }
         </AccessibleButton>
-        { devicesMenu }
+        {
+            showDeviceSelect && <DevicesContextMenu
+                containerRef={pipRef}
+                currentDevice={currentDevice}
+                devices={devices}
+                onDeviceSelect={onDeviceSelect}
+            />
+        }
     </div>;
 };

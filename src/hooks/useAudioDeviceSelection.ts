@@ -14,13 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MutableRefObject, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-import { toLeftOrRightOf } from "../components/structures/ContextMenu";
-import IconizedContextMenu, {
-    IconizedContextMenuOptionList,
-    IconizedContextMenuRadio,
-} from "../components/views/context_menus/IconizedContextMenu";
 import { _t } from "../languageHandler";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../MediaDeviceHandler";
 import { requestMediaPermissions } from "../utils/media/requestMediaPermissions";
@@ -28,18 +23,15 @@ import { requestMediaPermissions } from "../utils/media/requestMediaPermissions"
 interface State {
     devices: MediaDeviceInfo[];
     device: MediaDeviceInfo | null;
-    showDeviceSelect: boolean;
 }
 
 export const useAudioDeviceTooltipSelection = (
-    containerRef: MutableRefObject<HTMLElement | null>,
     onDeviceChanged?: (device: MediaDeviceInfo) => void,
 ) => {
     const shouldRequestPermissionsRef = useRef<boolean>(true);
     const [state, setState] = useState<State>({
         devices: [],
         device: null,
-        showDeviceSelect: false,
     });
 
     if (shouldRequestPermissionsRef.current) {
@@ -61,14 +53,13 @@ export const useAudioDeviceTooltipSelection = (
         });
     }
 
-    const onDeviceOptionClick = (device: MediaDeviceInfo) => {
+    const setDevice = (device: MediaDeviceInfo) => {
         const shouldNotify = device.deviceId !== state.device?.deviceId;
         MediaDeviceHandler.instance.setDevice(device.deviceId, MediaDeviceKindEnum.AudioInput);
 
         setState({
             ...state,
             device,
-            showDeviceSelect: false,
         });
 
         if (shouldNotify) {
@@ -76,37 +67,10 @@ export const useAudioDeviceTooltipSelection = (
         }
     };
 
-    const onSelectDeviceClick = () => {
-        setState({
-            ...state,
-            showDeviceSelect: true,
-        });
-    };
-
-    const deviceOptions = state.devices.map((d: MediaDeviceInfo) => {
-        return <IconizedContextMenuRadio
-            key={d.deviceId}
-            active={d.deviceId === state.device?.deviceId}
-            onClick={() => onDeviceOptionClick(d)}
-            label={d.label}
-        />;
-    });
-
-    const devicesMenu = state.showDeviceSelect && containerRef.current
-        ? <IconizedContextMenu
-            mountAsChild={false}
-            onFinished={() => {}}
-            {...toLeftOrRightOf(containerRef.current.getBoundingClientRect(), 0)}
-        >
-            <IconizedContextMenuOptionList>
-                { deviceOptions }
-            </IconizedContextMenuOptionList>
-        </IconizedContextMenu>
-        : null;
-
     return {
-        deviceLabel: state.device?.label || _t("Default Device"),
-        devicesMenu,
-        onSelectDeviceClick,
+        currentDevice: state.device,
+        currentDeviceLabel: state.device?.label || _t("Default Device"),
+        devices: state.devices,
+        setDevice,
     };
 };
