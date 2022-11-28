@@ -21,7 +21,7 @@ import AccessibleButton from "../../../components/views/elements/AccessibleButto
 import { VoiceBroadcastPreRecording } from "../../models/VoiceBroadcastPreRecording";
 import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
 import { _t } from "../../../languageHandler";
-import { useAudioDeviceTooltipSelection } from "../../../hooks/useAudioDeviceSelection";
+import { useAudioDeviceSelection } from "../../../hooks/useAudioDeviceSelection";
 import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
 
 interface Props {
@@ -32,7 +32,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({
     voiceBroadcastPreRecording,
 }) => {
     const pipRef = useRef<HTMLDivElement | null>(null);
-    const { currentDevice, currentDeviceLabel, devices, setDevice } = useAudioDeviceTooltipSelection();
+    const { currentDevice, currentDeviceLabel, devices, setDevice } = useAudioDeviceSelection();
     const [showDeviceSelect, setShowDeviceSelect] = useState<boolean>(false);
 
     const onDeviceSelect = (device: MediaDeviceInfo | null) => {

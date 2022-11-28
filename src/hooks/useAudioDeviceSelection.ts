@@ -25,7 +25,7 @@ interface State {
     device: MediaDeviceInfo | null;
 }
 
-export const useAudioDeviceTooltipSelection = (
+export const useAudioDeviceSelection = (
     onDeviceChanged?: (device: MediaDeviceInfo) => void,
 ) => {
     const shouldRequestPermissionsRef = useRef<boolean>(true);

@@ -29,7 +29,7 @@ import { Icon as RecordIcon } from "../../../../res/img/element-icons/Record.svg
 import { Icon as MicrophoneIcon } from "../../../../res/img/element-icons/Mic.svg";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
-import { useAudioDeviceTooltipSelection } from "../../../hooks/useAudioDeviceSelection";
+import { useAudioDeviceSelection } from "../../../hooks/useAudioDeviceSelection";
 import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
 
 interface VoiceBroadcastRecordingPipProps {
@@ -46,7 +46,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         stopRecording,
         toggleRecording,
     } = useVoiceBroadcastRecording(recording);
-    const { currentDevice, devices, setDevice } = useAudioDeviceTooltipSelection();
+    const { currentDevice, devices, setDevice } = useAudioDeviceSelection();
 
     const onDeviceSelect = async (device: MediaDeviceInfo) => {
         setShowDeviceSelect(false);
