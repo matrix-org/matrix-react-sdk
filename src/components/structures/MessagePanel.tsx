@@ -414,17 +414,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     /**
-     * Page up/down.
-     *
-     * @param {number} mult: -1 to page up, +1 to page down
-     */
-    public scrollRelative(mult: number): void {
-        if (this.scrollPanel.current) {
-            this.scrollPanel.current.scrollRelative(mult);
-        }
-    }
-
-    /**
      * Scroll up/down in response to a scroll key
      *
      * @param {KeyboardEvent} ev: the keyboard event to handle
