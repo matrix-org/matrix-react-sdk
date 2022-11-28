@@ -3646,5 +3646,7 @@
     "Reset your password": "Скиньте свій пароль",
     "Reset password": "Скинути пароль",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Забагато спроб за короткий час. Повторіть спробу за %(timeout)s.",
-    "Too many attempts in a short time. Wait some time before trying again.": "Забагато спроб за короткий час. Зачекайте трохи, перш ніж повторити спробу."
+    "Too many attempts in a short time. Wait some time before trying again.": "Забагато спроб за короткий час. Зачекайте трохи, перш ніж повторити спробу.",
+    "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
+    "Change input device": "Змінити пристрій вводу"
 }
