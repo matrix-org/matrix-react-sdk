@@ -111,8 +111,7 @@ describe("RoomView", () => {
             </SDKContext.Provider>,
         );
         await act(() => Promise.resolve()); // Allow state to settle
-        await act(() => Promise.resolve()); // Allow state to settle
-        await act(() => Promise.resolve()); // Allow state to settle
+        roomView.setProps({});
         return roomView;
     };
     const getRoomViewInstance = async (): Promise<_RoomView> =>
