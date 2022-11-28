@@ -423,7 +423,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         context.client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
         context.client.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
         context.client.on(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
-        context.client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         // Start listening for RoomViewStore updates
         context.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
 
@@ -894,7 +893,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             this.context.client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
             this.context.client.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
             this.context.client.removeListener(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
-            this.context.client.removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         }
 
         window.removeEventListener('beforeunload', this.onPageUnload);
@@ -1123,10 +1121,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // we'll only be showing a spinner.
         if (this.state.joining) return;
 
-        if (!ev.isBeingDecrypted() && !ev.isDecryptionFailure()) {
-            this.handleEffects(ev);
-        }
-
         if (ev.getSender() !== this.context.client.credentials.userId) {
             // update unread count when scrolled up
             if (!this.state.search && this.state.atEndOfLiveTimeline) {
@@ -1137,27 +1131,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 });
             }
         }
-    };
-
-    private onEventDecrypted = (ev: MatrixEvent) => {
-        if (!this.state.room || !this.state.matrixClientIsReady) return; // not ready at all
-        if (ev.getRoomId() !== this.state.room.roomId) return; // not for us
-        if (ev.isDecryptionFailure()) return;
-        this.handleEffects(ev);
-    };
-
-    private handleEffects = (ev: MatrixEvent) => {
-        const notifState = this.context.roomNotificationStateStore.getRoomState(this.state.room);
-        if (!notifState.isUnread) return;
-
-        CHAT_EFFECTS.forEach(effect => {
-            if (containsEmoji(ev.getContent(), effect.emojis) || ev.getContent().msgtype === effect.msgType) {
-                // For initial threads launch, chat effects are disabled see #19731
-                if (!SettingsStore.getValue("feature_thread") || !ev.isRelation(THREAD_RELATION_TYPE.name)) {
-                    dis.dispatch({ action: `effects.${effect.command}` });
-                }
-            }
-        });
     };
 
     private onRoomName = (room: Room) => {

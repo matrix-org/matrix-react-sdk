@@ -51,6 +51,7 @@ import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import AutoRageshakeStore from "../stores/AutoRageshakeStore";
 import { IConfigOptions } from "../IConfigOptions";
 import { MatrixDispatcher } from "../dispatcher/dispatcher";
+import { SdkContextClass } from "../contexts/SDKContext";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -109,6 +110,7 @@ declare global {
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
         mxAutoRageshakeStore?: AutoRageshakeStore;
         mxDispatcher: MatrixDispatcher;
+        mxSdkContextClass: SdkContextClass;
     }
 
     interface Electron {

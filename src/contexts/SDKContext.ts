@@ -35,6 +35,7 @@ import {
     VoiceBroadcastPreRecordingStore,
     VoiceBroadcastRecordingsStore,
 } from "../voice-broadcast";
+import { ChatEffectsStore } from "../effects/stores/ChatEffectsStore";
 
 export const SDKContext = createContext<SdkContextClass>(undefined);
 SDKContext.displayName = "SDKContext";
@@ -73,13 +74,15 @@ export class SdkContextClass {
     protected _VoiceBroadcastRecordingsStore?: VoiceBroadcastRecordingsStore;
     protected _VoiceBroadcastPreRecordingStore?: VoiceBroadcastPreRecordingStore;
     protected _VoiceBroadcastPlaybacksStore?: VoiceBroadcastPlaybacksStore;
+    protected _ChatEffectsStore?: ChatEffectsStore;
 
     /**
      * Automatically construct stores which need to be created eagerly so they can register with
      * the dispatcher.
      */
-    public constructEagerStores() {
+    public constructEagerStores(): void {
         this._RoomViewStore = this.roomViewStore;
+        this._ChatEffectsStore = this.chatEffectsStore;
     }
 
     public get legacyCallHandler(): LegacyCallHandler {
@@ -178,4 +181,13 @@ export class SdkContextClass {
         }
         return this._VoiceBroadcastPlaybacksStore;
     }
+
+    public get chatEffectsStore(): ChatEffectsStore {
+        if (!this._ChatEffectsStore) {
+            this._ChatEffectsStore = new ChatEffectsStore(defaultDispatcher, this);
+        }
+        return this._ChatEffectsStore;
+    }
 }
+
+window.mxSdkContextClass = SdkContextClass.instance;
