@@ -76,6 +76,11 @@ interface IProps {
     // a timeline representing.  If it has a room, we maintain RRs etc for
     // that room.
     timelineSet: EventTimelineSet;
+    // overlay events from a second timelineset on the main timeline
+    // added to support virtual rooms
+    // events from the overlay timeline set will be added by localTimestamp
+    // into the main timeline
+    // back paging not yet supported
     overlayTimelineSet?: EventTimelineSet;
     showReadReceipts?: boolean;
     // Enable managing RRs and RMs. These require the timelineSet to have a room.

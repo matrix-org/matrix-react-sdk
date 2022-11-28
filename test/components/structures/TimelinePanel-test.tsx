@@ -71,7 +71,7 @@ const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
     for (let index = 0; index < count; index++) {
         events.push(new MatrixEvent({
             room_id: room.roomId,
-            event_id: `event_${index}`,
+            event_id: `${room.roomId}_event_${index}`,
             type: EventType.RoomMessage,
             user_id: "userId",
             content: MessageEvent.from(`Event${index}`).serialize().content,
@@ -191,5 +191,48 @@ describe('TimelinePanel', () => {
         props.eventId = events[1].getId();
         rerender(<TimelinePanel {...props} />);
         expect(props.onEventScrolledIntoView).toHaveBeenCalledWith(events[1].getId());
+    });
+
+    describe('with overlayTimeline', () => {
+        it('renders merged timeline', () => {
+            const client = MatrixClientPeg.get();
+            const room = mkRoom(client, "roomId");
+            const events = mockEvents(room);
+            const virtualRoom = mkRoom(client, "virtualRoomId");
+            const virtualCallInvite = new MatrixEvent({
+                type: 'm.call.invite',
+                room_id: virtualRoom.roomId,
+                event_id: `virtualCallEvent1`,
+            });
+            const virtualCallMetaEvent = new MatrixEvent({
+                type: 'org.matrix.call.sdp_stream_metadata_changed',
+                room_id: virtualRoom.roomId,
+                event_id: `virtualCallEvent2`,
+            });
+            const virtualEvents = [
+                virtualCallInvite,
+                ...mockEvents(virtualRoom),
+                virtualCallMetaEvent,
+            ];
+            const { timelineSet: overlayTimelineSet } = getProps(virtualRoom, virtualEvents);
+
+            const props = {
+                ...getProps(room, events),
+                overlayTimelineSet,
+            };
+
+            const { container } = render(<TimelinePanel {...props} />);
+
+            const eventTiles = container.querySelectorAll('.mx_EventTile');
+            const eventTileIds = [...eventTiles].map(tileElement => tileElement.getAttribute('data-event-id'))
+            expect(eventTileIds).toEqual([
+                // main timeline events are included
+                events[1].getId(),
+                events[0].getId(),
+                // virtual timeline call event is included
+                virtualCallInvite.getId(),
+                // virtual call event without event tile is not rendered
+            ]);
+        });
     });
 });
