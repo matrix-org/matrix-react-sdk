@@ -3645,5 +3645,7 @@
     "Reset your password": "Atur ulang kata sandi Anda",
     "Reset password": "Atur ulang kata sandi",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Terlalu banyak upaya dalam waktu yang singkat. Coba lagi setelah %(timeout)s.",
-    "Too many attempts in a short time. Wait some time before trying again.": "Terlalu banyak upaya. Tunggu beberapa waktu sebelum mencoba lagi."
+    "Too many attempts in a short time. Wait some time before trying again.": "Terlalu banyak upaya. Tunggu beberapa waktu sebelum mencoba lagi.",
+    "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
+    "Change input device": "Ubah perangkat masukan"
 }
