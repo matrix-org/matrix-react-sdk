@@ -652,7 +652,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         // TODO: do a binary search here, as items are sorted by offsetTop
         // loop backwards, from bottom-most message (as that is the most common case)
         for (let i = messages.length - 1; i >= 0; --i) {
-            const htmlMessage = messages[i] as HTMLElement
+            const htmlMessage = messages[i] as HTMLElement;
             if (!htmlMessage.dataset?.scrollTokens) { // dataset is only specified on HTMLElements
                 continue;
             }
