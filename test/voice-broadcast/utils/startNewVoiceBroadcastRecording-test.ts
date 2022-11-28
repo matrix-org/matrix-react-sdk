@@ -59,6 +59,7 @@ describe("startNewVoiceBroadcastRecording", () => {
 
             return null;
         });
+
         mocked(client.sendStateEvent).mockImplementation(
             (sendRoomId: string, eventType: string, content: any, stateKey: string): Promise<ISendEventResponse> => {
                 if (sendRoomId === roomId && eventType === VoiceBroadcastInfoEventType) {
