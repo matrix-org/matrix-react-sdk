@@ -3646,5 +3646,7 @@
     "Reset your password": "Lähtesta oma salasõna",
     "Reset password": "Lähtesta salasõna",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota %(timeout)s sekundit.",
-    "Too many attempts in a short time. Wait some time before trying again.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota veidi."
+    "Too many attempts in a short time. Wait some time before trying again.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota veidi.",
+    "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
+    "Change input device": "Vaheta sisendseadet"
 }
