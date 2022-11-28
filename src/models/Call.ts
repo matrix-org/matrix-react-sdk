@@ -53,6 +53,7 @@ import { getCurrentLanguage } from "../languageHandler";
 import DesktopCapturerSourcePicker from "../components/views/elements/DesktopCapturerSourcePicker";
 import Modal from "../Modal";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
+import { PosthogAnalytics } from "../PosthogAnalytics";
 
 const TIMEOUT_MS = 16000;
 
@@ -626,7 +627,9 @@ export class ElementCall extends Call {
     }
 
     private constructor(public readonly groupCall: GroupCall, client: MatrixClient) {
-        // Splice together the Element Call URL for this call
+        const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
+        const analyticsID = accountAnalyticsData.event.content?.pseudonymousAnalyticsOptIn?
+            accountAnalyticsData.event.content?.id: '';
         const params = new URLSearchParams({
             embed: "",
             preload: "",
@@ -637,6 +640,7 @@ export class ElementCall extends Call {
             baseUrl: client.baseUrl,
             lang: getCurrentLanguage().replace("_", "-"),
             fontScale: `${SettingsStore.getValue("baseFontSize") / FontWatcher.DEFAULT_SIZE}`,
+            analyticsID,
         });
 
         // Set custom fonts
