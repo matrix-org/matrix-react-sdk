@@ -67,8 +67,8 @@ describe("setUpVoiceBroadcastPreRecording", () => {
         infoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
-            client.getUserId(),
-            client.getDeviceId(),
+            client.getUserId()!,
+            client.getDeviceId()!,
         );
         preRecordingStore = new VoiceBroadcastPreRecordingStore();
         playback = new VoiceBroadcastPlayback(infoEvent, client);
