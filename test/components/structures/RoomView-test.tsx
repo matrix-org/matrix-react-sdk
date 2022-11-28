@@ -159,6 +159,16 @@ describe("RoomView", () => {
         expect(roomViewInstance.state.liveTimeline).not.toEqual(oldTimeline);
     });
 
+    describe('with virtual rooms', () => {
+        it("checks for a virtual room", async () => {
+            const roomView = await mountRoomView();
+            expect(VoipUserMapper.sharedInstance().getVirtualRoomForRoom).toHaveBeenCalledWith(room.roomId);
+
+            // quick check that rendered without error
+            expect(roomView.find('.mx_ErrorBoundary').length).toBeFalsy();
+        });
+    });
+
     describe("video rooms", () => {
         beforeEach(async () => {
             // Make it a video room
