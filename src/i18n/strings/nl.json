@@ -3578,7 +3578,6 @@
     "Turn off to disable notifications on all your devices and sessions": "Schakel dit uit om meldingen op al je apparaten en sessies uit te schakelen",
     "Enable notifications for this account": "Meldingen inschakelen voor dit account",
     "Fill screen": "Scherm vullen",
-    "You have already joined this call from another device": "U heeft al deelgenomen aan dit gesprek vanaf een ander apparaat",
     "Sorry — this call is currently full": "Sorry — dit gesprek is momenteel vol",
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Noteer de naam, versie en url van de applicatie om sessies gemakkelijker te herkennen in sessiebeheer",
     "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Toestaan dat een QR-code wordt weergegeven in sessiebeheer om in te loggen op een ander apparaat (compatibele server vereist)",

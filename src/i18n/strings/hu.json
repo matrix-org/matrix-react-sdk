@@ -3525,7 +3525,6 @@
     "Join %(brand)s calls": "Csatlakozás ebbe a hívásba: %(brand)s",
     "Start %(brand)s calls": "%(brand)s hívás indítása",
     "Fill screen": "Képernyő kitöltése",
-    "You have already joined this call from another device": "Már csatlakozott ehhez a híváshoz egy másik eszközön",
     "Sorry — this call is currently full": "Bocsánat — ez a hívás betelt",
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Kliens neve, verziója és url felvétele a munkamenet könnyebb azonosításához a munkamenet kezelőben",
     "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "Az új munkamenet kezelő jobb rálátást biztosít a munkamenetekre és jobb felügyeletet beleértve, hogy távolról ki-, bekapcsolhatóak a „push” értesítések.",
