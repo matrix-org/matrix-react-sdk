@@ -16,93 +16,115 @@ limitations under the License.
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-dom/test-utils';
-import { createClient } from 'matrix-js-sdk/src/matrix';
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { createClient, MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { MatrixError } from 'matrix-js-sdk/src/http-api/errors';
 import { mocked } from 'jest-mock';
+import fetchMock from "fetch-mock-jest";
 
 import SdkConfig, { DEFAULTS } from '../../../../src/SdkConfig';
-import { createTestClient, mkServerConfig } from "../../../test-utils";
+import { mkServerConfig, mockPlatformPeg, unmockPlatformPeg } from "../../../test-utils";
 import Registration from "../../../../src/components/structures/auth/Registration";
-import RegistrationForm from "../../../../src/components/views/auth/RegistrationForm";
 
 jest.mock('matrix-js-sdk/src/matrix');
 jest.useFakeTimers();
 
 describe('Registration', function() {
-    let parentDiv;
+    const registerRequest = jest.fn();
+    const mockClient = mocked({
+        registerRequest,
+        loginFlows: jest.fn(),
+    } as unknown as MatrixClient);
 
     beforeEach(function() {
         SdkConfig.put({
             ...DEFAULTS,
             disable_custom_urls: true,
         });
-        parentDiv = document.createElement('div');
-        document.body.appendChild(parentDiv);
-        mocked(createClient).mockImplementation(() => createTestClient());
+        mockClient.registerRequest.mockRejectedValueOnce(new MatrixError({
+            flows: [{ stages: [] }],
+        }, 401));
+        mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
+        mocked(createClient).mockImplementation(opts => {
+            mockClient.idBaseUrl = opts.idBaseUrl;
+            mockClient.baseUrl = opts.baseUrl;
+            return mockClient;
+        });
+        fetchMock.get("https://matrix.org/_matrix/client/versions", {
+            unstable_features: {},
+            versions: [],
+        });
+        mockPlatformPeg({
+            startSingleSignOn: jest.fn(),
+        });
     });
 
     afterEach(function() {
-        ReactDOM.unmountComponentAtNode(parentDiv);
-        parentDiv.remove();
+        fetchMock.restore();
         SdkConfig.unset(); // we touch the config, so clean up
+        unmockPlatformPeg();
     });
 
     const defaultProps = {
         defaultDeviceDisplayName: 'test-device-display-name',
-        serverConfig: mkServerConfig("https://matrix.org", "https://vector.im"),
         makeRegistrationUrl: jest.fn(),
         onLoggedIn: jest.fn(),
         onLoginClick: jest.fn(),
         onServerConfigChange: jest.fn(),
     };
-    function render() {
-        return ReactDOM.render<typeof Registration>(<Registration
+
+    function getRawComponent(hsUrl = "https://matrix.org", isUrl = "https://vector.im") {
+        return <Registration
             {...defaultProps}
-        />, parentDiv) as React.Component<typeof Registration>;
+            serverConfig={mkServerConfig(hsUrl, isUrl)}
+        />;
+    }
+
+    function getComponent(hsUrl?: string, isUrl?: string) {
+        return render(getRawComponent(hsUrl, isUrl));
     }
 
     it('should show server picker', async function() {
-        const root = render();
-        const selector = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_ServerPicker");
-        expect(selector).toBeTruthy();
+        const { container } = getComponent();
+        expect(container.querySelector(".mx_ServerPicker")).toBeTruthy();
     });
 
     it('should show form when custom URLs disabled', async function() {
-        const root = render();
-
-        // Set non-empty flows & matrixClient to get past the loading spinner
-        root.setState({
-            flows: [{
-                stages: [],
-            }],
-            matrixClient: {},
-            busy: false,
-        });
-
-        const form = ReactTestUtils.findRenderedComponentWithType(
-            root,
-            RegistrationForm,
-        );
-        expect(form).toBeTruthy();
+        const { container } = getComponent();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+        expect(container.querySelector("form")).toBeTruthy();
     });
 
     it("should show SSO options if those are available", async () => {
-        const root = render();
+        mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.sso" }] });
+        const { container } = getComponent();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
-        // Set non-empty flows & matrixClient to get past the loading spinner
-        root.setState({
+        const ssoButton = container.querySelector(".mx_SSOButton");
+        expect(ssoButton).toBeTruthy();
+    });
+
+    it("should handle serverConfig updates correctly", async () => {
+        mockClient.loginFlows.mockResolvedValue({
             flows: [{
-                stages: [],
+                "type": "m.login.sso",
             }],
-            ssoFlow: {
-                type: "m.login.sso",
-            },
-            matrixClient: {},
-            busy: false,
         });
 
-        const ssoButton = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_SSOButton");
-        expect(ssoButton).toBeTruthy();
+        const { container, rerender } = render(getRawComponent());
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+
+        fireEvent.click(container.querySelector(".mx_SSOButton"));
+        expect(registerRequest.mock.instances[0].baseUrl).toBe("https://matrix.org");
+
+        fetchMock.get("https://server2/_matrix/client/versions", {
+            unstable_features: {},
+            versions: [],
+        });
+        rerender(getRawComponent("https://server2"));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+
+        fireEvent.click(container.querySelector(".mx_SSOButton"));
+        expect(registerRequest.mock.instances[1].baseUrl).toBe("https://server2");
     });
 });
