@@ -44,7 +44,6 @@ const CallEvent = wrapInMatrixClientContext(UnwrappedCallEvent);
 
 describe("CallEvent", () => {
     useMockedCalls();
-    Object.defineProperty(navigator, "mediaDevices", { value: { enumerateDevices: () => [] } });
     jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
 
     let client: Mocked<MatrixClient>;
@@ -122,7 +121,7 @@ describe("CallEvent", () => {
 
     it("shows call details and connection controls if the call is loaded", async () => {
         jest.advanceTimersByTime(90000);
-        call.participants = new Set([alice, bob]);
+        call.participants = new Map([[alice, new Set(["a"])], [bob, new Set(["b"])]]);
         renderEvent();
 
         screen.getByText("@alice:example.org started a video call");

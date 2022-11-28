@@ -29,8 +29,8 @@ export const VoiceBroadcastRecordingBody: React.FC<VoiceBroadcastRecordingBodyPr
     return (
         <div className="mx_VoiceBroadcastBody">
             <VoiceBroadcastHeader
-                live={live}
-                sender={sender}
+                live={live ? "live" : "grey"}
+                microphoneLabel={sender?.name}
                 room={room}
             />
         </div>

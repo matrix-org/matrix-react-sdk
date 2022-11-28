@@ -95,7 +95,6 @@ import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
 import UserSettingsDialog from '../views/dialogs/UserSettingsDialog';
 import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
-import RoomDirectory from './RoomDirectory';
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import CompleteSecurity from "./auth/CompleteSecurity";
@@ -139,6 +138,9 @@ import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
 import { SdkContextClass, SDKContext } from '../../contexts/SDKContext';
 import { viewUserDeviceSettings } from '../../actions/handlers/viewUserDeviceSettings';
 import { VoiceBroadcastResumer } from '../../voice-broadcast';
+import GenericToast from "../views/toasts/GenericToast";
+import { Linkify } from "../views/elements/Linkify";
+import RovingSpotlightDialog, { Filter } from '../views/dialogs/spotlight/SpotlightDialog';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -401,12 +403,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setState({ pendingInitialSync: false });
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle stage
-    // eslint-disable-next-line
-    UNSAFE_componentWillUpdate(props, state) {
-        if (this.shouldTrackPageChange(this.state, state)) {
+    public setState<K extends keyof IState>(
+        state: ((
+            prevState: Readonly<IState>,
+            props: Readonly<IProps>,
+        ) => (Pick<IState, K> | IState | null)) | (Pick<IState, K> | IState | null),
+        callback?: () => void,
+    ): void {
+        if (this.shouldTrackPageChange(this.state, { ...this.state, ...state })) {
             this.startPageChangeTimer();
         }
+        super.setState<K>(state, callback);
     }
 
     public componentDidMount(): void {
@@ -709,9 +716,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewSomethingBehindModal();
                 break;
             case Action.ViewRoomDirectory: {
-                Modal.createDialog(RoomDirectory, {
+                Modal.createDialog(RovingSpotlightDialog, {
                     initialText: payload.initialText,
-                }, 'mx_RoomDirectory_dialogWrapper', false, true);
+                    initialFilter: Filter.PublicRooms,
+                }, 'mx_SpotlightDialog_wrapper', false, true);
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
@@ -1331,6 +1339,28 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // The toast contains further logic to detect mobile platforms,
             // check if it has been dismissed before, etc.
             showMobileGuideToast();
+        }
+
+        const userNotice = SdkConfig.get("user_notice");
+        if (userNotice) {
+            const key = "user_notice_" + userNotice.title;
+            if (!userNotice.show_once || !localStorage.getItem(key)) {
+                ToastStore.sharedInstance().addOrReplaceToast({
+                    key,
+                    title: userNotice.title,
+                    props: {
+                        description: <Linkify>{ userNotice.description }</Linkify>,
+                        acceptLabel: _t("OK"),
+                        onAccept: () => {
+                            ToastStore.sharedInstance().dismissToast(key);
+                            localStorage.setItem(key, "1");
+                        },
+                    },
+                    component: GenericToast,
+                    className: "mx_AnalyticsToast",
+                    priority: 100,
+                });
+            }
         }
     }
 
@@ -2057,7 +2087,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 <ForgotPassword
                     onComplete={this.onLoginClick}
                     onLoginClick={this.onLoginClick}
-                    onServerConfigChange={this.onServerConfigChange}
                     {...this.getServerProperties()}
                 />
             );

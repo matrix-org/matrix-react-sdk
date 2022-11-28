@@ -54,13 +54,12 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { Features } from '../../../settings/Settings';
 import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
-import {
-    startNewVoiceBroadcastRecording,
-    VoiceBroadcastRecordingsStore,
-} from '../../../voice-broadcast';
+import { VoiceBroadcastRecordingsStore } from '../../../voice-broadcast';
 import { SendWysiwygComposer, sendMessage } from './wysiwyg_composer/';
 import { MatrixClientProps, withMatrixClientHOC } from '../../../contexts/MatrixClientContext';
 import { htmlToPlainText } from '../../../utils/room/htmlToPlaintext';
+import { setUpVoiceBroadcastPreRecording } from '../../../voice-broadcast/utils/setUpVoiceBroadcastPreRecording';
+import { SdkContextClass } from '../../../contexts/SDKContext';
 
 let instanceCount = 0;
 
@@ -459,6 +458,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         initialContent={this.state.initialComposerContent}
                         e2eStatus={this.props.e2eStatus}
                         menuPosition={menuPosition}
+                        placeholder={this.renderPlaceholderText()}
                     />;
             } else {
                 composer =
@@ -581,10 +581,11 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                 toggleButtonMenu={this.toggleButtonMenu}
                                 showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
                                 onStartVoiceBroadcastClick={() => {
-                                    startNewVoiceBroadcastRecording(
+                                    setUpVoiceBroadcastPreRecording(
                                         this.props.room,
                                         MatrixClientPeg.get(),
                                         VoiceBroadcastRecordingsStore.instance(),
+                                        SdkContextClass.instance.voiceBroadcastPreRecordingStore,
                                     );
                                     this.toggleButtonMenu();
                                 }}
