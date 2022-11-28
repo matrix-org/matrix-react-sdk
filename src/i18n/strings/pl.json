@@ -2287,5 +2287,7 @@
     "Send a sticker": "Wyślij naklejkę",
     "Undo edit": "Cofnij edycję",
     "Set up your profile": "Utwórz swój profil",
-    "Start new chat": "Nowy czat"
+    "Start new chat": "Nowy czat",
+    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
+    "Invite to %(roomName)s": "Zaproś do %(roomName)s"
 }
