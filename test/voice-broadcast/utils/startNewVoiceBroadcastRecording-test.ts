@@ -24,6 +24,8 @@ import {
     VoiceBroadcastInfoState,
     VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecording,
+    VoiceBroadcastPlaybacksStore,
+    VoiceBroadcastPlayback,
 } from "../../../src/voice-broadcast";
 import { mkEvent, stubClient } from "../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "./test-utils";
@@ -38,6 +40,7 @@ describe("startNewVoiceBroadcastRecording", () => {
     const roomId = "!room:example.com";
     const otherUserId = "@other:example.com";
     let client: MatrixClient;
+    let playbacksStore: VoiceBroadcastPlaybacksStore;
     let recordingsStore: VoiceBroadcastRecordingsStore;
     let room: Room;
     let infoEvent: MatrixEvent;
@@ -65,11 +68,6 @@ describe("startNewVoiceBroadcastRecording", () => {
             }
         });
 
-        recordingsStore = {
-            setCurrent: jest.fn(),
-            getCurrent: jest.fn(),
-        } as unknown as VoiceBroadcastRecordingsStore;
-
         infoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
@@ -84,6 +82,12 @@ describe("startNewVoiceBroadcastRecording", () => {
             room: roomId,
             skey: "",
         });
+
+        playbacksStore = new VoiceBroadcastPlaybacksStore();
+        recordingsStore = {
+            setCurrent: jest.fn(),
+            getCurrent: jest.fn(),
+        } as unknown as VoiceBroadcastRecordingsStore;
 
         mocked(VoiceBroadcastRecording).mockImplementation((
             infoEvent: MatrixEvent,
@@ -106,8 +110,16 @@ describe("startNewVoiceBroadcastRecording", () => {
             mocked(room.currentState.maySendStateEvent).mockReturnValue(true);
         });
 
-        describe("when there currently is no other broadcast", () => {
-            it("should create a new Voice Broadcast", async () => {
+        describe("when currently listening to a broadcast and there is no recording", () => {
+            let playback: VoiceBroadcastPlayback;
+
+            beforeEach(() => {
+                playback = new VoiceBroadcastPlayback(infoEvent, client);
+                jest.spyOn(playback, "pause");
+                playbacksStore.setCurrent(playback);
+            });
+
+            it("should stop listen to the current broadcast and create a new recording", async () => {
                 mocked(client.sendStateEvent).mockImplementation(async (
                     _roomId: string,
                     _eventType: string,
@@ -121,7 +133,11 @@ describe("startNewVoiceBroadcastRecording", () => {
                     }, 0);
                     return { event_id: infoEvent.getId() };
                 });
-                const recording = await startNewVoiceBroadcastRecording(room, client, recordingsStore);
+                const recording = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
+
+                // expect to stop and clear the current playback
+                expect(playback.pause).toHaveBeenCalled();
+                expect(playbacksStore.getCurrent()).toBeNull();
 
                 expect(client.sendStateEvent).toHaveBeenCalledWith(
                     roomId,
@@ -144,7 +160,7 @@ describe("startNewVoiceBroadcastRecording", () => {
                     new VoiceBroadcastRecording(infoEvent, client),
                 );
 
-                result = await startNewVoiceBroadcastRecording(room, client, recordingsStore);
+                result = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
             });
 
             it("should not start a voice broadcast", () => {
@@ -167,7 +183,7 @@ describe("startNewVoiceBroadcastRecording", () => {
                     ),
                 ]);
 
-                result = await startNewVoiceBroadcastRecording(room, client, recordingsStore);
+                result = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
             });
 
             it("should not start a voice broadcast", () => {
@@ -190,7 +206,7 @@ describe("startNewVoiceBroadcastRecording", () => {
                     ),
                 ]);
 
-                result = await startNewVoiceBroadcastRecording(room, client, recordingsStore);
+                result = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
             });
 
             it("should not start a voice broadcast", () => {
@@ -206,7 +222,7 @@ describe("startNewVoiceBroadcastRecording", () => {
     describe("when the current user is not allowed to send voice broadcast info state events", () => {
         beforeEach(async () => {
             mocked(room.currentState.maySendStateEvent).mockReturnValue(false);
-            result = await startNewVoiceBroadcastRecording(room, client, recordingsStore);
+            result = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
         });
 
         it("should not start a voice broadcast", () => {
