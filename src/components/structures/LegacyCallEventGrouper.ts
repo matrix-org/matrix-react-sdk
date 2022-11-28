@@ -44,8 +44,10 @@ export enum CustomCallState {
     Missed = "missed",
 }
 
-export const isCallEventType = (eventType: string): boolean =>
+const isCallEventType = (eventType: string): boolean =>
     eventType.startsWith("m.call.") || eventType.startsWith("org.matrix.call.");
+
+export const isCallEvent = (event: MatrixEvent): boolean => isCallEventType(event.getType());
 
 export function buildLegacyCallEventGroupers(
     callEventGroupers: Map<string, LegacyCallEventGrouper>,
@@ -53,7 +55,7 @@ export function buildLegacyCallEventGroupers(
 ): Map<string, LegacyCallEventGrouper> {
     const newCallEventGroupers = new Map();
     events?.forEach(ev => {
-        if (!isCallEventType(ev.getType())) {
+        if (!isCallEvent(ev)) {
             return;
         }
 

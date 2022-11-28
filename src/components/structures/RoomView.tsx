@@ -112,6 +112,7 @@ import { Call } from "../../models/Call";
 import { RoomSearchView } from './RoomSearchView';
 import eventSearch from "../../Searching";
 import VoipUserMapper from '../../VoipUserMapper';
+import { isCallEvent } from './LegacyCallEventGrouper';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -2106,6 +2107,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 ref={this.gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
                 overlayTimelineSet={this.state.virtualRoom?.getUnfilteredTimelineSet()}
+                overlayTimelineSetFilter={isCallEvent}
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}

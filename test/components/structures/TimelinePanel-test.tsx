@@ -33,6 +33,7 @@ import { mkRoom, stubClient } from "../../test-utils";
 import TimelinePanel from '../../../src/components/structures/TimelinePanel';
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import SettingsStore from "../../../src/settings/SettingsStore";
+import { isCallEvent } from '../../../src/components/structures/LegacyCallEventGrouper';
 
 const newReceipt = (eventId: string, userId: string, readTs: number, fullyReadTs: number): MatrixEvent => {
     const receiptContent = {
@@ -219,19 +220,20 @@ describe('TimelinePanel', () => {
             const props = {
                 ...getProps(room, events),
                 overlayTimelineSet,
+                overlayTimelineSetFilter: isCallEvent,
             };
 
             const { container } = render(<TimelinePanel {...props} />);
 
             const eventTiles = container.querySelectorAll('.mx_EventTile');
-            const eventTileIds = [...eventTiles].map(tileElement => tileElement.getAttribute('data-event-id'))
+            const eventTileIds = [...eventTiles].map(tileElement => tileElement.getAttribute('data-event-id'));
             expect(eventTileIds).toEqual([
                 // main timeline events are included
                 events[1].getId(),
                 events[0].getId(),
                 // virtual timeline call event is included
                 virtualCallInvite.getId(),
-                // virtual call event without event tile is not rendered
+                // virtual call event has no tile renderer => not rendered
             ]);
         });
     });

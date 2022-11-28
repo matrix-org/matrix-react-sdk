@@ -52,7 +52,7 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import Spinner from "../views/elements/Spinner";
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import ErrorDialog from '../views/dialogs/ErrorDialog';
-import LegacyCallEventGrouper, { buildLegacyCallEventGroupers, isCallEventType } from "./LegacyCallEventGrouper";
+import LegacyCallEventGrouper, { buildLegacyCallEventGroupers } from "./LegacyCallEventGrouper";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
@@ -82,6 +82,8 @@ interface IProps {
     // into the main timeline
     // back paging not yet supported
     overlayTimelineSet?: EventTimelineSet;
+    // filter events from overlay timeline
+    overlayTimelineSetFilter?: (event: MatrixEvent) => boolean;
     showReadReceipts?: boolean;
     // Enable managing RRs and RMs. These require the timelineSet to have a room.
     manageReadReceipts?: boolean;
@@ -1476,10 +1478,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     // get the list of events from the timeline window and the pending event list
     private getEvents(): Pick<IState, "events" | "liveEvents" | "firstVisibleEventIndex"> {
         const mainEvents: MatrixEvent[] = this.timelineWindow.getEvents();
-        // @TODO(kerrya) make this filter generic?
-        const overlayEvents = this.overlayTimelineWindow?.getEvents().filter(
-            e => isCallEventType(e.getType()),
-        ) || [];
+        const eventFilter = this.props.overlayTimelineSetFilter || Boolean;
+        const overlayEvents = this.overlayTimelineWindow?.getEvents().filter(eventFilter) || [];
 
         // maintain the main timeline event order as returned from the HS
         // merge overlay events at approximately the right position based on local timestamp
