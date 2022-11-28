@@ -3355,7 +3355,7 @@
     "%(count)s Members|one": "%(count)s учасник",
     "%(count)s Members|other": "%(count)s учасників",
     "Show: Matrix rooms": "Показати: кімнати Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Показати: %(instance)s кімнат (%(server)s)",
+    "Show: %(instance)s rooms (%(server)s)": "Показати: кімнати %(instance)s (%(server)s)",
     "Add new server…": "Додати новий сервер…",
     "Remove server “%(roomServer)s”": "Вилучити сервер «%(roomServer)s»",
     "You cannot search for rooms that are neither a room nor a space": "Ви не можете шукати кімнати, які не є ні кімнатою, ні простором",
