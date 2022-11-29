@@ -1210,7 +1210,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onRoomTimelineReset = (room: Room): void => {
+    private onRoomTimelineReset = (room?: Room): void => {
         if (room &&
             room.roomId === this.state.room?.roomId &&
             room.getLiveTimeline() !== this.state.liveTimeline
