@@ -776,7 +776,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     if (this.unmounted) {
                         return;
                     }
-
                     this.setState({
                         room: room,
                         peekLoading: false,
@@ -1190,7 +1189,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     // after a successful peek, or after we join the room).
     private onRoomLoaded = (room: Room) => {
         if (this.unmounted) return;
-
         // Attach a widget store listener only when we get a room
         this.context.widgetLayoutStore.on(WidgetLayoutStore.emissionForRoom(room), this.onWidgetLayoutChange);
 

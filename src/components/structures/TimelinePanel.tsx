@@ -1840,7 +1840,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const events = this.state.firstVisibleEventIndex
             ? this.state.events.slice(this.state.firstVisibleEventIndex)
             : this.state.events;
-
         return (
             <MessagePanel
                 ref={this.messagePanel}

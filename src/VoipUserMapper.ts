@@ -90,7 +90,6 @@ export default class VoipUserMapper {
 
         const virtualRoom = MatrixClientPeg.get().getRoom(roomId);
         if (!virtualRoom) return null;
-
         const virtualRoomEvent = virtualRoom.getAccountData(VIRTUAL_ROOM_EVENT_TYPE);
         if (!virtualRoomEvent || !virtualRoomEvent.getContent()) return null;
         const nativeRoomID = virtualRoomEvent.getContent()['native_room'];
