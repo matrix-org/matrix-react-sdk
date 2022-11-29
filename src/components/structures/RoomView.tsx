@@ -682,7 +682,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             this.state.initialEventId !== newState.initialEventId
         ) {
             newState.timelineRenderingType = TimelineRenderingType.Room;
-            this.state.search?.abortController.abort();
+            this.state.search?.abortController?.abort();
             newState.search = undefined;
         }
 
