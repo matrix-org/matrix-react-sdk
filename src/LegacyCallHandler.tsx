@@ -212,9 +212,9 @@ export default class LegacyCallHandler extends EventEmitter {
         const audioId = target?.id;
 
         if (MEDIA_ERROR_EVENT_TYPES.includes(e.type as MediaEventType)) {
-            logger.error(`LegacyCallHandler: encountered ${e.type} event with ${audioId}`, e);
+            logger.error(`LegacyCallHandler: encountered "${e.type}" event with ${audioId}`, e);
         } else if (MEDIA_EVENT_TYPES.includes(e.type as MediaEventType)) {
-            debuglog(`encountered ${e.type} event with ${audioId}`, e);
+            debuglog(`encountered "${e.type}" event with ${audioId}`, e);
         }
     }
 
