@@ -44,6 +44,11 @@ jobs:
     permissions:
       pull-requests: read
       checks: write
+    strategy:
+      matrix:
+        args:
+          - '--strict --noImplicitAny'
+          - '--noImplicitAny'
     steps:
       - uses: actions/checkout@v3
       
