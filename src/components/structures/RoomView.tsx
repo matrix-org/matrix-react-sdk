@@ -25,7 +25,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { throttle } from "lodash";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
