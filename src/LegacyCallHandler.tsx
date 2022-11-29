@@ -404,9 +404,18 @@ export default class LegacyCallHandler extends EventEmitter {
         if (audio) {
             const playAudio = async () => {
                 try {
+                    if (audio.muted) {
+                        logger.error(
+                            `${logPrefix} <audio> element was unexpectedly muted but we recovered ` +
+                            `gracefully by unmuting it`,
+                        );
+                        // Recover gracefully
+                        audio.muted = false;
+                    }
+
                     // This still causes the chrome debugger to break on promise rejection if
                     // the promise is rejected, even though we're catching the exception.
-                    logger.debug(`${logPrefix} attempting to play audio`);
+                    logger.debug(`${logPrefix} attempting to play audio at volume=${audio.volume}`);
                     await audio.play();
                     logger.debug(`${logPrefix} playing audio successfully`);
                 } catch (e) {
