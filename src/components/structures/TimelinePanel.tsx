@@ -1462,11 +1462,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return;
         }
 
-        // @TODO(kerrya) do some timestampToEvent here to load the overlay timeline
-        // at kind of the right point
-        // ?
         const prom = this.timelineWindow.load(eventId, INITIAL_SIZE).then(async () => {
             if (this.overlayTimelineWindow) {
+                // @TODO(kerrya) use timestampToEvent to load the overlay timeline
+                // with more correct position when main TL eventId is truthy
                 await this.overlayTimelineWindow?.load(undefined, INITIAL_SIZE);
             }
         });
@@ -1530,7 +1529,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 client.decryptEventIfNeeded(event);
             });
 
-        // @TODO(kerrya) should this use the full events array?
         const firstVisibleEventIndex = this.checkForPreJoinUISI(mainEvents);
 
         // Hold onto the live events separately. The read receipt and read marker
