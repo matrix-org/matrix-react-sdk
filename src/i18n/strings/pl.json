@@ -2295,5 +2295,14 @@
     "Deactivating your account is a permanent action — be careful!": "Dezaktywacja konta jest akcją trwałą — bądź ostrożny!",
     "Send voice message": "Wyślij wiadomość głosową",
     "Send message": "Wyślij wiadomość",
-    "Keyboard": "Skróty klawiszowe"
+    "Keyboard": "Skróty klawiszowe",
+    "Jump to first message": "Przeskocz do pierwszej wiadomości",
+    "Scroll down in the timeline": "Przewiń w dół na osi czasu",
+    "Scroll up in the timeline": "Przewiń w górę na osi czasu",
+    "Jump to oldest unread message": "Przejdź do najstarszej nieprzeczytanej wiadomości",
+    "Toggle webcam on/off": "Włącz lub wyłącz kamerę",
+    "Toggle microphone mute": "Wycisz mikrofon",
+    "Cancel replying to a message": "Anuluj odpowiadanie na wiadomość",
+    "Jump to start of the composer": "Przejdź do początku okna edycji",
+    "Redo edit": "Ponów edycję"
 }
