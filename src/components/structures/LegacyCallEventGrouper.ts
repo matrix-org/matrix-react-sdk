@@ -119,9 +119,9 @@ export default class LegacyCallEventGrouper extends EventEmitter {
         return Boolean(this.reject);
     }
 
-    public get duration(): Date {
+    public get duration(): number {
         if (!this.hangup || !this.selectAnswer) return;
-        return new Date(this.hangup.getDate().getTime() - this.selectAnswer.getDate().getTime());
+        return this.hangup.getDate().getTime() - this.selectAnswer.getDate().getTime();
     }
 
     /**

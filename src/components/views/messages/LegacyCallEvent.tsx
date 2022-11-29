@@ -28,7 +28,7 @@ import LegacyCallEventGrouper, {
 import AccessibleButton from '../elements/AccessibleButton';
 import InfoTooltip, { InfoTooltipKind } from '../elements/InfoTooltip';
 import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
-import { formatCallTime } from "../../../DateUtils";
+import { formatPreciseDuration } from "../../../DateUtils";
 import Clock from "../audio_messages/Clock";
 
 const MAX_NON_NARROW_WIDTH = 450 / 70 * 100;
@@ -175,7 +175,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                 const duration = this.props.callEventGrouper.duration;
                 let text = _t("Call ended");
                 if (duration) {
-                    text += " • " + formatCallTime(duration);
+                    text += " • " + formatPreciseDuration(duration);
                 }
                 return (
                     <div className="mx_LegacyCallEvent_content">

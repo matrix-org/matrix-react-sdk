@@ -20,6 +20,7 @@ import {
     formatDuration,
     formatFullDateNoDayISO,
     formatTimeLeft,
+    formatPreciseDuration,
 } from "../../src/DateUtils";
 import { REPEATABLE_DATE } from "../test-utils";
 
@@ -97,6 +98,22 @@ describe('formatDuration()', () => {
         ['rounds to 0 seconds when less than a second - 123ms', '0s', 123],
     ])('%s formats to %s', (_description, expectedResult, input) => {
         expect(formatDuration(input)).toEqual(expectedResult);
+    });
+});
+
+describe("formatPreciseDuration", () => {
+    const MINUTE_MS = 1000 * 60;
+    const HOUR_MS = MINUTE_MS * 60;
+    const DAY_MS = HOUR_MS * 24;
+
+    it.each<[string, string, number]>([
+        ['3 days, 6 hours, 48 minutes, 59 seconds', '3d 6h 48m 59s', 3 * DAY_MS + 6 * HOUR_MS + 48 * MINUTE_MS + 59000],
+        ['6 hours, 48 minutes, 59 seconds', '6h 48m 59s', 6 * HOUR_MS + 48 * MINUTE_MS + 59000],
+        ['48 minutes, 59 seconds', '48m 59s', 48 * MINUTE_MS + 59000],
+        ['59 seconds', '59s', 59000],
+        ['0 seconds', '0s', 0],
+    ])('%s formats to %s', (_description, expectedResult, input) => {
+        expect(formatPreciseDuration(input)).toEqual(expectedResult);
     });
 });
 
