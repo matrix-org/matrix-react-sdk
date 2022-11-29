@@ -37,8 +37,8 @@ describe("VoiceBroadcastHeader", () => {
 
     const renderHeader = (
         live: VoiceBroadcastLiveness,
-        showBroadcast: boolean = undefined,
-        buffering: boolean = undefined,
+        showBroadcast?: boolean,
+        buffering?: boolean,
     ): RenderResult => {
         return render(<VoiceBroadcastHeader
             live={live}
