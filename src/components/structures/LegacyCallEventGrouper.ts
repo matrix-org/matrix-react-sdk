@@ -133,7 +133,6 @@ export default class LegacyCallEventGrouper extends EventEmitter {
      * Returns true if there are only events from the other side - we missed the call
      */
     private get callWasMissed(): boolean {
-        // @TODO(kerrya) this marks virtual calls as missed
         return ![...this.events].some((event) => event.sender?.userId === MatrixClientPeg.get().getUserId());
     }
 
@@ -155,7 +154,6 @@ export default class LegacyCallEventGrouper extends EventEmitter {
     };
 
     public answerCall = (): void => {
-        // @TODO(kerrya) make this work when virtual event is merged into main timeline
         LegacyCallHandler.instance.answerCall(this.roomId);
     };
 
