@@ -25,6 +25,7 @@ import AccessibleButton from "../../../components/views/elements/AccessibleButto
 import { Icon as XIcon } from "../../../../res/img/element-icons/cancel-rounded.svg";
 import Clock from "../../../components/views/audio_messages/Clock";
 import { formatTimeLeft } from "../../../DateUtils";
+import Spinner from "../../../components/views/elements/Spinner";
 
 interface VoiceBroadcastHeaderProps {
     live?: VoiceBroadcastLiveness;
@@ -33,6 +34,7 @@ interface VoiceBroadcastHeaderProps {
     room: Room;
     microphoneLabel?: string;
     showBroadcast?: boolean;
+    showBuffering?: boolean;
     timeLeft?: number;
     showClose?: boolean;
 }
@@ -44,6 +46,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     room,
     microphoneLabel,
     showBroadcast = false,
+    showBuffering = false,
     showClose = false,
     timeLeft,
 }) => {
@@ -71,6 +74,13 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
         </div>
         : null;
 
+    const buffering = showBuffering
+        ? <div className="mx_VoiceBroadcastHeader_line">
+            <Spinner w={14} h={14} />
+            { _t("Buffering…") }
+        </div>
+        : null;
+
     const microphoneLineClasses = classNames({
         mx_VoiceBroadcastHeader_line: true,
         ["mx_VoiceBroadcastHeader_mic--clickable"]: onMicrophoneLineClick,
@@ -95,6 +105,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
             { microphoneLine }
             { timeLeftLine }
             { broadcast }
+            { buffering }
         </div>
         { liveBadge }
         { closeButton }
