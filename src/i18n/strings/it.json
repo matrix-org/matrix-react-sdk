@@ -3645,5 +3645,7 @@
     "Show details": "Mostra dettagli",
     "Hide details": "Nascondi dettagli",
     "30s forward": "30s avanti",
-    "30s backward": "30s indietro"
+    "30s backward": "30s indietro",
+    "Thread root ID: %(threadRootId)s": "ID root del thread: %(threadRootId)s",
+    "Change input device": "Cambia dispositivo di input"
 }
