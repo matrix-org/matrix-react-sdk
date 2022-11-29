@@ -3645,5 +3645,7 @@
     "Reset your password": "Réinitialise votre mot de passe",
     "Reset password": "Réinitialiser le mot de passe",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Trop de tentatives consécutives. Réessayez après %(timeout)s.",
-    "Too many attempts in a short time. Wait some time before trying again.": "Trop de tentatives consécutives. Attendez un peu avant de réessayer."
+    "Too many attempts in a short time. Wait some time before trying again.": "Trop de tentatives consécutives. Attendez un peu avant de réessayer.",
+    "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
+    "Change input device": "Change de périphérique d’entrée"
 }
