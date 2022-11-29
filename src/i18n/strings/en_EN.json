@@ -2573,7 +2573,7 @@
     "Join millions for free on the largest public server": "Join millions for free on the largest public server",
     "Homeserver": "Homeserver",
     "Help": "Help",
-    "WARNING:": "WARNING:",
+    "<w>WARNING:</w> <description/>": "<w>WARNING:</w> <description/>",
     "Choose a locale": "Choose a locale",
     "Continue with %(provider)s": "Continue with %(provider)s",
     "Sign in with single sign-on": "Sign in with single sign-on",
