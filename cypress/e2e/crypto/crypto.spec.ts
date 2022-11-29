@@ -196,6 +196,9 @@ describe("Cryptography", function() {
             roomId = _room1Id;
             cy.log(`Created test room ${roomId}`);
             cy.visit(`/#/room/${roomId}`);
+            // wait for Bob to join the room, otherwise our attempt to open his user details may race
+            // with his join.
+            cy.contains(".mx_TextualEvent", "Bob joined the room").should("exist");
         });
 
         verify.call(this);
