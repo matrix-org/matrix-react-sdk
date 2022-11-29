@@ -19,7 +19,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import AccessibleButton from "../../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import Notifier from "../../../../../Notifier";
 import SettingsStore from '../../../../../settings/SettingsStore';
 import { SettingLevel } from "../../../../../settings/SettingLevel";
@@ -55,20 +55,16 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
 
         this.roomProps = EchoChamber.forRoom(context.getRoom(this.props.roomId));
 
+        let currentSound = "default";
+        const soundData = Notifier.getSoundForRoom(this.props.roomId);
+        if (soundData) {
+            currentSound = soundData.name || soundData.url;
+        }
+
         this.state = {
-            currentSound: "default",
+            currentSound,
             uploadedFile: null,
         };
-    }
-
-    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
-    // eslint-disable-next-line @typescript-eslint/naming-convention, camelcase
-    public UNSAFE_componentWillMount(): void {
-        const soundData = Notifier.getSoundForRoom(this.props.roomId);
-        if (!soundData) {
-            return;
-        }
-        this.setState({ currentSound: soundData.name || soundData.url });
     }
 
     private triggerUploader = async (e: React.MouseEvent): Promise<void> => {
@@ -163,7 +159,9 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         this.forceUpdate();
     };
 
-    private onOpenSettingsClick = () => {
+    private onOpenSettingsClick = (event: ButtonEvent) => {
+        // avoid selecting the radio button
+        event.preventDefault();
         this.props.closeSettingsFn();
         defaultDispatcher.dispatch({
             action: Action.ViewUserSettings,

@@ -28,16 +28,6 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
           <div
             class="mx_Icon mx_Icon_16"
           />
-          <span>
-            @userId:matrix.org
-          </span>
-        </div>
-        <div
-          class="mx_VoiceBroadcastHeader_line"
-        >
-          <div
-            class="mx_Icon mx_Icon_16"
-          />
           <span
             class="mx_Clock"
           >
@@ -46,7 +36,7 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
         </div>
       </div>
       <div
-        class="mx_LiveBadge"
+        class="mx_LiveBadge mx_LiveBadge--grey"
       >
         <div
           class="mx_Icon mx_Icon_16"
@@ -68,6 +58,16 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
       >
         <div
           class="mx_Icon mx_Icon_16"
+        />
+      </div>
+      <div
+        aria-label="Change input device"
+        class="mx_AccessibleButton"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_16 mx_Icon_alert"
         />
       </div>
       <div
@@ -113,16 +113,6 @@ exports[`VoiceBroadcastRecordingPip when rendering a started recording should re
           <div
             class="mx_Icon mx_Icon_16"
           />
-          <span>
-            @userId:matrix.org
-          </span>
-        </div>
-        <div
-          class="mx_VoiceBroadcastHeader_line"
-        >
-          <div
-            class="mx_Icon mx_Icon_16"
-          />
           <span
             class="mx_Clock"
           >
@@ -153,6 +143,16 @@ exports[`VoiceBroadcastRecordingPip when rendering a started recording should re
       >
         <div
           class="mx_Icon mx_Icon_16"
+        />
+      </div>
+      <div
+        aria-label="Change input device"
+        class="mx_AccessibleButton"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_16 mx_Icon_alert"
         />
       </div>
       <div

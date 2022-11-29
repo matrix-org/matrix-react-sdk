@@ -23,6 +23,7 @@ import { RelationsHelperEvent } from "../../../src/events/RelationsHelper";
 import { MediaEventHelper } from "../../../src/utils/MediaEventHelper";
 import {
     VoiceBroadcastInfoState,
+    VoiceBroadcastLiveness,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
@@ -76,6 +77,12 @@ describe("VoiceBroadcastPlayback", () => {
         });
     };
 
+    const itShouldHaveLiveness = (liveness: VoiceBroadcastLiveness): void => {
+        it(`should have liveness ${liveness}`, () => {
+            expect(playback.getLiveness()).toBe(liveness);
+        });
+    };
+
     const startPlayback = () => {
         beforeEach(async () => {
             await playback.start();
@@ -119,6 +126,7 @@ describe("VoiceBroadcastPlayback", () => {
     const mkPlayback = async () => {
         const playback = new VoiceBroadcastPlayback(infoEvent, client);
         jest.spyOn(playback, "removeAllListeners");
+        jest.spyOn(playback, "destroy");
         playback.on(VoiceBroadcastPlaybackEvent.StateChanged, onStateChanged);
         await flushPromises();
         return playback;
@@ -187,6 +195,8 @@ describe("VoiceBroadcastPlayback", () => {
         describe("and calling start", () => {
             startPlayback();
 
+            itShouldHaveLiveness("grey");
+
             it("should be in buffering state", () => {
                 expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Buffering);
             });
@@ -223,6 +233,7 @@ describe("VoiceBroadcastPlayback", () => {
                 });
 
                 itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+                itShouldHaveLiveness("live");
 
                 it("should update the duration", () => {
                     expect(playback.durationSeconds).toBe(2.3);
@@ -263,6 +274,7 @@ describe("VoiceBroadcastPlayback", () => {
             startPlayback();
 
             it("should play the last chunk", () => {
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Playing);
                 // assert that the last chunk is played first
                 expect(chunk2Playback.play).toHaveBeenCalled();
                 expect(chunk1Playback.play).not.toHaveBeenCalled();
@@ -287,6 +299,17 @@ describe("VoiceBroadcastPlayback", () => {
                     it("should play the next chunk", () => {
                         expect(chunk3Playback.play).toHaveBeenCalled();
                     });
+                });
+            });
+
+            describe("and the info event is deleted", () => {
+                beforeEach(() => {
+                    infoEvent.makeRedacted(new MatrixEvent({}));
+                });
+
+                it("should stop and destroy the playback", () => {
+                    expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
+                    expect(playback.destroy).toHaveBeenCalled();
                 });
             });
         });
