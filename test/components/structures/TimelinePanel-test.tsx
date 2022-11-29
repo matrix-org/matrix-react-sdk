@@ -26,6 +26,8 @@ import {
     MatrixEvent,
     PendingEventOrdering,
     Room,
+    RoomEvent,
+    TimelineWindow,
 } from 'matrix-js-sdk/src/matrix';
 import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import {
@@ -42,7 +44,7 @@ import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import SettingsStore from "../../../src/settings/SettingsStore";
 import { isCallEvent } from '../../../src/components/structures/LegacyCallEventGrouper';
-import { mkRoom, stubClient } from "../../test-utils";
+import { flushPromises, mkRoom, stubClient } from "../../test-utils";
 
 const newReceipt = (eventId: string, userId: string, readTs: number, fullyReadTs: number): MatrixEvent => {
     const receiptContent = {
@@ -201,6 +203,114 @@ describe('TimelinePanel', () => {
         props.eventId = events[1].getId();
         rerender(<TimelinePanel {...props} />);
         expect(props.onEventScrolledIntoView).toHaveBeenCalledWith(events[1].getId());
+    });
+
+    describe('onRoomTimeline', () => {
+        it('ignores events for other timelines', () => {
+            const client = MatrixClientPeg.get();
+            const room = mkRoom(client, "roomId");
+            const events = mockEvents(room);
+
+            const otherTimelineSet = { room: room as Room } as EventTimelineSet;
+            const otherTimeline = new EventTimeline(otherTimelineSet);
+
+            const props = {
+                ...getProps(room, events),
+                onEventScrolledIntoView: jest.fn(),
+            };
+
+            const paginateSpy = jest.spyOn(TimelineWindow.prototype, 'paginate').mockClear();
+
+            render(<TimelinePanel {...props} />);
+
+            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const data = { timeline: otherTimeline, liveEvent: true };
+            client.emit(RoomEvent.Timeline, event, room, false, false, data);
+
+            expect(paginateSpy).not.toHaveBeenCalled();
+        });
+
+        it('ignores timeline updates without a live event', () => {
+            const client = MatrixClientPeg.get();
+            const room = mkRoom(client, "roomId");
+            const events = mockEvents(room);
+
+            const props = getProps(room, events);
+
+            const paginateSpy = jest.spyOn(TimelineWindow.prototype, 'paginate').mockClear();
+
+            render(<TimelinePanel {...props} />);
+
+            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
+            client.emit(RoomEvent.Timeline, event, room, false, false, data);
+
+            expect(paginateSpy).not.toHaveBeenCalled();
+        });
+
+        it('ignores timeline where toStartOfTimeline is true', () => {
+            const client = MatrixClientPeg.get();
+            const room = mkRoom(client, "roomId");
+            const events = mockEvents(room);
+
+            const props = getProps(room, events);
+
+            const paginateSpy = jest.spyOn(TimelineWindow.prototype, 'paginate').mockClear();
+
+            render(<TimelinePanel {...props} />);
+
+            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
+            const toStartOfTimeline = true;
+            client.emit(RoomEvent.Timeline, event, room, toStartOfTimeline, false, data);
+
+            expect(paginateSpy).not.toHaveBeenCalled();
+        });
+
+        it('advances the timeline window', () => {
+            const client = MatrixClientPeg.get();
+            const room = mkRoom(client, "roomId");
+            const events = mockEvents(room);
+
+            const props = getProps(room, events);
+
+            const paginateSpy = jest.spyOn(TimelineWindow.prototype, 'paginate').mockClear();
+
+            render(<TimelinePanel {...props} />);
+
+            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
+            client.emit(RoomEvent.Timeline, event, room, false, false, data);
+
+            expect(paginateSpy).toHaveBeenCalledWith(EventTimeline.FORWARDS, 1, false);
+        });
+
+        it('advances the overlay timeline window', async () => {
+            const client = MatrixClientPeg.get();
+            const room = mkRoom(client, "roomId");
+            const events = mockEvents(room);
+
+            const virtualRoom = mkRoom(client, "virtualRoomId");
+            const virtualEvents = mockEvents(virtualRoom);
+            const { timelineSet: overlayTimelineSet } = getProps(virtualRoom, virtualEvents);
+
+            const props = {
+                ...getProps(room, events),
+                overlayTimelineSet,
+            };
+
+            const paginateSpy = jest.spyOn(TimelineWindow.prototype, 'paginate').mockClear();
+
+            render(<TimelinePanel {...props} />);
+
+            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
+            client.emit(RoomEvent.Timeline, event, room, false, false, data);
+
+            await flushPromises();
+
+            expect(paginateSpy).toHaveBeenCalledTimes(2);
+        });
     });
 
     describe('with overlayTimeline', () => {
