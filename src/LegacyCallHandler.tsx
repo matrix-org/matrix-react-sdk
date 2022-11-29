@@ -177,47 +177,6 @@ export default class LegacyCallHandler extends EventEmitter {
         return window.mxLegacyCallHandler;
     }
 
-    componentDidMount() {
-        Object.keys(AudioID).forEach((audioId) => {
-            const audioElement = document.getElementById(audioId) as HTMLMediaElement;
-            this.addEventListenersForAudioElement(audioElement);
-        });
-    }
-
-    componentWillUnmount() {
-        Array.from(this.audioElementsWithListeners.keys()).forEach((audioElement) => {
-            this.removeEventListenersForAudioElement(audioElement);
-        });
-    }
-
-    private addEventListenersForAudioElement(audioElement) {
-        // Only need to setup the listeners once
-        if (!this.audioElementsWithListeners.get(audioElement)) {
-            MEDIA_EVENT_TYPES.forEach((errorEventType) => {
-                audioElement.addEventListener(errorEventType, this);
-                this.audioElementsWithListeners.set(audioElement, true);
-            });
-        }
-    }
-
-    private removeEventListenersForAudioElement(audioElement) {
-        MEDIA_EVENT_TYPES.forEach((errorEventType) => {
-            audioElement.removeEventListener(errorEventType, this);
-        });
-    }
-
-    // @ts-ignore - native event handler pattern
-    private handleEvent(e: Event) {
-        const target = e.target as HTMLElement;
-        const audioId = target?.id;
-
-        if (MEDIA_ERROR_EVENT_TYPES.includes(e.type as MediaEventType)) {
-            logger.error(`LegacyCallHandler: encountered "${e.type}" event with ${audioId}`, e);
-        } else if (MEDIA_EVENT_TYPES.includes(e.type as MediaEventType)) {
-            debuglog(`encountered "${e.type}" event with ${audioId}`, e);
-        }
-    }
-
     /*
      * Gets the user-facing room associated with a call (call.roomId may be the call "virtual room"
      * if a voip_mxid_translate_pattern is set in the config)
@@ -256,12 +215,55 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
+
+        // Add event listeners for the <audio> elements
+        Object.values(AudioID).forEach((audioId) => {
+            const audioElement = document.getElementById(audioId) as HTMLMediaElement;
+            if (audioElement) {
+                this.addEventListenersForAudioElement(audioElement);
+            } else {
+                logger.warn(`LegacyCallHandler: missing <audio id="${audioId}"> from page`);
+            }
+        });
     }
 
     public stop(): void {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener(CallEventHandlerEvent.Incoming, this.onCallIncoming);
+        }
+
+        // Remove event listeners for the <audio> elements
+        Array.from(this.audioElementsWithListeners.keys()).forEach((audioElement) => {
+            this.removeEventListenersForAudioElement(audioElement);
+        });
+    }
+
+    private addEventListenersForAudioElement(audioElement) {
+        // Only need to setup the listeners once
+        if (!this.audioElementsWithListeners.get(audioElement)) {
+            MEDIA_EVENT_TYPES.forEach((errorEventType) => {
+                audioElement.addEventListener(errorEventType, this);
+                this.audioElementsWithListeners.set(audioElement, true);
+            });
+        }
+    }
+
+    private removeEventListenersForAudioElement(audioElement) {
+        MEDIA_EVENT_TYPES.forEach((errorEventType) => {
+            audioElement.removeEventListener(errorEventType, this);
+        });
+    }
+
+    // @ts-ignore - native event handler pattern
+    private handleEvent(e: Event) {
+        const target = e.target as HTMLElement;
+        const audioId = target?.id;
+
+        if (MEDIA_ERROR_EVENT_TYPES.includes(e.type as MediaEventType)) {
+            logger.error(`LegacyCallHandler: encountered "${e.type}" event with <audio id="${audioId}">`, e);
+        } else if (MEDIA_EVENT_TYPES.includes(e.type as MediaEventType)) {
+            debuglog(`encountered "${e.type}" event with <audio id="${audioId}">`, e);
         }
     }
 
