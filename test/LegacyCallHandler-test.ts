@@ -445,6 +445,8 @@ describe('LegacyCallHandler without third party protocols', () => {
         const mockAudioElement = {
             play: jest.fn(),
             pause: jest.fn(),
+            addEventListener: jest.fn(),
+            removeEventListener: jest.fn(),
         } as unknown as HTMLMediaElement;
         beforeEach(() => {
             jest.clearAllMocks();
