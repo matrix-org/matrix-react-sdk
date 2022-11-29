@@ -1211,10 +1211,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet) => {
-        if (!room || room.roomId !== this.state.room?.roomId) return;
-        logger.log(`Live timeline of ${room.roomId} was reset`);
-        this.setState({ liveTimeline: timelineSet.getLiveTimeline() });
+    private onRoomTimelineReset = (room: Room): void => {
+        if (room &&
+            room.roomId === this.state.room?.roomId &&
+            room.getLiveTimeline() !== this.state.liveTimeline
+        ) {
+            logger.log(`Live timeline of ${room.roomId} was reset`);
+            this.setState({ liveTimeline: room.getLiveTimeline() });
+        }
     };
 
     private getRoomTombstone(room = this.state.room) {
