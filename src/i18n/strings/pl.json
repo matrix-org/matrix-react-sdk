@@ -2289,5 +2289,8 @@
     "Set up your profile": "Utwórz swój profil",
     "Start new chat": "Nowy czat",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
-    "Invite to %(roomName)s": "Zaproś do %(roomName)s"
+    "Invite to %(roomName)s": "Zaproś do %(roomName)s",
+    "To view all keyboard shortcuts, <a>click here</a>.": "<a>Kliknij tutaj</a> aby wyświetlić wszystkie skróty klawiaturowe.",
+    "Image size in the timeline": "Rozmiar obrazu na osi czasu",
+    "Deactivating your account is a permanent action — be careful!": "Dezaktywacja konta jest akcją trwałą — bądź ostrożny!"
 }
