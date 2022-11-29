@@ -80,9 +80,9 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
 
         if (!canChange && this.props.hideIfCannotSet) return null;
 
-        const label = this.props.label
+        const label = (this.props.label
             ? _t(this.props.label)
-            : SettingsStore.getDisplayName(this.props.name, this.props.level);
+            : SettingsStore.getDisplayName(this.props.name, this.props.level)) ?? undefined;
         const description = SettingsStore.getDescription(this.props.name);
         const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
 
