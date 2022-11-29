@@ -3645,5 +3645,7 @@
     "Reset your password": "重新設定你的密碼",
     "Reset password": "重設密碼",
     "Too many attempts in a short time. Retry after %(timeout)s.": "短時間內太多次嘗試訪問，請稍等 %(timeout)s 秒後再嘗試。",
-    "Too many attempts in a short time. Wait some time before trying again.": "短時間內太多次嘗試訪問，請稍待一段時間後再嘗試。"
+    "Too many attempts in a short time. Wait some time before trying again.": "短時間內太多次嘗試訪問，請稍待一段時間後再嘗試。",
+    "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
+    "Change input device": "變更輸入裝置"
 }
