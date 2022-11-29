@@ -3646,5 +3646,6 @@
     "Reset password": "Obnovit heslo",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Příliš mnoho pokusů v krátkém čase. Zkuste to znovu po %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Příliš mnoho pokusů v krátkém čase. Před dalším pokusem nějakou dobu počkejte.",
-    "Change input device": "Změnit vstupní zařízení"
+    "Change input device": "Změnit vstupní zařízení",
+    "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s"
 }
