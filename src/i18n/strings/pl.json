@@ -2292,5 +2292,8 @@
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
     "To view all keyboard shortcuts, <a>click here</a>.": "<a>Kliknij tutaj</a> aby wyświetlić wszystkie skróty klawiaturowe.",
     "Image size in the timeline": "Rozmiar obrazu na osi czasu",
-    "Deactivating your account is a permanent action — be careful!": "Dezaktywacja konta jest akcją trwałą — bądź ostrożny!"
+    "Deactivating your account is a permanent action — be careful!": "Dezaktywacja konta jest akcją trwałą — bądź ostrożny!",
+    "Send voice message": "Wyślij wiadomość głosową",
+    "Send message": "Wyślij wiadomość",
+    "Keyboard": "Skróty klawiszowe"
 }
