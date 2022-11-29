@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactElement } from "react";
+import classNames from "classnames";
 
 import {
     VoiceBroadcastControl,
@@ -36,10 +37,12 @@ import { SeekButton } from "../atoms/SeekButton";
 const SEEK_TIME = 30;
 
 interface VoiceBroadcastPlaybackBodyProps {
+    pip?: boolean;
     playback: VoiceBroadcastPlayback;
 }
 
 export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProps> = ({
+    pip = false,
     playback,
 }) => {
     const {
@@ -59,14 +62,17 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
     } else {
         let controlIcon: React.FC<React.SVGProps<SVGSVGElement>>;
         let controlLabel: string;
+        let className = "";
 
         switch (playbackState) {
             case VoiceBroadcastPlaybackState.Stopped:
                 controlIcon = PlayIcon;
+                className = "mx_VoiceBroadcastControl-play";
                 controlLabel = _t("play voice broadcast");
                 break;
             case VoiceBroadcastPlaybackState.Paused:
                 controlIcon = PlayIcon;
+                className = "mx_VoiceBroadcastControl-play";
                 controlLabel = _t("resume voice broadcast");
                 break;
             case VoiceBroadcastPlaybackState.Playing:
@@ -76,6 +82,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         }
 
         control = <VoiceBroadcastControl
+            className={className}
             label={controlLabel}
             icon={controlIcon}
             onClick={toggle}
@@ -107,8 +114,13 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         />;
     }
 
+    const classes = classNames({
+        mx_VoiceBroadcastBody: true,
+        ["mx_VoiceBroadcastBody--pip"]: pip,
+    });
+
     return (
-        <div className="mx_VoiceBroadcastBody">
+        <div className={classes}>
             <VoiceBroadcastHeader
                 live={liveness}
                 microphoneLabel={sender?.name}
