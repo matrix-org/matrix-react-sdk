@@ -482,9 +482,8 @@ export default class LegacyCallHandler extends EventEmitter {
         // TODO: Attach an invisible element for this instead
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
-        this.addEventListenersForAudioElement(audio);
-
         if (audio) {
+            this.addEventListenersForAudioElement(audio);
             const playAudio = async () => {
                 try {
                     if (audio.muted) {
