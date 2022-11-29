@@ -125,7 +125,6 @@ describe("formatFullDateNoDayISO", () => {
 
 describe("formatTimeLeft", () => {
     it.each([
-        [null, "0s left"],
         [0, "0s left"],
         [23, "23s left"],
         [60 + 23, "1m 23s left"],

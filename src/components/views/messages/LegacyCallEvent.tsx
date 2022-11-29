@@ -172,7 +172,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                 // https://github.com/vector-im/riot-android/issues/2623
                 // Also the correct hangup code as of VoIP v1 (with underscore)
                 // Also, if we don't have a reason
-                const duration = this.props.callEventGrouper.duration;
+                const duration = this.props.callEventGrouper.duration!;
                 let text = _t("Call ended");
                 if (duration) {
                     text += " • " + formatPreciseDuration(duration);
