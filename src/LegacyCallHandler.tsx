@@ -239,7 +239,7 @@ export default class LegacyCallHandler extends EventEmitter {
         });
     }
 
-    private addEventListenersForAudioElement(audioElement) {
+    private addEventListenersForAudioElement(audioElement: HTMLMediaElement) {
         // Only need to setup the listeners once
         if (!this.audioElementsWithListeners.get(audioElement)) {
             MEDIA_EVENT_TYPES.forEach((errorEventType) => {
@@ -249,14 +249,13 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     }
 
-    private removeEventListenersForAudioElement(audioElement) {
+    private removeEventListenersForAudioElement(audioElement: HTMLMediaElement) {
         MEDIA_EVENT_TYPES.forEach((errorEventType) => {
             audioElement.removeEventListener(errorEventType, this);
         });
     }
 
-    // @ts-ignore - native event handler pattern
-    private handleEvent(e: Event) {
+    public handleEvent(e: Event) {
         const target = e.target as HTMLElement;
         const audioId = target?.id;
 
