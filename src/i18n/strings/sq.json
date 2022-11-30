@@ -3637,5 +3637,11 @@
     "30s backward": "30s mbrapsht",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Urdhër zhvilluesish: Hedh tej sesionin e tanishëm të grupit me dikë dhe ujdis sesione të rinj Olm",
     "%(minutes)sm %(seconds)ss left": "Edhe %(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "Edhe %(hours)sh %(minutes)sm %(seconds)ss"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "Edhe %(hours)sh %(minutes)sm %(seconds)ss",
+    "We were unable to start a chat with the other user.": "S’qemë në gjendje të nisim një bisedë me përdoruesin tjetër.",
+    "Error starting verification": "Gabim në nisje verifikimi",
+    "Change input device": "Ndryshoni pajisje dhëniesh",
+    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss"
 }

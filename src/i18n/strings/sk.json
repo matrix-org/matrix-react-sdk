@@ -3647,5 +3647,11 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Príliš veľa pokusov v krátkom čase. Opakujte pokus po %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Príliš veľa pokusov v krátkom čase. Pred ďalším pokusom počkajte nejakú dobu.",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
-    "Change input device": "Zmeniť vstupné zariadenie"
+    "Change input device": "Zmeniť vstupné zariadenie",
+    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
+    "We were unable to start a chat with the other user.": "Nepodarilo sa nám spustiť konverzáciu s druhým používateľom.",
+    "Error starting verification": "Chyba pri spustení overovania",
+    "Buffering…": "Načítavanie do vyrovnávacej pamäte…"
 }

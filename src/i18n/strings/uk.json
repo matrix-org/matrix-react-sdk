@@ -3647,5 +3647,11 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Забагато спроб за короткий час. Повторіть спробу за %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Забагато спроб за короткий час. Зачекайте трохи, перш ніж повторити спробу.",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
-    "Change input device": "Змінити пристрій вводу"
+    "Change input device": "Змінити пристрій вводу",
+    "%(minutes)sm %(seconds)ss": "%(minutes)sхв %(seconds)sс",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sгод %(minutes)sхв %(seconds)sс",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sд %(hours)sгод %(minutes)sхв %(seconds)sс",
+    "We were unable to start a chat with the other user.": "Ми не змогли розпочати бесіду з іншим користувачем.",
+    "Error starting verification": "Помилка запуску перевірки",
+    "Buffering…": "Буферизація…"
 }
