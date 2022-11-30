@@ -45,10 +45,9 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
     playback,
 }) => {
     const {
-        duration,
+        times,
         liveness,
         playbackState,
-        position,
         room,
         sender,
         toggle,
@@ -88,7 +87,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
 
     if (playbackState !== VoiceBroadcastPlaybackState.Stopped) {
         const onSeekBackwardButtonClick = () => {
-            playback.skipTo(Math.max(0, position - SEEK_TIME));
+            playback.skipTo(Math.max(0, times.position - SEEK_TIME));
         };
 
         seekBackwardButton = <SeekButton
@@ -98,7 +97,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         />;
 
         const onSeekForwardButtonClick = () => {
-            playback.skipTo(Math.min(duration, position + SEEK_TIME));
+            playback.skipTo(Math.min(times.duration, times.position + SEEK_TIME));
         };
 
         seekForwardButton = <SeekButton
@@ -127,9 +126,10 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
                 { control }
                 { seekForwardButton }
             </div>
+            <SeekBar playback={playback} />
             <div className="mx_VoiceBroadcastBody_timerow">
-                <SeekBar playback={playback} />
-                <Clock seconds={duration} />
+                <Clock seconds={times.position} />
+                <Clock seconds={-times.timeLeft} />
             </div>
         </div>
     );
