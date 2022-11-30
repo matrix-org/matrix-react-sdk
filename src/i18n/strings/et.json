@@ -3650,5 +3650,8 @@
     "Change input device": "Vaheta sisendseadet",
     "%(minutes)sm %(seconds)ss": "%(minutes)s m %(seconds)s s",
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s t %(minutes)s m %(seconds)s s",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s pv %(hours)s t %(minutes)s m %(seconds)s s"
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s pv %(hours)s t %(minutes)s m %(seconds)s s",
+    "We were unable to start a chat with the other user.": "Meil ei õnnestunud alustada vestlust teise kasutajaga.",
+    "Error starting verification": "Viga verifitseerimise alustamisel",
+    "Buffering…": "Andmed on puhverdamisel…"
 }
