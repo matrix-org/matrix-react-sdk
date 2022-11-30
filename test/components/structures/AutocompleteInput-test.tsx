@@ -28,7 +28,7 @@ describe('AutocompleteInput', () => {
         { type: 'user', completion: 'user_2', completionId: '@user_2:host.local', range: { start: 1, end: 1 } },
     ];
 
-    const constructMockProvider = (data) => ({
+    const constructMockProvider = (data: ICompletion[]) => ({
         getCompletions: jest.fn().mockImplementation(async () => data),
     }) as unknown as AutocompleteProvider;
 

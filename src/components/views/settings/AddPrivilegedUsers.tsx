@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, { FormEvent, useCallback, useContext, useRef, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -57,7 +57,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         [room, defaultUserLevel],
     );
 
-    const onSubmit = async (event) => {
+    const onSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setIsLoading(true);
 
@@ -65,8 +65,6 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         const powerLevelEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
 
         try {
-            // TODO: Remove @ts-ignore as soon as https://github.com/matrix-org/matrix-js-sdk/pull/2892 is merged.
-            // @ts-ignore
             await client.setPowerLevel(room.roomId, userIds, powerLevel, powerLevelEvent);
             setSelectedUsers([]);
             setPowerLevel(defaultUserLevel);
