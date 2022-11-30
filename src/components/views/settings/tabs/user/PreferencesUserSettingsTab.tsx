@@ -51,6 +51,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
     private static SPACES_SETTINGS = [
         "Spaces.allRoomsInHome",
+        "Spaces.includeSubSpaceRoomsInRoomList",
     ];
 
     private static KEYBINDINGS_SETTINGS = [

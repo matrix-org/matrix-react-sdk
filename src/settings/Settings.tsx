@@ -1018,6 +1018,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
         default: true,
     },
+    "Spaces.includeSubSpaceRoomsInRoomList": {
+        displayName: _td("Display all people and rooms from nested spaces in the room list for a space"),
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: true,
+    },
     "developerMode": {
         displayName: _td("Developer mode"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

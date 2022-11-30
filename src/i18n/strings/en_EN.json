@@ -1013,6 +1013,7 @@
     "Show chat effects (animations when receiving e.g. confetti)": "Show chat effects (animations when receiving e.g. confetti)",
     "Show all rooms in Home": "Show all rooms in Home",
     "All rooms you're in will appear in Home.": "All rooms you're in will appear in Home.",
+    "Display all people and rooms from nested spaces in the room list for a space": "Display all people and rooms from nested spaces in the room list for a space",
     "Developer mode": "Developer mode",
     "Automatically send debug logs on any error": "Automatically send debug logs on any error",
     "Automatically send debug logs on decryption errors": "Automatically send debug logs on decryption errors",
