@@ -256,7 +256,7 @@ export default class LegacyCallHandler extends EventEmitter {
         });
     }
 
-    /* istanbul ignore next */
+    /* istanbul ignore next (remove if we start using this function for things other than debug logging) */
     public handleEvent(e: Event): void {
         const target = e.target as HTMLElement;
         const audioId = target?.id;
