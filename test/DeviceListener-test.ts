@@ -294,7 +294,7 @@ describe('DeviceListener', () => {
 
             describe('when user does not have a cross signing id on this device', () => {
                 beforeEach(() => {
-                    mockClient!.getCrossSigningId.mockReturnValue(undefined);
+                    mockClient!.getCrossSigningId.mockReturnValue(null);
                 });
 
                 it('shows verify session toast when account has cross signing', async () => {
@@ -307,7 +307,7 @@ describe('DeviceListener', () => {
                 });
 
                 it('checks key backup status when when account has cross signing', async () => {
-                    mockClient!.getCrossSigningId.mockReturnValue(undefined);
+                    mockClient!.getCrossSigningId.mockReturnValue(null);
                     mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
                     await createAndStart();
 
@@ -405,11 +405,13 @@ describe('DeviceListener', () => {
                     mockClient!.isCrossSigningReady.mockResolvedValue(false);
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
+                    expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
                 });
 
                 it('hides toast when all devices at app start are verified', async () => {
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
+                    expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
                 });
 
                 it('hides toast when current device is unverified', async () => {
@@ -424,6 +426,7 @@ describe('DeviceListener', () => {
                     });
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
+                    expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
                 });
 
                 it('shows toast with unverified devices at app start', async () => {
@@ -441,6 +444,7 @@ describe('DeviceListener', () => {
                     expect(BulkUnverifiedSessionsToast.showToast).toHaveBeenCalledWith(
                         new Set<string>([device3.deviceId]),
                     );
+                    expect(BulkUnverifiedSessionsToast.hideToast).not.toHaveBeenCalled();
                 });
 
                 it('hides toast when unverified sessions at app start have been dismissed', async () => {
@@ -488,7 +492,7 @@ describe('DeviceListener', () => {
                         currentDevice, device2, device3,
                     ]);
                     // trigger a recheck
-                    mockClient!.emit(CryptoEvent.DevicesUpdated, [mockClient!.getUserId()], false);
+                    mockClient!.emit(CryptoEvent.DevicesUpdated, [userId], false);
                     await flushPromises();
 
                     // bulk unverified sessions toast only shown for devices that were
