@@ -492,15 +492,14 @@ describe('LegacyCallHandler without third party protocols', () => {
         });
 
         it('should unmute <audio> before playing', () => {
-            // Set the audio element as muted
+            // Test setup: set the audio element as muted
             mockAudioElement.muted = true;
             expect(mockAudioElement.muted).toStrictEqual(true);
 
             callHandler.play(AudioID.Ring);
 
-            // Ensure audio is not muted anymore
+            // Ensure audio is no longer muted
             expect(mockAudioElement.muted).toStrictEqual(false);
-
             // Ensure the audio was played
             expect(mockAudioElement.play).toHaveBeenCalled();
         });
