@@ -659,7 +659,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // NB: This does assume that the roomID will not change for the lifetime of
         // the RoomView instance
         if (initial) {
-            const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room?.roomId);
+            const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(newState.roomId);
 
             newState.room = this.context.client.getRoom(newState.roomId);
             newState.virtualRoom = virtualRoom;
