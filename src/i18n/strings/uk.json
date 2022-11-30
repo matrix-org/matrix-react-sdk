@@ -3650,5 +3650,8 @@
     "Change input device": "Змінити пристрій вводу",
     "%(minutes)sm %(seconds)ss": "%(minutes)sхв %(seconds)sс",
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sгод %(minutes)sхв %(seconds)sс",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sд %(hours)sгод %(minutes)sхв %(seconds)sс"
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sд %(hours)sгод %(minutes)sхв %(seconds)sс",
+    "We were unable to start a chat with the other user.": "Ми не змогли розпочати бесіду з іншим користувачем.",
+    "Error starting verification": "Помилка запуску перевірки",
+    "Buffering…": "Буферизація…"
 }
