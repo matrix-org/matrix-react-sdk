@@ -369,7 +369,10 @@ export const Notifier = {
         }
     },
 
-    onEvent: function(this: typeof Notifier, ev: MatrixEvent, room: Room | undefined,
+    onEvent: function(
+    	this: typeof Notifier,
+    	ev: MatrixEvent,
+    	room: Room | undefined,
         toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
