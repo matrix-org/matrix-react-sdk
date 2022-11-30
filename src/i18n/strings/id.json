@@ -3647,5 +3647,8 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Terlalu banyak upaya dalam waktu yang singkat. Coba lagi setelah %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Terlalu banyak upaya. Tunggu beberapa waktu sebelum mencoba lagi.",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
-    "Change input device": "Ubah perangkat masukan"
+    "Change input device": "Ubah perangkat masukan",
+    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)sd",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sj %(minutes)sm %(seconds)sd",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sh %(hours)sj %(minutes)sm %(seconds)sd"
 }
