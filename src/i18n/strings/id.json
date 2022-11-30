@@ -3650,5 +3650,8 @@
     "Change input device": "Ubah perangkat masukan",
     "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)sd",
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sj %(minutes)sm %(seconds)sd",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sh %(hours)sj %(minutes)sm %(seconds)sd"
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sh %(hours)sj %(minutes)sm %(seconds)sd",
+    "We were unable to start a chat with the other user.": "Kami tidak dapat memulai sebuah obrolan dengan pengguna lain.",
+    "Error starting verification": "Terjadi kesalahan memulai verifikasi",
+    "Buffering…": "Memuat…"
 }
