@@ -103,13 +103,14 @@ const MEDIA_EVENT_TYPES = [
     ...MEDIA_DEBUG_EVENT_TYPES,
 ];
 
-enum AudioID {
+export enum AudioID {
     Ring = 'ringAudio',
     Ringback = 'ringbackAudio',
     CallEnd = 'callendAudio',
     Busy = 'busyAudio',
 }
 
+/* istanbul ignore next */
 const debuglog = (...args: any[]) => {
     if (SettingsStore.getValue("debug_legacy_call_handler")) {
         logger.log.call(console, "LegacyCallHandler debuglog:", ...args);
@@ -255,6 +256,7 @@ export default class LegacyCallHandler extends EventEmitter {
         });
     }
 
+    /* istanbul ignore next */
     public handleEvent(e: Event) {
         const target = e.target as HTMLElement;
         const audioId = target?.id;
