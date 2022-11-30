@@ -3650,5 +3650,6 @@
     "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
     "%(minutes)sm %(seconds)ss": "%(minutes)s m %(seconds)s s",
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s h %(minutes)s m %(seconds)s s",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s d %(hours)s h %(minutes)s m %(seconds)s s"
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s d %(hours)s h %(minutes)s m %(seconds)s s",
+    "Buffering…": "Puffere …"
 }
