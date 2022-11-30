@@ -3646,5 +3646,11 @@
     "Reset password": "Passwort zurücksetzen",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Zu viele Versuche in zu kurzer Zeit. Versuche es erneut nach %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Zu viele Versuche in zu kurzer Zeit. Warte ein wenig, bevor du es erneut versuchst.",
-    "Change input device": "Eingabegerät wechseln"
+    "Change input device": "Eingabegerät wechseln",
+    "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
+    "%(minutes)sm %(seconds)ss": "%(minutes)s m %(seconds)s s",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s h %(minutes)s m %(seconds)s s",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s d %(hours)s h %(minutes)s m %(seconds)s s",
+    "Buffering…": "Puffere …",
+    "Error starting verification": "Verifizierungbeginn fehlgeschlagen"
 }
