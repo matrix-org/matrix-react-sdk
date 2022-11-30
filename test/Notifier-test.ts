@@ -60,7 +60,7 @@ describe("Notifier", () => {
     let mockClient: MockedObject<MatrixClient>;
     let testRoom: Room;
     let accountDataEventKey: string;
-    let accountDataStore = {};
+    let accountDataStore: Record<string, MatrixEvent | undefined> = {};
 
     let mockSettings: Record<string, boolean> = {};
 
