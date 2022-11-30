@@ -3652,5 +3652,6 @@
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s h %(minutes)s m %(seconds)s s",
     "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s d %(hours)s h %(minutes)s m %(seconds)s s",
     "Buffering…": "Puffere …",
-    "Error starting verification": "Verifizierungbeginn fehlgeschlagen"
+    "Error starting verification": "Verifizierungbeginn fehlgeschlagen",
+    "We were unable to start a chat with the other user.": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich."
 }
