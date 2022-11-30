@@ -3647,5 +3647,11 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Trop de tentatives consécutives. Réessayez après %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Trop de tentatives consécutives. Attendez un peu avant de réessayer.",
     "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
-    "Change input device": "Change de périphérique d’entrée"
+    "Change input device": "Change de périphérique d’entrée",
+    "We were unable to start a chat with the other user.": "Nous n’avons pas pu démarrer une conversation avec l’autre utilisateur.",
+    "Error starting verification": "Erreur en démarrant la vérification",
+    "Buffering…": "Mise en mémoire tampon…",
+    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sj %(hours)sh %(minutes)sm %(seconds)ss"
 }
