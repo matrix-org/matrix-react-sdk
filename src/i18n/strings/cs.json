@@ -3650,5 +3650,8 @@
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
     "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss"
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
+    "We were unable to start a chat with the other user.": "Nepodařilo se zahájit chat s druhým uživatelem.",
+    "Error starting verification": "Chyba při zahájení ověření",
+    "Buffering…": "Ukládání do vyrovnávací paměti…"
 }
