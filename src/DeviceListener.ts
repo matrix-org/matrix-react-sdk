@@ -306,6 +306,9 @@ export default class DeviceListener {
         // Unverified devices that have appeared since then
         const newUnverifiedDeviceIds = new Set<string>();
 
+        const isCurrentDeviceTrusted = crossSigningReady &&
+            await (cli.checkDeviceTrust(cli.getUserId(), cli.deviceId)).isCrossSigningVerified();
+
         // as long as cross-signing isn't ready,
         // you can't see or dismiss any device toasts
         if (crossSigningReady) {
@@ -329,7 +332,8 @@ export default class DeviceListener {
         logger.debug("Currently showing toasts for: " + Array.from(this.displayingToastsForDeviceIds).join(','));
 
         // Display or hide the batch toast for old unverified sessions
-        if (oldUnverifiedDeviceIds.size > 0) {
+        // don't show the toast if the current device is unverified
+        if (oldUnverifiedDeviceIds.size > 0 && isCurrentDeviceTrusted) {
             showBulkUnverifiedSessionsToast(oldUnverifiedDeviceIds);
         } else {
             hideBulkUnverifiedSessionsToast();
