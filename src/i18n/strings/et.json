@@ -3647,5 +3647,8 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota %(timeout)s sekundit.",
     "Too many attempts in a short time. Wait some time before trying again.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota veidi.",
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
-    "Change input device": "Vaheta sisendseadet"
+    "Change input device": "Vaheta sisendseadet",
+    "%(minutes)sm %(seconds)ss": "%(minutes)s m %(seconds)s s",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s t %(minutes)s m %(seconds)s s",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s pv %(hours)s t %(minutes)s m %(seconds)s s"
 }
