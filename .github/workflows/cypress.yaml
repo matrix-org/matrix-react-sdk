@@ -230,5 +230,6 @@ jobs:
           TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
           TESTRAIL_RUN_ID: ${{ steps.testrailprep.outputs.run_id }}
         run: |
-          curl -X POST -d '{}' -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/close_run/$TESTRAIL_RUN_ID"
+          CLOSE_RESPONSE=`curl -X POST -d '{}' -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/close_run/$TESTRAIL_RUN_ID"`
+          if [ ! "0" == "`echo $CLOSE_RESPONSE | jq .untested_count`" ] ; then echo "::warning title=Missing Tests::Testrail reported some cypress tests were not run. $CLOSE_RESPONSE"; fi
 
