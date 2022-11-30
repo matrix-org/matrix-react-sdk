@@ -111,7 +111,7 @@ export enum AudioID {
 }
 
 /* istanbul ignore next */
-const debuglog = (...args: any[]) => {
+const debuglog = (...args: any[]): void => {
     if (SettingsStore.getValue("debug_legacy_call_handler")) {
         logger.log.call(console, "LegacyCallHandler debuglog:", ...args);
     }
@@ -240,7 +240,7 @@ export default class LegacyCallHandler extends EventEmitter {
         });
     }
 
-    private addEventListenersForAudioElement(audioElement: HTMLMediaElement) {
+    private addEventListenersForAudioElement(audioElement: HTMLMediaElement): void {
         // Only need to setup the listeners once
         if (!this.audioElementsWithListeners.get(audioElement)) {
             MEDIA_EVENT_TYPES.forEach((errorEventType) => {
@@ -250,14 +250,14 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     }
 
-    private removeEventListenersForAudioElement(audioElement: HTMLMediaElement) {
+    private removeEventListenersForAudioElement(audioElement: HTMLMediaElement): void {
         MEDIA_EVENT_TYPES.forEach((errorEventType) => {
             audioElement.removeEventListener(errorEventType, this);
         });
     }
 
     /* istanbul ignore next */
-    public handleEvent(e: Event) {
+    public handleEvent(e: Event): void {
         const target = e.target as HTMLElement;
         const audioId = target?.id;
 
