@@ -66,7 +66,7 @@ describe("Notifier", () => {
 
     const userId = "@bob:example.org";
 
-    const emitLiveEvent = (event: MatrixEvent) => {
+    const emitLiveEvent = (event: MatrixEvent): void => {
         mockClient!.emit(RoomEvent.Timeline, event, testRoom, false, false, {
             liveEvent: true,
             timeline: testRoom.getLiveTimeline(),
