@@ -114,7 +114,7 @@ describe("startNewVoiceBroadcastRecording", () => {
                     _content: any,
                     _stateKey = "",
                 ) => {
-                    setTimeout(() => {
+                    window.setTimeout(() => {
                         // emit state events after resolving the promise
                         room.currentState.setStateEvents([otherEvent]);
                         room.currentState.setStateEvents([infoEvent]);
