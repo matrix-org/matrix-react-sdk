@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { Dispatcher } from "flux";
+
 import { Action } from "./actions";
 import { ActionPayload, AsyncActionPayload } from "./payloads";
 
@@ -48,7 +49,7 @@ export class MatrixDispatcher extends Dispatcher<ActionPayload> {
             // if you dispatch from within a dispatch, so rather than action
             // handlers having to worry about not calling anything that might
             // then dispatch, we just do dispatches asynchronously.
-            setTimeout(super.dispatch.bind(this, payload), 0);
+            window.setTimeout(super.dispatch.bind(this, payload), 0);
         }
     }
 
@@ -60,15 +61,14 @@ export class MatrixDispatcher extends Dispatcher<ActionPayload> {
      * @see dispatch(action: ActionPayload, sync: boolean)
      */
     fire(action: Action, sync = false) {
-        this.dispatch({action}, sync);
+        this.dispatch({ action }, sync);
     }
 }
 
 export const defaultDispatcher = new MatrixDispatcher();
 
-const anyGlobal = <any>global;
-if (!anyGlobal.mxDispatcher) {
-    anyGlobal.mxDispatcher = defaultDispatcher;
+if (!window.mxDispatcher) {
+    window.mxDispatcher = defaultDispatcher;
 }
 
 export default defaultDispatcher;

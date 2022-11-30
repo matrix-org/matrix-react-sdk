@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-import {Room} from "matrix-js-sdk/src/models/room";
-import CallHandler from "../../../CallHandler";
+import { Room } from "matrix-js-sdk/src/models/room";
+
+import LegacyCallHandler from "../../../LegacyCallHandler";
 import { RoomListCustomisations } from "../../../customisations/RoomList";
+import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import VoipUserMapper from "../../../VoipUserMapper";
-import SettingsStore from "../../../settings/SettingsStore";
 
 export class VisibilityProvider {
     private static internalInstance: VisibilityProvider;
@@ -37,16 +38,25 @@ export class VisibilityProvider {
         await VoipUserMapper.sharedInstance().onNewInvitedRoom(room);
     }
 
-    public isRoomVisible(room: Room): boolean {
+    public isRoomVisible(room?: Room): boolean {
+        if (!room) {
+            return false;
+        }
+
         if (
-            CallHandler.sharedInstance().getSupportsVirtualRooms() &&
+            LegacyCallHandler.instance.getSupportsVirtualRooms() &&
             VoipUserMapper.sharedInstance().isVirtualRoom(room)
         ) {
             return false;
         }
 
         // hide space rooms as they'll be shown in the SpacePanel
-        if (room.isSpaceRoom() && SettingsStore.getValue("feature_spaces")) {
+        if (room.isSpaceRoom()) {
+            return false;
+        }
+
+        if (isLocalRoom(room)) {
+            // local rooms shouldn't show up anywhere
             return false;
         }
 

@@ -16,21 +16,25 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from 'matrix-js-sdk/src/matrix';
 
-import * as sdk from '../../../index';
 import * as Email from '../../../email';
 import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
 import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import { SAFE_LOCALPART_REGEX } from '../../../Registration';
-import withValidation from '../elements/Validation';
-import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
+import withValidation, { IValidationResult } from '../elements/Validation';
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import EmailField from "./EmailField";
 import PassphraseField from "./PassphraseField";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import CountryDropdown from "./CountryDropdown";
+import PassphraseConfirmField from "./PassphraseConfirmField";
+import { PosthogAnalytics } from '../../../PosthogAnalytics';
 
 enum RegistrationField {
     Email = "field_email",
@@ -40,7 +44,15 @@ enum RegistrationField {
     PasswordConfirm = "field_password_confirm",
 }
 
-const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from offline slow-hash scenario.
+enum UsernameAvailableStatus {
+    Unknown,
+    Available,
+    Unavailable,
+    Error,
+    Invalid,
+}
+
+export const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from offline slow-hash scenario.
 
 interface IProps {
     // Values pre-filled in the input boxes when the component loads
@@ -54,6 +66,7 @@ interface IProps {
     }[];
     serverConfig: ValidatedServerConfig;
     canSubmit?: boolean;
+    matrixClient: MatrixClient;
 
     onRegisterClick(params: {
         username: string;
@@ -81,10 +94,9 @@ interface IState {
 /*
  * A pure UI component which displays a registration form.
  */
-@replaceableComponent("views.auth.RegistrationForm")
 export default class RegistrationForm extends React.PureComponent<IProps, IState> {
     static defaultProps = {
-        onValidationChange: console.error,
+        onValidationChange: logger.error,
         canSubmit: true,
     };
 
@@ -101,8 +113,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             passwordConfirm: this.props.defaultPassword || "",
             passwordComplexity: null,
         };
-
-        CountlyAnalytics.instance.track("onboarding_registration_begin");
     }
 
     private onSubmit = async ev => {
@@ -113,14 +123,12 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
         if (!allFieldsValid) {
-            CountlyAnalytics.instance.track("onboarding_registration_submit_failed");
             return;
         }
 
         if (this.state.email === '') {
             if (this.showEmail()) {
-                CountlyAnalytics.instance.track("onboarding_registration_submit_warn");
-                Modal.createTrackedDialog("Email prompt dialog", '', RegistrationEmailPromptDialog, {
+                Modal.createDialog(RegistrationEmailPromptDialog, {
                     onFinished: async (confirmed: boolean, email?: string) => {
                         if (confirmed) {
                             this.setState({
@@ -142,11 +150,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private doSubmit(ev) {
-        const email = this.state.email.trim();
+        PosthogAnalytics.instance.setAuthenticationType("Password");
 
-        CountlyAnalytics.instance.track("onboarding_registration_submit_ok", {
-            email: !!email,
-        });
+        const email = this.state.email.trim();
 
         const promise = this.props.onRegisterClick({
             username: this.state.username.trim(),
@@ -218,14 +224,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     /**
      * @returns {boolean} true if all fields were valid last time they were validated.
      */
-    private allFieldsValid() {
-        const keys = Object.keys(this.state.fieldValid);
-        for (let i = 0; i < keys.length; ++i) {
-            if (!this.state.fieldValid[keys[i]]) {
-                return false;
-            }
-        }
-        return true;
+    private allFieldsValid(): boolean {
+        return Object.values(this.state.fieldValid).every(Boolean);
     }
 
     private findFirstInvalidField(fieldIDs: RegistrationField[]) {
@@ -247,14 +247,12 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private onEmailChange = ev => {
         this.setState({
-            email: ev.target.value,
+            email: ev.target.value.trim(),
         });
     };
 
-    private onEmailValidate = async fieldState => {
-        const result = await this.validateEmailRules(fieldState);
+    private onEmailValidate = (result: IValidationResult) => {
         this.markFieldValid(RegistrationField.Email, result.valid);
-        return result;
     };
 
     private validateEmailRules = withValidation({
@@ -292,28 +290,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         });
     };
 
-    private onPasswordConfirmValidate = async fieldState => {
-        const result = await this.validatePasswordConfirmRules(fieldState);
+    private onPasswordConfirmValidate = (result: IValidationResult) => {
         this.markFieldValid(RegistrationField.PasswordConfirm, result.valid);
-        return result;
     };
-
-    private validatePasswordConfirmRules = withValidation({
-        rules: [
-            {
-                key: "required",
-                test: ({ value, allowEmpty }) => allowEmpty || !!value,
-                invalid: () => _t("Confirm password"),
-            },
-            {
-                key: "match",
-                test(this: RegistrationForm, { value }) {
-                    return !value || value === this.state.password;
-                },
-                invalid: () => _t("Passwords don't match"),
-            },
-        ],
-    });
 
     private onPhoneCountryChange = newVal => {
         this.setState({
@@ -364,9 +343,28 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         return result;
     };
 
-    private validateUsernameRules = withValidation({
-        description: () => _t("Use lowercase letters, numbers, dashes and underscores only"),
+    private validateUsernameRules = withValidation<this, UsernameAvailableStatus>({
+        description: (_, results) => {
+            // omit the description if the only failing result is the `available` one as it makes no sense for it.
+            if (results.every(({ key, valid }) => key === "available" || valid)) return;
+            return _t("Use lowercase letters, numbers, dashes and underscores only");
+        },
         hideDescriptionIfValid: true,
+        async deriveData(this: RegistrationForm, { value }) {
+            if (!value) {
+                return UsernameAvailableStatus.Unknown;
+            }
+
+            try {
+                const available = await this.props.matrixClient.isUsernameAvailable(value);
+                return available ? UsernameAvailableStatus.Available : UsernameAvailableStatus.Unavailable;
+            } catch (err) {
+                if (err instanceof MatrixError && err.errcode === "M_INVALID_USERNAME") {
+                    return UsernameAvailableStatus.Invalid;
+                }
+                return UsernameAvailableStatus.Error;
+            }
+        },
         rules: [
             {
                 key: "required",
@@ -375,8 +373,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             },
             {
                 key: "safeLocalpart",
-                test: ({ value }) => !value || SAFE_LOCALPART_REGEX.test(value),
+                test: ({ value }, usernameAvailable) => (!value || SAFE_LOCALPART_REGEX.test(value))
+                    && usernameAvailable !== UsernameAvailableStatus.Invalid,
                 invalid: () => _t("Some characters not allowed"),
+            },
+            {
+                key: "available",
+                final: true,
+                test: async ({ value }, usernameAvailable) => {
+                    if (!value) {
+                        return true;
+                    }
+
+                    return usernameAvailable === UsernameAvailableStatus.Available;
+                },
+                invalid: (usernameAvailable) => usernameAvailable === UsernameAvailableStatus.Error
+                    ? _t("Unable to check if username has been taken. Try again later.")
+                    : _t("Someone already has that username. Try another or if it is you, sign in below."),
             },
         ],
     });
@@ -424,18 +437,16 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showEmail()) {
             return null;
         }
-        const emailPlaceholder = this.authStepIsRequired('m.login.email.identity') ?
-            _t("Email") :
-            _t("Email (optional)");
-        return <Field
-            ref={field => this[RegistrationField.Email] = field}
-            type="text"
-            label={emailPlaceholder}
+        const emailLabel = this.authStepIsRequired('m.login.email.identity') ?
+            _td("Email") :
+            _td("Email (optional)");
+        return <EmailField
+            fieldRef={field => this[RegistrationField.Email] = field}
+            label={emailLabel}
             value={this.state.email}
+            validationRules={this.validateEmailRules.bind(this)}
             onChange={this.onEmailChange}
             onValidate={this.onEmailValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_email_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_email_blur")}
         />;
     }
 
@@ -447,23 +458,18 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             value={this.state.password}
             onChange={this.onPasswordChange}
             onValidate={this.onPasswordValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_password_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_password_blur")}
         />;
     }
 
     renderPasswordConfirm() {
-        return <Field
+        return <PassphraseConfirmField
             id="mx_RegistrationForm_passwordConfirm"
-            ref={field => this[RegistrationField.PasswordConfirm] = field}
-            type="password"
+            fieldRef={field => this[RegistrationField.PasswordConfirm] = field}
             autoComplete="new-password"
-            label={_t("Confirm password")}
             value={this.state.passwordConfirm}
+            password={this.state.password}
             onChange={this.onPasswordConfirmChange}
             onValidate={this.onPasswordConfirmValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_passwordConfirm_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_passwordConfirm_blur")}
         />;
     }
 
@@ -471,7 +477,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showPhoneNumber()) {
             return null;
         }
-        const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
         const phoneLabel = this.authStepIsRequired('m.login.msisdn') ?
             _t("Phone") :
             _t("Phone (optional)");
@@ -503,8 +508,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             value={this.state.username}
             onChange={this.onUsernameChange}
             onValidate={this.onUsernameValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_username_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_username_blur")}
         />;
     }
 
@@ -538,15 +541,15 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             <div>
                 <form onSubmit={this.onSubmit}>
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderUsername()}
+                        { this.renderUsername() }
                     </div>
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderPassword()}
-                        {this.renderPasswordConfirm()}
+                        { this.renderPassword() }
+                        { this.renderPasswordConfirm() }
                     </div>
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderEmail()}
-                        {this.renderPhoneNumber()}
+                        { this.renderEmail() }
+                        { this.renderPhoneNumber() }
                     </div>
                     { emailHelperText }
                     { registerButton }

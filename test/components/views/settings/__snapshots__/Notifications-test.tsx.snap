@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Notifications /> main notification switches renders only enable notifications switch when notifications are disabled 1`] = `
+<div>
+  <div
+    class="mx_UserNotifSettings"
+  >
+    <div
+      class="mx_SettingsFlag"
+      data-testid="notif-master-switch"
+    >
+      <span
+        class="mx_SettingsFlag_label"
+      >
+        Enable notifications for this account
+        <br />
+        <span
+          class="mx_Caption"
+        >
+          Turn off to disable notifications on all your devices and sessions
+        </span>
+      </span>
+      <div
+        aria-checked="false"
+        aria-disabled="false"
+        aria-label="Enable notifications for this account"
+        class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+        role="switch"
+        tabindex="0"
+      >
+        <div
+          class="mx_ToggleSwitch_ball"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

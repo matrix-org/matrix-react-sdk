@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020-2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ limitations under the License.
 import React from 'react';
 
 import AccessibleButton from "./AccessibleButton";
-import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
-import {_t} from "../../../languageHandler";
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import { _t } from "../../../languageHandler";
 import TextWithTooltip from "./TextWithTooltip";
 import SdkConfig from "../../../SdkConfig";
 import Modal from "../../../Modal";
@@ -37,15 +37,16 @@ const showPickerDialog = (
     serverConfig: ValidatedServerConfig,
     onFinished: (config: ValidatedServerConfig) => void,
 ) => {
-    Modal.createTrackedDialog("Server Picker", "", ServerPickerDialog, { title, serverConfig, onFinished });
+    Modal.createDialog(ServerPickerDialog, { title, serverConfig, onFinished });
 };
 
 const onHelpClick = () => {
-    Modal.createTrackedDialog('Custom Server Dialog', '', InfoDialog, {
+    const brand = SdkConfig.get().brand;
+    Modal.createDialog(InfoDialog, {
         title: _t("Server Options"),
         description: _t("You can use the custom server options to sign into other Matrix servers by specifying " +
-            "a different homeserver URL. This allows you to use Element with an existing Matrix account on " +
-            "a different homeserver."),
+            "a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on " +
+            "a different homeserver.", { brand }),
         button: _t("Dismiss"),
         hasCloseButton: false,
         fixedWidth: false,
@@ -53,8 +54,10 @@ const onHelpClick = () => {
 };
 
 const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }: IProps) => {
+    const disableCustomUrls = SdkConfig.get("disable_custom_urls");
+
     let editBtn;
-    if (!SdkConfig.get()["disable_custom_urls"] && onServerConfigChange) {
+    if (!disableCustomUrls && onServerConfigChange) {
         const onClick = () => {
             showPickerDialog(dialogTitle, serverConfig, (config?: ValidatedServerConfig) => {
                 if (config) {
@@ -63,31 +66,38 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
             });
         };
         editBtn = <AccessibleButton className="mx_ServerPicker_change" kind="link" onClick={onClick}>
-            {_t("Edit")}
+            { _t("Edit") }
         </AccessibleButton>;
     }
 
-    let serverName = serverConfig.isNameResolvable ? serverConfig.hsName : serverConfig.hsUrl;
+    let serverName: React.ReactNode = serverConfig.isNameResolvable ? serverConfig.hsName : serverConfig.hsUrl;
     if (serverConfig.hsNameIsDifferent) {
         serverName = <TextWithTooltip class="mx_Login_underlinedServerName" tooltip={serverConfig.hsUrl}>
-            {serverConfig.hsName}
+            { serverConfig.hsName }
         </TextWithTooltip>;
     }
 
     let desc;
     if (serverConfig.hsName === "matrix.org") {
         desc = <span className="mx_ServerPicker_desc">
-            {_t("Join millions for free on the largest public server")}
+            { _t("Join millions for free on the largest public server") }
         </span>;
     }
 
     return <div className="mx_ServerPicker">
-        <h3>{title || _t("Homeserver")}</h3>
-        <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} />
-        <span className="mx_ServerPicker_server">{serverName}</span>
+        <h2>{ title || _t("Homeserver") }</h2>
+        { !disableCustomUrls ? (
+            <AccessibleButton
+                className="mx_ServerPicker_help"
+                onClick={onHelpClick}
+                aria-label={_t("Help")}
+            />): null }
+        <span className="mx_ServerPicker_server" title={typeof serverName === "string" ? serverName : undefined}>
+            { serverName }
+        </span>
         { editBtn }
         { desc }
-    </div>
-}
+    </div>;
+};
 
 export default ServerPicker;

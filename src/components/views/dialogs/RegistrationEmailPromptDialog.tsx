@@ -15,43 +15,31 @@ limitations under the License.
 */
 
 import * as React from "react";
+import { useRef, useState } from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import { IDialogProps } from "./IDialogProps";
-import {useRef, useState} from "react";
 import Field from "../elements/Field";
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import withValidation from "../elements/Validation";
-import * as Email from "../../../email";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
+import EmailField from "../auth/EmailField";
 
 interface IProps extends IDialogProps {
     onFinished(continued: boolean, email?: string): void;
 }
 
-const validation = withValidation({
-    rules: [
-        {
-            key: "email",
-            test: ({ value }) => !value || Email.looksValid(value),
-            invalid: () => _t("Doesn't look like a valid email address"),
-        },
-    ],
-});
-
-const RegistrationEmailPromptDialog: React.FC<IProps> = ({onFinished}) => {
+const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
     const [email, setEmail] = useState("");
     const fieldRef = useRef<Field>();
 
     const onSubmit = async (e) => {
         e.preventDefault();
         if (email) {
-            const valid = await fieldRef.current.validate({ allowEmpty: false });
+            const valid = await fieldRef.current.validate({});
 
             if (!valid) {
                 fieldRef.current.focus();
-                fieldRef.current.validate({ allowEmpty: false, focused: true });
+                fieldRef.current.validate({ focused: true });
                 return;
             }
         }
@@ -67,23 +55,20 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({onFinished}) => {
         fixedWidth={false}
     >
         <div className="mx_Dialog_content" id="mx_RegistrationEmailPromptDialog">
-            <p>{_t("Just a heads up, if you don't add an email and forget your password, you could " +
+            <p>{ _t("Just a heads up, if you don't add an email and forget your password, you could " +
                 "<b>permanently lose access to your account</b>.", {}, {
-                b: sub => <b>{sub}</b>,
-            })}</p>
+                b: sub => <b>{ sub }</b>,
+            }) }</p>
             <form onSubmit={onSubmit}>
-                <Field
-                    ref={fieldRef}
+                <EmailField
+                    fieldRef={fieldRef}
                     autoFocus={true}
-                    type="text"
-                    label={_t("Email (optional)")}
+                    label={_td("Email (optional)")}
                     value={email}
                     onChange={ev => {
-                        setEmail(ev.target.value);
+                        const target = ev.target as HTMLInputElement;
+                        setEmail(target.value);
                     }}
-                    onValidate={async fieldState => await validation(fieldState)}
-                    onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_email2_focus")}
-                    onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_email2_blur")}
                 />
             </form>
         </div>

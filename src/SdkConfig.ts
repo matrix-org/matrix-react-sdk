@@ -1,6 +1,6 @@
 /*
 Copyright 2016 OpenMarket Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,62 +15,102 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface ConfigOptions {
-    [key: string]: any;
-}
+import { Optional } from "matrix-events-sdk";
 
-export const DEFAULTS: ConfigOptions = {
-    // Brand name of the app
+import { SnakedObject } from "./utils/SnakedObject";
+import { IConfigOptions, ISsoRedirectOptions } from "./IConfigOptions";
+import { KeysWithObjectShape } from "./@types/common";
+
+// see element-web config.md for docs, or the IConfigOptions interface for dev docs
+export const DEFAULTS: IConfigOptions = {
     brand: "Element",
-    // URL to a page we show in an iframe to configure integrations
     integrations_ui_url: "https://scalar.vector.im/",
-    // Base URL to the REST interface of the integrations server
     integrations_rest_url: "https://scalar.vector.im/api",
-    // Where to send bug reports. If not specified, bugs cannot be sent.
     bug_report_endpoint_url: null,
-    // Jitsi conference options
     jitsi: {
-        // Default conference domain
-        preferredDomain: "jitsi.riot.im",
+        preferred_domain: "meet.element.io",
     },
+    element_call: {
+        url: "https://call.element.io",
+        use_exclusively: false,
+        participant_limit: 8,
+        brand: "Element Call",
+    },
+
+    // @ts-ignore - we deliberately use the camelCase version here so we trigger
+    // the fallback behaviour. If we used the snake_case version then we'd break
+    // everyone's config which has the camelCase property because our default would
+    // be preferred over their config.
     desktopBuilds: {
         available: true,
-        logo: require("../res/img/element-desktop-logo.svg"),
+        logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
+    },
+    voice_broadcast: {
+        chunk_length: 2 * 60, // two minutes
+        max_length: 4 * 60 * 60, // four hours
     },
 };
 
 export default class SdkConfig {
-    private static instance: ConfigOptions;
+    private static instance: IConfigOptions;
+    private static fallback: SnakedObject<IConfigOptions>;
 
-    private static setInstance(i: ConfigOptions) {
+    private static setInstance(i: IConfigOptions) {
         SdkConfig.instance = i;
+        SdkConfig.fallback = new SnakedObject(i);
 
         // For debugging purposes
-        (<any>window).mxReactSdkConfig = i;
+        window.mxReactSdkConfig = i;
     }
 
-    static get() {
-        return SdkConfig.instance || {};
-    }
-
-    static put(cfg: ConfigOptions) {
-        const defaultKeys = Object.keys(DEFAULTS);
-        for (let i = 0; i < defaultKeys.length; ++i) {
-            if (cfg[defaultKeys[i]] === undefined) {
-                cfg[defaultKeys[i]] = DEFAULTS[defaultKeys[i]];
-            }
+    public static get(): IConfigOptions;
+    public static get<K extends keyof IConfigOptions>(key: K, altCaseName?: string): IConfigOptions[K];
+    public static get<K extends keyof IConfigOptions = never>(
+        key?: K, altCaseName?: string,
+    ): IConfigOptions | IConfigOptions[K] {
+        if (key === undefined) {
+            // safe to cast as a fallback - we want to break the runtime contract in this case
+            return SdkConfig.instance || <IConfigOptions>{};
         }
-        SdkConfig.setInstance(cfg);
+        return SdkConfig.fallback.get(key, altCaseName);
     }
 
-    static unset() {
-        SdkConfig.setInstance({});
+    public static getObject<K extends KeysWithObjectShape<IConfigOptions>>(
+        key: K, altCaseName?: string,
+    ): Optional<SnakedObject<IConfigOptions[K]>> {
+        const val = SdkConfig.get(key, altCaseName);
+        if (val !== null && val !== undefined) {
+            return new SnakedObject(val);
+        }
+
+        // return the same type for sensitive callers (some want `undefined` specifically)
+        return val === undefined ? undefined : null;
     }
 
-    static add(cfg: ConfigOptions) {
-        const liveConfig = SdkConfig.get();
-        const newConfig = Object.assign({}, liveConfig, cfg);
-        SdkConfig.put(newConfig);
+    public static put(cfg: Partial<IConfigOptions>) {
+        SdkConfig.setInstance({ ...DEFAULTS, ...cfg });
     }
+
+    /**
+     * Resets the config to be completely empty.
+     */
+    public static unset() {
+        SdkConfig.setInstance(<IConfigOptions>{}); // safe to cast - defaults will be applied
+    }
+
+    public static add(cfg: Partial<IConfigOptions>) {
+        SdkConfig.put({ ...SdkConfig.get(), ...cfg });
+    }
+}
+
+export function parseSsoRedirectOptions(config: IConfigOptions): ISsoRedirectOptions {
+    // Ignore deprecated options if the config is using new ones
+    if (config.sso_redirect_options) return config.sso_redirect_options;
+
+    // We can cheat here because the default is false anyways
+    if (config.sso_immediate_redirect) return { immediate: true };
+
+    // Default: do nothing
+    return {};
 }

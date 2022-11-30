@@ -14,19 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useState} from "react";
-import {Room} from "matrix-js-sdk/src/models/room";
+import React, { useState } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { sleep } from "matrix-js-sdk/src/utils";
 
-import {_t} from "../../../languageHandler";
+import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import {copyPlaintext} from "../../../utils/strings";
-import {sleep} from "../../../utils/promise";
-import {RoomPermalinkCreator} from "../../../utils/permalinks/Permalinks";
-import {showRoomInviteDialog} from "../../../RoomInvite";
+import { copyPlaintext } from "../../../utils/strings";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { showRoomInviteDialog } from "../../../RoomInvite";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 interface IProps {
     space: Room;
-    onFinished(): void;
+    onFinished?(): void;
 }
 
 const SpacePublicShare = ({ space, onFinished }: IProps) => {
@@ -38,27 +41,30 @@ const SpacePublicShare = ({ space, onFinished }: IProps) => {
             onClick={async () => {
                 const permalinkCreator = new RoomPermalinkCreator(space);
                 permalinkCreator.load();
-                const success = await copyPlaintext(permalinkCreator.forRoom());
+                const success = await copyPlaintext(permalinkCreator.forShareableRoom());
                 const text = success ? _t("Copied!") : _t("Failed to copy");
                 setCopiedText(text);
-                await sleep(10);
+                await sleep(5000);
                 if (copiedText === text) { // if the text hasn't changed by another click then clear it after some time
                     setCopiedText(_t("Click to copy"));
                 }
             }}
         >
-            { _t("Share invite link") }
+            <h3>{ _t("Share invite link") }</h3>
             <span>{ copiedText }</span>
         </AccessibleButton>
-        <AccessibleButton
-            className="mx_SpacePublicShare_inviteButton"
-            onClick={() => {
-                showRoomInviteDialog(space.roomId);
-                onFinished();
-            }}
-        >
-            { _t("Invite by email or username") }
-        </AccessibleButton>
+        { space.canInvite(MatrixClientPeg.get()?.getUserId()) && shouldShowComponent(UIComponent.InviteUsers)
+            ? <AccessibleButton
+                className="mx_SpacePublicShare_inviteButton"
+                onClick={() => {
+                    if (onFinished) onFinished();
+                    showRoomInviteDialog(space.roomId);
+                }}
+            >
+                <h3>{ _t("Invite people") }</h3>
+                <span>{ _t("Invite with email or username") }</span>
+            </AccessibleButton>
+            : null }
     </div>;
 };
 

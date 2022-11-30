@@ -14,12 +14,44 @@
  limitations under the License.
  */
 
-import React from 'react';
-
-import {Key} from '../../../Keyboard';
+import React, { HTMLAttributes, InputHTMLAttributes, ReactHTML, ReactNode } from 'react';
 import classnames from 'classnames';
 
-export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element>;
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+
+export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element> | React.FormEvent<Element>;
+
+type AccessibleButtonKind = | 'primary'
+    | 'primary_outline'
+    | 'primary_sm'
+    | 'secondary'
+    | 'secondary_content'
+    | 'content_inline'
+    | 'danger'
+    | 'danger_outline'
+    | 'danger_sm'
+    | 'danger_inline'
+    | 'link'
+    | 'link_inline'
+    | 'link_sm'
+    | 'confirm_sm'
+    | 'cancel_sm'
+    | 'icon';
+
+/**
+ * This type construct allows us to specifically pass those props down to the element we’re creating that the element
+ * actually supports.
+ *
+ * e.g., if element is set to "a", we’ll support href and target, if it’s set to "input", we support type.
+ *
+ * To remain compatible with existing code, we’ll continue to support InputHTMLAttributes<Element>
+ */
+type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
+    JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
+type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
+    Partial<Omit<JSX.IntrinsicElements[T], 'ref' | 'onClick' | 'onMouseDown' | 'onKeyUp' | 'onKeyDown'>>
+    & Omit<InputHTMLAttributes<Element>, 'onClick'>;
 
 /**
  * children: React's magic prop. Represents all children given to the element.
@@ -27,22 +59,24 @@ export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Elemen
  * onClick:  (required) Event handler for button activation. Should be
  *           implemented exactly like a normal onClick handler.
  */
-interface IProps extends React.InputHTMLAttributes<Element> {
+type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     inputRef?: React.Ref<Element>;
-    element?: string;
+    element?: T;
+    children?: ReactNode;
     // The kind of button, similar to how Bootstrap works.
     // See available classes for AccessibleButton for options.
-    kind?: string;
+    kind?: AccessibleButtonKind | string;
     // The ARIA role
     role?: string;
     // The tabIndex
     tabIndex?: number;
     disabled?: boolean;
     className?: string;
-    onClick(e?: ButtonEvent): void;
-}
+    triggerOnMouseDown?: boolean;
+    onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
+};
 
-interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
@@ -54,7 +88,7 @@ interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
  */
-export default function AccessibleButton({
+export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>({
     element,
     onClick,
     children,
@@ -62,38 +96,59 @@ export default function AccessibleButton({
     disabled,
     inputRef,
     className,
+    onKeyDown,
+    onKeyUp,
+    triggerOnMouseDown,
     ...restProps
-}: IProps) {
+}: IProps<T>) {
     const newProps: IAccessibleButtonProps = restProps;
-    if (!disabled) {
-        newProps.onClick = onClick;
+    if (disabled) {
+        newProps["aria-disabled"] = true;
+        newProps["disabled"] = true;
+    } else {
+        if (triggerOnMouseDown) {
+            newProps.onMouseDown = onClick ?? undefined;
+        } else {
+            newProps.onClick = onClick ?? undefined;
+        }
         // We need to consume enter onKeyDown and space onKeyUp
         // otherwise we are risking also activating other keyboard focusable elements
         // that might receive focus as a result of the AccessibleButtonClick action
         // It's because we are using html buttons at a few places e.g. inside dialogs
         // And divs which we report as role button to assistive technologies.
-        // Browsers handle space and enter keypresses differently and we are only adjusting to the
+        // Browsers handle space and enter key presses differently and we are only adjusting to the
         // inconsistencies here
         newProps.onKeyDown = (e) => {
-            if (e.key === Key.ENTER) {
-                e.stopPropagation();
-                e.preventDefault();
-                return onClick(e);
-            }
-            if (e.key === Key.SPACE) {
-                e.stopPropagation();
-                e.preventDefault();
+            const action = getKeyBindingsManager().getAccessibilityAction(e);
+
+            switch (action) {
+                case KeyBindingAction.Enter:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return onClick?.(e);
+                case KeyBindingAction.Space:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+                default:
+                    onKeyDown?.(e);
             }
         };
         newProps.onKeyUp = (e) => {
-            if (e.key === Key.SPACE) {
-                e.stopPropagation();
-                e.preventDefault();
-                return onClick(e);
-            }
-            if (e.key === Key.ENTER) {
-                e.stopPropagation();
-                e.preventDefault();
+            const action = getKeyBindingsManager().getAccessibilityAction(e);
+
+            switch (action) {
+                case KeyBindingAction.Enter:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+                case KeyBindingAction.Space:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return onClick?.(e);
+                default:
+                    onKeyUp?.(e);
+                    break;
             }
         };
     }
@@ -112,11 +167,11 @@ export default function AccessibleButton({
     );
 
     // React.createElement expects InputHTMLAttributes
-    return React.createElement(element, restProps, children);
+    return React.createElement(element, newProps, children);
 }
 
 AccessibleButton.defaultProps = {
-    element: 'div',
+    element: 'div' as keyof ReactHTML,
     role: 'button',
     tabIndex: 0,
 };

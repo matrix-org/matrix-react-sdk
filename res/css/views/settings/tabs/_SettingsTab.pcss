@@ -1,0 +1,107 @@
+/*
+Copyright 2019, 2020 New Vector Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_SettingsTab {
+    --SettingsTab_section-margin-bottom-preferences-labs: 30px;
+    --SettingsTab_heading_nth_child-margin-top: 30px; /* TODO: Use a spacing variable */
+    --SettingsTab_fullWidthField-margin-inline-end: 100px;
+    --SettingsTab_tooltip-max-width: 120px; /* So it fits in the space provided by the page */
+
+    color: $primary-content;
+
+    a {
+        color: $links;
+    }
+}
+
+.mx_SettingsTab_warningText {
+    color: $alert;
+}
+
+.mx_SettingsTab_heading {
+    font-size: $font-20px;
+    font-weight: 600;
+    color: $primary-content;
+    margin-top: 10px; /* TODO: Use a spacing variable */
+    margin-bottom: 10px; /* TODO: Use a spacing variable */
+    margin-right: 100px; /* TODO: Use a spacing variable */
+
+    &:nth-child(n + 2) {
+        margin-top: var(--SettingsTab_heading_nth_child-margin-top);
+    }
+}
+
+.mx_SettingsTab_subheading {
+    font-size: $font-16px;
+    display: block;
+    font-weight: 600;
+    color: $primary-content;
+    margin-top: $spacing-12;
+    margin-bottom: 10px; /* TODO: Use a spacing variable */
+    margin-right: 100px; /* TODO: Use a spacing variable */
+}
+
+.mx_SettingsTab_subsectionText {
+    color: $secondary-content;
+    font-size: $font-14px;
+    display: block;
+    margin-top: 10px; /* TODO: Use a spacing variable */
+    margin-inline-end: 80px; /* Align with the rest of the view */
+    margin-bottom: 10px; /* TODO: Use a spacing variable */
+    margin-inline-start: 0;
+}
+
+.mx_SettingsTab_section {
+    $end-gutter: 80px;
+
+    margin-bottom: $spacing-24;
+
+    .mx_SettingsFlag {
+        margin-inline-end: $end-gutter;
+        margin-bottom: 10px; /* TODO: Use a spacing variable */
+
+        .mx_SettingsFlag_label {
+            vertical-align: middle;
+            display: inline-block;
+            max-width: calc(100% - $font-48px); /* Force word wrap instead of colliding with the switch */
+            box-sizing: border-box;
+        }
+
+        .mx_ToggleSwitch {
+            float: inline-end;
+        }
+    }
+
+    > p {
+        margin-inline-end: $end-gutter;
+    }
+
+    &.mx_SettingsTab_subsectionText .mx_SettingsFlag {
+        margin-inline-end: 0 !important;
+    }
+}
+
+.mx_SettingsTab_toggleWithDescription {
+    margin-top: $spacing-24;
+}
+
+.mx_SettingsTab_sections {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: $spacing-32;
+
+    padding: $spacing-16 0;
+}

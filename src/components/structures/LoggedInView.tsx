@@ -1,7 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2017, 2018, 2020 New Vector Ltd
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,143 +14,126 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { DragDropContext } from 'react-beautiful-dnd';
+import React, { ClipboardEvent } from 'react';
+import { ClientEvent, MatrixClient } from 'matrix-js-sdk/src/client';
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import classNames from 'classnames';
+import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
+import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixError } from 'matrix-js-sdk/src/matrix';
 
-import {Key, isOnlyCtrlOrCmdKeyEvent, isOnlyCtrlOrCmdIgnoreShiftKeyEvent, isMac} from '../../Keyboard';
+import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
-import CallMediaHandler from '../../CallMediaHandler';
+import MediaDeviceHandler from '../../MediaDeviceHandler';
 import { fixupColorFonts } from '../../utils/FontManager';
-import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
-import {MatrixClientPeg, IMatrixClientCreds} from '../../MatrixClientPeg';
+import { IMatrixClientCreds } from '../../MatrixClientPeg';
 import SettingsStore from "../../settings/SettingsStore";
-
-import TagOrderActions from '../../actions/TagOrderActions';
-import RoomListActions from '../../actions/RoomListActions';
+import { SettingLevel } from "../../settings/SettingLevel";
 import ResizeHandle from '../views/elements/ResizeHandle';
-import {Resizer, CollapseDistributor} from '../../resizer';
+import { CollapseDistributor, Resizer } from '../../resizer';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import * as KeyboardShortcuts from "../../accessibility/KeyboardShortcuts";
-import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import { DefaultTagID } from "../../stores/room-list/models";
-import {
-    showToast as showServerLimitToast,
-    hideToast as hideServerLimitToast,
-} from "../../toasts/ServerLimitToast";
+import { hideToast as hideServerLimitToast, showToast as showServerLimitToast } from "../../toasts/ServerLimitToast";
 import { Action } from "../../dispatcher/actions";
 import LeftPanel from "./LeftPanel";
-import CallContainer from '../views/voip/CallContainer';
+import PipContainer from '../views/voip/PipContainer';
 import { ViewRoomDeltaPayload } from "../../dispatcher/payloads/ViewRoomDeltaPayload";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import NonUrgentToastContainer from "./NonUrgentToastContainer";
-import { ToggleRightPanelPayload } from "../../dispatcher/payloads/ToggleRightPanelPayload";
-import { IThreepidInvite } from "../../stores/ThreepidInviteStore";
+import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import Modal from "../../Modal";
 import { ICollapseConfig } from "../../resizer/distributors/collapse";
 import HostSignupContainer from '../views/host_signup/HostSignupContainer';
+import { getKeyBindingsManager } from '../../KeyBindingsManager';
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
-import {replaceableComponent} from "../../utils/replaceableComponent";
+import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../LegacyCallHandler';
+import AudioFeedArrayForLegacyCall from '../views/voip/AudioFeedArrayForLegacyCall';
+import { OwnProfileStore } from '../../stores/OwnProfileStore';
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import RoomView from './RoomView';
+import type { RoomView as RoomViewType } from './RoomView';
+import ToastContainer from './ToastContainer';
+import UserView from "./UserView";
+import BackdropPanel from "./BackdropPanel";
+import { mediaFromMxc } from "../../customisations/Media";
+import { UserTab } from "../views/dialogs/UserTab";
+import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
+import RightPanelStore from '../../stores/right-panel/RightPanelStore';
+import { TimelineRenderingType } from "../../contexts/RoomContext";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
+import { IConfigOptions } from "../../IConfigOptions";
+import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
+import { UserOnboardingPage } from '../views/user-onboarding/UserOnboardingPage';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
 // NB. this is just for server notices rather than pinned messages in general.
 const MAX_PINNED_NOTICES_PER_ROOM = 2;
 
-function canElementReceiveInput(el) {
-    return el.tagName === "INPUT" ||
-        el.tagName === "TEXTAREA" ||
-        el.tagName === "SELECT" ||
-        !!el.getAttribute("contenteditable");
+// Used to find the closest inputable thing. Because of how our composer works,
+// your caret might be within a paragraph/font/div/whatever within the
+// contenteditable rather than directly in something inputable.
+function getInputableElement(el: HTMLElement): HTMLElement | null {
+    return el.closest("input, textarea, select, [contenteditable=true]");
 }
 
 interface IProps {
     matrixClient: MatrixClient;
+    // Called with the credentials of a registered user (if they were a ROU that
+    // transitioned to PWLU)
     onRegistered: (credentials: IMatrixClientCreds) => Promise<MatrixClient>;
-    viaServers?: string[];
     hideToSRUsers: boolean;
     resizeNotifier: ResizeNotifier;
     // eslint-disable-next-line camelcase
-    page_type: string;
-    autoJoin: boolean;
+    page_type?: string;
+    autoJoin?: boolean;
     threepidInvite?: IThreepidInvite;
-    roomOobData?: object;
+    roomOobData?: IOOBData;
     currentRoomId: string;
     collapseLhs: boolean;
-    config: {
-        piwik: {
-            policyUrl: string;
-        },
-        [key: string]: any,
-    };
+    config: IConfigOptions;
     currentUserId?: string;
-    currentGroupId?: string;
-    currentGroupIsNew?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
-}
-
-interface IUsageLimit {
-    // "hs_disabled" is NOT a specced string, but is used in Synapse
-    // This is tracked over at https://github.com/matrix-org/synapse/issues/9237
-    // eslint-disable-next-line camelcase
-    limit_type: "monthly_active_user" | "hs_disabled" | string;
-    // eslint-disable-next-line camelcase
-    admin_contact?: string;
+    forceTimeline?: boolean; // see props on MatrixChat
 }
 
 interface IState {
-    syncErrorData?: {
-        error: {
-            // This is not specced, but used in Synapse. See
-            // https://github.com/matrix-org/synapse/issues/9237#issuecomment-768238922
-            data: IUsageLimit;
-            errcode: string;
-        };
-    };
+    syncErrorData?: ISyncStateData;
     usageLimitDismissed: boolean;
     usageLimitEventContent?: IUsageLimit;
     usageLimitEventTs?: number;
     useCompactLayout: boolean;
+    activeCalls: Array<MatrixCall>;
+    backgroundImage?: string;
 }
 
 /**
  * This is what our MatrixChat shows when we are logged in. The precise view is
  * determined by the page_type property.
  *
- * Currently it's very tightly coupled with MatrixChat. We should try to do
+ * Currently, it's very tightly coupled with MatrixChat. We should try to do
  * something about that.
  *
  * Components mounted below us can access the matrix client via the react context.
  */
-@replaceableComponent("structures.LoggedInView")
 class LoggedInView extends React.Component<IProps, IState> {
     static displayName = 'LoggedInView';
 
-    static propTypes = {
-        matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
-        page_type: PropTypes.string.isRequired,
-        onRoomCreated: PropTypes.func,
-
-        // Called with the credentials of a registered user (if they were a ROU that
-        // transitioned to PWLU)
-        onRegistered: PropTypes.func,
-
-        // Used by the RoomView to handle joining rooms
-        viaServers: PropTypes.arrayOf(PropTypes.string),
-
-        // and lots and lots of other stuff.
-    };
-
     protected readonly _matrixClient: MatrixClient;
-    protected readonly _roomView: React.RefObject<any>;
-    protected readonly _resizeContainer: React.RefObject<ResizeHandle>;
+    protected readonly _roomView: React.RefObject<RoomViewType>;
+    protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
+    protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
+    protected layoutWatcherRef: string;
     protected compactLayoutWatcherRef: string;
+    protected backgroundImageWatcherRef: string;
     protected resizer: Resizer;
 
     constructor(props, context) {
@@ -163,98 +144,120 @@ class LoggedInView extends React.Component<IProps, IState> {
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
             usageLimitDismissed: false,
+            activeCalls: LegacyCallHandler.instance.getAllActiveCalls(),
         };
 
         // stash the MatrixClient in case we log out before we are unmounted
         this._matrixClient = this.props.matrixClient;
 
-        CallMediaHandler.loadDevices();
+        MediaDeviceHandler.loadDevices();
 
         fixupColorFonts();
 
         this._roomView = React.createRef();
         this._resizeContainer = React.createRef();
+        this.resizeHandler = React.createRef();
     }
 
     componentDidMount() {
-        document.addEventListener('keydown', this._onNativeKeyDown, false);
+        document.addEventListener('keydown', this.onNativeKeyDown, false);
+        LegacyCallHandler.instance.addListener(LegacyCallHandlerEvent.CallState, this.onCallState);
 
-        this._updateServerNoticeEvents();
+        this.updateServerNoticeEvents();
 
-        this._matrixClient.on("accountData", this.onAccountData);
-        this._matrixClient.on("sync", this.onSync);
+        this._matrixClient.on(ClientEvent.AccountData, this.onAccountData);
+        this._matrixClient.on(ClientEvent.Sync, this.onSync);
         // Call `onSync` with the current state as well
         this.onSync(
             this._matrixClient.getSyncState(),
             null,
             this._matrixClient.getSyncStateData(),
         );
-        this._matrixClient.on("RoomState.events", this.onRoomStateEvents);
+        this._matrixClient.on(RoomStateEvent.Events, this.onRoomStateEvents);
 
+        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, this.onCompactLayoutChanged);
         this.compactLayoutWatcherRef = SettingsStore.watchSetting(
             "useCompactLayout", null, this.onCompactLayoutChanged,
         );
+        this.backgroundImageWatcherRef = SettingsStore.watchSetting(
+            "RoomList.backgroundImage", null, this.refreshBackgroundImage,
+        );
 
-        this.resizer = this._createResizer();
+        this.resizer = this.createResizer();
         this.resizer.attach();
-        this._loadResizerPreferences();
+
+        OwnProfileStore.instance.on(UPDATE_EVENT, this.refreshBackgroundImage);
+        this.loadResizerPreferences();
+        this.refreshBackgroundImage();
     }
 
     componentWillUnmount() {
-        document.removeEventListener('keydown', this._onNativeKeyDown, false);
-        this._matrixClient.removeListener("accountData", this.onAccountData);
-        this._matrixClient.removeListener("sync", this.onSync);
-        this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
+        document.removeEventListener('keydown', this.onNativeKeyDown, false);
+        LegacyCallHandler.instance.removeListener(LegacyCallHandlerEvent.CallState, this.onCallState);
+        this._matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
+        this._matrixClient.removeListener(ClientEvent.Sync, this.onSync);
+        this._matrixClient.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+        OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
+        SettingsStore.unwatchSetting(this.layoutWatcherRef);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
+        SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
         this.resizer.detach();
     }
 
-    // Child components assume that the client peg will not be null, so give them some
-    // sort of assurance here by only allowing a re-render if the client is truthy.
-    //
-    // This is required because `LoggedInView` maintains its own state and if this state
-    // updates after the client peg has been made null (during logout), then it will
-    // attempt to re-render and the children will throw errors.
-    shouldComponentUpdate() {
-        return Boolean(MatrixClientPeg.get());
-    }
+    private onCallState = (): void => {
+        const activeCalls = LegacyCallHandler.instance.getAllActiveCalls();
+        if (activeCalls === this.state.activeCalls) return;
+        this.setState({ activeCalls });
+    };
 
-    canResetTimelineInRoom = (roomId) => {
+    private refreshBackgroundImage = async (): Promise<void> => {
+        let backgroundImage = SettingsStore.getValue("RoomList.backgroundImage");
+        if (backgroundImage) {
+            // convert to http before going much further
+            backgroundImage = mediaFromMxc(backgroundImage).srcHttp;
+        } else {
+            backgroundImage = OwnProfileStore.instance.getHttpAvatarUrl();
+        }
+        this.setState({ backgroundImage });
+    };
+
+    public canResetTimelineInRoom = (roomId: string) => {
         if (!this._roomView.current) {
             return true;
         }
         return this._roomView.current.canResetTimeline();
     };
 
-    _createResizer() {
-        let size;
-        let collapsed;
+    private createResizer() {
+        let panelSize;
+        let panelCollapsed;
         const collapseConfig: ICollapseConfig = {
             // TODO decrease this once Spaces launches as it'll no longer need to include the 56px Community Panel
             toggleSize: 206 - 50,
-            onCollapsed: (_collapsed) => {
-                collapsed = _collapsed;
-                if (_collapsed) {
-                    dis.dispatch({action: "hide_left_panel"});
+            onCollapsed: (collapsed) => {
+                panelCollapsed = collapsed;
+                if (collapsed) {
+                    dis.dispatch({ action: "hide_left_panel" });
                     window.localStorage.setItem("mx_lhs_size", '0');
                 } else {
-                    dis.dispatch({action: "show_left_panel"});
+                    dis.dispatch({ action: "show_left_panel" });
                 }
             },
-            onResized: (_size) => {
-                size = _size;
+            onResized: (size) => {
+                panelSize = size;
                 this.props.resizeNotifier.notifyLeftHandleResized();
             },
             onResizeStart: () => {
                 this.props.resizeNotifier.startResizing();
             },
             onResizeStop: () => {
-                if (!collapsed) window.localStorage.setItem("mx_lhs_size", '' + size);
+                if (!panelCollapsed) window.localStorage.setItem("mx_lhs_size", '' + panelSize);
                 this.props.resizeNotifier.stopResizing();
             },
             isItemCollapsed: domNode => {
                 return domNode.classList.contains("mx_LeftPanel_minimized");
             },
+            handler: this.resizeHandler.current,
         };
         const resizer = new Resizer(this._resizeContainer.current, CollapseDistributor, collapseConfig);
         resizer.setClassNames({
@@ -265,56 +268,46 @@ class LoggedInView extends React.Component<IProps, IState> {
         return resizer;
     }
 
-    _loadResizerPreferences() {
+    private loadResizerPreferences() {
         let lhsSize = parseInt(window.localStorage.getItem("mx_lhs_size"), 10);
         if (isNaN(lhsSize)) {
             lhsSize = 350;
         }
-        this.resizer.forHandleAt(0).resize(lhsSize);
+        this.resizer.forHandleWithId('lp-resizer').resize(lhsSize);
     }
 
-    onAccountData = (event) => {
+    private onAccountData = (event: MatrixEvent) => {
         if (event.getType() === "m.ignored_user_list") {
-            dis.dispatch({action: "ignore_state_changed"});
+            dis.dispatch({ action: "ignore_state_changed" });
         }
     };
 
-    onCompactLayoutChanged = (setting, roomId, level, valueAtLevel, newValue) => {
+    private onCompactLayoutChanged = () => {
         this.setState({
-            useCompactLayout: valueAtLevel,
+            useCompactLayout: SettingsStore.getValue("useCompactLayout"),
         });
     };
 
-    onSync = (syncState, oldSyncState, data) => {
-        const oldErrCode = (
-            this.state.syncErrorData &&
-            this.state.syncErrorData.error &&
-            this.state.syncErrorData.error.errcode
-        );
-        const newErrCode = data && data.error && data.error.errcode;
+    private onSync = (syncState: SyncState, oldSyncState?: SyncState, data?: ISyncStateData): void => {
+        const oldErrCode = (this.state.syncErrorData?.error as MatrixError)?.errcode;
+        const newErrCode = (data?.error as MatrixError)?.errcode;
         if (syncState === oldSyncState && oldErrCode === newErrCode) return;
 
-        if (syncState === 'ERROR') {
-            this.setState({
-                syncErrorData: data,
-            });
-        } else {
-            this.setState({
-                syncErrorData: null,
-            });
-        }
+        this.setState({
+            syncErrorData: syncState === SyncState.Error ? data : null,
+        });
 
-        if (oldSyncState === 'PREPARED' && syncState === 'SYNCING') {
-            this._updateServerNoticeEvents();
+        if (oldSyncState === SyncState.Prepared && syncState === SyncState.Syncing) {
+            this.updateServerNoticeEvents();
         } else {
-            this._calculateServerLimitToast(this.state.syncErrorData, this.state.usageLimitEventContent);
+            this.calculateServerLimitToast(this.state.syncErrorData, this.state.usageLimitEventContent);
         }
     };
 
-    onRoomStateEvents = (ev, state) => {
+    private onRoomStateEvents = (ev: MatrixEvent): void => {
         const serverNoticeList = RoomListStore.instance.orderedLists[DefaultTagID.ServerNotice];
-        if (serverNoticeList && serverNoticeList.some(r => r.roomId === ev.getRoomId())) {
-            this._updateServerNoticeEvents();
+        if (serverNoticeList?.some(r => r.roomId === ev.getRoomId())) {
+            this.updateServerNoticeEvents();
         }
     };
 
@@ -322,12 +315,12 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.setState({
             usageLimitDismissed: true,
         });
-    }
+    };
 
-    _calculateServerLimitToast(syncError: IState["syncErrorData"], usageLimitEventContent?: IUsageLimit) {
-        const error = syncError && syncError.error && syncError.error.errcode === "M_RESOURCE_LIMIT_EXCEEDED";
+    private calculateServerLimitToast(syncError: IState["syncErrorData"], usageLimitEventContent?: IUsageLimit) {
+        const error = (syncError?.error as MatrixError)?.errcode === "M_RESOURCE_LIMIT_EXCEEDED";
         if (error) {
-            usageLimitEventContent = syncError.error.data;
+            usageLimitEventContent = (syncError?.error as MatrixError).data as IUsageLimit;
         }
 
         // usageLimitDismissed is true when the user has explicitly hidden the toast
@@ -344,7 +337,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         }
     }
 
-    _updateServerNoticeEvents = async () => {
+    private updateServerNoticeEvents = async () => {
         const serverNoticeList = RoomListStore.instance.orderedLists[DefaultTagID.ServerNotice];
         if (!serverNoticeList) return [];
 
@@ -358,7 +351,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             const pinnedEventIds = pinStateEvent.getContent().pinned.slice(0, MAX_PINNED_NOTICES_PER_ROOM);
             for (const eventId of pinnedEventIds) {
-                const timeline = await this._matrixClient.getEventTimeline(room.getUnfilteredTimelineSet(), eventId, 0);
+                const timeline = await this._matrixClient.getEventTimeline(room.getUnfilteredTimelineSet(), eventId);
                 const event = timeline.getEvents().find(ev => ev.getId() === eventId);
                 if (event) events.push(event);
             }
@@ -376,7 +369,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             );
         });
         const usageLimitEventContent = usageLimitEvent && usageLimitEvent.getContent();
-        this._calculateServerLimitToast(this.state.syncErrorData, usageLimitEventContent);
+        this.calculateServerLimitToast(this.state.syncErrorData, usageLimitEventContent);
         this.setState({
             usageLimitEventContent,
             usageLimitEventTs: pinnedEventTs,
@@ -385,19 +378,21 @@ class LoggedInView extends React.Component<IProps, IState> {
         });
     };
 
-    _onPaste = (ev) => {
-        let canReceiveInput = false;
-        let element = ev.target;
-        // test for all parents because the target can be a child of a contenteditable element
-        while (!canReceiveInput && element) {
-            canReceiveInput = canElementReceiveInput(element);
-            element = element.parentElement;
-        }
-        if (!canReceiveInput) {
-            // refocusing during a paste event will make the
-            // paste end up in the newly focused element,
+    private onPaste = (ev: ClipboardEvent) => {
+        const element = ev.target as HTMLElement;
+        const inputableElement = getInputableElement(element);
+        if (inputableElement === document.activeElement) return; // nothing to do
+
+        if (inputableElement?.focus) {
+            inputableElement.focus();
+        } else {
+            const inThread = !!document.activeElement.closest(".mx_ThreadView");
+            // refocusing during a paste event will make the paste end up in the newly focused element,
             // so dispatch synchronously before paste happens
-            dis.fire(Action.FocusComposer, true);
+            dis.dispatch({
+                action: Action.FocusSendMessageComposer,
+                context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
+            }, true);
         }
     };
 
@@ -423,137 +418,189 @@ class LoggedInView extends React.Component<IProps, IState> {
     We also listen with a native listener on the document to get keydown events when no element is focused.
     Bubbling is irrelevant here as the target is the body element.
     */
-    _onReactKeyDown = (ev) => {
+    private onReactKeyDown = (ev) => {
         // events caught while bubbling up on the root element
         // of this component, so something must be focused.
-        this._onKeyDown(ev);
+        this.onKeyDown(ev);
     };
 
-    _onNativeKeyDown = (ev) => {
+    private onNativeKeyDown = (ev) => {
         // only pass this if there is no focused element.
-        // if there is, _onKeyDown will be called by the
+        // if there is, onKeyDown will be called by the
         // react keydown handler that respects the react bubbling order.
         if (ev.target === document.body) {
-            this._onKeyDown(ev);
+            this.onKeyDown(ev);
         }
     };
 
-    _onKeyDown = (ev) => {
+    private onKeyDown = (ev) => {
         let handled = false;
-        const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
-        const hasModifier = ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey;
-        const isModifier = ev.key === Key.ALT || ev.key === Key.CONTROL || ev.key === Key.META || ev.key === Key.SHIFT;
-        const modKey = isMac ? ev.metaKey : ev.ctrlKey;
 
-        switch (ev.key) {
-            case Key.PAGE_UP:
-            case Key.PAGE_DOWN:
-                if (!hasModifier && !isModifier) {
-                    this._onScrollKeyPressed(ev);
-                    handled = true;
-                }
+        const roomAction = getKeyBindingsManager().getRoomAction(ev);
+        switch (roomAction) {
+            case KeyBindingAction.ScrollUp:
+            case KeyBindingAction.ScrollDown:
+            case KeyBindingAction.JumpToFirstMessage:
+            case KeyBindingAction.JumpToLatestMessage:
+                // pass the event down to the scroll panel
+                this.onScrollKeyPressed(ev);
+                handled = true;
                 break;
+            case KeyBindingAction.SearchInRoom:
+                dis.dispatch({
+                    action: 'focus_search',
+                });
+                handled = true;
+                break;
+        }
+        if (handled) {
+            ev.stopPropagation();
+            ev.preventDefault();
+            return;
+        }
 
-            case Key.HOME:
-            case Key.END:
-                if (ev.ctrlKey && !ev.shiftKey && !ev.altKey && !ev.metaKey) {
-                    this._onScrollKeyPressed(ev);
+        const navAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navAction) {
+            case KeyBindingAction.FilterRooms:
+                dis.dispatch({
+                    action: 'focus_room_filter',
+                });
+                handled = true;
+                break;
+            case KeyBindingAction.ToggleUserMenu:
+                dis.fire(Action.ToggleUserMenu);
+                handled = true;
+                break;
+            case KeyBindingAction.ShowKeyboardSettings:
+                dis.dispatch<OpenToTabPayload>({
+                    action: Action.ViewUserSettings,
+                    initialTabId: UserTab.Keyboard,
+                });
+                handled = true;
+                break;
+            case KeyBindingAction.GoToHome:
+                dis.dispatch({
+                    action: Action.ViewHomePage,
+                });
+                Modal.closeCurrentModal("homeKeyboardShortcut");
+                handled = true;
+                break;
+            case KeyBindingAction.ToggleSpacePanel:
+                dis.fire(Action.ToggleSpacePanel);
+                handled = true;
+                break;
+            case KeyBindingAction.ToggleRoomSidePanel:
+                if (this.props.page_type === "room_view") {
+                    RightPanelStore.instance.togglePanel(null);
                     handled = true;
                 }
                 break;
-            case Key.K:
-                if (ctrlCmdOnly) {
-                    dis.dispatch({
-                        action: 'focus_room_filter',
-                    });
-                    handled = true;
-                }
+            case KeyBindingAction.SelectPrevRoom:
+                dis.dispatch<ViewRoomDeltaPayload>({
+                    action: Action.ViewRoomDelta,
+                    delta: -1,
+                    unread: false,
+                });
+                handled = true;
                 break;
-            case Key.F:
-                if (ctrlCmdOnly && SettingsStore.getValue("ctrlFForSearch")) {
-                    dis.dispatch({
-                        action: 'focus_search',
-                    });
-                    handled = true;
-                }
+            case KeyBindingAction.SelectNextRoom:
+                dis.dispatch<ViewRoomDeltaPayload>({
+                    action: Action.ViewRoomDelta,
+                    delta: 1,
+                    unread: false,
+                });
+                handled = true;
                 break;
-            case Key.BACKTICK:
-                // Ideally this would be CTRL+P for "Profile", but that's
-                // taken by the print dialog. CTRL+I for "Information"
-                // was previously chosen but conflicted with italics in
-                // composer, so CTRL+` it is
+            case KeyBindingAction.SelectPrevUnreadRoom:
+                dis.dispatch<ViewRoomDeltaPayload>({
+                    action: Action.ViewRoomDelta,
+                    delta: -1,
+                    unread: true,
+                });
+                break;
+            case KeyBindingAction.SelectNextUnreadRoom:
+                dis.dispatch<ViewRoomDeltaPayload>({
+                    action: Action.ViewRoomDelta,
+                    delta: 1,
+                    unread: true,
+                });
+                break;
+            case KeyBindingAction.PreviousVisitedRoomOrSpace:
+                PlatformPeg.get().navigateForwardBack(true);
+                handled = true;
+                break;
+            case KeyBindingAction.NextVisitedRoomOrSpace:
+                PlatformPeg.get().navigateForwardBack(false);
+                handled = true;
+                break;
+        }
 
-                if (ctrlCmdOnly) {
-                    dis.fire(Action.ToggleUserMenu);
+        // Handle labs actions here, as they apply within the same scope
+        if (!handled) {
+            const labsAction = getKeyBindingsManager().getLabsAction(ev);
+            switch (labsAction) {
+                case KeyBindingAction.ToggleHiddenEventVisibility: {
+                    const hiddenEventVisibility = SettingsStore.getValueAt(
+                        SettingLevel.DEVICE,
+                        'showHiddenEventsInTimeline',
+                        undefined,
+                        false,
+                    );
+                    SettingsStore.setValue(
+                        'showHiddenEventsInTimeline',
+                        undefined,
+                        SettingLevel.DEVICE,
+                        !hiddenEventVisibility,
+                    );
                     handled = true;
+                    break;
                 }
-                break;
+            }
+        }
 
-            case Key.SLASH:
-                if (isOnlyCtrlOrCmdIgnoreShiftKeyEvent(ev)) {
-                    KeyboardShortcuts.toggleDialog();
-                    handled = true;
-                }
-                break;
-
-            case Key.H:
-                if (ev.altKey && modKey) {
-                    dis.dispatch({
-                        action: 'view_home_page',
-                    });
-                    Modal.closeCurrentModal("homeKeyboardShortcut");
-                    handled = true;
-                }
-                break;
-
-            case Key.ARROW_UP:
-            case Key.ARROW_DOWN:
-                if (ev.altKey && !ev.ctrlKey && !ev.metaKey) {
-                    dis.dispatch<ViewRoomDeltaPayload>({
-                        action: Action.ViewRoomDelta,
-                        delta: ev.key === Key.ARROW_UP ? -1 : 1,
-                        unread: ev.shiftKey,
-                    });
-                    handled = true;
-                }
-                break;
-
-            case Key.PERIOD:
-                if (ctrlCmdOnly && (this.props.page_type === "room_view" || this.props.page_type === "group_view")) {
-                    dis.dispatch<ToggleRightPanelPayload>({
-                        action: Action.ToggleRightPanel,
-                        type: this.props.page_type === "room_view" ? "room" : "group",
-                    });
-                    handled = true;
-                }
-                break;
-
-            default:
-                // if we do not have a handler for it, pass it to the platform which might
-                handled = PlatformPeg.get().onKeyDown(ev);
+        if (
+            !handled &&
+            PlatformPeg.get().overrideBrowserShortcuts() &&
+            ev.code.startsWith("Digit") &&
+            ev.code !== "Digit0" && // this is the shortcut for reset zoom, don't override it
+            isOnlyCtrlOrCmdKeyEvent(ev)
+        ) {
+            dis.dispatch<SwitchSpacePayload>({
+                action: Action.SwitchSpace,
+                num: ev.code.slice(5), // Cut off the first 5 characters - "Digit"
+            });
+            handled = true;
         }
 
         if (handled) {
             ev.stopPropagation();
             ev.preventDefault();
-        } else if (!isModifier && !ev.altKey && !ev.ctrlKey && !ev.metaKey) {
+            return;
+        }
+
+        const isModifier = ev.key === Key.ALT || ev.key === Key.CONTROL || ev.key === Key.META || ev.key === Key.SHIFT;
+        if (!isModifier && !ev.ctrlKey && !ev.metaKey) {
             // The above condition is crafted to _allow_ characters with Shift
             // already pressed (but not the Shift key down itself).
-
             const isClickShortcut = ev.target !== document.body &&
                 (ev.key === Key.SPACE || ev.key === Key.ENTER);
 
-            // Do not capture the context menu key to improve keyboard accessibility
-            if (ev.key === Key.CONTEXT_MENU) {
-                return;
-            }
+            // We explicitly allow alt to be held due to it being a common accent modifier.
+            // XXX: Forwarding Dead keys in this way does not work as intended but better to at least
+            // move focus to the composer so the user can re-type the dead key correctly.
+            const isPrintable = ev.key.length === 1 || ev.key === "Dead";
 
-            if (!isClickShortcut && ev.key !== Key.TAB && !canElementReceiveInput(ev.target)) {
+            // If the user is entering a printable character outside of an input field
+            // redirect it to the composer for them.
+            if (!isClickShortcut && isPrintable && !getInputableElement(ev.target as HTMLElement)) {
+                const inThread = !!document.activeElement.closest(".mx_ThreadView");
                 // synchronous dispatch so we focus before key generates input
-                dis.fire(Action.FocusComposer, true);
+                dis.dispatch({
+                    action: Action.FocusSendMessageComposer,
+                    context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
+                }, true);
                 ev.stopPropagation();
-                // we should *not* preventDefault() here as
-                // that would prevent typing in the now-focussed composer
+                // we should *not* preventDefault() here as that would prevent typing in the now-focused composer
             }
         }
     };
@@ -562,133 +609,97 @@ class LoggedInView extends React.Component<IProps, IState> {
      * dispatch a page-up/page-down/etc to the appropriate component
      * @param {Object} ev The key event
      */
-    _onScrollKeyPressed = (ev) => {
+    private onScrollKeyPressed = (ev) => {
         if (this._roomView.current) {
             this._roomView.current.handleScrollKey(ev);
         }
     };
 
-    _onDragEnd = (result) => {
-        // Dragged to an invalid destination, not onto a droppable
-        if (!result.destination) {
-            return;
-        }
-
-        const dest = result.destination.droppableId;
-
-        if (dest === 'tag-panel-droppable') {
-            // Could be "GroupTile +groupId:domain"
-            const draggableId = result.draggableId.split(' ').pop();
-
-            // Dispatch synchronously so that the GroupFilterPanel receives an
-            // optimistic update from GroupFilterOrderStore before the previous
-            // state is shown.
-            dis.dispatch(TagOrderActions.moveTag(
-                this._matrixClient,
-                draggableId,
-                result.destination.index,
-            ), true);
-        } else if (dest.startsWith('room-sub-list-droppable_')) {
-            this._onRoomTileEndDrag(result);
-        }
-    };
-
-    _onRoomTileEndDrag = (result) => {
-        let newTag = result.destination.droppableId.split('_')[1];
-        let prevTag = result.source.droppableId.split('_')[1];
-        if (newTag === 'undefined') newTag = undefined;
-        if (prevTag === 'undefined') prevTag = undefined;
-
-        const roomId = result.draggableId.split('_')[1];
-
-        const oldIndex = result.source.index;
-        const newIndex = result.destination.index;
-
-        dis.dispatch(RoomListActions.tagRoom(
-            this._matrixClient,
-            this._matrixClient.getRoom(roomId),
-            prevTag, newTag,
-            oldIndex, newIndex,
-        ), true);
-    };
-
     render() {
-        const RoomView = sdk.getComponent('structures.RoomView');
-        const UserView = sdk.getComponent('structures.UserView');
-        const GroupView = sdk.getComponent('structures.GroupView');
-        const MyGroups = sdk.getComponent('structures.MyGroups');
-        const ToastContainer = sdk.getComponent('structures.ToastContainer');
-
         let pageElement;
 
         switch (this.props.page_type) {
             case PageTypes.RoomView:
                 pageElement = <RoomView
                     ref={this._roomView}
-                    autoJoin={this.props.autoJoin}
                     onRegistered={this.props.onRegistered}
                     threepidInvite={this.props.threepidInvite}
                     oobData={this.props.roomOobData}
-                    viaServers={this.props.viaServers}
                     key={this.props.currentRoomId || 'roomview'}
                     resizeNotifier={this.props.resizeNotifier}
                     justCreatedOpts={this.props.roomJustCreatedOpts}
+                    forceTimeline={this.props.forceTimeline}
                 />;
                 break;
 
-            case PageTypes.MyGroups:
-                pageElement = <MyGroups />;
-                break;
-
-            case PageTypes.RoomDirectory:
-                // handled by MatrixChat for now
-                break;
-
             case PageTypes.HomePage:
-                pageElement = <HomePage justRegistered={this.props.justRegistered} />;
+                pageElement = <UserOnboardingPage justRegistered={this.props.justRegistered} />;
                 break;
 
             case PageTypes.UserView:
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
                 break;
-            case PageTypes.GroupView:
-                pageElement = <GroupView
-                    groupId={this.props.currentGroupId}
-                    isNew={this.props.currentGroupIsNew}
-                    resizeNotifier={this.props.resizeNotifier}
-                />;
-                break;
         }
 
-        let bodyClasses = 'mx_MatrixChat';
-        if (this.state.useCompactLayout) {
-            bodyClasses += ' mx_MatrixChat_useCompactLayout';
-        }
+        const wrapperClasses = classNames({
+            'mx_MatrixChat_wrapper': true,
+            'mx_MatrixChat_useCompactLayout': this.state.useCompactLayout,
+        });
+        const bodyClasses = classNames({
+            'mx_MatrixChat': true,
+            'mx_MatrixChat--with-avatar': this.state.backgroundImage,
+        });
+
+        const audioFeedArraysForCalls = this.state.activeCalls.map((call) => {
+            return (
+                <AudioFeedArrayForLegacyCall call={call} key={call.callId} />
+            );
+        });
 
         return (
             <MatrixClientContext.Provider value={this._matrixClient}>
                 <div
-                    onPaste={this._onPaste}
-                    onKeyDown={this._onReactKeyDown}
-                    className='mx_MatrixChat_wrapper'
+                    onPaste={this.onPaste}
+                    onKeyDown={this.onReactKeyDown}
+                    className={wrapperClasses}
                     aria-hidden={this.props.hideToSRUsers}
                 >
                     <ToastContainer />
-                    <DragDropContext onDragEnd={this._onDragEnd}>
-                        <div ref={this._resizeContainer} className={bodyClasses}>
-                            { SettingsStore.getValue("feature_spaces") ? <SpacePanel /> : null }
-                            <LeftPanel
-                                isMinimized={this.props.collapseLhs || false}
-                                resizeNotifier={this.props.resizeNotifier}
-                            />
-                            <ResizeHandle />
+                    <div className={bodyClasses}>
+                        <div className='mx_LeftPanel_outerWrapper'>
+                            <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
+                            <nav className='mx_LeftPanel_wrapper'>
+                                <BackdropPanel
+                                    blurMultiplier={0.5}
+                                    backgroundImage={this.state.backgroundImage}
+                                />
+                                <SpacePanel />
+                                <BackdropPanel
+                                    backgroundImage={this.state.backgroundImage}
+                                />
+                                <div
+                                    className="mx_LeftPanel_wrapper--user"
+                                    ref={this._resizeContainer}
+                                    data-collapsed={this.props.collapseLhs ? true : undefined}
+                                >
+                                    <LeftPanel
+                                        pageType={this.props.page_type as PageTypes}
+                                        isMinimized={this.props.collapseLhs || false}
+                                        resizeNotifier={this.props.resizeNotifier}
+                                    />
+                                </div>
+                            </nav>
+                        </div>
+                        <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
+                        <div className="mx_RoomView_wrapper">
                             { pageElement }
                         </div>
-                    </DragDropContext>
+                    </div>
                 </div>
-                <CallContainer />
+                <PipContainer />
                 <NonUrgentToastContainer />
                 <HostSignupContainer />
+                { audioFeedArraysForCalls }
             </MatrixClientContext.Provider>
         );
     }

@@ -15,41 +15,37 @@ limitations under the License.
 */
 
 import * as React from "react";
-import {useContext, useState} from "react";
+import { useContext, useState } from "react";
 
 import AutoHideScrollbar from './AutoHideScrollbar';
-import {getHomePageUrl} from "../../utils/pages";
-import {_t} from "../../languageHandler";
+import { getHomePageUrl } from "../../utils/pages";
+import { _tDom } from "../../languageHandler";
 import SdkConfig from "../../SdkConfig";
-import * as sdk from "../../index";
 import dis from "../../dispatcher/dispatcher";
-import {Action} from "../../dispatcher/actions";
+import { Action } from "../../dispatcher/actions";
 import BaseAvatar from "../views/avatars/BaseAvatar";
-import {OwnProfileStore} from "../../stores/OwnProfileStore";
-import AccessibleButton from "../views/elements/AccessibleButton";
-import {UPDATE_EVENT} from "../../stores/AsyncStore";
-import {useEventEmitter} from "../../hooks/useEventEmitter";
+import { OwnProfileStore } from "../../stores/OwnProfileStore";
+import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import { useEventEmitter } from "../../hooks/useEventEmitter";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import MiniAvatarUploader, {AVATAR_SIZE} from "../views/elements/MiniAvatarUploader";
-import Analytics from "../../Analytics";
-import CountlyAnalytics from "../../CountlyAnalytics";
+import MiniAvatarUploader, { AVATAR_SIZE } from "../views/elements/MiniAvatarUploader";
+import PosthogTrackers from "../../PosthogTrackers";
+import EmbeddedPage from "./EmbeddedPage";
 
-const onClickSendDm = () => {
-    Analytics.trackEvent('home_page', 'button', 'dm');
-    CountlyAnalytics.instance.track("home_page_button", { button: "dm" });
-    dis.dispatch({action: 'view_create_chat'});
+const onClickSendDm = (ev: ButtonEvent) => {
+    PosthogTrackers.trackInteraction("WebHomeCreateChatButton", ev);
+    dis.dispatch({ action: 'view_create_chat' });
 };
 
-const onClickExplore = () => {
-    Analytics.trackEvent('home_page', 'button', 'room_directory');
-    CountlyAnalytics.instance.track("home_page_button", { button: "room_directory" });
+const onClickExplore = (ev: ButtonEvent) => {
+    PosthogTrackers.trackInteraction("WebHomeExploreRoomsButton", ev);
     dis.fire(Action.ViewRoomDirectory);
 };
 
-const onClickNewRoom = () => {
-    Analytics.trackEvent('home_page', 'button', 'create_room');
-    CountlyAnalytics.instance.track("home_page_button", { button: "create_room" });
-    dis.dispatch({action: 'view_create_room'});
+const onClickNewRoom = (ev: ButtonEvent) => {
+    PosthogTrackers.trackInteraction("WebHomeCreateRoomButton", ev);
+    dis.dispatch({ action: 'view_create_room' });
 };
 
 interface IProps {
@@ -72,9 +68,11 @@ const UserWelcomeTop = () => {
     return <div>
         <MiniAvatarUploader
             hasAvatar={!!ownProfile.avatarUrl}
-            hasAvatarLabel={_t("Great, that'll help people know it's you")}
-            noAvatarLabel={_t("Add a photo so people know it's you.")}
+            hasAvatarLabel={_tDom("Great, that'll help people know it's you")}
+            noAvatarLabel={_tDom("Add a photo so people know it's you.")}
             setAvatarUrl={url => cli.setAvatarUrl(url)}
+            isUserAvatar
+            onClick={ev => PosthogTrackers.trackInteraction("WebHomeMiniAvatarUploadButton", ev)}
         >
             <BaseAvatar
                 idName={userId}
@@ -86,8 +84,8 @@ const UserWelcomeTop = () => {
             />
         </MiniAvatarUploader>
 
-        <h1>{ _t("Welcome %(name)s", { name: ownProfile.displayName }) }</h1>
-        <h4>{ _t("Now, let's help you get started") }</h4>
+        <h1>{ _tDom("Welcome %(name)s", { name: ownProfile.displayName }) }</h1>
+        <h2>{ _tDom("Now, let's help you get started") }</h2>
     </div>;
 };
 
@@ -96,40 +94,35 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
     const pageUrl = getHomePageUrl(config);
 
     if (pageUrl) {
-        const EmbeddedPage = sdk.getComponent('structures.EmbeddedPage');
         return <EmbeddedPage className="mx_HomePage" url={pageUrl} scrollbar={true} />;
     }
 
-    let introSection;
-    if (justRegistered) {
+    let introSection: JSX.Element;
+    if (justRegistered || !OwnProfileStore.instance.getHttpAvatarUrl(AVATAR_SIZE)) {
         introSection = <UserWelcomeTop />;
     } else {
-        const brandingConfig = config.branding;
-        let logoUrl = "themes/element/img/logos/element-logo.svg";
-        if (brandingConfig && brandingConfig.authHeaderLogoUrl) {
-            logoUrl = brandingConfig.authHeaderLogoUrl;
-        }
+        const brandingConfig = SdkConfig.getObject("branding");
+        const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
 
         introSection = <React.Fragment>
             <img src={logoUrl} alt={config.brand} />
-            <h1>{ _t("Welcome to %(appName)s", { appName: config.brand }) }</h1>
-            <h4>{ _t("Liberate your communication") }</h4>
+            <h1>{ _tDom("Welcome to %(appName)s", { appName: config.brand }) }</h1>
+            <h2>{ _tDom("Own your conversations.") }</h2>
         </React.Fragment>;
     }
 
-
-    return <AutoHideScrollbar className="mx_HomePage mx_HomePage_default">
+    return <AutoHideScrollbar className="mx_HomePage mx_HomePage_default" element="main">
         <div className="mx_HomePage_default_wrapper">
             { introSection }
             <div className="mx_HomePage_default_buttons">
                 <AccessibleButton onClick={onClickSendDm} className="mx_HomePage_button_sendDm">
-                    { _t("Send a Direct Message") }
+                    { _tDom("Send a Direct Message") }
                 </AccessibleButton>
                 <AccessibleButton onClick={onClickExplore} className="mx_HomePage_button_explore">
-                    { _t("Explore Public Rooms") }
+                    { _tDom("Explore Public Rooms") }
                 </AccessibleButton>
                 <AccessibleButton onClick={onClickNewRoom} className="mx_HomePage_button_createGroup">
-                    { _t("Create a Group Chat") }
+                    { _tDom("Create a Group Chat") }
                 </AccessibleButton>
             </div>
         </div>

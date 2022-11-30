@@ -18,28 +18,26 @@ limitations under the License.
 
 import React from "react";
 
-import AccessibleButton from "../../components/views/elements/AccessibleButton";
-import AccessibleTooltipButton from "../../components/views/elements/AccessibleTooltipButton";
+import { RovingAccessibleButton, RovingAccessibleTooltipButton } from "../RovingTabIndex";
 
-interface IProps extends React.ComponentProps<typeof AccessibleButton> {
+interface IProps extends React.ComponentProps<typeof RovingAccessibleButton> {
     label?: string;
     tooltip?: string;
 }
 
 // Semantic component for representing a role=menuitem
-export const MenuItem: React.FC<IProps> = ({children, label, tooltip, ...props}) => {
+export const MenuItem: React.FC<IProps> = ({ children, label, tooltip, ...props }) => {
     const ariaLabel = props["aria-label"] || label;
 
     if (tooltip) {
-        return <AccessibleTooltipButton {...props} role="menuitem" tabIndex={-1} aria-label={ariaLabel} title={tooltip}>
+        return <RovingAccessibleTooltipButton {...props} role="menuitem" aria-label={ariaLabel} title={tooltip}>
             { children }
-        </AccessibleTooltipButton>;
+        </RovingAccessibleTooltipButton>;
     }
 
     return (
-        <AccessibleButton {...props} role="menuitem" tabIndex={-1} aria-label={ariaLabel}>
+        <RovingAccessibleButton {...props} role="menuitem" aria-label={ariaLabel}>
             { children }
-        </AccessibleButton>
+        </RovingAccessibleButton>
     );
 };
-

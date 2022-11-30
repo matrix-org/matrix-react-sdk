@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import EditorModel from "./model";
-import DocumentPosition, {Predicate} from "./position";
-import {Part} from "./parts";
+import DocumentPosition, { Predicate } from "./position";
+import { Part } from "./parts";
 
 const whitespacePredicate: Predicate = (index, offset, part) => {
     return part.text[offset].trim() === "";
@@ -25,30 +25,65 @@ const whitespacePredicate: Predicate = (index, offset, part) => {
 export default class Range {
     private _start: DocumentPosition;
     private _end: DocumentPosition;
+    private _lastStart: DocumentPosition;
+    private _initializedEmpty: boolean;
 
     constructor(public readonly model: EditorModel, positionA: DocumentPosition, positionB = positionA) {
         const bIsLarger = positionA.compare(positionB) < 0;
         this._start = bIsLarger ? positionA : positionB;
         this._end = bIsLarger ? positionB : positionA;
+        this._lastStart = this._start;
+        this._initializedEmpty = this._start.index === this._end.index && this._start.offset == this._end.offset;
     }
 
-    moveStart(delta: number) {
+    public moveStartForwards(delta: number): void {
         this._start = this._start.forwardsWhile(this.model, () => {
             delta -= 1;
             return delta >= 0;
         });
     }
 
-    trim() {
+    public wasInitializedEmpty(): boolean {
+        return this._initializedEmpty;
+    }
+
+    public setWasEmpty(value: boolean) {
+        this._initializedEmpty = value;
+    }
+
+    public getLastStartingPosition(): DocumentPosition {
+        return this._lastStart;
+    }
+
+    public setLastStartingPosition(position: DocumentPosition): void {
+        this._lastStart = position;
+    }
+
+    public moveEndBackwards(delta: number): void {
+        this._end = this._end.backwardsWhile(this.model, () => {
+            delta -= 1;
+            return delta >= 0;
+        });
+    }
+
+    public trim(): void {
+        if (this.text.trim() === "") {
+            this._start = this._end;
+            return;
+        }
         this._start = this._start.forwardsWhile(this.model, whitespacePredicate);
         this._end = this._end.backwardsWhile(this.model, whitespacePredicate);
     }
 
-    expandBackwardsWhile(predicate: Predicate) {
+    public expandBackwardsWhile(predicate: Predicate): void {
         this._start = this._start.backwardsWhile(this.model, predicate);
     }
 
-    get text() {
+    public expandForwardsWhile(predicate: Predicate): void {
+        this._end = this._end.forwardsWhile(this.model, predicate);
+    }
+
+    public get text(): string {
         let text = "";
         this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
             const t = part.text.substring(startIdx, endIdx);
@@ -63,7 +98,7 @@ export default class Range {
      * @param {Part[]} parts the parts to replace the range with
      * @return {Number} the net amount of characters added, can be negative.
      */
-    replace(parts: Part[]) {
+    public replace(parts: Part[]): number {
         const newLength = parts.reduce((sum, part) => sum + part.text.length, 0);
         let oldLength = 0;
         this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
@@ -77,8 +112,8 @@ export default class Range {
      * Returns a copy of the (partial) parts within the range.
      * For partial parts, only the text is adjusted to the part that intersects with the range.
      */
-    get parts() {
-        const parts = [];
+    public get parts(): Part[] {
+        const parts: Part[] = [];
         this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
             const serializedPart = part.serialize();
             serializedPart.text = part.text.substring(startIdx, endIdx);
@@ -88,7 +123,7 @@ export default class Range {
         return parts;
     }
 
-    get length() {
+    public get length(): number {
         let len = 0;
         this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
             len += endIdx - startIdx;
@@ -96,11 +131,11 @@ export default class Range {
         return len;
     }
 
-    get start() {
+    public get start(): DocumentPosition {
         return this._start;
     }
 
-    get end() {
+    public get end(): DocumentPosition {
         return this._end;
     }
 }

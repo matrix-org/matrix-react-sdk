@@ -23,13 +23,12 @@ import WidgetUtils from "../../../utils/WidgetUtils";
 import AppTile from "../elements/AppTile";
 import { _t } from "../../../languageHandler";
 import { useWidgets } from "./RoomSummaryCard";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
-import { Action } from "../../../dispatcher/actions";
 import { ChevronFace, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
 import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
+import UIStore from "../../../stores/UIStore";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import Heading from '../typography/Heading';
 
 interface IProps {
     room: Room;
@@ -42,22 +41,19 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
 
     const apps = useWidgets(room);
     const app = apps.find(a => a.id === widgetId);
-    const isPinned = app && WidgetLayoutStore.instance.isInContainer(room, app, Container.Top);
+    const isRight = app && WidgetLayoutStore.instance.isInContainer(room, app, Container.Right);
 
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
 
     useEffect(() => {
-        if (!app || isPinned) {
+        if (!app || !isRight) {
             // stop showing this card
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.RoomSummary,
-            });
+            RightPanelStore.instance.popCard();
         }
-    }, [app, isPinned]);
+    }, [app, isRight]);
 
     // Don't render anything as we are about to transition
-    if (!app || isPinned) return null;
+    if (!app || !isRight) return null;
 
     let contextMenu;
     if (menuDisplayed) {
@@ -65,7 +61,7 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
         contextMenu = (
             <WidgetContextMenu
                 chevronFace={ChevronFace.None}
-                right={window.innerWidth - rect.right - 12}
+                right={UIStore.instance.windowWidth - rect.right - 12}
                 top={rect.bottom + 12}
                 onFinished={closeMenu}
                 app={app}
@@ -73,30 +69,27 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
         );
     }
 
-    const header = <React.Fragment>
-        <h2>{ WidgetUtils.getWidgetName(app) }</h2>
+    const header = <div className="mx_BaseCard_header_title">
+        <Heading size="h4" className="mx_BaseCard_header_title_heading">{ WidgetUtils.getWidgetName(app) }</Heading>
         <ContextMenuButton
-            kind="secondary"
-            className="mx_WidgetCard_optionsButton"
+            className="mx_BaseCard_header_title_button--option"
             inputRef={handle}
             onClick={openMenu}
             isExpanded={menuDisplayed}
             label={_t("Options")}
         />
         { contextMenu }
-    </React.Fragment>;
+    </div>;
 
     return <BaseCard
         header={header}
         className="mx_WidgetCard"
         onClose={onClose}
-        previousPhase={RightPanelPhases.RoomSummary}
         withoutScrollContainer
     >
         <AppTile
             app={app}
             fullWidth
-            show
             showMenubar={false}
             room={room}
             userId={cli.getUserId()}

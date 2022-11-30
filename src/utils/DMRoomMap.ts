@@ -14,11 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClientPeg} from '../MatrixClientPeg';
-import {uniq} from "lodash";
-import {Room} from "matrix-js-sdk/src/models/room";
-import {Event} from "matrix-js-sdk/src/models/event";
-import {MatrixClient} from "matrix-js-sdk/src/client";
+import { uniq } from "lodash";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { logger } from "matrix-js-sdk/src/logger";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Optional } from "matrix-events-sdk";
+
+import { MatrixClientPeg } from '../MatrixClientPeg';
 
 /**
  * Class that takes a Matrix Client and flips the m.direct map
@@ -30,20 +34,18 @@ import {MatrixClient} from "matrix-js-sdk/src/client";
 export default class DMRoomMap {
     private static sharedInstance: DMRoomMap;
 
-    private matrixClient: MatrixClient;
     // TODO: convert these to maps
     private roomToUser: {[key: string]: string} = null;
     private userToRooms: {[key: string]: string[]} = null;
     private hasSentOutPatchDirectAccountDataPatch: boolean;
-    private mDirectEvent: Event;
+    private mDirectEvent: {[key: string]: string[]};
 
-    constructor(matrixClient) {
-        this.matrixClient = matrixClient;
+    constructor(private readonly matrixClient: MatrixClient) {
         // see onAccountData
         this.hasSentOutPatchDirectAccountDataPatch = false;
 
-        const mDirectEvent = matrixClient.getAccountData('m.direct');
-        this.mDirectEvent = mDirectEvent ? mDirectEvent.getContent() : {};
+        const mDirectEvent = matrixClient.getAccountData(EventType.Direct)?.getContent() ?? {};
+        this.mDirectEvent = { ...mDirectEvent }; // copy as we will mutate
     }
 
     /**
@@ -53,6 +55,15 @@ export default class DMRoomMap {
     public static makeShared(): DMRoomMap {
         DMRoomMap.sharedInstance = new DMRoomMap(MatrixClientPeg.get());
         return DMRoomMap.sharedInstance;
+    }
+
+    /**
+     * Set the shared instance to the instance supplied
+     * Used by tests
+     * @param inst the new shared instance
+     */
+    public static setShared(inst: DMRoomMap) {
+        DMRoomMap.sharedInstance = inst;
     }
 
     /**
@@ -66,27 +77,27 @@ export default class DMRoomMap {
 
     public start() {
         this.populateRoomToUser();
-        this.matrixClient.on("accountData", this.onAccountData);
+        this.matrixClient.on(ClientEvent.AccountData, this.onAccountData);
     }
 
     public stop() {
-        this.matrixClient.removeListener("accountData", this.onAccountData);
+        this.matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
     }
 
-    private onAccountData = (ev) => {
-        if (ev.getType() == 'm.direct') {
-            this.mDirectEvent = this.matrixClient.getAccountData('m.direct').getContent() || {};
+    private onAccountData = (ev: MatrixEvent) => {
+        if (ev.getType() == EventType.Direct) {
+            this.mDirectEvent = { ...ev.getContent() }; // copy as we will mutate
             this.userToRooms = null;
             this.roomToUser = null;
         }
-    }
+    };
 
     /**
      * some client bug somewhere is causing some DMs to be marked
      * with ourself, not the other user. Fix it by guessing the other user and
      * modifying userToRooms
      */
-    private patchUpSelfDMs(userToRooms) {
+    private patchUpSelfDMs(userToRooms: Record<string, string[]>) {
         const myUserId = this.matrixClient.getUserId();
         const selfRoomIds = userToRooms[myUserId];
         if (selfRoomIds) {
@@ -96,7 +107,7 @@ export default class DMRoomMap {
                 if (room) {
                     const userId = room.guessDMUserId();
                     if (userId && userId !== myUserId) {
-                        return {userId, roomId};
+                        return { userId, roomId };
                     }
                 }
             }).filter((ids) => !!ids); //filter out
@@ -109,7 +120,7 @@ export default class DMRoomMap {
                 return !guessedUserIdsThatChanged
                     .some((ids) => ids.roomId === roomId);
             });
-            guessedUserIdsThatChanged.forEach(({userId, roomId}) => {
+            guessedUserIdsThatChanged.forEach(({ userId, roomId }) => {
                 const roomIds = userToRooms[userId];
                 if (!roomIds) {
                     userToRooms[userId] = [roomId];
@@ -122,7 +133,7 @@ export default class DMRoomMap {
         }
     }
 
-    public getDMRoomsForUserId(userId): string[] {
+    public getDMRoomsForUserId(userId: string): string[] {
         // Here, we return the empty list if there are no rooms,
         // since the number of conversations you have with this user is zero.
         return this.getUserToRooms()[userId] || [];
@@ -131,7 +142,7 @@ export default class DMRoomMap {
     /**
      * Gets the DM room which the given IDs share, if any.
      * @param {string[]} ids The identifiers (user IDs and email addresses) to look for.
-     * @returns {Room} The DM room which all IDs given share, or falsey if no common room.
+     * @returns {Room} The DM room which all IDs given share, or falsy if no common room.
      */
     public getDMRoomForIdentifiers(ids: string[]): Room {
         // TODO: [Canonical DMs] Handle lookups for email addresses.
@@ -149,7 +160,7 @@ export default class DMRoomMap {
         return joinedRooms[0];
     }
 
-    public getUserIdForRoomId(roomId: string) {
+    public getUserIdForRoomId(roomId: string): Optional<string> {
         if (this.roomToUser == null) {
             // we lazily populate roomToUser so you can use
             // this class just to call getDMRoomsForUserId
@@ -174,26 +185,26 @@ export default class DMRoomMap {
     public getUniqueRoomsWithIndividuals(): {[userId: string]: Room} {
         if (!this.roomToUser) return {}; // No rooms means no map.
         return Object.keys(this.roomToUser)
-            .map(r => ({userId: this.getUserIdForRoomId(r), room: this.matrixClient.getRoom(r)}))
+            .map(r => ({ userId: this.getUserIdForRoomId(r), room: this.matrixClient.getRoom(r) }))
             .filter(r => r.userId && r.room && r.room.getInvitedAndJoinedMemberCount() === 2)
             .reduce((obj, r) => (obj[r.userId] = r.room) && obj, {});
     }
 
     private getUserToRooms(): {[key: string]: string[]} {
         if (!this.userToRooms) {
-            const userToRooms = this.mDirectEvent as {[key: string]: string[]};
+            const userToRooms = this.mDirectEvent;
             const myUserId = this.matrixClient.getUserId();
             const selfDMs = userToRooms[myUserId];
-            if (selfDMs && selfDMs.length) {
+            if (selfDMs?.length) {
                 const neededPatching = this.patchUpSelfDMs(userToRooms);
                 // to avoid multiple devices fighting to correct
                 // the account data, only try to send the corrected
                 // version once.
-                console.warn(`Invalid m.direct account data detected ` +
+                logger.warn(`Invalid m.direct account data detected ` +
                     `(self-chats that shouldn't be), patching it up.`);
                 if (neededPatching && !this.hasSentOutPatchDirectAccountDataPatch) {
                     this.hasSentOutPatchDirectAccountDataPatch = true;
-                    this.matrixClient.setAccountData('m.direct', userToRooms);
+                    this.matrixClient.setAccountData(EventType.Direct, userToRooms);
                 }
             }
             this.userToRooms = userToRooms;

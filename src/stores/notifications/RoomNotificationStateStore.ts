@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/models/room";
+import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { ClientEvent } from "matrix-js-sdk/src/client";
+import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
+
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { DefaultTagID, TagID } from "../room-list/models";
 import { FetchRoomFn, ListNotificationState } from "./ListNotificationState";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomNotificationState } from "./RoomNotificationState";
 import { SummarizedNotificationState } from "./SummarizedNotificationState";
+import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
+import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
+import { PosthogAnalytics } from "../../PosthogAnalytics";
 
 interface IState {}
 
-export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new RoomNotificationStateStore();
+export const UPDATE_STATUS_INDICATOR = Symbol("update-status-indicator");
 
+export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
+    private static readonly internalInstance = (() => {
+        const instance = new RoomNotificationStateStore();
+        instance.start();
+        return instance;
+    })();
     private roomMap = new Map<Room, RoomNotificationState>();
+
+    private roomThreadsMap: Map<Room, ThreadsRoomNotificationState> = new Map<Room, ThreadsRoomNotificationState>();
     private listMap = new Map<TagID, ListNotificationState>();
+    private _globalState = new SummarizedNotificationState();
 
     private constructor() {
         super(defaultDispatcher, {});
@@ -40,16 +55,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      * on the SummarizedNotificationState is equivalent to rooms.
      */
     public get globalState(): SummarizedNotificationState {
-        // If we're not ready yet, just return an empty state
-        if (!this.matrixClient) return new SummarizedNotificationState();
-
-        // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
-        // This will include highlights from the previous version of the room internally
-        const globalState = new SummarizedNotificationState();
-        for (const room of this.matrixClient.getVisibleRooms()) {
-            globalState.add(this.getRoomState(room));
-        }
-        return globalState;
+        return this._globalState;
     }
 
     /**
@@ -67,7 +73,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         const getRoomFn: FetchRoomFn = (room: Room) => {
             return this.getRoomState(room);
         };
-        const state = new ListNotificationState(useTileCount, tagId, getRoomFn);
+        const state = new ListNotificationState(useTileCount, getRoomFn);
         this.listMap.set(tagId, state);
         return state;
     }
@@ -81,23 +87,75 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      */
     public getRoomState(room: Room): RoomNotificationState {
         if (!this.roomMap.has(room)) {
-            this.roomMap.set(room, new RoomNotificationState(room));
+            let threadState;
+            if (room.client.canSupport.get(Feature.ThreadUnreadNotifications) === ServerSupport.Unsupported) {
+                // Not very elegant, but that way we ensure that we start tracking
+                // threads notification at the same time at rooms.
+                // There are multiple entry points, and it's unclear which one gets
+                // called first
+                const threadState = new ThreadsRoomNotificationState(room);
+                this.roomThreadsMap.set(room, threadState);
+            }
+            this.roomMap.set(room, new RoomNotificationState(room, threadState));
         }
         return this.roomMap.get(room);
+    }
+
+    public getThreadsRoomState(room: Room): ThreadsRoomNotificationState | null {
+        if (room.client.canSupport.get(Feature.ThreadUnreadNotifications) !== ServerSupport.Unsupported) {
+            return null;
+        }
+
+        if (!this.roomThreadsMap.has(room)) {
+            this.roomThreadsMap.set(room, new ThreadsRoomNotificationState(room));
+        }
+        return this.roomThreadsMap.get(room);
     }
 
     public static get instance(): RoomNotificationStateStore {
         return RoomNotificationStateStore.internalInstance;
     }
 
+    private onSync = (state: SyncState, prevState?: SyncState, data?: ISyncStateData) => {
+        // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
+        // This will include highlights from the previous version of the room internally
+        const globalState = new SummarizedNotificationState();
+        const visibleRooms = this.matrixClient.getVisibleRooms();
+
+        let numFavourites = 0;
+        for (const room of visibleRooms) {
+            if (VisibilityProvider.instance.isRoomVisible(room)) {
+                globalState.add(this.getRoomState(room));
+
+                if (room.tags[DefaultTagID.Favourite] && !room.getType()) numFavourites++;
+            }
+        }
+
+        PosthogAnalytics.instance.setProperty("numFavouriteRooms", numFavourites);
+
+        if (this.globalState.symbol !== globalState.symbol ||
+            this.globalState.count !== globalState.count ||
+            this.globalState.color !== globalState.color ||
+            this.globalState.numUnreadStates !== globalState.numUnreadStates ||
+            state !== prevState
+        ) {
+            this._globalState = globalState;
+            this.emit(UPDATE_STATUS_INDICATOR, globalState, state, prevState, data);
+        }
+    };
+
+    protected async onReady() {
+        this.matrixClient.on(ClientEvent.Sync, this.onSync);
+    }
+
     protected async onNotReady(): Promise<any> {
+        this.matrixClient?.off(ClientEvent.Sync, this.onSync);
         for (const roomState of this.roomMap.values()) {
             roomState.destroy();
         }
     }
 
     // We don't need this, but our contract says we do.
-    protected async onAction(payload: ActionPayload) {
-        return Promise.resolve();
+    protected async onAction(payload: ActionPayload): Promise<void> {
     }
 }

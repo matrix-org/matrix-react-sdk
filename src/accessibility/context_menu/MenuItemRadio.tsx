@@ -18,26 +18,25 @@ limitations under the License.
 
 import React from "react";
 
-import AccessibleButton from "../../components/views/elements/AccessibleButton";
+import { RovingAccessibleButton } from "../RovingTabIndex";
 
-interface IProps extends React.ComponentProps<typeof AccessibleButton> {
+interface IProps extends React.ComponentProps<typeof RovingAccessibleButton> {
     label?: string;
     active: boolean;
 }
 
 // Semantic component for representing a role=menuitemradio
-export const MenuItemRadio: React.FC<IProps> = ({children, label, active, disabled, ...props}) => {
+export const MenuItemRadio: React.FC<IProps> = ({ children, label, active, disabled, ...props }) => {
     return (
-        <AccessibleButton
+        <RovingAccessibleButton
             {...props}
             role="menuitemradio"
             aria-checked={active}
             aria-disabled={disabled}
             disabled={disabled}
-            tabIndex={-1}
             aria-label={label}
         >
             { children }
-        </AccessibleButton>
+        </RovingAccessibleButton>
     );
 };

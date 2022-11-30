@@ -16,7 +16,7 @@ limitations under the License.
 
 import { _t } from './languageHandler';
 
-export function levelRoleMap(usersDefault: number) {
+export function levelRoleMap(usersDefault: number): Record<number | "undefined", string> {
     return {
         undefined: _t('Default'),
         0: _t('Restricted'),
@@ -31,6 +31,6 @@ export function textualPowerLevel(level: number, usersDefault: number): string {
     if (LEVEL_ROLE_MAP[level]) {
         return LEVEL_ROLE_MAP[level];
     } else {
-        return _t("Custom (%(level)s)", {level});
+        return _t("Custom (%(level)s)", { level });
     }
 }

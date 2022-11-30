@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-import {MatrixClientPeg} from "../MatrixClientPeg";
-import {IMediaEventContent, IPreparedMedia, prepEventContentAsMedia} from "./models/IMediaEventContent";
-import {ResizeMethod} from "../Avatar";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { Optional } from "matrix-events-sdk";
+
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { IMediaEventContent, IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
 
 // Populate this class with the details of your customisations when copying it.
 
@@ -30,8 +33,14 @@ import {ResizeMethod} from "../Avatar";
  * "thumbnail media", derived from event contents or external sources.
  */
 export class Media {
+    private client: MatrixClient;
+
     // Per above, this constructor signature can be whatever is helpful for you.
-    constructor(private prepared: IPreparedMedia) {
+    constructor(private prepared: IPreparedMedia, client?: MatrixClient) {
+        this.client = client ?? MatrixClientPeg.get();
+        if (!this.client) {
+            throw new Error("No possible MatrixClient for media resolution. Please provide one or log in.");
+        }
     }
 
     /**
@@ -52,7 +61,7 @@ export class Media {
      * The MXC URI of the thumbnail media, if a thumbnail is recorded. Null/undefined
      * otherwise.
      */
-    public get thumbnailMxc(): string | undefined | null {
+    public get thumbnailMxc(): Optional<string> {
         return this.prepared.thumbnail?.mxc;
     }
 
@@ -67,7 +76,8 @@ export class Media {
      * The HTTP URL for the source media.
      */
     public get srcHttp(): string {
-        return MatrixClientPeg.get().mxcUrlToHttp(this.srcMxc);
+        // eslint-disable-next-line no-restricted-properties
+        return this.client.mxcUrlToHttp(this.srcMxc);
     }
 
     /**
@@ -76,7 +86,8 @@ export class Media {
      */
     public get thumbnailHttp(): string | undefined | null {
         if (!this.hasThumbnail) return null;
-        return MatrixClientPeg.get().mxcUrlToHttp(this.thumbnailMxc);
+        // eslint-disable-next-line no-restricted-properties
+        return this.client.mxcUrlToHttp(this.thumbnailMxc);
     }
 
     /**
@@ -89,7 +100,11 @@ export class Media {
      */
     public getThumbnailHttp(width: number, height: number, mode: ResizeMethod = "scale"): string | null | undefined {
         if (!this.hasThumbnail) return null;
-        return MatrixClientPeg.get().mxcUrlToHttp(this.thumbnailMxc, width, height, mode);
+        // scale using the device pixel ratio to keep images clear
+        width = Math.floor(width * window.devicePixelRatio);
+        height = Math.floor(height * window.devicePixelRatio);
+        // eslint-disable-next-line no-restricted-properties
+        return this.client.mxcUrlToHttp(this.thumbnailMxc, width, height, mode);
     }
 
     /**
@@ -100,7 +115,11 @@ export class Media {
      * @returns {string} The HTTP URL which points to the thumbnail.
      */
     public getThumbnailOfSourceHttp(width: number, height: number, mode: ResizeMethod = "scale"): string {
-        return MatrixClientPeg.get().mxcUrlToHttp(this.srcMxc, width, height, mode);
+        // scale using the device pixel ratio to keep images clear
+        width = Math.floor(width * window.devicePixelRatio);
+        height = Math.floor(height * window.devicePixelRatio);
+        // eslint-disable-next-line no-restricted-properties
+        return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode);
     }
 
     /**
@@ -110,6 +129,7 @@ export class Media {
      * @returns {string} An HTTP URL for the thumbnail.
      */
     public getSquareThumbnailHttp(dim: number): string {
+        dim = Math.floor(dim * window.devicePixelRatio); // scale using the device pixel ratio to keep images clear
         if (this.hasThumbnail) {
             return this.getThumbnailHttp(dim, dim, 'crop');
         }
@@ -128,17 +148,19 @@ export class Media {
 /**
  * Creates a media object from event content.
  * @param {IMediaEventContent} content The event content.
+ * @param {MatrixClient} client? Optional client to use.
  * @returns {Media} The media object.
  */
-export function mediaFromContent(content: IMediaEventContent): Media {
-    return new Media(prepEventContentAsMedia(content));
+export function mediaFromContent(content: Partial<IMediaEventContent>, client?: MatrixClient): Media {
+    return new Media(prepEventContentAsMedia(content), client);
 }
 
 /**
  * Creates a media object from an MXC URI.
  * @param {string} mxc The MXC URI.
+ * @param {MatrixClient} client? Optional client to use.
  * @returns {Media} The media object.
  */
-export function mediaFromMxc(mxc: string): Media {
-    return mediaFromContent({url: mxc});
+export function mediaFromMxc(mxc: string, client?: MatrixClient): Media {
+    return mediaFromContent({ url: mxc }, client);
 }

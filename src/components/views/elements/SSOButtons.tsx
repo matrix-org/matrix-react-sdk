@@ -17,38 +17,60 @@ limitations under the License.
 import React from "react";
 import { chunk } from "lodash";
 import classNames from "classnames";
-import {MatrixClient} from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
+import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "matrix-js-sdk/src/@types/auth";
 
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
-import {_t} from "../../../languageHandler";
-import {IdentityProviderBrand, IIdentityProvider, ISSOFlow} from "../../../Login";
+import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
-import {mediaFromMxc} from "../../../customisations/Media";
+import { mediaFromMxc } from "../../../customisations/Media";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 interface ISSOButtonProps extends Omit<IProps, "flow"> {
-    idp: IIdentityProvider;
+    idp?: IIdentityProvider;
     mini?: boolean;
 }
 
 const getIcon = (brand: IdentityProviderBrand | string) => {
     switch (brand) {
         case IdentityProviderBrand.Apple:
-            return require(`../../../../res/img/element-icons/brands/apple.svg`);
+            return require(`../../../../res/img/element-icons/brands/apple.svg`).default;
         case IdentityProviderBrand.Facebook:
-            return require(`../../../../res/img/element-icons/brands/facebook.svg`);
+            return require(`../../../../res/img/element-icons/brands/facebook.svg`).default;
         case IdentityProviderBrand.Github:
-            return require(`../../../../res/img/element-icons/brands/github.svg`);
+            return require(`../../../../res/img/element-icons/brands/github.svg`).default;
         case IdentityProviderBrand.Gitlab:
-            return require(`../../../../res/img/element-icons/brands/gitlab.svg`);
+            return require(`../../../../res/img/element-icons/brands/gitlab.svg`).default;
         case IdentityProviderBrand.Google:
-            return require(`../../../../res/img/element-icons/brands/google.svg`);
+            return require(`../../../../res/img/element-icons/brands/google.svg`).default;
         case IdentityProviderBrand.Twitter:
-            return require(`../../../../res/img/element-icons/brands/twitter.svg`);
+            return require(`../../../../res/img/element-icons/brands/twitter.svg`).default;
         default:
             return null;
     }
-}
+};
+
+const getAuthenticationType = (brand: IdentityProviderBrand | string): Signup["authenticationType"] => {
+    switch (brand) {
+        case IdentityProviderBrand.Apple:
+            return "Apple";
+        case IdentityProviderBrand.Facebook:
+            return "Facebook";
+        case IdentityProviderBrand.Github:
+            return "GitHub";
+        case IdentityProviderBrand.Gitlab:
+            return "GitLab";
+        case IdentityProviderBrand.Google:
+            return "Google";
+        // Not supported on the analytics SDK at the moment.
+        // case IdentityProviderBrand.Twitter:
+        //     return "Twitter";
+        default:
+            return "SSO";
+    }
+};
 
 const SSOButton: React.FC<ISSOButtonProps> = ({
     matrixClient,
@@ -62,6 +84,8 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     const label = idp ? _t("Continue with %(provider)s", { provider: idp.name }) : _t("Sign in with single sign-on");
 
     const onClick = () => {
+        const authenticationType = getAuthenticationType(idp?.brand ?? "");
+        PosthogAnalytics.instance.setAuthenticationType(authenticationType);
         PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
     };
 
@@ -73,7 +97,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
         brandClass = `mx_SSOButton_brand_${brandName}`;
         icon = <img src={brandIcon} height="24" width="24" alt={brandName} />;
     } else if (typeof idp?.icon === "string" && idp.icon.startsWith("mxc://")) {
-        const src = mediaFromMxc(idp.icon).getSquareThumbnailHttp(24);
+        const src = mediaFromMxc(idp.icon, matrixClient).getSquareThumbnailHttp(24);
         icon = <img src={src} height="24" width="24" alt={idp.name} />;
     }
 
@@ -111,8 +135,8 @@ interface IProps {
 
 const MAX_PER_ROW = 6;
 
-const SSOButtons: React.FC<IProps> = ({matrixClient, flow, loginType, fragmentAfterLogin, primary}) => {
-    const providers = flow["org.matrix.msc2858.identity_providers"] || [];
+const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentAfterLogin, primary }) => {
+    const providers = flow.identity_providers || [];
     if (providers.length < 2) {
         return <div className="mx_SSOButtons">
             <SSOButton

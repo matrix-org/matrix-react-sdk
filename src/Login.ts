@@ -1,9 +1,6 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2018 New Vector Ltd
+Copyright 2015-2021 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,53 +16,17 @@ limitations under the License.
 */
 
 // @ts-ignore - XXX: tsc doesn't like this: our js-sdk imports are complex so this isn't surprising
-import {createClient} from "matrix-js-sdk/src/matrix";
+import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { logger } from "matrix-js-sdk/src/logger";
+import { ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
+
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
 
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
 }
-
-// TODO: Move this to JS SDK
-interface IPasswordFlow {
-    type: "m.login.password";
-}
-
-export enum IdentityProviderBrand {
-    Gitlab = "org.matrix.gitlab",
-    Github = "org.matrix.github",
-    Apple = "org.matrix.apple",
-    Google = "org.matrix.google",
-    Facebook = "org.matrix.facebook",
-    Twitter = "org.matrix.twitter",
-}
-
-export interface IIdentityProvider {
-    id: string;
-    name: string;
-    icon?: string;
-    brand?: IdentityProviderBrand | string;
-}
-
-export interface ISSOFlow {
-    type: "m.login.sso" | "m.login.cas";
-    "org.matrix.msc2858.identity_providers": IIdentityProvider[]; // Unstable prefix for MSC2858
-}
-
-export type LoginFlow = ISSOFlow | IPasswordFlow;
-
-// TODO: Move this to JS SDK
-/* eslint-disable camelcase */
-interface ILoginParams {
-    identifier?: string;
-    password?: string;
-    token?: string;
-    device_id?: string;
-    initial_device_display_name?: string;
-}
-/* eslint-enable camelcase */
 
 export default class Login {
     private hsUrl: string;
@@ -114,11 +75,13 @@ export default class Login {
      * @returns {MatrixClient}
      */
     public createTemporaryClient(): MatrixClient {
-        if (this.tempClient) return this.tempClient; // use memoization
-        return this.tempClient = createClient({
-            baseUrl: this.hsUrl,
-            idBaseUrl: this.isUrl,
-        });
+        if (!this.tempClient) {
+            this.tempClient = createClient({
+                baseUrl: this.hsUrl,
+                idBaseUrl: this.isUrl,
+            });
+        }
+        return this.tempClient;
     }
 
     public async getFlows(): Promise<Array<LoginFlow>> {
@@ -168,7 +131,7 @@ export default class Login {
             return sendLoginRequest(
                 this.fallbackHsUrl, this.isUrl, 'm.login.password', loginParams,
             ).catch((fallbackError) => {
-                console.log("fallback HS login failed", fallbackError);
+                logger.log("fallback HS login failed", fallbackError);
                 // throw the original error
                 throw originalError;
             });
@@ -186,12 +149,11 @@ export default class Login {
             }
             throw originalLoginError;
         }).catch((error) => {
-            console.log("Login failed", error);
+            logger.log("Login failed", error);
             throw error;
         });
     }
 }
-
 
 /**
  * Send a login request to the given server, and format the response
@@ -202,7 +164,7 @@ export default class Login {
  * @param {string} loginType the type of login to do
  * @param {ILoginParams} loginParams the parameters for the login
  *
- * @returns {MatrixClientCreds}
+ * @returns {IMatrixClientCreds}
  */
 export async function sendLoginRequest(
     hsUrl: string,
@@ -221,12 +183,12 @@ export async function sendLoginRequest(
     if (wellknown) {
         if (wellknown["m.homeserver"] && wellknown["m.homeserver"]["base_url"]) {
             hsUrl = wellknown["m.homeserver"]["base_url"];
-            console.log(`Overrode homeserver setting with ${hsUrl} from login response`);
+            logger.log(`Overrode homeserver setting with ${hsUrl} from login response`);
         }
         if (wellknown["m.identity_server"] && wellknown["m.identity_server"]["base_url"]) {
             // TODO: should we prompt here?
             isUrl = wellknown["m.identity_server"]["base_url"];
-            console.log(`Overrode IS setting with ${isUrl} from login response`);
+            logger.log(`Overrode IS setting with ${isUrl} from login response`);
         }
     }
 

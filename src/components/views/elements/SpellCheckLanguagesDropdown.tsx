@@ -16,12 +16,11 @@ limitations under the License.
 
 import React from 'react';
 
-import Dropdown from "../../views/elements/Dropdown"
-import * as sdk from '../../../index';
+import Dropdown from "../../views/elements/Dropdown";
 import PlatformPeg from "../../../PlatformPeg";
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Spinner from "./Spinner";
 
 function languageMatchesSearchQuery(query, language) {
     if (language.label.toUpperCase().includes(query.toUpperCase())) return true;
@@ -30,22 +29,21 @@ function languageMatchesSearchQuery(query, language) {
 }
 
 interface SpellCheckLanguagesDropdownIProps {
-    className: string,
-    value: string,
-    onOptionChange(language: string),
+    className: string;
+    value: string;
+    onOptionChange(language: string);
 }
 
 interface SpellCheckLanguagesDropdownIState {
-    searchQuery: string,
-    languages: any,
+    searchQuery: string;
+    languages: any;
 }
 
-@replaceableComponent("views.elements.SpellCheckLanguagesDropdown")
 export default class SpellCheckLanguagesDropdown extends React.Component<SpellCheckLanguagesDropdownIProps,
                                                                          SpellCheckLanguagesDropdownIState> {
     constructor(props) {
         super(props);
-        this._onSearchChange = this._onSearchChange.bind(this);
+        this.onSearchChange = this.onSearchChange.bind(this);
 
         this.state = {
             searchQuery: '',
@@ -67,24 +65,21 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
                     langs.push({
                         label: language,
                         value: language,
-                    })
-                })
-                this.setState({languages: langs});
+                    });
+                });
+                this.setState({ languages: langs });
             }).catch((e) => {
-                this.setState({languages: ['en']});
+                this.setState({ languages: ['en'] });
             });
         }
     }
 
-    _onSearchChange(search) {
-        this.setState({
-            searchQuery: search,
-        });
+    private onSearchChange(searchQuery: string) {
+        this.setState({ searchQuery });
     }
 
     render() {
         if (this.state.languages === null) {
-            const Spinner = sdk.getComponent('elements.Spinner');
             return <Spinner />;
         }
 
@@ -104,7 +99,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
         });
 
         // default value here too, otherwise we need to handle null / undefined;
-        // values between mounting and the initial value propgating
+        // values between mounting and the initial value propagating
         let language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
         let value = null;
         if (language) {
@@ -118,10 +113,12 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
             id="mx_LanguageDropdown"
             className={this.props.className}
             onOptionChange={this.props.onOptionChange}
-            onSearchChange={this._onSearchChange}
+            onSearchChange={this.onSearchChange}
             searchEnabled={true}
             value={value}
-            label={_t("Language Dropdown")}>
+            label={_t("Language Dropdown")}
+            placeholder={_t("Choose a locale")}
+        >
             { options }
         </Dropdown>;
     }

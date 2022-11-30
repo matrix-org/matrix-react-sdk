@@ -15,33 +15,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClient} from "matrix-js-sdk/src/client";
-import {RoomMember} from "matrix-js-sdk/src/models/room-member";
-import {Room} from "matrix-js-sdk/src/models/room";
+import { split } from "lodash";
+import EMOJIBASE_REGEX from "emojibase-regex";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import AutocompleteWrapperModel, {
     GetAutocompleterComponent,
     UpdateCallback,
     UpdateQuery,
 } from "./autocomplete";
+import { unicodeToShortcode } from "../HtmlUtils";
 import * as Avatar from "../Avatar";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { Action } from "../dispatcher/actions";
+import SettingsStore from "../settings/SettingsStore";
 
 interface ISerializedPart {
-    type: Type.Plain | Type.Newline | Type.Command | Type.PillCandidate;
+    type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
     text: string;
 }
 
 interface ISerializedPillPart {
     type: Type.AtRoomPill | Type.RoomPill | Type.UserPill;
     text: string;
-    resourceId: string;
+    resourceId?: string;
 }
 
 export type SerializedPart = ISerializedPart | ISerializedPillPart;
 
-enum Type {
+export enum Type {
     Plain = "plain",
     Newline = "newline",
+    Emoji = "emoji",
     Command = "command",
     UserPill = "user-pill",
     RoomPill = "room-pill",
@@ -51,18 +58,19 @@ enum Type {
 
 interface IBasePart {
     text: string;
-    type: Type.Plain | Type.Newline;
+    type: Type.Plain | Type.Newline | Type.Emoji;
     canEdit: boolean;
+    acceptsCaret: boolean;
 
     createAutoComplete(updateCallback: UpdateCallback): void;
 
     serialize(): SerializedPart;
-    remove(offset: number, len: number): string;
+    remove(offset: number, len: number): string | undefined;
     split(offset: number): IBasePart;
     validateAndInsert(offset: number, str: string, inputType: string): boolean;
-    appendUntilRejected(str: string, inputType: string): string;
-    updateDOMNode(node: Node);
-    canUpdateDOMNode(node: Node);
+    appendUntilRejected(str: string, inputType: string): string | undefined;
+    updateDOMNode(node: Node): void;
+    canUpdateDOMNode(node: Node): boolean;
     toDOMNode(): Node;
 }
 
@@ -85,29 +93,30 @@ abstract class BasePart {
         this._text = text;
     }
 
-    acceptsInsertion(chr: string, offset: number, inputType: string) {
+    // chr can also be a grapheme cluster
+    protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
         return true;
     }
 
-    acceptsRemoval(position: number, chr: string) {
+    protected acceptsRemoval(position: number, chr: string): boolean {
         return true;
     }
 
-    merge(part: Part) {
+    public merge(part: Part): boolean {
         return false;
     }
 
-    split(offset: number) {
-        const splitText = this.text.substr(offset);
-        this._text = this.text.substr(0, offset);
+    public split(offset: number): IBasePart {
+        const splitText = this.text.slice(offset);
+        this._text = this.text.slice(0, offset);
         return new PlainPart(splitText);
     }
 
     // removes len chars, or returns the plain text this part should be replaced with
     // if the part would become invalid if it removed everything.
-    remove(offset: number, len: number) {
+    public remove(offset: number, len: number): string | undefined {
         // validate
-        const strWithRemoval = this.text.substr(0, offset) + this.text.substr(offset + len);
+        const strWithRemoval = this.text.slice(0, offset) + this.text.slice(offset + len);
         for (let i = offset; i < (len + offset); ++i) {
             const chr = this.text.charAt(i);
             if (!this.acceptsRemoval(i, chr)) {
@@ -118,70 +127,80 @@ abstract class BasePart {
     }
 
     // append str, returns the remaining string if a character was rejected.
-    appendUntilRejected(str: string, inputType: string) {
+    public appendUntilRejected(str: string, inputType: string): string | undefined {
         const offset = this.text.length;
-        for (let i = 0; i < str.length; ++i) {
-            const chr = str.charAt(i);
-            if (!this.acceptsInsertion(chr, offset + i, inputType)) {
-                this._text = this._text + str.substr(0, i);
-                return str.substr(i);
+        // Take a copy as we will be taking chunks off the start of the string as we process them
+        // To only need to grapheme split the bits of the string we're working on.
+        let buffer = str;
+        while (buffer) {
+            // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+            const [char] = split(buffer, "", 2);
+            if (!this.acceptsInsertion(char, offset + str.length - buffer.length, inputType)) {
+                break;
             }
+            buffer = buffer.slice(char.length);
         }
-        this._text = this._text + str;
+
+        this._text += str.slice(0, str.length - buffer.length);
+        return buffer || undefined;
     }
 
     // inserts str at offset if all the characters in str were accepted, otherwise don't do anything
     // return whether the str was accepted or not.
-    validateAndInsert(offset: number, str: string, inputType: string) {
+    public validateAndInsert(offset: number, str: string, inputType: string): boolean {
         for (let i = 0; i < str.length; ++i) {
             const chr = str.charAt(i);
             if (!this.acceptsInsertion(chr, offset + i, inputType)) {
                 return false;
             }
         }
-        const beforeInsert = this._text.substr(0, offset);
-        const afterInsert = this._text.substr(offset);
+        const beforeInsert = this._text.slice(0, offset);
+        const afterInsert = this._text.slice(offset);
         this._text = beforeInsert + str + afterInsert;
         return true;
     }
 
-    createAutoComplete(updateCallback: UpdateCallback): void {}
+    public createAutoComplete(updateCallback: UpdateCallback): void {}
 
-    trim(len: number) {
-        const remaining = this._text.substr(len);
-        this._text = this._text.substr(0, len);
+    protected trim(len: number): string {
+        const remaining = this._text.slice(len);
+        this._text = this._text.slice(0, len);
         return remaining;
     }
 
-    get text() {
+    public get text(): string {
         return this._text;
     }
 
-    abstract get type(): Type;
+    public abstract get type(): Type;
 
-    get canEdit() {
+    public get canEdit(): boolean {
         return true;
     }
 
-    toString() {
+    public get acceptsCaret(): boolean {
+        return this.canEdit;
+    }
+
+    public toString(): string {
         return `${this.type}(${this.text})`;
     }
 
-    serialize(): SerializedPart {
+    public serialize(): SerializedPart {
         return {
             type: this.type as ISerializedPart["type"],
             text: this.text,
         };
     }
 
-    abstract updateDOMNode(node: Node);
-    abstract canUpdateDOMNode(node: Node);
-    abstract toDOMNode(): Node;
+    public abstract updateDOMNode(node: Node): void;
+    public abstract canUpdateDOMNode(node: Node): boolean;
+    public abstract toDOMNode(): Node;
 }
 
 abstract class PlainBasePart extends BasePart {
-    acceptsInsertion(chr: string, offset: number, inputType: string) {
-        if (chr === "\n") {
+    protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
+        if (chr === "\n" || EMOJIBASE_REGEX.test(chr)) {
             return false;
         }
         // when not pasting or dropping text, reject characters that should start a pill candidate
@@ -203,11 +222,11 @@ abstract class PlainBasePart extends BasePart {
         return true;
     }
 
-    toDOMNode() {
+    public toDOMNode(): Node {
         return document.createTextNode(this.text);
     }
 
-    merge(part) {
+    public merge(part): boolean {
         if (part.type === this.type) {
             this._text = this.text + part.text;
             return true;
@@ -215,47 +234,49 @@ abstract class PlainBasePart extends BasePart {
         return false;
     }
 
-    updateDOMNode(node: Node) {
+    public updateDOMNode(node: Node): void {
         if (node.textContent !== this.text) {
             node.textContent = this.text;
         }
     }
 
-    canUpdateDOMNode(node: Node) {
+    public canUpdateDOMNode(node: Node): boolean {
         return node.nodeType === Node.TEXT_NODE;
     }
 }
 
 // exported for unit tests, should otherwise only be used through PartCreator
 export class PlainPart extends PlainBasePart implements IBasePart {
-    get type(): IBasePart["type"] {
+    public get type(): IBasePart["type"] {
         return Type.Plain;
     }
 }
 
-abstract class PillPart extends BasePart implements IPillPart {
+export abstract class PillPart extends BasePart implements IPillPart {
     constructor(public resourceId: string, label) {
         super(label);
     }
 
-    acceptsInsertion(chr: string) {
+    protected acceptsInsertion(chr: string): boolean {
         return chr !== " ";
     }
 
-    acceptsRemoval(position: number, chr: string) {
+    protected acceptsRemoval(position: number, chr: string): boolean {
         return position !== 0;  //if you remove initial # or @, pill should become plain
     }
 
-    toDOMNode() {
+    public toDOMNode(): Node {
         const container = document.createElement("span");
         container.setAttribute("spellcheck", "false");
+        container.setAttribute("contentEditable", "false");
+        container.onclick = this.onClick;
         container.className = this.className;
         container.appendChild(document.createTextNode(this.text));
         this.setAvatar(container);
         return container;
     }
 
-    updateDOMNode(node: HTMLElement) {
+    public updateDOMNode(node: HTMLElement): void {
         const textNode = node.childNodes[0];
         if (textNode.textContent !== this.text) {
             textNode.textContent = this.text;
@@ -263,10 +284,13 @@ abstract class PillPart extends BasePart implements IPillPart {
         if (node.className !== this.className) {
             node.className = this.className;
         }
+        if (node.onclick !== this.onClick) {
+            node.onclick = this.onClick;
+        }
         this.setAvatar(node);
     }
 
-    canUpdateDOMNode(node: HTMLElement) {
+    public canUpdateDOMNode(node: HTMLElement): boolean {
         return node.nodeType === Node.ELEMENT_NODE &&
                node.nodeName === "SPAN" &&
                node.childNodes.length === 1 &&
@@ -274,7 +298,7 @@ abstract class PillPart extends BasePart implements IPillPart {
     }
 
     // helper method for subclasses
-    _setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string) {
+    protected setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string): void {
         const avatarBackground = `url('${avatarUrl}')`;
         const avatarLetter = `'${initialLetter}'`;
         // check if the value is changing,
@@ -287,41 +311,51 @@ abstract class PillPart extends BasePart implements IPillPart {
         }
     }
 
-    get canEdit() {
+    public serialize(): ISerializedPillPart {
+        return {
+            type: this.type,
+            text: this.text,
+            resourceId: this.resourceId,
+        };
+    }
+
+    public get canEdit(): boolean {
         return false;
     }
 
-    abstract get type(): IPillPart["type"];
+    public abstract get type(): IPillPart["type"];
 
-    abstract get className(): string;
+    protected abstract get className(): string;
 
-    abstract setAvatar(node: HTMLElement): void;
+    protected onClick?: () => void;
+
+    protected abstract setAvatar(node: HTMLElement): void;
 }
 
 class NewlinePart extends BasePart implements IBasePart {
-    acceptsInsertion(chr: string, offset: number) {
+    protected acceptsInsertion(chr: string, offset: number): boolean {
         return offset === 0 && chr === "\n";
     }
 
-    acceptsRemoval(position: number, chr: string) {
+    protected acceptsRemoval(position: number, chr: string): boolean {
         return true;
     }
 
-    toDOMNode() {
+    public toDOMNode(): Node {
         return document.createElement("br");
     }
 
-    merge() {
+    public merge(): boolean {
         return false;
     }
 
-    updateDOMNode() {}
+    public updateDOMNode(): void {}
 
-    canUpdateDOMNode(node: HTMLElement) {
+    public canUpdateDOMNode(node: HTMLElement): boolean {
         return node.tagName === "BR";
     }
 
-    get type(): IBasePart["type"] {
+    public get type(): IBasePart["type"] {
         return Type.Newline;
     }
 
@@ -329,36 +363,74 @@ class NewlinePart extends BasePart implements IBasePart {
     // rather than trying to append to it, which is what we want.
     // As a newline can also be only one character, it makes sense
     // as it can only be one character long. This caused #9741.
-    get canEdit() {
+    public get canEdit(): boolean {
         return false;
     }
 }
 
+export class EmojiPart extends BasePart implements IBasePart {
+    protected acceptsInsertion(chr: string, offset: number): boolean {
+        return EMOJIBASE_REGEX.test(chr);
+    }
+
+    protected acceptsRemoval(position: number, chr: string): boolean {
+        return false;
+    }
+
+    public toDOMNode(): Node {
+        const span = document.createElement("span");
+        span.className = "mx_Emoji";
+        span.setAttribute("title", unicodeToShortcode(this.text));
+        span.appendChild(document.createTextNode(this.text));
+        return span;
+    }
+
+    public updateDOMNode(node: HTMLElement): void {
+        const textNode = node.childNodes[0];
+        if (textNode.textContent !== this.text) {
+            node.setAttribute("title", unicodeToShortcode(this.text));
+            textNode.textContent = this.text;
+        }
+    }
+
+    public canUpdateDOMNode(node: HTMLElement): boolean {
+        return node.className === "mx_Emoji";
+    }
+
+    public get type(): IBasePart["type"] {
+        return Type.Emoji;
+    }
+
+    public get canEdit(): boolean {
+        return false;
+    }
+
+    public get acceptsCaret(): boolean {
+        return true;
+    }
+}
+
 class RoomPillPart extends PillPart {
-    constructor(resourceId: string, label: string, private room: Room) {
+    constructor(resourceId: string, label: string, private room?: Room) {
         super(resourceId, label);
     }
 
-    setAvatar(node: HTMLElement) {
+    protected setAvatar(node: HTMLElement): void {
         let initialLetter = "";
-        let avatarUrl = Avatar.avatarUrlForRoom(
-            this.room,
-            16 * window.devicePixelRatio,
-            16 * window.devicePixelRatio,
-            "crop");
+        let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(this.room ? this.room.name : this.resourceId);
-            avatarUrl = Avatar.defaultAvatarUrlForString(this.room ? this.room.roomId : this.resourceId);
+            initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId);
+            avatarUrl = Avatar.defaultAvatarUrlForString(this.room?.roomId ?? this.resourceId);
         }
-        this._setAvatarVars(node, avatarUrl, initialLetter);
+        this.setAvatarVars(node, avatarUrl, initialLetter);
     }
 
-    get type(): IPillPart["type"] {
+    public get type(): IPillPart["type"] {
         return Type.RoomPill;
     }
 
-    get className() {
-        return "mx_RoomPill mx_Pill";
+    protected get className() {
+        return "mx_Pill " + (this.room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
     }
 }
 
@@ -367,8 +439,15 @@ class AtRoomPillPart extends RoomPillPart {
         super(text, text, room);
     }
 
-    get type(): IPillPart["type"] {
+    public get type(): IPillPart["type"] {
         return Type.AtRoomPill;
+    }
+
+    public serialize(): ISerializedPillPart {
+        return {
+            type: this.type,
+            text: this.text,
+        };
     }
 }
 
@@ -377,39 +456,34 @@ class UserPillPart extends PillPart {
         super(userId, displayName);
     }
 
-    setAvatar(node: HTMLElement) {
+    public get type(): IPillPart["type"] {
+        return Type.UserPill;
+    }
+
+    protected get className() {
+        return "mx_UserPill mx_Pill";
+    }
+
+    protected setAvatar(node: HTMLElement): void {
         if (!this.member) {
             return;
         }
         const name = this.member.name || this.member.userId;
         const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(this.member.userId);
-        const avatarUrl = Avatar.avatarUrlForMember(
-            this.member,
-            16 * window.devicePixelRatio,
-            16 * window.devicePixelRatio,
-            "crop");
+        const avatarUrl = Avatar.avatarUrlForMember(this.member, 16, 16, "crop");
         let initialLetter = "";
         if (avatarUrl === defaultAvatarUrl) {
             initialLetter = Avatar.getInitialLetter(name);
         }
-        this._setAvatarVars(node, avatarUrl, initialLetter);
+        this.setAvatarVars(node, avatarUrl, initialLetter);
     }
 
-    get type(): IPillPart["type"] {
-        return Type.UserPill;
-    }
-
-    get className() {
-        return "mx_UserPill mx_Pill";
-    }
-
-    serialize(): ISerializedPillPart {
-        return {
-            type: this.type,
-            text: this.text,
-            resourceId: this.resourceId,
-        };
-    }
+    protected onClick = (): void => {
+        defaultDispatcher.dispatch({
+            action: Action.ViewUser,
+            member: this.member,
+        });
+    };
 }
 
 class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
@@ -417,11 +491,11 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
         super(text);
     }
 
-    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel {
+    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel {
         return this.autoCompleteCreator.create(updateCallback);
     }
 
-    acceptsInsertion(chr: string, offset: number, inputType: string) {
+    protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
         if (offset === 0) {
             return true;
         } else {
@@ -429,11 +503,11 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
         }
     }
 
-    merge() {
+    public merge(): boolean {
         return false;
     }
 
-    acceptsRemoval(position: number, chr: string) {
+    protected acceptsRemoval(position: number, chr: string): boolean {
         return true;
     }
 
@@ -464,17 +538,21 @@ interface IAutocompleteCreator {
 export class PartCreator {
     protected readonly autoCompleteCreator: IAutocompleteCreator;
 
-    constructor(private room: Room, private client: MatrixClient, autoCompleteCreator: AutoCompleteCreator = null) {
+    constructor(
+        private readonly room: Room,
+        private readonly client: MatrixClient,
+        autoCompleteCreator: AutoCompleteCreator = null,
+    ) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
-        this.autoCompleteCreator = {create: autoCompleteCreator && autoCompleteCreator(this)};
+        this.autoCompleteCreator = { create: autoCompleteCreator?.(this) };
     }
 
-    setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator) {
+    public setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator): void {
         this.autoCompleteCreator.create = autoCompleteCreator(this);
     }
 
-    createPartForInput(input: string, partIndex: number, inputType?: string): Part {
+    public createPartForInput(input: string, partIndex: number, inputType?: string): Part {
         switch (input[0]) {
             case "#":
             case "@":
@@ -484,45 +562,55 @@ export class PartCreator {
             case "\n":
                 return new NewlinePart();
             default:
+                // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+                if (EMOJIBASE_REGEX.test(split(input, "", 2)[0])) {
+                    return new EmojiPart();
+                }
                 return new PlainPart();
         }
     }
 
-    createDefaultPart(text: string) {
+    public createDefaultPart(text: string): Part {
         return this.plain(text);
     }
 
-    deserializePart(part: SerializedPart): Part {
+    public deserializePart(part: SerializedPart): Part {
         switch (part.type) {
             case Type.Plain:
                 return this.plain(part.text);
             case Type.Newline:
                 return this.newline();
+            case Type.Emoji:
+                return this.emoji(part.text);
             case Type.AtRoomPill:
                 return this.atRoomPill(part.text);
             case Type.PillCandidate:
                 return this.pillCandidate(part.text);
             case Type.RoomPill:
-                return this.roomPill(part.text);
+                return this.roomPill(part.resourceId);
             case Type.UserPill:
                 return this.userPill(part.text, part.resourceId);
         }
     }
 
-    plain(text: string) {
+    public plain(text: string): PlainPart {
         return new PlainPart(text);
     }
 
-    newline() {
+    public newline(): NewlinePart {
         return new NewlinePart("\n");
     }
 
-    pillCandidate(text: string) {
+    public emoji(text: string): EmojiPart {
+        return new EmojiPart(text);
+    }
+
+    public pillCandidate(text: string): PillCandidatePart {
         return new PillCandidatePart(text, this.autoCompleteCreator);
     }
 
-    roomPill(alias: string, roomId?: string) {
-        let room;
+    public roomPill(alias: string, roomId?: string): RoomPillPart {
+        let room: Room | undefined;
         if (roomId || alias[0] !== "#") {
             room = this.client.getRoom(roomId || alias);
         } else {
@@ -534,18 +622,47 @@ export class PartCreator {
         return new RoomPillPart(alias, room ? room.name : alias, room);
     }
 
-    atRoomPill(text: string) {
+    public atRoomPill(text: string): AtRoomPillPart {
         return new AtRoomPillPart(text, this.room);
     }
 
-    userPill(displayName: string, userId: string) {
+    public userPill(displayName: string, userId: string): UserPillPart {
         const member = this.room.getMember(userId);
         return new UserPillPart(userId, displayName, member);
     }
 
-    createMentionParts(partIndex: number, displayName: string, userId: string) {
+    public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
+        const parts = [];
+        let plainText = "";
+
+        // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+        for (const char of split(text, "")) {
+            if (EMOJIBASE_REGEX.test(char)) {
+                if (plainText) {
+                    parts.push(this.plain(plainText));
+                    plainText = "";
+                }
+                parts.push(this.emoji(char));
+            } else {
+                plainText += char;
+            }
+        }
+        if (plainText) {
+            parts.push(this.plain(plainText));
+        }
+        return parts;
+    }
+
+    public createMentionParts(
+        insertTrailingCharacter: boolean,
+        displayName: string,
+        userId: string,
+    ): [UserPillPart, PlainPart] {
         const pill = this.userPill(displayName, userId);
-        const postfix = this.plain(partIndex === 0 ? ": " : " ");
+        if (!SettingsStore.getValue("MessageComposerInput.insertTrailingColon")) {
+            insertTrailingCharacter = false;
+        }
+        const postfix = this.plain(insertTrailingCharacter ? ": " : " ");
         return [pill, postfix];
     }
 }
@@ -553,7 +670,7 @@ export class PartCreator {
 // part creator that support auto complete for /commands,
 // used in SendMessageComposer
 export class CommandPartCreator extends PartCreator {
-    createPartForInput(text: string, partIndex: number) {
+    public createPartForInput(text: string, partIndex: number): Part {
         // at beginning and starts with /? create
         if (partIndex === 0 && text[0] === "/") {
             // text will be inserted by model, so pass empty string
@@ -563,12 +680,12 @@ export class CommandPartCreator extends PartCreator {
         }
     }
 
-    command(text: string) {
+    public command(text: string): CommandPart {
         return new CommandPart(text, this.autoCompleteCreator);
     }
 
-    deserializePart(part: Part): Part {
-        if (part.type === "command") {
+    public deserializePart(part: SerializedPart): Part {
+        if (part.type === Type.Command) {
             return this.command(part.text);
         } else {
             return super.deserializePart(part);
@@ -577,7 +694,7 @@ export class CommandPartCreator extends PartCreator {
 }
 
 class CommandPart extends PillCandidatePart {
-    get type(): IPillCandidatePart["type"] {
+    public get type(): IPillCandidatePart["type"] {
         return Type.Command;
     }
 }

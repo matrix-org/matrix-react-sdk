@@ -14,26 +14,58 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-
-import { RoomListStoreClass } from "./RoomListStore";
+import { RoomListStore as Interface } from "./Interface";
 import { SpaceFilterCondition } from "./filters/SpaceFilterCondition";
-import SpaceStore, { UPDATE_SELECTED_SPACE } from "../SpaceStore";
+import SpaceStore from "../spaces/SpaceStore";
+import { MetaSpace, SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
 
 /**
  * Watches for changes in spaces to manage the filter on the provided RoomListStore
  */
 export class SpaceWatcher {
-    private filter = new SpaceFilterCondition();
-    private activeSpace: Room = SpaceStore.instance.activeSpace;
+    private readonly filter = new SpaceFilterCondition();
+    // we track these separately to the SpaceStore as we need to observe transitions
+    private activeSpace: SpaceKey = SpaceStore.instance.activeSpace;
+    private allRoomsInHome: boolean = SpaceStore.instance.allRoomsInHome;
 
-    constructor(private store: RoomListStoreClass) {
-        this.filter.updateSpace(this.activeSpace); // get the filter into a consistent state
-        store.addFilter(this.filter);
+    constructor(private store: Interface) {
+        if (SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome)) {
+            this.updateFilter();
+            store.addFilter(this.filter);
+        }
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated);
+        SpaceStore.instance.on(UPDATE_HOME_BEHAVIOUR, this.onHomeBehaviourUpdated);
     }
 
-    private onSelectedSpaceUpdated = (activeSpace) => {
-        this.filter.updateSpace(this.activeSpace = activeSpace);
+    private static needsFilter(spaceKey: SpaceKey, allRoomsInHome: boolean): boolean {
+        return !(spaceKey === MetaSpace.Home && allRoomsInHome);
+    }
+
+    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome = this.allRoomsInHome) => {
+        if (activeSpace === this.activeSpace && allRoomsInHome === this.allRoomsInHome) return; // nop
+
+        const neededFilter = SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome);
+        const needsFilter = SpaceWatcher.needsFilter(activeSpace, allRoomsInHome);
+
+        this.activeSpace = activeSpace;
+        this.allRoomsInHome = allRoomsInHome;
+
+        if (needsFilter) {
+            this.updateFilter();
+        }
+
+        if (!neededFilter && needsFilter) {
+            this.store.addFilter(this.filter);
+        } else if (neededFilter && !needsFilter) {
+            this.store.removeFilter(this.filter);
+        }
+    };
+
+    private onHomeBehaviourUpdated = (allRoomsInHome: boolean) => {
+        this.onSelectedSpaceUpdated(this.activeSpace, allRoomsInHome);
+    };
+
+    private updateFilter = () => {
+        this.filter.updateSpace(this.activeSpace);
     };
 }

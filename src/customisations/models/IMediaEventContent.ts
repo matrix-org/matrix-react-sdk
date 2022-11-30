@@ -18,7 +18,6 @@
 
 export interface IEncryptedFile {
     url: string;
-    mimetype?: string;
     key: {
         alg: string;
         key_ops: string[]; // eslint-disable-line camelcase
@@ -31,13 +30,28 @@ export interface IEncryptedFile {
     v: string;
 }
 
+export interface IMediaEventInfo {
+    thumbnail_url?: string; // eslint-disable-line camelcase
+    thumbnail_file?: IEncryptedFile; // eslint-disable-line camelcase
+    thumbnail_info?: { // eslint-disable-line camelcase
+        mimetype: string;
+        w?: number;
+        h?: number;
+        size?: number;
+    };
+    mimetype: string;
+    w?: number;
+    h?: number;
+    size?: number;
+}
+
 export interface IMediaEventContent {
+    msgtype: string;
+    body?: string;
+    filename?: string; // `m.file` optional field
     url?: string; // required on unencrypted media
     file?: IEncryptedFile; // required for *encrypted* media
-    info?: {
-        thumbnail_url?: string; // eslint-disable-line camelcase
-        thumbnail_file?: IEncryptedFile; // eslint-disable-line camelcase
-    };
+    info?: IMediaEventInfo;
 }
 
 export interface IPreparedMedia extends IMediaObject {
@@ -56,7 +70,7 @@ export interface IMediaObject {
  * @returns {IPreparedMedia} A prepared media object.
  * @throws Throws if the given content cannot be packaged into a prepared media object.
  */
-export function prepEventContentAsMedia(content: IMediaEventContent): IPreparedMedia {
+export function prepEventContentAsMedia(content: Partial<IMediaEventContent>): IPreparedMedia {
     let thumbnail: IMediaObject = null;
     if (content?.info?.thumbnail_url) {
         thumbnail = {

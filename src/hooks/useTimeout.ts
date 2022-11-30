@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Handler = () => void;
 
@@ -30,7 +30,7 @@ export const useTimeout = (handler: Handler, timeoutMs: number) => {
 
     // Set up timer
     useEffect(() => {
-        const timeoutID = setTimeout(() => {
+        const timeoutID = window.setTimeout(() => {
             savedHandler.current();
         }, timeoutMs);
         return () => clearTimeout(timeoutID);
@@ -49,7 +49,7 @@ export const useInterval = (handler: Handler, intervalMs: number) => {
 
     // Set up timer
     useEffect(() => {
-        const intervalID = setInterval(() => {
+        const intervalID = window.setInterval(() => {
             savedHandler.current();
         }, intervalMs);
         return () => clearInterval(intervalID);

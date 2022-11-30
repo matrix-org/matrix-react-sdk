@@ -14,27 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useRef, useState} from 'react';
-import {EventType} from 'matrix-js-sdk/src/@types/event';
 import classNames from 'classnames';
+import { EventType } from 'matrix-js-sdk/src/@types/event';
+import React, { useContext, useRef, useState, MouseEvent } from 'react';
 
-import AccessibleButton from "./AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {useTimeout} from "../../../hooks/useTimeout";
-import Analytics from "../../../Analytics";
-import CountlyAnalytics from '../../../CountlyAnalytics';
 import RoomContext from "../../../contexts/RoomContext";
+import { useTimeout } from "../../../hooks/useTimeout";
+import { TranslatedString } from '../../../languageHandler';
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import AccessibleButton from "./AccessibleButton";
+import Spinner from "./Spinner";
 
 export const AVATAR_SIZE = 52;
 
 interface IProps {
     hasAvatar: boolean;
-    noAvatarLabel?: string;
-    hasAvatarLabel?: string;
-    setAvatarUrl(url: string): Promise<void>;
+    noAvatarLabel?: TranslatedString;
+    hasAvatarLabel?: TranslatedString;
+    setAvatarUrl(url: string): Promise<unknown>;
+    isUserAvatar?: boolean;
+    onClick?(ev: MouseEvent<HTMLInputElement>): void;
 }
 
-const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAvatarLabel, setAvatarUrl, children }) => {
+const MiniAvatarUploader: React.FC<IProps> = ({
+    hasAvatar, hasAvatarLabel, noAvatarLabel, setAvatarUrl, isUserAvatar, children, onClick,
+}) => {
     const cli = useContext(MatrixClientContext);
     const [busy, setBusy] = useState(false);
     const [hover, setHover] = useState(false);
@@ -51,8 +56,8 @@ const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAva
 
     const label = (hasAvatar || busy) ? hasAvatarLabel : noAvatarLabel;
 
-    const {room} = useContext(RoomContext);
-    const canSetAvatar = room?.currentState.maySendStateEvent(EventType.RoomAvatar, cli.getUserId());
+    const { room } = useContext(RoomContext);
+    const canSetAvatar = isUserAvatar || room?.currentState?.maySendStateEvent(EventType.RoomAvatar, cli.getUserId());
     if (!canSetAvatar) return <React.Fragment>{ children }</React.Fragment>;
 
     const visible = !!label && (hover || show);
@@ -61,13 +66,15 @@ const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAva
             type="file"
             ref={uploadRef}
             className="mx_MiniAvatarUploader_input"
+            onClick={(ev) => {
+                chromeFileInputFix(ev);
+                onClick?.(ev);
+            }}
             onChange={async (ev) => {
                 if (!ev.target.files?.length) return;
                 setBusy(true);
-                Analytics.trackEvent("mini_avatar", "upload");
-                CountlyAnalytics.instance.track("mini_avatar_upload");
                 const file = ev.target.files[0];
-                const uri = await cli.uploadContent(file);
+                const { content_uri: uri } = await cli.uploadContent(file);
                 await setAvatarUrl(uri);
                 setBusy(false);
             }}
@@ -87,6 +94,12 @@ const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAva
             onMouseLeave={() => setHover(false)}
         >
             { children }
+
+            <div className="mx_MiniAvatarUploader_indicator">
+                { busy ?
+                    <Spinner w={20} h={20} /> :
+                    <div className="mx_MiniAvatarUploader_cameraIcon" /> }
+            </div>
 
             <div className={classNames("mx_Tooltip", {
                 "mx_Tooltip_visible": visible,

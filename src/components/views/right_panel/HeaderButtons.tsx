@@ -19,65 +19,68 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import dis from '../../../dispatcher/dispatcher';
-import RightPanelStore from "../../../stores/RightPanelStore";
-import {RightPanelPhases} from "../../../stores/RightPanelStorePhases";
-import {Action} from '../../../dispatcher/actions';
-import {
-    SetRightPanelPhasePayload,
-    SetRightPanelPhaseRefireParams,
-} from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
-import {EventSubscription} from "fbemitter";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
+import { UPDATE_EVENT } from '../../../stores/AsyncStore';
+import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 
 export enum HeaderKind {
   Room = "room",
-  Group = "group",
 }
 
 interface IState {
     headerKind: HeaderKind;
     phase: RightPanelPhases;
+    threadNotificationColor: NotificationColor;
+    globalNotificationColor: NotificationColor;
 }
 
 interface IProps {}
 
-@replaceableComponent("views.right_panel.HeaderButtons")
-export default abstract class HeaderButtons extends React.Component<IProps, IState> {
-    private storeToken: EventSubscription;
+export default abstract class HeaderButtons<P = {}> extends React.Component<IProps & P, IState> {
+    private unmounted = false;
     private dispatcherRef: string;
 
-    constructor(props: IProps, kind: HeaderKind) {
+    constructor(props: IProps & P, kind: HeaderKind) {
         super(props);
 
-        const rps = RightPanelStore.getSharedInstance();
+        const rps = RightPanelStore.instance;
         this.state = {
             headerKind: kind,
-            phase: kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
+            phase: rps.currentCard.phase,
+            threadNotificationColor: NotificationColor.None,
+            globalNotificationColor: NotificationColor.None,
         };
     }
 
     public componentDidMount() {
-        this.storeToken = RightPanelStore.getSharedInstance().addListener(this.onRightPanelUpdate.bind(this));
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction.bind(this)); // used by subclasses
     }
 
     public componentWillUnmount() {
-        if (this.storeToken) this.storeToken.remove();
+        this.unmounted = true;
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
     protected abstract onAction(payload);
 
-    public setPhase(phase: RightPanelPhases, extras?: Partial<SetRightPanelPhaseRefireParams>) {
-        dis.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: phase,
-            refireParams: extras,
-        });
+    public setPhase(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>) {
+        const rps = RightPanelStore.instance;
+        if (rps.currentCard.phase == phase && !cardState && rps.isOpen) {
+            rps.togglePanel(null);
+        } else {
+            RightPanelStore.instance.setCard({ phase, state: cardState });
+            if (!rps.isOpen) rps.togglePanel(null);
+        }
     }
 
-    public isPhase(phases: string | string[]) {
+    public isPhase(phases: string | string[]): boolean {
+        if (!RightPanelStore.instance.isOpen) return false;
         if (Array.isArray(phases)) {
             return phases.includes(this.state.phase);
         } else {
@@ -85,21 +88,17 @@ export default abstract class HeaderButtons extends React.Component<IProps, ISta
         }
     }
 
-    private onRightPanelUpdate() {
-        const rps = RightPanelStore.getSharedInstance();
-        if (this.state.headerKind === HeaderKind.Room) {
-            this.setState({phase: rps.visibleRoomPanelPhase});
-        } else if (this.state.headerKind === HeaderKind.Group) {
-            this.setState({phase: rps.visibleGroupPanelPhase});
-        }
-    }
+    private onRightPanelStoreUpdate = () => {
+        if (this.unmounted) return;
+        this.setState({ phase: RightPanelStore.instance.currentCard.phase });
+    };
 
     // XXX: Make renderButtons a prop
-    public abstract renderButtons(): JSX.Element[];
+    public abstract renderButtons(): JSX.Element;
 
     public render() {
-        return <div className="mx_HeaderButtons">
-            {this.renderButtons()}
+        return <div className="mx_HeaderButtons" role="tablist">
+            { this.renderButtons() }
         </div>;
     }
 }

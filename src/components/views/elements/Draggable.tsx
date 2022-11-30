@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 interface IProps {
     className: string;
@@ -34,7 +33,6 @@ export interface ILocationState {
     currentY: number;
 }
 
-@replaceableComponent("views.elements.Draggable")
 export default class Draggable extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -49,7 +47,7 @@ export default class Draggable extends React.Component<IProps, IState> {
         };
     }
 
-    private onMouseDown = (event: MouseEvent): void => {
+    private onMouseDown = (event: React.MouseEvent): void => {
         this.setState({
             location: {
                 currentX: event.clientX,
@@ -76,6 +74,6 @@ export default class Draggable extends React.Component<IProps, IState> {
     }
 
     render() {
-        return <div className={this.props.className} onMouseDown={this.onMouseDown.bind(this)} />;
+        return <div className={this.props.className} onMouseDown={this.onMouseDown} />;
     }
 }

@@ -16,18 +16,18 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { _t } from "../../../languageHandler";
 import WidgetStore from "../../../stores/WidgetStore";
 import EventTileBubble from "./EventTileBubble";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 interface IProps {
     mxEvent: MatrixEvent;
+    timestamp?: JSX.Element;
 }
 
-@replaceableComponent("views.messages.MJitsiWidgetEvent")
 export default class MJitsiWidgetEvent extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
@@ -52,21 +52,24 @@ export default class MJitsiWidgetEvent extends React.PureComponent<IProps> {
             // removed
             return <EventTileBubble
                 className="mx_MJitsiWidgetEvent"
-                title={_t('Video conference ended by %(senderName)s', {senderName})}
+                title={_t('Video conference ended by %(senderName)s', { senderName })}
+                timestamp={this.props.timestamp}
             />;
         } else if (prevUrl) {
             // modified
             return <EventTileBubble
                 className="mx_MJitsiWidgetEvent"
-                title={_t('Video conference updated by %(senderName)s', {senderName})}
+                title={_t('Video conference updated by %(senderName)s', { senderName })}
                 subtitle={joinCopy}
+                timestamp={this.props.timestamp}
             />;
         } else {
             // assume added
             return <EventTileBubble
                 className="mx_MJitsiWidgetEvent"
-                title={_t("Video conference started by %(senderName)s", {senderName})}
+                title={_t("Video conference started by %(senderName)s", { senderName })}
                 subtitle={joinCopy}
+                timestamp={this.props.timestamp}
             />;
         }
     }

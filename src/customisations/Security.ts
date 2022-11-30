@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
+
 import { IMatrixClientCreds } from "../MatrixClientPeg";
 import { Kind as SetupEncryptionKind } from "../toasts/SetupEncryptionToast";
-import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/matrix';
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 function examineLoginResponse(
@@ -69,13 +70,25 @@ function setupEncryptionNeeded(kind: SetupEncryptionKind): boolean {
 export interface ISecurityCustomisations {
     examineLoginResponse?: typeof examineLoginResponse;
     persistCredentials?: typeof persistCredentials;
-    createSecretStorageKey?: typeof createSecretStorageKey,
-    getSecretStorageKey?: typeof getSecretStorageKey,
-    catchAccessSecretStorageError?: typeof catchAccessSecretStorageError,
-    setupEncryptionNeeded?: typeof setupEncryptionNeeded,
-    getDehydrationKey?: typeof getDehydrationKey,
+    createSecretStorageKey?: typeof createSecretStorageKey;
+    getSecretStorageKey?: typeof getSecretStorageKey;
+    catchAccessSecretStorageError?: typeof catchAccessSecretStorageError;
+    setupEncryptionNeeded?: typeof setupEncryptionNeeded;
+    getDehydrationKey?: typeof getDehydrationKey;
+
+    /**
+     * When false, disables the post-login UI from showing. If there's
+     * an error during setup, that will be shown to the user.
+     *
+     * Note: when this is set to false then the app will assume the user's
+     * encryption is set up some other way which would circumvent the default
+     * UI, such as by presenting alternative UI.
+     */
+    SHOW_ENCRYPTION_SETUP_UI?: boolean; // default true
 }
 
 // A real customisation module will define and export one or more of the
 // customisation points that make up `ISecurityCustomisations`.
-export default {} as ISecurityCustomisations;
+export default {
+    SHOW_ENCRYPTION_SETUP_UI: true,
+} as ISecurityCustomisations;

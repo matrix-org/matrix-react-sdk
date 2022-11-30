@@ -15,19 +15,20 @@ limitations under the License.
 */
 
 import React from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { CSSTransition } from "react-transition-group";
+
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { _t } from "../../../languageHandler";
-import { Room } from "matrix-js-sdk/src/models/room";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import Analytics from "../../../Analytics";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import { CSSTransition } from "react-transition-group";
-import RoomListStore from "../../../stores/room-list/RoomListStore";
-import { DefaultTagID } from "../../../stores/room-list/models";
-import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
+import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { Action } from "../../../dispatcher/actions";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
 }
@@ -43,7 +44,31 @@ interface IState {
     skipFirst: boolean;
 }
 
-@replaceableComponent("views.rooms.RoomBreadcrumbs")
+const RoomBreadcrumbTile = ({ room, onClick }: { room: Room, onClick: (ev: ButtonEvent) => void }) => {
+    const [onFocus, isActive, ref] = useRovingTabIndex();
+
+    return (
+        <AccessibleTooltipButton
+            className="mx_RoomBreadcrumbs_crumb"
+            onClick={onClick}
+            aria-label={_t("Room %(name)s", { name: room.name })}
+            title={room.name}
+            tooltipClassName="mx_RoomBreadcrumbs_Tooltip"
+            onFocus={onFocus}
+            inputRef={ref}
+            tabIndex={isActive ? 0 : -1}
+        >
+            <DecoratedRoomAvatar
+                room={room}
+                avatarSize={32}
+                displayBadge={true}
+                forceCount={true}
+                tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
+            />
+        </AccessibleTooltipButton>
+    );
+};
+
 export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState> {
     private isMounted = true;
 
@@ -73,48 +98,39 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
         // The second update, on the next available tick, causes the "enter" animation to start
         // again and this time we want to show the newest breadcrumb because it'll be hidden
         // off screen for the animation.
-        this.setState({doAnimation: false, skipFirst: true});
-        setTimeout(() => this.setState({doAnimation: true, skipFirst: false}), 0);
+        this.setState({ doAnimation: false, skipFirst: true });
+        window.setTimeout(() => this.setState({ doAnimation: true, skipFirst: false }), 0);
     };
 
-    private viewRoom = (room: Room, index: number) => {
-        Analytics.trackEvent("Breadcrumbs", "click_node", String(index));
-        defaultDispatcher.dispatch({action: "view_room", room_id: room.roomId});
+    private viewRoom = (room: Room, index: number, viaKeyboard = false) => {
+        defaultDispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: room.roomId,
+            metricsTrigger: "WebHorizontalBreadcrumbs",
+            metricsViaKeyboard: viaKeyboard,
+        });
     };
 
     public render(): React.ReactElement {
-        const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => {
-            const roomTags = RoomListStore.instance.getTagsForRoom(r);
-            const roomTag = roomTags.includes(DefaultTagID.DM) ? DefaultTagID.DM : roomTags[0];
-            return (
-                <RovingAccessibleTooltipButton
-                    className="mx_RoomBreadcrumbs_crumb"
-                    key={r.roomId}
-                    onClick={() => this.viewRoom(r, i)}
-                    aria-label={_t("Room %(name)s", {name: r.name})}
-                    title={r.name}
-                    tooltipClassName="mx_RoomBreadcrumbs_Tooltip"
-                >
-                    <DecoratedRoomAvatar
-                        room={r}
-                        avatarSize={32}
-                        tag={roomTag}
-                        displayBadge={true}
-                        forceCount={true}
-                    />
-                </RovingAccessibleTooltipButton>
-            );
-        });
+        const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => (
+            <RoomBreadcrumbTile
+                key={r.roomId}
+                room={r}
+                onClick={(ev: ButtonEvent) => this.viewRoom(r, i, ev.type !== "click")}
+            />
+        ));
 
         if (tiles.length > 0) {
             // NOTE: The CSSTransition timeout MUST match the timeout in our CSS!
             return (
                 <CSSTransition
-                    appear={true} in={this.state.doAnimation} timeout={640}
+                    appear={true}
+                    in={this.state.doAnimation}
+                    timeout={640}
                     classNames='mx_RoomBreadcrumbs'
                 >
                     <Toolbar className='mx_RoomBreadcrumbs' aria-label={_t("Recently visited rooms")}>
-                        {tiles.slice(this.state.skipFirst ? 1 : 0)}
+                        { tiles.slice(this.state.skipFirst ? 1 : 0) }
                     </Toolbar>
                 </CSSTransition>
             );
@@ -122,7 +138,7 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
             return (
                 <div className='mx_RoomBreadcrumbs'>
                     <div className="mx_RoomBreadcrumbs_placeholder">
-                        {_t("No recently visited rooms")}
+                        { _t("No recently visited rooms") }
                     </div>
                 </div>
             );

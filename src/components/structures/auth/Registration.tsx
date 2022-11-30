@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016, 2017, 2018, 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2015-2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {createClient} from 'matrix-js-sdk/src/matrix';
-import React, {ReactNode} from 'react';
-import {MatrixClient} from "matrix-js-sdk/src/client";
+import { AuthType, createClient, IAuthData } from 'matrix-js-sdk/src/matrix';
+import React, { Fragment, ReactNode } from 'react';
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
+import { ISSOFlow } from "matrix-js-sdk/src/@types/auth";
 
-import * as sdk from '../../../index';
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
-import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
-import classNames from "classnames";
+import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import * as Lifecycle from '../../../Lifecycle';
-import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
-import Login, {ISSOFlow} from "../../../Login";
+import Login from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from '../../views/elements/ServerPicker';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import RegistrationForm from '../../views/auth/RegistrationForm';
+import AccessibleButton from '../../views/elements/AccessibleButton';
+import AuthBody from "../../views/auth/AuthBody";
+import AuthHeader from "../../views/auth/AuthHeader";
+import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
+import Spinner from "../../views/elements/Spinner";
+import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
+import { AuthHeaderProvider } from './header/AuthHeaderProvider';
+import SettingsStore from '../../../settings/SettingsStore';
+import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+
+const debuglog = (...args: any[]) => {
+    if (SettingsStore.getValue("debug_registration")) {
+        logger.log.call(console, "Registration debuglog:", ...args);
+    }
+};
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -47,13 +63,7 @@ interface IProps {
     // - The user's password, if available and applicable (may be cached in memory
     //   for a short time so the user is not required to re-enter their password
     //   for operations like uploading cross-signing keys).
-    onLoggedIn(params: {
-        userId: string;
-        deviceId: string
-        homeserverUrl: string;
-        identityServerUrl?: string;
-        accessToken: string;
-    }, password: string): void;
+    onLoggedIn(params: IMatrixClientCreds, password: string): void;
     makeRegistrationUrl(params: {
         /* eslint-disable camelcase */
         client_secret: string;
@@ -61,7 +71,7 @@ interface IProps {
         is_url?: string;
         session_id: string;
         /* eslint-enable camelcase */
-    }): void;
+    }): string;
     // registration shouldn't know or care how login is done.
     onLoginClick(): void;
     onServerConfigChange(config: ValidatedServerConfig): void;
@@ -95,7 +105,7 @@ interface IState {
     // be seeing.
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
-    serverDeadError: string;
+    serverDeadError?: ReactNode;
 
     // Our matrix client - part of state because we can't render the UI auth
     // component without it.
@@ -110,9 +120,10 @@ interface IState {
     ssoFlow?: ISSOFlow;
 }
 
-@replaceableComponent("structures.auth.Registration")
 export default class Registration extends React.Component<IProps, IState> {
-    loginLogic: Login;
+    private readonly loginLogic: Login;
+    // `replaceClient` tracks latest serverConfig to spot when it changes under the async method which fetches flows
+    private latestServerConfig: ValidatedServerConfig;
 
     constructor(props) {
         super(props);
@@ -131,7 +142,7 @@ export default class Registration extends React.Component<IProps, IState> {
             serverDeadError: "",
         };
 
-        const {hsUrl, isUrl} = this.props.serverConfig;
+        const { hsUrl, isUrl } = this.props.serverConfig;
         this.loginLogic = new Login(hsUrl, isUrl, null, {
             defaultDeviceDisplayName: "Element login check", // We shouldn't ever be used
         });
@@ -139,38 +150,53 @@ export default class Registration extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.replaceClient(this.props.serverConfig);
+        //triggers a confirmation dialog for data loss before page unloads/refreshes
+        window.addEventListener("beforeunload", this.unloadCallback);
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillReceiveProps(newProps) {
-        if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
-            newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.unloadCallback);
+    }
 
-        this.replaceClient(newProps.serverConfig);
+    private unloadCallback = (event: BeforeUnloadEvent) => {
+        if (this.state.doingUIAuth) {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        }
+    };
+
+    public componentDidUpdate(prevProps) {
+        if (prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
+            prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
+        ) {
+            this.replaceClient(this.props.serverConfig);
+        }
     }
 
     private async replaceClient(serverConfig: ValidatedServerConfig) {
+        this.latestServerConfig = serverConfig;
+        const { hsUrl, isUrl } = serverConfig;
+
         this.setState({
             errorText: null,
             serverDeadError: null,
             serverErrorIsFatal: false,
-            // busy while we do liveness check (we need to avoid trying to render
+            // busy while we do live-ness check (we need to avoid trying to render
             // the UI auth component while we don't have a matrix client)
             busy: true,
         });
 
         // Do a liveliness check on the URLs
         try {
-            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
-                serverConfig.hsUrl,
-                serverConfig.isUrl,
-            );
+            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, isUrl);
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             this.setState({
                 serverIsAlive: true,
                 serverErrorIsFatal: false,
             });
         } catch (e) {
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             this.setState({
                 busy: false,
                 ...AutoDiscoveryUtils.authComponentStateForError(e, "register"),
@@ -180,7 +206,6 @@ export default class Registration extends React.Component<IProps, IState> {
             }
         }
 
-        const {hsUrl, isUrl} = serverConfig;
         const cli = createClient({
             baseUrl: hsUrl,
             idBaseUrl: isUrl,
@@ -192,9 +217,11 @@ export default class Registration extends React.Component<IProps, IState> {
         let ssoFlow: ISSOFlow;
         try {
             const loginFlows = await this.loginLogic.getFlows();
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             ssoFlow = loginFlows.find(f => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
         } catch (e) {
-            console.error("Failed to get login flows to check for SSO support", e);
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
+            logger.error("Failed to get login flows to check for SSO support", e);
         }
 
         this.setState({
@@ -202,34 +229,31 @@ export default class Registration extends React.Component<IProps, IState> {
             ssoFlow,
             busy: false,
         });
-        const showGenericError = (e) => {
-            this.setState({
-                errorText: _t("Unable to query for supported registration methods."),
-                // add empty flows array to get rid of spinner
-                flows: [],
-            });
-        };
+
         try {
             // We do the first registration request ourselves to discover whether we need to
             // do SSO instead. If we've already started the UI Auth process though, we don't
             // need to.
             if (!this.state.doingUIAuth) {
                 await this.makeRegisterRequest(null);
+                if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
                 // This should never succeed since we specified no auth object.
-                console.log("Expecting 401 from register request but got success!");
+                logger.log("Expecting 401 from register request but got success!");
             }
         } catch (e) {
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             if (e.httpStatus === 401) {
                 this.setState({
                     flows: e.data.flows,
                 });
-            } else if (e.httpStatus === 403 && e.errcode === "M_UNKNOWN") {
+            } else if (e.httpStatus === 403 || e.errcode === "M_FORBIDDEN") {
+                // Check for 403 or M_FORBIDDEN, Synapse used to send 403 M_UNKNOWN but now sends 403 M_FORBIDDEN.
                 // At this point registration is pretty much disabled, but before we do that let's
                 // quickly check to see if the server supports SSO instead. If it does, we'll send
                 // the user off to the login page to figure their account out.
                 if (ssoFlow) {
                     // Redirect to login page - server probably expects SSO only
-                    dis.dispatch({action: 'start_login'});
+                    dis.dispatch({ action: 'start_login' });
                 } else {
                     this.setState({
                         serverErrorIsFatal: true, // fatal because user cannot continue on this server
@@ -239,17 +263,21 @@ export default class Registration extends React.Component<IProps, IState> {
                     });
                 }
             } else {
-                console.log("Unable to query for supported registration methods.", e);
-                showGenericError(e);
+                logger.log("Unable to query for supported registration methods.", e);
+                this.setState({
+                    errorText: _t("Unable to query for supported registration methods."),
+                    // add empty flows array to get rid of spinner
+                    flows: [],
+                });
             }
         }
     }
 
-    private onFormSubmit = formVals => {
+    private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
         this.setState({
             errorText: "",
             busy: true,
-            formVals: formVals,
+            formVals,
             doingUIAuth: true,
         });
     };
@@ -266,11 +294,12 @@ export default class Registration extends React.Component<IProps, IState> {
                 session_id: sessionId,
             }),
         );
-    }
+    };
 
-    private onUIAuthFinished = async (success, response, extra) => {
+    private onUIAuthFinished: InteractiveAuthCallback = async (success, response) => {
+        debuglog("Registration: ui authentication finished: ", { success, response });
         if (!success) {
-            let msg = response.message || response.toString();
+            let errorText: ReactNode = response.message || response.toString();
             // can we give a better error message?
             if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
@@ -278,7 +307,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     response.data.admin_contact,
                     {
                         'monthly_active_user': _td("This homeserver has hit its Monthly Active User limit."),
-                        'hs_blocked': _td("This homeserver has been blocked by it's administrator."),
+                        'hs_blocked': _td("This homeserver has been blocked by its administrator."),
                         '': _td("This homeserver has exceeded one of its resource limits."),
                     },
                 );
@@ -289,25 +318,28 @@ export default class Registration extends React.Component<IProps, IState> {
                         '': _td("Please <a>contact your service administrator</a> to continue using this service."),
                     },
                 );
-                msg = <div>
-                    <p>{errorTop}</p>
-                    <p>{errorDetail}</p>
+                errorText = <div>
+                    <p>{ errorTop }</p>
+                    <p>{ errorDetail }</p>
                 </div>;
-            } else if (response.required_stages && response.required_stages.indexOf('m.login.msisdn') > -1) {
+            } else if (response.required_stages && response.required_stages.includes(AuthType.Msisdn)) {
                 let msisdnAvailable = false;
                 for (const flow of response.available_flows) {
-                    msisdnAvailable = msisdnAvailable || flow.stages.includes('m.login.msisdn');
+                    msisdnAvailable = msisdnAvailable || flow.stages.includes(AuthType.Msisdn);
                 }
                 if (!msisdnAvailable) {
-                    msg = _t('This server does not support authentication with a phone number.');
+                    errorText = _t('This server does not support authentication with a phone number.');
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
-                msg = _t("That username already exists, please try another.");
+                errorText = _t("Someone already has that username, please try another.");
+            } else if (response.errcode === "M_THREEPID_IN_USE") {
+                errorText = _t("That e-mail address or phone number is already in use.");
             }
+
             this.setState({
                 busy: false,
                 doingUIAuth: false,
-                errorText: msg,
+                errorText,
             });
             return;
         }
@@ -329,14 +361,32 @@ export default class Registration extends React.Component<IProps, IState> {
         // starting the registration process. This isn't perfect since it's possible
         // the user had a separate guest session they didn't actually mean to replace.
         const [sessionOwner, sessionIsGuest] = await Lifecycle.getStoredSessionOwner();
-        if (sessionOwner && !sessionIsGuest && sessionOwner !== response.userId) {
-            console.log(
-                `Found a session for ${sessionOwner} but ${response.userId} has just registered.`,
+        if (sessionOwner && !sessionIsGuest && sessionOwner !== response.user_id) {
+            logger.log(
+                `Found a session for ${sessionOwner} but ${response.user_id} has just registered.`,
             );
             newState.differentLoggedInUserId = sessionOwner;
         }
 
-        if (response.access_token) {
+        // if we don't have an email at all, only one client can be involved in this flow, and we can directly log in.
+        //
+        // if we've got an email, it needs to be verified. in that case, two clients can be involved in this flow, the
+        // original client starting the process and the client that submitted the verification token. After the token
+        // has been submitted, it can not be used again.
+        //
+        // we can distinguish them based on whether the client has form values saved (if so, it's the one that started
+        // the registration), or whether it doesn't have any form values saved (in which case it's the client that
+        // verified the email address)
+        //
+        // as the client that started registration may be gone by the time we've verified the email, and only the client
+        // that verified the email is guaranteed to exist, we'll always do the login in that client.
+        const hasEmail = Boolean(this.state.formVals.email);
+        const hasAccessToken = Boolean(response.access_token);
+        debuglog("Registration: ui auth finished:", { hasEmail, hasAccessToken });
+        // don’t log in if we found a session for a different user
+        if (!hasEmail && hasAccessToken && !newState.differentLoggedInUserId) {
+            // we'll only try logging in if we either have no email to verify at all or we're the client that verified
+            // the email, not the client that started the registration flow
             await this.props.onLoggedIn({
                 userId: response.user_id,
                 deviceId: response.device_id,
@@ -359,21 +409,21 @@ export default class Registration extends React.Component<IProps, IState> {
             return Promise.resolve();
         }
         const matrixClient = MatrixClientPeg.get();
-        return matrixClient.getPushers().then((resp)=>{
+        return matrixClient.getPushers().then((resp) => {
             const pushers = resp.pushers;
             for (let i = 0; i < pushers.length; ++i) {
                 if (pushers[i].kind === 'email') {
                     const emailPusher = pushers[i];
                     emailPusher.data = { brand: this.props.brand };
                     matrixClient.setPusher(emailPusher).then(() => {
-                        console.log("Set email branding to " + this.props.brand);
+                        logger.log("Set email branding to " + this.props.brand);
                     }, (error) => {
-                        console.error("Couldn't set email branding: " + error);
+                        logger.error("Couldn't set email branding: " + error);
                     });
                 }
             }
         }, (error) => {
-            console.error("Couldn't get pushers: " + error);
+            logger.error("Couldn't get pushers: " + error);
         });
     }
 
@@ -393,27 +443,18 @@ export default class Registration extends React.Component<IProps, IState> {
         });
     };
 
-    private makeRegisterRequest = auth => {
-        // We inhibit login if we're trying to register with an email address: this
-        // avoids a lot of complex race conditions that can occur if we try to log
-        // the user in one one or both of the tabs they might end up with after
-        // clicking the email link.
-        let inhibitLogin = Boolean(this.state.formVals.email);
-
-        // Only send inhibitLogin if we're sending username / pw params
-        // (Since we need to send no params at all to use the ones saved in the
-        // session).
-        if (!this.state.formVals.password) inhibitLogin = null;
-
+    private makeRegisterRequest = (auth: IAuthData | null) => {
         const registerParams = {
             username: this.state.formVals.username,
             password: this.state.formVals.password,
             initial_device_display_name: this.props.defaultDeviceDisplayName,
             auth: undefined,
+            // we still want to avoid the race conditions involved with multiple clients handling registration, but
+            // we'll handle these after we've received the access_token in onUIAuthFinished
             inhibit_login: undefined,
         };
         if (auth) registerParams.auth = auth;
-        if (inhibitLogin !== undefined && inhibitLogin !== null) registerParams.inhibit_login = inhibitLogin;
+        debuglog("Registration: sending registration request:", auth);
         return this.state.matrixClient.registerRequest(registerParams);
     };
 
@@ -431,18 +472,16 @@ export default class Registration extends React.Component<IProps, IState> {
     private onLoginClickWithCheck = async ev => {
         ev.preventDefault();
 
-        const sessionLoaded = await Lifecycle.loadSession({ignoreGuest: true});
+        const sessionLoaded = await Lifecycle.loadSession({ ignoreGuest: true });
         if (!sessionLoaded) {
             // ok fine, there's still no session: really go to the login page
             this.props.onLoginClick();
         }
+
+        return sessionLoaded;
     };
 
     private renderRegisterComponent() {
-        const InteractiveAuth = sdk.getComponent('structures.InteractiveAuth');
-        const Spinner = sdk.getComponent('elements.Spinner');
-        const RegistrationForm = sdk.getComponent('auth.RegistrationForm');
-
         if (this.state.matrixClient && this.state.doingUIAuth) {
             return <InteractiveAuth
                 matrixClient={this.state.matrixClient}
@@ -465,13 +504,13 @@ export default class Registration extends React.Component<IProps, IState> {
             let ssoSection;
             if (this.state.ssoFlow) {
                 let continueWithSection;
-                const providers = this.state.ssoFlow["org.matrix.msc2858.identity_providers"] || [];
+                const providers = this.state.ssoFlow.identity_providers || [];
                 // when there is only a single (or 0) providers we show a wide button with `Continue with X` text
                 if (providers.length > 1) {
                     // i18n: ssoButtons is a placeholder to help translators understand context
-                    continueWithSection = <h3 className="mx_AuthBody_centered">
+                    continueWithSection = <h2 className="mx_AuthBody_centered">
                         { _t("Continue with %(ssoButtons)s", { ssoButtons: "" }).trim() }
-                    </h3>;
+                    </h2>;
                 }
 
                 // i18n: ssoButtons & usernamePassword are placeholders to help translators understand context
@@ -483,9 +522,15 @@ export default class Registration extends React.Component<IProps, IState> {
                         loginType={this.state.ssoFlow.type === "m.login.sso" ? "sso" : "cas"}
                         fragmentAfterLogin={this.props.fragmentAfterLogin}
                     />
-                    <h3 className="mx_AuthBody_centered">
-                        { _t("%(ssoButtons)s Or %(usernamePassword)s", { ssoButtons: "", usernamePassword: ""}).trim() }
-                    </h3>
+                    <h2 className="mx_AuthBody_centered">
+                        { _t(
+                            "%(ssoButtons)s Or %(usernamePassword)s",
+                            {
+                                ssoButtons: "",
+                                usernamePassword: "",
+                            },
+                        ).trim() }
+                    </h2>
                 </React.Fragment>;
             }
 
@@ -501,16 +546,13 @@ export default class Registration extends React.Component<IProps, IState> {
                     flows={this.state.flows}
                     serverConfig={this.props.serverConfig}
                     canSubmit={!this.state.serverErrorIsFatal}
+                    matrixClient={this.state.matrixClient}
                 />
             </React.Fragment>;
         }
     }
 
     render() {
-        const AuthHeader = sdk.getComponent('auth.AuthHeader');
-        const AuthBody = sdk.getComponent("auth.AuthBody");
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
         let errorText;
         const err = this.state.errorText;
         if (err) {
@@ -526,23 +568,27 @@ export default class Registration extends React.Component<IProps, IState> {
             });
             serverDeadSection = (
                 <div className={classes}>
-                    {this.state.serverDeadError}
+                    { this.state.serverDeadError }
                 </div>
             );
         }
 
         const signIn = <span className="mx_AuthBody_changeFlow">
-            {_t("Already have an account? <a>Sign in here</a>", {}, {
-                a: sub => <a onClick={this.onLoginClick} href="#">{ sub }</a>,
-            })}
+            { _t("Already have an account? <a>Sign in here</a>", {}, {
+                a: sub => <AccessibleButton kind='link_inline' onClick={this.onLoginClick}>{ sub }</AccessibleButton>,
+            }) }
         </span>;
 
         // Only show the 'go back' button if you're not looking at the form
         let goBack;
         if (this.state.doingUIAuth) {
-            goBack = <a className="mx_AuthBody_changeFlow" onClick={this.onGoToFormClicked} href="#">
+            goBack = <AccessibleButton
+                kind='link'
+                className="mx_AuthBody_changeFlow"
+                onClick={this.onGoToFormClicked}
+            >
                 { _t('Go back') }
-            </a>;
+            </AccessibleButton>;
         }
 
         let body;
@@ -550,63 +596,79 @@ export default class Registration extends React.Component<IProps, IState> {
             let regDoneText;
             if (this.state.differentLoggedInUserId) {
                 regDoneText = <div>
-                    <p>{_t(
+                    <p>{ _t(
                         "Your new account (%(newAccountId)s) is registered, but you're already " +
                         "logged into a different account (%(loggedInUserId)s).", {
                             newAccountId: this.state.registeredUsername,
                             loggedInUserId: this.state.differentLoggedInUserId,
                         },
-                    )}</p>
-                    <p><AccessibleButton element="span" className="mx_linkButton" onClick={this.onLoginClickWithCheck}>
-                        {_t("Continue with previous account")}
+                    ) }</p>
+                    <p><AccessibleButton
+                        kind="link_inline"
+                        onClick={async event => {
+                            const sessionLoaded = await this.onLoginClickWithCheck(event);
+                            if (sessionLoaded) {
+                                dis.dispatch({ action: "view_welcome_page" });
+                            }
+                        }}
+                    >
+                        { _t("Continue with previous account") }
                     </AccessibleButton></p>
                 </div>;
-            } else if (this.state.formVals.password) {
-                // We're the client that started the registration
-                regDoneText = <h3>{_t(
+            } else {
+                // regardless of whether we're the client that started the registration or not, we should
+                // try our credentials anyway
+                regDoneText = <h2>{ _t(
                     "<a>Log in</a> to your new account.", {},
                     {
-                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{sub}</a>,
+                        a: (sub) => <AccessibleButton
+                            kind="link_inline"
+                            onClick={async event => {
+                                const sessionLoaded = await this.onLoginClickWithCheck(event);
+                                if (sessionLoaded) {
+                                    dis.dispatch({ action: "view_home_page" });
+                                }
+                            }}
+                        >{ sub }</AccessibleButton>,
                     },
-                )}</h3>;
-            } else {
-                // We're not the original client: the user probably got to us by clicking the
-                // email validation link. We can't offer a 'go straight to your account' link
-                // as we don't have the original creds.
-                regDoneText = <h3>{_t(
-                    "You can now close this window or <a>log in</a> to your new account.", {},
-                    {
-                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{sub}</a>,
-                    },
-                )}</h3>;
+                ) }</h2>;
             }
             body = <div>
-                <h2>{_t("Registration Successful")}</h2>
+                <h1>{ _t("Registration Successful") }</h1>
                 { regDoneText }
             </div>;
         } else {
-            body = <div>
-                <h2>{ _t('Create account') }</h2>
-                { errorText }
-                { serverDeadSection }
-                <ServerPicker
-                    title={_t("Host account on")}
-                    dialogTitle={_t("Decide where your account is hosted")}
-                    serverConfig={this.props.serverConfig}
-                    onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
-                />
-                { this.renderRegisterComponent() }
-                { goBack }
-                { signIn }
-            </div>;
+            body = <Fragment>
+                <div className="mx_Register_mainContent">
+                    <AuthHeaderDisplay
+                        title={_t('Create account')}
+                        serverPicker={<ServerPicker
+                            title={_t("Host account on")}
+                            dialogTitle={_t("Decide where your account is hosted")}
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
+                        />}
+                    >
+                        { errorText }
+                        { serverDeadSection }
+                    </AuthHeaderDisplay>
+                    { this.renderRegisterComponent() }
+                </div>
+                <div className="mx_Register_footerActions">
+                    { goBack }
+                    { signIn }
+                </div>
+            </Fragment>;
         }
 
         return (
             <AuthPage>
                 <AuthHeader />
-                <AuthBody>
-                    { body }
-                </AuthBody>
+                <AuthHeaderProvider>
+                    <AuthBody flex>
+                        { body }
+                    </AuthBody>
+                </AuthHeaderProvider>
             </AuthPage>
         );
     }

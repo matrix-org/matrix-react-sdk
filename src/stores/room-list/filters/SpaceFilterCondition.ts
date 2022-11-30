@@ -17,10 +17,12 @@ limitations under the License.
 import { EventEmitter } from "events";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { FILTER_CHANGED, FilterPriority, IFilterCondition } from "./IFilterCondition";
+import { FILTER_CHANGED, IFilterCondition } from "./IFilterCondition";
 import { IDestroyable } from "../../../utils/IDestroyable";
-import SpaceStore, {HOME_SPACE} from "../../SpaceStore";
+import SpaceStore from "../../spaces/SpaceStore";
+import { isMetaSpace, MetaSpace, SpaceKey } from "../../spaces";
 import { setHasDiff } from "../../../utils/sets";
+import SettingsStore from "../../../settings/SettingsStore";
 
 /**
  * A filter condition for the room list which reveals rooms which
@@ -29,41 +31,49 @@ import { setHasDiff } from "../../../utils/sets";
  *  + All DMs
  */
 export class SpaceFilterCondition extends EventEmitter implements IFilterCondition, IDestroyable {
-    private roomIds = new Set<Room>();
-    private space: Room = null;
-
-    public get relativePriority(): FilterPriority {
-        // Lowest priority so we can coarsely find rooms.
-        return FilterPriority.Lowest;
-    }
+    private roomIds = new Set<string>();
+    private userIds = new Set<string>();
+    private showPeopleInSpace = true;
+    private space: SpaceKey = MetaSpace.Home;
 
     public isVisible(room: Room): boolean {
-        return this.roomIds.has(room.roomId);
+        return SpaceStore.instance.isRoomInSpace(this.space, room.roomId);
     }
 
-    private onStoreUpdate = async (): Promise<void> => {
+    private onStoreUpdate = async (forceUpdate = false): Promise<void> => {
         const beforeRoomIds = this.roomIds;
-        this.roomIds = SpaceStore.instance.getSpaceFilteredRoomIds(this.space);
+        // clone the set as it may be mutated by the space store internally
+        this.roomIds = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(this.space));
 
-        if (setHasDiff(beforeRoomIds, this.roomIds)) {
-            // XXX: Room List Store has a bug where rooms which are synced after the filter is set
-            // are excluded from the filter, this is a workaround for it.
+        const beforeUserIds = this.userIds;
+        // clone the set as it may be mutated by the space store internally
+        this.userIds = new Set(SpaceStore.instance.getSpaceFilteredUserIds(this.space));
+
+        const beforeShowPeopleInSpace = this.showPeopleInSpace;
+        this.showPeopleInSpace = isMetaSpace(this.space[0]) ||
+            SettingsStore.getValue("Spaces.showPeopleInSpace", this.space);
+
+        if (forceUpdate ||
+            beforeShowPeopleInSpace !== this.showPeopleInSpace ||
+            setHasDiff(beforeRoomIds, this.roomIds) ||
+            setHasDiff(beforeUserIds, this.userIds)
+        ) {
             this.emit(FILTER_CHANGED);
-            setTimeout(() => {
+            // XXX: Room List Store has a bug where updates to the pre-filter during a local echo of a
+            // tags transition seem to be ignored, so refire in the next tick to work around it
+            setImmediate(() => {
                 this.emit(FILTER_CHANGED);
-            }, 500);
+            });
         }
     };
 
-    private getSpaceEventKey = (space: Room | null) => space ? space.roomId : HOME_SPACE;
-
-    public updateSpace(space: Room) {
-        SpaceStore.instance.off(this.getSpaceEventKey(this.space), this.onStoreUpdate);
-        SpaceStore.instance.on(this.getSpaceEventKey(this.space = space), this.onStoreUpdate);
-        this.onStoreUpdate(); // initial update from the change to the space
+    public updateSpace(space: SpaceKey) {
+        SpaceStore.instance.off(this.space, this.onStoreUpdate);
+        SpaceStore.instance.on(this.space = space, this.onStoreUpdate);
+        this.onStoreUpdate(true); // initial update from the change to the space
     }
 
     public destroy(): void {
-        SpaceStore.instance.off(this.getSpaceEventKey(this.space), this.onStoreUpdate);
+        SpaceStore.instance.off(this.space, this.onStoreUpdate);
     }
 }

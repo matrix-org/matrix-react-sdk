@@ -1,4 +1,3 @@
-//@flow
 /*
 Copyright 2017 Aviral Dasgupta
 
@@ -15,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {clamp} from "lodash";
-import {MatrixEvent} from "matrix-js-sdk/src/models/event";
+import { clamp } from "lodash";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import {SerializedPart} from "./editor/parts";
+import { SerializedPart } from "./editor/parts";
 import EditorModel from "./editor/model";
 
 interface IHistoryItem {
@@ -43,7 +43,7 @@ export default class SendHistoryManager {
             try {
                 this.history.push(JSON.parse(itemJSON));
             } catch (e) {
-                console.warn("Throwing away unserialisable history", e);
+                logger.warn("Throwing away unserialisable history", e);
                 break;
             }
             ++index;

@@ -14,13 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {useRef, useEffect} from "react";
-import type {EventEmitter} from "events";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { ListenerMap, TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+
+import type { EventEmitter } from "events";
 
 type Handler = (...args: any[]) => void;
 
-// Hook to wrap event emitter on and removeListener in hook lifecycle
-export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbol, handler: Handler) => {
+export function useTypedEventEmitter<
+    Events extends string,
+    Arguments extends ListenerMap<Events>,
+>(
+    emitter: TypedEventEmitter<Events, Arguments>,
+    eventName: Events,
+    handler: Handler,
+): void {
+    useEventEmitter(emitter, eventName, handler);
+}
+
+/**
+ * Hook to wrap an EventEmitter on and off in hook lifecycle
+ */
+export function useEventEmitter(
+    emitter: EventEmitter | undefined,
+    eventName: string | symbol,
+    handler: Handler,
+): void {
     // Create a ref that stores handler
     const savedHandler = useRef(handler);
 
@@ -42,9 +61,38 @@ export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbo
 
             // Remove event listener on cleanup
             return () => {
-                emitter.removeListener(eventName, eventListener);
+                emitter.off(eventName, eventListener);
             };
         },
         [eventName, emitter], // Re-run if eventName or emitter changes
     );
-};
+}
+
+type Mapper<T> = (...args: any[]) => T;
+
+export function useTypedEventEmitterState<
+    T,
+    Events extends string,
+    Arguments extends ListenerMap<Events>,
+>(
+    emitter: TypedEventEmitter<Events, Arguments>,
+    eventName: Events,
+    fn: Mapper<T>,
+): T {
+    return useEventEmitterState<T>(emitter, eventName, fn);
+}
+
+export function useEventEmitterState<T>(
+    emitter: EventEmitter | undefined,
+    eventName: string | symbol,
+    fn: Mapper<T>,
+): T {
+    const [value, setValue] = useState<T>(fn);
+    const handler = useCallback((...args: any[]) => {
+        setValue(fn(...args));
+    }, [fn]);
+    // re-run when the emitter changes
+    useEffect(handler, [emitter]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEventEmitter(emitter, eventName, handler);
+    return value;
+}

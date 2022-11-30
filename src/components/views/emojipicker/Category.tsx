@@ -15,13 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {RefObject} from 'react';
+import React, { RefObject } from 'react';
 
 import { CATEGORY_HEADER_HEIGHT, EMOJI_HEIGHT, EMOJIS_PER_ROW } from "./EmojiPicker";
 import LazyRenderList from "../elements/LazyRenderList";
-import {DATA_BY_CATEGORY, IEmoji} from "../../../emoji";
+import { DATA_BY_CATEGORY, IEmoji } from "../../../emoji";
 import Emoji from './Emoji';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const OVERFLOW_ROWS = 3;
 
@@ -46,15 +45,15 @@ interface IProps {
     onClick(emoji: IEmoji): void;
     onMouseEnter(emoji: IEmoji): void;
     onMouseLeave(emoji: IEmoji): void;
+    isEmojiDisabled?: (unicode: string) => boolean;
 }
 
-@replaceableComponent("views.emojipicker.Category")
 class Category extends React.PureComponent<IProps> {
     private renderEmojiRow = (rowIndex: number) => {
         const { onClick, onMouseEnter, onMouseLeave, selectedEmojis, emojis } = this.props;
         const emojisForRow = emojis.slice(rowIndex * 8, (rowIndex + 1) * 8);
         return (<div key={rowIndex}>{
-            emojisForRow.map(emoji => ((
+            emojisForRow.map(emoji => (
                 <Emoji
                     key={emoji.hexcode}
                     emoji={emoji}
@@ -62,8 +61,9 @@ class Category extends React.PureComponent<IProps> {
                     onClick={onClick}
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
+                    disabled={this.props.isEmojiDisabled?.(emoji.unicode)}
                 />
-            )))
+            ))
         }</div>);
     };
 
@@ -98,17 +98,19 @@ class Category extends React.PureComponent<IProps> {
                 aria-label={name}
             >
                 <h2 className="mx_EmojiPicker_category_label">
-                    {name}
+                    { name }
                 </h2>
                 <LazyRenderList
-                    element="ul" className="mx_EmojiPicker_list"
-                    itemHeight={EMOJI_HEIGHT} items={rows}
+                    element="ul"
+                    className="mx_EmojiPicker_list"
+                    itemHeight={EMOJI_HEIGHT}
+                    items={rows}
                     scrollTop={localScrollTop}
                     height={localHeight}
                     overflowItems={OVERFLOW_ROWS}
                     overflowMargin={0}
-                    renderItem={this.renderEmojiRow}>
-                </LazyRenderList>
+                    renderItem={this.renderEmojiRow}
+                />
             </section>
         );
     }

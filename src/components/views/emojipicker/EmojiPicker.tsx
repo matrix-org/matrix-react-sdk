@@ -19,23 +19,25 @@ import React from 'react';
 
 import { _t } from '../../../languageHandler';
 import * as recent from '../../../emojipicker/recent';
-import {DATA_BY_CATEGORY, getEmojiFromUnicode, IEmoji} from "../../../emoji";
+import { DATA_BY_CATEGORY, getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import Header from "./Header";
 import Search from "./Search";
 import Preview from "./Preview";
 import QuickReactions from "./QuickReactions";
-import Category, {ICategory, CategoryKey} from "./Category";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Category, { ICategory, CategoryKey } from "./Category";
 
-export const CATEGORY_HEADER_HEIGHT = 22;
-export const EMOJI_HEIGHT = 37;
+export const CATEGORY_HEADER_HEIGHT = 20;
+export const EMOJI_HEIGHT = 35;
 export const EMOJIS_PER_ROW = 8;
 
+const ZERO_WIDTH_JOINER = "\u200D";
+
 interface IProps {
-    selectedEmojis: Set<string>;
+    selectedEmojis?: Set<string>;
     showQuickReactions?: boolean;
     onChoose(unicode: string): boolean;
+    isEmojiDisabled?: (unicode: string) => boolean;
 }
 
 interface IState {
@@ -48,15 +50,14 @@ interface IState {
     viewportHeight: number;
 }
 
-@replaceableComponent("views.emojipicker.EmojiPicker")
 class EmojiPicker extends React.Component<IProps, IState> {
     private readonly recentlyUsed: IEmoji[];
     private readonly memoizedDataByCategory: Record<CategoryKey, IEmoji[]>;
     private readonly categories: ICategory[];
 
-    private bodyRef = React.createRef<HTMLDivElement>();
+    private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -131,7 +132,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
     }
 
     private onScroll = () => {
-        const body = this.bodyRef.current;
+        const body = this.scrollRef.current?.containerRef.current;
         this.setState({
             scrollTop: body.scrollTop,
             viewportHeight: body.clientHeight,
@@ -140,7 +141,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
     };
 
     private updateVisibility = () => {
-        const body = this.bodyRef.current;
+        const body = this.scrollRef.current?.containerRef.current;
         const rect = body.getBoundingClientRect();
         for (const cat of this.categories) {
             const elem = body.querySelector(`[data-category-id="${cat.id}"]`);
@@ -167,20 +168,21 @@ class EmojiPicker extends React.Component<IProps, IState> {
     };
 
     private scrollToCategory = (category: string) => {
-        this.bodyRef.current.querySelector(`[data-category-id="${category}"]`).scrollIntoView();
+        this.scrollRef.current?.containerRef.current
+            ?.querySelector(`[data-category-id="${category}"]`).scrollIntoView();
     };
 
     private onChangeFilter = (filter: string) => {
-        filter = filter.toLowerCase(); // filter is case insensitive stored lower-case
+        const lcFilter = filter.toLowerCase().trim(); // filter is case insensitive
         for (const cat of this.categories) {
             let emojis;
             // If the new filter string includes the old filter string, we don't have to re-filter the whole dataset.
-            if (filter.includes(this.state.filter)) {
+            if (lcFilter.includes(this.state.filter)) {
                 emojis = this.memoizedDataByCategory[cat.id];
             } else {
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
             }
-            emojis = emojis.filter(emoji => emoji.filterString.includes(filter));
+            emojis = emojis.filter(emoji => this.emojiMatchesFilter(emoji, lcFilter));
             this.memoizedDataByCategory[cat.id] = emojis;
             cat.enabled = emojis.length > 0;
             // The setState below doesn't re-render the header and we already have the refs for updateVisibility, so...
@@ -189,11 +191,22 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.setState({ filter });
         // Header underlines need to be updated, but updating requires knowing
         // where the categories are, so we wait for a tick.
-        setTimeout(this.updateVisibility, 0);
+        window.setTimeout(this.updateVisibility, 0);
+    };
+
+    private emojiMatchesFilter = (emoji: IEmoji, filter: string): boolean => {
+        return emoji.label.toLowerCase().includes(filter) ||
+            (Array.isArray(emoji.emoticon)
+                ? emoji.emoticon.some((x) => x.includes(filter))
+                : emoji.emoticon?.includes(filter)
+            ) ||
+            emoji.shortcodes.some(x => x.toLowerCase().includes(filter)) ||
+            emoji.unicode.split(ZERO_WIDTH_JOINER).includes(filter);
     };
 
     private onEnterFilter = () => {
-        const btn = this.bodyRef.current.querySelector<HTMLButtonElement>(".mx_EmojiPicker_item");
+        const btn = this.scrollRef.current?.containerRef.current
+            ?.querySelector<HTMLButtonElement>(".mx_EmojiPicker_item");
         if (btn) {
             btn.click();
         }
@@ -227,20 +240,17 @@ class EmojiPicker extends React.Component<IProps, IState> {
     render() {
         let heightBefore = 0;
         return (
-            <div className="mx_EmojiPicker">
+            <div className="mx_EmojiPicker" data-testid='mx_EmojiPicker'>
                 <Header categories={this.categories} onAnchorClick={this.scrollToCategory} />
                 <Search query={this.state.filter} onChange={this.onChangeFilter} onEnter={this.onEnterFilter} />
                 <AutoHideScrollbar
                     className="mx_EmojiPicker_body"
-                    wrappedRef={ref => {
-                        // @ts-ignore - AutoHideScrollbar should accept a RefObject or fall back to its own instead
-                        this.bodyRef.current = ref
-                    }}
+                    ref={this.scrollRef}
                     onScroll={this.onScroll}
                 >
-                    {this.categories.map(category => {
+                    { this.categories.map(category => {
                         const emojis = this.memoizedDataByCategory[category.id];
-                        const categoryElement = ((
+                        const categoryElement = (
                             <Category
                                 key={category.id}
                                 id={category.id}
@@ -252,15 +262,16 @@ class EmojiPicker extends React.Component<IProps, IState> {
                                 onClick={this.onClickEmoji}
                                 onMouseEnter={this.onHoverEmoji}
                                 onMouseLeave={this.onHoverEmojiEnd}
+                                isEmojiDisabled={this.props.isEmojiDisabled}
                                 selectedEmojis={this.props.selectedEmojis}
                             />
-                        ));
+                        );
                         const height = EmojiPicker.categoryHeightForEmojiCount(emojis.length);
                         heightBefore += height;
                         return categoryElement;
-                    })}
+                    }) }
                 </AutoHideScrollbar>
-                {this.state.previewEmoji || !this.props.showQuickReactions
+                { this.state.previewEmoji || !this.props.showQuickReactions
                     ? <Preview emoji={this.state.previewEmoji} />
                     : <QuickReactions onClick={this.onClickEmoji} selectedEmojis={this.props.selectedEmojis} /> }
             </div>
