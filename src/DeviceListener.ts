@@ -311,7 +311,7 @@ export default class DeviceListener {
         const newUnverifiedDeviceIds = new Set<string>();
 
         const isCurrentDeviceTrusted = crossSigningReady &&
-            await (cli.checkDeviceTrust(cli.getUserId(), cli.deviceId)).isCrossSigningVerified();
+            await (cli.checkDeviceTrust(cli.getUserId()!, cli.deviceId)).isCrossSigningVerified();
 
         // as long as cross-signing isn't ready,
         // you can't see or dismiss any device toasts
