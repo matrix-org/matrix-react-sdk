@@ -383,6 +383,16 @@ export function tryTransformPermalinkToLocalHref(permalink: string): string {
     return permalink;
 }
 
+export function handleMarkdownLocalLinks(e: React.MouseEvent<HTMLDivElement>): void {
+    const targetLink = e.target as HTMLLinkElement;
+    const localHref = tryTransformPermalinkToLocalHref(targetLink.href);
+    if (localHref !== targetLink.href) {
+        // it could be converted to a localHref -> therefore handle locally
+        e.preventDefault();
+        window.location.hash = localHref;
+    }
+}
+
 export function getPrimaryPermalinkEntity(permalink: string): string {
     try {
         let permalinkParts = parsePermalink(permalink);

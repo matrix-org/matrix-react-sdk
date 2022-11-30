@@ -28,7 +28,7 @@ import Modal from "../../../Modal";
 import InfoDialog from "../dialogs/InfoDialog";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
+import { handleMarkdownLocalLinks } from "../../../utils/permalinks/Permalinks";
 import AccessibleButton from "./AccessibleButton";
 import { Linkify } from "./Linkify";
 import TooltipTarget from "./TooltipTarget";
@@ -50,15 +50,8 @@ export default function RoomTopic({
 
     const onClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         props.onClick?.(e);
-        const target = e.target as HTMLElement;
-        if (target.tagName.toUpperCase() === "A") {
-            const targetLink = target as HTMLLinkElement;
-            const localHref = tryTransformPermalinkToLocalHref(targetLink.href);
-            if (localHref !== targetLink.href) {
-                // it could be converted to a localHref -> therefore handle locally
-                e.preventDefault();
-                window.location.hash = localHref;
-            }
+        if ((e.target as HTMLElement).tagName.toUpperCase() === "A") {
+            handleMarkdownLocalLinks(e);
             return;
         }
 
@@ -82,13 +75,7 @@ export default function RoomTopic({
                         onClick={(ev: MouseEvent) => {
                             if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
                                 modal.close();
-                                const targetLink = ev.target as HTMLLinkElement;
-                                const localHref = tryTransformPermalinkToLocalHref(targetLink.href);
-                                if (localHref !== targetLink.href) {
-                                    // it could be converted to a localHref -> therefore handle locally
-                                    ev.preventDefault();
-                                    window.location.hash = localHref;
-                                }
+                                handleMarkdownLocalLinks(ev);
                             }
                         }}
                     >

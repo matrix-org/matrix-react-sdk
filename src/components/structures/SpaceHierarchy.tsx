@@ -59,7 +59,7 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { IOOBData } from "../../stores/ThreepidInviteStore";
 import { awaitRoomDownSync } from "../../utils/RoomUpgrade";
-import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permalinks";
+import { handleMarkdownLocalLinks } from "../../utils/permalinks/Permalinks";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
@@ -226,15 +226,9 @@ const Tile: React.FC<ITileProps> = ({
                 ref={e => e && linkifyElement(e)}
                 onClick={ev => {
                     // prevent clicks on links from bubbling up to the room tile
-                    if ((ev.target as HTMLElement).tagName === "A") {
+                    if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
                         ev.stopPropagation();
-                        const targetLink = ev.target as HTMLLinkElement;
-                        const localHref = tryTransformPermalinkToLocalHref(targetLink.href);
-                        if (localHref !== targetLink.href) {
-                            // it could be converted to a localHref -> therefore handle locally
-                            ev.preventDefault();
-                            window.location.hash = localHref;
-                        }
+                        handleMarkdownLocalLinks(ev);
                     }
                 }}
             >
