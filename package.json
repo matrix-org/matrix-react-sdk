@@ -208,7 +208,6 @@
     "raw-loader": "^4.0.2",
     "react-test-renderer": "^17.0.2",
     "rimraf": "^3.0.2",
-    "rrweb-snapshot": "1.1.14",
     "stylelint": "^14.9.1",
     "stylelint-config-standard": "^26.0.0",
     "stylelint-scss": "^4.2.0",
