@@ -24,7 +24,7 @@ import Modal from './Modal';
 import { RightPanelPhases } from "./stores/right-panel/RightPanelStorePhases";
 import { accessSecretStorage } from './SecurityManager';
 import UntrustedDeviceDialog from "./components/views/dialogs/UntrustedDeviceDialog";
-import { IDevice } from "./components/views/right_panel/UserInfo";
+import { Device } from "./components/views/right_panel/UserInfo/UserInfo";
 import ManualDeviceKeyVerificationDialog from "./components/views/dialogs/ManualDeviceKeyVerificationDialog";
 import RightPanelStore from "./stores/right-panel/RightPanelStore";
 import { IRightPanelCardState } from "./stores/right-panel/RightPanelStoreIPanelState";
@@ -44,7 +44,7 @@ async function enable4SIfNeeded() {
     return true;
 }
 
-export async function verifyDevice(user: User, device: IDevice) {
+export async function verifyDevice(user: User, device: Device) {
     const cli = MatrixClientPeg.get();
     if (cli.isGuest()) {
         dis.dispatch({ action: 'require_registration' });

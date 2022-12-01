@@ -19,89 +19,63 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
-import { ClientEvent, MatrixClient } from 'matrix-js-sdk/src/client';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { User } from 'matrix-js-sdk/src/models/user';
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
-import dis from '../../../dispatcher/dispatcher';
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
-import DMRoomMap from '../../../utils/DMRoomMap';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import SdkConfig from '../../../SdkConfig';
-import MultiInviter from "../../../utils/MultiInviter";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import E2EIcon from "../rooms/E2EIcon";
-import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
-import { textualPowerLevel } from '../../../Roles';
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import EncryptionPanel from "./EncryptionPanel";
-import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
-import { legacyVerifyUser, verifyDevice, verifyUser } from '../../../verification';
-import { Action } from "../../../dispatcher/actions";
-import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
-import BaseCard from "./BaseCard";
-import { E2EStatus } from "../../../utils/ShieldUtils";
-import ImageView from "../elements/ImageView";
-import Spinner from "../elements/Spinner";
-import PowerSelector from "../elements/PowerSelector";
-import MemberAvatar from "../avatars/MemberAvatar";
-import PresenceLabel from "../rooms/PresenceLabel";
-import BulkRedactDialog from "../dialogs/BulkRedactDialog";
-import ShareDialog from "../dialogs/ShareDialog";
-import ErrorDialog from "../dialogs/ErrorDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
-import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
-import RoomAvatar from "../avatars/RoomAvatar";
-import RoomName from "../elements/RoomName";
-import { mediaFromMxc } from "../../../customisations/Media";
-import UIStore from "../../../stores/UIStore";
-import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
-import { bulkSpaceBehaviour } from "../../../utils/space";
-import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
-import { UIComponent } from "../../../settings/UIFeature";
-import { TimelineRenderingType } from "../../../contexts/RoomContext";
-import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
-import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import PosthogTrackers from "../../../PosthogTrackers";
-import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { DirectoryMember, startDmOnFirstMessage } from '../../../utils/direct-messages';
-import { SdkContextClass } from '../../../contexts/SDKContext';
+import dis from '../../../../dispatcher/dispatcher';
+import Modal from '../../../../Modal';
+import { _t } from '../../../../languageHandler';
+import DMRoomMap from '../../../../utils/DMRoomMap';
+import AccessibleButton, { ButtonEvent } from '../../elements/AccessibleButton';
+import MultiInviter from "../../../../utils/MultiInviter";
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import { textualPowerLevel } from '../../../../Roles';
+import MatrixClientContext from "../../../../contexts/MatrixClientContext";
+import { RightPanelPhases } from '../../../../stores/right-panel/RightPanelStorePhases';
+import EncryptionPanel from "../EncryptionPanel";
+import { legacyVerifyUser, verifyDevice, verifyUser } from '../../../../verification';
+import { Action } from "../../../../dispatcher/actions";
+import { useIsEncrypted } from "../../../../hooks/useIsEncrypted";
+import BaseCard from "../BaseCard";
+import { E2EStatus } from "../../../../utils/ShieldUtils";
+import Spinner from "../../elements/Spinner";
+import PowerSelector from "../../elements/PowerSelector";
+import BulkRedactDialog from "../../dialogs/BulkRedactDialog";
+import ShareDialog from "../../dialogs/ShareDialog";
+import ErrorDialog from "../../dialogs/ErrorDialog";
+import QuestionDialog from "../../dialogs/QuestionDialog";
+import ConfirmUserActionDialog from "../../dialogs/ConfirmUserActionDialog";
+import RoomAvatar from "../../avatars/RoomAvatar";
+import RoomName from "../../elements/RoomName";
+import { ComposerInsertPayload } from "../../../../dispatcher/payloads/ComposerInsertPayload";
+import ConfirmSpaceUserActionDialog from "../../dialogs/ConfirmSpaceUserActionDialog";
+import { bulkSpaceBehaviour } from "../../../../utils/space";
+import { shouldShowComponent } from "../../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../../settings/UIFeature";
+import { TimelineRenderingType } from "../../../../contexts/RoomContext";
+import RightPanelStore from '../../../../stores/right-panel/RightPanelStore';
+import { IRightPanelCardState } from '../../../../stores/right-panel/RightPanelStoreIPanelState';
+import PosthogTrackers from "../../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
+import { SdkContextClass } from '../../../../contexts/SDKContext';
+import { Icon as VerifiedIcon } from "../../../../../res/img/e2e/verified.svg";
+import { Icon as HideIcon } from "../../../../../res/img/element-icons/hide.svg";
+import { UserInfoButton } from "./UserInfoButton";
+import { UserInfoHeader } from './UserInfoHeader';
+import { Device, PowerLevelsContent, RoomPermissions } from './@types/index.d.ts';
+import { useRoomPowerLevels } from './hooks/useRoomPowerLevels';
+import { useIsSynapseAdmin } from './hooks/useIsSynapseAdmin';
+import { useRoomPermissions } from './hooks/useRoomPermissions';
+import { useHomeserverSupportsCrossSigning } from './hooks/useHomeserverSupportsCrossSigning';
+import { useHasCrossSigningKeys } from './hooks/useHasCrossSigningKeys';
+import { useDevices } from './hooks/useDevices';
+import { useIsIgnored } from './hooks/useIsIgnored';
 
-export interface IDevice {
-    deviceId: string;
-    ambiguous?: boolean;
-    getDisplayName(): string;
-}
-
-const disambiguateDevices = (devices: IDevice[]) => {
-    const names = Object.create(null);
-    for (let i = 0; i < devices.length; i++) {
-        const name = devices[i].getDisplayName();
-        const indexList = names[name] || [];
-        indexList.push(i);
-        names[name] = indexList;
-    }
-    for (const name in names) {
-        if (names[name].length > 1) {
-            names[name].forEach((j) => {
-                devices[j].ambiguous = true;
-            });
-        }
-    }
-};
-
-export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice[]): E2EStatus => {
+export const getE2EStatus = (cli: MatrixClient, userId: string, devices: Device[]): E2EStatus => {
     const isMe = userId === cli.getUserId();
     const userTrust = cli.checkUserTrust(userId);
     if (!userTrust.isCrossSigningVerified()) {
@@ -121,35 +95,7 @@ export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice
     return anyDeviceUnverified ? E2EStatus.Warning : E2EStatus.Verified;
 };
 
-async function openDMForUser(matrixClient: MatrixClient, user: RoomMember): Promise<void> {
-    const startDMUser = new DirectoryMember({
-        user_id: user.userId,
-        display_name: user.rawDisplayName,
-        avatar_url: user.getMxcAvatarUrl(),
-    });
-    startDmOnFirstMessage(matrixClient, [startDMUser]);
-}
-
-type SetUpdating = (updating: boolean) => void;
-
-function useHasCrossSigningKeys(cli: MatrixClient, member: User, canVerify: boolean, setUpdating: SetUpdating) {
-    return useAsyncMemo(async () => {
-        if (!canVerify) {
-            return undefined;
-        }
-        setUpdating(true);
-        try {
-            await cli.downloadKeys([member.userId]);
-            const xsi = cli.getStoredCrossSigningForUser(member.userId);
-            const key = xsi && xsi.getId();
-            return !!key;
-        } finally {
-            setUpdating(false);
-        }
-    }, [cli, member, canVerify]);
-}
-
-function DeviceItem({ userId, device }: { userId: string, device: IDevice }) {
+function DeviceItem({ userId, device }: { userId: string, device: Device }) {
     const cli = useContext(MatrixClientContext);
     const isMe = userId === cli.getUserId();
     const deviceTrust = cli.checkDeviceTrust(userId, device.deviceId);
@@ -210,7 +156,7 @@ function DeviceItem({ userId, device }: { userId: string, device: IDevice }) {
     }
 }
 
-function DevicesSection({ devices, userId, loading }: { devices: IDevice[], userId: string, loading: boolean }) {
+function DevicesSection({ devices, userId, loading }: { devices: Device[], userId: string, loading: boolean }) {
     const cli = useContext(MatrixClientContext);
     const userTrust = cli.checkUserTrust(userId);
 
@@ -263,22 +209,15 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
     let expandButton;
     if (expandSectionDevices.length) {
         if (isExpanded) {
-            expandButton = (<AccessibleButton
-                kind="link"
-                className="mx_UserInfo_expand"
-                onClick={() => setExpanded(false)}
-            >
-                <div>{ expandHideCaption }</div>
-            </AccessibleButton>);
+            expandButton = <UserInfoButton onClick={() => setExpanded(false)}>
+                <HideIcon />
+                { expandHideCaption }
+            </UserInfoButton>;
         } else {
-            expandButton = (<AccessibleButton
-                kind="link"
-                className="mx_UserInfo_expand"
-                onClick={() => setExpanded(true)}
-            >
+            expandButton = (<UserInfoButton onClick={() => setExpanded(true)}>
                 <div className={expandIconClasses} />
                 <div>{ expandCountCaption }</div>
-            </AccessibleButton>);
+            </UserInfoButton>);
         }
     }
 
@@ -293,43 +232,20 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
     }
 
     return (
-        <div className="mx_UserInfo_devices">
-            <div>{ deviceList }</div>
-            <div>{ expandButton }</div>
-        </div>
+        <>
+            { deviceList }
+            { expandButton }
+        </>
     );
 }
 
-const MessageButton = ({ member }: { member: RoomMember }) => {
-    const cli = useContext(MatrixClientContext);
-    const [busy, setBusy] = useState(false);
-
-    return (
-        <AccessibleButton
-            kind="link"
-            onClick={async () => {
-                if (busy) return;
-                setBusy(true);
-                await openDMForUser(cli, member);
-                setBusy(false);
-            }}
-            className="mx_UserInfo_field"
-            disabled={busy}
-        >
-            { _t("Message") }
-        </AccessibleButton>
-    );
-};
-
 const UserOptionsSection: React.FC<{
     member: RoomMember;
-    isIgnored: boolean;
     canInvite: boolean;
     isSpace?: boolean;
-}> = ({ member, isIgnored, canInvite, isSpace }) => {
+}> = ({ member, canInvite, isSpace }) => {
     const cli = useContext(MatrixClientContext);
 
-    let ignoreButton = null;
     let insertPillButton = null;
     let inviteUserButton = null;
     let readReceiptButton = null;
@@ -345,28 +261,6 @@ const UserOptionsSection: React.FC<{
     // Only allow the user to ignore the user if its not ourselves
     // same goes for jumping to read receipt
     if (!isMe) {
-        const onIgnoreToggle = () => {
-            const ignoredUsers = cli.getIgnoredUsers();
-            if (isIgnored) {
-                const index = ignoredUsers.indexOf(member.userId);
-                if (index !== -1) ignoredUsers.splice(index, 1);
-            } else {
-                ignoredUsers.push(member.userId);
-            }
-
-            cli.setIgnoredUsers(ignoredUsers);
-        };
-
-        ignoreButton = (
-            <AccessibleButton
-                kind="link"
-                onClick={onIgnoreToggle}
-                className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
-            >
-                { isIgnored ? _t("Unignore") : _t("Ignore") }
-            </AccessibleButton>
-        );
-
         if (member.roomId && !isSpace) {
             const onReadReceiptButton = function() {
                 const room = cli.getRoom(member.roomId);
@@ -390,24 +284,16 @@ const UserOptionsSection: React.FC<{
             const room = cli.getRoom(member.roomId);
             if (room?.getEventReadUpTo(member.userId)) {
                 readReceiptButton = (
-                    <AccessibleButton
-                        kind="link"
-                        onClick={onReadReceiptButton}
-                        className="mx_UserInfo_field"
-                    >
+                    <UserInfoButton onClick={onReadReceiptButton}>
                         { _t('Jump to read receipt') }
-                    </AccessibleButton>
+                    </UserInfoButton>
                 );
             }
 
             insertPillButton = (
-                <AccessibleButton
-                    kind="link"
-                    onClick={onInsertPillButton}
-                    className="mx_UserInfo_field"
-                >
+                <UserInfoButton onClick={onInsertPillButton}>
                     { _t('Mention') }
-                </AccessibleButton>
+                </UserInfoButton>
             );
         }
 
@@ -433,43 +319,26 @@ const UserOptionsSection: React.FC<{
             };
 
             inviteUserButton = (
-                <AccessibleButton
-                    kind="link"
-                    onClick={onInviteUserButton}
-                    className="mx_UserInfo_field"
-                >
+                <UserInfoButton onClick={onInviteUserButton}>
                     { _t('Invite') }
-                </AccessibleButton>
+                </UserInfoButton>
             );
         }
     }
 
     const shareUserButton = (
-        <AccessibleButton
-            kind="link"
-            onClick={onShareUserClick}
-            className="mx_UserInfo_field"
-        >
+        <UserInfoButton onClick={onShareUserClick}>
             { _t('Share Link to User') }
-        </AccessibleButton>
+        </UserInfoButton>
     );
 
-    let directMessageButton: JSX.Element;
-    if (!isMe) {
-        directMessageButton = <MessageButton member={member} />;
-    }
-
     return (
-        <div className="mx_UserInfo_container">
+        <div className="mx_UserInfo_container mx_BaseCard_Group">
             <h3>{ _t("Options") }</h3>
-            <div>
-                { directMessageButton }
-                { readReceiptButton }
-                { shareUserButton }
-                { insertPillButton }
-                { inviteUserButton }
-                { ignoreButton }
-            </div>
+            { readReceiptButton }
+            { shareUserButton }
+            { insertPillButton }
+            { inviteUserButton }
         </div>
     );
 };
@@ -496,29 +365,14 @@ const warnSelfDemote = async (isSpace: boolean) => {
 
 const GenericAdminToolsContainer: React.FC<{}> = ({ children }) => {
     return (
-        <div className="mx_UserInfo_container">
+        <div className="mx_UserInfo_container mx_BaseCard_Group">
             <h3>{ _t("Admin Tools") }</h3>
-            <div className="mx_UserInfo_buttons">
-                { children }
-            </div>
+            { children }
         </div>
     );
 };
 
-interface IPowerLevelsContent {
-    events?: Record<string, number>;
-    // eslint-disable-next-line camelcase
-    users_default?: number;
-    // eslint-disable-next-line camelcase
-    events_default?: number;
-    // eslint-disable-next-line camelcase
-    state_default?: number;
-    ban?: number;
-    kick?: number;
-    redact?: number;
-}
-
-const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsContent) => {
+const isMuted = (member: RoomMember, powerLevelContent: PowerLevelsContent) => {
     if (!powerLevelContent || !member) return false;
 
     const levelToSend = (
@@ -526,27 +380,6 @@ const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsContent) => 
         powerLevelContent.events_default
     );
     return member.powerLevel < levelToSend;
-};
-
-const getPowerLevels = room => room?.currentState?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent() || {};
-
-export const useRoomPowerLevels = (cli: MatrixClient, room: Room) => {
-    const [powerLevels, setPowerLevels] = useState<IPowerLevelsContent>(getPowerLevels(room));
-
-    const update = useCallback((ev?: MatrixEvent) => {
-        if (!room) return;
-        if (ev && ev.getType() !== EventType.RoomPowerLevels) return;
-        setPowerLevels(getPowerLevels(room));
-    }, [room]);
-
-    useTypedEventEmitter(cli, RoomStateEvent.Events, update);
-    useEffect(() => {
-        update();
-        return () => {
-            setPowerLevels({});
-        };
-    }, [update]);
-    return powerLevels;
 };
 
 interface IBaseProps {
@@ -615,13 +448,14 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
         member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
         : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room");
 
-    return <AccessibleButton
-        kind="link"
-        className="mx_UserInfo_field mx_UserInfo_destructive"
+    return <UserInfoButton
+        className={classNames({
+            mx_UserInfo_destructive: true,
+        })}
         onClick={onKick}
     >
         { kickLabel }
-    </AccessibleButton>;
+    </UserInfoButton>;
 };
 
 const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
@@ -637,13 +471,14 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
         });
     };
 
-    return <AccessibleButton
-        kind="link"
-        className="mx_UserInfo_field mx_UserInfo_destructive"
+    return <UserInfoButton
+        className={classNames({
+            mx_UserInfo_destructive: true,
+        })}
         onClick={onRedactAllMessages}
     >
         { _t("Remove recent messages") }
-    </AccessibleButton>;
+    </UserInfoButton>;
 };
 
 const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBaseRoomProps, "powerLevels">) => {
@@ -732,22 +567,19 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
             : _t("Unban from room");
     }
 
-    const classes = classNames("mx_UserInfo_field", {
-        mx_UserInfo_destructive: !isBanned,
-    });
-
-    return <AccessibleButton
-        kind="link"
-        className={classes}
+    return <UserInfoButton
+        className={classNames({
+            mx_UserInfo_destructive: !isBanned,
+        })}
         onClick={onBanOrUnban}
     >
         { label }
-    </AccessibleButton>;
+    </UserInfoButton>;
 };
 
 interface IBaseRoomProps extends IBaseProps {
     room: Room;
-    powerLevels: IPowerLevelsContent;
+    powerLevels: PowerLevelsContent;
 }
 
 const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels, startUpdating, stopUpdating }) => {
@@ -805,18 +637,15 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
         }
     };
 
-    const classes = classNames("mx_UserInfo_field", {
-        mx_UserInfo_destructive: !muted,
-    });
-
     const muteLabel = muted ? _t("Unmute") : _t("Mute");
-    return <AccessibleButton
-        kind="link"
-        className={classes}
+    return <UserInfoButton
+        className={classNames({
+            mx_UserInfo_destructive: !muted,
+        })}
         onClick={onMuteToggle}
     >
         { muteLabel }
-    </AccessibleButton>;
+    </UserInfoButton>;
 };
 
 const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
@@ -900,84 +729,11 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     return <div />;
 };
 
-const useIsSynapseAdmin = (cli: MatrixClient) => {
-    const [isAdmin, setIsAdmin] = useState(false);
-    useEffect(() => {
-        cli.isSynapseAdministrator().then((isAdmin) => {
-            setIsAdmin(isAdmin);
-        }, () => {
-            setIsAdmin(false);
-        });
-    }, [cli]);
-    return isAdmin;
-};
-
-const useHomeserverSupportsCrossSigning = (cli: MatrixClient) => {
-    return useAsyncMemo<boolean>(async () => {
-        return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
-    }, [cli], false);
-};
-
-interface IRoomPermissions {
-    modifyLevelMax: number;
-    canEdit: boolean;
-    canInvite: boolean;
-}
-
-function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IRoomPermissions {
-    const [roomPermissions, setRoomPermissions] = useState<IRoomPermissions>({
-        // modifyLevelMax is the max PL we can set this user to, typically min(their PL, our PL) && canSetPL
-        modifyLevelMax: -1,
-        canEdit: false,
-        canInvite: false,
-    });
-
-    const updateRoomPermissions = useCallback(() => {
-        const powerLevels = room?.currentState.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
-        if (!powerLevels) return;
-
-        const me = room.getMember(cli.getUserId());
-        if (!me) return;
-
-        const them = user;
-        const isMe = me.userId === them.userId;
-        const canAffectUser = them.powerLevel < me.powerLevel || isMe;
-
-        let modifyLevelMax = -1;
-        if (canAffectUser) {
-            const editPowerLevel = powerLevels.events?.[EventType.RoomPowerLevels] ?? powerLevels.state_default ?? 50;
-            if (me.powerLevel >= editPowerLevel) {
-                modifyLevelMax = me.powerLevel;
-            }
-        }
-
-        setRoomPermissions({
-            canInvite: me.powerLevel >= (powerLevels.invite ?? 0),
-            canEdit: modifyLevelMax >= 0,
-            modifyLevelMax,
-        });
-    }, [cli, user, room]);
-
-    useTypedEventEmitter(cli, RoomStateEvent.Update, updateRoomPermissions);
-    useEffect(() => {
-        updateRoomPermissions();
-        return () => {
-            setRoomPermissions({
-                modifyLevelMax: -1,
-                canEdit: false,
-                canInvite: false,
-            });
-        };
-    }, [updateRoomPermissions]);
-
-    return roomPermissions;
-}
-
 const PowerLevelSection: React.FC<{
     user: RoomMember;
     room: Room;
-    roomPermissions: IRoomPermissions;
-    powerLevels: IPowerLevelsContent;
+    roomPermissions: RoomPermissions;
+    powerLevels: PowerLevelsContent;
 }> = ({ user, room, roomPermissions, powerLevels }) => {
     if (roomPermissions.canEdit) {
         return (<PowerLevelEditor user={user} room={room} roomPermissions={roomPermissions} />);
@@ -996,7 +752,7 @@ const PowerLevelSection: React.FC<{
 const PowerLevelEditor: React.FC<{
     user: RoomMember;
     room: Room;
-    roomPermissions: IRoomPermissions;
+    roomPermissions: RoomPermissions;
 }> = ({ user, room, roomPermissions }) => {
     const cli = useContext(MatrixClientContext);
 
@@ -1074,80 +830,10 @@ const PowerLevelEditor: React.FC<{
     );
 };
 
-export const useDevices = (userId: string) => {
-    const cli = useContext(MatrixClientContext);
-
-    // undefined means yet to be loaded, null means failed to load, otherwise list of devices
-    const [devices, setDevices] = useState(undefined);
-    // Download device lists
-    useEffect(() => {
-        setDevices(undefined);
-
-        let cancelled = false;
-
-        async function downloadDeviceList() {
-            try {
-                await cli.downloadKeys([userId], true);
-                const devices = cli.getStoredDevicesForUser(userId);
-
-                if (cancelled) {
-                    // we got cancelled - presumably a different user now
-                    return;
-                }
-
-                disambiguateDevices(devices);
-                setDevices(devices);
-            } catch (err) {
-                setDevices(null);
-            }
-        }
-        downloadDeviceList();
-
-        // Handle being unmounted
-        return () => {
-            cancelled = true;
-        };
-    }, [cli, userId]);
-
-    // Listen to changes
-    useEffect(() => {
-        let cancel = false;
-        const updateDevices = async () => {
-            const newDevices = cli.getStoredDevicesForUser(userId);
-            if (cancel) return;
-            setDevices(newDevices);
-        };
-        const onDevicesUpdated = (users) => {
-            if (!users.includes(userId)) return;
-            updateDevices();
-        };
-        const onDeviceVerificationChanged = (_userId, device) => {
-            if (_userId !== userId) return;
-            updateDevices();
-        };
-        const onUserTrustStatusChanged = (_userId, trustStatus) => {
-            if (_userId !== userId) return;
-            updateDevices();
-        };
-        cli.on(CryptoEvent.DevicesUpdated, onDevicesUpdated);
-        cli.on(CryptoEvent.DeviceVerificationChanged, onDeviceVerificationChanged);
-        cli.on(CryptoEvent.UserTrustStatusChanged, onUserTrustStatusChanged);
-        // Handle being unmounted
-        return () => {
-            cancel = true;
-            cli.removeListener(CryptoEvent.DevicesUpdated, onDevicesUpdated);
-            cli.removeListener(CryptoEvent.DeviceVerificationChanged, onDeviceVerificationChanged);
-            cli.removeListener(CryptoEvent.UserTrustStatusChanged, onUserTrustStatusChanged);
-        };
-    }, [cli, userId]);
-
-    return devices;
-};
-
 const BasicUserInfo: React.FC<{
     room: Room;
     member: User | RoomMember;
-    devices: IDevice[];
+    devices: Device[];
     isRoomEncrypted: boolean;
 }> = ({ room, member, devices, isRoomEncrypted }) => {
     const cli = useContext(MatrixClientContext);
@@ -1155,20 +841,6 @@ const BasicUserInfo: React.FC<{
     const powerLevels = useRoomPowerLevels(cli, room);
     // Load whether or not we are a Synapse Admin
     const isSynapseAdmin = useIsSynapseAdmin(cli);
-
-    // Check whether the user is ignored
-    const [isIgnored, setIsIgnored] = useState(cli.isUserIgnored(member.userId));
-    // Recheck if the user or client changes
-    useEffect(() => {
-        setIsIgnored(cli.isUserIgnored(member.userId));
-    }, [cli, member.userId]);
-    // Recheck also if we receive new accountData m.ignored_user_list
-    const accountDataHandler = useCallback((ev) => {
-        if (ev.getType() === "m.ignored_user_list") {
-            setIsIgnored(cli.isUserIgnored(member.userId));
-        }
-    }, [cli, member.userId]);
-    useTypedEventEmitter(cli, ClientEvent.AccountData, accountDataHandler);
 
     // Count of how many operations are currently in progress, if > 0 then show a Spinner
     const [pendingUpdateCount, setPendingUpdateCount] = useState(0);
@@ -1217,13 +889,9 @@ const BasicUserInfo: React.FC<{
     // FIXME this should be using cli instead of MatrixClientPeg.matrixClient
     if (isSynapseAdmin && member.userId.endsWith(`:${MatrixClientPeg.getHomeserverName()}`)) {
         synapseDeactivateButton = (
-            <AccessibleButton
-                kind="link"
-                className="mx_UserInfo_field mx_UserInfo_destructive"
-                onClick={onSynapseDeactivate}
-            >
-                { _t("Deactivate user") }
-            </AccessibleButton>
+            <UserInfoButton onClick={onSynapseDeactivate} className="mx_UserInfo_destructive">
+                { _t('Deactivate user') }
+            </UserInfoButton>
         );
     }
 
@@ -1232,7 +900,7 @@ const BasicUserInfo: React.FC<{
     if (room && (member as RoomMember).roomId) {
         // hide the Roles section for DMs as it doesn't make sense there
         if (!DMRoomMap.shared().getUserIdForRoomId((member as RoomMember).roomId)) {
-            memberDetails = <div className="mx_UserInfo_container">
+            memberDetails = <div className="mx_UserInfo_container mx_BaseCard_Group">
                 <h3>{ _t("Role in <RoomName/>", {}, {
                     RoomName: () => <b>{ room.name }</b>,
                 }) }</h3>
@@ -1299,21 +967,16 @@ const BasicUserInfo: React.FC<{
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
-            verifyButton = (<div className="mx_UserInfo_container_verifyButton">
-                <AccessibleButton
-                    kind="link"
-                    className="mx_UserInfo_field mx_UserInfo_verifyButton"
-                    onClick={() => {
-                        if (hasCrossSigningKeys) {
-                            verifyUser(member as User);
-                        } else {
-                            legacyVerifyUser(member as User);
-                        }
-                    }}
-                >
-                    { _t("Verify") }
-                </AccessibleButton>
-            </div>);
+            verifyButton = (<UserInfoButton onClick={() => {
+                if (hasCrossSigningKeys) {
+                    verifyUser(member as User);
+                } else {
+                    legacyVerifyUser(member as User);
+                }
+            }}>
+                <VerifiedIcon />
+                { _t('Verify') }
+            </UserInfoButton>);
         } else if (!showDeviceListSpinner) {
             // HACK: only show a spinner if the device section spinner is not shown,
             // to avoid showing a double spinner
@@ -1324,23 +987,18 @@ const BasicUserInfo: React.FC<{
 
     let editDevices;
     if (member.userId == cli.getUserId()) {
-        editDevices = (<div>
-            <AccessibleButton
-                kind="link"
-                className="mx_UserInfo_field"
-                onClick={() => {
-                    dis.dispatch({
-                        action: Action.ViewUserDeviceSettings,
-                    });
-                }}
-            >
+        editDevices = (
+            <UserInfoButton onClick={() => {
+                dis.dispatch({
+                    action: Action.ViewUserDeviceSettings,
+                });
+            }}>
                 { _t("Edit devices") }
-            </AccessibleButton>
-        </div>);
+            </UserInfoButton>);
     }
 
     const securitySection = (
-        <div className="mx_UserInfo_container">
+        <div className="mx_UserInfo_container mx_BaseCard_Group">
             <h3>{ _t("Security") }</h3>
             <p>{ text }</p>
             { verifyButton }
@@ -1358,7 +1016,6 @@ const BasicUserInfo: React.FC<{
         { securitySection }
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
-            isIgnored={isIgnored}
             member={member as RoomMember}
             isSpace={room?.isSpaceRoom()}
         />
@@ -1370,105 +1027,6 @@ const BasicUserInfo: React.FC<{
 };
 
 export type Member = User | RoomMember;
-
-const UserInfoHeader: React.FC<{
-    member: Member;
-    e2eStatus: E2EStatus;
-    roomId?: string;
-}> = ({ member, e2eStatus, roomId }) => {
-    const cli = useContext(MatrixClientContext);
-
-    const onMemberAvatarClick = useCallback(() => {
-        const avatarUrl = (member as RoomMember).getMxcAvatarUrl
-            ? (member as RoomMember).getMxcAvatarUrl()
-            : (member as User).avatarUrl;
-        if (!avatarUrl) return;
-
-        const httpUrl = mediaFromMxc(avatarUrl).srcHttp;
-        const params = {
-            src: httpUrl,
-            name: (member as RoomMember).name || (member as User).displayName,
-        };
-
-        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
-    }, [member]);
-
-    const avatarElement = (
-        <div className="mx_UserInfo_avatar">
-            <div className="mx_UserInfo_avatar_transition">
-                <div className="mx_UserInfo_avatar_transition_child">
-                    <MemberAvatar
-                        key={member.userId} // to instantly blank the avatar when UserInfo changes members
-                        member={member as RoomMember}
-                        width={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
-                        height={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
-                        resizeMethod="scale"
-                        fallbackUserId={member.userId}
-                        onClick={onMemberAvatarClick}
-                        urls={(member as User).avatarUrl ? [(member as User).avatarUrl] : undefined} />
-                </div>
-            </div>
-        </div>
-    );
-
-    let presenceState;
-    let presenceLastActiveAgo;
-    let presenceCurrentlyActive;
-    if (member instanceof RoomMember && member.user) {
-        presenceState = member.user.presence;
-        presenceLastActiveAgo = member.user.lastActiveAgo;
-        presenceCurrentlyActive = member.user.currentlyActive;
-    }
-
-    const enablePresenceByHsUrl = SdkConfig.get("enable_presence_by_hs_url");
-    let showPresence = true;
-    if (enablePresenceByHsUrl && enablePresenceByHsUrl[cli.baseUrl] !== undefined) {
-        showPresence = enablePresenceByHsUrl[cli.baseUrl];
-    }
-
-    let presenceLabel = null;
-    if (showPresence) {
-        presenceLabel = (
-            <PresenceLabel
-                activeAgo={presenceLastActiveAgo}
-                currentlyActive={presenceCurrentlyActive}
-                presenceState={presenceState}
-            />
-        );
-    }
-
-    let e2eIcon;
-    if (e2eStatus) {
-        e2eIcon = <E2EIcon size={18} status={e2eStatus} isUser={true} />;
-    }
-
-    const displayName = (member as RoomMember).rawDisplayName;
-    return <React.Fragment>
-        { avatarElement }
-
-        <div className="mx_UserInfo_container mx_UserInfo_separator">
-            <div className="mx_UserInfo_profile">
-                <div>
-                    <h2>
-                        { e2eIcon }
-                        <span title={displayName} aria-label={displayName} dir="auto">
-                            { displayName }
-                        </span>
-                    </h2>
-                </div>
-                <div className="mx_UserInfo_profile_mxid">
-                    { UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, {
-                        roomId,
-                        withDisplayName: true,
-                    }) }
-                </div>
-                <div className="mx_UserInfo_profileStatus">
-                    { presenceLabel }
-                </div>
-            </div>
-        </div>
-    </React.Fragment>;
-};
 
 interface IProps {
     user: Member;
@@ -1557,9 +1115,11 @@ const UserInfo: React.FC<IProps> = ({
         </div>;
     }
 
+    const isIgnored = useIsIgnored(cli, member);
+
     const header = <>
         { scopeHeader }
-        <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
+        <UserInfoHeader isIgnored={isIgnored} member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
     </>;
     return <BaseCard
         className={classes.join(" ")}
@@ -1578,3 +1138,5 @@ const UserInfo: React.FC<IProps> = ({
 };
 
 export default UserInfo;
+
+export { Device };

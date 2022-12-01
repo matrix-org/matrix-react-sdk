@@ -495,7 +495,8 @@ legend {
     }
 }
 
-.mx_Dialog_buttons_row {
+.mx_Dialog_buttons_row,
+.mx_buttons_row {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -508,6 +509,10 @@ legend {
 
     button {
         margin: 0 !important; /* override the margin settings */
+    }
+
+    &.mx_butons_row_equalSize > * {
+        flex: 1;
     }
 }
 

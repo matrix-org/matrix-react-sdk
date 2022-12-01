@@ -23,11 +23,11 @@ import E2EIcon, { E2EState } from "../rooms/E2EIcon";
 import AccessibleButton from "../elements/AccessibleButton";
 import BaseDialog from "./BaseDialog";
 import { IDialogProps } from "./IDialogProps";
-import { IDevice } from "../right_panel/UserInfo";
+import { Device } from "../right_panel/UserInfo/UserInfo";
 
 interface IProps extends IDialogProps {
     user: User;
-    device: IDevice;
+    device: Device;
 }
 
 const UntrustedDeviceDialog: React.FC<IProps> = ({ device, user, onFinished }) => {

@@ -47,24 +47,19 @@ limitations under the License.
         margin: 18px 0 0 0; /* TODO: Use a variable */
     }
 
+    .mx_UserInfo_cta {
+        margin-top: $spacing-8;
+        display: block;
+    }
+
     .mx_UserInfo_container {
-        padding: $spacing-8 $spacing-16;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 0 $spacing-16 $spacing-8 $spacing-16;
 
         &:not(.mx_UserInfo_separator) {
             padding-top: $spacing-16;
             padding-bottom: 0;
-
-            > :not(h3) {
-                margin-inline-start: $spacing-8;
-                display: flex;
-                flex-flow: column;
-                align-items: flex-start;
-                row-gap: $spacing-8;
-            }
-        }
-
-        .mx_UserInfo_container_verifyButton {
-            margin-top: $spacing-8;
         }
     }
 
@@ -92,54 +87,7 @@ limitations under the License.
 
     .mx_UserInfo_avatar {
         margin: $spacing-24 $spacing-32 0 $spacing-32;
-
-        .mx_UserInfo_avatar_transition {
-            max-width: 30vh;
-            margin: 0 auto;
-            transition: 0.5s;
-
-            .mx_UserInfo_avatar_transition_child {
-                /* use padding-top instead of height to make this element square,
-                as the % in padding is a % of the width (including margin,
-                that's why we had to put the margin to center on a parent div),
-                and not a % of the parent height. */
-                padding-top: 100%;
-                position: relative;
-
-                .mx_BaseAvatar,
-                .mx_BaseAvatar_initial,
-                .mx_BaseAvatar_image {
-                    border-radius: 100%;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100% !important;
-                    height: 100% !important;
-                }
-
-                .mx_BaseAvatar {
-                    &.mx_BaseAvatar_image {
-                        cursor: zoom-in;
-                    }
-
-                    .mx_BaseAvatar_initial {
-                        z-index: 1;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        /* override the calculated sizes so that the letter isn't HUGE */
-                        font-size: 6rem !important;
-                        width: 100% !important;
-                        transition: font-size 0.5s;
-
-                        & + .mx_BaseAvatar_image {
-                            cursor: default;
-                        }
-                    }
-                }
-            }
-        }
+        text-align: center;
     }
 
     h3 {
@@ -212,10 +160,6 @@ limitations under the License.
 
     .mx_UserInfo_field {
         line-height: $font-16px;
-
-        &.mx_UserInfo_destructive {
-            color: $alert;
-        }
     }
 
     .mx_UserInfo_statusMessage {
@@ -238,37 +182,38 @@ limitations under the License.
         flex: 1 1 0;
     }
 
+    .mx_E2EIcon {
+        float: left;
+        flex: 0 0 auto;
+        margin: 0;
+    }
+
+    .mx_UserInfo_device {
+        display: flex;
+        margin: $spacing-8 0;
+        margin-left: 14px;
+        padding: 0;
+        clear: both;
+
+        &.mx_UserInfo_device_verified {
+            .mx_UserInfo_device_trusted {
+                color: $accent;
+            }
+        }
+        &.mx_UserInfo_device_unverified {
+            .mx_UserInfo_device_trusted {
+                color: $alert;
+            }
+        }
+
+        .mx_UserInfo_device_name {
+            flex: 1;
+            margin: 0 5px;
+            word-break: break-word;
+        }
+    }
+
     .mx_UserInfo_devices {
-        .mx_UserInfo_device {
-            display: flex;
-            margin: $spacing-8 0;
-
-            &.mx_UserInfo_device_verified {
-                .mx_UserInfo_device_trusted {
-                    color: $accent;
-                }
-            }
-            &.mx_UserInfo_device_unverified {
-                .mx_UserInfo_device_trusted {
-                    color: $alert;
-                }
-            }
-
-            .mx_UserInfo_device_name {
-                flex: 1;
-                margin: 0 5px;
-                word-break: break-word;
-            }
-        }
-
-        /* both for icon in expand button and device item */
-        .mx_E2EIcon {
-            /* don't squeeze */
-            flex: 0 0 auto;
-            margin: 0;
-            width: 12px;
-            height: 12px;
-        }
 
         .mx_UserInfo_expand {
             column-gap: 5px; /* cf: mx_UserInfo_device_name */
@@ -276,21 +221,8 @@ limitations under the License.
             align-items: initial; /* Cancel the default property */
         }
     }
+}
 
-    &.mx_UserInfo_smallAvatar {
-        .mx_UserInfo_avatar {
-            .mx_UserInfo_avatar_transition {
-                max-width: 72px;
-                margin: 0 auto;
-            }
-
-            .mx_UserInfo_avatar_transition_child {
-                .mx_BaseAvatar {
-                    .mx_BaseAvatar_initial {
-                        font-size: 40px !important; /* override the other override because here the avatar is smaller */
-                    }
-                }
-            }
-        }
-    }
+.mx_UserInfo_destructive {
+    color: $alert !important;
 }

@@ -302,29 +302,35 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
 
     return <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
         <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
-            <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
+            <Button className="mx_RoomSummaryCard_icon_people mx_RoomSummaryCard_ButtonWithIcon" onClick={onRoomMembersClick}>
                 { _t("People") }
                 <span className="mx_BaseCard_Button_sublabel">
                     { memberCount }
                 </span>
             </Button>
-            { !isVideoRoom && <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
+            { !isVideoRoom && <Button
+                className="mx_RoomSummaryCard_icon_files mx_RoomSummaryCard_ButtonWithIcon"
+                onClick={onRoomFilesClick}>
                 { _t("Files") }
             </Button> }
             { pinningEnabled && !isVideoRoom &&
-                <Button className="mx_RoomSummaryCard_icon_pins" onClick={onRoomPinsClick}>
+                <Button className="mx_RoomSummaryCard_icon_pins mx_RoomSummaryCard_ButtonWithIcon" onClick={onRoomPinsClick}>
                     { _t("Pinned") }
                     { pinCount > 0 && <span className="mx_BaseCard_Button_sublabel">
                         { pinCount }
                     </span> }
                 </Button> }
-            { !isVideoRoom && <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
+            { !isVideoRoom && <Button
+                className="mx_RoomSummaryCard_icon_export mx_RoomSummaryCard_ButtonWithIcon"
+                onClick={onRoomExportClick}>
                 { _t("Export chat") }
             </Button> }
-            <Button className="mx_RoomSummaryCard_icon_share" onClick={onShareRoomClick}>
+            <Button
+                className="mx_RoomSummaryCard_icon_share mx_RoomSummaryCard_ButtonWithIcon"
+                onClick={onShareRoomClick}>
                 { _t("Share room") }
             </Button>
-            <Button className="mx_RoomSummaryCard_icon_settings" onClick={onRoomSettingsClick}>
+            <Button className="mx_RoomSummaryCard_icon_settings mx_RoomSummaryCard_ButtonWithIcon" onClick={onRoomSettingsClick}>
                 { _t("Room settings") }
             </Button>
         </Group>

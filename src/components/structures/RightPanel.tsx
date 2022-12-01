@@ -30,7 +30,7 @@ import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
 import WidgetCard from "../views/right_panel/WidgetCard";
 import SettingsStore from "../../settings/SettingsStore";
 import MemberList from "../views/rooms/MemberList";
-import UserInfo from "../views/right_panel/UserInfo";
+import UserInfo from "../views/right_panel/UserInfo/UserInfo";
 import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 import FilePanel from "./FilePanel";
 import ThreadView from "./ThreadView";
