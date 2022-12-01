@@ -3657,5 +3657,9 @@
     "Temporary implementation. Locations persist in room history.": "Vorläufige Implementierung: Standorte verbleiben im Raumverlauf.",
     "Live Location Sharing": "Echtzeit-Standortfreigabe",
     "Under active development, cannot be disabled.": "In aktiver Entwicklung, kann nicht deaktiviert werden.",
-    "Currently experimental.": "Aktuell experimentell."
+    "Currently experimental.": "Aktuell experimentell.",
+    "Right panel stays open": "Rechte Seitenleiste geöffnet lassen",
+    "New ways to ignore people": "Neue Methoden, Personen zu blockieren",
+    "Report to moderators": "An Raummoderation melden",
+    "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "In Räumen, die Moderation unterstützen, lässt dich die Schaltfläche „Melden“ missbräuchliche Verwendung an die Raummoderation melden."
 }
