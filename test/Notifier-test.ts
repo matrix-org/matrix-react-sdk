@@ -258,7 +258,7 @@ describe("Notifier", () => {
             { event: undefined, count: 1 },
         ];
         it.each(testCases)("does not dispatch when notifications are silenced", ({ event, count }) => {
-            mockClient.setAccountData(accountDataEventKey, event);
+            mockClient.setAccountData(accountDataEventKey, event!);
             Notifier._displayPopupNotification(testEvent, testRoom);
             expect(MockPlatform.displayNotification).toHaveBeenCalledTimes(count);
         });
@@ -274,16 +274,17 @@ describe("Notifier", () => {
     });
 
     describe("_playAudioNotification", () => {
-        it.each([
+        const testCases: {event: IContent, count: number}[] = [
             { event: { is_silenced: true }, count: 0 },
             { event: { is_silenced: false }, count: 1 },
             { event: undefined, count: 1 },
-        ])("does not dispatch when notifications are silenced", ({ event, count }) => {
+        ];
+        it.each(testCases)("does not dispatch when notifications are silenced", ({ event, count }) => {
             // It's not ideal to only look at whether this function has been called
             // but avoids starting to look into DOM stuff
             Notifier.getSoundForRoom = jest.fn();
 
-            mockClient.setAccountData(accountDataEventKey, event);
+            mockClient.setAccountData(accountDataEventKey, event!);
             Notifier._playAudioNotification(testEvent, testRoom);
             expect(Notifier.getSoundForRoom).toHaveBeenCalledTimes(count);
         });
