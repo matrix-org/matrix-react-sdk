@@ -60,6 +60,10 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     const [unrequestedSessions, setUnrequestedSessions] = useState<Set<string>>(new Set());
 
     useEffect(() => {
+        let cancelled = false;
+        const cancel = () => {
+            cancelled = true;
+        };
         const updateSessions = async () => {
             // Aggregate session IDs of undecryptable messages, and check
             // which ones do not have pending key requests
@@ -77,10 +81,12 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
                 } else {
                     currentUnrequestedSessions.add(sessionId);
                 }
+                if (cancelled) return;
             }
             setUnrequestedSessions(currentUnrequestedSessions);
         };
         updateSessions();
+        return cancel;
     }, [context, failures, setUnrequestedSessions]);
 
     const resendKeyRequests = useCallback(async () => {
