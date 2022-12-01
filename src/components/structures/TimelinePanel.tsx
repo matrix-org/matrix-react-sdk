@@ -1635,6 +1635,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             const boundingRect = node.getBoundingClientRect();
             if (boundingRect.top <= screenBottom && boundingRect.bottom >= screenTop) {
+                // the tile for this event is in the visible part of the screen (or just above/below it).
                 enteredVisibleRange = true;
                 if (ev.isDecryptionFailure()) result.push(ev);
             } else if (enteredVisibleRange) {
