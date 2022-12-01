@@ -377,7 +377,7 @@ export const Notifier = {
         removed: boolean,
         data: IRoomTimelineData,
     ) {
-        if (!data.liveEvent) return; // on notify for new things, not old.
+        if (!data.liveEvent) return; // only notify for new things, not old.
         if (!this.isSyncing) return; // don't alert for any messages initially
         if (ev.getSender() === MatrixClientPeg.get().getUserId()) return;
 
@@ -437,6 +437,11 @@ export const Notifier = {
             }
         }
         const room = MatrixClientPeg.get().getRoom(roomId);
+        if (!room) {
+            // e.g we are in the process of joining a room.
+            // Seen in the cypress lazy-loading test.
+            return;
+        }
 
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
 
