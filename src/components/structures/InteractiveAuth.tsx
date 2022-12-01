@@ -127,14 +127,13 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         });
 
         if (this.props.poll) {
-            this.intervalId = setInterval(() => {
+            this.intervalId = window.setInterval(() => {
                 this.authLogic.poll();
             }, 2000);
         }
     }
 
-    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
-    UNSAFE_componentWillMount() { // eslint-disable-line @typescript-eslint/naming-convention, camelcase
+    public componentDidMount() {
         this.authLogic.attemptAuth().then((result) => {
             const extra = {
                 emailSid: this.authLogic.getEmailSid(),

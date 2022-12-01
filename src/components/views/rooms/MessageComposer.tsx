@@ -54,13 +54,12 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
 import { Features } from '../../../settings/Settings';
 import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
-import {
-    startNewVoiceBroadcastRecording,
-    VoiceBroadcastRecordingsStore,
-} from '../../../voice-broadcast';
+import { VoiceBroadcastRecordingsStore } from '../../../voice-broadcast';
 import { SendWysiwygComposer, sendMessage } from './wysiwyg_composer/';
 import { MatrixClientProps, withMatrixClientHOC } from '../../../contexts/MatrixClientContext';
 import { htmlToPlainText } from '../../../utils/room/htmlToPlaintext';
+import { setUpVoiceBroadcastPreRecording } from '../../../voice-broadcast/utils/setUpVoiceBroadcastPreRecording';
+import { SdkContextClass } from '../../../contexts/SDKContext';
 
 let instanceCount = 0;
 
@@ -200,7 +199,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                     // that the ScrollPanel listening to the resizeNotifier can
                     // correctly measure it's new height and scroll down to keep
                     // at the bottom if it already is
-                    setTimeout(() => {
+                    window.setTimeout(() => {
                         this.props.resizeNotifier.notifyTimelineHeightChanged();
                     }, 100);
                 }
@@ -396,7 +395,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
     private onRecordingEndingSoon = ({ secondsLeft }) => {
         this.setState({ recordingTimeLeftSeconds: secondsLeft });
-        setTimeout(() => this.setState({ recordingTimeLeftSeconds: null }), 3000);
+        window.setTimeout(() => this.setState({ recordingTimeLeftSeconds: null }), 3000);
     };
 
     private setStickerPickerOpen = (isStickerPickerOpen: boolean) => {
@@ -459,6 +458,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         initialContent={this.state.initialComposerContent}
                         e2eStatus={this.props.e2eStatus}
                         menuPosition={menuPosition}
+                        placeholder={this.renderPlaceholderText()}
                     />;
             } else {
                 composer =
@@ -581,10 +581,12 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                 toggleButtonMenu={this.toggleButtonMenu}
                                 showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
                                 onStartVoiceBroadcastClick={() => {
-                                    startNewVoiceBroadcastRecording(
+                                    setUpVoiceBroadcastPreRecording(
                                         this.props.room,
                                         MatrixClientPeg.get(),
+                                        SdkContextClass.instance.voiceBroadcastPlaybacksStore,
                                         VoiceBroadcastRecordingsStore.instance(),
+                                        SdkContextClass.instance.voiceBroadcastPreRecordingStore,
                                     );
                                     this.toggleButtonMenu();
                                 }}

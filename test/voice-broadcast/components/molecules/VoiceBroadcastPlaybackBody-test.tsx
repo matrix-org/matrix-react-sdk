@@ -16,12 +16,13 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { act, render, RenderResult } from "@testing-library/react";
+import { act, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 
 import {
     VoiceBroadcastInfoState,
+    VoiceBroadcastLiveness,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackBody,
     VoiceBroadcastPlaybackEvent,
@@ -41,6 +42,7 @@ jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
 describe("VoiceBroadcastPlaybackBody", () => {
     const userId = "@user:example.com";
     const roomId = "!room:example.com";
+    const duration = 23 * 60 + 42; // 23:42
     let client: MatrixClient;
     let infoEvent: MatrixEvent;
     let playback: VoiceBroadcastPlayback;
@@ -48,9 +50,12 @@ describe("VoiceBroadcastPlaybackBody", () => {
 
     beforeAll(() => {
         client = stubClient();
+        mocked(client.relations).mockClear();
+        mocked(client.relations).mockResolvedValue({ events: [] });
+
         infoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
-            VoiceBroadcastInfoState.Started,
+            VoiceBroadcastInfoState.Stopped,
             userId,
             client.getDeviceId(),
         );
@@ -59,13 +64,16 @@ describe("VoiceBroadcastPlaybackBody", () => {
     beforeEach(() => {
         playback = new VoiceBroadcastPlayback(infoEvent, client);
         jest.spyOn(playback, "toggle").mockImplementation(() => Promise.resolve());
+        jest.spyOn(playback, "getLiveness");
         jest.spyOn(playback, "getState");
-        jest.spyOn(playback, "durationSeconds", "get").mockReturnValue(23 * 60 + 42); // 23:42
+        jest.spyOn(playback, "skipTo");
+        jest.spyOn(playback, "durationSeconds", "get").mockReturnValue(duration);
     });
 
     describe("when rendering a buffering voice broadcast", () => {
         beforeEach(() => {
             mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Buffering);
+            mocked(playback.getLiveness).mockReturnValue("live");
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
         });
 
@@ -74,10 +82,63 @@ describe("VoiceBroadcastPlaybackBody", () => {
         });
     });
 
+    describe("when rendering a playing broadcast", () => {
+        beforeEach(() => {
+            mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Playing);
+            mocked(playback.getLiveness).mockReturnValue("not-live");
+            renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+        });
+
+        it("should render as expected", () => {
+            expect(renderResult.container).toMatchSnapshot();
+        });
+
+        describe("and being in the middle of the playback", () => {
+            beforeEach(() => {
+                act(() => {
+                    playback.emit(VoiceBroadcastPlaybackEvent.TimesChanged, {
+                        duration,
+                        position: 10 * 60,
+                        timeLeft: duration - 10 * 60,
+                    });
+                });
+            });
+
+            describe("and clicking 30s backward", () => {
+                beforeEach(async () => {
+                    await act(async () => {
+                        await userEvent.click(screen.getByLabelText("30s backward"));
+                    });
+                });
+
+                it("should seek 30s backward", () => {
+                    expect(playback.skipTo).toHaveBeenCalledWith(9 * 60 + 30);
+                });
+            });
+
+            describe("and clicking 30s forward", () => {
+                beforeEach(async () => {
+                    await act(async () => {
+                        await userEvent.click(screen.getByLabelText("30s forward"));
+                    });
+                });
+
+                it("should seek 30s forward", () => {
+                    expect(playback.skipTo).toHaveBeenCalledWith(10 * 60 + 30);
+                });
+            });
+        });
+    });
+
     describe(`when rendering a stopped broadcast`, () => {
         beforeEach(() => {
             mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Stopped);
+            mocked(playback.getLiveness).mockReturnValue("not-live");
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+        });
+
+        it("should render as expected", () => {
+            expect(renderResult.container).toMatchSnapshot();
         });
 
         describe("and clicking the play button", () => {
@@ -90,25 +151,31 @@ describe("VoiceBroadcastPlaybackBody", () => {
             });
         });
 
-        describe("and the length updated", () => {
+        describe("and the times update", () => {
             beforeEach(() => {
                 act(() => {
-                    playback.emit(VoiceBroadcastPlaybackEvent.LengthChanged, 42000); // 00:42
+                    playback.emit(VoiceBroadcastPlaybackEvent.TimesChanged, {
+                        duration,
+                        position: 5 * 60 + 13,
+                        timeLeft: 7 * 60 + 5,
+                    });
                 });
             });
 
-            it("should render as expected", () => {
-                expect(renderResult.container).toMatchSnapshot();
+            it("should render the times", async () => {
+                expect(await screen.findByText("05:13")).toBeInTheDocument();
+                expect(await screen.findByText("-07:05")).toBeInTheDocument();
             });
         });
     });
 
     describe.each([
-        VoiceBroadcastPlaybackState.Paused,
-        VoiceBroadcastPlaybackState.Playing,
-    ])("when rendering a %s broadcast", (playbackState: VoiceBroadcastPlaybackState) => {
+        [VoiceBroadcastPlaybackState.Paused, "not-live"],
+        [VoiceBroadcastPlaybackState.Playing, "live"],
+    ])("when rendering a %s/%s broadcast", (state: VoiceBroadcastPlaybackState, liveness: VoiceBroadcastLiveness) => {
         beforeEach(() => {
-            mocked(playback.getState).mockReturnValue(playbackState);
+            mocked(playback.getState).mockReturnValue(state);
+            mocked(playback.getLiveness).mockReturnValue(liveness);
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
         });
 

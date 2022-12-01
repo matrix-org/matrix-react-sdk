@@ -70,11 +70,9 @@ export default class EditableText extends React.Component<IProps, IState> {
         };
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line @typescript-eslint/naming-convention, camelcase
-    public UNSAFE_componentWillReceiveProps(nextProps: IProps): void {
-        if (nextProps.initialValue !== this.props.initialValue) {
-            this.value = nextProps.initialValue;
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
+        if (prevProps.initialValue !== this.props.initialValue) {
+            this.value = this.props.initialValue;
             if (this.editableDiv.current) {
                 this.showPlaceholder(!this.value);
             }
@@ -117,8 +115,6 @@ export default class EditableText extends React.Component<IProps, IState> {
     };
 
     private onKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>): void => {
-        // console.log("keyDown: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
-
         if (this.placeholder) {
             this.showPlaceholder(false);
         }
@@ -130,13 +126,9 @@ export default class EditableText extends React.Component<IProps, IState> {
                 ev.preventDefault();
                 break;
         }
-
-        // console.log("keyDown: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
     };
 
     private onKeyUp = (ev: React.KeyboardEvent<HTMLDivElement>): void => {
-        // console.log("keyUp: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
-
         if (!(ev.target as HTMLDivElement).textContent) {
             this.showPlaceholder(true);
         } else if (!this.placeholder) {
@@ -152,8 +144,6 @@ export default class EditableText extends React.Component<IProps, IState> {
                 this.onFinish(ev);
                 break;
         }
-
-        // console.log("keyUp: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
     };
 
     private onClickDiv = (): void => {
@@ -165,8 +155,6 @@ export default class EditableText extends React.Component<IProps, IState> {
     };
 
     private onFocus = (ev: React.FocusEvent<HTMLDivElement>): void => {
-        //ev.target.setSelectionRange(0, ev.target.textContent.length);
-
         const node = ev.target.childNodes[0];
         if (node) {
             const range = document.createRange();

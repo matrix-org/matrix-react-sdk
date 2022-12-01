@@ -69,6 +69,9 @@ jest.mock('../../../../src/stores/OwnProfileStore', () => ({
 
 jest.mock('../../../../src/Modal', () => ({
     createDialog: jest.fn(),
+    on: jest.fn(),
+    off: jest.fn(),
+    ModalManagerEvent: { Opened: "opened" },
 }));
 
 describe('<LocationShareMenu />', () => {
@@ -349,7 +352,7 @@ describe('<LocationShareMenu />', () => {
             // @ts-ignore
             mocked(SettingsStore.watchSetting).mockImplementation((featureName, roomId, callback) => {
                 callback(featureName, roomId, SettingLevel.DEVICE, '', '');
-                setTimeout(() => {
+                window.setTimeout(() => {
                     callback(featureName, roomId, SettingLevel.DEVICE, '', '');
                 }, 1000);
             });

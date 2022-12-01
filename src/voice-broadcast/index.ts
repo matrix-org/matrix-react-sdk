@@ -22,6 +22,7 @@ limitations under the License.
 import { RelationType } from "matrix-js-sdk/src/matrix";
 
 export * from "./models/VoiceBroadcastPlayback";
+export * from "./models/VoiceBroadcastPreRecording";
 export * from "./models/VoiceBroadcastRecording";
 export * from "./audio/VoiceBroadcastRecorder";
 export * from "./components/VoiceBroadcastBody";
@@ -29,12 +30,20 @@ export * from "./components/atoms/LiveBadge";
 export * from "./components/atoms/VoiceBroadcastControl";
 export * from "./components/atoms/VoiceBroadcastHeader";
 export * from "./components/molecules/VoiceBroadcastPlaybackBody";
+export * from "./components/molecules/VoiceBroadcastPreRecordingPip";
 export * from "./components/molecules/VoiceBroadcastRecordingBody";
 export * from "./components/molecules/VoiceBroadcastRecordingPip";
+export * from "./hooks/useCurrentVoiceBroadcastPreRecording";
+export * from "./hooks/useCurrentVoiceBroadcastRecording";
 export * from "./hooks/useVoiceBroadcastRecording";
 export * from "./stores/VoiceBroadcastPlaybacksStore";
+export * from "./stores/VoiceBroadcastPreRecordingStore";
 export * from "./stores/VoiceBroadcastRecordingsStore";
+export * from "./utils/checkVoiceBroadcastPreConditions";
+export * from "./utils/doClearCurrentVoiceBroadcastPlaybackIfStopped";
+export * from "./utils/doMaybeSetCurrentVoiceBroadcastPlayback";
 export * from "./utils/getChunkLength";
+export * from "./utils/getMaxBroadcastLength";
 export * from "./utils/hasRoomLiveVoiceBroadcast";
 export * from "./utils/findRoomLiveVoiceBroadcastFromUserAndDevice";
 export * from "./utils/shouldDisplayAsVoiceBroadcastRecordingTile";
@@ -44,6 +53,8 @@ export * from "./utils/VoiceBroadcastResumer";
 
 export const VoiceBroadcastInfoEventType = "io.element.voice_broadcast_info";
 export const VoiceBroadcastChunkEventType = "io.element.voice_broadcast_chunk";
+
+export type VoiceBroadcastLiveness = "live" | "not-live" | "grey";
 
 export enum VoiceBroadcastInfoState {
     Started = "started",

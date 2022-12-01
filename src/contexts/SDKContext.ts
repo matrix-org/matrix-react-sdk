@@ -21,6 +21,7 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import LegacyCallHandler from "../LegacyCallHandler";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 import { SlidingSyncManager } from "../SlidingSyncManager";
+import { MemberListStore } from "../stores/MemberListStore";
 import { RoomNotificationStateStore } from "../stores/notifications/RoomNotificationStateStore";
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import { RoomViewStore } from "../stores/RoomViewStore";
@@ -29,6 +30,11 @@ import TypingStore from "../stores/TypingStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 import { WidgetPermissionStore } from "../stores/widgets/WidgetPermissionStore";
 import WidgetStore from "../stores/WidgetStore";
+import {
+    VoiceBroadcastPlaybacksStore,
+    VoiceBroadcastPreRecordingStore,
+    VoiceBroadcastRecordingsStore,
+} from "../voice-broadcast";
 
 export const SDKContext = createContext<SdkContextClass>(undefined);
 SDKContext.displayName = "SDKContext";
@@ -53,6 +59,7 @@ export class SdkContextClass {
 
     // All protected fields to make it easier to derive test stores
     protected _WidgetPermissionStore?: WidgetPermissionStore;
+    protected _MemberListStore?: MemberListStore;
     protected _RightPanelStore?: RightPanelStore;
     protected _RoomNotificationStateStore?: RoomNotificationStateStore;
     protected _RoomViewStore?: RoomViewStore;
@@ -63,6 +70,9 @@ export class SdkContextClass {
     protected _SpaceStore?: SpaceStoreClass;
     protected _LegacyCallHandler?: LegacyCallHandler;
     protected _TypingStore?: TypingStore;
+    protected _VoiceBroadcastRecordingsStore?: VoiceBroadcastRecordingsStore;
+    protected _VoiceBroadcastPreRecordingStore?: VoiceBroadcastPreRecordingStore;
+    protected _VoiceBroadcastPlaybacksStore?: VoiceBroadcastPlaybacksStore;
 
     /**
      * Automatically construct stores which need to be created eagerly so they can register with
@@ -122,6 +132,12 @@ export class SdkContextClass {
         }
         return this._PosthogAnalytics;
     }
+    public get memberListStore(): MemberListStore {
+        if (!this._MemberListStore) {
+            this._MemberListStore = new MemberListStore(this);
+        }
+        return this._MemberListStore;
+    }
     public get slidingSyncManager(): SlidingSyncManager {
         if (!this._SlidingSyncManager) {
             this._SlidingSyncManager = SlidingSyncManager.instance;
@@ -140,5 +156,26 @@ export class SdkContextClass {
             window.mxTypingStore = this._TypingStore;
         }
         return this._TypingStore;
+    }
+
+    public get voiceBroadcastRecordingsStore(): VoiceBroadcastRecordingsStore {
+        if (!this._VoiceBroadcastRecordingsStore) {
+            this._VoiceBroadcastRecordingsStore = VoiceBroadcastRecordingsStore.instance();
+        }
+        return this._VoiceBroadcastRecordingsStore;
+    }
+
+    public get voiceBroadcastPreRecordingStore(): VoiceBroadcastPreRecordingStore {
+        if (!this._VoiceBroadcastPreRecordingStore) {
+            this._VoiceBroadcastPreRecordingStore = new VoiceBroadcastPreRecordingStore();
+        }
+        return this._VoiceBroadcastPreRecordingStore;
+    }
+
+    public get voiceBroadcastPlaybacksStore(): VoiceBroadcastPlaybacksStore {
+        if (!this._VoiceBroadcastPlaybacksStore) {
+            this._VoiceBroadcastPlaybacksStore = VoiceBroadcastPlaybacksStore.instance();
+        }
+        return this._VoiceBroadcastPlaybacksStore;
     }
 }

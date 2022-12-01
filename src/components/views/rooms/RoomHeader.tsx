@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import { throttle } from 'lodash';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { ISearchResults } from 'matrix-js-sdk/src/@types/search';
 
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import type { Room } from "matrix-js-sdk/src/models/room";
@@ -65,7 +66,7 @@ import IconizedContextMenu, {
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { CallDurationFromEvent } from "../voip/CallDuration";
+import { GroupCallDuration } from "../voip/CallDuration";
 import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from '../beacon/RoomCallBanner';
 
@@ -393,9 +394,15 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
 };
 
 export interface ISearchInfo {
-    searchTerm: string;
-    searchScope: SearchScope;
-    searchCount: number;
+    searchId: number;
+    roomId?: string;
+    term: string;
+    scope: SearchScope;
+    promise: Promise<ISearchResults>;
+    abortController?: AbortController;
+
+    inProgress?: boolean;
+    count?: number;
 }
 
 export interface IProps {
@@ -408,7 +415,7 @@ export interface IProps {
     onAppsClick: (() => void) | null;
     e2eStatus: E2EStatus;
     appsShown: boolean;
-    searchInfo: ISearchInfo;
+    searchInfo?: ISearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
     showButtons?: boolean;
     enableRoomOptionsMenu?: boolean;
@@ -505,7 +512,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         }
 
         if (this.props.viewingCall && this.props.activeCall instanceof ElementCall) {
-            startButtons.push(<CallLayoutSelector call={this.props.activeCall} />);
+            startButtons.push(<CallLayoutSelector key="layout" call={this.props.activeCall} />);
         }
 
         if (!this.props.viewingCall && this.props.onForgetClick) {
@@ -678,7 +685,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                             { _t("Video call") }
                         </div>
                         { this.props.activeCall instanceof ElementCall && (
-                            <CallDurationFromEvent mxEvent={this.props.activeCall.groupCall} />
+                            <GroupCallDuration groupCall={this.props.activeCall.groupCall} />
                         ) }
                         { /* Empty topic element to fill out space */ }
                         <div className="mx_RoomHeader_topic" />
@@ -692,11 +699,9 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         // don't display the search count until the search completes and
         // gives us a valid (possibly zero) searchCount.
-        if (this.props.searchInfo &&
-            this.props.searchInfo.searchCount !== undefined &&
-            this.props.searchInfo.searchCount !== null) {
+        if (typeof this.props.searchInfo?.count === "number") {
             searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;
-                { _t("(~%(count)s results)", { count: this.props.searchInfo.searchCount }) }
+                { _t("(~%(count)s results)", { count: this.props.searchInfo.count }) }
             </div>;
         }
 

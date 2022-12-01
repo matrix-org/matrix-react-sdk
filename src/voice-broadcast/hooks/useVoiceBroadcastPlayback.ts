@@ -19,7 +19,6 @@ import { useState } from "react";
 import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import {
-    VoiceBroadcastInfoState,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
@@ -28,6 +27,13 @@ import {
 export const useVoiceBroadcastPlayback = (playback: VoiceBroadcastPlayback) => {
     const client = MatrixClientPeg.get();
     const room = client.getRoom(playback.infoEvent.getRoomId());
+
+    if (!room) {
+        throw new Error(
+            `Voice Broadcast room not found (event ${playback.infoEvent.getId()})`,
+        );
+    }
+
     const playbackToggle = () => {
         playback.toggle();
     };
@@ -41,26 +47,30 @@ export const useVoiceBroadcastPlayback = (playback: VoiceBroadcastPlayback) => {
         },
     );
 
-    const [playbackInfoState, setPlaybackInfoState] = useState(playback.getInfoState());
+    const [times, setTimes] = useState({
+        duration: playback.durationSeconds,
+        position: playback.timeSeconds,
+        timeLeft: playback.timeLeftSeconds,
+    });
     useTypedEventEmitter(
         playback,
-        VoiceBroadcastPlaybackEvent.InfoStateChanged,
-        setPlaybackInfoState,
+        VoiceBroadcastPlaybackEvent.TimesChanged,
+        t => setTimes(t),
     );
 
-    const [duration, setDuration] = useState(playback.durationSeconds);
+    const [liveness, setLiveness] = useState(playback.getLiveness());
     useTypedEventEmitter(
         playback,
-        VoiceBroadcastPlaybackEvent.LengthChanged,
-        d => setDuration(d / 1000),
+        VoiceBroadcastPlaybackEvent.LivenessChanged,
+        l => setLiveness(l),
     );
 
     return {
-        duration,
-        live: playbackInfoState !== VoiceBroadcastInfoState.Stopped,
+        times,
+        liveness: liveness,
+        playbackState,
         room: room,
         sender: playback.infoEvent.sender,
         toggle: playbackToggle,
-        playbackState,
     };
 };

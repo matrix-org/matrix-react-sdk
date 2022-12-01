@@ -15,10 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { compare } from "matrix-js-sdk/src/utils";
+
 import { _t } from "./languageHandler";
 import SettingsStore from "./settings/SettingsStore";
 import ThemeWatcher from "./settings/watchers/ThemeWatcher";
-import { compare } from "./utils/strings";
 
 export const DEFAULT_THEME = "light";
 const HIGH_CONTRAST_THEMES = {
@@ -297,7 +298,7 @@ export async function setTheme(theme?: string): Promise<void> {
 
             // In case of theme toggling (white => black => white)
             // Chrome doesn't fire the `load` event when the white theme is selected the second times
-            const intervalId = setInterval(() => {
+            const intervalId = window.setInterval(() => {
                 if (isStyleSheetLoaded()) {
                     clearInterval(intervalId);
                     styleSheet.onload = undefined;

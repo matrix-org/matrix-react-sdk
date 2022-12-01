@@ -165,13 +165,13 @@ export default class Registration extends React.Component<IProps, IState> {
             return "";
         }
     };
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line
-    UNSAFE_componentWillReceiveProps(newProps) {
-        if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
-            newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 
-        this.replaceClient(newProps.serverConfig);
+    public componentDidUpdate(prevProps) {
+        if (prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
+            prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
+        ) {
+            this.replaceClient(this.props.serverConfig);
+        }
     }
 
     private async replaceClient(serverConfig: ValidatedServerConfig) {
@@ -333,7 +333,7 @@ export default class Registration extends React.Component<IProps, IState> {
             } else if (response.errcode === "M_USER_IN_USE") {
                 errorText = _t("Someone already has that username, please try another.");
             } else if (response.errcode === "M_THREEPID_IN_USE") {
-                errorText = _t("That e-mail address is already in use.");
+                errorText = _t("That e-mail address or phone number is already in use.");
             }
 
             this.setState({

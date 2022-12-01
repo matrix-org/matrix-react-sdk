@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
-import { Relations } from 'matrix-js-sdk/src/models/relations';
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -30,9 +29,11 @@ import MImageReplyBody from "../messages/MImageReplyBody";
 import { isVoiceMessage } from '../../../utils/EventUtils';
 import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import MFileBody from "../messages/MFileBody";
+import MemberAvatar from '../avatars/MemberAvatar';
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
+import { GetRelationsForEvent } from "../rooms/EventTile";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -41,9 +42,7 @@ interface IProps {
     highlightLink?: string;
     onHeightChanged?(): void;
     toggleExpandedQuote?: () => void;
-    getRelationsForEvent?: (
-        (eventId: string, relationType: string, eventType: string) => Relations
-    );
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 export default class ReplyTile extends React.PureComponent<IProps> {
@@ -108,7 +107,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
     render() {
         const mxEvent = this.props.mxEvent;
         const msgType = mxEvent.getContent().msgtype;
-        const evType = mxEvent.getType() as EventType;
+        const evType = mxEvent.getType();
 
         const {
             hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration,
@@ -135,17 +134,21 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         }
 
         let sender;
-        const needsSenderProfile = (
-            !isInfoMessage
-            && msgType !== MsgType.Image
-            && evType !== EventType.Sticker
-            && evType !== EventType.RoomCreate
-        );
-
-        if (needsSenderProfile) {
-            sender = <SenderProfile
-                mxEvent={mxEvent}
-            />;
+        const hasOwnSender = isInfoMessage || evType === EventType.RoomCreate;
+        if (!hasOwnSender) {
+            sender = (
+                <div className="mx_ReplyTile_sender">
+                    <MemberAvatar
+                        member={mxEvent.sender}
+                        fallbackUserId={mxEvent.getSender()}
+                        width={16}
+                        height={16}
+                    />
+                    <SenderProfile
+                        mxEvent={mxEvent}
+                    />
+                </div>
+            );
         }
 
         const msgtypeOverrides: Record<string, typeof React.Component> = {
