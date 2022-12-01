@@ -66,7 +66,7 @@ import { Icon as VerifiedIcon } from "../../../../../res/img/e2e/verified.svg";
 import { Icon as HideIcon } from "../../../../../res/img/element-icons/hide.svg";
 import { UserInfoButton } from "./UserInfoButton";
 import { UserInfoHeader } from './UserInfoHeader';
-import { Device, PowerLevelsContent, RoomPermissions } from './@types/index.d.ts';
+import { Device, PowerLevelsContent, RoomPermissions } from './@types';
 import { useRoomPowerLevels } from './hooks/useRoomPowerLevels';
 import { useIsSynapseAdmin } from './hooks/useIsSynapseAdmin';
 import { useRoomPermissions } from './hooks/useRoomPermissions';
@@ -74,6 +74,10 @@ import { useHomeserverSupportsCrossSigning } from './hooks/useHomeserverSupports
 import { useHasCrossSigningKeys } from './hooks/useHasCrossSigningKeys';
 import { useDevices } from './hooks/useDevices';
 import { useIsIgnored } from './hooks/useIsIgnored';
+import { Icon as MentionIcon } from "../../../../../res/img/element-icons/room/mention.svg";
+import { Icon as InviteIcon } from "../../../../../res/img/element-icons/room/invite.svg";
+import { Icon as ShareIcon } from "../../../../../res/img/element-icons/room/share.svg";
+import { Icon as ChildRelationIcon } from "../../../../../res/img/element-icons/child-relationship.svg";
 
 export const getE2EStatus = (cli: MatrixClient, userId: string, devices: Device[]): E2EStatus => {
     const isMe = userId === cli.getUserId();
@@ -285,6 +289,7 @@ const UserOptionsSection: React.FC<{
             if (room?.getEventReadUpTo(member.userId)) {
                 readReceiptButton = (
                     <UserInfoButton onClick={onReadReceiptButton}>
+                        <ChildRelationIcon />
                         { _t('Jump to read receipt') }
                     </UserInfoButton>
                 );
@@ -292,6 +297,7 @@ const UserOptionsSection: React.FC<{
 
             insertPillButton = (
                 <UserInfoButton onClick={onInsertPillButton}>
+                    <MentionIcon />
                     { _t('Mention') }
                 </UserInfoButton>
             );
@@ -320,6 +326,7 @@ const UserOptionsSection: React.FC<{
 
             inviteUserButton = (
                 <UserInfoButton onClick={onInviteUserButton}>
+                    <InviteIcon />
                     { _t('Invite') }
                 </UserInfoButton>
             );
@@ -328,7 +335,8 @@ const UserOptionsSection: React.FC<{
 
     const shareUserButton = (
         <UserInfoButton onClick={onShareUserClick}>
-            { _t('Share Link to User') }
+            <ShareIcon />
+            { _t('Share User') }
         </UserInfoButton>
     );
 
