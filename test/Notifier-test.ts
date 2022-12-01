@@ -17,7 +17,7 @@ limitations under the License.
 import { mocked, MockedObject } from "jest-mock";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { waitFor } from "@testing-library/react";
 
@@ -184,10 +184,10 @@ describe("Notifier", () => {
             expect(MockPlatform.loudNotification).not.toHaveBeenCalled();
         });
 
-        it('does not create notifications for events with no Room objects', () => {
+        it('does not create notifications for rooms which cannot be obtained via client.getRoom', () => {
             mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
             mockClient.getRoom.mockReturnValue(null);
-            mockClient!.emit(RoomEvent.Timeline, event, null, false, false, {
+            mockClient!.emit(RoomEvent.Timeline, event, testRoom, false, false, {
                 liveEvent: true,
                 timeline: testRoom.getLiveTimeline(),
             });
@@ -252,11 +252,12 @@ describe("Notifier", () => {
     });
 
     describe("_displayPopupNotification", () => {
-        it.each([
+        const testCases: {event: IContent, count: number}[] = [
             { event: { is_silenced: true }, count: 0 },
             { event: { is_silenced: false }, count: 1 },
             { event: undefined, count: 1 },
-        ])("does not dispatch when notifications are silenced", ({ event, count }) => {
+        ];
+        it.each(testCases)("does not dispatch when notifications are silenced", ({ event, count }) => {
             mockClient.setAccountData(accountDataEventKey, event);
             Notifier._displayPopupNotification(testEvent, testRoom);
             expect(MockPlatform.displayNotification).toHaveBeenCalledTimes(count);
