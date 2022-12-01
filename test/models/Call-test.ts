@@ -989,15 +989,16 @@ describe("ElementCall", () => {
             });
 
             it("doesn't clean up valid devices", async () => {
+                await call.connect();
                 await client.sendStateEvent(
                     room.roomId,
                     ElementCall.MEMBER_EVENT_TYPE.name,
-                    mkContent([aliceDesktop]),
+                    mkContent([aliceWeb, aliceDesktop]),
                     alice.userId,
                 );
 
                 await call.clean();
-                expectDevices([aliceDesktop]);
+                expectDevices([aliceWeb, aliceDesktop]);
             });
 
             it("cleans up our own device if we're disconnected", async () => {
