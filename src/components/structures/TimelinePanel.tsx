@@ -246,13 +246,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private timelineWindow?: TimelineWindow;
     private overlayTimelineWindow?: TimelineWindow;
     private unmounted = false;
-    private readReceiptActivityTimer: Timer;
-    private readMarkerActivityTimer: Timer;
+    private readReceiptActivityTimer: Timer | null = null;
+    private readMarkerActivityTimer: Timer | null = null;
 
     // A map of <callId, LegacyCallEventGrouper>
     private callEventGroupers = new Map<string, LegacyCallEventGrouper>();
 
-    constructor(props, context) {
+    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
         this.context = context;
 
@@ -694,7 +694,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // timeline window.
         //
         // see https://github.com/vector-im/vector-web/issues/1035
-        this.timelineWindow.paginate(EventTimeline.FORWARDS, 1, false)
+        this.timelineWindow!.paginate(EventTimeline.FORWARDS, 1, false)
             .then(() => {
                 if (this.overlayTimelineWindow) {
                     return this.overlayTimelineWindow.paginate(EventTimeline.FORWARDS, 1, false);
@@ -713,7 +713,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     firstVisibleEventIndex,
                 };
 
-                let callRMUpdated;
+                let callRMUpdated = false;
                 if (this.props.manageReadMarkers) {
                 // when a new event arrives when the user is not watching the
                 // window, but the window is in its auto-scroll mode, make sure the
@@ -1374,8 +1374,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.advanceReadMarkerPastMyEvents();
 
             this.setState({
-                canBackPaginate: this.timelineWindow.canPaginate(EventTimeline.BACKWARDS),
-                canForwardPaginate: this.timelineWindow.canPaginate(EventTimeline.FORWARDS),
+                canBackPaginate: this.timelineWindow?.canPaginate(EventTimeline.BACKWARDS),
+                canForwardPaginate: this.timelineWindow?.canPaginate(EventTimeline.FORWARDS),
                 timelineLoading: false,
             }, () => {
                 // initialise the scroll state of the message panel
@@ -1501,7 +1501,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     // get the list of events from the timeline window and the pending event list
     private getEvents(): Pick<IState, "events" | "liveEvents" | "firstVisibleEventIndex"> {
-        const mainEvents: MatrixEvent[] = this.timelineWindow.getEvents();
+        const mainEvents: MatrixEvent[] = this.timelineWindow?.getEvents() || [];
         const eventFilter = this.props.overlayTimelineSetFilter || Boolean;
         const overlayEvents = this.overlayTimelineWindow?.getEvents().filter(eventFilter) || [];
 
@@ -1536,13 +1536,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const liveEvents = [...events];
 
         // if we're at the end of the live timeline, append the pending events
-        if (!this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
+        if (!this.timelineWindow?.canPaginate(EventTimeline.FORWARDS)) {
             const pendingEvents = this.props.timelineSet.getPendingEvents();
             events.push(...pendingEvents.filter(event => {
                 const {
                     shouldLiveInRoom,
                     threadId,
-                } = this.props.timelineSet.room.eventShouldLiveIn(event, pendingEvents);
+                } = this.props.timelineSet.room!.eventShouldLiveIn(event, pendingEvents);
 
                 if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
                     return threadId === this.context.threadId;
