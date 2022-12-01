@@ -1639,6 +1639,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 enteredVisibleRange = true;
                 if (ev.isDecryptionFailure()) result.push(ev);
             } else if (enteredVisibleRange) {
+                // this event is not currenlty visible, so we must have gone past the visible section of timeline.
                 break;
             }
         }
