@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, render, waitFor, RenderResult } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, RenderResult } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { DecryptionFailureBar } from "../../../../src/components/views/rooms/DecryptionFailureBar";
+import { RoomKeyRequestState } from "matrix-js-sdk/src/crypto/OutgoingRoomKeyRequestManager";
 
 type MockDevice = { device_id: string };
 
@@ -42,6 +44,13 @@ const mockEvent3 = {
     getWireContent: () => ({ session_id: "sessionB" }),
 };
 
+const outgoingRequest3 = {
+    requestId: "outgoingRequest",
+    recipients: [],
+    requestBody: { session_id: "sessionB" },
+    state: RoomKeyRequestState.Sent,
+};
+
 const userId = "@user:example.com";
 
 let ourDevice: MockDevice | undefined;
@@ -54,14 +63,9 @@ const mockClient = {
     getDevices: () => Promise.resolve({ devices: allDevices }),
     isSecretStored: jest.fn(() => Promise.resolve(keyBackup ? { key: "yes" } : null)),
     checkIfOwnDeviceCrossSigned: (deviceId: string) => deviceId.startsWith("verified"),
-    downloadKeys: () => {},
+    downloadKeys: jest.fn(() => {}),
     cancelAndResendEventRoomKeyRequest: jest.fn(() => {}),
-    crypto: {
-        deviceList: {
-            invalidateUserDeviceList: jest.fn(() => {}),
-            refreshOutdatedDeviceLists: jest.fn(() => Promise.resolve()),
-        },
-    },
+    getOutgoingRoomKeyRequest: jest.fn((ev) => Promise.resolve(ev === mockEvent3 ? outgoingRequest3 : null)),
 };
 
 function getBar(wrapper: RenderResult) {
@@ -237,7 +241,7 @@ describe("<DecryptionFailureBar />", () => {
         bar.unmount();
     });
 
-    it("Resends one key request per missing session if we are verified", async () => {
+    it("Displays button to resend key requests if we are verified", async () => {
         ourDevice = verifiedDevice1;
         allDevices = [verifiedDevice1, verifiedDevice2];
 
@@ -256,14 +260,21 @@ describe("<DecryptionFailureBar />", () => {
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
+        act(() => { jest.advanceTimersByTime(5000); });
+        expect(getBar(bar)).toMatchSnapshot();
+
+        await fireEvent.click(screen.getByText("Resend key requests"));
+
         expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(2);
         expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent1);
         expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent2);
 
+        expect(getBar(bar)).toMatchSnapshot();
+
         bar.unmount();
     });
 
-    it("Does not send key requests if we are unverified", async () => {
+    it("Does not display a button to send key requests if we are unverified", async () => {
         ourDevice = unverifiedDevice1;
         allDevices = [unverifiedDevice1, verifiedDevice2];
 
@@ -281,12 +292,14 @@ describe("<DecryptionFailureBar />", () => {
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
-        expect(mockClient.cancelAndResendEventRoomKeyRequest).not.toHaveBeenCalled();
+
+        act(() => { jest.advanceTimersByTime(5000); });
+        expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
     });
 
-    it("Sends new key requests only if new sessions appear", async () => {
+    it("Displays the button to resend key requests only if sessions without pending requests appear", async () => {
         ourDevice = verifiedDevice1;
         allDevices = [verifiedDevice1, verifiedDevice2];
 
@@ -296,7 +309,7 @@ describe("<DecryptionFailureBar />", () => {
                 <DecryptionFailureBar
                     failures={[
                         // @ts-ignore
-                        mockEvent1,
+                        mockEvent3,
                     ]}
                     room={null}
                 />,
@@ -305,24 +318,8 @@ describe("<DecryptionFailureBar />", () => {
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(1);
-        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent1);
-
-        bar.rerender(
-            // @ts-ignore
-            <MatrixClientContext.Provider value={mockClient}>
-                <DecryptionFailureBar
-                    failures={[
-                        // @ts-ignore
-                        mockEvent1, mockEvent2,
-                    ]}
-                    room={null}
-                />,
-            </MatrixClientContext.Provider>,
-        );
-
-        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent2);
-        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(2);
+        act(() => { jest.advanceTimersByTime(5000); });
+        expect(getBar(bar)).toMatchSnapshot();
 
         bar.rerender(
             // @ts-ignore
@@ -337,7 +334,8 @@ describe("<DecryptionFailureBar />", () => {
             </MatrixClientContext.Provider>,
         );
 
-        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(2);
+        await waitFor(() => expect(mockClient.getOutgoingRoomKeyRequest).toHaveBeenCalledWith(mockEvent1));
+        expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
     });
@@ -360,8 +358,7 @@ describe("<DecryptionFailureBar />", () => {
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
-        expect(mockClient.crypto.deviceList.invalidateUserDeviceList).toHaveBeenCalledWith(userId);
-        expect(mockClient.crypto.deviceList.refreshOutdatedDeviceLists).toHaveBeenCalled();
+        expect(mockClient.downloadKeys).toHaveBeenCalledWith([userId], true);
 
         bar.unmount();
     });
