@@ -1444,9 +1444,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
-    private updateVisibleDecryptionFailures = throttle(() => this.setState({
-        visibleDecryptionFailures: this.messagePanel?.getVisibleDecryptionFailures() ?? [],
-    }), 500, { leading: false, trailing: true });
+    private updateVisibleDecryptionFailures = throttle(() => this.setState((prevState) => ({
+        visibleDecryptionFailures: this.messagePanel?.getVisibleDecryptionFailures(
+            // If there were visible failures last time we checked,
+            // add a margin to provide hysteresis and prevent flickering
+            prevState.visibleDecryptionFailures.length > 0,
+        ) ?? [],
+    })), 500, { leading: false, trailing: true });
 
     private onMessageListScroll = ev => {
         if (this.messagePanel.isAtEndOfLiveTimeline()) {

@@ -1607,18 +1607,22 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /**
      * Get a list of undecryptable events currently visible on-screen.
      *
+     * @param {boolean} addMargin Whether to add an extra margin beyond the viewport
+     * where events are still considered "visible"
+     *
      * @returns {MatrixEvent[] | null} A list of undecryptable events, or null if
      *     the list of events could not be determined.
      */
-    public getVisibleDecryptionFailures(): MatrixEvent[] | null {
+    public getVisibleDecryptionFailures(addMargin?: boolean): MatrixEvent[] | null {
         const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;
 
         const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
         if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
         const wrapperRect = messagePanelNode.getBoundingClientRect();
-        const screenTop = wrapperRect.top - VISIBLE_DECRYPTION_FAILURE_MARGIN;
-        const screenBottom = wrapperRect.bottom + VISIBLE_DECRYPTION_FAILURE_MARGIN;
+        const margin = addMargin ? VISIBLE_DECRYPTION_FAILURE_MARGIN : 0;
+        const screenTop = wrapperRect.top - margin;
+        const screenBottom = wrapperRect.bottom + margin;
 
         let enteredVisibleRange = false;
 
