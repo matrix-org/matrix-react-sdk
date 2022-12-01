@@ -106,7 +106,8 @@ describe("Decryption Failures", () => {
             cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
                 .should("have.text", "Verify this device to access all messages");
 
-            cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_button").click();
+            cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
+            cy.contains(".mx_DecryptionFailureBar_button", "Verify").click();
 
             const verificationRequestPromise = waitForVerificationRequest(otherDevice);
             cy.get(".mx_CompleteSecurity_actionRow .mx_AccessibleButton").click();
@@ -127,6 +128,11 @@ describe("Decryption Failures", () => {
 
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
             .should("have.text", "Open another device to load encrypted messages");
+
+        cy.intercept("/_matrix/client/r0/sendToDevice/m.room_key_request/*").as("keyRequest");
+        cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").click();
+        cy.wait("@keyRequest");
+        cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
     });
 
     it("the decryption failure bar should prompt the user to reset keys, "
@@ -144,7 +150,7 @@ describe("Decryption Failures", () => {
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
             .should("have.text", "Reset your keys to prevent future decryption errors");
 
-        cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_button").click();
+        cy.contains(".mx_DecryptionFailureBar_button", "Reset").click();
 
         cy.get(".mx_Dialog").within(() => {
             cy.contains(".mx_Dialog_primary", "Continue").click();

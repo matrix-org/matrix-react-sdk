@@ -56,31 +56,46 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     // Does this user have key backups?
     const [hasKeyBackup, setHasKeyBackup] = useState<boolean>(false);
 
-    // Keep track of session IDs we've re-sent key requests for
-    const [requestedSessions, setRequestedSessions] = useState<Set<string>>(new Set());
+    // Keep track of session IDs that do not have pending key requests
+    const [unrequestedSessions, setUnrequestedSessions] = useState<Set<string>>(new Set());
 
     useEffect(() => {
-        if (needsVerification || !hasOtherVerifiedDevices) return;
+        const updateSessions = async () => {
+            // Aggregate session IDs of undecryptable messages, and check
+            // which ones do not have pending key requests
+            const currentRequestedSessions = new Set<string>();
+            const currentUnrequestedSessions = new Set<string>();
+            for (const event of failures) {
+                const wireContent = event.getWireContent();
+                const sessionId = wireContent.session_id;
+                if (!sessionId
+                    || currentRequestedSessions.has(sessionId)
+                    || currentUnrequestedSessions.has(sessionId)
+                ) continue;
+                if (await context.getOutgoingRoomKeyRequest(event)) {
+                    currentRequestedSessions.add(sessionId);
+                } else {
+                    currentUnrequestedSessions.add(sessionId);
+                }
+            }
+            setUnrequestedSessions(currentUnrequestedSessions);
+        };
+        updateSessions();
+    }, [context, failures, setUnrequestedSessions]);
 
-        // Aggregate session IDs of undecryptable messages, and resend key requests
-        // for any sessions we weren't already handling.
+    const resendKeyRequests = useCallback(async () => {
+        // Resend key requests for any sessions that do not currently have pending requests
+        const oldUnrequestedSessions = new Set(unrequestedSessions);
+        setUnrequestedSessions(new Set());
+
         const newRequestedSessions = new Set<string>();
         for (const event of failures) {
             const sessionId = event.getWireContent().session_id;
-            if (!sessionId || requestedSessions.has(sessionId) || newRequestedSessions.has(sessionId)) continue;
+            if (!sessionId || !oldUnrequestedSessions.has(sessionId) || newRequestedSessions.has(sessionId)) continue;
             newRequestedSessions.add(sessionId);
-            context.cancelAndResendEventRoomKeyRequest(event);
+            await context.cancelAndResendEventRoomKeyRequest(event);
         }
-        if (newRequestedSessions.size > 0) {
-            setRequestedSessions(oldRequestedSessions => {
-                const requestedSessions = new Set(oldRequestedSessions);
-                for (const session of newRequestedSessions) {
-                    requestedSessions.add(session);
-                }
-                return requestedSessions;
-            });
-        }
-    }, [needsVerification, hasOtherVerifiedDevices, failures, room, requestedSessions, context]);
+    }, [context, unrequestedSessions, failures]);
 
     // Recheck which devices are verified and whether we have key backups
     const updateDeviceInfo = useCallback(async () => {
@@ -198,6 +213,13 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         </React.Fragment>;
     }
 
+    let keyRequestButton: JSX.Element;
+    if (!needsVerification && unrequestedSessions.size > 0) {
+        keyRequestButton = <AccessibleButton kind="primary" onClick={resendKeyRequests}>
+            { _t("Resend key requests") }
+        </AccessibleButton>;
+    }
+
     return (
         <div className="mx_DecryptionFailureBar">
             { statusIndicator }
@@ -211,6 +233,9 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
             </div>
             <div className="mx_DecryptionFailureBar_button">
                 { button }
+            </div>
+            <div className="mx_DecryptionFailureBar_button">
+                { keyRequestButton }
             </div>
         </div>
     );
