@@ -99,8 +99,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
     // Recheck which devices are verified and whether we have key backups
     const updateDeviceInfo = useCallback(async () => {
-        context.crypto.deviceList.invalidateUserDeviceList(context.getUserId()!);
-        await context.crypto.deviceList.refreshOutdatedDeviceLists();
+        await context.downloadKeys([context.getUserId()], true);
 
         const deviceId = context.getDeviceId()!;
         let verified = true; // if we can't get a clear answer, don't bug the user about verifying
