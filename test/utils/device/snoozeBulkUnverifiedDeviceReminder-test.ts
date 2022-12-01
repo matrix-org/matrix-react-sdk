@@ -17,10 +17,10 @@ limitations under the License.
 import { logger } from "matrix-js-sdk/src/logger";
 
 import {
-    isBulkUnverifiedDeviceNagSnoozed,
-    removeSnoozeBulkUnverifiedDeviceNag,
-    snoozeBulkUnverifiedDeviceNag,
-} from "../../../src/utils/device/snoozeBulkUnverifiedDeviceNag";
+    isBulkUnverifiedDeviceReminderSnoozed,
+    removeSnoozeBulkUnverifiedDeviceReminder,
+    snoozeBulkUnverifiedDeviceReminder,
+} from "../../../src/utils/device/snoozeBulkUnverifiedDeviceReminder";
 
 const SNOOZE_KEY = 'mx_snooze_bulk_unverified_device_nag';
 
@@ -44,9 +44,9 @@ describe('snooze bulk unverified device nag', () => {
         jest.restoreAllMocks();
     });
 
-    describe('snoozeBulkUnverifiedDeviceNag()', () => {
+    describe('snoozeBulkUnverifiedDeviceReminder()', () => {
         it('sets the current time in local storage', () => {
-            snoozeBulkUnverifiedDeviceNag();
+            snoozeBulkUnverifiedDeviceReminder();
 
             expect(localStorageSetSpy).toHaveBeenCalledWith(SNOOZE_KEY, now.toString());
         });
@@ -54,13 +54,13 @@ describe('snooze bulk unverified device nag', () => {
         it('catches an error from localstorage', () => {
             const loggerErrorSpy = jest.spyOn(logger, 'error');
             localStorageSetSpy.mockImplementation(() => { throw new Error('oups'); });
-            snoozeBulkUnverifiedDeviceNag();
+            snoozeBulkUnverifiedDeviceReminder();
             expect(loggerErrorSpy).toHaveBeenCalled();
         });
     });
-    describe('removeSnoozeBulkUnverifiedDeviceNag()', () => {
+    describe('removeSnoozeBulkUnverifiedDeviceReminder()', () => {
         it('removes the snooze in local storage', () => {
-            removeSnoozeBulkUnverifiedDeviceNag();
+            removeSnoozeBulkUnverifiedDeviceReminder();
 
             expect(localStorageRemoveSpy).toHaveBeenCalledWith(SNOOZE_KEY);
         });
@@ -68,14 +68,14 @@ describe('snooze bulk unverified device nag', () => {
         it('catches an error from localstorage', () => {
             const loggerErrorSpy = jest.spyOn(logger, 'error');
             localStorageRemoveSpy.mockImplementation(() => { throw new Error('oups'); });
-            removeSnoozeBulkUnverifiedDeviceNag();
+            removeSnoozeBulkUnverifiedDeviceReminder();
             expect(loggerErrorSpy).toHaveBeenCalled();
         });
     });
 
-    describe('isBulkUnverifiedDeviceNagSnoozed()', () => {
+    describe('isBulkUnverifiedDeviceReminderSnoozed()', () => {
         it('returns false when there is no snooze in storage', () => {
-            const result = isBulkUnverifiedDeviceNagSnoozed();
+            const result = isBulkUnverifiedDeviceReminderSnoozed();
             expect(localStorageGetSpy).toHaveBeenCalledWith(SNOOZE_KEY);
             expect(result).toBe(false);
         });
@@ -83,14 +83,14 @@ describe('snooze bulk unverified device nag', () => {
         it('catches an error from localstorage and returns false', () => {
             const loggerErrorSpy = jest.spyOn(logger, 'error');
             localStorageGetSpy.mockImplementation(() => { throw new Error('oups'); });
-            const result = isBulkUnverifiedDeviceNagSnoozed();
+            const result = isBulkUnverifiedDeviceReminderSnoozed();
             expect(result).toBe(false);
             expect(loggerErrorSpy).toHaveBeenCalled();
         });
 
         it('returns false when snooze timestamp in storage is not a number', () => {
             localStorageGetSpy.mockReturnValue('test');
-            const result = isBulkUnverifiedDeviceNagSnoozed();
+            const result = isBulkUnverifiedDeviceReminderSnoozed();
             expect(result).toBe(false);
         });
 
@@ -98,7 +98,7 @@ describe('snooze bulk unverified device nag', () => {
             const msDay = 1000 * 60 * 60 * 24;
             // snoozed 8 days ago
             localStorageGetSpy.mockReturnValue(now - (msDay * 8));
-            const result = isBulkUnverifiedDeviceNagSnoozed();
+            const result = isBulkUnverifiedDeviceReminderSnoozed();
             expect(result).toBe(false);
         });
 
@@ -106,7 +106,7 @@ describe('snooze bulk unverified device nag', () => {
             const msDay = 1000 * 60 * 60 * 24;
             // snoozed 8 days ago
             localStorageGetSpy.mockReturnValue(now - (msDay * 6));
-            const result = isBulkUnverifiedDeviceNagSnoozed();
+            const result = isBulkUnverifiedDeviceReminderSnoozed();
             expect(result).toBe(true);
         });
     });
