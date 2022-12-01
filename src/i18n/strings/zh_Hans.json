@@ -3103,7 +3103,6 @@
     "Enable Markdown": "启用Markdown",
     "Insert a trailing colon after user mentions at the start of a message": "在消息开头的提及用户的地方后面插入尾随冒号",
     "Show polls button": "显示投票按钮",
-    "Live Location Sharing (temporary implementation: locations persist in room history)": "实时位置分享（暂时的实现：位置保留在房间历史记录中）",
     "Show extensible event representation of events": "显示事件的可扩展事件表示",
     "Let moderators hide messages pending moderation.": "让协管员隐藏等待审核的消息。",
     "Jump to date (adds /jumptodate and jump to date headers)": "跳至日期（新增 /jumptodate 并跳至日期标头）",

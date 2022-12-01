@@ -2528,7 +2528,6 @@
     "Unable to verify this device": "לא ניתן לאמת את מכשיר זה",
     "Jump to last message": "קיפצו להודעה האחרונה",
     "Jump to first message": "קיפצו להודעה הראשונה",
-    "Live Location Sharing (temporary implementation: locations persist in room history)": "שיתוף מיקום חי (יישום זמני: המיקומים נמשכים בהיסטוריית החדרים)",
     "Send read receipts": "שילחו אישורי קריאה",
     "Jump to date (adds /jumptodate and jump to date headers)": "קיפצו לתאריך (מוסיף /jumptodate וקפוץ לכותרות תאריך)",
     "Messages in this chat will be end-to-end encrypted.": "הודעות בצ'אט זה יוצפו מקצה לקצה.",

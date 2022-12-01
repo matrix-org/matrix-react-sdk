@@ -3359,7 +3359,6 @@
     "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Mund edhe t’i kërkoni përgjegjësit të shërbyesit tuaj Home të përmirësojë shërbyesin, për ndryshimin e kësaj sjelljeje.",
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Nëse doni ta mbani mundësinë e përdorimit të historikut të fjalosjeve tuaja në dhoma të fshehtëzuara, së pari duhet të eksportoni kyçet tuaj të dhomave dhe më pas t’i riimportoni.",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Fillojini mesazhet me <code>/plain</code>, për dërgim pa <em>markdown</em> dhe me <code>/md</code> për të dërguar me të.",
-    "Live Location Sharing (temporary implementation: locations persist in room history)": "Tregim “Live” Vendndodhjeje (sendërtim i përkohshëm: vendndodhjet mbeten në historikun e dhomës)",
     "Show HTML representation of room topics": "Shfaq paraqitje HTML të temave të dhomave",
     "Yes, the chat timeline is displayed alongside the video.": "Po, rrjedha kohore e fjalosjes shfaqet tok me videon.",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Në %(brand)s, dhomat video janë kanale VoIP përherë-hapur, trupëzuar brenda një dhome.",
