@@ -1464,25 +1464,25 @@ const SafeEventTile = forwardRef((props: EventTileProps, ref: RefObject<Unwrappe
 });
 export default SafeEventTile;
 
-function E2ePadlockUnverified(props) {
+function E2ePadlockUnverified(props: Omit<IE2ePadlockProps, "title" | "icon">) {
     return (
         <E2ePadlock title={_t("Encrypted by an unverified session")} icon={E2ePadlockIcon.Warning} {...props} />
     );
 }
 
-function E2ePadlockUnencrypted(props) {
+function E2ePadlockUnencrypted(props: Omit<IE2ePadlockProps, "title" | "icon">) {
     return (
         <E2ePadlock title={_t("Unencrypted")} icon={E2ePadlockIcon.Warning} {...props} />
     );
 }
 
-function E2ePadlockUnknown(props) {
+function E2ePadlockUnknown(props: Omit<IE2ePadlockProps, "title" | "icon">) {
     return (
         <E2ePadlock title={_t("Encrypted by a deleted session")} icon={E2ePadlockIcon.Normal} {...props} />
     );
 }
 
-function E2ePadlockUnauthenticated(props) {
+function E2ePadlockUnauthenticated(props: Omit<IE2ePadlockProps, "title" | "icon">) {
     return (
         <E2ePadlock
             title={_t("The authenticity of this encrypted message can't be guaranteed on this device.")}
@@ -1492,7 +1492,7 @@ function E2ePadlockUnauthenticated(props) {
     );
 }
 
-function E2ePadlockDecryptionFailure(props) {
+function E2ePadlockDecryptionFailure(props: Omit<IE2ePadlockProps, "title" | "icon">) {
     return (
         <E2ePadlock title={_t("This message could not be decrypted")} icon={E2ePadlockIcon.DecryptionFailure} {...props} />
     );

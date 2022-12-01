@@ -1658,7 +1658,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const wrapperRect = messagePanelNode.getBoundingClientRect();
         const myUserId = MatrixClientPeg.get().credentials.userId;
 
-        const isNodeInView = (node) => {
+        const isNodeInView = (node: HTMLElement) => {
             if (node) {
                 const boundingRect = node.getBoundingClientRect();
                 if (

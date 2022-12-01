@@ -17,10 +17,11 @@ limitations under the License.
 import React from "react";
 import { act, fireEvent, render, screen, waitFor, RenderResult } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { RoomKeyRequestState } from "matrix-js-sdk/src/crypto/OutgoingRoomKeyRequestManager";
+import { OutgoingRoomKeyRequest } from "matrix-js-sdk/src/crypto/store/base";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { DecryptionFailureBar } from "../../../../src/components/views/rooms/DecryptionFailureBar";
-import { RoomKeyRequestState } from "matrix-js-sdk/src/crypto/OutgoingRoomKeyRequestManager";
 
 type MockDevice = { device_id: string };
 
@@ -44,10 +45,15 @@ const mockEvent3 = {
     getWireContent: () => ({ session_id: "sessionB" }),
 };
 
-const outgoingRequest3 = {
+const outgoingRequest3: OutgoingRoomKeyRequest = {
     requestId: "outgoingRequest",
     recipients: [],
-    requestBody: { session_id: "sessionB" },
+    requestBody: {
+        session_id: "sessionB",
+        sender_key: "senderkey",
+        room_id: "!room",
+        algorithm: "m.megolm.v1.aes-sha2",
+    },
     state: RoomKeyRequestState.Sent,
 };
 
