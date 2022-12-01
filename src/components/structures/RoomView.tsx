@@ -657,10 +657,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // NB: This does assume that the roomID will not change for the lifetime of
         // the RoomView instance
         if (initial) {
-            const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(newState.roomId);
+            const virtualRoom = newState.roomId ?
+                await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(newState.roomId) : undefined;
 
-            newState.room = this.context.client.getRoom(newState.roomId);
-            newState.virtualRoom = virtualRoom;
+            newState.room = this.context.client!.getRoom(newState.roomId) || undefined;
+            newState.virtualRoom = virtualRoom || undefined;
             if (newState.room) {
                 newState.showApps = this.shouldShowApps(newState.room);
                 this.onRoomLoaded(newState.room);
@@ -1286,7 +1287,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room.roomId);
         this.setState({
             room: room,
-            virtualRoom,
+            virtualRoom: virtualRoom || undefined,
         }, () => {
             this.onRoomLoaded(room);
         });
@@ -2101,7 +2102,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             hideMessagePanel = true;
         }
 
-        let highlightedEventId = null;
+        let highlightedEventId;
         if (this.state.isInitialEventHighlighted) {
             highlightedEventId = this.state.initialEventId;
         }
