@@ -214,9 +214,11 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
     let keyRequestButton: JSX.Element;
     if (!needsVerification && unrequestedSessions.size > 0) {
-        keyRequestButton = <AccessibleButton kind="primary" onClick={resendKeyRequests}>
-            { _t("Resend key requests") }
-        </AccessibleButton>;
+        keyRequestButton = <div className="mx_DecryptionFailureBar_button">
+            <AccessibleButton kind="primary" onClick={resendKeyRequests}>
+                { _t("Resend key requests") }
+            </AccessibleButton>
+        </div>;
     }
 
     return (
@@ -233,9 +235,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
             <div className="mx_DecryptionFailureBar_button">
                 { button }
             </div>
-            <div className="mx_DecryptionFailureBar_button">
-                { keyRequestButton }
-            </div>
+            { keyRequestButton }
         </div>
     );
 };
