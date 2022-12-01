@@ -173,6 +173,29 @@ describe("Notifier", () => {
             expect(MockPlatform.loudNotification).not.toHaveBeenCalled();
         });
 
+        it('does not create notifications for non-live events (scrollback)', () => {
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
+            mockClient!.emit(RoomEvent.Timeline, event, testRoom, false, false, {
+                liveEvent: false,
+                timeline: testRoom.getLiveTimeline(),
+            });
+
+            expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
+            expect(MockPlatform.loudNotification).not.toHaveBeenCalled();
+        });
+
+        it('does not create notifications for events with no Room objects', () => {
+            mockClient!.emit(ClientEvent.Sync, SyncState.Syncing, null);
+            mockClient.getRoom.mockReturnValue(null);
+            mockClient!.emit(RoomEvent.Timeline, event, null, false, false, {
+                liveEvent: true,
+                timeline: testRoom.getLiveTimeline(),
+            });
+
+            expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
+            expect(MockPlatform.loudNotification).not.toHaveBeenCalled();
+        });
+
         it('does not create notifications when event does not have notify push action', () => {
             mockClient.getPushActionsForEvent.mockReturnValue({
                 notify: false,
