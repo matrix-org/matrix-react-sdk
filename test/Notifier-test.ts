@@ -252,7 +252,7 @@ describe("Notifier", () => {
     });
 
     describe("_displayPopupNotification", () => {
-        const testCases: {event: IContent, count: number}[] = [
+        const testCases: {event: IContent | undefined, count: number}[] = [
             { event: { is_silenced: true }, count: 0 },
             { event: { is_silenced: false }, count: 1 },
             { event: undefined, count: 1 },
@@ -274,7 +274,7 @@ describe("Notifier", () => {
     });
 
     describe("_playAudioNotification", () => {
-        const testCases: {event: IContent, count: number}[] = [
+        const testCases: {event: IContent | undefined, count: number}[] = [
             { event: { is_silenced: true }, count: 0 },
             { event: { is_silenced: false }, count: 1 },
             { event: undefined, count: 1 },
