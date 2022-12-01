@@ -3661,5 +3661,9 @@
     "Right panel stays open": "Rechte Seitenleiste geöffnet lassen",
     "New ways to ignore people": "Neue Methoden, Personen zu blockieren",
     "Report to moderators": "An Raummoderation melden",
-    "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "In Räumen, die Moderation unterstützen, lässt dich die Schaltfläche „Melden“ missbräuchliche Verwendung an die Raummoderation melden."
+    "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "In Räumen, die Moderation unterstützen, lässt dich die Schaltfläche „Melden“ missbräuchliche Verwendung an die Raummoderation melden.",
+    "Sliding Sync mode": "Sliding-Sync-Modus",
+    "Favourite Messages": "Favorisierte Nachrichten",
+    "Defaults to room member list.": "Standardmäßig wird die Raummitgliederliste angezeigt.",
+    "Early previews": "Frühe Vorschauen"
 }
