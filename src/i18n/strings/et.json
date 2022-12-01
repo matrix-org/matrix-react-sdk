@@ -3643,5 +3643,14 @@
     "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s pv %(hours)s t %(minutes)s m %(seconds)s s",
     "We were unable to start a chat with the other user.": "Meil ei õnnestunud alustada vestlust teise kasutajaga.",
     "Error starting verification": "Viga verifitseerimise alustamisel",
-    "Buffering…": "Andmed on puhverdamisel…"
+    "Buffering…": "Andmed on puhverdamisel…",
+    "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
+    "Defaults to room member list.": "Vaikimisi sisaldab jututoas osalejate loendit.",
+    "Right panel stays open": "Parem paan jääb avatuks",
+    "Currently experimental.": "Parasjagu katsejärgus.",
+    "New ways to ignore people": "Uued võimalused osalejate eiramiseks",
+    "Use rich text instead of Markdown in the message composer. Plain text mode coming soon.": "Sõnumi kirjutamisel võid tavalise Markdown-vormingu asemel kasutada kujundatud teksti. Lihtteksti kasutamise võimalus lisandub varsti.",
+    "Rich text editor": "Kujundatud teksti toimeti",
+    "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "Kui jututoas on modereerimine kasutusel, siis nupust „Teata sisust“ avaneva vormi abil saad jututoa reegleid rikkuvast sisust teatada moderaatoritele.",
+    "Report to moderators": "Teata moderaatoritele"
 }
