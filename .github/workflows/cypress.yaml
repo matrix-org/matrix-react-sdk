@@ -22,6 +22,7 @@ jobs:
       commit_author: ${{ steps.commit.outputs.author }}
       commit_email: ${{ steps.commit.outputs.email }}
       percy_enable: ${{ steps.percy.outputs.value || '1' }}
+      testrail_enable: ${{ steps.testrail.outputs.value || '1' }}
     steps:
       # We create the status here and then update it to success/failure in the `report` stage
       # This provides an easy link to this workflow_run from the PR before Cypress is done.
@@ -61,6 +62,14 @@ jobs:
         if: |
           github.event.workflow_run.event == 'pull_request' &&
           !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+        run: echo "::set-output name=value::0"
+
+      # Only run Testrail when it is demanded or on develop
+      - name: Disable Testrail if not needed
+        id: testrail
+        if: |
+          github.event.workflow_run.event == 'pull_request' &&
+          !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Testrail')
         run: echo "::set-output name=value::0"
 
       - name: Generate unique ID 💎
@@ -165,7 +174,6 @@ jobs:
   report:
     name: Report results
     needs:
-      - prepare
       - tests
     runs-on: ubuntu-latest
     if: always()
@@ -179,13 +187,22 @@ jobs:
           context: ${{ github.workflow }} / cypress (${{ github.event.workflow_run.event }} => ${{ github.event_name }})
           sha: ${{ github.event.workflow_run.head_sha }}
           target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+  testrail:
+    name: Report results to testrail
+    needs:
+      - prepare
+      - tests
+    runs-on: ubuntu-latest
+    if: ${{ needs.prepare.outputs.testrail_enable }}
+    steps:
       - uses: actions/download-artifact@v3
         with:
           name: cypress-junit
       - name: Prepare testrail upload config
         id: testrailprep
         env:
-          TESTRAIL_PROJECT_ID: 5
+          TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
           TEST_ID: ${{ github.run_id }}
           TESTRAIL_URL: https://elementqa.testrail.io
           TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
@@ -203,7 +220,7 @@ jobs:
       - run: pip install trcli
       - name: Upload junit files
         env:
-          TESTRAIL_PROJECT_ID: 5
+          TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
           TESTRAIL_URL: https://elementqa.testrail.io
           TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
           TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
