@@ -22,7 +22,6 @@ import { Key } from '../../Keyboard';
 import { ICompletion } from '../../autocomplete/Autocompleter';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import { Icon as PillRemoveIcon } from '../../../res/img/icon-pill-remove.svg';
-import { Icon as CheckmarkIcon } from '../../../res/img/element-icons/roomlist/checkmark.svg';
 import { Icon as SearchIcon } from '../../../res/img/element-icons/roomlist/search.svg';
 import useFocus from "../../hooks/useFocus";
 
@@ -232,10 +231,7 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({ item, selection, onClic
             }}
             data-testid={`autocomplete-suggestion-item-${item.completionId}`}
         >
-            <div>
-                { children }
-            </div>
-            { isSelected && <CheckmarkIcon height={16} width={16} /> }
+            { children }
         </div>
     );
 
