@@ -307,7 +307,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     }
 
                     if (isAnimated) {
-                        const thumb = await createThumbnail(img, img.width, img.height, content.info?.mimetype, false);
+                        const thumb = await createThumbnail(img, img.width, img.height, content.info!.mimetype, false);
                         thumbUrl = URL.createObjectURL(thumb.thumbnail);
                     }
                 } catch (error) {
