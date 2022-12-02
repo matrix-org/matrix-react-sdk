@@ -2021,7 +2021,6 @@
     "Add some details to help people recognise it.": "添加一些细节，以便人们辨识你的社群。",
     "Open space for anyone, best for communities": "适合每一个人的开放空间，社群的理想选择",
     "New version of %(brand)s is available": "%(brand)s 有新版本可用",
-    "You have unverified logins": "你有未验证的登录",
     "You should know": "你应当知道",
     "Learn more in our <privacyPolicyLink />, <termsOfServiceLink /> and <cookiePolicyLink />.": "请通过我们的<privacyPolicyLink />、<termsOfServiceLink />和 <cookiePolicyLink />了解更多信息。",
     "Failed to connect to your homeserver. Please close this dialog and try again.": "无法连接至你的主服务器。请关闭此对话框并再试一次。",

@@ -2313,7 +2313,6 @@
     "Threaded messaging": "Säikeistetty viestittely",
     "Set up Secure Backup": "Määritä turvallinen varmuuskopio",
     "Error fetching file": "Virhe tiedostoa noutaessa",
-    "You have unverified logins": "Vahvistamattomia kirjautumisia havaittu",
     "Review to ensure your account is safe": "Katselmoi varmistaaksesi, että tilisi on turvassa",
     "%(creatorName)s created this room.": "%(creatorName)s loi tämän huoneen.",
     "Plain Text": "Raakateksti",
