@@ -23,6 +23,7 @@ import { ICompletion } from '../../autocomplete/Autocompleter';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import { Icon as PillRemoveIcon } from '../../../res/img/icon-pill-remove.svg';
 import { Icon as CheckmarkIcon } from '../../../res/img/element-icons/roomlist/checkmark.svg';
+import { Icon as SearchIcon } from '../../../res/img/element-icons/roomlist/search.svg';
 import useFocus from "../../hooks/useFocus";
 
 interface AutocompleteInputProps {
@@ -58,7 +59,6 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
 
     const onQueryChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.trim();
-
         setQuery(value);
 
         let matches = await provider.getCompletions(
@@ -118,10 +118,15 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         <div className="mx_AutocompleteInput">
             <div
                 ref={editorContainerRef}
-                className='mx_AutocompleteInput_editor'
+                className={classNames({
+                    'mx_AutocompleteInput_editor': true,
+                    'mx_AutocompleteInput_editor--focused': isFocused,
+                    'mx_AutocompleteInput_editor--has-suggestions': suggestions.length > 0,
+                })}
                 onClick={onClickInputArea}
                 data-testid="autocomplete-editor"
             >
+                <SearchIcon className="mx_AutocompleteInput_search_icon" width={16} height={16} />
                 {
                     selection.map(item => (
                         <SelectionItem
@@ -185,7 +190,7 @@ const SelectionItem: React.FC<SelectionItemProps> = ({ item, onClick, render }) 
                 { children }
             </span>
             <AccessibleButton
-                className='mx_AutocompleteInput_editor_selection_remove'
+                className='mx_AutocompleteInput_editor_selection_remove_button'
                 onClick={() => onClick(item)}
                 data-testid={`autocomplete-selection-remove-button-${item.completionId}`}
             >

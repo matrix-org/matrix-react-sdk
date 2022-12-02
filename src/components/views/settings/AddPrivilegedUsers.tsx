@@ -87,7 +87,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
             >
                 <AutocompleteInput
                     provider={userProvider.current}
-                    placeholder={_t("Search users in this room …")}
+                    placeholder={_t("Search users in this room…")}
                     onSelectionChange={setSelectedUsers}
                     selection={selectedUsers}
                     additionalFilter={filterSuggestions}
