@@ -3651,5 +3651,19 @@
     "Use rich text instead of Markdown in the message composer. Plain text mode coming soon.": "Sõnumi kirjutamisel võid tavalise Markdown-vormingu asemel kasutada kujundatud teksti. Lihtteksti kasutamise võimalus lisandub varsti.",
     "Rich text editor": "Kujundatud teksti toimeti",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "Kui jututoas on modereerimine kasutusel, siis nupust „Teata sisust“ avaneva vormi abil saad jututoa reegleid rikkuvast sisust teatada moderaatoritele.",
-    "Report to moderators": "Teata moderaatoritele"
+    "Report to moderators": "Teata moderaatoritele",
+    "Sliding Sync mode": "Järkjärgulise sünkroniseerimise režiim",
+    "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Soovid katsetada? Proovi meie uusimaid arendusmõtteid. Need funktsionaalsused pole üldsegi veel valmis, nad võivad toimida puudulikult, võivad muutuda või sootuks lõpetamata jääda. <a>Lisateavet leiad siit</a>.",
+    "Early previews": "Varased arendusjärgud",
+    "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "Mida %(brand)s tulevikus teha oskab? Arendusjärgus funktsionaalsuste loendist leiad võimalusi, mis varsti on kõigile saadaval, kuid sa saad neid juba katsetada ning ka mõjutada missuguseks nad lõplikukt kujunevad.",
+    "Upcoming features": "Tulevikus lisanduvad funktsionaalsused",
+    "Requires compatible homeserver.": "Eeldab, et koduserver toetab sellist funktsionaalsust.",
+    "Low bandwidth mode": "Vähese ribalaiusega režiim",
+    "Under active development": "Aktiivselt arendamisel",
+    "Under active development.": "Aktiivselt arendamisel.",
+    "Favourite Messages": "Lemmiksõnumid",
+    "Temporary implementation. Locations persist in room history.": "Tegemist on ajutise ja esialgse lahendusega: asukohad on jututoa ajaloos näha.",
+    "Live Location Sharing": "Asukoha jagamine reaalajas",
+    "Under active development, cannot be disabled.": "Aktiivselt arendamisel ega ole võimalik välja lülitada.",
+    "You have unverified sessions": "Sul on verifitseerimata sessioone"
 }
