@@ -296,18 +296,18 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     await loadPromise;
                 } catch (error) {
                     logger.error("Unable to download attachment: ", error);
-                    this.setState({ error });
+                    this.setState({ error: error as Error });
                     return;
                 }
 
                 try {
                     const blob = await this.props.mediaEventHelper.sourceBlob.value;
-                    if (!await blobIsAnimated(content.info.mimetype, blob)) {
+                    if (!await blobIsAnimated(content.info?.mimetype, blob)) {
                         isAnimated = false;
                     }
 
                     if (isAnimated) {
-                        const thumb = await createThumbnail(img, img.width, img.height, content.info.mimetype, false);
+                        const thumb = await createThumbnail(img, img.width, img.height, content.info?.mimetype, false);
                         thumbUrl = URL.createObjectURL(thumb.thumbnail);
                     }
                 } catch (error) {
