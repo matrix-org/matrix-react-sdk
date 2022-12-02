@@ -3525,7 +3525,6 @@
     "Video call started in %(roomName)s. (not supported by this browser)": "Appel vidéo commencé dans %(roomName)s. (non pris en charge par ce navigateur)",
     "Video call started in %(roomName)s.": "Appel vidéo commencé dans %(roomName)s.",
     "Close call": "Terminer l’appel",
-    "Layout type": "Type de mise en page",
     "Spotlight": "Projecteur",
     "Freedom": "Liberté",
     "Fill screen": "Remplir l’écran",

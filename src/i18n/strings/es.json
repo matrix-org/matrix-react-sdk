@@ -3493,7 +3493,6 @@
     "You need to be able to kick users to do that.": "Debes poder sacar usuarios para hacer eso.",
     "Video call started in %(roomName)s. (not supported by this browser)": "Videollamada empezada en %(roomName)s. (no compatible con este navegador)",
     "Video call started in %(roomName)s.": "Videollamada empezada en %(roomName)s.",
-    "Layout type": "Tipo de disposición",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s o %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "Proxy URL": "URL de servidor proxy",

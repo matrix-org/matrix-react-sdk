@@ -3078,7 +3078,6 @@
     "Moderation": "Moderointi",
     "You were disconnected from the call. (Error: %(message)s)": "Yhteytesi puheluun katkaistiin. (Virhe: %(message)s)",
     "See when people join, leave, or are invited to this room": "Näe milloin ihmiset liittyvät, poistuvat tai tulevat kutsutuiksi tähän huoneeseen",
-    "Layout type": "Asettelun tyyppi",
     "Previous autocomplete suggestion": "Edellinen automaattitäydennyksen ehdotus",
     "Next autocomplete suggestion": "Seuraava automaattitäydennyksen ehdotus",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s tai %(copyButton)s",
