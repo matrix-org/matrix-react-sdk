@@ -3664,5 +3664,6 @@
     "Rich text editor": "Розширений текстовий редактор",
     "Report to moderators": "Поскаржитись модераторам",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "У кімнатах, які підтримують модерацію, кнопка «Поскаржитися» дає змогу повідомити про зловживання модераторам кімнати.",
-    "You have unverified sessions": "У вас є неперевірені сеанси"
+    "You have unverified sessions": "У вас є неперевірені сеанси",
+    "Change layout": "Змінити макет"
 }
