@@ -3664,5 +3664,6 @@
     "Temporary implementation. Locations persist in room history.": "Tegemist on ajutise ja esialgse lahendusega: asukohad on jututoa ajaloos näha.",
     "Live Location Sharing": "Asukoha jagamine reaalajas",
     "Under active development, cannot be disabled.": "Aktiivselt arendamisel ega ole võimalik välja lülitada.",
-    "You have unverified sessions": "Sul on verifitseerimata sessioone"
+    "You have unverified sessions": "Sul on verifitseerimata sessioone",
+    "Change layout": "Muuda paigutust"
 }
