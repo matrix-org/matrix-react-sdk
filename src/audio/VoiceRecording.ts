@@ -44,13 +44,13 @@ interface RecorderOptions {
 }
 
 export const voiceRecorderOptions: RecorderOptions = {
-    bitrate: 24000,
-    encoderApplication: 2048,
+    bitrate: 24000, // recommended Opus bitrate for high-quality VoIP
+    encoderApplication: 2048, // voice
 };
 
 export const highQualityRecorderOptions: RecorderOptions = {
-    bitrate: 96000,
-    encoderApplication: 2049,
+    bitrate: 96000, // recommended Opus bitrate for high-quality music/audio streaming
+    encoderApplication: 2049, // full band audio
 };
 
 export interface IRecordingUpdate {
@@ -104,6 +104,9 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
     }
 
     private shouldRecordInHighQuality(): boolean {
+        // Non-voice use case is suspected when noise suppression is disabled by the user.
+        // When recording complex audio, higher quality is required to avoid audio artifacts.
+        // This is a really arbitrary decision, but it can be refined/replaced at any time.
         return !MediaDeviceHandler.getAudioNoiseSuppression();
     }
 
