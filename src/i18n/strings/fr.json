@@ -3663,5 +3663,7 @@
     "Use rich text instead of Markdown in the message composer. Plain text mode coming soon.": "Utilise le texte formaté au lieu de Markdown dans le compositeur de message. Le mode texte brut arrive bientôt.",
     "Rich text editor": "Éditeur de texte formaté",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "Dans les salons prenant en charge la modération, le bouton « Signaler » vous permet de signaler des abus aux modérateurs du salon.",
-    "Report to moderators": "Signaler aux modérateurs"
+    "Report to moderators": "Signaler aux modérateurs",
+    "Change layout": "Changer la disposition",
+    "You have unverified sessions": "Vous avez des sessions non vérifiées"
 }
