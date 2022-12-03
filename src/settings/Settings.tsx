@@ -556,6 +556,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: false,
     },
+    "Notifications.hideBold": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: false,
+    },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Use a more compact 'Modern' layout"),
