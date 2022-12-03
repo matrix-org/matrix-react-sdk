@@ -48,7 +48,7 @@ export const voiceRecorderOptions: RecorderOptions = {
     encoderApplication: 2048,
 };
 
-export const higQualityRecorderOptions: RecorderOptions = {
+export const highQualityRecorderOptions: RecorderOptions = {
     bitrate: 96000,
     encoderApplication: 2049,
 };
@@ -160,13 +160,13 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             this.recorder = new Recorder({
                 encoderPath, // magic from webpack
                 encoderSampleRate: SAMPLE_RATE,
-                encoderApplication: hqRecording ? higQualityRecorderOptions.encoderApplication
+                encoderApplication: hqRecording ? highQualityRecorderOptions.encoderApplication
                     : voiceRecorderOptions.encoderApplication,
                 streamPages: true, // this speeds up the encoding process by using CPU over time
                 encoderFrameSize: 20, // ms, arbitrary frame size we send to the encoder
                 numberOfChannels: CHANNELS,
                 sourceNode: this.recorderSource,
-                encoderBitRate: hqRecording ? higQualityRecorderOptions.bitrate : voiceRecorderOptions.bitrate,
+                encoderBitRate: hqRecording ? highQualityRecorderOptions.bitrate : voiceRecorderOptions.bitrate,
 
                 // We use low values for the following to ease CPU usage - the resulting waveform
                 // is indistinguishable for a voice message. Note that the underlying library will

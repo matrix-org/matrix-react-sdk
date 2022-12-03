@@ -18,7 +18,7 @@ import { mocked } from 'jest-mock';
 // @ts-ignore
 import Recorder from 'opus-recorder/dist/recorder.min.js';
 
-import { VoiceRecording, voiceRecorderOptions, higQualityRecorderOptions } from "../../src/audio/VoiceRecording";
+import { VoiceRecording, voiceRecorderOptions, highQualityRecorderOptions } from "../../src/audio/VoiceRecording";
 import { createAudioContext } from '../..//src/audio/compat';
 import MediaDeviceHandler from "../../src/MediaDeviceHandler";
 
@@ -101,8 +101,8 @@ describe("VoiceRecording", () => {
                 audio: expect.objectContaining({ noiseSuppression: { ideal: false } }),
             }));
             expect(RecorderMock).toHaveBeenCalledWith(expect.objectContaining({
-                encoderBitRate: higQualityRecorderOptions.bitrate,
-                encoderApplication: higQualityRecorderOptions.encoderApplication,
+                encoderBitRate: highQualityRecorderOptions.bitrate,
+                encoderApplication: highQualityRecorderOptions.encoderApplication,
             }));
         });
 
