@@ -38,9 +38,9 @@ export abstract class NotificationState
     extends TypedEventEmitter<NotificationStateEvents, EventHandlerMap>
     implements INotificationStateSnapshotParams, IDestroyable {
     //
-    protected _symbol: string | null;
-    protected _count: number;
-    protected _color: NotificationColor;
+    protected _symbol: string | null = null;
+    protected _count = 0;
+    protected _color: NotificationColor = NotificationColor.None;
 
     private watcherReferences: string[] = [];
 
@@ -53,7 +53,7 @@ export abstract class NotificationState
         );
     }
 
-    public get symbol(): string {
+    public get symbol(): string | null {
         return this._symbol;
     }
 
@@ -106,7 +106,7 @@ export abstract class NotificationState
 }
 
 export class NotificationStateSnapshot {
-    private readonly symbol: string;
+    private readonly symbol: string | null;
     private readonly count: number;
     private readonly color: NotificationColor;
 
