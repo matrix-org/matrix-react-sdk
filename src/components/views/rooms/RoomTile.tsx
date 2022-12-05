@@ -65,8 +65,8 @@ type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
 
 interface State {
     selected: boolean;
-    notificationsMenuPosition: PartialDOMRect;
-    generalMenuPosition: PartialDOMRect;
+    notificationsMenuPosition: PartialDOMRect | null;
+    generalMenuPosition: PartialDOMRect | null;
     call: Call | null;
     messagePreview?: string;
 }
@@ -82,7 +82,7 @@ export const contextMenuBelow = (elementRect: PartialDOMRect) => {
 };
 
 export class RoomTile extends React.PureComponent<ClassProps, State> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private roomTileRef = createRef<HTMLDivElement>();
     private notificationState: NotificationState;
     private roomProps: RoomEchoChamber;
@@ -174,7 +174,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
             this.onRoomPreviewChanged,
         );
         this.props.room.off(RoomEvent.Name, this.onRoomNameUpdate);
-        defaultDispatcher.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         this.notificationState.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         CallStore.instance.off(CallStoreEvent.Call, this.onCallChanged);
@@ -223,12 +223,14 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         ev.stopPropagation();
 
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        const clearSearch = ([KeyBindingAction.Enter, KeyBindingAction.Space] as Array<string | undefined>)
+            .includes(action);
 
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             show_room_tile: true, // make sure the room is visible in the list
             room_id: this.props.room.roomId,
-            clear_search: [KeyBindingAction.Enter, KeyBindingAction.Space].includes(action),
+            clear_search: clearSearch,
             metricsTrigger: "RoomList",
             metricsViaKeyboard: ev.type !== "click",
         });
@@ -238,7 +240,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         this.setState({ selected: isActive });
     };
 
-    private onNotificationsMenuOpenClick = (ev: React.MouseEvent) => {
+    private onNotificationsMenuOpenClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
@@ -251,7 +253,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         this.setState({ notificationsMenuPosition: null });
     };
 
-    private onGeneralMenuOpenClick = (ev: React.MouseEvent) => {
+    private onGeneralMenuOpenClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
@@ -276,7 +278,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         this.setState({ generalMenuPosition: null });
     };
 
-    private renderNotificationsMenu(isActive: boolean): React.ReactElement {
+    private renderNotificationsMenu(isActive: boolean): React.ReactElement | null {
         if (MatrixClientPeg.get().isGuest() || this.props.tag === DefaultTagID.Archived ||
             !this.showContextMenu || this.props.isMinimized
         ) {
@@ -318,7 +320,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         );
     }
 
-    private renderGeneralMenu(): React.ReactElement {
+    private renderGeneralMenu(): React.ReactElement | null {
         if (!this.showContextMenu) return null; // no menu to show
         return (
             <React.Fragment>
