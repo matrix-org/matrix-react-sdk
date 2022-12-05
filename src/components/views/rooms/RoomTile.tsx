@@ -50,20 +50,20 @@ import { CallStore, CallStoreEvent } from "../../../stores/CallStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { useHasRoomLiveVoiceBroadcast, VoiceBroadcastRoomSubtitle } from "../../../voice-broadcast";
 
-interface IProps {
+interface Props {
     room: Room;
     showMessagePreview: boolean;
     isMinimized: boolean;
     tag: TagID;
 }
 
-interface ClassProps extends IProps {
+interface ClassProps extends Props {
     hasLiveVoiceBroadcast: boolean;
 }
 
 type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
 
-interface IState {
+interface State {
     selected: boolean;
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
@@ -81,7 +81,7 @@ export const contextMenuBelow = (elementRect: PartialDOMRect) => {
     return { left, top, chevronFace };
 };
 
-export class RoomTile extends React.PureComponent<ClassProps, IState> {
+export class RoomTile extends React.PureComponent<ClassProps, State> {
     private dispatcherRef: string;
     private roomTileRef = createRef<HTMLDivElement>();
     private notificationState: NotificationState;
@@ -125,7 +125,7 @@ export class RoomTile extends React.PureComponent<ClassProps, IState> {
         return !this.props.isMinimized && this.props.showMessagePreview;
     }
 
-    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
+    public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
         const showMessageChanged = prevProps.showMessagePreview !== this.props.showMessagePreview;
         const minimizedChanged = prevProps.isMinimized !== this.props.isMinimized;
         if (showMessageChanged || minimizedChanged) {
@@ -480,7 +480,7 @@ export class RoomTile extends React.PureComponent<ClassProps, IState> {
     }
 }
 
-const RoomTileHOC: React.FC<IProps> = (props: IProps) => {
+const RoomTileHOC: React.FC<Props> = (props: Props) => {
     const hasLiveVoiceBroadcast = useHasRoomLiveVoiceBroadcast(props.room);
     return <RoomTile {...props} hasLiveVoiceBroadcast={hasLiveVoiceBroadcast} />;
 };
