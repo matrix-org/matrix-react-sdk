@@ -3663,5 +3663,7 @@
     "Rich text editor": "格式化文字編輯器",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "在支援審核的聊天室中，「回報」按鈕讓您可以回報濫用行為給聊天室管理員。",
     "Report to moderators": "回報給管理員",
-    "Buffering…": "正在緩衝……"
+    "Buffering…": "正在緩衝……",
+    "Change layout": "變更佈局",
+    "You have unverified sessions": "您有未驗證的工作階段"
 }
