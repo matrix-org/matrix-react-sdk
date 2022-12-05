@@ -755,7 +755,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
     };
 
-    public canResetTimeline = () => this.messagePanel?.current.isAtBottom();
+    public canResetTimeline = () => this.messagePanel?.current?.isAtBottom();
 
     private onRoomRedaction = (ev: MatrixEvent, room: Room): void => {
         if (this.unmounted) return;
