@@ -18,6 +18,7 @@ import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter"
 
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
+import SettingsStore from "../../settings/SettingsStore";
 
 export interface INotificationStateSnapshotParams {
     symbol: string | null;
@@ -41,6 +42,17 @@ export abstract class NotificationState
     protected _count: number;
     protected _color: NotificationColor;
 
+    private watcherReferences: string[] = [];
+
+    constructor() {
+        super();
+        this.watcherReferences.push(
+            SettingsStore.watchSetting("feature_hidebold", null, () => {
+                this.emit(NotificationStateEvents.Update);
+            }),
+        );
+    }
+
     public get symbol(): string {
         return this._symbol;
     }
@@ -58,7 +70,12 @@ export abstract class NotificationState
     }
 
     public get isUnread(): boolean {
-        return this.color >= NotificationColor.Bold;
+        if (this.color > NotificationColor.Bold) {
+            return true;
+        } else {
+            const hideBold = SettingsStore.getValue("feature_hidebold");
+            return this.color === NotificationColor.Bold && !hideBold;
+        }
     }
 
     public get hasUnreadCount(): boolean {
@@ -81,6 +98,10 @@ export abstract class NotificationState
 
     public destroy(): void {
         this.removeAllListeners(NotificationStateEvents.Update);
+        for (const watcherReference of this.watcherReferences) {
+            SettingsStore.unwatchSetting(watcherReference);
+        }
+        this.watcherReferences = [];
     }
 }
 
