@@ -203,12 +203,13 @@ jobs:
         id: testrailprep
         env:
           TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
+          TESTRAIL_SUITE_ID: ${{ secrets.TESTRAIL_SUITE_ID }}
           TEST_ID: ${{ github.run_id }}
           TESTRAIL_URL: https://elementqa.testrail.io
           TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
           TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
         run: |
-          echo '{"name": "element-web cypress '$TEST_ID'"}' > body.json # TODO add description with more context?
+          echo '{"name": "element-web cypress '$TEST_ID'", "suite_id": $TESTRAIL_SUITE_ID}' > body.json # TODO add description with more context?
           RUN_ID=`curl -X POST -d @body.json -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/add_run/$TESTRAIL_PROJECT_ID" | jq '.id'`
           PROJECT_NAME=`curl -X GET -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/get_project/$TESTRAIL_PROJECT_ID" | jq '.name'`
           echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
@@ -221,6 +222,7 @@ jobs:
       - name: Upload junit files
         env:
           TESTRAIL_PROJECT_ID: ${{ secrets.TESTRAIL_PROJECT_ID }}
+          TESTRAIL_SUITE_ID: ${{ secrets.TESTRAIL_SUITE_ID }}
           TESTRAIL_URL: https://elementqa.testrail.io
           TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
           TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
@@ -235,6 +237,7 @@ jobs:
                   --password $TESTRAIL_API_KEY \
                   parse_junit \
                   --run-id $TESTRAIL_RUN_ID \
+                  --suite-id $TESTRAIL_SUITE_ID \
                   --title "if you see this please check cypress build for run id not being provisioned" \
                   -f $file
           done
