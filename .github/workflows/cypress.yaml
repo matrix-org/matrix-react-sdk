@@ -193,6 +193,7 @@ jobs:
     needs:
       - prepare
       - tests
+    environment: Testrail
     runs-on: ubuntu-latest
     if: ${{ needs.prepare.outputs.testrail_enable }}
     steps:
@@ -209,7 +210,7 @@ jobs:
           TESTRAIL_USER: ${{ secrets.TESTRAIL_USER }}
           TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
         run: |
-          echo '{"name": "element-web cypress '$TEST_ID'", "suite_id": $TESTRAIL_SUITE_ID}' > body.json # TODO add description with more context?
+          echo '{"name": "element-web cypress '$TEST_ID'", "suite_id": '$TESTRAIL_SUITE_ID' }' > body.json # TODO add description with more context?
           RUN_ID=`curl -X POST -d @body.json -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/add_run/$TESTRAIL_PROJECT_ID" | jq '.id'`
           PROJECT_NAME=`curl -X GET -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json" "$TESTRAIL_URL/index.php?/api/v2/get_project/$TESTRAIL_PROJECT_ID" | jq '.name'`
           echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
