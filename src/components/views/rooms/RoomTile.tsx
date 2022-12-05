@@ -48,12 +48,17 @@ import { RoomTileCallSummary } from "./RoomTileCallSummary";
 import { RoomGeneralContextMenu } from "../context_menus/RoomGeneralContextMenu";
 import { CallStore, CallStoreEvent } from "../../../stores/CallStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { useHasRoomLiveVoiceBroadcast, VoiceBroadcastRoomSubtitle } from "../../../voice-broadcast";
 
 interface IProps {
     room: Room;
     showMessagePreview: boolean;
     isMinimized: boolean;
     tag: TagID;
+}
+
+interface ClassProps extends IProps {
+    hasLiveVoiceBroadcast: boolean;
 }
 
 type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
@@ -76,13 +81,13 @@ export const contextMenuBelow = (elementRect: PartialDOMRect) => {
     return { left, top, chevronFace };
 };
 
-export default class RoomTile extends React.PureComponent<IProps, IState> {
+export class RoomTile extends React.PureComponent<ClassProps, IState> {
     private dispatcherRef: string;
     private roomTileRef = createRef<HTMLDivElement>();
     private notificationState: NotificationState;
     private roomProps: RoomEchoChamber;
 
-    constructor(props: IProps) {
+    constructor(props: ClassProps) {
         super(props);
 
         this.state = {
@@ -379,6 +384,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     <RoomTileCallSummary call={this.state.call} />
                 </div>
             );
+        } else if (this.props.hasLiveVoiceBroadcast) {
+            subtitle = <VoiceBroadcastRoomSubtitle />;
         } else if (this.showMessagePreview && this.state.messagePreview) {
             subtitle = (
                 <div
@@ -472,3 +479,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
     }
 }
+
+const RoomTileHOC: React.FC<IProps> = (props: IProps) => {
+    const hasLiveVoiceBroadcast = useHasRoomLiveVoiceBroadcast(props.room);
+    return <RoomTile {...props} hasLiveVoiceBroadcast={hasLiveVoiceBroadcast} />;
+};
+
+export default RoomTileHOC;
