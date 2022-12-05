@@ -3638,7 +3638,7 @@
     "Change input device": "變更輸入裝置",
     "%(minutes)sm %(seconds)ss": "%(minutes)s分鐘%(seconds)s秒",
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s小時%(minutes)s分鐘%(seconds)s秒",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s天%(hours)s小時%(minutes)s分鐘%(seconds)s秒˙",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s天%(hours)s小時%(minutes)s分鐘%(seconds)s秒",
     "<w>WARNING:</w> <description/>": "<w>警告：</w> <description/>",
     "We were unable to start a chat with the other user.": "我們無法與其他使用者開始聊天。",
     "Error starting verification": "開始驗證時發生錯誤",
