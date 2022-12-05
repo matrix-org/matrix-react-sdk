@@ -2102,7 +2102,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             hideMessagePanel = true;
         }
 
-        let highlightedEventId;
+        let highlightedEventId: string | undefined;
         if (this.state.isInitialEventHighlighted) {
             highlightedEventId = this.state.initialEventId;
         }
