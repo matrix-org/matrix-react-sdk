@@ -738,7 +738,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     }
                 }
 
-                this.setState<null>(updatedState, () => {
+                this.setState(updatedState as IState, () => {
                     this.messagePanel.current?.updateTimelineMinHeight();
                     if (callRMUpdated) {
                         this.props.onReadMarkerUpdated?.();
