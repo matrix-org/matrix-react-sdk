@@ -63,7 +63,7 @@ enum Phase {
 
 interface Props {
     serverConfig: ValidatedServerConfig;
-    onLoginClick?: () => void;
+    onLoginClick: () => void;
     onComplete: () => void;
 }
 
@@ -86,10 +86,6 @@ interface State {
 }
 
 export default class ForgotPassword extends React.Component<Props, State> {
-    public static defaultProps: Partial<Props> = {
-        onLoginClick: () => {},
-    };
-
     private reset: PasswordReset;
     private fieldPassword: Field | null = null;
     private fieldPasswordConfirm: Field | null = null;
