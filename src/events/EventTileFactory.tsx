@@ -19,6 +19,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START, Optional } from "matrix-events-sdk";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
 
 import EditorStateTransfer from "../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../utils/permalinks/Permalinks";
@@ -47,7 +48,6 @@ import { shouldDisplayAsBeaconTile } from "../utils/beacon/timeline";
 import { shouldDisplayAsVoiceBroadcastTile } from "../voice-broadcast/utils/shouldDisplayAsVoiceBroadcastTile";
 import { ElementCall } from "../models/Call";
 import { VoiceBroadcastChunkEventType } from "../voice-broadcast";
-import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
 
 // Subset of EventTile's IProps plus some mixins
 export interface EventTileTypeProps {
@@ -413,7 +413,7 @@ export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents: boo
         return Boolean(mxEvent.getContent()['predecessor']);
     } else if (ElementCall.CALL_EVENT_TYPE.names.some(eventType => handler === STATE_EVENT_TILE_TYPES.get(eventType))) {
         const intent = mxEvent.getContent()['m.intent'];
-        const newlyStarted = Object.keys(mxEvent.getPrevContent()).length === 0
+        const newlyStarted = Object.keys(mxEvent.getPrevContent()).length === 0;
         // Only interested in events that mark the start of a non-room call
         return newlyStarted && typeof intent === 'string' && intent !== GroupCallIntent.Room;
     } else if (handler === JSONEventFactory) {
