@@ -731,7 +731,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     // we know we're stuckAtBottom, so we can advance the RM
                     // immediately, to save a later render cycle
 
-                        this.setReadMarker(lastLiveEvent.getId(), lastLiveEvent.getTs(), true);
+                        this.setReadMarker(lastLiveEvent.getId() ?? null, lastLiveEvent.getTs(), true);
                         updatedState.readMarkerVisible = false;
                         updatedState.readMarkerEventId = lastLiveEvent.getId();
                         callRMUpdated = true;

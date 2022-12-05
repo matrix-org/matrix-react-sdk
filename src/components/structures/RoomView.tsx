@@ -1295,7 +1295,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onDeviceVerificationChanged = (userId: string) => {
         const room = this.state.room;
-        if (!room.currentState.getMember(userId)) {
+        if (!room?.currentState.getMember(userId)) {
             return;
         }
         this.updateE2EStatus(room);
