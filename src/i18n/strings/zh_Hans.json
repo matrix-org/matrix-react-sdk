@@ -3505,5 +3505,18 @@
     "Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.": "我们的新会话管理器提供更好的对你的全部会话的可见性，和更多对它们的控制，包括远程开关推送通知的能力。",
     "New session manager": "新会话管理器",
     "Rich text editor": "富文本编辑器",
-    "Report to moderators": "报告给协管员"
+    "Report to moderators": "报告给协管员",
+    "Video call started": "视频通话已开始",
+    "Unknown room": "未知房间",
+    "Buffering…": "正在缓冲……",
+    "Live": "实时",
+    "Change input device": "变更输入设备",
+    "Go live": "开始直播",
+    "30s forward": "前进30秒",
+    "30s backward": "后退30秒",
+    "%(minutes)sm %(seconds)ss": "%(minutes)s分钟%(seconds)s秒",
+    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s小时%(minutes)s分钟%(seconds)s秒",
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s天%(hours)s小时%(minutes)s分钟%(seconds)s秒",
+    "%(minutes)sm %(seconds)ss left": "剩余%(minutes)s分钟%(seconds)s秒",
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "剩余%(hours)s小时%(minutes)s分钟%(seconds)s秒"
 }
