@@ -38,7 +38,7 @@ export function StatelessNotificationBadge({
     count,
     color,
     ...props }: Props) {
-    const hideBold = useSettingValue("Notifications.hideBold");
+    const hideBold = useSettingValue("feature_hidebold");
 
     // Don't show a badge if we don't need to
     if (color === NotificationColor.None || (hideBold && color == NotificationColor.Bold)) {

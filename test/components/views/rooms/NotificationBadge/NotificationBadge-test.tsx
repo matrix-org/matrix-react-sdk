@@ -49,7 +49,7 @@ describe("NotificationBadge", () => {
 
         it("hides the bold icon when the settings is set", () => {
             jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
-                return name === "Notifications.hideBold";
+                return name === "feature_hidebold";
             });
 
             const { container } = render(<StatelessNotificationBadge

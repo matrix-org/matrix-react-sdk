@@ -556,8 +556,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: false,
     },
-    "Notifications.hideBold": {
-        supportedLevels: [SettingLevel.DEVICE],
+    "feature_hidebold": {
+        isFeature: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Hide notification dot (only display counters badges)"),
+        labsGroup: LabGroup.Rooms,
         default: false,
     },
     "useCompactLayout": {
