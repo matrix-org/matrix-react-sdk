@@ -336,7 +336,6 @@ export default class DeviceListener {
         logger.debug("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(','));
         logger.debug("Currently showing toasts for: " + Array.from(this.displayingToastsForDeviceIds).join(','));
 
-
         const isBulkUnverifiedSessionsReminderSnoozed = isBulkUnverifiedDeviceReminderSnoozed();
 
         // Display or hide the batch toast for old unverified sessions
