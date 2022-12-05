@@ -492,24 +492,6 @@ describe('DeviceListener', () => {
                     expect(BulkUnverifiedSessionsToast.hideToast).not.toHaveBeenCalled();
                 });
 
-                it('hmm', async () => {
-                    // currentDevice, device2 are verified, device3 is unverified
-                    mockClient!.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
-                        switch (deviceId) {
-                            case currentDevice.deviceId:
-                            case device2.deviceId:
-                                return deviceTrustVerified;
-                            default:
-                                return deviceTrustUnverified;
-                        }
-                    });
-                    await createAndStart();
-                    expect(BulkUnverifiedSessionsToast.showToast).toHaveBeenCalledWith(
-                        new Set<string>([device3.deviceId]),
-                    );
-                    expect(BulkUnverifiedSessionsToast.hideToast).not.toHaveBeenCalled();
-                });
-
                 it('hides toast when unverified sessions at app start have been dismissed', async () => {
                     // currentDevice, device2 are verified, device3 is unverified
                     mockClient!.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
