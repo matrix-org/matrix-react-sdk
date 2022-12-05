@@ -1374,8 +1374,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.advanceReadMarkerPastMyEvents();
 
             this.setState({
-                canBackPaginate: this.timelineWindow?.canPaginate(EventTimeline.BACKWARDS),
-                canForwardPaginate: this.timelineWindow?.canPaginate(EventTimeline.FORWARDS),
+                canBackPaginate: !!this.timelineWindow?.canPaginate(EventTimeline.BACKWARDS),
+                canForwardPaginate: !!this.timelineWindow?.canPaginate(EventTimeline.FORWARDS),
                 timelineLoading: false,
             }, () => {
                 // initialise the scroll state of the message panel
@@ -1466,7 +1466,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.overlayTimelineWindow) {
                 // @TODO(kerrya) use timestampToEvent to load the overlay timeline
                 // with more correct position when main TL eventId is truthy
-                await this.overlayTimelineWindow?.load(undefined, INITIAL_SIZE);
+                await this.overlayTimelineWindow.load(undefined, INITIAL_SIZE);
             }
         });
         this.buildLegacyCallEventGroupers();

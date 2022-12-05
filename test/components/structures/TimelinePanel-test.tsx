@@ -93,6 +93,13 @@ const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
     return events;
 };
 
+const setupTestData = (): [MatrixClient, Room, MatrixEvent[]] => {
+    const client = MatrixClientPeg.get();
+    const room = mkRoom(client, "roomId");
+    const events = mockEvents(room);
+    return [client, room, events];
+};
+
 describe('TimelinePanel', () => {
     beforeEach(() => {
         stubClient();
@@ -158,9 +165,7 @@ describe('TimelinePanel', () => {
         });
 
         it("sends public read receipt when enabled", () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
 
             const getValueCopy = SettingsStore.getValue;
             SettingsStore.getValue = jest.fn().mockImplementation((name: string) => {
@@ -173,9 +178,7 @@ describe('TimelinePanel', () => {
         });
 
         it("does not send public read receipt when enabled", () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
 
             const getValueCopy = SettingsStore.getValue;
             SettingsStore.getValue = jest.fn().mockImplementation((name: string) => {
@@ -207,9 +210,7 @@ describe('TimelinePanel', () => {
 
     describe('onRoomTimeline', () => {
         it('ignores events for other timelines', () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
 
             const otherTimelineSet = { room: room as Room } as EventTimelineSet;
             const otherTimeline = new EventTimeline(otherTimelineSet);
@@ -231,9 +232,7 @@ describe('TimelinePanel', () => {
         });
 
         it('ignores timeline updates without a live event', () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
 
             const props = getProps(room, events);
 
@@ -249,9 +248,7 @@ describe('TimelinePanel', () => {
         });
 
         it('ignores timeline where toStartOfTimeline is true', () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
 
             const props = getProps(room, events);
 
@@ -268,9 +265,7 @@ describe('TimelinePanel', () => {
         });
 
         it('advances the timeline window', () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
 
             const props = getProps(room, events);
 
@@ -286,9 +281,7 @@ describe('TimelinePanel', () => {
         });
 
         it('advances the overlay timeline window', async () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
 
             const virtualRoom = mkRoom(client, "virtualRoomId");
             const virtualEvents = mockEvents(virtualRoom);
@@ -315,9 +308,7 @@ describe('TimelinePanel', () => {
 
     describe('with overlayTimeline', () => {
         it('renders merged timeline', () => {
-            const client = MatrixClientPeg.get();
-            const room = mkRoom(client, "roomId");
-            const events = mockEvents(room);
+            const [client, room, events] = setupTestData();
             const virtualRoom = mkRoom(client, "virtualRoomId");
             const virtualCallInvite = new MatrixEvent({
                 type: 'm.call.invite',
