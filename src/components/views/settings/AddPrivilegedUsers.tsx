@@ -61,7 +61,9 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         event.preventDefault();
         setIsLoading(true);
 
-        const userIds = selectedUsers.map(selectedUser => selectedUser.completionId);
+        const userIds = selectedUsers
+            .map(selectedUser => selectedUser.completionId)
+            .filter(userId => userId !== undefined);
         const powerLevelEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
 
         try {
