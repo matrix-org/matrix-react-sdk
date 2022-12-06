@@ -3308,7 +3308,7 @@
     "%(count)s people joined|one": "%(count)s osoba se připojila",
     "%(count)s people joined|other": "%(count)s osob se připojilo",
     "Resent!": "Přeposláno!",
-    "Did not receive it? <a>Resend it</a>": "Nedošlo vám to? <a>Přeposlat</a>",
+    "Did not receive it? <a>Resend it</a>": "Nedostali jste ho? <a>Poslat znovu</a>",
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Pro vytvoření účtu, otevřete odkaz v e-mailu, který jsme právě zaslali na adresu %(emailAddress)s.",
     "Unread email icon": "Ikona nepřečteného e-mailu",
     "Check your email to continue": "Zkontrolujte svůj e-mail a pokračujte",
@@ -3626,7 +3626,7 @@
     "Enter your email to reset password": "Zadejte svůj e-mail pro obnovení hesla",
     "Send email": "Odeslat e-mail",
     "Verification link email resent!": "E-mail s ověřovacím odkazem odeslán znovu!",
-    "Did not receive it?": "Neobdrželi jste ho?",
+    "Did not receive it?": "Nedostali jste ho?",
     "Follow the instructions sent to <b>%(email)s</b>": "Postupujte podle pokynů zaslaných na <b>%(email)s</b>",
     "Sign out of all devices": "Odhlásit se ze všech zařízení",
     "Confirm new password": "Potvrďte nové heslo",
@@ -3668,5 +3668,6 @@
     "Change layout": "Změnit rozvržení",
     "Sign in instead": "Namísto toho se přihlásit",
     "Re-enter email address": "Zadejte znovu e-mailovou adresu",
-    "Wrong email address?": "Špatná e-mailová adresa?"
+    "Wrong email address?": "Špatná e-mailová adresa?",
+    "Hide notification dot (only display counters badges)": "Skrýt tečku oznámení (zobrazit pouze odznaky čítačů)"
 }
