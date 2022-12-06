@@ -3665,5 +3665,9 @@
     "Live Location Sharing": "Asukoha jagamine reaalajas",
     "Under active development, cannot be disabled.": "Aktiivselt arendamisel ega ole võimalik välja lülitada.",
     "You have unverified sessions": "Sul on verifitseerimata sessioone",
-    "Change layout": "Muuda paigutust"
+    "Change layout": "Muuda paigutust",
+    "Sign in instead": "Pigem logi sisse",
+    "Re-enter email address": "Sisesta e-posti aadress uuesti",
+    "Wrong email address?": "Kas e-posti aadress pole õige?",
+    "Hide notification dot (only display counters badges)": "Peida teavituse täpp (ja näita loendure)"
 }
