@@ -106,7 +106,7 @@ describe("Decryption Failure Bar", () => {
             cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
                 .should("have.text", "Verify this device to access all messages");
 
-            cy.percySnapshot();
+            cy.percySnapshot("DecryptionFailureBar prompts user to verify");
 
             cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
             cy.contains(".mx_DecryptionFailureBar_button", "Verify").click();
@@ -131,14 +131,15 @@ describe("Decryption Failure Bar", () => {
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
             .should("have.text", "Open another device to load encrypted messages");
 
-        cy.percySnapshot();
+        cy.percySnapshot("DecryptionFailureBar prompts user to open another device, with Resend Key Requests button");
 
         cy.intercept("/_matrix/client/r0/sendToDevice/m.room_key_request/*").as("keyRequest");
         cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").click();
         cy.wait("@keyRequest");
         cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
 
-        cy.percySnapshot();
+        cy.percySnapshot("DecryptionFailureBar prompts user to open another device, "
+                         + "without Resend Key Requests button");
     });
 
     it("should prompt the user to reset keys, if this device isn't verified "
@@ -156,7 +157,7 @@ describe("Decryption Failure Bar", () => {
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
             .should("have.text", "Reset your keys to prevent future decryption errors");
 
-        cy.percySnapshot();
+        cy.percySnapshot("DecryptionFailureBar prompts user to reset keys");
 
         cy.contains(".mx_DecryptionFailureBar_button", "Reset").click();
 
@@ -171,7 +172,7 @@ describe("Decryption Failure Bar", () => {
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
             .should("have.text", "Requesting keys to decrypt messages...");
 
-        cy.percySnapshot();
+        cy.percySnapshot("DecryptionFailureBar displays general message with no call to action");
     });
 
     it("should appear and disappear as undecryptable messages enter and leave view", () => {
@@ -184,7 +185,7 @@ describe("Decryption Failure Bar", () => {
         cy.get(".mx_DecryptionFailureBar").should("exist");
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("exist");
 
-        cy.percySnapshot();
+        cy.percySnapshot("DecryptionFailureBar displays loading spinner");
 
         cy.wait(5000);
         cy.get(".mx_DecryptionFailureBar .mx_Spinner").should("not.exist");
