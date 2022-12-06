@@ -144,7 +144,9 @@ interface IProps {
 }
 
 interface IState {
+    // All events, including still-pending events being sent by us
     events: MatrixEvent[];
+    // Only events that are actually in the live timeline
     liveEvents: MatrixEvent[];
     // track whether our room timeline is loading
     timelineLoading: boolean;
