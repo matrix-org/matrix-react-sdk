@@ -18,7 +18,6 @@ package-lock.json
 *.tmp
 
 .vscode
-.vscode/
 
 /cypress/videos
 /cypress/downloads
