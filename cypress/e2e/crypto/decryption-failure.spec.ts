@@ -53,7 +53,7 @@ const handleVerificationRequest = (request: VerificationRequest): Chainable<Emoj
     }));
 };
 
-describe("Decryption Failures", () => {
+describe("Decryption Failure Bar", () => {
     let synapse: SynapseInstance | undefined;
     let testUser: UserCredentials | undefined;
     let bot: MatrixClient | undefined;
@@ -91,8 +91,8 @@ describe("Decryption Failures", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("the decryption failure bar should prompt the user to verify, "
-        + "if this device isn't verified and there are other verified devices or backups", () => {
+    it("should prompt the user to verify, if this device isn't verified "
+       + "and there are other verified devices or backups", () => {
         let otherDevice: MatrixClient | undefined;
         cy.loginBot(synapse, testUser.username, testUser.password, {}).then(async (cli) => {
             otherDevice = cli;
@@ -135,8 +135,8 @@ describe("Decryption Failures", () => {
         cy.contains(".mx_DecryptionFailureBar_button", "Resend key requests").should("not.exist");
     });
 
-    it("the decryption failure bar should prompt the user to reset keys, "
-        + "if this device isn't verified and there are no other verified devices or backups", () => {
+    it("should prompt the user to reset keys, if this device isn't verified "
+       + "and there are no other verified devices or backups", () => {
         cy.loginBot(synapse, testUser.username, testUser.password, {}).then(async (cli) => {
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest) => { await makeRequest({}); },
@@ -164,7 +164,7 @@ describe("Decryption Failures", () => {
             .should("have.text", "Requesting keys to decrypt messages...");
     });
 
-    it("the decryption failure bar should appear and disappear as undecryptable messages enter and leave view", () => {
+    it("should appear and disappear as undecryptable messages enter and leave view", () => {
         cy.getClient().then((cli) => {
             for (let i = 0; i < 25; i++) {
                 cy.botSendMessage(cli, roomId, `test ${i}`);
