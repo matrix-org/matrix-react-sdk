@@ -1624,8 +1624,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const screenTop = wrapperRect.top - margin;
         const screenBottom = wrapperRect.bottom + margin;
 
-        let enteredVisibleRange = false;
-
         const result: MatrixEvent[] = [];
         for (const ev of this.state.liveEvents) {
             const eventId = ev.getId();
@@ -1636,10 +1634,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
             const boundingRect = node.getBoundingClientRect();
             if (boundingRect.top <= screenBottom && boundingRect.bottom >= screenTop) {
                 // the tile for this event is in the visible part of the screen (or just above/below it).
-                enteredVisibleRange = true;
                 if (ev.isDecryptionFailure()) result.push(ev);
-            } else if (enteredVisibleRange) {
-                // this event is not currenlty visible, so we must have gone past the visible section of timeline.
+            } else if (boundingRect.top > screenBottom) {
+                // we have gone past the visible section of timeline
                 break;
             }
         }
