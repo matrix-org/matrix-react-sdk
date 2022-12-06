@@ -436,8 +436,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td('Sliding Sync mode'),
         description: _td("Under active development, cannot be disabled."),
-        shouldWarn: true,
-        default: false,
+        shouldWarn: false,
+        default: true,
         controller: new SlidingSyncController(),
     },
     "feature_sliding_sync_proxy_url": {
