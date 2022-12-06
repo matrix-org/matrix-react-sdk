@@ -34,6 +34,8 @@ import { Action } from "../src/dispatcher/actions";
 import SettingsStore from "../src/settings/SettingsStore";
 import { SettingLevel } from "../src/settings/SettingLevel";
 import { getMockClientWithEventEmitter, mockPlatformPeg } from "./test-utils";
+import { UIFeature } from "../src/settings/UIFeature";
+import { isBulkUnverifiedDeviceReminderSnoozed } from "../src/utils/device/snoozeBulkUnverifiedDeviceReminder";
 
 // don't litter test console with logs
 jest.mock("matrix-js-sdk/src/logger");
@@ -45,6 +47,10 @@ jest.mock("../src/dispatcher/dispatcher", () => ({
 
 jest.mock("../src/SecurityManager", () => ({
     isSecretStorageBeingAccessed: jest.fn(), accessSecretStorage: jest.fn(),
+}));
+
+jest.mock("../src/utils/device/snoozeBulkUnverifiedDeviceReminder", () => ({
+    isBulkUnverifiedDeviceReminderSnoozed: jest.fn(),
 }));
 
 const userId = '@user:server';
@@ -94,6 +100,7 @@ describe('DeviceListener', () => {
         });
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
         jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
+        mocked(isBulkUnverifiedDeviceReminderSnoozed).mockClear().mockReturnValue(false);
     });
 
     const createAndStart = async (): Promise<DeviceListener> => {
@@ -399,6 +406,9 @@ describe('DeviceListener', () => {
                 // all devices verified by default
                 mockClient!.checkDeviceTrust.mockReturnValue(deviceTrustVerified);
                 mockClient!.deviceId = currentDevice.deviceId;
+                jest.spyOn(SettingsStore, 'getValue').mockImplementation(
+                    settingName => settingName === UIFeature.BulkUnverifiedSessionsReminder,
+                );
             });
             describe('bulk unverified sessions toasts', () => {
                 it('hides toast when cross signing is not ready', async () => {
@@ -414,14 +424,54 @@ describe('DeviceListener', () => {
                     expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
                 });
 
-                it('hides toast when only unverified device is the current device', async () => {
-                    mockClient!.getStoredDevicesForUser.mockReturnValue([
-                        currentDevice,
-                    ]);
-                    mockClient!.checkDeviceTrust.mockReturnValue(deviceTrustUnverified);
+                it('hides toast when feature is disabled', async () => {
+                    // BulkUnverifiedSessionsReminder set to false
+                    jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
+                    // currentDevice, device2 are verified, device3 is unverified
+                    // ie if reminder was enabled it should be shown
+                    mockClient!.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
+                        switch (deviceId) {
+                            case currentDevice.deviceId:
+                            case device2.deviceId:
+                                return deviceTrustVerified;
+                            default:
+                                return deviceTrustUnverified;
+                        }
+                    });
+                    await createAndStart();
+                    expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
+                });
+
+                it('hides toast when current device is unverified', async () => {
+                    // device2 verified, current and device3 unverified
+                    mockClient!.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
+                        switch (deviceId) {
+                            case device2.deviceId:
+                                return deviceTrustVerified;
+                            default:
+                                return deviceTrustUnverified;
+                        }
+                    });
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
                     expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
+                });
+
+                it('hides toast when reminder is snoozed', async () => {
+                    mocked(isBulkUnverifiedDeviceReminderSnoozed).mockReturnValue(true);
+                    // currentDevice, device2 are verified, device3 is unverified
+                    mockClient!.checkDeviceTrust.mockImplementation((_userId, deviceId) => {
+                        switch (deviceId) {
+                            case currentDevice.deviceId:
+                            case device2.deviceId:
+                                return deviceTrustVerified;
+                            default:
+                                return deviceTrustUnverified;
+                        }
+                    });
+                    await createAndStart();
+                    expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
+                    expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
                 });
 
                 it('shows toast with unverified devices at app start', async () => {
