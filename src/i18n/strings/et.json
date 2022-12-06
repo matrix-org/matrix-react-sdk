@@ -1441,7 +1441,7 @@
     "Security Key": "Turvavõti",
     "Use your Security Key to continue.": "Jätkamiseks kasuta turvavõtit.",
     "Restoring keys from backup": "Taastan võtmed varundusest",
-    "Fetching keys from server...": "Laen võtmed serverist...",
+    "Fetching keys from server...": "Laadin serverist võtmeid...",
     "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s võtit taastatud",
     "Unable to load backup status": "Varunduse oleku laadimine ei õnnestunud",
     "<b>Warning</b>: You should only set up key backup from a trusted computer.": "<b>Hoiatus</b>: Sa peaksid võtmete varundust seadistama vaid arvutist, mida sa usaldad.",
