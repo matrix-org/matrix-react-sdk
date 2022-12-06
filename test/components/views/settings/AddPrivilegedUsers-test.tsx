@@ -17,30 +17,45 @@ import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 
 import {
     getMockClientWithEventEmitter,
     makeRoomWithStateEvents,
 } from "../../../test-utils";
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
-import { AddPrivilegedUsers } from "../../../../src/components/views/settings/AddPrivilegedUsers";
+import {
+    AddPrivilegedUsers,
+    getUserIdsFromCompletions, hasLowerOrEqualLevelThanDefaultLevel,
+} from "../../../../src/components/views/settings/AddPrivilegedUsers";
 import UserProvider from "../../../../src/autocomplete/UserProvider";
+import { ICompletion } from "../../../../src/autocomplete/Autocompleter";
 
 jest.mock('../../../../src/autocomplete/UserProvider');
 
+const completions: ICompletion[] = [
+    { type: 'user', completion: 'user_1', completionId: '@user_1:host.local', range: { start: 1, end: 1 } },
+    { type: 'user', completion: 'user_2', completionId: '@user_2:host.local', range: { start: 1, end: 1 } },
+    { type: 'user', completion: 'user_without_completion_id', range: { start: 1, end: 1 } },
+];
+
 describe('<AddPrivilegedUsers />', () => {
     const provider = mocked(UserProvider, { shallow: true });
-    provider.prototype.getCompletions.mockResolvedValue([
-        { type: 'user', completion: 'user_1', completionId: '@user_1:host.local', range: { start: 1, end: 1 } },
-        { type: 'user', completion: 'user_2', completionId: '@user_2:host.local', range: { start: 1, end: 1 } },
-    ]);
+    provider.prototype.getCompletions.mockResolvedValue(completions);
 
     const mockClient = getMockClientWithEventEmitter({
         // `makeRoomWithStateEvents` only work's if `getRoom` is present.
         getRoom: jest.fn(),
         setPowerLevel: jest.fn(),
     });
+
     const room = makeRoomWithStateEvents([], { roomId: 'room_id', mockClient: mockClient });
+    room.getMember = (userId: string) => {
+        const member = new RoomMember('room_id', userId);
+        member.powerLevel = 0;
+
+        return member;
+    };
 
     const getComponent = () =>
         <MatrixClientContext.Provider value={mockClient}>
@@ -111,4 +126,18 @@ describe('<AddPrivilegedUsers />', () => {
         expect((getByTestId('power-level-option-50') as HTMLOptionElement).selected).toBeFalsy();
         expect((getByTestId('power-level-option-100') as HTMLOptionElement).selected).toBeFalsy();
     });
+
+    it('getUserIdsFromCompletions() should map completions to user id\'s', () => {
+        expect(getUserIdsFromCompletions(completions)).toStrictEqual(['@user_1:host.local', '@user_2:host.local']);
+    });
+
+    it.each([
+        { defaultUserLevel: -50, expectation: false },
+        { defaultUserLevel: 0, expectation: true },
+        { defaultUserLevel: 50, expectation: true },
+    ])('hasLowerOrEqualLevelThanDefaultLevel() should return $expectation for default level $defaultUserLevel',
+        ({ defaultUserLevel, expectation }) => {
+            expect(hasLowerOrEqualLevelThanDefaultLevel(room, completions[0], defaultUserLevel)).toBe(expectation);
+        },
+    );
 });
