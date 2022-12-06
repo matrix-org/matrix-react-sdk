@@ -90,6 +90,12 @@ const securityCardContent: Record<DeviceSecurityVariation, {
             `sign out from those you don't recognize or use anymore.`,
          ),
      },
+     [DeviceSecurityVariation.Unverifiable]: {
+         title: _t('Unverified session'),
+         description: _t(
+             `This session doesn't support encryption and thus can't be verified.`,
+         ),
+     },
      [DeviceSecurityVariation.Inactive]: {
          title: _t('Inactive sessions'),
          description: _t(
