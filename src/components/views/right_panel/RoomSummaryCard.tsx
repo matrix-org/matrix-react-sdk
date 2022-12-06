@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
@@ -76,7 +76,7 @@ const Button: React.FC<IButtonProps> = ({ children, className, onClick }) => {
 };
 
 export const useWidgets = (room: Room) => {
-    const [apps, setApps] = useState<IApp[]>(WidgetStore.instance.getApps(room.roomId));
+    const [apps, setApps] = useState<IApp[]>(() => WidgetStore.instance.getApps(room.roomId));
 
     const updateApps = useCallback(() => {
         // Copy the array so that we always trigger a re-render, as some updates mutate the array of apps/settings
@@ -197,6 +197,8 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
 
 const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
     const apps = useWidgets(room);
+    // Filter out virtual widgets
+    const realApps = useMemo(() => apps.filter(app => app.eventId !== undefined), [apps]);
 
     const onManageIntegrations = () => {
         const managers = IntegrationManagers.sharedInstance();
@@ -208,8 +210,8 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
         }
     };
 
-    let copyLayoutBtn = null;
-    if (apps.length > 0 && WidgetLayoutStore.instance.canCopyLayoutToRoom(room)) {
+    let copyLayoutBtn: JSX.Element | null = null;
+    if (realApps.length > 0 && WidgetLayoutStore.instance.canCopyLayoutToRoom(room)) {
         copyLayoutBtn = (
             <AccessibleButton kind="link" onClick={() => WidgetLayoutStore.instance.copyLayoutToRoom(room)}>
                 { _t("Set my room layout for everyone") }
@@ -218,10 +220,10 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
     }
 
     return <Group className="mx_RoomSummaryCard_appsGroup" title={_t("Widgets")}>
-        { apps.map(app => <AppRow key={app.id} app={app} room={room} />) }
+        { realApps.map(app => <AppRow key={app.id} app={app} room={room} />) }
         { copyLayoutBtn }
         <AccessibleButton kind="link" onClick={onManageIntegrations}>
-            { apps.length > 0 ? _t("Edit widgets, bridges & bots") : _t("Add widgets, bridges & bots") }
+            { realApps.length > 0 ? _t("Edit widgets, bridges & bots") : _t("Add widgets, bridges & bots") }
         </AccessibleButton>
     </Group>;
 };
@@ -262,7 +264,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
-    const isVideoRoom = useFeatureEnabled("feature_video_rooms") && room.isElementVideoRoom();
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
+    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
+    const isVideoRoom = videoRoomsEnabled && (
+        room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom())
+    );
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = <React.Fragment>

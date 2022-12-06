@@ -88,6 +88,7 @@ export function createMessageContent(
     model = unescapeMessage(model);
 
     const body = textSerialize(model);
+
     const content: IContent = {
         msgtype: isEmote ? "m.emote" : "m.text",
         body: body,
@@ -158,7 +159,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     };
 
     constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
-        super(props);
+        super(props, context);
+        this.context = context; // otherwise React will only set it prior to render due to type def above
+
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(() => {
                 this.props.mxClient.prepareToEncrypt(this.props.room);
@@ -166,6 +169,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
 
         window.addEventListener("beforeunload", this.saveStoredEditorState);
+
+        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
+        const parts = this.restoreStoredEditorState(partCreator) || [];
+        this.model = new EditorModel(parts, partCreator);
+        this.dispatcherRef = dis.register(this.onAction);
+        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, 'mx_cider_history_');
     }
 
     public componentDidUpdate(prevProps: ISendMessageComposerProps): void {
@@ -453,15 +462,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         dis.unregister(this.dispatcherRef);
         window.removeEventListener("beforeunload", this.saveStoredEditorState);
         this.saveStoredEditorState();
-    }
-
-    // TODO: [REACT-WARNING] Move this to constructor
-    UNSAFE_componentWillMount() { // eslint-disable-line
-        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
-        const parts = this.restoreStoredEditorState(partCreator) || [];
-        this.model = new EditorModel(parts, partCreator);
-        this.dispatcherRef = dis.register(this.onAction);
-        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, 'mx_cider_history_');
     }
 
     private get editorStateKey() {

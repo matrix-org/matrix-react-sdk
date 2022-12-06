@@ -16,10 +16,15 @@ limitations under the License.
 
 import { mocked } from 'jest-mock';
 import { ConditionKind, PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
+import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
 
-import { stubClient } from "./test-utils";
+import { mkEvent, stubClient } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
-import { getRoomNotifsState, RoomNotifState } from "../src/RoomNotifs";
+import {
+    getRoomNotifsState,
+    RoomNotifState,
+    getUnreadNotificationCount,
+} from "../src/RoomNotifs";
 
 describe("RoomNotifs test", () => {
     beforeEach(() => {
@@ -27,7 +32,8 @@ describe("RoomNotifs test", () => {
     });
 
     it("getRoomNotifsState handles rules with no conditions", () => {
-        mocked(MatrixClientPeg.get()).pushRules = {
+        const cli = MatrixClientPeg.get();
+        mocked(cli).pushRules = {
             global: {
                 override: [{
                     rule_id: "!roomId:server",
@@ -37,16 +43,18 @@ describe("RoomNotifs test", () => {
                 }],
             },
         };
-        expect(getRoomNotifsState("!roomId:server")).toBe(null);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(null);
     });
 
     it("getRoomNotifsState handles guest users", () => {
-        mocked(MatrixClientPeg.get()).isGuest.mockReturnValue(true);
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.AllMessages);
+        const cli = MatrixClientPeg.get();
+        mocked(cli).isGuest.mockReturnValue(true);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.AllMessages);
     });
 
     it("getRoomNotifsState handles mute state", () => {
-        MatrixClientPeg.get().pushRules = {
+        const cli = MatrixClientPeg.get();
+        cli.pushRules = {
             global: {
                 override: [{
                     rule_id: "!roomId:server",
@@ -61,26 +69,98 @@ describe("RoomNotifs test", () => {
                 }],
             },
         };
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.Mute);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.Mute);
     });
 
     it("getRoomNotifsState handles mentions only", () => {
-        MatrixClientPeg.get().getRoomPushRule = () => ({
+        const cli = MatrixClientPeg.get();
+        cli.getRoomPushRule = () => ({
             rule_id: "!roomId:server",
             enabled: true,
             default: false,
             actions: [PushRuleActionName.DontNotify],
         });
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.MentionsOnly);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.MentionsOnly);
     });
 
     it("getRoomNotifsState handles noisy", () => {
-        MatrixClientPeg.get().getRoomPushRule = () => ({
+        const cli = MatrixClientPeg.get();
+        cli.getRoomPushRule = () => ({
             rule_id: "!roomId:server",
             enabled: true,
             default: false,
             actions: [{ set_tweak: TweakName.Sound, value: "default" }],
         });
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.AllMessagesLoud);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.AllMessagesLoud);
+    });
+
+    describe("getUnreadNotificationCount", () => {
+        const ROOM_ID = "!roomId:example.org";
+        const THREAD_ID = "$threadId";
+
+        let cli;
+        let room: Room;
+        beforeEach(() => {
+            cli = MatrixClientPeg.get();
+            room = new Room(ROOM_ID, cli, cli.getUserId());
+        });
+
+        it("counts room notification type", () => {
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(0);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(0);
+        });
+
+        it("counts notifications type", () => {
+            room.setUnreadNotificationCount(NotificationCountType.Total, 2);
+            room.setUnreadNotificationCount(NotificationCountType.Highlight, 1);
+
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(2);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(1);
+        });
+
+        it("counts predecessor highlight", () => {
+            room.setUnreadNotificationCount(NotificationCountType.Total, 2);
+            room.setUnreadNotificationCount(NotificationCountType.Highlight, 1);
+
+            const OLD_ROOM_ID = "!oldRoomId:example.org";
+            const oldRoom = new Room(OLD_ROOM_ID, cli, cli.getUserId());
+            oldRoom.setUnreadNotificationCount(NotificationCountType.Total, 10);
+            oldRoom.setUnreadNotificationCount(NotificationCountType.Highlight, 6);
+
+            cli.getRoom.mockReset().mockReturnValue(oldRoom);
+
+            const predecessorEvent = mkEvent({
+                event: true,
+                type: "m.room.create",
+                room: ROOM_ID,
+                user: cli.getUserId(),
+                content: {
+                    creator: cli.getUserId(),
+                    room_version: "5",
+                    predecessor: {
+                        room_id: OLD_ROOM_ID,
+                        event_id: "$someevent",
+                    },
+                },
+                ts: Date.now(),
+            });
+            room.addLiveEvents([predecessorEvent]);
+
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(8);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(7);
+        });
+
+        it("counts thread notification type", () => {
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total, THREAD_ID)).toBe(0);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, THREAD_ID)).toBe(0);
+        });
+
+        it("counts notifications type", () => {
+            room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Total, 2);
+            room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Highlight, 1);
+
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total, THREAD_ID)).toBe(2);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, THREAD_ID)).toBe(1);
+        });
     });
 });

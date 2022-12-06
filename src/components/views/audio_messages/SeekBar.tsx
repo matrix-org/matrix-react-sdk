@@ -16,20 +16,20 @@ limitations under the License.
 
 import React, { ChangeEvent, CSSProperties, ReactNode } from "react";
 
-import { Playback, PlaybackState } from "../../../audio/Playback";
+import { PlaybackInterface } from "../../../audio/Playback";
 import { MarkedExecution } from "../../../utils/MarkedExecution";
 import { percentageOf } from "../../../utils/numbers";
 
 interface IProps {
     // Playback instance to render. Cannot change during component lifecycle: create
     // an all-new component instead.
-    playback: Playback;
+    playback: PlaybackInterface;
 
     // Tab index for the underlying component. Useful if the seek bar is in a managed state.
     // Defaults to zero.
     tabIndex?: number;
 
-    playbackPhase: PlaybackState;
+    disabled?: boolean;
 }
 
 interface IState {
@@ -52,6 +52,7 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
 
     public static defaultProps = {
         tabIndex: 0,
+        disabled: false,
     };
 
     constructor(props: IProps) {
@@ -62,26 +63,26 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
         };
 
         // We don't need to de-register: the class handles this for us internally
-        this.props.playback.clockInfo.liveData.onUpdate(() => this.animationFrameFn.mark());
+        this.props.playback.liveData.onUpdate(() => this.animationFrameFn.mark());
     }
 
     private doUpdate() {
         this.setState({
             percentage: percentageOf(
-                this.props.playback.clockInfo.timeSeconds,
+                this.props.playback.timeSeconds,
                 0,
-                this.props.playback.clockInfo.durationSeconds),
+                this.props.playback.durationSeconds),
         });
     }
 
     public left() {
         // noinspection JSIgnoredPromiseFromCall
-        this.props.playback.skipTo(this.props.playback.clockInfo.timeSeconds - ARROW_SKIP_SECONDS);
+        this.props.playback.skipTo(this.props.playback.timeSeconds - ARROW_SKIP_SECONDS);
     }
 
     public right() {
         // noinspection JSIgnoredPromiseFromCall
-        this.props.playback.skipTo(this.props.playback.clockInfo.timeSeconds + ARROW_SKIP_SECONDS);
+        this.props.playback.skipTo(this.props.playback.timeSeconds + ARROW_SKIP_SECONDS);
     }
 
     private onChange = (ev: ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +90,12 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
         // change the value on the component. We can use this as a reliable "skip to X" function.
         //
         // noinspection JSIgnoredPromiseFromCall
-        this.props.playback.skipTo(Number(ev.target.value) * this.props.playback.clockInfo.durationSeconds);
+        this.props.playback.skipTo(Number(ev.target.value) * this.props.playback.durationSeconds);
+    };
+
+    private onMouseDown = (event: React.MouseEvent<Element, MouseEvent>) => {
+        // do not propagate mouse down events, because these should be handled by the seekbar
+        event.stopPropagation();
     };
 
     public render(): ReactNode {
@@ -100,12 +106,13 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
             className='mx_SeekBar'
             tabIndex={this.props.tabIndex}
             onChange={this.onChange}
+            onMouseDown={this.onMouseDown}
             min={0}
             max={1}
             value={this.state.percentage}
             step={0.001}
             style={{ '--fillTo': this.state.percentage } as ISeekCSS}
-            disabled={this.props.playbackPhase === PlaybackState.Decoding}
+            disabled={this.props.disabled}
         />;
     }
 }

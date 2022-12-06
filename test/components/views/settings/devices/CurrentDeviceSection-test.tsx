@@ -19,6 +19,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import CurrentDeviceSection from '../../../../../src/components/views/settings/devices/CurrentDeviceSection';
+import { DeviceType } from '../../../../../src/utils/device/parseUserAgent';
 
 describe('<CurrentDeviceSection />', () => {
     const deviceId = 'alices_device';
@@ -26,17 +27,23 @@ describe('<CurrentDeviceSection />', () => {
     const alicesVerifiedDevice = {
         device_id: deviceId,
         isVerified: false,
+        deviceType: DeviceType.Unknown,
     };
     const alicesUnverifiedDevice = {
         device_id: deviceId,
         isVerified: false,
+        deviceType: DeviceType.Unknown,
     };
 
     const defaultProps = {
         device: alicesVerifiedDevice,
         onVerifyCurrentDevice: jest.fn(),
+        onSignOutCurrentDevice: jest.fn(),
+        saveDeviceName: jest.fn(),
         isLoading: false,
+        isSigningOut: false,
     };
+
     const getComponent = (props = {}): React.ReactElement =>
         (<CurrentDeviceSection {...defaultProps} {...props} />);
 
@@ -58,6 +65,23 @@ describe('<CurrentDeviceSection />', () => {
     it('renders device and correct security card when device is unverified', () => {
         const { container } = render(getComponent({ device: alicesUnverifiedDevice }));
         expect(container).toMatchSnapshot();
+    });
+
+    it('displays device details on main tile click', () => {
+        const { getByTestId, container } = render(getComponent({ device: alicesUnverifiedDevice }));
+
+        act(() => {
+            fireEvent.click(getByTestId(`device-tile-${alicesUnverifiedDevice.device_id}`));
+        });
+
+        expect(container.getElementsByClassName('mx_DeviceDetails').length).toBeTruthy();
+
+        act(() => {
+            fireEvent.click(getByTestId(`device-tile-${alicesUnverifiedDevice.device_id}`));
+        });
+
+        // device details are hidden
+        expect(container.getElementsByClassName('mx_DeviceDetails').length).toBeFalsy();
     });
 
     it('displays device details on toggle click', () => {

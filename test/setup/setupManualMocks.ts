@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import fetchMock from "fetch-mock-jest";
 import { TextDecoder, TextEncoder } from "util";
+import fetch from 'node-fetch';
 
 // jest 27 removes setImmediate from jsdom
 // polyfill until setImmediate use in client can be removed
@@ -29,6 +31,29 @@ class ResizeObserver {
     disconnect() {} // do nothing
 }
 window.ResizeObserver = ResizeObserver;
+
+// Stub DOMRect
+class DOMRect {
+    x = 0;
+    y = 0;
+    top = 0;
+    bottom = 0;
+    left = 0;
+    right = 0;
+    height = 0;
+    width = 0;
+
+    static fromRect() {
+        return new DOMRect();
+    }
+    toJSON() {}
+}
+
+window.DOMRect = DOMRect;
+
+// Work around missing ClipboardEvent type
+class MyClipboardEvent extends Event {}
+window.ClipboardEvent = MyClipboardEvent as any;
 
 // matchMedia is not included in jsdom
 const mockMatchMedia = jest.fn().mockImplementation(query => ({
@@ -45,11 +70,30 @@ global.matchMedia = mockMatchMedia;
 
 // maplibre requires a createObjectURL mock
 global.URL.createObjectURL = jest.fn();
+global.URL.revokeObjectURL = jest.fn();
 
 // polyfilling TextEncoder as it is not available on JSDOM
 // view https://github.com/facebook/jest/issues/9983
 global.TextEncoder = TextEncoder;
+// @ts-ignore
 global.TextDecoder = TextDecoder;
 
 // prevent errors whenever a component tries to manually scroll.
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
+
+// set up fetch API mock
+fetchMock.config.overwriteRoutes = false;
+fetchMock.catch("");
+fetchMock.get("/image-file-stub", "image file stub");
+// @ts-ignore
+window.fetch = fetchMock.sandbox();
+
+window.Response = fetch.Response;
+
+// set up mediaDevices mock
+Object.defineProperty(navigator, "mediaDevices", {
+    value: {
+        enumerateDevices: jest.fn().mockResolvedValue([]),
+        getUserMedia: jest.fn(),
+    },
+});

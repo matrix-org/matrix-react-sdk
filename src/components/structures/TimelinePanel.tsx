@@ -27,9 +27,10 @@ import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-membe
 import { debounce, throttle } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
-import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
+import { ReadReceipt } from 'matrix-js-sdk/src/models/read-receipt';
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -179,7 +180,7 @@ interface IState {
     // disappearance when switching into the room.
     readMarkerVisible: boolean;
 
-    readMarkerEventId: string;
+    readMarkerEventId: string | null;
 
     backPaginating: boolean;
     forwardPaginating: boolean;
@@ -229,8 +230,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         disableGrouping: false,
     };
 
-    private lastRRSentEventId: string = undefined;
-    private lastRMSentEventId: string = undefined;
+    private lastRRSentEventId: string | null | undefined = undefined;
+    private lastRMSentEventId: string | null | undefined = undefined;
 
     private readonly messagePanel = createRef<MessagePanel>();
     private readonly dispatcherRef: string;
@@ -250,7 +251,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         // XXX: we could track RM per TimelineSet rather than per Room.
         // but for now we just do it per room for simplicity.
-        let initialReadMarker = null;
+        let initialReadMarker: string | null = null;
         if (this.props.manageReadMarkers) {
             const readmarker = this.props.timelineSet.room.getAccountData('m.fully_read');
             if (readmarker) {
@@ -296,25 +297,22 @@ class TimelinePanel extends React.Component<IProps, IState> {
         cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         cli.on(MatrixEventEvent.Replaced, this.onEventReplaced);
         cli.on(ClientEvent.Sync, this.onSync);
+
+        this.props.timelineSet.room?.on(ThreadEvent.Update, this.onThreadUpdate);
     }
 
-    // TODO: [REACT-WARNING] Move into constructor
-    // eslint-disable-next-line
-    UNSAFE_componentWillMount() {
+    public componentDidMount() {
         if (this.props.manageReadReceipts) {
             this.updateReadReceiptOnUserActivity();
         }
         if (this.props.manageReadMarkers) {
             this.updateReadMarkerOnUserActivity();
         }
-
         this.initTimeline(this.props);
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line
-    UNSAFE_componentWillReceiveProps(newProps) {
-        if (newProps.timelineSet !== this.props.timelineSet) {
+    public componentDidUpdate(prevProps) {
+        if (prevProps.timelineSet !== this.props.timelineSet) {
             // throw new Error("changing timelineSet on a TimelinePanel is not supported");
 
             // regrettably, this does happen; in particular, when joining a
@@ -329,14 +327,16 @@ class TimelinePanel extends React.Component<IProps, IState> {
             logger.warn("Replacing timelineSet on a TimelinePanel - confusion may ensue");
         }
 
-        const differentEventId = newProps.eventId != this.props.eventId;
-        const differentHighlightedEventId = newProps.highlightedEventId != this.props.highlightedEventId;
-        const differentAvoidJump = newProps.eventScrollIntoView && !this.props.eventScrollIntoView;
+        this.props.timelineSet.room?.off(ThreadEvent.Update, this.onThreadUpdate);
+        this.props.timelineSet.room?.on(ThreadEvent.Update, this.onThreadUpdate);
+
+        const differentEventId = prevProps.eventId != this.props.eventId;
+        const differentHighlightedEventId = prevProps.highlightedEventId != this.props.highlightedEventId;
+        const differentAvoidJump = prevProps.eventScrollIntoView && !this.props.eventScrollIntoView;
         if (differentEventId || differentHighlightedEventId || differentAvoidJump) {
-            logger.log("TimelinePanel switching to " +
-                "eventId " + newProps.eventId + " (was " + this.props.eventId + "), " +
-                "scrollIntoView: " + newProps.eventScrollIntoView + " (was " + this.props.eventScrollIntoView + ")");
-            return this.initTimeline(newProps);
+            logger.log(`TimelinePanel switching to eventId ${this.props.eventId} (was ${prevProps.eventId}), ` +
+                `scrollIntoView: ${this.props.eventScrollIntoView} (was ${prevProps.eventScrollIntoView})`);
+            this.initTimeline(this.props);
         }
     }
 
@@ -371,6 +371,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(MatrixEventEvent.Replaced, this.onEventReplaced);
             client.removeListener(MatrixEventEvent.VisibilityChange, this.onEventVisibilityChange);
             client.removeListener(ClientEvent.Sync, this.onSync);
+            this.props.timelineSet.room?.removeListener(ThreadEvent.Update, this.onThreadUpdate);
         }
     }
 
@@ -644,8 +645,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (data.timeline.getTimelineSet() !== this.props.timelineSet) return;
 
         if (!Thread.hasServerSideSupport && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
-            // const direction = toStartOfTimeline ? Direction.Backward : Direction.Forward;
-            // this.timelineWindow.extend(direction, 1);
             if (toStartOfTimeline && !this.state.canBackPaginate) {
                 this.setState({
                     canBackPaginate: true,
@@ -749,6 +748,25 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.forceUpdate();
     };
 
+    private onThreadUpdate = (thread: Thread): void => {
+        if (this.unmounted) {
+            return;
+        }
+
+        // ignore events for other rooms
+        const roomId = thread.roomId;
+        if (roomId !== this.props.timelineSet.room?.roomId) {
+            return;
+        }
+
+        // we could skip an update if the event isn't in our timeline,
+        // but that's probably an early optimisation.
+        const tile = this.messagePanel.current?.getTileForEventId(thread.id);
+        if (tile) {
+            tile.forceUpdate();
+        }
+    };
+
     // Called whenever the visibility of an event changes, as per
     // MSC3531. We typically need to re-render the tile.
     private onEventVisibilityChange = (ev: MatrixEvent): void => {
@@ -797,7 +815,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (this.unmounted) return;
 
         // ignore events for other rooms
-        if (replacedEvent.getRoomId() !== this.props.timelineSet.room.roomId) return;
+        if (replacedEvent.getRoomId() !== this.props.timelineSet.room?.roomId) return;
 
         // we could skip an update if the event isn't in our timeline,
         // but that's probably an early optimisation.
@@ -942,13 +960,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (lastReadEventIndex === null) {
             shouldSendRR = false;
         }
-        let lastReadEvent = this.state.events[lastReadEventIndex];
+        let lastReadEvent: MatrixEvent | null = this.state.events[lastReadEventIndex ?? 0];
         shouldSendRR = shouldSendRR &&
             // Only send a RR if the last read event is ahead in the timeline relative to
             // the current RR event.
             lastReadEventIndex > currentRREventIndex &&
             // Only send a RR if the last RR set != the one we would send
-            this.lastRRSentEventId != lastReadEvent.getId();
+            this.lastRRSentEventId !== lastReadEvent?.getId();
 
         // Only send a RM if the last RM sent != the one we would send
         const shouldSendRM =
@@ -958,7 +976,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // same one at the server repeatedly
         if (shouldSendRR || shouldSendRM) {
             if (shouldSendRR) {
-                this.lastRRSentEventId = lastReadEvent.getId();
+                this.lastRRSentEventId = lastReadEvent?.getId();
             } else {
                 lastReadEvent = null;
             }
@@ -974,48 +992,58 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 `prr=${lastReadEvent?.getId()}`,
 
             );
-            MatrixClientPeg.get().setRoomReadMarkers(
-                roomId,
-                this.state.readMarkerEventId,
-                sendRRs ? lastReadEvent : null, // Public read receipt (could be null)
-                lastReadEvent, // Private read receipt (could be null)
-            ).catch(async (e) => {
-                // /read_markers API is not implemented on this HS, fallback to just RR
-                if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
-                    if (
-                        !sendRRs
-                        && !MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285.stable")
-                    ) return;
 
-                    try {
-                        return await MatrixClientPeg.get().sendReadReceipt(
-                            lastReadEvent,
-                            sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
-                        );
-                    } catch (error) {
+            if (this.props.timelineSet.thread && sendRRs && lastReadEvent) {
+                // There's no support for fully read markers on threads
+                // as defined by MSC3771
+                cli.sendReadReceipt(
+                    lastReadEvent,
+                    sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
+                );
+            } else {
+                cli.setRoomReadMarkers(
+                    roomId,
+                    this.state.readMarkerEventId ?? "",
+                    sendRRs ? (lastReadEvent ?? undefined) : undefined, // Public read receipt (could be null)
+                    lastReadEvent ?? undefined, // Private read receipt (could be null)
+                ).catch(async (e) => {
+                    // /read_markers API is not implemented on this HS, fallback to just RR
+                    if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
+                        if (
+                            !sendRRs
+                            && !(await cli.doesServerSupportUnstableFeature("org.matrix.msc2285.stable"))
+                            && !(await cli.isVersionSupported("v1.4"))
+                        ) return;
+                        try {
+                            return await cli.sendReadReceipt(
+                                lastReadEvent,
+                                sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
+                            );
+                        } catch (error) {
+                            logger.error(e);
+                            this.lastRRSentEventId = undefined;
+                        }
+                    } else {
                         logger.error(e);
-                        this.lastRRSentEventId = undefined;
                     }
-                } else {
-                    logger.error(e);
-                }
-                // it failed, so allow retries next time the user is active
-                this.lastRRSentEventId = undefined;
-                this.lastRMSentEventId = undefined;
-            });
-
-            // do a quick-reset of our unreadNotificationCount to avoid having
-            // to wait from the remote echo from the homeserver.
-            // we only do this if we're right at the end, because we're just assuming
-            // that sending an RR for the latest message will set our notif counter
-            // to zero: it may not do this if we send an RR for somewhere before the end.
-            if (this.isAtEndOfLiveTimeline()) {
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
-                dis.dispatch({
-                    action: 'on_room_read',
-                    roomId: this.props.timelineSet.room.roomId,
+                    // it failed, so allow retries next time the user is active
+                    this.lastRRSentEventId = undefined;
+                    this.lastRMSentEventId = undefined;
                 });
+
+                // do a quick-reset of our unreadNotificationCount to avoid having
+                // to wait from the remote echo from the homeserver.
+                // we only do this if we're right at the end, because we're just assuming
+                // that sending an RR for the latest message will set our notif counter
+                // to zero: it may not do this if we send an RR for somewhere before the end.
+                if (this.isAtEndOfLiveTimeline()) {
+                    this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
+                    this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
+                    dis.dispatch({
+                        action: 'on_room_read',
+                        roomId: this.props.timelineSet.room.roomId,
+                    });
+                }
             }
         }
     };
@@ -1149,7 +1177,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const rmId = this.getCurrentReadReceipt();
 
         // Look up the timestamp if we can find it
-        const tl = this.props.timelineSet.getTimelineForEvent(rmId);
+        const tl = this.props.timelineSet.getTimelineForEvent(rmId ?? "");
         let rmTs: number;
         if (tl) {
             const event = tl.getEvents().find((e) => { return e.getId() == rmId; });
@@ -1351,7 +1379,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) return;
 
             this.setState({ timelineLoading: false });
-            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}: ${error}`);
+            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}`, error);
 
             let onFinished: () => void;
 
@@ -1398,24 +1426,28 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // quite slow. So we detect that situation and shortcut straight to
         // calling _reloadEvents and updating the state.
 
-        const timeline = this.props.timelineSet.getTimelineForEvent(eventId);
-        if (timeline) {
-            // This is a hot-path optimization by skipping a promise tick
-            // by repeating a no-op sync branch in TimelineSet.getTimelineForEvent & MatrixClient.getEventTimeline
-            this.timelineWindow.load(eventId, INITIAL_SIZE); // in this branch this method will happen in sync time
+        // This is a hot-path optimization by skipping a promise tick
+        // by repeating a no-op sync branch in
+        // TimelineSet.getTimelineForEvent & MatrixClient.getEventTimeline
+        if (this.props.timelineSet.getTimelineForEvent(eventId)) {
+            // if we've got an eventId, and the timeline exists, we can skip
+            // the promise tick.
+            this.timelineWindow.load(eventId, INITIAL_SIZE);
+            // in this branch this method will happen in sync time
             onLoaded();
-        } else {
-            const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
-            this.buildLegacyCallEventGroupers();
-            this.setState({
-                events: [],
-                liveEvents: [],
-                canBackPaginate: false,
-                canForwardPaginate: false,
-                timelineLoading: true,
-            });
-            prom.then(onLoaded, onError);
+            return;
         }
+
+        const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
+        this.buildLegacyCallEventGroupers();
+        this.setState({
+            events: [],
+            liveEvents: [],
+            canBackPaginate: false,
+            canForwardPaginate: false,
+            timelineLoading: true,
+        });
+        prom.then(onLoaded, onError);
     }
 
     // handle the completion of a timeline load or localEchoUpdate, by
@@ -1432,8 +1464,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     }
 
     // Force refresh the timeline before threads support pending events
-    public refreshTimeline(): void {
-        this.loadTimeline();
+    public refreshTimeline(eventId?: string): void {
+        this.loadTimeline(eventId, undefined, undefined, false);
         this.reloadEvents();
     }
 
@@ -1554,7 +1586,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         return 0;
     }
 
-    private indexForEventId(evId: string): number | null {
+    private indexForEventId(evId: string | null): number | null {
+        if (evId === null) { return null; }
         /* Threads do not have server side support for read receipts and the concept
         is very tied to the main room timeline, we are forcing the timeline to
         send read receipts for threaded events */
@@ -1655,7 +1688,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      *                                    SDK.
      * @return {String} the event ID
      */
-    private getCurrentReadReceipt(ignoreSynthesized = false): string {
+    private getCurrentReadReceipt(ignoreSynthesized = false): string | null {
         const client = MatrixClientPeg.get();
         // the client can be null on logout
         if (client == null) {
@@ -1663,21 +1696,23 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         const myUserId = client.credentials.userId;
-        return this.props.timelineSet.room.getEventReadUpTo(myUserId, ignoreSynthesized);
+        const receiptStore: ReadReceipt<any, any> =
+            this.props.timelineSet.thread ?? this.props.timelineSet.room;
+        return receiptStore?.getEventReadUpTo(myUserId, ignoreSynthesized);
     }
 
-    private setReadMarker(eventId: string, eventTs: number, inhibitSetState = false): void {
-        const roomId = this.props.timelineSet.room.roomId;
+    private setReadMarker(eventId: string | null, eventTs: number, inhibitSetState = false): void {
+        const roomId = this.props.timelineSet.room?.roomId;
 
         // don't update the state (and cause a re-render) if there is
         // no change to the RM.
-        if (eventId === this.state.readMarkerEventId) {
+        if (eventId === this.state.readMarkerEventId || eventId === null) {
             return;
         }
 
         // in order to later figure out if the read marker is
         // above or below the visible timeline, we stash the timestamp.
-        TimelinePanel.roomReadMarkerTsMap[roomId] = eventTs;
+        TimelinePanel.roomReadMarkerTsMap[roomId ?? ""] = eventTs;
 
         if (inhibitSetState) {
             return;
@@ -1704,7 +1739,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     private getRelationsForEvent = (
         eventId: string,
-        relationType: RelationType,
+        relationType: RelationType | string,
         eventType: EventType | string,
     ) => this.props.timelineSet.relations?.getChildEventsForEvent(eventId, relationType, eventType);
 

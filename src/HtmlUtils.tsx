@@ -526,7 +526,7 @@ function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | s
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnString): string;
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnNode): ReactNode;
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOpts = {}) {
-    const isFormattedBody = content.format === "org.matrix.custom.html" && content.formatted_body;
+    const isFormattedBody = content.format === "org.matrix.custom.html" && !!content.formatted_body;
     let bodyHasEmoji = false;
     let isHtmlMessage = false;
 
@@ -574,7 +574,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 decodeEntities: false,
             });
             const isPlainText = phtml.html() === phtml.root().text();
-            isHtmlMessage = isFormattedBody && !isPlainText;
+            isHtmlMessage = !isPlainText;
 
             if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
                 // @ts-ignore - The types for `replaceWith` wrongly expect

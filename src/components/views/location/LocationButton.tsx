@@ -28,7 +28,7 @@ import LocationShareMenu from './LocationShareMenu';
 interface IProps {
     roomId: string;
     sender: RoomMember;
-    menuPosition: AboveLeftOf;
+    menuPosition?: AboveLeftOf;
     relation?: IEventRelation;
 }
 
@@ -69,6 +69,7 @@ export const LocationButton: React.FC<IProps> = ({ roomId, sender, menuPosition,
             iconClassName="mx_MessageComposer_location"
             onClick={openMenu}
             title={_t("Location")}
+            inputRef={button}
         />
 
         { contextMenu }

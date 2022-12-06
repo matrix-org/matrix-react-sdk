@@ -110,7 +110,8 @@ export function findEditableEvent({
     events: MatrixEvent[];
     isForward: boolean;
     fromEventId?: string;
-}): MatrixEvent {
+}): MatrixEvent | undefined {
+    if (!events.length) return;
     const maxIdx = events.length - 1;
     const inc = isForward ? 1 : -1;
     const beginIdx = isForward ? 0 : maxIdx;
@@ -238,8 +239,11 @@ export async function fetchInitialEvent(
     ) {
         const threadId = initialEvent.threadRootId;
         const room = client.getRoom(roomId);
+        const mapper = client.getEventMapper();
+        const rootEvent = room.findEventById(threadId)
+            ?? mapper(await client.fetchRoomEvent(roomId, threadId));
         try {
-            room.createThread(threadId, room.findEventById(threadId), [initialEvent], true);
+            room.createThread(threadId, rootEvent, [initialEvent], true);
         } catch (e) {
             logger.warn("Could not find root event: " + threadId);
         }

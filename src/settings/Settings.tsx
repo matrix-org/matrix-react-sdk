@@ -92,6 +92,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    VoiceAndVideo,
     Moderation,
     Analytics,
     MessagePreviews,
@@ -101,12 +102,17 @@ export enum LabGroup {
     Developer,
 }
 
+export enum Features {
+    VoiceBroadcast = "feature_voice_broadcast",
+}
+
 export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Messaging]: _td("Messaging"),
     [LabGroup.Profile]: _td("Profile"),
     [LabGroup.Spaces]: _td("Spaces"),
     [LabGroup.Widgets]: _td("Widgets"),
     [LabGroup.Rooms]: _td("Rooms"),
+    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
     [LabGroup.MessagePreviews]: _td("Message Previews"),
@@ -121,7 +127,8 @@ export type SettingValueType = boolean |
     string |
     number[] |
     string[] |
-    Record<string, unknown>;
+    Record<string, unknown> |
+    null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
@@ -187,7 +194,7 @@ export type ISetting = IBaseSetting | IFeature;
 export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_video_rooms": {
         isFeature: true,
-        labsGroup: LabGroup.Rooms,
+        labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("Video rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -296,6 +303,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             requiresRefresh: true,
         },
 
+    },
+    "feature_wysiwyg_composer": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("Try out the rich text editor (plain text mode coming soon)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
     },
     "feature_state_counters": {
         isFeature: true,
@@ -419,6 +433,22 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: "",
     },
+    "feature_element_call_video_rooms": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("Element Call video rooms"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
+    "feature_group_calls": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("New group call experience"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -435,11 +465,44 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Favourite Messages (under active development)"),
         default: false,
     },
+    [Features.VoiceBroadcast]: {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Voice broadcast (under active development)"),
+        default: false,
+    },
     "feature_new_device_manager": {
         isFeature: true,
         labsGroup: LabGroup.Experimental,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new session manager (under active development)"),
+        displayName: _td("Use new session manager"),
+        default: false,
+        betaInfo: {
+            title: _td('New session manager'),
+            caption: () => <>
+                <p>
+                    { _td('Have greater visibility and control over all your sessions.') }
+                </p>
+                <p>
+                    { _td(
+                        'Our new sessions manager provides better visibility of all your sessions, '
+                        + 'and greater control over them including the ability to remotely toggle push notifications.',
+                    )
+                    }
+                </p>
+
+            </>,
+        },
+    },
+    "feature_qr_signin_reciprocate_show": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td(
+            "Allow a QR code to be shown in session manager to sign in another device " +
+            "(requires compatible homeserver)",
+        ),
         default: false,
     },
     "baseFontSize": {
@@ -650,10 +713,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "webRtcAllowPeerToPeer": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td(
-            "Allow Peer-to-Peer for 1:1 calls " +
-            "(if you enable this, the other party might be able to see your IP address)",
-        ),
+        displayName: _td("Allow Peer-to-Peer for 1:1 calls"),
+        description: _td("When enabled, the other party might be able to see your IP address"),
         default: true,
         invertedSettingName: 'webRtcForceTURN',
     },
@@ -668,6 +729,21 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "webrtc_videoinput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: "default",
+    },
+    "webrtc_audio_autoGainControl": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Automatic gain control"),
+        default: true,
+    },
+    "webrtc_audio_echoCancellation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Echo cancellation"),
+        default: true,
+    },
+    "webrtc_audio_noiseSuppression": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Noise suppression"),
+        default: true,
     },
     "language": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -710,6 +786,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
         default: null,
+    },
+    "deviceClientInformationOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td(
+            `Record the client name, version, and url ` +
+            `to recognise sessions more easily in session manager`,
+        ),
+        default: false,
     },
     "FTUE.useCaseSelection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -761,6 +845,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new NotificationsEnabledController(),
+    },
+    "deviceNotificationsEnabled": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: true,
     },
     "notificationSound": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
@@ -828,9 +916,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td(
-            "Allow fallback call assist server turn.matrix.org when your homeserver " +
-            "does not offer one (your IP address would be shared during a call)",
+        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
+        description: _td(
+            "Only applies if your homeserver does not offer one. " +
+            "Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,

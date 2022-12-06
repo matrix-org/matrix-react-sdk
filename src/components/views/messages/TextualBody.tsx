@@ -51,6 +51,7 @@ import { getParentEventId } from '../../../utils/Reply';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { decryptFile } from '../../../utils/DecryptFile';
 import { mediaFromMxc } from '../../../customisations/Media';
+import { EditWysiwygComposer } from '../rooms/wysiwyg_composer';
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -592,7 +593,10 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     }
     render() {
         if (this.props.editState) {
-            return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
+            const isWysiwygComposerEnabled = SettingsStore.getValue("feature_wysiwyg_composer");
+            return isWysiwygComposerEnabled ?
+                <EditWysiwygComposer editorStateTransfer={this.props.editState} className="mx_EventTile_content" /> :
+                <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
         }
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
