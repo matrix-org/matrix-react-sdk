@@ -27,14 +27,6 @@ export const snoozeBulkUnverifiedDeviceReminder = () => {
     }
 };
 
-export const removeSnoozeBulkUnverifiedDeviceReminder = () => {
-    try {
-        localStorage.removeItem(SNOOZE_KEY);
-    } catch (error) {
-        logger.error('Failed to remove bulk unverified device nag snooze', error);
-    }
-};
-
 export const isBulkUnverifiedDeviceReminderSnoozed = () => {
     try {
         const snoozedTimestamp = localStorage.getItem(SNOOZE_KEY);

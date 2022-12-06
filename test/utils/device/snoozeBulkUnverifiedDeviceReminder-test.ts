@@ -18,7 +18,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import {
     isBulkUnverifiedDeviceReminderSnoozed,
-    removeSnoozeBulkUnverifiedDeviceReminder,
     snoozeBulkUnverifiedDeviceReminder,
 } from "../../../src/utils/device/snoozeBulkUnverifiedDeviceReminder";
 
@@ -55,20 +54,6 @@ describe('snooze bulk unverified device nag', () => {
             const loggerErrorSpy = jest.spyOn(logger, 'error');
             localStorageSetSpy.mockImplementation(() => { throw new Error('oups'); });
             snoozeBulkUnverifiedDeviceReminder();
-            expect(loggerErrorSpy).toHaveBeenCalled();
-        });
-    });
-    describe('removeSnoozeBulkUnverifiedDeviceReminder()', () => {
-        it('removes the snooze in local storage', () => {
-            removeSnoozeBulkUnverifiedDeviceReminder();
-
-            expect(localStorageRemoveSpy).toHaveBeenCalledWith(SNOOZE_KEY);
-        });
-
-        it('catches an error from localstorage', () => {
-            const loggerErrorSpy = jest.spyOn(logger, 'error');
-            localStorageRemoveSpy.mockImplementation(() => { throw new Error('oups'); });
-            removeSnoozeBulkUnverifiedDeviceReminder();
             expect(loggerErrorSpy).toHaveBeenCalled();
         });
     });
