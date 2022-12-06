@@ -3664,5 +3664,9 @@
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "V miestnostiach, ktoré podporujú moderovanie, môžete pomocou tlačidla \"Nahlásiť\" nahlásiť porušovanie pravidiel moderátorom miestnosti.",
     "Report to moderators": "Nahlásiť moderátorom",
     "You have unverified sessions": "Máte neoverené relácie",
-    "Change layout": "Zmeniť rozloženie"
+    "Change layout": "Zmeniť rozloženie",
+    "Sign in instead": "Radšej sa prihlásiť",
+    "Re-enter email address": "Znovu zadajte e-mailovú adresu",
+    "Wrong email address?": "Nesprávna e-mailová adresa?",
+    "Hide notification dot (only display counters badges)": "Skryť oznamovaciu bodku (zobrazovať iba odznaky počítadiel)"
 }
