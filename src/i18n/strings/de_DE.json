@@ -3665,5 +3665,9 @@
     "Defaults to room member list.": "Standardmäßig wird die Raummitgliederliste angezeigt.",
     "Early previews": "Frühe Vorschauen",
     "You have unverified sessions": "Du hast nicht verifizierte Sitzungen",
-    "Change layout": "Anordnung ändern"
+    "Change layout": "Anordnung ändern",
+    "Sign in instead": "Stattdessen anmelden",
+    "Re-enter email address": "E-Mail-Adresse erneut eingeben",
+    "Wrong email address?": "Falsche E-Mail-Adresse?",
+    "Hide notification dot (only display counters badges)": "Benachrichtigungspunkt ausblenden (nur Zähler zeigen)"
 }
