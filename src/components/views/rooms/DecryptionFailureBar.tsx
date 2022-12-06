@@ -137,6 +137,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         setHasKeyBackup(keyBackup);
     }, [context]);
 
+    // Update device info on initial render
     useEffect(() => {
         updateDeviceInfo().catch(console.error);
     }, [updateDeviceInfo]);
