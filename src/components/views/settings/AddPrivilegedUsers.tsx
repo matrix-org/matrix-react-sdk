@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FormEvent, useCallback, useContext, useRef, useState } from 'react';
+import React, { FormEvent, useContext, useRef, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -40,30 +40,31 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [powerLevel, setPowerLevel] = useState<number>(defaultUserLevel);
     const [selectedUsers, setSelectedUsers] = useState<ICompletion[]>([]);
-    const filterSuggestions = useCallback(
-        (user: ICompletion) => {
-            if (user.completionId === undefined) {
-                return false;
-            }
-
-            const member = room.getMember(user.completionId);
-
-            if (member === null) {
-                return false;
-            }
-
-            return member.powerLevel <= defaultUserLevel;
-        },
-        [room, defaultUserLevel],
-    );
+    // const filterSuggestions = useCallback(
+    //     (user: ICompletion) => {
+    //         if (user.completionId === undefined) {
+    //             return false;
+    //         }
+    //
+    //         const member = room.getMember(user.completionId);
+    //
+    //         if (member === null) {
+    //             return false;
+    //         }
+    //
+    //         return member.powerLevel <= defaultUserLevel;
+    //     },
+    //     [room, defaultUserLevel],
+    // );
 
     const onSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setIsLoading(true);
 
         const userIds = selectedUsers
-            .map(selectedUser => selectedUser.completionId)
-            .filter(userId => userId !== undefined);
+            .filter(selectedUser => selectedUser.completionId !== undefined)
+            // undefined completionId's are filtered out but TypeScript does not seem to understand.
+            .map(selectedUser => selectedUser.completionId!);
         const powerLevelEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
 
         try {
@@ -92,7 +93,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
                     placeholder={_t("Search users in this room…")}
                     onSelectionChange={setSelectedUsers}
                     selection={selectedUsers}
-                    additionalFilter={filterSuggestions}
+                    // additionalFilter={filterSuggestions}
                 />
                 <PowerSelector value={powerLevel} onChange={setPowerLevel} />
                 <AccessibleButton
@@ -101,6 +102,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
                     kind='primary'
                     disabled={!selectedUsers.length || isLoading}
                     onClick={null}
+                    data-testid='add-privileged-users-submit-button'
                 >
                     { _t('Apply') }
                 </AccessibleButton>
