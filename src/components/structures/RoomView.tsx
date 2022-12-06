@@ -2213,9 +2213,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainSplitContentClasses = classNames("mx_RoomView_body", mainSplitContentClassName);
 
         let excludedRightPanelPhaseButtons = [RightPanelPhases.Timeline];
-        let onAppsClick = this.onAppsClick;
-        let onForgetClick = this.onForgetClick;
-        let onSearchClick: () => void | null = this.onSearchClick;
+        let onAppsClick: (() => void) | null = this.onAppsClick;
+        let onForgetClick: (() => void) | null = this.onForgetClick;
+        let onSearchClick: (() => void) | null = this.onSearchClick;
         let onInviteClick = null;
         let viewingCall = false;
 
