@@ -39,7 +39,7 @@ export const isBulkUnverifiedDeviceReminderSnoozed = () => {
     try {
         const snoozedTimestamp = localStorage.getItem(SNOOZE_KEY);
 
-        const parsedTimestamp = Number.parseInt(snoozedTimestamp, 10);
+        const parsedTimestamp = Number.parseInt(snoozedTimestamp || '', 10);
 
         return Number.isInteger(parsedTimestamp) && (parsedTimestamp + snoozePeriod) > Date.now();
     } catch (error) {
