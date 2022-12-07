@@ -3665,5 +3665,9 @@
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "Dans les salons prenant en charge la modération, le bouton « Signaler » vous permet de signaler des abus aux modérateurs du salon.",
     "Report to moderators": "Signaler aux modérateurs",
     "Change layout": "Changer la disposition",
-    "You have unverified sessions": "Vous avez des sessions non vérifiées"
+    "You have unverified sessions": "Vous avez des sessions non vérifiées",
+    "Sign in instead": "Se connecter à la place",
+    "Re-enter email address": "Re-saisir l’adresse e-mail",
+    "Wrong email address?": "Mauvaise adresse e-mail ?",
+    "Hide notification dot (only display counters badges)": "Masquer le point de notification (affiche seulement les badges des compteurs)"
 }
