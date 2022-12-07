@@ -3665,5 +3665,9 @@
     "Report to moderators": "回報給管理員",
     "Buffering…": "正在緩衝……",
     "Change layout": "變更佈局",
-    "You have unverified sessions": "您有未驗證的工作階段"
+    "You have unverified sessions": "您有未驗證的工作階段",
+    "Sign in instead": "改為登入",
+    "Re-enter email address": "重新輸入電子郵件地址",
+    "Wrong email address?": "錯誤的電子郵件地址？",
+    "Hide notification dot (only display counters badges)": "隱藏通知點（僅顯示計數器徽章）"
 }
