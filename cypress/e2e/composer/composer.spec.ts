@@ -124,7 +124,7 @@ describe("Composer", () => {
             // does not trigger an insertParagraph when you do that.
             cy.get('div[contenteditable=true]').trigger('input', { inputType: "insertParagraph" });
             // It was sent
-            cy.contains('.mx_EventTile_body', 'my message 1');
+            cy.contains('.mx_EventTile_body', 'my message 2');
         });
 
         it("can write formatted text", () => {
