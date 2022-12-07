@@ -17,11 +17,12 @@ import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { RoomMember, EventType } from "matrix-js-sdk/src/matrix";
 
 import {
     getMockClientWithEventEmitter,
     makeRoomWithStateEvents,
+    mkEvent,
 } from "../../../test-utils";
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 import {
@@ -55,6 +56,13 @@ describe('<AddPrivilegedUsers />', () => {
         member.powerLevel = 0;
 
         return member;
+    };
+    (room.currentState.getStateEvents as unknown) = (_eventType: string, _stateKey: string) => {
+        return mkEvent({
+            type: EventType.RoomPowerLevels,
+            content: {},
+            user: 'user_id',
+        });
     };
 
     const getComponent = () =>

@@ -52,6 +52,16 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         const userIds = getUserIdsFromCompletions(selectedUsers);
         const powerLevelEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
 
+        // `RoomPowerLevels` event should exist, but technically it is not guaranteed.
+        if (powerLevelEvent === null) {
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Error"),
+                description: _t("Failed to change power level"),
+            });
+
+            return;
+        }
+
         try {
             await client.setPowerLevel(room.roomId, userIds, powerLevel, powerLevelEvent);
             setSelectedUsers([]);
