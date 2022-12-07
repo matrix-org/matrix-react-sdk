@@ -86,7 +86,7 @@ function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean {
     // get the most recent read receipt sent by our account.
     // N.B. this is NOT a read marker (RM, aka "read up to marker"),
     // despite the name of the method :((
-    const readUpToId = room.getEventReadUpTo(myUserId);
+    const readUpToId: string | null = room.getEventReadUpTo(myUserId);
 
     // this just looks at whatever history we have, which if we've only just started
     // up probably won't be very much, so if the last couple of events are ones that
