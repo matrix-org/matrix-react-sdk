@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { MouseEvent } from "react";
 import { Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
@@ -26,8 +26,12 @@ import { Icon as XIcon } from "../../../../res/img/element-icons/cancel-rounded.
 import Clock from "../../../components/views/audio_messages/Clock";
 import { formatTimeLeft } from "../../../DateUtils";
 import Spinner from "../../../components/views/elements/Spinner";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { Action } from "../../../dispatcher/actions";
+import dis from '../../../dispatcher/dispatcher';
 
 interface VoiceBroadcastHeaderProps {
+    linkToRoom?: boolean;
     live?: VoiceBroadcastLiveness;
     onCloseClick?: () => void;
     onMicrophoneLineClick?: () => void;
@@ -40,6 +44,7 @@ interface VoiceBroadcastHeaderProps {
 }
 
 export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
+    linkToRoom = false,
     live = "not-live",
     onCloseClick = () => {},
     onMicrophoneLineClick,
@@ -96,12 +101,33 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
         </div>
     );
 
+    const onRoomAvatarOrNameClick = (event: MouseEvent): void => {
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: room.roomId,
+            metricsTrigger: undefined, // other
+        });
+    };
+
+    let roomAvatar = <RoomAvatar room={room} width={32} height={32} />;
+    let roomName = <div className="mx_VoiceBroadcastHeader_room">
+        { room.name }
+    </div>;
+
+    if (linkToRoom) {
+        roomAvatar = <AccessibleButton onClick={onRoomAvatarOrNameClick}>
+            { roomAvatar }
+        </AccessibleButton>;
+
+        roomName = <AccessibleButton onClick={onRoomAvatarOrNameClick}>
+            { roomName }
+        </AccessibleButton>;
+    }
+
     return <div className="mx_VoiceBroadcastHeader">
-        <RoomAvatar room={room} width={32} height={32} />
+        { roomAvatar }
         <div className="mx_VoiceBroadcastHeader_content">
-            <div className="mx_VoiceBroadcastHeader_room">
-                { room.name }
-            </div>
+            { roomName }
             { microphoneLine }
             { timeLeftLine }
             { broadcast }

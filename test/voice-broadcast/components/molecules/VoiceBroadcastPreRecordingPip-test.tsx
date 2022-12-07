@@ -29,7 +29,10 @@ import {
 import { flushPromises, stubClient } from "../../../test-utils";
 import { requestMediaPermissions } from "../../../../src/utils/media/requestMediaPermissions";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../../src/MediaDeviceHandler";
+import dis from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
 
+jest.mock("../../../../src/dispatcher/dispatcher");
 jest.mock("../../../../src/utils/media/requestMediaPermissions");
 
 // mock RoomAvatar, because it is doing too much fancy stuff
@@ -48,6 +51,16 @@ describe("VoiceBroadcastPreRecordingPip", () => {
     let client: MatrixClient;
     let room: Room;
     let sender: RoomMember;
+
+    const itShouldShowTheBroadcastRoom = () => {
+        it("should show the broadcast room", () => {
+            expect(dis.dispatch).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                metricsTrigger: undefined,
+            });
+        });
+    };
 
     beforeEach(() => {
         client = stubClient();
@@ -101,6 +114,22 @@ describe("VoiceBroadcastPreRecordingPip", () => {
 
         it("should match the snapshot", () => {
             expect(renderResult.container).toMatchSnapshot();
+        });
+
+        describe("and clicking the room name", () => {
+            beforeEach(async () => {
+                await userEvent.click(screen.getByText(room.name));
+            });
+
+            itShouldShowTheBroadcastRoom();
+        });
+
+        describe("and clicking the room avatar", () => {
+            beforeEach(async () => {
+                await userEvent.click(screen.getByText(`room avatar: ${room.name}`));
+            });
+
+            itShouldShowTheBroadcastRoom();
         });
 
         describe("and clicking the device label", () => {

@@ -84,6 +84,7 @@ export const VoiceBroadcastRecordingPip: React.FC<VoiceBroadcastRecordingPipProp
         ref={pipRef}
     >
         <VoiceBroadcastHeader
+            linkToRoom={true}
             live={live ? "live" : "grey"}
             room={room}
             timeLeft={timeLeft}
