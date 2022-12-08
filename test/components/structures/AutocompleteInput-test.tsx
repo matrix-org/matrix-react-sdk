@@ -32,7 +32,7 @@ describe('AutocompleteInput', () => {
         getCompletions: jest.fn().mockImplementation(async () => data),
     }) as unknown as AutocompleteProvider;
 
-    beforeEach(async () => {
+    beforeEach(() => {
         TestUtils.stubClient();
     });
 
@@ -67,7 +67,7 @@ describe('AutocompleteInput', () => {
         expect(screen.getByTestId('autocomplete-matches').childNodes).toHaveLength(mockCompletion.length);
     });
 
-    it('should render selected items passed in via props', async () => {
+    it('should render selected items passed in via props', () => {
         const mockProvider = constructMockProvider(mockCompletion);
         const onSelectionChangeMock = jest.fn();
 
@@ -85,7 +85,7 @@ describe('AutocompleteInput', () => {
         expect(selection).toHaveLength(mockCompletion.length);
     });
 
-    it('should call onSelectionChange() when an item is removed from selection', async () => {
+    it('should call onSelectionChange() when an item is removed from selection', () => {
         const mockProvider = constructMockProvider(mockCompletion);
         const onSelectionChangeMock = jest.fn();
 
@@ -110,7 +110,7 @@ describe('AutocompleteInput', () => {
         expect(onSelectionChangeMock).toHaveBeenCalledWith([mockCompletion[1]]);
     });
 
-    it('should render custom selection element when renderSelection() is defined', async () => {
+    it('should render custom selection element when renderSelection() is defined', () => {
         const mockProvider = constructMockProvider(mockCompletion);
         const onSelectionChangeMock = jest.fn();
 
@@ -186,7 +186,7 @@ describe('AutocompleteInput', () => {
         suggestions.map(suggestion => expect(suggestion).toHaveClass('mx_AutocompleteInput_suggestion--selected'));
     });
 
-    it('should remove the last added selection when backspace is pressed in empty input', async () => {
+    it('should remove the last added selection when backspace is pressed in empty input', () => {
         const mockProvider = constructMockProvider(mockCompletion);
         const onSelectionChangeMock = jest.fn();
 
