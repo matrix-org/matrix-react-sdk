@@ -108,7 +108,7 @@ const securityCardContent: Record<DeviceSecurityVariation, {
  };
 
 const isSecurityVariation = (filter?: DeviceFilterKey): filter is FilterVariation =>
-    ([
+    !!filter && ([
         DeviceSecurityVariation.Inactive,
         DeviceSecurityVariation.Unverified,
         DeviceSecurityVariation.Verified,
