@@ -37,14 +37,12 @@ import SettingsStore from "./settings/SettingsStore";
 import { ALL_RULE_TYPES, ROOM_RULE_TYPES, SERVER_RULE_TYPES, USER_RULE_TYPES } from "./mjolnir/BanList";
 import { WIDGET_LAYOUT_EVENT_TYPE } from "./stores/widgets/WidgetLayoutStore";
 import { RightPanelPhases } from './stores/right-panel/RightPanelStorePhases';
-import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
 import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
-import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
-import { isLocationEvent } from './utils/EventUtils';
+import { highlightEvent, isLocationEvent } from './utils/EventUtils';
 import { ElementCall } from "./models/Call";
 
 export function getSenderName(event: MatrixEvent): string {
@@ -497,16 +495,6 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
     });
 }
 
-const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void => {
-    defaultDispatcher.dispatch<ViewRoomPayload>({
-        action: Action.ViewRoom,
-        event_id: messageId,
-        highlighted: true,
-        room_id: roomId,
-        metricsTrigger: undefined, // room doesn't change
-    });
-};
-
 const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
@@ -533,7 +521,7 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => Render
                         { senderName },
                         {
                             "a": (sub) =>
-                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => highlightEvent(roomId, messageId)}>
                                     { sub }
                                 </AccessibleButton>,
                             "b": (sub) =>
@@ -561,7 +549,7 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => Render
                         { senderName },
                         {
                             "a": (sub) =>
-                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => highlightEvent(roomId, messageId)}>
                                     { sub }
                                 </AccessibleButton>,
                             "b": (sub) =>
