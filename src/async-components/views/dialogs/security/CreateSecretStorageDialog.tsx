@@ -65,7 +65,6 @@ enum Phase {
 const PASSWORD_MIN_SCORE = 4; // So secure, many characters, much complex, wow, etc, etc.
 
 interface IProps extends IDialogProps {
-    hasCancel: boolean;
     accountPassword: string;
     forceReset: boolean;
 }
@@ -96,7 +95,6 @@ interface IState {
  */
 export default class CreateSecretStorageDialog extends React.PureComponent<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
-        hasCancel: true,
         forceReset: false,
     };
     private recoveryKey: IRecoveryKey;
@@ -871,7 +869,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 onFinished={this.props.onFinished}
                 title={this.titleForPhase(this.state.phase)}
                 titleClass={titleClass}
-                hasCancel={this.props.hasCancel && [Phase.Passphrase].includes(this.state.phase)}
+                hasCancel={this.state.canSkip}
                 fixedWidth={false}
             >
                 <div>

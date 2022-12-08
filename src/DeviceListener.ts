@@ -357,7 +357,11 @@ export default class DeviceListener {
         }
         // returns null when key backup status hasn't finished being checked
         const isKeyBackupEnabled = MatrixClientPeg.get().getKeyBackupEnabled();
-        this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
+
+        // Ensure user can't dismiss the toast if secure backup is required
+        if (isKeyBackupEnabled === false && !isSecureBackupRequired()) {
+            this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
+        }
 
         if (isKeyBackupEnabled === false) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });

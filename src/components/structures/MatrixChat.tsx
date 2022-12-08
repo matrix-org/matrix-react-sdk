@@ -141,6 +141,7 @@ import { VoiceBroadcastResumer } from '../../voice-broadcast';
 import GenericToast from "../views/toasts/GenericToast";
 import { Linkify } from "../views/elements/Linkify";
 import RovingSpotlightDialog, { Filter } from '../views/dialogs/spotlight/SpotlightDialog';
+import { isSecureBackupRequired } from '../../utils/WellKnownUtils';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -825,6 +826,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case Action.PseudonymousAnalyticsReject:
                 hideAnalyticsToast();
                 SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, false);
+                break;
+            case Action.ReportKeyBackupNotEnabled:
+                if (isSecureBackupRequired()) {
+                    this.setStateForNewView({ view: Views.COMPLETE_SECURITY });
+                }
                 break;
             case Action.ShowThread: {
                 const {

@@ -22,6 +22,7 @@ import SetupEncryptionBody from "./SetupEncryptionBody";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
 import AuthPage from "../../views/auth/AuthPage";
+import { isSecureBackupRequired } from '../../../utils/WellKnownUtils';
 
 interface IProps {
     onFinished: () => void;
@@ -91,7 +92,7 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
         }
 
         let skipButton;
-        if (phase === Phase.Intro || phase === Phase.ConfirmReset) {
+        if ((phase === Phase.Intro || phase === Phase.ConfirmReset) && !isSecureBackupRequired()) {
             skipButton = (
                 <AccessibleButton onClick={this.onSkipClick} className="mx_CompleteSecurity_skip" aria-label={_t("Skip verification for now")} />
             );
