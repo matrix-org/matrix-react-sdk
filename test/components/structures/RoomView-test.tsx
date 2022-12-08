@@ -18,7 +18,7 @@ import React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
 import { mocked, MockedObject } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/matrix";
@@ -202,12 +202,22 @@ describe("RoomView", () => {
     });
 
     describe('with virtual rooms', () => {
-        it("checks for a virtual room", async () => {
-            const roomView = await mountRoomView();
+        it("checks for a virtual room on initial load", async () => {
+            const { container } = await renderRoomView();
             expect(VoipUserMapper.sharedInstance().getVirtualRoomForRoom).toHaveBeenCalledWith(room.roomId);
 
             // quick check that rendered without error
-            expect(roomView.find('.mx_ErrorBoundary').length).toBeFalsy();
+            expect(container.querySelector('.mx_ErrorBoundary')).toBeFalsy();
+        });
+
+        it("checks for a virtual room on room event", async () => {
+            await renderRoomView();
+            expect(VoipUserMapper.sharedInstance().getVirtualRoomForRoom).toHaveBeenCalledWith(room.roomId);
+
+            cli.emit(ClientEvent.Room, room);
+
+            // called again after room event
+            expect(VoipUserMapper.sharedInstance().getVirtualRoomForRoom).toHaveBeenCalledTimes(2);
         });
     });
 
