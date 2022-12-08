@@ -3669,5 +3669,9 @@
     "Sign in instead": "Stattdessen anmelden",
     "Re-enter email address": "E-Mail-Adresse erneut eingeben",
     "Wrong email address?": "Falsche E-Mail-Adresse?",
-    "Hide notification dot (only display counters badges)": "Benachrichtigungspunkt ausblenden (nur Zähler zeigen)"
+    "Hide notification dot (only display counters badges)": "Benachrichtigungspunkt ausblenden (nur Zähler zeigen)",
+    "Add privileged users": "Berechtigten Benutzer hinzufügen",
+    "Apply": "Anwenden",
+    "Search users in this room…": "Benutzer im Raum suchen …",
+    "Give one or multiple users in this room more privileges": "Einem oder mehreren Benutzern im Raum mehr Berechtigungen geben"
 }
