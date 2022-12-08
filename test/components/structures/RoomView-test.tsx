@@ -17,15 +17,21 @@ limitations under the License.
 import React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
-import { act } from "react-dom/test-utils";
 import { mocked, MockedObject } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/matrix";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
+import { fireEvent, render } from "@testing-library/react";
 
-import { stubClient, mockPlatformPeg, unmockPlatformPeg, wrapInMatrixClientContext } from "../../test-utils";
+import {
+    stubClient,
+    mockPlatformPeg,
+    unmockPlatformPeg,
+    wrapInMatrixClientContext,
+    flushPromises,
+} from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { Action } from "../../../src/dispatcher/actions";
 import { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
@@ -110,8 +116,44 @@ describe("RoomView", () => {
                 />
             </SDKContext.Provider>,
         );
-        await act(() => Promise.resolve()); // Allow state to settle
-        roomView.setProps({});
+        await flushPromises();
+        return roomView;
+    };
+
+    const renderRoomView = async (): Promise<ReturnType<typeof render>> => {
+        if (stores.roomViewStore.getRoomId() !== room.roomId) {
+            const switchedRoom = new Promise<void>(resolve => {
+                const subFn = () => {
+                    if (stores.roomViewStore.getRoomId()) {
+                        stores.roomViewStore.off(UPDATE_EVENT, subFn);
+                        resolve();
+                    }
+                };
+                stores.roomViewStore.on(UPDATE_EVENT, subFn);
+            });
+
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                metricsTrigger: null,
+            });
+
+            await switchedRoom;
+        }
+
+        const roomView = render(
+            <SDKContext.Provider value={stores}>
+                <RoomView
+                    threepidInvite={null}
+                    oobData={null}
+                    resizeNotifier={new ResizeNotifier()}
+                    justCreatedOpts={null}
+                    forceTimeline={false}
+                    onRegistered={null}
+                />
+            </SDKContext.Provider>,
+        );
+        await flushPromises();
         return roomView;
     };
     const getRoomViewInstance = async (): Promise<_RoomView> =>
@@ -192,7 +234,6 @@ describe("RoomView", () => {
 
     describe("for a local room", () => {
         let localRoom: LocalRoom;
-        let roomView: ReactWrapper;
 
         beforeEach(async () => {
             localRoom = room = await createDmLocalRoom(cli, [new DirectoryMember({ user_id: "@user:example.com" })]);
@@ -200,15 +241,15 @@ describe("RoomView", () => {
         });
 
         it("should remove the room from the store on unmount", async () => {
-            roomView = await mountRoomView();
-            roomView.unmount();
+            const { unmount } = await renderRoomView();
+            unmount();
             expect(cli.store.removeRoom).toHaveBeenCalledWith(room.roomId);
         });
 
         describe("in state NEW", () => {
             it("should match the snapshot", async () => {
-                roomView = await mountRoomView();
-                expect(roomView.html()).toMatchSnapshot();
+                const { container } = await renderRoomView();
+                expect(container).toMatchSnapshot();
             });
 
             describe("that is encrypted", () => {
@@ -232,33 +273,32 @@ describe("RoomView", () => {
                 });
 
                 it("should match the snapshot", async () => {
-                    const roomView = await mountRoomView();
-                    expect(roomView.html()).toMatchSnapshot();
+                    const { container } = await renderRoomView();
+                    expect(container).toMatchSnapshot();
                 });
             });
         });
 
         it("in state CREATING should match the snapshot", async () => {
             localRoom.state = LocalRoomState.CREATING;
-            roomView = await mountRoomView();
-            expect(roomView.html()).toMatchSnapshot();
+            const { container } = await renderRoomView();
+            expect(container).toMatchSnapshot();
         });
 
         describe("in state ERROR", () => {
             beforeEach(async () => {
                 localRoom.state = LocalRoomState.ERROR;
-                roomView = await mountRoomView();
             });
 
             it("should match the snapshot", async () => {
-                expect(roomView.html()).toMatchSnapshot();
+                const { container } = await renderRoomView();
+                expect(container).toMatchSnapshot();
             });
 
-            it("clicking retry should set the room state to new dispatch a local room event", () => {
+            it("clicking retry should set the room state to new dispatch a local room event", async () => {
                 jest.spyOn(defaultDispatcher, "dispatch");
-                roomView.findWhere((w: ReactWrapper) => {
-                    return w.hasClass("mx_RoomStatusBar_unsentRetry") && w.text() === "Retry";
-                }).first().simulate("click");
+                const { getByText } = await renderRoomView();
+                fireEvent.click(getByText('Retry'));
                 expect(localRoom.state).toBe(LocalRoomState.NEW);
                 expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({
                     action: "local_room_event",
