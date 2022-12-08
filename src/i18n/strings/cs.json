@@ -3669,5 +3669,9 @@
     "Sign in instead": "Namísto toho se přihlásit",
     "Re-enter email address": "Zadejte znovu e-mailovou adresu",
     "Wrong email address?": "Špatná e-mailová adresa?",
-    "Hide notification dot (only display counters badges)": "Skrýt tečku oznámení (zobrazit pouze odznaky čítačů)"
+    "Hide notification dot (only display counters badges)": "Skrýt tečku oznámení (zobrazit pouze odznaky čítačů)",
+    "Apply": "Použít",
+    "Search users in this room…": "Hledání uživatelů v této místnosti…",
+    "Give one or multiple users in this room more privileges": "Přidělit jednomu nebo více uživatelům v této místnosti více oprávnění",
+    "Add privileged users": "Přidat oprávněné uživatele"
 }
