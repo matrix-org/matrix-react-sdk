@@ -3673,5 +3673,9 @@
     "Apply": "Použít",
     "Search users in this room…": "Hledání uživatelů v této místnosti…",
     "Give one or multiple users in this room more privileges": "Přidělit jednomu nebo více uživatelům v této místnosti více oprávnění",
-    "Add privileged users": "Přidat oprávněné uživatele"
+    "Add privileged users": "Přidat oprávněné uživatele",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "Při použití této relace se nebudete moci účastnit místností, kde je povoleno šifrování.",
+    "This session doesn't support encryption and thus can't be verified.": "Tato relace nepodporuje šifrování, a proto ji nelze ověřit.",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Pro co nejlepší zabezpečení a ochranu soukromí je doporučeno používat Matrix klienty, které podporují šifrování.",
+    "This session doesn't support encryption, so it can't be verified.": "Tato relace nepodporuje šifrování, takže ji nelze ověřit."
 }
