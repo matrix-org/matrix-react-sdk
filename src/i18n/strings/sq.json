@@ -3657,5 +3657,14 @@
     "Change layout": "Ndryshoni skemë",
     "Sign in instead": "Në vend të kësaj, hyni",
     "Re-enter email address": "Rijepeni adresën email",
-    "Wrong email address?": "Adresë email e gabuar?"
+    "Wrong email address?": "Adresë email e gabuar?",
+    "This session doesn't support encryption and thus can't be verified.": "Ky sesion s’mbulon fshehtëzim, ndaj s’mund të verifikohet.",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Për sigurinë dhe privatësinë më të mirë, rekomandohet të përdoren klientë Matrix që mbulojnë fshehtëzim.",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "S’do të jeni në gjendje të merrni pjesë në dhoma ku fshehtëzimi është aktivizuar, kur përdoret ky sesion.",
+    "This session doesn't support encryption, so it can't be verified.": "Ky sesion nuk mbulon fshehtëzim, ndaj s’mund të verifikohet.",
+    "Apply": "Aplikoje",
+    "Search users in this room…": "Kërkoni për përdorues në këtë dhomë…",
+    "Give one or multiple users in this room more privileges": "Jepini një ose disa përdoruesve më tepër privilegje në këtë dhomë",
+    "Add privileged users": "Shtoni përdorues të privilegjuar",
+    "Hide notification dot (only display counters badges)": "Fshihe pikën e njoftimeve (shfaq vetëm stema numëratorësh)"
 }
