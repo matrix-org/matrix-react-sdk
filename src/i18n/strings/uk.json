@@ -3669,5 +3669,9 @@
     "Sign in instead": "Натомість увійти",
     "Re-enter email address": "Введіть адресу е-пошти ще раз",
     "Wrong email address?": "Неправильна адреса електронної пошти?",
-    "Hide notification dot (only display counters badges)": "Сховати крапку сповіщення ( показувати тільки значки лічильників)"
+    "Hide notification dot (only display counters badges)": "Сховати крапку сповіщення ( показувати тільки значки лічильників)",
+    "Apply": "Застосувати",
+    "Search users in this room…": "Пошук користувачів у цій кімнаті…",
+    "Give one or multiple users in this room more privileges": "Надайте одному або кільком користувачам у цій кімнаті більше повноважень",
+    "Add privileged users": "Додати привілейованих користувачів"
 }
