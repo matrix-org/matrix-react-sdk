@@ -131,7 +131,7 @@ describe("Unread", () => {
         );
     });
 
-    describe.only("doesRoomHaveUnreadMessages()", () => {
+    describe("doesRoomHaveUnreadMessages()", () => {
         let room;
         let event;
         const roomId = "!abc:server.org";
