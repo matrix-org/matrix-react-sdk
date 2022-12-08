@@ -3669,5 +3669,9 @@
     "Sign in instead": "Pigem logi sisse",
     "Re-enter email address": "Sisesta e-posti aadress uuesti",
     "Wrong email address?": "Kas e-posti aadress pole õige?",
-    "Hide notification dot (only display counters badges)": "Peida teavituse täpp (ja näita loendure)"
+    "Hide notification dot (only display counters badges)": "Peida teavituse täpp (ja näita loendure)",
+    "Apply": "Rakenda",
+    "Search users in this room…": "Vali kasutajad sellest jututoast…",
+    "Give one or multiple users in this room more privileges": "Lisa selles jututoas ühele või mitmele kasutajale täiendavaid õigusi",
+    "Add privileged users": "Lisa kasutajatele täiendavaid õigusi"
 }
