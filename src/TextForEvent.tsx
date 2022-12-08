@@ -44,6 +44,7 @@ import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 import { highlightEvent, isLocationEvent } from './utils/EventUtils';
 import { ElementCall } from "./models/Call";
+import { textForVoiceBroadcastStoppedEvent, VoiceBroadcastInfoEventType } from './voice-broadcast';
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
@@ -753,7 +754,7 @@ function textForPollEndEvent(event: MatrixEvent): () => string | null {
     });
 }
 
-type Renderable = string | JSX.Element | null;
+type Renderable = string | React.ReactNode | null;
 
 interface IHandlers {
     [type: string]:
@@ -789,6 +790,7 @@ const stateHandlers: IHandlers = {
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     'im.vector.modular.widgets': textForWidgetEvent,
     [WIDGET_LAYOUT_EVENT_TYPE]: textForWidgetLayoutEvent,
+    [VoiceBroadcastInfoEventType]: textForVoiceBroadcastStoppedEvent,
 };
 
 // Add all the Mjolnir stuff to the renderer
@@ -820,8 +822,8 @@ export function hasText(ev: MatrixEvent, showHiddenEvents?: boolean): boolean {
  *     to avoid hitting the settings store
  */
 export function textForEvent(ev: MatrixEvent): string;
-export function textForEvent(ev: MatrixEvent, allowJSX: true, showHiddenEvents?: boolean): string | JSX.Element;
-export function textForEvent(ev: MatrixEvent, allowJSX = false, showHiddenEvents?: boolean): string | JSX.Element {
+export function textForEvent(ev: MatrixEvent, allowJSX: true, showHiddenEvents?: boolean): string | React.ReactNode;
+export function textForEvent(ev: MatrixEvent, allowJSX = false, showHiddenEvents?: boolean): string | React.ReactNode {
     const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];
     return handler?.(ev, allowJSX, showHiddenEvents)?.() || '';
 }
