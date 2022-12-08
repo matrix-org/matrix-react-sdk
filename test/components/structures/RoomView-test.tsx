@@ -98,7 +98,7 @@ describe("RoomView", () => {
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
-                metricsTrigger: null,
+                metricsTrigger: undefined,
             });
 
             await switchedRoom;
@@ -107,12 +107,11 @@ describe("RoomView", () => {
         const roomView = mount(
             <SDKContext.Provider value={stores}>
                 <RoomView
-                    threepidInvite={null}
-                    oobData={null}
+                    // threepidInvite should be optional on RoomView props
+                    // it is treated as optional in RoomView
+                    threepidInvite={undefined as any}
                     resizeNotifier={new ResizeNotifier()}
-                    justCreatedOpts={null}
                     forceTimeline={false}
-                    onRegistered={null}
                 />
             </SDKContext.Provider>,
         );
@@ -135,7 +134,7 @@ describe("RoomView", () => {
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
-                metricsTrigger: null,
+                metricsTrigger: undefined,
             });
 
             await switchedRoom;
@@ -144,12 +143,12 @@ describe("RoomView", () => {
         const roomView = render(
             <SDKContext.Provider value={stores}>
                 <RoomView
-                    threepidInvite={null}
-                    oobData={null}
+                    // threepidInvite should be optional on RoomView props
+                    // it is treated as optional in RoomView
+                    threepidInvite={undefined as any}
                     resizeNotifier={new ResizeNotifier()}
-                    justCreatedOpts={null}
                     forceTimeline={false}
-                    onRegistered={null}
+                    onRegistered={jest.fn()}
                 />
             </SDKContext.Provider>,
         );
@@ -183,7 +182,7 @@ describe("RoomView", () => {
         // and fake an encryption event into the room to prompt it to re-check
         room.addLiveEvents([new MatrixEvent({
             type: "m.room.encryption",
-            sender: cli.getUserId(),
+            sender: cli.getUserId()!,
             content: {},
             event_id: "someid",
             room_id: room.roomId,
@@ -273,8 +272,8 @@ describe("RoomView", () => {
                             content: {
                                 algorithm: MEGOLM_ALGORITHM,
                             },
-                            user_id: cli.getUserId(),
-                            sender: cli.getUserId(),
+                            user_id: cli.getUserId()!,
+                            sender: cli.getUserId()!,
                             state_key: "",
                             room_id: localRoom.roomId,
                             origin_server_ts: Date.now(),
