@@ -118,7 +118,49 @@ export default class PlainTextExporter extends Exporter {
             if (this.cancelled) return this.cleanUp();
             if (!haveRendererForEvent(event, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
-            content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
+            
+            let date_time_string = new Date(event.getTs()).toLocaleString();
+
+            // regex for dissecting the 12-hour timestamp
+            const TIMESTAMP_REGEX = /(\d*\/\d*\/[0-9]*), ([0-9]*:[0-9]*:[0-9]*) (AM|PM|am|pm|a\.m\.|p\.m\.)/;
+            const timestampRegexResult = TIMESTAMP_REGEX.match(date_time_string);
+
+            // ignore if the format happens to be in the 24-hour format
+            if (timestampRegexResult) {
+                const current_date = timestampRegexResult[1];
+                const timestamp = timestampRegexResult[2];
+                const am_or_pm = timestampRegexResult[3];
+
+                if (am_or_pm === "am" || am_or_pm === "AM" || am_or_pm === "a.m.") {
+                    if (timestamp.substring(0,2) === "12") {
+                        date_time_string = `${current_date}, 00${timestamp.substring(2)}`;
+                    } else if (timestamp.length == 7) {
+                        date_time_string = `${current_date}, 0${timestamp}`;
+                    } else {
+                        date_time_string = `${current_date}, ${timestamp}`;
+                    }
+                } else {
+                    let hour = timestamp.substring(0,2);
+
+                    if (hour === "12") {
+                        date_time_string = `${current_date}, ${timestamp}`;
+                    } else {
+
+                        let substring_start_index = 2;
+                        if (hour[1] === ":") {
+                            hour = timestamp[0];
+                            substring_start_index = 1;
+                        }
+
+                        let new_hour = (+hour + 12).toString();
+
+                        date_time_string = `${current_date}, ${new_hour}${timestamp.substring(substring_start_index)}`;
+                    }
+                }
+
+            }
+
+            content += textForEvent && `${date_time_string} - ${textForEvent}\n`;
         }
         return content;
     }
