@@ -3668,5 +3668,9 @@
     "Sign in instead": "Radšej sa prihlásiť",
     "Re-enter email address": "Znovu zadajte e-mailovú adresu",
     "Wrong email address?": "Nesprávna e-mailová adresa?",
-    "Hide notification dot (only display counters badges)": "Skryť oznamovaciu bodku (zobrazovať iba odznaky počítadiel)"
+    "Hide notification dot (only display counters badges)": "Skryť oznamovaciu bodku (zobrazovať iba odznaky počítadiel)",
+    "Apply": "Použiť",
+    "Search users in this room…": "Vyhľadať používateľov v tejto miestnosti…",
+    "Give one or multiple users in this room more privileges": "Prideliť jednému alebo viacerým používateľom v tejto miestnosti viac oprávnení",
+    "Add privileged users": "Pridať oprávnených používateľov"
 }
