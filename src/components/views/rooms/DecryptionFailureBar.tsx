@@ -56,52 +56,37 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     // Does this user have key backups?
     const [hasKeyBackup, setHasKeyBackup] = useState<boolean>(false);
 
-    // Keep track of session IDs that do not have pending key requests
-    const [unrequestedSessions, setUnrequestedSessions] = useState<Set<string>>(new Set());
+    // Keep track of session IDs that the user has sent key
+    // requests for using the Resend Key Requests button
+    const [requestedSessions, setRequestedSessions] = useState<Set<string>>(new Set());
+    // Keep track of whether there are any sessions the user has not yet sent requests for
+    const [anyUnrequestedSessions, setAnyUnrequestedSessions] = useState<boolean>(true);
 
     useEffect(() => {
-        let cancelled = false;
-        const cancel = () => {
-            cancelled = true;
-        };
-        const updateSessions = async () => {
-            // Aggregate session IDs of undecryptable messages, and check
-            // which ones do not have pending key requests
-            const currentRequestedSessions = new Set<string>();
-            const currentUnrequestedSessions = new Set<string>();
-            for (const event of failures) {
-                const wireContent = event.getWireContent();
-                const sessionId = wireContent.session_id;
-                if (!sessionId
-                    || currentRequestedSessions.has(sessionId)
-                    || currentUnrequestedSessions.has(sessionId)
-                ) continue;
-                if (await context.getOutgoingRoomKeyRequest(event)) {
-                    currentRequestedSessions.add(sessionId);
-                } else {
-                    currentUnrequestedSessions.add(sessionId);
-                }
-                if (cancelled) return;
-            }
-            setUnrequestedSessions(currentUnrequestedSessions);
-        };
-        updateSessions();
-        return cancel;
-    }, [context, failures, setUnrequestedSessions]);
+        setAnyUnrequestedSessions(failures.some((event) => {
+            const sessionId = event.getWireContent().session_id;
+            return sessionId && !requestedSessions.has(sessionId);
+        }));
+    }, [failures, requestedSessions, setAnyUnrequestedSessions]);
 
-    const resendKeyRequests = useCallback(async () => {
-        // Resend key requests for any sessions that do not currently have pending requests
-        const oldUnrequestedSessions = new Set(unrequestedSessions);
-        setUnrequestedSessions(new Set());
+    // Send key requests for any sessions that we haven't previously
+    // sent requests for. This is important if, for instance, we
+    // failed to decrypt a message because a key was withheld (in
+    // which case, we wouldn't bother requesting the key), but have
+    // since verified our device. In that case, now that the device is
+    // verified, other devices might be willing to share the key with us
+    // now.
+    const sendKeyRequests = useCallback(() => {
+        const newRequestedSessions = new Set(requestedSessions);
 
-        const newRequestedSessions = new Set<string>();
         for (const event of failures) {
             const sessionId = event.getWireContent().session_id;
-            if (!sessionId || !oldUnrequestedSessions.has(sessionId) || newRequestedSessions.has(sessionId)) continue;
+            if (!sessionId || newRequestedSessions.has(sessionId)) continue;
             newRequestedSessions.add(sessionId);
-            await context.cancelAndResendEventRoomKeyRequest(event);
+            context.cancelAndResendEventRoomKeyRequest(event);
         }
-    }, [context, unrequestedSessions, failures]);
+        setRequestedSessions(newRequestedSessions);
+    }, [context, requestedSessions, setRequestedSessions, failures]);
 
     // Recheck which devices are verified and whether we have key backups
     const updateDeviceInfo = useCallback(async () => {
@@ -220,9 +205,9 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     }
 
     let keyRequestButton: JSX.Element;
-    if (!needsVerification && unrequestedSessions.size > 0) {
+    if (!needsVerification && anyUnrequestedSessions) {
         keyRequestButton = <div className="mx_DecryptionFailureBar_button">
-            <AccessibleButton kind="primary" onClick={resendKeyRequests}>
+            <AccessibleButton kind="primary" onClick={sendKeyRequests}>
                 { _t("Resend key requests") }
             </AccessibleButton>
         </div>;

@@ -17,8 +17,6 @@ limitations under the License.
 import React from "react";
 import { act, fireEvent, render, screen, waitFor, RenderResult } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { RoomKeyRequestState } from "matrix-js-sdk/src/crypto/OutgoingRoomKeyRequestManager";
-import { OutgoingRoomKeyRequest } from "matrix-js-sdk/src/crypto/store/base";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { DecryptionFailureBar } from "../../../../src/components/views/rooms/DecryptionFailureBar";
@@ -45,18 +43,6 @@ const mockEvent3 = {
     getWireContent: () => ({ session_id: "sessionB" }),
 };
 
-const outgoingRequest3: OutgoingRoomKeyRequest = {
-    requestId: "outgoingRequest",
-    recipients: [],
-    requestBody: {
-        session_id: "sessionB",
-        sender_key: "senderkey",
-        room_id: "!room",
-        algorithm: "m.megolm.v1.aes-sha2",
-    },
-    state: RoomKeyRequestState.Sent,
-};
-
 const userId = "@user:example.com";
 
 let ourDevice: MockDevice | undefined;
@@ -71,7 +57,6 @@ const mockClient = {
     checkIfOwnDeviceCrossSigned: (deviceId: string) => deviceId.startsWith("verified"),
     downloadKeys: jest.fn(() => {}),
     cancelAndResendEventRoomKeyRequest: jest.fn(() => {}),
-    getOutgoingRoomKeyRequest: jest.fn((ev) => Promise.resolve(ev === mockEvent3 ? outgoingRequest3 : null)),
 };
 
 function getBar(wrapper: RenderResult) {
@@ -269,7 +254,7 @@ describe("<DecryptionFailureBar />", () => {
         act(() => { jest.advanceTimersByTime(5000); });
         expect(getBar(bar)).toMatchSnapshot();
 
-        await fireEvent.click(screen.getByText("Resend key requests"));
+        fireEvent.click(screen.getByText("Resend key requests"));
 
         expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(2);
         expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent1);
@@ -305,46 +290,62 @@ describe("<DecryptionFailureBar />", () => {
         bar.unmount();
     });
 
-    it("Displays the button to resend key requests only if sessions without pending requests appear", async () => {
-        ourDevice = verifiedDevice1;
-        allDevices = [verifiedDevice1, verifiedDevice2];
+    it("Displays the button to resend key requests only if there are sessions we haven't already requested",
+        async () => {
+            ourDevice = verifiedDevice1;
+            allDevices = [verifiedDevice1, verifiedDevice2];
 
-        const bar = render(
+            const bar = render(
             // @ts-ignore
-            <MatrixClientContext.Provider value={mockClient}>
-                <DecryptionFailureBar
-                    failures={[
+                <MatrixClientContext.Provider value={mockClient}>
+                    <DecryptionFailureBar
+                        failures={[
                         // @ts-ignore
-                        mockEvent3,
-                    ]}
-                    room={null}
-                />,
-            </MatrixClientContext.Provider>,
-        );
+                            mockEvent3,
+                        ]}
+                        room={null}
+                    />,
+                </MatrixClientContext.Provider>,
+            );
 
-        await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
+            await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
-        expect(getBar(bar)).toMatchSnapshot();
+            act(() => { jest.advanceTimersByTime(5000); });
+            expect(getBar(bar)).toMatchSnapshot();
 
-        bar.rerender(
+            fireEvent.click(screen.getByText("Resend key requests"));
+
+            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(1);
+            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent3);
+
+            expect(getBar(bar)).toMatchSnapshot();
+
+            bar.rerender(
             // @ts-ignore
-            <MatrixClientContext.Provider value={mockClient}>
-                <DecryptionFailureBar
-                    failures={[
+                <MatrixClientContext.Provider value={mockClient}>
+                    <DecryptionFailureBar
+                        failures={[
                         // @ts-ignore
-                        mockEvent1, mockEvent2, mockEvent3,
-                    ]}
-                    room={null}
-                />,
-            </MatrixClientContext.Provider>,
-        );
+                            mockEvent1, mockEvent2, mockEvent3,
+                        ]}
+                        room={null}
+                    />,
+                </MatrixClientContext.Provider>,
+            );
 
-        await waitFor(() => expect(mockClient.getOutgoingRoomKeyRequest).toHaveBeenCalledWith(mockEvent1));
-        expect(getBar(bar)).toMatchSnapshot();
+            expect(getBar(bar)).toMatchSnapshot();
 
-        bar.unmount();
-    });
+            mockClient.cancelAndResendEventRoomKeyRequest.mockClear();
+
+            fireEvent.click(screen.getByText("Resend key requests"));
+
+            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(1);
+            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent1);
+
+            expect(getBar(bar)).toMatchSnapshot();
+
+            bar.unmount();
+        });
 
     it("Forces a refresh of device lists", async () => {
         ourDevice = unverifiedDevice1;
