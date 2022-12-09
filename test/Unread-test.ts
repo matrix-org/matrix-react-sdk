@@ -258,7 +258,7 @@ describe("Unread", () => {
             });
             room.addReceipt(receipt);
 
-            // Create a thread as the current user..
+            // Create a thread as the current user.
             mkThread({ room, client, authorId: client.getUserId(), participantUserIds: [client.getUserId()] });
 
             expect(doesRoomHaveUnreadMessages(room)).toBe(false);
@@ -291,7 +291,7 @@ describe("Unread", () => {
                 content: {
                     [events[events.length - 1].getId()]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1, threadId: rootEvent.getId() },
+                            [client.getUserId()]: { ts: 1, thread_id: rootEvent.getId() },
                         },
                     },
                 },
