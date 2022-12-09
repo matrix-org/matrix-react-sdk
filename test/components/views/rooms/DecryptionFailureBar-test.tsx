@@ -21,12 +21,12 @@ import "@testing-library/jest-dom";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { DecryptionFailureBar } from "../../../../src/components/views/rooms/DecryptionFailureBar";
 
-type MockDevice = { device_id: string };
+type MockDevice = { deviceId: string };
 
-const verifiedDevice1: MockDevice = { device_id: "verified1" };
-const verifiedDevice2: MockDevice = { device_id: "verified2" };
-const unverifiedDevice1: MockDevice = { device_id: "unverified1" };
-const unverifiedDevice2: MockDevice = { device_id: "unverified2" };
+const verifiedDevice1: MockDevice = { deviceId: "verified1" };
+const verifiedDevice2: MockDevice = { deviceId: "verified2" };
+const unverifiedDevice1: MockDevice = { deviceId: "unverified1" };
+const unverifiedDevice2: MockDevice = { deviceId: "unverified2" };
 
 const mockEvent1 = {
     event: { event_id: "mockEvent1" },
@@ -48,15 +48,18 @@ const userId = "@user:example.com";
 let ourDevice: MockDevice | undefined;
 let allDevices: MockDevice[] | undefined;
 let keyBackup = false;
+let callback = async () => {};
 
 const mockClient = {
     getUserId: () => userId,
-    getDeviceId: () => ourDevice.device_id,
-    getDevices: () => Promise.resolve({ devices: allDevices }),
+    getDeviceId: () => ourDevice.deviceId,
+    getStoredDevicesForUser: () => allDevices,
     isSecretStored: jest.fn(() => Promise.resolve(keyBackup ? { key: "yes" } : null)),
     checkIfOwnDeviceCrossSigned: (deviceId: string) => deviceId.startsWith("verified"),
     downloadKeys: jest.fn(() => {}),
     cancelAndResendEventRoomKeyRequest: jest.fn(() => {}),
+    on: (_: any, cb: () => Promise<void>) => { callback = cb; },
+    off: () => {},
 };
 
 function getBar(wrapper: RenderResult) {
@@ -347,7 +350,7 @@ describe("<DecryptionFailureBar />", () => {
             bar.unmount();
         });
 
-    it("Forces a refresh of device lists", async () => {
+    it("Handles device updates", async () => {
         ourDevice = unverifiedDevice1;
         allDevices = [unverifiedDevice1, verifiedDevice2];
 
@@ -365,7 +368,12 @@ describe("<DecryptionFailureBar />", () => {
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
-        expect(mockClient.downloadKeys).toHaveBeenCalledWith([userId], true);
+        act(() => { jest.advanceTimersByTime(5000); });
+        expect(getBar(bar)).toMatchSnapshot();
+
+        ourDevice = verifiedDevice1;
+        await act(callback);
+        expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
     });

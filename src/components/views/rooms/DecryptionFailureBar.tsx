@@ -17,6 +17,7 @@ limitations under the License.
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { CryptoEvent } from 'matrix-js-sdk/src/crypto';
 
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
@@ -90,8 +91,6 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
     // Recheck which devices are verified and whether we have key backups
     const updateDeviceInfo = useCallback(async () => {
-        await context.downloadKeys([context.getUserId()], true);
-
         const deviceId = context.getDeviceId()!;
         let verified = true; // if we can't get a clear answer, don't bug the user about verifying
         try {
@@ -103,9 +102,9 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
         let otherVerifiedDevices = false;
         try {
-            const { devices } = await context.getDevices();
+            const devices = context.getStoredDevicesForUser(context.getUserId());
             otherVerifiedDevices = devices.some(
-                (device) => device.device_id !== deviceId && context.checkIfOwnDeviceCrossSigned(device.device_id),
+                (device) => device.deviceId !== deviceId && context.checkIfOwnDeviceCrossSigned(device.deviceId),
             );
         } catch (e) {
             console.error("Error getting info about other devices", e);
@@ -122,15 +121,16 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         setHasKeyBackup(keyBackup);
     }, [context]);
 
-    // Update device info on initial render
+    // Update our device info on initial render, and continue updating
+    // it whenever the client has an update
     useEffect(() => {
         updateDeviceInfo().catch(console.error);
-    }, [updateDeviceInfo]);
+        context.on(CryptoEvent.DevicesUpdated, updateDeviceInfo);
+        return () => { context.off(CryptoEvent.DevicesUpdated, updateDeviceInfo); };
+    }, [context, updateDeviceInfo]);
 
     const onVerifyClick = (): void => {
-        Modal.createDialog(SetupEncryptionDialog, {
-            onFinished: updateDeviceInfo,
-        });
+        Modal.createDialog(SetupEncryptionDialog);
     };
 
     const onDeviceListClick = (): void => {
@@ -140,9 +140,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
     const onResetClick = (): void => {
         const store = SetupEncryptionStore.sharedInstance();
-        store.resetConfirm()
-            .then(() => context.downloadKeys([context.getUserId()], true))
-            .then(() => updateDeviceInfo());
+        store.resetConfirm();
     };
 
     const statusIndicator = waiting ? <Spinner /> : <div className="mx_DecryptionFailureBar_icon" />;

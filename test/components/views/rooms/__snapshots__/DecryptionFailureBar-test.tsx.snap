@@ -340,6 +340,87 @@ exports[`<DecryptionFailureBar /> Does not display a button to send key requests
 </div>
 `;
 
+exports[`<DecryptionFailureBar /> Handles device updates 1`] = `
+<div
+  class="mx_DecryptionFailureBar"
+>
+  <div
+    class="mx_DecryptionFailureBar_icon"
+  />
+  <div
+    class="mx_DecryptionFailureBar_message"
+  >
+    <div
+      class="mx_DecryptionFailureBar_message_headline"
+    >
+      Verify this device to access all messages
+    </div>
+    <div
+      class="mx_DecryptionFailureBar_message_body"
+    >
+      This device was unable to decrypt some messages because it has not been verified yet.
+    </div>
+  </div>
+  <div
+    class="mx_DecryptionFailureBar_button"
+  >
+    <div
+      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      role="button"
+      tabindex="0"
+    >
+      Verify
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<DecryptionFailureBar /> Handles device updates 2`] = `
+<div
+  class="mx_DecryptionFailureBar"
+>
+  <div
+    class="mx_DecryptionFailureBar_icon"
+  />
+  <div
+    class="mx_DecryptionFailureBar_message"
+  >
+    <div
+      class="mx_DecryptionFailureBar_message_headline"
+    >
+      Open another device to load encrypted messages
+    </div>
+    <div
+      class="mx_DecryptionFailureBar_message_body"
+    >
+      This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.
+    </div>
+  </div>
+  <div
+    class="mx_DecryptionFailureBar_button"
+  >
+    <div
+      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+      role="button"
+      tabindex="0"
+    >
+      View your device list
+    </div>
+  </div>
+  <div
+    class="mx_DecryptionFailureBar_button"
+  >
+    <div
+      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      role="button"
+      tabindex="0"
+    >
+      Resend key requests
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<DecryptionFailureBar /> Prompts the user to reset if they have no other verified devices and no backups 1`] = `
 <div
   class="mx_DecryptionFailureBar"
