@@ -3669,5 +3669,13 @@
     "Sign in instead": "改為登入",
     "Re-enter email address": "重新輸入電子郵件地址",
     "Wrong email address?": "錯誤的電子郵件地址？",
-    "Hide notification dot (only display counters badges)": "隱藏通知點（僅顯示計數器徽章）"
+    "Hide notification dot (only display counters badges)": "隱藏通知點（僅顯示計數器徽章）",
+    "This session doesn't support encryption and thus can't be verified.": "此工作階段不支援加密，因此無法驗證。",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "為獲得最佳安全性與隱私，建議使用支援加密的 Matrix 客戶端。",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "使用此工作階段時，您將無法參與啟用加密的聊天室。",
+    "This session doesn't support encryption, so it can't be verified.": "此工作階段不支援加密，因此無法驗證。",
+    "Apply": "套用",
+    "Search users in this room…": "搜尋此聊天室中的使用者……",
+    "Give one or multiple users in this room more privileges": "給這個聊天室中的一個使用者或多個使用者更多的權限",
+    "Add privileged users": "新增特權使用者"
 }
