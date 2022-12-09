@@ -3673,5 +3673,9 @@
     "Add privileged users": "Berechtigten Benutzer hinzufügen",
     "Apply": "Anwenden",
     "Search users in this room…": "Benutzer im Raum suchen …",
-    "Give one or multiple users in this room more privileges": "Einem oder mehreren Benutzern im Raum mehr Berechtigungen geben"
+    "Give one or multiple users in this room more privileges": "Einem oder mehreren Benutzern im Raum mehr Berechtigungen geben",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Aus Sicherheits- und Datenschutzgründen, wird die Nutzung von verschlüsselungsfähigen Matrix-Anwendungen empfohlen.",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "Du wirst dich mit dieser Sitzung nicht an Unterhaltungen in Räumen mit aktivierter Verschlüsselung beteiligen können.",
+    "This session doesn't support encryption and thus can't be verified.": "Diese Sitzung unterstützt keine Verschlüsselung und kann deshalb nicht verifiziert werden.",
+    "This session doesn't support encryption, so it can't be verified.": "Diese Sitzung unterstützt keine Verschlüsselung und kann deshalb nicht verifiziert werden."
 }
