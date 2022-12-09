@@ -3672,5 +3672,9 @@
     "Apply": "Použiť",
     "Search users in this room…": "Vyhľadať používateľov v tejto miestnosti…",
     "Give one or multiple users in this room more privileges": "Prideliť jednému alebo viacerým používateľom v tejto miestnosti viac oprávnení",
-    "Add privileged users": "Pridať oprávnených používateľov"
+    "Add privileged users": "Pridať oprávnených používateľov",
+    "This session doesn't support encryption and thus can't be verified.": "Táto relácia nepodporuje šifrovanie, a preto ju nemožno overiť.",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Pre čo najlepšie zabezpečenie a ochranu súkromia sa odporúča používať klientov Matrix, ktorí podporujú šifrovanie.",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "Pri používaní tejto relácie sa nebudete môcť zúčastňovať v miestnostiach, v ktorých je zapnuté šifrovanie.",
+    "This session doesn't support encryption, so it can't be verified.": "Táto relácia nepodporuje šifrovanie, a preto ju nemožno overiť."
 }
