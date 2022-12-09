@@ -197,15 +197,18 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         </AccessibleButton>;
     } else {
         headline = <React.Fragment>
-            { _t("Requesting keys to decrypt messages...") }
+            { _t("Some messages could not be decrypted") }
         </React.Fragment>;
         body = <React.Fragment>
-            { _t("Some messages could not be decrypted. This device is requesting keys from the messages' senders.") }
+            { _t(
+                "Unfortunately, there are no other verified devices to request decryption keys from. " +
+                "Signing in and verifying other devices may help avoid this situation in the future.",
+            ) }
         </React.Fragment>;
     }
 
     let keyRequestButton: JSX.Element;
-    if (!needsVerification && anyUnrequestedSessions) {
+    if (!needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
         keyRequestButton = <div className="mx_DecryptionFailureBar_button">
             <AccessibleButton kind="primary" onClick={sendKeyRequests}>
                 { _t("Resend key requests") }

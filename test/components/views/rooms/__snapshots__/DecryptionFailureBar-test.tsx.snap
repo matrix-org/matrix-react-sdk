@@ -13,28 +13,17 @@ exports[`<DecryptionFailureBar /> Displays a general error message if there are 
     <div
       class="mx_DecryptionFailureBar_message_headline"
     >
-      Requesting keys to decrypt messages...
+      Some messages could not be decrypted
     </div>
     <div
       class="mx_DecryptionFailureBar_message_body"
     >
-      Some messages could not be decrypted. This device is requesting keys from the messages' senders.
+      Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.
     </div>
   </div>
   <div
     class="mx_DecryptionFailureBar_button"
   />
-  <div
-    class="mx_DecryptionFailureBar_button"
-  >
-    <div
-      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
-      role="button"
-      tabindex="0"
-    >
-      Resend key requests
-    </div>
-  </div>
 </div>
 `;
 
