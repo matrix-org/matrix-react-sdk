@@ -70,7 +70,7 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     return false;
 }
 
-function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean {
+export function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean {
     const myUserId = MatrixClientPeg.get().getUserId();
 
     // as we don't send RRs for our own messages, make sure we special case that
