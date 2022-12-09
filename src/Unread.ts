@@ -33,6 +33,8 @@ import SettingsStore from "./settings/SettingsStore";
  * @returns {boolean} True if the given event should affect the unread message count
  */
 export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
+    console.log(ev.getSender());
+    console.log(MatrixClientPeg.get().credentials.userId);
     if (ev.getSender() === MatrixClientPeg.get().credentials.userId) {
         return false;
     }

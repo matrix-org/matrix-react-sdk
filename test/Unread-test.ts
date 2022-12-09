@@ -24,13 +24,7 @@ import {
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 
 import { haveRendererForEvent } from "../src/events/EventTileFactory";
-import {
-    getMockClientWithEventEmitter,
-    makeBeaconEvent,
-    mkEvent,
-    mockClientMethodsUser,
-    stubClient,
-} from "./test-utils";
+import { makeBeaconEvent, mkEvent, stubClient } from "./test-utils";
 import { mkThread } from "./test-utils/threads";
 import { doesRoomHaveUnreadMessages, eventTriggersUnreadCount } from "../src/Unread";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -40,15 +34,12 @@ jest.mock("../src/events/EventTileFactory", () => ({
 }));
 
 describe("Unread", () => {
+    // A different user.
+    const aliceId = '@alice:server.org';
+    stubClient();
+    const client = MatrixClientPeg.get();
+
     describe('eventTriggersUnreadCount()', () => {
-        const aliceId = '@alice:server.org';
-        const bobId = '@bob:server.org';
-
-        // mock user credentials
-        getMockClientWithEventEmitter({
-            ...mockClientMethodsUser(bobId),
-        });
-
         // setup events
         const alicesMessage = new MatrixEvent({
             type: EventType.RoomMessage,
@@ -59,9 +50,9 @@ describe("Unread", () => {
             },
         });
 
-        const bobsMessage = new MatrixEvent({
+        const ourMessage = new MatrixEvent({
             type: EventType.RoomMessage,
-            sender: bobId,
+            sender: client.getUserId(),
             content: {
                 msgtype: MsgType.Text,
                 body: 'Hello from Bob',
@@ -80,7 +71,7 @@ describe("Unread", () => {
         });
 
         it('returns false when the event was sent by the current user', () => {
-            expect(eventTriggersUnreadCount(bobsMessage)).toBe(false);
+            expect(eventTriggersUnreadCount(ourMessage)).toBe(false);
             // returned early before checking renderer
             expect(haveRendererForEvent).not.toHaveBeenCalled();
         });
@@ -135,10 +126,6 @@ describe("Unread", () => {
         let room;
         let event;
         const roomId = "!abc:server.org";
-        // A different user.
-        const aliceId = '@alice:server.org';
-        stubClient();
-        const client = MatrixClientPeg.get();
 
         beforeAll(() => {
             client.supportsExperimentalThreads = () => true;
