@@ -52,7 +52,7 @@ describe("Unread", () => {
 
         const ourMessage = new MatrixEvent({
             type: EventType.RoomMessage,
-            sender: client.getUserId(),
+            sender: client.getUserId()!,
             content: {
                 msgtype: MsgType.Text,
                 body: 'Hello from Bob',
@@ -123,9 +123,10 @@ describe("Unread", () => {
     });
 
     describe("doesRoomHaveUnreadMessages()", () => {
-        let room;
-        let event;
+        let room: Room;
+        let event: MatrixEvent;
         const roomId = "!abc:server.org";
+        const myId = client.getUserId()!;
 
         beforeAll(() => {
             client.supportsExperimentalThreads = () => true;
@@ -133,7 +134,7 @@ describe("Unread", () => {
 
         beforeEach(() => {
             // Create a room and initial event in it.
-            room = new Room(roomId, client, client.getUserId());
+            room = new Room(roomId, client, myId);
             event = mkEvent({
                 event: true,
                 type: "m.room.message",
@@ -155,7 +156,7 @@ describe("Unread", () => {
             event = mkEvent({
                 event: true,
                 type: "m.room.message",
-                user: client.getUserId(),
+                user: myId,
                 room: roomId,
                 content: {},
             });
@@ -170,9 +171,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [event.getId()]: {
+                    [event.getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1 },
+                            [myId]: { ts: 1 },
                         },
                     },
                 },
@@ -187,9 +188,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [event.getId()]: {
+                    [event.getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1 },
+                            [myId]: { ts: 1 },
                         },
                     },
                 },
@@ -215,9 +216,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [event.getId()]: {
+                    [event.getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1 },
+                            [myId]: { ts: 1 },
                         },
                     },
                 },
@@ -225,7 +226,7 @@ describe("Unread", () => {
             room.addReceipt(receipt);
 
             // Create a thread as a different user.
-            mkThread({ room, client, authorId: client.getUserId(), participantUserIds: [aliceId] });
+            mkThread({ room, client, authorId: myId, participantUserIds: [aliceId] });
 
             expect(doesRoomHaveUnreadMessages(room)).toBe(true);
         });
@@ -236,9 +237,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [event.getId()]: {
+                    [event.getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1 },
+                            [myId]: { ts: 1 },
                         },
                     },
                 },
@@ -246,7 +247,7 @@ describe("Unread", () => {
             room.addReceipt(receipt);
 
             // Create a thread as the current user.
-            mkThread({ room, client, authorId: client.getUserId(), participantUserIds: [client.getUserId()] });
+            mkThread({ room, client, authorId: myId, participantUserIds: [myId] });
 
             expect(doesRoomHaveUnreadMessages(room)).toBe(false);
         });
@@ -257,9 +258,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [event.getId()]: {
+                    [event.getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1 },
+                            [myId]: { ts: 1 },
                         },
                     },
                 },
@@ -268,7 +269,7 @@ describe("Unread", () => {
 
             // Create threads.
             const { rootEvent, events } = mkThread(
-                { room, client, authorId: client.getUserId(), participantUserIds: [aliceId] },
+                { room, client, authorId: myId, participantUserIds: [aliceId] },
             );
 
             // Mark the thread as read.
@@ -276,9 +277,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [events[events.length - 1].getId()]: {
+                    [events[events.length - 1].getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1, thread_id: rootEvent.getId() },
+                            [myId]: { ts: 1, thread_id: rootEvent.getId()! },
                         },
                     },
                 },
@@ -294,9 +295,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [event.getId()]: {
+                    [event.getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1 },
+                            [myId]: { ts: 1 },
                         },
                     },
                 },
@@ -305,7 +306,7 @@ describe("Unread", () => {
 
             // Create threads.
             const { rootEvent, events } = mkThread(
-                { room, client, authorId: client.getUserId(), participantUserIds: [aliceId] },
+                { room, client, authorId: myId, participantUserIds: [aliceId] },
             );
 
             // Mark the thread as read.
@@ -313,9 +314,9 @@ describe("Unread", () => {
                 type: "m.receipt",
                 room_id: "!foo:bar",
                 content: {
-                    [events[0].getId()]: {
+                    [events[0].getId()!]: {
                         [ReceiptType.Read]: {
-                            [client.getUserId()]: { ts: 1, threadId: rootEvent.getId() },
+                            [myId]: { ts: 1, threadId: rootEvent.getId()! },
                         },
                     },
                 },
