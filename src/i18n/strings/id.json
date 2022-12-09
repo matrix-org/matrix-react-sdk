@@ -3669,5 +3669,13 @@
     "Sign in instead": "Masuk saja",
     "Re-enter email address": "Masukkan ulang alamat email",
     "Wrong email address?": "Alamat email salah?",
-    "Hide notification dot (only display counters badges)": "Sembunyikan titik notifikasi (hanya tampilkan lencana penghitung)"
+    "Hide notification dot (only display counters badges)": "Sembunyikan titik notifikasi (hanya tampilkan lencana penghitung)",
+    "This session doesn't support encryption and thus can't be verified.": "Sesi ini tidak mendukung enkripsi dan tidak dapat diverifikasi.",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Untuk keamanan dan privasi yang terbaik, kami merekomendasikan menggunakan klien Matrix yang mendukung enkripsi.",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "Anda tidak akan dapat berpartisipasi dalam ruangan di mana enkripsi diaktifkan ketika menggunakan sesi ini.",
+    "This session doesn't support encryption, so it can't be verified.": "Sesi ini tidak mendukung enkripsi, jadi ini tidak dapat diverifikasi.",
+    "Apply": "Terapkan",
+    "Search users in this room…": "Cari pengguna di ruangan ini…",
+    "Give one or multiple users in this room more privileges": "Berikan satu atau beberapa pengguna dalam ruangan ini lebih banyak izin",
+    "Add privileged users": "Tambahkan pengguna yang diizinkan"
 }
