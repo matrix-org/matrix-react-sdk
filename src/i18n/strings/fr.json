@@ -3669,5 +3669,13 @@
     "Sign in instead": "Se connecter à la place",
     "Re-enter email address": "Re-saisir l’adresse e-mail",
     "Wrong email address?": "Mauvaise adresse e-mail ?",
-    "Hide notification dot (only display counters badges)": "Masquer le point de notification (affiche seulement les badges des compteurs)"
+    "Hide notification dot (only display counters badges)": "Masquer le point de notification (affiche seulement les badges des compteurs)",
+    "This session doesn't support encryption and thus can't be verified.": "Cette session ne prend pas en charge le chiffrement, elle ne peut donc pas être vérifiée.",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Pour de meilleures sécurité et confidentialité, il est recommandé d’utiliser des clients Matrix qui prennent en charge le chiffrement.",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "Vous ne pourrez pas participer aux salons qui ont activé le chiffrement en utilisant cette session.",
+    "This session doesn't support encryption, so it can't be verified.": "Cette session ne prend pas en charge le chiffrement, elle ne peut donc pas être vérifiée.",
+    "Apply": "Appliquer",
+    "Search users in this room…": "Chercher des utilisateurs dans ce salon…",
+    "Give one or multiple users in this room more privileges": "Donne plus de privilèges à un ou plusieurs utilisateurs de ce salon",
+    "Add privileged users": "Ajouter des utilisateurs privilégiés"
 }
