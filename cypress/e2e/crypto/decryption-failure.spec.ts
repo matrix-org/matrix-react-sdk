@@ -170,7 +170,7 @@ describe("Decryption Failure Bar", () => {
         });
 
         cy.get(".mx_DecryptionFailureBar .mx_DecryptionFailureBar_message_headline")
-            .should("have.text", "Requesting keys to decrypt messages...");
+            .should("have.text", "Some messages could not be decrypted");
 
         cy.percySnapshot("DecryptionFailureBar displays general message with no call to action");
     });
