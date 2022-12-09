@@ -111,6 +111,8 @@ import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 import { Call } from "../../models/Call";
 import { RoomSearchView } from './RoomSearchView';
 import eventSearch from "../../Searching";
+import VoipUserMapper from '../../VoipUserMapper';
+import { isCallEvent } from './LegacyCallEventGrouper';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -145,6 +147,7 @@ enum MainSplitContentType {
 }
 export interface IRoomState {
     room?: Room;
+    virtualRoom?: Room;
     roomId?: string;
     roomAlias?: string;
     roomLoading: boolean;
@@ -658,7 +661,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // NB: This does assume that the roomID will not change for the lifetime of
         // the RoomView instance
         if (initial) {
-            newState.room = this.context.client.getRoom(newState.roomId);
+            const virtualRoom = newState.roomId ?
+                await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(newState.roomId) : undefined;
+
+            newState.room = this.context.client!.getRoom(newState.roomId) || undefined;
+            newState.virtualRoom = virtualRoom || undefined;
             if (newState.room) {
                 newState.showApps = this.shouldShowApps(newState.room);
                 this.onRoomLoaded(newState.room);
@@ -1269,7 +1276,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
-    private onRoom = (room: Room) => {
+    private onRoom = async (room: Room) => {
         if (!room || room.roomId !== this.state.roomId) {
             return;
         }
@@ -1282,8 +1289,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
+        const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room.roomId);
         this.setState({
             room: room,
+            virtualRoom: virtualRoom || undefined,
         }, () => {
             this.onRoomLoaded(room);
         });
@@ -1291,7 +1300,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onDeviceVerificationChanged = (userId: string) => {
         const room = this.state.room;
-        if (!room.currentState.getMember(userId)) {
+        if (!room?.currentState.getMember(userId)) {
             return;
         }
         this.updateE2EStatus(room);
@@ -2116,7 +2125,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             hideMessagePanel = true;
         }
 
-        let highlightedEventId = null;
+        let highlightedEventId: string | undefined;
         if (this.state.isInitialEventHighlighted) {
             highlightedEventId = this.state.initialEventId;
         }
@@ -2125,6 +2134,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             <TimelinePanel
                 ref={this.gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
+                overlayTimelineSet={this.state.virtualRoom?.getUnfilteredTimelineSet()}
+                overlayTimelineSetFilter={isCallEvent}
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}
