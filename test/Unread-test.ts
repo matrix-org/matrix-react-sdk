@@ -140,6 +140,10 @@ describe("Unread", () => {
         stubClient();
         const client = MatrixClientPeg.get();
 
+        beforeAll(() => {
+            client.supportsExperimentalThreads = () => true;
+        });
+
         beforeEach(() => {
             // Create a room and initial event in it.
             room = new Room(roomId, client, client.getUserId());
