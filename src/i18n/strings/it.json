@@ -3665,5 +3665,17 @@
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)so %(minutes)sm %(seconds)ss",
     "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sg %(hours)so %(minutes)sm %(seconds)ss",
     "Change layout": "Cambia disposizione",
-    "You have unverified sessions": "Hai sessioni non verificate"
+    "You have unverified sessions": "Hai sessioni non verificate",
+    "Sign in instead": "Oppure accedi",
+    "Re-enter email address": "Re-inserisci l'indirizzo email",
+    "Wrong email address?": "Indirizzo email sbagliato?",
+    "This session doesn't support encryption and thus can't be verified.": "Questa sessione non supporta la crittografia, perciò non può essere verificata.",
+    "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Per maggiore sicurezza e privacy, è consigliabile usare i client di Matrix che supportano la crittografia.",
+    "You won't be able to participate in rooms where encryption is enabled when using this session.": "Non potrai partecipare in stanze dove la crittografia è attiva mentre usi questa sessione.",
+    "This session doesn't support encryption, so it can't be verified.": "Questa sessione non supporta la crittografia, perciò non può essere verificata.",
+    "Apply": "Applica",
+    "Search users in this room…": "Cerca utenti in questa stanza…",
+    "Give one or multiple users in this room more privileges": "Dai più privilegi a uno o più utenti in questa stanza",
+    "Add privileged users": "Aggiungi utenti privilegiati",
+    "Hide notification dot (only display counters badges)": "Nascondi il punto di notifica (mostra solo i contatori)"
 }
