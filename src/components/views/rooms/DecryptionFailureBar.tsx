@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { CryptoEvent } from 'matrix-js-sdk/src/crypto';
 
@@ -32,14 +31,13 @@ import { SetupEncryptionStore } from '../../../stores/SetupEncryptionStore';
 import Spinner from "../elements/Spinner";
 
 interface IProps {
-    room: Room;
     failures: MatrixEvent[];
 }
 
 // Number of milliseconds to display a loading spinner before prompting the user for action
 const WAIT_PERIOD = 5000;
 
-export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
+export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     const context = useContext(MatrixClientContext);
 
     // Display a spinner for a few seconds before presenting an error message,
@@ -102,7 +100,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
         let otherVerifiedDevices = false;
         try {
-            const devices = context.getStoredDevicesForUser(context.getUserId());
+            const devices = context.getStoredDevicesForUser(context.getUserId()!);
             otherVerifiedDevices = devices.some(
                 (device) => device.deviceId !== deviceId && context.checkIfOwnDeviceCrossSigned(device.deviceId),
             );
@@ -147,7 +145,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
     let headline: JSX.Element;
     let body: JSX.Element;
-    let button: JSX.Element;
+    let button = <React.Fragment />;
     if (waiting) {
         headline = <React.Fragment>
             { _t("Decrypting messages...") }
@@ -205,7 +203,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         </React.Fragment>;
     }
 
-    let keyRequestButton: JSX.Element;
+    let keyRequestButton = <React.Fragment />;
     if (!needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
         keyRequestButton = <div className="mx_DecryptionFailureBar_button">
             <AccessibleButton kind="primary" onClick={sendKeyRequests}>

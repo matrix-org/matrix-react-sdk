@@ -52,7 +52,7 @@ let callback = async () => {};
 
 const mockClient = {
     getUserId: () => userId,
-    getDeviceId: () => ourDevice.deviceId,
+    getDeviceId: () => ourDevice?.deviceId,
     getStoredDevicesForUser: () => allDevices,
     isSecretStored: jest.fn(() => Promise.resolve(keyBackup ? { key: "yes" } : null)),
     checkIfOwnDeviceCrossSigned: (deviceId: string) => deviceId.startsWith("verified"),
@@ -93,7 +93,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -118,7 +117,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -144,7 +142,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -170,7 +167,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -196,7 +192,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -222,7 +217,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -247,7 +241,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1, mockEvent2, mockEvent3,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -280,7 +273,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1, mockEvent2,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
@@ -306,7 +298,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                             mockEvent3,
                         ]}
-                        room={null}
                     />,
                 </MatrixClientContext.Provider>,
             );
@@ -331,7 +322,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                             mockEvent1, mockEvent2, mockEvent3,
                         ]}
-                        room={null}
                     />,
                 </MatrixClientContext.Provider>,
             );
@@ -362,7 +352,6 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1, mockEvent2,
                     ]}
-                    room={null}
                 />,
             </MatrixClientContext.Provider>,
         );
