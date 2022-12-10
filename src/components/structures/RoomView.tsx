@@ -1457,7 +1457,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         visibleDecryptionFailures: this.messagePanel?.getVisibleDecryptionFailures(
             // If there were visible failures last time we checked,
             // add a margin to provide hysteresis and prevent flickering
-            prevState.visibleDecryptionFailures?.length > 0,
+            (prevState.visibleDecryptionFailures?.length ?? 0) > 0,
         ) ?? [],
     })), 500, { leading: false, trailing: true });
 
