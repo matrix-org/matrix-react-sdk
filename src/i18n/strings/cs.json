@@ -3677,5 +3677,7 @@
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Při použití této relace se nebudete moci účastnit místností, kde je povoleno šifrování.",
     "This session doesn't support encryption and thus can't be verified.": "Tato relace nepodporuje šifrování, a proto ji nelze ověřit.",
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Pro co nejlepší zabezpečení a ochranu soukromí je doporučeno používat Matrix klienty, které podporují šifrování.",
-    "This session doesn't support encryption, so it can't be verified.": "Tato relace nepodporuje šifrování, takže ji nelze ověřit."
+    "This session doesn't support encryption, so it can't be verified.": "Tato relace nepodporuje šifrování, takže ji nelze ověřit.",
+    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ukončil(a) <a>hlasové vysílání</a>",
+    "You ended a <a>voice broadcast</a>": "Ukončili jste <a>hlasové vysílání</a>"
 }
