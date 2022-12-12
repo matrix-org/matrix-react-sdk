@@ -79,7 +79,7 @@ function doesRoomOrThreadHaveUnreadMessages(room: Room | Thread): boolean {
     //             https://github.com/vector-im/element-web/issues/2427
     // ...and possibly some of the others at
     //             https://github.com/vector-im/element-web/issues/3363
-    if (room.timeline.length && room.timeline[room.timeline.length - 1].getSender() === myUserId) {
+    if (room.timeline.at(-1)?.getSender() === myUserId) {
         return false;
     }
 
