@@ -22,17 +22,15 @@ import { PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import { EventStatus } from "matrix-js-sdk/src/models/event-status";
 
-import {
-    UnreadNotificationBadge,
-} from "../../../../../src/components/views/rooms/NotificationBadge/UnreadNotificationBadge";
-import { mkEvent, mkMessage, stubClient } from "../../../../test-utils/test-utils";
 import { mkThread } from "../../../../test-utils/threads";
+import { UnreadNotificationBadge } from "../../../../../src/components/views/rooms/NotificationBadge/UnreadNotificationBadge";
+import { mkEvent, mkMessage, stubClient } from "../../../../test-utils/test-utils";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 import * as RoomNotifs from "../../../../../src/RoomNotifs";
 
 jest.mock("../../../../../src/RoomNotifs");
-jest.mock('../../../../../src/RoomNotifs', () => ({
-    ...(jest.requireActual('../../../../../src/RoomNotifs') as Object),
+jest.mock("../../../../../src/RoomNotifs", () => ({
+    ...(jest.requireActual("../../../../../src/RoomNotifs") as Object),
     getRoomNotifsState: jest.fn(),
 }));
 
@@ -61,9 +59,12 @@ describe("UnreadNotificationBadge", () => {
         room.setUnreadNotificationCount(NotificationCountType.Total, 1);
         room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
 
-        const { rootEvent } = mkThread(
-            { room, client, authorId: client.getUserId()!, participantUserIds: [client.getUserId()!] },
-        );
+        const { rootEvent } = mkThread({
+            room,
+            client,
+            authorId: client.getUserId()!,
+            participantUserIds: [client.getUserId()!],
+        });
         THREAD_ID = rootEvent.getId()!;
 
         room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Total, 1);
@@ -130,9 +131,7 @@ describe("UnreadNotificationBadge", () => {
     });
 
     it("hides counter for muted rooms", () => {
-        jest.spyOn(RoomNotifs, "getRoomNotifsState")
-            .mockReset()
-            .mockReturnValue(RoomNotifs.RoomNotifState.Mute);
+        jest.spyOn(RoomNotifs, "getRoomNotifsState").mockReset().mockReturnValue(RoomNotifs.RoomNotifState.Mute);
 
         const { container } = render(getComponent());
         expect(container.querySelector(".mx_NotificationBadge")).toBeNull();
@@ -151,7 +150,7 @@ describe("UnreadNotificationBadge", () => {
                 room: room.roomId,
                 content: {
                     "msgtype": MsgType.Text,
-                    "body": 'Hello from Bob',
+                    "body": "Hello from Bob",
                     "m.relates_to": {
                         event_id: THREAD_ID,
                         rel_type: "m.thread",
