@@ -38,7 +38,7 @@ describe("textForVoiceBroadcastStoppedEvent", () => {
             roomId,
             VoiceBroadcastInfoState.Stopped,
             senderId,
-            client.deviceId,
+            client.deviceId!,
         );
 
         if (startEventId) {
@@ -56,7 +56,7 @@ describe("textForVoiceBroadcastStoppedEvent", () => {
     });
 
     it("should render own broadcast as expected", () => {
-        expect(renderText(client.getUserId()).container).toMatchSnapshot();
+        expect(renderText(client.getUserId()!).container).toMatchSnapshot();
     });
 
     it("should render other users broadcast as expected", () => {
@@ -72,7 +72,7 @@ describe("textForVoiceBroadcastStoppedEvent", () => {
         let result: RenderResult;
 
         beforeEach(() => {
-            result = renderText(client.getUserId(), "$start-id");
+            result = renderText(client.getUserId()!, "$start-id");
         });
 
         it("should render events with relation to the start event", () => {

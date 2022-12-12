@@ -27,13 +27,14 @@ export const textForVoiceBroadcastStoppedEvent = (event: MatrixEvent): () => Rea
     return (): ReactNode => {
         const ownUserId = MatrixClientPeg.get()?.getUserId();
         const startEventId = event.getRelation()?.event_id;
+        const roomId = event.getRoomId();
 
         const templateTags = {
-            a: (text: string) => startEventId
+            a: (text: string) => startEventId && roomId
                 ? (
                     <AccessibleButton
                         kind="link_inline"
-                        onClick={() => highlightEvent(event.getRoomId(), startEventId)}
+                        onClick={() => highlightEvent(roomId, startEventId)}
                     >
                         { text }
                     </AccessibleButton>

@@ -13,6 +13,7 @@
     "outDir": "./lib",
     "declaration": true,
     "jsx": "react",
+    "strict": true,
     "lib": [
       "es2020",
       "dom",

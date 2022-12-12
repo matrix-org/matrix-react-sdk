@@ -31,13 +31,13 @@ describe("pickFactory", () => {
         voiceBroadcastStoppedEvent = mkVoiceBroadcastInfoStateEvent(
             "!room:example.com",
             VoiceBroadcastInfoState.Stopped,
-            client.getUserId(),
-            client.deviceId,
+            client.getUserId()!,
+            client.deviceId!,
         );
         voiceBroadcastChunkEvent = mkEvent({
             event: true,
             type: EventType.RoomMessage,
-            user: client.getUserId(),
+            user: client.getUserId()!,
             room: roomId,
             content: {
                 msgtype: MsgType.Audio,
@@ -47,7 +47,7 @@ describe("pickFactory", () => {
         audioMessageEvent = mkEvent({
             event: true,
             type: EventType.RoomMessage,
-            user: client.getUserId(),
+            user: client.getUserId()!,
             room: roomId,
             content: {
                 msgtype: MsgType.Audio,
@@ -60,7 +60,7 @@ describe("pickFactory", () => {
             type: EventType.RoomPowerLevels,
             state_key: "",
             content: {},
-            sender: client.getUserId(),
+            sender: client.getUserId()!,
             room_id: roomId,
         });
         expect(pickFactory(event, client, true)).toBe(JSONEventFactory);
