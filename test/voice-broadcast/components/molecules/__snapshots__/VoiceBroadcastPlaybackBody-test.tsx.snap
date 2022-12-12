@@ -380,7 +380,10 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast in pip mo
           </div>
         </div>
         <div
-          class="mx_VoiceBroadcastHeader_line"
+          aria-label="Change input device"
+          class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          role="button"
+          tabindex="0"
         >
           <div
             class="mx_Icon mx_Icon_16"
