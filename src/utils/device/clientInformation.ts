@@ -77,9 +77,9 @@ export const removeClientInformation = async (
     const type = getClientInformationEventType(deviceId);
     const clientInformation = getDeviceClientInformation(matrixClient, deviceId);
 
-    // if a non-empty client info event exists, overwrite to remove the content
+    // if a non-empty client info event exists, remove it
     if (clientInformation.name || clientInformation.version || clientInformation.url) {
-        await matrixClient.setAccountData(type, {});
+        await matrixClient.deleteAccountData(type);
     }
 };
 
