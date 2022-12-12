@@ -350,7 +350,7 @@ export default class ContentMessages {
     }
 
     public async sendContentListToRoom(
-        files: File[],
+        files: Blob[],
         roomId: string,
         relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
@@ -570,7 +570,7 @@ export default class ContentMessages {
         }
     }
 
-    private isFileSizeAcceptable(file: File) {
+    private isFileSizeAcceptable(file: Blob) {
         if (this.mediaConfig !== null &&
             this.mediaConfig["m.upload.size"] !== undefined &&
             file.size > this.mediaConfig["m.upload.size"]) {

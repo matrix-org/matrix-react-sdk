@@ -25,7 +25,6 @@ import { IApp } from "../../../stores/WidgetStore";
 import WidgetUtils from "../../../utils/WidgetUtils";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import RoomContext from "../../../contexts/RoomContext";
-import dis from "../../../dispatcher/dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
@@ -34,6 +33,7 @@ import { WidgetType } from "../../../widgets/WidgetType";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { getConfigLivestreamUrl, startJitsiAudioLivestream } from "../../../Livestream";
+import ContentMessages from "../../../ContentMessages";
 
 interface IProps extends React.ComponentProps<typeof IconizedContextMenu> {
     app: IApp;
@@ -102,12 +102,9 @@ const WidgetContextMenu: React.FC<IProps> = ({
     let snapshotButton;
     const screenshotsEnabled = SettingsStore.getValue("enableWidgetScreenshots");
     if (screenshotsEnabled && widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
-        const onSnapshotClick = () => {
+        const onSnapshotClick = async () => {
             widgetMessaging?.takeScreenshot().then(data => {
-                dis.dispatch({
-                    action: 'picture_snapshot',
-                    file: data.screenshot,
-                });
+                return ContentMessages.sharedInstance().sendContentListToRoom([data.screenshot], roomId, null, cli);
             }).catch(err => {
                 logger.error("Failed to take screenshot: ", err);
             });

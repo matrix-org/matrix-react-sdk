@@ -1001,10 +1001,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     payload.data.description || payload.data.name,
                     payload.data.threadId);
                 break;
-            case 'picture_snapshot':
-                ContentMessages.sharedInstance().sendContentListToRoom(
-                    [payload.file], this.state.room.roomId, null, this.context.client);
-                break;
             case 'notifier_enabled':
             case Action.UploadStarted:
             case Action.UploadFinished:
