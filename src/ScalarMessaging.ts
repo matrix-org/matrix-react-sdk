@@ -264,6 +264,20 @@ Get an openID token for the current user session.
 Request: No parameters
 Response:
  - The openId token object as described in https://spec.matrix.org/v1.2/client-server-api/#post_matrixclientv3useruseridopenidrequest_token
+
+send_event
+----------
+Sends an event in a room.
+
+Request:
+ - type is the event type to send.
+ - state_key is the state key to send. Omitted if not a state event.
+ - content is the event content to send.
+
+Response:
+ - room_id is the room ID where the event was sent.
+ - event_id is the event ID of the event which was sent.
+
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -295,6 +309,7 @@ enum Action {
     SetBotOptions = "set_bot_options",
     SetBotPower = "set_bot_power",
     GetOpenIdToken = "get_open_id_token",
+    SendEvent = "send_event",
 }
 
 function sendResponse(event: MessageEvent<any>, res: any): void {
@@ -693,6 +708,67 @@ async function getOpenIdToken(event: MessageEvent<any>) {
     }
 }
 
+async function sendEvent(
+    event: MessageEvent<{
+        type: string,
+        state_key?: string,
+        content?: unknown,
+    }>,
+    roomId: string,
+) {
+    const eventType = event.data.type;
+    const stateKey = event.data.state_key;
+    const content = event.data.content;
+
+    if (typeof eventType !== "string") {
+        sendError(event, _t("Failed to send event"), new Error("Invalid 'type' in request"));
+        return;
+    }
+    const allowedEventTypes = [
+        "im.vector.modular.widgets",
+        "m.widgets",
+        "io.element.integrations.installations",
+    ];
+    if (!allowedEventTypes.includes(eventType)) {
+        sendError(event, _t("Failed to send event"), new Error("Disallowed 'type' in request"));
+        return;
+    }
+
+    if (typeof content !== "object") {
+        sendError(event, _t("Failed to send event"), new Error("Invalid 'content' in request"));
+        return;
+    }
+
+    const client = MatrixClientPeg.get();
+    if (!client) {
+        sendError(event, _t("You need to be logged in."));
+        return;
+    }
+
+    const room = client.getRoom(roomId);
+    if (!room) {
+        sendError(event, _t("This room is not recognised."));
+        return;
+    }
+
+    let res;
+    if (stateKey !== undefined) {
+        // state event
+        try {
+            res = await client.sendStateEvent(roomId, eventType, content, stateKey);
+        } catch (e) {
+            sendError(event, _t("Failed to send event"), e);
+        }
+    } else {
+        // message event
+        sendError(event, _t("Failed to send event"), new Error("Not implemented"));
+    }
+    sendResponse(event, {
+        room_id: roomId,
+        event_id: res.event_id,
+    });
+}
+
 const onMessage = function (event: MessageEvent<any>): void {
     if (!event.origin) {
         // stupid chrome
@@ -785,6 +861,9 @@ const onMessage = function (event: MessageEvent<any>): void {
         return;
     } else if (event.data.action === Action.CanSendEvent) {
         canSendEvent(event, roomId);
+        return;
+    } else if (event.data.action === Action.SendEvent) {
+        sendEvent(event, roomId);
         return;
     }
 
