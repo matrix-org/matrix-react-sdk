@@ -3677,5 +3677,7 @@
     "Search users in this room…": "Cerca utenti in questa stanza…",
     "Give one or multiple users in this room more privileges": "Dai più privilegi a uno o più utenti in questa stanza",
     "Add privileged users": "Aggiungi utenti privilegiati",
-    "Hide notification dot (only display counters badges)": "Nascondi il punto di notifica (mostra solo i contatori)"
+    "Hide notification dot (only display counters badges)": "Nascondi il punto di notifica (mostra solo i contatori)",
+    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ha terminato una <a>trasmissione vocale</a>",
+    "You ended a <a>voice broadcast</a>": "Hai terminato una <a>trasmissione vocale</a>"
 }
