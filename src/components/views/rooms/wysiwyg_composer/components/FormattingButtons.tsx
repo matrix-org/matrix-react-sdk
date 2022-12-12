@@ -23,6 +23,7 @@ import { Icon as ItalicIcon } from '../../../../../../res/img/element-icons/room
 import { Icon as UnderlineIcon } from '../../../../../../res/img/element-icons/room/composer/underline.svg';
 import { Icon as StrikeThroughIcon } from '../../../../../../res/img/element-icons/room/composer/strikethrough.svg';
 import { Icon as InlineCodeIcon } from '../../../../../../res/img/element-icons/room/composer/inline_code.svg';
+import { Icon as LinkIcon } from '../../../../../../res/img/element-icons/room/composer/link.svg';
 import AccessibleTooltipButton from "../../../elements/AccessibleTooltipButton";
 import { Alignment } from "../../../elements/Tooltip";
 import { KeyboardShortcut } from "../../../settings/KeyboardShortcut";
@@ -77,5 +78,11 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
         <Button isActive={actionStates.underline === 'reversed'} label={_td('Underline')} keyCombo={{ ctrlOrCmdKey: true, key: 'u' }} onClick={() => composer.underline()} icon={<UnderlineIcon className="mx_FormattingButtons_Icon" />} />
         <Button isActive={actionStates.strikeThrough === 'reversed'} label={_td('Strikethrough')} onClick={() => composer.strikeThrough()} icon={<StrikeThroughIcon className="mx_FormattingButtons_Icon" />} />
         <Button isActive={actionStates.inlineCode === 'reversed'} label={_td('Code')} keyCombo={{ ctrlOrCmdKey: true, key: 'e' }} onClick={() => composer.inlineCode()} icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />} />
+        <Button isActive={actionStates.link === 'reversed'}
+            label={_td('Link')}
+            onClick={() => {
+            // TODO display link modal
+            }}
+            icon={<LinkIcon className="mx_FormattingButtons_Icon" />} />
     </div>;
 }
