@@ -24,6 +24,7 @@ import RoomHeaderButtons from "../../../../src/components/views/right_panel/Room
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { stubClient } from "../../../test-utils";
+import { mkThread } from "../../../test-utils/threads";
 
 describe("RoomHeaderButtons-test.tsx", function() {
     const ROOM_ID = "!roomId:example.org";
@@ -55,7 +56,7 @@ describe("RoomHeaderButtons-test.tsx", function() {
         return container.querySelector(".mx_RightPanel_threadsButton");
     }
 
-    function isIndicatorOfType(container, type: "red" | "gray") {
+    function isIndicatorOfType(container, type: "red" | "gray" | "bold") {
         return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")
             .className
             .includes(type);
@@ -81,7 +82,7 @@ describe("RoomHeaderButtons-test.tsx", function() {
         expect(container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")).toBeNull();
     });
 
-    it("room wide notification does not change the thread button", () => {
+    it.only("thread notification does change the thread button", () => {
         const { container } = getComponent(room);
 
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Total, 1);
@@ -94,6 +95,10 @@ describe("RoomHeaderButtons-test.tsx", function() {
         room.setThreadUnreadNotificationCount("$123", NotificationCountType.Highlight, 0);
 
         expect(container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")).toBeNull();
+
+        // Thread activity should appear on the icon.
+        mkThread({ room, client, authorId: client.getUserId()!, participantUserIds: ["@alice:example.org"] });
+        expect(isIndicatorOfType(getComponent(room), "bold")).toBe(true);
     });
 
     it("does not explode without a room", () => {

@@ -44,6 +44,7 @@ import { NotificationStateEvents } from "../../../stores/notifications/Notificat
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { doesRoomOrThreadHaveUnreadMessages } from "../../../Unread";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -192,9 +193,17 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 return NotificationColor.Red;
             case NotificationCountType.Total:
                 return NotificationColor.Grey;
-            default:
-                return NotificationColor.None;
         }
+        // We don't have any notified messages, but we might have unread messages. Let's
+        // find out.
+        for (const thread of this.props.room!.getThreads()) {
+            // If the current thread has unread messages, we're done.
+            if (doesRoomOrThreadHaveUnreadMessages(thread)) {
+                return NotificationColor.Bold;
+            }
+        }
+        // Otherwise, no notification color.
+        return NotificationColor.None;
     }
 
     private onUpdateStatus = (notificationState: SummarizedNotificationState): void => {
