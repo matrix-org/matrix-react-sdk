@@ -23,6 +23,7 @@ import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
 import SecurityCustomisations from "../customisations/Security";
 import Spinner from "../components/views/elements/Spinner";
+import { isSecureBackupRequired } from '../utils/WellKnownUtils';
 
 const TOAST_KEY = "setupencryption";
 
@@ -78,6 +79,10 @@ const onReject = () => {
     DeviceListener.sharedInstance().dismissEncryptionSetup();
 };
 
+type LatterButton = {
+    rejectLabel?: string;
+}
+
 export const showToast = (kind: Kind) => {
     if (SecurityCustomisations.setupEncryptionNeeded?.(kind)) {
         return;
@@ -99,6 +104,12 @@ export const showToast = (kind: Kind) => {
         }
     };
 
+    // Ensure user can't dismiss the toast if secure backup is required
+    let latterButton: LatterButton = { rejectLabel: _t("Later") };
+    if (kind === Kind.SET_UP_ENCRYPTION && isSecureBackupRequired()) {
+        latterButton = {};
+    }
+
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
         title: getTitle(kind),
@@ -107,8 +118,8 @@ export const showToast = (kind: Kind) => {
             description: getDescription(kind),
             acceptLabel: getSetupCaption(kind),
             onAccept,
-            rejectLabel: _t("Later"),
             onReject,
+            ...latterButton
         },
         component: GenericToast,
         priority: kind === Kind.VERIFY_THIS_SESSION ? 95 : 40,
@@ -116,5 +127,8 @@ export const showToast = (kind: Kind) => {
 };
 
 export const hideToast = () => {
+    // Ensure user can't dismiss the toast if secure backup is required
+    if (isSecureBackupRequired()) return;
+
     ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };
