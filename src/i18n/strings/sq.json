@@ -3666,5 +3666,7 @@
     "Search users in this room…": "Kërkoni për përdorues në këtë dhomë…",
     "Give one or multiple users in this room more privileges": "Jepini një ose disa përdoruesve më tepër privilegje në këtë dhomë",
     "Add privileged users": "Shtoni përdorues të privilegjuar",
-    "Hide notification dot (only display counters badges)": "Fshihe pikën e njoftimeve (shfaq vetëm stema numëratorësh)"
+    "Hide notification dot (only display counters badges)": "Fshihe pikën e njoftimeve (shfaq vetëm stema numëratorësh)",
+    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s përfundoi një <a>transmetim zanor</a>",
+    "You ended a <a>voice broadcast</a>": "Përfunduat një <a>transmetim zanor</a>"
 }
