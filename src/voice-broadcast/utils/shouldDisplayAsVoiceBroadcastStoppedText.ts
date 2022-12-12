@@ -19,7 +19,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "..";
 
 export const shouldDisplayAsVoiceBroadcastStoppedText = (event: MatrixEvent): boolean => (
-    event.getType?.() === VoiceBroadcastInfoEventType
-    && event.getContent?.()?.state === VoiceBroadcastInfoState.Stopped
+    event.getType() === VoiceBroadcastInfoEventType
+    && event.getContent()?.state === VoiceBroadcastInfoState.Stopped
     && !event.isRedacted()
 );
