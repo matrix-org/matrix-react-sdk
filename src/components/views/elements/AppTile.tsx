@@ -50,6 +50,7 @@ import { Action } from '../../../dispatcher/actions';
 import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
 import { WidgetMessagingStore } from '../../../stores/widgets/WidgetMessagingStore';
 import { SdkContextClass } from '../../../contexts/SDKContext';
+import ContentMessages from "../../../ContentMessages";
 
 interface IProps {
     app: IApp;
@@ -404,13 +405,25 @@ export default class AppTile extends React.Component<IProps, IState> {
                 if (payload.widgetId === this.props.app.id &&
                     this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.StickerSending)
                 ) {
-                    dis.dispatch({
-                        action: 'post_sticker_message',
-                        data: {
-                            ...payload.data,
-                            threadId: this.props.threadId,
-                        },
-                    });
+                    if (this.context.isGuest()) {
+                        dis.dispatch({ action: 'require_registration' });
+                        return;
+                    }
+
+                    // We use this instead of this.props.roomId as the widget may be account-wide and not bound to room
+                    const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
+                    const { threadId } = this.props;
+                    const { content, description, name } = payload.data;
+                    const text = description || name;
+                    ContentMessages.sharedInstance()
+                        .sendStickerContentToRoom(content.url, roomId, threadId, content.info, text, this.context)
+                        .then(undefined, (error) => {
+                            if (error.name === "UnknownDeviceError") {
+                                // Let the staus bar handle this
+                                return;
+                            }
+                        });
+
                     dis.dispatch({ action: 'stickerpicker_close' });
                 } else {
                     logger.warn('Ignoring sticker message. Invalid capability');

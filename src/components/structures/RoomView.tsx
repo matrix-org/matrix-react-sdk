@@ -994,13 +994,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             case 'message_sent':
                 this.checkDesktopNotifications();
                 break;
-            case 'post_sticker_message':
-                this.injectSticker(
-                    payload.data.content.url,
-                    payload.data.content.info,
-                    payload.data.description || payload.data.name,
-                    payload.data.threadId);
-                break;
             case 'notifier_enabled':
             case Action.UploadStarted:
             case Action.UploadFinished:
@@ -1443,22 +1436,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }
     };
-
-    private injectSticker(url: string, info: object, text: string, threadId: string | null) {
-        if (this.context.client.isGuest()) {
-            dis.dispatch({ action: 'require_registration' });
-            return;
-        }
-
-        ContentMessages.sharedInstance()
-            .sendStickerContentToRoom(url, this.state.room.roomId, threadId, info, text, this.context.client)
-            .then(undefined, (error) => {
-                if (error.name === "UnknownDeviceError") {
-                    // Let the staus bar handle this
-                    return;
-                }
-            });
-    }
 
     private onSearch = (term: string, scope: SearchScope) => {
         const roomId = scope === SearchScope.Room ? this.state.room.roomId : undefined;
