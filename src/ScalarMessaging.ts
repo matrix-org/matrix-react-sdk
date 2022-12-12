@@ -807,7 +807,7 @@ async function readEvents(
         "io.element.integrations.installations",
     ];
     if (!allowedEventTypes.includes(eventType)) {
-        sendError(event, _t("Failed to send event"), new Error("Disallowed 'type' in request"));
+        sendError(event, _t("Failed to read events"), new Error("Disallowed 'type' in request"));
         return;
     }
 
