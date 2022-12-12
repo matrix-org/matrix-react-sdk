@@ -254,6 +254,22 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
         />;
     }
 
+    let urlsOption: JSX.Element;
+    if (!isVideoRoom) {
+        urlsOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.UrlPanel }, false);
+                onFinished();
+            }}
+            label={_t("Urls")}
+            iconClassName=".mx_RoomTile_iconCopyLink"
+        />;
+    }
+
     const pinningEnabled = useFeatureEnabled("feature_pinning");
     const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
 
@@ -348,6 +364,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             { favouriteOption }
             { peopleOption }
             { filesOption }
+            { urlsOption }
             { pinsOption }
             { widgetsOption }
             { lowPriorityOption }

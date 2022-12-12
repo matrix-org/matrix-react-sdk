@@ -49,6 +49,7 @@ const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
     RightPanelPhases.Widget,
     RightPanelPhases.FilePanel,
+    RightPanelPhases.UrlPanel,
     RightPanelPhases.RoomMemberList,
     RightPanelPhases.RoomMemberInfo,
     RightPanelPhases.EncryptionPanel,

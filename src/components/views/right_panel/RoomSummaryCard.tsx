@@ -237,6 +237,10 @@ const onRoomFilesClick = () => {
     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, true);
 };
 
+const onRoomUrlsClick = () => {
+    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.UrlPanel }, true);
+};
+
 const onRoomPinsClick = () => {
     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.PinnedMessages }, true);
 };
@@ -310,6 +314,9 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
             </Button>
             { !isVideoRoom && <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
                 { _t("Files") }
+            </Button> }
+            { !isVideoRoom && <Button className="mx_RoomSummaryCard_icon_urls" onClick={onRoomUrlsClick}>
+                { _t("Urls") }
             </Button> }
             { pinningEnabled && !isVideoRoom &&
                 <Button className="mx_RoomSummaryCard_icon_pins" onClick={onRoomPinsClick}>
