@@ -29,6 +29,7 @@ import Spinner from "../../../components/views/elements/Spinner";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
 import dis from '../../../dispatcher/dispatcher';
+import AccessibleTooltipButton from "../../../components/views/elements/AccessibleTooltipButton";
 
 interface VoiceBroadcastHeaderProps {
     linkToRoom?: boolean;
@@ -92,13 +93,14 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     });
 
     const microphoneLine = microphoneLabel && (
-        <div
+        <AccessibleTooltipButton
             className={microphoneLineClasses}
             onClick={onMicrophoneLineClick}
+            title={_t("Change input device")}
         >
             <MicrophoneIcon className="mx_Icon mx_Icon_16" />
             <span>{ microphoneLabel }</span>
-        </div>
+        </AccessibleTooltipButton>
     );
 
     const onRoomAvatarOrNameClick = (event: MouseEvent): void => {
