@@ -33,7 +33,9 @@ interface PlainTextComposerProps {
     initialContent?: string;
     className?: string;
     leftComponent?: ReactNode;
-    rightComponent?: ReactNode;
+    rightComponent?: (
+        selectPreviousSelection: () => void
+    ) => ReactNode;
     children?: (
         ref: MutableRefObject<HTMLDivElement | null>,
         composerFunctions: ComposerFunctions,
@@ -52,8 +54,9 @@ export function PlainTextComposer({
     rightComponent,
 }: PlainTextComposerProps,
 ) {
-    const { ref, onInput, onPaste, onKeyDown, content } = usePlainTextListeners(initialContent, onChange, onSend);
-    const composerFunctions = useComposerFunctions(ref);
+    const { ref, onInput, onPaste, onKeyDown, content, setContent } =
+        usePlainTextListeners(initialContent, onChange, onSend);
+    const composerFunctions = useComposerFunctions(ref, setContent);
     usePlainTextInitialization(initialContent, ref);
     useSetCursorPosition(disabled, ref);
     const { isFocused, onFocus } = useIsFocused();
