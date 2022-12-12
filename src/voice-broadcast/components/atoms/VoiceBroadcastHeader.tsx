@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MouseEvent } from "react";
+import React from "react";
 import { Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
@@ -21,7 +21,7 @@ import { Icon as MicrophoneIcon } from "../../../../res/img/voip/call-view/mic-o
 import { Icon as TimerIcon } from "../../../../res/img/element-icons/Timer.svg";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../../../components/views/avatars/RoomAvatar";
-import AccessibleButton from "../../../components/views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../components/views/elements/AccessibleButton";
 import { Icon as XIcon } from "../../../../res/img/element-icons/cancel-rounded.svg";
 import Clock from "../../../components/views/audio_messages/Clock";
 import { formatTimeLeft } from "../../../DateUtils";
@@ -35,7 +35,7 @@ interface VoiceBroadcastHeaderProps {
     linkToRoom?: boolean;
     live?: VoiceBroadcastLiveness;
     onCloseClick?: () => void;
-    onMicrophoneLineClick?: () => void;
+    onMicrophoneLineClick?: ((e: ButtonEvent) => void | Promise<void>) | null;
     room: Room;
     microphoneLabel?: string;
     showBroadcast?: boolean;
@@ -48,7 +48,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     linkToRoom = false,
     live = "not-live",
     onCloseClick = () => {},
-    onMicrophoneLineClick,
+    onMicrophoneLineClick = null,
     room,
     microphoneLabel,
     showBroadcast = false,
@@ -103,7 +103,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
         </AccessibleTooltipButton>
     );
 
-    const onRoomAvatarOrNameClick = (event: MouseEvent): void => {
+    const onRoomAvatarOrNameClick = (): void => {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
