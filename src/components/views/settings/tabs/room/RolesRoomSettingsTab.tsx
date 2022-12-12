@@ -33,6 +33,7 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
 import { ElementCall } from "../../../../../models/Call";
 import SdkConfig, { DEFAULTS } from "../../../../../SdkConfig";
+import { AddPrivilegedUsers } from "../../AddPrivilegedUsers";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -324,12 +325,13 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         let privilegedUsersSection = <div>{ _t('No users have specific privileges in this room') }</div>;
         let mutedUsersSection;
         if (Object.keys(userLevels).length) {
-            const privilegedUsers = [];
-            const mutedUsers = [];
+            const privilegedUsers: JSX.Element[] = [];
+            const mutedUsers: JSX.Element[] = [];
 
             Object.keys(userLevels).forEach((user) => {
-                if (!Number.isInteger(userLevels[user])) { return; }
-                const canChange = userLevels[user] < currentUserLevel && canChangeLevels;
+                if (!Number.isInteger(userLevels[user])) return;
+                const isMe = user === client.getUserId();
+                const canChange = canChangeLevels && (userLevels[user] < currentUserLevel || isMe);
                 if (userLevels[user] > defaultUserLevel) { // privileged
                     privilegedUsers.push(
                         <PowerSelector
@@ -469,6 +471,11 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             <div className="mx_SettingsTab mx_RolesRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Roles & Permissions") }</div>
                 { privilegedUsersSection }
+                {
+                    (canChangeLevels && room !== null) && (
+                        <AddPrivilegedUsers room={room} defaultUserLevel={defaultUserLevel} />
+                    )
+                }
                 { mutedUsersSection }
                 { bannedUsersSection }
                 <SettingsFieldset

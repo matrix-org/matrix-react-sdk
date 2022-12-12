@@ -25,7 +25,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { throttle } from "lodash";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
@@ -111,6 +110,8 @@ import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 import { Call } from "../../models/Call";
 import { RoomSearchView } from './RoomSearchView';
 import eventSearch from "../../Searching";
+import VoipUserMapper from '../../VoipUserMapper';
+import { isCallEvent } from './LegacyCallEventGrouper';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -145,6 +146,7 @@ enum MainSplitContentType {
 }
 export interface IRoomState {
     room?: Room;
+    virtualRoom?: Room;
     roomId?: string;
     roomAlias?: string;
     roomLoading: boolean;
@@ -533,8 +535,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const roomId = this.context.roomViewStore.getRoomId();
         const room = this.context.client.getRoom(roomId);
 
-        // This convoluted type signature ensures we get IntelliSense *and* correct typing
-        const newState: Partial<IRoomState> & Pick<IRoomState, any> = {
+        const newState: Partial<IRoomState> = {
             roomId,
             roomAlias: this.context.roomViewStore.getRoomAlias(),
             roomLoading: this.context.roomViewStore.isRoomLoading(),
@@ -655,7 +656,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // NB: This does assume that the roomID will not change for the lifetime of
         // the RoomView instance
         if (initial) {
-            newState.room = this.context.client.getRoom(newState.roomId);
+            const virtualRoom = newState.roomId ?
+                await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(newState.roomId) : undefined;
+
+            newState.room = this.context.client!.getRoom(newState.roomId) || undefined;
+            newState.virtualRoom = virtualRoom || undefined;
             if (newState.room) {
                 newState.showApps = this.shouldShowApps(newState.room);
                 this.onRoomLoaded(newState.room);
@@ -678,11 +683,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         // Clear the search results when clicking a search result (which changes the
         // currently scrolled to event, this.state.initialEventId).
-        if (this.state.initialEventId !== newState.initialEventId) {
-            newState.searchResults = null;
+        if (this.state.timelineRenderingType === TimelineRenderingType.Search &&
+            this.state.initialEventId !== newState.initialEventId
+        ) {
+            newState.timelineRenderingType = TimelineRenderingType.Room;
+            this.state.search?.abortController?.abort();
+            newState.search = undefined;
         }
 
-        this.setState(newState);
+        this.setState(newState as IRoomState);
         // At this point, newState.roomId could be null (e.g. the alias might not
         // have been resolved yet) so anything called here must handle this case.
 
@@ -1181,10 +1190,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet) => {
-        if (!room || room.roomId !== this.state.room?.roomId) return;
-        logger.log(`Live timeline of ${room.roomId} was reset`);
-        this.setState({ liveTimeline: timelineSet.getLiveTimeline() });
+    private onRoomTimelineReset = (room?: Room): void => {
+        if (room &&
+            room.roomId === this.state.room?.roomId &&
+            room.getLiveTimeline() !== this.state.liveTimeline
+        ) {
+            logger.log(`Live timeline of ${room.roomId} was reset`);
+            this.setState({ liveTimeline: room.getLiveTimeline() });
+        }
     };
 
     private getRoomTombstone(room = this.state.room) {
@@ -1231,7 +1244,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
-    private onRoom = (room: Room) => {
+    private onRoom = async (room: Room) => {
         if (!room || room.roomId !== this.state.roomId) {
             return;
         }
@@ -1244,8 +1257,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
+        const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room.roomId);
         this.setState({
             room: room,
+            virtualRoom: virtualRoom || undefined,
         }, () => {
             this.onRoomLoaded(room);
         });
@@ -1253,7 +1268,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onDeviceVerificationChanged = (userId: string) => {
         const room = this.state.room;
-        if (!room.currentState.getMember(userId)) {
+        if (!room?.currentState.getMember(userId)) {
             return;
         }
         this.updateE2EStatus(room);
@@ -2060,7 +2075,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             hideMessagePanel = true;
         }
 
-        let highlightedEventId = null;
+        let highlightedEventId: string | undefined;
         if (this.state.isInitialEventHighlighted) {
             highlightedEventId = this.state.initialEventId;
         }
@@ -2069,6 +2084,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             <TimelinePanel
                 ref={this.gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
+                overlayTimelineSet={this.state.virtualRoom?.getUnfilteredTimelineSet()}
+                overlayTimelineSetFilter={isCallEvent}
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}

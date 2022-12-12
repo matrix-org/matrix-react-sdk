@@ -44,13 +44,18 @@ export enum CustomCallState {
     Missed = "missed",
 }
 
+const isCallEventType = (eventType: string): boolean =>
+    eventType.startsWith("m.call.") || eventType.startsWith("org.matrix.call.");
+
+export const isCallEvent = (event: MatrixEvent): boolean => isCallEventType(event.getType());
+
 export function buildLegacyCallEventGroupers(
     callEventGroupers: Map<string, LegacyCallEventGrouper>,
     events?: MatrixEvent[],
 ): Map<string, LegacyCallEventGrouper> {
     const newCallEventGroupers = new Map();
     events?.forEach(ev => {
-        if (!ev.getType().startsWith("m.call.") && !ev.getType().startsWith("org.matrix.call.")) {
+        if (!isCallEvent(ev)) {
             return;
         }
 
@@ -119,9 +124,9 @@ export default class LegacyCallEventGrouper extends EventEmitter {
         return Boolean(this.reject);
     }
 
-    public get duration(): Date {
-        if (!this.hangup || !this.selectAnswer) return;
-        return new Date(this.hangup.getDate().getTime() - this.selectAnswer.getDate().getTime());
+    public get duration(): number | null {
+        if (!this.hangup || !this.selectAnswer) return null;
+        return this.hangup.getDate().getTime() - this.selectAnswer.getDate().getTime();
     }
 
     /**

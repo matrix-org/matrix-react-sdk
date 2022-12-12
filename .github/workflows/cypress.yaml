@@ -43,7 +43,7 @@ jobs:
       - name: Get commit details
         id: commit
         if: github.event.workflow_run.event == 'pull_request'
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const response = await github.rest.git.getCommit({
@@ -76,13 +76,13 @@ jobs:
       issues: read
       pull-requests: read
     environment: Cypress
-    strategy:
-      fail-fast: false
-      matrix:
-        # Run 4 instances in Parallel
-        runner: [1, 2, 3, 4]
+      #strategy:
+      #    fail-fast: false
+      #    matrix:
+      #      # Run 4 instances in Parallel
+      #      runner: [1, 2, 3, 4]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # XXX: We're checking out untrusted code in a secure context
           # We need to be careful to not trust anything this code outputs/may do
@@ -96,13 +96,12 @@ jobs:
       - name: 📥 Download artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: element-build-and-test.yaml
           run_id: ${{ github.event.workflow_run.id }}
           name: previewbuild
           path: webapp
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v4.1.1
+        uses: cypress-io/github-action@v4.2.2
         with:
           # The built-in Electron runner seems to grind to a halt trying
           # to run the tests, so use chrome.
@@ -110,8 +109,9 @@ jobs:
           start: npx serve -p 8080 webapp
           wait-on: 'http://localhost:8080'
           record: true
-          parallel: true
-          command-prefix: 'yarn percy exec --parallel --'
+            #parallel: true
+            #command-prefix: 'yarn percy exec --parallel --'
+          command-prefix: 'yarn percy exec --'
           ci-build-id: ${{ needs.prepare.outputs.uuid }}
         env:
           # pass the Dashboard record key as an environment variable
@@ -142,12 +142,12 @@ jobs:
           PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
           PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
           PERCY_PULL_REQUEST: ${{ needs.prepare.outputs.pr_id }}
-          PERCY_PARALLEL_TOTAL: ${{ strategy.job-total }}
+            #PERCY_PARALLEL_TOTAL: ${{ strategy.job-total }}
           PERCY_PARALLEL_NONCE: ${{ needs.prepare.outputs.uuid }}
 
       - name: Upload Artifact
         if: failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cypress-results
           path: |
