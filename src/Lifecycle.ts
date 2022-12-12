@@ -39,7 +39,6 @@ import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
 import * as StorageManager from './utils/StorageManager';
 import SettingsStore from "./settings/SettingsStore";
-import TypingStore from "./stores/TypingStore";
 import ToastStore from "./stores/ToastStore";
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { Mjolnir } from "./mjolnir/Mjolnir";
@@ -62,6 +61,7 @@ import { DialogOpener } from "./utils/DialogOpener";
 import { Action } from "./dispatcher/actions";
 import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
+import { SdkContextClass } from './contexts/SDKContext';
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -426,7 +426,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
     const { hsUrl, isUrl, hasAccessToken, accessToken, userId, deviceId, isGuest } = await getStoredSessionVars();
 
     if (hasAccessToken && !accessToken) {
-        abortLogin();
+        await abortLogin();
     }
 
     if (accessToken && userId && hsUrl) {
@@ -584,7 +584,7 @@ async function doSetLoggedIn(
     // later than MatrixChat might assume.
     //
     // we fire it *synchronously* to make sure it fires before on_logged_in.
-    // (dis.dispatch uses `setTimeout`, which does not guarantee ordering.)
+    // (dis.dispatch uses `window.setTimeout`, which does not guarantee ordering.)
     dis.dispatch({ action: 'on_logging_in' }, true);
 
     if (clearStorageEnabled) {
@@ -699,7 +699,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
         } catch (e) {
             localStorage.setItem("mx_access_token", credentials.accessToken);
         }
-        if (localStorage.getItem("mx_has_pickle_key")) {
+        if (localStorage.getItem("mx_has_pickle_key") === "true") {
             logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
         }
     }
@@ -739,7 +739,7 @@ export function logout(): void {
     _isLoggingOut = true;
     const client = MatrixClientPeg.get();
     PlatformPeg.get().destroyPickleKey(client.getUserId(), client.getDeviceId());
-    client.logout(undefined, true).then(onLoggedOut, (err) => {
+    client.logout(true).then(onLoggedOut, (err) => {
         // Just throwing an error here is going to be very unhelpful
         // if you're trying to log out because your server's down and
         // you want to log into a different server, so just forget the
@@ -797,7 +797,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     dis.dispatch({ action: 'will_start_client' }, true);
 
     // reset things first just in case
-    TypingStore.sharedInstance().reset();
+    SdkContextClass.instance.typingStore.reset();
     ToastStore.sharedInstance().reset();
 
     DialogOpener.instance.prepare();
@@ -865,7 +865,7 @@ export async function onLoggedOut(): Promise<void> {
     if (SdkConfig.get().logout_redirect_url) {
         logger.log("Redirecting to external provider to finish logout");
         // XXX: Defer this so that it doesn't race with MatrixChat unmounting the world by going to /#/login
-        setTimeout(() => {
+        window.setTimeout(() => {
             window.location.href = SdkConfig.get().logout_redirect_url;
         }, 100);
     }
@@ -927,7 +927,7 @@ export function stopMatrixClient(unsetClient = true): void {
     Notifier.stop();
     LegacyCallHandler.instance.stop();
     UserActivity.sharedInstance().stop();
-    TypingStore.sharedInstance().reset();
+    SdkContextClass.instance.typingStore.reset();
     Presence.stop();
     ActiveWidgetStore.instance.stop();
     IntegrationManagers.sharedInstance().stopWatching();

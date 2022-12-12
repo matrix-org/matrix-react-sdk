@@ -184,7 +184,7 @@ export default class MultiInviter {
                 }
             }
 
-            return this.matrixClient.invite(roomId, addr, undefined, this.reason);
+            return this.matrixClient.invite(roomId, addr, this.reason);
         } else {
             throw new Error('Unsupported address');
         }
@@ -241,7 +241,7 @@ export default class MultiInviter {
                         break;
                     case "M_LIMIT_EXCEEDED":
                         // we're being throttled so wait a bit & try again
-                        setTimeout(() => {
+                        window.setTimeout(() => {
                             this.doInvite(address, ignoreProfile).then(resolve, reject);
                         }, 5000);
                         return;

@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
 import BaseCard from "../views/right_panel/BaseCard";
@@ -33,7 +33,6 @@ import Measured from '../views/elements/Measured';
 import PosthogTrackers from "../../PosthogTrackers";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import { BetaPill } from '../views/beta/BetaCard';
-import SdkConfig from '../../SdkConfig';
 import Modal from '../../Modal';
 import BetaFeedbackDialog from '../views/dialogs/BetaFeedbackDialog';
 import { Action } from '../../dispatcher/actions';
@@ -41,6 +40,7 @@ import { UserTab } from '../views/dialogs/UserTab';
 import dis from '../../dispatcher/dispatcher';
 import Spinner from "../views/elements/Spinner";
 import Heading from '../views/typography/Heading';
+import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     roomId: string;
@@ -207,18 +207,6 @@ const ThreadPanel: React.FC<IProps> = ({
     }, [mxClient, roomId]);
 
     useEffect(() => {
-        function refreshTimeline() {
-            timelinePanel?.current.refreshTimeline();
-        }
-
-        room?.on(ThreadEvent.Update, refreshTimeline);
-
-        return () => {
-            room?.removeListener(ThreadEvent.Update, refreshTimeline);
-        };
-    }, [room, mxClient, timelineSet]);
-
-    useEffect(() => {
         if (room) {
             if (filterOption === ThreadFilterType.My) {
                 setTimelineSet(room.threadsTimelineSets[1]);
@@ -234,7 +222,7 @@ const ThreadPanel: React.FC<IProps> = ({
         }
     }, [timelineSet, timelinePanel]);
 
-    const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
+    const openFeedback = shouldShowFeedback() ? () => {
         Modal.createDialog(BetaFeedbackDialog, {
             featureId: "feature_thread",
         });
@@ -282,10 +270,10 @@ const ThreadPanel: React.FC<IProps> = ({
                     ? <TimelinePanel
                         key={timelineSet.getFilter()?.filterId ?? (roomId + ":" + filterOption)}
                         ref={timelinePanel}
-                        showReadReceipts={false} // No RR support in thread's MVP
-                        manageReadReceipts={false} // No RR support in thread's MVP
-                        manageReadMarkers={false} // No RM support in thread's MVP
-                        sendReadReceiptOnLoad={false} // No RR support in thread's MVP
+                        showReadReceipts={false} // No RR support in thread's list
+                        manageReadReceipts={false} // No RR support in thread's list
+                        manageReadMarkers={false} // No RM support in thread's list
+                        sendReadReceiptOnLoad={false} // No RR support in thread's list
                         timelineSet={timelineSet}
                         showUrlPreview={false} // No URL previews at the threads list level
                         empty={<EmptyThread

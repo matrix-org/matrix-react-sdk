@@ -20,17 +20,18 @@ import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
 import SettingsSubsection from '../shared/SettingsSubsection';
 import DeviceSecurityCard from './DeviceSecurityCard';
-import { filterDevicesBySecurityRecommendation, INACTIVE_DEVICE_AGE_DAYS } from './filter';
+import { DeviceSecurityLearnMore } from './DeviceSecurityLearnMore';
+import { filterDevicesBySecurityRecommendation, FilterVariation, INACTIVE_DEVICE_AGE_DAYS } from './filter';
 import {
     DeviceSecurityVariation,
-    DeviceWithVerification,
+    ExtendedDevice,
     DevicesDictionary,
 } from './types';
 
 interface Props {
     devices: DevicesDictionary;
-    currentDeviceId: DeviceWithVerification['device_id'];
-    goToFilteredList: (filter: DeviceSecurityVariation) => void;
+    currentDeviceId: ExtendedDevice['device_id'];
+    goToFilteredList: (filter: FilterVariation) => void;
 }
 
 const SecurityRecommendations: React.FC<Props> = ({
@@ -38,7 +39,7 @@ const SecurityRecommendations: React.FC<Props> = ({
     currentDeviceId,
     goToFilteredList,
 }) => {
-    const devicesArray = Object.values<DeviceWithVerification>(devices);
+    const devicesArray = Object.values<ExtendedDevice>(devices);
 
     const unverifiedDevicesCount = filterDevicesBySecurityRecommendation(
         devicesArray,
@@ -70,10 +71,13 @@ const SecurityRecommendations: React.FC<Props> = ({
             <DeviceSecurityCard
                 variation={DeviceSecurityVariation.Unverified}
                 heading={_t('Unverified sessions')}
-                description={_t(
-                    `Verify your sessions for enhanced secure messaging` +
+                description={<>
+                    { _t(
+                        `Verify your sessions for enhanced secure messaging` +
                     ` or sign out from those you don't recognize or use anymore.`,
-                )}
+                    ) }
+                    <DeviceSecurityLearnMore variation={DeviceSecurityVariation.Unverified} />
+                </>}
             >
                 <AccessibleButton
                     kind='link_inline'
@@ -91,11 +95,15 @@ const SecurityRecommendations: React.FC<Props> = ({
                 <DeviceSecurityCard
                     variation={DeviceSecurityVariation.Inactive}
                     heading={_t('Inactive sessions')}
-                    description={_t(
-                        `Consider signing out from old sessions ` +
-                        `(%(inactiveAgeDays)s days or older) you don't use anymore`,
-                        { inactiveAgeDays },
-                    )}
+                    description={<>
+                        { _t(
+                            `Consider signing out from old sessions ` +
+                            `(%(inactiveAgeDays)s days or older) you don't use anymore`,
+                            { inactiveAgeDays },
+                        ) }
+                        <DeviceSecurityLearnMore variation={DeviceSecurityVariation.Inactive} />
+                    </>
+                    }
                 >
                     <AccessibleButton
                         kind='link_inline'

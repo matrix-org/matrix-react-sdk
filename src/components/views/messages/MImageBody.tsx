@@ -39,6 +39,7 @@ import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
 import { presentableTextForFile } from "../../../utils/FileUtils";
 import { createReconnectedListener } from '../../../utils/connection';
 import MediaProcessingError from './shared/MediaProcessingError';
+import { DecryptError, DownloadError } from "../../../utils/DecryptFile";
 
 enum Placeholder {
     NoImage,
@@ -258,9 +259,18 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 ]));
             } catch (error) {
                 if (this.unmounted) return;
-                logger.warn("Unable to decrypt attachment: ", error);
+
+                if (error instanceof DecryptError) {
+                    logger.error("Unable to decrypt attachment: ", error);
+                } else if (error instanceof DownloadError) {
+                    logger.error("Unable to download attachment to decrypt it: ", error);
+                } else {
+                    logger.error("Error encountered when downloading encrypted attachment: ", error);
+                }
+
                 // Set a placeholder image when we can't decrypt the image.
                 this.setState({ error });
+                return;
             }
         } else {
             thumbUrl = this.getThumbUrl();
@@ -282,16 +292,27 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 img.crossOrigin = "Anonymous"; // CORS allow canvas access
                 img.src = contentUrl;
 
-                await loadPromise;
-
-                const blob = await this.props.mediaEventHelper.sourceBlob.value;
-                if (!await blobIsAnimated(content.info.mimetype, blob)) {
-                    isAnimated = false;
+                try {
+                    await loadPromise;
+                } catch (error) {
+                    logger.error("Unable to download attachment: ", error);
+                    this.setState({ error: error as Error });
+                    return;
                 }
 
-                if (isAnimated) {
-                    const thumb = await createThumbnail(img, img.width, img.height, content.info.mimetype, false);
-                    thumbUrl = URL.createObjectURL(thumb.thumbnail);
+                try {
+                    const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                    if (!await blobIsAnimated(content.info?.mimetype, blob)) {
+                        isAnimated = false;
+                    }
+
+                    if (isAnimated) {
+                        const thumb = await createThumbnail(img, img.width, img.height, content.info!.mimetype, false);
+                        thumbUrl = URL.createObjectURL(thumb.thumbnail);
+                    }
+                } catch (error) {
+                    // This is a non-critical failure, do not surface the error or bail the method here
+                    logger.warn("Unable to generate thumbnail for animated image: ", error);
                 }
             }
         }
@@ -326,7 +347,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         // Add a 150ms timer for blurhash to first appear.
         if (this.props.mxEvent.getContent().info?.[BLURHASH_FIELD]) {
             this.clearBlurhashTimeout();
-            this.timeout = setTimeout(() => {
+            this.timeout = window.setTimeout(() => {
                 if (!this.state.imgLoaded || !this.state.imgError) {
                     this.setState({
                         placeholder: Placeholder.Blurhash,
@@ -391,7 +412,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             // By doing this, the image "pops" into the timeline, but is still restricted
             // by the same width and height logic below.
             if (!this.state.loadedImageDimensions) {
-                let imageElement;
+                let imageElement: JSX.Element;
                 if (!this.state.showImage) {
                     imageElement = <HiddenImagePlaceholder />;
                 } else {
@@ -425,7 +446,13 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         let gifLabel: JSX.Element;
 
         if (!this.props.forExport && !this.state.imgLoaded) {
-            placeholder = this.getPlaceholder(maxWidth, maxHeight);
+            const classes = classNames('mx_MImageBody_placeholder', {
+                'mx_MImageBody_placeholder--blurhash': this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
+            });
+
+            placeholder = <div className={classes}>
+                { this.getPlaceholder(maxWidth, maxHeight) }
+            </div>;
         }
 
         let showPlaceholder = Boolean(placeholder);
@@ -463,29 +490,26 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             banner = this.getBanner(content);
         }
 
-        const classes = classNames({
-            'mx_MImageBody_placeholder': true,
-            'mx_MImageBody_placeholder--blurhash': this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
-        });
-
         // many SVGs don't have an intrinsic size if used in <img> elements.
         // due to this we have to set our desired width directly.
         // this way if the image is forced to shrink, the height adapts appropriately.
         const sizing = infoSvg ? { maxHeight, maxWidth, width: maxWidth } : { maxHeight, maxWidth };
 
+        if (!this.props.forExport) {
+            placeholder = <SwitchTransition mode="out-in">
+                <CSSTransition
+                    classNames="mx_rtg--fade"
+                    key={`img-${showPlaceholder}`}
+                    timeout={300}
+                >
+                    { showPlaceholder ? placeholder : <></> /* Transition always expects a child */ }
+                </CSSTransition>
+            </SwitchTransition>;
+        }
+
         const thumbnail = (
             <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight, maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}>
-                <SwitchTransition mode="out-in">
-                    <CSSTransition
-                        classNames="mx_rtg--fade"
-                        key={`img-${showPlaceholder}`}
-                        timeout={300}
-                    >
-                        { showPlaceholder ? <div className={classes}>
-                            { placeholder }
-                        </div> : <></> /* Transition always expects a child */ }
-                    </CSSTransition>
-                </SwitchTransition>
+                { placeholder }
 
                 <div style={sizing}>
                     { img }
@@ -494,7 +518,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 </div>
 
                 { /* HACK: This div fills out space while the image loads, to prevent scroll jumps */ }
-                { !this.state.imgLoaded && <div style={{ height: maxHeight, width: maxWidth }} /> }
+                { !this.props.forExport && !this.state.imgLoaded && (
+                    <div style={{ height: maxHeight, width: maxWidth }} />
+                ) }
 
                 { this.state.hover && this.getTooltip() }
             </div>
@@ -552,16 +578,26 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
 
         if (this.state.error) {
+            let errorText = _t("Unable to show image due to error");
+            if (this.state.error instanceof DecryptError) {
+                errorText = _t("Error decrypting image");
+            } else if (this.state.error instanceof DownloadError) {
+                errorText = _t("Error downloading image");
+            }
+
             return (
                 <MediaProcessingError className="mx_MImageBody">
-                    { _t("Error decrypting image") }
+                    { errorText }
                 </MediaProcessingError>
             );
         }
 
-        const contentUrl = this.state.contentUrl;
+        let contentUrl = this.state.contentUrl;
         let thumbUrl: string;
-        if (this.props.forExport || (this.state.isAnimated && SettingsStore.getValue("autoplayGifs"))) {
+        if (this.props.forExport) {
+            contentUrl = this.props.mxEvent.getContent().url ?? this.props.mxEvent.getContent().file?.url;
+            thumbUrl = contentUrl;
+        } else if (this.state.isAnimated && SettingsStore.getValue("autoplayGifs")) {
             thumbUrl = contentUrl;
         } else {
             thumbUrl = this.state.thumbUrl ?? this.state.contentUrl;

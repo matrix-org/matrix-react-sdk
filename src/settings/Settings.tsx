@@ -41,6 +41,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import SlidingSyncController from './controllers/SlidingSyncController';
 import ThreadBetaController from './controllers/ThreadBetaController';
 import { FontWatcher } from "./watchers/FontWatcher";
 
@@ -91,6 +92,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    VoiceAndVideo,
     Moderation,
     Analytics,
     MessagePreviews,
@@ -100,12 +102,17 @@ export enum LabGroup {
     Developer,
 }
 
+export enum Features {
+    VoiceBroadcast = "feature_voice_broadcast",
+}
+
 export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Messaging]: _td("Messaging"),
     [LabGroup.Profile]: _td("Profile"),
     [LabGroup.Spaces]: _td("Spaces"),
     [LabGroup.Widgets]: _td("Widgets"),
     [LabGroup.Rooms]: _td("Rooms"),
+    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
     [LabGroup.MessagePreviews]: _td("Message Previews"),
@@ -115,12 +122,13 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
-export type SettingValueType = boolean |
-    number |
-    string |
-    number[] |
-    string[] |
-    Record<string, unknown>;
+export type SettingValueType = boolean
+    | number
+    | string
+    | number[]
+    | string[]
+    | Record<string, unknown>
+    | null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
@@ -172,6 +180,9 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         extraSettings?: string[];
         requiresRefresh?: boolean;
     };
+
+    // Whether the setting should have a warning sign in the microcopy
+    shouldWarn?: boolean;
 }
 
 export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
@@ -186,7 +197,7 @@ export type ISetting = IBaseSetting | IFeature;
 export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_video_rooms": {
         isFeature: true,
-        labsGroup: LabGroup.Rooms,
+        labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("Video rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -237,8 +248,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_report_to_moderators": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        displayName: _td("Report to moderators prototype. " +
-            "In rooms that support moderation, the `report` button will let you report abuse to room moderators"),
+        displayName: _td("Report to moderators"),
+        description: _td(
+            "In rooms that support moderation, "
+            +"the “Report” button will let you report abuse to room moderators.",
+        ),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -296,6 +310,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         },
 
     },
+    "feature_wysiwyg_composer": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("Rich text editor"),
+        description: _td("Use rich text instead of Markdown in the message composer. Plain text mode coming soon."),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_state_counters": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
@@ -306,7 +328,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_mjolnir": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        displayName: _td("Try out new ways to ignore people (experimental)"),
+        displayName: _td("New ways to ignore people"),
+        description: _td("Currently experimental."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -385,7 +408,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open (defaults to room member list)"),
+        displayName: _td("Right panel stays open"),
+        description: _td("Defaults to room member list."),
         default: false,
     },
     "feature_jump_to_date": {
@@ -406,27 +430,92 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Send read receipts"),
         default: true,
     },
+    "feature_sliding_sync": {
+        isFeature: true,
+        labsGroup: LabGroup.Developer,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td('Sliding Sync mode'),
+        description: _td("Under active development, cannot be disabled."),
+        shouldWarn: true,
+        default: false,
+        controller: new SlidingSyncController(),
+    },
+    "feature_sliding_sync_proxy_url": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: "",
+    },
+    "feature_element_call_video_rooms": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("Element Call video rooms"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
+    "feature_group_calls": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("New group call experience"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td(
-            "Live Location Sharing (temporary implementation: locations persist in room history)",
-        ),
+        displayName: _td("Live Location Sharing"),
+        description: _td("Temporary implementation. Locations persist in room history."),
+        shouldWarn: true,
         default: false,
     },
     "feature_favourite_messages": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Favourite Messages (under active development)"),
+        displayName: _td("Favourite Messages"),
+        description: _td("Under active development."),
+        default: false,
+    },
+    [Features.VoiceBroadcast]: {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Voice broadcast"),
+        description: _td("Under active development"),
         default: false,
     },
     "feature_new_device_manager": {
         isFeature: true,
         labsGroup: LabGroup.Experimental,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new session manager (under active development)"),
+        displayName: _td("Use new session manager"),
+        default: false,
+        betaInfo: {
+            title: _td('New session manager'),
+            caption: () => <>
+                <p>
+                    { _td('Have greater visibility and control over all your sessions.') }
+                </p>
+                <p>
+                    { _td(
+                        'Our new sessions manager provides better visibility of all your sessions, '
+                        + 'and greater control over them including the ability to remotely toggle push notifications.',
+                    )
+                    }
+                </p>
+
+            </>,
+        },
+    },
+    "feature_qr_signin_reciprocate_show": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td(
+            "Allow a QR code to be shown in session manager to sign in another device " +
+            "(requires compatible homeserver)",
+        ),
         default: false,
     },
     "baseFontSize": {
@@ -467,11 +556,18 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: false,
     },
+    "feature_hidebold": {
+        isFeature: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("Hide notification dot (only display counters badges)"),
+        labsGroup: LabGroup.Rooms,
+        default: false,
+    },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Use a more compact 'Modern' layout"),
         default: false,
-        controller: new IncompatibleController("layout", false, v => v !== Layout.Group),
+        controller: new IncompatibleController("layout", false, (v: Layout) => v !== Layout.Group),
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
@@ -637,10 +733,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "webRtcAllowPeerToPeer": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td(
-            "Allow Peer-to-Peer for 1:1 calls " +
-            "(if you enable this, the other party might be able to see your IP address)",
-        ),
+        displayName: _td("Allow Peer-to-Peer for 1:1 calls"),
+        description: _td("When enabled, the other party might be able to see your IP address"),
         default: true,
         invertedSettingName: 'webRtcForceTURN',
     },
@@ -655,6 +749,21 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "webrtc_videoinput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: "default",
+    },
+    "webrtc_audio_autoGainControl": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Automatic gain control"),
+        default: true,
+    },
+    "webrtc_audio_echoCancellation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Echo cancellation"),
+        default: true,
+    },
+    "webrtc_audio_noiseSuppression": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Noise suppression"),
+        default: true,
     },
     "language": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -697,6 +806,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
         default: null,
+    },
+    "deviceClientInformationOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td(
+            `Record the client name, version, and url ` +
+            `to recognise sessions more easily in session manager`,
+        ),
+        default: false,
     },
     "FTUE.useCaseSelection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -748,6 +865,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new NotificationsEnabledController(),
+    },
+    "deviceNotificationsEnabled": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: true,
     },
     "notificationSound": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
@@ -809,15 +930,18 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "lowBandwidth": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Low bandwidth mode (requires compatible homeserver)'),
+        displayName: _td('Low bandwidth mode'),
+        description: _td("Requires compatible homeserver."),
         default: false,
         controller: new ReloadOnChangeController(),
+        shouldWarn: true,
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td(
-            "Allow fallback call assist server turn.matrix.org when your homeserver " +
-            "does not offer one (your IP address would be shared during a call)",
+        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
+        description: _td(
+            "Only applies if your homeserver does not offer one. " +
+            "Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,
@@ -954,6 +1078,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },
+    "debug_legacy_call_handler": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
     "audioInputMuted": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
@@ -1025,6 +1153,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true,
     },
     [UIFeature.TimelineEnableRelativeDates]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.BulkUnverifiedSessionsReminder]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },

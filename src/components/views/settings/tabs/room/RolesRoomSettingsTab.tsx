@@ -20,16 +20,20 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
+import { compare } from "matrix-js-sdk/src/utils";
 
 import { _t, _td } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
-import { compare } from "../../../../../utils/strings";
 import ErrorDialog from '../../../dialogs/ErrorDialog';
 import PowerSelector from "../../../elements/PowerSelector";
 import SettingsFieldset from '../../SettingsFieldset';
 import SettingsStore from "../../../../../settings/SettingsStore";
+import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
+import { ElementCall } from "../../../../../models/Call";
+import SdkConfig, { DEFAULTS } from "../../../../../SdkConfig";
+import { AddPrivilegedUsers } from "../../AddPrivilegedUsers";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -59,8 +63,13 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
     [EventType.Reaction]: { isState: false, hideForSpace: true },
     [EventType.RoomRedaction]: { isState: false, hideForSpace: true },
 
+    // MSC3401: Native Group VoIP signaling
+    [ElementCall.CALL_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
+    [ElementCall.MEMBER_EVENT_TYPE.name]: { isState: true, hideForSpace: true },
+
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": { isState: true, hideForSpace: true },
+    [VoiceBroadcastInfoEventType]: { isState: true, hideForSpace: true },
 };
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
@@ -244,10 +253,16 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
+            [VoiceBroadcastInfoEventType]: _td("Voice broadcasts"),
         };
 
         if (SettingsStore.getValue("feature_pinning")) {
             plEventsToLabels[EventType.RoomPinnedEvents] = _td("Manage pinned events");
+        }
+        // MSC3401: Native Group VoIP signaling
+        if (SettingsStore.getValue("feature_group_calls")) {
+            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start %(brand)s calls");
+            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join %(brand)s calls");
         }
 
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {
@@ -310,12 +325,13 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         let privilegedUsersSection = <div>{ _t('No users have specific privileges in this room') }</div>;
         let mutedUsersSection;
         if (Object.keys(userLevels).length) {
-            const privilegedUsers = [];
-            const mutedUsers = [];
+            const privilegedUsers: JSX.Element[] = [];
+            const mutedUsers: JSX.Element[] = [];
 
             Object.keys(userLevels).forEach((user) => {
-                if (!Number.isInteger(userLevels[user])) { return; }
-                const canChange = userLevels[user] < currentUserLevel && canChangeLevels;
+                if (!Number.isInteger(userLevels[user])) return;
+                const isMe = user === client.getUserId();
+                const canChange = canChangeLevels && (userLevels[user] < currentUserLevel || isMe);
                 if (userLevels[user] > defaultUserLevel) { // privileged
                     privilegedUsers.push(
                         <PowerSelector
@@ -432,7 +448,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             let label = plEventsToLabels[eventType];
             if (label) {
-                label = _t(label);
+                const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
+                label = _t(label, { brand });
             } else {
                 label = _t("Send %(eventType)s events", { eventType });
             }
@@ -454,6 +471,11 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             <div className="mx_SettingsTab mx_RolesRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Roles & Permissions") }</div>
                 { privilegedUsersSection }
+                {
+                    (canChangeLevels && room !== null) && (
+                        <AddPrivilegedUsers room={room} defaultUserLevel={defaultUserLevel} />
+                    )
+                }
                 { mutedUsersSection }
                 { bannedUsersSection }
                 <SettingsFieldset

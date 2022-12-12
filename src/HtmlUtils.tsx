@@ -24,7 +24,7 @@ import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
 import { split } from 'lodash';
 import katex from 'katex';
-import { AllHtmlEntities } from 'html-entities';
+import { decode } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
 import { Optional } from 'matrix-events-sdk';
 
@@ -460,7 +460,7 @@ function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | s
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnString): string;
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnNode): ReactNode;
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOpts = {}) {
-    const isFormattedBody = content.format === "org.matrix.custom.html" && content.formatted_body;
+    const isFormattedBody = content.format === "org.matrix.custom.html" && !!content.formatted_body;
     let bodyHasEmoji = false;
     let isHtmlMessage = false;
 
@@ -511,14 +511,14 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
                 decodeEntities: false,
             });
             const isPlainText = phtml.html() === phtml.root().text();
-            isHtmlMessage = isFormattedBody && !isPlainText;
+            isHtmlMessage = !isPlainText;
 
             if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
                 // @ts-ignore - The types for `replaceWith` wrongly expect
                 // Cheerio instance to be returned.
                 phtml('div, span[data-mx-maths!=""]').replaceWith(function(i, e) {
                     return katex.renderToString(
-                        AllHtmlEntities.decode(phtml(e).attr('data-mx-maths')),
+                        decode(phtml(e).attr('data-mx-maths')),
                         {
                             throwOnError: false,
                             // @ts-ignore - `e` can be an Element, not just a Node

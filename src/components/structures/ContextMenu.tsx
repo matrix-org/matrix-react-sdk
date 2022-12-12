@@ -26,6 +26,7 @@ import UIStore from "../../stores/UIStore";
 import { checkInputableElement, RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import Modal, { ModalManagerEvent } from "../../Modal";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -92,6 +93,9 @@ export interface IProps extends IPosition {
     // within an existing FocusLock e.g inside a modal.
     focusLock?: boolean;
 
+    // call onFinished on any interaction with the menu
+    closeOnInteraction?: boolean;
+
     // Function to be called on menu close
     onFinished();
     // on resize callback
@@ -124,10 +128,19 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         this.initialFocus = document.activeElement as HTMLElement;
     }
 
-    componentWillUnmount() {
+    public componentDidMount() {
+        Modal.on(ModalManagerEvent.Opened, this.onModalOpen);
+    }
+
+    public componentWillUnmount() {
+        Modal.off(ModalManagerEvent.Opened, this.onModalOpen);
         // return focus to the thing which had it before us
         this.initialFocus.focus();
     }
+
+    private onModalOpen = () => {
+        this.props.onFinished?.();
+    };
 
     private collectContextMenuRect = (element: HTMLDivElement) => {
         // We don't need to clean up when unmounting, so ignore
@@ -180,12 +193,16 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
     private onFinished = (ev: React.MouseEvent) => {
         ev.stopPropagation();
         ev.preventDefault();
-        if (this.props.onFinished) this.props.onFinished();
+        this.props.onFinished?.();
     };
 
     private onClick = (ev: React.MouseEvent) => {
         // Don't allow clicks to escape the context menu wrapper
         ev.stopPropagation();
+
+        if (this.props.closeOnInteraction) {
+            this.props.onFinished?.();
+        }
     };
 
     // We now only handle closing the ContextMenu in this keyDown handler.
@@ -397,6 +414,13 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             </FocusLock>;
         }
 
+        // filter props that are invalid for DOM elements
+        const {
+            hasBackground: _hasBackground, // eslint-disable-line @typescript-eslint/no-unused-vars
+            onFinished: _onFinished, // eslint-disable-line @typescript-eslint/no-unused-vars
+            ...divProps
+        } = props;
+
         return (
             <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.onKeyDown}>
                 { ({ onKeyDownHandler }) => (
@@ -413,7 +437,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
                             style={menuStyle}
                             ref={this.collectContextMenuRect}
                             role={managed ? "menu" : undefined}
-                            {...props}
+                            {...divProps}
                         >
                             { body }
                         </div>
@@ -446,6 +470,35 @@ export const toRightOf = (elementRect: Pick<DOMRect, "right" | "top" | "height">
     let top = elementRect.top + (elementRect.height / 2) + window.scrollY;
     top -= chevronOffset + 8; // where 8 is half the height of the chevron
     return { left, top, chevronOffset };
+};
+
+export type ToLeftOf = {
+    chevronOffset: number;
+    right: number;
+    top: number;
+};
+
+// Placement method for <ContextMenu /> to position context menu to left of elementRect with chevronOffset
+export const toLeftOf = (elementRect: DOMRect, chevronOffset = 12): ToLeftOf => {
+    const right = UIStore.instance.windowWidth - elementRect.left + window.scrollX - 3;
+    let top = elementRect.top + (elementRect.height / 2) + window.scrollY;
+    top -= chevronOffset + 8; // where 8 is half the height of the chevron
+    return { right, top, chevronOffset };
+};
+
+/**
+ * Placement method for <ContextMenu /> to position context menu of or right of elementRect
+ * depending on which side has more space.
+ */
+export const toLeftOrRightOf = (elementRect: DOMRect, chevronOffset = 12): ToRightOf | ToLeftOf => {
+    const spaceToTheLeft = elementRect.left;
+    const spaceToTheRight = UIStore.instance.windowWidth - elementRect.right;
+
+    if (spaceToTheLeft > spaceToTheRight) {
+        return toLeftOf(elementRect, chevronOffset);
+    }
+
+    return toRightOf(elementRect, chevronOffset);
 };
 
 export type AboveLeftOf = IPosition & {
@@ -510,16 +563,11 @@ export const alwaysAboveLeftOf = (
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonRight = elementRect.right + window.scrollX;
-    const buttonBottom = elementRect.bottom + window.scrollY;
     const buttonTop = elementRect.top + window.scrollY;
     // Align the right edge of the menu to the right edge of the button
     menuOptions.right = UIStore.instance.windowWidth - buttonRight;
-    // Align the menu vertically on whichever side of the button has more space available.
-    if (buttonBottom < UIStore.instance.windowHeight / 2) {
-        menuOptions.top = buttonBottom + vPadding;
-    } else {
-        menuOptions.bottom = (UIStore.instance.windowHeight - buttonTop) + vPadding;
-    }
+    // Align the menu vertically above the menu
+    menuOptions.bottom = (UIStore.instance.windowHeight - buttonTop) + vPadding;
 
     return menuOptions;
 };
@@ -551,8 +599,13 @@ type ContextMenuTuple<T> = [
     (val: boolean) => void,
 ];
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
-export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<T> => {
-    const button = useRef<T>(null);
+export const useContextMenu = <T extends any = HTMLElement>(inputRef?: RefObject<T>): ContextMenuTuple<T> => {
+    let button = useRef<T>(null);
+    if (inputRef) {
+        // if we are given a ref, use it instead of ours
+        button = inputRef;
+    }
+
     const [isOpen, setIsOpen] = useState(false);
     const open = (ev?: SyntheticEvent) => {
         ev?.preventDefault();
@@ -565,7 +618,7 @@ export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<
         setIsOpen(false);
     };
 
-    return [isOpen, button, open, close, setIsOpen];
+    return [button.current ? isOpen : false, button, open, close, setIsOpen];
 };
 
 // XXX: Deprecated, used only for dynamic Tooltips. Avoid using at all costs.

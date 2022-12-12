@@ -16,8 +16,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import request from "browser-request";
-
 import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
@@ -80,13 +78,13 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, opts: CreateBotOpts): 
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password, opts.displayName).then(credentials => {
+        cy.log(`Registered bot user ${username} with displayname ${opts.displayName}`);
         return cy.window({ log: false }).then(win => {
             const cli = new win.matrixcs.MatrixClient({
                 baseUrl: synapse.baseUrl,
                 userId: credentials.userId,
                 deviceId: credentials.deviceId,
                 accessToken: credentials.accessToken,
-                request,
                 store: new win.matrixcs.MemoryStore(),
                 scheduler: new win.matrixcs.MatrixScheduler(),
                 cryptoStore: new win.matrixcs.MemoryCryptoStore(),
@@ -128,7 +126,7 @@ Cypress.Commands.add("botJoinRoomByName", (cli: MatrixClient, roomName: string):
         return cy.botJoinRoom(cli, room.roomId);
     }
 
-    return cy.wrap(Promise.reject());
+    return cy.wrap(Promise.reject(`Bot room join failed. Cannot find room '${roomName}'`));
 });
 
 Cypress.Commands.add("botSendMessage", (

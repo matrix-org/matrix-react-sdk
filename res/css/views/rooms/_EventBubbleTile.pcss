@@ -43,7 +43,9 @@ limitations under the License.
     --EventTile_bubble_gap-inline: 5px;
 
     position: relative;
-    margin-top: var(--gutterSize);
+    /* Other half of the gutter is provided by margin-bottom on the last tile
+    of the section */
+    margin-top: calc(var(--gutterSize) / 2);
     margin-left: var(--EventTile_bubble-margin-inline-start);
     font-size: $font-14px;
 
@@ -154,7 +156,7 @@ limitations under the License.
         }
     }
 
-    .mx_CallEvent {
+    .mx_LegacyCallEvent {
         background-color: unset;
 
         border-style: solid;
@@ -292,23 +294,13 @@ limitations under the License.
             }
 
             /* we put the timestamps for media (other than stickers) atop the media */
-            /* for images we also apply a linear gradient and change the timestamp colour to aid readability */
             &.mx_EventTile_image {
                 .mx_MessageTimestamp {
-                    color: #ffffff; /* regardless of theme, always visible on the below gradient */
-                }
-
-                /* linear gradient to make the timestamp more visible */
-                .mx_MImageBody::before {
-                    content: "";
-                    position: absolute;
-                    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
-                    z-index: 1;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    pointer-events: none;
+                    border-radius: $timeline-image-border-radius;
+                    /* Hardcoded colours because it's the same on all themes */
+                    background-color: rgba(0, 0, 0, 0.6);
+                    color: #ffffff;
+                    padding: 0px 4px 0px 4px;
                 }
             }
         }
@@ -533,6 +525,7 @@ limitations under the License.
         max-width: 100%;
     }
 
+    .mx_LegacyCallEvent_wrapper,
     .mx_CallEvent_wrapper {
         justify-content: center;
     }

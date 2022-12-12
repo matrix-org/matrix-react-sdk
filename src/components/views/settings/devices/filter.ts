@@ -14,26 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DeviceWithVerification, DeviceSecurityVariation } from "./types";
+import { ExtendedDevice, DeviceSecurityVariation } from "./types";
 
-type DeviceFilterCondition = (device: DeviceWithVerification) => boolean;
+type DeviceFilterCondition = (device: ExtendedDevice) => boolean;
 
 const MS_DAY = 24 * 60 * 60 * 1000;
 export const INACTIVE_DEVICE_AGE_MS = 7.776e+9; // 90 days
 export const INACTIVE_DEVICE_AGE_DAYS = INACTIVE_DEVICE_AGE_MS / MS_DAY;
 
+export type FilterVariation = DeviceSecurityVariation.Verified
+    | DeviceSecurityVariation.Inactive
+    | DeviceSecurityVariation.Unverified;
+
 export const isDeviceInactive: DeviceFilterCondition = device =>
     !!device.last_seen_ts && device.last_seen_ts < Date.now() - INACTIVE_DEVICE_AGE_MS;
 
-const filters: Record<DeviceSecurityVariation, DeviceFilterCondition> = {
+const filters: Record<FilterVariation, DeviceFilterCondition> = {
     [DeviceSecurityVariation.Verified]: device => !!device.isVerified,
     [DeviceSecurityVariation.Unverified]: device => !device.isVerified,
     [DeviceSecurityVariation.Inactive]: isDeviceInactive,
 };
 
 export const filterDevicesBySecurityRecommendation = (
-    devices: DeviceWithVerification[],
-    securityVariations: DeviceSecurityVariation[],
+    devices: ExtendedDevice[],
+    securityVariations: FilterVariation[],
 ) => {
     const activeFilters = securityVariations.map(variation => filters[variation]);
     if (!activeFilters.length) {

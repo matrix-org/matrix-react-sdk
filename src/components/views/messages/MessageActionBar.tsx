@@ -59,6 +59,7 @@ import { Action } from '../../../dispatcher/actions';
 import SdkConfig from "../../../SdkConfig";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
+import { GetRelationsForEvent } from '../rooms/EventTile';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -67,11 +68,7 @@ interface IOptionsButtonProps {
     getReplyChain: () => ReplyChain;
     permalinkCreator: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: string,
-        eventType: string
-    ) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 const OptionsButton: React.FC<IOptionsButtonProps> = ({
@@ -83,7 +80,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     getRelationsForEvent,
 }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-    const [onFocus, isActive, ref] = useRovingTabIndex(button);
+    const [onFocus, isActive] = useRovingTabIndex(button);
     useEffect(() => {
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
@@ -123,7 +120,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             onClick={onOptionsClick}
             onContextMenu={onOptionsClick}
             isExpanded={menuDisplayed}
-            inputRef={ref}
+            inputRef={button}
             onFocus={onFocus}
             tabIndex={isActive ? 0 : -1}
         >
@@ -135,13 +132,13 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
 
 interface IReactButtonProps {
     mxEvent: MatrixEvent;
-    reactions: Relations;
+    reactions?: Relations | null | undefined;
     onFocusChange: (menuDisplayed: boolean) => void;
 }
 
 const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusChange }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-    const [onFocus, isActive, ref] = useRovingTabIndex(button);
+    const [onFocus, isActive] = useRovingTabIndex(button);
     useEffect(() => {
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
@@ -173,7 +170,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
             onClick={onClick}
             onContextMenu={onClick}
             isExpanded={menuDisplayed}
-            inputRef={ref}
+            inputRef={button}
             onFocus={onFocus}
             tabIndex={isActive ? 0 : -1}
         >
@@ -299,7 +296,7 @@ const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
 
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
-    reactions?: Relations;
+    reactions?: Relations | null | undefined;
     // TODO: Types
     getTile: () => any | null;
     getReplyChain: () => ReplyChain | undefined;
@@ -307,11 +304,7 @@ interface IMessageActionBarProps {
     onFocusChange?: (menuDisplayed: boolean) => void;
     toggleThreadExpanded: () => void;
     isQuoteExpanded?: boolean;
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: RelationType | string,
-        eventType: string
-    ) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 export default class MessageActionBar extends React.PureComponent<IMessageActionBarProps> {

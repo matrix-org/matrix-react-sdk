@@ -20,7 +20,7 @@ import DeviceListener from '../DeviceListener';
 import GenericToast from "../components/views/toasts/GenericToast";
 import ToastStore from "../stores/ToastStore";
 import { Action } from "../dispatcher/actions";
-import { UserTab } from "../components/views/dialogs/UserTab";
+import { snoozeBulkUnverifiedDeviceReminder } from '../utils/device/snoozeBulkUnverifiedDeviceReminder';
 
 const TOAST_KEY = "reviewsessions";
 
@@ -29,18 +29,18 @@ export const showToast = (deviceIds: Set<string>) => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions(deviceIds);
 
         dis.dispatch({
-            action: Action.ViewUserSettings,
-            initialTabId: UserTab.Security,
+            action: Action.ViewUserDeviceSettings,
         });
     };
 
     const onReject = () => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions(deviceIds);
+        snoozeBulkUnverifiedDeviceReminder();
     };
 
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
-        title: _t("You have unverified logins"),
+        title: _t("You have unverified sessions"),
         icon: "verification_warning",
         props: {
             description: _t("Review to ensure your account is safe"),

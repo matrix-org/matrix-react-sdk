@@ -38,8 +38,6 @@ export interface IValidateOpts {
 interface IProps {
     // The field's ID, which binds the input and label together. Immutable.
     id?: string;
-    // The field's type (when used as an <input>). Defaults to "text".
-    type?: string;
     // id of a <datalist> element for suggestions
     list?: string;
     // The field's label string.
@@ -292,7 +290,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         let fieldTooltip;
         if (tooltipContent || this.state.feedback) {
             fieldTooltip = <Tooltip
-                tooltipClassName={classNames("mx_Field_tooltip", tooltipClassName)}
+                tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
                 visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
                 label={tooltipContent || this.state.feedback}
                 alignment={Tooltip.Alignment.Right}

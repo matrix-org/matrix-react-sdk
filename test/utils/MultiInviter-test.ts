@@ -41,6 +41,8 @@ jest.mock('../../src/Modal', () => ({
 
 jest.mock('../../src/settings/SettingsStore', () => ({
     getValue: jest.fn(),
+    monitorSetting: jest.fn(),
+    watchSetting: jest.fn(),
 }));
 
 const mockPromptBeforeInviteUnknownUsers = (value: boolean) => {
@@ -98,9 +100,9 @@ describe('MultiInviter', () => {
                 const result = await inviter.invite([MXID1, MXID2, MXID3]);
 
                 expect(client.invite).toHaveBeenCalledTimes(3);
-                expect(client.invite).toHaveBeenNthCalledWith(1, ROOMID, MXID1, undefined, undefined);
-                expect(client.invite).toHaveBeenNthCalledWith(2, ROOMID, MXID2, undefined, undefined);
-                expect(client.invite).toHaveBeenNthCalledWith(3, ROOMID, MXID3, undefined, undefined);
+                expect(client.invite).toHaveBeenNthCalledWith(1, ROOMID, MXID1, undefined);
+                expect(client.invite).toHaveBeenNthCalledWith(2, ROOMID, MXID2, undefined);
+                expect(client.invite).toHaveBeenNthCalledWith(3, ROOMID, MXID3, undefined);
 
                 expectAllInvitedResult(result);
             });
@@ -116,9 +118,9 @@ describe('MultiInviter', () => {
                     const result = await inviter.invite([MXID1, MXID2, MXID3]);
 
                     expect(client.invite).toHaveBeenCalledTimes(3);
-                    expect(client.invite).toHaveBeenNthCalledWith(1, ROOMID, MXID1, undefined, undefined);
-                    expect(client.invite).toHaveBeenNthCalledWith(2, ROOMID, MXID2, undefined, undefined);
-                    expect(client.invite).toHaveBeenNthCalledWith(3, ROOMID, MXID3, undefined, undefined);
+                    expect(client.invite).toHaveBeenNthCalledWith(1, ROOMID, MXID1, undefined);
+                    expect(client.invite).toHaveBeenNthCalledWith(2, ROOMID, MXID2, undefined);
+                    expect(client.invite).toHaveBeenNthCalledWith(3, ROOMID, MXID3, undefined);
 
                     expectAllInvitedResult(result);
                 });
@@ -131,7 +133,7 @@ describe('MultiInviter', () => {
                     const result = await inviter.invite([MXID1, MXID2, MXID3]);
 
                     expect(client.invite).toHaveBeenCalledTimes(1);
-                    expect(client.invite).toHaveBeenNthCalledWith(1, ROOMID, MXID1, undefined, undefined);
+                    expect(client.invite).toHaveBeenNthCalledWith(1, ROOMID, MXID1, undefined);
 
                     // The resolved state is 'invited' for all users.
                     // With the above client expectations, the test ensures that only the first user is invited.

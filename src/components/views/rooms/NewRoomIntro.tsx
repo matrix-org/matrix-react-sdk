@@ -55,10 +55,10 @@ const NewRoomIntro = () => {
         ? room.targets[0]?.userId
         : DMRoomMap.shared().getUserIdForRoomId(roomId);
 
-    let body;
+    let body: JSX.Element;
     if (dmPartner) {
         let introMessage = _t("This is the beginning of your direct message history with <displayName/>.");
-        let caption;
+        let caption: string | undefined;
 
         if (isLocalRoom) {
             introMessage = _t("Send your first message to invite <displayName/> to chat");
@@ -67,7 +67,7 @@ const NewRoomIntro = () => {
         }
 
         const member = room?.getMember(dmPartner);
-        const displayName = member?.rawDisplayName || dmPartner;
+        const displayName = room?.name || member?.rawDisplayName || dmPartner;
         body = <React.Fragment>
             <RoomAvatar
                 room={room}
@@ -175,14 +175,22 @@ const NewRoomIntro = () => {
         }
 
         const avatarUrl = room.currentState.getStateEvents(EventType.RoomAvatar, "")?.getContent()?.url;
-        body = <React.Fragment>
-            <MiniAvatarUploader
-                hasAvatar={!!avatarUrl}
+        let avatar = (
+            <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} viewAvatarOnClick={!!avatarUrl} />
+        );
+
+        if (!avatarUrl) {
+            avatar = <MiniAvatarUploader
+                hasAvatar={false}
                 noAvatarLabel={_t("Add a photo, so people can easily spot your room.")}
                 setAvatarUrl={url => cli.sendStateEvent(roomId, EventType.RoomAvatar, { url }, '')}
             >
-                <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} viewAvatarOnClick={true} />
-            </MiniAvatarUploader>
+                { avatar }
+            </MiniAvatarUploader>;
+        }
+
+        body = <React.Fragment>
+            { avatar }
 
             <h2>{ room.name }</h2>
 

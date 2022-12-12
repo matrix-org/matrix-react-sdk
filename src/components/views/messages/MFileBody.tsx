@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
@@ -88,9 +88,9 @@ export function computedStyle(element: HTMLElement) {
     if (cssText == "") {
         // Firefox doesn't implement ".cssText" for computed styles.
         // https://bugzilla.mozilla.org/show_bug.cgi?id=137687
-        for (let i = 0; i < style.length; i++) {
-            cssText += style[i] + ":";
-            cssText += style.getPropertyValue(style[i]) + ";";
+        for (const rule of style) {
+            cssText += rule + ":";
+            cssText += style.getPropertyValue(rule) + ";";
         }
     }
     return cssText;

@@ -38,7 +38,7 @@ limitations under the License.
 .mx_Tooltip_chevron {
     position: absolute;
     left: -7px;
-    top: 10px;
+    top: calc(50% - 6px);
     width: 0;
     height: 0;
     border-top: 7px solid transparent;
@@ -75,11 +75,6 @@ limitations under the License.
     color: $accent-fg-color;
     border: 0;
     text-align: center;
-
-    &:not(.mx_Tooltip_noMargin) {
-        margin-left: 6px;
-        margin-right: 6px;
-    }
 
     .mx_Tooltip_chevron {
         display: none;

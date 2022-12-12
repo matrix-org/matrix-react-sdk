@@ -64,7 +64,7 @@ interface IProps {
     continueText?: string;
     continueKind?: string;
     // callback
-    makeRequest(auth: IAuthData): Promise<IAuthData>;
+    makeRequest(auth: IAuthData | null): Promise<IAuthData>;
     // callback called when the auth process has finished,
     // successfully or unsuccessfully.
     // @param {boolean} status True if the operation requiring
@@ -127,14 +127,13 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         });
 
         if (this.props.poll) {
-            this.intervalId = setInterval(() => {
+            this.intervalId = window.setInterval(() => {
                 this.authLogic.poll();
             }, 2000);
         }
     }
 
-    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
-    UNSAFE_componentWillMount() { // eslint-disable-line @typescript-eslint/naming-convention, camelcase
+    public componentDidMount() {
         this.authLogic.attemptAuth().then((result) => {
             const extra = {
                 emailSid: this.authLogic.getEmailSid(),
@@ -199,7 +198,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         });
     };
 
-    private requestCallback = (auth: IAuthData, background: boolean): Promise<IAuthData> => {
+    private requestCallback = (auth: IAuthData | null, background: boolean): Promise<IAuthData> => {
         // This wrapper just exists because the js-sdk passes a second
         // 'busy' param for backwards compat. This throws the tests off
         // so discard it here.

@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+
 import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
-import type { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
@@ -50,7 +51,7 @@ const checkDMRoom = () => {
 
 const startDMWithBob = function(this: CryptoTestContext) {
     cy.get('.mx_RoomList [aria-label="Start chat"]').click();
-    cy.get('[data-test-id="invite-dialog-input"]').type(this.bob.getUserId());
+    cy.get('[data-testid="invite-dialog-input"]').type(this.bob.getUserId());
     cy.contains(".mx_InviteDialog_tile_nameStack_name", "Bob").click();
     cy.contains(".mx_InviteDialog_userTile_pill .mx_InviteDialog_userTile_name", "Bob").should("exist");
     cy.get(".mx_InviteDialog_goButton").click();
@@ -60,7 +61,6 @@ const testMessages = function(this: CryptoTestContext) {
     // check the invite message
     cy.contains(".mx_EventTile_body", "Hey!").closest(".mx_EventTile").within(() => {
         cy.get(".mx_EventTile_e2eIcon_warning").should("not.exist");
-        cy.get(".mx_EventTile_receiptSent").should("exist");
     });
 
     // Bob sends a response
@@ -73,17 +73,42 @@ const testMessages = function(this: CryptoTestContext) {
 };
 
 const bobJoin = function(this: CryptoTestContext) {
-    cy.botJoinRoomByName(this.bob, "Alice").as("bobsRoom");
+    cy.window({ log: false }).then(async win => {
+        const bobRooms = this.bob.getRooms();
+        if (!bobRooms.length) {
+            await new Promise<void>(resolve => {
+                const onMembership = (_event) => {
+                    this.bob.off(win.matrixcs.RoomMemberEvent.Membership, onMembership);
+                    resolve();
+                };
+                this.bob.on(win.matrixcs.RoomMemberEvent.Membership, onMembership);
+            });
+        }
+    }).then(() => {
+        cy.botJoinRoomByName(this.bob, "Alice").as("bobsRoom");
+    });
+
     cy.contains(".mx_TextualEvent", "Bob joined the room").should("exist");
 };
+
+/** configure the given MatrixClient to auto-accept any invites */
+function autoJoin(client: MatrixClient) {
+    cy.window({ log: false }).then(async win => {
+        client.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+            if (member.membership === "invite" && member.userId === client.getUserId()) {
+                client.joinRoom(member.roomId);
+            }
+        });
+    });
+}
 
 const handleVerificationRequest = (request: VerificationRequest): Chainable<EmojiMapping[]> => {
     return cy.wrap(new Promise<EmojiMapping[]>((resolve) => {
         const onShowSas = (event: ISasEvent) => {
-            resolve(event.sas.emoji);
             verifier.off("show_sas", onShowSas);
             event.confirm();
             verifier.done();
+            resolve(event.sas.emoji);
         };
 
         const verifier = request.beginKeyVerification("m.sas.v1");
@@ -158,6 +183,24 @@ describe("Cryptography", function() {
         checkDMRoom();
         bobJoin.call(this);
         testMessages.call(this);
+        verify.call(this);
+    });
+
+    it("should allow verification when there is no existing DM", function(this: CryptoTestContext) {
+        cy.bootstrapCrossSigning();
+        autoJoin(this.bob);
+
+        /* we need to have a room with the other user present, so we can open the verification panel */
+        let roomId: string;
+        cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] }).then(_room1Id => {
+            roomId = _room1Id;
+            cy.log(`Created test room ${roomId}`);
+            cy.visit(`/#/room/${roomId}`);
+            // wait for Bob to join the room, otherwise our attempt to open his user details may race
+            // with his join.
+            cy.contains(".mx_TextualEvent", "Bob joined the room").should("exist");
+        });
+
         verify.call(this);
     });
 });

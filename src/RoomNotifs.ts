@@ -25,6 +25,7 @@ import {
     TweakName,
 } from "matrix-js-sdk/src/@types/PushRules";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 
@@ -35,8 +36,8 @@ export enum RoomNotifState {
     Mute = 'mute',
 }
 
-export function getRoomNotifsState(roomId: string): RoomNotifState {
-    if (MatrixClientPeg.get().isGuest()) return RoomNotifState.AllMessages;
+export function getRoomNotifsState(client: MatrixClient, roomId: string): RoomNotifState {
+    if (client.isGuest()) return RoomNotifState.AllMessages;
 
     // look through the override rules for a rule affecting this room:
     // if one exists, it will take precedence.
@@ -48,7 +49,7 @@ export function getRoomNotifsState(roomId: string): RoomNotifState {
     // for everything else, look at the room rule.
     let roomRule = null;
     try {
-        roomRule = MatrixClientPeg.get().getRoomPushRule('global', roomId);
+        roomRule = client.getRoomPushRule('global', roomId);
     } catch (err) {
         // Possible that the client doesn't have pushRules yet. If so, it
         // hasn't started either, so indicate that this room is not notifying.
@@ -78,15 +79,23 @@ export function setRoomNotifsState(roomId: string, newState: RoomNotifState): Pr
     }
 }
 
-export function getUnreadNotificationCount(room: Room, type: NotificationCountType = null): number {
-    let notificationCount = room.getUnreadNotificationCount(type);
+export function getUnreadNotificationCount(
+    room: Room,
+    type: NotificationCountType,
+    threadId?: string,
+): number {
+    let notificationCount = (!!threadId
+        ? room.getThreadUnreadNotificationCount(threadId, type)
+        : room.getUnreadNotificationCount(type));
 
     // Check notification counts in the old room just in case there's some lost
     // there. We only go one level down to avoid performance issues, and theory
     // is that 1st generation rooms will have already been read by the 3rd generation.
     const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, "");
-    if (createEvent && createEvent.getContent()['predecessor']) {
-        const oldRoomId = createEvent.getContent()['predecessor']['room_id'];
+    const predecessor = createEvent?.getContent().predecessor;
+    // Exclude threadId, as the same thread can't continue over a room upgrade
+    if (!threadId && predecessor) {
+        const oldRoomId = predecessor.room_id;
         const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
         if (oldRoom) {
             // We only ever care if there's highlights in the old room. No point in

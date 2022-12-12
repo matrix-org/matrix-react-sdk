@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ExportDialog /> renders export dialog 1`] = `
-Array [
+[
   <BaseDialog
     className="mx_ExportDialog false"
     contentId="mx_Dialog_content"
@@ -14,7 +14,7 @@ Array [
     <ForwardRef(FocusLockUICombination)
       className="mx_ExportDialog false mx_Dialog_fixedWidth"
       lockProps={
-        Object {
+        {
           "aria-describedby": "mx_Dialog_content",
           "aria-labelledby": "mx_BaseDialog_title",
           "onKeyDown": [Function],
@@ -30,7 +30,7 @@ Array [
         crossFrame={true}
         disabled={false}
         lockProps={
-          Object {
+          {
             "aria-describedby": "mx_Dialog_content",
             "aria-labelledby": "mx_BaseDialog_title",
             "onKeyDown": [Function],
@@ -46,7 +46,7 @@ Array [
           data-focus-guard={true}
           key="guard-first"
           style={
-            Object {
+            {
               "height": "0px",
               "left": "1px",
               "overflow": "hidden",
@@ -62,7 +62,7 @@ Array [
           autoFocus={true}
           crossFrame={true}
           disabled={false}
-          id={Object {}}
+          id={{}}
           observed={
             <div
               aria-describedby="mx_Dialog_content"
@@ -249,14 +249,14 @@ Array [
                   class="mx_Dialog_buttons_row"
                 >
                   <button
-                    data-test-id="dialog-cancel-button"
+                    data-testid="dialog-cancel-button"
                     type="button"
                   >
                     Cancel
                   </button>
                   <button
                     class="mx_Dialog_primary"
-                    data-test-id="dialog-primary-button"
+                    data-testid="dialog-primary-button"
                     type="button"
                   >
                     Export
@@ -269,12 +269,12 @@ Array [
           onDeactivation={[Function]}
           persistentFocus={false}
           returnFocus={[Function]}
-          shards={Array []}
+          shards={[]}
           sideCar={
-            Object {
+            {
               "assignMedium": [Function],
               "assignSyncMedium": [Function],
-              "options": Object {
+              "options": {
                 "async": true,
                 "ssr": false,
               },
@@ -287,7 +287,7 @@ Array [
             autoFocus={true}
             crossFrame={true}
             disabled={false}
-            id={Object {}}
+            id={{}}
             observed={
               <div
                 aria-describedby="mx_Dialog_content"
@@ -474,14 +474,14 @@ Array [
                     class="mx_Dialog_buttons_row"
                   >
                     <button
-                      data-test-id="dialog-cancel-button"
+                      data-testid="dialog-cancel-button"
                       type="button"
                     >
                       Cancel
                     </button>
                     <button
                       class="mx_Dialog_primary"
-                      data-test-id="dialog-primary-button"
+                      data-testid="dialog-primary-button"
                       type="button"
                     >
                       Export
@@ -494,12 +494,12 @@ Array [
             onDeactivation={[Function]}
             persistentFocus={false}
             returnFocus={[Function]}
-            shards={Array []}
+            shards={[]}
             sideCar={
-              Object {
+              {
                 "assignMedium": [Function],
                 "assignSyncMedium": [Function],
-                "options": Object {
+                "options": {
                   "async": true,
                   "ssr": false,
                 },
@@ -566,16 +566,16 @@ Array [
             </span>
             <StyledRadioGroup
               definitions={
-                Array [
-                  Object {
+                [
+                  {
                     "label": "HTML",
                     "value": "Html",
                   },
-                  Object {
+                  {
                     "label": "Plain Text",
                     "value": "PlainText",
                   },
-                  Object {
+                  {
                     "label": "JSON",
                     "value": "Json",
                   },
@@ -827,7 +827,7 @@ Array [
                 className="mx_Dialog_buttons_row"
               >
                 <button
-                  data-test-id="dialog-cancel-button"
+                  data-testid="dialog-cancel-button"
                   disabled={false}
                   onClick={[Function]}
                   type="button"
@@ -836,7 +836,7 @@ Array [
                 </button>
                 <button
                   className="mx_Dialog_primary"
-                  data-test-id="dialog-primary-button"
+                  data-testid="dialog-primary-button"
                   onClick={[Function]}
                   type="button"
                 >
@@ -849,7 +849,7 @@ Array [
         <div
           data-focus-guard={true}
           style={
-            Object {
+            {
               "height": "0px",
               "left": "1px",
               "overflow": "hidden",
@@ -867,7 +867,7 @@ Array [
   <ForwardRef(FocusLockUICombination)
     className="mx_ExportDialog false mx_Dialog_fixedWidth"
     lockProps={
-      Object {
+      {
         "aria-describedby": "mx_Dialog_content",
         "aria-labelledby": "mx_BaseDialog_title",
         "onKeyDown": [Function],
@@ -883,7 +883,7 @@ Array [
       crossFrame={true}
       disabled={false}
       lockProps={
-        Object {
+        {
           "aria-describedby": "mx_Dialog_content",
           "aria-labelledby": "mx_BaseDialog_title",
           "onKeyDown": [Function],
@@ -899,7 +899,7 @@ Array [
         data-focus-guard={true}
         key="guard-first"
         style={
-          Object {
+          {
             "height": "0px",
             "left": "1px",
             "overflow": "hidden",
@@ -915,7 +915,7 @@ Array [
         autoFocus={true}
         crossFrame={true}
         disabled={false}
-        id={Object {}}
+        id={{}}
         observed={
           <div
             aria-describedby="mx_Dialog_content"
@@ -1102,14 +1102,14 @@ Array [
                 class="mx_Dialog_buttons_row"
               >
                 <button
-                  data-test-id="dialog-cancel-button"
+                  data-testid="dialog-cancel-button"
                   type="button"
                 >
                   Cancel
                 </button>
                 <button
                   class="mx_Dialog_primary"
-                  data-test-id="dialog-primary-button"
+                  data-testid="dialog-primary-button"
                   type="button"
                 >
                   Export
@@ -1122,12 +1122,12 @@ Array [
         onDeactivation={[Function]}
         persistentFocus={false}
         returnFocus={[Function]}
-        shards={Array []}
+        shards={[]}
         sideCar={
-          Object {
+          {
             "assignMedium": [Function],
             "assignSyncMedium": [Function],
-            "options": Object {
+            "options": {
               "async": true,
               "ssr": false,
             },
@@ -1140,7 +1140,7 @@ Array [
           autoFocus={true}
           crossFrame={true}
           disabled={false}
-          id={Object {}}
+          id={{}}
           observed={
             <div
               aria-describedby="mx_Dialog_content"
@@ -1327,14 +1327,14 @@ Array [
                   class="mx_Dialog_buttons_row"
                 >
                   <button
-                    data-test-id="dialog-cancel-button"
+                    data-testid="dialog-cancel-button"
                     type="button"
                   >
                     Cancel
                   </button>
                   <button
                     class="mx_Dialog_primary"
-                    data-test-id="dialog-primary-button"
+                    data-testid="dialog-primary-button"
                     type="button"
                   >
                     Export
@@ -1347,12 +1347,12 @@ Array [
           onDeactivation={[Function]}
           persistentFocus={false}
           returnFocus={[Function]}
-          shards={Array []}
+          shards={[]}
           sideCar={
-            Object {
+            {
               "assignMedium": [Function],
               "assignSyncMedium": [Function],
-              "options": Object {
+              "options": {
                 "async": true,
                 "ssr": false,
               },
@@ -1419,16 +1419,16 @@ Array [
           </span>
           <StyledRadioGroup
             definitions={
-              Array [
-                Object {
+              [
+                {
                   "label": "HTML",
                   "value": "Html",
                 },
-                Object {
+                {
                   "label": "Plain Text",
                   "value": "PlainText",
                 },
-                Object {
+                {
                   "label": "JSON",
                   "value": "Json",
                 },
@@ -1680,7 +1680,7 @@ Array [
               className="mx_Dialog_buttons_row"
             >
               <button
-                data-test-id="dialog-cancel-button"
+                data-testid="dialog-cancel-button"
                 disabled={false}
                 onClick={[Function]}
                 type="button"
@@ -1689,7 +1689,7 @@ Array [
               </button>
               <button
                 className="mx_Dialog_primary"
-                data-test-id="dialog-primary-button"
+                data-testid="dialog-primary-button"
                 onClick={[Function]}
                 type="button"
               >
@@ -1702,7 +1702,7 @@ Array [
       <div
         data-focus-guard={true}
         style={
-          Object {
+          {
             "height": "0px",
             "left": "1px",
             "overflow": "hidden",
@@ -1723,7 +1723,7 @@ Array [
     crossFrame={true}
     disabled={false}
     lockProps={
-      Object {
+      {
         "aria-describedby": "mx_Dialog_content",
         "aria-labelledby": "mx_BaseDialog_title",
         "onKeyDown": [Function],
@@ -1739,7 +1739,7 @@ Array [
       data-focus-guard={true}
       key="guard-first"
       style={
-        Object {
+        {
           "height": "0px",
           "left": "1px",
           "overflow": "hidden",
@@ -1755,7 +1755,7 @@ Array [
       autoFocus={true}
       crossFrame={true}
       disabled={false}
-      id={Object {}}
+      id={{}}
       observed={
         <div
           aria-describedby="mx_Dialog_content"
@@ -1942,14 +1942,14 @@ Array [
               class="mx_Dialog_buttons_row"
             >
               <button
-                data-test-id="dialog-cancel-button"
+                data-testid="dialog-cancel-button"
                 type="button"
               >
                 Cancel
               </button>
               <button
                 class="mx_Dialog_primary"
-                data-test-id="dialog-primary-button"
+                data-testid="dialog-primary-button"
                 type="button"
               >
                 Export
@@ -1962,12 +1962,12 @@ Array [
       onDeactivation={[Function]}
       persistentFocus={false}
       returnFocus={[Function]}
-      shards={Array []}
+      shards={[]}
       sideCar={
-        Object {
+        {
           "assignMedium": [Function],
           "assignSyncMedium": [Function],
-          "options": Object {
+          "options": {
             "async": true,
             "ssr": false,
           },
@@ -1980,7 +1980,7 @@ Array [
         autoFocus={true}
         crossFrame={true}
         disabled={false}
-        id={Object {}}
+        id={{}}
         observed={
           <div
             aria-describedby="mx_Dialog_content"
@@ -2167,14 +2167,14 @@ Array [
                 class="mx_Dialog_buttons_row"
               >
                 <button
-                  data-test-id="dialog-cancel-button"
+                  data-testid="dialog-cancel-button"
                   type="button"
                 >
                   Cancel
                 </button>
                 <button
                   class="mx_Dialog_primary"
-                  data-test-id="dialog-primary-button"
+                  data-testid="dialog-primary-button"
                   type="button"
                 >
                   Export
@@ -2187,12 +2187,12 @@ Array [
         onDeactivation={[Function]}
         persistentFocus={false}
         returnFocus={[Function]}
-        shards={Array []}
+        shards={[]}
         sideCar={
-          Object {
+          {
             "assignMedium": [Function],
             "assignSyncMedium": [Function],
-            "options": Object {
+            "options": {
               "async": true,
               "ssr": false,
             },
@@ -2259,16 +2259,16 @@ Array [
         </span>
         <StyledRadioGroup
           definitions={
-            Array [
-              Object {
+            [
+              {
                 "label": "HTML",
                 "value": "Html",
               },
-              Object {
+              {
                 "label": "Plain Text",
                 "value": "PlainText",
               },
-              Object {
+              {
                 "label": "JSON",
                 "value": "Json",
               },
@@ -2520,7 +2520,7 @@ Array [
             className="mx_Dialog_buttons_row"
           >
             <button
-              data-test-id="dialog-cancel-button"
+              data-testid="dialog-cancel-button"
               disabled={false}
               onClick={[Function]}
               type="button"
@@ -2529,7 +2529,7 @@ Array [
             </button>
             <button
               className="mx_Dialog_primary"
-              data-test-id="dialog-primary-button"
+              data-testid="dialog-primary-button"
               onClick={[Function]}
               type="button"
             >
@@ -2542,7 +2542,7 @@ Array [
     <div
       data-focus-guard={true}
       style={
-        Object {
+        {
           "height": "0px",
           "left": "1px",
           "overflow": "hidden",
@@ -2612,16 +2612,16 @@ Array [
       </span>
       <StyledRadioGroup
         definitions={
-          Array [
-            Object {
+          [
+            {
               "label": "HTML",
               "value": "Html",
             },
-            Object {
+            {
               "label": "Plain Text",
               "value": "PlainText",
             },
-            Object {
+            {
               "label": "JSON",
               "value": "Json",
             },
@@ -2873,7 +2873,7 @@ Array [
           className="mx_Dialog_buttons_row"
         >
           <button
-            data-test-id="dialog-cancel-button"
+            data-testid="dialog-cancel-button"
             disabled={false}
             onClick={[Function]}
             type="button"
@@ -2882,7 +2882,7 @@ Array [
           </button>
           <button
             className="mx_Dialog_primary"
-            data-test-id="dialog-primary-button"
+            data-testid="dialog-primary-button"
             onClick={[Function]}
             type="button"
           >

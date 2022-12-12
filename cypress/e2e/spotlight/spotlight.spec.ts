@@ -124,8 +124,9 @@ Cypress.Commands.add("startDM", (name: string) => {
     cy.get(".mx_BasicMessageComposer_input")
         .should("have.focus")
         .type("Hey!{enter}");
-    cy.contains(".mx_EventTile_body", "Hey!");
-    cy.get(".mx_RoomSublist[aria-label=People]").should("contain", name);
+    // The DM room is created at this point, this can take a little bit of time
+    cy.contains(".mx_EventTile_body", "Hey!", { timeout: 30000 });
+    cy.contains(".mx_RoomSublist[aria-label=People]", name);
 });
 
 describe("Spotlight", () => {
@@ -162,7 +163,7 @@ describe("Spotlight", () => {
                 cy.window({ log: false }).then(({ matrixcs: { Visibility } }) => {
                     cy.createRoom({ name: room1Name, visibility: Visibility.Public }).then(_room1Id => {
                         room1Id = _room1Id;
-                        cy.inviteUser(room1Id, bot1.getUserId());
+                        bot1.joinRoom(room1Id);
                         cy.visit("/#/room/" + room1Id);
                     });
                     bot2.createRoom({ name: room2Name, visibility: Visibility.Public })
@@ -217,7 +218,7 @@ describe("Spotlight", () => {
     it("should find joined rooms", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightSearch().clear().type(room1Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", room1Name);
             cy.spotlightResults().eq(0).click();
@@ -231,7 +232,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.PublicRooms);
             cy.spotlightSearch().clear().type(room1Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", room1Name);
             cy.spotlightResults().eq(0).should("contain", "View");
@@ -246,7 +247,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.PublicRooms);
             cy.spotlightSearch().clear().type(room2Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", room2Name);
             cy.spotlightResults().eq(0).should("contain", "Join");
@@ -262,7 +263,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.PublicRooms);
             cy.spotlightSearch().clear().type(room3Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", room3Name);
             cy.spotlightResults().eq(0).should("contain", "View");
@@ -301,7 +302,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot1Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", bot1Name);
             cy.spotlightResults().eq(0).click();
@@ -314,7 +315,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot2Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", bot2Name);
             cy.spotlightResults().eq(0).click();
@@ -331,7 +332,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot2Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", bot2Name);
             cy.spotlightResults().eq(0).click();
@@ -345,7 +346,7 @@ describe("Spotlight", () => {
             .type("Hey!{enter}");
 
         // Assert DM exists by checking for the first message and the room being in the room list
-        cy.contains(".mx_EventTile_body", "Hey!");
+        cy.contains(".mx_EventTile_body", "Hey!", { timeout: 30000 });
         cy.get(".mx_RoomSublist[aria-label=People]").should("contain", bot2Name);
 
         // Invite BotBob into existing DM with ByteBot
@@ -365,7 +366,10 @@ describe("Spotlight", () => {
                     cy.spotlightSearch().clear().type(bot1.getUserId());
                     cy.wait(1000); // wait for the dialog code to settle
                     cy.spotlightResults().should("have.length", 2);
-                    cy.spotlightResults().eq(0).should("contain", groupDm.name);
+                    cy.contains(
+                        ".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option",
+                        groupDm.name,
+                    );
                 });
 
                 // Search for ByteBot by id, should return group DM and user
@@ -374,7 +378,10 @@ describe("Spotlight", () => {
                     cy.spotlightSearch().clear().type(bot2.getUserId());
                     cy.wait(1000); // wait for the dialog code to settle
                     cy.spotlightResults().should("have.length", 2);
-                    cy.spotlightResults().eq(0).should("contain", groupDm.name);
+                    cy.contains(
+                        ".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option",
+                        groupDm.name,
+                    );
                 });
             });
     });
@@ -403,7 +410,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot2Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.spotlightResults().should("have.length", 1);
             cy.spotlightResults().eq(0).should("contain", bot2Name);
             cy.get(".mx_SpotlightDialog_startGroupChat").should("contain", "Start a group chat");
@@ -425,7 +432,7 @@ describe("Spotlight", () => {
         cy.openSpotlightDialog().within(() => {
             cy.spotlightFilter(Filter.People);
             cy.spotlightSearch().clear().type(bot1Name);
-            cy.wait(1000); // wait for the dialog code to settle
+            cy.wait(3000); // wait for the dialog code to settle
             cy.get(".mx_Spinner").should("not.exist");
             cy.spotlightResults().should("have.length", 1);
         });

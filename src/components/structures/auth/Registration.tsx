@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AuthType, createClient } from 'matrix-js-sdk/src/matrix';
+import { AuthType, createClient, IAuthData } from 'matrix-js-sdk/src/matrix';
 import React, { Fragment, ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ISSOFlow } from "matrix-js-sdk/src/@types/auth";
 
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
@@ -26,7 +27,7 @@ import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
-import Login, { ISSOFlow } from "../../../Login";
+import Login from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from '../../views/elements/ServerPicker';
@@ -164,13 +165,13 @@ export default class Registration extends React.Component<IProps, IState> {
             return "";
         }
     };
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line
-    UNSAFE_componentWillReceiveProps(newProps) {
-        if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
-            newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 
-        this.replaceClient(newProps.serverConfig);
+    public componentDidUpdate(prevProps) {
+        if (prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
+            prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
+        ) {
+            this.replaceClient(this.props.serverConfig);
+        }
     }
 
     private async replaceClient(serverConfig: ValidatedServerConfig) {
@@ -332,7 +333,7 @@ export default class Registration extends React.Component<IProps, IState> {
             } else if (response.errcode === "M_USER_IN_USE") {
                 errorText = _t("Someone already has that username, please try another.");
             } else if (response.errcode === "M_THREEPID_IN_USE") {
-                errorText = _t("That e-mail address is already in use.");
+                errorText = _t("That e-mail address or phone number is already in use.");
             }
 
             this.setState({
@@ -442,7 +443,7 @@ export default class Registration extends React.Component<IProps, IState> {
         });
     };
 
-    private makeRegisterRequest = auth => {
+    private makeRegisterRequest = (auth: IAuthData | null) => {
         const registerParams = {
             username: this.state.formVals.username,
             password: this.state.formVals.password,

@@ -21,6 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import SettingsStore from "./settings/SettingsStore";
 import { SettingLevel } from "./settings/SettingLevel";
 import { MatrixClientPeg } from "./MatrixClientPeg";
+import { _t } from './languageHandler';
 
 // XXX: MediaDeviceKind is a union type, so we make our own enum
 export enum MediaDeviceKindEnum {
@@ -50,10 +51,20 @@ export default class MediaDeviceHandler extends EventEmitter {
         return devices.some(d => Boolean(d.label));
     }
 
+    /**
+     * Gets the available audio input/output and video input devices
+     * from the browser: a thin wrapper around mediaDevices.enumerateDevices()
+     * that also returns results by type of devices. Note that this requires
+     * user media permissions and an active stream, otherwise you'll get blank
+     * device labels.
+     *
+     * Once the Permissions API
+     * (https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API)
+     * is ready for primetime, it might help make this simpler.
+     *
+     * @return Promise<IMediaDevices> The available media devices
+     */
     public static async getDevices(): Promise<IMediaDevices> {
-        // Only needed for Electron atm, though should work in modern browsers
-        // once permission has been granted to the webapp
-
         try {
             const devices = await navigator.mediaDevices.enumerateDevices();
             const output = {
@@ -69,6 +80,18 @@ export default class MediaDeviceHandler extends EventEmitter {
         }
     }
 
+    public static getDefaultDevice = (devices: Array<Partial<MediaDeviceInfo>>): string => {
+        // Note we're looking for a device with deviceId 'default' but adding a device
+        // with deviceId == the empty string: this is because Chrome gives us a device
+        // with deviceId 'default', so we're looking for this, not the one we are adding.
+        if (!devices.some((i) => i.deviceId === 'default')) {
+            devices.unshift({ deviceId: '', label: _t('Default Device') });
+            return '';
+        } else {
+            return 'default';
+        }
+    };
+
     /**
      * Retrieves devices from the SettingsStore and tells the js-sdk to use them
      */
@@ -78,6 +101,16 @@ export default class MediaDeviceHandler extends EventEmitter {
 
         await MatrixClientPeg.get().getMediaHandler().setAudioInput(audioDeviceId);
         await MatrixClientPeg.get().getMediaHandler().setVideoInput(videoDeviceId);
+
+        await MediaDeviceHandler.updateAudioSettings();
+    }
+
+    private static async updateAudioSettings(): Promise<void> {
+        await MatrixClientPeg.get().getMediaHandler().setAudioSettings({
+            autoGainControl: MediaDeviceHandler.getAudioAutoGainControl(),
+            echoCancellation: MediaDeviceHandler.getAudioEchoCancellation(),
+            noiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression(),
+        });
     }
 
     public setAudioOutput(deviceId: string): void {
@@ -113,6 +146,21 @@ export default class MediaDeviceHandler extends EventEmitter {
         }
     }
 
+    public static async setAudioAutoGainControl(value: boolean): Promise<void> {
+        await SettingsStore.setValue("webrtc_audio_autoGainControl", null, SettingLevel.DEVICE, value);
+        await MediaDeviceHandler.updateAudioSettings();
+    }
+
+    public static async setAudioEchoCancellation(value: boolean): Promise<void> {
+        await SettingsStore.setValue("webrtc_audio_echoCancellation", null, SettingLevel.DEVICE, value);
+        await MediaDeviceHandler.updateAudioSettings();
+    }
+
+    public static async setAudioNoiseSuppression(value: boolean): Promise<void> {
+        await SettingsStore.setValue("webrtc_audio_noiseSuppression", null, SettingLevel.DEVICE, value);
+        await MediaDeviceHandler.updateAudioSettings();
+    }
+
     public static getAudioOutput(): string {
         return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_audiooutput");
     }
@@ -123,6 +171,18 @@ export default class MediaDeviceHandler extends EventEmitter {
 
     public static getVideoInput(): string {
         return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_videoinput");
+    }
+
+    public static getAudioAutoGainControl(): boolean {
+        return SettingsStore.getValue("webrtc_audio_autoGainControl");
+    }
+
+    public static getAudioEchoCancellation(): boolean {
+        return SettingsStore.getValue("webrtc_audio_echoCancellation");
+    }
+
+    public static getAudioNoiseSuppression(): boolean {
+        return SettingsStore.getValue("webrtc_audio_noiseSuppression");
     }
 
     /**
