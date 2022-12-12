@@ -58,7 +58,9 @@ const mockClient = {
     checkIfOwnDeviceCrossSigned: (deviceId: string) => deviceId.startsWith("verified"),
     downloadKeys: jest.fn(() => {}),
     cancelAndResendEventRoomKeyRequest: jest.fn(() => {}),
-    on: (_: any, cb: () => Promise<void>) => { callback = cb; },
+    on: (_: any, cb: () => Promise<void>) => {
+        callback = cb;
+    },
     off: () => {},
 };
 
@@ -93,7 +95,8 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
@@ -117,13 +120,16 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
@@ -142,13 +148,16 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
@@ -167,13 +176,16 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
@@ -192,13 +204,16 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
@@ -217,13 +232,16 @@ describe("<DecryptionFailureBar />", () => {
                         // @ts-ignore
                         mockEvent1,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
@@ -239,15 +257,22 @@ describe("<DecryptionFailureBar />", () => {
                 <DecryptionFailureBar
                     failures={[
                         // @ts-ignore
-                        mockEvent1, mockEvent2, mockEvent3,
+                        mockEvent1,
+                        // @ts-ignore
+                        mockEvent2,
+                        // @ts-ignore
+                        mockEvent3,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         fireEvent.click(screen.getByText("Resend key requests"));
@@ -271,74 +296,86 @@ describe("<DecryptionFailureBar />", () => {
                 <DecryptionFailureBar
                     failures={[
                         // @ts-ignore
-                        mockEvent1, mockEvent2,
+                        mockEvent1,
+                        // @ts-ignore
+                        mockEvent2,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         bar.unmount();
     });
 
-    it("Displays the button to resend key requests only if there are sessions we haven't already requested",
-        async () => {
-            ourDevice = verifiedDevice1;
-            allDevices = [verifiedDevice1, verifiedDevice2];
+    it("Displays the button to resend key requests only if there are sessions we haven't already requested", async () => {
+        ourDevice = verifiedDevice1;
+        allDevices = [verifiedDevice1, verifiedDevice2];
 
-            const bar = render(
+        const bar = render(
             // @ts-ignore
-                <MatrixClientContext.Provider value={mockClient}>
-                    <DecryptionFailureBar
-                        failures={[
+            <MatrixClientContext.Provider value={mockClient}>
+                <DecryptionFailureBar
+                    failures={[
                         // @ts-ignore
-                            mockEvent3,
-                        ]}
-                    />,
-                </MatrixClientContext.Provider>,
-            );
+                        mockEvent3,
+                    ]}
+                />
+                ,
+            </MatrixClientContext.Provider>,
+        );
 
-            await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
+        await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
 
-            act(() => { jest.advanceTimersByTime(5000); });
-            expect(getBar(bar)).toMatchSnapshot();
-
-            fireEvent.click(screen.getByText("Resend key requests"));
-
-            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(1);
-            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent3);
-
-            expect(getBar(bar)).toMatchSnapshot();
-
-            bar.rerender(
-            // @ts-ignore
-                <MatrixClientContext.Provider value={mockClient}>
-                    <DecryptionFailureBar
-                        failures={[
-                        // @ts-ignore
-                            mockEvent1, mockEvent2, mockEvent3,
-                        ]}
-                    />,
-                </MatrixClientContext.Provider>,
-            );
-
-            expect(getBar(bar)).toMatchSnapshot();
-
-            mockClient.cancelAndResendEventRoomKeyRequest.mockClear();
-
-            fireEvent.click(screen.getByText("Resend key requests"));
-
-            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(1);
-            expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent1);
-
-            expect(getBar(bar)).toMatchSnapshot();
-
-            bar.unmount();
+        act(() => {
+            jest.advanceTimersByTime(5000);
         });
+        expect(getBar(bar)).toMatchSnapshot();
+
+        fireEvent.click(screen.getByText("Resend key requests"));
+
+        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(1);
+        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent3);
+
+        expect(getBar(bar)).toMatchSnapshot();
+
+        bar.rerender(
+            // @ts-ignore
+            <MatrixClientContext.Provider value={mockClient}>
+                <DecryptionFailureBar
+                    failures={[
+                        // @ts-ignore
+                        mockEvent1,
+                        // @ts-ignore
+                        mockEvent2,
+                        // @ts-ignore
+                        mockEvent3,
+                    ]}
+                />
+                ,
+            </MatrixClientContext.Provider>,
+        );
+
+        expect(getBar(bar)).toMatchSnapshot();
+
+        mockClient.cancelAndResendEventRoomKeyRequest.mockClear();
+
+        fireEvent.click(screen.getByText("Resend key requests"));
+
+        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledTimes(1);
+        expect(mockClient.cancelAndResendEventRoomKeyRequest).toHaveBeenCalledWith(mockEvent1);
+
+        expect(getBar(bar)).toMatchSnapshot();
+
+        bar.unmount();
+    });
 
     it("Handles device updates", async () => {
         ourDevice = unverifiedDevice1;
@@ -350,14 +387,19 @@ describe("<DecryptionFailureBar />", () => {
                 <DecryptionFailureBar
                     failures={[
                         // @ts-ignore
-                        mockEvent1, mockEvent2,
+                        mockEvent1,
+                        // @ts-ignore
+                        mockEvent2,
                     ]}
-                />,
+                />
+                ,
             </MatrixClientContext.Provider>,
         );
 
         await waitFor(() => expect(mockClient.isSecretStored).toHaveBeenCalled());
-        act(() => { jest.advanceTimersByTime(5000); });
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         expect(getBar(bar)).toMatchSnapshot();
 
         ourDevice = verifiedDevice1;

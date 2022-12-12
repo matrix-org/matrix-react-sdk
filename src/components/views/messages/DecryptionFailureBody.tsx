@@ -14,18 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { IBodyProps } from "./IBodyProps";
 
 // A placeholder element for messages that could not be decrypted
 export default class DecryptionFailureBody extends React.Component<Partial<IBodyProps>> {
     render() {
-        return (
-            <div className="mx_DecryptionFailureBody mx_EventTile_content">
-                { _t('Unable to decrypt message') }
-            </div>
-        );
+        return <div className="mx_DecryptionFailureBody mx_EventTile_content">{_t("Unable to decrypt message")}</div>;
     }
 }

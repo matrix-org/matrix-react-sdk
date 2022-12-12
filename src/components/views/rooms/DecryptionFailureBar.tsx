@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { CryptoEvent } from 'matrix-js-sdk/src/crypto';
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton from "../elements/AccessibleButton";
 import { OpenToTabPayload } from "../../../dispatcher/payloads/OpenToTabPayload";
 import { UserTab } from "../dialogs/UserTab";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
-import { SetupEncryptionStore } from '../../../stores/SetupEncryptionStore';
+import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+import { SetupEncryptionStore } from "../../../stores/SetupEncryptionStore";
 import Spinner from "../elements/Spinner";
 
 interface IProps {
@@ -62,10 +62,12 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     const [anyUnrequestedSessions, setAnyUnrequestedSessions] = useState<boolean>(true);
 
     useEffect(() => {
-        setAnyUnrequestedSessions(failures.some((event) => {
-            const sessionId = event.getWireContent().session_id;
-            return sessionId && !requestedSessions.has(sessionId);
-        }));
+        setAnyUnrequestedSessions(
+            failures.some((event) => {
+                const sessionId = event.getWireContent().session_id;
+                return sessionId && !requestedSessions.has(sessionId);
+            }),
+        );
     }, [failures, requestedSessions, setAnyUnrequestedSessions]);
 
     // Send key requests for any sessions that we haven't previously
@@ -111,8 +113,8 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
 
         let keyBackup = false;
         try {
-            const keys = await context.isSecretStored('m.cross_signing.master');
-            keyBackup = (keys !== null && Object.keys(keys).length > 0);
+            const keys = await context.isSecretStored("m.cross_signing.master");
+            keyBackup = keys !== null && Object.keys(keys).length > 0;
         } catch (e) {
             console.error("Error getting info about key backups", e);
         }
@@ -124,7 +126,9 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     useEffect(() => {
         updateDeviceInfo().catch(console.error);
         context.on(CryptoEvent.DevicesUpdated, updateDeviceInfo);
-        return () => { context.off(CryptoEvent.DevicesUpdated, updateDeviceInfo); };
+        return () => {
+            context.off(CryptoEvent.DevicesUpdated, updateDeviceInfo);
+        };
     }, [context, updateDeviceInfo]);
 
     const onVerifyClick = (): void => {
@@ -147,86 +151,88 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
     let body: JSX.Element;
     let button = <React.Fragment />;
     if (waiting) {
-        headline = <React.Fragment>
-            { _t("Decrypting messages...") }
-        </React.Fragment>;
-        body = <React.Fragment>
-            { _t("Please wait as we try to decrypt your messages. This may take a few moments.") }
-        </React.Fragment>;
+        headline = <React.Fragment>{_t("Decrypting messages...")}</React.Fragment>;
+        body = (
+            <React.Fragment>
+                {_t("Please wait as we try to decrypt your messages. This may take a few moments.")}
+            </React.Fragment>
+        );
     } else if (needsVerification) {
         if (hasOtherVerifiedDevices || hasKeyBackup) {
-            headline = <React.Fragment>
-                { _t("Verify this device to access all messages") }
-            </React.Fragment>;
-            body = <React.Fragment>
-                { _t("This device was unable to decrypt some messages because it has not been verified yet.") }
-            </React.Fragment>;
-            button = <AccessibleButton kind="primary" onClick={onVerifyClick}>
-                { _t("Verify") }
-            </AccessibleButton>;
+            headline = <React.Fragment>{_t("Verify this device to access all messages")}</React.Fragment>;
+            body = (
+                <React.Fragment>
+                    {_t("This device was unable to decrypt some messages because it has not been verified yet.")}
+                </React.Fragment>
+            );
+            button = (
+                <AccessibleButton kind="primary" onClick={onVerifyClick}>
+                    {_t("Verify")}
+                </AccessibleButton>
+            );
         } else {
-            headline = <React.Fragment>
-                { _t("Reset your keys to prevent future decryption errors") }
-            </React.Fragment>;
-            body = <React.Fragment>
-                { _t(
-                    "You will not be able to access old undecryptable messages, " +
-                    "but resetting your keys will allow you to receive new messages.",
-                ) }
-            </React.Fragment>;
-            button = <AccessibleButton kind="primary" onClick={onResetClick}>
-                { _t("Reset") }
-            </AccessibleButton>;
+            headline = <React.Fragment>{_t("Reset your keys to prevent future decryption errors")}</React.Fragment>;
+            body = (
+                <React.Fragment>
+                    {_t(
+                        "You will not be able to access old undecryptable messages, " +
+                            "but resetting your keys will allow you to receive new messages.",
+                    )}
+                </React.Fragment>
+            );
+            button = (
+                <AccessibleButton kind="primary" onClick={onResetClick}>
+                    {_t("Reset")}
+                </AccessibleButton>
+            );
         }
     } else if (hasOtherVerifiedDevices) {
-        headline = <React.Fragment>
-            { _t("Open another device to load encrypted messages") }
-        </React.Fragment>;
-        body = <React.Fragment>
-            { _t(
-                "This device is requesting decryption keys from your other devices. " +
-                "Opening one of your other devices may speed this up.",
-            ) }
-        </React.Fragment>;
-        button = <AccessibleButton kind="primary_outline" onClick={onDeviceListClick}>
-            { _t("View your device list") }
-        </AccessibleButton>;
+        headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
+        body = (
+            <React.Fragment>
+                {_t(
+                    "This device is requesting decryption keys from your other devices. " +
+                        "Opening one of your other devices may speed this up.",
+                )}
+            </React.Fragment>
+        );
+        button = (
+            <AccessibleButton kind="primary_outline" onClick={onDeviceListClick}>
+                {_t("View your device list")}
+            </AccessibleButton>
+        );
     } else {
-        headline = <React.Fragment>
-            { _t("Some messages could not be decrypted") }
-        </React.Fragment>;
-        body = <React.Fragment>
-            { _t(
-                "Unfortunately, there are no other verified devices to request decryption keys from. " +
-                "Signing in and verifying other devices may help avoid this situation in the future.",
-            ) }
-        </React.Fragment>;
+        headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
+        body = (
+            <React.Fragment>
+                {_t(
+                    "Unfortunately, there are no other verified devices to request decryption keys from. " +
+                        "Signing in and verifying other devices may help avoid this situation in the future.",
+                )}
+            </React.Fragment>
+        );
     }
 
     let keyRequestButton = <React.Fragment />;
     if (!needsVerification && hasOtherVerifiedDevices && anyUnrequestedSessions) {
-        keyRequestButton = <div className="mx_DecryptionFailureBar_button">
-            <AccessibleButton kind="primary" onClick={sendKeyRequests}>
-                { _t("Resend key requests") }
-            </AccessibleButton>
-        </div>;
+        keyRequestButton = (
+            <div className="mx_DecryptionFailureBar_button">
+                <AccessibleButton kind="primary" onClick={sendKeyRequests}>
+                    {_t("Resend key requests")}
+                </AccessibleButton>
+            </div>
+        );
     }
 
     return (
         <div className="mx_DecryptionFailureBar">
-            { statusIndicator }
+            {statusIndicator}
             <div className="mx_DecryptionFailureBar_message">
-                <div className="mx_DecryptionFailureBar_message_headline">
-                    { headline }
-                </div>
-                <div className="mx_DecryptionFailureBar_message_body">
-                    { body }
-                </div>
+                <div className="mx_DecryptionFailureBar_message_headline">{headline}</div>
+                <div className="mx_DecryptionFailureBar_message_body">{body}</div>
             </div>
-            <div className="mx_DecryptionFailureBar_button">
-                { button }
-            </div>
-            { keyRequestButton }
+            <div className="mx_DecryptionFailureBar_button">{button}</div>
+            {keyRequestButton}
         </div>
     );
 };
