@@ -737,8 +737,8 @@ async function sendEvent(
         return;
     }
     const allowedEventTypes = [
-        "im.vector.modular.widgets",
         "m.widgets",
+        "im.vector.modular.widgets",
         "io.element.integrations.installations",
     ];
     if (!allowedEventTypes.includes(eventType)) {
@@ -799,8 +799,11 @@ async function readEvents(
     }
     const allowedEventTypes = [
         "m.room.power_levels",
-        "im.vector.modular.widgets",
+        "m.room.encryption",
+        "m.room.member",
+        "m.room.name",
         "m.widgets",
+        "im.vector.modular.widgets",
         "io.element.integrations.installations",
     ];
     if (!allowedEventTypes.includes(eventType)) {
