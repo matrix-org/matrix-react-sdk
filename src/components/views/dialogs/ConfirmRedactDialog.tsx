@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
+import { MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
+import { isVoiceBroadcastStartedEvent } from "../../../voice-broadcast";
 import ErrorDialog from "./ErrorDialog";
 import TextInputDialog from "./TextInputDialog";
 
@@ -62,9 +64,26 @@ export function createRedactEventDialog({
                 if (!proceed) return;
 
                 const cli = MatrixClientPeg.get();
+                const withRelations: { with_relations?: RelationType[] } = {};
+
+                // redact related events if this is a voice broadcast started event and
+                // server has support for relation based redactions
+                if (isVoiceBroadcastStartedEvent(mxEvent)) {
+                    const relationBasedRedactionsSupport = cli.canSupport.get(Feature.RelationBasedRedactions);
+                    if (
+                        relationBasedRedactionsSupport &&
+                        relationBasedRedactionsSupport !== ServerSupport.Unsupported
+                    ) {
+                        withRelations.with_relations = [RelationType.Reference];
+                    }
+                }
+
                 try {
                     onCloseDialog?.();
-                    await cli.redactEvent(mxEvent.getRoomId(), mxEvent.getId(), undefined, reason ? { reason } : {});
+                    await cli.redactEvent(mxEvent.getRoomId(), mxEvent.getId(), undefined, {
+                        ...(reason ? { reason } : {}),
+                        ...withRelations,
+                    });
                 } catch (e) {
                     const code = e.errcode || e.statusCode;
                     // only show the dialog if failing for something other than a network error
