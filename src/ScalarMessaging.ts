@@ -278,6 +278,17 @@ Response:
  - room_id is the room ID where the event was sent.
  - event_id is the event ID of the event which was sent.
 
+read_events
+-----------
+Read events from a room.
+
+Request:
+ - type is the event type to read.
+ - state_key is the state key to read, or `true` to read all events of the type. Omitted if not a state event.
+
+Response:
+ - events: Array of events. If none found, this will be an empty array.
+
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -310,6 +321,7 @@ enum Action {
     SetBotPower = "set_bot_power",
     GetOpenIdToken = "get_open_id_token",
     SendEvent = "send_event",
+    ReadEvents = "read_events",
 }
 
 function sendResponse(event: MessageEvent<any>, res: any): void {
@@ -769,6 +781,77 @@ async function sendEvent(
     });
 }
 
+async function readEvents(
+    event: MessageEvent<{
+        type: string,
+        state_key?: string | boolean,
+        limit?: number,
+    }>,
+    roomId: string,
+) {
+    const eventType = event.data.type;
+    const stateKey = event.data.state_key;
+    const limit = event.data.limit;
+
+    if (typeof eventType !== "string") {
+        sendError(event, _t("Failed to read events"), new Error("Invalid 'type' in request"));
+        return;
+    }
+    const allowedEventTypes = [
+        "m.room.power_levels",
+        "im.vector.modular.widgets",
+        "m.widgets",
+        "io.element.integrations.installations",
+    ];
+    if (!allowedEventTypes.includes(eventType)) {
+        sendError(event, _t("Failed to send event"), new Error("Disallowed 'type' in request"));
+        return;
+    }
+
+    let effectiveLimit: number;
+    if (limit !== undefined) {
+        if (typeof limit !== "number" || limit < 0) {
+            sendError(event, _t("Failed to read events"), new Error("Invalid 'limit' in request"));
+            return;
+        }
+        effectiveLimit = Math.min(limit, Number.MAX_SAFE_INTEGER);
+    } else {
+        effectiveLimit = Number.MAX_SAFE_INTEGER;
+    }
+
+    const client = MatrixClientPeg.get();
+    if (!client) {
+        sendError(event, _t("You need to be logged in."));
+        return;
+    }
+
+    const room = client.getRoom(roomId);
+    if (!room) {
+        sendError(event, _t("This room is not recognised."));
+        return;
+    }
+
+    if (stateKey !== undefined) {
+        // state events
+        if (typeof stateKey !== "string" && stateKey !== true) {
+            sendError(event, _t("Failed to read events"), new Error("Invalid 'state_key' in request"));
+            return;
+        }
+        // When `true` is passed for state key, get events with any state key.
+        const effectiveStateKey = stateKey === true ? undefined : stateKey;
+        const events: MatrixEvent[] = [].concat(room.currentState.getStateEvents(eventType, effectiveStateKey) || []);
+
+        sendResponse(event, {
+            events: events.slice(0, effectiveLimit).map(e => e.getEffectiveEvent()),
+        });
+        return;
+    } else {
+        // message events
+        sendError(event, _t("Failed to read events"), new Error("Not implemented"));
+        return;
+    }
+}
+
 const onMessage = function (event: MessageEvent<any>): void {
     if (!event.origin) {
         // stupid chrome
@@ -864,6 +947,9 @@ const onMessage = function (event: MessageEvent<any>): void {
         return;
     } else if (event.data.action === Action.SendEvent) {
         sendEvent(event, roomId);
+        return;
+    } else if (event.data.action === Action.ReadEvents) {
+        readEvents(event, roomId);
         return;
     }
 
