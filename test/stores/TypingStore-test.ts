@@ -33,7 +33,7 @@ describe("TypingStore", () => {
     let mockClient: MatrixClient;
     const settings = {
         sendTypingNotifications: true,
-        feature_thread: false,
+        feature_threadstable: false,
     };
     const roomId = "!test:example.com";
     const localRoomId = LOCAL_ROOM_ID_PREFIX + "test";

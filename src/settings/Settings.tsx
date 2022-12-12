@@ -255,57 +255,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_thread": {
+    "feature_threadstable": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         controller: new ThreadBetaController(),
-        displayName: _td("Threaded messaging"),
+        displayName: _td("Threaded messages"),
         supportedLevels: LEVELS_FEATURE,
-        default: false,
-        betaInfo: {
-            title: _td("Threads"),
-            caption: () => (
-                <>
-                    <p>{_t("Keep discussions organised with threads.")}</p>
-                    <p>
-                        {_t(
-                            "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.",
-                            {},
-                            {
-                                a: (sub) => (
-                                    <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
-                                        {sub}
-                                    </a>
-                                ),
-                            },
-                        )}
-                    </p>
-                </>
-            ),
-            faq: () =>
-                SdkConfig.get().bug_report_endpoint_url && (
-                    <>
-                        <h4>{_t("How can I start a thread?")}</h4>
-                        <p>
-                            {_t("Use “%(replyInThread)s” when hovering over a message.", {
-                                replyInThread: _t("Reply in thread"),
-                            })}
-                        </p>
-                        <h4>{_t("How can I leave the beta?")}</h4>
-                        <p>
-                            {_t("To leave, return to this page and use the “%(leaveTheBeta)s” button.", {
-                                leaveTheBeta: _t("Leave the beta"),
-                            })}
-                        </p>
-                    </>
-                ),
-            feedbackLabel: "thread-feedback",
-            feedbackSubheading: _td(
-                "Thank you for trying the beta, " + "please go into as much detail as you can so we can improve it.",
-            ),
-            image: require("../../res/img/betas/threads.png"),
-            requiresRefresh: true,
-        },
+        default: true,
     },
     "feature_wysiwyg_composer": {
         isFeature: true,

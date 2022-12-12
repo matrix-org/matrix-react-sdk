@@ -387,7 +387,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             }
         }
 
-        if (SettingsStore.getValue("feature_thread")) {
+        if (SettingsStore.getValue("feature_threadstable")) {
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
             if (this.thread && !this.supportsThreadNotifications) {
@@ -469,7 +469,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
-        if (SettingsStore.getValue("feature_thread")) {
+        if (SettingsStore.getValue("feature_threadstable")) {
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
         this.threadState?.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
@@ -496,22 +496,11 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     private get thread(): Thread | null {
-        if (!SettingsStore.getValue("feature_thread")) {
+        if (!SettingsStore.getValue("feature_threadstable")) {
             return null;
         }
 
-        let thread = this.props.mxEvent.getThread();
-        /**
-         * Accessing the threads value through the room due to a race condition
-         * that will be solved when there are proper backend support for threads
-         * We currently have no reliable way to discover than an event is a thread
-         * when we are at the sync stage
-         */
-        if (!thread) {
-            const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-            thread = room?.findThreadForEvent(this.props.mxEvent);
-        }
-        return thread ?? null;
+        return this.props.mxEvent.getThread() ?? null;
     }
 
     private renderThreadPanelSummary(): JSX.Element | null {
