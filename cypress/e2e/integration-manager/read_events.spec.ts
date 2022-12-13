@@ -91,18 +91,18 @@ describe("Integration Manager: Read Events", () => {
     let integrationManagerUrl: string;
 
     beforeEach(() => {
-        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then(url => {
+        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then((url) => {
             integrationManagerUrl = url;
         });
-        cy.startSynapse("default").then(data => {
+        cy.startSynapse("default").then((data) => {
             synapse = data;
 
             cy.initTestUser(synapse, USER_DISPLAY_NAME, () => {
-                cy.window().then(win => {
+                cy.window().then((win) => {
                     win.localStorage.setItem("mx_scalar_token", INTEGRATION_MANAGER_TOKEN);
                     win.localStorage.setItem(`mx_scalar_token_at_${integrationManagerUrl}`, INTEGRATION_MANAGER_TOKEN);
                 });
-            }).then(user => {
+            }).then((user) => {
                 testUser = user;
             });
 
@@ -121,8 +121,8 @@ describe("Integration Manager: Read Events", () => {
             }).as("integrationManager");
 
             // Succeed when checking the token is valid
-            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, req => {
-                req.continue(res => {
+            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, (req) => {
+                req.continue((res) => {
                     return res.send(200, {
                         user_id: testUser.userId,
                     });
@@ -141,10 +141,7 @@ describe("Integration Manager: Read Events", () => {
     });
 
     it("should read a state event by state key", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             const eventType = "io.element.integrations.installations";
@@ -154,39 +151,28 @@ describe("Integration Manager: Read Events", () => {
             const stateKey = "state-key-123";
 
             // Send a state event
-            cy.getClient().then(async client => {
-                return await client.sendStateEvent(
-                    roomId,
-                    eventType,
-                    eventContent,
-                    stateKey,
-                );
-            }).then(event => {
-                openIntegrationManager();
+            cy.getClient()
+                .then(async (client) => {
+                    return await client.sendStateEvent(roomId, eventType, eventContent, stateKey);
+                })
+                .then((event) => {
+                    openIntegrationManager();
 
-                // Read state events
-                sendActionFromIntegrationManager(
-                    integrationManagerUrl,
-                    roomId,
-                    eventType,
-                    stateKey,
-                );
+                    // Read state events
+                    sendActionFromIntegrationManager(integrationManagerUrl, roomId, eventType, stateKey);
 
-                // Check the response
-                cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-                    cy.get("#message-response")
-                        .should("include.text", event.event_id)
-                        .should("include.text", `"content":${JSON.stringify(eventContent)}`);
+                    // Check the response
+                    cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
+                        cy.get("#message-response")
+                            .should("include.text", event.event_id)
+                            .should("include.text", `"content":${JSON.stringify(eventContent)}`);
+                    });
                 });
-            });
         });
     });
 
     it("should read a state event with empty state key", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             const eventType = "io.element.integrations.installations";
@@ -196,39 +182,28 @@ describe("Integration Manager: Read Events", () => {
             const stateKey = "";
 
             // Send a state event
-            cy.getClient().then(async client => {
-                return await client.sendStateEvent(
-                    roomId,
-                    eventType,
-                    eventContent,
-                    stateKey,
-                );
-            }).then(event => {
-                openIntegrationManager();
+            cy.getClient()
+                .then(async (client) => {
+                    return await client.sendStateEvent(roomId, eventType, eventContent, stateKey);
+                })
+                .then((event) => {
+                    openIntegrationManager();
 
-                // Read state events
-                sendActionFromIntegrationManager(
-                    integrationManagerUrl,
-                    roomId,
-                    eventType,
-                    stateKey,
-                );
+                    // Read state events
+                    sendActionFromIntegrationManager(integrationManagerUrl, roomId, eventType, stateKey);
 
-                // Check the response
-                cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-                    cy.get("#message-response")
-                        .should("include.text", event.event_id)
-                        .should("include.text", `"content":${JSON.stringify(eventContent)}`);
+                    // Check the response
+                    cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
+                        cy.get("#message-response")
+                            .should("include.text", event.event_id)
+                            .should("include.text", `"content":${JSON.stringify(eventContent)}`);
+                    });
                 });
-            });
         });
     });
 
     it("should read state events with any state key", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             const eventType = "io.element.integrations.installations";
@@ -247,57 +222,41 @@ describe("Integration Manager: Read Events", () => {
             };
 
             // Send state events
-            cy.getClient().then(async client => {
-                return Promise.all([
-                    client.sendStateEvent(
-                        roomId,
-                        eventType,
-                        eventContent1,
-                        stateKey1,
-                    ),
-                    client.sendStateEvent(
-                        roomId,
-                        eventType,
-                        eventContent2,
-                        stateKey2,
-                    ),
-                    client.sendStateEvent(
-                        roomId,
-                        eventType,
-                        eventContent3,
-                        stateKey3,
-                    ),
-                ]);
-            }).then(events => {
-                openIntegrationManager();
+            cy.getClient()
+                .then(async (client) => {
+                    return Promise.all([
+                        client.sendStateEvent(roomId, eventType, eventContent1, stateKey1),
+                        client.sendStateEvent(roomId, eventType, eventContent2, stateKey2),
+                        client.sendStateEvent(roomId, eventType, eventContent3, stateKey3),
+                    ]);
+                })
+                .then((events) => {
+                    openIntegrationManager();
 
-                // Read state events
-                sendActionFromIntegrationManager(
-                    integrationManagerUrl,
-                    roomId,
-                    eventType,
-                    true, // Any state key
-                );
+                    // Read state events
+                    sendActionFromIntegrationManager(
+                        integrationManagerUrl,
+                        roomId,
+                        eventType,
+                        true, // Any state key
+                    );
 
-                // Check the response
-                cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-                    cy.get("#message-response")
-                        .should("include.text", events[0].event_id)
-                        .should("include.text", `"content":${JSON.stringify(eventContent1)}`)
-                        .should("include.text", events[1].event_id)
-                        .should("include.text", `"content":${JSON.stringify(eventContent2)}`)
-                        .should("include.text", events[2].event_id)
-                        .should("include.text", `"content":${JSON.stringify(eventContent3)}`)
+                    // Check the response
+                    cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
+                        cy.get("#message-response")
+                            .should("include.text", events[0].event_id)
+                            .should("include.text", `"content":${JSON.stringify(eventContent1)}`)
+                            .should("include.text", events[1].event_id)
+                            .should("include.text", `"content":${JSON.stringify(eventContent2)}`)
+                            .should("include.text", events[2].event_id)
+                            .should("include.text", `"content":${JSON.stringify(eventContent3)}`);
+                    });
                 });
-            });
         });
     });
 
     it("should fail to read an event type which is not allowed", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             const eventType = "com.example.event";
@@ -306,17 +265,11 @@ describe("Integration Manager: Read Events", () => {
             openIntegrationManager();
 
             // Read state events
-            sendActionFromIntegrationManager(
-                integrationManagerUrl,
-                roomId,
-                eventType,
-                stateKey,
-            );
+            sendActionFromIntegrationManager(integrationManagerUrl, roomId, eventType, stateKey);
 
             // Check the response
             cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-                cy.get("#message-response")
-                    .should("include.text", "Failed to read events");
+                cy.get("#message-response").should("include.text", "Failed to read events");
             });
         });
     });

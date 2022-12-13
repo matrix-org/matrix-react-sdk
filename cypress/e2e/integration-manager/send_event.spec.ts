@@ -1,4 +1,3 @@
-
 /*
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
@@ -98,18 +97,18 @@ describe("Integration Manager: Send Event", () => {
     let integrationManagerUrl: string;
 
     beforeEach(() => {
-        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then(url => {
+        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then((url) => {
             integrationManagerUrl = url;
         });
-        cy.startSynapse("default").then(data => {
+        cy.startSynapse("default").then((data) => {
             synapse = data;
 
             cy.initTestUser(synapse, USER_DISPLAY_NAME, () => {
-                cy.window().then(win => {
+                cy.window().then((win) => {
                     win.localStorage.setItem("mx_scalar_token", INTEGRATION_MANAGER_TOKEN);
                     win.localStorage.setItem(`mx_scalar_token_at_${integrationManagerUrl}`, INTEGRATION_MANAGER_TOKEN);
                 });
-            }).then(user => {
+            }).then((user) => {
                 testUser = user;
             });
 
@@ -128,8 +127,8 @@ describe("Integration Manager: Send Event", () => {
             }).as("integrationManager");
 
             // Succeed when checking the token is valid
-            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, req => {
-                req.continue(res => {
+            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, (req) => {
+                req.continue((res) => {
                     return res.send(200, {
                         user_id: testUser.userId,
                     });
@@ -148,10 +147,7 @@ describe("Integration Manager: Send Event", () => {
     });
 
     it("should send a state event", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             openIntegrationManager();
@@ -163,13 +159,7 @@ describe("Integration Manager: Send Event", () => {
             const stateKey = "state-key-123";
 
             // Send the event
-            sendActionFromIntegrationManager(
-                integrationManagerUrl,
-                roomId,
-                eventType,
-                stateKey,
-                eventContent,
-            );
+            sendActionFromIntegrationManager(integrationManagerUrl, roomId, eventType, stateKey, eventContent);
 
             // Check the response
             cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
@@ -177,19 +167,18 @@ describe("Integration Manager: Send Event", () => {
             });
 
             // Check the event
-            cy.getClient().then(async client => {
-                return await client.getStateEvent(roomId, eventType, stateKey);
-            }).then((event) => {
-                expect(event).to.deep.equal(eventContent);
-            });
+            cy.getClient()
+                .then(async (client) => {
+                    return await client.getStateEvent(roomId, eventType, stateKey);
+                })
+                .then((event) => {
+                    expect(event).to.deep.equal(eventContent);
+                });
         });
     });
 
     it("should send a state event with empty content", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             openIntegrationManager();
@@ -199,13 +188,7 @@ describe("Integration Manager: Send Event", () => {
             const stateKey = "state-key-123";
 
             // Send the event
-            sendActionFromIntegrationManager(
-                integrationManagerUrl,
-                roomId,
-                eventType,
-                stateKey,
-                eventContent,
-            );
+            sendActionFromIntegrationManager(integrationManagerUrl, roomId, eventType, stateKey, eventContent);
 
             // Check the response
             cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
@@ -213,19 +196,18 @@ describe("Integration Manager: Send Event", () => {
             });
 
             // Check the event
-            cy.getClient().then(async client => {
-                return await client.getStateEvent(roomId, eventType, stateKey);
-            }).then((event) => {
-                expect(event).to.be.empty;
-            });
+            cy.getClient()
+                .then(async (client) => {
+                    return await client.getStateEvent(roomId, eventType, stateKey);
+                })
+                .then((event) => {
+                    expect(event).to.be.empty;
+                });
         });
     });
 
     it("should send a state event with empty state key", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             openIntegrationManager();
@@ -237,13 +219,7 @@ describe("Integration Manager: Send Event", () => {
             const stateKey = "";
 
             // Send the event
-            sendActionFromIntegrationManager(
-                integrationManagerUrl,
-                roomId,
-                eventType,
-                stateKey,
-                eventContent,
-            );
+            sendActionFromIntegrationManager(integrationManagerUrl, roomId, eventType, stateKey, eventContent);
 
             // Check the response
             cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
@@ -251,19 +227,18 @@ describe("Integration Manager: Send Event", () => {
             });
 
             // Check the event
-            cy.getClient().then(async client => {
-                return await client.getStateEvent(roomId, eventType, stateKey);
-            }).then((event) => {
-                expect(event).to.deep.equal(eventContent);
-            });
+            cy.getClient()
+                .then(async (client) => {
+                    return await client.getStateEvent(roomId, eventType, stateKey);
+                })
+                .then((event) => {
+                    expect(event).to.deep.equal(eventContent);
+                });
         });
     });
 
     it("should fail to send an event type which is not allowed", () => {
-        cy.all([
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([roomId]) => {
+        cy.all([cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(([roomId]) => {
             cy.viewRoomByName(ROOM_NAME);
 
             openIntegrationManager();
@@ -275,13 +250,7 @@ describe("Integration Manager: Send Event", () => {
             const stateKey = "";
 
             // Send the event
-            sendActionFromIntegrationManager(
-                integrationManagerUrl,
-                roomId,
-                eventType,
-                stateKey,
-                eventContent,
-            );
+            sendActionFromIntegrationManager(integrationManagerUrl, roomId, eventType, stateKey, eventContent);
 
             // Check the response
             cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {

@@ -723,9 +723,9 @@ async function getOpenIdToken(event: MessageEvent<any>) {
 
 async function sendEvent(
     event: MessageEvent<{
-        type: string,
-        state_key?: string,
-        content?: IContent,
+        type: string;
+        state_key?: string;
+        content?: IContent;
     }>,
     roomId: string,
 ) {
@@ -737,11 +737,7 @@ async function sendEvent(
         sendError(event, _t("Failed to send event"), new Error("Invalid 'type' in request"));
         return;
     }
-    const allowedEventTypes = [
-        "m.widgets",
-        "im.vector.modular.widgets",
-        "io.element.integrations.installations",
-    ];
+    const allowedEventTypes = ["m.widgets", "im.vector.modular.widgets", "io.element.integrations.installations"];
     if (!allowedEventTypes.includes(eventType)) {
         sendError(event, _t("Failed to send event"), new Error("Disallowed 'type' in request"));
         return;
@@ -785,9 +781,9 @@ async function sendEvent(
 
 async function readEvents(
     event: MessageEvent<{
-        type: string,
-        state_key?: string | boolean,
-        limit?: number,
+        type: string;
+        state_key?: string | boolean;
+        limit?: number;
     }>,
     roomId: string,
 ) {
@@ -850,7 +846,7 @@ async function readEvents(
         events = events.slice(0, effectiveLimit);
 
         sendResponse(event, {
-            events: events.map(e => e.getEffectiveEvent()),
+            events: events.map((e) => e.getEffectiveEvent()),
         });
         return;
     } else {
