@@ -3248,7 +3248,6 @@
     "No live locations": "Žiadne polohy v reálnom čase",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Začnite správy s <code>/plain</code> pre odoslanie bez formátovania Markdown a <code>/md</code> pre odoslanie s formátovaním.",
     "Enable Markdown": "Povoliť funkciu Markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "Použite položku \"%(replyInThread)s\", keď prejdete ponad správu.",
     "Close sidebar": "Zatvoriť bočný panel",
     "View List": "Zobraziť zoznam",
     "View list": "Zobraziť zoznam",
@@ -3674,5 +3673,7 @@
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Pri používaní tejto relácie sa nebudete môcť zúčastňovať v miestnostiach, v ktorých je zapnuté šifrovanie.",
     "This session doesn't support encryption, so it can't be verified.": "Táto relácia nepodporuje šifrovanie, a preto ju nemožno overiť.",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ukončil/a <a>hlasové vysielanie</a>",
-    "You ended a <a>voice broadcast</a>": "Ukončili ste <a>hlasové vysielanie</a>"
+    "You ended a <a>voice broadcast</a>": "Ukončili ste <a>hlasové vysielanie</a>",
+    "Defaults to room member list.": "Predvolené nastavenie je zoznam členov miestnosti.",
+    "Threaded messages": "Správy vo vláknach"
 }
