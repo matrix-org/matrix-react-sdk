@@ -32,6 +32,7 @@ export * from "./components/atoms/VoiceBroadcastHeader";
 export * from "./components/atoms/VoiceBroadcastPlaybackControl";
 export * from "./components/atoms/VoiceBroadcastRoomSubtitle";
 export * from "./components/molecules/VoiceBroadcastPlaybackBody";
+export * from "./components/molecules/VoiceBroadcastSmallPlaybackBody";
 export * from "./components/molecules/VoiceBroadcastPreRecordingPip";
 export * from "./components/molecules/VoiceBroadcastRecordingBody";
 export * from "./components/molecules/VoiceBroadcastRecordingPip";
