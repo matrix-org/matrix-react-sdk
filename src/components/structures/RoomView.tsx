@@ -1204,11 +1204,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private loadVirtualRoom = async (room?: Room): Promise<void> => {
-        const virtualRoom = room?.roomId
-            ? await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room?.roomId)
-            : undefined;
+        const virtualRoom = room?.roomId && await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room?.roomId);
 
-        this.setState({ virtualRoom });
+        this.setState({ virtualRoom: virtualRoom || undefined });
     };
 
     // called when state.room is first initialised (either at initial load,
