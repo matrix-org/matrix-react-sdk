@@ -291,7 +291,7 @@ Response:
 
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -495,7 +495,7 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     }
 }
 
-function getWidgets(event: MessageEvent<any>, roomId: string): void {
+function getWidgets(event: MessageEvent<any>, roomId?: string): void {
     const client = MatrixClientPeg.get();
     if (!client) {
         sendError(event, _t("You need to be logged in."));
@@ -724,7 +724,7 @@ async function sendEvent(
     event: MessageEvent<{
         type: string,
         state_key?: string,
-        content?: unknown,
+        content?: IContent,
     }>,
     roomId: string,
 ) {
@@ -763,22 +763,23 @@ async function sendEvent(
         return;
     }
 
-    let res;
     if (stateKey !== undefined) {
         // state event
         try {
-            res = await client.sendStateEvent(roomId, eventType, content, stateKey);
+            const res = await client.sendStateEvent(roomId, eventType, content, stateKey);
+            sendResponse(event, {
+                room_id: roomId,
+                event_id: res.event_id,
+            });
         } catch (e) {
-            sendError(event, _t("Failed to send event"), e);
+            sendError(event, _t("Failed to send event"), e as Error);
+            return;
         }
     } else {
         // message event
         sendError(event, _t("Failed to send event"), new Error("Sending message events is not implemented"));
+        return;
     }
-    sendResponse(event, {
-        room_id: roomId,
-        event_id: res.event_id,
-    });
 }
 
 async function readEvents(
@@ -842,10 +843,13 @@ async function readEvents(
         }
         // When `true` is passed for state key, get events with any state key.
         const effectiveStateKey = stateKey === true ? undefined : stateKey;
-        const events: MatrixEvent[] = [].concat(room.currentState.getStateEvents(eventType, effectiveStateKey) || []);
+
+        let events: MatrixEvent[] = [];
+        events = events.concat(room.currentState.getStateEvents(eventType, effectiveStateKey) || []);
+        events = events.slice(0, effectiveLimit);
 
         sendResponse(event, {
-            events: events.slice(0, effectiveLimit).map(e => e.getEffectiveEvent()),
+            events: events.map(e => e.getEffectiveEvent()),
         });
         return;
     } else {
