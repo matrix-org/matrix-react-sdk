@@ -18,6 +18,7 @@ import classNames from "classnames";
 import React, { CSSProperties, forwardRef, memo, MutableRefObject, ReactNode } from "react";
 
 import { useIsExpanded } from "../hooks/useIsExpanded";
+import { useLink } from "../hooks/useLink";
 import { useSelection } from "../hooks/useSelection";
 
 const HEIGHT_BREAKING_POINT = 20;
@@ -36,6 +37,7 @@ export const Editor = memo(
     ) {
         const isExpanded = useIsExpanded(ref as MutableRefObject<HTMLDivElement | null>, HEIGHT_BREAKING_POINT);
         const { onFocus, onBlur, selectPreviousSelection, onInput } = useSelection();
+        const { onClick } = useLink()
 
         return (
             <div
@@ -61,6 +63,7 @@ export const Editor = memo(
                         onFocus={onFocus}
                         onBlur={onBlur}
                         onInput={onInput}
+                        onClick={onClick}
                     />
                 </div>
                 {rightComponent?.(selectPreviousSelection)}
