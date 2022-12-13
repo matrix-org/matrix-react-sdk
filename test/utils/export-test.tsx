@@ -47,7 +47,7 @@ interface ITestContent extends IContent {
 describe("export", function () {
     let mockExportOptions: IExportOptions;
     let mockRoom: Room;
-    let ts0;
+    let ts0: number;
     let events: MatrixEvent[];
     beforeEach(() => {
         stubClient();
