@@ -2415,7 +2415,6 @@
     "Start the camera": "Ativar a câmera",
     "Autoplay videos": "Reproduzir vídeos automaticamente",
     "Autoplay GIFs": "Reproduzir GIFs automaticamente",
-    "Threaded messaging": "Mensagens em fios",
     "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s fixou uma mensagem nesta sala. Veja todas as mensagens fixadas.",
     "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s fixou <a>uma mensagens</a> nesta sala. Veja todas as <b>mensagens fixadas</b>.",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
