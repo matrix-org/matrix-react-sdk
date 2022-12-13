@@ -2351,7 +2351,7 @@
     "View message": "Nachricht anzeigen",
     "Zoom in": "Vergrößern",
     "Zoom out": "Verkleinern",
-    "%(seconds)ss left": "%(seconds)s vergangen",
+    "%(seconds)ss left": "%(seconds)s verbleibend",
     "Change server ACLs": "Server-ACLs bearbeiten",
     "Failed to send": "Fehler beim Senden",
     "View all %(count)s members|other": "Alle %(count)s Mitglieder anzeigen",
