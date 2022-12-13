@@ -496,7 +496,7 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     }
 }
 
-function getWidgets(event: MessageEvent<any>, roomId?: string): void {
+function getWidgets(event: MessageEvent<any>, roomId: string | null): void {
     const client = MatrixClientPeg.get();
     if (!client) {
         sendError(event, _t("You need to be logged in."));
@@ -842,7 +842,7 @@ async function readEvents(
         const effectiveStateKey = stateKey === true ? undefined : stateKey;
 
         let events: MatrixEvent[] = [];
-        events = events.concat(room.currentState.getStateEvents(eventType, effectiveStateKey) || []);
+        events = events.concat(room.currentState.getStateEvents(eventType, effectiveStateKey as string) || []);
         events = events.slice(0, effectiveLimit);
 
         sendResponse(event, {
