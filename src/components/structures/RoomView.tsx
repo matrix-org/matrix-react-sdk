@@ -1204,7 +1204,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private loadVirtualRoom = async (room?: Room): Promise<void> => {
-        const virtualRoom = room?.roomId && await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room?.roomId);
+        const virtualRoom = room?.roomId && (await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room?.roomId));
 
         this.setState({ virtualRoom: virtualRoom || undefined });
     };
@@ -1303,11 +1303,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
-        this.setState({
-            room: room,
-        }, () => {
-            this.onRoomLoaded(room);
-        });
+        this.setState(
+            {
+                room: room,
+            },
+            () => {
+                this.onRoomLoaded(room);
+            },
+        );
     };
 
     private onDeviceVerificationChanged = (userId: string) => {
