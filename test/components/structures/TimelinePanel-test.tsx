@@ -163,7 +163,7 @@ describe("TimelinePanel", () => {
             expect(readMarkersSent).toEqual(["ev1"]);
         });
 
-        it("sends public read receipt when enabled", async () => {
+        it("sends public read receipt when enabled", () => {
             const [client, room, events] = setupTestData();
 
             const getValueCopy = SettingsStore.getValue;
