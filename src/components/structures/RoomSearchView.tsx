@@ -110,7 +110,12 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                             );
                                         if (!bundledRelationship || event.getThread()) continue;
                                         const room = client.getRoom(event.getRoomId());
-                                        room.createThread(event.getId(), event, [], true);
+                                        const thread = room.findThreadForEvent(event);
+                                        if (thread) {
+                                            event.setThread(thread);
+                                        } else {
+                                            room.createThread(event.getId(), event, [], true);
+                                        }
                                     }
                                 }
                             }
