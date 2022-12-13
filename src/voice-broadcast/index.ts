@@ -29,6 +29,7 @@ export * from "./components/VoiceBroadcastBody";
 export * from "./components/atoms/LiveBadge";
 export * from "./components/atoms/VoiceBroadcastControl";
 export * from "./components/atoms/VoiceBroadcastHeader";
+export * from "./components/atoms/VoiceBroadcastPlaybackControl";
 export * from "./components/atoms/VoiceBroadcastRoomSubtitle";
 export * from "./components/molecules/VoiceBroadcastPlaybackBody";
 export * from "./components/molecules/VoiceBroadcastPreRecordingPip";
