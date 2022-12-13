@@ -74,12 +74,6 @@ function openIntegrationManager() {
     });
 }
 
-function closeIntegrationManager(integrationManagerUrl: string) {
-    cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-        cy.get("#close").should("exist").click();
-    });
-}
-
 function sendActionFromIntegrationManager(
     integrationManagerUrl: string,
     targetRoomId: string,
