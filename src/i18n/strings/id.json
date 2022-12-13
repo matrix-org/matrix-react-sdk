@@ -3674,5 +3674,6 @@
     "Give one or multiple users in this room more privileges": "Berikan satu atau beberapa pengguna dalam ruangan ini lebih banyak izin",
     "Add privileged users": "Tambahkan pengguna yang diizinkan",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s mengakhiri sebuah <a>siaran suara</a>",
-    "You ended a <a>voice broadcast</a>": "Anda mengakhiri sebuah <a>siaran suara</a>"
+    "You ended a <a>voice broadcast</a>": "Anda mengakhiri sebuah <a>siaran suara</a>",
+    "Threaded messages": "Utasan pesan"
 }
