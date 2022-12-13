@@ -251,7 +251,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
                     </div>
                     {!hasARelation && (
                         <div className="mx_Tooltip_sub">
-                            {SettingsStore.getValue("feature_thread")
+                            {SettingsStore.getValue("feature_threadstable")
                                 ? _t("Beta feature")
                                 : _t("Beta feature. Click to learn more.")}
                         </div>
