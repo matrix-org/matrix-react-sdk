@@ -662,12 +662,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // NB: This does assume that the roomID will not change for the lifetime of
         // the RoomView instance
         if (initial) {
-            const virtualRoom = newState.roomId
-                ? await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(newState.roomId)
-                : undefined;
-
             newState.room = this.context.client!.getRoom(newState.roomId) || undefined;
-            newState.virtualRoom = virtualRoom || undefined;
             if (newState.room) {
                 newState.showApps = this.shouldShowApps(newState.room);
                 this.onRoomLoaded(newState.room);
@@ -1187,7 +1182,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         CHAT_EFFECTS.forEach((effect) => {
             if (containsEmoji(ev.getContent(), effect.emojis) || ev.getContent().msgtype === effect.msgType) {
                 // For initial threads launch, chat effects are disabled see #19731
-                if (!SettingsStore.getValue("feature_thread") || !ev.isRelation(THREAD_RELATION_TYPE.name)) {
+                if (!SettingsStore.getValue("feature_threadstable") || !ev.isRelation(THREAD_RELATION_TYPE.name)) {
                     dis.dispatch({ action: `effects.${effect.command}` });
                 }
             }
@@ -1213,6 +1208,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return this.messagePanel.canResetTimeline();
     };
 
+    private loadVirtualRoom = async (room?: Room): Promise<void> => {
+        const virtualRoom = room?.roomId && (await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room?.roomId));
+
+        this.setState({ virtualRoom: virtualRoom || undefined });
+    };
+
     // called when state.room is first initialised (either at initial load,
     // after a successful peek, or after we join the room).
     private onRoomLoaded = (room: Room) => {
@@ -1227,6 +1228,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
+        this.loadVirtualRoom(room);
 
         if (
             this.getMainSplitContentType(room) !== MainSplitContentType.Timeline &&
@@ -1293,7 +1295,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
-    private onRoom = async (room: Room) => {
+    private onRoom = (room: Room) => {
         if (!room || room.roomId !== this.state.roomId) {
             return;
         }
@@ -1306,11 +1308,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
-        const virtualRoom = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(room.roomId);
         this.setState(
             {
                 room: room,
-                virtualRoom: virtualRoom || undefined,
             },
             () => {
                 this.onRoomLoaded(room);

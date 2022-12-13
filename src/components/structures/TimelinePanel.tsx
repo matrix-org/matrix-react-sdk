@@ -347,11 +347,15 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const differentEventId = prevProps.eventId != this.props.eventId;
         const differentHighlightedEventId = prevProps.highlightedEventId != this.props.highlightedEventId;
         const differentAvoidJump = prevProps.eventScrollIntoView && !this.props.eventScrollIntoView;
+        const differentOverlayTimeline = prevProps.overlayTimelineSet !== this.props.overlayTimelineSet;
         if (differentEventId || differentHighlightedEventId || differentAvoidJump) {
             logger.log(
                 `TimelinePanel switching to eventId ${this.props.eventId} (was ${prevProps.eventId}), ` +
                     `scrollIntoView: ${this.props.eventScrollIntoView} (was ${prevProps.eventScrollIntoView})`,
             );
+            this.initTimeline(this.props);
+        } else if (differentOverlayTimeline) {
+            logger.log(`TimelinePanel updating overlay timeline.`);
             this.initTimeline(this.props);
         }
     }
@@ -1684,7 +1688,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         is very tied to the main room timeline, we are forcing the timeline to
         send read receipts for threaded events */
         const isThreadTimeline = this.context.timelineRenderingType === TimelineRenderingType.Thread;
-        if (SettingsStore.getValue("feature_thread") && isThreadTimeline) {
+        if (SettingsStore.getValue("feature_threadstable") && isThreadTimeline) {
             return 0;
         }
         const index = this.state.events.findIndex((ev) => ev.getId() === evId);
