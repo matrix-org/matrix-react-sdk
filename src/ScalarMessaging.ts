@@ -773,7 +773,7 @@ async function sendEvent(
         }
     } else {
         // message event
-        sendError(event, _t("Failed to send event"), new Error("Not implemented"));
+        sendError(event, _t("Failed to send event"), new Error("Sending message events is not implemented"));
     }
     sendResponse(event, {
         room_id: roomId,
@@ -850,7 +850,7 @@ async function readEvents(
         return;
     } else {
         // message events
-        sendError(event, _t("Failed to read events"), new Error("Not implemented"));
+        sendError(event, _t("Failed to read events"), new Error("Reading message events is not implemented"));
         return;
     }
 }
