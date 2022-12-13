@@ -87,13 +87,9 @@ describe("VoiceBroadcastRecordingPip", () => {
 
     beforeAll(() => {
         client = stubClient();
-        mocked(requestMediaPermissions).mockReturnValue(
-            new Promise<MediaStream>((r) => {
-                r({
-                    getTracks: () => [],
-                } as unknown as MediaStream);
-            }),
-        );
+        mocked(requestMediaPermissions).mockResolvedValue({
+            getTracks: (): Array<MediaStreamTrack> => [],
+        } as unknown as MediaStream);
         jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
             [MediaDeviceKindEnum.AudioInput]: [
                 {
