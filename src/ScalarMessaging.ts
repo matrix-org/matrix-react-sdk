@@ -293,6 +293,7 @@ Response:
 
 import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
@@ -501,7 +502,7 @@ function getWidgets(event: MessageEvent<any>, roomId?: string): void {
         sendError(event, _t("You need to be logged in."));
         return;
     }
-    let widgetStateEvents = [];
+    let widgetStateEvents: Partial<IEvent>[] = [];
 
     if (roomId) {
         const room = client.getRoom(roomId);
