@@ -28,7 +28,7 @@ import { formatTimeLeft } from "../../../DateUtils";
 import Spinner from "../../../components/views/elements/Spinner";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
 import AccessibleTooltipButton from "../../../components/views/elements/AccessibleTooltipButton";
 
 interface VoiceBroadcastHeaderProps {
@@ -59,13 +59,11 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const broadcast = showBroadcast && (
         <div className="mx_VoiceBroadcastHeader_line">
             <LiveIcon className="mx_Icon mx_Icon_16" />
-            { _t("Voice broadcast") }
+            {_t("Voice broadcast")}
         </div>
     );
 
-    const liveBadge = live !== "not-live" && (
-        <LiveBadge grey={live === "grey"} />
-    );
+    const liveBadge = live !== "not-live" && <LiveBadge grey={live === "grey"} />;
 
     const closeButton = showClose && (
         <AccessibleButton onClick={onCloseClick}>
@@ -83,7 +81,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const buffering = showBuffering && (
         <div className="mx_VoiceBroadcastHeader_line">
             <Spinner w={14} h={14} />
-            { _t("Buffering…") }
+            {_t("Buffering…")}
         </div>
     );
 
@@ -99,7 +97,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
             title={_t("Change input device")}
         >
             <MicrophoneIcon className="mx_Icon mx_Icon_16" />
-            <span>{ microphoneLabel }</span>
+            <span>{microphoneLabel}</span>
         </AccessibleTooltipButton>
     );
 
@@ -112,30 +110,26 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     };
 
     let roomAvatar = <RoomAvatar room={room} width={32} height={32} />;
-    let roomName = <div className="mx_VoiceBroadcastHeader_room">
-        { room.name }
-    </div>;
+    let roomName = <div className="mx_VoiceBroadcastHeader_room">{room.name}</div>;
 
     if (linkToRoom) {
-        roomAvatar = <AccessibleButton onClick={onRoomAvatarOrNameClick}>
-            { roomAvatar }
-        </AccessibleButton>;
+        roomAvatar = <AccessibleButton onClick={onRoomAvatarOrNameClick}>{roomAvatar}</AccessibleButton>;
 
-        roomName = <AccessibleButton onClick={onRoomAvatarOrNameClick}>
-            { roomName }
-        </AccessibleButton>;
+        roomName = <AccessibleButton onClick={onRoomAvatarOrNameClick}>{roomName}</AccessibleButton>;
     }
 
-    return <div className="mx_VoiceBroadcastHeader">
-        { roomAvatar }
-        <div className="mx_VoiceBroadcastHeader_content">
-            { roomName }
-            { microphoneLine }
-            { timeLeftLine }
-            { broadcast }
-            { buffering }
+    return (
+        <div className="mx_VoiceBroadcastHeader">
+            {roomAvatar}
+            <div className="mx_VoiceBroadcastHeader_content">
+                {roomName}
+                {microphoneLine}
+                {timeLeftLine}
+                {broadcast}
+                {buffering}
+            </div>
+            {liveBadge}
+            {closeButton}
         </div>
-        { liveBadge }
-        { closeButton }
-    </div>;
+    );
 };
