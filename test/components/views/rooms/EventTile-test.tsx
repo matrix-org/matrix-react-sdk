@@ -137,7 +137,8 @@ describe("EventTile", () => {
         it("shows an unread notification bage", () => {
             const { container } = getComponent({}, TimelineRenderingType.ThreadsList);
 
-            expect(container.getElementsByClassName("mx_NotificationBadge")).toHaveLength(0);
+            // By default, the thread will assume there's unread activity in it.
+            expect(container.getElementsByClassName("mx_NotificationBadge")).toHaveLength(1);
 
             act(() => {
                 room.setThreadUnreadNotificationCount(mxEvent.getId(), NotificationCountType.Total, 3);
