@@ -3674,5 +3674,6 @@
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Під час користування цим сеансом ви не зможете брати участь у кімнатах, де ввімкнено шифрування.",
     "This session doesn't support encryption, so it can't be verified.": "Цей сеанс не підтримує шифрування, тож його не можна звірити.",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s завершує <a>голосову трансляцію</a>",
-    "You ended a <a>voice broadcast</a>": "Ви завершили <a>голосову трансляцію</a>"
+    "You ended a <a>voice broadcast</a>": "Ви завершили <a>голосову трансляцію</a>",
+    "Threaded messages": "Повідомлення в гілках"
 }
