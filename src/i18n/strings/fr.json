@@ -3677,5 +3677,7 @@
     "Apply": "Appliquer",
     "Search users in this room…": "Chercher des utilisateurs dans ce salon…",
     "Give one or multiple users in this room more privileges": "Donne plus de privilèges à un ou plusieurs utilisateurs de ce salon",
-    "Add privileged users": "Ajouter des utilisateurs privilégiés"
+    "Add privileged users": "Ajouter des utilisateurs privilégiés",
+    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s a terminé une <a>diffusion audio</a>",
+    "You ended a <a>voice broadcast</a>": "Vous avez terminé une <a>diffusion audio</a>"
 }
