@@ -3132,7 +3132,6 @@
     "Disinvite from space": "スペースへの招待を取り消す",
     "Remove from space": "スペースから追放",
     "Disinvite from room": "ルームへの招待を取り消す",
-    "Use “%(replyInThread)s” when hovering over a message.": "メッセージの「%(replyInThread)s」機能を使用すると新しいスレッドを開始できます。",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>ヒント：</b>メッセージの「%(replyInThread)s」機能を使用すると新しいスレッドを開始できます。",
     "No live locations": "位置情報（ライブ）がありません",
     "Enable Markdown": "マークダウンを有効にする",

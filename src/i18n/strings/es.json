@@ -3272,7 +3272,6 @@
     "Audio devices": "Dispositivos de audio",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Empieza los mensajes con <code>/plain</code> para enviarlos sin Markdown, y <code>/md</code> para enviarlos con Markdown.",
     "Enable Markdown": "Activar Markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "Usa «%(replyInThread)s» al pasar el ratón sobre un mensaje.",
     "Keep discussions organised with threads.": "Mantén tus conversaciones organizadas con los hilos.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Si deseas mantener acceso a tu historial de conversación en salas encriptadas, configura copia de llaves o exporta tus claves de mensaje desde uno de tus otros dispositivos antes de proceder.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Cerrar sesión en tus dispositivos causará que las claves de encriptado almacenadas en ellas se eliminen, haciendo que el historial de la conversación encriptada sea imposible de leer.",

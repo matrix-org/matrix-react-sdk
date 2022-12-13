@@ -2916,7 +2916,6 @@
     "Sends the given message with hearts": "Sendir skilaboðin með hjörtum",
     "Enable hardware acceleration": "Virkja vélbúnaðarhröðun",
     "Enable Markdown": "Virkja Markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "Notaðu “%(replyInThread)s” þegar bendillinn svífur yfir skilaboðum.",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær. <a>Kanna nánar</a>.",
     "Keep discussions organised with threads.": "Haltu umræðum skipulögðum með spjallþráðum.",
     "Connection lost": "Tenging rofnaði",

@@ -3138,7 +3138,6 @@
     "Do you want to enable threads anyway?": "Вы всё равно хотите включить обсуждения?",
     "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Ваш домашний сервер в настоящее время не поддерживает обсуждения, поэтому эта функция может быть ненадёжной. Некоторые обсуждения могут быть недоступны. <a>Узнать больше</a>.",
     "Partial Support for Threads": "Частичная поддержка обсуждений",
-    "Use “%(replyInThread)s” when hovering over a message.": "Используйте “%(replyInThread)s” при наведении курсора на сообщение.",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Обсуждения помогают поддерживать и легко отслеживать тематику бесед. <a>Узнать больше</a>.",
     "Keep discussions organised with threads.": "Организуйте обсуждения с помощью обсуждений.",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",

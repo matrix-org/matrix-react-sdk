@@ -3132,7 +3132,6 @@
     "%(value)sd": "%(value)sd",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Beginne Nachrichten mit <code>/plain</code>, um Nachrichten ohne Markdown zu schreiben und mit <code>/md</code>, um sie mit Markdown zu schreiben.",
     "Enable Markdown": "Markdown aktivieren",
-    "Use “%(replyInThread)s” when hovering over a message.": "Klicke auf „%(replyInThread)s“ im Menü einer Nachricht.",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Threads helfen dir dabei, dass deine Unterhaltungen beim Thema bleiben. <a>Mehr Infos</a>.",
     "Keep discussions organised with threads.": "Organisiere Diskussionen mit Threads.",
     "Failed to join": "Betreten fehlgeschlagen",

@@ -3250,7 +3250,6 @@
     "Partial Support for Threads": "Supporto parziale per i messaggi in conversazioni",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Inizia i messaggi con <code>/plain</code> per inviarli senza markdown e <code>/md</code> per inviarli con.",
     "Enable Markdown": "Attiva markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "Usa \"%(replyInThread)s\" passando sopra un messaggio.",
     "Jump to the given date in the timeline": "Salta alla data scelta nella linea temporale",
     "Updated %(humanizedUpdateTime)s": "Aggiornato %(humanizedUpdateTime)s",
     "Hide my messages from new joiners": "Nascondi i miei messaggi ai nuovi membri",

@@ -3245,7 +3245,6 @@
     "Disinvite from room": "Zrušit pozvánku do místnosti",
     "Disinvite from space": "Zrušit pozvánku do prostoru",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tip:</b> Použijte \"%(replyInThread)s\" při najetí na zprávu.",
-    "Use “%(replyInThread)s” when hovering over a message.": "Použijte \"%(replyInThread)s\" při najetí na zprávu.",
     "No live locations": "Žádné polohy živě",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Zprávy uvozujte pomocí <code>/plain</code> pro odeslání bez Markdown a <code>/md</code> pro odeslání s Markdown formátováním.",
     "Enable Markdown": "Povolit Markdown",

@@ -3248,7 +3248,6 @@
     "No live locations": "Tidak ada lokasi langsung",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Mulai pesan dengan <code>/plain</code> untuk mengirim tanpa Markdown dan <code>/md</code> untuk kirim dengan Markdown.",
     "Enable Markdown": "Aktifkan Markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "Gunakan “%(replyInThread)s” ketika kursor berada di atas pesan.",
     "Close sidebar": "Tutup bilah samping",
     "View List": "Tampilkan Daftar",
     "View list": "Tampilkan daftar",

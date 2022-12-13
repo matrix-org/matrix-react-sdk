@@ -3282,7 +3282,6 @@
     "Do you want to enable threads anyway?": "Θέλετε να ενεργοποιήσετε τα νήματα ούτως ή άλλως;",
     "Enable hardware acceleration": "Ενεργοποίηση επιτάχυνσης υλικού",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Ξεκινήστε τα μηνύματα με <code>/plain</code> για αποστολή χωρίς σήμανση markdown και <code>/md</code> για αποστολή με markdown.",
-    "Use “%(replyInThread)s” when hovering over a message.": "Χρησιμοποιήστε την “%(replyInThread)s” όταν τοποθετείτε το δείκτη του ποντικιού πάνω από ένα μήνυμα.",
     "Yes, the chat timeline is displayed alongside the video.": "Ναι, το χρονοδιάγραμμα της συνομιλίας εμφανίζεται δίπλα στο βίντεο.",
     "Can I use text chat alongside the video call?": "Μπορώ να χρησιμοποιήσω τη συνομιλία κειμένου παράλληλα με τη βιντεοκλήση;",
     "Use the “+” button in the room section of the left panel.": "Χρησιμοποιήστε το κουμπί “+” στην ενότητα δωματίων του αριστερού πάνελ.",

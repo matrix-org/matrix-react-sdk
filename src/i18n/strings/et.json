@@ -3245,7 +3245,6 @@
     "Disinvite from room": "Eemalda kutse jututuppa",
     "Disinvite from space": "Eemalda kutse kogukonda",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Soovitus:</b> Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust.",
-    "Use “%(replyInThread)s” when hovering over a message.": "Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust.",
     "No live locations": "Reaalajas asukohad puuduvad",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Kui sa ei soovi sõnumis kasutada Markdown-süntaksit, siis kirjuta algusesse <code>/plain</code>, vastasel juhul alusta sõnumit nii: <code>/md</code>.",
     "Enable Markdown": "Kasuta Markdown-süntaksit",

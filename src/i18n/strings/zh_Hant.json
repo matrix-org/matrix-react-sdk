@@ -3248,7 +3248,6 @@
     "No live locations": "無即時位置",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "以 <code>/plain</code> 當訊息的開頭以不使用 markdown 傳送，或以 <code>/md</code> 傳送來包含 markdown 格式。",
     "Enable Markdown": "啟用 Markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
     "Close sidebar": "關閉側邊欄",
     "View List": "檢視清單",
     "View list": "檢視清單",

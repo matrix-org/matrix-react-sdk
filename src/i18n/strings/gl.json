@@ -3267,7 +3267,6 @@
     "Audio devices": "Dispositivos de audio",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Comeza as mensaxes con <code>/plain</code> para enviar sen markdown e <code>/md</code> para enviar usándoo.",
     "Enable Markdown": "Activar Markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "Usa \"%(replyInThread)s\" ao poñerte sobre unha mensaxe.",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Pechaches a sesión en tódolos dispositivos e non recibirás notificacións push. Para reactivalas notificacións volve a acceder en cada dispositivo.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Se queres manter o acceso ao historial de conversas en salas cifradas, configura a Copia de Apoio das Chaves ou exporta as chaves das mensaxes desde un dos teus dispositivos antes de continuar.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Ao pechar sesión nos teus dispositivos eliminarás as chaves de cifrado de mensaxes gardadas neles, facendo ilexible o historial de conversas cifrado.",

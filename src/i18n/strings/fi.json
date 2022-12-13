@@ -2971,7 +2971,6 @@
     "Search %(spaceName)s": "Etsi %(spaceName)s",
     "Call": "Soita",
     "Dial": "Yhdistä",
-    "How can I start a thread?": "Miten aloitan ketjun?",
     "Messaging": "Viestintä",
     "Back to thread": "Takaisin ketjuun",
     "The user's homeserver does not support the version of the space.": "Käyttäjän kotipalvelin ei tue avaruuden versiota.",

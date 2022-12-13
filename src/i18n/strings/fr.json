@@ -3278,7 +3278,6 @@
     "Audio devices": "Périphériques audio",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Commencer les messages avec <code>/plain</code> pour les envoyer sans markdown et <code>/md</code> pour les envoyer avec.",
     "Enable Markdown": "Activer Markdown",
-    "Use “%(replyInThread)s” when hovering over a message.": "Utilisez « %(replyInThread)s » en survolant un message.",
     "%(members)s and more": "%(members)s et plus",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Votre message n’a pas été envoyé car ce serveur d’accueil a été bloqué par son administrateur. Veuillez <a>contacter l’administrateur de votre service</a> pour continuer à l’utiliser.",
     "An error occurred while stopping your live location": "Une erreur s’est produite lors de l’arrêt de votre position en continu",

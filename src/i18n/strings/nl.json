@@ -3278,7 +3278,6 @@
     "Audio devices": "Audio-apparaten",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Begin berichten met <code>/plain</code> om ze zonder markdown te verzenden en met <code>/md</code> om ze met markdown te verzenden.",
     "Enable Markdown": "Markdown inschakelen",
-    "Use “%(replyInThread)s” when hovering over a message.": "Houd de muiscursor boven een bericht en gebruik “%(replyInThread)s”.",
     "An error occurred while stopping your live location": "Er is een fout opgetreden bij het stoppen van je live locatie",
     "Enable live location sharing": "Live locatie delen inschakelen",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Let op: dit is een labfunctie met een tijdelijke implementatie. Dit betekent dat je jouw locatiegeschiedenis niet kunt verwijderen en dat geavanceerde gebruikers jouw locatiegeschiedenis kunnen zien, zelfs nadat je stopt met het delen van uw live locatie met deze ruimte.",
