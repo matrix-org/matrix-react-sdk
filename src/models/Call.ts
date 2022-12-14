@@ -630,6 +630,8 @@ export class ElementCall extends Call {
         const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
         const analyticsID: string = accountAnalyticsData?.event.content?.pseudonymousAnalyticsOptIn ?
             accountAnalyticsData?.event.content?.id : "";
+
+        // Splice together the Element Call URL for this call
         const params = new URLSearchParams({
             embed: "",
             preload: "",
