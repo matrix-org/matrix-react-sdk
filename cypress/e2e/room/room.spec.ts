@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { EventType } from "matrix-js-sdk/src/matrix";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { MatrixClient } from "../../global";
