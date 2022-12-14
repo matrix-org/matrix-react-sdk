@@ -16,9 +16,10 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import { EventType } from "matrix-js-sdk/src/matrix";
+
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { MatrixClient } from "../../global";
-import { EventType } from "matrix-js-sdk/src/matrix";
 
 describe("Room Directory", () => {
     let synapse: SynapseInstance;
@@ -36,10 +37,6 @@ describe("Room Directory", () => {
     });
 
     it("should switch between existing dm rooms without a loader", () => {
-        let clientUserId;
-        cy.getClient().then((cli) => {
-            clientUserId = cli.getUserId();
-        });
         let bobClient: MatrixClient;
         let charlieClient: MatrixClient;
         cy.getBot(synapse, {
