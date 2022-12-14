@@ -21,11 +21,13 @@ import { _td } from "../../../../../languageHandler";
 import Modal from "../../../../../Modal";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import Field from "../../../elements/Field";
+import { useComposerContext } from "../ComposerContext";
+import { isSelectionEmpty, setSelection } from "../utils/selection";
 
 export function openLinkModal(composer: FormattingFunctions) {
     const modal = Modal.createDialog(
         LinkModal,
-        { composer, onClose: () => modal.close() },
+        { composer, onClose: () => modal.close(), isTextEnabled: isSelectionEmpty() },
         "mx_CompoundDialog",
         false,
         true,
@@ -38,12 +40,15 @@ function isEmpty(text: string) {
 
 interface LinkModalProps {
     composer: FormattingFunctions;
+    isTextEnabled: boolean;
     onClose: () => void;
 }
 
-export function LinkModal({ composer, onClose }: LinkModalProps) {
+function LinkModal({ composer, isTextEnabled, onClose }: LinkModalProps) {
+    const composerContext = useComposerContext();
+
     const [fields, setFields] = useState({ text: "", link: "" });
-    const isSaveDisabled = isEmpty(fields.text) || isEmpty(fields.link);
+    const isSaveDisabled = (isTextEnabled && isEmpty(fields.text)) || isEmpty(fields.link);
 
     return (
         <QuestionDialog
@@ -52,21 +57,26 @@ export function LinkModal({ composer, onClose }: LinkModalProps) {
             button={_td("Save")}
             buttonDisabled={isSaveDisabled}
             hasCancelButton={true}
-            onFinished={(isClickOnSave: boolean) => {
+            onFinished={async (isClickOnSave: boolean) => {
                 if (isClickOnSave) {
-                    composer.link(fields.link, fields.text)
+                    setSelection(composerContext.selection);
+
+                    // Waiting for selection to be effective
+                    setTimeout(() => composer.link(fields.link, isTextEnabled ? fields.text : undefined), 0);
                 }
                 onClose();
             }}
             description={
                 <>
-                    <Field
-                        label={_td("Text")}
-                        value={fields.text}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            setFields((fields) => ({ ...fields, text: e.target.value }))
-                        }
-                    />
+                    {isTextEnabled && (
+                        <Field
+                            label={_td("Text")}
+                            value={fields.text}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                setFields((fields) => ({ ...fields, text: e.target.value }))
+                            }
+                        />
+                    )}
                     <Field
                         label={_td("Link")}
                         value={fields.link}

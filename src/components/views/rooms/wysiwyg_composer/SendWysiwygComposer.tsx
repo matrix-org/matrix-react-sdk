@@ -24,6 +24,7 @@ import { E2EStatus } from "../../../../utils/ShieldUtils";
 import E2EIcon from "../E2EIcon";
 import { AboveLeftOf } from "../../../structures/ContextMenu";
 import { Emoji } from "./components/Emoji";
+import { ComposerContext, defaultContext } from "./ComposerContext";
 
 interface ContentProps {
     disabled?: boolean;
@@ -58,17 +59,17 @@ export function SendWysiwygComposer({
     const Composer = isRichTextEnabled ? WysiwygComposer : PlainTextComposer;
 
     return (
-        <Composer
-            className="mx_SendWysiwygComposer"
-            leftComponent={e2eStatus && <E2EIcon status={e2eStatus} />}
-            rightComponent={(selectPreviousSelection) => (
-                <Emoji menuPosition={menuPosition} selectPreviousSelection={selectPreviousSelection} />
-            )}
-            {...props}
-        >
-            {(ref, composerFunctions) => (
-                <Content disabled={props.disabled} ref={ref} composerFunctions={composerFunctions} />
-            )}
-        </Composer>
+        <ComposerContext.Provider value={defaultContext}>
+            <Composer
+                className="mx_SendWysiwygComposer"
+                leftComponent={e2eStatus && <E2EIcon status={e2eStatus} />}
+                rightComponent={<Emoji menuPosition={menuPosition} />}
+                {...props}
+            >
+                {(ref, composerFunctions) => (
+                    <Content disabled={props.disabled} ref={ref} composerFunctions={composerFunctions} />
+                )}
+            </Composer>
+        </ComposerContext.Provider>
     );
 }

@@ -14,15 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MouseEvent, useCallback } from "react";
+import { createContext, useContext } from "react";
 
-export function useLink() {
-    const onClick = useCallback((evt: MouseEvent<HTMLDivElement>) => {
-        const target = evt.target as HTMLLinkElement;
-        if (target.nodeName === 'A') {
-            window.open(target.href, '_blank');
-        }
-    }, [])
+import { SubSelection } from "./types";
 
-    return { onClick }
+export const defaultContext = { selection: { anchorNode: null, anchorOffset: 0, focusNode: null, focusOffset: 0 } };
+
+export interface ComposerContextState {
+    selection: SubSelection;
+}
+
+export const ComposerContext = createContext<ComposerContextState>(defaultContext);
+ComposerContext.displayName = "ComposerContext";
+
+export function useComposerContext() {
+    return useContext(ComposerContext);
 }
