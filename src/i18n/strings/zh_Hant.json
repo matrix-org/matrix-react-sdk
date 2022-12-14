@@ -3674,5 +3674,6 @@
     "Give one or multiple users in this room more privileges": "給這個聊天室中的一個使用者或多個使用者更多的權限",
     "Add privileged users": "新增特權使用者",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s 結束了<a>語音廣播</a>",
-    "You ended a <a>voice broadcast</a>": "您結束了<a>語音廣播</a>"
+    "You ended a <a>voice broadcast</a>": "您結束了<a>語音廣播</a>",
+    "Threaded messages": "討論串訊息"
 }
