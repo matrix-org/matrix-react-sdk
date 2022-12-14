@@ -57,7 +57,7 @@ describe("Room Directory", () => {
             const charlieRoom = await cli.createRoom({ is_direct: true });
             await cli.invite(bobRoom.room_id, bobClient.getUserId());
             await cli.invite(charlieRoom.room_id, charlieClient.getUserId());
-            await cli.setAccountData(EventType.Direct, {
+            await cli.setAccountData("m.direct" as EventType, {
                 [bobClient.getUserId()]: [bobRoom.room_id],
                 [charlieClient.getUserId()]: [charlieRoom.room_id],
             });
