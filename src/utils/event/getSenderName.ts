@@ -17,15 +17,7 @@ limitations under the License.
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../languageHandler";
-import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { getSenderName } from "../../utils/event/getSenderName";
 
-export const textForVoiceBroadcastStoppedEventWithoutLink = (event: MatrixEvent): string => {
-    const ownUserId = MatrixClientPeg.get()?.getUserId();
-
-    if (ownUserId && ownUserId === event.getSender()) {
-        return _t("You ended a voice broadcast", {});
-    }
-
-    return _t("%(senderName)s ended a voice broadcast", { senderName: getSenderName(event) });
-};
+export function getSenderName(event: MatrixEvent): string {
+    return event.sender?.name ?? event.getSender() ?? _t("Someone");
+}
