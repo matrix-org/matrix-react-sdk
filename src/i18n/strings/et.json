@@ -3674,5 +3674,6 @@
     "This session doesn't support encryption and thus can't be verified.": "Seda sessiooni ei saa verifitseerida, sest seal puudub krüptimise tugi.",
     "This session doesn't support encryption, so it can't be verified.": "Seda sessiooni ei saa verifitseerida, sest seal puudub krüptimise tugi.",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s lõpetas <a>ringhäälingukõne</a>",
-    "You ended a <a>voice broadcast</a>": "Sa lõpetasid <a>ringhäälingukõne</a>"
+    "You ended a <a>voice broadcast</a>": "Sa lõpetasid <a>ringhäälingukõne</a>",
+    "Threaded messages": "Sõnumid jutulõngana"
 }
