@@ -47,7 +47,7 @@ export function usePlainTextListeners(
     const onInput = useCallback(
         (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
             if (isDivElement(event.target)) {
-                setText(event.target.innerHTML);
+                setText(event.target.textContent);
             }
         },
         [setText],
