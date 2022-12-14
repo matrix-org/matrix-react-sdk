@@ -25,6 +25,7 @@ import Spinner from "../views/elements/Spinner";
 import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import Measured from "../views/elements/Measured";
+import Heading from "../views/typography/Heading";
 
 interface IProps {
     onClose(): void;
@@ -90,7 +91,20 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
                     narrow: this.state.narrow,
                 }}
             >
-                <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
+                <BaseCard
+                    header={
+                        <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                            {_t("Notifications")}
+                        </Heading>
+                    }
+                    /**
+                     * Need to rename this CSS class to something more generic
+                     * Will be done once all the panels are using a similar layout
+                     */
+                    className="mx_ThreadPanel"
+                    onClose={this.props.onClose}
+                    withoutScrollContainer={true}
+                >
                     <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
                     {content}
                 </BaseCard>

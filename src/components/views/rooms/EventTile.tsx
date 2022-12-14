@@ -1025,7 +1025,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
-            mx_EventTile_clamp: this.context.timelineRenderingType === TimelineRenderingType.ThreadsList,
+            mx_EventTile_clamp:
+                this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
+                this.context.timelineRenderingType === TimelineRenderingType.Notification,
             mx_EventTile_noBubble: noBubbleEvent,
         });
 
@@ -1090,7 +1092,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 member = this.props.mxEvent.sender;
             }
             // In the ThreadsList view we use the entire EventTile as a click target to open the thread instead
-            const viewUserOnClick = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList;
+            const viewUserOnClick = ![TimelineRenderingType.ThreadsList, TimelineRenderingType.Notification].includes(
+                this.context.timelineRenderingType,
+            );
             avatar = (
                 <div className="mx_EventTile_avatar">
                     <MemberAvatar
@@ -1280,57 +1284,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         const isOwnEvent = this.props.mxEvent?.getSender() === MatrixClientPeg.get().getUserId();
 
         switch (this.context.timelineRenderingType) {
-            case TimelineRenderingType.Notification: {
-                const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-                return React.createElement(
-                    this.props.as || "li",
-                    {
-                        "className": classes,
-                        "aria-live": ariaLive,
-                        "aria-atomic": true,
-                        "data-scroll-tokens": scrollToken,
-                    },
-                    [
-                        <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
-                            <RoomAvatar room={room} width={28} height={28} />
-                            <a href={permalink} onClick={this.onPermalinkClicked}>
-                                {room ? room.name : ""}
-                            </a>
-                        </div>,
-                        <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
-                            {avatar}
-                            <a
-                                href={permalink}
-                                onClick={this.onPermalinkClicked}
-                                onContextMenu={this.onTimestampContextMenu}
-                            >
-                                {sender}
-                                {timestamp}
-                            </a>
-                        </div>,
-                        <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
-                            {this.renderContextMenu()}
-                            {renderTile(
-                                TimelineRenderingType.Notification,
-                                {
-                                    ...this.props,
-
-                                    // overrides
-                                    ref: this.tile,
-                                    isSeeingThroughMessageHiddenForModeration,
-
-                                    // appease TS
-                                    highlights: this.props.highlights,
-                                    highlightLink: this.props.highlightLink,
-                                    onHeightChanged: this.props.onHeightChanged,
-                                    permalinkCreator: this.props.permalinkCreator,
-                                },
-                                this.context.showHiddenEvents,
-                            )}
-                        </div>,
-                    ],
-                );
-            }
             case TimelineRenderingType.Thread: {
                 return React.createElement(
                     this.props.as || "li",
@@ -1382,6 +1335,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     ],
                 );
             }
+            case TimelineRenderingType.Notification:
             case TimelineRenderingType.ThreadsList: {
                 const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
@@ -1404,20 +1358,47 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
-                            dis.dispatch<ShowThreadPayload>({
-                                action: Action.ShowThread,
-                                rootEvent: this.props.mxEvent,
-                                push: true,
-                            });
                             const target = ev.currentTarget as HTMLElement;
                             const index = Array.from(target.parentElement.children).indexOf(target);
-                            PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
+                            switch (this.context.timelineRenderingType) {
+                                case TimelineRenderingType.Notification:
+                                    this.viewInRoom(ev);
+                                    break;
+                                case TimelineRenderingType.ThreadsList:
+                                    dis.dispatch<ShowThreadPayload>({
+                                        action: Action.ShowThread,
+                                        rootEvent: this.props.mxEvent,
+                                        push: true,
+                                    });
+                                    PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
+                                    break;
+                            }
                         },
                     },
                     <>
-                        {sender}
-                        {avatar}
-                        {timestamp}
+                        <div className="mx_EventTile_details">
+                            {sender}
+                            {this.context.timelineRenderingType === TimelineRenderingType.Notification ? (
+                                <span className="mx_EventTile_truncated">
+                                    {" "}
+                                    {_t(
+                                        " in <strong>%(room)s</strong>",
+                                        { room: room.name },
+                                        { strong: (sub) => <strong>{sub}</strong> },
+                                    )}
+                                </span>
+                            ) : (
+                                ""
+                            )}
+                            {timestamp}
+                        </div>
+                        {this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ? (
+                            avatar
+                        ) : (
+                            <div className="mx_EventTile_avatar">
+                                <RoomAvatar room={room} width={28} height={28} />
+                            </div>
+                        )}
                         <div className={lineClasses} key="mx_EventTile_line">
                             <div className="mx_EventTile_body">
                                 {this.props.mxEvent.isRedacted() ? (
@@ -1428,24 +1409,27 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             </div>
                             {this.renderThreadPanelSummary()}
                         </div>
-                        <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
-                            <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_iconButton"
-                                onClick={this.viewInRoom}
-                                title={_t("View in room")}
-                                key="view_in_room"
-                            >
-                                <ViewInRoomIcon />
-                            </RovingAccessibleTooltipButton>
-                            <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_iconButton"
-                                onClick={this.copyLinkToThread}
-                                title={_t("Copy link to thread")}
-                                key="copy_link_to_thread"
-                            >
-                                <LinkIcon />
-                            </RovingAccessibleTooltipButton>
-                        </Toolbar>
+                        {this.context.timelineRenderingType === TimelineRenderingType.ThreadsList && (
+                            <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+                                <RovingAccessibleTooltipButton
+                                    className="mx_MessageActionBar_iconButton"
+                                    onClick={this.viewInRoom}
+                                    title={_t("View in room")}
+                                    key="view_in_room"
+                                >
+                                    <ViewInRoomIcon />
+                                </RovingAccessibleTooltipButton>
+                                <RovingAccessibleTooltipButton
+                                    className="mx_MessageActionBar_iconButton"
+                                    onClick={this.copyLinkToThread}
+                                    title={_t("Copy link to thread")}
+                                    key="copy_link_to_thread"
+                                >
+                                    <LinkIcon />
+                                </RovingAccessibleTooltipButton>
+                            </Toolbar>
+                        )}
+
                         {msgOption}
                         <UnreadNotificationBadge room={room} threadId={this.props.mxEvent.getId()} />
                     </>,
