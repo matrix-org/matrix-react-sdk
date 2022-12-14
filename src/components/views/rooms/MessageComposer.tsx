@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode } from "react";
-import { htmlToMarkdown, markdownToHtml } from "@matrix-org/matrix-wysiwyg";
+import { richToPlain, plainToRich } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -359,22 +359,15 @@ export class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
-    private onRichTextToggle = async () => {
-        if (this.state.isRichTextEnabled) {
-            const contentAsMarkdown = await htmlToMarkdown(this.state.composerContent);
-            this.setState({
-                isRichTextEnabled: false,
-                composerContent: contentAsMarkdown,
-                initialComposerContent: contentAsMarkdown,
-            });
-        } else {
-            const contentAsHtml = await markdownToHtml(this.state.composerContent);
-            this.setState({
-                isRichTextEnabled: true,
-                composerContent: contentAsHtml,
-                initialComposerContent: contentAsHtml,
-            });
-        }
+    private onRichTextToggle = () => {
+        this.setState(({ isRichTextEnabled, composerContent }) => {
+            const convertedContent = isRichTextEnabled ? richToPlain(composerContent) : plainToRich(composerContent);
+            return {
+                isRichTextEnabled: !isRichTextEnabled,
+                composerContent: convertedContent,
+                initialComposerContent: convertedContent,
+            };
+        });
     };
 
     private onVoiceStoreUpdate = () => {
