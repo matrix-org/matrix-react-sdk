@@ -25,14 +25,15 @@ import { TestSdkContext } from "../TestSdkContext";
 jest.mock("../../src/settings/SettingsStore", () => ({
     getValue: jest.fn(),
     monitorSetting: jest.fn(),
+    watchSetting: jest.fn(),
 }));
 
 describe("TypingStore", () => {
     let typingStore: TypingStore;
     let mockClient: MatrixClient;
     const settings = {
-        "sendTypingNotifications": true,
-        "feature_thread": false,
+        sendTypingNotifications: true,
+        feature_thread: false,
     };
     const roomId = "!test:example.com";
     const localRoomId = LOCAL_ROOM_ID_PREFIX + "test";

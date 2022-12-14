@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import * as Roles from '../../../Roles';
-import { _t } from '../../../languageHandler';
+import * as Roles from "../../../Roles";
+import { _t } from "../../../languageHandler";
 import Field from "./Field";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -86,13 +86,13 @@ export default class PowerSelector extends React.Component<IProps, IState> {
     private initStateFromProps(): void {
         // This needs to be done now because levelRoleMap has translated strings
         const levelRoleMap = Roles.levelRoleMap(this.props.usersDefault);
-        const options = Object.keys(levelRoleMap).filter(level => {
-            return (
-                level === undefined ||
-                parseInt(level) <= this.props.maxValue ||
-                parseInt(level) == this.props.value
-            );
-        }).map(level => parseInt(level));
+        const options = Object.keys(levelRoleMap)
+            .filter((level) => {
+                return (
+                    level === undefined || parseInt(level) <= this.props.maxValue || parseInt(level) == this.props.value
+                );
+            })
+            .map((level) => parseInt(level));
 
         const isCustom = levelRoleMap[this.props.value] === undefined;
 
@@ -174,7 +174,11 @@ export default class PowerSelector extends React.Component<IProps, IState> {
             });
             options.push({ value: CUSTOM_VALUE, text: _t("Custom level") });
             const optionsElements = options.map((op) => {
-                return <option value={op.value} key={op.value}>{ op.text }</option>;
+                return (
+                    <option value={op.value} key={op.value} data-testid={`power-level-option-${op.value}`}>
+                        {op.text}
+                    </option>
+                );
             });
 
             picker = (
@@ -184,16 +188,13 @@ export default class PowerSelector extends React.Component<IProps, IState> {
                     onChange={this.onSelectChange}
                     value={String(this.state.selectValue)}
                     disabled={this.props.disabled}
+                    data-testid="power-level-select-element"
                 >
-                    { optionsElements }
+                    {optionsElements}
                 </Field>
             );
         }
 
-        return (
-            <div className="mx_PowerSelector">
-                { picker }
-            </div>
-        );
+        return <div className="mx_PowerSelector">{picker}</div>;
     }
 }

@@ -26,6 +26,7 @@ import { Icon as XIcon } from "../../../../res/img/element-icons/cancel-rounded.
 import Clock from "../../../components/views/audio_messages/Clock";
 import { formatTimeLeft } from "../../../DateUtils";
 import Spinner from "../../../components/views/elements/Spinner";
+import AccessibleTooltipButton from "../../../components/views/elements/AccessibleTooltipButton";
 
 interface VoiceBroadcastHeaderProps {
     live?: VoiceBroadcastLiveness;
@@ -53,13 +54,11 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const broadcast = showBroadcast && (
         <div className="mx_VoiceBroadcastHeader_line">
             <LiveIcon className="mx_Icon mx_Icon_16" />
-            { _t("Voice broadcast") }
+            {_t("Voice broadcast")}
         </div>
     );
 
-    const liveBadge = live !== "not-live" && (
-        <LiveBadge grey={live === "grey"} />
-    );
+    const liveBadge = live !== "not-live" && <LiveBadge grey={live === "grey"} />;
 
     const closeButton = showClose && (
         <AccessibleButton onClick={onCloseClick}>
@@ -77,7 +76,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const buffering = showBuffering && (
         <div className="mx_VoiceBroadcastHeader_line">
             <Spinner w={14} h={14} />
-            { _t("Buffering…") }
+            {_t("Buffering…")}
         </div>
     );
 
@@ -87,27 +86,28 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     });
 
     const microphoneLine = microphoneLabel && (
-        <div
+        <AccessibleTooltipButton
             className={microphoneLineClasses}
             onClick={onMicrophoneLineClick}
+            title={_t("Change input device")}
         >
             <MicrophoneIcon className="mx_Icon mx_Icon_16" />
-            <span>{ microphoneLabel }</span>
-        </div>
+            <span>{microphoneLabel}</span>
+        </AccessibleTooltipButton>
     );
 
-    return <div className="mx_VoiceBroadcastHeader">
-        <RoomAvatar room={room} width={32} height={32} />
-        <div className="mx_VoiceBroadcastHeader_content">
-            <div className="mx_VoiceBroadcastHeader_room">
-                { room.name }
+    return (
+        <div className="mx_VoiceBroadcastHeader">
+            <RoomAvatar room={room} width={32} height={32} />
+            <div className="mx_VoiceBroadcastHeader_content">
+                <div className="mx_VoiceBroadcastHeader_room">{room.name}</div>
+                {microphoneLine}
+                {timeLeftLine}
+                {broadcast}
+                {buffering}
             </div>
-            { microphoneLine }
-            { timeLeftLine }
-            { broadcast }
-            { buffering }
+            {liveBadge}
+            {closeButton}
         </div>
-        { liveBadge }
-        { closeButton }
-    </div>;
+    );
 };

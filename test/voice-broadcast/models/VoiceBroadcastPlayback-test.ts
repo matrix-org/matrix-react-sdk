@@ -115,12 +115,7 @@ describe("VoiceBroadcastPlayback", () => {
     };
 
     const mkInfoEvent = (state: VoiceBroadcastInfoState) => {
-        return mkVoiceBroadcastInfoStateEvent(
-            roomId,
-            state,
-            userId,
-            deviceId,
-        );
+        return mkVoiceBroadcastInfoStateEvent(roomId, state, userId, deviceId);
     };
 
     const mkPlayback = async () => {
@@ -350,7 +345,7 @@ describe("VoiceBroadcastPlayback", () => {
             });
 
             describe("and skipping to the middle of the second chunk", () => {
-                const middleOfSecondChunk = (chunk1Length + (chunk2Length / 2)) / 1000;
+                const middleOfSecondChunk = (chunk1Length + chunk2Length / 2) / 1000;
 
                 beforeEach(async () => {
                     await playback.skipTo(middleOfSecondChunk);
@@ -387,6 +382,9 @@ describe("VoiceBroadcastPlayback", () => {
                 });
 
                 it("should play until the end", () => {
+                    // assert first chunk was unloaded
+                    expect(chunk1Playback.destroy).toHaveBeenCalled();
+
                     // assert that the second chunk is being played
                     expect(chunk2Playback.play).toHaveBeenCalled();
 
@@ -407,6 +405,17 @@ describe("VoiceBroadcastPlayback", () => {
             describe("and calling stop", () => {
                 stopPlayback();
                 itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Stopped);
+
+                describe("and skipping to somewhere in the middle of the first chunk", () => {
+                    beforeEach(async () => {
+                        mocked(chunk1Playback.play).mockClear();
+                        await playback.skipTo(1);
+                    });
+
+                    it("should not start the playback", () => {
+                        expect(chunk1Playback.play).not.toHaveBeenCalled();
+                    });
+                });
             });
 
             describe("and calling destroy", () => {
