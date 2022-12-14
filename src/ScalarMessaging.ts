@@ -743,7 +743,7 @@ async function sendEvent(
         return;
     }
 
-    if (typeof content !== "object") {
+    if (!content || typeof content !== "object") {
         sendError(event, _t("Failed to send event"), new Error("Invalid 'content' in request"));
         return;
     }
