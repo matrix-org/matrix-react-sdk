@@ -28,6 +28,13 @@ import { UPDATE_EVENT } from "../../src/stores/AsyncStore";
 import { ActiveRoomChangedPayload } from "../../src/dispatcher/payloads/ActiveRoomChangedPayload";
 import { SpaceStoreClass } from "../../src/stores/spaces/SpaceStore";
 import { TestSdkContext } from "../TestSdkContext";
+import { ViewRoomPayload } from "../../src/dispatcher/payloads/ViewRoomPayload";
+import {
+    VoiceBroadcastInfoState,
+    VoiceBroadcastPlayback,
+    VoiceBroadcastPlaybacksStore,
+} from "../../src/voice-broadcast";
+import { mkVoiceBroadcastInfoStateEvent } from "../voice-broadcast/utils/test-utils";
 
 // mock out the injected classes
 jest.mock("../../src/PosthogAnalytics");
@@ -60,12 +67,24 @@ describe("RoomViewStore", function () {
         getRoom: jest.fn(),
         getRoomIdForAlias: jest.fn(),
         isGuest: jest.fn(),
+        getUserId: jest.fn(),
     });
     const room = new Room(roomId, mockClient, userId);
+
+    const viewCall = async (): Promise<void> => {
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: roomId,
+            view_call: true,
+            metricsTrigger: undefined,
+        });
+        await untilDispatch(Action.ViewRoom, dis);
+    };
 
     let roomViewStore: RoomViewStore;
     let slidingSyncManager: SlidingSyncManager;
     let dis: MatrixDispatcher;
+    let stores: TestSdkContext;
 
     beforeEach(function () {
         jest.clearAllMocks();
@@ -73,14 +92,16 @@ describe("RoomViewStore", function () {
         mockClient.joinRoom.mockResolvedValue(room);
         mockClient.getRoom.mockReturnValue(room);
         mockClient.isGuest.mockReturnValue(false);
+        mockClient.getUserId.mockReturnValue(userId);
 
         // Make the RVS to test
         dis = new MatrixDispatcher();
         slidingSyncManager = new MockSlidingSyncManager();
-        const stores = new TestSdkContext();
+        stores = new TestSdkContext();
         stores._SlidingSyncManager = slidingSyncManager;
         stores._PosthogAnalytics = new MockPosthogAnalytics();
         stores._SpaceStore = new MockSpaceStore();
+        stores._VoiceBroadcastPlaybacksStore = new VoiceBroadcastPlaybacksStore();
         roomViewStore = new RoomViewStore(dis, stores);
         stores._RoomViewStore = roomViewStore;
     });
@@ -204,6 +225,28 @@ describe("RoomViewStore", function () {
         dis.dispatch({ action: Action.ViewHomePage });
         await untilEmission(roomViewStore, UPDATE_EVENT);
         expect(roomViewStore.getRoomId()).toBeNull();
+    });
+
+    it("when viewing a call without a broadcast, it should not raise an error", async () => {
+        await viewCall();
+    });
+
+    describe("when listening to a voice broadcast", () => {
+        let voiceBroadcastPlayback: VoiceBroadcastPlayback;
+
+        beforeEach(() => {
+            voiceBroadcastPlayback = new VoiceBroadcastPlayback(
+                mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Started, mockClient.getUserId(), "d42"),
+                mockClient,
+            );
+            stores.voiceBroadcastPlaybacksStore.setCurrent(voiceBroadcastPlayback);
+            jest.spyOn(voiceBroadcastPlayback, "pause").mockImplementation();
+        });
+
+        it("and viewing a call it should pause the current broadcast", async () => {
+            await viewCall();
+            expect(voiceBroadcastPlayback.pause).toHaveBeenCalled();
+        });
     });
 
     describe("Sliding Sync", function () {

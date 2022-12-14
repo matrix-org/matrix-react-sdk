@@ -43,6 +43,9 @@ import { Action } from "../src/dispatcher/actions";
 import { getFunctionalMembers } from "../src/utils/room/getFunctionalMembers";
 import SettingsStore from "../src/settings/SettingsStore";
 import { UIFeature } from "../src/settings/UIFeature";
+import { VoiceBroadcastInfoState, VoiceBroadcastPlayback } from "../src/voice-broadcast";
+import { mkVoiceBroadcastInfoStateEvent } from "./voice-broadcast/utils/test-utils";
+import { SdkContextClass } from "../src/contexts/SDKContext";
 
 jest.mock("../src/utils/room/getFunctionalMembers", () => ({
     getFunctionalMembers: jest.fn(),
@@ -361,6 +364,31 @@ describe("LegacyCallHandler", () => {
         expect(callRoomChangeEventCount).toEqual(1);
         expect(callHandler.getCallForRoom(NATIVE_ROOM_BOB)).toBeNull();
         expect(callHandler.getCallForRoom(NATIVE_ROOM_CHARLIE)).toBe(fakeCall);
+    });
+
+    describe("when listening to a voice broadcast", () => {
+        let voiceBroadcastPlayback: VoiceBroadcastPlayback;
+
+        beforeEach(() => {
+            voiceBroadcastPlayback = new VoiceBroadcastPlayback(
+                mkVoiceBroadcastInfoStateEvent(
+                    "!room:example.com",
+                    VoiceBroadcastInfoState.Started,
+                    MatrixClientPeg.get().getUserId(),
+                    "d42",
+                ),
+                MatrixClientPeg.get(),
+            );
+            SdkContextClass.instance.voiceBroadcastPlaybacksStore.setCurrent(voiceBroadcastPlayback);
+            jest.spyOn(voiceBroadcastPlayback, "pause").mockImplementation();
+        });
+
+        it("and placing a call should pause the broadcast", async () => {
+            callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
+            await untilCallHandlerEvent(callHandler, LegacyCallHandlerEvent.CallState);
+
+            expect(voiceBroadcastPlayback.pause).toHaveBeenCalled();
+        });
     });
 });
 

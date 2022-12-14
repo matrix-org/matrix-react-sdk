@@ -180,6 +180,11 @@ export class RoomViewStore extends EventEmitter {
             return;
         }
 
+        if (newState.viewingCall) {
+            // Pause current broadcast, if any
+            this.stores.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
+        }
+
         const lastRoomId = this.state.roomId;
         this.state = Object.assign(this.state, newState);
         if (lastRoomId !== this.state.roomId) {

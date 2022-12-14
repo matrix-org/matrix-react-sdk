@@ -63,6 +63,7 @@ import { OpenInviteDialogPayload } from "./dispatcher/payloads/OpenInviteDialogP
 import { findDMForUser } from "./utils/dm/findDMForUser";
 import { getJoinedNonFunctionalMembers } from "./utils/room/getJoinedNonFunctionalMembers";
 import { localNotificationsAreSilenced } from "./utils/notifications";
+import { SdkContextClass } from "./contexts/SDKContext";
 
 export const PROTOCOL_PSTN = "m.protocol.pstn";
 export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
@@ -932,6 +933,9 @@ export default class LegacyCallHandler extends EventEmitter {
     }
 
     public async placeCall(roomId: string, type?: CallType, transferee?: MatrixCall): Promise<void> {
+        // Pause current broadcast, if any
+        SdkContextClass.instance.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
+
         // We might be using managed hybrid widgets
         if (isManagedHybridWidgetEnabled()) {
             await addManagedHybridWidget(roomId);
