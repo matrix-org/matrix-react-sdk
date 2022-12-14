@@ -16,7 +16,8 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import { textForVoiceBroadcastStoppedEventWithoutLink, VoiceBroadcastInfoState } from "../../../voice-broadcast";
+import { VoiceBroadcastInfoState } from "../../../voice-broadcast/types";
+import { textForVoiceBroadcastStoppedEventWithoutLink } from "../../../voice-broadcast/utils/textForVoiceBroadcastStoppedEventWithoutLink";
 import { IPreview } from "./IPreview";
 
 export class VoiceBroadcastPreview implements IPreview {
