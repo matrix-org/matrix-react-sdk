@@ -28,6 +28,9 @@ export class MessageEventPreview implements IPreview {
     public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string {
         let eventContent = event.getContent();
 
+        // no preview for broadcast chunks
+        if (eventContent["io.element.voice_broadcast_chunk"]) return null;
+
         if (event.isRelation(RelationType.Replace)) {
             // It's an edit, generate the preview on the new text
             eventContent = event.getContent()["m.new_content"];
