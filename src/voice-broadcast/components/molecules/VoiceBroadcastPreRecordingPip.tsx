@@ -42,7 +42,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
     });
 
     const onDeviceSelect = (device: MediaDeviceInfo) => {
-        setState(state => ({
+        setState((state) => ({
             ...state,
             showDeviceSelect: false,
         }));
@@ -50,7 +50,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
     };
 
     const onStartBroadcastClick = () => {
-        setState(state => ({
+        setState((state) => ({
             ...state,
             disableStartButton: true,
         }));
