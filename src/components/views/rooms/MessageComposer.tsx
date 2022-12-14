@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode } from "react";
+import { htmlToMarkdown } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -57,7 +58,6 @@ import { VoiceMessageRecording } from "../../../audio/VoiceMessageRecording";
 import { VoiceBroadcastRecordingsStore } from "../../../voice-broadcast";
 import { SendWysiwygComposer, sendMessage } from "./wysiwyg_composer/";
 import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
-import { htmlToPlainText } from "../../../utils/room/htmlToPlaintext";
 import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/setUpVoiceBroadcastPreRecording";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
@@ -359,13 +359,14 @@ export class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
-    private onRichTextToggle = () => {
+    private onRichTextToggle = async () => {
+        let initialComposerContent = this.state.composerContent;
+        if (this.state.isRichTextEnabled) {
+            initialComposerContent = await htmlToMarkdown(this.state.composerContent);
+        }
         this.setState((state) => ({
             isRichTextEnabled: !state.isRichTextEnabled,
-            initialComposerContent: !state.isRichTextEnabled
-                ? state.composerContent
-                : // TODO when available use rust model plain text
-                  htmlToPlainText(state.composerContent),
+            initialComposerContent,
         }));
     };
 
