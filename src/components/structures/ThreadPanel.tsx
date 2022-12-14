@@ -249,7 +249,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     const openFeedback = shouldShowFeedback()
         ? () => {
               Modal.createDialog(BetaFeedbackDialog, {
-                  featureId: "feature_thread",
+                  featureId: "feature_threadstable",
               });
           }
         : null;
@@ -305,7 +305,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 <Measured sensor={card.current} onMeasurement={setNarrow} />
                 {timelineSet ? (
                     <TimelinePanel
-                        key={timelineSet.getFilter()?.filterId ?? roomId + ":" + filterOption}
+                        key={filterOption + ":" + (timelineSet.getFilter()?.filterId ?? roomId)}
                         ref={timelinePanel}
                         showReadReceipts={false} // No RR support in thread's list
                         manageReadReceipts={false} // No RR support in thread's list
