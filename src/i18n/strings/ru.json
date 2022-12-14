@@ -214,7 +214,7 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Вы не сможете отменить это действие, так как этот пользователь получит уровень прав, равный вашему.",
     "Options": "Дополнительно",
     "Passphrases must match": "Мнемонические фразы должны совпадать",
-    "Passphrase must not be empty": "Кодовая фраза не может быть пустой",
+    "Passphrase must not be empty": "Мнемоническая фраза не может быть пустой",
     "Export room keys": "Экспорт ключей комнаты",
     "Enter passphrase": "Введите мнемоническую фразу",
     "Confirm passphrase": "Подтвердите мнемоническую фразу",
@@ -3407,7 +3407,7 @@
     "Send your first message to invite <displayName/> to chat": "Отправьте свое первое сообщение, чтобы пригласить <displayName/> в чат",
     "Inactive for %(inactiveAgeDays)s+ days": "Неактивен в течение %(inactiveAgeDays)s+ дней",
     "Session details": "Сведения о сеансе",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности подтвердите свои сеансы и выйдите из тех, которые более не признаёте или не используете.",
+    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности заверьте свои сеансы и выйдите из тех, которые более не признаёте или не используете.",
     "Verify or sign out from this session for best security and reliability.": "Заверьте или выйдите из этого сеанса для лучшей безопасности и надёжности.",
     "Your server doesn't support disabling sending read receipts.": "Ваш сервер не поддерживает отключение отправки уведомлений о прочтении.",
     "Share your activity and status with others.": "Поделитесь своей активностью и статусом с другими.",
@@ -3545,5 +3545,5 @@
     "Are you sure you want to sign out of %(count)s sessions?|one": "Вы уверены, что хотите выйти из %(count)s сеанса?",
     "Are you sure you want to sign out of %(count)s sessions?|other": "Вы уверены, что хотите выйти из %(count)s сеансов?",
     "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Разрешить отображение QR-кода в менеджере сеансов для входа с другого устройства (требует совместимый домашний сервер)",
-    "You have unverified sessions": "У вас есть неподтверждённые сеансы"
+    "You have unverified sessions": "У вас есть незаверенные сеансы"
 }
