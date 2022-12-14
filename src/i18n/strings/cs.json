@@ -3640,7 +3640,7 @@
     "Rich text editor": "Editor formátovaného textu",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Rádi experimentujete? Vyzkoušejte naše nejnovější nápady ve vývoji. Tyto funkce nejsou dokončeny; mohou být nestabilní, mohou se změnit nebo mohou být zcela vypuštěny. <a>Zjistěte více</a>.",
-    "Early previews": "První náhledy",
+    "Early previews": "Předběžné ukázky",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "Co se chystá pro %(brand)s? Experimentální funkce jsou nejlepším způsobem, jak se dostat k novým věcem v raném stádiu, vyzkoušet nové funkce a pomoci je formovat ještě před jejich spuštěním.",
     "Upcoming features": "Připravované funkce",
     "Requires compatible homeserver.": "Vyžaduje kompatibilní domovský server.",
@@ -3674,5 +3674,6 @@
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Pro co nejlepší zabezpečení a ochranu soukromí je doporučeno používat Matrix klienty, které podporují šifrování.",
     "This session doesn't support encryption, so it can't be verified.": "Tato relace nepodporuje šifrování, takže ji nelze ověřit.",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ukončil(a) <a>hlasové vysílání</a>",
-    "You ended a <a>voice broadcast</a>": "Ukončili jste <a>hlasové vysílání</a>"
+    "You ended a <a>voice broadcast</a>": "Ukončili jste <a>hlasové vysílání</a>",
+    "Threaded messages": "Zprávy ve vláknech"
 }
