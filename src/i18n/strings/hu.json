@@ -3674,5 +3674,6 @@
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)só %(minutes)sp %(seconds)smp",
     "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sn %(hours)só %(minutes)sp %(seconds)smp",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s befejezte a <a>hang közvetítést</a>",
-    "You ended a <a>voice broadcast</a>": "Befejezte a <a>hang közvetítést</a>"
+    "You ended a <a>voice broadcast</a>": "Befejezte a <a>hang közvetítést</a>",
+    "Threaded messages": "Üzenetszálas beszélgetés"
 }
