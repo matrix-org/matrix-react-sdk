@@ -63,6 +63,8 @@ describe("Room Directory", () => {
             });
         });
 
+        cy.wait(250); // let the room list settle
+
         cy.viewRoomByName("Bob");
 
         // short timeout because loader is only visible for short period
