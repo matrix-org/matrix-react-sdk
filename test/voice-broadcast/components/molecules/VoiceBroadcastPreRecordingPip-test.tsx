@@ -29,14 +29,17 @@ import {
 import { flushPromises, stubClient } from "../../../test-utils";
 import { requestMediaPermissions } from "../../../../src/utils/media/requestMediaPermissions";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../../src/MediaDeviceHandler";
+import dis from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
 
+jest.mock("../../../../src/dispatcher/dispatcher");
 jest.mock("../../../../src/utils/media/requestMediaPermissions");
 
 // mock RoomAvatar, because it is doing too much fancy stuff
 jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
     __esModule: true,
     default: jest.fn().mockImplementation(({ room }) => {
-        return <div data-testid="room-avatar">room avatar: { room.name }</div>;
+        return <div data-testid="room-avatar">room avatar: {room.name}</div>;
     }),
 }));
 
@@ -49,17 +52,25 @@ describe("VoiceBroadcastPreRecordingPip", () => {
     let room: Room;
     let sender: RoomMember;
 
+    const itShouldShowTheBroadcastRoom = () => {
+        it("should show the broadcast room", () => {
+            expect(dis.dispatch).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                metricsTrigger: undefined,
+            });
+        });
+    };
+
     beforeEach(() => {
         client = stubClient();
         room = new Room("!room@example.com", client, client.getUserId() || "");
         sender = new RoomMember(room.roomId, client.getUserId() || "");
         playbacksStore = new VoiceBroadcastPlaybacksStore();
         recordingsStore = new VoiceBroadcastRecordingsStore();
-        mocked(requestMediaPermissions).mockReturnValue(new Promise<MediaStream>((r) => {
-            r({
-                getTracks: () => [],
-            } as unknown as MediaStream);
-        }));
+        mocked(requestMediaPermissions).mockResolvedValue({
+            getTracks: (): Array<MediaStreamTrack> => [],
+        } as unknown as MediaStream);
         jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
             [MediaDeviceKindEnum.AudioInput]: [
                 {
@@ -75,13 +86,7 @@ describe("VoiceBroadcastPreRecordingPip", () => {
             [MediaDeviceKindEnum.VideoInput]: [],
         });
         jest.spyOn(MediaDeviceHandler.instance, "setDevice").mockImplementation();
-        preRecording = new VoiceBroadcastPreRecording(
-            room,
-            sender,
-            client,
-            playbacksStore,
-            recordingsStore,
-        );
+        preRecording = new VoiceBroadcastPreRecording(room, sender, client, playbacksStore, recordingsStore);
     });
 
     afterAll(() => {
@@ -90,9 +95,7 @@ describe("VoiceBroadcastPreRecordingPip", () => {
 
     describe("when rendered", () => {
         beforeEach(async () => {
-            renderResult = render(<VoiceBroadcastPreRecordingPip
-                voiceBroadcastPreRecording={preRecording}
-            />);
+            renderResult = render(<VoiceBroadcastPreRecordingPip voiceBroadcastPreRecording={preRecording} />);
 
             await act(async () => {
                 flushPromises();
@@ -101,6 +104,22 @@ describe("VoiceBroadcastPreRecordingPip", () => {
 
         it("should match the snapshot", () => {
             expect(renderResult.container).toMatchSnapshot();
+        });
+
+        describe("and clicking the room name", () => {
+            beforeEach(async () => {
+                await userEvent.click(screen.getByText(room.name));
+            });
+
+            itShouldShowTheBroadcastRoom();
+        });
+
+        describe("and clicking the room avatar", () => {
+            beforeEach(async () => {
+                await userEvent.click(screen.getByText(`room avatar: ${room.name}`));
+            });
+
+            itShouldShowTheBroadcastRoom();
         });
 
         describe("and clicking the device label", () => {
