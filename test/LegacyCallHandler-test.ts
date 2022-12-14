@@ -43,9 +43,28 @@ import { Action } from "../src/dispatcher/actions";
 import { getFunctionalMembers } from "../src/utils/room/getFunctionalMembers";
 import SettingsStore from "../src/settings/SettingsStore";
 import { UIFeature } from "../src/settings/UIFeature";
-import { VoiceBroadcastInfoState, VoiceBroadcastPlayback } from "../src/voice-broadcast";
+import { VoiceBroadcastInfoState, VoiceBroadcastPlayback, VoiceBroadcastRecording } from "../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "./voice-broadcast/utils/test-utils";
 import { SdkContextClass } from "../src/contexts/SDKContext";
+import Modal from "../src/Modal";
+
+jest.mock("../src/Modal");
+
+// mock VoiceRecording because it contains all the audio APIs
+jest.mock("../src/audio/VoiceRecording", () => ({
+    VoiceRecording: jest.fn().mockReturnValue({
+        disableMaxLength: jest.fn(),
+        liveData: {
+            onUpdate: jest.fn(),
+        },
+        off: jest.fn(),
+        on: jest.fn(),
+        start: jest.fn(),
+        stop: jest.fn(),
+        destroy: jest.fn(),
+        contentType: "audio/ogg",
+    }),
+}));
 
 jest.mock("../src/utils/room/getFunctionalMembers", () => ({
     getFunctionalMembers: jest.fn(),
@@ -390,6 +409,27 @@ describe("LegacyCallHandler", () => {
             expect(voiceBroadcastPlayback.pause).toHaveBeenCalled();
         });
     });
+
+    describe("when recording a voice broadcast", () => {
+        beforeEach(() => {
+            SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(
+                new VoiceBroadcastRecording(
+                    mkVoiceBroadcastInfoStateEvent(
+                        "!room:example.com",
+                        VoiceBroadcastInfoState.Started,
+                        MatrixClientPeg.get().getUserId(),
+                        "d42",
+                    ),
+                    MatrixClientPeg.get(),
+                ),
+            );
+        });
+
+        it("and placing a call should show the info dialog", async () => {
+            callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
+            expect(Modal.createDialog).toMatchSnapshot();
+        });
+    });
 });
 
 describe("LegacyCallHandler without third party protocols", () => {
@@ -449,6 +489,9 @@ describe("LegacyCallHandler without third party protocols", () => {
         audioElement = document.createElement("audio");
         audioElement.id = "remoteAudio";
         document.body.appendChild(audioElement);
+
+        SdkContextClass.instance.voiceBroadcastPlaybacksStore.clearCurrent();
+        SdkContextClass.instance.voiceBroadcastRecordingsStore.clearCurrent();
     });
 
     afterEach(() => {

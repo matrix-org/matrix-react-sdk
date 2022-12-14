@@ -33,8 +33,12 @@ import {
     VoiceBroadcastInfoState,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybacksStore,
+    VoiceBroadcastRecording,
 } from "../../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "../voice-broadcast/utils/test-utils";
+import Modal from "../../src/Modal";
+
+jest.mock("../../src/Modal");
 
 // mock out the injected classes
 jest.mock("../../src/PosthogAnalytics");
@@ -43,6 +47,22 @@ jest.mock("../../src/SlidingSyncManager");
 const MockSlidingSyncManager = <jest.Mock<SlidingSyncManager>>(<unknown>SlidingSyncManager);
 jest.mock("../../src/stores/spaces/SpaceStore");
 const MockSpaceStore = <jest.Mock<SpaceStoreClass>>(<unknown>SpaceStoreClass);
+
+// mock VoiceRecording because it contains all the audio APIs
+jest.mock("../../src/audio/VoiceRecording", () => ({
+    VoiceRecording: jest.fn().mockReturnValue({
+        disableMaxLength: jest.fn(),
+        liveData: {
+            onUpdate: jest.fn(),
+        },
+        off: jest.fn(),
+        on: jest.fn(),
+        start: jest.fn(),
+        stop: jest.fn(),
+        destroy: jest.fn(),
+        contentType: "audio/ogg",
+    }),
+}));
 
 jest.mock("../../src/utils/DMRoomMap", () => {
     const mock = {
@@ -246,6 +266,29 @@ describe("RoomViewStore", function () {
         it("and viewing a call it should pause the current broadcast", async () => {
             await viewCall();
             expect(voiceBroadcastPlayback.pause).toHaveBeenCalled();
+            expect(roomViewStore.isViewingCall()).toBe(true);
+        });
+    });
+
+    describe("when recording a voice broadcast", () => {
+        beforeEach(() => {
+            stores.voiceBroadcastRecordingsStore.setCurrent(
+                new VoiceBroadcastRecording(
+                    mkVoiceBroadcastInfoStateEvent(
+                        roomId,
+                        VoiceBroadcastInfoState.Started,
+                        mockClient.getUserId(),
+                        "d42",
+                    ),
+                    mockClient,
+                ),
+            );
+        });
+
+        it("and trying to view a call, it should not actually view it and show the info dialog", async () => {
+            await viewCall();
+            expect(Modal.createDialog).toMatchSnapshot();
+            expect(roomViewStore.isViewingCall()).toBe(false);
         });
     });
 
