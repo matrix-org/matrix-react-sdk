@@ -24,7 +24,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import _RightPanel from "../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
-import { stubClient, wrapInMatrixClientContext, mkRoom } from "../../test-utils";
+import { stubClient, wrapInMatrixClientContext, mkRoom, wrapInSdkContext } from "../../test-utils";
 import { Action } from "../../../src/dispatcher/actions";
 import dis from "../../../src/dispatcher/dispatcher";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
@@ -35,22 +35,28 @@ import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
 import { WidgetLayoutStore } from "../../../src/stores/widgets/WidgetLayoutStore";
 import RoomSummaryCard from "../../../src/components/views/right_panel/RoomSummaryCard";
 import MemberList from "../../../src/components/views/rooms/MemberList";
+import { SdkContextClass } from "../../../src/contexts/SDKContext";
 
-const RightPanel = wrapInMatrixClientContext(_RightPanel);
+const RightPanelBase = wrapInMatrixClientContext(_RightPanel);
 
 describe("RightPanel", () => {
     const resizeNotifier = new ResizeNotifier();
 
     let cli: MockedObject<MatrixClient>;
+    let context: SdkContextClass;
+    let RightPanel: React.ComponentType<React.ComponentProps<typeof RightPanelBase>>;
     beforeEach(() => {
         stubClient();
         cli = mocked(MatrixClientPeg.get());
         DMRoomMap.makeShared();
+        context = new SdkContextClass();
+        context.client = cli;
+        RightPanel = wrapInSdkContext(RightPanelBase, context);
     });
 
     afterEach(async () => {
-        const roomChanged = new Promise<void>(resolve => {
-            const ref = dis.register(payload => {
+        const roomChanged = new Promise<void>((resolve) => {
+            const ref = dis.register((payload) => {
                 if (payload.action === Action.ActiveRoomChanged) {
                     dis.unregister(ref);
                     resolve();
@@ -78,12 +84,11 @@ describe("RightPanel", () => {
         await RightPanelStore.instance.onReady();
     };
 
-    const waitForRpsUpdate = () =>
-        new Promise<void>(resolve => RightPanelStore.instance.once(UPDATE_EVENT, resolve));
+    const waitForRpsUpdate = () => new Promise<void>((resolve) => RightPanelStore.instance.once(UPDATE_EVENT, resolve));
 
     it("navigates from room summary to member list", async () => {
         const r1 = mkRoom(cli, "r1");
-        cli.getRoom.mockImplementation(roomId => roomId === "r1" ? r1 : null);
+        cli.getRoom.mockImplementation((roomId) => (roomId === "r1" ? r1 : null));
 
         // Set up right panel state
         const realGetValue = SettingsStore.getValue;
@@ -121,7 +126,7 @@ describe("RightPanel", () => {
         const r1 = mkRoom(cli, "r1");
         const r2 = mkRoom(cli, "r2");
 
-        cli.getRoom.mockImplementation(roomId => {
+        cli.getRoom.mockImplementation((roomId) => {
             if (roomId === "r1") return r1;
             if (roomId === "r2") return r2;
             return null;
@@ -162,7 +167,7 @@ describe("RightPanel", () => {
         // We want to verify that as we change to room 2, we should always have
         // the correct right panel state for whichever room we are showing.
         const instance = wrapper.find(_RightPanel).instance() as _RightPanel;
-        const rendered = new Promise<void>(resolve => {
+        const rendered = new Promise<void>((resolve) => {
             jest.spyOn(instance, "render").mockImplementation(() => {
                 const { props, state } = instance;
                 if (props.room.roomId === "r2" && state.phase === RightPanelPhases.RoomMemberList) {

@@ -23,6 +23,7 @@ import { RelationsHelperEvent } from "../../../src/events/RelationsHelper";
 import { MediaEventHelper } from "../../../src/utils/MediaEventHelper";
 import {
     VoiceBroadcastInfoState,
+    VoiceBroadcastLiveness,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
@@ -76,6 +77,12 @@ describe("VoiceBroadcastPlayback", () => {
         });
     };
 
+    const itShouldHaveLiveness = (liveness: VoiceBroadcastLiveness): void => {
+        it(`should have liveness ${liveness}`, () => {
+            expect(playback.getLiveness()).toBe(liveness);
+        });
+    };
+
     const startPlayback = () => {
         beforeEach(async () => {
             await playback.start();
@@ -108,17 +115,13 @@ describe("VoiceBroadcastPlayback", () => {
     };
 
     const mkInfoEvent = (state: VoiceBroadcastInfoState) => {
-        return mkVoiceBroadcastInfoStateEvent(
-            roomId,
-            state,
-            userId,
-            deviceId,
-        );
+        return mkVoiceBroadcastInfoStateEvent(roomId, state, userId, deviceId);
     };
 
     const mkPlayback = async () => {
         const playback = new VoiceBroadcastPlayback(infoEvent, client);
         jest.spyOn(playback, "removeAllListeners");
+        jest.spyOn(playback, "destroy");
         playback.on(VoiceBroadcastPlaybackEvent.StateChanged, onStateChanged);
         await flushPromises();
         return playback;
@@ -187,6 +190,8 @@ describe("VoiceBroadcastPlayback", () => {
         describe("and calling start", () => {
             startPlayback();
 
+            itShouldHaveLiveness("grey");
+
             it("should be in buffering state", () => {
                 expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Buffering);
             });
@@ -223,6 +228,7 @@ describe("VoiceBroadcastPlayback", () => {
                 });
 
                 itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Playing);
+                itShouldHaveLiveness("live");
 
                 it("should update the duration", () => {
                     expect(playback.durationSeconds).toBe(2.3);
@@ -263,6 +269,7 @@ describe("VoiceBroadcastPlayback", () => {
             startPlayback();
 
             it("should play the last chunk", () => {
+                expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Playing);
                 // assert that the last chunk is played first
                 expect(chunk2Playback.play).toHaveBeenCalled();
                 expect(chunk1Playback.play).not.toHaveBeenCalled();
@@ -287,6 +294,17 @@ describe("VoiceBroadcastPlayback", () => {
                     it("should play the next chunk", () => {
                         expect(chunk3Playback.play).toHaveBeenCalled();
                     });
+                });
+            });
+
+            describe("and the info event is deleted", () => {
+                beforeEach(() => {
+                    infoEvent.makeRedacted(new MatrixEvent({}));
+                });
+
+                it("should stop and destroy the playback", () => {
+                    expect(playback.getState()).toBe(VoiceBroadcastPlaybackState.Stopped);
+                    expect(playback.destroy).toHaveBeenCalled();
                 });
             });
         });
@@ -327,7 +345,7 @@ describe("VoiceBroadcastPlayback", () => {
             });
 
             describe("and skipping to the middle of the second chunk", () => {
-                const middleOfSecondChunk = (chunk1Length + (chunk2Length / 2)) / 1000;
+                const middleOfSecondChunk = (chunk1Length + chunk2Length / 2) / 1000;
 
                 beforeEach(async () => {
                     await playback.skipTo(middleOfSecondChunk);
@@ -364,6 +382,9 @@ describe("VoiceBroadcastPlayback", () => {
                 });
 
                 it("should play until the end", () => {
+                    // assert first chunk was unloaded
+                    expect(chunk1Playback.destroy).toHaveBeenCalled();
+
                     // assert that the second chunk is being played
                     expect(chunk2Playback.play).toHaveBeenCalled();
 
@@ -384,6 +405,17 @@ describe("VoiceBroadcastPlayback", () => {
             describe("and calling stop", () => {
                 stopPlayback();
                 itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Stopped);
+
+                describe("and skipping to somewhere in the middle of the first chunk", () => {
+                    beforeEach(async () => {
+                        mocked(chunk1Playback.play).mockClear();
+                        await playback.skipTo(1);
+                    });
+
+                    it("should not start the playback", () => {
+                        expect(chunk1Playback.play).not.toHaveBeenCalled();
+                    });
+                });
             });
 
             describe("and calling destroy", () => {

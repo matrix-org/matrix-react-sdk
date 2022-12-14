@@ -37,7 +37,7 @@ interface IState {
 }
 
 interface ISeekCSS extends CSSProperties {
-    '--fillTo': number;
+    "--fillTo": number;
 }
 
 const ARROW_SKIP_SECONDS = 5; // arbitrary
@@ -48,7 +48,8 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
 
     private animationFrameFn = new MarkedExecution(
         () => this.doUpdate(),
-        () => requestAnimationFrame(() => this.animationFrameFn.trigger()));
+        () => requestAnimationFrame(() => this.animationFrameFn.trigger()),
+    );
 
     public static defaultProps = {
         tabIndex: 0,
@@ -68,10 +69,7 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
 
     private doUpdate() {
         this.setState({
-            percentage: percentageOf(
-                this.props.playback.timeSeconds,
-                0,
-                this.props.playback.durationSeconds),
+            percentage: percentageOf(this.props.playback.timeSeconds, 0, this.props.playback.durationSeconds),
         });
     }
 
@@ -93,20 +91,28 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
         this.props.playback.skipTo(Number(ev.target.value) * this.props.playback.durationSeconds);
     };
 
+    private onMouseDown = (event: React.MouseEvent<Element, MouseEvent>) => {
+        // do not propagate mouse down events, because these should be handled by the seekbar
+        event.stopPropagation();
+    };
+
     public render(): ReactNode {
         // We use a range input to avoid having to re-invent accessibility handling on
         // a custom set of divs.
-        return <input
-            type="range"
-            className='mx_SeekBar'
-            tabIndex={this.props.tabIndex}
-            onChange={this.onChange}
-            min={0}
-            max={1}
-            value={this.state.percentage}
-            step={0.001}
-            style={{ '--fillTo': this.state.percentage } as ISeekCSS}
-            disabled={this.props.disabled}
-        />;
+        return (
+            <input
+                type="range"
+                className="mx_SeekBar"
+                tabIndex={this.props.tabIndex}
+                onChange={this.onChange}
+                onMouseDown={this.onMouseDown}
+                min={0}
+                max={1}
+                value={this.state.percentage}
+                step={0.001}
+                style={{ "--fillTo": this.state.percentage } as ISeekCSS}
+                disabled={this.props.disabled}
+            />
+        );
     }
 }

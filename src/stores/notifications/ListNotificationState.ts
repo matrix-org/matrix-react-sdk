@@ -31,7 +31,7 @@ export class ListNotificationState extends NotificationState {
         super();
     }
 
-    public get symbol(): string {
+    public get symbol(): string | null {
         return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
@@ -98,4 +98,3 @@ export class ListNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-

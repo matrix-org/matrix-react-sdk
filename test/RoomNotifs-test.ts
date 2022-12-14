@@ -14,17 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mocked } from 'jest-mock';
+import { mocked } from "jest-mock";
 import { ConditionKind, PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
-import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
+import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 
 import { mkEvent, stubClient } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
-import {
-    getRoomNotifsState,
-    RoomNotifState,
-    getUnreadNotificationCount,
-} from "../src/RoomNotifs";
+import { getRoomNotifsState, RoomNotifState, getUnreadNotificationCount } from "../src/RoomNotifs";
 
 describe("RoomNotifs test", () => {
     beforeEach(() => {
@@ -32,61 +28,72 @@ describe("RoomNotifs test", () => {
     });
 
     it("getRoomNotifsState handles rules with no conditions", () => {
-        mocked(MatrixClientPeg.get()).pushRules = {
+        const cli = MatrixClientPeg.get();
+        mocked(cli).pushRules = {
             global: {
-                override: [{
-                    rule_id: "!roomId:server",
-                    enabled: true,
-                    default: false,
-                    actions: [],
-                }],
+                override: [
+                    {
+                        rule_id: "!roomId:server",
+                        enabled: true,
+                        default: false,
+                        actions: [],
+                    },
+                ],
             },
         };
-        expect(getRoomNotifsState("!roomId:server")).toBe(null);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(null);
     });
 
     it("getRoomNotifsState handles guest users", () => {
-        mocked(MatrixClientPeg.get()).isGuest.mockReturnValue(true);
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.AllMessages);
+        const cli = MatrixClientPeg.get();
+        mocked(cli).isGuest.mockReturnValue(true);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.AllMessages);
     });
 
     it("getRoomNotifsState handles mute state", () => {
-        MatrixClientPeg.get().pushRules = {
+        const cli = MatrixClientPeg.get();
+        cli.pushRules = {
             global: {
-                override: [{
-                    rule_id: "!roomId:server",
-                    enabled: true,
-                    default: false,
-                    conditions: [{
-                        kind: ConditionKind.EventMatch,
-                        key: "room_id",
-                        pattern: "!roomId:server",
-                    }],
-                    actions: [PushRuleActionName.DontNotify],
-                }],
+                override: [
+                    {
+                        rule_id: "!roomId:server",
+                        enabled: true,
+                        default: false,
+                        conditions: [
+                            {
+                                kind: ConditionKind.EventMatch,
+                                key: "room_id",
+                                pattern: "!roomId:server",
+                            },
+                        ],
+                        actions: [PushRuleActionName.DontNotify],
+                    },
+                ],
             },
         };
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.Mute);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.Mute);
     });
 
     it("getRoomNotifsState handles mentions only", () => {
-        MatrixClientPeg.get().getRoomPushRule = () => ({
+        const cli = MatrixClientPeg.get();
+        cli.getRoomPushRule = () => ({
             rule_id: "!roomId:server",
             enabled: true,
             default: false,
             actions: [PushRuleActionName.DontNotify],
         });
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.MentionsOnly);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.MentionsOnly);
     });
 
     it("getRoomNotifsState handles noisy", () => {
-        MatrixClientPeg.get().getRoomPushRule = () => ({
+        const cli = MatrixClientPeg.get();
+        cli.getRoomPushRule = () => ({
             rule_id: "!roomId:server",
             enabled: true,
             default: false,
             actions: [{ set_tweak: TweakName.Sound, value: "default" }],
         });
-        expect(getRoomNotifsState("!roomId:server")).toBe(RoomNotifState.AllMessagesLoud);
+        expect(getRoomNotifsState(cli, "!roomId:server")).toBe(RoomNotifState.AllMessagesLoud);
     });
 
     describe("getUnreadNotificationCount", () => {

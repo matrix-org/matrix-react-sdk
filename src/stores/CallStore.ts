@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent } from "matrix-js-sdk/src/client";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { GroupCallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/groupCallEventHandler";
 
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import type { Room } from "matrix-js-sdk/src/models/room";
-import type { RoomState } from "matrix-js-sdk/src/models/room-state";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { UPDATE_EVENT } from "./AsyncStore";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -56,13 +54,13 @@ export class CallStore extends AsyncStoreWithClient<{}> {
 
     protected async onReady(): Promise<any> {
         // We assume that the calls present in a room are a function of room
-        // state and room widgets, so we initialize the room map here and then
+        // widgets and group calls, so we initialize the room map here and then
         // update it whenever those change
         for (const room of this.matrixClient.getRooms()) {
             this.updateRoom(room);
         }
-        this.matrixClient.on(ClientEvent.Room, this.onRoom);
-        this.matrixClient.on(RoomStateEvent.Events, this.onRoomState);
+        this.matrixClient.on(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
+        this.matrixClient.on(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgets);
 
         // If the room ID of a previously connected call is still in settings at
@@ -71,7 +69,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         const uncleanlyDisconnectedRoomIds = SettingsStore.getValue<string[]>("activeCallRoomIds");
         if (uncleanlyDisconnectedRoomIds.length) {
             await Promise.all([
-                ...uncleanlyDisconnectedRoomIds.map(async uncleanlyDisconnectedRoomId => {
+                ...uncleanlyDisconnectedRoomIds.map(async (uncleanlyDisconnectedRoomId) => {
                     logger.log(`Cleaning up call state for room ${uncleanlyDisconnectedRoomId}`);
                     await this.getCall(uncleanlyDisconnectedRoomId)?.clean();
                 }),
@@ -92,8 +90,9 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         this.calls.clear();
         this._activeCalls.clear();
 
-        this.matrixClient.off(ClientEvent.Room, this.onRoom);
-        this.matrixClient.off(RoomStateEvent.Events, this.onRoomState);
+        this.matrixClient.off(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
+        this.matrixClient.off(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
+        this.matrixClient.off(GroupCallEventHandlerEvent.Ended, this.onGroupCall);
         WidgetStore.instance.off(UPDATE_EVENT, this.onWidgets);
     }
 
@@ -109,7 +108,12 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         this.emit(CallStoreEvent.ActiveCalls, value);
 
         // The room IDs are persisted to settings so we can detect unclean disconnects
-        SettingsStore.setValue("activeCallRoomIds", null, SettingLevel.DEVICE, [...value].map(call => call.roomId));
+        SettingsStore.setValue(
+            "activeCallRoomIds",
+            null,
+            SettingLevel.DEVICE,
+            [...value].map((call) => call.roomId),
+        );
     }
 
     private calls = new Map<string, Call>(); // Key is room ID
@@ -124,7 +128,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
                     if (state === ConnectionState.Connected) {
                         this.activeCalls = new Set([...this.activeCalls, call]);
                     } else if (state === ConnectionState.Disconnected) {
-                        this.activeCalls = new Set([...this.activeCalls].filter(c => c !== call));
+                        this.activeCalls = new Set([...this.activeCalls].filter((c) => c !== call));
                     }
                 };
                 const onDestroy = () => {
@@ -137,10 +141,13 @@ export class CallStore extends AsyncStoreWithClient<{}> {
                 call.on(CallEvent.Destroy, onDestroy);
 
                 this.calls.set(room.roomId, call);
-                this.callListeners.set(call, new Map<CallEvent, (...args: unknown[]) => unknown>([
-                    [CallEvent.ConnectionState, onConnectionState],
-                    [CallEvent.Destroy, onDestroy],
-                ]));
+                this.callListeners.set(
+                    call,
+                    new Map<CallEvent, (...args: unknown[]) => unknown>([
+                        [CallEvent.ConnectionState, onConnectionState],
+                        [CallEvent.Destroy, onDestroy],
+                    ]),
+                );
             }
 
             this.emit(CallStoreEvent.Call, call, room.roomId);
@@ -166,18 +173,6 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         return call !== null && this.activeCalls.has(call) ? call : null;
     }
 
-    private onRoom = (room: Room) => this.updateRoom(room);
-
-    private onRoomState = (event: MatrixEvent, state: RoomState) => {
-        // If there's already a call stored for this room, it's understood to
-        // still be valid until destroyed
-        if (!this.calls.has(state.roomId)) {
-            const room = this.matrixClient.getRoom(state.roomId);
-            // State events can arrive before the room does, when creating a room
-            if (room !== null) this.updateRoom(room);
-        }
-    };
-
     private onWidgets = (roomId: string | null) => {
         if (roomId === null) {
             // This store happened to start before the widget store was done
@@ -191,4 +186,6 @@ export class CallStore extends AsyncStoreWithClient<{}> {
             if (room !== null) this.updateRoom(room);
         }
     };
+
+    private onGroupCall = (groupCall: GroupCall) => this.updateRoom(groupCall.room);
 }

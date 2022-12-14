@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import sanitizeHtml from 'sanitize-html';
+import React from "react";
 
-export interface IExtendedSanitizeOptions extends sanitizeHtml.IOptions {
-    // This option only exists in 2.x RCs so far, so not yet present in the
-    // separate type definition module.
-    nestingLimit?: number;
-}
+import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
+import { _t } from "../../../languageHandler";
+
+export const VoiceBroadcastRoomSubtitle = () => {
+    return (
+        <div className="mx_RoomTile_subtitle mx_RoomTile_subtitle--voice-broadcast">
+            <LiveIcon className="mx_Icon mx_Icon_16" />
+            {_t("Live")}
+        </div>
+    );
+};

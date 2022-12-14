@@ -50,7 +50,7 @@ export class VoiceBroadcastChunkEvents {
     }
 
     public includes(event: MatrixEvent): boolean {
-        return !!this.events.find(e => this.equalByTxnIdOrId(event, e));
+        return !!this.events.find((e) => this.equalByTxnIdOrId(event, e));
     }
 
     /**
@@ -93,21 +93,25 @@ export class VoiceBroadcastChunkEvents {
         return null;
     }
 
+    public isLast(event: MatrixEvent): boolean {
+        return this.events.indexOf(event) >= this.events.length - 1;
+    }
+
     private calculateChunkLength(event: MatrixEvent): number {
-        return event.getContent()?.["org.matrix.msc1767.audio"]?.duration
-            || event.getContent()?.info?.duration
-            || 0;
+        return event.getContent()?.["org.matrix.msc1767.audio"]?.duration || event.getContent()?.info?.duration || 0;
     }
 
     private addOrReplaceEvent = (event: MatrixEvent): boolean => {
-        this.events = this.events.filter(e => !this.equalByTxnIdOrId(event, e));
+        this.events = this.events.filter((e) => !this.equalByTxnIdOrId(event, e));
         this.events.push(event);
         return true;
     };
 
     private equalByTxnIdOrId(eventA: MatrixEvent, eventB: MatrixEvent): boolean {
-        return eventA.getTxnId() && eventB.getTxnId() && eventA.getTxnId() === eventB.getTxnId()
-            || eventA.getId() === eventB.getId();
+        return (
+            (eventA.getTxnId() && eventB.getTxnId() && eventA.getTxnId() === eventB.getTxnId()) ||
+            eventA.getId() === eventB.getId()
+        );
     }
 
     /**

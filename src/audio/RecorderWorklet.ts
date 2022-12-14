@@ -36,7 +36,7 @@ function roundTimeToTargetFreq(seconds: number): number {
 
 function nextTimeForTargetFreq(roundedSeconds: number): number {
     // The extra round is just to make sure we cut off any floating point issues
-    return roundTimeToTargetFreq(roundedSeconds + (1 / TARGET_AMPLITUDE_FREQUENCY));
+    return roundTimeToTargetFreq(roundedSeconds + 1 / TARGET_AMPLITUDE_FREQUENCY);
 }
 
 class MxVoiceWorklet extends AudioWorkletProcessor {
@@ -85,4 +85,4 @@ class MxVoiceWorklet extends AudioWorkletProcessor {
 
 registerProcessor(WORKLET_NAME, MxVoiceWorklet);
 
-export default null; // to appease module loaders (we never use the export)
+export default ""; // to appease module loaders (we never use the export)

@@ -24,7 +24,10 @@ import { doesRoomHaveUnreadMessages } from "../Unread";
 import { EffectiveMembership, getEffectiveMembership } from "../utils/membership";
 import { useEventEmitter } from "./useEventEmitter";
 
-export const useUnreadNotifications = (room: Room, threadId?: string): {
+export const useUnreadNotifications = (
+    room: Room,
+    threadId?: string,
+): {
     symbol: string | null;
     count: number;
     color: NotificationColor;
@@ -33,7 +36,9 @@ export const useUnreadNotifications = (room: Room, threadId?: string): {
     const [count, setCount] = useState<number>(0);
     const [color, setColor] = useState<NotificationColor>(0);
 
-    useEventEmitter(room, RoomEvent.UnreadNotifications,
+    useEventEmitter(
+        room,
+        RoomEvent.UnreadNotifications,
         (unreadNotifications: NotificationCount, evtThreadId?: string) => {
             // Discarding all events not related to the thread if one has been setup
             if (threadId && threadId !== evtThreadId) return;
@@ -55,7 +60,7 @@ export const useUnreadNotifications = (room: Room, threadId?: string): {
             setSymbol("!");
             setCount(1);
             setColor(NotificationColor.Red);
-        } else if (getRoomNotifsState(room.roomId) === RoomNotifState.Mute) {
+        } else if (getRoomNotifsState(room.client, room.roomId) === RoomNotifState.Mute) {
             setSymbol(null);
             setCount(0);
             setColor(NotificationColor.None);

@@ -22,9 +22,9 @@ import {
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import { userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";
@@ -57,7 +57,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
     async componentDidMount() {
         const { request } = this.props;
         if (request.timeout && request.timeout > 0) {
-            this.intervalHandle = setInterval(() => {
+            this.intervalHandle = window.setInterval(() => {
                 let { counter } = this.state;
                 counter = Math.max(0, counter - 1);
                 this.setState({ counter });
@@ -129,12 +129,18 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                     request.channel.roomId,
                 );
             } else {
-                Modal.createDialog(VerificationRequestDialog, {
-                    verificationRequest: request,
-                    onFinished: () => {
-                        request.cancel();
+                Modal.createDialog(
+                    VerificationRequestDialog,
+                    {
+                        verificationRequest: request,
+                        onFinished: () => {
+                            request.cancel();
+                        },
                     },
-                }, null, /* priority = */ false, /* static = */ true);
+                    null,
+                    /* priority = */ false,
+                    /* static = */ true,
+                );
             }
             await request.accept();
         } catch (err) {
@@ -167,17 +173,18 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                 }
             }
         }
-        const declineLabel = this.state.counter === 0 ?
-            _t("Decline") :
-            _t("Decline (%(counter)s)", { counter: this.state.counter });
+        const declineLabel =
+            this.state.counter === 0 ? _t("Decline") : _t("Decline (%(counter)s)", { counter: this.state.counter });
 
-        return <GenericToast
-            description={description}
-            detail={detail}
-            acceptLabel={_t("Accept")}
-            onAccept={this.accept}
-            rejectLabel={declineLabel}
-            onReject={this.cancel}
-        />;
+        return (
+            <GenericToast
+                description={description}
+                detail={detail}
+                acceptLabel={_t("Accept")}
+                onAccept={this.accept}
+                rejectLabel={declineLabel}
+                onReject={this.cancel}
+            />
+        );
     }
 }

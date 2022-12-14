@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 
-import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
-import { lerp } from '../../../utils/AnimationUtils';
-import { MarkedExecution } from '../../../utils/MarkedExecution';
+import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
+import { lerp } from "../../../utils/AnimationUtils";
+import { MarkedExecution } from "../../../utils/MarkedExecution";
 
 const PIP_VIEW_WIDTH = 336;
 const PIP_VIEW_HEIGHT = 232;
@@ -33,14 +33,21 @@ const PADDING = {
     right: 8,
 };
 
+/**
+ * The type of a callback which will create the pip content children.
+ */
+export type CreatePipChildren = (options: IChildrenOptions) => JSX.Element;
+
 interface IChildrenOptions {
+    // a callback which is called when a mouse event (most likely mouse down) occurs at start of moving the pip around
     onStartMoving: (event: React.MouseEvent<Element, MouseEvent>) => void;
+    // a callback which is called when the content fo the pip changes in a way that is likely to cause a resize
     onResize: (event: Event) => void;
 }
 
 interface IProps {
     className?: string;
-    children: ({ onStartMoving, onResize }: IChildrenOptions) => React.ReactNode;
+    children: CreatePipChildren;
     draggable: boolean;
     onDoubleClick?: () => void;
     onMove?: () => void;
@@ -103,8 +110,7 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
     private setStyle = () => {
         if (!this.callViewWrapper.current) return;
         // Set the element's style directly, bypassing React for efficiency
-        this.callViewWrapper.current.style.transform =
-            `translateX(${this.translationX}px) translateY(${this.translationY}px)`;
+        this.callViewWrapper.current.style.transform = `translateX(${this.translationX}px) translateY(${this.translationY}px)`;
     };
 
     private setTranslation(inTranslationX: number, inTranslationY: number) {
@@ -140,14 +146,10 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         // We subtract the PiP size from the window size in order to calculate
         // the position to snap to from the PiP center and not its top-left
         // corner
-        const windowWidth = (
-            UIStore.instance.windowWidth -
-            (this.callViewWrapper.current?.clientWidth || PIP_VIEW_WIDTH)
-        );
-        const windowHeight = (
-            UIStore.instance.windowHeight -
-            (this.callViewWrapper.current?.clientHeight || PIP_VIEW_HEIGHT)
-        );
+        const windowWidth =
+            UIStore.instance.windowWidth - (this.callViewWrapper.current?.clientWidth || PIP_VIEW_WIDTH);
+        const windowHeight =
+            UIStore.instance.windowHeight - (this.callViewWrapper.current?.clientHeight || PIP_VIEW_HEIGHT);
 
         if (translationX >= windowWidth / 2 && translationY >= windowHeight / 2) {
             this.desiredTranslationX = windowWidth - PADDING.right;
@@ -209,10 +211,10 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
                 ref={this.callViewWrapper}
                 onDoubleClick={this.props.onDoubleClick}
             >
-                { this.props.children({
+                {this.props.children({
                     onStartMoving: this.onStartMoving,
                     onResize: this.onResize,
-                }) }
+                })}
             </aside>
         );
     }

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { KeyboardEvent, SyntheticEvent, useCallback, useRef } from "react";
+import { KeyboardEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 
@@ -22,29 +22,48 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
 }
 
-export function usePlainTextListeners(onChange?: (content: string) => void, onSend?: () => void) {
+export function usePlainTextListeners(
+    initialContent?: string,
+    onChange?: (content: string) => void,
+    onSend?: () => void,
+) {
     const ref = useRef<HTMLDivElement | null>(null);
-    const send = useCallback((() => {
+    const [content, setContent] = useState<string | undefined>(initialContent);
+    const send = useCallback(() => {
         if (ref.current) {
-            ref.current.innerHTML = '';
+            ref.current.innerHTML = "";
         }
         onSend?.();
-    }), [ref, onSend]);
+    }, [ref, onSend]);
 
-    const onInput = useCallback((event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
-        if (isDivElement(event.target)) {
-            onChange?.(event.target.innerHTML);
-        }
-    }, [onChange]);
+    const setText = useCallback(
+        (text: string) => {
+            setContent(text);
+            onChange?.(text);
+        },
+        [onChange],
+    );
+
+    const onInput = useCallback(
+        (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
+            if (isDivElement(event.target)) {
+                setText(event.target.innerHTML);
+            }
+        },
+        [setText],
+    );
 
     const isCtrlEnter = useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
-    const onKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === 'Enter' && !event.shiftKey && (!isCtrlEnter || (isCtrlEnter && event.ctrlKey))) {
-            event.preventDefault();
-            event.stopPropagation();
-            send();
-        }
-    }, [isCtrlEnter, send]);
+    const onKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === "Enter" && !event.shiftKey && (!isCtrlEnter || (isCtrlEnter && event.ctrlKey))) {
+                event.preventDefault();
+                event.stopPropagation();
+                send();
+            }
+        },
+        [isCtrlEnter, send],
+    );
 
-    return { ref, onInput, onPaste: onInput, onKeyDown };
+    return { ref, onInput, onPaste: onInput, onKeyDown, content, setContent: setText };
 }

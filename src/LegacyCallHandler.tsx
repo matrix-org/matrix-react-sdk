@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import {
     CallError,
     CallErrorCode,
@@ -27,19 +27,19 @@ import {
     CallType,
     MatrixCall,
 } from "matrix-js-sdk/src/webrtc/call";
-import { logger } from 'matrix-js-sdk/src/logger';
-import EventEmitter from 'events';
+import { logger } from "matrix-js-sdk/src/logger";
+import EventEmitter from "events";
 import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
-import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
-import { _t } from './languageHandler';
-import dis from './dispatcher/dispatcher';
-import WidgetUtils from './utils/WidgetUtils';
-import SettingsStore from './settings/SettingsStore';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
+import dis from "./dispatcher/dispatcher";
+import WidgetUtils from "./utils/WidgetUtils";
+import SettingsStore from "./settings/SettingsStore";
 import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
@@ -48,35 +48,71 @@ import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 import { UIFeature } from "./settings/UIFeature";
-import { Action } from './dispatcher/actions';
-import VoipUserMapper from './VoipUserMapper';
-import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/ManagedHybrid';
-import SdkConfig from './SdkConfig';
-import { ensureDMExists } from './createRoom';
-import { Container, WidgetLayoutStore } from './stores/widgets/WidgetLayoutStore';
-import IncomingLegacyCallToast, { getIncomingLegacyCallToastKey } from './toasts/IncomingLegacyCallToast';
-import ToastStore from './stores/ToastStore';
-import Resend from './Resend';
+import { Action } from "./dispatcher/actions";
+import VoipUserMapper from "./VoipUserMapper";
+import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from "./widgets/ManagedHybrid";
+import SdkConfig from "./SdkConfig";
+import { ensureDMExists } from "./createRoom";
+import { Container, WidgetLayoutStore } from "./stores/widgets/WidgetLayoutStore";
+import IncomingLegacyCallToast, { getIncomingLegacyCallToastKey } from "./toasts/IncomingLegacyCallToast";
+import ToastStore from "./stores/ToastStore";
+import Resend from "./Resend";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialogTypes";
 import { OpenInviteDialogPayload } from "./dispatcher/payloads/OpenInviteDialogPayload";
-import { findDMForUser } from './utils/dm/findDMForUser';
-import { getJoinedNonFunctionalMembers } from './utils/room/getJoinedNonFunctionalMembers';
-import { localNotificationsAreSilenced } from './utils/notifications';
+import { findDMForUser } from "./utils/dm/findDMForUser";
+import { getJoinedNonFunctionalMembers } from "./utils/room/getJoinedNonFunctionalMembers";
+import { localNotificationsAreSilenced } from "./utils/notifications";
 
-export const PROTOCOL_PSTN = 'm.protocol.pstn';
-export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
-export const PROTOCOL_SIP_NATIVE = 'im.vector.protocol.sip_native';
-export const PROTOCOL_SIP_VIRTUAL = 'im.vector.protocol.sip_virtual';
+export const PROTOCOL_PSTN = "m.protocol.pstn";
+export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
+export const PROTOCOL_SIP_NATIVE = "im.vector.protocol.sip_native";
+export const PROTOCOL_SIP_VIRTUAL = "im.vector.protocol.sip_virtual";
 
 const CHECK_PROTOCOLS_ATTEMPTS = 3;
 
-enum AudioID {
-    Ring = 'ringAudio',
-    Ringback = 'ringbackAudio',
-    CallEnd = 'callendAudio',
-    Busy = 'busyAudio',
+type MediaEventType = keyof HTMLMediaElementEventMap;
+const MEDIA_ERROR_EVENT_TYPES: MediaEventType[] = [
+    "error",
+    // The media has become empty; for example, this event is sent if the media has
+    // already been loaded (or partially loaded), and the HTMLMediaElement.load method
+    // is called to reload it.
+    "emptied",
+    // The user agent is trying to fetch media data, but data is unexpectedly not
+    // forthcoming.
+    "stalled",
+    // Media data loading has been suspended.
+    "suspend",
+    // Playback has stopped because of a temporary lack of data
+    "waiting",
+];
+const MEDIA_DEBUG_EVENT_TYPES: MediaEventType[] = [
+    "play",
+    "pause",
+    "playing",
+    "ended",
+    "loadeddata",
+    "loadedmetadata",
+    "canplay",
+    "canplaythrough",
+    "volumechange",
+];
+
+const MEDIA_EVENT_TYPES = [...MEDIA_ERROR_EVENT_TYPES, ...MEDIA_DEBUG_EVENT_TYPES];
+
+export enum AudioID {
+    Ring = "ringAudio",
+    Ringback = "ringbackAudio",
+    CallEnd = "callendAudio",
+    Busy = "busyAudio",
 }
+
+/* istanbul ignore next */
+const debuglog = (...args: any[]): void => {
+    if (SettingsStore.getValue("debug_legacy_call_handler")) {
+        logger.log.call(console, "LegacyCallHandler debuglog:", ...args);
+    }
+};
 
 interface ThirdpartyLookupResponseFields {
     /* eslint-disable camelcase */
@@ -119,6 +155,7 @@ export default class LegacyCallHandler extends EventEmitter {
     // call with a different party to this one.
     private transferees = new Map<string, MatrixCall>(); // callId (target) -> call (transferee)
     private audioPromises = new Map<AudioID, Promise<void>>();
+    private audioElementsWithListeners = new Map<HTMLMediaElement, boolean>();
     private supportsPstnProtocol = null;
     private pstnSupportPrefixed = null; // True if the server only support the prefixed pstn protocol
     private supportsSipNativeVirtual = null; // im.vector.protocol.sip_virtual and im.vector.protocol.sip_native
@@ -163,12 +200,12 @@ export default class LegacyCallHandler extends EventEmitter {
         // end up causing the audio elements with our ring/ringback etc
         // audio clips in to play.
         if (navigator.mediaSession) {
-            navigator.mediaSession.setActionHandler('play', function() {});
-            navigator.mediaSession.setActionHandler('pause', function() {});
-            navigator.mediaSession.setActionHandler('seekbackward', function() {});
-            navigator.mediaSession.setActionHandler('seekforward', function() {});
-            navigator.mediaSession.setActionHandler('previoustrack', function() {});
-            navigator.mediaSession.setActionHandler('nexttrack', function() {});
+            navigator.mediaSession.setActionHandler("play", function () {});
+            navigator.mediaSession.setActionHandler("pause", function () {});
+            navigator.mediaSession.setActionHandler("seekbackward", function () {});
+            navigator.mediaSession.setActionHandler("seekforward", function () {});
+            navigator.mediaSession.setActionHandler("previoustrack", function () {});
+            navigator.mediaSession.setActionHandler("nexttrack", function () {});
         }
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
@@ -176,12 +213,55 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
+
+        // Add event listeners for the <audio> elements
+        Object.values(AudioID).forEach((audioId) => {
+            const audioElement = document.getElementById(audioId) as HTMLMediaElement;
+            if (audioElement) {
+                this.addEventListenersForAudioElement(audioElement);
+            } else {
+                logger.warn(`LegacyCallHandler: missing <audio id="${audioId}"> from page`);
+            }
+        });
     }
 
     public stop(): void {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener(CallEventHandlerEvent.Incoming, this.onCallIncoming);
+        }
+
+        // Remove event listeners for the <audio> elements
+        Array.from(this.audioElementsWithListeners.keys()).forEach((audioElement) => {
+            this.removeEventListenersForAudioElement(audioElement);
+        });
+    }
+
+    private addEventListenersForAudioElement(audioElement: HTMLMediaElement): void {
+        // Only need to setup the listeners once
+        if (!this.audioElementsWithListeners.get(audioElement)) {
+            MEDIA_EVENT_TYPES.forEach((errorEventType) => {
+                audioElement.addEventListener(errorEventType, this);
+                this.audioElementsWithListeners.set(audioElement, true);
+            });
+        }
+    }
+
+    private removeEventListenersForAudioElement(audioElement: HTMLMediaElement): void {
+        MEDIA_EVENT_TYPES.forEach((errorEventType) => {
+            audioElement.removeEventListener(errorEventType, this);
+        });
+    }
+
+    /* istanbul ignore next (remove if we start using this function for things other than debug logging) */
+    public handleEvent(e: Event): void {
+        const target = e.target as HTMLElement;
+        const audioId = target?.id;
+
+        if (MEDIA_ERROR_EVENT_TYPES.includes(e.type as MediaEventType)) {
+            logger.error(`LegacyCallHandler: encountered "${e.type}" event with <audio id="${audioId}">`, e);
+        } else if (MEDIA_EVENT_TYPES.includes(e.type as MediaEventType)) {
+            debuglog(`encountered "${e.type}" event with <audio id="${audioId}">`, e);
         }
     }
 
@@ -216,10 +296,7 @@ export default class LegacyCallHandler extends EventEmitter {
      */
     private areAnyCallsUnsilenced(): boolean {
         for (const call of this.calls.values()) {
-            if (
-                call.state === CallState.Ringing &&
-                !this.isCallSilenced(call.callId)
-            ) {
+            if (call.state === CallState.Ringing && !this.isCallSilenced(call.callId)) {
                 return true;
             }
         }
@@ -254,7 +331,7 @@ export default class LegacyCallHandler extends EventEmitter {
                 logger.log("Failed to check for protocol support and no retries remain: assuming no support", e);
             } else {
                 logger.log("Failed to check for protocol support: will retry", e);
-                setTimeout(() => {
+                window.setTimeout(() => {
                     this.checkProtocols(maxTries - 1);
                 }, 10000);
             }
@@ -276,38 +353,35 @@ export default class LegacyCallHandler extends EventEmitter {
     public async pstnLookup(phoneNumber: string): Promise<ThirdpartyLookupResponse[]> {
         try {
             return await MatrixClientPeg.get().getThirdpartyUser(
-                this.pstnSupportPrefixed ? PROTOCOL_PSTN_PREFIXED : PROTOCOL_PSTN, {
-                    'm.id.phone': phoneNumber,
+                this.pstnSupportPrefixed ? PROTOCOL_PSTN_PREFIXED : PROTOCOL_PSTN,
+                {
+                    "m.id.phone": phoneNumber,
                 },
             );
         } catch (e) {
-            logger.warn('Failed to lookup user from phone number', e);
+            logger.warn("Failed to lookup user from phone number", e);
             return Promise.resolve([]);
         }
     }
 
     public async sipVirtualLookup(nativeMxid: string): Promise<ThirdpartyLookupResponse[]> {
         try {
-            return await MatrixClientPeg.get().getThirdpartyUser(
-                PROTOCOL_SIP_VIRTUAL, {
-                    'native_mxid': nativeMxid,
-                },
-            );
+            return await MatrixClientPeg.get().getThirdpartyUser(PROTOCOL_SIP_VIRTUAL, {
+                native_mxid: nativeMxid,
+            });
         } catch (e) {
-            logger.warn('Failed to query SIP identity for user', e);
+            logger.warn("Failed to query SIP identity for user", e);
             return Promise.resolve([]);
         }
     }
 
     public async sipNativeLookup(virtualMxid: string): Promise<ThirdpartyLookupResponse[]> {
         try {
-            return await MatrixClientPeg.get().getThirdpartyUser(
-                PROTOCOL_SIP_NATIVE, {
-                    'virtual_mxid': virtualMxid,
-                },
-            );
+            return await MatrixClientPeg.get().getThirdpartyUser(PROTOCOL_SIP_NATIVE, {
+                virtual_mxid: virtualMxid,
+            });
         } catch (e) {
-            logger.warn('Failed to query identity for SIP user', e);
+            logger.warn("Failed to query identity for SIP user", e);
             return Promise.resolve([]);
         }
     }
@@ -321,8 +395,7 @@ export default class LegacyCallHandler extends EventEmitter {
         const mappedRoomId = LegacyCallHandler.instance.roomIdForCall(call);
         if (this.getCallForRoom(mappedRoomId)) {
             logger.log(
-                "Got incoming call for room " + mappedRoomId +
-                " but there's already a call for this room: ignoring",
+                "Got incoming call for room " + mappedRoomId + " but there's already a call for this room: ignoring",
             );
             return;
         }
@@ -402,11 +475,21 @@ export default class LegacyCallHandler extends EventEmitter {
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
         if (audio) {
+            this.addEventListenersForAudioElement(audio);
             const playAudio = async () => {
                 try {
+                    if (audio.muted) {
+                        logger.error(
+                            `${logPrefix} <audio> element was unexpectedly muted but we recovered ` +
+                                `gracefully by unmuting it`,
+                        );
+                        // Recover gracefully
+                        audio.muted = false;
+                    }
+
                     // This still causes the chrome debugger to break on promise rejection if
                     // the promise is rejected, even though we're catching the exception.
-                    logger.debug(`${logPrefix} attempting to play audio`);
+                    logger.debug(`${logPrefix} attempting to play audio at volume=${audio.volume}`);
                     await audio.play();
                     logger.debug(`${logPrefix} playing audio successfully`);
                 } catch (e) {
@@ -418,10 +501,13 @@ export default class LegacyCallHandler extends EventEmitter {
                 }
             };
             if (this.audioPromises.has(audioId)) {
-                this.audioPromises.set(audioId, this.audioPromises.get(audioId).then(() => {
-                    audio.load();
-                    return playAudio();
-                }));
+                this.audioPromises.set(
+                    audioId,
+                    this.audioPromises.get(audioId).then(() => {
+                        audio.load();
+                        return playAudio();
+                    }),
+                );
             } else {
                 this.audioPromises.set(audioId, playAudio());
             }
@@ -484,7 +570,7 @@ export default class LegacyCallHandler extends EventEmitter {
             }
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Call Failed'),
+                title: _t("Call Failed"),
                 description: err.message,
             });
         });
@@ -560,7 +646,7 @@ export default class LegacyCallHandler extends EventEmitter {
         const mappedRoomId = this.roomIdForCall(call);
         this.setCallState(call, newState);
         dis.dispatch({
-            action: 'call_state',
+            action: "call_state",
             room_id: mappedRoomId,
             state: newState,
         });
@@ -580,14 +666,13 @@ export default class LegacyCallHandler extends EventEmitter {
 
         switch (newState) {
             case CallState.Ringing: {
-                const incomingCallPushRule = (
-                    new PushProcessor(MatrixClientPeg.get()).getPushRuleById(RuleId.IncomingCall)
+                const incomingCallPushRule = new PushProcessor(MatrixClientPeg.get()).getPushRuleById(
+                    RuleId.IncomingCall,
                 );
                 const pushRuleEnabled = incomingCallPushRule?.enabled;
-                const tweakSetToRing = incomingCallPushRule?.actions.some((action: Tweaks) => (
-                    action.set_tweak === TweakName.Sound &&
-                    action.value === "ring"
-                ));
+                const tweakSetToRing = incomingCallPushRule?.actions.some(
+                    (action: Tweaks) => action.set_tweak === TweakName.Sound && action.value === "ring",
+                );
 
                 if (pushRuleEnabled && tweakSetToRing && !this.isForcedSilent()) {
                     this.play(AudioID.Ring);
@@ -621,11 +706,10 @@ export default class LegacyCallHandler extends EventEmitter {
                     }
 
                     Modal.createDialog(ErrorDialog, {
-                        title, description,
+                        title,
+                        description,
                     });
-                } else if (
-                    hangupReason === CallErrorCode.AnsweredElsewhere && oldState === CallState.Connecting
-                ) {
+                } else if (hangupReason === CallErrorCode.AnsweredElsewhere && oldState === CallState.Connecting) {
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Answered Elsewhere"),
                         description: _t("The call was answered on another device."),
@@ -645,51 +729,50 @@ export default class LegacyCallHandler extends EventEmitter {
         const stats = await call.getCurrentCallStats();
         logger.debug(
             `Call completed. Call ID: ${call.callId}, virtual room ID: ${call.roomId}, ` +
-            `user-facing room ID: ${mappedRoomId}, direction: ${call.direction}, ` +
-            `our Party ID: ${call.ourPartyId}, hangup party: ${call.hangupParty}, ` +
-            `hangup reason: ${call.hangupReason}`,
+                `user-facing room ID: ${mappedRoomId}, direction: ${call.direction}, ` +
+                `our Party ID: ${call.ourPartyId}, hangup party: ${call.hangupParty}, ` +
+                `hangup reason: ${call.hangupReason}`,
         );
         if (!stats) {
             logger.debug(
-                "Call statistics are undefined. The call has " +
-                "probably failed before a peerConn was established",
+                "Call statistics are undefined. The call has " + "probably failed before a peerConn was established",
             );
             return;
         }
         logger.debug("Local candidates:");
-        for (const cand of stats.filter(item => item.type === 'local-candidate')) {
+        for (const cand of stats.filter((item) => item.type === "local-candidate")) {
             const address = cand.address || cand.ip; // firefox uses 'address', chrome uses 'ip'
             logger.debug(
                 `${cand.id} - type: ${cand.candidateType}, address: ${address}, port: ${cand.port}, ` +
-                `protocol: ${cand.protocol}, relay protocol: ${cand.relayProtocol}, network type: ${cand.networkType}`,
+                    `protocol: ${cand.protocol}, relay protocol: ${cand.relayProtocol}, network type: ${cand.networkType}`,
             );
         }
         logger.debug("Remote candidates:");
-        for (const cand of stats.filter(item => item.type === 'remote-candidate')) {
+        for (const cand of stats.filter((item) => item.type === "remote-candidate")) {
             const address = cand.address || cand.ip; // firefox uses 'address', chrome uses 'ip'
             logger.debug(
                 `${cand.id} - type: ${cand.candidateType}, address: ${address}, port: ${cand.port}, ` +
-                `protocol: ${cand.protocol}`,
+                    `protocol: ${cand.protocol}`,
             );
         }
         logger.debug("Candidate pairs:");
-        for (const pair of stats.filter(item => item.type === 'candidate-pair')) {
+        for (const pair of stats.filter((item) => item.type === "candidate-pair")) {
             logger.debug(
                 `${pair.localCandidateId} / ${pair.remoteCandidateId} - state: ${pair.state}, ` +
-                `nominated: ${pair.nominated}, ` +
-                `requests sent ${pair.requestsSent}, requests received  ${pair.requestsReceived},  ` +
-                `responses received: ${pair.responsesReceived}, responses sent: ${pair.responsesSent}, ` +
-                `bytes received: ${pair.bytesReceived}, bytes sent: ${pair.bytesSent}, `,
+                    `nominated: ${pair.nominated}, ` +
+                    `requests sent ${pair.requestsSent}, requests received  ${pair.requestsReceived},  ` +
+                    `responses received: ${pair.responsesReceived}, responses sent: ${pair.responsesSent}, ` +
+                    `bytes received: ${pair.bytesReceived}, bytes sent: ${pair.bytesSent}, `,
             );
         }
 
         logger.debug("Outbound RTP:");
-        for (const s of stats.filter(item => item.type === 'outbound-rtp')) {
+        for (const s of stats.filter((item) => item.type === "outbound-rtp")) {
             logger.debug(s);
         }
 
         logger.debug("Inbound RTP:");
-        for (const s of stats.filter(item => item.type === 'inbound-rtp')) {
+        for (const s of stats.filter((item) => item.type === "inbound-rtp")) {
             logger.debug(s);
         }
     }
@@ -697,9 +780,7 @@ export default class LegacyCallHandler extends EventEmitter {
     private setCallState(call: MatrixCall, status: CallState): void {
         const mappedRoomId = LegacyCallHandler.instance.roomIdForCall(call);
 
-        logger.log(
-            `Call state in ${mappedRoomId} changed to ${status}`,
-        );
+        logger.log(`Call state in ${mappedRoomId} changed to ${status}`);
 
         const toastKey = getIncomingLegacyCallToastKey(call.callId);
         if (status === CallState.Ringing) {
@@ -725,31 +806,44 @@ export default class LegacyCallHandler extends EventEmitter {
 
     private showICEFallbackPrompt(): void {
         const cli = MatrixClientPeg.get();
-        const code = sub => <code>{ sub }</code>;
-        Modal.createDialog(QuestionDialog, {
-            title: _t("Call failed due to misconfigured server"),
-            description: <div>
-                <p>{ _t(
-                    "Please ask the administrator of your homeserver " +
-                    "(<code>%(homeserverDomain)s</code>) to configure a TURN server in " +
-                    "order for calls to work reliably.",
-                    { homeserverDomain: cli.getDomain() }, { code },
-                ) }</p>
-                <p>{ _t(
-                    "Alternatively, you can try to use the public server at " +
-                    "<code>turn.matrix.org</code>, but this will not be as reliable, and " +
-                    "it will share your IP address with that server. You can also manage " +
-                    "this in Settings.",
-                    null, { code },
-                ) }</p>
-            </div>,
-            button: _t('Try using turn.matrix.org'),
-            cancelButton: _t('OK'),
-            onFinished: (allow) => {
-                SettingsStore.setValue("fallbackICEServerAllowed", null, SettingLevel.DEVICE, allow);
-                cli.setFallbackICEServerAllowed(allow);
+        const code = (sub) => <code>{sub}</code>;
+        Modal.createDialog(
+            QuestionDialog,
+            {
+                title: _t("Call failed due to misconfigured server"),
+                description: (
+                    <div>
+                        <p>
+                            {_t(
+                                "Please ask the administrator of your homeserver " +
+                                    "(<code>%(homeserverDomain)s</code>) to configure a TURN server in " +
+                                    "order for calls to work reliably.",
+                                { homeserverDomain: cli.getDomain() },
+                                { code },
+                            )}
+                        </p>
+                        <p>
+                            {_t(
+                                "Alternatively, you can try to use the public server at " +
+                                    "<code>turn.matrix.org</code>, but this will not be as reliable, and " +
+                                    "it will share your IP address with that server. You can also manage " +
+                                    "this in Settings.",
+                                null,
+                                { code },
+                            )}
+                        </p>
+                    </div>
+                ),
+                button: _t("Try using turn.matrix.org"),
+                cancelButton: _t("OK"),
+                onFinished: (allow) => {
+                    SettingsStore.setValue("fallbackICEServerAllowed", null, SettingLevel.DEVICE, allow);
+                    cli.setFallbackICEServerAllowed(allow);
+                },
             },
-        }, null, true);
+            null,
+            true,
+        );
     }
 
     private showMediaCaptureError(call: MatrixCall): void {
@@ -758,27 +852,37 @@ export default class LegacyCallHandler extends EventEmitter {
 
         if (call.type === CallType.Voice) {
             title = _t("Unable to access microphone");
-            description = <div>
-                { _t(
-                    "Call failed because microphone could not be accessed. " +
-                    "Check that a microphone is plugged in and set up correctly.",
-                ) }
-            </div>;
+            description = (
+                <div>
+                    {_t(
+                        "Call failed because microphone could not be accessed. " +
+                            "Check that a microphone is plugged in and set up correctly.",
+                    )}
+                </div>
+            );
         } else if (call.type === CallType.Video) {
             title = _t("Unable to access webcam / microphone");
-            description = <div>
-                { _t("Call failed because webcam or microphone could not be accessed. Check that:") }
-                <ul>
-                    <li>{ _t("A microphone and webcam are plugged in and set up correctly") }</li>
-                    <li>{ _t("Permission is granted to use the webcam") }</li>
-                    <li>{ _t("No other application is using the webcam") }</li>
-                </ul>
-            </div>;
+            description = (
+                <div>
+                    {_t("Call failed because webcam or microphone could not be accessed. Check that:")}
+                    <ul>
+                        <li>{_t("A microphone and webcam are plugged in and set up correctly")}</li>
+                        <li>{_t("Permission is granted to use the webcam")}</li>
+                        <li>{_t("No other application is using the webcam")}</li>
+                    </ul>
+                </div>
+            );
         }
 
-        Modal.createDialog(ErrorDialog, {
-            title, description,
-        }, null, true);
+        Modal.createDialog(
+            ErrorDialog,
+            {
+                title,
+                description,
+            },
+            null,
+            true,
+        );
     }
 
     private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
@@ -805,7 +909,7 @@ export default class LegacyCallHandler extends EventEmitter {
             this.addCallForRoom(roomId, call);
         } catch (e) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Already in call'),
+                title: _t("Already in call"),
                 description: _t("You're already in a call with this person."),
             });
             return;
@@ -820,7 +924,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
         if (type === CallType.Voice) {
             call.placeVoiceCall();
-        } else if (type === 'video') {
+        } else if (type === "video") {
             call.placeVideoCall();
         } else {
             logger.error("Unknown conf call type: " + type);
@@ -837,16 +941,16 @@ export default class LegacyCallHandler extends EventEmitter {
         // if the runtime env doesn't do VoIP, whine.
         if (!MatrixClientPeg.get().supportsVoip()) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Calls are unsupported'),
-                description: _t('You cannot place calls in this browser.'),
+                title: _t("Calls are unsupported"),
+                description: _t("You cannot place calls in this browser."),
             });
             return;
         }
 
         if (MatrixClientPeg.get().getSyncState() === SyncState.Error) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Connectivity to the server has been lost'),
-                description: _t('You cannot place calls without a connection to the server.'),
+                title: _t("Connectivity to the server has been lost"),
+                description: _t("You cannot place calls without a connection to the server."),
             });
             return;
         }
@@ -854,7 +958,7 @@ export default class LegacyCallHandler extends EventEmitter {
         // don't allow > 2 calls to be placed.
         if (this.getAllActiveCalls().length > 1) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Too Many Calls'),
+                title: _t("Too Many Calls"),
                 description: _t("You've reached the maximum number of simultaneous calls."),
             });
             return;
@@ -872,13 +976,14 @@ export default class LegacyCallHandler extends EventEmitter {
         const members = getJoinedNonFunctionalMembers(room);
         if (members.length <= 1) {
             Modal.createDialog(ErrorDialog, {
-                description: _t('You cannot place a call with yourself.'),
+                description: _t("You cannot place a call with yourself."),
             });
         } else if (members.length === 2) {
             logger.info(`Place ${type} call in ${roomId}`);
 
             await this.placeMatrixCall(roomId, type, transferee);
-        } else { // > 2
+        } else {
+            // > 2
             await this.placeJitsiCall(roomId, type);
         }
     }
@@ -917,7 +1022,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
         if (this.getAllActiveCalls().length > 1) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Too Many Calls'),
+                title: _t("Too Many Calls"),
                 description: _t("You've reached the maximum number of simultaneous calls."),
             });
             return;
@@ -973,7 +1078,9 @@ export default class LegacyCallHandler extends EventEmitter {
     }
 
     public async startTransferToPhoneNumber(
-        call: MatrixCall, destination: string, consultFirst: boolean,
+        call: MatrixCall,
+        destination: string,
+        consultFirst: boolean,
     ): Promise<void> {
         if (consultFirst) {
             // if we're consulting, we just start by placing a call to the transfer
@@ -994,9 +1101,7 @@ export default class LegacyCallHandler extends EventEmitter {
         await this.startTransferToMatrixID(call, results[0].userid, consultFirst);
     }
 
-    public async startTransferToMatrixID(
-        call: MatrixCall, destination: string, consultFirst: boolean,
-    ): Promise<void> {
+    public async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean): Promise<void> {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
 
@@ -1014,8 +1119,8 @@ export default class LegacyCallHandler extends EventEmitter {
             } catch (e) {
                 logger.log("Failed to transfer call", e);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Transfer Failed'),
-                    description: _t('Failed to transfer call'),
+                    title: _t("Transfer Failed"),
+                    description: _t("Failed to transfer call"),
                 });
             }
         }
@@ -1052,10 +1157,10 @@ export default class LegacyCallHandler extends EventEmitter {
         const client = MatrixClientPeg.get();
         logger.info(`Place conference call in ${roomId}`);
 
-        dis.dispatch({ action: 'appsDrawer', show: true });
+        dis.dispatch({ action: "appsDrawer", show: true });
 
         // Prevent double clicking the call button
-        const widget = WidgetStore.instance.getApps(roomId).find(app => WidgetType.JITSI.matches(app.type));
+        const widget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.JITSI.matches(app.type));
         if (widget) {
             // If there already is a Jitsi widget, pin it
             WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), widget, Container.Top);
@@ -1063,12 +1168,12 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         try {
-            await WidgetUtils.addJitsiWidget(roomId, type, 'Jitsi', false);
-            logger.log('Jitsi widget added');
+            await WidgetUtils.addJitsiWidget(roomId, type, "Jitsi", false);
+            logger.log("Jitsi widget added");
         } catch (e) {
-            if (e.errcode === 'M_FORBIDDEN') {
+            if (e.errcode === "M_FORBIDDEN") {
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Permission Required'),
+                    title: _t("Permission Required"),
                     description: _t("You do not have permission to start a conference call in this room"),
                 });
             }
@@ -1082,8 +1187,8 @@ export default class LegacyCallHandler extends EventEmitter {
         const roomInfo = WidgetStore.instance.getRoom(roomId);
         if (!roomInfo) return; // "should never happen" clauses go here
 
-        const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
-        jitsiWidgets.forEach(w => {
+        const jitsiWidgets = roomInfo.widgets.filter((w) => WidgetType.JITSI.matches(w.type));
+        jitsiWidgets.forEach((w) => {
             const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(w));
             if (!messaging) return; // more "should never happen" words
 

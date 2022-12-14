@@ -25,7 +25,7 @@ export enum VoiceBroadcastPlaybacksStoreEvent {
 }
 
 interface EventMap {
-    [VoiceBroadcastPlaybacksStoreEvent.CurrentChanged]: (recording: VoiceBroadcastPlayback) => void;
+    [VoiceBroadcastPlaybacksStoreEvent.CurrentChanged]: (recording: VoiceBroadcastPlayback | null) => void;
 }
 
 /**
@@ -35,7 +35,8 @@ interface EventMap {
  */
 export class VoiceBroadcastPlaybacksStore
     extends TypedEventEmitter<VoiceBroadcastPlaybacksStoreEvent, EventMap>
-    implements IDestroyable {
+    implements IDestroyable
+{
     private current: VoiceBroadcastPlayback | null;
 
     /** Playbacks indexed by their info event id. */
@@ -53,7 +54,14 @@ export class VoiceBroadcastPlaybacksStore
         this.emit(VoiceBroadcastPlaybacksStoreEvent.CurrentChanged, current);
     }
 
-    public getCurrent(): VoiceBroadcastPlayback {
+    public clearCurrent(): void {
+        if (this.current === null) return;
+
+        this.current = null;
+        this.emit(VoiceBroadcastPlaybacksStoreEvent.CurrentChanged, null);
+    }
+
+    public getCurrent(): VoiceBroadcastPlayback | null {
         return this.current;
     }
 
@@ -76,15 +84,16 @@ export class VoiceBroadcastPlaybacksStore
         playback.on(VoiceBroadcastPlaybackEvent.StateChanged, this.onPlaybackStateChanged);
     }
 
-    private onPlaybackStateChanged = (
-        state: VoiceBroadcastPlaybackState,
-        playback: VoiceBroadcastPlayback,
-    ): void => {
-        if ([
-            VoiceBroadcastPlaybackState.Buffering,
-            VoiceBroadcastPlaybackState.Playing,
-        ].includes(state)) {
-            this.pauseExcept(playback);
+    private onPlaybackStateChanged = (state: VoiceBroadcastPlaybackState, playback: VoiceBroadcastPlayback): void => {
+        switch (state) {
+            case VoiceBroadcastPlaybackState.Buffering:
+            case VoiceBroadcastPlaybackState.Playing:
+                this.pauseExcept(playback);
+                this.setCurrent(playback);
+                break;
+            case VoiceBroadcastPlaybackState.Stopped:
+                this.clearCurrent();
+                break;
         }
     };
 

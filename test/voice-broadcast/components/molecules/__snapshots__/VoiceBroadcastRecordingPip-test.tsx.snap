@@ -9,28 +9,30 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
       class="mx_VoiceBroadcastHeader"
     >
       <div
-        data-testid="room-avatar"
+        class="mx_AccessibleButton"
+        role="button"
+        tabindex="0"
       >
-        room avatar: 
-        My room
+        <div
+          data-testid="room-avatar"
+        >
+          room avatar: 
+          My room
+        </div>
       </div>
       <div
         class="mx_VoiceBroadcastHeader_content"
       >
         <div
-          class="mx_VoiceBroadcastHeader_room"
-        >
-          My room
-        </div>
-        <div
-          class="mx_VoiceBroadcastHeader_line"
+          class="mx_AccessibleButton"
+          role="button"
+          tabindex="0"
         >
           <div
-            class="mx_Icon mx_Icon_16"
-          />
-          <span>
-            @userId:matrix.org
-          </span>
+            class="mx_VoiceBroadcastHeader_room"
+          >
+            My room
+          </div>
         </div>
         <div
           class="mx_VoiceBroadcastHeader_line"
@@ -46,7 +48,7 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
         </div>
       </div>
       <div
-        class="mx_LiveBadge"
+        class="mx_LiveBadge mx_LiveBadge--grey"
       >
         <div
           class="mx_Icon mx_Icon_16"
@@ -68,6 +70,16 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
       >
         <div
           class="mx_Icon mx_Icon_16"
+        />
+      </div>
+      <div
+        aria-label="Change input device"
+        class="mx_AccessibleButton"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_16 mx_Icon_alert"
         />
       </div>
       <div
@@ -94,28 +106,30 @@ exports[`VoiceBroadcastRecordingPip when rendering a started recording should re
       class="mx_VoiceBroadcastHeader"
     >
       <div
-        data-testid="room-avatar"
+        class="mx_AccessibleButton"
+        role="button"
+        tabindex="0"
       >
-        room avatar: 
-        My room
+        <div
+          data-testid="room-avatar"
+        >
+          room avatar: 
+          My room
+        </div>
       </div>
       <div
         class="mx_VoiceBroadcastHeader_content"
       >
         <div
-          class="mx_VoiceBroadcastHeader_room"
-        >
-          My room
-        </div>
-        <div
-          class="mx_VoiceBroadcastHeader_line"
+          class="mx_AccessibleButton"
+          role="button"
+          tabindex="0"
         >
           <div
-            class="mx_Icon mx_Icon_16"
-          />
-          <span>
-            @userId:matrix.org
-          </span>
+            class="mx_VoiceBroadcastHeader_room"
+          >
+            My room
+          </div>
         </div>
         <div
           class="mx_VoiceBroadcastHeader_line"
@@ -153,6 +167,16 @@ exports[`VoiceBroadcastRecordingPip when rendering a started recording should re
       >
         <div
           class="mx_Icon mx_Icon_16"
+        />
+      </div>
+      <div
+        aria-label="Change input device"
+        class="mx_AccessibleButton"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_16 mx_Icon_alert"
         />
       </div>
       <div

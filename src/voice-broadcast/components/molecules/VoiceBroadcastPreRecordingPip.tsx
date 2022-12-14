@@ -14,35 +14,77 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useRef, useState } from "react";
 
 import { VoiceBroadcastHeader } from "../..";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
 import { VoiceBroadcastPreRecording } from "../../models/VoiceBroadcastPreRecording";
 import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
 import { _t } from "../../../languageHandler";
+import { useAudioDeviceSelection } from "../../../hooks/useAudioDeviceSelection";
+import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
 
 interface Props {
     voiceBroadcastPreRecording: VoiceBroadcastPreRecording;
 }
 
-export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({
-    voiceBroadcastPreRecording,
-}) => {
-    return <div className="mx_VoiceBroadcastBody mx_VoiceBroadcastBody--pip">
-        <VoiceBroadcastHeader
-            onCloseClick={voiceBroadcastPreRecording.cancel}
-            room={voiceBroadcastPreRecording.room}
-            sender={voiceBroadcastPreRecording.sender}
-            showClose={true}
-        />
-        <AccessibleButton
-            className="mx_VoiceBroadcastBody_blockButton"
-            kind="danger"
-            onClick={voiceBroadcastPreRecording.start}
-        >
-            <LiveIcon className="mx_Icon mx_Icon_16" />
-            { _t("Go live") }
-        </AccessibleButton>
-    </div>;
+interface State {
+    showDeviceSelect: boolean;
+    disableStartButton: boolean;
+}
+
+export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastPreRecording }) => {
+    const pipRef = useRef<HTMLDivElement | null>(null);
+    const { currentDevice, currentDeviceLabel, devices, setDevice } = useAudioDeviceSelection();
+    const [state, setState] = useState<State>({
+        showDeviceSelect: false,
+        disableStartButton: false,
+    });
+
+    const onDeviceSelect = (device: MediaDeviceInfo) => {
+        setState((state) => ({
+            ...state,
+            showDeviceSelect: false,
+        }));
+        setDevice(device);
+    };
+
+    const onStartBroadcastClick = () => {
+        setState((state) => ({
+            ...state,
+            disableStartButton: true,
+        }));
+
+        voiceBroadcastPreRecording.start();
+    };
+
+    return (
+        <div className="mx_VoiceBroadcastBody mx_VoiceBroadcastBody--pip" ref={pipRef}>
+            <VoiceBroadcastHeader
+                linkToRoom={true}
+                onCloseClick={voiceBroadcastPreRecording.cancel}
+                onMicrophoneLineClick={() => setState({ ...state, showDeviceSelect: true })}
+                room={voiceBroadcastPreRecording.room}
+                microphoneLabel={currentDeviceLabel}
+                showClose={true}
+            />
+            <AccessibleButton
+                className="mx_VoiceBroadcastBody_blockButton"
+                kind="danger"
+                onClick={onStartBroadcastClick}
+                disabled={state.disableStartButton}
+            >
+                <LiveIcon className="mx_Icon mx_Icon_16" />
+                {_t("Go live")}
+            </AccessibleButton>
+            {state.showDeviceSelect && (
+                <DevicesContextMenu
+                    containerRef={pipRef}
+                    currentDevice={currentDevice}
+                    devices={devices}
+                    onDeviceSelect={onDeviceSelect}
+                />
+            )}
+        </div>
+    );
 };

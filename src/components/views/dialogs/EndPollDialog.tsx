@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 import { PollEndEvent } from "matrix-events-sdk";
 
 import { _t } from "../../../languageHandler";
@@ -26,48 +25,36 @@ import QuestionDialog from "./QuestionDialog";
 import { findTopAnswer } from "../messages/MPollBody";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
+import { GetRelationsForEvent } from "../rooms/EventTile";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
     event: MatrixEvent;
     onFinished: (success: boolean) => void;
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: string,
-        eventType: string
-    ) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 export default class EndPollDialog extends React.Component<IProps> {
     private onFinished = (endPoll: boolean) => {
-        const topAnswer = findTopAnswer(
-            this.props.event,
-            this.props.matrixClient,
-            this.props.getRelationsForEvent,
-        );
+        const topAnswer = findTopAnswer(this.props.event, this.props.matrixClient, this.props.getRelationsForEvent);
 
-        const message = (
-            (topAnswer === "")
+        const message =
+            topAnswer === ""
                 ? _t("The poll has ended. No votes were cast.")
-                : _t(
-                    "The poll has ended. Top answer: %(topAnswer)s",
-                    { topAnswer },
-                )
-        );
+                : _t("The poll has ended. Top answer: %(topAnswer)s", { topAnswer });
 
         if (endPoll) {
             const endEvent = PollEndEvent.from(this.props.event.getId(), message).serialize();
 
-            this.props.matrixClient.sendEvent(
-                this.props.event.getRoomId(), endEvent.type, endEvent.content,
-            ).catch((e: any) => {
-                console.error("Failed to submit poll response event:", e);
-                Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to end poll"),
-                    description: _t(
-                        "Sorry, the poll did not end. Please try again."),
+            this.props.matrixClient
+                .sendEvent(this.props.event.getRoomId(), endEvent.type, endEvent.content)
+                .catch((e: any) => {
+                    console.error("Failed to submit poll response event:", e);
+                    Modal.createDialog(ErrorDialog, {
+                        title: _t("Failed to end poll"),
+                        description: _t("Sorry, the poll did not end. Please try again."),
+                    });
                 });
-            });
         }
         this.props.onFinished(endPoll);
     };
@@ -76,13 +63,11 @@ export default class EndPollDialog extends React.Component<IProps> {
         return (
             <QuestionDialog
                 title={_t("End Poll")}
-                description={
-                    _t(
-                        "Are you sure you want to end this poll? " +
+                description={_t(
+                    "Are you sure you want to end this poll? " +
                         "This will show the final results of the poll and " +
                         "stop people from being able to vote.",
-                    )
-                }
+                )}
                 button={_t("End Poll")}
                 onFinished={(endPoll: boolean) => this.onFinished(endPoll)}
             />

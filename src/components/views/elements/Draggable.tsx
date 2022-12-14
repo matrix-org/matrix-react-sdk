@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 interface IProps {
     className: string;
@@ -47,7 +47,7 @@ export default class Draggable extends React.Component<IProps, IState> {
         };
     }
 
-    private onMouseDown = (event: MouseEvent): void => {
+    private onMouseDown = (event: React.MouseEvent): void => {
         this.setState({
             location: {
                 currentX: event.clientX,
@@ -74,6 +74,6 @@ export default class Draggable extends React.Component<IProps, IState> {
     }
 
     render() {
-        return <div className={this.props.className} onMouseDown={this.onMouseDown.bind(this)} />;
+        return <div className={this.props.className} onMouseDown={this.onMouseDown} />;
     }
 }
