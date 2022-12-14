@@ -158,7 +158,6 @@ jobs:
                       #PERCY_PARALLEL_TOTAL: ${{ strategy.job-total }}
                   PERCY_PARALLEL_NONCE: ${{ needs.prepare.outputs.uuid }}
 
-
             - name: Upload Artifact
               if: failure()
               uses: actions/upload-artifact@v3
