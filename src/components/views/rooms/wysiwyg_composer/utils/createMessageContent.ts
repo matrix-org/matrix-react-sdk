@@ -14,14 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { richToPlain } from "@matrix-org/matrix-wysiwyg";
+import { richToPlain, plainToRich } from "@matrix-org/matrix-wysiwyg";
 import { IContent, IEventRelation, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
-import { htmlSerializeFromMdIfNeeded } from "../../../../../editor/serialize";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
-import { htmlToPlainText } from "../../../../../utils/room/htmlToPlaintext";
 
 // Merges favouring the given relation
 function attachRelation(content: IContent, relation?: IEventRelation): void {
@@ -91,6 +89,8 @@ export async function createMessageContent(
 
     // const body = textSerialize(model);
 
+    // if we're editing rich text, the message content is pure html
+    // BUT if we're not, the message content will be plain text
     const body = isHTML ? await richToPlain(message) : message;
     const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
     const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
@@ -107,7 +107,7 @@ export async function createMessageContent(
     const formattedBody = isHTML
         ? message
         : isMarkdownEnabled
-            ? htmlSerializeFromMdIfNeeded(message, { forceHTML: isReply }) // does this also become the md output from the model?
+            ? await plainToRich(message)
             : null;
 
     if (formattedBody) {
