@@ -1525,10 +1525,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/analytics-events/-/analytics-events-0.3.0.tgz#a428f7e3f164ffadf38f35bc0f0f9a3e47369ce6"
   integrity sha512-f1WIMA8tjNB3V5g1C34yIpIJK47z6IJ4SLiY4j+J9Gw4X8C3TKGTAx563rMcMvW3Uk/PFqnIBXtkavHBXoYJ9A==
 
-"@matrix-org/matrix-wysiwyg@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.9.0.tgz#8651eacdc0bbfa313501e4feeb713c74dbf099cc"
-  integrity sha512-utxLZPSmBR/oKFeLLteAfqprhSW8prrH9IKzeMK1VswQYganPusYYO8u86kCQt4SuDz/1Zc8C7r76xmOiVJ9JQ==
+"@matrix-org/matrix-wysiwyg@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-0.11.0.tgz#3000ee809a3e38242c5da47bef17c572582f2f6b"
+  integrity sha512-B16iLfNnW4PKG4fpDuwJVc0QUrUUqTkhwJ/kxzawcxwVNmWbsPCWJ3hkextYrN2gqRL1d4CNASkNbWLCNNiXhA==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz":
   version "3.2.8"
