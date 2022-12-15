@@ -84,7 +84,7 @@ describe("MatrixClientPeg", () => {
         it("should initialise the rust crypto library, if enabled", async () => {
             const originalGetValue = SettingsStore.getValue;
             jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                (settingName: string, roomId: string = null, excludeDefault = false) => {
+                (settingName: string, roomId: string | null = null, excludeDefault = false) => {
                     if (settingName === "feature_rust_crypto") {
                         return true;
                     }
