@@ -1025,8 +1025,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp:
-                this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
-                isRenderingNotification,
+                this.context.timelineRenderingType === TimelineRenderingType.ThreadsList || isRenderingNotification,
             mx_EventTile_noBubble: noBubbleEvent,
         });
 
@@ -1412,7 +1411,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         {this.context.timelineRenderingType === TimelineRenderingType.ThreadsList && (
                             <EventTileThreadToolbar
                                 viewInRoom={this.viewInRoom}
-                                copyLinkToThread={this.copyLinkToThread} />
+                                copyLinkToThread={this.copyLinkToThread}
+                            />
                         )}
 
                         {msgOption}

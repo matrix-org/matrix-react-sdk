@@ -23,31 +23,31 @@ import { Icon as LinkIcon } from "../../../../../res/img/element-icons/link.svg"
 import { Icon as ViewInRoomIcon } from "../../../../../res/img/element-icons/view-in-room.svg";
 import { ButtonEvent } from "../../elements/AccessibleButton";
 
-
-
 export function EventTileThreadToolbar({
     viewInRoom,
-    copyLinkToThread
+    copyLinkToThread,
 }: {
     viewInRoom: (evt: ButtonEvent) => void;
     copyLinkToThread: (evt: ButtonEvent) => void;
 }) {
-    return <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
-    <RovingAccessibleTooltipButton
-        className="mx_MessageActionBar_iconButton"
-        onClick={viewInRoom}
-        title={_t("View in room")}
-        key="view_in_room"
-    >
-        <ViewInRoomIcon />
-    </RovingAccessibleTooltipButton>
-    <RovingAccessibleTooltipButton
-        className="mx_MessageActionBar_iconButton"
-        onClick={copyLinkToThread}
-        title={_t("Copy link to thread")}
-        key="copy_link_to_thread"
-    >
-        <LinkIcon />
-    </RovingAccessibleTooltipButton>
-</Toolbar>
+    return (
+        <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+            <RovingAccessibleTooltipButton
+                className="mx_MessageActionBar_iconButton"
+                onClick={viewInRoom}
+                title={_t("View in room")}
+                key="view_in_room"
+            >
+                <ViewInRoomIcon />
+            </RovingAccessibleTooltipButton>
+            <RovingAccessibleTooltipButton
+                className="mx_MessageActionBar_iconButton"
+                onClick={copyLinkToThread}
+                title={_t("Copy link to thread")}
+                key="copy_link_to_thread"
+            >
+                <LinkIcon />
+            </RovingAccessibleTooltipButton>
+        </Toolbar>
+    );
 }
