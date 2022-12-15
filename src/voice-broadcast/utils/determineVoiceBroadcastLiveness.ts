@@ -16,13 +16,13 @@ limitations under the License.
 
 import { VoiceBroadcastInfoState, VoiceBroadcastLiveness } from "..";
 
-const stateLivenessMap: Record<VoiceBroadcastInfoState, VoiceBroadcastLiveness> = {
-    started: "live",
-    resumed: "live",
-    paused: "grey",
-    stopped: "not-live",
-};
+const stateLivenessMap: Map<VoiceBroadcastInfoState, VoiceBroadcastLiveness> = new Map([
+    ["started", "live"],
+    ["resumed", "live"],
+    ["paused", "grey"],
+    ["stopped", "not-live"],
+] as Array<[VoiceBroadcastInfoState, VoiceBroadcastLiveness]>);
 
 export const determineVoiceBroadcastLiveness = (infoState: VoiceBroadcastInfoState): VoiceBroadcastLiveness => {
-    return stateLivenessMap[infoState] ?? "not-live";
+    return stateLivenessMap.get(infoState) ?? "not-live";
 };
