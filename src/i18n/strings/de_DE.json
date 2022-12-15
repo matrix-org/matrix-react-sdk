@@ -996,7 +996,6 @@
     "If disabled, messages from encrypted rooms won't appear in search results.": "Wenn deaktiviert, werden Nachrichten von verschlüsselten Räumen nicht in den Ergebnissen auftauchen.",
     "This user has not verified all of their sessions.": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
     "You have verified this user. This user has verified all of their sessions.": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Schlüsselanfragen werden automatisch an deine anderen Sitzungen gesendet. Wenn du sie abgelehnt oder ignoriert hast, klicke hier, um die Schlüssel erneut anzufordern.",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Schlüssel aus deinen anderen Sitzungen erneut anfordern</requestLink>.",
     "Room %(name)s": "Raum %(name)s",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
@@ -3670,5 +3669,19 @@
     "This session doesn't support encryption and thus can't be verified.": "Diese Sitzung unterstützt keine Verschlüsselung und kann deshalb nicht verifiziert werden.",
     "This session doesn't support encryption, so it can't be verified.": "Diese Sitzung unterstützt keine Verschlüsselung und kann deshalb nicht verifiziert werden.",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s beendete eine <a>Sprachübertragung</a>",
-    "You ended a <a>voice broadcast</a>": "Du hast eine <a>Sprachübertragung</a> beendet"
+    "You ended a <a>voice broadcast</a>": "Du hast eine <a>Sprachübertragung</a> beendet",
+    "Unable to decrypt message": "Nachrichten-Entschlüsselung nicht möglich",
+    "This message could not be decrypted": "Diese Nachricht konnte nicht enschlüsselt werden",
+    "Resend key requests": "Schlüsselanfrage erneut senden",
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "Bedauerlicherweise gibt es keine anderen Geräte, von denen Entschlüsselungs-Schlüssel angefordert werden können. Andere Geräte anzumelden und zu verifizieren könnte derartige Situationen in Zukunft verhindern.",
+    "Some messages could not be decrypted": "Einige Nachrichten konnten nicht entschlüsselt werden",
+    "View your device list": "Deine Geräteliste ansehen",
+    "This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.": "Dieses Gerät fordert Entschlüsselungs-Schlüssel von deinen anderen Geräten an. Die Nutzung deiner anderen Geräte könnte dies beschleunigen.",
+    "Open another device to load encrypted messages": "Nutze ein anderes verbundenes Gerät, um verschlüsselte Nachrichten zu laden",
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": "Du wirst nicht in der Lage sein, auf alte nicht entschlüsselbare Nachrichten zuzugreifen, aber durch das Zurücksetzen kannst du neue Nachrichten erhalten.",
+    "Reset your keys to prevent future decryption errors": "Setze deine Schlüssel zurück, um zukünftige Entschlüsselungsfehler zu vermeiden",
+    "This device was unable to decrypt some messages because it has not been verified yet.": "Dieses Gerät konnte einige Nachrichten nicht entschlüsseln, da es noch nicht verifiziert wurde.",
+    "Verify this device to access all messages": "Verifiziere dieses Gerät, um auf alle Nachrichten zugreifen zu können",
+    "Please wait as we try to decrypt your messages. This may take a few moments.": "Bitte warte, während wir versuchen, deine Nachrichten zu entschlüsseln. Das könnte ein wenig dauern.",
+    "Decrypting messages...": "Entschlüssele Nachrichten …"
 }
