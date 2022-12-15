@@ -1317,7 +1317,6 @@
     "This user has not verified all of their sessions.": "此使用者尚未驗證他們的所有工作階段。",
     "You have verified this user. This user has verified all of their sessions.": "您已驗證此使用者。此使用者已驗證他們所有的工作階段。",
     "Someone is using an unknown session": "某人正在使用未知的工作階段",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "金鑰分享請求已自動傳送到您其他的工作階段。如果您在您其他的工作階段上拒絕或忽略金鑰分享請求，點擊此處以再此請求此工作階段的金鑰。",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "從您的其他工作階段<requestLink>重新請求加密金鑰</requestLink>。",
     "Encrypted by an unverified session": "已由未驗證的工作階段加密",
     "Encrypted by a deleted session": "被已刪除的工作階段加密",

@@ -1839,7 +1839,6 @@
     "Encrypted by an unverified session": "Κρυπτογραφήθηκε από μια μη επαληθευμένη συνεδρία",
     "Copy link to thread": "Αντιγραφή συνδέσμου στο νήμα εκτέλεσης",
     "View in room": "Δείτε στο δωμάτιο",
-    "Key request sent.": "Το αίτημα κλειδιού στάλθηκε.",
     "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Τα αιτήματα κοινής χρήσης κλειδιών αποστέλλονται αυτόματα στις άλλες συνεδρίες σας. Εάν απορρίψατε ή απδεσμεύσατε το αίτημα κοινής χρήσης κλειδιού στις άλλες συνεδρίες σας, κάντε κλικ εδώ για να ζητήσετε ξανά τα κλειδιά για αυτήν τη συνεδρία.",
     "This event could not be displayed": "Δεν ήταν δυνατή η εμφάνιση αυτού του συμβάντος",
     "From a thread": "Από ένα νήμα εκτέλεσης",

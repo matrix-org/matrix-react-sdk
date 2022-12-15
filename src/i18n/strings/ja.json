@@ -1061,7 +1061,6 @@
     "Report a bug": "不具合の報告",
     "Update %(brand)s": "%(brand)sの更新",
     "New version of %(brand)s is available": "%(brand)sの新バージョンが利用可能です",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "鍵の共有リクエストは自動的にあなたの他のセッションに送信されます。他のセッションで鍵の共有リクエストを拒否または却下した場合は、ここをクリックしてこのセッションの鍵を再度リクエストしてください。",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "あなたの他のセッションに<requestLink>暗号鍵を再要求する</requestLink>。",
     "Block anyone not part of %(serverName)s from ever joining this room.": "%(serverName)s以外からの参加をブロックします。",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix関連のセキュリティー問題を報告するには、Matrix.orgの<a>Security Disclosure Policy</a>をご覧ください。",

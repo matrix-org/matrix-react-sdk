@@ -1410,7 +1410,6 @@
     "Backup has an <validity>invalid</validity> signature from <verify>verified</verify> session <device></device>": "У резервной копии <validity>неверная</validity>подпись <verify>подтверждённого</verify> сеанса <device></device>",
     "Backup has an <validity>invalid</validity> signature from <verify>unverified</verify> session <device></device>": "У резервной копии <validity>неверная</validity> подпись <verify>неподтверждённого</verify> сеанса <device></device>",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Эта комната пересылает сообщения с помощью моста на следующие платформы. <a>Подробнее</a>",
-    "If your other sessions do not have the key for this message you will not be able to decrypt them.": "Вы не сможете расшифровать это сообщение в других сеансах, если у них не окажется ключа шифрования.",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Для дополнительной безопасности подтвердите этого пользователя, сравнив одноразовый код на ваших устройствах.",
     "Start verification again from their profile.": "Начните подтверждение заново в профиле пользователя.",
     "Send a Direct Message": "Отправить личное сообщение",

@@ -1324,7 +1324,6 @@
     "You have verified this user. This user has verified all of their sessions.": "E keni verifikuar këtë përdorues. Ky përdorues ka verifikuar krejt sesionet e veta.",
     "Someone is using an unknown session": "Dikush po përdor një sesion të panjohur",
     "Mod": "Moderator",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Kërkesat për ndarje kyçesh dërgohen automatikisht te sesionet tuaj të tjerë. Nëse s’e pranuat ose e hodhët tej kërkesën për ndarje kyçesh në sesionet tuaj të tjerë, klikoni këtu që të rikërkoni kyçe për këtë sesion.",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Rikërkoni kyçe fshehtëzimi</requestLink> prej sesionesh tuaj të tjerë.",
     "Encrypted by an unverified session": "Fshehtëzuar nga një sesion i paverifikuar",
     "Encrypted by a deleted session": "Fshehtëzuar nga një sesion i fshirë",

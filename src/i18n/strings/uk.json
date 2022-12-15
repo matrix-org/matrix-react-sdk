@@ -2358,7 +2358,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Запросіть когось за іменем, користувацьким іменем (вигляду <userId/>) чи <a>поділіться цією кімнатою</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Запросіть когось за іменем, е-поштою, користувацьким іменем (вигляду <userId/>) чи <a>поділіться цією кімнатою</a>.",
     "Add a photo, so people can easily spot your room.": "Додайте фото, щоб люди легко вирізняли вашу кімнату.",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Запити поширення ключів автоматично надсилаються іншим вашим сеансам. Якщо з іншого сеансу ви відхилили чи закрили цей запит поширення ключів, натисніть сюди, щоб повторно запитати ключі для цього сеансу.",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Додамо лінк старої кімнати нагорі нової, щоб люди могли бачити старі повідомлення",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Вимкнемо користувачам можливість писати до старої версії кімнати й додамо повідомлення з порадою перейти до нової",
     "Update any local room aliases to point to the new room": "Направимо всі локальні псевдоніми цієї кімнати до нової",

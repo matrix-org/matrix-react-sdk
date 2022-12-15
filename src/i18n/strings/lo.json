@@ -382,7 +382,6 @@
     "Encrypted by an unverified session": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ບໍ່ໄດ້ຮັບການຢືນຢັນ",
     "Copy link to thread": "ສຳເນົາລິ້ງໃສ່ກະທູ້",
     "View in room": "ເບິ່ງຢູ່ໃນຫ້ອງ",
-    "If your other sessions do not have the key for this message you will not be able to decrypt them.": "ຖ້າພາກອື່ນຂອງທ່ານບໍ່ມີກະແຈສຳລັບຂໍ້ຄວາມນີ້ທ່ານຈະບໍ່ສາມາດຖອດລະຫັດໄດ້.",
     "Your key share request has been sent - please check your other sessions for key share requests.": "ການຮ້ອງຂໍການແບ່ງປັນທີ່ສໍາຄັນຂອງທ່ານຖືກສົ່ງໄປແລ້ວ - ກະລຸນາກວດເບິ່ງ ຊຸດອື່ນຂອງທ່ານສໍາລັບການຮ້ອງຂໍການແບ່ງປັນທີ່ສໍາຄັນ.",
     "This event could not be displayed": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້",
     "From a thread": "ຈາກກະທູ້",

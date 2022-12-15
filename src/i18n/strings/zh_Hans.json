@@ -1174,7 +1174,6 @@
     "This room is end-to-end encrypted": "此房间是端到端加密的",
     "Everyone in this room is verified": "房间中所有人都已被验证",
     "Edit message": "编辑消息",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "密钥共享请求会自动发送至你别的会话。如果你拒绝或忽略了你别的会话上的密钥共享请求，请点击此处重新为此会话请求密钥。",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "从你别的会话<requestLink>重新请求加密密钥</requestLink>。",
     "Encrypted by an unverified session": "由未验证的会话加密",
     "Unencrypted": "未加密",

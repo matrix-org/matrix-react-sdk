@@ -1343,7 +1343,6 @@
     "Securely cache encrypted messages locally for them to appear in search results.": "Gorde zifratutako mezuak cachean modu seguruan bilaketen emaitzetan agertu daitezen.",
     "You have verified this user. This user has verified all of their sessions.": "Erabiltzaile hau egiaztatu duzu. Erabiltzaile honek bere saio guztiak egiaztatu ditu.",
     "Mod": "Moderatzailea",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Automatikoki bidaltzen dira gako partekatze eskaerak zure beste saioetara. Beste saioetan gako partekatze eskaera ukatu edo baztertu baduzu, sakatu hemen saio honentzat gakoak berriro eskatzeko.",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Eskatu berriro zifratze gakoak</requestLink> zure beste saioei.",
     "Waiting for %(displayName)s to accept…": "%(displayName)s(e)k onartu bitartean zain…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Zuen mezuak babestuta daude eta soilik zuk eta hartzaileak dituzue hauek desblokeatzeko gakoak.",

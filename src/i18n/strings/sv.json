@@ -1312,7 +1312,6 @@
     "This room is end-to-end encrypted": "Det här rummet är totalsträckskrypterat",
     "Everyone in this room is verified": "Alla i det här rummet är verifierade",
     "Mod": "Mod",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Nyckeldelningsbegäran skickas till dina andra sessioner automatiskt. Om du avvisade eller avfärdade nyckeldelningsbegäran på dina andra sessioner, klicka här för att begära nycklarna för den här sessionen igen.",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Återförfråga krypteringsnycklar</requestLink> från dina andra sessioner.",
     "Encrypted by an unverified session": "Krypterat av en overifierad session",
     "Unencrypted": "Okrypterat",

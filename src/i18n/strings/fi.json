@@ -1462,7 +1462,6 @@
     "You have verified this user. This user has verified all of their sessions.": "Olet varmentanut tämän käyttäjän. Tämä käyttäjä on varmentanut kaikki istuntonsa.",
     "This room is end-to-end encrypted": "Tämä huone käyttää päästä päähän -salausta",
     "Everyone in this room is verified": "Kaikki tämän huoneen käyttäjät on varmennettu",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Avainten jakopyynnöt lähetetään muille istunnoillesi automaattisesti. Jos hylkäsit tai jätit huomiotta avainten jakopyynnön toisessa istunnossasi, napsauta tästä pyytääksesi avaimia uudelleen.",
     "Encrypted by an unverified session": "Salattu varmentamattoman istunnon toimesta",
     "Encrypted by a deleted session": "Salattu poistetun istunnon toimesta",
     "Reject & Ignore user": "Hylkää ja sivuuta käyttäjä",

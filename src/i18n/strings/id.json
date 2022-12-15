@@ -1825,7 +1825,6 @@
     "Encrypted by an unverified session": "Terenkripsi oleh sesi yang belum diverifikasi",
     "Reply in thread": "Balas di utasan",
     "Message Actions": "Aksi Pesan",
-    "Key request sent.": "Permintaan kunci terkirim.",
     "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Permintaan pembagian kunci terkirim ke sesi Anda yang lain secara otomatis. Jika Anda menolak atau mengabaikan permintaan berbagi kunci pada sesi Anda yang lain, klik di sini untuk meminta kunci untuk sesi ini lagi.",
     "This event could not be displayed": "Peristiwa ini tidak dapat ditampilkan",
     "%(count)s reply|one": "%(count)s balasan",

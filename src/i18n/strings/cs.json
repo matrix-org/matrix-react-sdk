@@ -1289,7 +1289,6 @@
     "This room is end-to-end encrypted": "Místnost je koncově šifrovaná",
     "Everyone in this room is verified": "V této místnosti jsou všichni ověřeni",
     "Mod": "Moderátor",
-    "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Požadavky na sdílení klíčů jsou vašim ostatním relacím odesílány automaticky. Pokud jste nějaký zamítli nebo ignorovali, tímto tlačítkem si ho můžete poslat znovu.",
     "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Znovu zažádat o šifrovací klíče</requestLink> z vašich ostatních relací.",
     "Encrypted by an unverified session": "Šifrované neověřenou relací",
     "Encrypted by a deleted session": "Šifrované smazanou relací",

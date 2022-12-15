@@ -2532,7 +2532,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Overenie tohto používateľa označí jeho reláciu ako dôveryhodnú a zároveň označí vašu reláciu ako dôveryhodnú pre neho.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Vymazanie všetkých údajov z tejto relácie je trvalé. Zašifrované správy sa stratia, pokiaľ neboli zálohované ich kľúče.",
     "Clear all data in this session?": "Vymazať všetky údaje v tejto relácii?",
-    "If your other sessions do not have the key for this message you will not be able to decrypt them.": "Ak ostatné relácie nemajú kľúč pre túto správu, nebudete ich môcť dešifrovať.",
     "One of the following may be compromised:": "Jedna z nasledujúcich vecí môže byť narušená:",
     "Reject & Ignore user": "Odmietnuť a ignorovať používateľa",
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Tip: Správu začnite znakom <code>//</code>, aby ste ju začali lomítkom.",

@@ -996,7 +996,6 @@
     "If disabled, messages from encrypted rooms won't appear in search results.": "Wenn deaktiviert, werden Nachrichten von verschlüsselten Räumen nicht in den Ergebnissen auftauchen.",
     "This user has not verified all of their sessions.": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
     "You have verified this user. This user has verified all of their sessions.": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Schlüssel aus deinen anderen Sitzungen erneut anfordern</requestLink>.",
     "Room %(name)s": "Raum %(name)s",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) hat sich zu einer neuen Sitzung angemeldet, ohne sie zu verifizieren:",
