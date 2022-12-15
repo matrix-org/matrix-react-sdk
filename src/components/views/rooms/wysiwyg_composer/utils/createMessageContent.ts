@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { richToPlain } from "@matrix-org/matrix-wysiwyg";
 import { IContent, IEventRelation, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
 import { htmlSerializeFromMdIfNeeded } from "../../../../../editor/serialize";
@@ -62,7 +63,7 @@ interface CreateMessageContentParams {
     editedEvent?: MatrixEvent;
 }
 
-export function createMessageContent(
+export async function createMessageContent(
     message: string,
     isHTML: boolean,
     {
@@ -72,7 +73,7 @@ export function createMessageContent(
         includeReplyLegacyFallback = true,
         editedEvent,
     }: CreateMessageContentParams,
-): IContent {
+): Promise<IContent> {
     // TODO emote ?
 
     const isEditing = Boolean(editedEvent);
@@ -90,15 +91,13 @@ export function createMessageContent(
 
     // const body = textSerialize(model);
 
-    // TODO remove this ugly hack for replace br tag
-    const body = (isHTML && htmlToPlainText(message)) || message.replace(/<br>/g, "\n");
+    const body = isHTML ? await richToPlain(message) : message;
     const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
     const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
 
     const content: IContent = {
         // TODO emote
         msgtype: MsgType.Text,
-        // TODO when available, use HTML --> Plain text conversion from wysiwyg rust model
         body: isEditing ? `${bodyPrefix} * ${body}` : body,
     };
 
@@ -108,8 +107,8 @@ export function createMessageContent(
     const formattedBody = isHTML
         ? message
         : isMarkdownEnabled
-        ? htmlSerializeFromMdIfNeeded(message, { forceHTML: isReply })
-        : null;
+            ? htmlSerializeFromMdIfNeeded(message, { forceHTML: isReply })
+            : null;
 
     if (formattedBody) {
         content.format = "org.matrix.custom.html";

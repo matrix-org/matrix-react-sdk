@@ -43,7 +43,11 @@ interface SendMessageParams {
     includeReplyLegacyFallback?: boolean;
 }
 
-export function sendMessage(message: string, isHTML: boolean, { roomContext, mxClient, ...params }: SendMessageParams) {
+export async function sendMessage(
+    message: string,
+    isHTML: boolean,
+    { roomContext, mxClient, ...params }: SendMessageParams,
+) {
     const { relation, replyToEvent } = params;
     const { room } = roomContext;
     const { roomId } = room;
@@ -72,7 +76,7 @@ export function sendMessage(message: string, isHTML: boolean, { roomContext, mxC
     // TODO quick reaction
 
     if (!content) {
-        content = createMessageContent(message, isHTML, params);
+        content = await createMessageContent(message, isHTML, params);
     }
 
     // don't bother sending an empty message
