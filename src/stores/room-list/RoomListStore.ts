@@ -389,7 +389,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
     private calculateTagSorting(tagId: TagID): SortAlgorithm {
         const isDefaultRecent = tagId === DefaultTagID.Invite || tagId === DefaultTagID.DM;
         const defaultSort = isDefaultRecent ? SortAlgorithm.Recent : SortAlgorithm.Alphabetic;
-        const settingAlphabetical = SettingsStore.getValue("RoomList.orderAlphabetically", null, true);
         const definedSort = this.getTagSorting(tagId);
         const storedSort = this.getStoredTagSorting(tagId);
 
@@ -399,8 +398,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         let tagSort = defaultSort;
         if (storedSort) {
             tagSort = storedSort;
-        } else if (!isNullOrUndefined(settingAlphabetical)) {
-            tagSort = settingAlphabetical ? SortAlgorithm.Alphabetic : SortAlgorithm.Recent;
         } else if (definedSort) {
             tagSort = definedSort;
         } // else default (already set)
@@ -432,7 +429,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
     // logic must match calculateTagSorting
     private calculateListOrder(tagId: TagID): ListAlgorithm {
         const defaultOrder = ListAlgorithm.Natural;
-        const settingImportance = SettingsStore.getValue("RoomList.orderByImportance", null, true);
         const definedOrder = this.getListOrder(tagId);
         const storedOrder = this.getStoredListOrder(tagId);
 
@@ -442,8 +438,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         let listOrder = defaultOrder;
         if (storedOrder) {
             listOrder = storedOrder;
-        } else if (!isNullOrUndefined(settingImportance)) {
-            listOrder = settingImportance ? ListAlgorithm.Importance : ListAlgorithm.Natural;
         } else if (definedOrder) {
             listOrder = definedOrder;
         } // else default (already set)
