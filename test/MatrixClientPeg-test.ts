@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import { advanceDateAndTime, stubClient } from "./test-utils";
-import { MatrixClientPeg as peg } from "../src/MatrixClientPeg";
+import { IMatrixClientPeg, MatrixClientPeg as peg } from "../src/MatrixClientPeg";
+import SettingsStore from "../src/settings/SettingsStore";
 
 jest.useFakeTimers();
 
@@ -56,5 +57,47 @@ describe("MatrixClientPeg", () => {
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(false);
+    });
+
+    describe(".start", () => {
+        let testPeg: IMatrixClientPeg;
+
+        beforeEach(() => {
+            // instantiate a MatrixClientPegClass instance, with a new MatrixClient
+            const pegClass = Object.getPrototypeOf(peg).constructor;
+            testPeg = new pegClass();
+            testPeg.replaceUsingCreds({
+                accessToken: "SEKRET",
+                homeserverUrl: "http://example.com",
+                userId: "@user:example.com",
+                deviceId: "TEST_DEVICE_ID",
+            });
+        });
+
+        it("should initialise client crypto", async () => {
+            const mockInitCrypto = jest.spyOn(testPeg.get(), "initCrypto").mockResolvedValue(undefined);
+
+            await testPeg.start();
+            expect(mockInitCrypto).toHaveBeenCalledTimes(1);
+        });
+
+        it("should initialise the rust crypto library, if enabled", async () => {
+            const originalGetValue = SettingsStore.getValue;
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName: string, roomId: string = null, excludeDefault = false) => {
+                    if (settingName === "feature_rust_crypto") {
+                        return true;
+                    }
+                    return originalGetValue(settingName, roomId, excludeDefault);
+                },
+            );
+
+            const mockInitCrypto = jest.spyOn(testPeg.get(), "initCrypto").mockResolvedValue(undefined);
+            const mockInitRustCrypto = jest.spyOn(testPeg.get(), "initRustCrypto").mockResolvedValue(undefined);
+
+            await testPeg.start();
+            expect(mockInitCrypto).not.toHaveBeenCalled();
+            expect(mockInitRustCrypto).toHaveBeenCalledTimes(1);
+        });
     });
 });
