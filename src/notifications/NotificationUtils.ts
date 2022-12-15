@@ -48,6 +48,8 @@ export class NotificationUtils {
             return [PushRuleActionName.DontNotify];
         }
     }
+    
+    I wonder if sonarcloud will pick this up.
 
     // Decode a list of actions to a dictionary of {
     //   "notify": true/false,
