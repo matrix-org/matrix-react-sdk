@@ -115,15 +115,18 @@ describe("<VoiceBroadcastSmallPlaybackBody />", () => {
     describe.each([
         { state: VoiceBroadcastPlaybackState.Paused, liveness: "not-live" },
         { state: VoiceBroadcastPlaybackState.Playing, liveness: "live" },
-    ] as Array<{ state: VoiceBroadcastPlaybackState, liveness: VoiceBroadcastLiveness}>)("when rendering a %s/%s broadcast", ({state, liveness}) => {
-        beforeEach(() => {
-            mocked(playback.getState).mockReturnValue(state);
-            mocked(playback.getLiveness).mockReturnValue(liveness);
-            renderResult = render(<VoiceBroadcastSmallPlaybackBody playback={playback} />);
-        });
+    ] as Array<{ state: VoiceBroadcastPlaybackState; liveness: VoiceBroadcastLiveness }>)(
+        "when rendering a %s/%s broadcast",
+        ({ state, liveness }) => {
+            beforeEach(() => {
+                mocked(playback.getState).mockReturnValue(state);
+                mocked(playback.getLiveness).mockReturnValue(liveness);
+                renderResult = render(<VoiceBroadcastSmallPlaybackBody playback={playback} />);
+            });
 
-        it("should render as expected", () => {
-            expect(renderResult.container).toMatchSnapshot();
-        });
-    });
+            it("should render as expected", () => {
+                expect(renderResult.container).toMatchSnapshot();
+            });
+        },
+    );
 });
