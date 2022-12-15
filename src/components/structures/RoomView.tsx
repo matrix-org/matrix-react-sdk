@@ -1489,7 +1489,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         { leading: false, trailing: true },
     );
 
-    private onMessageListScroll = (ev) => {
+    private onMessageListScroll = () => {
         if (this.messagePanel.isAtEndOfLiveTimeline()) {
             this.setState({
                 numUnreadMessages: 0,
