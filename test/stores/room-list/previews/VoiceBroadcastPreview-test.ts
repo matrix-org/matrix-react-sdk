@@ -51,7 +51,7 @@ describe("VoiceBroadcastPreview.getTextFor", () => {
 
     it("when passing a redacted broadcast stopped event, it should return null", () => {
         const event = mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Stopped, userId, deviceId);
-        event.makeRedacted(mkEvent({ event: true, content: {}, user: userId, type: "m.room.redaction"}));
+        event.makeRedacted(mkEvent({ event: true, content: {}, user: userId, type: "m.room.redaction" }));
         expect(preview.getTextFor(event)).toBeNull();
     });
 });

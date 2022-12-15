@@ -25,7 +25,7 @@ import { getHtmlText } from "../../../HtmlUtils";
 import { stripHTMLReply, stripPlainReply } from "../../../utils/Reply";
 
 export class MessageEventPreview implements IPreview {
-    public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string {
+    public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string | null {
         let eventContent = event.getContent();
 
         // no preview for broadcast chunks
