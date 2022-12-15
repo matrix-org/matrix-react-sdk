@@ -334,7 +334,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         if (this.state.isWysiwygLabEnabled) {
             const { permalinkCreator, relation, replyToEvent } = this.props;
-            sendMessage(this.state.composerContent, this.state.isRichTextEnabled, {
+            await sendMessage(this.state.composerContent, this.state.isRichTextEnabled, {
                 mxClient: this.props.mxClient,
                 roomContext: this.context,
                 permalinkCreator,
