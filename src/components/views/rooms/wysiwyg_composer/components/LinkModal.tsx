@@ -44,7 +44,7 @@ interface LinkModalProps {
     onClose: () => void;
 }
 
-function LinkModal({ composer, isTextEnabled, onClose }: LinkModalProps) {
+export function LinkModal({ composer, isTextEnabled, onClose }: LinkModalProps) {
     const composerContext = useComposerContext();
 
     const [fields, setFields] = useState({ text: "", link: "" });
