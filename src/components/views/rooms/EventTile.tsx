@@ -29,8 +29,6 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 
-import { Icon as LinkIcon } from "../../../../res/img/element-icons/link.svg";
-import { Icon as ViewInRoomIcon } from "../../../../res/img/element-icons/view-in-room.svg";
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -64,8 +62,6 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
-import Toolbar from "../../../accessibility/Toolbar";
-import { RovingAccessibleTooltipButton } from "../../../accessibility/roving/RovingAccessibleTooltipButton";
 import { ThreadNotificationState } from "../../../stores/notifications/ThreadNotificationState";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
@@ -86,6 +82,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
+import { EventTileThreadToolbar } from "./EventTile/EventTileThreadToolbar";
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -1001,6 +998,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             isContinuation = false;
         }
 
+        const isRenderingNotification = this.context.timelineRenderingType === TimelineRenderingType.Notification;
+
         const isEditing = !!this.props.editState;
         const classes = classNames({
             mx_EventTile_bubbleContainer: isBubbleMessage,
@@ -1027,7 +1026,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp:
                 this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
-                this.context.timelineRenderingType === TimelineRenderingType.Notification,
+                isRenderingNotification,
             mx_EventTile_noBubble: noBubbleEvent,
         });
 
@@ -1048,7 +1047,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         let avatarSize: number;
         let needsSenderProfile: boolean;
 
-        if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
+        if (isRenderingNotification) {
             avatarSize = 24;
             needsSenderProfile = true;
         } else if (isInfoMessage) {
@@ -1379,7 +1378,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     <>
                         <div className="mx_EventTile_details">
                             {sender}
-                            {this.context.timelineRenderingType === TimelineRenderingType.Notification && room ? (
+                            {isRenderingNotification && room ? (
                                 <span className="mx_EventTile_truncated">
                                     {" "}
                                     {_t(
@@ -1393,7 +1392,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             )}
                             {timestamp}
                         </div>
-                        {this.context.timelineRenderingType === TimelineRenderingType.Notification && room ? (
+                        {isRenderingNotification && room ? (
                             <div className="mx_EventTile_avatar">
                                 <RoomAvatar room={room} width={28} height={28} />
                             </div>
@@ -1411,24 +1410,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             {this.renderThreadPanelSummary()}
                         </div>
                         {this.context.timelineRenderingType === TimelineRenderingType.ThreadsList && (
-                            <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
-                                <RovingAccessibleTooltipButton
-                                    className="mx_MessageActionBar_iconButton"
-                                    onClick={this.viewInRoom}
-                                    title={_t("View in room")}
-                                    key="view_in_room"
-                                >
-                                    <ViewInRoomIcon />
-                                </RovingAccessibleTooltipButton>
-                                <RovingAccessibleTooltipButton
-                                    className="mx_MessageActionBar_iconButton"
-                                    onClick={this.copyLinkToThread}
-                                    title={_t("Copy link to thread")}
-                                    key="copy_link_to_thread"
-                                >
-                                    <LinkIcon />
-                                </RovingAccessibleTooltipButton>
-                            </Toolbar>
+                            <EventTileThreadToolbar
+                                viewInRoom={this.viewInRoom}
+                                copyLinkToThread={this.copyLinkToThread} />
                         )}
 
                         {msgOption}
