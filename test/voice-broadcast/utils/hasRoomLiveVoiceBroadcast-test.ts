@@ -38,8 +38,8 @@ describe("hasRoomLiveVoiceBroadcast", () => {
     };
 
     const itShouldReturnTrueTrue = () => {
-        it("should return true/true", () => {
-            expect(hasRoomLiveVoiceBroadcast(room, client.getUserId())).toEqual({
+        it("should return true/true", async () => {
+            expect(await hasRoomLiveVoiceBroadcast(client, room, client.getUserId())).toEqual({
                 hasBroadcast: true,
                 infoEvent: expectedEvent,
                 startedByUser: true,
@@ -48,8 +48,8 @@ describe("hasRoomLiveVoiceBroadcast", () => {
     };
 
     const itShouldReturnTrueFalse = () => {
-        it("should return true/false", () => {
-            expect(hasRoomLiveVoiceBroadcast(room, client.getUserId())).toEqual({
+        it("should return true/false", async () => {
+            expect(await hasRoomLiveVoiceBroadcast(client, room, client.getUserId())).toEqual({
                 hasBroadcast: true,
                 infoEvent: expectedEvent,
                 startedByUser: false,
@@ -58,8 +58,8 @@ describe("hasRoomLiveVoiceBroadcast", () => {
     };
 
     const itShouldReturnFalseFalse = () => {
-        it("should return false/false", () => {
-            expect(hasRoomLiveVoiceBroadcast(room, client.getUserId())).toEqual({
+        it("should return false/false", async () => {
+            expect(await hasRoomLiveVoiceBroadcast(client, room, client.getUserId())).toEqual({
                 hasBroadcast: false,
                 infoEvent: null,
                 startedByUser: false,

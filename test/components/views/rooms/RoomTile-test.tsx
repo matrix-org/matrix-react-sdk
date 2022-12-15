@@ -32,17 +32,19 @@ import {
     useMockedCalls,
     setupAsyncStoreWithClient,
     filterConsole,
+    flushPromises,
 } from "../../../test-utils";
 import { CallStore } from "../../../../src/stores/CallStore";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import PlatformPeg from "../../../../src/PlatformPeg";
 import BasePlatform from "../../../../src/BasePlatform";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 import { VoiceBroadcastInfoState } from "../../../../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
+import { TestSdkContext } from "../../../TestSdkContext";
+import { SDKContext } from "../../../../src/contexts/SDKContext";
 
 describe("RoomTile", () => {
     jest.spyOn(PlatformPeg, "get").mockReturnValue({
@@ -50,7 +52,7 @@ describe("RoomTile", () => {
     } as unknown as BasePlatform);
     useMockedCalls();
 
-    const setUpVoiceBroadcast = (state: VoiceBroadcastInfoState): void => {
+    const setUpVoiceBroadcast = async (state: VoiceBroadcastInfoState): Promise<void> => {
         voiceBroadcastInfoEvent = mkVoiceBroadcastInfoStateEvent(
             room.roomId,
             state,
@@ -58,14 +60,17 @@ describe("RoomTile", () => {
             client.getDeviceId(),
         );
 
-        act(() => {
+        await act(async () => {
             room.currentState.setStateEvents([voiceBroadcastInfoEvent]);
+            await flushPromises();
         });
     };
 
     const renderRoomTile = (): void => {
         renderResult = render(
-            <RoomTile room={room} showMessagePreview={false} isMinimized={false} tag={DefaultTagID.Untagged} />,
+            <SDKContext.Provider value={sdkContext}>
+                <RoomTile room={room} showMessagePreview={false} isMinimized={false} tag={DefaultTagID.Untagged} />
+            </SDKContext.Provider>,
         );
     };
 
@@ -74,15 +79,18 @@ describe("RoomTile", () => {
     let voiceBroadcastInfoEvent: MatrixEvent;
     let room: Room;
     let renderResult: RenderResult;
+    let sdkContext: TestSdkContext;
 
     beforeEach(() => {
+        sdkContext = new TestSdkContext();
+
         restoreConsole = filterConsole(
             // irrelevant for this test
             "Room !1:example.org does not have an m.room.create event",
         );
 
-        stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(stubClient());
+        sdkContext.client = client;
         DMRoomMap.makeShared();
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
@@ -180,8 +188,8 @@ describe("RoomTile", () => {
         });
 
         describe("and a live broadcast starts", () => {
-            beforeEach(() => {
-                setUpVoiceBroadcast(VoiceBroadcastInfoState.Started);
+            beforeEach(async () => {
+                await setUpVoiceBroadcast(VoiceBroadcastInfoState.Started);
             });
 
             it("should still render the call subtitle", () => {
@@ -192,8 +200,8 @@ describe("RoomTile", () => {
     });
 
     describe("when a live voice broadcast starts", () => {
-        beforeEach(() => {
-            setUpVoiceBroadcast(VoiceBroadcastInfoState.Started);
+        beforeEach(async () => {
+            await setUpVoiceBroadcast(VoiceBroadcastInfoState.Started);
         });
 
         it("should render the »Live« subtitle", () => {
@@ -201,7 +209,7 @@ describe("RoomTile", () => {
         });
 
         describe("and the broadcast stops", () => {
-            beforeEach(() => {
+            beforeEach(async () => {
                 const stopEvent = mkVoiceBroadcastInfoStateEvent(
                     room.roomId,
                     VoiceBroadcastInfoState.Stopped,
@@ -209,8 +217,9 @@ describe("RoomTile", () => {
                     client.getDeviceId(),
                     voiceBroadcastInfoEvent,
                 );
-                act(() => {
+                await act(async () => {
                     room.currentState.setStateEvents([stopEvent]);
+                    await flushPromises();
                 });
             });
 

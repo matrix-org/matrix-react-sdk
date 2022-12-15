@@ -34,6 +34,7 @@ import {
     wrapInMatrixClientContext,
     wrapInSdkContext,
     mkRoomCreateEvent,
+    flushPromises,
 } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { CallStore } from "../../../../src/stores/CallStore";
@@ -69,6 +70,12 @@ describe("PipView", () => {
     let voiceBroadcastRecordingsStore: VoiceBroadcastRecordingsStore;
     let voiceBroadcastPreRecordingStore: VoiceBroadcastPreRecordingStore;
     let voiceBroadcastPlaybacksStore: VoiceBroadcastPlaybacksStore;
+
+    const actFlushPromises = async () => {
+        await act(async () => {
+            await flushPromises();
+        });
+    };
 
     beforeEach(async () => {
         stubClient();
@@ -264,10 +271,11 @@ describe("PipView", () => {
     });
 
     describe("when there is a voice broadcast recording and pre-recording", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             setUpVoiceBroadcastPreRecording();
             setUpVoiceBroadcastRecording();
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast recording PiP", () => {
@@ -277,10 +285,11 @@ describe("PipView", () => {
     });
 
     describe("when there is a voice broadcast playback and pre-recording", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             mkVoiceBroadcast(room);
             setUpVoiceBroadcastPreRecording();
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast pre-recording PiP", () => {
@@ -290,9 +299,10 @@ describe("PipView", () => {
     });
 
     describe("when there is a voice broadcast pre-recording", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             setUpVoiceBroadcastPreRecording();
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast pre-recording PiP", () => {
@@ -306,7 +316,13 @@ describe("PipView", () => {
             setUpRoomViewStore();
             viewRoom(room.roomId);
             mkVoiceBroadcast(room);
-            await voiceBroadcastPlaybacksStore.getCurrent()?.start();
+            await actFlushPromises();
+
+            if (!voiceBroadcastPlaybacksStore.getCurrent()) {
+                throw new Error("broadcast not started");
+            }
+
+            await voiceBroadcastPlaybacksStore.getCurrent().start();
             viewRoom(room2.roomId);
             renderPip();
         });
@@ -322,11 +338,12 @@ describe("PipView", () => {
     describe("when viewing a room with a live voice broadcast", () => {
         let startEvent!: MatrixEvent;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             setUpRoomViewStore();
             viewRoom(room.roomId);
             startEvent = mkVoiceBroadcast(room);
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast playback pip", () => {
@@ -335,15 +352,16 @@ describe("PipView", () => {
         });
 
         describe("and the broadcast stops", () => {
-            beforeEach(() => {
-                act(() => {
-                    const stopEvent = mkVoiceBroadcastInfoStateEvent(
-                        room.roomId,
-                        VoiceBroadcastInfoState.Stopped,
-                        alice.userId,
-                        client.getDeviceId() || "",
-                        startEvent,
-                    );
+            beforeEach(async () => {
+                const stopEvent = mkVoiceBroadcastInfoStateEvent(
+                    room.roomId,
+                    VoiceBroadcastInfoState.Stopped,
+                    alice.userId,
+                    client.getDeviceId() || "",
+                    startEvent,
+                );
+
+                await act(async () => {
                     room.currentState.setStateEvents([stopEvent]);
                     defaultDispatcher.dispatch<IRoomStateEventsActionPayload>(
                         {
@@ -354,6 +372,7 @@ describe("PipView", () => {
                         },
                         true,
                     );
+                    await flushPromises();
                 });
             });
 
@@ -364,9 +383,10 @@ describe("PipView", () => {
         });
 
         describe("and leaving the room", () => {
-            beforeEach(() => {
-                act(() => {
+            beforeEach(async () => {
+                await act(async () => {
                     viewRoom(room2.roomId);
+                    await flushPromises();
                 });
             });
 
