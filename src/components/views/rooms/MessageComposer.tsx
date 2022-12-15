@@ -359,14 +359,16 @@ export class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
-    private onRichTextToggle = () => {
-        this.setState(({ isRichTextEnabled, composerContent }) => {
-            const convertedContent = isRichTextEnabled ? richToPlain(composerContent) : plainToRich(composerContent);
-            return {
-                isRichTextEnabled: !isRichTextEnabled,
-                composerContent: convertedContent,
-                initialComposerContent: convertedContent,
-            };
+    private onRichTextToggle = async () => {
+        const { isRichTextEnabled, composerContent } = this.state;
+        const convertedContent = isRichTextEnabled
+            ? await richToPlain(composerContent)
+            : await plainToRich(composerContent);
+
+        this.setState({
+            isRichTextEnabled: !isRichTextEnabled,
+            composerContent: convertedContent,
+            initialComposerContent: convertedContent,
         });
     };
 
