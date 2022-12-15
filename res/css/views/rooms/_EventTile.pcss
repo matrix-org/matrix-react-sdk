@@ -962,6 +962,7 @@ $left-gutter: 64px;
         width: 100%;
         box-sizing: border-box;
         padding-bottom: 0;
+        padding-inline-start: var(--leftOffset);
 
         .mx_ThreadPanel_replies {
             margin-top: $spacing-8;
@@ -985,10 +986,6 @@ $left-gutter: 64px;
                 white-space: nowrap;
             }
         }
-    }
-
-    .mx_EventTile_line {
-        padding-inline-start: var(--leftOffset);
     }
 
     .mx_MessageTimestamp {
