@@ -76,9 +76,13 @@ describe("MatrixClientPeg", () => {
 
         it("should initialise client crypto", async () => {
             const mockInitCrypto = jest.spyOn(testPeg.get(), "initCrypto").mockResolvedValue(undefined);
+            const mockSetTrustCrossSignedDevices = jest
+                .spyOn(testPeg.get(), "setCryptoTrustCrossSignedDevices")
+                .mockImplementation(() => {});
 
             await testPeg.start();
             expect(mockInitCrypto).toHaveBeenCalledTimes(1);
+            expect(mockSetTrustCrossSignedDevices).toHaveBeenCalledTimes(1);
         });
 
         it("should initialise the rust crypto library, if enabled", async () => {
