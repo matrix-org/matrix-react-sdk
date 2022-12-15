@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -28,6 +28,9 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { getRoomContext, mkEvent, mkMessage, stubClient } from "../../../test-utils";
 import { mkThread } from "../../../test-utils/threads";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import dis from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
 
 describe("EventTile", () => {
     const ROOM_ID = "!roomId:example.org";
@@ -152,6 +155,44 @@ describe("EventTile", () => {
 
             expect(container.getElementsByClassName("mx_NotificationBadge")).toHaveLength(1);
             expect(container.getElementsByClassName("mx_NotificationBadge_highlighted")).toHaveLength(1);
+        });
+    });
+
+    describe("EventTile in the right panel", () => {
+        beforeAll(() => {
+            const dmRoomMap: DMRoomMap = {
+                getUserIdForRoomId: jest.fn(),
+            } as unknown as DMRoomMap;
+            DMRoomMap.setShared(dmRoomMap);
+        });
+
+        it("renders the room name for notifications", () => {
+            const { container } = getComponent({}, TimelineRenderingType.Notification);
+            expect(container.getElementsByClassName("mx_EventTile_details")[0]).toHaveTextContent(
+                "@alice:example.org in !roomId:example.org",
+            );
+        });
+
+        it("renders the sender for the thread list", () => {
+            const { container } = getComponent({}, TimelineRenderingType.ThreadsList);
+            expect(container.getElementsByClassName("mx_EventTile_details")[0]).toHaveTextContent("@alice:example.org");
+        });
+
+        it.each([
+            [TimelineRenderingType.Notification, Action.ViewRoom],
+            [TimelineRenderingType.ThreadsList, Action.ShowThread],
+        ])("type %s dispatches %s", (renderingType, action) => {
+            jest.spyOn(dis, "dispatch");
+
+            const { container } = getComponent({}, renderingType);
+
+            fireEvent.click(container.querySelector("li")!);
+
+            expect(dis.dispatch).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    action,
+                }),
+            );
         });
     });
 });

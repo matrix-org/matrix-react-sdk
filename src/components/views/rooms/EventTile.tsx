@@ -1320,7 +1320,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                     // appease TS
                                     highlights: this.props.highlights,
                                     highlightLink: this.props.highlightLink,
-                                    onHeightChanged: () => this.props.onHeightChanged(),
+                                    onHeightChanged: () => this.props.onHeightChanged,
                                     permalinkCreator: this.props.permalinkCreator!,
                                 },
                                 this.context.showHiddenEvents,
@@ -1359,7 +1359,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
                             const target = ev.currentTarget as HTMLElement;
-                            const index = Array.from(target.parentElement?.children).indexOf(target);
+                            let index = -1;
+                            if (target.parentElement) index = Array.from(target.parentElement.children).indexOf(target);
                             switch (this.context.timelineRenderingType) {
                                 case TimelineRenderingType.Notification:
                                     this.viewInRoom(ev);
@@ -1370,7 +1371,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                         rootEvent: this.props.mxEvent,
                                         push: true,
                                     });
-                                    PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
+                                    PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index ?? -1);
                                     break;
                             }
                         },
