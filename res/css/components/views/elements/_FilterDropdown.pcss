@@ -32,12 +32,13 @@ limitations under the License.
 
     .mx_Dropdown_input {
         height: 24px;
-        background-color: $quinary-content;
-        border-color: $quinary-content;
+        background-color: transparent;
+        border-color: transparent;
         color: $secondary-content;
         border-radius: 4px;
 
-        &:focus {
+        &:focus, &:hover {
+            background-color: $quinary-content;
             border-color: $quinary-content;
         }
     }
