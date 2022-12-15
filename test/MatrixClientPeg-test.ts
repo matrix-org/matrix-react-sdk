@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { advanceDateAndTime, stubClient } from "./test-utils";
 import { IMatrixClientPeg, MatrixClientPeg as peg } from "../src/MatrixClientPeg";
 import SettingsStore from "../src/settings/SettingsStore";
@@ -72,6 +74,9 @@ describe("MatrixClientPeg", () => {
                 userId: "@user:example.com",
                 deviceId: "TEST_DEVICE_ID",
             });
+
+            // stub out Logger.log which gets called a lot and clutters up the test output
+            jest.spyOn(logger, "log").mockImplementation(() => {});
         });
 
         it("should initialise client crypto", async () => {
@@ -79,10 +84,28 @@ describe("MatrixClientPeg", () => {
             const mockSetTrustCrossSignedDevices = jest
                 .spyOn(testPeg.get(), "setCryptoTrustCrossSignedDevices")
                 .mockImplementation(() => {});
+            const mockStartClient = jest.spyOn(testPeg.get(), "startClient").mockResolvedValue(undefined);
 
             await testPeg.start();
             expect(mockInitCrypto).toHaveBeenCalledTimes(1);
             expect(mockSetTrustCrossSignedDevices).toHaveBeenCalledTimes(1);
+            expect(mockStartClient).toHaveBeenCalledTimes(1);
+        });
+
+        it("should carry on regardless if there is an error initialising crypto", async () => {
+            const e2eError = new Error("nope nope nope");
+            const mockInitCrypto = jest.spyOn(testPeg.get(), "initCrypto").mockRejectedValue(e2eError);
+            const mockSetTrustCrossSignedDevices = jest
+                .spyOn(testPeg.get(), "setCryptoTrustCrossSignedDevices")
+                .mockImplementation(() => {});
+            const mockStartClient = jest.spyOn(testPeg.get(), "startClient").mockResolvedValue(undefined);
+            const mockWarning = jest.spyOn(logger, "warn").mockReturnValue(undefined);
+
+            await testPeg.start();
+            expect(mockInitCrypto).toHaveBeenCalledTimes(1);
+            expect(mockSetTrustCrossSignedDevices).not.toHaveBeenCalled();
+            expect(mockStartClient).toHaveBeenCalledTimes(1);
+            expect(mockWarning).toHaveBeenCalledWith(expect.stringMatching("Unable to initialise e2e"), e2eError);
         });
 
         it("should initialise the rust crypto library, if enabled", async () => {
