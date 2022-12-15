@@ -368,10 +368,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private messagePanel: TimelinePanel;
     private roomViewBody = createRef<HTMLDivElement>();
 
-    static contextType = SDKContext;
+    public static contextType = SDKContext;
     public context!: React.ContextType<typeof SDKContext>;
 
-    constructor(props: IRoomProps, context: React.ContextType<typeof SDKContext>) {
+    public constructor(props: IRoomProps, context: React.ContextType<typeof SDKContext>) {
         super(props, context);
 
         const llMembers = context.client.hasLazyLoadMembersEnabled();
@@ -834,7 +834,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return isManuallyShown && widgets.length > 0;
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         this.onRoomViewStoreUpdate(true);
 
         const call = this.getCallForRoom();
@@ -847,7 +847,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         window.addEventListener("beforeunload", this.onPageUnload);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    public shouldComponentUpdate(nextProps, nextState) {
         const hasPropsDiff = objectHasDiff(this.props, nextProps);
 
         const { upgradeRecommendation, ...state } = this.state;
@@ -860,7 +860,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return hasPropsDiff || hasStateDiff;
     }
 
-    componentDidUpdate() {
+    public componentDidUpdate() {
         // Note: We check the ref here with a flag because componentDidMount, despite
         // documentation, does not define our messagePanel ref. It looks like our spinner
         // in render() prevents the ref from being set on first mount, so we try and
@@ -873,7 +873,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         // set a boolean to say we've been unmounted, which any pending
         // promises can use to throw away their results.
         //
@@ -1784,13 +1784,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return this.context.client.getRoom(createEvent.getContent()["predecessor"]["room_id"]);
     }
 
-    getHiddenHighlightCount() {
+    public getHiddenHighlightCount() {
         const oldRoom = this.getOldRoom();
         if (!oldRoom) return 0;
         return oldRoom.getUnreadNotificationCount(NotificationCountType.Highlight);
     }
 
-    onHiddenHighlightsClick = () => {
+    public onHiddenHighlightsClick = () => {
         const oldRoom = this.getOldRoom();
         if (!oldRoom) return;
         dis.dispatch<ViewRoomPayload>({
@@ -1849,7 +1849,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         );
     }
 
-    render() {
+    public render() {
         if (this.state.room instanceof LocalRoom) {
             if (this.state.room.state === LocalRoomState.CREATING) {
                 return this.renderLocalRoomCreateLoader();
