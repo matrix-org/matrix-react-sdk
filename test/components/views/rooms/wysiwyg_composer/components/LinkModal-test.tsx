@@ -23,12 +23,18 @@ import { ComposerContext } from "../../../../../../src/components/views/rooms/wy
 import { LinkModal } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/LinkModal";
 import { mockPlatformPeg } from "../../../../../test-utils";
 import * as selection from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
+import { SubSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/types";
 
 describe("LinkModal", () => {
     const composer = {
         link: jest.fn(),
     } as unknown as FormattingFunctions;
-    const defaultValue = { focusNode: null, anchorNode: null, focusOffset: 3, anchorOffset: 4 };
+    const defaultValue: SubSelection = {
+        focusNode: null,
+        anchorNode: null,
+        focusOffset: 3,
+        anchorOffset: 4,
+    };
 
     const customRender = (isTextEnabled: boolean, onClose: () => void) => {
         return render(

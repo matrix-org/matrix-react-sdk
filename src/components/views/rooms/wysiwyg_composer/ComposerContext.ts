@@ -18,7 +18,9 @@ import { createContext, useContext } from "react";
 
 import { SubSelection } from "./types";
 
-export const defaultContext = { selection: { anchorNode: null, anchorOffset: 0, focusNode: null, focusOffset: 0 } };
+export const defaultContext: { selection: SubSelection } = {
+    selection: { anchorNode: null, anchorOffset: 0, focusNode: null, focusOffset: 0 },
+};
 
 export interface ComposerContextState {
     selection: SubSelection;
