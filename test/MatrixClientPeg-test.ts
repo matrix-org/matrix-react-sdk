@@ -64,8 +64,8 @@ describe("MatrixClientPeg", () => {
 
         beforeEach(() => {
             // instantiate a MatrixClientPegClass instance, with a new MatrixClient
-            const pegClass = Object.getPrototypeOf(peg).constructor;
-            testPeg = new pegClass();
+            const PegClass = Object.getPrototypeOf(peg).constructor;
+            testPeg = new PegClass();
             testPeg.replaceUsingCreds({
                 accessToken: "SEKRET",
                 homeserverUrl: "http://example.com",
