@@ -87,7 +87,7 @@ describe("RoomViewStore", function () {
         getRoom: jest.fn(),
         getRoomIdForAlias: jest.fn(),
         isGuest: jest.fn(),
-        getUserId: jest.fn(),
+        getSafeUserId: jest.fn(),
     });
     const room = new Room(roomId, mockClient, userId);
 
@@ -112,7 +112,7 @@ describe("RoomViewStore", function () {
         mockClient.joinRoom.mockResolvedValue(room);
         mockClient.getRoom.mockReturnValue(room);
         mockClient.isGuest.mockReturnValue(false);
-        mockClient.getUserId.mockReturnValue(userId);
+        mockClient.getSafeUserId.mockReturnValue(userId);
 
         // Make the RVS to test
         dis = new MatrixDispatcher();
@@ -256,7 +256,12 @@ describe("RoomViewStore", function () {
 
         beforeEach(() => {
             voiceBroadcastPlayback = new VoiceBroadcastPlayback(
-                mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Started, mockClient.getUserId(), "d42"),
+                mkVoiceBroadcastInfoStateEvent(
+                    roomId,
+                    VoiceBroadcastInfoState.Started,
+                    mockClient.getSafeUserId(),
+                    "d42",
+                ),
                 mockClient,
             );
             stores.voiceBroadcastPlaybacksStore.setCurrent(voiceBroadcastPlayback);
@@ -277,7 +282,7 @@ describe("RoomViewStore", function () {
                     mkVoiceBroadcastInfoStateEvent(
                         roomId,
                         VoiceBroadcastInfoState.Started,
-                        mockClient.getUserId(),
+                        mockClient.getSafeUserId(),
                         "d42",
                     ),
                     mockClient,
