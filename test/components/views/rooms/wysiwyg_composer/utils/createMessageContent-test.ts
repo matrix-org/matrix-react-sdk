@@ -37,9 +37,9 @@ describe("createMessageContent", () => {
         jest.resetAllMocks();
     });
 
-    it("Should create html message", () => {
+    it("Should create html message", async () => {
         // When
-        const content = createMessageContent(message, true, { permalinkCreator });
+        const content = await createMessageContent(message, true, { permalinkCreator });
 
         // Then
         expect(content).toEqual({
@@ -50,9 +50,9 @@ describe("createMessageContent", () => {
         });
     });
 
-    it("Should add reply to message content", () => {
+    it("Should add reply to message content", async () => {
         // When
-        const content = createMessageContent(message, true, { permalinkCreator, replyToEvent: mockEvent });
+        const content = await createMessageContent(message, true, { permalinkCreator, replyToEvent: mockEvent });
 
         // Then
         expect(content).toEqual({
@@ -71,13 +71,13 @@ describe("createMessageContent", () => {
         });
     });
 
-    it("Should add relation to message", () => {
+    it("Should add relation to message", async () => {
         // When
         const relation = {
             rel_type: "m.thread",
             event_id: "myFakeThreadId",
         };
-        const content = createMessageContent(message, true, { permalinkCreator, relation });
+        const content = await createMessageContent(message, true, { permalinkCreator, relation });
 
         // Then
         expect(content).toEqual({
@@ -92,7 +92,7 @@ describe("createMessageContent", () => {
         });
     });
 
-    it("Should add fields related to edition", () => {
+    it("Should add fields related to edition", async () => {
         // When
         const editedEvent = mkEvent({
             type: "m.room.message",
@@ -110,7 +110,7 @@ describe("createMessageContent", () => {
             },
             event: true,
         });
-        const content = createMessageContent(message, true, { permalinkCreator, editedEvent });
+        const content = await createMessageContent(message, true, { permalinkCreator, editedEvent });
 
         // Then
         expect(content).toEqual({
