@@ -2634,7 +2634,6 @@
     "Are you sure you want to add encryption to this public room?": "您確定您要在此公開聊天室新增加密？",
     "Cross-signing is ready but keys are not backed up.": "已準備好交叉簽署但金鑰未備份。",
     "Thread": "討論串",
-    "Threaded messaging": "討論串訊息",
     "The above, but in <Room /> as well": "以上，但也在 <Room /> 中",
     "The above, but in any room you are joined or invited to as well": "以上，但在任何您已加入或被邀請的聊天室中",
     "Autoplay videos": "自動播放影片",
@@ -3051,7 +3050,6 @@
     "Use <arrows/> to scroll": "使用 <arrows/> 捲動",
     "Feedback sent! Thanks, we appreciate it!": "已傳送回饋！謝謝，我們感激不盡！",
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "感謝您試用測試版，請盡可能地詳細說明，如此我們才能改善它。",
-    "How can I leave the beta?": "我要如何離開測試版？",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 與 %(space2Name)s",
     "Maximise": "最大化",
     "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)s 傳送了 1 個隱藏的訊息",
@@ -3222,7 +3220,6 @@
     "%(count)s participants|other": "%(count)s 個參與者",
     "New video room": "新視訊聊天室",
     "New room": "新聊天室",
-    "How can I start a thread?": "我要如何啟動討論串？",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "討論串讓對話不離題且易於追蹤。<a>取得更多資訊</a>。",
     "Keep discussions organised with threads.": "透過討論串讓討論保持有條不紊。",
     "sends hearts": "傳送愛心",
@@ -3251,8 +3248,6 @@
     "No live locations": "無即時位置",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "以 <code>/plain</code> 當訊息的開頭以不使用 markdown 傳送，或以 <code>/md</code> 傳送來包含 markdown 格式。",
     "Enable Markdown": "啟用 Markdown",
-    "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "要離開，返回此頁面並使用「%(leaveTheBeta)s」按鈕。",
-    "Use “%(replyInThread)s” when hovering over a message.": "在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
     "Close sidebar": "關閉側邊欄",
     "View List": "檢視清單",
     "View list": "檢視清單",
@@ -3679,5 +3674,6 @@
     "Give one or multiple users in this room more privileges": "給這個聊天室中的一個使用者或多個使用者更多的權限",
     "Add privileged users": "新增特權使用者",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s 結束了<a>語音廣播</a>",
-    "You ended a <a>voice broadcast</a>": "您結束了<a>語音廣播</a>"
+    "You ended a <a>voice broadcast</a>": "您結束了<a>語音廣播</a>",
+    "Threaded messages": "討論串訊息"
 }
