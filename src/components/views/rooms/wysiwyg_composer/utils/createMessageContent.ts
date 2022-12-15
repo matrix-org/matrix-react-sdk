@@ -107,7 +107,7 @@ export async function createMessageContent(
     const formattedBody = isHTML
         ? message
         : isMarkdownEnabled
-            ? htmlSerializeFromMdIfNeeded(message, { forceHTML: isReply })
+            ? htmlSerializeFromMdIfNeeded(message, { forceHTML: isReply }) // does this also become the md output from the model?
             : null;
 
     if (formattedBody) {
