@@ -105,7 +105,7 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                 >
-                    <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                    {this.card.current && <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />}
                     {content}
                 </BaseCard>
             </RoomContext.Provider>

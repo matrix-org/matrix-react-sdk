@@ -1043,8 +1043,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         // Local echos have a send "status".
         const scrollToken = this.props.mxEvent.status ? undefined : this.props.mxEvent.getId();
 
-        let avatar: JSX.Element;
-        let sender: JSX.Element;
+        let avatar: JSX.Element | null = null;
+        let sender: JSX.Element | null = null;
         let avatarSize: number;
         let needsSenderProfile: boolean;
 
@@ -1320,8 +1320,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                     // appease TS
                                     highlights: this.props.highlights,
                                     highlightLink: this.props.highlightLink,
-                                    onHeightChanged: this.props.onHeightChanged,
-                                    permalinkCreator: this.props.permalinkCreator,
+                                    onHeightChanged: () => this.props.onHeightChanged(),
+                                    permalinkCreator: this.props.permalinkCreator!,
                                 },
                                 this.context.showHiddenEvents,
                             )}
@@ -1359,7 +1359,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {
                             const target = ev.currentTarget as HTMLElement;
-                            const index = Array.from(target.parentElement.children).indexOf(target);
+                            const index = Array.from(target.parentElement?.children).indexOf(target);
                             switch (this.context.timelineRenderingType) {
                                 case TimelineRenderingType.Notification:
                                     this.viewInRoom(ev);
@@ -1378,7 +1378,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     <>
                         <div className="mx_EventTile_details">
                             {sender}
-                            {this.context.timelineRenderingType === TimelineRenderingType.Notification ? (
+                            {this.context.timelineRenderingType === TimelineRenderingType.Notification && room ? (
                                 <span className="mx_EventTile_truncated">
                                     {" "}
                                     {_t(
@@ -1392,12 +1392,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             )}
                             {timestamp}
                         </div>
-                        {this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ? (
-                            avatar
-                        ) : (
+                        {this.context.timelineRenderingType === TimelineRenderingType.Notification && room ? (
                             <div className="mx_EventTile_avatar">
                                 <RoomAvatar room={room} width={28} height={28} />
                             </div>
+                        ) : (
+                            avatar
                         )}
                         <div className={lineClasses} key="mx_EventTile_line">
                             <div className="mx_EventTile_body">
