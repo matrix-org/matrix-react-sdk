@@ -442,7 +442,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_sliding_sync_proxy_url": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: "https://slidingsync.lab.matrix.org",
+        default: "https://slidingsync.lab.element.dev",
     },
     "feature_element_call_video_rooms": {
         isFeature: true,
