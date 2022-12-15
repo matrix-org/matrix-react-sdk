@@ -14,23 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceBroadcastControl {
-    align-items: center;
-    background-color: $background;
-    border-radius: 50%;
-    color: $secondary-content;
-    display: flex;
-    flex: 0 0 32px;
-    height: 32px;
-    justify-content: center;
-    width: 32px;
-}
+import React from "react";
 
-.mx_VoiceBroadcastControl-recording {
-    color: $alert;
-}
+import { _t } from "../../../languageHandler";
+import { IBodyProps } from "./IBodyProps";
 
-.mx_VoiceBroadcastControl-play .mx_Icon {
-    left: 1px;
-    position: relative;
+// A placeholder element for messages that could not be decrypted
+export default class DecryptionFailureBody extends React.Component<Partial<IBodyProps>> {
+    render() {
+        return <div className="mx_DecryptionFailureBody mx_EventTile_content">{_t("Unable to decrypt message")}</div>;
+    }
 }
