@@ -55,7 +55,7 @@ describe("<VoiceBroadcastSmallPlaybackBody />", () => {
             roomId,
             VoiceBroadcastInfoState.Stopped,
             userId,
-            client.getDeviceId(),
+            client.getDeviceId()!,
         );
     });
 
@@ -113,9 +113,9 @@ describe("<VoiceBroadcastSmallPlaybackBody />", () => {
     });
 
     describe.each([
-        [VoiceBroadcastPlaybackState.Paused, "not-live"],
-        [VoiceBroadcastPlaybackState.Playing, "live"],
-    ])("when rendering a %s/%s broadcast", (state: VoiceBroadcastPlaybackState, liveness: VoiceBroadcastLiveness) => {
+        { state: VoiceBroadcastPlaybackState.Paused, liveness: "not-live" },
+        { state: VoiceBroadcastPlaybackState.Playing, liveness: "live" },
+    ] as Array<{ state: VoiceBroadcastPlaybackState, liveness: VoiceBroadcastLiveness}>)("when rendering a %s/%s broadcast", ({state, liveness}) => {
         beforeEach(() => {
             mocked(playback.getState).mockReturnValue(state);
             mocked(playback.getLiveness).mockReturnValue(liveness);
