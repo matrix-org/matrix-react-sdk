@@ -245,16 +245,16 @@ class MatrixClientPegClass implements IMatrixClientPeg {
      * Attempt to initialize the crypto layer on a newly-created MatrixClient
      */
     private async initClientCrypto(): Promise<void> {
-        const use_rust_crypto = SettingsStore.getValue("feature_rust_crypto");
+        const useRustCrypto = SettingsStore.getValue("feature_rust_crypto");
 
         // we want to make sure that the same crypto implementation is used throughout the lifetime of a device,
         // so persist the setting at the device layer
         // (At some point, we'll allow the user to *enable* the setting via labs, which will migrate their existing
         // device to the rust-sdk implementation, but that won't change anything here).
-        await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, use_rust_crypto);
+        await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, useRustCrypto);
 
         // Now we can initialise the right crypto impl.
-        if (use_rust_crypto) {
+        if (useRustCrypto) {
             await this.matrixClient.initRustCrypto();
 
             // TODO: device dehydration and whathaveyou
@@ -273,7 +273,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 StorageManager.setCryptoInitialised(true);
             }
         } catch (e) {
-            if (e && e.name === "InvalidCryptoStoreError") {
+            if (e instanceof Error && e.name === "InvalidCryptoStoreError") {
                 // The js-sdk found a crypto DB too new for it to use
                 Modal.createDialog(CryptoStoreTooNewDialog);
             }
