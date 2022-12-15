@@ -2635,7 +2635,6 @@
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "Autoplay videos": "Memage ludi filmojn",
     "Autoplay GIFs": "Memage ludi GIF-ojn",
-    "Threaded messaging": "Mesaĝaj fadenoj",
     "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s malfiksis mesaĝon de ĉi tiu ĉambro. Vidu ĉiujn fiksitajn mesaĝojn.",
     "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s malfiksis <a>mesaĝon</a> de ĉi tiu ĉambro. Vidu ĉiujn <b>fiksitajn mesaĝojn</b>.",
     "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s fiksis mesaĝon al ĉi tiu ĉambro. Vidu ĉiujn fiksitajn mesaĝojn.",
