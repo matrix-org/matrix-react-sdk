@@ -24,7 +24,6 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
 import { ProxyInstance } from "../../plugins/sliding-sync";
-import ThemeController from "../../../src/settings/controllers/ThemeController";
 
 describe("Sliding Sync", () => {
     beforeEach(() => {
