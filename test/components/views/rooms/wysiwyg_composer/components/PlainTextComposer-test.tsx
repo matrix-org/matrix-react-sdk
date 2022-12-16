@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { PlainTextComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/PlainTextComposer";
@@ -112,15 +112,15 @@ describe("PlainTextComposer", () => {
         await userEvent.type(textBox, "hello");
 
         // Then it does NOT send a message on enter
-        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: false });
+        await userEvent.type(textBox, "{enter}");
         expect(onSend).toBeCalledTimes(0);
 
         // Then it does NOT send a message on windows+enter
-        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: true });
+        await userEvent.type(textBox, "{meta>}{enter}{meta/}");
         expect(onSend).toBeCalledTimes(0);
 
         // Then it does send a message on ctrl+enter
-        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: true, metaKey: false });
+        await userEvent.type(textBox, "{control>}{enter}{control/}");
         expect(onSend).toBeCalledTimes(1);
     });
 
@@ -135,15 +135,15 @@ describe("PlainTextComposer", () => {
         await userEvent.type(textBox, "hello");
 
         // Then it does NOT send a message on enter
-        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: false });
+        await userEvent.type(textBox, "{enter}");
         expect(onSend).toBeCalledTimes(0);
 
         // Then it does NOT send a message on ctrl+enter
-        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: true, metaKey: false });
+        await userEvent.type(textBox, "{control>}{enter}{control/}");
         expect(onSend).toBeCalledTimes(0);
 
         // Then it does send a message on cmd+enter
-        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: true });
+        await userEvent.type(textBox, "{meta>}{enter}{meta/}");
         expect(onSend).toBeCalledTimes(1);
     });
 
