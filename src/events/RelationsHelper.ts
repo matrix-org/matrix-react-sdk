@@ -93,6 +93,7 @@ export class RelationsHelper extends TypedEventEmitter<RelationsHelperEvent, Eve
     }
 
     private onRelationsAdd = (event: MatrixEvent): void => {
+        console.log("on add");
         this.emit(RelationsHelperEvent.Add, event);
     };
 
