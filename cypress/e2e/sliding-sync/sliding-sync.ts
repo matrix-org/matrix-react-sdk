@@ -415,12 +415,12 @@ describe("Sliding Sync", () => {
         // create rooms and check room names are correct
         cy.createRoom({ name: "Apple" })
             .as("roomA")
-            .then((roomId) => roomAId = roomId)
+            .then((roomId) => (roomAId = roomId))
             .then(() => cy.contains(".mx_RoomSublist", "Apple"));
 
         cy.createRoom({ name: "Pineapple" })
             .as("roomP")
-            .then((roomId) => roomPId = roomId)
+            .then((roomId) => (roomPId = roomId))
             .then(() => cy.contains(".mx_RoomSublist", "Pineapple"));
         cy.createRoom({ name: "Orange" })
             .as("roomO")
