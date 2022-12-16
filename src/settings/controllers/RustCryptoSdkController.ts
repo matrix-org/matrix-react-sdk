@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import SettingController from "./SettingController";
 
-interface IProps {
-    title: React.ReactNode;
-    message: React.ReactNode;
-}
-
-export default class GenericErrorPage extends React.PureComponent<IProps> {
-    public render() {
-        return (
-            <div className="mx_GenericErrorPage">
-                <div className="mx_GenericErrorPage_box">
-                    <h1>{this.props.title}</h1>
-                    <p>{this.props.message}</p>
-                </div>
-            </div>
-        );
+export default class RustCryptoSdkController extends SettingController {
+    public get settingDisabled(): boolean {
+        // Currently this can only be changed via config.json. In future, we'll allow the user to *enable* this setting
+        // via labs, which will migrate their existing device to the rust-sdk implementation.
+        return true;
     }
 }
