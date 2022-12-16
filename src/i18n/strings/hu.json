@@ -1328,7 +1328,6 @@
     "You have verified this user. This user has verified all of their sessions.": "Ezt a felhasználót ellenőrizted. Ez a felhasználó hitelesítette az összes munkamenetét.",
     "Someone is using an unknown session": "Valaki ellenőrizetlen munkamenetet használ",
     "Mod": "Mod",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Titkosítási kulcsok újrakérése</requestLink> a többi munkamenetből.",
     "Encrypted by an unverified session": "Ellenőrizetlen munkamenet titkosította",
     "Encrypted by a deleted session": "Törölt munkamenet által lett titkosítva",
     "Waiting for %(displayName)s to accept…": "%(displayName)s felhasználóra várakozás az elfogadáshoz…",
@@ -3670,5 +3669,19 @@
     "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sn %(hours)só %(minutes)sp %(seconds)smp",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s befejezte a <a>hang közvetítést</a>",
     "You ended a <a>voice broadcast</a>": "Befejezte a <a>hang közvetítést</a>",
-    "Threaded messages": "Üzenetszálas beszélgetés"
+    "Threaded messages": "Üzenetszálas beszélgetés",
+    "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
+    "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
+    "Resend key requests": "Kulcskérés újraküldése",
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "Sajnos, nincs olyan ellenőrzött eszköz ahonnan kulcsokat lehetne kérni. Bejelentkezéssel más eszközbe és azok ellenőrzésével ezt a probléma kiküszöbölhető a jövőben.",
+    "Some messages could not be decrypted": "Néhány üzenetet nem lehet visszafejteni",
+    "View your device list": "Eszközlista megjelenítése",
+    "This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.": "Ez az eszköz titkosítási kulcsokat kér másik eszközeitől. Egy másik eszköz megnyitása felgyorsíthatja ezt a folyamatot.",
+    "Open another device to load encrypted messages": "A titkosított üzenetek betöltéséhez másik eszköz megnyitása",
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": "A régi visszafejtetlen üzenetekhez a hozzáférés elveszik, de a kulcsok alaphelyzetbe állítása után az új üzenetek fogadása újból lehetséges.",
+    "Reset your keys to prevent future decryption errors": "Kulcsok alaphelyzetbe állítása a jövőbeni visszafejtési hibák elkerüléséért",
+    "This device was unable to decrypt some messages because it has not been verified yet.": "Az eszköz nem tud minden üzenetet visszafejteni mert nincs ellenőrizve.",
+    "Verify this device to access all messages": "Eszköz ellenőrzése az üzenetekhez való hozzáféréshez",
+    "Please wait as we try to decrypt your messages. This may take a few moments.": "Kérjük várj amíg az üzeneteket visszafejtjük. Ez eltarthat egy darabig.",
+    "Decrypting messages...": "Üzenetek visszafejtése…"
 }
