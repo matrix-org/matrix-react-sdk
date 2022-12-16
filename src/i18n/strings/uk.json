@@ -3683,5 +3683,7 @@
     "This device was unable to decrypt some messages because it has not been verified yet.": "Цей пристрій не зміг розшифрувати деякі повідомлення, оскільки ще не звірений.",
     "Verify this device to access all messages": "Звірте цей пристрій, щоб отримати доступ до всіх повідомлень",
     "Please wait as we try to decrypt your messages. This may take a few moments.": "Будь ласка, зачекайте, поки ми намагаємося розшифрувати ваші повідомлення. Це може тривати кілька хвилин.",
-    "Decrypting messages...": "Розшифрування повідомлень..."
+    "Decrypting messages...": "Розшифрування повідомлень...",
+    "%(senderName)s ended a voice broadcast": "%(senderName)s завершує голосову трансляцію",
+    "You ended a voice broadcast": "Ви завершили голосову трансляцію"
 }
