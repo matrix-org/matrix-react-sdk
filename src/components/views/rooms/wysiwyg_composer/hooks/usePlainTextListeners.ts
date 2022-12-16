@@ -68,7 +68,6 @@ export function usePlainTextListeners(
 
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
-            console.log('<<< <<< hit on keydown');
             if (event.key === Key.ENTER) {
                 const sendModifierIsPressed = IS_MAC ? event.metaKey : event.ctrlKey;
 
