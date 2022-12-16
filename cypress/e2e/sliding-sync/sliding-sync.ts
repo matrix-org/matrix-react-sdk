@@ -410,7 +410,8 @@ describe("Sliding Sync", () => {
     });
 
     it("should send unsubscribe_rooms for every room switch", () => {
-        let roomAId: string, roomPId: string;
+        let roomAId: string;
+        let roomPId: string;
         // create rooms and check room names are correct
         cy.createRoom({ name: "Apple" })
             .as("roomA")
