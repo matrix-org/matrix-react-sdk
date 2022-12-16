@@ -134,12 +134,12 @@ describe("VoiceBroadcastPlayback", () => {
     };
 
     const createChunkEvents = () => {
-        chunk1Event = mkVoiceBroadcastChunkEvent(infoEvent.getId(), userId, roomId, chunk1Length, 1);
-        chunk2Event = mkVoiceBroadcastChunkEvent(infoEvent.getId(), userId, roomId, chunk2Length, 2);
+        chunk1Event = mkVoiceBroadcastChunkEvent(infoEvent.getId()!, userId, roomId, chunk1Length, 1);
+        chunk2Event = mkVoiceBroadcastChunkEvent(infoEvent.getId()!, userId, roomId, chunk2Length, 2);
         chunk2Event.setTxnId("tx-id-1");
-        chunk2BEvent = mkVoiceBroadcastChunkEvent(infoEvent.getId(), userId, roomId, chunk2Length, 2);
+        chunk2BEvent = mkVoiceBroadcastChunkEvent(infoEvent.getId()!, userId, roomId, chunk2Length, 2);
         chunk2BEvent.setTxnId("tx-id-1");
-        chunk3Event = mkVoiceBroadcastChunkEvent(infoEvent.getId(), userId, roomId, chunk3Length, 3);
+        chunk3Event = mkVoiceBroadcastChunkEvent(infoEvent.getId()!, userId, roomId, chunk3Length, 3);
 
         chunk1Helper = mkChunkHelper(chunk1Data);
         chunk2Helper = mkChunkHelper(chunk2Data);
