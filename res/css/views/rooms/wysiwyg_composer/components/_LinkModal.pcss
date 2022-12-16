@@ -16,4 +16,19 @@ limitations under the License.
 
 .mx_LinkModal {
     padding: 32px;
+
+    .mx_Dialog_content {
+        margin-top: 30px;
+        margin-bottom: 42px;
+    }
+
+    .mx_LinkModal_content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mx_Dialog_primary {
+        // Override the default min-with of the primary button
+        min-width: 76px !important;
+    }
 }

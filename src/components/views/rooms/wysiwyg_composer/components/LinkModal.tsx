@@ -67,7 +67,7 @@ export function LinkModal({ composer, isTextEnabled, onClose }: LinkModalProps) 
                 onClose();
             }}
             description={
-                <>
+                <div className="mx_LinkModal_content">
                     {isTextEnabled && (
                         <Field
                             label={_td("Text")}
@@ -84,7 +84,7 @@ export function LinkModal({ composer, isTextEnabled, onClose }: LinkModalProps) 
                             setFields((fields) => ({ ...fields, link: e.target.value }))
                         }
                     />
-                </>
+                </div>
             }
         />
     );
