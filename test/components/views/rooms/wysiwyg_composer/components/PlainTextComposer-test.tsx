@@ -19,6 +19,14 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { PlainTextComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/PlainTextComposer";
+import * as mockUseSettingsHook from "../../../../../../src/hooks/useSettings";
+
+jest.mock("../../../../../../src/hooks/useSettings");
+mockUseSettingsHook.useSettingValue = jest.fn();
+
+afterAll(() => {
+    jest.resetAllMocks();
+});
 
 describe("PlainTextComposer", () => {
     const customRender = (
@@ -64,7 +72,7 @@ describe("PlainTextComposer", () => {
         expect(onChange).toBeCalledWith(content);
     });
 
-    it("Should call onSend when Enter is pressed", async () => {
+    it("Should call onSend when Enter is pressed and ctrlEnterToSend is false", async () => {
         //When
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
@@ -72,6 +80,66 @@ describe("PlainTextComposer", () => {
 
         // Then it sends a message
         expect(onSend).toBeCalledTimes(1);
+    });
+
+    it("Should not call onSend when Enter is pressed and ctrlEnterToSend is true", async () => {
+        //When
+        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        const onSend = jest.fn();
+        customRender(jest.fn(), onSend);
+        await userEvent.type(screen.getByRole("textbox"), "{enter}");
+
+        // Then it does not send a message
+        expect(onSend).toBeCalledTimes(0);
+    });
+
+    it("Should insert a newline character when shift enter is pressed and ctrlEnterToSend is false", async () => {
+        //When
+        const onSend = jest.fn();
+        customRender(jest.fn(), onSend);
+        const textBox = screen.getByRole("textbox");
+        const inputWithShiftEnter = "new{Shift>}{enter}{/Shift}line";
+        const expectedInnerHtml = "new\nline";
+
+        await userEvent.click(textBox);
+        await userEvent.type(textBox, inputWithShiftEnter);
+
+        // Then it does not send a message, but inserts a newline character
+        expect(onSend).toBeCalledTimes(0);
+        expect(textBox.innerHTML).toBe(expectedInnerHtml);
+    });
+
+    it("Should insert a newline character when shift enter is pressed and ctrlEnterToSend is true", async () => {
+        //When
+        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        const onSend = jest.fn();
+        customRender(jest.fn(), onSend);
+        const textBox = screen.getByRole("textbox");
+        const inputWithShiftEnter = "new{Shift>}{enter}{/Shift}line";
+        const expectedInnerHtml = "new\nline";
+
+        await userEvent.click(textBox);
+        await userEvent.type(textBox, inputWithShiftEnter);
+
+        // Then it does not send a message, but inserts a newline character
+        expect(onSend).toBeCalledTimes(0);
+        expect(textBox.innerHTML).toBe(expectedInnerHtml);
+    });
+
+    it("Should not insert div and br tags when enter is pressed and ctrlEnterToSend is true", async () => {
+        //When
+        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        const onSend = jest.fn();
+        customRender(jest.fn(), onSend);
+        const textBox = screen.getByRole("textbox");
+        const defaultEnterHtml = "<div><br></div";
+
+        await userEvent.click(textBox);
+        await userEvent.type(textBox, "{enter}");
+
+        // Then it does not send a message, but inserts a newline character
+        expect(onSend).toBeCalledTimes(0);
+        expect(textBox).not.toContainHTML(defaultEnterHtml);
     });
 
     it("Should clear textbox content when clear is called", async () => {
