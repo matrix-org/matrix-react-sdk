@@ -938,7 +938,7 @@ export default class LegacyCallHandler extends EventEmitter {
         SdkContextClass.instance.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
 
         if (SdkContextClass.instance.voiceBroadcastRecordingsStore.getCurrent()) {
-            // Do not start a calc, if recording a broadcast
+            // Do not start a call, if recording a broadcast
             showCantStartACallDialog();
             return;
         }
