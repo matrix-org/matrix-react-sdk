@@ -45,21 +45,33 @@ export function usePlainTextListeners(
         [onChange],
     );
 
+    const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     const onInput = useCallback(
         (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
             if (isDivElement(event.target)) {
-                setText(event.target.innerHTML);
+                if (enterShouldSend) {
+                    // if enter should send, can just set text
+                    setText(event.target.innerHTML);
+                } else {
+                    // hitting enter inside an editable div inserts a br tag inside
+                    // a div tag as default behaviour, which can then be edited
+                    const amendedHtml = event.target.innerHTML
+                        .replaceAll(/<div>/g, "")
+                        .replaceAll(/<\/div>/g, "")
+                        .replaceAll(/<br>/g, "\n");
+                    setText(amendedHtml);
+                }
             }
         },
-        [setText],
+        [setText, enterShouldSend],
     );
 
-    const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
+            console.log('<<< <<< hit on keydown');
             if (event.key === Key.ENTER) {
                 const sendModifierIsPressed = IS_MAC ? event.metaKey : event.ctrlKey;
-                
+
                 // if enter should send, send if the user is not pushing shift
                 if (enterShouldSend && !event.shiftKey) {
                     event.preventDefault();
