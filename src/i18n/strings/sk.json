@@ -3669,5 +3669,19 @@
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ukončil/a <a>hlasové vysielanie</a>",
     "You ended a <a>voice broadcast</a>": "Ukončili ste <a>hlasové vysielanie</a>",
     "Defaults to room member list.": "Predvolené nastavenie je zoznam členov miestnosti.",
-    "Threaded messages": "Správy vo vláknach"
+    "Threaded messages": "Správy vo vláknach",
+    "Unable to decrypt message": "Nie je možné dešifrovať správu",
+    "This message could not be decrypted": "Túto správu sa nepodarilo dešifrovať",
+    "Resend key requests": "Opätovne odoslať žiadosti o kľúč",
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "Nanešťastie neexistujú žiadne iné overené zariadenia, od ktorých by ste si mohli vyžiadať dešifrovacie kľúče. Prihlásenie a overenie iných zariadení môže pomôcť vyhnúť sa tejto situácii v budúcnosti.",
+    "Some messages could not be decrypted": "Niektoré správy nebolo možné dešifrovať",
+    "View your device list": "Zobraziť zoznam vašich zariadení",
+    "This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.": "Toto zariadenie požaduje od vašich ostatných zariadení dešifrovacie kľúče. Otvorenie jedného z vašich ďalších zariadení to môže urýchliť.",
+    "Open another device to load encrypted messages": "Otvoriť iné zariadenie na načítanie zašifrovaných správ",
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": "K starým nedešifrovateľným správam nebudete mať prístup, ale obnovenie kľúčov vám umožní prijímať nové správy.",
+    "Reset your keys to prevent future decryption errors": "Obnovte svoje kľúče, aby ste predišli budúcim chybám pri dešifrovaní",
+    "This device was unable to decrypt some messages because it has not been verified yet.": "Toto zariadenie nebolo schopné dešifrovať niektoré správy, pretože ešte nebolo overené.",
+    "Verify this device to access all messages": "Overte toto zariadenie na prístup ku všetkým správam",
+    "Please wait as we try to decrypt your messages. This may take a few moments.": "Počkajte, prosím, kým sa pokúsime dešifrovať vaše správy. Môže to chvíľu trvať.",
+    "Decrypting messages...": "Dešifrovanie správ..."
 }
