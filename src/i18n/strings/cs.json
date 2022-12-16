@@ -3685,5 +3685,7 @@
     "Please wait as we try to decrypt your messages. This may take a few moments.": "Počkejte prosím, než se pokusíme vaše zprávy dešifrovat. Může to chvíli trvat.",
     "Decrypting messages...": "Dešifrování zpráv...",
     "%(senderName)s ended a voice broadcast": "%(senderName)s ukončil(a) hlasové vysílání",
-    "You ended a voice broadcast": "Ukončili jste hlasové vysílání"
+    "You ended a voice broadcast": "Ukončili jste hlasové vysílání",
+    "Under active development. Can currently only be enabled via config.json": "V aktivním vývoji. V současné době lze povolit pouze prostřednictvím config.json",
+    "Rust cryptography implementation": "Implementace kryptografie v jazyce Rust"
 }
