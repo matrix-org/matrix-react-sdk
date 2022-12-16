@@ -15,18 +15,27 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { PlainTextComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/PlainTextComposer";
 import * as mockUseSettingsHook from "../../../../../../src/hooks/useSettings";
+import * as mockKeyboard from "../../../../../../src/Keyboard";
+import { text } from "stream/consumers";
 
 jest.mock("../../../../../../src/hooks/useSettings");
-mockUseSettingsHook.useSettingValue = jest.fn();
 
-afterAll(() => {
-    jest.resetAllMocks();
+jest.mock("../../../../../../src/hooks/useSettings");
+
+beforeEach(() => {
+    // defaults for these tests are:
+    // ctrlEnterToSend is false
+    mockUseSettingsHook.useSettingValue = jest.fn().mockReturnValue(false);
+    // platform is not mac
+    mockKeyboard.IS_MAC = false;
 });
+
+
 
 describe("PlainTextComposer", () => {
     const customRender = (
@@ -93,6 +102,51 @@ describe("PlainTextComposer", () => {
         expect(onSend).toBeCalledTimes(0);
     });
 
+    it("Should only call onSend when ctrl+enter is pressed if ctrlEnterToSend is true on windows", async () => {
+        //When
+        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+
+        const onSend = jest.fn();
+        customRender(jest.fn(), onSend);
+        const textBox = screen.getByRole("textbox");
+        await userEvent.type(textBox, "hello");
+
+        // Then it does NOT send a message on enter
+        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: false });
+        expect(onSend).toBeCalledTimes(0);
+
+        // Then it does NOT send a message on windows+enter
+        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: true });
+        expect(onSend).toBeCalledTimes(0);
+
+        // Then it does send a message on ctrl+enter
+        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: true, metaKey: false });
+        expect(onSend).toBeCalledTimes(1);
+    });
+
+    it("Should only call onSend when cmd+enter is pressed if ctrlEnterToSend is true on mac", async () => {
+        //When
+        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        mockKeyboard.IS_MAC = true;
+
+        const onSend = jest.fn();
+        customRender(jest.fn(), onSend);
+        const textBox = screen.getByRole("textbox");
+        await userEvent.type(textBox, "hello");
+
+        // Then it does NOT send a message on enter
+        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: false });
+        expect(onSend).toBeCalledTimes(0);
+
+        // Then it does NOT send a message on ctrl+enter
+        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: true, metaKey: false });
+        expect(onSend).toBeCalledTimes(0);
+
+        // Then it does send a message on cmd+enter
+        fireEvent.keyDown(textBox, { key: 'Enter', ctrlKey: false, metaKey: true });
+        expect(onSend).toBeCalledTimes(1);
+    });
+
     it("Should insert a newline character when shift enter is pressed and ctrlEnterToSend is false", async () => {
         //When
         const onSend = jest.fn();
@@ -115,11 +169,11 @@ describe("PlainTextComposer", () => {
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
         const textBox = screen.getByRole("textbox");
-        const inputWithShiftEnter = "new{Shift>}{enter}{/Shift}line";
+        const keyboardInput = "new{Shift>}{enter}{/Shift}line";
         const expectedInnerHtml = "new\nline";
 
         await userEvent.click(textBox);
-        await userEvent.type(textBox, inputWithShiftEnter);
+        await userEvent.type(textBox, keyboardInput);
 
         // Then it does not send a message, but inserts a newline character
         expect(onSend).toBeCalledTimes(0);
