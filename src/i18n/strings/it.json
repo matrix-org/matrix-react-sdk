@@ -3676,5 +3676,14 @@
     "Decrypting messages...": "Decifrazione messaggi...",
     "Threaded messages": "Messaggi in conversazioni",
     "%(senderName)s ended a voice broadcast": "%(senderName)s ha terminato una trasmissione vocale",
-    "You ended a voice broadcast": "Hai terminato una trasmissione vocale"
+    "You ended a voice broadcast": "Hai terminato una trasmissione vocale",
+    "Unable to decrypt message": "Impossibile decifrare il messaggio",
+    "This message could not be decrypted": "Non è stato possibile decifrare questo messaggio",
+    "Resend key requests": "Re-invia richiesta chiavi",
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "Sfortunatamente non ci sono altri dispositivi verificati a cui chiedere le chiavi di decifrazione. Accedere e verificare altri dispositivi può aiutare ad evitare questa situazione in futuro.",
+    "Some messages could not be decrypted": "Non è stato possibile decifrare alcuni messaggi",
+    "View your device list": "Vedi la lista dei dispositivi",
+    "This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.": "Questo dispositivo sta chiedendo le chiavi di decifrazione dai tuoi altri dispositivi. Aprire uno di essi potrebbe velocizzarlo.",
+    "Open another device to load encrypted messages": "Apri un altro dispositivo per caricare i messaggi cifrati",
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": "Non potrai accedere ai vecchi messaggi indecifrabili, ma reimpostare le tue chiavi permetterà di ricevere nuovi messaggi."
 }
