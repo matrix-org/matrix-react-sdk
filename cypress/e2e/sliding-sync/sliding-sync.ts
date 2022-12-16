@@ -24,6 +24,7 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
 import { ProxyInstance } from "../../plugins/sliding-sync";
+import ThemeController from "../../../src/settings/controllers/ThemeController";
 
 describe("Sliding Sync", () => {
     beforeEach(() => {
@@ -409,13 +410,17 @@ describe("Sliding Sync", () => {
         cy.get(".mx_ReplyPreview").should("exist");
     });
 
-    it("should send unsubscribe_rooms for every room switch", () => {
+    it.only("should send unsubscribe_rooms for every room switch", () => {
+        let roomAId: string, roomPId: string;
         // create rooms and check room names are correct
         cy.createRoom({ name: "Apple" })
             .as("roomA")
+            .then((roomId) => roomAId = roomId)
             .then(() => cy.contains(".mx_RoomSublist", "Apple"));
+
         cy.createRoom({ name: "Pineapple" })
             .as("roomP")
+            .then((roomId) => roomPId = roomId)
             .then(() => cy.contains(".mx_RoomSublist", "Pineapple"));
         cy.createRoom({ name: "Orange" })
             .as("roomO")
@@ -424,17 +429,19 @@ describe("Sliding Sync", () => {
         // Intercept all calls to /sync
         cy.intercept({ method: "POST", url: "**/sync*" }).as("syncRequest");
 
-        const assertUnsubExists = (interception: Interception) => {
+        const assertUnsubExists = (interception: Interception, subRoomId: string, unsubRoomId: string) => {
+            const body = interception.request.body;
             // There may be a request without a txn_id, ignore it, as there won't be any subscription changes
-            if (interception.request.body.txn_id === undefined) {
+            if (body.txn_id === undefined) {
                 return;
             }
-            assert.isArray(interception.request.body.unsubscribe_rooms, "unsubscribe_rooms is array");
-            assert.isObject(interception.request.body.room_subscriptions, "room_subscriptions is object");
+            expect(body.unsubscribe_rooms).eql([unsubRoomId]);
+            expect(body.room_subscriptions).to.not.have.property(unsubRoomId);
+            expect(body.room_subscriptions).to.have.property(subRoomId);
         };
 
         // Select the Test Room
-        cy.contains(".mx_RoomTile", "Test Room").click();
+        cy.contains(".mx_RoomTile", "Apple").click();
 
         // and wait for cypress to get the result as alias
         cy.wait("@syncRequest").then((interception) => {
@@ -444,11 +451,11 @@ describe("Sliding Sync", () => {
 
         // Switch to another room
         cy.contains(".mx_RoomTile", "Pineapple").click();
-        cy.wait("@syncRequest").then((interception) => assertUnsubExists(interception));
+        cy.wait("@syncRequest").then((interception) => assertUnsubExists(interception, roomPId, roomAId));
 
         // And switch to even another room
         cy.contains(".mx_RoomTile", "Apple").click();
-        cy.wait("@syncRequest").then((interception) => assertUnsubExists(interception));
+        cy.wait("@syncRequest").then((interception) => assertUnsubExists(interception, roomPId, roomAId));
 
         // TODO: Add tests for encrypted rooms
     });
