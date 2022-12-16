@@ -410,7 +410,7 @@ describe("Sliding Sync", () => {
         cy.get(".mx_ReplyPreview").should("exist");
     });
 
-    it.only("should send unsubscribe_rooms for every room switch", () => {
+    it("should send unsubscribe_rooms for every room switch", () => {
         let roomAId: string, roomPId: string;
         // create rooms and check room names are correct
         cy.createRoom({ name: "Apple" })
