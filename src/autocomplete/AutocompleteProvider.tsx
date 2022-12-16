@@ -22,7 +22,7 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import type { ICompletion, ISelectionRange } from "./Autocompleter";
 
 export interface ICommand {
-    command: string | null;
+    command: RegExpExecArray | null;
     range: {
         start: number;
         end: number;
@@ -89,7 +89,7 @@ export default abstract class AutocompleteProvider {
             const end = start + match[0].length;
             if (selection.start <= end && selection.end >= start) {
                 return {
-                    command: match[0],
+                    command: match,
                     range: {
                         start,
                         end,
