@@ -1317,7 +1317,6 @@
     "This user has not verified all of their sessions.": "此使用者尚未驗證他們的所有工作階段。",
     "You have verified this user. This user has verified all of their sessions.": "您已驗證此使用者。此使用者已驗證他們所有的工作階段。",
     "Someone is using an unknown session": "某人正在使用未知的工作階段",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "從您的其他工作階段<requestLink>重新請求加密金鑰</requestLink>。",
     "Encrypted by an unverified session": "已由未驗證的工作階段加密",
     "Encrypted by a deleted session": "被已刪除的工作階段加密",
     "Waiting for %(displayName)s to accept…": "正在等待 %(displayName)s 接受……",
@@ -3670,5 +3669,19 @@
     "Add privileged users": "新增特權使用者",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s 結束了<a>語音廣播</a>",
     "You ended a <a>voice broadcast</a>": "您結束了<a>語音廣播</a>",
-    "Threaded messages": "討論串訊息"
+    "Threaded messages": "討論串訊息",
+    "Unable to decrypt message": "無法解密訊息",
+    "This message could not be decrypted": "此訊息無法解密",
+    "Resend key requests": "重新傳送金鑰請求",
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "不幸的是，沒有其他已驗證的裝置可以從中請求解密金鑰。登入並驗證其他裝置可能可以在未來協助避免此狀況。",
+    "Some messages could not be decrypted": "部份訊息無法解密",
+    "View your device list": "檢視您的裝置清單",
+    "This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.": "此裝置正在從您其他的裝置請求解密金鑰。開啟您其他裝置的其中一個可能會加快速度。",
+    "Open another device to load encrypted messages": "開啟其他裝置以載入已加密的訊息",
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": "您將無法存取舊的未解密訊息，但重設您的金鑰將讓您可以接收新的訊息。",
+    "Reset your keys to prevent future decryption errors": "重設您的金鑰以避免未來的解密錯誤",
+    "This device was unable to decrypt some messages because it has not been verified yet.": "此裝置無法解密某些訊息，因為其尚未被驗證。",
+    "Verify this device to access all messages": "驗證此裝置以存取所有訊息",
+    "Please wait as we try to decrypt your messages. This may take a few moments.": "請在我們嘗試解密您的訊息時稍後。這可能需要一點時間。",
+    "Decrypting messages...": "正在解密訊息……"
 }
