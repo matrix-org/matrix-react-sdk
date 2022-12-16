@@ -3539,5 +3539,8 @@
     "Are you sure you want to sign out of %(count)s sessions?|one": "Вы уверены, что хотите выйти из %(count)s сеанса?",
     "Are you sure you want to sign out of %(count)s sessions?|other": "Вы уверены, что хотите выйти из %(count)s сеансов?",
     "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Разрешить отображение QR-кода в менеджере сеансов для входа с другого устройства (требует совместимый домашний сервер)",
-    "You have unverified sessions": "У вас есть незаверенные сеансы"
+    "You have unverified sessions": "У вас есть незаверенные сеансы",
+    "Rich text editor": "Наглядный текстовый редактор",
+    "Decrypting messages...": "",
+    "Favourite Messages": ""
 }
