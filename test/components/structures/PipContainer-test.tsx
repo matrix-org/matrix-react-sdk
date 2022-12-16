@@ -34,17 +34,17 @@ import {
     wrapInMatrixClientContext,
     wrapInSdkContext,
     mkRoomCreateEvent,
-} from "../../../test-utils";
-import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import { CallStore } from "../../../../src/stores/CallStore";
-import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
-import UnwrappedPipView from "../../../../src/components/views/voip/PipView";
-import ActiveWidgetStore from "../../../../src/stores/ActiveWidgetStore";
-import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
-import { Action } from "../../../../src/dispatcher/actions";
-import { ViewRoomPayload } from "../../../../src/dispatcher/payloads/ViewRoomPayload";
-import { TestSdkContext } from "../../../TestSdkContext";
+} from "../../test-utils";
+import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
+import { CallStore } from "../../../src/stores/CallStore";
+import { WidgetMessagingStore } from "../../../src/stores/widgets/WidgetMessagingStore";
+import { PipContainer as UnwrappedPipContainer } from "../../../src/components/structures/PipContainer";
+import ActiveWidgetStore from "../../../src/stores/ActiveWidgetStore";
+import DMRoomMap from "../../../src/utils/DMRoomMap";
+import defaultDispatcher from "../../../src/dispatcher/dispatcher";
+import { Action } from "../../../src/dispatcher/actions";
+import { ViewRoomPayload } from "../../../src/dispatcher/payloads/ViewRoomPayload";
+import { TestSdkContext } from "../../TestSdkContext";
 import {
     VoiceBroadcastInfoState,
     VoiceBroadcastPlaybacksStore,
@@ -52,12 +52,12 @@ import {
     VoiceBroadcastPreRecordingStore,
     VoiceBroadcastRecording,
     VoiceBroadcastRecordingsStore,
-} from "../../../../src/voice-broadcast";
-import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
-import { RoomViewStore } from "../../../../src/stores/RoomViewStore";
-import { IRoomStateEventsActionPayload } from "../../../../src/actions/MatrixActionCreators";
+} from "../../../src/voice-broadcast";
+import { mkVoiceBroadcastInfoStateEvent } from "../../voice-broadcast/utils/test-utils";
+import { RoomViewStore } from "../../../src/stores/RoomViewStore";
+import { IRoomStateEventsActionPayload } from "../../../src/actions/MatrixActionCreators";
 
-describe("PipView", () => {
+describe("PipContainer", () => {
     useMockedCalls();
     jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
 
@@ -120,8 +120,8 @@ describe("PipView", () => {
     });
 
     const renderPip = () => {
-        const PipView = wrapInMatrixClientContext(wrapInSdkContext(UnwrappedPipView, sdkContext));
-        render(<PipView />);
+        const PipContainer = wrapInMatrixClientContext(wrapInSdkContext(UnwrappedPipContainer, sdkContext));
+        render(<PipContainer />);
     };
 
     const viewRoom = (roomId: string) =>

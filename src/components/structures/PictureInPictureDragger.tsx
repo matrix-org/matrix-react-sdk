@@ -16,9 +16,9 @@ limitations under the License.
 
 import React, { createRef } from "react";
 
-import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
-import { lerp } from "../../../utils/AnimationUtils";
-import { MarkedExecution } from "../../../utils/MarkedExecution";
+import UIStore, { UI_EVENTS } from "../../stores/UIStore";
+import { lerp } from "../../utils/AnimationUtils";
+import { MarkedExecution } from "../../utils/MarkedExecution";
 
 const PIP_VIEW_WIDTH = 336;
 const PIP_VIEW_HEIGHT = 232;

@@ -21,21 +21,21 @@ import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { Optional } from "matrix-events-sdk";
 
-import LegacyCallView from "./LegacyCallView";
-import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../../LegacyCallHandler";
-import PersistentApp from "../elements/PersistentApp";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import LegacyCallView from "../views/voip/LegacyCallView";
+import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
+import PersistentApp from "../views/elements/PersistentApp";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import PictureInPictureDragger, { CreatePipChildren } from "./PictureInPictureDragger";
-import dis from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
-import LegacyCallViewHeader from "./LegacyCallView/LegacyCallViewHeader";
-import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../../stores/ActiveWidgetStore";
-import WidgetStore, { IApp } from "../../../stores/WidgetStore";
-import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import { SDKContext, SdkContextClass } from "../../../contexts/SDKContext";
-import { CallStore } from "../../../stores/CallStore";
+import dis from "../../dispatcher/dispatcher";
+import { Action } from "../../dispatcher/actions";
+import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
+import LegacyCallViewHeader from "../views/voip/LegacyCallView/LegacyCallViewHeader";
+import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../stores/ActiveWidgetStore";
+import WidgetStore, { IApp } from "../../stores/WidgetStore";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import { SDKContext, SdkContextClass } from "../../contexts/SDKContext";
+import { CallStore } from "../../stores/CallStore";
 import {
     useCurrentVoiceBroadcastPreRecording,
     useCurrentVoiceBroadcastRecording,
@@ -46,8 +46,8 @@ import {
     VoiceBroadcastRecording,
     VoiceBroadcastRecordingPip,
     VoiceBroadcastSmallPlaybackBody,
-} from "../../../voice-broadcast";
-import { useCurrentVoiceBroadcastPlayback } from "../../../voice-broadcast/hooks/useCurrentVoiceBroadcastPlayback";
+} from "../../voice-broadcast";
+import { useCurrentVoiceBroadcastPlayback } from "../../voice-broadcast/hooks/useCurrentVoiceBroadcastPlayback";
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -128,12 +128,12 @@ function getPrimarySecondaryCallsForPip(roomId: Optional<string>): [MatrixCall |
 }
 
 /**
- * PipView shows a small version of the LegacyCallView or a sticky widget hovering over the UI in 'picture-in-picture'
- * (PiP mode). It displays the call(s) which is *not* in the room the user is currently viewing
+ * PipContainer shows a small version of the LegacyCallView or a sticky widget hovering over the UI in
+ * 'picture-in-picture' (PiP mode). It displays the call(s) which is *not* in the room the user is currently viewing
  * and all widgets that are active but not shown in any other possible container.
  */
 
-class PipView extends React.Component<IProps, IState> {
+class PipContainerInner extends React.Component<IProps, IState> {
     // The cast is not so great, but solves the typing issue for the moment.
     // Proper solution: use useRef (requires the component to be refactored to a functional component).
     private movePersistedElement = createRef<() => void>() as React.MutableRefObject<() => void>;
@@ -452,7 +452,7 @@ class PipView extends React.Component<IProps, IState> {
     }
 }
 
-const PipViewHOC: React.FC<IProps> = (props) => {
+export const PipContainer: React.FC<IProps> = (props) => {
     const sdkContext = useContext(SDKContext);
     const voiceBroadcastPreRecordingStore = sdkContext.voiceBroadcastPreRecordingStore;
     const { currentVoiceBroadcastPreRecording } = useCurrentVoiceBroadcastPreRecording(voiceBroadcastPreRecordingStore);
@@ -464,7 +464,7 @@ const PipViewHOC: React.FC<IProps> = (props) => {
     const { currentVoiceBroadcastPlayback } = useCurrentVoiceBroadcastPlayback(voiceBroadcastPlaybacksStore);
 
     return (
-        <PipView
+        <PipContainerInner
             voiceBroadcastPlayback={currentVoiceBroadcastPlayback}
             voiceBroadcastPreRecording={currentVoiceBroadcastPreRecording}
             voiceBroadcastRecording={currentVoiceBroadcastRecording}
@@ -472,5 +472,3 @@ const PipViewHOC: React.FC<IProps> = (props) => {
         />
     );
 };
-
-export default PipViewHOC;
