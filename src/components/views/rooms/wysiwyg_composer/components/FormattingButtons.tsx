@@ -31,6 +31,7 @@ import { KeyCombo } from "../../../../../KeyBindingsManager";
 import { _td } from "../../../../../languageHandler";
 import { ButtonEvent } from "../../../elements/AccessibleButton";
 import { openLinkModal } from "./LinkModal";
+import { useComposerContext } from "../ComposerContext";
 
 interface TooltipProps {
     label: string;
@@ -78,6 +79,8 @@ interface FormattingButtonsProps {
 }
 
 export function FormattingButtons({ composer, actionStates }: FormattingButtonsProps) {
+    const composerContext = useComposerContext();
+
     return (
         <div className="mx_FormattingButtons">
             <Button
@@ -117,7 +120,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             <Button
                 isActive={actionStates.link === "reversed"}
                 label={_td("Link")}
-                onClick={() => openLinkModal(composer)}
+                onClick={() => openLinkModal(composer, composerContext)}
                 icon={<LinkIcon className="mx_FormattingButtons_Icon" />}
             />
         </div>

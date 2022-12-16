@@ -21,13 +21,13 @@ import { _td } from "../../../../../languageHandler";
 import Modal from "../../../../../Modal";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import Field from "../../../elements/Field";
-import { useComposerContext } from "../ComposerContext";
+import { ComposerContextState } from "../ComposerContext";
 import { isSelectionEmpty, setSelection } from "../utils/selection";
 
-export function openLinkModal(composer: FormattingFunctions) {
+export function openLinkModal(composer: FormattingFunctions, composerContext: ComposerContextState) {
     const modal = Modal.createDialog(
         LinkModal,
-        { composer, onClose: () => modal.close(), isTextEnabled: isSelectionEmpty() },
+        { composerContext, composer, onClose: () => modal.close(), isTextEnabled: isSelectionEmpty() },
         "mx_CompoundDialog",
         false,
         true,
@@ -42,11 +42,10 @@ interface LinkModalProps {
     composer: FormattingFunctions;
     isTextEnabled: boolean;
     onClose: () => void;
+    composerContext: ComposerContextState;
 }
 
-export function LinkModal({ composer, isTextEnabled, onClose }: LinkModalProps) {
-    const composerContext = useComposerContext();
-
+export function LinkModal({ composer, isTextEnabled, onClose, composerContext }: LinkModalProps) {
     const [fields, setFields] = useState({ text: "", link: "" });
     const isSaveDisabled = (isTextEnabled && isEmpty(fields.text)) || isEmpty(fields.link);
 

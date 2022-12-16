@@ -19,7 +19,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";
 
-import { ComposerContext } from "../../../../../../src/components/views/rooms/wysiwyg_composer/ComposerContext";
 import { LinkModal } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/LinkModal";
 import { mockPlatformPeg } from "../../../../../test-utils";
 import * as selection from "../../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
@@ -38,9 +37,12 @@ describe("LinkModal", () => {
 
     const customRender = (isTextEnabled: boolean, onClose: () => void) => {
         return render(
-            <ComposerContext.Provider value={{ selection: defaultValue }}>
-                <LinkModal composer={composer} isTextEnabled={isTextEnabled} onClose={onClose} />
-            </ComposerContext.Provider>,
+            <LinkModal
+                composer={composer}
+                isTextEnabled={isTextEnabled}
+                onClose={onClose}
+                composerContext={{ selection: defaultValue }}
+            />,
         );
     };
 
