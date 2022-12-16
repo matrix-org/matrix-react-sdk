@@ -3683,5 +3683,7 @@
     "This device was unable to decrypt some messages because it has not been verified yet.": "Toto zariadenie nebolo schopné dešifrovať niektoré správy, pretože ešte nebolo overené.",
     "Verify this device to access all messages": "Overte toto zariadenie na prístup ku všetkým správam",
     "Please wait as we try to decrypt your messages. This may take a few moments.": "Počkajte, prosím, kým sa pokúsime dešifrovať vaše správy. Môže to chvíľu trvať.",
-    "Decrypting messages...": "Dešifrovanie správ..."
+    "Decrypting messages...": "Dešifrovanie správ...",
+    "%(senderName)s ended a voice broadcast": "%(senderName)s ukončil/a hlasové vysielanie",
+    "You ended a voice broadcast": "Ukončili ste hlasové vysielanie"
 }
