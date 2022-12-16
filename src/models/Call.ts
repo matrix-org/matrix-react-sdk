@@ -628,8 +628,9 @@ export class ElementCall extends Call {
 
     private constructor(public readonly groupCall: GroupCall, client: MatrixClient) {
         const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
-        const analyticsID: string = accountAnalyticsData?.event.content?.pseudonymousAnalyticsOptIn ?
-            accountAnalyticsData?.event.content?.id : "";
+        const analyticsID: string = accountAnalyticsData?.event.content?.pseudonymousAnalyticsOptIn
+            ? accountAnalyticsData?.event.content?.id
+            : "";
 
         // Splice together the Element Call URL for this call
         const params = new URLSearchParams({
