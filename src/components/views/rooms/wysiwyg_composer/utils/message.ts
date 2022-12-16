@@ -43,7 +43,11 @@ interface SendMessageParams {
     includeReplyLegacyFallback?: boolean;
 }
 
-export function sendMessage(message: string, isHTML: boolean, { roomContext, mxClient, ...params }: SendMessageParams) {
+export function sendMessage(
+    message: string,
+    isHTML: boolean,
+    { roomContext, mxClient, ...params }: SendMessageParams,
+): Promise<ISendEventResponse> {
     const { relation, replyToEvent } = params;
     const { room } = roomContext;
     const { roomId } = room;
@@ -139,7 +143,10 @@ interface EditMessageParams {
     editorStateTransfer: EditorStateTransfer;
 }
 
-export function editMessage(html: string, { roomContext, mxClient, editorStateTransfer }: EditMessageParams) {
+export function editMessage(
+    html: string,
+    { roomContext, mxClient, editorStateTransfer }: EditMessageParams,
+): Promise<ISendEventResponse> {
     const editedEvent = editorStateTransfer.getEvent();
 
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({

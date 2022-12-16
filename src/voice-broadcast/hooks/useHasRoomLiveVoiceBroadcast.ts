@@ -20,7 +20,7 @@ import { Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { hasRoomLiveVoiceBroadcast } from "../utils/hasRoomLiveVoiceBroadcast";
 import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 
-export const useHasRoomLiveVoiceBroadcast = (room: Room) => {
+export const useHasRoomLiveVoiceBroadcast = (room: Room): boolean => {
     const [hasLiveVoiceBroadcast, setHasLiveVoiceBroadcast] = useState(hasRoomLiveVoiceBroadcast(room).hasBroadcast);
 
     useTypedEventEmitter(room.currentState, RoomStateEvent.Update, () => {

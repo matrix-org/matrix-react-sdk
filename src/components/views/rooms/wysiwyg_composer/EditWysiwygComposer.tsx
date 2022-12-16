@@ -43,7 +43,11 @@ interface EditWysiwygComposerProps {
     className?: string;
 }
 
-export function EditWysiwygComposer({ editorStateTransfer, className, ...props }: EditWysiwygComposerProps) {
+export function EditWysiwygComposer({
+    editorStateTransfer,
+    className,
+    ...props
+}: EditWysiwygComposerProps): JSX.Element {
     const initialContent = useInitialContent(editorStateTransfer);
     const isReady = !editorStateTransfer || initialContent !== undefined;
 

@@ -14,6 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export function htmlToPlainText(html: string) {
+export function htmlToPlainText(html: string): string {
     return new DOMParser().parseFromString(html, "text/html").documentElement.textContent;
 }

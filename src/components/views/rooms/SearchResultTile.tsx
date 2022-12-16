@@ -57,7 +57,7 @@ export default class SearchResultTile extends React.Component<IProps> {
         this.callEventGroupers = buildLegacyCallEventGroupers(this.callEventGroupers, events);
     }
 
-    public render() {
+    public render(): JSX.Element {
         const result = this.props.searchResult;
         const resultEvent = result.context.getEvent();
         const eventId = resultEvent.getId();

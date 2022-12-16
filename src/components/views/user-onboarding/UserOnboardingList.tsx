@@ -30,7 +30,7 @@ interface Props {
     waitingTasks: Task[];
 }
 
-export function UserOnboardingList({ completedTasks, waitingTasks }: Props) {
+export function UserOnboardingList({ completedTasks, waitingTasks }: Props): JSX.Element {
     const completed = completedTasks.length;
     const waiting = waitingTasks.length;
     const total = completed + waiting;

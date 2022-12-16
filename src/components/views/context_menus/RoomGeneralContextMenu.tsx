@@ -47,7 +47,7 @@ interface IProps extends IContextMenuProps {
     onPostLeaveClick?: (event: ButtonEvent) => void;
 }
 
-export const RoomGeneralContextMenu = ({
+export const RoomGeneralContextMenu: React.FC<IProps> = ({
     room,
     onFinished,
     onPostFavoriteClick,
@@ -58,7 +58,7 @@ export const RoomGeneralContextMenu = ({
     onPostLeaveClick,
     onPostForgetClick,
     ...props
-}: IProps) => {
+}) => {
     const cli = useContext(MatrixClientContext);
     const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
         RoomListStore.instance.getTagsForRoom(room),
@@ -83,7 +83,7 @@ export const RoomGeneralContextMenu = ({
         };
     };
 
-    const onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
+    const onTagRoom = (ev: ButtonEvent, tagId: TagID): void => {
         if (tagId === DefaultTagID.Favourite || tagId === DefaultTagID.LowPriority) {
             const inverseTag = tagId === DefaultTagID.Favourite ? DefaultTagID.LowPriority : DefaultTagID.Favourite;
             const isApplied = RoomListStore.instance.getTagsForRoom(room).includes(tagId);

@@ -35,7 +35,7 @@ const UNFILL_REQUEST_DEBOUNCE_MS = 200;
 // much while the content loads.
 const PAGE_SIZE = 400;
 
-const debuglog = (...args: any[]) => {
+const debuglog = (...args: any[]): void => {
     if (SettingsStore.getValue("debug_scroll_panel")) {
         logger.log.call(console, "ScrollPanel debuglog:", ...args);
     }
@@ -587,7 +587,7 @@ export default class ScrollPanel extends React.Component<IProps> {
      * Scroll up/down in response to a scroll key
      * @param {object} ev the keyboard event
      */
-    public handleScrollKey = (ev: KeyboardEvent) => {
+    public handleScrollKey = (ev: KeyboardEvent): void => {
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
             case KeyBindingAction.ScrollUp:
@@ -853,7 +853,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         return this.divScroll;
     }
 
-    private collectScroll = (divScroll: HTMLDivElement) => {
+    private collectScroll = (divScroll: HTMLDivElement): void => {
         this.divScroll = divScroll;
     };
 

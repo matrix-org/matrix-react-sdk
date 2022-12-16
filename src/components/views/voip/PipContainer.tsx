@@ -24,7 +24,7 @@ interface IProps {}
 interface IState {}
 
 export default class PiPContainer extends React.PureComponent<IProps, IState> {
-    public render() {
+    public render(): JSX.Element {
         return (
             <div className="mx_PiPContainer">
                 <PipView />

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { KeyboardEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
+import { KeyboardEvent, RefObject, SyntheticEvent, useCallback, useRef, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
 
@@ -26,7 +26,14 @@ export function usePlainTextListeners(
     initialContent?: string,
     onChange?: (content: string) => void,
     onSend?: () => void,
-) {
+): {
+    ref: RefObject<HTMLDivElement | null>;
+    content?: string;
+    onInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
+    onPaste(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
+    onKeyDown(event: KeyboardEvent<HTMLDivElement>): void;
+    setContent(text: string): void;
+} {
     const ref = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
     const send = useCallback(() => {

@@ -62,11 +62,11 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
@@ -76,7 +76,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         };
     }
 
-    private onRoomStateEvents = (ev: MatrixEvent) => {
+    private onRoomStateEvents = (ev: MatrixEvent): void => {
         if (ev.getRoomId() !== this.props.room?.roomId || ev.getType() !== EventType.RoomAvatar) return;
 
         this.setState({
@@ -107,7 +107,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         return Avatar.avatarUrlForRoom(props.room, props.width, props.height, props.resizeMethod);
     }
 
-    private onRoomAvatarClick = () => {
+    private onRoomAvatarClick = (): void => {
         const avatarUrl = Avatar.avatarUrlForRoom(this.props.room, null, null, null);
         const params = {
             src: avatarUrl,
@@ -117,7 +117,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
     };
 
-    public render() {
+    public render(): JSX.Element {
         const { room, oobData, viewAvatarOnClick, onClick, className, ...otherProps } = this.props;
 
         const roomName = room?.name ?? oobData.name;

@@ -198,7 +198,7 @@ interface IReplyInThreadButton {
     mxEvent: MatrixEvent;
 }
 
-const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
+const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
     const context = useContext(CardContext);
 
     const relationType = mxEvent?.getRelation()?.rel_type;
@@ -275,7 +275,7 @@ interface IFavouriteButtonProp {
     mxEvent: MatrixEvent;
 }
 
-const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
+const FavouriteButton: React.FC<IFavouriteButtonProp> = ({ mxEvent }) => {
     const { isFavourite, toggleFavourite } = useFavouriteMessages();
 
     const eventId = mxEvent.getId();

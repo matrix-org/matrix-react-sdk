@@ -84,15 +84,20 @@ export function isJoinedOrNearlyJoined(membership: string): boolean {
  * NOTE: this assumes you've just created the room and there's not been an opportunity
  * for other code to run, so we shouldn't miss RoomState.newMember when it comes by.
  */
-export async function waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
+export async function waitForMember(
+    client: MatrixClient,
+    roomId: string,
+    userId: string,
+    opts = { timeout: 1500 },
+): Promise<void> {
     const { timeout } = opts;
     let handler;
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         handler = function (_, __, member: RoomMember) {
             if (member.userId !== userId) return;
             if (member.roomId !== roomId) return;
-            resolve(true);
+            resolve();
         };
         client.on(RoomStateEvent.NewMember, handler);
 

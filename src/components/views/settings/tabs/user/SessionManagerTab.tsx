@@ -69,7 +69,7 @@ const useSignOut = (
 } => {
     const [signingOutDeviceIds, setSigningOutDeviceIds] = useState<ExtendedDevice["device_id"][]>([]);
 
-    const onSignOutCurrentDevice = () => {
+    const onSignOutCurrentDevice = (): void => {
         Modal.createDialog(
             LogoutDialog,
             {}, // props,
@@ -79,7 +79,7 @@ const useSignOut = (
         );
     };
 
-    const onSignOutOtherDevices = async (deviceIds: ExtendedDevice["device_id"][]) => {
+    const onSignOutOtherDevices = async (deviceIds: ExtendedDevice["device_id"][]): Promise<void> => {
         if (!deviceIds.length) {
             return;
         }
@@ -90,7 +90,7 @@ const useSignOut = (
 
         try {
             setSigningOutDeviceIds([...signingOutDeviceIds, ...deviceIds]);
-            await deleteDevicesWithInteractiveAuth(matrixClient, deviceIds, async (success) => {
+            await deleteDevicesWithInteractiveAuth(matrixClient, deviceIds, async (success): Promise<void> => {
                 if (success) {
                     await onSignoutResolvedCallback();
                 }
@@ -141,7 +141,7 @@ const SessionManagerTab: React.FC = () => {
         }
     };
 
-    const onGoToFilteredList = (filter: FilterVariation) => {
+    const onGoToFilteredList = (filter: FilterVariation): void => {
         setFilter(filter);
         clearTimeout(scrollIntoViewTimeoutRef.current);
         // wait a tick for the filtered section to rerender with different height
@@ -158,7 +158,7 @@ const SessionManagerTab: React.FC = () => {
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
     const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
 
-    const onVerifyCurrentDevice = () => {
+    const onVerifyCurrentDevice = (): void => {
         Modal.createDialog(SetupEncryptionDialog as unknown as React.ComponentType, { onFinished: refreshDevices });
     };
 
@@ -171,7 +171,7 @@ const SessionManagerTab: React.FC = () => {
             Modal.createDialog(VerificationRequestDialog, {
                 verificationRequestPromise,
                 member: currentUserMember,
-                onFinished: async () => {
+                onFinished: async (): Promise<void> => {
                     const request = await verificationRequestPromise;
                     request.cancel();
                     await refreshDevices();
@@ -181,7 +181,7 @@ const SessionManagerTab: React.FC = () => {
         [requestDeviceVerification, refreshDevices, currentUserMember],
     );
 
-    const onSignoutResolvedCallback = async () => {
+    const onSignoutResolvedCallback = async (): Promise<void> => {
         await refreshDevices();
         setSelectedDeviceIds([]);
     };

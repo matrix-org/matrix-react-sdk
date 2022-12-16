@@ -31,7 +31,7 @@ interface IProps {
  * A dialog for confirming a redaction.
  */
 export default class ConfirmRedactDialog extends React.Component<IProps> {
-    public render() {
+    public render(): JSX.Element {
         return (
             <TextInputDialog
                 onFinished={this.props.onFinished}
@@ -54,11 +54,11 @@ export function createRedactEventDialog({
 }: {
     mxEvent: MatrixEvent;
     onCloseDialog?: () => void;
-}) {
+}): void {
     Modal.createDialog(
         ConfirmRedactDialog,
         {
-            onFinished: async (proceed: boolean, reason?: string) => {
+            onFinished: async (proceed: boolean, reason?: string): Promise<void> => {
                 if (!proceed) return;
 
                 const cli = MatrixClientPeg.get();

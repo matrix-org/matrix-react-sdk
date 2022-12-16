@@ -35,7 +35,7 @@ interface TooltipProps {
     keyCombo?: KeyCombo;
 }
 
-function Tooltip({ label, keyCombo }: TooltipProps) {
+function Tooltip({ label, keyCombo }: TooltipProps): JSX.Element {
     return (
         <div className="mx_FormattingButtons_Tooltip">
             {label}
@@ -52,7 +52,7 @@ interface ButtonProps extends TooltipProps {
     onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-function Button({ label, keyCombo, onClick, isActive, icon }: ButtonProps) {
+function Button({ label, keyCombo, onClick, isActive, icon }: ButtonProps): JSX.Element {
     return (
         <AccessibleTooltipButton
             element="button"
@@ -75,7 +75,7 @@ interface FormattingButtonsProps {
     actionStates: AllActionStates;
 }
 
-export function FormattingButtons({ composer, actionStates }: FormattingButtonsProps) {
+export function FormattingButtons({ composer, actionStates }: FormattingButtonsProps): JSX.Element {
     return (
         <div className="mx_FormattingButtons">
             <Button

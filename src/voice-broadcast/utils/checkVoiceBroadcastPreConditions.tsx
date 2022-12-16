@@ -22,7 +22,7 @@ import InfoDialog from "../../components/views/dialogs/InfoDialog";
 import { _t } from "../../languageHandler";
 import Modal from "../../Modal";
 
-const showAlreadyRecordingDialog = () => {
+const showAlreadyRecordingDialog = (): void => {
     Modal.createDialog(InfoDialog, {
         title: _t("Can't start a new voice broadcast"),
         description: (
@@ -37,7 +37,7 @@ const showAlreadyRecordingDialog = () => {
     });
 };
 
-const showInsufficientPermissionsDialog = () => {
+const showInsufficientPermissionsDialog = (): void => {
     Modal.createDialog(InfoDialog, {
         title: _t("Can't start a new voice broadcast"),
         description: (
@@ -52,7 +52,7 @@ const showInsufficientPermissionsDialog = () => {
     });
 };
 
-const showOthersAlreadyRecordingDialog = () => {
+const showOthersAlreadyRecordingDialog = (): void => {
     Modal.createDialog(InfoDialog, {
         title: _t("Can't start a new voice broadcast"),
         description: (

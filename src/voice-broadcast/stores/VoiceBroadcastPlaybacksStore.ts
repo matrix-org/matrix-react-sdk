@@ -120,7 +120,7 @@ export class VoiceBroadcastPlaybacksStore
     /**
      * TODO Michael W: replace when https://github.com/matrix-org/matrix-react-sdk/pull/9293 has been merged
      */
-    public static instance() {
+    public static instance(): VoiceBroadcastPlaybacksStore {
         return VoiceBroadcastPlaybacksStore._instance;
     }
 }

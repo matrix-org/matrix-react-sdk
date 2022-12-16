@@ -21,7 +21,7 @@ import { setSelection } from "../utils/selection";
 
 type SubSelection = Pick<Selection, "anchorNode" | "anchorOffset" | "focusNode" | "focusOffset">;
 
-function setSelectionRef(selectionRef: MutableRefObject<SubSelection>) {
+function setSelectionRef(selectionRef: MutableRefObject<SubSelection>): void {
     const selection = document.getSelection();
 
     if (selection) {
@@ -34,7 +34,10 @@ function setSelectionRef(selectionRef: MutableRefObject<SubSelection>) {
     }
 }
 
-export function useSelection() {
+export function useSelection(): ReturnType<typeof useFocus>[1] & {
+    selectPreviousSelection(): void;
+    onInput(): void;
+} {
     const selectionRef = useRef<SubSelection>({
         anchorNode: null,
         anchorOffset: 0,
@@ -44,7 +47,7 @@ export function useSelection() {
     const [isFocused, focusProps] = useFocus();
 
     useEffect(() => {
-        function onSelectionChange() {
+        function onSelectionChange(): void {
             setSelectionRef(selectionRef);
         }
 

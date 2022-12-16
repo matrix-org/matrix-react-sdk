@@ -23,7 +23,7 @@ import { TimelineRenderingType, useRoomContext } from "../../../../../contexts/R
 import { useDispatcher } from "../../../../../hooks/useDispatcher";
 import { focusComposer } from "./utils";
 
-export function useWysiwygEditActionHandler(disabled: boolean, composerElement: RefObject<HTMLElement>) {
+export function useWysiwygEditActionHandler(disabled: boolean, composerElement: RefObject<HTMLElement>): void {
     const roomContext = useRoomContext();
     const timeoutId = useRef<number | null>(null);
 
