@@ -62,7 +62,12 @@ export default class RoomProvider extends AutocompleteProvider {
         return cli.getVisibleRooms().filter((r) => !r.isSpaceRoom());
     }
 
-    public async getCompletions(query: string, selection: ISelectionRange, force = false, limit = -1): Promise<ICompletion[]> {
+    public async getCompletions(
+        query: string,
+        selection: ISelectionRange,
+        force = false,
+        limit = -1,
+    ): Promise<ICompletion[]> {
         let completions = [];
         const { command, range } = this.getCurrentCommand(query, selection, force);
         if (command) {

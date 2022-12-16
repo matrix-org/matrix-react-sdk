@@ -32,7 +32,12 @@ export default class NotifProvider extends AutocompleteProvider {
         super({ commandRegex: AT_ROOM_REGEX, renderingType });
     }
 
-    public async getCompletions(query: string, selection: ISelectionRange, force = false, limit = -1): Promise<ICompletion[]> {
+    public async getCompletions(
+        query: string,
+        selection: ISelectionRange,
+        force = false,
+        limit = -1,
+    ): Promise<ICompletion[]> {
         const client = MatrixClientPeg.get();
 
         if (!this.room.currentState.mayTriggerNotifOfType("room", client.credentials.userId)) return [];
