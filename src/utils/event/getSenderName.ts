@@ -14,23 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceBroadcastControl {
-    align-items: center;
-    background-color: $background;
-    border-radius: 50%;
-    color: $secondary-content;
-    display: flex;
-    flex: 0 0 32px;
-    height: 32px;
-    justify-content: center;
-    width: 32px;
-}
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-.mx_VoiceBroadcastControl-recording {
-    color: $alert;
-}
+import { _t } from "../../languageHandler";
 
-.mx_VoiceBroadcastControl-play .mx_Icon {
-    left: 1px;
-    position: relative;
+export function getSenderName(event: MatrixEvent): string {
+    return event.sender?.name ?? event.getSender() ?? _t("Someone");
 }

@@ -14,23 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceBroadcastControl {
-    align-items: center;
-    background-color: $background;
-    border-radius: 50%;
-    color: $secondary-content;
-    display: flex;
-    flex: 0 0 32px;
-    height: 32px;
-    justify-content: center;
-    width: 32px;
-}
+import { VoiceBroadcastInfoState, VoiceBroadcastLiveness } from "..";
 
-.mx_VoiceBroadcastControl-recording {
-    color: $alert;
-}
+const stateLivenessMap: Map<VoiceBroadcastInfoState, VoiceBroadcastLiveness> = new Map([
+    ["started", "live"],
+    ["resumed", "live"],
+    ["paused", "grey"],
+    ["stopped", "not-live"],
+] as Array<[VoiceBroadcastInfoState, VoiceBroadcastLiveness]>);
 
-.mx_VoiceBroadcastControl-play .mx_Icon {
-    left: 1px;
-    position: relative;
-}
+export const determineVoiceBroadcastLiveness = (infoState: VoiceBroadcastInfoState): VoiceBroadcastLiveness => {
+    return stateLivenessMap.get(infoState) ?? "not-live";
+};
