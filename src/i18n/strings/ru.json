@@ -1323,8 +1323,8 @@
     "Verify User": "Подтвердить пользователя",
     "Your messages are not secure": "Ваши сообщения не защищены",
     "Your homeserver": "Ваш домашний сервер",
-    "Trusted": "Заверенная",
-    "Not trusted": "Незаверенная",
+    "Trusted": "Заверенный",
+    "Not trusted": "Незаверенный",
     "%(count)s verified sessions|other": "Заверенных сеансов: %(count)s",
     "%(count)s verified sessions|one": "1 заверенный сеанс",
     "Hide verified sessions": "Свернуть заверенные сеансы",
@@ -3542,5 +3542,12 @@
     "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Rich text editor": "Наглядный текстовый редактор",
     "Decrypting messages...": "",
-    "Favourite Messages": ""
+    "Favourite Messages": "",
+    "Search users in this room…": "Поиск пользователей в этой комнате…",
+    "Apply": "Применить",
+    "You ended a <a>voice broadcast</a>": "Вы завершили <a>голосовую трансляцию</a>",
+    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s завершил(а) <a>голосовую трансляцию</a>",
+    "Verify this device to access all messages": "Заверьте этот сеанс, чтобы получить доступ ко всем сообщениям",
+    "You ended a voice broadcast": "Вы завершили голосовую трансляцию",
+    "%(senderName)s ended a voice broadcast": "%(senderName)s завершил(а) голосовую трансляцию"
 }
