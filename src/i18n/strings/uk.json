@@ -3685,5 +3685,7 @@
     "Please wait as we try to decrypt your messages. This may take a few moments.": "Будь ласка, зачекайте, поки ми намагаємося розшифрувати ваші повідомлення. Це може тривати кілька хвилин.",
     "Decrypting messages...": "Розшифрування повідомлень...",
     "%(senderName)s ended a voice broadcast": "%(senderName)s завершує голосову трансляцію",
-    "You ended a voice broadcast": "Ви завершили голосову трансляцію"
+    "You ended a voice broadcast": "Ви завершили голосову трансляцію",
+    "Under active development. Can currently only be enabled via config.json": "В активній розробці. На разі може бути ввімкнено лише через config.json",
+    "Rust cryptography implementation": "Реалізація криптографії Rust"
 }
