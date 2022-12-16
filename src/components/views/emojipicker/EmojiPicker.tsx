@@ -37,6 +37,11 @@ import { Key } from "../../../Keyboard";
 import { clamp } from "../../../utils/numbers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { Ref } from "../../../accessibility/roving/types";
+import Category, { ICategory, CategoryKey } from "./Category";
+import { Room } from './matrix-js-sdk/src/models/room';
+import { mediaFromMxc } from '../../../customisations/Media';
+import { decryptFile } from '../../../utils/DecryptFile';
+import { MatrixClientPeg } from '../../../MatrixClientPeg';
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
@@ -49,6 +54,7 @@ interface IProps {
     onChoose(unicode: string): boolean;
     onFinished(): void;
     isEmojiDisabled?: (unicode: string) => boolean;
+    room?:Room;
 }
 
 interface IState {
@@ -62,14 +68,26 @@ interface IState {
 }
 
 class EmojiPicker extends React.Component<IProps, IState> {
-    private readonly recentlyUsed: IEmoji[];
+    private recentlyUsed: IEmoji[];
     private readonly memoizedDataByCategory: Record<CategoryKey, IEmoji[]>;
     private readonly categories: ICategory[];
 
     private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
-    public constructor(props: IProps) {
+    private emotes: Map<string, React.Component>;
+    private emotesPromise: Promise<Map<string, string>>;
+    private finalEmotes: IEmoji[];
+    private finalEmotesMap:Map<string,IEmoji>;
+    constructor(props: IProps) {
         super(props);
+
+
+        const emotesEvent = props.room?.currentState.getStateEvents("m.room.emotes", "");
+        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+        this.emotesPromise = this.decryptEmotes(rawEmotes, props.room?.roomId);
+        this.finalEmotes=[];
+        this.finalEmotesMap=new Map<string,IEmoji>();
+        this.loadEmotes()
 
         this.state = {
             filter: "",
@@ -81,77 +99,135 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.recentlyUsed = Array.from(new Set(filterBoolean(recent.get().map(getEmojiFromUnicode))));
         this.memoizedDataByCategory = {
             recent: this.recentlyUsed,
+            custom: this.finalEmotes,
             ...DATA_BY_CATEGORY,
         };
 
-        this.categories = [
-            {
-                id: "recent",
-                name: _t("Frequently Used"),
-                enabled: this.recentlyUsed.length > 0,
-                visible: this.recentlyUsed.length > 0,
-                ref: React.createRef(),
-            },
-            {
-                id: "people",
-                name: _t("Smileys & People"),
-                enabled: true,
-                visible: true,
-                ref: React.createRef(),
-            },
-            {
-                id: "nature",
-                name: _t("Animals & Nature"),
-                enabled: true,
-                visible: false,
-                ref: React.createRef(),
-            },
-            {
-                id: "foods",
-                name: _t("Food & Drink"),
-                enabled: true,
-                visible: false,
-                ref: React.createRef(),
-            },
-            {
-                id: "activity",
-                name: _t("Activities"),
-                enabled: true,
-                visible: false,
-                ref: React.createRef(),
-            },
-            {
-                id: "places",
-                name: _t("Travel & Places"),
-                enabled: true,
-                visible: false,
-                ref: React.createRef(),
-            },
-            {
-                id: "objects",
-                name: _t("Objects"),
-                enabled: true,
-                visible: false,
-                ref: React.createRef(),
-            },
-            {
-                id: "symbols",
-                name: _t("Symbols"),
-                enabled: true,
-                visible: false,
-                ref: React.createRef(),
-            },
-            {
-                id: "flags",
-                name: _t("Flags"),
-                enabled: true,
-                visible: false,
-                ref: React.createRef(),
-            },
-        ];
+        this.categories = [{
+            id: "recent",
+            name: _t("Frequently Used"),
+            enabled: true,
+            visible: true,
+            ref: React.createRef(),
+        },{
+            id: "custom",
+            name: _t("Custom"),
+            enabled: true,
+            visible: true,
+            ref: React.createRef(),
+        },{
+            id: "people",
+            name: _t("Smileys & People"),
+            enabled: true,
+            visible: true,
+            ref: React.createRef(),
+        }, {
+            id: "nature",
+            name: _t("Animals & Nature"),
+            enabled: true,
+            visible: false,
+            ref: React.createRef(),
+        }, {
+            id: "foods",
+            name: _t("Food & Drink"),
+            enabled: true,
+            visible: false,
+            ref: React.createRef(),
+        }, {
+            id: "activity",
+            name: _t("Activities"),
+            enabled: true,
+            visible: false,
+            ref: React.createRef(),
+        }, {
+            id: "places",
+            name: _t("Travel & Places"),
+            enabled: true,
+            visible: false,
+            ref: React.createRef(),
+        }, {
+            id: "objects",
+            name: _t("Objects"),
+            enabled: true,
+            visible: false,
+            ref: React.createRef(),
+        }, {
+            id: "symbols",
+            name: _t("Symbols"),
+            enabled: true,
+            visible: false,
+            ref: React.createRef(),
+        }, {
+            id: "flags",
+            name: _t("Flags"),
+            enabled: true,
+            visible: false,
+            ref: React.createRef(),
+        }];
     }
 
-    private onScroll = (): void => {
+    private async loadEmotes(){
+        this.emotes=await this.emotesPromise
+        for (const key in this.emotes) {
+            this.finalEmotes.push(
+                {   label: key,
+                    shortcodes: [key],
+                    hexcode: key,
+                    unicode: ":"+key+":",
+                    customLabel:key,
+                    customComponent:this.emotes[key]
+                }
+            );
+            this.finalEmotesMap.set((":"+key+":").trim(),{   
+                label: key,
+                shortcodes: [key],
+                hexcode: key,
+                unicode: ":"+key+":",
+                customLabel:key,
+                customComponent:this.emotes[key]
+            });
+        }
+
+        let rec=Array.from(new Set(recent.get()));
+        rec.forEach((v,i)=>{
+            if(this.finalEmotesMap.get(v as string)){
+                if(i>=this.recentlyUsed.length){
+                    this.recentlyUsed.push(this.finalEmotesMap.get(v as string))
+                }
+                else{
+                    this.recentlyUsed[i]=this.finalEmotesMap.get(v as string)
+                }
+                
+            } else if(getEmojiFromUnicode(v as string)){
+                if(i>=this.recentlyUsed.length){
+                    this.recentlyUsed.push(getEmojiFromUnicode(v as string))
+                }
+                else{
+                    this.recentlyUsed[i]=getEmojiFromUnicode(v as string)
+                }    
+            }
+        })
+        this.onScroll();  
+    }
+
+    private async decryptEmotes(emotes: Object, roomId: string) {
+        const decryptede=new Map<string, string>();
+        const client = MatrixClientPeg.get();
+        let durl = "";
+        const isEnc=client.isRoomEncrypted(roomId);
+        for (const shortcode in emotes) {
+            if (isEnc) {
+                const blob = await decryptFile(emotes[shortcode]);
+                durl = URL.createObjectURL(blob);
+            } else {
+                durl = mediaFromMxc(emotes[shortcode]).srcHttp;
+            }
+            decryptede[shortcode] = <img class='mx_Emote' title={":" + shortcode +":"} src= {durl}/>;
+        }
+        return decryptede;
+    }
+    
+    private onScroll = () => {
         const body = this.scrollRef.current?.containerRef.current;
         if (!body) return;
         this.setState({
@@ -266,7 +342,11 @@ class EmojiPicker extends React.Component<IProps, IState> {
             if (lcFilter.includes(this.state.filter)) {
                 emojis = this.memoizedDataByCategory[cat.id];
             } else {
+                
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
+                if(cat.id==="custom"){
+                    emojis=this.finalEmotes
+                }
             }
 
             if (lcFilter !== "") {

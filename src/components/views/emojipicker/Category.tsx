@@ -25,7 +25,7 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 
 const OVERFLOW_ROWS = 3;
 
-export type CategoryKey = keyof typeof DATA_BY_CATEGORY | "recent";
+export type CategoryKey = (keyof typeof DATA_BY_CATEGORY) | "recent" | "custom";
 
 export interface ICategory {
     id: CategoryKey;

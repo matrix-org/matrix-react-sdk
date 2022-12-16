@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EMOJIBASE from "emojibase-data/en/compact.json";
-import SHORTCODES from "emojibase-data/en/shortcodes/iamcal.json";
+import React from 'react';
+import EMOJIBASE from 'emojibase-data/en/compact.json';
+import SHORTCODES from 'emojibase-data/en/shortcodes/iamcal.json';
+
 
 export interface IEmoji {
     label: string;
@@ -27,6 +29,8 @@ export interface IEmoji {
     unicode: string;
     skins?: Omit<IEmoji, "shortcodes" | "tags">[]; // Currently unused
     emoticon?: string | string[];
+    customLabel?:string;
+    customComponent?:React.Component;
 }
 
 // The unicode is stored without the variant selector

@@ -79,15 +79,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     let moreButtons: ReactNode[];
     if (narrow) {
         mainButtons = [
-            isWysiwygLabEnabled ? (
-                <ComposerModeButton
-                    key="composerModeButton"
-                    isRichTextEnabled={props.isRichTextEnabled}
-                    onClick={props.onComposerModeClick}
-                />
-            ) : (
-                emojiButton(props)
-            ),
+            emojiButton(props,room),
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
@@ -99,15 +91,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
     } else {
         mainButtons = [
-            isWysiwygLabEnabled ? (
-                <ComposerModeButton
-                    key="composerModeButton"
-                    isRichTextEnabled={props.isRichTextEnabled}
-                    onClick={props.onComposerModeClick}
-                />
-            ) : (
-                emojiButton(props)
-            ),
+            emojiButton(props,room),
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
@@ -154,13 +138,60 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     );
 };
 
-function emojiButton(props: IProps): ReactElement {
-    return (
-        <EmojiButton
-            key="emoji_button"
-            addEmoji={props.addEmoji}
-            menuPosition={props.menuPosition}
-            className="mx_MessageComposer_button"
+function emojiButton(props: IProps, room: Room): ReactElement {
+    return <EmojiButton
+        key="emoji_button"
+        addEmoji={props.addEmoji}
+        menuPosition={props.menuPosition}
+        room={room}
+
+    />;
+}
+
+interface IEmojiButtonProps {
+    addEmoji: (unicode: string) => boolean;
+    menuPosition: AboveLeftOf;
+    room: Room;
+}
+
+const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, room}) => {
+    const overflowMenuCloser = useContext(OverflowMenuContext);
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    let contextMenu: React.ReactElement | null = null;
+    if (menuDisplayed) {
+        const position = (
+            menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
+        );
+
+        contextMenu = <ContextMenu
+            {...position}
+            onFinished={() => {
+                closeMenu();
+                overflowMenuCloser?.();
+            }}
+            managed={false}
+        >
+            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} room={room}/>
+        </ContextMenu>;
+    }
+
+    const className = classNames(
+        "mx_MessageComposer_button",
+        {
+            "mx_MessageComposer_button_highlight": menuDisplayed,
+        },
+        "mx_EmojiButton_icon"
+    );
+
+    // TODO: replace ContextMenuTooltipButton with a unified representation of
+    // the header buttons and the right panel buttons
+    return <React.Fragment>
+        <CollapsibleButton
+            className={className}
+            iconClassName="mx_MessageComposer_emoji"
+            onClick={openMenu}
+            title={_t("Emoji")}
+            inputRef={button}
         />
     );
 }
