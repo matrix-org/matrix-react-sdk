@@ -17,6 +17,7 @@ limitations under the License.
 import { KeyboardEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
+import { IS_MAC, Key } from '../../../../../Keyboard';
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
@@ -53,16 +54,28 @@ export function usePlainTextListeners(
         [setText],
     );
 
-    const isCtrlEnter = useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
+    const enterShouldSend = !useSettingValue<boolean>("MessageComposerInput.ctrlEnterToSend");
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
-            if (event.key === "Enter" && !event.shiftKey && (!isCtrlEnter || (isCtrlEnter && event.ctrlKey))) {
-                event.preventDefault();
-                event.stopPropagation();
-                send();
+            if (event.key === Key.ENTER) {
+                const sendModifierIsPressed = IS_MAC ? event.metaKey : event.ctrlKey;
+                
+                // if enter should send, send if the user is not pushing shift
+                if (enterShouldSend && !event.shiftKey) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    send();
+                }
+
+                // if enter should not send, send only if the user is pushing ctrl/cmd
+                if (!enterShouldSend && sendModifierIsPressed) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    send();
+                }
             }
         },
-        [isCtrlEnter, send],
+        [enterShouldSend, send],
     );
 
     return { ref, onInput, onPaste: onInput, onKeyDown, content, setContent: setText };
