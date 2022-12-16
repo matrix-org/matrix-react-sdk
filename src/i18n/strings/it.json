@@ -3668,5 +3668,13 @@
     "Add privileged users": "Aggiungi utenti privilegiati",
     "Hide notification dot (only display counters badges)": "Nascondi il punto di notifica (mostra solo i contatori)",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ha terminato una <a>trasmissione vocale</a>",
-    "You ended a <a>voice broadcast</a>": "Hai terminato una <a>trasmissione vocale</a>"
+    "You ended a <a>voice broadcast</a>": "Hai terminato una <a>trasmissione vocale</a>",
+    "Reset your keys to prevent future decryption errors": "Reimposta le tue chiavi per evitare errori di decifrazione futuri",
+    "This device was unable to decrypt some messages because it has not been verified yet.": "Questo dispositivo non è riuscito a decifrare alcuni messaggi perché non è ancora stato verificato.",
+    "Verify this device to access all messages": "Verifica questo dispositivo per accedere ai messaggi",
+    "Please wait as we try to decrypt your messages. This may take a few moments.": "Attendi mentre tentiamo di decifrare i tuoi messaggi. Potrebbe impiegarci un po'.",
+    "Decrypting messages...": "Decifrazione messaggi...",
+    "Threaded messages": "Messaggi in conversazioni",
+    "%(senderName)s ended a voice broadcast": "%(senderName)s ha terminato una trasmissione vocale",
+    "You ended a voice broadcast": "Hai terminato una trasmissione vocale"
 }
