@@ -469,6 +469,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     if (opts.forComposerQuote) {
         sanitizeParams = composerSanitizeHtmlParams;
     }
+    
     let strippedBody: string;
     let safeBody: string; // safe, sanitised HTML, preferred over `strippedBody` which is fully plaintext
 
