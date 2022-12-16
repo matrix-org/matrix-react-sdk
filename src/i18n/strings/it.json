@@ -1324,7 +1324,6 @@
     "You have not verified this user.": "Non hai verificato questo utente.",
     "You have verified this user. This user has verified all of their sessions.": "Hai verificato questo utente. Questo utente ha verificato tutte le sue sessioni.",
     "Someone is using an unknown session": "Qualcuno sta usando una sessione sconosciuta",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Chiedi di nuovo le chiavi di crittografia</requestLink> dalle altre sessioni.",
     "Encrypted by an unverified session": "Cifrato da una sessione non verificata",
     "Encrypted by a deleted session": "Cifrato da una sessione eliminata",
     "Waiting for %(displayName)s to accept…": "In attesa che %(displayName)s accetti…",

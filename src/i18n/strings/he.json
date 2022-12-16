@@ -1350,7 +1350,6 @@
     "Encrypted by a deleted session": "הוצפן על ידי מושב שנמחק",
     "Unencrypted": "לא מוצפן",
     "Encrypted by an unverified session": "הוצפן על ידי מושב לא מאומת",
-    "If your other sessions do not have the key for this message you will not be able to decrypt them.": "אם למפגשים האחרים שלך אין מפתח להודעה זו לא תוכל לפענח אותם.",
     "This event could not be displayed": "לא ניתן להציג את הארוע הזה",
     "Mod": "ממתן",
     "Edit message": "ערוך הודעה",

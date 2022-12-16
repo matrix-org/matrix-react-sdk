@@ -1174,7 +1174,6 @@
     "This room is end-to-end encrypted": "此房间是端到端加密的",
     "Everyone in this room is verified": "房间中所有人都已被验证",
     "Edit message": "编辑消息",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "从你别的会话<requestLink>重新请求加密密钥</requestLink>。",
     "Encrypted by an unverified session": "由未验证的会话加密",
     "Unencrypted": "未加密",
     "Encrypted by a deleted session": "由已删除的会话加密",

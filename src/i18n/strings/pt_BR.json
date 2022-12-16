@@ -1010,7 +1010,6 @@
     "Click the link in the email you received to verify and then click continue again.": "Clique no link no e-mail que você recebeu para confirmar e então clique novamente em continuar.",
     "Verify the link in your inbox": "Verifique o link na sua caixa de e-mails",
     "This room is end-to-end encrypted": "Esta sala é criptografada de ponta a ponta",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Solicitar novamente as chaves de criptografia</requestLink> das suas outras sessões.",
     "Encrypted by an unverified session": "Criptografada por uma sessão não confirmada",
     "Unencrypted": "Descriptografada",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",

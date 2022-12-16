@@ -1323,7 +1323,6 @@
     "You have not verified this user.": "Vi ne kontrolis tiun ĉi uzanton.",
     "You have verified this user. This user has verified all of their sessions.": "Vi kontrolis tiun ĉi uzanton. Ĝi kontrolis ĉiomon da siaj salutaĵoj.",
     "Someone is using an unknown session": "Iu uzas nekonatan salutaĵon",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Repeti viajn ĉifrajn ŝlosilojn</requestLink> de ceteraj viaj salutaĵoj.",
     "Encrypted by an unverified session": "Ĉifrita de nekontrolita salutaĵo",
     "Encrypted by a deleted session": "Ĉifrita de forigita salutaĵo",
     "Close preview": "Fermi antaŭrigardon",

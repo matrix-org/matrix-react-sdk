@@ -1361,7 +1361,6 @@
     "This room is end-to-end encrypted": "Тази стая е шифрована от-край-до-край",
     "Everyone in this room is verified": "Всички в тази стая са верифицирани",
     "Mod": "Модератор",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Поискай отново ключове за шифроване</requestLink> от другите сесии.",
     "Encrypted by an unverified session": "Шифровано от неверифицирана сесия",
     "Encrypted by a deleted session": "Шифровано от изтрита сесия",
     "Scroll to most recent messages": "Отиди до най-скорошните съобщения",

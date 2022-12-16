@@ -901,7 +901,6 @@
     "Update %(brand)s": "حدّث: %(brand)s",
     "New login. Was this you?": "تسجيل دخول جديد. هل كان ذاك أنت؟",
     "Other users may not trust it": "قد لا يثق به المستخدمون الآخرون",
-    "If your other sessions do not have the key for this message you will not be able to decrypt them.": "إذا كانت اتصالاتك الأخرى لا تحتوي على مفتاح هذه الرسالة ، فلن تتمكن من فك تشفيرها.",
     "This event could not be displayed": "تعذر عرض هذا الحدث",
     "Mod": "مشرف",
     "Edit message": "تعديل الرسالة",

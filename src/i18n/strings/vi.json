@@ -1904,7 +1904,6 @@
     "Encrypted by a deleted session": "Được mã hóa bởi một phiên đã xóa",
     "Unencrypted": "Không được mã hóa",
     "Encrypted by an unverified session": "Được mã hóa bởi một phiên chưa được xác minh",
-    "If your other sessions do not have the key for this message you will not be able to decrypt them.": "Nếu các phiên khác của bạn không có khóa cho thông báo này, bạn sẽ không thể giải mã chúng.",
     "This event could not be displayed": "Sự kiện này không thể được hiển thị",
     "%(count)s reply|one": "%(count)s trả lời",
     "%(count)s reply|other": "%(count)s trả lời",

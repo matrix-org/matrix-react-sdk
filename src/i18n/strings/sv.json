@@ -1312,7 +1312,6 @@
     "This room is end-to-end encrypted": "Det här rummet är totalsträckskrypterat",
     "Everyone in this room is verified": "Alla i det här rummet är verifierade",
     "Mod": "Mod",
-    "<requestLink>Re-request encryption keys</requestLink> from your other sessions.": "<requestLink>Återförfråga krypteringsnycklar</requestLink> från dina andra sessioner.",
     "Encrypted by an unverified session": "Krypterat av en overifierad session",
     "Unencrypted": "Okrypterat",
     "Encrypted by a deleted session": "Krypterat av en raderad session",
