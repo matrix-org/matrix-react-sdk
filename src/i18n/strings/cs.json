@@ -3683,5 +3683,7 @@
     "This device was unable to decrypt some messages because it has not been verified yet.": "Toto zařízení nebylo schopno dešifrovat některé zprávy, protože dosud nebylo ověřeno.",
     "Verify this device to access all messages": "Ověřte toto zařízení pro přístup ke všem zprávám",
     "Please wait as we try to decrypt your messages. This may take a few moments.": "Počkejte prosím, než se pokusíme vaše zprávy dešifrovat. Může to chvíli trvat.",
-    "Decrypting messages...": "Dešifrování zpráv..."
+    "Decrypting messages...": "Dešifrování zpráv...",
+    "%(senderName)s ended a voice broadcast": "%(senderName)s ukončil(a) hlasové vysílání",
+    "You ended a voice broadcast": "Ukončili jste hlasové vysílání"
 }
