@@ -53,6 +53,7 @@ import { decryptFile } from '../../../utils/DecryptFile';
 import { mediaFromMxc } from '../../../customisations/Media';
 import { EditWysiwygComposer } from '../rooms/wysiwyg_composer';
 
+
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
 interface IState {
@@ -61,7 +62,7 @@ interface IState {
 
     // track whether the preview widget is hidden
     widgetHidden: boolean;
-    finalEmotes: Dictionary<string>;
+    finalEmotes: Map<string, string>;
 }
 
 export default class TextualBody extends React.Component<IBodyProps, IState> {
@@ -80,7 +81,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.state = {
             links: [],
             widgetHidden: false,
-            finalEmotes: {},
+            finalEmotes: new Map<string, string>(),
         };
     }
 
@@ -572,7 +573,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         //TODO: Do not encrypt/decrypt if room is not encrypted
         const emotesEvent = room?.currentState.getStateEvents("m.room.emotes", "");
         const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
-        const decryptede={};
+        const decryptede=new Map<string, string>;
         let durl="";
         const isEnc=client.isRoomEncrypted(this.props.mxEvent.getRoomId());
         for (const shortcode in rawEmotes) {

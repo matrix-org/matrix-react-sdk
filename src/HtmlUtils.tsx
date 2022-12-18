@@ -396,7 +396,7 @@ interface IOpts {
     returnString?: boolean;
     forComposerQuote?: boolean;
     ref?: React.Ref<HTMLSpanElement>;
-    emotes?: Dictionary<string>;
+    emotes?: Map<string, string>;
 }
 
 export interface IOptsReturnNode extends IOpts {
@@ -534,6 +534,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     if (opts.forComposerQuote) {
         sanitizeParams = composerSanitizeHtmlParams;
     }
+    
     let strippedBody: string;
     let safeBody: string; // safe, sanitised HTML, preferred over `strippedBody` which is fully plaintext
 

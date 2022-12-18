@@ -40,11 +40,11 @@ class Emoji extends React.PureComponent<IProps> {
                 onMouseEnter={() => onMouseEnter(emoji)}
                 onMouseLeave={() => onMouseLeave(emoji)}
                 className="mx_EmojiPicker_item_wrapper"
-                label={emoji.unicode}
+                label={emoji.customLabel?emoji.customLabel:emoji.unicode}
                 disabled={this.props.disabled}
             >
                 <div className={`mx_EmojiPicker_item ${isSelected ? 'mx_EmojiPicker_item_selected' : ''}`}>
-                    { emoji.unicode }
+                    { emoji.customComponent?emoji.customComponent:emoji.unicode }
                 </div>
             </MenuItem>
         );

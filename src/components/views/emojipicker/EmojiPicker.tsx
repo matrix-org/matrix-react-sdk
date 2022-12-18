@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
-
+import { useContext } from "react";
 import { _t } from '../../../languageHandler';
 import * as recent from '../../../emojipicker/recent';
 import { DATA_BY_CATEGORY, getEmojiFromUnicode, IEmoji } from "../../../emoji";
@@ -26,6 +26,13 @@ import Search from "./Search";
 import Preview from "./Preview";
 import QuickReactions from "./QuickReactions";
 import Category, { ICategory, CategoryKey } from "./Category";
+import { Room } from './matrix-js-sdk/src/models/room';
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import RoomContext from '../../../contexts/RoomContext';
+import { mediaFromMxc } from '../../../customisations/Media';
+import { decryptFile } from '../../../utils/DecryptFile';
+import { MatrixClientPeg } from '../../../MatrixClientPeg';
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
@@ -38,6 +45,7 @@ interface IProps {
     showQuickReactions?: boolean;
     onChoose(unicode: string): boolean;
     isEmojiDisabled?: (unicode: string) => boolean;
+    room?:Room;
 }
 
 interface IState {
@@ -51,14 +59,26 @@ interface IState {
 }
 
 class EmojiPicker extends React.Component<IProps, IState> {
-    private readonly recentlyUsed: IEmoji[];
+    private recentlyUsed: IEmoji[];
     private readonly memoizedDataByCategory: Record<CategoryKey, IEmoji[]>;
     private readonly categories: ICategory[];
 
     private scrollRef = React.createRef<AutoHideScrollbar<"div">>();
 
+    private emotes: Map<string, React.Component>;
+    private emotesPromise: Promise<Map<string, string>>;
+    private finalEmotes: IEmoji[];
+    private finalEmotesMap:Map<string,IEmoji>;
     constructor(props: IProps) {
         super(props);
+
+
+        const emotesEvent = props.room?.currentState.getStateEvents("m.room.emotes", "");
+        const rawEmotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
+        this.emotesPromise = this.decryptEmotes(rawEmotes, props.room?.roomId);
+        this.finalEmotes=[];
+        this.finalEmotesMap=new Map<string,IEmoji>();
+        this.loadEmotes()
 
         this.state = {
             filter: "",
@@ -71,16 +91,23 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
         this.memoizedDataByCategory = {
             recent: this.recentlyUsed,
+            custom: this.finalEmotes,
             ...DATA_BY_CATEGORY,
         };
 
         this.categories = [{
             id: "recent",
             name: _t("Frequently Used"),
-            enabled: this.recentlyUsed.length > 0,
-            visible: this.recentlyUsed.length > 0,
+            enabled: true,
+            visible: true,
             ref: React.createRef(),
-        }, {
+        },{
+            id: "custom",
+            name: _t("Custom"),
+            enabled: true,
+            visible: true,
+            ref: React.createRef(),
+        },{
             id: "people",
             name: _t("Smileys & People"),
             enabled: true,
@@ -131,6 +158,67 @@ class EmojiPicker extends React.Component<IProps, IState> {
         }];
     }
 
+    private async loadEmotes(){
+        this.emotes=await this.emotesPromise
+        for (const key in this.emotes) {
+            this.finalEmotes.push(
+                {   label: key,
+                    shortcodes: [key],
+                    hexcode: key,
+                    unicode: ":"+key+":",
+                    customLabel:key,
+                    customComponent:this.emotes[key]
+                }
+            );
+            this.finalEmotesMap.set((":"+key+":").trim(),{   
+                label: key,
+                shortcodes: [key],
+                hexcode: key,
+                unicode: ":"+key+":",
+                customLabel:key,
+                customComponent:this.emotes[key]
+            });
+        }
+
+        let rec=Array.from(new Set(recent.get()));
+        rec.forEach((v,i)=>{
+            if(this.finalEmotesMap.get(v as string)){
+                if(i>=this.recentlyUsed.length){
+                    this.recentlyUsed.push(this.finalEmotesMap.get(v as string))
+                }
+                else{
+                    this.recentlyUsed[i]=this.finalEmotesMap.get(v as string)
+                }
+                
+            } else if(getEmojiFromUnicode(v as string)){
+                if(i>=this.recentlyUsed.length){
+                    this.recentlyUsed.push(getEmojiFromUnicode(v as string))
+                }
+                else{
+                    this.recentlyUsed[i]=getEmojiFromUnicode(v as string)
+                }    
+            }
+        })
+        this.onScroll();  
+    }
+
+    private async decryptEmotes(emotes: Object, roomId: string) {
+        const decryptede=new Map<string, string>();
+        const client = MatrixClientPeg.get();
+        let durl = "";
+        const isEnc=client.isRoomEncrypted(roomId);
+        for (const shortcode in emotes) {
+            if (isEnc) {
+                const blob = await decryptFile(emotes[shortcode]);
+                durl = URL.createObjectURL(blob);
+            } else {
+                durl = mediaFromMxc(emotes[shortcode]).srcHttp;
+            }
+            decryptede[shortcode] = <img class='mx_Emote' title={":" + shortcode +":"} src= {durl}/>;
+        }
+        return decryptede;
+    }
+    
     private onScroll = () => {
         const body = this.scrollRef.current?.containerRef.current;
         this.setState({
@@ -180,7 +268,11 @@ class EmojiPicker extends React.Component<IProps, IState> {
             if (lcFilter.includes(this.state.filter)) {
                 emojis = this.memoizedDataByCategory[cat.id];
             } else {
+                
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
+                if(cat.id==="custom"){
+                    emojis=this.finalEmotes
+                }
             }
             emojis = emojis.filter(emoji => this.emojiMatchesFilter(emoji, lcFilter));
             this.memoizedDataByCategory[cat.id] = emojis;
@@ -266,7 +358,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                                 selectedEmojis={this.props.selectedEmojis}
                             />
                         );
-                        const height = EmojiPicker.categoryHeightForEmojiCount(emojis.length);
+                        const height = EmojiPicker.categoryHeightForEmojiCount(emojis?.length);
                         heightBefore += height;
                         return categoryElement;
                     }) }
