@@ -41,7 +41,7 @@ describe("<BeaconMarker />", () => {
 
     const aliceMember = new RoomMember(roomId, aliceId);
 
-    const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
 
     const mockClient = getMockClientWithEventEmitter({

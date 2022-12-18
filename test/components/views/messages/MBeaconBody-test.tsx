@@ -48,7 +48,7 @@ describe("<MBeaconBody />", () => {
     const roomId = "!room:server";
     const aliceId = "@alice:server";
 
-    const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
     const mockMarker = new maplibregl.Marker();
 

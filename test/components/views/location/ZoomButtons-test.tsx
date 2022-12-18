@@ -24,7 +24,7 @@ import ZoomButtons from "../../../../src/components/views/location/ZoomButtons";
 import { findByTestId } from "../../../test-utils";
 
 describe("<ZoomButtons />", () => {
-    const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
     const defaultProps = {
         map: mockMap,

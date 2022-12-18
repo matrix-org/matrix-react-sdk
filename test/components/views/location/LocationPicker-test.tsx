@@ -62,7 +62,7 @@ describe("LocationPicker", () => {
                 wrappingComponentProps: { value: mockClient },
             });
 
-        const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+        const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
         const mockMap = new maplibregl.Map(mapOptions);
         const mockGeolocate = new maplibregl.GeolocateControl({});
         const mockMarker = new maplibregl.Marker();

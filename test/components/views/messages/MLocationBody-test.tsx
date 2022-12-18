@@ -35,7 +35,7 @@ import { makeLocationEvent } from "../../../test-utils/location";
 import { getMockClientWithEventEmitter } from "../../../test-utils";
 
 describe("MLocationBody", () => {
-    const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     describe("<MLocationBody>", () => {
         const roomId = "!room:server";
         const userId = "@user:server";

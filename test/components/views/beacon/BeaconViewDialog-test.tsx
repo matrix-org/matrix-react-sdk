@@ -58,7 +58,7 @@ describe("<BeaconViewDialog />", () => {
         getVisibleRooms: jest.fn().mockReturnValue([]),
     });
 
-    const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
 
     // make fresh rooms every time

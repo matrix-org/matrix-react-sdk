@@ -27,7 +27,7 @@ jest.mock("../../../../src/utils/location/findMapStyleUrl", () => ({
 }));
 
 describe("<SmartMarker />", () => {
-    const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
     const mockMarker = new maplibregl.Marker();
 

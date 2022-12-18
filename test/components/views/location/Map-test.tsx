@@ -54,7 +54,7 @@ describe("<Map />", () => {
         jest.spyOn(logger, "error").mockRestore();
     });
 
-    const mapOptions = { container: {} as unknown as HTMLElement, style: '' };
+    const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
 
     it("renders", () => {
