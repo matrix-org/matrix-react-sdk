@@ -17,7 +17,7 @@ limitations under the License.
 import classNames from 'classnames';
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
-import React, { createContext, MouseEventHandler, ReactElement, useContext, useRef } from 'react';
+import React, { createContext, ReactElement, useContext, useRef } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
@@ -25,8 +25,9 @@ import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { CollapsibleButton } from './CollapsibleButton';
-import { AboveLeftOf } from '../../structures/ContextMenu';
+import ContextMenu, { aboveLeftOf, AboveLeftOf, useContextMenu } from '../../structures/ContextMenu';
 import dis from '../../../dispatcher/dispatcher';
+import EmojiPicker from '../emojipicker/EmojiPicker';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import LocationButton from '../location/LocationButton';
 import Modal from "../../../Modal";
@@ -38,8 +39,6 @@ import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
-import { EmojiButton } from './EmojiButton';
-import { useSettingValue } from '../../../hooks/useSettings';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -56,8 +55,6 @@ interface IProps {
     toggleButtonMenu: () => void;
     showVoiceBroadcastButton: boolean;
     onStartVoiceBroadcastClick: () => void;
-    isRichTextEnabled: boolean;
-    onComposerModeClick: () => void;
 }
 
 type OverflowMenuCloser = () => void;
@@ -66,8 +63,6 @@ export const OverflowMenuContext = createContext<OverflowMenuCloser | null>(null
 const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     const matrixClient: MatrixClient = useContext(MatrixClientContext);
     const { room, roomId, narrow } = useContext(RoomContext);
-
-    const isWysiwygLabEnabled = useSettingValue<boolean>('feature_wysiwyg_composer');
 
     if (props.haveRecording) {
         return null;
@@ -403,25 +398,6 @@ function showLocationButton(
             />
             : null
     );
-}
-
-interface WysiwygToggleButtonProps {
-    isRichTextEnabled: boolean;
-    onClick: MouseEventHandler<HTMLDivElement>;
-}
-
-function ComposerModeButton({ isRichTextEnabled, onClick }: WysiwygToggleButtonProps) {
-    const title = isRichTextEnabled ? _t("Hide formatting") : _t("Show formatting");
-
-    return <CollapsibleButton
-        className="mx_MessageComposer_button"
-        iconClassName={classNames({
-            "mx_MessageComposer_plain_text": isRichTextEnabled,
-            "mx_MessageComposer_rich_text": !isRichTextEnabled,
-        })}
-        onClick={onClick}
-        title={title}
-    />;
 }
 
 export default MessageComposerButtons;
