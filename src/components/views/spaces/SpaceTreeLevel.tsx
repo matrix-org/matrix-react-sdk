@@ -245,7 +245,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         return this.state.collapsed || this.props.isPanelCollapsed;
     }
 
-    private toggleCollapse = (evt): void => {
+    private toggleCollapse = (evt: ButtonEvent): void => {
         if (this.props.onExpand && this.isCollapsed) {
             this.props.onExpand();
         }

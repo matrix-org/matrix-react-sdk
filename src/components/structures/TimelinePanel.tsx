@@ -326,7 +326,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.initTimeline(this.props);
     }
 
-    public componentDidUpdate(prevProps): void {
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
         if (prevProps.timelineSet !== this.props.timelineSet) {
             // throw new Error("changing timelineSet on a TimelinePanel is not supported");
 
@@ -617,7 +617,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         });
     };
 
-    private onMessageListScroll = (e): void => {
+    private onMessageListScroll = (e: Event): void => {
         this.props.onScroll?.(e);
         if (this.props.manageReadMarkers) {
             this.doManageReadMarkers();
@@ -1316,7 +1316,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      *
      * We pass it down to the scroll panel.
      */
-    public handleScrollKey = (ev): void => {
+    public handleScrollKey = (ev: React.KeyboardEvent): void => {
         if (!this.messagePanel.current) return;
 
         // jump to the live timeline on ctrl-end, rather than the end of the

@@ -227,14 +227,14 @@ export default class ScrollPanel extends React.Component<IProps> {
         this.props.resizeNotifier?.removeListener("middlePanelResizedNoisy", this.onResize);
     }
 
-    private onScroll = (ev: Event | React.UIEvent): void => {
+    private onScroll = (ev: Event): void => {
         // skip scroll events caused by resizing
         if (this.props.resizeNotifier && this.props.resizeNotifier.isResizing) return;
         debuglog("onScroll called past resize gate; scroll node top:", this.getScrollNode().scrollTop);
         this.scrollTimeout.restart();
         this.saveScrollState();
         this.updatePreventShrinking();
-        this.props.onScroll?.(ev as Event);
+        this.props.onScroll?.(ev);
         // noinspection JSIgnoredPromiseFromCall
         this.checkFillState();
     };

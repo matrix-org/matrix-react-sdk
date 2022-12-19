@@ -521,7 +521,7 @@ const SpaceSetupPrivateInvite: React.FC<{
                 label={_t("Email address")}
                 placeholder={_t("Email")}
                 value={emailAddresses[i]}
-                onChange={(ev) => setEmailAddress(i, ev.target.value)}
+                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setEmailAddress(i, ev.target.value)}
                 ref={fieldRefs[i]}
                 onValidate={validateEmailRules}
                 autoFocus={i === 0}
@@ -530,7 +530,7 @@ const SpaceSetupPrivateInvite: React.FC<{
         );
     });
 
-    const onNextClick = async (ev): Promise<void> => {
+    const onNextClick = async (ev: ButtonEvent): Promise<void> => {
         ev.preventDefault();
         if (busy) return;
         setError("");
@@ -568,7 +568,7 @@ const SpaceSetupPrivateInvite: React.FC<{
         setBusy(false);
     };
 
-    let onClick = (ev): void => {
+    let onClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         onFinished();
     };

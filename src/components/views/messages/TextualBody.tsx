@@ -282,7 +282,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
     }
 
-    public componentDidUpdate(prevProps): void {
+    public componentDidUpdate(prevProps: Readonly<IBodyProps>): void {
         if (!this.props.editState) {
             const stoppedEditing = prevProps.editState && !this.props.editState;
             const messageWasEdited = prevProps.replacingEventId !== this.props.replacingEventId;
@@ -298,7 +298,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         unmountTooltips(this.tooltips);
     }
 
-    public shouldComponentUpdate(nextProps, nextState): boolean {
+    public shouldComponentUpdate(nextProps: Readonly<IBodyProps>, nextState: Readonly<IState>): boolean {
         //console.info("shouldComponentUpdate: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         // exploit that events are immutable :)

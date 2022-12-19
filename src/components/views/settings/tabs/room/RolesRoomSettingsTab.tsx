@@ -19,9 +19,8 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { logger } from "matrix-js-sdk/src/logger";
-import { throttle } from "lodash";
+import { throttle, get } from "lodash";
 import { compare } from "matrix-js-sdk/src/utils";
-import { IContent } from "matrix-js-sdk/src/models/event";
 
 import { _t, _td } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -88,7 +87,7 @@ interface IBannedUserProps {
 }
 
 export class BannedUser extends React.Component<IBannedUserProps> {
-    private onUnbanClick = (e): void => {
+    private onUnbanClick = (): void => {
         MatrixClientPeg.get()
             .unban(this.props.member.roomId, this.props.member.userId)
             .catch((err) => {
@@ -372,9 +371,11 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             });
 
             // comparator for sorting PL users lexicographically on PL descending, MXID ascending. (case-insensitive)
-            const comparator = (a, b): number => {
-                const plDiff = userLevels[b.key] - userLevels[a.key];
-                return plDiff !== 0 ? plDiff : compare(a.key.toLocaleLowerCase(), b.key.toLocaleLowerCase());
+            const comparator = (a: JSX.Element, b: JSX.Element): number => {
+                const aKey = a.key as string;
+                const bKey = b.key as string;
+                const plDiff = userLevels[bKey] - userLevels[aKey];
+                return plDiff !== 0 ? plDiff : compare(aKey.toLocaleLowerCase(), bKey.toLocaleLowerCase());
             };
 
             privilegedUsers.sort(comparator);
@@ -424,16 +425,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                     return null;
                 }
 
-                const keyPath = key.split(".");
-                let currentObj: IContent | string = plContent;
-                for (const prop of keyPath) {
-                    if (currentObj === undefined) {
-                        break;
-                    }
-                    currentObj = currentObj[prop];
-                }
-
-                const value = parseIntWithDefault(currentObj as string, descriptor.defaultValue);
+                const value = parseIntWithDefault(get(plContent, key), descriptor.defaultValue);
                 return (
                     <div key={index} className="">
                         <PowerSelector

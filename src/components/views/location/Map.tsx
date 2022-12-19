@@ -33,6 +33,12 @@ const useMapWithStyle = ({
     onError,
     interactive,
     bounds,
+}: {
+    id: string;
+    centerGeoUri?: string;
+    interactive?: boolean;
+    bounds?: Bounds;
+    onError(error: Error): void;
 }): {
     map: maplibregl.Map;
     bodyId: string;

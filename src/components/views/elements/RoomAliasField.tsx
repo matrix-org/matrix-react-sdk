@@ -17,7 +17,7 @@ limitations under the License.
 import React, { createRef, KeyboardEventHandler } from "react";
 
 import { _t } from "../../../languageHandler";
-import withValidation, { IValidationResult } from "./Validation";
+import withValidation, { IFieldState, IValidationResult } from "./Validation";
 import Field, { IValidateOpts } from "./Field";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
@@ -98,11 +98,11 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         );
     }
 
-    private onChange = (ev): void => {
+    private onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange?.(this.asFullAlias(ev.target.value));
     };
 
-    private onValidate = async (fieldState): Promise<IValidationResult> => {
+    private onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validationRules(fieldState);
         this.setState({ isValid: result.valid });
         return result;

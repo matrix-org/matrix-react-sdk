@@ -32,7 +32,7 @@ import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from "../../views/elements/ServerPicker";
 import RegistrationForm from "../../views/auth/RegistrationForm";
-import AccessibleButton from "../../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
@@ -284,10 +284,10 @@ export default class Registration extends React.Component<IProps, IState> {
     };
 
     private requestEmailToken = (
-        emailAddress,
-        clientSecret,
-        sendAttempt,
-        sessionId,
+        emailAddress: string,
+        clientSecret: string,
+        sendAttempt: number,
+        sessionId: string,
     ): Promise<IRequestTokenResponse> => {
         return this.state.matrixClient.requestRegisterEmailToken(
             emailAddress,
@@ -305,7 +305,7 @@ export default class Registration extends React.Component<IProps, IState> {
     private onUIAuthFinished: InteractiveAuthCallback = async (success, response): Promise<void> => {
         debuglog("Registration: ui authentication finished: ", { success, response });
         if (!success) {
-            let errorText: ReactNode = response.message || response.toString();
+            let errorText: ReactNode = (response as Error).message || (response as Error).toString();
             // can we give a better error message?
             if (response.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
                 const errorTop = messageForResourceLimitError(response.data.limit_type, response.data.admin_contact, {
@@ -438,13 +438,13 @@ export default class Registration extends React.Component<IProps, IState> {
         );
     }
 
-    private onLoginClick = (ev): void => {
+    private onLoginClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         this.props.onLoginClick();
     };
 
-    private onGoToFormClicked = (ev): void => {
+    private onGoToFormClicked = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         this.replaceClient(this.props.serverConfig);
@@ -480,7 +480,7 @@ export default class Registration extends React.Component<IProps, IState> {
     // Links to the login page shown after registration is completed are routed through this
     // which checks the user hasn't already logged in somewhere else (perhaps we should do
     // this more generally?)
-    private onLoginClickWithCheck = async (ev): Promise<boolean> => {
+    private onLoginClickWithCheck = async (ev: ButtonEvent): Promise<boolean> => {
         ev.preventDefault();
 
         const sessionLoaded = await Lifecycle.loadSession({ ignoreGuest: true });
@@ -632,7 +632,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         <p>
                             <AccessibleButton
                                 kind="link_inline"
-                                onClick={async (event): Promise<void> => {
+                                onClick={async (event: ButtonEvent): Promise<void> => {
                                     const sessionLoaded = await this.onLoginClickWithCheck(event);
                                     if (sessionLoaded) {
                                         dis.dispatch({ action: "view_welcome_page" });
@@ -656,7 +656,7 @@ export default class Registration extends React.Component<IProps, IState> {
                                 a: (sub) => (
                                     <AccessibleButton
                                         kind="link_inline"
-                                        onClick={async (event): Promise<void> => {
+                                        onClick={async (event: ButtonEvent): Promise<void> => {
                                             const sessionLoaded = await this.onLoginClickWithCheck(event);
                                             if (sessionLoaded) {
                                                 dis.dispatch({ action: "view_home_page" });

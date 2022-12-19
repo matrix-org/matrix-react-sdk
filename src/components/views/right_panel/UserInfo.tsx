@@ -1048,8 +1048,8 @@ const PowerLevelEditor: React.FC<{
         async (powerLevel: number): Promise<void> => {
             setSelectedPowerLevel(powerLevel);
 
-            const applyPowerChange = (roomId, target, powerLevel, powerLevelEvent): Promise<void> => {
-                return cli.setPowerLevel(roomId, target, parseInt(powerLevel), powerLevelEvent).then(
+            const applyPowerChange = (roomId: string, target: string, powerLevel: number, powerLevelEvent: MatrixEvent): Promise<void> => {
+                return cli.setPowerLevel(roomId, target, powerLevel, powerLevelEvent).then(
                     function () {
                         // NO-OP; rely on the m.room.member event coming down else we could
                         // get out of sync if we force setState here!
@@ -1168,11 +1168,11 @@ export const useDevices = (userId: string): DeviceInfo[] => {
             if (!users.includes(userId)) return;
             updateDevices();
         };
-        const onDeviceVerificationChanged = (_userId, device): void => {
+        const onDeviceVerificationChanged = (_userId: string): void => {
             if (_userId !== userId) return;
             updateDevices();
         };
-        const onUserTrustStatusChanged = (_userId, trustStatus): void => {
+        const onUserTrustStatusChanged = (_userId: string): void => {
             if (_userId !== userId) return;
             updateDevices();
         };

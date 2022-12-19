@@ -17,7 +17,8 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 /**
  * Approximation of a membership status for a given room.
@@ -91,7 +92,7 @@ export async function waitForMember(
     opts = { timeout: 1500 },
 ): Promise<void> {
     const { timeout } = opts;
-    let handler;
+    let handler: (event: MatrixEvent, state: RoomState, member: RoomMember) => void;
     return new Promise<void>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         handler = function (_, __, member: RoomMember) {

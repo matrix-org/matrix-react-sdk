@@ -27,7 +27,7 @@ import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import createRoom, { IOpts as ICreateOpts } from "../../../createRoom";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SpaceBasicSettings, { SpaceAvatar } from "./SpaceBasicSettings";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import withValidation from "../elements/Validation";
 import RoomAliasField from "../elements/RoomAliasField";
@@ -246,7 +246,7 @@ const SpaceCreateMenu: React.FC<{
     const [avatar, setAvatar] = useState<File>(null);
     const [topic, setTopic] = useState<string>("");
 
-    const onSpaceCreateClick = async (e): Promise<void> => {
+    const onSpaceCreateClick = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
         if (busy) return;
 

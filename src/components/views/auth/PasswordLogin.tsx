@@ -54,7 +54,7 @@ interface IState {
     password: "";
 }
 
-enum LoginField {
+const enum LoginField {
     Email = "login_field_email",
     MatrixId = "login_field_mxid",
     Phone = "login_field_phone",

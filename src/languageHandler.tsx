@@ -121,7 +121,9 @@ function safeCounterpartTranslate(text: string, variables?: IVariables): { trans
     // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
     // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
     // It is enough to pass the count variable, but in the future counterpart might make use of other information too
-    const options = { ...variables, interpolate: false };
+    const options: IVariables & {
+        interpolate: boolean;
+    } = { ...variables, interpolate: false };
 
     // Horrible hack to avoid https://github.com/vector-im/element-web/issues/4191
     // The interpolation library that counterpart uses does not support undefined/null

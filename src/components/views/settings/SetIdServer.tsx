@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import url from "url";
-import React from "react";
+import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 
@@ -43,7 +43,7 @@ const REACHABILITY_TIMEOUT = 10000; // ms
  * @param {string} u The url to check
  * @returns {string} null if url passes all checks, otherwise i18ned error string
  */
-async function checkIdentityServerUrl(u): Promise<string | null> {
+async function checkIdentityServerUrl(u: string): Promise<string | null> {
     const parsedUrl = url.parse(u);
 
     if (parsedUrl.protocol !== "https:") return _t("Identity server URL must be HTTPS");
@@ -122,7 +122,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         });
     };
 
-    private onIdentityServerChanged = (ev): void => {
+    private onIdentityServerChanged = (ev: React.ChangeEvent<HTMLInputElement>): void => {
         const u = ev.target.value;
 
         this.setState({ idServer: u });
@@ -160,7 +160,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         });
     };
 
-    private checkIdServer = async (e): Promise<void> => {
+    private checkIdServer = async (e: React.SyntheticEvent): Promise<void> => {
         e.preventDefault();
         const { idServer, currentClientIdServer } = this.state;
 
@@ -221,7 +221,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         });
     };
 
-    private showNoTermsWarning(fullUrl): Promise<[boolean]> {
+    private showNoTermsWarning(fullUrl: string): Promise<[boolean]> {
         const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
             title: _t("Identity server has no terms of service"),
             description: (
@@ -257,7 +257,11 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         }
     };
 
-    private async showServerChangeWarning({ title, unboundMessage, button }): Promise<[boolean]> {
+    private async showServerChangeWarning({ title, unboundMessage, button }: {
+        title: string;
+        unboundMessage: ReactNode;
+        button: string;
+    }): Promise<[boolean]> {
         const { currentClientIdServer } = this.state;
 
         let threepids: IThreepid[] = [];

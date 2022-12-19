@@ -23,7 +23,7 @@ import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/ev
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { TimelineIndex, TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { IEventWithRoomId, IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
+import { IEventWithRoomId, IMatrixProfile, IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
@@ -504,12 +504,12 @@ export default class EventIndex extends EventEmitter {
             // Convert the plain JSON events into Matrix events so they get
             // decrypted if necessary.
             const matrixEvents = res.chunk.map(eventMapper);
-            let stateEvents = [];
+            let stateEvents: MatrixEvent[] = [];
             if (res.state !== undefined) {
                 stateEvents = res.state.map(eventMapper);
             }
 
-            const profiles = {};
+            const profiles: Record<string, IMatrixProfile> = {};
 
             stateEvents.forEach((ev) => {
                 if (ev.event.content && ev.event.content.membership === "join") {
@@ -545,7 +545,7 @@ export default class EventIndex extends EventEmitter {
             const events = filteredEvents.map((ev) => {
                 const e = this.eventToJson(ev);
 
-                let profile = {};
+                let profile: IMatrixProfile = {};
                 if (e.sender in profiles) profile = profiles[e.sender];
                 const object = {
                     event: e,
@@ -914,7 +914,7 @@ export default class EventIndex extends EventEmitter {
      * @return {Promise<boolean>} Returns true if the index contains events for
      * the given room, false otherwise.
      */
-    public async isRoomIndexed(roomId): Promise<boolean> {
+    public async isRoomIndexed(roomId: string): Promise<boolean> {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         return indexManager.isRoomIndexed(roomId);
     }
