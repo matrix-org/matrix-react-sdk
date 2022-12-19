@@ -71,7 +71,7 @@ describe("SeekBar", () => {
             beforeEach(() => {
                 const rangeInput = renderResult.container.querySelector("[type='range']");
                 act(() => {
-                    fireEvent.change(rangeInput, { target: { value: 0.5 } });
+                    fireEvent.change(rangeInput!, { target: { value: 0.5 } });
                 });
             });
 
@@ -83,7 +83,7 @@ describe("SeekBar", () => {
                 beforeEach(() => {
                     mocked(playback.skipTo).mockClear();
                     act(() => {
-                        seekBarRef.current.left();
+                        seekBarRef.current!.left();
                     });
                 });
 
@@ -96,7 +96,7 @@ describe("SeekBar", () => {
                 beforeEach(() => {
                     mocked(playback.skipTo).mockClear();
                     act(() => {
-                        seekBarRef.current.right();
+                        seekBarRef.current!.right();
                     });
                 });
 
