@@ -3685,5 +3685,7 @@
     "Rust cryptography implementation": "Rust-Verschlüsselungsumsetzung",
     "Threaded messages": "Threads",
     "%(senderName)s ended a voice broadcast": "%(senderName)s beendete eine Sprachübertragung",
-    "You ended a voice broadcast": "Du hast eine Sprachübertragung beendet"
+    "You ended a voice broadcast": "Du hast eine Sprachübertragung beendet",
+    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Du kannst kein Gespräch beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
+    "Can’t start a call": "Kann Gespräch nicht beginnen"
 }
