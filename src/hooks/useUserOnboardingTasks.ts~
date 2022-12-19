@@ -44,7 +44,7 @@ interface UserOnboardingTask {
     completed: (ctx: UserOnboardingContext) => boolean;
 }
 
-export interface UserOnboardingTaskWithResolvedCompletion extends Omit<UserOnboardingTask, "completed"> {
+export interface UserOnboardingTaskWithResolvedCompletion extends Omit<UserOnboardingTask, 'completed'> {
     completed: boolean;
 }
 
@@ -153,6 +153,6 @@ export function useUserOnboardingTasks(context: UserOnboardingContext) {
             .map((task) => ({
                 ...task,
                 completed: task.completed(context),
-            }));
+            }))
     }, [context, useCase]);
 }

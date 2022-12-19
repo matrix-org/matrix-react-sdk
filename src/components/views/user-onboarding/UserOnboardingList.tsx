@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { useMemo } from "react";
 
-import { UserOnboardingTask as Task } from "../../../hooks/useUserOnboardingTasks";
+import { UserOnboardingTaskWithResolvedCompletion } from "../../../hooks/useUserOnboardingTasks";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import ProgressBar from "../../views/elements/ProgressBar";
@@ -26,22 +25,13 @@ import { UserOnboardingFeedback } from "./UserOnboardingFeedback";
 import { UserOnboardingTask } from "./UserOnboardingTask";
 
 interface Props {
-    completedTasks: Task[];
-    waitingTasks: Task[];
+    tasks: UserOnboardingTaskWithResolvedCompletion[];
 }
 
-export function UserOnboardingList({ completedTasks, waitingTasks }: Props) {
-    const completed = completedTasks.length;
-    const waiting = waitingTasks.length;
+export function UserOnboardingList({ tasks }: Props) {
+    const completed = tasks.filter((task) => task.completed === true).length;
+    const waiting = tasks.filter((task) => task.completed === false).length;
     const total = completed + waiting;
-
-    const tasks = useMemo(
-        () => [
-            ...completedTasks.map((it): [Task, boolean] => [it, true]),
-            ...waitingTasks.map((it): [Task, boolean] => [it, false]),
-        ],
-        [completedTasks, waitingTasks],
-    );
 
     return (
         <div className="mx_UserOnboardingList">
@@ -64,8 +54,8 @@ export function UserOnboardingList({ completedTasks, waitingTasks }: Props) {
                 {waiting === 0 && <UserOnboardingFeedback />}
             </div>
             <ol className="mx_UserOnboardingList_list">
-                {tasks.map(([task, completed]) => (
-                    <UserOnboardingTask key={task.id} completed={completed} task={task} />
+                {tasks.map((task) => (
+                    <UserOnboardingTask key={task.id} completed={task.completed} task={task} />
                 ))}
             </ol>
         </div>
