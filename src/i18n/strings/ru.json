@@ -3560,5 +3560,6 @@
     "This device was unable to decrypt some messages because it has not been verified yet.": "Этот сеанс не смог расшифровать некоторые сообщения, поскольку он ещё не заверен.",
     "This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.": "Этот сеанс запрашивает ключи расшифровки у других ваших сеансов. Открытие одного из других сеансов может ускорить этот процесс.",
     "Open another device to load encrypted messages": "Откройте другой сеанс для загрузки зашифрованных сообщений",
-    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "Увы, нет других заверенных сеансов, у которых можно было бы запросить ключи расшифровки. Вход в систему и заверение других сеансов могут помочь избежать подобной ситуации в будущем."
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "Увы, нет других заверенных сеансов, у которых можно было бы запросить ключи расшифровки. Вход в систему и заверение других сеансов могут помочь избежать подобной ситуации в будущем.",
+    "Threaded messages": "Обсуждения сообщений"
 }
