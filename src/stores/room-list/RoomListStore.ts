@@ -64,7 +64,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         this.emit(LISTS_UPDATE_EVENT);
     });
 
-    constructor(dis: MatrixDispatcher) {
+    public constructor(dis: MatrixDispatcher) {
         super(dis);
         this.setMaxListeners(20); // RoomList + LeftPanel + 8xRoomSubList + spares
         this.algorithm.start();
@@ -386,15 +386,13 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
     // logic must match calculateListOrder
     private calculateTagSorting(tagId: TagID): SortAlgorithm {
-        const isDefaultRecent = tagId === DefaultTagID.Invite || tagId === DefaultTagID.DM;
-        const defaultSort = isDefaultRecent ? SortAlgorithm.Recent : SortAlgorithm.Alphabetic;
         const definedSort = this.getTagSorting(tagId);
         const storedSort = this.getStoredTagSorting(tagId);
 
         // We use the following order to determine which of the 4 flags to use:
         // Stored > Settings > Defined > Default
 
-        let tagSort = defaultSort;
+        let tagSort = SortAlgorithm.Recent;
         if (storedSort) {
             tagSort = storedSort;
         } else if (definedSort) {
@@ -427,7 +425,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
     // logic must match calculateTagSorting
     private calculateListOrder(tagId: TagID): ListAlgorithm {
-        const defaultOrder = ListAlgorithm.Natural;
+        const defaultOrder = ListAlgorithm.Importance;
         const definedOrder = this.getListOrder(tagId);
         const storedOrder = this.getStoredListOrder(tagId);
 
