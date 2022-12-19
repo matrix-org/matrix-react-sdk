@@ -3679,7 +3679,7 @@
     "This device is requesting decryption keys from your other devices. Opening one of your other devices may speed this up.": "Perangkat ini sedang meminta kunci dekripsi dari perangkat Anda yang lain. Membuka salah satu perangkat Anda yang lain dapat mempercepat proses ini.",
     "Open another device to load encrypted messages": "Buka perangkat lain untuk memuat pesan terenkripsi",
     "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": "Anda tidak akan dapat mengakses pesan lama yang tidak dapat didekripsi, tetapi mengatur ulang kunci Anda akan memungkinkan Anda untuk menerima pesan baru.",
-    "Reset your keys to prevent future decryption errors": "Atur ulang kunci Anda untuk mencegah kesalahan pendekripsian di masa mendatang.",
+    "Reset your keys to prevent future decryption errors": "Atur ulang kunci Anda untuk mencegah kesalahan pendekripsian di masa mendatang",
     "This device was unable to decrypt some messages because it has not been verified yet.": "Perangkat ini tidak dapat mendekripsi beberapa pesan karena belum diverifikasi.",
     "Verify this device to access all messages": "Verifikasi perangkat ini untuk mengakses semua pesan",
     "Please wait as we try to decrypt your messages. This may take a few moments.": "Mohon tunggu saat kami mencoba untuk mendekripsi pesan Anda. Ini mungkin membutuhkan beberapa waktu.",
@@ -3687,5 +3687,7 @@
     "Under active development. Can currently only be enabled via config.json": "Dalam pengembangan aktif. Hanya dapat diaktifkan melalui config.json",
     "Rust cryptography implementation": "Implementasi kriptografi Rust",
     "%(senderName)s ended a voice broadcast": "%(senderName)s mdngakhiri sebuah siaran suara",
-    "You ended a voice broadcast": "Anda mengakhiri sebuah siaran suara"
+    "You ended a voice broadcast": "Anda mengakhiri sebuah siaran suara",
+    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Anda tidak dapat memulai sebuah panggilan karena Anda saat ini merekam sebuah siaran langsung. Mohon akhiri siaran langsung Anda untuk memulai sebuah panggilan.",
+    "Can’t start a call": "Tidak dapat memulai panggilan"
 }
