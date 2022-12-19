@@ -52,7 +52,7 @@ describe("retrieveStartedInfoEvent", () => {
     beforeEach(() => {
         client = stubClient();
         room = new Room("!room:example.com", client, client.getUserId()!);
-        mocked(client.getRoom).mockImplementation((roomId: string): Room => {
+        mocked(client.getRoom).mockImplementation((roomId: string): Room | null => {
             if (roomId === room.roomId) return room;
             return null;
         });
@@ -84,7 +84,7 @@ describe("retrieveStartedInfoEvent", () => {
         const startEvent = mkStartEvent();
         const stopEvent = mkStopEvent(startEvent);
         mocked(client.fetchRoomEvent).mockResolvedValue(startEvent.event);
-        expect((await retrieveStartedInfoEvent(stopEvent, client)).getId()).toBe(startEvent.getId());
+        expect((await retrieveStartedInfoEvent(stopEvent, client))?.getId()).toBe(startEvent.getId());
         expect(client.fetchRoomEvent).toHaveBeenCalledWith(room.roomId, startEvent.getId());
     });
 });
