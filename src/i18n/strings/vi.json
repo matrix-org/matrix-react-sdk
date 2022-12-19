@@ -2535,7 +2535,6 @@
     "Show previews/thumbnails for images": "Hiển thị bản xem trước / hình thu nhỏ cho hình ảnh",
     "Show hidden events in timeline": "Hiện các sự kiện ẩn trong dòng thời gian",
     "Show shortcuts to recently viewed rooms above the room list": "Hiển thị shortcuts cho các phòng đã xem gần đây phía trên danh sách phòng",
-    "Show rooms with unread notifications first": "Hiển thị các phòng có thông báo chưa đọc trước",
     "Order rooms by name": "Sắp xếp phòng theo tên",
     "Prompt before sending invites to potentially invalid matrix IDs": "Nhắc trước khi gửi lời mời đến các ID Matrix có khả năng không hợp lệ",
     "Never send encrypted messages to unverified sessions in this room from this session": "Không bao giờ gửi tin nhắn được mã hóa đến các phiên chưa được xác minh trong phòng này từ phiên này",

@@ -775,7 +775,6 @@
     "Never send encrypted messages to unverified sessions from this session": "Non enviar nunca desde esta sesión mensaxes cifradas a sesións non verificadas",
     "Never send encrypted messages to unverified sessions in this room from this session": "Non enviar mensaxes cifradas desde esta sesión a sesións non verificadas nesta sala",
     "Prompt before sending invites to potentially invalid matrix IDs": "Avisar antes de enviar convites a IDs de Matrix potencialmente incorrectos",
-    "Order rooms by name": "Ordenar salas por nome",
     "Show rooms with unread notifications first": "Mostrar primeiro as salas que teñen notificacións sen ler",
     "Show shortcuts to recently viewed rooms above the room list": "Mostrar atallos a salas vistas recentemente enriba da lista de salas",
     "Show hidden events in timeline": "Mostrar na cronoloxía eventos ocultos",

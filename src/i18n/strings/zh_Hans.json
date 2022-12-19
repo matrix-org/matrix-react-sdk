@@ -980,7 +980,6 @@
     "System font name": "系统字体名称",
     "Never send encrypted messages to unverified sessions from this session": "永不从本会话向未验证的会话发送加密消息",
     "Never send encrypted messages to unverified sessions in this room from this session": "永不从此会话向此房间中未验证的会话发送加密消息",
-    "Order rooms by name": "按名称排列房间顺序",
     "Show rooms with unread notifications first": "优先显示有未读通知的房间",
     "Show previews/thumbnails for images": "显示图片的预览图",
     "Enable message search in encrypted rooms": "在加密房间中启用消息搜索",

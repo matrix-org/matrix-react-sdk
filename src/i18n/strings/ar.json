@@ -849,7 +849,6 @@
     "Show previews/thumbnails for images": "إظهار المعاينات / الصور المصغرة للصور",
     "Show hidden events in timeline": "إظهار الأحداث المخفية في الجدول الزمني",
     "Show shortcuts to recently viewed rooms above the room list": "إظهار اختصارات للغرف التي تم عرضها مؤخرًا أعلى قائمة الغرف",
-    "Show rooms with unread notifications first": "اعرض الغرف ذات الإشعارات غير المقروءة أولاً",
     "Order rooms by name": "ترتيب الغرف بالاسم",
     "Prompt before sending invites to potentially invalid matrix IDs": "أعلمني قبل إرسال دعوات لمعرِّفات قد لا تكون صحيحة",
     "Enable URL previews by default for participants in this room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة",

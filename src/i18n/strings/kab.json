@@ -441,7 +441,6 @@
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "%(senderName)s invited %(targetName)s": "%(senderName)s yettusnubget %(targetName)s",
     "Message Pinning": "Arezzi n yizen",
-    "Order rooms by name": "Semyizwer tixxamin s yisem",
     "Show rooms with unread notifications first": "Sken tixxamin yesεan ilɣa ur nettwaɣra ara d timezwura",
     "Collecting logs": "Alqaḍ n yiɣmisen",
     "Waiting for response from server": "Aṛaǧu n tririt sɣur aqeddac",
