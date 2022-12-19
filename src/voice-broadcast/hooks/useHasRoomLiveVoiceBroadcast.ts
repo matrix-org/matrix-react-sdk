@@ -25,11 +25,13 @@ export const useHasRoomLiveVoiceBroadcast = (room: Room) => {
     const sdkContext = useContext(SDKContext);
     const [hasLiveVoiceBroadcast, setHasLiveVoiceBroadcast] = useState(false);
 
-    const update = () => {
-        hasRoomLiveVoiceBroadcast(sdkContext.client, room).then(({ hasBroadcast }) => {
-            setHasLiveVoiceBroadcast(hasBroadcast);
-        });
-    };
+    const update = sdkContext.client
+        ? () => {
+              hasRoomLiveVoiceBroadcast(sdkContext.client!, room).then(({ hasBroadcast }) => {
+                  setHasLiveVoiceBroadcast(hasBroadcast);
+              });
+          }
+        : () => {}; // noop without client
 
     update();
     useTypedEventEmitter(room.currentState, RoomStateEvent.Update, () => update());

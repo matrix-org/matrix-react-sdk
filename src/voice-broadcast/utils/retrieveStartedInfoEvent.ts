@@ -30,7 +30,7 @@ export const retrieveStartedInfoEvent = async (
     // no related event
     if (!relatedEventId) return null;
 
-    const roomId = event.getRoomId();
+    const roomId = event.getRoomId() || "";
     const relatedEventFromRoom = client.getRoom(roomId)?.findEventById(relatedEventId);
 
     // event found

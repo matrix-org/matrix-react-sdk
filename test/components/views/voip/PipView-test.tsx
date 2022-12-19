@@ -322,7 +322,7 @@ describe("PipView", () => {
                 throw new Error("broadcast not started");
             }
 
-            await voiceBroadcastPlaybacksStore.getCurrent().start();
+            await voiceBroadcastPlaybacksStore.getCurrent()?.start();
             viewRoom(room2.roomId);
             renderPip();
         });

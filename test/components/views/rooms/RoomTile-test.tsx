@@ -56,8 +56,8 @@ describe("RoomTile", () => {
         voiceBroadcastInfoEvent = mkVoiceBroadcastInfoStateEvent(
             room.roomId,
             state,
-            client.getUserId(),
-            client.getDeviceId(),
+            client.getSafeUserId(),
+            client.getDeviceId()!,
         );
 
         await act(async () => {
@@ -144,7 +144,7 @@ describe("RoomTile", () => {
 
             // Insert an await point in the connection method so we can inspect
             // the intermediate connecting state
-            let completeConnection: () => void;
+            let completeConnection: () => void = () => {};
             const connectionCompleted = new Promise<void>((resolve) => (completeConnection = resolve));
             jest.spyOn(call, "performConnection").mockReturnValue(connectionCompleted);
 
@@ -213,8 +213,8 @@ describe("RoomTile", () => {
                 const stopEvent = mkVoiceBroadcastInfoStateEvent(
                     room.roomId,
                     VoiceBroadcastInfoState.Stopped,
-                    client.getUserId(),
-                    client.getDeviceId(),
+                    client.getSafeUserId(),
+                    client.getDeviceId()!,
                     voiceBroadcastInfoEvent,
                 );
                 await act(async () => {
