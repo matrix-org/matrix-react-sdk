@@ -23,6 +23,16 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
 }
 
+// Hitting enter inside the editor inserts an editable div, initially containing a <br />
+// For correct display, first replace this pattern with a newline character and then remove divs
+// noting that they are used to delimit paragraphs
+export function amendInnerHtml(text: string) {
+    return text
+        .replace(/<div><br><\/div>/g, "\n") // this is pressing enter then not typing
+        .replace(/<div>/g, "\n")
+        .replace(/<\/div>/g, "");
+}
+
 export function usePlainTextListeners(
     initialContent?: string,
     onChange?: (content: string) => void,
@@ -49,18 +59,9 @@ export function usePlainTextListeners(
     const onInput = useCallback(
         (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
             if (isDivElement(event.target)) {
-                if (enterShouldSend) {
-                    // if enter should send, can just set text
-                    setText(event.target.innerHTML);
-                } else {
-                    // hitting enter inside an editable div inserts a br tag inside
-                    // a div tag as default behaviour, which can then be edited
-                    const amendedHtml = event.target.innerHTML
-                        .replaceAll(/<div>/g, "")
-                        .replaceAll(/<\/div>/g, "")
-                        .replaceAll(/<br>/g, "\n");
-                    setText(amendedHtml);
-                }
+                // if enterShouldSend, we do not need to amend the html before setting text
+                const newInnerHTML = enterShouldSend ? event.target.innerHTML : amendInnerHtml(event.target.innerHTML);
+                setText(newInnerHTML);
             }
         },
         [setText, enterShouldSend],
