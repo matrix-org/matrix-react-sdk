@@ -3673,5 +3673,8 @@
     "Under active development. Can currently only be enabled via config.json": "Nën zhvillim aktiv. Aktualisht mund të aktivizohet vetëm përmes config.json",
     "Rust cryptography implementation": "Sendërtim kriptografie Rust",
     "%(senderName)s ended a voice broadcast": "%(senderName)s përfundoi një transmetim zanor",
-    "You ended a voice broadcast": "Përfunduat një transmetim zanor"
+    "You ended a voice broadcast": "Përfunduat një transmetim zanor",
+    "Threaded messages": "Mesazhe në rrjedha",
+    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "S’mund të nisni një thirrje, ngaqë aktualisht jeni duke regjistruar një transmetim të drejtpërdrejtë. Që të mund të nisni një thirrje, ju lutemi, përfundoni transmetimin tuaj të drejtpërdrejtë.",
+    "Can’t start a call": "S’fillohet dot thirrje"
 }
