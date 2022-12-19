@@ -1236,7 +1236,6 @@
     "Use your account or create a new one to continue.": "Gebruik je bestaande account of maak een nieuwe aan om verder te gaan.",
     "Create Account": "Registreren",
     "Displays information about a user": "Geeft informatie weer over een persoon",
-    "Show rooms with unread notifications first": "Kamers met ongelezen meldingen eerst tonen",
     "Show shortcuts to recently viewed rooms above the room list": "Snelkoppelingen naar de kamers die je recent hebt bekeken bovenaan de kamerlijst weergeven",
     "Cancelling…": "Bezig met annuleren…",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "In %(brand)s ontbreken enige modulen vereist voor het veilig lokaal bewaren van versleutelde berichten. Wil je deze functie uittesten, compileer dan een aangepaste versie van %(brand)s Desktop <nativeLink>die de zoekmodulen bevat</nativeLink>.",

@@ -1011,7 +1011,6 @@
     "Show typing notifications": "Zobrazovať oznámenia, keď ostatní používatelia píšu",
     "Never send encrypted messages to unverified sessions from this session": "Nikdy neposielať šifrované správy neovereným reláciám z tejto relácie",
     "Never send encrypted messages to unverified sessions in this room from this session": "Nikdy neposielať šifrované správy neovereným reláciám v tejto miestnosti z tejto relácie",
-    "Show rooms with unread notifications first": "Zobraziť miestnosti s neprečítanými oznámeniami navrchu",
     "Show shortcuts to recently viewed rooms above the room list": "Zobraziť skratky nedávno zobrazených miestnosti nad zoznamom miestností",
     "Enable message search in encrypted rooms": "Povoliť vyhľadávanie správ v šifrovaných miestnostiach",
     "How fast should messages be downloaded.": "Ako rýchlo sa majú správy sťahovať.",

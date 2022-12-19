@@ -1813,7 +1813,6 @@
     "Show previews/thumbnails for images": "پیش‌نمایش تصاویر را نشان بده",
     "Show hidden events in timeline": "نمایش رخدادهای مخفی در گفتگو‌ها",
     "Show shortcuts to recently viewed rooms above the room list": "نمایش میانبر در بالای لیست اتاق‌ها برای مشاهده‌ی اتاق‌هایی که اخیرا باز کرده‌اید",
-    "Order rooms by name": "مرتب‌کردن اتاق‌ها بر اساس نام",
     "Prompt before sending invites to potentially invalid matrix IDs": "قبل از ارسال دعوت‌نامه برای کاربری که شناسه‌ی او احتمالا معتبر نیست، هشدا بده",
     "Enable widget screenshots on supported widgets": "فعال‌سازی امکان اسکرین‌شات برای ویجت‌های پشتیبانی‌شده",
     "Enable URL previews by default for participants in this room": "امکان پیش‌نمایش URL را به صورت پیش‌فرض برای اعضای این اتاق فعال کن",

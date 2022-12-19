@@ -2212,7 +2212,6 @@
     "Show previews/thumbnails for images": "ສະແດງຕົວຢ່າງ/ຮູບຕົວຢ່າງສຳລັບຮູບພາບ",
     "Show hidden events in timeline": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
     "Show shortcuts to recently viewed rooms above the room list": "ສະແດງທາງລັດໄປຫາຫ້ອງທີ່ເບິ່ງເມື່ອບໍ່ດົນມານີ້ຂ້າງເທິງລາຍການຫ້ອງ",
-    "Order rooms by name": "ຈັດລຽງຫ້ອງຕາມຊື່",
     "Prompt before sending invites to potentially invalid matrix IDs": "ເຕືອນກ່ອນທີ່ຈະສົ່ງຄໍາເຊີນໄປຫາ ID matrix ທີ່ອາດຈະບໍ່ຖືກຕ້ອງ",
     "Enable widget screenshots on supported widgets": "ເປີດໃຊ້ widget ຖ່າຍໜ້າຈໍໃນ widget ທີ່ຮອງຮັບ",
     "Enable URL previews by default for participants in this room": "ເປີດໃຊ້ການສະແດງຕົວຢ່າງ URL ໂດຍຄ່າເລີ່ມຕົ້ນສໍາລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້",

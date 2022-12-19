@@ -392,7 +392,6 @@
     "Send analytics data": "Send analytiske data",
     "Enable inline URL previews by default": "Skru på URL-forhåndsvisninger inni meldinger som standard",
     "Prompt before sending invites to potentially invalid matrix IDs": "Si ifra før det sendes invitasjoner til potensielt ugyldige Matrix-ID-er",
-    "Show rooms with unread notifications first": "Vis rom med uleste varsler først",
     "Show shortcuts to recently viewed rooms above the room list": "Vis snarveier til de nyligst viste rommene ovenfor romlisten",
     "Show hidden events in timeline": "Vis skjulte hendelser i tidslinjen",
     "Show previews/thumbnails for images": "Vis forhåndsvisninger for bilder",

@@ -902,7 +902,6 @@
     "Scan this unique code": "Noskenējiet šo unikālo kodu",
     "The other party cancelled the verification.": "Pretējā puse pārtrauca verificēšanu.",
     "Show shortcuts to recently viewed rooms above the room list": "Rādīt saīsnes uz nesen skatītajām istabām istabu saraksta augšpusē",
-    "Order rooms by name": "Kārtot istabas pēc nosaukuma",
     "Send analytics data": "Sūtīt analītikas datus",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
