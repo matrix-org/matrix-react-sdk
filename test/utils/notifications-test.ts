@@ -26,6 +26,7 @@ import {
     createLocalNotificationSettingsIfNeeded,
     deviceNotificationSettingsKeys,
     clearAllNotifications,
+    clearRoomNotification,
 } from "../../src/utils/notifications";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { getMockClientWithEventEmitter } from "../test-utils/client";
@@ -104,6 +105,41 @@ describe("notifications", () => {
 
             mockClient.setAccountData(accountDataEventKey, { is_silenced: false });
             expect(localNotificationsAreSilenced(mockClient)).toBeFalsy();
+        });
+    });
+
+    describe("clearRoomNotification", () => {
+        let client: MatrixClient;
+        let room: Room;
+        let sendReadReceiptSpy;
+
+        const ROOM_ID = "123";
+        const USER_ID = "@bob:example.org";
+
+        beforeEach(() => {
+            stubClient();
+            client = mocked(MatrixClientPeg.get());
+            room = new Room(ROOM_ID, client, USER_ID);
+            sendReadReceiptSpy = jest.spyOn(client, "sendReadReceipt").mockResolvedValue({});
+            jest.spyOn(client, "getRooms").mockReturnValue([room]);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "sendReadReceipts";
+            });
+        });
+
+        it("sends a request even if everything has been read", () => {
+            clearRoomNotification(room, client);
+            expect(sendReadReceiptSpy).not.toBeCalled();
+        });
+
+        it("marks the room as read even if the receipt failed", async () => {
+            room.setUnreadNotificationCount(NotificationCountType.Total, 5);
+            sendReadReceiptSpy = jest.spyOn(client, "sendReadReceipt").mockReset().mockRejectedValue({});
+            try {
+                await clearRoomNotification(room, client);
+            } finally {
+                expect(room.getUnreadNotificationCount(NotificationCountType.Total)).toBe(0);
+            }
         });
     });
 
