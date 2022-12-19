@@ -44,11 +44,10 @@ export const hasRoomLiveVoiceBroadcast = async (client: MatrixClient, room: Room
             if (startEvent?.isRedacted()) return true;
 
             hasBroadcast = true;
-            infoEvent = event;
+            infoEvent = startEvent;
 
             // state key = sender's MXID
             if (event.getStateKey() === userId) {
-                infoEvent = event;
                 startedByUser = true;
                 // break here, because more than true / true is not possible
                 return false;
