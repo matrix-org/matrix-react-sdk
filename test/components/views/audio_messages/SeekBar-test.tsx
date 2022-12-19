@@ -42,17 +42,29 @@ describe("SeekBar", () => {
     });
 
     describe("when rendering a SeekBar", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
             renderResult = render(<SeekBar ref={seekBarRef} playback={playback} />);
-            act(() => {
-                playback.liveData.update([playback.timeSeconds, playback.durationSeconds]);
-                frameRequestCallback(0);
-            });
         });
 
-        it("should render as expected", () => {
+        it("should render the initial position", () => {
             // expected value 3141 / 31415 ~ 0.099984084
             expect(renderResult.container).toMatchSnapshot();
+        });
+
+        describe("and the playback proceeds", () => {
+            beforeEach(async () => {
+                // @ts-ignore
+                playback.timeSeconds = 6969;
+                act(() => {
+                    playback.liveData.update([playback.timeSeconds, playback.durationSeconds]);
+                    frameRequestCallback(0);
+                });
+            });
+
+            it("should render as expected", () => {
+                // expected value 6969 / 31415 ~ 0.221836702
+                expect(renderResult.container).toMatchSnapshot();
+            });
         });
 
         describe("and seeking position with the slider", () => {
