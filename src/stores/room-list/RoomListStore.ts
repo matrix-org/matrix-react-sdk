@@ -16,7 +16,6 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
