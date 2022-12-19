@@ -17,12 +17,12 @@ limitations under the License.
 import classNames from "classnames";
 import * as React from "react";
 
-import { UserOnboardingTask as Task } from "../../../hooks/useUserOnboardingTasks";
+import { UserOnboardingTaskWithResolvedCompletion } from "../../../hooks/useUserOnboardingTasks";
 import AccessibleButton from "../../views/elements/AccessibleButton";
 import Heading from "../../views/typography/Heading";
 
 interface Props {
-    task: Task;
+    task: UserOnboardingTaskWithResolvedCompletion;
     completed?: boolean;
 }
 
