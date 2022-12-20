@@ -55,7 +55,7 @@ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { Features } from "../../../settings/Settings";
 import { VoiceMessageRecording } from "../../../audio/VoiceMessageRecording";
 import { VoiceBroadcastRecordingsStore } from "../../../voice-broadcast";
-import { SendWysiwygComposer, sendMessage } from "./wysiwyg_composer/";
+import { SendWysiwygComposer } from "./wysiwyg_composer/";
 import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/setUpVoiceBroadcastPreRecording";
 import { SdkContextClass } from "../../../contexts/SDKContext";
@@ -332,6 +332,10 @@ export class MessageComposer extends React.Component<IProps, IState> {
         this.messageComposerInput.current?.sendMessage();
 
         if (this.state.isWysiwygLabEnabled) {
+            // due to this function using wysiwyg functions targetting ES6,
+            // we need to import dynamically
+            const { sendMessage } = await import("./wysiwyg_composer/");
+
             const { permalinkCreator, relation, replyToEvent } = this.props;
             await sendMessage(this.state.composerContent, this.state.isRichTextEnabled, {
                 mxClient: this.props.mxClient,
