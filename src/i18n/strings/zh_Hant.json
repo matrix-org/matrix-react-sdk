@@ -3682,5 +3682,10 @@
     "Under active development. Can currently only be enabled via config.json": "正在積極開發中。目前只能透過 config.json 啟用",
     "Rust cryptography implementation": "Rust 密碼學實作",
     "%(senderName)s ended a voice broadcast": "%(senderName)s 結束音訊廣播",
-    "You ended a voice broadcast": "您結束了音訊廣播"
+    "You ended a voice broadcast": "您結束了音訊廣播",
+    "Improve your account security by following these recommendations.": "透過以下的建議改善您的帳號安全性。",
+    "%(count)s sessions selected|one": "已選取 %(count)s 個工作階段",
+    "%(count)s sessions selected|other": "已選取 %(count)s 個工作階段",
+    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "您無法開始通話，因為您正在錄製直播。請結束您的直播以便開始通話。",
+    "Can’t start a call": "無法開始通話"
 }
