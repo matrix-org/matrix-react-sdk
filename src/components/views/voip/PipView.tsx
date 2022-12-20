@@ -45,6 +45,7 @@ import {
     VoiceBroadcastPreRecordingPip,
     VoiceBroadcastRecording,
     VoiceBroadcastRecordingPip,
+    VoiceBroadcastSmallPlaybackBody,
 } from "../../../voice-broadcast";
 import { useCurrentVoiceBroadcastPlayback } from "../../../voice-broadcast/hooks/useCurrentVoiceBroadcastPlayback";
 
@@ -137,7 +138,7 @@ class PipView extends React.Component<IProps, IState> {
     // Proper solution: use useRef (requires the component to be refactored to a functional component).
     private movePersistedElement = createRef<() => void>() as React.MutableRefObject<() => void>;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
@@ -335,9 +336,17 @@ class PipView extends React.Component<IProps, IState> {
     }
 
     private createVoiceBroadcastPlaybackPipContent(voiceBroadcastPlayback: VoiceBroadcastPlayback): CreatePipChildren {
+        if (this.state.viewedRoomId === voiceBroadcastPlayback.infoEvent.getRoomId()) {
+            return ({ onStartMoving }) => (
+                <div onMouseDown={onStartMoving}>
+                    <VoiceBroadcastPlaybackBody playback={voiceBroadcastPlayback} pip={true} />
+                </div>
+            );
+        }
+
         return ({ onStartMoving }) => (
             <div onMouseDown={onStartMoving}>
-                <VoiceBroadcastPlaybackBody playback={voiceBroadcastPlayback} pip={true} />
+                <VoiceBroadcastSmallPlaybackBody playback={voiceBroadcastPlayback} />
             </div>
         );
     }
