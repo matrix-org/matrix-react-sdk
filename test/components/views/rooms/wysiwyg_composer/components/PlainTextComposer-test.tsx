@@ -22,20 +22,6 @@ import { PlainTextComposer } from "../../../../../../src/components/views/rooms/
 import * as mockUseSettingsHook from "../../../../../../src/hooks/useSettings";
 import * as mockKeyboard from "../../../../../../src/Keyboard";
 
-jest.mock("../../../../../../src/hooks/useSettings");
-
-jest.mock("../../../../../../src/hooks/useSettings");
-
-beforeEach(() => {
-    // defaults for these tests are:
-    // ctrlEnterToSend is false
-    mockUseSettingsHook.useSettingValue = jest.fn().mockReturnValue(false);
-    // platform is not mac
-    mockKeyboard.IS_MAC = false;
-});
-
-
-
 describe("PlainTextComposer", () => {
     const customRender = (
         onChange = (_content: string) => void 0,
@@ -52,6 +38,17 @@ describe("PlainTextComposer", () => {
             />,
         );
     };
+
+    let mockUseSettingValue;
+    beforeEach(() => {
+        // defaults for these tests are:
+        // ctrlEnterToSend is false
+        mockUseSettingValue = jest.spyOn(mockUseSettingsHook, "useSettingValue").mockReturnValue(false);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
 
     it("Should have contentEditable at false when disabled", () => {
         // When
@@ -92,7 +89,7 @@ describe("PlainTextComposer", () => {
 
     it("Should not call onSend when Enter is pressed when ctrlEnterToSend is true", async () => {
         //When
-        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        mockUseSettingValue.mockReturnValue(true);
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
         await userEvent.type(screen.getByRole("textbox"), "{enter}");
@@ -103,7 +100,7 @@ describe("PlainTextComposer", () => {
 
     it("Should only call onSend when ctrl+enter is pressed when ctrlEnterToSend is true on windows", async () => {
         //When
-        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        mockUseSettingValue.mockReturnValue(true);
 
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
@@ -125,8 +122,8 @@ describe("PlainTextComposer", () => {
 
     it("Should only call onSend when cmd+enter is pressed when ctrlEnterToSend is true on mac", async () => {
         //When
-        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
-        mockKeyboard.IS_MAC = true;
+        mockUseSettingValue.mockReturnValue(true);
+        Object.defineProperty(mockKeyboard, "IS_MAC", { value: true });
 
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
@@ -164,7 +161,7 @@ describe("PlainTextComposer", () => {
 
     it("Should insert a newline character when shift enter is pressed when ctrlEnterToSend is true", async () => {
         //When
-        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        mockUseSettingValue.mockReturnValue(true);
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
         const textBox = screen.getByRole("textbox");
@@ -181,7 +178,7 @@ describe("PlainTextComposer", () => {
 
     it("Should not insert div and br tags when enter is pressed when ctrlEnterToSend is true", async () => {
         //When
-        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        mockUseSettingValue.mockReturnValue(true);
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
         const textBox = screen.getByRole("textbox");
@@ -197,7 +194,7 @@ describe("PlainTextComposer", () => {
 
     it("Should not insert div tags when enter is pressed then user types more when ctrlEnterToSend is true", async () => {
         //When
-        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        mockUseSettingValue.mockReturnValue(true);
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
         const textBox = screen.getByRole("textbox");
