@@ -68,9 +68,14 @@ describe("EditWysiwygComposer", () => {
         it("Should initialize useWysiwyg with html content", async () => {
             // When
             customRender(false, editorStateTransfer);
-            await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
 
             // Then
+            expect(screen.queryByRole("textbox")).toBeNull();
+
+            await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"), {
+                timeout: 2000,
+            });
+
             await waitFor(() =>
                 expect(screen.getByRole("textbox")).toContainHTML(mockEvent.getContent()["formatted_body"]),
             );
