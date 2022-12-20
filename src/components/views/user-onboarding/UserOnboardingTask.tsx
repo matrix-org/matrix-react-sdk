@@ -32,6 +32,7 @@ export function UserOnboardingTask({ task, completed = false }: Props) {
 
     return (
         <li
+            data-testid="user-onboarding-task"
             className={classNames("mx_UserOnboardingTask", {
                 mx_UserOnboardingTask_completed: completed,
             })}

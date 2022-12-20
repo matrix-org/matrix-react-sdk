@@ -24,14 +24,23 @@ import Heading from "../../views/typography/Heading";
 import { UserOnboardingFeedback } from "./UserOnboardingFeedback";
 import { UserOnboardingTask } from "./UserOnboardingTask";
 
+export const getUserOnboardingCounters = (tasks: UserOnboardingTaskWithResolvedCompletion[]) => {
+    const completed = tasks.filter((task) => task.completed === true).length;
+    const waiting = tasks.filter((task) => task.completed === false).length;
+
+    return {
+        completed: completed,
+        waiting: waiting,
+        total: completed + waiting,
+    };
+};
+
 interface Props {
     tasks: UserOnboardingTaskWithResolvedCompletion[];
 }
 
 export function UserOnboardingList({ tasks }: Props) {
-    const completed = tasks.filter((task) => task.completed === true).length;
-    const waiting = tasks.filter((task) => task.completed === false).length;
-    const total = completed + waiting;
+    const { completed, waiting, total } = getUserOnboardingCounters(tasks);
 
     return (
         <div className="mx_UserOnboardingList">
