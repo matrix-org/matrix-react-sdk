@@ -3,7 +3,7 @@
 exports[`<CurrentDeviceSection /> displays device details on toggle click 1`] = `
 HTMLCollection [
   <div
-    class="mx_DeviceDetails"
+    class="mx_DeviceDetails mx_CurrentDeviceSection_deviceDetails"
     data-testid="device-detail-alices_device"
   >
     <section

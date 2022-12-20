@@ -27,6 +27,7 @@ import ToggleSwitch from "../../elements/ToggleSwitch";
 import { DeviceDetailHeading } from "./DeviceDetailHeading";
 import { DeviceVerificationStatusCard } from "./DeviceVerificationStatusCard";
 import { ExtendedDevice } from "./types";
+import classNames from "classnames";
 
 interface Props {
     device: ExtendedDevice;
@@ -38,6 +39,7 @@ interface Props {
     saveDeviceName: (deviceName: string) => Promise<void>;
     setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
     supportsMSC3881?: boolean | undefined;
+    className?: string;
 }
 
 interface MetadataTable {
@@ -56,6 +58,7 @@ const DeviceDetails: React.FC<Props> = ({
     saveDeviceName,
     setPushNotifications,
     supportsMSC3881,
+    className,
 }) => {
     const metadata: MetadataTable[] = [
         {
@@ -113,7 +116,7 @@ const DeviceDetails: React.FC<Props> = ({
     }
 
     return (
-        <div className="mx_DeviceDetails" data-testid={`device-detail-${device.device_id}`}>
+        <div className={classNames("mx_DeviceDetails", className)} data-testid={`device-detail-${device.device_id}`}>
             <section className="mx_DeviceDetails_section">
                 <DeviceDetailHeading device={device} saveDeviceName={saveDeviceName} />
                 <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyDevice} />
