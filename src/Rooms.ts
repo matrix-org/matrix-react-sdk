@@ -81,14 +81,14 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
         if (!roomInDMs) return;
     }
 
-    let dmRoomMap = {};
+    let dmRoomMap: Map<string, string[]> = new Map();
 
-    if (mDirectEvent !== undefined) dmRoomMap = { ...currentContent }; // copy as we will mutate
+    if (mDirectEvent !== undefined) dmRoomMap = new Map(Object.entries(currentContent)); // copy as we will mutate
 
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
-    for (const thisUserId of Object.keys(dmRoomMap)) {
-        const roomList = dmRoomMap[thisUserId];
+    for (const thisUserId of dmRoomMap.keys()) {
+        const roomList = dmRoomMap.get(thisUserId) || [];
 
         if (thisUserId != userId) {
             const indexOfRoom = roomList.indexOf(roomId);
@@ -100,14 +100,14 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
 
     // now add it, if it's not already there
     if (userId) {
-        const roomList = dmRoomMap[userId] || [];
+        const roomList = dmRoomMap.get(userId) || [];
         if (roomList.indexOf(roomId) == -1) {
             roomList.push(roomId);
         }
-        dmRoomMap[userId] = roomList;
+        dmRoomMap.set(userId, roomList);
     }
 
-    await MatrixClientPeg.get().setAccountData(EventType.Direct, dmRoomMap);
+    await MatrixClientPeg.get().setAccountData(EventType.Direct, Object.fromEntries(dmRoomMap));
 }
 
 /**
