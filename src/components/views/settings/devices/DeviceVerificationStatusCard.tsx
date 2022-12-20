@@ -22,7 +22,7 @@ import DeviceSecurityCard from "./DeviceSecurityCard";
 import { DeviceSecurityLearnMore } from "./DeviceSecurityLearnMore";
 import { DeviceSecurityVariation, ExtendedDevice } from "./types";
 
-interface Props {
+export interface DeviceVerificationStatusCardProps {
     device: ExtendedDevice;
     isCurrentDevice?: boolean;
     onVerifyDevice?: () => void;
@@ -79,7 +79,11 @@ const getCardProps = (
     };
 };
 
-export const DeviceVerificationStatusCard: React.FC<Props> = ({ device, isCurrentDevice, onVerifyDevice }) => {
+export const DeviceVerificationStatusCard: React.FC<DeviceVerificationStatusCardProps> = ({
+    device,
+    isCurrentDevice,
+    onVerifyDevice,
+}) => {
     const securityCardProps = getCardProps(device, isCurrentDevice);
 
     return (
