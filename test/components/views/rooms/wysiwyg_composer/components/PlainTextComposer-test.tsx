@@ -21,7 +21,6 @@ import userEvent from "@testing-library/user-event";
 import { PlainTextComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/PlainTextComposer";
 import * as mockUseSettingsHook from "../../../../../../src/hooks/useSettings";
 import * as mockKeyboard from "../../../../../../src/Keyboard";
-import { text } from "stream/consumers";
 
 jest.mock("../../../../../../src/hooks/useSettings");
 
@@ -81,7 +80,7 @@ describe("PlainTextComposer", () => {
         expect(onChange).toBeCalledWith(content);
     });
 
-    it("Should call onSend when Enter is pressed and ctrlEnterToSend is false", async () => {
+    it("Should call onSend when Enter is pressed when ctrlEnterToSend is false", async () => {
         //When
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
@@ -91,7 +90,7 @@ describe("PlainTextComposer", () => {
         expect(onSend).toBeCalledTimes(1);
     });
 
-    it("Should not call onSend when Enter is pressed and ctrlEnterToSend is true", async () => {
+    it("Should not call onSend when Enter is pressed when ctrlEnterToSend is true", async () => {
         //When
         mockUseSettingsHook.useSettingValue.mockReturnValue(true);
         const onSend = jest.fn();
@@ -102,7 +101,7 @@ describe("PlainTextComposer", () => {
         expect(onSend).toBeCalledTimes(0);
     });
 
-    it("Should only call onSend when ctrl+enter is pressed if ctrlEnterToSend is true on windows", async () => {
+    it("Should only call onSend when ctrl+enter is pressed when ctrlEnterToSend is true on windows", async () => {
         //When
         mockUseSettingsHook.useSettingValue.mockReturnValue(true);
 
@@ -124,7 +123,7 @@ describe("PlainTextComposer", () => {
         expect(onSend).toBeCalledTimes(1);
     });
 
-    it("Should only call onSend when cmd+enter is pressed if ctrlEnterToSend is true on mac", async () => {
+    it("Should only call onSend when cmd+enter is pressed when ctrlEnterToSend is true on mac", async () => {
         //When
         mockUseSettingsHook.useSettingValue.mockReturnValue(true);
         mockKeyboard.IS_MAC = true;
@@ -147,7 +146,7 @@ describe("PlainTextComposer", () => {
         expect(onSend).toBeCalledTimes(1);
     });
 
-    it("Should insert a newline character when shift enter is pressed and ctrlEnterToSend is false", async () => {
+    it("Should insert a newline character when shift enter is pressed when ctrlEnterToSend is false", async () => {
         //When
         const onSend = jest.fn();
         customRender(jest.fn(), onSend);
@@ -163,7 +162,7 @@ describe("PlainTextComposer", () => {
         expect(textBox.innerHTML).toBe(expectedInnerHtml);
     });
 
-    it("Should insert a newline character when shift enter is pressed and ctrlEnterToSend is true", async () => {
+    it("Should insert a newline character when shift enter is pressed when ctrlEnterToSend is true", async () => {
         //When
         mockUseSettingsHook.useSettingValue.mockReturnValue(true);
         const onSend = jest.fn();
@@ -180,7 +179,23 @@ describe("PlainTextComposer", () => {
         expect(textBox.innerHTML).toBe(expectedInnerHtml);
     });
 
-    it("Should not insert div and br tags when enter is pressed and ctrlEnterToSend is true", async () => {
+    it("Should not insert div and br tags when enter is pressed when ctrlEnterToSend is true", async () => {
+        //When
+        mockUseSettingsHook.useSettingValue.mockReturnValue(true);
+        const onSend = jest.fn();
+        customRender(jest.fn(), onSend);
+        const textBox = screen.getByRole("textbox");
+        const enterThenTypeHtml = "<div>hello</div";
+
+        await userEvent.click(textBox);
+        await userEvent.type(textBox, "{enter}hello");
+
+        // Then it does not send a message, but inserts a newline character
+        expect(onSend).toBeCalledTimes(0);
+        expect(textBox).not.toContainHTML(enterThenTypeHtml);
+    });
+
+    it("Should not insert div tags when enter is pressed then user types more when ctrlEnterToSend is true", async () => {
         //When
         mockUseSettingsHook.useSettingValue.mockReturnValue(true);
         const onSend = jest.fn();
