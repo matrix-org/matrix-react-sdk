@@ -3682,5 +3682,10 @@
     "Under active development. Can currently only be enabled via config.json": "Aktív fejlesztés alatt. Csak config.json-ban lehet bekapcsolni",
     "Rust cryptography implementation": "Rust titkosítás implementáció",
     "%(senderName)s ended a voice broadcast": "%(senderName)s befejezte a hang közvetítést",
-    "You ended a voice broadcast": "A hang közvetítés befejeződött"
+    "You ended a voice broadcast": "A hang közvetítés befejeződött",
+    "Improve your account security by following these recommendations.": "Javítsa a fiókja biztonságát azzal, hogy követi a következő javaslatokat.",
+    "%(count)s sessions selected|one": "%(count)s munkamenet kiválasztva",
+    "%(count)s sessions selected|other": "%(count)s munkamenet kiválasztva",
+    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nem lehet hívást kezdeményezni élő közvetítés felvétele közben. Az élő közvetítés bejezése szükséges a hívás indításához.",
+    "Can’t start a call": "Nem sikerült hívást indítani"
 }
