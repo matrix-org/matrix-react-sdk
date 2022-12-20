@@ -58,10 +58,8 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext }:
             hasCancelButton={true}
             onFinished={async (isClickOnSave: boolean) => {
                 if (isClickOnSave) {
-                    setSelection(composerContext.selection);
-
-                    // Waiting for selection to be effective
-                    setTimeout(() => composer.link(fields.link, isTextEnabled ? fields.text : undefined), 0);
+                    await setSelection(composerContext.selection);
+                    composer.link(fields.link, isTextEnabled ? fields.text : undefined);
                 }
                 onClose();
             }}

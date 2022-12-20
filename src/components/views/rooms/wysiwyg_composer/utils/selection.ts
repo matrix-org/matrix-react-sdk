@@ -25,6 +25,9 @@ export function setSelection(selection: SubSelection) {
         document.getSelection()?.removeAllRanges();
         document.getSelection()?.addRange(range);
     }
+
+    // Waiting for the next loop to ensure that the selection is effective
+    return new Promise((resolve) => setTimeout(resolve, 0));
 }
 
 export function isSelectionEmpty() {

@@ -25,7 +25,7 @@ import * as selection from "../../../../../../src/components/views/rooms/wysiwyg
 import { SubSelection } from "../../../../../../src/components/views/rooms/wysiwyg_composer/types";
 
 describe("LinkModal", () => {
-    const composer = {
+    const formattingFunctions = {
         link: jest.fn(),
     } as unknown as FormattingFunctions;
     const defaultValue: SubSelection = {
@@ -38,7 +38,7 @@ describe("LinkModal", () => {
     const customRender = (isTextEnabled: boolean, onClose: () => void) => {
         return render(
             <LinkModal
-                composer={composer}
+                composer={formattingFunctions}
                 isTextEnabled={isTextEnabled}
                 onClose={onClose}
                 composerContext={{ selection: defaultValue }}
@@ -46,9 +46,9 @@ describe("LinkModal", () => {
         );
     };
 
-    mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
     const selectionSpy = jest.spyOn(selection, "setSelection");
 
+    beforeEach(() => mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) }));
     afterEach(() => {
         jest.clearAllMocks();
         jest.useRealTimers();
@@ -78,13 +78,13 @@ describe("LinkModal", () => {
 
         // Then
         expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-        expect(onClose).toBeCalledTimes(1);
+        await waitFor(() => expect(onClose).toBeCalledTimes(1));
 
         // When
         jest.runAllTimers();
 
         // Then
-        expect(composer.link).toHaveBeenCalledWith("l", undefined);
+        expect(formattingFunctions.link).toHaveBeenCalledWith("l", undefined);
     });
 
     it("Should create a link with text", async () => {
@@ -121,12 +121,12 @@ describe("LinkModal", () => {
 
         // Then
         expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-        expect(onClose).toBeCalledTimes(1);
+        await waitFor(() => expect(onClose).toBeCalledTimes(1));
 
         // When
         jest.runAllTimers();
 
         // Then
-        expect(composer.link).toHaveBeenCalledWith("l", "t");
+        expect(formattingFunctions.link).toHaveBeenCalledWith("l", "t");
     });
 });

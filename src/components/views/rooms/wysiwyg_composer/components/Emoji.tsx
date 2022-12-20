@@ -37,12 +37,13 @@ export function Emoji({ menuPosition }: EmojiProps) {
         <EmojiButton
             menuPosition={menuPosition}
             addEmoji={(emoji) => {
-                setSelection(composerContext.selection);
-                dis.dispatch<ComposerInsertPayload>({
-                    action: Action.ComposerInsert,
-                    text: emoji,
-                    timelineRenderingType: roomContext.timelineRenderingType,
-                });
+                setSelection(composerContext.selection).then(() =>
+                    dis.dispatch<ComposerInsertPayload>({
+                        action: Action.ComposerInsert,
+                        text: emoji,
+                        timelineRenderingType: roomContext.timelineRenderingType,
+                    }),
+                );
                 return true;
             }}
         />
