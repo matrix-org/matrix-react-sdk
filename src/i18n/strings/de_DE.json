@@ -3534,9 +3534,9 @@
     "Italic": "Kursiv",
     "Underline": "Unterstrichen",
     "Notifications silenced": "Benachrichtigungen stummgeschaltet",
-    "Are you sure you want to stop your live broadcast?This will end the broadcast and the full recording will be available in the room.": "Willst du die Sprachübertragung wirklich beenden? Damit endet auch die Aufnahme.",
-    "Yes, stop broadcast": "Ja, Sprachübertragung beenden",
-    "Stop live broadcasting?": "Sprachübertragung beenden?",
+    "Are you sure you want to stop your live broadcast?This will end the broadcast and the full recording will be available in the room.": "Möchtest du die Übertragung wirklich beenden? Dies wird die Übertragung beenden und die vollständige Aufnahme im Raum bereitstellen.",
+    "Yes, stop broadcast": "Ja, Übertragung beenden",
+    "Stop live broadcasting?": "Live-Übertragung beenden?",
     "Sign in with QR code": "Mit QR-Code anmelden",
     "Browser": "Browser",
     "Allow a QR code to be shown in session manager to sign in another device (requires compatible homeserver)": "Erlaube es andere Geräte mittels QR-Code in der Sitzungsverwaltung anzumelden (kompatibler Heim-Server benötigt)",
@@ -3684,5 +3684,8 @@
     "%(senderName)s ended a voice broadcast": "%(senderName)s beendete eine Sprachübertragung",
     "You ended a voice broadcast": "Du hast eine Sprachübertragung beendet",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Du kannst kein Gespräch beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
-    "Can’t start a call": "Kann Gespräch nicht beginnen"
+    "Can’t start a call": "Kann Gespräch nicht beginnen",
+    "Improve your account security by following these recommendations.": "Verbessere deine Kontosicherheit, indem du diese Empfehlungen beherzigst.",
+    "%(count)s sessions selected|one": "%(count)s Sitzung ausgewählt",
+    "%(count)s sessions selected|other": "%(count)s Sitzungen ausgewählt"
 }
