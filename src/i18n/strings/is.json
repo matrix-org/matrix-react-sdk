@@ -3089,7 +3089,6 @@
     "Seen by %(count)s people|other": "Séð af %(count)s aðilum",
     "Send your first message to invite <displayName/> to chat": "Sendu fyrstu skilaboðin þín til að bjóða <displayName/> að spjalla",
     "Security recommendations": "Ráðleggingar varðandi öryggi",
-    "%(selectedDeviceCount)s sessions selected": "%(selectedDeviceCount)s setur valdar",
     "Filter devices": "Sía tæki",
     "Inactive sessions": "Óvirkar setur",
     "Verified sessions": "Sannreyndar setur",
