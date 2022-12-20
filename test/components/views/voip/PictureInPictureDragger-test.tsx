@@ -43,7 +43,17 @@ describe("PictureInPictureDragger", () => {
         });
 
         it("should render the PiP content", () => {
-            expect(renderResult.container).toMatchSnapshot();
+            expect(renderResult.container).toMatchSnapshot("pip-content-1");
+        });
+
+        describe("and rerendering PiP content 1", () => {
+            beforeEach(() => {
+                renderResult.rerender(<PictureInPictureDragger draggable={true}>{mkContent1}</PictureInPictureDragger>);
+            });
+
+            it("should not change the PiP content", () => {
+                expect(renderResult.container).toMatchSnapshot("pip-content-1");
+            });
         });
 
         describe("and rendering PiP content 2", () => {
