@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
 import { IPusher } from "matrix-js-sdk/src/@types/PushRules";
 import { PUSHER_ENABLED } from "matrix-js-sdk/src/@types/event";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
@@ -27,7 +28,6 @@ import ToggleSwitch from "../../elements/ToggleSwitch";
 import { DeviceDetailHeading } from "./DeviceDetailHeading";
 import { DeviceVerificationStatusCard } from "./DeviceVerificationStatusCard";
 import { ExtendedDevice } from "./types";
-import classNames from "classnames";
 
 interface Props {
     device: ExtendedDevice;
