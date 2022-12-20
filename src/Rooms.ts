@@ -57,18 +57,33 @@ export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> 
 /**
  * Marks or unmarks the given room as being as a DM room.
  * @param {string} roomId The ID of the room to modify
- * @param {string} userId The user ID of the desired DM
+ * @param {string | null} userId The user ID of the desired DM
  room target user or null to un-mark
  this room as a DM room
  * @returns {object} A promise
  */
-export async function setDMRoom(roomId: string, userId: string): Promise<void> {
+export async function setDMRoom(roomId: string, userId: string | null): Promise<void> {
     if (MatrixClientPeg.get().isGuest()) return;
 
     const mDirectEvent = MatrixClientPeg.get().getAccountData(EventType.Direct);
+    const currentContent = mDirectEvent?.getContent() || {};
+
+    // already marked as DM
+    if (userId && currentContent[userId]?.includes?.(roomId)) return;
+
+    if (userId === null) {
+        const roomInDMs = Object.values(currentContent).find((roomIds: any) => {
+            if (!Array.isArray(roomIds)) return false;
+            return roomIds.includes(roomId);
+        });
+
+        // skip remove unknown room
+        if (!roomInDMs) return;
+    }
+
     let dmRoomMap = {};
 
-    if (mDirectEvent !== undefined) dmRoomMap = { ...mDirectEvent.getContent() }; // copy as we will mutate
+    if (mDirectEvent !== undefined) dmRoomMap = { ...currentContent }; // copy as we will mutate
 
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
