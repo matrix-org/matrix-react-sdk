@@ -3684,5 +3684,8 @@
     "Under active development. Can currently only be enabled via config.json": "V aktívnom vývoji. V súčasnosti sa dá povoliť len cez config.json",
     "Rust cryptography implementation": "Implementácia kryptografie Rust",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nemôžete spustiť hovor, pretože práve nahrávate živé vysielanie. Ukončite živé vysielanie, aby ste mohli začať hovor.",
-    "Can’t start a call": "Nie je možné začať hovor"
+    "Can’t start a call": "Nie je možné začať hovor",
+    "Improve your account security by following these recommendations.": "Zlepšite zabezpečenie svojho účtu dodržiavaním týchto odporúčaní.",
+    "%(count)s sessions selected|one": "%(count)s vybraná relácia",
+    "%(count)s sessions selected|other": "%(count)s vybraných relácií"
 }
