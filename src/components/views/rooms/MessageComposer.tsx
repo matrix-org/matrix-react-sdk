@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode } from "react";
-import { richToPlain, plainToRich } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -360,6 +359,10 @@ export class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private onRichTextToggle = async () => {
+        // due to this repo targetting ES6, we need to import dynamically
+        const conversionFunctions = await import("@matrix-org/matrix-wysiwyg");
+        const { richToPlain, plainToRich } = conversionFunctions;
+
         const { isRichTextEnabled, composerContent } = this.state;
         const convertedContent = isRichTextEnabled
             ? await richToPlain(composerContent)
