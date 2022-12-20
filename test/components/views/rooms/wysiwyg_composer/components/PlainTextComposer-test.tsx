@@ -210,7 +210,11 @@ describe("PlainTextComposer", () => {
 
     it("Should clear textbox content when clear is called", async () => {
         //When
-        let composer;
+        let composer: {
+            clear: () => void;
+            insertText: (text: string) => void;
+        };
+
         render(
             <PlainTextComposer onChange={jest.fn()} onSend={jest.fn()}>
                 {(ref, composerFunctions) => {
@@ -219,9 +223,11 @@ describe("PlainTextComposer", () => {
                 }}
             </PlainTextComposer>,
         );
+
         await userEvent.type(screen.getByRole("textbox"), "content");
         expect(screen.getByRole("textbox").innerHTML).toBe("content");
-        composer.clear();
+
+        composer!.clear();
 
         // Then
         expect(screen.getByRole("textbox").innerHTML).toBeFalsy();
@@ -249,7 +255,9 @@ describe("PlainTextComposer", () => {
         render(<PlainTextComposer onChange={jest.fn()} onSend={jest.fn()} />);
 
         // Then
-        expect(screen.getByTestId("WysiwygComposerEditor").attributes["data-is-expanded"].value).toBe("false");
+        expect(
+            screen.getByTestId("WysiwygComposerEditor").attributes["data-is-expanded" as unknown as number].value,
+        ).toBe("false");
         expect(editor).toBe(screen.getByRole("textbox"));
 
         // When
@@ -260,7 +268,9 @@ describe("PlainTextComposer", () => {
         jest.runAllTimers();
 
         // Then
-        expect(screen.getByTestId("WysiwygComposerEditor").attributes["data-is-expanded"].value).toBe("true");
+        expect(
+            screen.getByTestId("WysiwygComposerEditor").attributes["data-is-expanded" as unknown as number].value,
+        ).toBe("true");
 
         (global.ResizeObserver as jest.Mock).mockRestore();
         (global.requestAnimationFrame as jest.Mock).mockRestore();
