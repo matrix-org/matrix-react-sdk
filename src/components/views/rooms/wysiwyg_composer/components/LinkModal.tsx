@@ -67,6 +67,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext }:
                 <div className="mx_LinkModal_content">
                     {isTextEnabled && (
                         <Field
+                            autoFocus={true}
                             label={_td("Text")}
                             value={fields.text}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -75,6 +76,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext }:
                         />
                     )}
                     <Field
+                        autoFocus={!isTextEnabled}
                         label={_td("Link")}
                         value={fields.link}
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
