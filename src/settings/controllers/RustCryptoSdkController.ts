@@ -14,19 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SettingsSubsection {
-    width: 100%;
-    box-sizing: border-box;
-}
+import SettingController from "./SettingController";
 
-.mx_SettingsSubsection_description {
-    width: 100%;
-    box-sizing: inherit;
-    line-height: $font-24px;
-    margin-bottom: $spacing-24;
-    color: $secondary-content;
-}
-
-.mx_SettingsSubsection_content {
-    width: 100%;
+export default class RustCryptoSdkController extends SettingController {
+    public get settingDisabled(): boolean {
+        // Currently this can only be changed via config.json. In future, we'll allow the user to *enable* this setting
+        // via labs, which will migrate their existing device to the rust-sdk implementation.
+        return true;
+    }
 }
