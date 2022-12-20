@@ -255,9 +255,7 @@ describe("PlainTextComposer", () => {
         render(<PlainTextComposer onChange={jest.fn()} onSend={jest.fn()} />);
 
         // Then
-        expect(
-            screen.getByTestId("WysiwygComposerEditor").attributes["data-is-expanded" as unknown as number].value,
-        ).toBe("false");
+        expect(screen.getByTestId("WysiwygComposerEditor").dataset["isExpanded"]).toBe("false");
         expect(editor).toBe(screen.getByRole("textbox"));
 
         // When
@@ -268,9 +266,7 @@ describe("PlainTextComposer", () => {
         jest.runAllTimers();
 
         // Then
-        expect(
-            screen.getByTestId("WysiwygComposerEditor").attributes["data-is-expanded" as unknown as number].value,
-        ).toBe("true");
+        expect(screen.getByTestId("WysiwygComposerEditor").dataset["isExpanded"]).toBe("true");
 
         (global.ResizeObserver as jest.Mock).mockRestore();
         (global.requestAnimationFrame as jest.Mock).mockRestore();
