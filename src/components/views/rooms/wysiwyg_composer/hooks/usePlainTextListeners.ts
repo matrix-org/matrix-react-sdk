@@ -17,7 +17,7 @@ limitations under the License.
 import { KeyboardEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
 
 import { useSettingValue } from "../../../../../hooks/useSettings";
-import { IS_MAC, Key } from '../../../../../Keyboard';
+import { IS_MAC, Key } from "../../../../../Keyboard";
 
 function isDivElement(target: EventTarget): target is HTMLDivElement {
     return target instanceof HTMLDivElement;
