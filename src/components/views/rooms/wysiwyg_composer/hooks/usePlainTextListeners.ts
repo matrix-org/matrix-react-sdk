@@ -26,10 +26,10 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
 // Hitting enter inside the editor inserts an editable div, initially containing a <br />
 // For correct display, first replace this pattern with a newline character and then remove divs
 // noting that they are used to delimit paragraphs
-export function amendInnerHtml(text: string) {
+function amendInnerHtml(text: string) {
     return text
         .replace(/<div><br><\/div>/g, "\n") // this is pressing enter then not typing
-        .replace(/<div>/g, "\n")
+        .replace(/<div>/g, "\n") // this is from pressing enter, then typing inside the div
         .replace(/<\/div>/g, "");
 }
 
