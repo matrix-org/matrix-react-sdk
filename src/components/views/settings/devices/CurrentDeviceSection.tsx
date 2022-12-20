@@ -129,7 +129,11 @@ const CurrentDeviceSection: React.FC<Props> = ({
                     ) : (
                         <>
                             <br />
-                            <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyCurrentDevice} />
+                            <DeviceVerificationStatusCard
+                                device={device}
+                                onVerifyDevice={onVerifyCurrentDevice}
+                                isCurrentDevice
+                            />
                         </>
                     )}
                 </>
