@@ -73,7 +73,7 @@ describe("EditWysiwygComposer", () => {
 
         rerender(
             <MatrixClientContext.Provider value={mockClient}>
-                <RoomContext.Provider value={getRoomContext(null, {})}>
+                <RoomContext.Provider value={{ ...defaultRoomContext, room: undefined }}>
                     <EditWysiwygComposer disabled={false} editorStateTransfer={editorStateTransfer} />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>,
@@ -89,8 +89,6 @@ describe("EditWysiwygComposer", () => {
             customRender(false, editorStateTransfer);
 
             // Then
-            expect(screen.queryByRole("textbox")).toBeNull();
-
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"), {
                 timeout: 2000,
             });
