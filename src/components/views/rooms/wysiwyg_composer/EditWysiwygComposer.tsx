@@ -44,35 +44,38 @@ interface EditWysiwygComposerProps {
     className?: string;
 }
 
-export function EditWysiwygComposer({ editorStateTransfer, className, ...props }: EditWysiwygComposerProps) {
+// Default needed for React.lazy
+export default function EditWysiwygComposer({ editorStateTransfer, className, ...props }: EditWysiwygComposerProps) {
     const defaultContextValue = useRef(getDefaultContextValue());
     const initialContent = useInitialContent(editorStateTransfer);
     const isReady = !editorStateTransfer || initialContent !== undefined;
 
     const { editMessage, endEditing, onChange, isSaveDisabled } = useEditing(editorStateTransfer, initialContent);
 
+    if (!isReady) {
+        return null;
+    }
+
     return (
-        isReady && (
-            <ComposerContext.Provider value={defaultContextValue.current}>
-                <WysiwygComposer
-                    className={classNames("mx_EditWysiwygComposer", className)}
-                    initialContent={initialContent}
-                    onChange={onChange}
-                    onSend={editMessage}
-                    {...props}
-                >
-                    {(ref) => (
-                        <>
-                            <Content disabled={props.disabled} ref={ref} />
-                            <EditionButtons
-                                onCancelClick={endEditing}
-                                onSaveClick={editMessage}
-                                isSaveDisabled={isSaveDisabled}
-                            />
-                        </>
-                    )}
-                </WysiwygComposer>
-            </ComposerContext.Provider>
-        )
+        <ComposerContext.Provider value={defaultContextValue.current}>
+            <WysiwygComposer
+                className={classNames("mx_EditWysiwygComposer", className)}
+                initialContent={initialContent}
+                onChange={onChange}
+                onSend={editMessage}
+                {...props}
+            >
+                {(ref) => (
+                    <>
+                        <Content disabled={props.disabled} ref={ref} />
+                        <EditionButtons
+                            onCancelClick={endEditing}
+                            onSaveClick={editMessage}
+                            isSaveDisabled={isSaveDisabled}
+                        />
+                    </>
+                )}
+            </WysiwygComposer>
+        </ComposerContext.Provider>
     );
 }
