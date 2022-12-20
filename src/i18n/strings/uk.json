@@ -3687,5 +3687,7 @@
     "Can’t start a call": "Не вдалося розпочати виклик",
     "Improve your account security by following these recommendations.": "Удоскональте безпеку свого облікового запису, дотримуючись цих порад.",
     "%(count)s sessions selected|one": "%(count)s сеанс вибрано",
-    "%(count)s sessions selected|other": "Вибрано сеансів: %(count)s"
+    "%(count)s sessions selected|other": "Вибрано сеансів: %(count)s",
+    "Failed to read events": "Не вдалося прочитати події",
+    "Failed to send event": "Не вдалося надіслати подію"
 }
