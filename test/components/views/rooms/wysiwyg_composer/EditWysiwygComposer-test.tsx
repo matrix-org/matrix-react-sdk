@@ -64,6 +64,25 @@ describe("EditWysiwygComposer", () => {
         );
     };
 
+    it("Should not render the component when not ready", async () => {
+        // When
+        const { rerender } = customRender(false);
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"), {
+            timeout: 2000,
+        });
+
+        rerender(
+            <MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={getRoomContext(null, {})}>
+                    <EditWysiwygComposer disabled={false} editorStateTransfer={editorStateTransfer} />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>,
+        );
+
+        // Then
+        await waitFor(() => expect(screen.queryByRole("textbox")).toBeNull());
+    });
+
     describe("Initialize with content", () => {
         it("Should initialize useWysiwyg with html content", async () => {
             // When
