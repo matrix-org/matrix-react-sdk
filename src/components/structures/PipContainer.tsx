@@ -14,28 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useContext } from "react";
+import React, { useContext } from "react";
 import { CallEvent, CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
-import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { Optional } from "matrix-events-sdk";
 
 import LegacyCallView from "../views/voip/LegacyCallView";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
-import PersistentApp from "../views/elements/PersistentApp";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import PictureInPictureDragger, { CreatePipChildren } from "./PictureInPictureDragger";
 import dis from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
-import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
-import LegacyCallViewHeader from "../views/voip/LegacyCallView/LegacyCallViewHeader";
+import { WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../stores/ActiveWidgetStore";
-import WidgetStore, { IApp } from "../../stores/WidgetStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { SDKContext, SdkContextClass } from "../../contexts/SDKContext";
-import { CallStore } from "../../stores/CallStore";
 import {
     useCurrentVoiceBroadcastPreRecording,
     useCurrentVoiceBroadcastRecording,
@@ -48,6 +42,7 @@ import {
     VoiceBroadcastSmallPlaybackBody,
 } from "../../voice-broadcast";
 import { useCurrentVoiceBroadcastPlayback } from "../../voice-broadcast/hooks/useCurrentVoiceBroadcastPlayback";
+import { WidgetPip } from "../views/pips/WidgetPip";
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -78,19 +73,7 @@ interface IState {
     persistentWidgetId: string;
     persistentRoomId: string;
     showWidgetInPip: boolean;
-
-    moving: boolean;
 }
-
-const getRoomAndAppForWidget = (widgetId: string, roomId: string): [Room | null, IApp | null] => {
-    if (!widgetId) return [null, null];
-    if (!roomId) return [null, null];
-
-    const room = MatrixClientPeg.get().getRoom(roomId);
-    const app = WidgetStore.instance.getApps(roomId).find((app) => app.id === widgetId);
-
-    return [room, app || null];
-};
 
 // Splits a list of calls into one 'primary' one and a list
 // (which should be a single element) of other calls.
@@ -134,10 +117,6 @@ function getPrimarySecondaryCallsForPip(roomId: Optional<string>): [MatrixCall |
  */
 
 class PipContainerInner extends React.Component<IProps, IState> {
-    // The cast is not so great, but solves the typing issue for the moment.
-    // Proper solution: use useRef (requires the component to be refactored to a functional component).
-    private movePersistedElement = createRef<() => void>() as React.MutableRefObject<() => void>;
-
     public constructor(props: IProps) {
         super(props);
 
@@ -146,7 +125,6 @@ class PipContainerInner extends React.Component<IProps, IState> {
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(roomId);
 
         this.state = {
-            moving: false,
             viewedRoomId: roomId || undefined,
             primaryCall: primaryCall || null,
             secondaryCall: secondaryCalls[0],
@@ -168,7 +146,6 @@ class PipContainerInner extends React.Component<IProps, IState> {
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Persistence, this.onWidgetPersistence);
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Dock, this.onWidgetDockChanges);
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Undock, this.onWidgetDockChanges);
-        document.addEventListener("mouseup", this.onEndMoving.bind(this));
     }
 
     public componentWillUnmount() {
@@ -184,18 +161,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Persistence, this.onWidgetPersistence);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Dock, this.onWidgetDockChanges);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Undock, this.onWidgetDockChanges);
-        document.removeEventListener("mouseup", this.onEndMoving.bind(this));
     }
-
-    private onStartMoving() {
-        this.setState({ moving: true });
-    }
-
-    private onEndMoving() {
-        this.setState({ moving: false });
-    }
-
-    private onMove = () => this.movePersistedElement.current?.();
 
     private onRoomViewStoreUpdate = () => {
         const newRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
@@ -264,53 +230,6 @@ class PipContainerInner extends React.Component<IProps, IState> {
             });
         }
     };
-
-    private onMaximize = (): void => {
-        const widgetId = this.state.persistentWidgetId;
-        const roomId = this.state.persistentRoomId;
-
-        if (this.state.showWidgetInPip && widgetId && roomId) {
-            const [room, app] = getRoomAndAppForWidget(widgetId, roomId);
-
-            if (room && app) {
-                WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
-                return;
-            }
-        }
-
-        dis.dispatch({
-            action: "video_fullscreen",
-            fullscreen: true,
-        });
-    };
-
-    private onPin = (): void => {
-        if (!this.state.showWidgetInPip) return;
-
-        const [room, app] = getRoomAndAppForWidget(this.state.persistentWidgetId, this.state.persistentRoomId);
-
-        if (room && app) {
-            WidgetLayoutStore.instance.moveToContainer(room, app, Container.Top);
-        }
-    };
-
-    private onExpand = (): void => {
-        const widgetId = this.state.persistentWidgetId;
-        if (!widgetId || !this.state.showWidgetInPip) return;
-
-        dis.dispatch({
-            action: Action.ViewRoom,
-            room_id: this.state.persistentRoomId,
-        });
-    };
-
-    private onViewCall = (): void =>
-        dis.dispatch<ViewRoomPayload>({
-            action: Action.ViewRoom,
-            room_id: this.state.persistentRoomId,
-            view_call: true,
-            metricsTrigger: undefined,
-        });
 
     // Accepts a persistentWidgetId to be able to skip awaiting the setState for persistentWidgetId
     public updateShowWidgetInPip(
@@ -401,50 +320,25 @@ class PipContainerInner extends React.Component<IProps, IState> {
             );
         }
 
-        if (this.state.showWidgetInPip) {
-            const pipViewClasses = classNames({
-                mx_LegacyCallView: true,
-                mx_LegacyCallView_pip: pipMode,
-                mx_LegacyCallView_large: !pipMode,
-            });
-            const roomId = this.state.persistentRoomId;
-            const roomForWidget = MatrixClientPeg.get().getRoom(roomId)!;
-            const viewingCallRoom = this.state.viewedRoomId === roomId;
-            const isCall = CallStore.instance.getActiveCall(roomId) !== null;
-
-            pipContent = ({ onStartMoving }) => (
-                <div className={pipViewClasses}>
-                    <LegacyCallViewHeader
-                        onPipMouseDown={(event) => {
-                            onStartMoving?.(event);
-                            this.onStartMoving.bind(this)();
-                        }}
-                        pipMode={pipMode}
-                        callRooms={[roomForWidget]}
-                        onExpand={!isCall && !viewingCallRoom ? this.onExpand : undefined}
-                        onPin={!isCall && viewingCallRoom ? this.onPin : undefined}
-                        onMaximize={isCall ? this.onViewCall : viewingCallRoom ? this.onMaximize : undefined}
-                    />
-                    <PersistentApp
-                        persistentWidgetId={this.state.persistentWidgetId}
-                        persistentRoomId={roomId}
-                        pointerEvents={this.state.moving ? "none" : undefined}
-                        movePersistedElement={this.movePersistedElement}
-                    />
-                </div>
-            );
-        }
-
         if (!!pipContent) {
             return (
                 <PictureInPictureDragger
                     className="mx_LegacyCallPreview"
                     draggable={pipMode}
                     onDoubleClick={this.onDoubleClick}
-                    onMove={this.onMove}
                 >
                     {pipContent}
                 </PictureInPictureDragger>
+            );
+        }
+
+        if (this.state.showWidgetInPip) {
+            return (
+                <WidgetPip
+                    widgetId={this.state.persistentWidgetId}
+                    room={MatrixClientPeg.get().getRoom(this.state.persistentRoomId)!}
+                    viewingRoom={this.state.viewedRoomId === this.state.persistentRoomId}
+                />
             );
         }
 
