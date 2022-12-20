@@ -3684,5 +3684,8 @@
     "%(senderName)s ended a voice broadcast": "%(senderName)s mdngakhiri sebuah siaran suara",
     "You ended a voice broadcast": "Anda mengakhiri sebuah siaran suara",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Anda tidak dapat memulai sebuah panggilan karena Anda saat ini merekam sebuah siaran langsung. Mohon akhiri siaran langsung Anda untuk memulai sebuah panggilan.",
-    "Can’t start a call": "Tidak dapat memulai panggilan"
+    "Can’t start a call": "Tidak dapat memulai panggilan",
+    "Improve your account security by following these recommendations.": "Tingkatkan keamanan akun Anda dengan mengikuti saran berikut.",
+    "%(count)s sessions selected|one": "%(count)s sesi dipilih",
+    "%(count)s sessions selected|other": "%(count)s sesi dipilih"
 }
