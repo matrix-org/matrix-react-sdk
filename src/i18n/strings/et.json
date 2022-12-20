@@ -3684,5 +3684,8 @@
     "%(senderName)s ended a voice broadcast": "%(senderName)s lõpetas ringhäälingukõne",
     "You ended a voice broadcast": "Sa lõpetasid ringhäälingukõne",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis tavakõne algatamine ei õnnestu. Kõne alustamiseks palun lõpeta ringhäälingukõne.",
-    "Can’t start a call": "Kõne algatamine ei õnnestu"
+    "Can’t start a call": "Kõne algatamine ei õnnestu",
+    "Improve your account security by following these recommendations.": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust.",
+    "%(count)s sessions selected|one": "%(count)s sessioon valitud",
+    "%(count)s sessions selected|other": "%(count)s sessiooni valitud"
 }
