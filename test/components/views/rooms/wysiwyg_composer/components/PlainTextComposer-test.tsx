@@ -39,7 +39,7 @@ describe("PlainTextComposer", () => {
         );
     };
 
-    let mockUseSettingValue;
+    let mockUseSettingValue: jest.SpyInstance;
     beforeEach(() => {
         // defaults for these tests are:
         // ctrlEnterToSend is false
