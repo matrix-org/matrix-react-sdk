@@ -43,7 +43,7 @@ describe("createMessageContent", () => {
 
         // Then
         expect(content).toEqual({
-            body: "hello world",
+            body: "*__hello__ world*",
             format: "org.matrix.custom.html",
             formatted_body: message,
             msgtype: "m.text",
@@ -56,7 +56,7 @@ describe("createMessageContent", () => {
 
         // Then
         expect(content).toEqual({
-            "body": "> <myfakeuser> Replying to this\n\nhello world",
+            "body": "> <myfakeuser> Replying to this\n\n*__hello__ world*",
             "format": "org.matrix.custom.html",
             "formatted_body":
                 '<mx-reply><blockquote><a href="$$permalink$$">In reply to</a>' +
@@ -81,7 +81,7 @@ describe("createMessageContent", () => {
 
         // Then
         expect(content).toEqual({
-            "body": "hello world",
+            "body": "*__hello__ world*",
             "format": "org.matrix.custom.html",
             "formatted_body": message,
             "msgtype": "m.text",
@@ -114,7 +114,7 @@ describe("createMessageContent", () => {
 
         // Then
         expect(content).toEqual({
-            "body": " * hello world",
+            "body": " * *__hello__ world*",
             "format": "org.matrix.custom.html",
             "formatted_body": ` * ${message}`,
             "msgtype": "m.text",

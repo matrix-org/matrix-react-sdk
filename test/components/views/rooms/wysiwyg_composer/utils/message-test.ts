@@ -80,7 +80,7 @@ describe("message", () => {
 
             // Then
             const expectedContent = {
-                body: "hello world",
+                body: "*__hello__ world*",
                 format: "org.matrix.custom.html",
                 formatted_body: "<i><b>hello</b> world</i>",
                 msgtype: "m.text",
@@ -114,7 +114,7 @@ describe("message", () => {
             });
 
             const expectedContent = {
-                "body": "> <myfakeuser2> My reply\n\nhello world",
+                "body": "> <myfakeuser2> My reply\n\n*__hello__ world*",
                 "format": "org.matrix.custom.html",
                 "formatted_body":
                     '<mx-reply><blockquote><a href="$$permalink$$">In reply to</a>' +
