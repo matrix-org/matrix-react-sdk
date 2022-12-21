@@ -318,9 +318,7 @@ describe("PipView", () => {
             mkVoiceBroadcast(room);
             await actFlushPromises();
 
-            if (!voiceBroadcastPlaybacksStore.getCurrent()) {
-                throw new Error("broadcast not started");
-            }
+            expect(voiceBroadcastPlaybacksStore.getCurrent()).toBeTruthy();
 
             await voiceBroadcastPlaybacksStore.getCurrent()?.start();
             viewRoom(room2.roomId);
