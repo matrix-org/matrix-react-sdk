@@ -2335,7 +2335,7 @@
     "Enable encryption in settings.": "Ota salaus käyttöön asetuksissa.",
     "A private space for you and your teammates": "Yksityinen avaruus sinulle ja tiimikavereille",
     "A private space to organise your rooms": "Yksityinen avaruus, jolla voit järjestää huoneesi",
-    "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Yksityiset viestisi ovat normaalisti salattu, mutta tämä huone ei ole. Yleensä tämä johtuu ei tuetusta laitteesta tai käytetystä tavasta, kuten sähköpostikutsuista.",
+    "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Yksityiset viestisi salataan normaalisti, mutta tämä huone ei ole salattu. Yleensä tämä johtuu laitteesta, jota ei tueta, tai käytetystä tavasta, kuten sähköpostikutsuista.",
     "End-to-end encryption isn't enabled": "Päästä päähän -salaus ei ole käytössä",
     "You have no visible notifications.": "Sinulla ei ole näkyviä ilmoituksia.",
     "Add space": "Lisää avaruus",
