@@ -41,7 +41,7 @@ describe("setDMRoom", () => {
                         [userId2]: [roomId3],
                     },
                     type: EventType.Direct,
-                    user: client.getSafeUserId(),
+                    user: client.getUserId(),
                 });
             }
 
