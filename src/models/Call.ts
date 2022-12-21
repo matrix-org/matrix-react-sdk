@@ -629,7 +629,7 @@ export class ElementCall extends Call {
     private constructor(public readonly groupCall: GroupCall, client: MatrixClient) {
         const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
         // The analyticsID is passed directly to element call (EC) since this codepath is only for EC and no other widget.
-        // We really don't want the same analyticID's for the EC and EW posthog instances (Data on posthog should be limited/anonymized as much as possible). 
+        // We really don't want the same analyticID's for the EC and EW posthog instances (Data on posthog should be limited/anonymized as much as possible).
         // This is prohibited in EC where a hashed version of the analyticsID is used for the actual posthog identification.
         // We can pass the raw EW analyticsID here since we need to trust EC with not sending sensitive data to posthog (EC has access to more sensible data than the analyticsID e.g. the username)
         const analyticsID: string = accountAnalyticsData?.getContent().pseudonymousAnalyticsOptIn
