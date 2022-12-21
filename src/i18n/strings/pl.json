@@ -2290,5 +2290,13 @@
     "Cancel replying to a message": "Anuluj odpowiadanie na wiadomość",
     "Jump to start of the composer": "Przejdź do początku okna edycji",
     "Redo edit": "Ponów edycję",
-    "Jump to last message": "Przejdź do ostatniej wiadomości"
+    "Jump to last message": "Przejdź do ostatniej wiadomości",
+    "Previous room or DM": "Poprzedni pokój lub wiadomość bezpośrednia",
+    "Previous unread room or DM": "Poprzedni nieodczytany pokój lub wiadomość bezpośrednia",
+    "Next unread room or DM": "Następny nieodczytany pokój lub wiadomość bezpośrednia",
+    "Open this settings tab": "Otwórz zakładkę ustawień",
+    "Toggle right panel": "Przełącz prawy panel",
+    "Toggle the top left menu": "Przełącz lewe górne menu",
+    "Navigate up in the room list": "Przejdź w górę listy pokoi",
+    "Navigate down in the room list": "Przejdź w dół listy pokoi"
 }
