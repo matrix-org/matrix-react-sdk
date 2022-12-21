@@ -3687,5 +3687,7 @@
     "Can’t start a call": "Kõne algatamine ei õnnestu",
     "Improve your account security by following these recommendations.": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust.",
     "%(count)s sessions selected|one": "%(count)s sessioon valitud",
-    "%(count)s sessions selected|other": "%(count)s sessiooni valitud"
+    "%(count)s sessions selected|other": "%(count)s sessiooni valitud",
+    "Failed to read events": "Päringu või sündmuse lugemine ei õnnestunud",
+    "Failed to send event": "Päringu või sündmuse saatmine ei õnnestunud"
 }
