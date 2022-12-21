@@ -94,7 +94,7 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
         dmRoomMap.set(userId, roomList);
     }
 
-    // prevent unnecessary changes
+    // prevent unnecessary calls to setAccountData
     if (!modified) return;
 
     await MatrixClientPeg.get().setAccountData(EventType.Direct, Object.fromEntries(dmRoomMap));
