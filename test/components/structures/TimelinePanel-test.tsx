@@ -517,7 +517,7 @@ describe("TimelinePanel", () => {
         });
     });
 
-    it.only("renders when the last message is an undecryptable thread root", () => {
+    it("renders when the last message is an undecryptable thread root", () => {
         jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => name === "feature_threadstable");
 
         const client = MatrixClientPeg.get();
