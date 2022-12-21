@@ -70,6 +70,21 @@ describe("message", () => {
             expect(spyDispatcher).toBeCalledTimes(0);
         });
 
+        it("Should not send message when there is no roomId", async () => {
+            // When
+            const mockRoomWithoutId = mkStubRoom("", "room without id", mockClient) as any;
+
+            await sendMessage(message, true, {
+                roomContext: mockRoomWithoutId,
+                mxClient: mockClient,
+                permalinkCreator,
+            });
+
+            // Then
+            expect(mockClient.sendMessage).toBeCalledTimes(0);
+            expect(spyDispatcher).toBeCalledTimes(0);
+        });
+
         it("Should send html message", async () => {
             // When
             await sendMessage(message, true, {
