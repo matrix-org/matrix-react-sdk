@@ -57,9 +57,8 @@ export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> 
 /**
  * Marks or unmarks the given room as being as a DM room.
  * @param {string} roomId The ID of the room to modify
- * @param {string | null} userId The user ID of the desired DM
- room target user or null to un-mark
- this room as a DM room
+ * @param {string | null} userId The user ID of the desired DM room target user or
+ *                        null to un-mark this room as a DM room
  * @returns {object} A promise
  */
 export async function setDMRoom(roomId: string, userId: string | null): Promise<void> {
@@ -71,19 +70,8 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
     // already marked as DM
     if (userId && currentContent[userId]?.includes?.(roomId)) return;
 
-    if (userId === null) {
-        const roomInDMs = Object.values(currentContent).find((roomIds: any) => {
-            if (!Array.isArray(roomIds)) return false;
-            return roomIds.includes(roomId);
-        });
-
-        // skip remove unknown room
-        if (!roomInDMs) return;
-    }
-
-    let dmRoomMap: Map<string, string[]> = new Map();
-
-    if (mDirectEvent !== undefined) dmRoomMap = new Map(Object.entries(currentContent)); // copy as we will mutate
+    const dmRoomMap = new Map(Object.entries(currentContent));
+    let removed = false;
 
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
@@ -94,9 +82,13 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
             const indexOfRoom = roomList.indexOf(roomId);
             if (indexOfRoom > -1) {
                 roomList.splice(indexOfRoom, 1);
+                removed = true;
             }
         }
     }
+
+    // already not marked as DM
+    if (userId === null && !removed) return;
 
     // now add it, if it's not already there
     if (userId) {
