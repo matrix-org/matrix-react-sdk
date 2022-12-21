@@ -25,6 +25,7 @@ import Spinner from "../views/elements/Spinner";
 import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import Measured from "../views/elements/Measured";
+import Heading from "../views/typography/Heading";
 
 interface IProps {
     onClose(): void;
@@ -38,11 +39,11 @@ interface IState {
  * Component which shows the global notification list using a TimelinePanel
  */
 export default class NotificationPanel extends React.PureComponent<IProps, IState> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
 
     private card = React.createRef<HTMLDivElement>();
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         this.state = {
@@ -54,7 +55,7 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
         this.setState({ narrow });
     };
 
-    render() {
+    public render() {
         const emptyState = (
             <div className="mx_RightPanel_empty mx_NotificationPanel_empty">
                 <h2>{_t("You're all caught up")}</h2>
@@ -90,8 +91,21 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
                     narrow: this.state.narrow,
                 }}
             >
-                <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
-                    <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                <BaseCard
+                    header={
+                        <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                            {_t("Notifications")}
+                        </Heading>
+                    }
+                    /**
+                     * Need to rename this CSS class to something more generic
+                     * Will be done once all the panels are using a similar layout
+                     */
+                    className="mx_ThreadPanel"
+                    onClose={this.props.onClose}
+                    withoutScrollContainer={true}
+                >
+                    {this.card.current && <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />}
                     {content}
                 </BaseCard>
             </RoomContext.Provider>
