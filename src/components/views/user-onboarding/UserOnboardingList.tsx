@@ -43,7 +43,7 @@ export function UserOnboardingList({ tasks }: Props) {
     const { completed, waiting, total } = getUserOnboardingCounters(tasks);
 
     return (
-        <div className="mx_UserOnboardingList">
+        <div className="mx_UserOnboardingList" data-testid="user-onboarding-list">
             <div className="mx_UserOnboardingList_header">
                 <Heading size="h3" className="mx_UserOnboardingList_title">
                     {waiting > 0
