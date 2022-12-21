@@ -3689,5 +3689,6 @@
     "%(count)s sessions selected|one": "%(count)s vybraná relácia",
     "%(count)s sessions selected|other": "%(count)s vybraných relácií",
     "Failed to read events": "Nepodarilo sa prečítať udalosť",
-    "Failed to send event": "Nepodarilo sa odoslať udalosť"
+    "Failed to send event": "Nepodarilo sa odoslať udalosť",
+    " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>"
 }
