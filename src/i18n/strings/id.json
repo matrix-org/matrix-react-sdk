@@ -3687,5 +3687,7 @@
     "Can’t start a call": "Tidak dapat memulai panggilan",
     "Improve your account security by following these recommendations.": "Tingkatkan keamanan akun Anda dengan mengikuti saran berikut.",
     "%(count)s sessions selected|one": "%(count)s sesi dipilih",
-    "%(count)s sessions selected|other": "%(count)s sesi dipilih"
+    "%(count)s sessions selected|other": "%(count)s sesi dipilih",
+    "Failed to read events": "Gagal membaca peristiwa",
+    "Failed to send event": "Gagal mengirimkan peristiwa"
 }
