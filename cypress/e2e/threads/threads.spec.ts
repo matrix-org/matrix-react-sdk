@@ -52,7 +52,7 @@ describe("Threads", () => {
             // initially the new property is there
             cy.window().should("have.prop", "beforeReload", true);
 
-            cy.leaveBeta("Threads");
+            cy.leaveBeta("Threaded messages");
             cy.wait(1000);
             // after reload the property should be gone
             cy.window().should("not.have.prop", "beforeReload");
@@ -66,7 +66,7 @@ describe("Threads", () => {
             // initially the new property is there
             cy.window().should("have.prop", "beforeReload", true);
 
-            cy.joinBeta("Threads");
+            cy.joinBeta("Threaded messages");
             cy.wait(1000);
             // after reload the property should be gone
             cy.window().should("not.have.prop", "beforeReload");
