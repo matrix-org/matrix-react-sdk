@@ -196,189 +196,181 @@ describe("EventTile", () => {
                 expect.objectContaining({
                     action,
                 }),
-                describe("Event verification", () => {
-                    // data for our stubbed getEventEncryptionInfo: a map from event id to result
-                    const eventToEncryptionInfoMap = new Map<string, IEncryptedEventInfo>();
+            );
+        });
+    });
+    describe("Event verification", () => {
+        // data for our stubbed getEventEncryptionInfo: a map from event id to result
+        const eventToEncryptionInfoMap = new Map<string, IEncryptedEventInfo>();
 
-                    const TRUSTED_DEVICE = DeviceInfo.fromStorage({}, "TRUSTED_DEVICE");
-                    const UNTRUSTED_DEVICE = DeviceInfo.fromStorage({}, "UNTRUSTED_DEVICE");
+        const TRUSTED_DEVICE = DeviceInfo.fromStorage({}, "TRUSTED_DEVICE");
+        const UNTRUSTED_DEVICE = DeviceInfo.fromStorage({}, "UNTRUSTED_DEVICE");
 
-                    beforeEach(() => {
-                        eventToEncryptionInfoMap.clear();
+        beforeEach(() => {
+            eventToEncryptionInfoMap.clear();
 
-                        // a mocked version of getEventEncryptionInfo which will pick its result from `eventToEncryptionInfoMap`
-                        client.getEventEncryptionInfo = (event) => eventToEncryptionInfoMap.get(event.getId()!)!;
+            // a mocked version of getEventEncryptionInfo which will pick its result from `eventToEncryptionInfoMap`
+            client.getEventEncryptionInfo = (event) => eventToEncryptionInfoMap.get(event.getId()!)!;
 
-                        // a mocked version of checkUserTrust which always says the user is trusted (we do our testing via
-                        // unverified devices).
-                        const trustedUserTrustLevel = new UserTrustLevel(true, true, true);
-                        client.checkUserTrust = (_userId) => trustedUserTrustLevel;
+            // a mocked version of checkUserTrust which always says the user is trusted (we do our testing via
+            // unverified devices).
+            const trustedUserTrustLevel = new UserTrustLevel(true, true, true);
+            client.checkUserTrust = (_userId) => trustedUserTrustLevel;
 
-                        // a version of checkDeviceTrust which says that TRUSTED_DEVICE is trusted, and others are not.
-                        const trustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(
-                            trustedUserTrustLevel,
-                            true,
-                            false,
-                        );
-                        const untrustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(
-                            trustedUserTrustLevel,
-                            false,
-                            false,
-                        );
-                        client.checkDeviceTrust = (userId, deviceId) => {
-                            if (deviceId === TRUSTED_DEVICE.deviceId) {
-                                return trustedDeviceTrustLevel;
-                            } else {
-                                return untrustedDeviceTrustLevel;
-                            }
-                        };
-                    });
+            // a version of checkDeviceTrust which says that TRUSTED_DEVICE is trusted, and others are not.
+            const trustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, true, false);
+            const untrustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, false, false);
+            client.checkDeviceTrust = (userId, deviceId) => {
+                if (deviceId === TRUSTED_DEVICE.deviceId) {
+                    return trustedDeviceTrustLevel;
+                } else {
+                    return untrustedDeviceTrustLevel;
+                }
+            };
+        });
 
-                    it("shows a warning for an event from an unverified device", async () => {
-                        mxEvent = await mkEncryptedEvent({
-                            plainContent: { msgtype: "m.text", body: "msg1" },
-                            plainType: "m.room.message",
-                            user: "@alice:example.org",
-                            room: room.roomId,
-                        });
-                        eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                            authenticated: true,
-                            sender: UNTRUSTED_DEVICE,
-                        } as IEncryptedEventInfo);
+        it("shows a warning for an event from an unverified device", async () => {
+            mxEvent = await mkEncryptedEvent({
+                plainContent: { msgtype: "m.text", body: "msg1" },
+                plainType: "m.room.message",
+                user: "@alice:example.org",
+                room: room.roomId,
+            });
+            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
+                authenticated: true,
+                sender: UNTRUSTED_DEVICE,
+            } as IEncryptedEventInfo);
 
-                        const { container } = getComponent();
+            const { container } = getComponent();
 
-                        const eventTiles = container.getElementsByClassName("mx_EventTile");
-                        expect(eventTiles).toHaveLength(1);
-                        const eventTile = eventTiles[0];
+            const eventTiles = container.getElementsByClassName("mx_EventTile");
+            expect(eventTiles).toHaveLength(1);
+            const eventTile = eventTiles[0];
 
-                        expect(eventTile.classList).toContain("mx_EventTile_unverified");
+            expect(eventTile.classList).toContain("mx_EventTile_unverified");
 
-                        // there should be a warning shield
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
-                            "mx_EventTile_e2eIcon_warning",
-                        );
-                    });
+            // there should be a warning shield
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
+                "mx_EventTile_e2eIcon_warning",
+            );
+        });
 
-                    it("shows no shield for a verified event", async () => {
-                        mxEvent = await mkEncryptedEvent({
-                            plainContent: { msgtype: "m.text", body: "msg1" },
-                            plainType: "m.room.message",
-                            user: "@alice:example.org",
-                            room: room.roomId,
-                        });
-                        eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                            authenticated: true,
-                            sender: TRUSTED_DEVICE,
-                        } as IEncryptedEventInfo);
+        it("shows no shield for a verified event", async () => {
+            mxEvent = await mkEncryptedEvent({
+                plainContent: { msgtype: "m.text", body: "msg1" },
+                plainType: "m.room.message",
+                user: "@alice:example.org",
+                room: room.roomId,
+            });
+            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
+                authenticated: true,
+                sender: TRUSTED_DEVICE,
+            } as IEncryptedEventInfo);
 
-                        const { container } = getComponent();
+            const { container } = getComponent();
 
-                        const eventTiles = container.getElementsByClassName("mx_EventTile");
-                        expect(eventTiles).toHaveLength(1);
-                        const eventTile = eventTiles[0];
+            const eventTiles = container.getElementsByClassName("mx_EventTile");
+            expect(eventTiles).toHaveLength(1);
+            const eventTile = eventTiles[0];
 
-                        expect(eventTile.classList).toContain("mx_EventTile_verified");
+            expect(eventTile.classList).toContain("mx_EventTile_verified");
 
-                        // there should be no warning
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
-                    });
+            // there should be no warning
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
+        });
 
-                    it("should update the warning when the event is edited", async () => {
-                        // we start out with an event from the trusted device
-                        mxEvent = await mkEncryptedEvent({
-                            plainContent: { msgtype: "m.text", body: "msg1" },
-                            plainType: "m.room.message",
-                            user: "@alice:example.org",
-                            room: room.roomId,
-                        });
-                        eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                            authenticated: true,
-                            sender: TRUSTED_DEVICE,
-                        } as IEncryptedEventInfo);
+        it("should update the warning when the event is edited", async () => {
+            // we start out with an event from the trusted device
+            mxEvent = await mkEncryptedEvent({
+                plainContent: { msgtype: "m.text", body: "msg1" },
+                plainType: "m.room.message",
+                user: "@alice:example.org",
+                room: room.roomId,
+            });
+            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
+                authenticated: true,
+                sender: TRUSTED_DEVICE,
+            } as IEncryptedEventInfo);
 
-                        const { container } = getComponent();
+            const { container } = getComponent();
 
-                        const eventTiles = container.getElementsByClassName("mx_EventTile");
-                        expect(eventTiles).toHaveLength(1);
-                        const eventTile = eventTiles[0];
+            const eventTiles = container.getElementsByClassName("mx_EventTile");
+            expect(eventTiles).toHaveLength(1);
+            const eventTile = eventTiles[0];
 
-                        expect(eventTile.classList).toContain("mx_EventTile_verified");
+            expect(eventTile.classList).toContain("mx_EventTile_verified");
 
-                        // there should be no warning
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
+            // there should be no warning
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
 
-                        // then we replace the event with one from the unverified device
-                        const replacementEvent = await mkEncryptedEvent({
-                            plainContent: { msgtype: "m.text", body: "msg1" },
-                            plainType: "m.room.message",
-                            user: "@alice:example.org",
-                            room: room.roomId,
-                        });
-                        eventToEncryptionInfoMap.set(replacementEvent.getId()!, {
-                            authenticated: true,
-                            sender: UNTRUSTED_DEVICE,
-                        } as IEncryptedEventInfo);
+            // then we replace the event with one from the unverified device
+            const replacementEvent = await mkEncryptedEvent({
+                plainContent: { msgtype: "m.text", body: "msg1" },
+                plainType: "m.room.message",
+                user: "@alice:example.org",
+                room: room.roomId,
+            });
+            eventToEncryptionInfoMap.set(replacementEvent.getId()!, {
+                authenticated: true,
+                sender: UNTRUSTED_DEVICE,
+            } as IEncryptedEventInfo);
 
-                        act(() => {
-                            mxEvent.makeReplaced(replacementEvent);
-                        });
+            act(() => {
+                mxEvent.makeReplaced(replacementEvent);
+            });
 
-                        // check it was updated
-                        expect(eventTile.classList).toContain("mx_EventTile_unverified");
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
-                            "mx_EventTile_e2eIcon_warning",
-                        );
-                    });
+            // check it was updated
+            expect(eventTile.classList).toContain("mx_EventTile_unverified");
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
+                "mx_EventTile_e2eIcon_warning",
+            );
+        });
 
-                    it("should update the warning when the event is replaced with an unencrypted one", async () => {
-                        jest.spyOn(client, "isRoomEncrypted").mockReturnValue(true);
+        it("should update the warning when the event is replaced with an unencrypted one", async () => {
+            jest.spyOn(client, "isRoomEncrypted").mockReturnValue(true);
 
-                        // we start out with an event from the trusted device
-                        mxEvent = await mkEncryptedEvent({
-                            plainContent: { msgtype: "m.text", body: "msg1" },
-                            plainType: "m.room.message",
-                            user: "@alice:example.org",
-                            room: room.roomId,
-                        });
-                        eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                            authenticated: true,
-                            sender: TRUSTED_DEVICE,
-                        } as IEncryptedEventInfo);
+            // we start out with an event from the trusted device
+            mxEvent = await mkEncryptedEvent({
+                plainContent: { msgtype: "m.text", body: "msg1" },
+                plainType: "m.room.message",
+                user: "@alice:example.org",
+                room: room.roomId,
+            });
+            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
+                authenticated: true,
+                sender: TRUSTED_DEVICE,
+            } as IEncryptedEventInfo);
 
-                        const { container } = getComponent();
+            const { container } = getComponent();
 
-                        const eventTiles = container.getElementsByClassName("mx_EventTile");
-                        expect(eventTiles).toHaveLength(1);
-                        const eventTile = eventTiles[0];
+            const eventTiles = container.getElementsByClassName("mx_EventTile");
+            expect(eventTiles).toHaveLength(1);
+            const eventTile = eventTiles[0];
 
-                        expect(eventTile.classList).toContain("mx_EventTile_verified");
+            expect(eventTile.classList).toContain("mx_EventTile_verified");
 
-                        // there should be no warning
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
+            // there should be no warning
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
 
-                        // then we replace the event with an unencrypted one
-                        const replacementEvent = await mkMessage({
-                            msg: "msg2",
-                            user: "@alice:example.org",
-                            room: room.roomId,
-                            event: true,
-                        });
+            // then we replace the event with an unencrypted one
+            const replacementEvent = await mkMessage({
+                msg: "msg2",
+                user: "@alice:example.org",
+                room: room.roomId,
+                event: true,
+            });
 
-                        act(() => {
-                            mxEvent.makeReplaced(replacementEvent);
-                        });
+            act(() => {
+                mxEvent.makeReplaced(replacementEvent);
+            });
 
-                        // check it was updated
-                        expect(eventTile.classList).not.toContain("mx_EventTile_verified");
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
-                        expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
-                            "mx_EventTile_e2eIcon_warning",
-                        );
-                    });
-                }),
+            // check it was updated
+            expect(eventTile.classList).not.toContain("mx_EventTile_verified");
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
+            expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
+                "mx_EventTile_e2eIcon_warning",
             );
         });
     });
