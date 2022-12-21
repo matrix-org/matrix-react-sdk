@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
@@ -50,7 +50,11 @@ export async function sendMessage(
 ) {
     const { relation, replyToEvent } = params;
     const { room } = roomContext;
-    const { roomId } = room;
+    const roomId = room?.roomId;
+
+    if (!roomId) {
+        return;
+    }
 
     const posthogEvent: ComposerEvent = {
         eventName: "Composer",
@@ -67,17 +71,13 @@ export async function sendMessage(
     }*/
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
-    let content: IContent;
+    const content = await createMessageContent(message, isHTML, params);
 
     // TODO slash comment
 
     // TODO replace emotion end of message ?
 
     // TODO quick reaction
-
-    if (!content) {
-        content = await createMessageContent(message, isHTML, params);
-    }
 
     // don't bother sending an empty message
     if (!content.body.trim()) {
@@ -88,7 +88,7 @@ export async function sendMessage(
         decorateStartSendingTime(content);
     }
 
-    const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
+    const threadId = relation?.event_id && relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
 
     const prom = doMaybeLocalRoomAction(
         roomId,
