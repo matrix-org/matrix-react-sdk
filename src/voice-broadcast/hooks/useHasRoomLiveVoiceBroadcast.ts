@@ -32,9 +32,7 @@ export const useHasRoomLiveVoiceBroadcast = (room: Room) => {
                       ({ hasBroadcast }) => {
                           setHasLiveVoiceBroadcast(hasBroadcast);
                       },
-                      () => {
-                          /* no update on error */
-                      },
+                      () => {}, // no update on error
                   );
               }
             : () => {}; // noop without client
