@@ -223,7 +223,10 @@ describe("EditWysiwygComposer", () => {
                 },
                 "msgtype": "m.text",
             };
-            expect(mockClient.sendMessage).toBeCalledWith(mockEvent.getRoomId(), null, expectedContent);
+            await waitFor(() =>
+                expect(mockClient.sendMessage).toBeCalledWith(mockEvent.getRoomId(), null, expectedContent),
+            );
+
             expect(spyDispatcher).toBeCalledWith({ action: "message_sent" });
         });
     });
