@@ -530,9 +530,7 @@ describe("TimelinePanel", () => {
         });
 
         const events = mockEvents(room);
-        const props = {
-            ...getProps(room, events),
-        };
+        const props = getProps(room, events);
 
         const { rootEvent } = mkThread({
             room,
@@ -549,8 +547,8 @@ describe("TimelinePanel", () => {
             user: authorId,
             room: room.roomId,
             event: true,
+            skey: "123",
         });
-        roomMembership.event.state_key = "123";
 
         events.push(roomMembership);
 
