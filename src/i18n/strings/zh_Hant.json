@@ -3687,5 +3687,7 @@
     "%(count)s sessions selected|one": "已選取 %(count)s 個工作階段",
     "%(count)s sessions selected|other": "已選取 %(count)s 個工作階段",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "您無法開始通話，因為您正在錄製直播。請結束您的直播以便開始通話。",
-    "Can’t start a call": "無法開始通話"
+    "Can’t start a call": "無法開始通話",
+    "Failed to read events": "讀取事件失敗",
+    "Failed to send event": "傳送事件失敗"
 }
