@@ -67,11 +67,8 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
     const mDirectEvent = MatrixClientPeg.get().getAccountData(EventType.Direct);
     const currentContent = mDirectEvent?.getContent() || {};
 
-    // already marked as DM
-    if (userId && currentContent[userId]?.includes?.(roomId)) return;
-
     const dmRoomMap = new Map(Object.entries(currentContent));
-    let removed = false;
+    let modified = false;
 
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
@@ -82,22 +79,23 @@ export async function setDMRoom(roomId: string, userId: string | null): Promise<
             const indexOfRoom = roomList.indexOf(roomId);
             if (indexOfRoom > -1) {
                 roomList.splice(indexOfRoom, 1);
-                removed = true;
+                modified = true;
             }
         }
     }
-
-    // already not marked as DM
-    if (userId === null && !removed) return;
 
     // now add it, if it's not already there
     if (userId) {
         const roomList = dmRoomMap.get(userId) || [];
         if (roomList.indexOf(roomId) == -1) {
             roomList.push(roomId);
+            modified = true;
         }
         dmRoomMap.set(userId, roomList);
     }
+
+    // prevent unnecessary changes
+    if (!modified) return;
 
     await MatrixClientPeg.get().setAccountData(EventType.Direct, Object.fromEntries(dmRoomMap));
 }
