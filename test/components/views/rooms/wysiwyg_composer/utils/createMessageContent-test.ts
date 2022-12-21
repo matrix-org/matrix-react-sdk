@@ -24,7 +24,7 @@ describe("createMessageContent", () => {
             return "$$permalink$$";
         },
     } as RoomPermalinkCreator;
-    const message = "<i><b>hello</b> world</i>";
+    const message = "<em><b>hello</b> world</em>";
     const mockEvent = mkEvent({
         type: "m.room.message",
         room: "myfakeroom",
@@ -61,7 +61,7 @@ describe("createMessageContent", () => {
             "formatted_body":
                 '<mx-reply><blockquote><a href="$$permalink$$">In reply to</a>' +
                 ' <a href="https://matrix.to/#/myfakeuser">myfakeuser</a>' +
-                "<br>Replying to this</blockquote></mx-reply><i><b>hello</b> world</i>",
+                "<br>Replying to this</blockquote></mx-reply><em><b>hello</b> world</em>",
             "msgtype": "m.text",
             "m.relates_to": {
                 "m.in_reply_to": {
@@ -119,7 +119,7 @@ describe("createMessageContent", () => {
             "formatted_body": ` * ${message}`,
             "msgtype": "m.text",
             "m.new_content": {
-                body: "hello world",
+                body: "*__hello__ world*",
                 format: "org.matrix.custom.html",
                 formatted_body: message,
                 msgtype: "m.text",
