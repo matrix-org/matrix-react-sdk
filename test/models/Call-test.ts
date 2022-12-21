@@ -41,6 +41,7 @@ import SettingsStore from "../../src/settings/SettingsStore";
 import Modal, { IHandle } from "../../src/Modal";
 import PlatformPeg from "../../src/PlatformPeg";
 import { MatrixEvent } from "matrix-js-sdk";
+import { PosthogAnalytics } from "../../src/PosthogAnalytics";
 
 jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
     [MediaDeviceKindEnum.AudioInput]: [
@@ -625,9 +626,12 @@ describe("ElementCall", () => {
         });
 
         it("passes analyticsID through widget URL", async () => {
-            client.getAccountData.mockReturnValue(
-                new MatrixEvent({ content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: true } }),
-            );
+            client.getAccountData.mockImplementation((eventType: string) => {
+                if (eventType === PosthogAnalytics.ANALYTICS_EVENT_TYPE) {
+                    return new MatrixEvent({ content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: true } });
+                }
+                return undefined;
+            });
             await ElementCall.create(room);
             const call = Call.get(room);
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
@@ -637,9 +641,14 @@ describe("ElementCall", () => {
         });
 
         it("does not pass analyticsID if `pseudonymousAnalyticsOptIn` set to false", async () => {
-            client.getAccountData.mockReturnValue(
-                new MatrixEvent({ content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: false } }),
-            );
+            client.getAccountData.mockImplementation((eventType: string) => {
+                if (eventType === PosthogAnalytics.ANALYTICS_EVENT_TYPE) {
+                    return new MatrixEvent({
+                        content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: false },
+                    });
+                }
+                return undefined;
+            });
             await ElementCall.create(room);
             const call = Call.get(room);
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
@@ -649,7 +658,12 @@ describe("ElementCall", () => {
         });
 
         it("passes empty analyticsID if the id is not in the account data", async () => {
-            client.getAccountData.mockReturnValue(new MatrixEvent({ content: {} }));
+            client.getAccountData.mockImplementation((eventType: string) => {
+                if (eventType === PosthogAnalytics.ANALYTICS_EVENT_TYPE) {
+                    return new MatrixEvent({ content: {} });
+                }
+                return undefined;
+            });
             await ElementCall.create(room);
             const call = Call.get(room);
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
