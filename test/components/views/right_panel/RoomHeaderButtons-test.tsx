@@ -25,7 +25,7 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { stubClient } from "../../../test-utils";
 
-describe("RoomHeaderButtons-test.tsx", function() {
+describe("RoomHeaderButtons-test.tsx", function () {
     const ROOM_ID = "!roomId:example.org";
     let room: Room;
     let client: MatrixClient;
@@ -40,15 +40,12 @@ describe("RoomHeaderButtons-test.tsx", function() {
         });
 
         jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
-            if (name === "feature_thread") return true;
+            if (name === "feature_threadstable") return true;
         });
     });
 
     function getComponent(room?: Room) {
-        return render(<RoomHeaderButtons
-            room={room}
-            excludedRightPanelPhaseButtons={[]}
-        />);
+        return render(<RoomHeaderButtons room={room} excludedRightPanelPhaseButtons={[]} />);
     }
 
     function getThreadButton(container) {
@@ -56,9 +53,7 @@ describe("RoomHeaderButtons-test.tsx", function() {
     }
 
     function isIndicatorOfType(container, type: "red" | "gray") {
-        return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator")
-            .className
-            .includes(type);
+        return container.querySelector(".mx_RightPanel_threadsButton .mx_Indicator").className.includes(type);
     }
 
     it("shows the thread button", () => {

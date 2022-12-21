@@ -40,19 +40,8 @@ interface VoiceBroadcastPlaybackBodyProps {
     playback: VoiceBroadcastPlayback;
 }
 
-export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProps> = ({
-    pip = false,
-    playback,
-}) => {
-    const {
-        duration,
-        liveness,
-        playbackState,
-        position,
-        room,
-        sender,
-        toggle,
-    } = useVoiceBroadcastPlayback(playback);
+export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProps> = ({ pip = false, playback }) => {
+    const { times, liveness, playbackState, room, sender, toggle } = useVoiceBroadcastPlayback(playback);
 
     let controlIcon: React.FC<React.SVGProps<SVGSVGElement>>;
     let controlLabel: string;
@@ -76,36 +65,29 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
             break;
     }
 
-    const control = <VoiceBroadcastControl
-        className={className}
-        label={controlLabel}
-        icon={controlIcon}
-        onClick={toggle}
-    />;
+    const control = (
+        <VoiceBroadcastControl className={className} label={controlLabel} icon={controlIcon} onClick={toggle} />
+    );
 
     let seekBackwardButton: ReactElement | null = null;
     let seekForwardButton: ReactElement | null = null;
 
     if (playbackState !== VoiceBroadcastPlaybackState.Stopped) {
         const onSeekBackwardButtonClick = () => {
-            playback.skipTo(Math.max(0, position - SEEK_TIME));
+            playback.skipTo(Math.max(0, times.position - SEEK_TIME));
         };
 
-        seekBackwardButton = <SeekButton
-            icon={Back30sIcon}
-            label={_t("30s backward")}
-            onClick={onSeekBackwardButtonClick}
-        />;
+        seekBackwardButton = (
+            <SeekButton icon={Back30sIcon} label={_t("30s backward")} onClick={onSeekBackwardButtonClick} />
+        );
 
         const onSeekForwardButtonClick = () => {
-            playback.skipTo(Math.min(duration, position + SEEK_TIME));
+            playback.skipTo(Math.min(times.duration, times.position + SEEK_TIME));
         };
 
-        seekForwardButton = <SeekButton
-            icon={Forward30sIcon}
-            label={_t("30s forward")}
-            onClick={onSeekForwardButtonClick}
-        />;
+        seekForwardButton = (
+            <SeekButton icon={Forward30sIcon} label={_t("30s forward")} onClick={onSeekForwardButtonClick} />
+        );
     }
 
     const classes = classNames({
@@ -116,6 +98,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
     return (
         <div className={classes}>
             <VoiceBroadcastHeader
+                linkToRoom={pip}
                 live={liveness}
                 microphoneLabel={sender?.name}
                 room={room}
@@ -123,13 +106,14 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
                 showBuffering={playbackState === VoiceBroadcastPlaybackState.Buffering}
             />
             <div className="mx_VoiceBroadcastBody_controls">
-                { seekBackwardButton }
-                { control }
-                { seekForwardButton }
+                {seekBackwardButton}
+                {control}
+                {seekForwardButton}
             </div>
+            <SeekBar playback={playback} />
             <div className="mx_VoiceBroadcastBody_timerow">
-                <SeekBar playback={playback} />
-                <Clock seconds={duration} />
+                <Clock seconds={times.position} />
+                <Clock seconds={-times.timeLeft} />
             </div>
         </div>
     );

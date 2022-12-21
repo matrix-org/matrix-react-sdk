@@ -23,7 +23,10 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 0/not-live broadcast should
           My room
         </div>
         <div
-          class="mx_VoiceBroadcastHeader_line"
+          aria-label="Change input device"
+          class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          role="button"
+          tabindex="0"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -76,23 +79,28 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 0/not-live broadcast should
         />
       </div>
     </div>
+    <input
+      class="mx_SeekBar"
+      max="1"
+      min="0"
+      step="0.001"
+      style="--fillTo: 0;"
+      tabindex="0"
+      type="range"
+      value="0"
+    />
     <div
       class="mx_VoiceBroadcastBody_timerow"
     >
-      <input
-        class="mx_SeekBar"
-        max="1"
-        min="0"
-        step="0.001"
-        style="--fillTo: 0;"
-        tabindex="0"
-        type="range"
-        value="0"
-      />
       <span
         class="mx_Clock"
       >
-        23:42
+        00:00
+      </span>
+      <span
+        class="mx_Clock"
+      >
+        -23:42
       </span>
     </div>
   </div>
@@ -122,7 +130,10 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 1/live broadcast should ren
           My room
         </div>
         <div
-          class="mx_VoiceBroadcastHeader_line"
+          aria-label="Change input device"
+          class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          role="button"
+          tabindex="0"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -183,23 +194,28 @@ exports[`VoiceBroadcastPlaybackBody when rendering a 1/live broadcast should ren
         />
       </div>
     </div>
+    <input
+      class="mx_SeekBar"
+      max="1"
+      min="0"
+      step="0.001"
+      style="--fillTo: 0;"
+      tabindex="0"
+      type="range"
+      value="0"
+    />
     <div
       class="mx_VoiceBroadcastBody_timerow"
     >
-      <input
-        class="mx_SeekBar"
-        max="1"
-        min="0"
-        step="0.001"
-        style="--fillTo: 0;"
-        tabindex="0"
-        type="range"
-        value="0"
-      />
       <span
         class="mx_Clock"
       >
-        23:42
+        00:00
+      </span>
+      <span
+        class="mx_Clock"
+      >
+        -23:42
       </span>
     </div>
   </div>
@@ -229,7 +245,10 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
           My room
         </div>
         <div
-          class="mx_VoiceBroadcastHeader_line"
+          aria-label="Change input device"
+          class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          role="button"
+          tabindex="0"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -298,53 +317,73 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
         />
       </div>
     </div>
+    <input
+      class="mx_SeekBar"
+      max="1"
+      min="0"
+      step="0.001"
+      style="--fillTo: 0;"
+      tabindex="0"
+      type="range"
+      value="0"
+    />
     <div
       class="mx_VoiceBroadcastBody_timerow"
     >
-      <input
-        class="mx_SeekBar"
-        max="1"
-        min="0"
-        step="0.001"
-        style="--fillTo: 0;"
-        tabindex="0"
-        type="range"
-        value="0"
-      />
       <span
         class="mx_Clock"
       >
-        23:42
+        00:00
+      </span>
+      <span
+        class="mx_Clock"
+      >
+        -23:42
       </span>
     </div>
   </div>
 </div>
 `;
 
-exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast should render as expected 1`] = `
+exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast in pip mode should render as expected 1`] = `
 <div>
   <div
-    class="mx_VoiceBroadcastBody"
+    class="mx_VoiceBroadcastBody mx_VoiceBroadcastBody--pip"
   >
     <div
       class="mx_VoiceBroadcastHeader"
     >
       <div
-        data-testid="room-avatar"
+        class="mx_AccessibleButton"
+        role="button"
+        tabindex="0"
       >
-        room avatar: 
-        My room
+        <div
+          data-testid="room-avatar"
+        >
+          room avatar: 
+          My room
+        </div>
       </div>
       <div
         class="mx_VoiceBroadcastHeader_content"
       >
         <div
-          class="mx_VoiceBroadcastHeader_room"
+          class="mx_AccessibleButton"
+          role="button"
+          tabindex="0"
         >
-          My room
+          <div
+            class="mx_VoiceBroadcastHeader_room"
+          >
+            My room
+          </div>
         </div>
         <div
-          class="mx_VoiceBroadcastHeader_line"
+          aria-label="Change input device"
+          class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          role="button"
+          tabindex="0"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -397,23 +436,135 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast should re
         />
       </div>
     </div>
+    <input
+      class="mx_SeekBar"
+      max="1"
+      min="0"
+      step="0.001"
+      style="--fillTo: 0;"
+      tabindex="0"
+      type="range"
+      value="0"
+    />
     <div
       class="mx_VoiceBroadcastBody_timerow"
     >
-      <input
-        class="mx_SeekBar"
-        max="1"
-        min="0"
-        step="0.001"
-        style="--fillTo: 0;"
-        tabindex="0"
-        type="range"
-        value="0"
-      />
       <span
         class="mx_Clock"
       >
-        23:42
+        00:00
+      </span>
+      <span
+        class="mx_Clock"
+      >
+        -23:42
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast should render as expected 1`] = `
+<div>
+  <div
+    class="mx_VoiceBroadcastBody"
+  >
+    <div
+      class="mx_VoiceBroadcastHeader"
+    >
+      <div
+        data-testid="room-avatar"
+      >
+        room avatar: 
+        My room
+      </div>
+      <div
+        class="mx_VoiceBroadcastHeader_content"
+      >
+        <div
+          class="mx_VoiceBroadcastHeader_room"
+        >
+          My room
+        </div>
+        <div
+          aria-label="Change input device"
+          class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="mx_Icon mx_Icon_16"
+          />
+          <span>
+            @user:example.com
+          </span>
+        </div>
+        <div
+          class="mx_VoiceBroadcastHeader_line"
+        >
+          <div
+            class="mx_Icon mx_Icon_16"
+          />
+          Voice broadcast
+        </div>
+      </div>
+    </div>
+    <div
+      class="mx_VoiceBroadcastBody_controls"
+    >
+      <div
+        aria-label="30s backward"
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary_content"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_24"
+        />
+      </div>
+      <div
+        aria-label="pause voice broadcast"
+        class="mx_AccessibleButton mx_VoiceBroadcastControl"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_16"
+        />
+      </div>
+      <div
+        aria-label="30s forward"
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary_content"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="mx_Icon mx_Icon_24"
+        />
+      </div>
+    </div>
+    <input
+      class="mx_SeekBar"
+      max="1"
+      min="0"
+      step="0.001"
+      style="--fillTo: 0;"
+      tabindex="0"
+      type="range"
+      value="0"
+    />
+    <div
+      class="mx_VoiceBroadcastBody_timerow"
+    >
+      <span
+        class="mx_Clock"
+      >
+        00:00
+      </span>
+      <span
+        class="mx_Clock"
+      >
+        -23:42
       </span>
     </div>
   </div>
@@ -443,7 +594,10 @@ exports[`VoiceBroadcastPlaybackBody when rendering a stopped broadcast should re
           My room
         </div>
         <div
-          class="mx_VoiceBroadcastHeader_line"
+          aria-label="Change input device"
+          class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          role="button"
+          tabindex="0"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -476,23 +630,28 @@ exports[`VoiceBroadcastPlaybackBody when rendering a stopped broadcast should re
         />
       </div>
     </div>
+    <input
+      class="mx_SeekBar"
+      max="1"
+      min="0"
+      step="0.001"
+      style="--fillTo: 0;"
+      tabindex="0"
+      type="range"
+      value="0"
+    />
     <div
       class="mx_VoiceBroadcastBody_timerow"
     >
-      <input
-        class="mx_SeekBar"
-        max="1"
-        min="0"
-        step="0.001"
-        style="--fillTo: 0;"
-        tabindex="0"
-        type="range"
-        value="0"
-      />
       <span
         class="mx_Clock"
       >
-        23:42
+        00:00
+      </span>
+      <span
+        class="mx_Clock"
+      >
+        -23:42
       </span>
     </div>
   </div>

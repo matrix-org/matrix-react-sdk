@@ -18,10 +18,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { uniq, sortBy } from 'lodash';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import React from "react";
+import { uniq, sortBy } from "lodash";
+import EMOTICON_REGEX from "emojibase-regex/emoticon";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from '../languageHandler';
@@ -40,7 +40,7 @@ const LIMIT = 20;
 
 // Match for ascii-style ";-)" emoticons or ":wink:" shortcodes provided by emojibase
 // anchored to only match from the start of parts otherwise it'll show emoji suggestions whilst typing matrix IDs
-const EMOJI_REGEX = new RegExp('(' + EMOTICON_REGEX.source + '|(?:^|\\s):[+-\\w]*:?)$', 'g');
+const EMOJI_REGEX = new RegExp("(" + EMOTICON_REGEX.source + "|(?:^|\\s):[+-\\w]*:?)$", "g");
 
 interface ISortedEmoji {
     emoji: IEmoji;
@@ -87,12 +87,12 @@ export default class EmojiProvider extends AutocompleteProvider {
         this.emotesPromise = this.decryptEmotes(rawEmotes, room?.roomId);
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
-            funcs: [o => o.emoji.shortcodes.map(s => `:${s}:`)],
+            funcs: [(o) => o.emoji.shortcodes.map((s) => `:${s}:`)],
             // For matching against ascii equivalents
             shouldMatchWordsOnly: false,
         });
         this.nameMatcher = new QueryMatcher(SORTED_EMOJI, {
-            keys: ['emoji.label'],
+            keys: ["emoji.label"],
             // For removing punctuation
             shouldMatchWordsOnly: true,
         });
@@ -143,7 +143,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         }
         this.matcher.setObjects(emojisAndEmotes);
         this.nameMatcher.setObjects(emojisAndEmotes);
-        let completions = [];
+        let completions: ISortedEmoji[] = [];
         const { command, range } = this.getCurrentCommand(query, selection);
 
         if (command && command[0].length > 2) {
@@ -155,33 +155,31 @@ export default class EmojiProvider extends AutocompleteProvider {
 
             let sorters = [];
             // make sure that emoticons come first
-            sorters.push(c => score(matchedString, c.emoji.emoticon || ""));
+            sorters.push((c) => score(matchedString, c.emoji.emoticon || ""));
 
             // then sort by score (Infinity if matchedString not in shortcode)
-            sorters.push(c => score(matchedString, c.emoji.shortcodes[0]));
+            sorters.push((c) => score(matchedString, c.emoji.shortcodes[0]));
             // then sort by max score of all shortcodes, trim off the `:`
             const trimmedMatch = colonsTrimmed(matchedString);
-            sorters.push(c => Math.min(
-                ...c.emoji.shortcodes.map(s => score(trimmedMatch, s)),
-            ));
+            sorters.push((c) => Math.min(...c.emoji.shortcodes.map((s) => score(trimmedMatch, s))));
             // If the matchedString is not empty, sort by length of shortcode. Example:
             //  matchedString = ":bookmark"
             //  completions = [":bookmark:", ":bookmark_tabs:", ...]
             if (matchedString.length > 1) {
-                sorters.push(c => c.emoji.shortcodes[0].length);
+                sorters.push((c) => c.emoji.shortcodes[0].length);
             }
             // Finally, sort by original ordering
-            sorters.push(c => c._orderBy);
-            completions = sortBy(uniq(completions), sorters);
+            sorters.push((c) => c._orderBy);
+            completions = sortBy<ISortedEmoji>(uniq(completions), sorters);
 
             completions = completions.slice(0, LIMIT);
 
             // Do a second sort to place emoji matching with frequently used one on top
             sorters = [];
-            this.recentlyUsed.forEach(emoji => {
-                sorters.push(c => score(emoji.shortcodes[0], c.emoji.shortcodes[0]));
+            this.recentlyUsed.forEach((emoji) => {
+                sorters.push((c) => score(emoji.shortcodes[0], c.emoji.shortcodes[0]));
             });
-            completions = sortBy(uniq(completions), sorters);
+            completions = sortBy<ISortedEmoji>(uniq(completions), sorters);
 
             completions = completions.map(c => ({
                 completion: this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode,
@@ -193,11 +191,11 @@ export default class EmojiProvider extends AutocompleteProvider {
                 range,
             }));
         }
-        return completions;
+        return [];
     }
 
     getName() {
-        return '😃 ' + _t('Emoji');
+        return "😃 " + _t("Emoji");
     }
 
     renderCompletions(completions: React.ReactNode[]): React.ReactNode {
@@ -207,7 +205,7 @@ export default class EmojiProvider extends AutocompleteProvider {
                 role="presentation"
                 aria-label={_t("Emoji Autocomplete")}
             >
-                { completions }
+                {completions}
             </div>
         );
     }

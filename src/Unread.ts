@@ -20,7 +20,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import shouldHideEvent from './shouldHideEvent';
+import shouldHideEvent from "./shouldHideEvent";
 import { haveRendererForEvent } from "./events/EventTileFactory";
 import SettingsStore from "./settings/SettingsStore";
 
@@ -64,9 +64,9 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     // get the most recent read receipt sent by our account.
     // N.B. this is NOT a read marker (RM, aka "read up to marker"),
     // despite the name of the method :((
-    const readUpToId = room.getEventReadUpTo(myUserId);
+    const readUpToId = room.getEventReadUpTo(myUserId!);
 
-    if (!SettingsStore.getValue("feature_thread")) {
+    if (!SettingsStore.getValue("feature_threadstable")) {
         // as we don't send RRs for our own messages, make sure we special case that
         // if *we* sent the last message into the room, we consider it not unread!
         // Should fix: https://github.com/vector-im/element-web/issues/3263
@@ -82,9 +82,11 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     // we consider that there are no unread messages
     // This might be a false negative, but probably the best we can do until
     // the read receipts have evolved to cater for threads
-    const event = room.findEventById(readUpToId);
-    if (event?.getThread()) {
-        return false;
+    if (readUpToId) {
+        const event = room.findEventById(readUpToId);
+        if (event?.getThread()) {
+            return false;
+        }
     }
 
     // this just looks at whatever history we have, which if we've only just started
