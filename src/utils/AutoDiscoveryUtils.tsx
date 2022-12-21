@@ -238,6 +238,9 @@ export default class AutoDiscoveryUtils {
                 if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error) !== -1) {
                     throw newTranslatableError(hsResult.error);
                 }
+                if (hsResult.error === AutoDiscovery.ERROR_HOMESERVER_TOO_OLD) {
+                    throw newTranslatableError(_td("Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server."));
+                }
                 throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
             } // else the error is not related to syntax - continue anyways.
         }

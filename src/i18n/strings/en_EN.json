@@ -680,6 +680,7 @@
     "No homeserver URL provided": "No homeserver URL provided",
     "Unexpected error resolving homeserver configuration": "Unexpected error resolving homeserver configuration",
     "Unexpected error resolving identity server configuration": "Unexpected error resolving identity server configuration",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
     "This homeserver has hit its Monthly Active User limit.": "This homeserver has hit its Monthly Active User limit.",
     "This homeserver has been blocked by its administrator.": "This homeserver has been blocked by its administrator.",
     "This homeserver has exceeded one of its resource limits.": "This homeserver has exceeded one of its resource limits.",
