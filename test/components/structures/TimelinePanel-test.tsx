@@ -524,7 +524,7 @@ describe("TimelinePanel", () => {
         client.isRoomEncrypted = () => true;
         client.supportsExperimentalThreads = () => true;
         client.decryptEventIfNeeded = () => Promise.resolve();
-        const authorId = client.getUserId();
+        const authorId = client.getUserId()!;
         const room = new Room("roomId", client, authorId, {
             lazyLoadMembers: false,
         });
