@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render, RenderResult } from "@testing-library/react";
+import { render, RenderResult, waitFor, screen } from "@testing-library/react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
 import { MessageEvent } from "matrix-events-sdk";
@@ -61,9 +61,9 @@ const newReceipt = (eventId: string, userId: string, readTs: number, fullyReadTs
 };
 
 const getProps = (room: Room, events: MatrixEvent[]): TimelinePanel["props"] => {
-    const timelineSet = room.getUnfilteredTimelineSet?.() ?? ({ room: room as Room } as EventTimelineSet);
+    const timelineSet = { room: room as Room } as EventTimelineSet;
     const timeline = new EventTimeline(timelineSet);
-    events.forEach((event) => timeline.addEvent(event, true));
+    events.forEach((event) => timeline.addEvent(event, { toStartOfTimeline: true }));
     timelineSet.getLiveTimeline = () => timeline;
     timelineSet.getTimelineForEvent = () => timeline;
     timelineSet.getPendingEvents = () => events;
@@ -433,7 +433,7 @@ describe("TimelinePanel", () => {
             // @ts-ignore
             thread.fetchEditsWhereNeeded = () => Promise.resolve();
             await thread.addEvent(reply1, true);
-            await allThreads.getLiveTimeline().addEvent(thread.rootEvent!, true);
+            await allThreads.getLiveTimeline().addEvent(thread.rootEvent!, { toStartOfTimeline: true });
             const replyToEvent = jest.spyOn(thread, "replyToEvent", "get");
 
             const dom = render(
@@ -479,7 +479,7 @@ describe("TimelinePanel", () => {
             // @ts-ignore
             realThread.fetchEditsWhereNeeded = () => Promise.resolve();
             await realThread.addEvent(reply1, true);
-            await allThreads.getLiveTimeline().addEvent(realThread.rootEvent!, true);
+            await allThreads.getLiveTimeline().addEvent(realThread.rootEvent!, { toStartOfTimeline: true });
             const replyToEvent = jest.spyOn(realThread, "replyToEvent", "get");
 
             // @ts-ignore
@@ -517,7 +517,7 @@ describe("TimelinePanel", () => {
         });
     });
 
-    it("renders when the last message is an undecryptable thread root", () => {
+    it("renders when the last message is an undecryptable thread root", async () => {
         jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => name === "feature_threadstable");
 
         const client = MatrixClientPeg.get();
@@ -527,10 +527,11 @@ describe("TimelinePanel", () => {
         const authorId = client.getUserId()!;
         const room = new Room("roomId", client, authorId, {
             lazyLoadMembers: false,
+            pendingEventOrdering: PendingEventOrdering.Detached,
         });
 
         const events = mockEvents(room);
-        const props = getProps(room, events);
+        const timelineSet = room.getUnfilteredTimelineSet();
 
         const { rootEvent } = mkThread({
             room,
@@ -540,6 +541,8 @@ describe("TimelinePanel", () => {
         });
 
         events.push(rootEvent);
+
+        events.forEach((event) => timelineSet.getLiveTimeline().addEvent(event, { toStartOfTimeline: true }));
 
         const roomMembership = mkMembership({
             mship: "join",
@@ -558,8 +561,8 @@ describe("TimelinePanel", () => {
         const roomState = new RoomState(room.roomId);
         jest.spyOn(roomState, "getMember").mockReturnValue(member);
 
-        jest.spyOn(props.timelineSet.getLiveTimeline(), "getState").mockReturnValue(roomState);
-        props.timelineSet.addLiveEvent(roomMembership, {});
+        jest.spyOn(timelineSet.getLiveTimeline(), "getState").mockReturnValue(roomState);
+        timelineSet.addEventToTimeline(roomMembership, timelineSet.getLiveTimeline(), { toStartOfTimeline: false });
 
         for (const event of events) {
             jest.spyOn(event, "isDecryptionFailure").mockReturnValue(true);
@@ -568,10 +571,11 @@ describe("TimelinePanel", () => {
 
         const { container } = render(
             <MatrixClientContext.Provider value={client}>
-                <TimelinePanel {...props} />
+                <TimelinePanel timelineSet={timelineSet} manageReadReceipts={true} sendReadReceiptOnLoad={true} />
             </MatrixClientContext.Provider>,
         );
 
-        expect(container.querySelectorAll(".mx_EventTile")).toHaveLength(5);
+        await waitFor(() => expect(screen.queryByRole("progressbar")).toBeNull());
+        await waitFor(() => expect(container.querySelector(".mx_RoomView_MessageList")).not.toBeEmptyDOMElement());
     });
 });
