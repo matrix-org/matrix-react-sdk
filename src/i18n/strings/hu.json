@@ -3687,5 +3687,8 @@
     "%(count)s sessions selected|one": "%(count)s munkamenet kiválasztva",
     "%(count)s sessions selected|other": "%(count)s munkamenet kiválasztva",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nem lehet hívást kezdeményezni élő közvetítés felvétele közben. Az élő közvetítés bejezése szükséges a hívás indításához.",
-    "Can’t start a call": "Nem sikerült hívást indítani"
+    "Can’t start a call": "Nem sikerült hívást indítani",
+    " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
+    "Failed to read events": "Esemény beolvasása sikertelen",
+    "Failed to send event": "Esemény küldése sikertelen"
 }
