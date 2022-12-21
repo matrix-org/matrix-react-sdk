@@ -252,6 +252,53 @@ describe("PollCreateDialog", () => {
             },
         });
     });
+
+    it("retains poll disclosure type when editing", () => {
+        const previousEvent: MatrixEvent = new MatrixEvent(
+            PollStartEvent.from("Poll Q", ["Answer 1", "Answer 2"], M_POLL_KIND_DISCLOSED).serialize(),
+        );
+        previousEvent.event.event_id = "$prevEventId";
+
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} editingMxEvent={previousEvent} />,
+        );
+
+        changeValue(dialog, "Question or topic", "Poll Q updated");
+        dialog.find("button").simulate("click");
+
+        const [, , eventType, sentEventContent] = mockClient.sendEvent.mock.calls[0];
+        expect(M_POLL_START.matches(eventType)).toBeTruthy();
+        expect(sentEventContent).toEqual({
+            "m.new_content": {
+                [M_TEXT.name]: "Poll Q updated\n1. Answer 1\n2. Answer 2",
+                [M_POLL_START.name]: {
+                    answers: [
+                        {
+                            id: expect.any(String),
+                            [M_TEXT.name]: "Answer 1",
+                        },
+                        {
+                            id: expect.any(String),
+                            [M_TEXT.name]: "Answer 2",
+                        },
+                    ],
+                    kind: M_POLL_KIND_DISCLOSED.name,
+                    max_selections: 1,
+                    question: {
+                        body: "Poll Q updated",
+                        format: undefined,
+                        formatted_body: undefined,
+                        msgtype: "m.text",
+                        [M_TEXT.name]: "Poll Q updated",
+                    },
+                },
+            },
+            "m.relates_to": {
+                event_id: previousEvent.getId(),
+                rel_type: "m.replace",
+            },
+        });
+    });
 });
 
 function createRoom(): Room {
