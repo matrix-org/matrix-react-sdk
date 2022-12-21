@@ -114,7 +114,7 @@
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s hat das Berechtigungslevel von %(powerLevelDiffText)s geändert.",
     "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s hat den Raumnamen geändert zu %(roomName)s.",
     "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s hat das Thema geändert in \"%(topic)s\".",
-    "Failed to send request.": "Anfrage konnte nicht gesendet werden.",
+    "Failed to send request.": "Übertragung der Anfrage fehlgeschlagen.",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s von %(fromPowerLevel)s zu %(toPowerLevel)s",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s hat den Verlauf für alle Raummitglieder ab ihrer Einladung sichtbar gemacht.",
     "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s hat den Verlauf für alle Raummitglieder ab ihrem Betreten sichtbar gemacht.",
@@ -460,9 +460,9 @@
     "Low Priority": "Niedrige Priorität",
     "Off": "Aus",
     "Event Type": "Eventtyp",
-    "Event sent!": "Event gesendet!",
+    "Event sent!": "Ereignis gesendet!",
     "View Source": "Rohdaten anzeigen",
-    "Event Content": "Eventinhalt",
+    "Event Content": "Ereignisinhalt",
     "Thank you!": "Danke!",
     "Checking for an update...": "Nach Aktualisierungen suchen …",
     "Missing roomId.": "Fehlende Raum-ID.",
@@ -3218,7 +3218,7 @@
     "Server Versions": "Server-Versionen",
     "Client Versions": "Anwendungsversionen",
     "Send custom state event": "Benutzerdefiniertes Status-Event senden",
-    "Failed to send event!": "Event konnte nicht gesendet werden!",
+    "Failed to send event!": "Übertragung des Ereignisses fehlgeschlagen!",
     "Server info": "Server-Info",
     "Explore account data": "Kontodaten erkunden",
     "View servers in room": "Zeige Server im Raum",
@@ -3687,5 +3687,7 @@
     "Can’t start a call": "Kann Gespräch nicht beginnen",
     "Improve your account security by following these recommendations.": "Verbessere deine Kontosicherheit, indem du diese Empfehlungen beherzigst.",
     "%(count)s sessions selected|one": "%(count)s Sitzung ausgewählt",
-    "%(count)s sessions selected|other": "%(count)s Sitzungen ausgewählt"
+    "%(count)s sessions selected|other": "%(count)s Sitzungen ausgewählt",
+    "Failed to read events": "Lesen der Ereignisse fehlgeschlagen",
+    "Failed to send event": "Übertragung des Ereignisses fehlgeschlagen"
 }
