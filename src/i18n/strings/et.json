@@ -3689,5 +3689,6 @@
     "%(count)s sessions selected|one": "%(count)s sessioon valitud",
     "%(count)s sessions selected|other": "%(count)s sessiooni valitud",
     "Failed to read events": "Päringu või sündmuse lugemine ei õnnestunud",
-    "Failed to send event": "Päringu või sündmuse saatmine ei õnnestunud"
+    "Failed to send event": "Päringu või sündmuse saatmine ei õnnestunud",
+    " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas"
 }
