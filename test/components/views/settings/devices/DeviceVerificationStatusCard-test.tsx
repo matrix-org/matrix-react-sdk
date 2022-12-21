@@ -21,23 +21,33 @@ import {
     DeviceVerificationStatusCard,
     DeviceVerificationStatusCardProps,
 } from "../../../../../src/components/views/settings/devices/DeviceVerificationStatusCard";
+import { ExtendedDevice } from "../../../../../src/components/views/settings/devices/types";
 import { DeviceType } from "../../../../../src/utils/device/parseUserAgent";
 
 describe("<DeviceVerificationStatusCard />", () => {
-    const baseDevice = {
-        device_id: "test-device",
+    const deviceId = "test-device";
+    const unverifiedDevice: ExtendedDevice = {
+        device_id: deviceId,
         isVerified: false,
         deviceType: DeviceType.Unknown,
     };
+    const verifiedDevice: ExtendedDevice = {
+        ...unverifiedDevice,
+        isVerified: true,
+    };
+    const unverifiableDevice: ExtendedDevice = {
+        ...unverifiedDevice,
+        isVerified: null,
+    };
     const defaultProps = {
-        device: baseDevice,
+        device: unverifiedDevice,
         onVerifyDevice: jest.fn(),
     };
     const getComponent = (props: Partial<DeviceVerificationStatusCardProps> = {}) => (
         <DeviceVerificationStatusCard {...defaultProps} {...props} />
     );
 
-    const verifyButtonTestId = `verification-status-button-${baseDevice.device_id}`;
+    const verifyButtonTestId = `verification-status-button-${deviceId}`;
 
     describe("for the current device", () => {
         // current device uses different copy
@@ -47,20 +57,22 @@ describe("<DeviceVerificationStatusCard />", () => {
         });
 
         it("renders an unverifiable device", () => {
-            const device = {
-                ...baseDevice,
-                isVerified: null,
-            };
-            const { getByText } = render(getComponent({ device, isCurrentDevice: true }));
+            const { getByText } = render(
+                getComponent({
+                    device: unverifiableDevice,
+                    isCurrentDevice: true,
+                }),
+            );
             expect(getByText("This session doesn't support encryption and thus can't be verified.")).toBeTruthy();
         });
 
         it("renders a verified device", () => {
-            const device = {
-                ...baseDevice,
-                isVerified: true,
-            };
-            const { getByText } = render(getComponent({ device, isCurrentDevice: true }));
+            const { getByText } = render(
+                getComponent({
+                    device: verifiedDevice,
+                    isCurrentDevice: true,
+                }),
+            );
             expect(getByText("Your current session is ready for secure messaging.")).toBeTruthy();
         });
     });
@@ -71,21 +83,13 @@ describe("<DeviceVerificationStatusCard />", () => {
     });
 
     it("renders an unverifiable device", () => {
-        const device = {
-            ...baseDevice,
-            isVerified: null,
-        };
-        const { container, queryByTestId } = render(getComponent({ device }));
+        const { container, queryByTestId } = render(getComponent({ device: unverifiableDevice }));
         expect(container).toMatchSnapshot();
         expect(queryByTestId(verifyButtonTestId)).toBeFalsy();
     });
 
     it("renders a verified device", () => {
-        const device = {
-            ...baseDevice,
-            isVerified: true,
-        };
-        const { container, queryByTestId } = render(getComponent({ device }));
+        const { container, queryByTestId } = render(getComponent({ device: verifiedDevice }));
         expect(container).toMatchSnapshot();
         expect(queryByTestId(verifyButtonTestId)).toBeFalsy();
     });
