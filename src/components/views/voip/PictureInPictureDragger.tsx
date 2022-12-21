@@ -85,10 +85,6 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         UIStore.instance.off(UI_EVENTS.Resize, this.onResize);
     }
 
-    public componentDidUpdate(prevProps: Readonly<IProps>): void {
-        if (prevProps.children !== this.props.children) this.snap(true);
-    }
-
     private animationCallback = () => {
         if (
             !this.moving &&
