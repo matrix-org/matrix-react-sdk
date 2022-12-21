@@ -143,7 +143,7 @@ interface EditMessageParams {
     editorStateTransfer: EditorStateTransfer;
 }
 
-export function editMessage(html: string, { roomContext, mxClient, editorStateTransfer }: EditMessageParams) {
+export async function editMessage(html: string, { roomContext, mxClient, editorStateTransfer }: EditMessageParams) {
     const editedEvent = editorStateTransfer.getEvent();
 
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({
@@ -160,7 +160,7 @@ export function editMessage(html: string, { roomContext, mxClient, editorStateTr
         const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
         this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
     }*/
-    const editContent = createMessageContent(html, true, { editedEvent });
+    const editContent = await createMessageContent(html, true, { editedEvent });
     const newContent = editContent["m.new_content"];
 
     const shouldSend = true;
@@ -178,10 +178,10 @@ export function editMessage(html: string, { roomContext, mxClient, editorStateTr
 
     let response: Promise<ISendEventResponse> | undefined;
 
-    // If content is modified then send an updated event into the room
-    if (isContentModified(newContent, editorStateTransfer)) {
-        const roomId = editedEvent.getRoomId();
+    const roomId = editedEvent.getRoomId();
 
+    // If content is modified then send an updated event into the room
+    if (isContentModified(newContent, editorStateTransfer) && roomId) {
         // TODO Slash Commands
 
         if (shouldSend) {
