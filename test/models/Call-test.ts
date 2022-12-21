@@ -40,6 +40,7 @@ import { ElementWidgetActions } from "../../src/stores/widgets/ElementWidgetActi
 import SettingsStore from "../../src/settings/SettingsStore";
 import Modal, { IHandle } from "../../src/Modal";
 import PlatformPeg from "../../src/PlatformPeg";
+import { MatrixEvent } from "matrix-js-sdk";
 
 jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
     [MediaDeviceKindEnum.AudioInput]: [
@@ -621,6 +622,40 @@ describe("ElementCall", () => {
             expect(urlParams.getAll("font")).toEqual(["OpenDyslexic", "DejaVu Sans"]);
 
             SettingsStore.getValue = originalGetValue;
+        });
+
+        it("passes analyticsID through widget URL", async () => {
+            client.getAccountData.mockReturnValue(
+                new MatrixEvent({ content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: true } }),
+            );
+            await ElementCall.create(room);
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("analyticsID")).toBe("123456789987654321");
+        });
+
+        it("does not pass analyticsID if `pseudonymousAnalyticsOptIn` set to false", async () => {
+            client.getAccountData.mockReturnValue(
+                new MatrixEvent({ content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: false } }),
+            );
+            await ElementCall.create(room);
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("analyticsID")).toBe("");
+        });
+
+        it("passes empty analyticsID if the id is not in the account data", async () => {
+            client.getAccountData.mockReturnValue(new MatrixEvent({ content: {} }));
+            await ElementCall.create(room);
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("analyticsID")).toBe("");
         });
     });
 
