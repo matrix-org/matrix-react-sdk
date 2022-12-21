@@ -3689,5 +3689,6 @@
     "%(count)s sessions selected|one": "%(count)s Sitzung ausgewählt",
     "%(count)s sessions selected|other": "%(count)s Sitzungen ausgewählt",
     "Failed to read events": "Lesen der Ereignisse fehlgeschlagen",
-    "Failed to send event": "Übertragung des Ereignisses fehlgeschlagen"
+    "Failed to send event": "Übertragung des Ereignisses fehlgeschlagen",
+    " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>"
 }
