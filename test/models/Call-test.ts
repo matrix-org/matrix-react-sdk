@@ -23,6 +23,7 @@ import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Widget } from "matrix-widget-api";
 import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
@@ -40,7 +41,6 @@ import { ElementWidgetActions } from "../../src/stores/widgets/ElementWidgetActi
 import SettingsStore from "../../src/settings/SettingsStore";
 import Modal, { IHandle } from "../../src/Modal";
 import PlatformPeg from "../../src/PlatformPeg";
-import { MatrixEvent } from "matrix-js-sdk";
 import { PosthogAnalytics } from "../../src/PosthogAnalytics";
 
 jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
