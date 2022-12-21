@@ -3687,5 +3687,7 @@
     "%(count)s sessions selected|one": "%(count)s vybraná relace",
     "%(count)s sessions selected|other": "%(count)s vybraných relací",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nemůžete zahájit hovor, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli zahájit hovor.",
-    "Can’t start a call": "Nelze zahájit hovor"
+    "Can’t start a call": "Nelze zahájit hovor",
+    "Failed to read events": "Nepodařilo se načíst události",
+    "Failed to send event": "Nepodařilo se odeslat událost"
 }
