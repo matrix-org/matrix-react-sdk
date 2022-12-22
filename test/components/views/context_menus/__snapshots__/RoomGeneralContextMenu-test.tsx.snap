@@ -27,7 +27,7 @@ exports[`RoomGeneralContextMenu renders an empty context menu for archived rooms
             aria-label="Mark as read"
             class="mx_AccessibleButton mx_IconizedContextMenu_item"
             role="menuitemcheckbox"
-            tabindex="-1"
+            tabindex="0"
           >
             <span
               class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconMarkAsRead"
@@ -94,7 +94,7 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             aria-label="Mark as read"
             class="mx_AccessibleButton mx_IconizedContextMenu_item"
             role="menuitemcheckbox"
-            tabindex="-1"
+            tabindex="0"
           >
             <span
               class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconMarkAsRead"
