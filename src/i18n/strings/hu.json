@@ -3690,5 +3690,7 @@
     "Can’t start a call": "Nem sikerült hívást indítani",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
     "Failed to read events": "Esemény beolvasása sikertelen",
-    "Failed to send event": "Esemény küldése sikertelen"
+    "Failed to send event": "Esemény küldése sikertelen",
+    "Verify your current session for enhanced secure messaging.": "Ellenőrizze az aktuális munkamenetet a biztonságos üzenetküldéshez.",
+    "Your current session is ready for secure messaging.": "Az aktuális munkamenet készen áll a biztonságos üzenetküldésre."
 }
