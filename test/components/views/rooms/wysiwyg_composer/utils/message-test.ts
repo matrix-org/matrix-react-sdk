@@ -73,9 +73,10 @@ describe("message", () => {
         it("Should not send message when there is no roomId", async () => {
             // When
             const mockRoomWithoutId = mkStubRoom("", "room without id", mockClient) as any;
+            const mockRoomContextWithoutId: IRoomState = getRoomContext(mockRoomWithoutId, {});
 
             await sendMessage(message, true, {
-                roomContext: mockRoomWithoutId,
+                roomContext: mockRoomContextWithoutId,
                 mxClient: mockClient,
                 permalinkCreator,
             });
@@ -83,6 +84,65 @@ describe("message", () => {
             // Then
             expect(mockClient.sendMessage).toBeCalledTimes(0);
             expect(spyDispatcher).toBeCalledTimes(0);
+        });
+
+        describe("calls client.sendMessage with", () => {
+            it("a null argument if SendMessageParams is missing relation", async () => {
+                // When
+                await sendMessage(message, true, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                });
+
+                // Then
+                expect(mockClient.sendMessage).toHaveBeenCalledWith(expect.anything(), null, expect.anything());
+            });
+            it("a null argument if SendMessageParams has relation but relation is missing event_id", async () => {
+                // When
+                await sendMessage(message, true, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                    relation: {
+                        event_id: null,
+                    },
+                });
+
+                // Then
+                expect(mockClient.sendMessage).toBeCalledWith(expect.anything(), null, expect.anything());
+            });
+            it("a null argument if SendMessageParams has relation but rel_type does not match THREAD_RELATION_TYPE.name", async () => {
+                // When
+                await sendMessage(message, true, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                    relation: {
+                        event_id: "valid_id",
+                        rel_type: "m.does_not_match",
+                    },
+                });
+
+                // Then
+                expect(mockClient.sendMessage).toBeCalledWith(expect.anything(), null, expect.anything());
+            });
+
+            it("the event_id if SendMessageParams has relation and rel_type matches THREAD_RELATION_TYPE.name", async () => {
+                // When
+                await sendMessage(message, true, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                    relation: {
+                        event_id: "valid_id",
+                        rel_type: "m.thread",
+                    },
+                });
+
+                // Then
+                expect(mockClient.sendMessage).toBeCalledWith(expect.anything(), "valid_id", expect.anything());
+            });
         });
 
         it("Should send html message", async () => {
