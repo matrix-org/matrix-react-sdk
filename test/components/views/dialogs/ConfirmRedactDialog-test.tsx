@@ -63,12 +63,7 @@ describe("ConfirmRedactDialog", () => {
             });
 
             it("should call redact without `with_relations`", () => {
-                expect(client.redactEvent).toHaveBeenCalledWith(
-                    roomId,
-                    mxEvent.getId(),
-                    undefined,
-                    {},
-                );
+                expect(client.redactEvent).toHaveBeenCalledWith(roomId, mxEvent.getId(), undefined, {});
             });
         });
     });
@@ -84,14 +79,9 @@ describe("ConfirmRedactDialog", () => {
             });
 
             it("should call redact with `with_relations`", () => {
-                expect(client.redactEvent).toHaveBeenCalledWith(
-                    roomId,
-                    mxEvent.getId(),
-                    undefined,
-                    {
-                        with_relations: [RelationType.Reference],
-                    },
-                );
+                expect(client.redactEvent).toHaveBeenCalledWith(roomId, mxEvent.getId(), undefined, {
+                    with_relations: [RelationType.Reference],
+                });
             });
         });
     });
