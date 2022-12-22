@@ -21,7 +21,7 @@ import React from "react";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
-import { isVoiceBroadcastStartedEvent } from "../../../voice-broadcast";
+import { isVoiceBroadcastStartedEvent } from "../../../voice-broadcast/utils/isVoiceBroadcastStartedEvent";
 import ErrorDialog from "./ErrorDialog";
 import TextInputDialog from "./TextInputDialog";
 

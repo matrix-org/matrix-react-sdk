@@ -16,7 +16,7 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "..";
+import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../types";
 
 export const isVoiceBroadcastStartedEvent = (event: MatrixEvent): boolean => {
     return (
