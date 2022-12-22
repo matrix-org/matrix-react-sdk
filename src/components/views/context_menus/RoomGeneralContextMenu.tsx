@@ -119,7 +119,7 @@ export const RoomGeneralContextMenu = ({
     );
 
     let inviteOption: JSX.Element | null = null;
-    if (room.canInvite(cli.getUserId()) && !isDm) {
+    if (room.canInvite(cli.getUserId()!) && !isDm) {
         inviteOption = (
             <IconizedContextMenuOption
                 onClick={wrapHandler(

@@ -106,7 +106,7 @@ export async function clearRoomNotification(room: Room, client: MatrixClient): P
  * @returns a promise that resolves when all rooms have been marked as read
  */
 export function clearAllNotifications(client: MatrixClient): Promise<Array<{}>> {
-    const receiptPromises = client.getRooms().reduce((promises: Array<Promise<{}>>, room: Room) => {
+    const receiptPromises = client.getRooms().reduce((promises: Array<Promise<{} | undefined>>, room: Room) => {
         if (room.getUnreadNotificationCount() > 0) {
             const promise = clearRoomNotification(room, client);
             promises.push(promise);
