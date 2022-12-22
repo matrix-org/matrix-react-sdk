@@ -3690,5 +3690,7 @@
     "Can’t start a call": "Nelze zahájit hovor",
     "Failed to read events": "Nepodařilo se načíst události",
     "Failed to send event": "Nepodařilo se odeslat událost",
-    " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>"
+    " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
+    "Verify your current session for enhanced secure messaging.": "Ověřte svou aktuální relaci pro vylepšené zabezpečené zasílání zpráv.",
+    "Your current session is ready for secure messaging.": "Vaše aktuální relace je připravena pro bezpečné zasílání zpráv."
 }
