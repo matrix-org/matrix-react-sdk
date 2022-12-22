@@ -34,7 +34,7 @@ import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { createMessageContent } from "./createMessageContent";
 import { isContentModified } from "./isContentModified";
 
-interface SendMessageParams {
+export interface SendMessageParams {
     mxClient: MatrixClient;
     relation?: IEventRelation;
     replyToEvent?: MatrixEvent;
