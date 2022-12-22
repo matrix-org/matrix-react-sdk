@@ -23,8 +23,11 @@ import RoomListActions from "../../../actions/RoomListActions";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import dis from "../../../dispatcher/dispatcher";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useNotificationState } from "../../../hooks/useRoomNotificationState";
+import { useUnreadNotifications } from "../../../hooks/useUnreadNotifications";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { _t } from "../../../languageHandler";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
@@ -202,21 +205,24 @@ export const RoomGeneralContextMenu = ({
         );
     }
 
-    const markAsReadOption: JSX.Element = (
-        <IconizedContextMenuCheckbox
-            onClick={() => {
-                clearRoomNotification(room, cli);
-                onFinished?.();
-            }}
-            active={false}
-            label={_t("Mark as read")}
-            iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
-        />
-    );
+    const { color } = useUnreadNotifications(room);
+    const markAsReadOption: JSX.Element | null =
+        color > NotificationColor.None ? (
+            <IconizedContextMenuCheckbox
+                onClick={() => {
+                    clearRoomNotification(room, cli);
+                    onFinished?.();
+                }}
+                active={false}
+                label={_t("Mark as read")}
+                iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
+            />
+        ) : null;
 
     return (
         <IconizedContextMenu {...props} onFinished={onFinished} className="mx_RoomGeneralContextMenu" compact>
             <IconizedContextMenuOptionList>
+                {markAsReadOption}
                 {!roomTags.includes(DefaultTagID.Archived) && (
                     <>
                         {favoriteOption}
@@ -226,7 +232,6 @@ export const RoomGeneralContextMenu = ({
                         {settingsOption}
                     </>
                 )}
-                {markAsReadOption}
             </IconizedContextMenuOptionList>
             <IconizedContextMenuOptionList red>{leaveOption}</IconizedContextMenuOptionList>
         </IconizedContextMenu>
