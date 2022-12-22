@@ -3559,5 +3559,8 @@
     "Open another device to load encrypted messages": "Откройте другой сеанс для загрузки зашифрованных сообщений",
     "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": "Увы, нет других заверенных сеансов, у которых можно было бы запросить ключи расшифровки. Вход в систему и заверение других сеансов могут помочь избежать подобной ситуации в будущем.",
     "Threaded messages": "Обсуждения сообщений",
-    "Improve your account security by following these recommendations.": "Усильте защиту своей учётной записи, следуя этим рекомендациям."
+    "Improve your account security by following these recommendations.": "Усильте защиту своей учётной записи, следуя этим рекомендациям.",
+    "Verify your current session for enhanced secure messaging.": "Заверьте текущий сеанс для усиления защиты переписки.",
+    "Mark as read": "Отметить как прочитанное",
+    "Your current session is ready for secure messaging.": "Ваш текущий сеанс готов к защищенной переписке."
 }
