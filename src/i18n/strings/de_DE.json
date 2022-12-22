@@ -3692,5 +3692,6 @@
     "Failed to send event": "Übertragung des Ereignisses fehlgeschlagen",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Verify your current session for enhanced secure messaging.": "Verifiziere deine aktuelle Sitzung für besonders sichere Kommunikation.",
-    "Your current session is ready for secure messaging.": "Deine aktuelle Sitzung ist für sichere Kommunikation bereit."
+    "Your current session is ready for secure messaging.": "Deine aktuelle Sitzung ist für sichere Kommunikation bereit.",
+    "Mark as read": "Als gelesen markieren"
 }
