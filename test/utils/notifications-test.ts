@@ -111,8 +111,7 @@ describe("notifications", () => {
     describe("clearRoomNotification", () => {
         let client: MatrixClient;
         let room: Room;
-        let sendReadReceiptSpy;
-
+        let sendReadReceiptSpy: jest.SpyInstance;
         const ROOM_ID = "123";
         const USER_ID = "@bob:example.org";
 

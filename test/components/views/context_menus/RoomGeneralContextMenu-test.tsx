@@ -39,7 +39,7 @@ describe("RoomGeneralContextMenu", () => {
     let room: Room;
     let mockClient: MatrixClient;
 
-    let onFinished;
+    let onFinished: () => void;
 
     function getComponent(props?: Partial<RoomGeneralContextMenuProps>) {
         return render(

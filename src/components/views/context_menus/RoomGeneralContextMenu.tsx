@@ -23,7 +23,6 @@ import RoomListActions from "../../../actions/RoomListActions";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import dis from "../../../dispatcher/dispatcher";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import { useNotificationState } from "../../../hooks/useRoomNotificationState";
 import { useUnreadNotifications } from "../../../hooks/useUnreadNotifications";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { _t } from "../../../languageHandler";
@@ -119,7 +118,7 @@ export const RoomGeneralContextMenu = ({
         />
     );
 
-    let inviteOption: JSX.Element;
+    let inviteOption: JSX.Element | null = null;
     if (room.canInvite(cli.getUserId()) && !isDm) {
         inviteOption = (
             <IconizedContextMenuOption
@@ -137,7 +136,7 @@ export const RoomGeneralContextMenu = ({
         );
     }
 
-    let copyLinkOption: JSX.Element;
+    let copyLinkOption: JSX.Element | null = null;
     if (!isDm) {
         copyLinkOption = (
             <IconizedContextMenuOption

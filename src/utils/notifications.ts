@@ -65,7 +65,7 @@ export function localNotificationsAreSilenced(cli: MatrixClient): boolean {
  * @param client
  * @returns a promise that resolves when the room has been marked as read
  */
-export async function clearRoomNotification(room: Room, client: MatrixClient): Promise<{}> {
+export async function clearRoomNotification(room: Room, client: MatrixClient): Promise<{} | undefined> {
     const roomEvents = room.getLiveTimeline().getEvents();
     const lastThreadEvents = room.lastThread?.events;
 
@@ -74,8 +74,6 @@ export async function clearRoomNotification(room: Room, client: MatrixClient): P
 
     const lastEvent =
         (lastRoomEvent?.getTs() ?? 0) > (lastThreadLastEvent?.getTs() ?? 0) ? lastRoomEvent : lastThreadLastEvent;
-
-    let promise: Promise<{}>;
 
     try {
         if (lastEvent) {
@@ -100,8 +98,6 @@ export async function clearRoomNotification(room: Room, client: MatrixClient): P
             room.setThreadUnreadNotificationCount(thread.id, NotificationCountType.Total, 0);
         }
     }
-
-    return promise ?? {};
 }
 
 /**
