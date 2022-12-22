@@ -19,7 +19,7 @@ import { MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matri
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { flushPromises, stubClient } from "../../../test-utils";
+import { flushPromises, mkEvent, stubClient } from "../../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
 import { VoiceBroadcastInfoState } from "../../../../src/voice-broadcast";
 import { createRedactEventDialog } from "../../../../src/components/views/dialogs/ConfirmRedactDialog";
@@ -39,7 +39,6 @@ describe("ConfirmRedactDialog", () => {
     };
 
     const confirmDeleteVoiceBroadcastStartedEvent = async () => {
-        setUpVoiceBroadcastStartedEvent();
         createRedactEventDialog({ mxEvent });
         // double-flush promises required for the dialog to show up
         await flushPromises();
@@ -52,35 +51,69 @@ describe("ConfirmRedactDialog", () => {
         client = stubClient();
     });
 
-    describe("when the server does not support relation based redactions", () => {
-        beforeEach(() => {
-            client.canSupport.set(Feature.RelationBasedRedactions, ServerSupport.Unsupported);
+    it("should raise an error for an event without ID", async () => {
+        mxEvent = mkEvent({
+            event: true,
+            type: "m.room.message",
+            room: roomId,
+            content: {},
+            user: client.getSafeUserId(),
         });
-
-        describe("and displaying and confirm the dialog for a voice broadcast", () => {
-            beforeEach(async () => {
-                await confirmDeleteVoiceBroadcastStartedEvent();
-            });
-
-            it("should call redact without `with_relations`", () => {
-                expect(client.redactEvent).toHaveBeenCalledWith(roomId, mxEvent.getId(), undefined, {});
-            });
-        });
+        jest.spyOn(mxEvent, "getId").mockReturnValue(undefined);
+        expect(async () => {
+            await confirmDeleteVoiceBroadcastStartedEvent();
+        }).rejects.toThrow("cannot redact event without ID");
     });
 
-    describe("when the server supports relation based redactions", () => {
+    it("should raise an error for an event without room-ID", async () => {
+        mxEvent = mkEvent({
+            event: true,
+            type: "m.room.message",
+            room: roomId,
+            content: {},
+            user: client.getSafeUserId(),
+        });
+        jest.spyOn(mxEvent, "getRoomId").mockReturnValue(undefined);
+        expect(async () => {
+            await confirmDeleteVoiceBroadcastStartedEvent();
+        }).rejects.toThrow(`cannot redact event ${mxEvent.getId()} without room ID`);
+    });
+
+    describe("when redacting a voice broadcast started event", () => {
         beforeEach(() => {
-            client.canSupport.set(Feature.RelationBasedRedactions, ServerSupport.Unstable);
+            setUpVoiceBroadcastStartedEvent();
         });
 
-        describe("and displaying and confirm the dialog for a voice broadcast", () => {
-            beforeEach(async () => {
-                await confirmDeleteVoiceBroadcastStartedEvent();
+        describe("and the server does not support relation based redactions", () => {
+            beforeEach(() => {
+                client.canSupport.set(Feature.RelationBasedRedactions, ServerSupport.Unsupported);
             });
 
-            it("should call redact with `with_relations`", () => {
-                expect(client.redactEvent).toHaveBeenCalledWith(roomId, mxEvent.getId(), undefined, {
-                    with_relations: [RelationType.Reference],
+            describe("and displaying and confirm the dialog for a voice broadcast", () => {
+                beforeEach(async () => {
+                    await confirmDeleteVoiceBroadcastStartedEvent();
+                });
+
+                it("should call redact without `with_relations`", () => {
+                    expect(client.redactEvent).toHaveBeenCalledWith(roomId, mxEvent.getId(), undefined, {});
+                });
+            });
+        });
+
+        describe("and the server supports relation based redactions", () => {
+            beforeEach(() => {
+                client.canSupport.set(Feature.RelationBasedRedactions, ServerSupport.Unstable);
+            });
+
+            describe("and displaying and confirm the dialog for a voice broadcast", () => {
+                beforeEach(async () => {
+                    await confirmDeleteVoiceBroadcastStartedEvent();
+                });
+
+                it("should call redact with `with_relations`", () => {
+                    expect(client.redactEvent).toHaveBeenCalledWith(roomId, mxEvent.getId(), undefined, {
+                        with_relations: [RelationType.Reference],
+                    });
                 });
             });
         });

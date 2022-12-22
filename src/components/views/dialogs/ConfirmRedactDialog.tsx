@@ -57,6 +57,14 @@ export function createRedactEventDialog({
     mxEvent: MatrixEvent;
     onCloseDialog?: () => void;
 }) {
+    const eventId = mxEvent.getId();
+
+    if (!eventId) throw new Error("cannot redact event without ID");
+
+    const roomId = mxEvent.getRoomId();
+
+    if (!roomId) throw new Error(`cannot redact event ${mxEvent.getId()} without room ID`);
+
     Modal.createDialog(
         ConfirmRedactDialog,
         {
@@ -80,11 +88,11 @@ export function createRedactEventDialog({
 
                 try {
                     onCloseDialog?.();
-                    await cli.redactEvent(mxEvent.getRoomId(), mxEvent.getId(), undefined, {
+                    await cli.redactEvent(roomId, eventId, undefined, {
                         ...(reason ? { reason } : {}),
                         ...withRelations,
                     });
-                } catch (e) {
+                } catch (e: any) {
                     const code = e.errcode || e.statusCode;
                     // only show the dialog if failing for something other than a network error
                     // (e.g. no errcode or statusCode) as in that case the redactions end up in the
