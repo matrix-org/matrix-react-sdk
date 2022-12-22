@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, FocusEvent } from 'react';
+import React, { SyntheticEvent, FocusEvent } from "react";
 
 import AccessibleButton from "./AccessibleButton";
-import Tooltip, { Alignment } from './Tooltip';
+import Tooltip, { Alignment } from "./Tooltip";
 
 interface IProps extends React.ComponentProps<typeof AccessibleButton> {
     title?: string;
@@ -36,14 +36,14 @@ interface IState {
 }
 
 export default class AccessibleTooltipButton extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             hover: false,
         };
     }
 
-    componentDidUpdate(prevProps: Readonly<IProps>) {
+    public componentDidUpdate(prevProps: Readonly<IProps>) {
         if (!prevProps.forceHide && this.props.forceHide && this.state.hover) {
             this.setState({
                 hover: false,
@@ -73,16 +73,14 @@ export default class AccessibleTooltipButton extends React.PureComponent<IProps,
         if (ev.relatedTarget) this.showTooltip();
     };
 
-    render() {
+    public render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { title, tooltip, children, tooltipClassName, forceHide, alignment, onHideTooltip,
-            ...props } = this.props;
+        const { title, tooltip, children, tooltipClassName, forceHide, alignment, onHideTooltip, ...props } =
+            this.props;
 
-        const tip = this.state.hover && (title || tooltip) && <Tooltip
-            tooltipClassName={tooltipClassName}
-            label={tooltip || title}
-            alignment={alignment}
-        />;
+        const tip = this.state.hover && (title || tooltip) && (
+            <Tooltip tooltipClassName={tooltipClassName} label={tooltip || title} alignment={alignment} />
+        );
         return (
             <AccessibleButton
                 {...props}
@@ -92,9 +90,9 @@ export default class AccessibleTooltipButton extends React.PureComponent<IProps,
                 onBlur={this.hideTooltip || props.onBlur}
                 aria-label={title || props["aria-label"]}
             >
-                { children }
-                { this.props.label }
-                { (tooltip || title) && tip }
+                {children}
+                {this.props.label}
+                {(tooltip || title) && tip}
             </AccessibleButton>
         );
     }

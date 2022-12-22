@@ -35,7 +35,7 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
 }
 
 class PassphraseConfirmField extends PureComponent<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         label: _td("Confirm password"),
         labelRequired: _td("Confirm password"),
         labelInvalid: _td("Passwords don't match"),
@@ -65,17 +65,19 @@ class PassphraseConfirmField extends PureComponent<IProps> {
         return result;
     };
 
-    render() {
-        return <Field
-            id={this.props.id}
-            ref={this.props.fieldRef}
-            type="password"
-            label={_t(this.props.label)}
-            autoComplete={this.props.autoComplete}
-            value={this.props.value}
-            onChange={this.props.onChange}
-            onValidate={this.onValidate}
-        />;
+    public render() {
+        return (
+            <Field
+                id={this.props.id}
+                ref={this.props.fieldRef}
+                type="password"
+                label={_t(this.props.label)}
+                autoComplete={this.props.autoComplete}
+                value={this.props.value}
+                onChange={this.props.onChange}
+                onValidate={this.onValidate}
+            />
+        );
     }
 }
 

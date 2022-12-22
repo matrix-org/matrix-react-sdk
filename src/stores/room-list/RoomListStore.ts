@@ -16,7 +16,6 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -65,7 +64,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         this.emit(LISTS_UPDATE_EVENT);
     });
 
-    constructor(dis: MatrixDispatcher) {
+    public constructor(dis: MatrixDispatcher) {
         super(dis);
         this.setMaxListeners(20); // RoomList + LeftPanel + 8xRoomSubList + spares
         this.algorithm.start();
@@ -181,7 +180,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             throw new Error("Room list store has no algorithm to process dispatcher update with");
         }
 
-        if (payload.action === 'MatrixActions.Room.receipt') {
+        if (payload.action === "MatrixActions.Room.receipt") {
             // First see if the receipt event is for our own user. If it was, trigger
             // a room update (we probably read the room on a different device).
             if (readReceiptChangeIsFor(payload.event, this.matrixClient)) {
@@ -194,28 +193,26 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
                 this.updateFn.trigger();
                 return;
             }
-        } else if (payload.action === 'MatrixActions.Room.tags') {
-            const roomPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (payload.action === "MatrixActions.Room.tags") {
+            const roomPayload = <any>payload; // TODO: Type out the dispatcher types
             await this.handleRoomUpdate(roomPayload.room, RoomUpdateCause.PossibleTagChange);
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.Room.timeline') {
+        } else if (payload.action === "MatrixActions.Room.timeline") {
             const eventPayload = <IRoomTimelineActionPayload>payload;
 
             // Ignore non-live events (backfill) and notification timeline set events (without a room)
-            if (!eventPayload.isLiveEvent ||
-                !eventPayload.isLiveUnfilteredRoomTimelineEvent ||
-                !eventPayload.room
-            ) {
+            if (!eventPayload.isLiveEvent || !eventPayload.isLiveUnfilteredRoomTimelineEvent || !eventPayload.room) {
                 return;
             }
 
             const roomId = eventPayload.event.getRoomId();
             const room = this.matrixClient.getRoom(roomId);
             const tryUpdate = async (updatedRoom: Room) => {
-                if (eventPayload.event.getType() === EventType.RoomTombstone &&
-                    eventPayload.event.getStateKey() === ''
+                if (
+                    eventPayload.event.getType() === EventType.RoomTombstone &&
+                    eventPayload.event.getStateKey() === ""
                 ) {
-                    const newRoom = this.matrixClient.getRoom(eventPayload.event.getContent()['replacement_room']);
+                    const newRoom = this.matrixClient.getRoom(eventPayload.event.getContent()["replacement_room"]);
                     if (newRoom) {
                         // If we have the new room, then the new room check will have seen the predecessor
                         // and did the required updates, so do nothing here.
@@ -236,8 +233,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             } else {
                 await tryUpdate(room);
             }
-        } else if (payload.action === 'MatrixActions.Event.decrypted') {
-            const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (payload.action === "MatrixActions.Event.decrypted") {
+            const eventPayload = <any>payload; // TODO: Type out the dispatcher types
             const roomId = eventPayload.event.getRoomId();
             if (!roomId) {
                 return;
@@ -249,8 +246,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             }
             await this.handleRoomUpdate(room, RoomUpdateCause.Timeline);
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.accountData' && payload.event_type === EventType.Direct) {
-            const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (payload.action === "MatrixActions.accountData" && payload.event_type === EventType.Direct) {
+            const eventPayload = <any>payload; // TODO: Type out the dispatcher types
             const dmMap = eventPayload.event.getContent();
             for (const userId of Object.keys(dmMap)) {
                 const roomIds = dmMap[userId];
@@ -269,16 +266,16 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
                 }
             }
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.Room.myMembership') {
-            const membershipPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (payload.action === "MatrixActions.Room.myMembership") {
+            const membershipPayload = <any>payload; // TODO: Type out the dispatcher types
             const oldMembership = getEffectiveMembership(membershipPayload.oldMembership);
             const newMembership = getEffectiveMembership(membershipPayload.membership);
             if (oldMembership !== EffectiveMembership.Join && newMembership === EffectiveMembership.Join) {
                 // If we're joining an upgraded room, we'll want to make sure we don't proliferate
                 // the dead room in the list.
                 const createEvent = membershipPayload.room.currentState.getStateEvents(EventType.RoomCreate, "");
-                if (createEvent && createEvent.getContent()['predecessor']) {
-                    const prevRoom = this.matrixClient.getRoom(createEvent.getContent()['predecessor']['room_id']);
+                if (createEvent && createEvent.getContent()["predecessor"]) {
+                    const prevRoom = this.matrixClient.getRoom(createEvent.getContent()["predecessor"]["room_id"]);
                     if (prevRoom) {
                         const isSticky = this.algorithm.stickyRoom === prevRoom;
                         if (isSticky) {
@@ -325,8 +322,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             return; // don't do anything on rooms that aren't visible
         }
 
-        if ((cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.PossibleTagChange) &&
-            !this.prefilterConditions.every(c => c.isVisible(room))
+        if (
+            (cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.PossibleTagChange) &&
+            !this.prefilterConditions.every((c) => c.isVisible(room))
         ) {
             return; // don't do anything on new/moved rooms which ought not to be shown
         }
@@ -388,20 +386,15 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
     // logic must match calculateListOrder
     private calculateTagSorting(tagId: TagID): SortAlgorithm {
-        const isDefaultRecent = tagId === DefaultTagID.Invite || tagId === DefaultTagID.DM;
-        const defaultSort = isDefaultRecent ? SortAlgorithm.Recent : SortAlgorithm.Alphabetic;
-        const settingAlphabetical = SettingsStore.getValue("RoomList.orderAlphabetically", null, true);
         const definedSort = this.getTagSorting(tagId);
         const storedSort = this.getStoredTagSorting(tagId);
 
         // We use the following order to determine which of the 4 flags to use:
         // Stored > Settings > Defined > Default
 
-        let tagSort = defaultSort;
+        let tagSort = SortAlgorithm.Recent;
         if (storedSort) {
             tagSort = storedSort;
-        } else if (!isNullOrUndefined(settingAlphabetical)) {
-            tagSort = settingAlphabetical ? SortAlgorithm.Alphabetic : SortAlgorithm.Recent;
         } else if (definedSort) {
             tagSort = definedSort;
         } // else default (already set)
@@ -432,8 +425,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
     // logic must match calculateTagSorting
     private calculateListOrder(tagId: TagID): ListAlgorithm {
-        const defaultOrder = ListAlgorithm.Natural;
-        const settingImportance = SettingsStore.getValue("RoomList.orderByImportance", null, true);
+        const defaultOrder = ListAlgorithm.Importance;
         const definedOrder = this.getListOrder(tagId);
         const storedOrder = this.getStoredListOrder(tagId);
 
@@ -443,8 +435,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
         let listOrder = defaultOrder;
         if (storedOrder) {
             listOrder = storedOrder;
-        } else if (!isNullOrUndefined(settingImportance)) {
-            listOrder = settingImportance ? ListAlgorithm.Importance : ListAlgorithm.Natural;
         } else if (definedOrder) {
             listOrder = definedOrder;
         } // else default (already set)
@@ -492,10 +482,10 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
     private getPlausibleRooms(): Room[] {
         if (!this.matrixClient) return [];
 
-        let rooms = this.matrixClient.getVisibleRooms().filter(r => VisibilityProvider.instance.isRoomVisible(r));
+        let rooms = this.matrixClient.getVisibleRooms().filter((r) => VisibilityProvider.instance.isRoomVisible(r));
 
         if (this.prefilterConditions.length > 0) {
-            rooms = rooms.filter(r => {
+            rooms = rooms.filter((r) => {
                 for (const filter of this.prefilterConditions) {
                     if (!filter.isVisible(r)) {
                         return false;

@@ -45,13 +45,9 @@ describe("setUpVoiceBroadcastPreRecording", () => {
 
     const itShouldReturnNull = () => {
         it("should return null", () => {
-            expect(setUpVoiceBroadcastPreRecording(
-                room,
-                client,
-                playbacksStore,
-                recordingsStore,
-                preRecordingStore,
-            )).toBeNull();
+            expect(
+                setUpVoiceBroadcastPreRecording(room, client, playbacksStore, recordingsStore, preRecordingStore),
+            ).toBeNull();
             expect(checkVoiceBroadcastPreConditions).toHaveBeenCalledWith(room, client, recordingsStore);
         });
     };
@@ -79,7 +75,7 @@ describe("setUpVoiceBroadcastPreRecording", () => {
 
     describe("when the preconditions fail", () => {
         beforeEach(() => {
-            mocked(checkVoiceBroadcastPreConditions).mockReturnValue(false);
+            mocked(checkVoiceBroadcastPreConditions).mockResolvedValue(false);
         });
 
         itShouldReturnNull();
@@ -87,7 +83,7 @@ describe("setUpVoiceBroadcastPreRecording", () => {
 
     describe("when the preconditions pass", () => {
         beforeEach(() => {
-            mocked(checkVoiceBroadcastPreConditions).mockReturnValue(true);
+            mocked(checkVoiceBroadcastPreConditions).mockResolvedValue(true);
         });
 
         describe("and there is no user id", () => {
@@ -110,9 +106,7 @@ describe("setUpVoiceBroadcastPreRecording", () => {
         describe("and there is a room member and listening to another broadcast", () => {
             beforeEach(() => {
                 playbacksStore.setCurrent(playback);
-                room.currentState.setStateEvents([
-                    mkRoomMemberJoinEvent(userId, roomId),
-                ]);
+                room.currentState.setStateEvents([mkRoomMemberJoinEvent(userId, roomId)]);
             });
 
             it("should pause the current playback and create a voice broadcast pre-recording", () => {
