@@ -104,9 +104,7 @@ describe("message", () => {
                     roomContext: defaultRoomContext,
                     mxClient: mockClient,
                     permalinkCreator,
-                    relation: {
-                        event_id: null,
-                    },
+                    relation: {},
                 });
 
                 // Then
