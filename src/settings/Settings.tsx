@@ -463,11 +463,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: false,
     },
     [Features.VoiceBroadcastForceSmallChunks]: {
-        isFeature: true,
-        labsGroup: LabGroup.VoiceAndVideo,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Force 15s voice broadcast chunk length"),
-        description: _td("Overrides any other broadcast chunk length configuration"),
         default: false,
     },
     "feature_new_device_manager": {
