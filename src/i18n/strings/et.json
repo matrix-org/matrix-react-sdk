@@ -3690,5 +3690,8 @@
     "%(count)s sessions selected|other": "%(count)s sessiooni valitud",
     "Failed to read events": "Päringu või sündmuse lugemine ei õnnestunud",
     "Failed to send event": "Päringu või sündmuse saatmine ei õnnestunud",
-    " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas"
+    " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
+    "Mark as read": "Märgi loetuks",
+    "Verify your current session for enhanced secure messaging.": "Turvalise sõnumivahetuse nimel palun verifitseeri oma praegune sessioon.",
+    "Your current session is ready for secure messaging.": "Sinu praegune sessioon on valmis turvaliseks sõnumivahetuseks."
 }
