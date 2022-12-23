@@ -67,16 +67,14 @@ describe("shouldDisplayAsVoiceBroadcastRecordingTile", () => {
     );
 
     it("should return false, when all params are null", () => {
-        // @ts-ignore
         event = mkVoiceBroadcastInfoStateEvent("!room:example.com", null, null, null);
-        // @ts-ignore
+        // @ts-ignore Simulate null state received for any reason.
         expect(shouldDisplayAsVoiceBroadcastRecordingTile(null, client, event)).toBe(false);
     });
 
     it("should return false, when all params are undefined", () => {
-        // @ts-ignore
-        event = mkVoiceBroadcastInfoStateEvent("!room:example.com", null, null, null);
-        // @ts-ignore
-        expect(shouldDisplayAsVoiceBroadcastRecordingTile(null, client, event)).toBe(false);
+        event = mkVoiceBroadcastInfoStateEvent("!room:example.com", undefined, undefined, undefined);
+        // @ts-ignore Simulate undefined state received for any reason.
+        expect(shouldDisplayAsVoiceBroadcastRecordingTile(undefined, client, event)).toBe(false);
     });
 });
