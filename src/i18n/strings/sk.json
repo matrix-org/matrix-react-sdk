@@ -3693,5 +3693,8 @@
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "Mark as read": "Označiť ako prečítané",
     "Verify your current session for enhanced secure messaging.": "Overte svoju aktuálnu reláciu pre vylepšené bezpečné zasielanie správ.",
-    "Your current session is ready for secure messaging.": "Vaša aktuálna relácia je pripravená na bezpečné zasielanie správ."
+    "Your current session is ready for secure messaging.": "Vaša aktuálna relácia je pripravená na bezpečné zasielanie správ.",
+    "Text": "Text",
+    "Create a link": "Vytvoriť odkaz",
+    "Link": "Odkaz"
 }
