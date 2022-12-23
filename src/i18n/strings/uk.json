@@ -3693,5 +3693,9 @@
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "Verify your current session for enhanced secure messaging.": "Звірте свій поточний сеанс для посилення безпеки обміну повідомленнями.",
     "Your current session is ready for secure messaging.": "Ваш поточний сеанс готовий до захищеного обміну повідомленнями.",
-    "Mark as read": "Позначити прочитаним"
+    "Mark as read": "Позначити прочитаним",
+    "Text": "Текст",
+    "Create a link": "Створити посилання",
+    "Link": "Посилання",
+    "Force 15s voice broadcast chunk length": "Примусово обмежити тривалість голосових трансляцій до 15 с"
 }
