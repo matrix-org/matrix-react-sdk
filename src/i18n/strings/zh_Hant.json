@@ -3690,5 +3690,8 @@
     "Can’t start a call": "無法開始通話",
     "Failed to read events": "讀取事件失敗",
     "Failed to send event": "傳送事件失敗",
-    " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>"
+    " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
+    "Mark as read": "標記為已讀",
+    "Verify your current session for enhanced secure messaging.": "驗證您目前的工作階段以強化安全訊息傳遞。",
+    "Your current session is ready for secure messaging.": "您目前的工作階段已準備好進行安全訊息傳遞。"
 }
