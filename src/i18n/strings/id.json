@@ -3690,5 +3690,8 @@
     "%(count)s sessions selected|other": "%(count)s sesi dipilih",
     "Failed to read events": "Gagal membaca peristiwa",
     "Failed to send event": "Gagal mengirimkan peristiwa",
-    " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>"
+    " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
+    "Mark as read": "Tandai sebagai dibaca",
+    "Verify your current session for enhanced secure messaging.": "Verifikasi sesi Anda saat ini untuk perpesanan aman yang ditingkatkan.",
+    "Your current session is ready for secure messaging.": "Sesi Anda saat ini siap untuk perpesanan aman."
 }
