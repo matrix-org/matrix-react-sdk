@@ -3696,5 +3696,6 @@
     "Mark as read": "Als gelesen markieren",
     "Text": "Text",
     "Create a link": "Link erstellen",
-    "Link": "Link"
+    "Link": "Link",
+    "Force 15s voice broadcast chunk length": "Die Chunk-Länge der Sprachübertragungen auf 15 Sekunden erzwingen"
 }
