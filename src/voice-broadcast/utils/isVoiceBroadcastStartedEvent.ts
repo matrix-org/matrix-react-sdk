@@ -14,9 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export type ComposerFunctions = {
-    clear: () => void;
-    insertText: (text: string) => void;
-};
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-export type SubSelection = Pick<Selection, "anchorNode" | "anchorOffset" | "focusNode" | "focusOffset">;
+import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../types";
+
+export const isVoiceBroadcastStartedEvent = (event: MatrixEvent): boolean => {
+    return (
+        event.getType() === VoiceBroadcastInfoEventType && event.getContent()?.state === VoiceBroadcastInfoState.Started
+    );
+};
