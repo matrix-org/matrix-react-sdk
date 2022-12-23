@@ -3693,5 +3693,8 @@
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Verify your current session for enhanced secure messaging.": "Verifiziere deine aktuelle Sitzung für besonders sichere Kommunikation.",
     "Your current session is ready for secure messaging.": "Deine aktuelle Sitzung ist für sichere Kommunikation bereit.",
-    "Mark as read": "Als gelesen markieren"
+    "Mark as read": "Als gelesen markieren",
+    "Text": "Text",
+    "Create a link": "Link erstellen",
+    "Link": "Link"
 }
