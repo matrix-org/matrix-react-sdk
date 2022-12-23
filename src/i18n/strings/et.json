@@ -3693,5 +3693,7 @@
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "Mark as read": "Märgi loetuks",
     "Verify your current session for enhanced secure messaging.": "Turvalise sõnumivahetuse nimel palun verifitseeri oma praegune sessioon.",
-    "Your current session is ready for secure messaging.": "Sinu praegune sessioon on valmis turvaliseks sõnumivahetuseks."
+    "Your current session is ready for secure messaging.": "Sinu praegune sessioon on valmis turvaliseks sõnumivahetuseks.",
+    "Text": "Tekst",
+    "Create a link": "Tee link"
 }
