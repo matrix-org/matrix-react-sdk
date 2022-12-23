@@ -3367,5 +3367,8 @@
     "Mobile session": "モバイル端末セッション",
     "Desktop session": "デスクトップセッション",
     "Unverified": "未認証",
-    "Verified": "認証済み"
+    "Verified": "認証済み",
+    "Can’t start a call": "呼び出しを開始できません",
+    "Failed to read events": "イベント受信に失敗しました",
+    "Failed to send event": "イベント送信に失敗しました"
 }
