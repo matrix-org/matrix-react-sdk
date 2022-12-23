@@ -1048,7 +1048,12 @@ const PowerLevelEditor: React.FC<{
         async (powerLevel: number): Promise<void> => {
             setSelectedPowerLevel(powerLevel);
 
-            const applyPowerChange = (roomId: string, target: string, powerLevel: number, powerLevelEvent: MatrixEvent): Promise<void> => {
+            const applyPowerChange = (
+                roomId: string,
+                target: string,
+                powerLevel: number,
+                powerLevelEvent: MatrixEvent,
+            ): Promise<void> => {
                 return cli.setPowerLevel(roomId, target, powerLevel, powerLevelEvent).then(
                     function () {
                         // NO-OP; rely on the m.room.member event coming down else we could

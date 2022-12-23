@@ -728,7 +728,7 @@ async function sendEvent(
         content?: IContent;
     }>,
     roomId: string,
-) {
+): Promise<void> {
     const eventType = event.data.type;
     const stateKey = event.data.state_key;
     const content = event.data.content;
@@ -786,7 +786,7 @@ async function readEvents(
         limit?: number;
     }>,
     roomId: string,
-) {
+): Promise<void> {
     const eventType = event.data.type;
     const stateKey = event.data.state_key;
     const limit = event.data.limit;

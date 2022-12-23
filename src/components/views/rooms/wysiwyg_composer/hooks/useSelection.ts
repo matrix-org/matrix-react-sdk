@@ -33,7 +33,6 @@ function setSelectionContext(composerContext: ComposerContextState): void {
 }
 
 export function useSelection(): ReturnType<typeof useFocus>[1] & {
-    selectPreviousSelection(): void;
     onInput(): void;
 } {
     const composerContext = useComposerContext();

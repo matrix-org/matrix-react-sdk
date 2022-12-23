@@ -608,7 +608,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     /** called when the event is edited after we show it. */
-    private onReplaced = () => {
+    private onReplaced = (): void => {
         // re-verify the event if it is replaced (the edit may not be verified)
         this.verifyEvent();
     };

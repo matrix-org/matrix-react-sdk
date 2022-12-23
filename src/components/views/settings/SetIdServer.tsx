@@ -257,7 +257,11 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         }
     };
 
-    private async showServerChangeWarning({ title, unboundMessage, button }: {
+    private async showServerChangeWarning({
+        title,
+        unboundMessage,
+        button,
+    }: {
         title: string;
         unboundMessage: ReactNode;
         button: string;

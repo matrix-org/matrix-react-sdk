@@ -19,7 +19,7 @@ import React, { ComponentProps, lazy, Suspense } from "react";
 const SendComposer = lazy(() => import("./SendWysiwygComposer"));
 const EditComposer = lazy(() => import("./EditWysiwygComposer"));
 
-export function DynamicImportSendWysiwygComposer(props: ComponentProps<typeof SendComposer>) {
+export function DynamicImportSendWysiwygComposer(props: ComponentProps<typeof SendComposer>): JSX.Element {
     return (
         <Suspense fallback={<div />}>
             <SendComposer {...props} />
@@ -27,7 +27,7 @@ export function DynamicImportSendWysiwygComposer(props: ComponentProps<typeof Se
     );
 }
 
-export function DynamicImportEditWysiwygComposer(props: ComponentProps<typeof EditComposer>) {
+export function DynamicImportEditWysiwygComposer(props: ComponentProps<typeof EditComposer>): JSX.Element {
     return (
         <Suspense fallback={<div />}>
             <EditComposer {...props} />

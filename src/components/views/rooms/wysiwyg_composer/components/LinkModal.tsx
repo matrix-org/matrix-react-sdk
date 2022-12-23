@@ -24,7 +24,7 @@ import Field from "../../../elements/Field";
 import { ComposerContextState } from "../ComposerContext";
 import { isSelectionEmpty, setSelection } from "../utils/selection";
 
-export function openLinkModal(composer: FormattingFunctions, composerContext: ComposerContextState) {
+export function openLinkModal(composer: FormattingFunctions, composerContext: ComposerContextState): void {
     const modal = Modal.createDialog(
         LinkModal,
         { composerContext, composer, onClose: () => modal.close(), isTextEnabled: isSelectionEmpty() },
@@ -34,7 +34,7 @@ export function openLinkModal(composer: FormattingFunctions, composerContext: Co
     );
 }
 
-function isEmpty(text: string) {
+function isEmpty(text: string): boolean {
     return text.length < 1;
 }
 
@@ -45,7 +45,7 @@ interface LinkModalProps {
     composerContext: ComposerContextState;
 }
 
-export function LinkModal({ composer, isTextEnabled, onClose, composerContext }: LinkModalProps) {
+export function LinkModal({ composer, isTextEnabled, onClose, composerContext }: LinkModalProps): JSX.Element {
     const [fields, setFields] = useState({ text: "", link: "" });
     const isSaveDisabled = (isTextEnabled && isEmpty(fields.text)) || isEmpty(fields.link);
 

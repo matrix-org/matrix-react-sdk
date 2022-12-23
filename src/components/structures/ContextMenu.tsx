@@ -620,7 +620,10 @@ export const useContextMenu = <T extends any = HTMLElement>(inputRef?: RefObject
 };
 
 // XXX: Deprecated, used only for dynamic Tooltips. Avoid using at all costs.
-export function createMenu(ElementClass: typeof React.Component, props: Record<string, any>): { close: (...args: any[]) => void } {
+export function createMenu(
+    ElementClass: typeof React.Component,
+    props: Record<string, any>,
+): { close: (...args: any[]) => void } {
     const onFinished = function (...args): void {
         ReactDOM.unmountComponentAtNode(getOrCreateContainer());
         props?.onFinished?.apply(null, args);
