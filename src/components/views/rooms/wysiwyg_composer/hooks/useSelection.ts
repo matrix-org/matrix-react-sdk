@@ -14,18 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MutableRefObject, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 
 import useFocus from "../../../../../hooks/useFocus";
-import { setSelection } from "../utils/selection";
+import { useComposerContext, ComposerContextState } from "../ComposerContext";
 
-type SubSelection = Pick<Selection, "anchorNode" | "anchorOffset" | "focusNode" | "focusOffset">;
-
-function setSelectionRef(selectionRef: MutableRefObject<SubSelection>): void {
+function setSelectionContext(composerContext: ComposerContextState): void {
     const selection = document.getSelection();
 
     if (selection) {
-        selectionRef.current = {
+        composerContext.selection = {
             anchorNode: selection.anchorNode,
             anchorOffset: selection.anchorOffset,
             focusNode: selection.focusNode,
@@ -38,17 +36,12 @@ export function useSelection(): ReturnType<typeof useFocus>[1] & {
     selectPreviousSelection(): void;
     onInput(): void;
 } {
-    const selectionRef = useRef<SubSelection>({
-        anchorNode: null,
-        anchorOffset: 0,
-        focusNode: null,
-        focusOffset: 0,
-    });
+    const composerContext = useComposerContext();
     const [isFocused, focusProps] = useFocus();
 
     useEffect(() => {
         function onSelectionChange(): void {
-            setSelectionRef(selectionRef);
+            setSelectionContext(composerContext);
         }
 
         if (isFocused) {
@@ -56,15 +49,11 @@ export function useSelection(): ReturnType<typeof useFocus>[1] & {
         }
 
         return () => document.removeEventListener("selectionchange", onSelectionChange);
-    }, [isFocused]);
+    }, [isFocused, composerContext]);
 
     const onInput = useCallback(() => {
-        setSelectionRef(selectionRef);
-    }, []);
+        setSelectionContext(composerContext);
+    }, [composerContext]);
 
-    const selectPreviousSelection = useCallback(() => {
-        setSelection(selectionRef.current);
-    }, []);
-
-    return { ...focusProps, selectPreviousSelection, onInput };
+    return { ...focusProps, onInput };
 }

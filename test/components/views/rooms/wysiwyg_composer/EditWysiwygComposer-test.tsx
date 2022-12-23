@@ -64,13 +64,38 @@ describe("EditWysiwygComposer", () => {
         );
     };
 
+    beforeAll(() => {
+        // Load the dynamic import
+        customRender(false).unmount();
+    });
+
+    it("Should not render the component when not ready", async () => {
+        // When
+        const { rerender } = customRender(false);
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
+
+        rerender(
+            <MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={{ ...defaultRoomContext, room: undefined }}>
+                    <EditWysiwygComposer disabled={false} editorStateTransfer={editorStateTransfer} />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>,
+        );
+
+        // Then
+        await waitFor(() => expect(screen.queryByRole("textbox")).toBeNull());
+    });
+
     describe("Initialize with content", () => {
         it("Should initialize useWysiwyg with html content", async () => {
             // When
             customRender(false, editorStateTransfer);
-            await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
 
             // Then
+            await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"), {
+                timeout: 2000,
+            });
+
             await waitFor(() =>
                 expect(screen.getByRole("textbox")).toContainHTML(mockEvent.getContent()["formatted_body"]),
             );
@@ -226,20 +251,20 @@ describe("EditWysiwygComposer", () => {
         expect(screen.getByRole("textbox")).not.toHaveFocus();
 
         // When we send an action that would cause us to get focus
-        act(() => {
-            defaultDispatcher.dispatch({
-                action: Action.FocusEditMessageComposer,
-                context: null,
-            });
-            // (Send a second event to exercise the clearTimeout logic)
-            defaultDispatcher.dispatch({
-                action: Action.FocusEditMessageComposer,
-                context: null,
-            });
+        defaultDispatcher.dispatch({
+            action: Action.FocusEditMessageComposer,
+            context: null,
+        });
+        // (Send a second event to exercise the clearTimeout logic)
+        defaultDispatcher.dispatch({
+            action: Action.FocusEditMessageComposer,
+            context: null,
         });
 
         // Wait for event dispatch to happen
-        await flushPromises();
+        await act(async () => {
+            await flushPromises();
+        });
 
         // Then we don't get it because we are disabled
         expect(screen.getByRole("textbox")).not.toHaveFocus();

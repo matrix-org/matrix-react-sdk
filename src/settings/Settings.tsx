@@ -90,6 +90,7 @@ export enum LabGroup {
 
 export enum Features {
     VoiceBroadcast = "feature_voice_broadcast",
+    VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
 }
 
 export const labGroupNames: Record<LabGroup, string> = {
@@ -262,7 +263,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new ThreadBetaController(),
         displayName: _td("Threaded messages"),
         supportedLevels: LEVELS_FEATURE,
-        default: true,
+        default: false,
         betaInfo: {
             title: _td("Threaded messages"),
             caption: () => (
@@ -459,6 +460,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Voice broadcast"),
         description: _td("Under active development"),
+        default: false,
+    },
+    [Features.VoiceBroadcastForceSmallChunks]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Force 15s voice broadcast chunk length"),
         default: false,
     },
     "feature_new_device_manager": {
@@ -884,18 +890,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             allow: [],
             deny: [],
         },
-    },
-    // TODO: Remove setting: https://github.com/vector-im/element-web/issues/14373
-    "RoomList.orderAlphabetically": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Order rooms by name"),
-        default: false,
-    },
-    // TODO: Remove setting: https://github.com/vector-im/element-web/issues/14373
-    "RoomList.orderByImportance": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show rooms with unread notifications first"),
-        default: true,
     },
     "breadcrumbs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
