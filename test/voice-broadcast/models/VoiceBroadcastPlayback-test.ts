@@ -19,6 +19,7 @@ import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import { Playback, PlaybackState } from "../../../src/audio/Playback";
 import { PlaybackManager } from "../../../src/audio/PlaybackManager";
+import { SdkContextClass } from "../../../src/contexts/SDKContext";
 import { MediaEventHelper } from "../../../src/utils/MediaEventHelper";
 import {
     VoiceBroadcastInfoState,
@@ -119,7 +120,11 @@ describe("VoiceBroadcastPlayback", () => {
     };
 
     const mkPlayback = async () => {
-        const playback = new VoiceBroadcastPlayback(infoEvent, client);
+        const playback = new VoiceBroadcastPlayback(
+            infoEvent,
+            client,
+            SdkContextClass.instance.voiceBroadcastRecordingsStore,
+        );
         jest.spyOn(playback, "removeAllListeners");
         jest.spyOn(playback, "destroy");
         playback.on(VoiceBroadcastPlaybackEvent.StateChanged, onStateChanged);
