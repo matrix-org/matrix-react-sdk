@@ -3696,5 +3696,6 @@
     "Your current session is ready for secure messaging.": "Vaša aktuálna relácia je pripravená na bezpečné zasielanie správ.",
     "Text": "Text",
     "Create a link": "Vytvoriť odkaz",
-    "Link": "Odkaz"
+    "Link": "Odkaz",
+    "Force 15s voice broadcast chunk length": "Vynútiť 15s dĺžku sekcie hlasového vysielania"
 }
