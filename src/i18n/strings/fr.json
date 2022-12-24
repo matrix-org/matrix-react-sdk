@@ -3693,5 +3693,9 @@
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
     "Verify your current session for enhanced secure messaging.": "Vérifiez cette session pour renforcer la sécurité de votre messagerie.",
     "Your current session is ready for secure messaging.": "Votre session actuelle est prête pour une messagerie sécurisée.",
-    "Mark as read": "Marquer comme lu"
+    "Mark as read": "Marquer comme lu",
+    "Text": "Texte",
+    "Create a link": "Crée un lien",
+    "Link": "Lien",
+    "Force 15s voice broadcast chunk length": "Forcer la diffusion audio à utiliser des morceaux de 15s"
 }
