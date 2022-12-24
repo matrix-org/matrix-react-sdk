@@ -3693,5 +3693,9 @@
     "Failed to send event": "Esemény küldése sikertelen",
     "Verify your current session for enhanced secure messaging.": "Ellenőrizze az aktuális munkamenetet a biztonságos üzenetküldéshez.",
     "Your current session is ready for secure messaging.": "Az aktuális munkamenet készen áll a biztonságos üzenetküldésre.",
-    "Mark as read": "Olvasottnak jelöl"
+    "Mark as read": "Olvasottnak jelöl",
+    "Text": "Szöveg",
+    "Create a link": "Hivatkozás készítése",
+    "Link": "Hivatkozás",
+    "Force 15s voice broadcast chunk length": "Hang közvetítések 15 másodperces darabolásának kényszerítése"
 }
