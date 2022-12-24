@@ -3695,5 +3695,6 @@
     "Verify your current session for enhanced secure messaging.": "Turvalise sõnumivahetuse nimel palun verifitseeri oma praegune sessioon.",
     "Your current session is ready for secure messaging.": "Sinu praegune sessioon on valmis turvaliseks sõnumivahetuseks.",
     "Text": "Tekst",
-    "Create a link": "Tee link"
+    "Create a link": "Tee link",
+    "Force 15s voice broadcast chunk length": "Kasuta ringhäälingusõnumi puhul 15-sekundilist blokipikkust"
 }
