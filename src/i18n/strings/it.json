@@ -3689,5 +3689,13 @@
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Non puoi avviare una chiamata perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare una chiamata.",
     "Can’t start a call": "Impossibile avviare una chiamata",
     "Failed to read events": "Lettura degli eventi fallita",
-    "Failed to send event": "Invio dell'evento fallito"
+    "Failed to send event": "Invio dell'evento fallito",
+    "Mark as read": "Segna come letto",
+    "Text": "Testo",
+    "Create a link": "Crea un collegamento",
+    "Link": "Collegamento",
+    " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
+    "Verify your current session for enhanced secure messaging.": "Verifica la tua sessione attuale per messaggi più sicuri.",
+    "Your current session is ready for secure messaging.": "La tua sessione attuale è pronta per i messaggi sicuri.",
+    "Force 15s voice broadcast chunk length": "Forza lunghezza pezzo trasmissione vocale a 15s"
 }
