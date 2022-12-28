@@ -21,6 +21,8 @@ import { ClientWidgetApi, MatrixWidgetType } from "matrix-widget-api";
 import { Optional } from "matrix-events-sdk";
 import { act, render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { SpiedFunction } from "jest-mock";
 
 import RightPanel from "../../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -44,7 +46,7 @@ import { ElementWidget } from "../../../../src/stores/widgets/StopGapWidget";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
 
 describe("AppTile", () => {
-    let cli;
+    let cli: MatrixClient;
     let r1: Room;
     let r2: Room;
     const resizeNotifier = new ResizeNotifier();
@@ -89,7 +91,7 @@ describe("AppTile", () => {
             type: MatrixWidgetType.Custom,
             url: "https://example.com",
             name: "Example 1",
-            creatorUserId: cli.getUserId(),
+            creatorUserId: cli.getSafeUserId(),
             avatar_url: undefined,
         };
         app2 = {
@@ -99,7 +101,7 @@ describe("AppTile", () => {
             type: MatrixWidgetType.Custom,
             url: "https://example.com",
             name: "Example 2",
-            creatorUserId: cli.getUserId(),
+            creatorUserId: cli.getSafeUserId(),
             avatar_url: undefined,
         };
         jest.spyOn(WidgetStore.instance, "getApps").mockImplementation((roomId: string): Array<IApp> => {
@@ -281,7 +283,7 @@ describe("AppTile", () => {
         // Run initial render with room 1, and also running lifecycle methods
         const renderResult = render(
             <MatrixClientContext.Provider value={cli}>
-                <AppsDrawer userId={cli.getUserId()} room={r1} resizeNotifier={resizeNotifier} />
+                <AppsDrawer userId={cli.getSafeUserId()} room={r1} resizeNotifier={resizeNotifier} />
             </MatrixClientContext.Provider>,
         );
 
@@ -312,7 +314,7 @@ describe("AppTile", () => {
 
     describe("for a pinned widget", () => {
         let renderResult: RenderResult;
-        let moveToContainerSpy;
+        let moveToContainerSpy: SpiedFunction<typeof WidgetLayoutStore.instance.moveToContainer>;
 
         beforeEach(() => {
             renderResult = render(
