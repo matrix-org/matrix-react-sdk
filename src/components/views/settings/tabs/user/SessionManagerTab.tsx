@@ -250,7 +250,7 @@ const SessionManagerTab: React.FC = () => {
                     heading={
                         <OtherSessionsSectionHeading
                             otherSessionsCount={otherSessionsCount}
-                            signOutAllOtherSessions={signOutAllOtherSessions}
+                            signOutAllOtherSessions={signOutAllOtherSessions!}
                             disabled={!!signingOutDeviceIds.length}
                         />
                     }
