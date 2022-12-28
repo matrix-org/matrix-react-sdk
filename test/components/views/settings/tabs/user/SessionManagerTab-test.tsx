@@ -928,6 +928,27 @@ describe("<SessionManagerTab />", () => {
 
                 resolveDeleteRequest?.();
             });
+
+            it("signs out of all other devices from other sessions context menu", async () => {
+                mockClient.getDevices.mockResolvedValue({
+                    devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
+                });
+                const { getByTestId, getByLabelText } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromises();
+                });
+
+                fireEvent.click(getByTestId("other-sessions-menu"));
+                fireEvent.click(getByLabelText("Sign out of 2 sessions"));
+                await confirmSignout(getByTestId);
+
+                // other devices deleted, excluding current device
+                expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
+                    [alicesMobileDevice.device_id, alicesOlderMobileDevice.device_id],
+                    undefined,
+                );
+            });
         });
     });
 

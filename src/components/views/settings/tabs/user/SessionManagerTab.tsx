@@ -38,6 +38,7 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import { useAsyncMemo } from "../../../../../hooks/useAsyncMemo";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { FilterVariation } from "../../devices/filter";
+import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionHeading";
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
@@ -246,7 +247,13 @@ const SessionManagerTab: React.FC = () => {
             />
             {shouldShowOtherSessions && (
                 <SettingsSubsection
-                    heading={_t("Other sessions")}
+                    heading={
+                        <OtherSessionsSectionHeading
+                            otherSessionsCount={otherSessionsCount}
+                            signOutAllOtherSessions={signOutAllOtherSessions}
+                            disabled={!!signingOutDeviceIds.length}
+                        />
+                    }
                     description={_t(
                         `For best security, verify your sessions and sign out ` +
                             `from any session that you don't recognize or use anymore.`,
