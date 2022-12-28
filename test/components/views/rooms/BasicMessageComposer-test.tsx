@@ -41,10 +41,38 @@ describe("BasicMessageComposer", () => {
         const userId = client.getUserId();
         const room = new Room(roomId, client, userId);
 
+        const testUrl = "https://element.io";
+        const mockDataTransfer = generateMockDataTransferForString(testUrl);
+
         render(<BasicMessageComposer model={model} room={room} />);
-        userEvent.paste("https://element.io");
+        userEvent.paste(mockDataTransfer);
 
         expect(model.parts).toHaveLength(1);
-        expect(model.parts[0].text).toBe("https://element.io");
+        expect(model.parts[0].text).toBe(testUrl);
+        expect(screen.getByText(testUrl)).toBeInTheDocument();
     });
 });
+
+function generateMockDataTransferForString(string): DataTransfer {
+    return {
+        getData: (type) => {
+            if (type === "text/plain") {
+                return string;
+            }
+        },
+        dropEffect: "link",
+        effectAllowed: "link",
+        files: undefined,
+        items: undefined,
+        types: [],
+        clearData: function (format?: string): void {
+            throw new Error("Function not implemented.");
+        },
+        setData: function (format: string, data: string): void {
+            throw new Error("Function not implemented.");
+        },
+        setDragImage: function (image: Element, x: number, y: number): void {
+            throw new Error("Function not implemented.");
+        },
+    };
+}
