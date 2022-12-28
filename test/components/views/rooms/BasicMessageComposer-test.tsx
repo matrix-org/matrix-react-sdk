@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import BasicMessageComposer from "../../../../src/components/views/rooms/BasicMessageComposer";
@@ -35,30 +35,16 @@ describe("BasicMessageComposer", () => {
 
     it("should allow a user to paste a URL without it being mangled", () => {
         const model = new EditorModel([], pc, renderer);
+        const client: MatrixClient = MatrixClientPeg.get();
 
-        const wrapper = render(model);
+        const roomId = "!1234567890:domain";
+        const userId = client.getUserId();
+        const room = new Room(roomId, client, userId);
 
-        wrapper.find(".mx_BasicMessageComposer_input").simulate("paste", {
-            clipboardData: {
-                getData: (type) => {
-                    if (type === "text/plain") {
-                        return "https://element.io";
-                    }
-                },
-            },
-        });
+        render(<BasicMessageComposer model={model} room={room} />);
+        userEvent.paste("https://element.io");
 
         expect(model.parts).toHaveLength(1);
         expect(model.parts[0].text).toBe("https://element.io");
     });
 });
-
-function render(model: EditorModel): ReactWrapper {
-    const client: MatrixClient = MatrixClientPeg.get();
-
-    const roomId = "!1234567890:domain";
-    const userId = client.getUserId();
-    const room = new Room(roomId, client, userId);
-
-    return mount(<BasicMessageComposer model={model} room={room} />);
-}
