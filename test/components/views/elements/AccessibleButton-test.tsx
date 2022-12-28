@@ -62,7 +62,7 @@ describe("<AccessibleButton />", () => {
         expect(container.querySelector("[disabled]")).toBeTruthy();
         expect(container.querySelector("[aria-disabled]")).toBeTruthy();
 
-        const btn = container.querySelector(".mx_AccessibleButton");
+        const btn = container.querySelector(".mx_AccessibleButton")!;
 
         fireEvent.click(btn);
 
@@ -79,7 +79,7 @@ describe("<AccessibleButton />", () => {
             onClick,
         });
 
-        const btn = container.querySelector(".mx_AccessibleButton");
+        const btn = container.querySelector(".mx_AccessibleButton")!;
         fireEvent.click(btn);
 
         expect(onClick).toHaveBeenCalled();
@@ -92,7 +92,7 @@ describe("<AccessibleButton />", () => {
             triggerOnMouseDown: true,
         });
 
-        const btn = container.querySelector(".mx_AccessibleButton");
+        const btn = container.querySelector(".mx_AccessibleButton")!;
         fireEvent.mouseDown(btn);
 
         expect(onClick).toHaveBeenCalled();
@@ -105,7 +105,7 @@ describe("<AccessibleButton />", () => {
                 onClick,
             });
 
-            const btn = container.querySelector(".mx_AccessibleButton");
+            const btn = container.querySelector(".mx_AccessibleButton")!;
 
             fireEvent.keyDown(btn, { key: Key.ENTER, code: Key.ENTER });
 
@@ -122,7 +122,7 @@ describe("<AccessibleButton />", () => {
             const { container } = getComponent({
                 onClick,
             });
-            const btn = container.querySelector(".mx_AccessibleButton");
+            const btn = container.querySelector(".mx_AccessibleButton")!;
 
             fireEvent.keyDown(btn, { key: Key.SPACE, code: Key.SPACE });
 
@@ -144,7 +144,7 @@ describe("<AccessibleButton />", () => {
                 onKeyUp,
             });
 
-            const btn = container.querySelector(".mx_AccessibleButton");
+            const btn = container.querySelector(".mx_AccessibleButton")!;
 
             fireEvent.keyDown(btn, { key: Key.K, code: Key.K });
             fireEvent.keyUp(btn, { key: Key.K, code: Key.K });
@@ -160,7 +160,7 @@ describe("<AccessibleButton />", () => {
                 onClick,
             });
 
-            const btn = container.querySelector(".mx_AccessibleButton");
+            const btn = container.querySelector(".mx_AccessibleButton")!;
 
             fireEvent.keyDown(btn, { key: Key.K, code: Key.K });
             fireEvent.keyUp(btn, { key: Key.K, code: Key.K });
