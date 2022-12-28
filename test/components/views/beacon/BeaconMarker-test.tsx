@@ -138,7 +138,7 @@ describe("<BeaconMarker />", () => {
         expect(screen.queryByTestId(geoUri1)).not.toBeInTheDocument();
         expect(screen.getByTestId(geoUri2)).toBeInTheDocument();
 
-        // restor the mock implimentation to avoid affecting other tests
+        // restore the mock implimentation to avoid affecting other tests
         uriSmartMarker.mockRestore();
     });
 });
