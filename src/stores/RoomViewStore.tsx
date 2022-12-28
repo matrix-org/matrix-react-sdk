@@ -54,6 +54,8 @@ import { ThreadPayload } from "../dispatcher/payloads/ThreadPayload";
 import {
     doClearCurrentVoiceBroadcastPlaybackIfStopped,
     doMaybeSetCurrentVoiceBroadcastPlayback,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingsStoreEvent,
 } from "../voice-broadcast";
 import { IRoomStateEventsActionPayload } from "../actions/MatrixActionCreators";
 import { showCantStartACallDialog } from "../voice-broadcast/utils/showCantStartACallDialog";
@@ -153,6 +155,10 @@ export class RoomViewStore extends EventEmitter {
     public constructor(dis: MatrixDispatcher, private readonly stores: SdkContextClass) {
         super();
         this.resetDispatcher(dis);
+        this.stores.voiceBroadcastRecordingsStore.addListener(
+            VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
+            this.onCurrentBroadcastRecordingChanged,
+        );
     }
 
     public addRoomListener(roomId: string, fn: Listener): void {
@@ -166,6 +172,16 @@ export class RoomViewStore extends EventEmitter {
     private emitForRoom(roomId: string, isActive: boolean): void {
         this.emit(roomId, isActive);
     }
+
+    private onCurrentBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null) => {
+        if (recording === null) {
+            const room = this.stores.client?.getRoom(this.state.roomId);
+
+            if (room) {
+                this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
+            }
+        }
+    };
 
     private setState(newState: Partial<State>): void {
         // If values haven't changed, there's nothing to do.
