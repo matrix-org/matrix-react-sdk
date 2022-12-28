@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
 import { render, screen } from "@testing-library/react";
 import { Beacon } from "matrix-js-sdk/src/matrix";
 
