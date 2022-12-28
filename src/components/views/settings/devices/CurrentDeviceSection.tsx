@@ -35,7 +35,7 @@ interface Props {
     isSigningOut: boolean;
     localNotificationSettings?: LocalNotificationSettings | undefined;
     // number of other sessions the user has
-    // exlcudes current session
+    // excludes current session
     otherSessionsCount: number;
     setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
     onVerifyCurrentDevice: () => void;
