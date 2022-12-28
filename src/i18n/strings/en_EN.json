@@ -1765,7 +1765,7 @@
     "Please enter verification code sent via text.": "Please enter verification code sent via text.",
     "Verification code": "Verification code",
     "Discovery options will appear once you have added a phone number above.": "Discovery options will appear once you have added a phone number above.",
-    "Sign out all other sessions": "Sign out all other sessions",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Sign out of all other sessions (%(otherSessionsCount)s)",
     "Current session": "Current session",
     "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "Confirm logging out these devices by using Single Sign On to prove your identity.",
     "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "Confirm logging out this device by using Single Sign On to prove your identity.",

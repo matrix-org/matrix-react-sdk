@@ -643,7 +643,7 @@ describe("<SessionManagerTab />", () => {
             });
 
             fireEvent.click(getByTestId("current-session-menu"));
-            expect(queryByLabelText("Sign out all other sessions")).toBeFalsy();
+            expect(queryByLabelText("Sign out of all other sessions")).toBeFalsy();
         });
 
         it("signs out of all other devices from current session context menu", async () => {
@@ -657,7 +657,7 @@ describe("<SessionManagerTab />", () => {
             });
 
             fireEvent.click(getByTestId("current-session-menu"));
-            fireEvent.click(getByLabelText("Sign out all other sessions"));
+            fireEvent.click(getByLabelText("Sign out of all other sessions (2)"));
             await confirmSignout(getByTestId);
 
             // other devices deleted, excluding current device

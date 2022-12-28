@@ -156,7 +156,8 @@ const SessionManagerTab: React.FC = () => {
     };
 
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
-    const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
+    const otherSessionsCount = Object.keys(otherDevices).length;
+    const shouldShowOtherSessions = otherSessionsCount > 0;
 
     const onVerifyCurrentDevice = () => {
         Modal.createDialog(SetupEncryptionDialog as unknown as React.ComponentType, { onFinished: refreshDevices });
@@ -241,6 +242,7 @@ const SessionManagerTab: React.FC = () => {
                 onVerifyCurrentDevice={onVerifyCurrentDevice}
                 onSignOutCurrentDevice={onSignOutCurrentDevice}
                 signOutAllOtherSessions={signOutAllOtherSessions}
+                otherSessionsCount={otherSessionsCount}
             />
             {shouldShowOtherSessions && (
                 <SettingsSubsection
