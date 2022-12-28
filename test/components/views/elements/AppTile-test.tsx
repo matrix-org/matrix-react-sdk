@@ -102,9 +102,10 @@ describe("AppTile", () => {
             creatorUserId: cli.getUserId(),
             avatar_url: undefined,
         };
-        jest.spyOn(WidgetStore.instance, "getApps").mockImplementation((roomId) => {
+        jest.spyOn(WidgetStore.instance, "getApps").mockImplementation((roomId: string): Array<IApp> => {
             if (roomId === "r1") return [app1];
             if (roomId === "r2") return [app2];
+            return [];
         });
 
         // Wake up various stores we rely on
