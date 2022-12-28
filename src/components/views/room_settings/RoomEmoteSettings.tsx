@@ -23,7 +23,12 @@ import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import { uploadFile } from "../../../ContentMessages";
 import { decryptFile } from "../../../utils/DecryptFile";
 import { mediaFromMxc } from '../../../customisations/Media';
-
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import SettingsFieldset from '../settings/SettingsFieldset';
+import LabelledToggleSwitch from '../elements/LabelledToggleSwitch';
+import { stringify } from '../dialogs/devtools/Event';
+const EMOTES_STATE=new UnstableValue("m.room.emotes","org.matrix.msc3892.emotes")
+const COMPAT_STATE=new UnstableValue("m.room.clientemote_compatibility","org.matrix.msc3892.clientemote_compatibility")
 interface IProps {
     roomId: string;
 }
@@ -40,6 +45,7 @@ interface IState {
     deleted: boolean;
     deletedItems: Dictionary<any>;
     value: Dictionary<string>;
+    compatiblity: boolean;
 }
 
 // TODO: Merge with EmoteSettings?
@@ -47,18 +53,29 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
     private emoteUpload = createRef<HTMLInputElement>();
     private emoteCodeUpload = createRef<HTMLInputElement>();
     private emoteUploadImage = createRef<HTMLImageElement>();
+    private imagePack:object;
     constructor(props: IProps) {
         super(props);
 
         const client = MatrixClientPeg.get();
         const room = client.getRoom(props.roomId);
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
+        
         //TODO: Do not encrypt/decrypt if room is not encrypted
         const emotesEvent = room.currentState.getStateEvents("m.room.emotes", "");
         const emotes = emotesEvent ? (emotesEvent.getContent() || {}) : {};
         const value = {};
         for (const emote in emotes) {
             value[emote] = emote;
+        }
+
+        const compatEvent = room.currentState.getStateEvents("m.room.clientemote_compatibility", "");
+        const compat = compatEvent ? (compatEvent.getContent().isCompat || false) : false;
+
+        const imagePackEvent = room.currentState.getStateEvents("m.image_pack", "");
+        this.imagePack = imagePackEvent ? (imagePackEvent.getContent() || {"images":new Map<string,object>()}) : {"images":new Map<string,object>()};
+        if(!this.imagePack["images"]){
+            this.imagePack={"images":new Map<string,object>()}
         }
 
         this.state = {
@@ -71,8 +88,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             newEmoteFile: [],
             deleted: false,
             deletedItems: {},
-            canAddEmote: room.currentState.maySendStateEvent('m.room.emotes', client.getUserId()),
+            canAddEmote: room.currentState.maySendStateEvent("m.room.emotes", client.getUserId()),
             value: value,
+            compatibility:compat
         };
         this.decryptEmotes(client.isRoomEncrypted(props.roomId));
     }
@@ -147,6 +165,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const newState: Partial<IState> = {};
         const emotesMxcs = {};
         const value = {};
+        const newPack={"images":new Map<string,object>()}
         // TODO: What do we do about errors?
 
         if (this.state.emotes || (this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)) {
@@ -160,25 +179,43 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                         emotesMxcs[this.state.newEmoteCode[i]] = newEmote.url;
                     }
                     value[this.state.newEmoteCode[i]] = this.state.newEmoteCode[i];
+                    if(this.state.compatibility){
+                        if (client.isRoomEncrypted(this.props.roomId)) {     
+                            const compatNewEmote=await client.uploadContent(this.state.newEmoteFile[i])
+                            newPack["images"][this.state.newEmoteCode[i]] = {"url":compatNewEmote.content_uri};
+                        } else {
+                            newPack["images"][this.state.newEmoteCode[i]] = {"url":newEmote.url};
+                        }
+                    }
                 }
             }
             if (this.state.emotes) {
                 for (const shortcode in this.state.emotes) {
                     if ((this.state.newEmoteFileAdded && this.state.newEmoteCodeAdded)
-                    && (shortcode in this.state.newEmoteCode)) {
+                        && (shortcode in this.state.newEmoteCode)) {
                         continue;
                     }
                     if (this.state.EmoteFieldsTouched.hasOwnProperty(shortcode)) {
                         emotesMxcs[this.state.EmoteFieldsTouched[shortcode]] = this.state.emotes[shortcode];
                         value[this.state.EmoteFieldsTouched[shortcode]] = this.state.EmoteFieldsTouched[shortcode];
+                        if (this.imagePack[shortcode]) {
+                            newPack["images"][this.state.EmoteFieldsTouched[shortcode]] = { "url": this.imagePack[shortcode]["url"] };
+                        }
+
                     } else {
                         emotesMxcs[shortcode] = this.state.emotes[shortcode];
                         value[shortcode] = shortcode;
+                        if (this.imagePack["images"][shortcode]) {
+                            newPack["images"][shortcode] = { "url": this.imagePack["images"][shortcode]["url"] }
+                        }
                     }
                 }
             }
             newState.value = value;
-            await client.sendStateEvent(this.props.roomId, 'm.room.emotes', emotesMxcs, "");
+            await client.sendStateEvent(this.props.roomId, "m.room.emotes", emotesMxcs, "");
+            this.imagePack=newPack
+            await client.sendStateEvent(this.props.roomId, "m.image_pack", this.imagePack, "");
+            
             //this.emoteUpload.current.value = "";
             //this.emoteCodeUpload.current.value = "";
             newState.newEmoteFileAdded = false;
@@ -253,6 +290,34 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             });
         }
     };
+
+    private onCompatChange = async (allowed: boolean) => {
+        
+        const client = MatrixClientPeg.get();
+        await client.sendStateEvent(this.props.roomId, "m.room.clientemote_compatibility", { isCompat: allowed }, "");
+        
+        if (allowed) {
+            for (const shortcode in this.state.emotes) {
+                if(!this.imagePack["images"][shortcode]){
+                    if (client.isRoomEncrypted(this.props.roomId)) {
+                        const blob = await decryptFile(this.state.emotes[shortcode]);
+                        const uploadedEmote = await client.uploadContent(blob)
+                        this.imagePack["images"][shortcode] = { "url": uploadedEmote.content_uri };
+                    } else {
+                        this.imagePack["images"][shortcode] = { "url": this.state.emotes[shortcode] };
+                    }
+                }
+            }
+
+            await client.sendStateEvent(this.props.roomId, "m.image_pack", this.imagePack, "");
+        }
+
+        this.setState({
+            compatibility: allowed,
+        }
+        ) 
+      
+    }
     private async decryptEmotes(isEnc: boolean) {
         const decryptede = {};
         for (const shortcode in this.state.emotes) {
@@ -368,6 +433,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 </li>,
             );
         }
+        const isCompat = this.state.compatibility
         return (
 
             <form
@@ -386,6 +452,21 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     multiple
                 />
                 { emoteSettingsButtons }
+                {
+                    <SettingsFieldset
+                    legend={_t("Emote Compatibility on Other Clients")}
+                    description={_t("This will allow emotes sent to be compatible with non-Element clients that have custom emotes. \
+                    Note that this uses a different spec and emote images will be stored on the server unencrypted. Emotes sent before this setting is enabled will not work on the other clients. \
+                    The room will have to be reloaded for this change to take effect.")}
+                >
+                    <LabelledToggleSwitch
+                        value={isCompat}
+                        onChange={this.onCompatChange}
+                        label={_t("Compatibility")}
+                        disabled={!this.state.canAddEmote}
+                    />
+                </SettingsFieldset>
+                }
                 { uploadedEmotes }
                 {
                     existingEmotes
