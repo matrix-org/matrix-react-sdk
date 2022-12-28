@@ -40,7 +40,7 @@ import { CommandPartCreator, Part, PartCreator, SerializedPart } from "../../../
 import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories } from "../../../SlashCommands";
-import ContentMessages from "../../../ContentMessages";
+import ContentMessages, { uploadFile } from "../../../ContentMessages";
 import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
@@ -60,6 +60,7 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
+
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
@@ -77,7 +78,10 @@ export function createMessageContent(
     relation: IEventRelation | undefined,
     permalinkCreator: RoomPermalinkCreator,
     includeReplyLegacyFallback = true,
+    emotes?:Map<string,string>,
+    compat?:boolean,
 ): IContent {
+    
     const isEmote = containsEmote(model);
     if (isEmote) {
         model = stripEmoteCommand(model);
@@ -88,19 +92,33 @@ export function createMessageContent(
     model = unescapeMessage(model);
 
     const body = textSerialize(model);
-
+    let emoteBody;
+    if (compat) {
+        emoteBody = body.replace(/:[\w+-]+:/g, m => emotes[m] ? emotes[m] : m)
+    }
     const content: IContent = {
         msgtype: isEmote ? "m.emote" : "m.text",
         body: body,
     };
-    const formattedBody = htmlSerializeIfNeeded(model, {
+    let formattedBody = htmlSerializeIfNeeded(model, {
         forceHTML: !!replyToEvent,
         useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
     });
     if (formattedBody) {
+        if(compat){
+            formattedBody=formattedBody.replace(/:[\w+-]+:/g, m => emotes[m] ? emotes[m] : m)
+        }
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
     }
+    else if (compat){
+        if(body!=emoteBody){
+            content.format="org.matrix.custom.html"
+            content.formatted_body = emoteBody
+        }
+    }
+
+
 
     attachRelation(content, relation);
     if (replyToEvent) {
@@ -152,7 +170,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     private currentlyComposedEditorState: SerializedPart[] = null;
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
-
+    private imagePack: object;
+    private emotes: Map<string,string>;
+    private compat: boolean;
     static defaultProps = {
         includeReplyLegacyFallback: true,
     };
@@ -178,6 +198,19 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.model = new EditorModel(parts, partCreator);
         this.dispatcherRef = dis.register(this.onAction);
         this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, "mx_cider_history_");
+
+        const room = this.props.room
+
+        const compatEvent = room.currentState.getStateEvents("m.room.clientemote_compatibility", "");
+        this.compat = compatEvent ? (compatEvent.getContent().isCompat || false) : false;
+
+        const imagePackEvent = room.currentState.getStateEvents("m.image_pack", "");
+        this.imagePack = imagePackEvent ? (imagePackEvent.getContent() || {"images":new Map<string,object>()}) : {"images":new Map<string,object>()};
+        this.emotes=new Map<string,string>()
+
+        for (const shortcode in this.imagePack["images"]){
+            this.emotes[":"+shortcode+":"]="<img data-mx-emoticon src='"+this.imagePack["images"][shortcode]["url"] +"'/>"
+        }
     }
 
     public componentDidUpdate(prevProps: ISendMessageComposerProps): void {
@@ -192,6 +225,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             this.editorRef.current?.focus();
         }
     }
+
+
 
     private onKeyDown = (event: KeyboardEvent): void => {
         // ignore any keypress while doing IME compositions
@@ -329,7 +364,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     public async sendMessage(): Promise<void> {
         const model = this.model;
-
         if (model.isEmpty) {
             return;
         }
@@ -404,6 +438,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     this.props.relation,
                     this.props.permalinkCreator,
                     this.props.includeReplyLegacyFallback,
+                    this.emotes,
+                    this.compat,
                 );
             }
             // don't bother sending an empty message
