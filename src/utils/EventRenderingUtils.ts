@@ -24,6 +24,7 @@ import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getMessageModerationState, isLocationEvent, MessageModerationState } from "./EventUtils";
 import { ElementCall } from "../models/Call";
+import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../voice-broadcast";
 
 export function getEventDisplayInfo(
     mxEvent: MatrixEvent,
@@ -75,7 +76,8 @@ export function getEventDisplayInfo(
         eventType !== EventType.Sticker &&
         eventType !== EventType.RoomCreate &&
         !M_POLL_START.matches(eventType) &&
-        !M_BEACON_INFO.matches(eventType);
+        !M_BEACON_INFO.matches(eventType) &&
+        !(eventType === VoiceBroadcastInfoEventType && content?.state === VoiceBroadcastInfoState.Started);
     // Some non-info messages want to be rendered in the appropriate bubble column but without the bubble background
     const noBubbleEvent =
         (eventType === EventType.RoomMessage && msgtype === MsgType.Emote) ||
