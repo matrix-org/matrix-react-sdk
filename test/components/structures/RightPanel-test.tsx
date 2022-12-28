@@ -34,10 +34,7 @@ import { RightPanelPhases } from "../../../src/stores/right-panel/RightPanelStor
 import RightPanelStore from "../../../src/stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
 import { WidgetLayoutStore } from "../../../src/stores/widgets/WidgetLayoutStore";
-import RoomSummaryCard from "../../../src/components/views/right_panel/RoomSummaryCard";
-import MemberList from "../../../src/components/views/rooms/MemberList";
 import { SdkContextClass } from "../../../src/contexts/SDKContext";
-import { FillExtrusionBucket } from "maplibre-gl";
 
 const RightPanelBase = wrapInMatrixClientContext(_RightPanel);
 
