@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import * as maplibregl from "maplibre-gl";
 import { act } from "react-dom/test-utils";
 import { Beacon, Room, RoomMember, MatrixEvent, getBeaconInfoIdentifier } from "matrix-js-sdk/src/matrix";
 
 import BeaconMarker from "../../../../src/components/views/beacon/BeaconMarker";
+import * as mockSmartMarker from "../../../../src/components/views/location/SmartMarker";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import {
     getMockClientWithEventEmitter,
@@ -64,14 +64,16 @@ describe("<BeaconMarker />", () => {
     const defaultEvent = makeBeaconInfoEvent(aliceId, roomId, { isLive: true }, "$alice-room1-1");
     const notLiveEvent = makeBeaconInfoEvent(aliceId, roomId, { isLive: false }, "$alice-room1-2");
 
+    const geoUri1 = "geo:51,41";
     const location1 = makeBeaconEvent(aliceId, {
         beaconInfoId: defaultEvent.getId(),
-        geoUri: "geo:51,41",
+        geoUri: geoUri1,
         timestamp: now + 1,
     });
+    const geoUri2 = "geo:52,42";
     const location2 = makeBeaconEvent(aliceId, {
         beaconInfoId: defaultEvent.getId(),
-        geoUri: "geo:52,42",
+        geoUri: geoUri2,
         timestamp: now + 10000,
     });
 
@@ -80,11 +82,15 @@ describe("<BeaconMarker />", () => {
         beacon: new Beacon(defaultEvent),
     };
 
-    const getComponent = (props = {}) =>
-        mount(<BeaconMarker {...defaultProps} {...props} />, {
-            wrappingComponent: MatrixClientContext.Provider,
-            wrappingComponentProps: { value: mockClient },
+    const renderComponent = (props = {}) => {
+        const Wrapper = (props) => {
+            return <MatrixClientContext.Provider value={mockClient} {...props} />;
+        };
+
+        return render(<BeaconMarker {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
         });
+    };
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -93,38 +99,46 @@ describe("<BeaconMarker />", () => {
     it("renders nothing when beacon is not live", () => {
         const room = setupRoom([notLiveEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(notLiveEvent));
-        const component = getComponent({ beacon });
-        expect(component.html()).toBe(null);
+        const { container } = renderComponent({ beacon });
+        expect(container.innerHTML).toBe("");
     });
 
     it("renders nothing when beacon has no location", () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
-        const component = getComponent({ beacon });
-        expect(component.html()).toBe(null);
+        const { container } = renderComponent({ beacon });
+        expect(container.innerHTML).toBe("");
     });
 
     it("renders marker when beacon has location", () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
-        const component = getComponent({ beacon });
-        expect(component).toMatchSnapshot();
+        const { asFragment } = renderComponent({ beacon });
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it("updates with new locations", () => {
+        // we need to mock the SmartMarker here to be able to check the geoUris
+        const uriSmartMarker = jest.spyOn(mockSmartMarker, "default");
+        uriSmartMarker.mockImplementation((props) => <div data-testid={props.geoUri} />);
+
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
-        const component = getComponent({ beacon });
-        expect(component.find("SmartMarker").props()["geoUri"]).toEqual("geo:51,41");
+        renderComponent({ beacon });
+
+        expect(screen.getByTestId(geoUri1)).toBeInTheDocument();
 
         act(() => {
             beacon.addLocations([location2]);
         });
-        component.setProps({});
 
         // updated to latest location
-        expect(component.find("SmartMarker").props()["geoUri"]).toEqual("geo:52,42");
+        expect(screen.queryByTestId(geoUri1)).not.toBeInTheDocument();
+        expect(screen.getByTestId(geoUri2)).toBeInTheDocument();
+
+        // restor the mock implimentation to avoid affecting other tests
+        uriSmartMarker.mockRestore();
     });
 });
