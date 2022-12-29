@@ -68,7 +68,7 @@ class MockRoom {
     }
 }
 
-export function createPartCreator(completions = []) {
+export function createPartCreator(completions: PillPart[] = []) {
     const autoCompleteCreator = (partCreator: PartCreator) => {
         return (updateCallback: UpdateCallback) =>
             new MockAutoComplete(updateCallback, partCreator, completions) as unknown as AutocompleteWrapperModel;
