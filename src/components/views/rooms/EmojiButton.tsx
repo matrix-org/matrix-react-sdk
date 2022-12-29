@@ -22,14 +22,16 @@ import ContextMenu, { aboveLeftOf, AboveLeftOf, useContextMenu } from "../../str
 import EmojiPicker from "../emojipicker/EmojiPicker";
 import { CollapsibleButton } from "./CollapsibleButton";
 import { OverflowMenuContext } from "./MessageComposerButtons";
+import { Room } from 'matrix-js-sdk/src/models/room';
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
     menuPosition: AboveLeftOf;
     className?: string;
+    room: Room,
 }
 
-export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonProps) {
+export function EmojiButton({ addEmoji, menuPosition, className, room }: IEmojiButtonProps) {
     const overflowMenuCloser = useContext(OverflowMenuContext);
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
@@ -46,7 +48,7 @@ export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonP
                 }}
                 managed={false}
             >
-                <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
+                <EmojiPicker onChoose={addEmoji} showQuickReactions={true} room = {room} />
             </ContextMenu>
         );
     }
@@ -71,3 +73,6 @@ export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonP
         </>
     );
 }
+
+
+

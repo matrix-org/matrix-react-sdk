@@ -40,6 +40,7 @@ import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from "../context_menus/IconizedContextMenu";
 import { useSettingValue } from "../../../hooks/useSettings";
+import { EmojiButton } from "./EmojiButton";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -150,7 +151,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     );
 };
 
-function emojiButton(props: IProps): ReactElement {
+function emojiButton(props: IProps, room: Room): ReactElement {
     return (
         <EmojiButton
             key="emoji_button"
@@ -162,55 +163,6 @@ function emojiButton(props: IProps): ReactElement {
     );
 }
 
-interface IEmojiButtonProps {
-    addEmoji: (unicode: string) => boolean;
-    menuPosition: AboveLeftOf;
-    room: Room;
-}
-
-const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, room}) => {
-    const overflowMenuCloser = useContext(OverflowMenuContext);
-    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-    let contextMenu: React.ReactElement | null = null;
-    if (menuDisplayed) {
-        const position = (
-            menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
-        );
-
-        contextMenu = <ContextMenu
-            {...position}
-            onFinished={() => {
-                closeMenu();
-                overflowMenuCloser?.();
-            }}
-            managed={false}
-        >
-            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} room={room}/>
-        </ContextMenu>;
-    }
-
-    const className = classNames(
-        "mx_MessageComposer_button",
-        {
-            "mx_MessageComposer_button_highlight": menuDisplayed,
-        },
-        "mx_EmojiButton_icon"
-    );
-
-    // TODO: replace ContextMenuTooltipButton with a unified representation of
-    // the header buttons and the right panel buttons
-    return <React.Fragment>
-        <CollapsibleButton
-            className={className}
-            iconClassName="mx_MessageComposer_emoji"
-            onClick={openMenu}
-            title={_t("Emoji")}
-            inputRef={button}
-        />
-
-        { contextMenu }
-    </React.Fragment>;
-};
 
 function uploadButton(): ReactElement {
     return <UploadButton key="controls_upload" />;
