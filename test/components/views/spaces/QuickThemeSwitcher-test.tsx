@@ -67,13 +67,13 @@ describe("<QuickThemeSwitcher />", () => {
         mocked(dis).dispatch.mockClear();
     });
 
-    const selectFromDropdown = async (select: RegExp | string) => {
+    const selectFromDropdown = async (getByTextArg: RegExp | string) => {
         const dropdown = screen.getByRole("button", { name: "Space selection" });
         await userEvent.click(dropdown);
         await waitFor(() => {
             expect(dropdown).toHaveAttribute("aria-expanded", "true");
         });
-        await userEvent.click(screen.getByText(select));
+        await userEvent.click(screen.getByText(getByTextArg));
         return waitFor(() => {
             expect(dropdown).toHaveAttribute("aria-expanded", "false");
         });
