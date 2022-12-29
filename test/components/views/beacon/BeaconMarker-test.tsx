@@ -83,8 +83,8 @@ describe("<BeaconMarker />", () => {
     };
 
     const renderComponent = (props = {}) => {
-        const Wrapper = (props) => {
-            return <MatrixClientContext.Provider value={mockClient} {...props} />;
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
         };
 
         return render(<BeaconMarker {...defaultProps} {...props} />, {
@@ -113,7 +113,7 @@ describe("<BeaconMarker />", () => {
     it("renders marker when beacon has location", () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
-        beacon.addLocations([location1]);
+        beacon?.addLocations([location1]);
         const { asFragment } = renderComponent({ beacon });
         expect(asFragment()).toMatchSnapshot();
     });
@@ -125,13 +125,13 @@ describe("<BeaconMarker />", () => {
 
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
-        beacon.addLocations([location1]);
+        beacon?.addLocations([location1]);
         renderComponent({ beacon });
 
         expect(screen.getByTestId(geoUri1)).toBeInTheDocument();
 
         act(() => {
-            beacon.addLocations([location2]);
+            beacon?.addLocations([location2]);
         });
 
         // updated to latest location
