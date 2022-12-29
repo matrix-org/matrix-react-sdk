@@ -1568,23 +1568,23 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     switch (phase) {
         case RightPanelPhases.RoomMemberInfo:
         case RightPanelPhases.SpaceMemberInfo:
-            content = room && devices && typeof isRoomEncrypted === "boolean" && (
+            content = room && devices && (
                 <BasicUserInfo
                     room={room}
                     member={member as User}
                     devices={devices}
-                    isRoomEncrypted={isRoomEncrypted}
+                    isRoomEncrypted={Boolean(isRoomEncrypted)}
                 />
             );
             break;
         case RightPanelPhases.EncryptionPanel:
             classes.push("mx_UserInfo_smallAvatar");
-            content = typeof isRoomEncrypted === "boolean" && (
+            content = (
                 <EncryptionPanel
                     {...(props as React.ComponentProps<typeof EncryptionPanel>)}
                     member={member as User | RoomMember}
                     onClose={onEncryptionPanelClose}
-                    isRoomEncrypted={isRoomEncrypted}
+                    isRoomEncrypted={Boolean(isRoomEncrypted)}
                 />
             );
             break;
