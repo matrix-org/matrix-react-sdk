@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
-import { act } from "react-dom/test-utils";
 import { Room, User, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
@@ -26,10 +25,6 @@ import UserInfo from "../../../../src/components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
-import VerificationPanel from "../../../../src/components/views/right_panel/VerificationPanel";
-import EncryptionInfo from "../../../../src/components/views/right_panel/EncryptionInfo";
-
-const findByTestId = (component, id) => component.find(`[data-test-id="${id}"]`);
 
 jest.mock("../../../../src/utils/DMRoomMap", () => {
     const mock = {
@@ -70,6 +65,7 @@ describe("<UserInfo />", () => {
         phase: Phase.Ready,
         channel: { transactionId: 1 },
         otherPartySupportsMethod: jest.fn(),
+        off: jest.fn(),
     } as unknown as VerificationRequest;
 
     const defaultProps = {
@@ -79,11 +75,15 @@ describe("<UserInfo />", () => {
         onClose: jest.fn(),
     };
 
-    const getComponent = (props = {}) =>
-        mount(<UserInfo {...defaultProps} {...props} />, {
-            wrappingComponent: MatrixClientContext.Provider,
-            wrappingComponentProps: { value: mockClient },
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<UserInfo {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
         });
+    };
 
     beforeAll(() => {
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
@@ -93,47 +93,43 @@ describe("<UserInfo />", () => {
         mockClient.getUser.mockClear().mockReturnValue({} as unknown as User);
     });
 
-    it("closes on close button click", () => {
+    it("closes on close button click", async () => {
         const onClose = jest.fn();
-        const component = getComponent({ onClose });
-        act(() => {
-            findByTestId(component, "base-card-close-button").at(0).simulate("click");
-        });
+        renderComponent({ onClose });
+
+        await userEvent.click(screen.getByTestId("base-card-close-button"));
 
         expect(onClose).toHaveBeenCalled();
     });
 
     describe("without a room", () => {
         it("does not render space header", () => {
-            const component = getComponent();
-            expect(findByTestId(component, "space-header").length).toBeFalsy();
+            renderComponent();
+            expect(screen.queryByTestId("space-header")).not.toBeInTheDocument();
         });
 
         it("renders user info", () => {
-            const component = getComponent();
-            expect(component.find("BasicUserInfo").length).toBeTruthy();
+            renderComponent();
+            expect(screen.getByRole("heading", { name: defaultUserId })).toBeInTheDocument();
         });
 
         it("renders encryption info panel without pending verification", () => {
-            const phase = RightPanelPhases.EncryptionPanel;
-            const component = getComponent({ phase });
-
-            expect(component.find(EncryptionInfo).length).toBeTruthy();
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel });
+            expect(screen.getByRole("heading", { name: /encryption/i })).toBeInTheDocument();
         });
 
         it("renders encryption verification panel with pending verification", () => {
-            const phase = RightPanelPhases.EncryptionPanel;
-            const component = getComponent({ phase, verificationRequest });
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
 
-            expect(component.find(EncryptionInfo).length).toBeFalsy();
-            expect(component.find(VerificationPanel).length).toBeTruthy();
+            expect(screen.queryByRole("heading", { name: /encryption/i })).not.toBeInTheDocument();
+            // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
+            // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
+            expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
 
         it("renders close button correctly when encryption panel with a pending verification request", () => {
-            const phase = RightPanelPhases.EncryptionPanel;
-            const component = getComponent({ phase, verificationRequest });
-
-            expect(findByTestId(component, "base-card-close-button").at(0).props().title).toEqual("Cancel");
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
+            expect(screen.getByTestId("base-card-close-button")).toHaveAttribute("title", "Cancel");
         });
     });
 
@@ -153,13 +149,13 @@ describe("<UserInfo />", () => {
         } as unknown as Room;
 
         it("renders user info", () => {
-            const component = getComponent();
-            expect(component.find("BasicUserInfo").length).toBeTruthy();
+            renderComponent({ room });
+            expect(screen.getByRole("heading", { name: defaultUserId })).toBeInTheDocument();
         });
 
         it("does not render space header when room is not a space room", () => {
-            const component = getComponent({ room });
-            expect(findByTestId(component, "space-header").length).toBeFalsy();
+            renderComponent({ room });
+            expect(screen.queryByTestId("space-header")).not.toBeInTheDocument();
         });
 
         it("renders space header when room is a space room", () => {
@@ -167,23 +163,22 @@ describe("<UserInfo />", () => {
                 ...room,
                 isSpaceRoom: jest.fn().mockReturnValue(true),
             };
-            const component = getComponent({ room: spaceRoom });
-            expect(findByTestId(component, "space-header").length).toBeTruthy();
+            renderComponent({ room: spaceRoom });
+            expect(screen.getByTestId("space-header")).toBeInTheDocument();
         });
 
         it("renders encryption info panel without pending verification", () => {
-            const phase = RightPanelPhases.EncryptionPanel;
-            const component = getComponent({ phase, room });
-
-            expect(component.find(EncryptionInfo).length).toBeTruthy();
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, room });
+            expect(screen.getByRole("heading", { name: /encryption/i })).toBeInTheDocument();
         });
 
         it("renders encryption verification panel with pending verification", () => {
-            const phase = RightPanelPhases.EncryptionPanel;
-            const component = getComponent({ phase, verificationRequest, room });
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest, room });
 
-            expect(component.find(EncryptionInfo).length).toBeFalsy();
-            expect(component.find(VerificationPanel).length).toBeTruthy();
+            expect(screen.queryByRole("heading", { name: /encryption/i })).not.toBeInTheDocument();
+            // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
+            // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
+            expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
     });
 });
