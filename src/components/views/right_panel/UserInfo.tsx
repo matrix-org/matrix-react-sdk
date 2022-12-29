@@ -94,7 +94,7 @@ const disambiguateDevices = (devices: IDevice[]) => {
     }
     for (const name in names) {
         if (names[name].length > 1) {
-            names[name].forEach((j) => {
+            names[name].forEach((j: number) => {
                 devices[j].ambiguous = true;
             });
         }
@@ -172,7 +172,10 @@ function DeviceItem({ userId, device }: { userId: string; device: IDevice }) {
     });
 
     const onDeviceClick = () => {
-        verifyDevice(cli.getUser(userId), device);
+        const user = cli.getUser(userId);
+        if (user) {
+            verifyDevice(user, device);
+        }
     };
 
     let deviceName;
@@ -364,13 +367,16 @@ const UserOptionsSection: React.FC<{
         if (member.roomId && !isSpace) {
             const onReadReceiptButton = function () {
                 const room = cli.getRoom(member.roomId);
-                dis.dispatch<ViewRoomPayload>({
-                    action: Action.ViewRoom,
-                    highlighted: true,
-                    event_id: room.getEventReadUpTo(member.userId),
-                    room_id: member.roomId,
-                    metricsTrigger: undefined, // room doesn't change
-                });
+                if (room) {
+                    dis.dispatch<ViewRoomPayload>({
+                        action: Action.ViewRoom,
+                        highlighted: true,
+                        // this could return null, the default prevents a type error
+                        event_id: room.getEventReadUpTo(member.userId) || undefined,
+                        room_id: member.roomId,
+                        metricsTrigger: undefined, // room doesn't change
+                    });
+                }
             };
 
             const onInsertPillButton = function () {
@@ -402,6 +408,9 @@ const UserOptionsSection: React.FC<{
             const onInviteUserButton = async (ev: ButtonEvent) => {
                 try {
                     // We use a MultiInviter to re-use the invite logic, even though we're only inviting one user.
+                    if (!roomId) {
+                        throw new Error("Missing roomId");
+                    }
                     const inviter = new MultiInviter(roomId);
                     await inviter.invite([member.userId]).then(() => {
                         if (inviter.getCompletionState(member.userId) !== "invited") {
@@ -409,9 +418,11 @@ const UserOptionsSection: React.FC<{
                         }
                     });
                 } catch (err) {
+                    const description = err instanceof Error ? err.message : _t("Operation failed");
+
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Failed to invite"),
-                        description: err && err.message ? err.message : _t("Operation failed"),
+                        description,
                     });
                 }
 
@@ -432,10 +443,7 @@ const UserOptionsSection: React.FC<{
         </AccessibleButton>
     );
 
-    let directMessageButton: JSX.Element;
-    if (!isMe) {
-        directMessageButton = <MessageButton member={member} />;
-    }
+    const directMessageButton = isMe ? null : <MessageButton member={member} />;
 
     return (
         <div className="mx_UserInfo_container">
@@ -505,10 +513,12 @@ const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsContent) => 
     const levelToSend =
         (powerLevelContent.events ? powerLevelContent.events["m.room.message"] : null) ||
         powerLevelContent.events_default;
-    return member.powerLevel < levelToSend;
+
+    return levelToSend && member.powerLevel < levelToSend;
 };
 
-const getPowerLevels = (room) => room?.currentState?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent() || {};
+const getPowerLevels = (room: Room): IPowerLevelsContent =>
+    room?.currentState?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent() || {};
 
 export const useRoomPowerLevels = (cli: MatrixClient, room: Room) => {
     const [powerLevels, setPowerLevels] = useState<IPowerLevelsContent>(getPowerLevels(room));
@@ -566,7 +576,7 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
                 space: room,
                 spaceChildFilter: (child: Room) => {
                     // Return true if the target member is not banned and we have sufficient PL to ban them
-                    const myMember = child.getMember(cli.credentials.userId);
+                    const myMember = cli.credentials.userId && child.getMember(cli.credentials.userId);
                     const theirMember = child.getMember(member.userId);
                     return (
                         myMember &&
@@ -674,7 +684,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
                 spaceChildFilter: isBanned
                     ? (child: Room) => {
                           // Return true if the target member is banned and we have sufficient PL to unban
-                          const myMember = child.getMember(cli.credentials.userId);
+                          const myMember = cli.credentials.userId && child.getMember(cli.credentials.userId);
                           const theirMember = child.getMember(member.userId);
                           return (
                               myMember &&
@@ -686,7 +696,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
                       }
                     : (child: Room) => {
                           // Return true if the target member isn't banned and we have sufficient PL to ban
-                          const myMember = child.getMember(cli.credentials.userId);
+                          const myMember = cli.credentials.userId && child.getMember(cli.credentials.userId);
                           const theirMember = child.getMember(member.userId);
                           return (
                               myMember &&
@@ -855,7 +865,8 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     // if these do not exist in the event then they should default to 50 as per the spec
     const { ban: banPowerLevel = 50, kick: kickPowerLevel = 50, redact: redactPowerLevel = 50 } = powerLevels;
 
-    const me = room.getMember(cli.getUserId());
+    const userId = cli.getUserId();
+    const me = userId && room.getMember(userId);
     if (!me) {
         // we aren't in the room, so return no admin tooling
         return <div />;
@@ -879,7 +890,7 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
             <BanToggleButton room={room} member={member} startUpdating={startUpdating} stopUpdating={stopUpdating} />
         );
     }
-    if (!isMe && canAffectUser && me.powerLevel >= editPowerLevel && !room.isSpaceRoom()) {
+    if (!isMe && canAffectUser && editPowerLevel && me.powerLevel >= editPowerLevel && !room.isSpaceRoom()) {
         muteButton = (
             <MuteToggleButton
                 member={member}
@@ -949,7 +960,8 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
         const powerLevels = room?.currentState.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
         if (!powerLevels) return;
 
-        const me = room.getMember(cli.getUserId());
+        const userId = cli.getUserId();
+        const me = userId && room.getMember(userId);
         if (!me) return;
 
         const them = user;
@@ -1022,8 +1034,13 @@ const PowerLevelEditor: React.FC<{
         async (powerLevel: number) => {
             setSelectedPowerLevel(powerLevel);
 
-            const applyPowerChange = (roomId, target, powerLevel, powerLevelEvent) => {
-                return cli.setPowerLevel(roomId, target, parseInt(powerLevel), powerLevelEvent).then(
+            const applyPowerChange = (
+                roomId: string,
+                target: string,
+                powerLevel: number,
+                powerLevelEvent: MatrixEvent,
+            ) => {
+                return cli.setPowerLevel(roomId, target, powerLevel, powerLevelEvent).then(
                     function () {
                         // NO-OP; rely on the m.room.member event coming down else we could
                         // get out of sync if we force setState here!
@@ -1046,7 +1063,7 @@ const PowerLevelEditor: React.FC<{
             if (!powerLevelEvent) return;
 
             const myUserId = cli.getUserId();
-            const myPower = powerLevelEvent.getContent().users[myUserId];
+            const myPower = myUserId && powerLevelEvent.getContent().users[myUserId];
             if (myPower && parseInt(myPower) <= powerLevel && myUserId !== target) {
                 const { finished } = Modal.createDialog(QuestionDialog, {
                     title: _t("Warning!"),
@@ -1085,7 +1102,7 @@ const PowerLevelEditor: React.FC<{
     return (
         <div className="mx_UserInfo_profileField">
             <PowerSelector
-                label={null}
+                label={undefined}
                 value={selectedPowerLevel}
                 maxValue={roomPermissions.modifyLevelMax}
                 usersDefault={powerLevelUsersDefault}
@@ -1099,7 +1116,7 @@ export const useDevices = (userId: string) => {
     const cli = useContext(MatrixClientContext);
 
     // undefined means yet to be loaded, null means failed to load, otherwise list of devices
-    const [devices, setDevices] = useState(undefined);
+    const [devices, setDevices] = useState<undefined | null | IDevice[]>(undefined);
     // Download device lists
     useEffect(() => {
         setDevices(undefined);
@@ -1116,8 +1133,8 @@ export const useDevices = (userId: string) => {
                     return;
                 }
 
-                disambiguateDevices(devices);
-                setDevices(devices);
+                disambiguateDevices(devices as IDevice[]);
+                setDevices(devices as IDevice[]);
             } catch (err) {
                 setDevices(null);
             }
