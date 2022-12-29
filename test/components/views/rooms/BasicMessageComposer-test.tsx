@@ -38,11 +38,8 @@ describe("BasicMessageComposer", () => {
         const client: MatrixClient = MatrixClientPeg.get();
 
         const roomId = "!1234567890:domain";
-        const userId = client.getUserId();
+        const userId = client.getSafeUserId();
 
-        if (!userId) {
-            fail("could not find userId");
-        }
         const room = new Room(roomId, client, userId);
 
         const testUrl = "https://element.io";
