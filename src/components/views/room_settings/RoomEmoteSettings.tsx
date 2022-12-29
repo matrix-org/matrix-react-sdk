@@ -198,8 +198,8 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     if (this.state.EmoteFieldsTouched.hasOwnProperty(shortcode)) {
                         emotesMxcs[this.state.EmoteFieldsTouched[shortcode]] = this.state.emotes[shortcode];
                         value[this.state.EmoteFieldsTouched[shortcode]] = this.state.EmoteFieldsTouched[shortcode];
-                        if (this.imagePack[shortcode]) {
-                            newPack["images"][this.state.EmoteFieldsTouched[shortcode]] = { "url": this.imagePack[shortcode]["url"] };
+                        if (this.imagePack["images"][shortcode]) {
+                            newPack["images"][this.state.EmoteFieldsTouched[shortcode]] = { "url": this.imagePack["images"][shortcode]["url"] };
                         }
 
                     } else {
@@ -456,8 +456,9 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                     <SettingsFieldset
                     legend={_t("Emote Compatibility on Other Clients")}
                     description={_t("This will allow emotes sent to be compatible with non-Element clients that have custom emotes. \
-                    Note that this uses a different spec and emote images will be stored on the server unencrypted. Emotes sent before this setting is enabled will not work on the other clients. \
-                    The room will have to be reloaded for this change to take effect.")}
+                    This uses a different spec and emote images will be stored on the server unencrypted. Emotes sent before this setting is enabled will not work on the other clients. \
+                    The room will have to be reloaded for this change to take effect. \
+                    NOTE: The first time you turn this setting on in an encrypted room it may take some time so please be patient and wait until the toggle switch shows that it is on.")}
                 >
                     <LabelledToggleSwitch
                         value={isCompat}
