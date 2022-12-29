@@ -37,17 +37,25 @@ import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { addTextToComposerRTL } from "../../../test-utils/composer";
 import UIStore, { UI_EVENTS } from "../../../../src/stores/UIStore";
 import { Action } from "../../../../src/dispatcher/actions";
+import { VoiceBroadcastInfoState, VoiceBroadcastRecording } from "../../../../src/voice-broadcast";
+import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 
 jest.mock("../../../../src/components/views/rooms/wysiwyg_composer", () => ({
     SendWysiwygComposer: jest.fn().mockImplementation(() => <div data-testid="wysiwyg-composer" />),
 }));
 
-jest.setTimeout(100);
-
 const openStickerPicker = async (renderResult: RenderResult): Promise<void> => {
     await act(async () => {
         await userEvent.click(renderResult.getByLabelText("More options"));
         await userEvent.click(renderResult.getByLabelText("Sticker"));
+    });
+};
+
+const startVoiceMessage = async (renderResult: RenderResult): Promise<void> => {
+    await act(async () => {
+        await userEvent.click(renderResult.getByLabelText("More options"));
+        await userEvent.click(renderResult.getByLabelText("Voice Message"));
     });
 };
 
@@ -63,13 +71,15 @@ describe("MessageComposer", () => {
         jest.useRealTimers();
 
         // restore settings
-        [
-            "MessageComposerInput.showStickersButton",
-            "MessageComposerInput.showPollsButton",
-            Features.VoiceBroadcast,
-            "feature_wysiwyg_composer",
-        ].forEach((setting: string): void => {
-            SettingsStore.setValue(setting, null, SettingLevel.DEVICE, SettingsStore.getDefaultValue(setting));
+        act(() => {
+            [
+                "MessageComposerInput.showStickersButton",
+                "MessageComposerInput.showPollsButton",
+                Features.VoiceBroadcast,
+                "feature_wysiwyg_composer",
+            ].forEach((setting: string): void => {
+                SettingsStore.setValue(setting, null, SettingLevel.DEVICE, SettingsStore.getDefaultValue(setting));
+            });
         });
     });
 
@@ -365,6 +375,30 @@ describe("MessageComposer", () => {
                     setEncrypted();
                     checkPlaceholder("Reply to encrypted thread…");
                 });
+            });
+        });
+
+        describe("when recording a voice broadcast and trying to start a voice message", () => {
+            let renderResult: RenderResult;
+
+            beforeEach(async () => {
+                const recording = new VoiceBroadcastRecording(
+                    mkVoiceBroadcastInfoStateEvent(
+                        room.roomId,
+                        VoiceBroadcastInfoState.Started,
+                        "@user:example.com",
+                        "ABC123",
+                    ),
+                    MatrixClientPeg.get(),
+                );
+                SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
+                renderResult = wrapAndRender({ room }).renderResult;
+                await startVoiceMessage(renderResult);
+            });
+
+            it("should not start a voice message and display an info dialog", async () => {
+                expect(renderResult.queryByLabelText("Stop recording")).not.toBeInTheDocument();
+                expect(await renderResult.findByText("Can't start voice message")).toBeInTheDocument();
             });
         });
     });
