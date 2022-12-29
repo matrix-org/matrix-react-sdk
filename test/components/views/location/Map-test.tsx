@@ -160,7 +160,7 @@ describe("<Map />", () => {
         });
 
         it("renders children with map renderProp", () => {
-            const children = ({ map }) => (
+            const children = ({ map }: { map: maplibregl.Map }) => (
                 <div data-testid="test-child" data-map={map}>
                     Hello, world
                 </div>

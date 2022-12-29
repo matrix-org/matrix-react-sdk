@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { Room, Beacon, BeaconEvent, getBeaconInfoIdentifier } from "matrix-js-sdk/src/matrix";
+import { Room, Beacon, BeaconEvent, getBeaconInfoIdentifier, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { fireEvent, getByTestId, render, screen, waitFor } from "@testing-library/react";
 
@@ -68,7 +68,7 @@ describe("<RoomLiveShareWarning />", () => {
 
     // make fresh rooms every time
     // as we update room state
-    const makeRoomsWithStateEvents = (stateEvents = []): [Room, Room] => {
+    const makeRoomsWithStateEvents = (stateEvents: MatrixEvent[] = []): [Room, Room] => {
         const room1 = new Room(room1Id, mockClient, aliceId);
         const room2 = new Room(room2Id, mockClient, aliceId);
 
@@ -236,7 +236,7 @@ describe("<RoomLiveShareWarning />", () => {
                     },
                     "$0",
                 );
-                beacon.update(room1Beacon1Update);
+                beacon?.update(room1Beacon1Update);
             });
 
             // update to expiry of new beacon
@@ -258,7 +258,7 @@ describe("<RoomLiveShareWarning />", () => {
             const { container } = getComponent({ roomId: room1Id });
 
             act(() => {
-                fireEvent.click(container.firstChild);
+                fireEvent.click(container.firstChild! as Node);
             });
 
             expect(dispatcherSpy).toHaveBeenCalledWith({
