@@ -67,20 +67,13 @@ describe("<QuickThemeSwitcher />", () => {
         mocked(dis).dispatch.mockClear();
     });
 
-    const clickDropdown = async () => {
+    const selectFromDropdown = async (select: RegExp | string) => {
         const dropdown = screen.getByRole("button", { name: "Space selection" });
         await userEvent.click(dropdown);
-    };
-
-    const dropdownIsOpen = async () => {
-        const dropdown = screen.getByRole("button", { name: "Space selection" });
-        return waitFor(() => {
+        await waitFor(() => {
             expect(dropdown).toHaveAttribute("aria-expanded", "true");
         });
-    };
-
-    const dropdownIsClosed = async () => {
-        const dropdown = screen.getByRole("button", { name: "Space selection" });
+        await userEvent.click(screen.getByText(select));
         return waitFor(() => {
             expect(dropdown).toHaveAttribute("aria-expanded", "false");
         });
@@ -104,13 +97,7 @@ describe("<QuickThemeSwitcher />", () => {
         const requestClose = jest.fn();
         renderComponent({ requestClose });
 
-        await clickDropdown();
-        await dropdownIsOpen();
-
-        // select match system
-        await userEvent.click(screen.getByText(/match system/i));
-
-        await dropdownIsClosed();
+        await selectFromDropdown(/match system/i);
 
         expect(SettingsStore.setValue).toHaveBeenCalledTimes(1);
         expect(SettingsStore.setValue).toHaveBeenCalledWith("use_system_theme", null, SettingLevel.DEVICE, true);
@@ -124,13 +111,7 @@ describe("<QuickThemeSwitcher />", () => {
         const requestClose = jest.fn();
         renderComponent({ requestClose });
 
-        await clickDropdown();
-        await dropdownIsOpen();
-
-        // select dark
-        await userEvent.click(screen.getByText(/dark/i));
-
-        await dropdownIsClosed();
+        await selectFromDropdown(/dark/i);
 
         expect(SettingsStore.setValue).toHaveBeenCalledWith("use_system_theme", null, SettingLevel.DEVICE, false);
         expect(SettingsStore.setValue).toHaveBeenCalledWith("theme", null, SettingLevel.DEVICE, "dark");
@@ -144,13 +125,7 @@ describe("<QuickThemeSwitcher />", () => {
         const requestClose = jest.fn();
         renderComponent({ requestClose });
 
-        await clickDropdown();
-        await dropdownIsOpen();
-
-        // select match system
-        await userEvent.click(screen.getByText(/match system/i));
-
-        await dropdownIsClosed();
+        await selectFromDropdown(/match system/i);
 
         expect(dis.dispatch).toHaveBeenCalledWith({ action: Action.RecheckTheme });
         expect(requestClose).toHaveBeenCalled();
