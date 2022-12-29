@@ -29,6 +29,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
@@ -1153,17 +1154,17 @@ export const useDevices = (userId: string) => {
         const updateDevices = async () => {
             const newDevices = cli.getStoredDevicesForUser(userId);
             if (cancel) return;
-            setDevices(newDevices);
+            setDevices(newDevices as IDevice[]);
         };
-        const onDevicesUpdated = (users) => {
+        const onDevicesUpdated = (users: string[]) => {
             if (!users.includes(userId)) return;
             updateDevices();
         };
-        const onDeviceVerificationChanged = (_userId, device) => {
+        const onDeviceVerificationChanged = (_userId: string, deviceId: string) => {
             if (_userId !== userId) return;
             updateDevices();
         };
-        const onUserTrustStatusChanged = (_userId, trustStatus) => {
+        const onUserTrustStatusChanged = (_userId: string, trustLevel: UserTrustLevel) => {
             if (_userId !== userId) return;
             updateDevices();
         };
@@ -1246,9 +1247,11 @@ const BasicUserInfo: React.FC<{
             logger.error("Failed to deactivate user");
             logger.error(err);
 
+            const description = err instanceof Error ? err.message : _t("Operation failed");
+
             Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to deactivate user"),
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description,
             });
         }
     }, [cli, member.userId]);
@@ -1334,12 +1337,12 @@ const BasicUserInfo: React.FC<{
     const homeserverSupportsCrossSigning = useHomeserverSupportsCrossSigning(cli);
 
     const userTrust = cryptoEnabled && cli.checkUserTrust(member.userId);
-    const userVerified = cryptoEnabled && userTrust.isCrossSigningVerified();
+    const userVerified = cryptoEnabled && userTrust && userTrust.isCrossSigningVerified();
     const isMe = member.userId === cli.getUserId();
     const canVerify =
         cryptoEnabled && homeserverSupportsCrossSigning && !userVerified && !isMe && devices && devices.length > 0;
 
-    const setUpdating = (updating) => {
+    const setUpdating: SetUpdating = (updating) => {
         setPendingUpdateCount((count) => count + (updating ? 1 : -1));
     };
     const hasCrossSigningKeys = useHasCrossSigningKeys(cli, member as User, canVerify, setUpdating);
@@ -1444,8 +1447,10 @@ const UserInfoHeader: React.FC<{
             name: (member as RoomMember).name || (member as User).displayName,
         };
 
-        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
+        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", undefined, true);
     }, [member]);
+
+    const avatarUrl = (member as User).avatarUrl;
 
     const avatarElement = (
         <div className="mx_UserInfo_avatar">
@@ -1459,7 +1464,7 @@ const UserInfoHeader: React.FC<{
                         resizeMethod="scale"
                         fallbackUserId={member.userId}
                         onClick={onMemberAvatarClick}
-                        urls={(member as User).avatarUrl ? [(member as User).avatarUrl] : undefined}
+                        {...(avatarUrl ? { urls: [avatarUrl] } : {})}
                     />
                 </div>
             </div>
@@ -1513,7 +1518,7 @@ const UserInfoHeader: React.FC<{
                         </h2>
                     </div>
                     <div className="mx_UserInfo_profile_mxid">
-                        {UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, {
+                        {UserIdentifierCustomisations.getDisplayUserIdentifier?.(member.userId, {
                             roomId,
                             withDisplayName: true,
                         })}
@@ -1550,7 +1555,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
 
     const classes = ["mx_UserInfo"];
 
-    let cardState: IRightPanelCardState;
+    let cardState: IRightPanelCardState = {};
     // We have no previousPhase for when viewing a UserInfo without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {
         cardState = { member };
@@ -1566,7 +1571,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     switch (phase) {
         case RightPanelPhases.RoomMemberInfo:
         case RightPanelPhases.SpaceMemberInfo:
-            content = (
+            content = room && devices && typeof isRoomEncrypted === "boolean" && (
                 <BasicUserInfo
                     room={room}
                     member={member as User}
@@ -1577,7 +1582,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
             break;
         case RightPanelPhases.EncryptionPanel:
             classes.push("mx_UserInfo_smallAvatar");
-            content = (
+            content = typeof isRoomEncrypted === "boolean" && (
                 <EncryptionPanel
                     {...(props as React.ComponentProps<typeof EncryptionPanel>)}
                     member={member as User | RoomMember}
@@ -1609,7 +1614,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     const header = (
         <>
             {scopeHeader}
-            <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
+            {e2eStatus && <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />}
         </>
     );
     return (
