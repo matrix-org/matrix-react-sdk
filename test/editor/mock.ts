@@ -18,7 +18,7 @@ import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import AutocompleteWrapperModel, { UpdateCallback } from "../../src/editor/autocomplete";
 import { Caret } from "../../src/editor/caret";
-import { IPillPart, Part, PartCreator } from "../../src/editor/parts";
+import { PillPart, Part, PartCreator } from "../../src/editor/parts";
 import DocumentPosition from "../../src/editor/position";
 
 class MockAutoComplete {
@@ -27,7 +27,7 @@ class MockAutoComplete {
     public _completions;
     public _part: Part | null;
 
-    constructor(updateCallback: UpdateCallback, partCreator: PartCreator, completions: IPillPart[]) {
+    constructor(updateCallback: UpdateCallback, partCreator: PartCreator, completions: PillPart[]) {
         this._updateCallback = updateCallback;
         this._partCreator = partCreator;
         this._completions = completions;
