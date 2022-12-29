@@ -3696,5 +3696,8 @@
     "Text": "Текст",
     "Create a link": "Створити посилання",
     "Link": "Посилання",
-    "Force 15s voice broadcast chunk length": "Примусово обмежити тривалість голосових трансляцій до 15 с"
+    "Force 15s voice broadcast chunk length": "Примусово обмежити тривалість голосових трансляцій до 15 с",
+    "Sign out of %(count)s sessions|one": "Вийти з %(count)s сеансу",
+    "Sign out of %(count)s sessions|other": "Вийти з %(count)s сеансів",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Вийти з усіх інших сеансів (%(otherSessionsCount)s)"
 }
