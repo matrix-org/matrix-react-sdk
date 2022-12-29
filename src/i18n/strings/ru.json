@@ -3624,5 +3624,7 @@
     "Failed to send event": "Не удалось отправить событие",
     "%(minutes)sm %(seconds)ss": "%(minutes)s мин %(seconds)s с",
     "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s ч %(minutes)s мин %(seconds)s с",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s д %(hours)s ч %(minutes)s мин %(seconds)s с"
+    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s д %(hours)s ч %(minutes)s мин %(seconds)s с",
+    "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Время экспериментов? Попробуйте наши последние наработки. Эти функции не заверешены; они могут быть нестабильными, постоянно меняющимися, или вовсе отброшенными. <a>Узнайте больше</a>.",
+    "Early previews": "Предпросмотр"
 }
