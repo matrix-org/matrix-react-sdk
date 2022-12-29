@@ -15,15 +15,13 @@ limitations under the License.
 */
 
 import * as React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from "enzyme";
-import { MatrixEvent, MsgType, RoomMember } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { act, render, RenderResult } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import { createTestClient, mkEvent, mkStubRoom, stubClient } from "../../../test-utils";
-import MessageComposer, {
-    MessageComposer as MessageComposerClass,
-} from "../../../../src/components/views/rooms/MessageComposer";
+import { createTestClient, mkEvent, mkStubRoom, mockPlatformPeg, stubClient } from "../../../test-utils";
+import MessageComposer from "../../../../src/components/views/rooms/MessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import RoomContext from "../../../../src/contexts/RoomContext";
@@ -31,42 +29,66 @@ import { IRoomState } from "../../../../src/components/structures/RoomView";
 import ResizeNotifier from "../../../../src/utils/ResizeNotifier";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { LocalRoom } from "../../../../src/models/LocalRoom";
-import MessageComposerButtons from "../../../../src/components/views/rooms/MessageComposerButtons";
 import { Features } from "../../../../src/settings/Settings";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import dis from "../../../../src/dispatcher/dispatcher";
-import { Action } from "../../../../src/dispatcher/actions";
-import { SendMessageComposer } from "../../../../src/components/views/rooms/SendMessageComposer";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
-import { addTextToComposerEnzyme } from "../../../test-utils/composer";
+import { addTextToComposerRTL } from "../../../test-utils/composer";
 import UIStore, { UI_EVENTS } from "../../../../src/stores/UIStore";
-import { SendWysiwygComposer } from "../../../../src/components/views/rooms/wysiwyg_composer";
+import { Action } from "../../../../src/dispatcher/actions";
+
+jest.mock("../../../../src/components/views/rooms/wysiwyg_composer", () => ({
+    SendWysiwygComposer: jest.fn().mockImplementation(() => <div data-testid="wysiwyg-composer" />),
+}));
+
+jest.setTimeout(100);
+
+const openStickerPicker = async (renderResult: RenderResult): Promise<void> => {
+    await act(async () => {
+        await userEvent.click(renderResult.getByLabelText("More options"));
+        await userEvent.click(renderResult.getByLabelText("Sticker"));
+    });
+};
 
 describe("MessageComposer", () => {
     stubClient();
     const cli = createTestClient();
 
+    beforeEach(() => {
+        mockPlatformPeg();
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+
+        // restore settings
+        [
+            "MessageComposerInput.showStickersButton",
+            "MessageComposerInput.showPollsButton",
+            Features.VoiceBroadcast,
+            "feature_wysiwyg_composer",
+        ].forEach((setting: string): void => {
+            SettingsStore.setValue(setting, null, SettingLevel.DEVICE, SettingsStore.getDefaultValue(setting));
+        });
+    });
+
     describe("for a Room", () => {
         const room = mkStubRoom("!roomId:server", "Room 1", cli);
 
         it("Renders a SendMessageComposer and MessageComposerButtons by default", () => {
-            const wrapper = wrapAndRender({ room });
-
-            expect(wrapper.find("SendMessageComposer")).toHaveLength(1);
-            expect(wrapper.find("MessageComposerButtons")).toHaveLength(1);
+            const { renderResult } = wrapAndRender({ room });
+            expect(renderResult.getByLabelText("Send a message…")).toBeInTheDocument();
         });
 
         it("Does not render a SendMessageComposer or MessageComposerButtons when user has no permission", () => {
-            const wrapper = wrapAndRender({ room }, false);
-
-            expect(wrapper.find("SendMessageComposer")).toHaveLength(0);
-            expect(wrapper.find("MessageComposerButtons")).toHaveLength(0);
-            expect(wrapper.find(".mx_MessageComposer_noperm_error")).toHaveLength(1);
+            const { renderResult } = wrapAndRender({ room }, false);
+            expect(renderResult.queryByLabelText("Send a message…")).not.toBeInTheDocument();
+            expect(renderResult.getByText("You do not have permission to post to this room")).toBeInTheDocument();
         });
 
         it("Does not render a SendMessageComposer or MessageComposerButtons when room is tombstoned", () => {
-            const wrapper = wrapAndRender(
+            const { renderResult } = wrapAndRender(
                 { room },
                 true,
                 false,
@@ -81,13 +103,12 @@ describe("MessageComposer", () => {
                 }),
             );
 
-            expect(wrapper.find("SendMessageComposer")).toHaveLength(0);
-            expect(wrapper.find("MessageComposerButtons")).toHaveLength(0);
-            expect(wrapper.find(".mx_MessageComposer_roomReplaced_header")).toHaveLength(1);
+            expect(renderResult.queryByLabelText("Send a message…")).not.toBeInTheDocument();
+            expect(renderResult.getByText("This room has been replaced and is no longer active.")).toBeInTheDocument();
         });
 
         describe("when receiving a »reply_to_event«", () => {
-            let wrapper: ReactWrapper;
+            let roomContext: IRoomState;
             let resizeNotifier: ResizeNotifier;
 
             beforeEach(() => {
@@ -95,18 +116,17 @@ describe("MessageComposer", () => {
                 resizeNotifier = {
                     notifyTimelineHeightChanged: jest.fn(),
                 } as unknown as ResizeNotifier;
-                wrapper = wrapAndRender({
+                roomContext = wrapAndRender({
                     room,
                     resizeNotifier,
-                });
+                }).roomContext;
             });
 
             it("should call notifyTimelineHeightChanged() for the same context", () => {
                 dis.dispatch({
                     action: "reply_to_event",
-                    context: (wrapper.instance as unknown as MessageComposerClass).context,
+                    context: roomContext.timelineRenderingType,
                 });
-                wrapper.update();
 
                 jest.advanceTimersByTime(150);
                 expect(resizeNotifier.notifyTimelineHeightChanged).toHaveBeenCalled();
@@ -117,7 +137,6 @@ describe("MessageComposer", () => {
                     action: "reply_to_event",
                     context: "test",
                 });
-                wrapper.update();
 
                 jest.advanceTimersByTime(150);
                 expect(resizeNotifier.notifyTimelineHeightChanged).not.toHaveBeenCalled();
@@ -128,28 +147,35 @@ describe("MessageComposer", () => {
         [
             {
                 setting: "MessageComposerInput.showStickersButton",
-                prop: "showStickersButton",
+                buttonLabel: "Sticker",
             },
             {
                 setting: "MessageComposerInput.showPollsButton",
-                prop: "showPollsButton",
+                buttonLabel: "Poll",
             },
             {
                 setting: Features.VoiceBroadcast,
-                prop: "showVoiceBroadcastButton",
+                buttonLabel: "Voice broadcast",
             },
-        ].forEach(({ setting, prop }) => {
+        ].forEach(({ setting, buttonLabel }) => {
             [true, false].forEach((value: boolean) => {
                 describe(`when ${setting} = ${value}`, () => {
-                    let wrapper: ReactWrapper;
+                    let renderResult: RenderResult;
 
-                    beforeEach(() => {
+                    beforeEach(async () => {
                         SettingsStore.setValue(setting, null, SettingLevel.DEVICE, value);
-                        wrapper = wrapAndRender({ room });
+                        renderResult = wrapAndRender({ room }).renderResult;
+                        await act(async () => {
+                            await userEvent.click(renderResult.getByLabelText("More options"));
+                        });
                     });
 
-                    it(`should pass the prop ${prop} = ${value}`, () => {
-                        expect(wrapper.find(MessageComposerButtons).props()[prop]).toBe(value);
+                    it(`should${value || "not"} display the button`, () => {
+                        if (value) {
+                            expect(renderResult.getByLabelText(buttonLabel)).toBeInTheDocument();
+                        } else {
+                            expect(renderResult.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
+                        }
                     });
 
                     describe(`and setting ${setting} to ${!value}`, () => {
@@ -164,11 +190,14 @@ describe("MessageComposer", () => {
                                 },
                                 true,
                             );
-                            wrapper.update();
                         });
 
-                        it(`should pass the prop ${prop} = ${!value}`, () => {
-                            expect(wrapper.find(MessageComposerButtons).props()[prop]).toBe(!value);
+                        it(`should${!value || "not"} display the button`, () => {
+                            if (!value) {
+                                expect(renderResult.getByLabelText(buttonLabel)).toBeInTheDocument();
+                            } else {
+                                expect(renderResult.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
+                            }
                         });
                     });
                 });
@@ -176,26 +205,25 @@ describe("MessageComposer", () => {
         });
 
         it("should not render the send button", () => {
-            const wrapper = wrapAndRender({ room });
-            expect(wrapper.find("SendButton")).toHaveLength(0);
+            const { renderResult } = wrapAndRender({ room });
+            expect(renderResult.queryByLabelText("Send message")).not.toBeInTheDocument();
         });
 
         describe("when a message has been entered", () => {
-            let wrapper: ReactWrapper;
+            let renderResult: RenderResult;
 
-            beforeEach(() => {
-                wrapper = wrapAndRender({ room });
-                addTextToComposerEnzyme(wrapper, "Hello");
-                wrapper.update();
+            beforeEach(async () => {
+                renderResult = wrapAndRender({ room }).renderResult;
+                await addTextToComposerRTL(renderResult, "Hello");
             });
 
             it("should render the send button", () => {
-                expect(wrapper.find("SendButton")).toHaveLength(1);
+                expect(renderResult.getByLabelText("Send message")).toBeInTheDocument();
             });
         });
 
         describe("UIStore interactions", () => {
-            let wrapper: ReactWrapper;
+            let renderResult: RenderResult;
             let resizeCallback: Function;
 
             beforeEach(() => {
@@ -205,74 +233,76 @@ describe("MessageComposer", () => {
             });
 
             describe("when a non-resize event occurred in UIStore", () => {
-                let stateBefore: any;
-
-                beforeEach(() => {
-                    wrapper = wrapAndRender({ room }).children();
-                    stateBefore = { ...wrapper.instance().state };
+                beforeEach(async () => {
+                    renderResult = wrapAndRender({ room }).renderResult;
+                    await openStickerPicker(renderResult);
                     resizeCallback("test", {});
-                    wrapper.update();
                 });
 
-                it("should not change the state", () => {
-                    expect(wrapper.instance().state).toEqual(stateBefore);
+                it("should still display the sticker picker", () => {
+                    expect(
+                        renderResult.getByText("You don't currently have any stickerpacks enabled"),
+                    ).toBeInTheDocument();
                 });
             });
 
             describe("when a resize to narrow event occurred in UIStore", () => {
-                beforeEach(() => {
-                    wrapper = wrapAndRender({ room }, true, true).children();
-
-                    wrapper.setState({
-                        isMenuOpen: true,
-                        isStickerPickerOpen: true,
-                    });
+                beforeEach(async () => {
+                    renderResult = wrapAndRender({ room }, true, true).renderResult;
+                    await openStickerPicker(renderResult);
                     resizeCallback(UI_EVENTS.Resize, {});
-                    wrapper.update();
                 });
 
-                it("isMenuOpen should be true", () => {
-                    expect(wrapper.state("isMenuOpen")).toBe(true);
+                it("should close the menu", () => {
+                    expect(renderResult.queryByLabelText("Sticker")).not.toBeInTheDocument();
                 });
 
-                it("isStickerPickerOpen should be false", () => {
-                    expect(wrapper.state("isStickerPickerOpen")).toBe(false);
+                it("should not show the attachment button", () => {
+                    expect(renderResult.queryByLabelText("Attachment")).not.toBeInTheDocument();
+                });
+
+                it("should close the sticker picker", () => {
+                    expect(
+                        renderResult.queryByText("You don't currently have any stickerpacks enabled"),
+                    ).not.toBeInTheDocument();
                 });
             });
 
             describe("when a resize to non-narrow event occurred in UIStore", () => {
-                beforeEach(() => {
-                    wrapper = wrapAndRender({ room }, true, false).children();
-                    wrapper.setState({
-                        isMenuOpen: true,
-                        isStickerPickerOpen: true,
-                    });
+                beforeEach(async () => {
+                    renderResult = wrapAndRender({ room }, true, false).renderResult;
+                    await openStickerPicker(renderResult);
                     resizeCallback(UI_EVENTS.Resize, {});
-                    wrapper.update();
                 });
 
-                it("isMenuOpen should be false", () => {
-                    expect(wrapper.state("isMenuOpen")).toBe(false);
+                it("should close the menu", () => {
+                    expect(renderResult.queryByLabelText("Sticker")).not.toBeInTheDocument();
                 });
 
-                it("isStickerPickerOpen should be false", () => {
-                    expect(wrapper.state("isStickerPickerOpen")).toBe(false);
+                it("should show the attachment button", () => {
+                    expect(renderResult.getByLabelText("Attachment")).toBeInTheDocument();
+                });
+
+                it("should close the sticker picker", () => {
+                    expect(
+                        renderResult.queryByText("You don't currently have any stickerpacks enabled"),
+                    ).not.toBeInTheDocument();
                 });
             });
         });
 
         describe("when not replying to an event", () => {
             it("should pass the expected placeholder to SendMessageComposer", () => {
-                const wrapper = wrapAndRender({ room });
-                expect(wrapper.find(SendMessageComposer).props().placeholder).toBe("Send a message…");
+                const renderResult = wrapAndRender({ room }).renderResult;
+                expect(renderResult.getByLabelText("Send a message…")).toBeInTheDocument();
             });
 
             it("and an e2e status it should pass the expected placeholder to SendMessageComposer", () => {
-                const wrapper = wrapAndRender({
+                const renderResult = wrapAndRender({
                     room,
                     e2eStatus: E2EStatus.Normal,
-                });
-                expect(wrapper.find(SendMessageComposer).props().placeholder).toBe("Send an encrypted message…");
+                }).renderResult;
+                expect(renderResult.getByLabelText("Send an encrypted message…")).toBeInTheDocument();
             });
         });
 
@@ -282,8 +312,8 @@ describe("MessageComposer", () => {
 
             const checkPlaceholder = (expected: string) => {
                 it("should pass the expected placeholder to SendMessageComposer", () => {
-                    const wrapper = wrapAndRender(props);
-                    expect(wrapper.find(SendMessageComposer).props().placeholder).toBe(expected);
+                    const renderResult = wrapAndRender(props).renderResult;
+                    expect(renderResult.getByLabelText(expected)).toBeInTheDocument();
                 });
             };
 
@@ -296,7 +326,7 @@ describe("MessageComposer", () => {
             beforeEach(() => {
                 replyToEvent = mkEvent({
                     event: true,
-                    type: MsgType.Text,
+                    type: EventType.RoomMessage,
                     user: cli.getUserId(),
                     content: {},
                 });
@@ -342,20 +372,21 @@ describe("MessageComposer", () => {
     describe("for a LocalRoom", () => {
         const localRoom = new LocalRoom("!room:example.com", cli, cli.getUserId()!);
 
-        it("should pass the sticker picker disabled prop", () => {
-            const wrapper = wrapAndRender({ room: localRoom });
-            expect(wrapper.find(MessageComposerButtons).props().showStickersButton).toBe(false);
+        it("should not show the stickers button", async () => {
+            const renderResult = wrapAndRender({ room: localRoom }).renderResult;
+            await act(async () => {
+                await userEvent.click(renderResult.getByLabelText("More options"));
+            });
+            expect(renderResult.queryByLabelText("Sticker")).not.toBeInTheDocument();
         });
     });
 
-    it("should render SendWysiwygComposer", () => {
+    it("should render SendWysiwygComposer when enabled", () => {
         const room = mkStubRoom("!roomId:server", "Room 1", cli);
-
         SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, true);
-        const wrapper = wrapAndRender({ room });
 
-        SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, false);
-        expect(wrapper.find(SendWysiwygComposer)).toBeTruthy();
+        const renderResult = wrapAndRender({ room }).renderResult;
+        expect(renderResult.getByTestId("wysiwyg-composer")).toBeInTheDocument();
     });
 });
 
@@ -364,7 +395,7 @@ function wrapAndRender(
     canSendMessages = true,
     narrow = false,
     tombstone?: MatrixEvent,
-): ReactWrapper {
+) {
     const mockClient = MatrixClientPeg.get();
     const roomId = "myroomid";
     const room: any = props.room || {
@@ -376,7 +407,7 @@ function wrapAndRender(
         },
     };
 
-    const roomState = {
+    const roomContext = {
         room,
         canSendMessages,
         tombstone,
@@ -389,11 +420,14 @@ function wrapAndRender(
         permalinkCreator: new RoomPermalinkCreator(room),
     };
 
-    return mount(
-        <MatrixClientContext.Provider value={mockClient}>
-            <RoomContext.Provider value={roomState}>
-                <MessageComposer {...defaultProps} {...props} />
-            </RoomContext.Provider>
-        </MatrixClientContext.Provider>,
-    );
+    return {
+        renderResult: render(
+            <MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={roomContext}>
+                    <MessageComposer {...defaultProps} {...props} />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>,
+        ),
+        roomContext,
+    };
 }
