@@ -1430,7 +1430,7 @@ export type Member = User | RoomMember;
 
 const UserInfoHeader: React.FC<{
     member: Member;
-    e2eStatus: E2EStatus;
+    e2eStatus?: E2EStatus;
     roomId?: string;
 }> = ({ member, e2eStatus, roomId }) => {
     const cli = useContext(MatrixClientContext);
@@ -1497,10 +1497,7 @@ const UserInfoHeader: React.FC<{
         );
     }
 
-    let e2eIcon;
-    if (e2eStatus) {
-        e2eIcon = <E2EIcon size={18} status={e2eStatus} isUser={true} />;
-    }
+    const e2eIcon = e2eStatus ? <E2EIcon size={18} status={e2eStatus} isUser={true} /> : null;
 
     const displayName = (member as RoomMember).rawDisplayName;
     return (
@@ -1614,7 +1611,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     const header = (
         <>
             {scopeHeader}
-            {e2eStatus && <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />}
+            <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
         </>
     );
     return (
