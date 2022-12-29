@@ -17,6 +17,7 @@ limitations under the License.
 import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import AutocompleteWrapperModel from "../../src/editor/autocomplete";
+import { Caret } from "../../src/editor/caret";
 import { PartCreator } from "../../src/editor/parts";
 import DocumentPosition from "../../src/editor/position";
 
@@ -81,11 +82,11 @@ export function createPartCreator(completions = []) {
 }
 
 export function createRenderer() {
-    const render = (c: DocumentPosition) => {
+    const render = (c: Caret) => {
         render.caret = c;
         render.count += 1;
     };
     render.count = 0;
-    render.caret = null as DocumentPosition;
+    render.caret = null as unknown as Caret;
     return render;
 }
