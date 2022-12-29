@@ -15,16 +15,9 @@ limitations under the License.
 */
 
 import EditorModel from "../../src/editor/model";
-import { createPartCreator, createRenderer } from "./mock";
+import { createPartCreator, createRenderer, isDocumentPosition } from "./mock";
 import DocumentOffset from "../../src/editor/offset";
-import DocumentPosition from "../../src/editor/position";
-import { Caret } from "../../src/editor/caret";
 import { PillPart } from "../../src/editor/parts";
-
-// for each of these tests we need to narrow the caret type
-function isDocumentPosition(caret: Caret): caret is DocumentPosition {
-    return caret instanceof DocumentPosition;
-}
 
 describe("editor/model", function () {
     describe("plain text manipulation", function () {
