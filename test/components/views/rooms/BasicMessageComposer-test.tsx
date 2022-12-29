@@ -39,6 +39,10 @@ describe("BasicMessageComposer", () => {
 
         const roomId = "!1234567890:domain";
         const userId = client.getUserId();
+
+        if (!userId) {
+            fail("could not find userId");
+        }
         const room = new Room(roomId, client, userId);
 
         const testUrl = "https://element.io";
@@ -53,26 +57,21 @@ describe("BasicMessageComposer", () => {
     });
 });
 
-function generateMockDataTransferForString(string): DataTransfer {
+function generateMockDataTransferForString(string: string): DataTransfer {
     return {
         getData: (type) => {
             if (type === "text/plain") {
                 return string;
             }
+            return "";
         },
         dropEffect: "link",
         effectAllowed: "link",
-        files: undefined,
-        items: undefined,
+        files: {} as FileList,
+        items: {} as DataTransferItemList,
         types: [],
-        clearData: function (format?: string): void {
-            throw new Error("Function not implemented.");
-        },
-        setData: function (format: string, data: string): void {
-            throw new Error("Function not implemented.");
-        },
-        setDragImage: function (image: Element, x: number, y: number): void {
-            throw new Error("Function not implemented.");
-        },
+        clearData: () => {},
+        setData: () => {},
+        setDragImage: () => {},
     };
 }
