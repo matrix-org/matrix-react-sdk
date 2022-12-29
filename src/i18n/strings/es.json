@@ -3469,7 +3469,6 @@
     "Failed to set pusher state": "Fallo al establecer el estado push",
     "Sign out of this session": "Cerrar esta sesión",
     "Receive push notifications on this session.": "Recibir notificaciones push en esta sesión.",
-    "Sign out all other sessions": "Cerrar el resto de sesiones",
     "You do not have sufficient permissions to change this.": "No tienes suficientes permisos para cambiar esto.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s está cifrado de extremo a extremo, pero actualmente está limitado a unos pocos participantes.",
     "Enable %(brand)s as an additional calling option in this room": "Activar %(brand)s como una opción para las llamadas de esta sala",

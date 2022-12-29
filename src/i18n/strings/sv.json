@@ -3614,7 +3614,6 @@
     "Please be aware that session names are also visible to people you communicate with.": "Observera att sessionsnamn också syns för personer du kommunicerar med.",
     "Rename session": "Döp om session",
     "Current session": "Nuvarande session",
-    "Sign out all other sessions": "Logga ut alla andra sessioner",
     "Call type": "Samtalstyp",
     "You do not have sufficient permissions to change this.": "Du är inte behörig att ändra detta.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s är totalsträckskrypterad, men är för närvarande begränsad till ett lägre antal användare.",

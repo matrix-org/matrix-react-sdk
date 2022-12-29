@@ -3540,7 +3540,6 @@
     "Under active development": "积极开发中",
     "Under active development.": "积极开发中。",
     "Rename session": "重命名会话",
-    "Sign out all other sessions": "登出全部其他会话",
     "Call type": "通话类型",
     "You do not have sufficient permissions to change this.": "你没有足够的权限更改这个。",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s是端到端加密的，但是目前仅限于少数用户。",

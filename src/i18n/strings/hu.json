@@ -3528,7 +3528,6 @@
     "URL": "URL",
     "Version": "Verzió",
     "Application": "Alkalmazás",
-    "Sign out all other sessions": "Kijelentkezés minden más munkamenetből",
     "Call type": "Hívás típusa",
     "You do not have sufficient permissions to change this.": "Nincs megfelelő jogosultság a megváltoztatáshoz.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s végpontok között titkosított de jelenleg csak kevés számú résztvevővel működik.",
