@@ -321,14 +321,14 @@ describe("RoomViewStore", function () {
 
             it("should continue recording", () => {
                 expect(stores.voiceBroadcastPlaybacksStore.getCurrent()).toBeNull();
-                expect(stores.voiceBroadcastRecordingsStore.getCurrent().getState()).toBe(
+                expect(stores.voiceBroadcastRecordingsStore.getCurrent()?.getState()).toBe(
                     VoiceBroadcastInfoState.Started,
                 );
             });
 
             describe("and stopping the recording", () => {
                 beforeEach(async () => {
-                    await stores.voiceBroadcastRecordingsStore.getCurrent().stop();
+                    await stores.voiceBroadcastRecordingsStore.getCurrent()?.stop();
                     // check test precondition
                     expect(stores.voiceBroadcastRecordingsStore.getCurrent()).toBeNull();
                 });

@@ -175,7 +175,7 @@ export class RoomViewStore extends EventEmitter {
 
     private onCurrentBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null) => {
         if (recording === null) {
-            const room = this.stores.client?.getRoom(this.state.roomId);
+            const room = this.stores.client?.getRoom(this.state.roomId || undefined);
 
             if (room) {
                 this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
