@@ -1582,7 +1582,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     let scopeHeader;
     if (room?.isSpaceRoom()) {
         scopeHeader = (
-            <div data-test-id="space-header" className="mx_RightPanel_scopeHeader">
+            <div data-testid="space-header" className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={room} height={32} width={32} />
                 <RoomName room={room} />
             </div>
