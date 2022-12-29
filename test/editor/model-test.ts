@@ -169,7 +169,7 @@ describe("editor/model", function () {
     describe("auto-complete", function () {
         it("insert user pill", function () {
             const renderer = createRenderer();
-            const pc = createPartCreator([{ resourceId: "@alice", label: "Alice" }]);
+            const pc = createPartCreator([{ resourceId: "@alice", text: "Alice" }]);
             const model = new EditorModel([pc.plain("hello ")], pc, renderer);
 
             model.update("hello @a", "insertText", new DocumentOffset(8, true));
