@@ -3695,5 +3695,9 @@
     "Your current session is ready for secure messaging.": "Sinu praegune sessioon on valmis turvaliseks sõnumivahetuseks.",
     "Text": "Tekst",
     "Create a link": "Tee link",
-    "Force 15s voice broadcast chunk length": "Kasuta ringhäälingusõnumi puhul 15-sekundilist blokipikkust"
+    "Force 15s voice broadcast chunk length": "Kasuta ringhäälingusõnumi puhul 15-sekundilist blokipikkust",
+    "Link": "Link",
+    "Sign out of %(count)s sessions|one": "Logi %(count)s'st sessioonist välja",
+    "Sign out of %(count)s sessions|other": "Logi %(count)s'st sessioonist välja",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Logi kõikidest ülejäänud sessioonidest välja: %(otherSessionsCount)s sessioon(i)"
 }
