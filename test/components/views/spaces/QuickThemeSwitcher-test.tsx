@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 
@@ -67,9 +67,9 @@ describe("<QuickThemeSwitcher />", () => {
         mocked(dis).dispatch.mockClear();
     });
 
-    const clickDropdown = () => {
+    const clickDropdown = async () => {
         const dropdown = screen.getByRole("button", { name: "Space selection" });
-        userEvent.click(dropdown);
+        await userEvent.click(dropdown);
     };
 
     const dropdownIsOpen = async () => {
@@ -104,11 +104,11 @@ describe("<QuickThemeSwitcher />", () => {
         const requestClose = jest.fn();
         renderComponent({ requestClose });
 
-        clickDropdown();
+        await clickDropdown();
         await dropdownIsOpen();
 
         // select match system
-        userEvent.click(screen.getByText(/match system/i));
+        await userEvent.click(screen.getByText(/match system/i));
 
         await dropdownIsClosed();
 
@@ -124,11 +124,11 @@ describe("<QuickThemeSwitcher />", () => {
         const requestClose = jest.fn();
         renderComponent({ requestClose });
 
-        clickDropdown();
+        await clickDropdown();
         await dropdownIsOpen();
 
         // select dark
-        userEvent.click(screen.getByText(/dark/i));
+        await userEvent.click(screen.getByText(/dark/i));
 
         await dropdownIsClosed();
 
@@ -144,11 +144,11 @@ describe("<QuickThemeSwitcher />", () => {
         const requestClose = jest.fn();
         renderComponent({ requestClose });
 
-        clickDropdown();
+        await clickDropdown();
         await dropdownIsOpen();
 
         // select match system
-        userEvent.click(screen.getByText(/match system/i));
+        await userEvent.click(screen.getByText(/match system/i));
 
         await dropdownIsClosed();
 
