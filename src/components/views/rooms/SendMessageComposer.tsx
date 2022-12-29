@@ -312,7 +312,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.emotes=new Map<string,string>()
 
         for (const shortcode in this.imagePack["images"]){
-            this.emotes[":"+shortcode+":"]="<img data-mx-emoticon src='"+this.imagePack["images"][shortcode]["url"] +"'/>"
+            this.emotes[":"+shortcode+":"]="<img data-mx-emoticon src='"+this.imagePack["images"][shortcode]["url"] +"' height='32' alt='"+":"+shortcode+":'"+" title='"+":"+shortcode+":'"+"/>"
         }
     }
 
