@@ -90,3 +90,8 @@ export function createRenderer() {
     render.caret = null as unknown as Caret;
     return render;
 }
+
+// in many tests we need to narrow the caret type
+export function isDocumentPosition(caret: Caret): caret is DocumentPosition {
+    return caret instanceof DocumentPosition;
+}
