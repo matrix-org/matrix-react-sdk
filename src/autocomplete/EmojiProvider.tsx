@@ -96,7 +96,6 @@ export default class EmojiProvider extends AutocompleteProvider {
             // For removing punctuation
             shouldMatchWordsOnly: true,
         });
-
         this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
     }
 
@@ -128,7 +127,6 @@ export default class EmojiProvider extends AutocompleteProvider {
             return []; // don't give any suggestions if the user doesn't want them
         }
         this.emotes=await this.emotesPromise;
-        //console.log("emotes",this.emotes)
         const emojisAndEmotes=[...SORTED_EMOJI];
         for (const key in this.emotes) {
             emojisAndEmotes.push({
@@ -181,7 +179,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             });
             completions = sortBy<ISortedEmoji>(uniq(completions), sorters);
 
-            completions = completions.map(c => ({
+            return completions.map(c => ({
                 completion: this.emotes[c.emoji.hexcode]? ":"+c.emoji.hexcode+":":c.emoji.unicode,
                 component: (
                     <PillCompletion title={this.emotes[c.emoji.hexcode]? c.emoji.unicode:":"+c.emoji.shortcodes[0]+":"} aria-label={c.emoji.unicode}>

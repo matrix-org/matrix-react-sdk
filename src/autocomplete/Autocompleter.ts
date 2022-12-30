@@ -50,7 +50,7 @@ export interface ICompletion {
 const PROVIDERS = [UserProvider, RoomProvider, EmojiProvider, NotifProvider, CommandProvider, SpaceProvider];
 
 // Providers will get rejected if they take longer than this.
-const PROVIDER_COMPLETION_TIMEOUT = 3000;
+const PROVIDER_COMPLETION_TIMEOUT = 30000;
 
 export interface IProviderCompletions {
     completions: ICompletion[];
