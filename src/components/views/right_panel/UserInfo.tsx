@@ -407,10 +407,7 @@ export const UserOptionsSection: React.FC<{
             const onInviteUserButton = async (ev: ButtonEvent) => {
                 try {
                     // We use a MultiInviter to re-use the invite logic, even though we're only inviting one user.
-                    if (!roomId) {
-                        throw new Error("Missing roomId");
-                    }
-                    const inviter = new MultiInviter(roomId);
+                    const inviter = new MultiInviter(roomId!);
                     await inviter.invite([member.userId]).then(() => {
                         if (inviter.getCompletionState(member.userId) !== "invited") {
                             throw new Error(inviter.getErrorText(member.userId));
