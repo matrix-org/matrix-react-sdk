@@ -150,7 +150,7 @@ function useHasCrossSigningKeys(cli: MatrixClient, member: User, canVerify: bool
     }, [cli, member, canVerify]);
 }
 
-function DeviceItem({ userId, device }: { userId: string; device: IDevice }) {
+export function DeviceItem({ userId, device }: { userId: string; device: IDevice }) {
     const cli = useContext(MatrixClientContext);
     const isMe = userId === cli.getUserId();
     const deviceTrust = cli.checkDeviceTrust(userId, device.deviceId);

@@ -20,11 +20,17 @@ import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { Room, User, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
-import UserInfo, { disambiguateDevices } from "../../../../src/components/views/right_panel/UserInfo";
+import UserInfo, {
+    DeviceItem,
+    disambiguateDevices,
+    IDevice,
+} from "../../../../src/components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import * as mockVerification from "../../../../src/verification";
 
 jest.mock("../../../../src/utils/DMRoomMap", () => {
     const mock = {
@@ -38,26 +44,36 @@ jest.mock("../../../../src/utils/DMRoomMap", () => {
     };
 });
 
+const mockClient = mocked({
+    getUser: jest.fn(),
+    isGuest: jest.fn().mockReturnValue(false),
+    isUserIgnored: jest.fn(),
+    isCryptoEnabled: jest.fn(),
+    getUserId: jest.fn(),
+    on: jest.fn(),
+    isSynapseAdministrator: jest.fn().mockResolvedValue(false),
+    isRoomEncrypted: jest.fn().mockReturnValue(false),
+    doesServerSupportUnstableFeature: jest.fn().mockReturnValue(false),
+    mxcUrlToHttp: jest.fn().mockReturnValue("mock-mxcUrlToHttp"),
+    removeListener: jest.fn(),
+    currentState: {
+        on: jest.fn(),
+    },
+    checkDeviceTrust: jest.fn(),
+    checkUserTrust: jest.fn(),
+} as unknown as MatrixClient);
+
+beforeAll(() => {
+    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
+});
+
+beforeEach(() => {
+    mockClient.getUser.mockClear().mockReturnValue({} as unknown as User);
+});
+
 describe("<UserInfo />", () => {
     const defaultUserId = "@test:test";
     const defaultUser = new User(defaultUserId);
-
-    const mockClient = mocked({
-        getUser: jest.fn(),
-        isGuest: jest.fn().mockReturnValue(false),
-        isUserIgnored: jest.fn(),
-        isCryptoEnabled: jest.fn(),
-        getUserId: jest.fn(),
-        on: jest.fn(),
-        isSynapseAdministrator: jest.fn().mockResolvedValue(false),
-        isRoomEncrypted: jest.fn().mockReturnValue(false),
-        doesServerSupportUnstableFeature: jest.fn().mockReturnValue(false),
-        mxcUrlToHttp: jest.fn().mockReturnValue("mock-mxcUrlToHttp"),
-        removeListener: jest.fn(),
-        currentState: {
-            on: jest.fn(),
-        },
-    } as unknown as MatrixClient);
 
     const verificationRequest = {
         pending: true,
@@ -84,14 +100,6 @@ describe("<UserInfo />", () => {
             wrapper: Wrapper,
         });
     };
-
-    beforeAll(() => {
-        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
-    });
-
-    beforeEach(() => {
-        mockClient.getUser.mockClear().mockReturnValue({} as unknown as User);
-    });
 
     it("closes on close button click", async () => {
         const onClose = jest.fn();
@@ -219,5 +227,117 @@ describe("disambiguateDevices", () => {
         nonUniqueNameDevices.forEach((device) => {
             expect(device).toHaveProperty("ambiguous", true);
         });
+    });
+});
+
+describe("<DeviceItem />", () => {
+    const userId = "testId";
+    const device: IDevice = { deviceId: "deviceId", getDisplayName: () => "deviceName" };
+    const defaultProps = {
+        userId,
+        device,
+    };
+
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<DeviceItem {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
+        });
+    };
+
+    const setMockUserTrust = (isVerified = false) => {
+        mockClient.checkUserTrust.mockReturnValue({ isVerified: () => isVerified } as UserTrustLevel);
+    };
+    const setMockDeviceTrust = (isVerified = false, isCrossSigningVerified = false) => {
+        mockClient.checkDeviceTrust.mockReturnValue({
+            isVerified: () => isVerified,
+            isCrossSigningVerified: () => isCrossSigningVerified,
+        } as DeviceTrustLevel);
+    };
+
+    const mockVerifyDevice = jest.spyOn(mockVerification, "verifyDevice");
+
+    beforeEach(() => {
+        setMockUserTrust();
+        setMockDeviceTrust();
+    });
+
+    afterEach(() => {
+        mockClient.checkDeviceTrust.mockReset();
+        mockClient.checkUserTrust.mockReset();
+        mockVerifyDevice.mockClear;
+    });
+
+    it("with unverified user and device, displays button without a label", () => {
+        renderComponent();
+
+        expect(screen.getByRole("button", { name: device.getDisplayName() })).toBeInTheDocument;
+        expect(screen.queryByText(/trusted/i)).not.toBeInTheDocument();
+    });
+
+    it("with verified user only, displays button with a 'Not trusted' label", () => {
+        setMockUserTrust(true);
+        renderComponent();
+
+        expect(screen.getByRole("button", { name: `${device.getDisplayName()} Not trusted` })).toBeInTheDocument;
+    });
+
+    it("with verified device only, displays no button without a label", () => {
+        setMockDeviceTrust(true);
+        renderComponent();
+
+        expect(screen.getByText(device.getDisplayName())).toBeInTheDocument();
+        expect(screen.queryByText(/trusted/)).not.toBeInTheDocument();
+    });
+
+    it("when userId is the same as userId from client, uses isCrossSigningVerified to determine if button is shown", () => {
+        mockClient.getUserId.mockReturnValueOnce(userId);
+        renderComponent();
+
+        // set trust to be false for isVerified, true for isCrossSigningVerified
+        setMockDeviceTrust(false, true);
+
+        // expect to see no button in this case
+        expect(screen.queryByRole("button")).not.toBeInTheDocument;
+        expect(screen.getByText(device.getDisplayName())).toBeInTheDocument();
+    });
+
+    it("with verified user and device, displays no button and a 'Trusted' label", () => {
+        setMockUserTrust(true);
+        setMockDeviceTrust(true);
+        renderComponent();
+
+        expect(screen.queryByRole("button")).not.toBeInTheDocument;
+        expect(screen.getByText(device.getDisplayName())).toBeInTheDocument();
+        expect(screen.getByText("Trusted")).toBeInTheDocument();
+    });
+
+    it("does not call verifyDevice if client.getUser returns null", async () => {
+        mockClient.getUser.mockReturnValueOnce(null);
+        renderComponent();
+
+        const button = screen.getByRole("button", { name: device.getDisplayName() });
+        expect(button).toBeInTheDocument;
+        await userEvent.click(button);
+
+        expect(mockVerifyDevice).not.toHaveBeenCalled();
+    });
+
+    it("calls verifyDevice if client.getUser returns an object", async () => {
+        mockClient.getUser.mockReturnValueOnce({} as User);
+        // set mock return of isGuest to short circuit verifyDevice call to avoid
+        // even more mocking
+        mockClient.isGuest.mockReturnValueOnce(true);
+        renderComponent();
+
+        const button = screen.getByRole("button", { name: device.getDisplayName() });
+        expect(button).toBeInTheDocument;
+        await userEvent.click(button);
+
+        expect(mockVerifyDevice).toHaveBeenCalledTimes(1);
+        expect(mockVerifyDevice).toHaveBeenCalledWith({}, device);
     });
 });
