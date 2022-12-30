@@ -26,6 +26,7 @@ import UserInfo, {
     DeviceItem,
     disambiguateDevices,
     IDevice,
+    isMuted,
     UserOptionsSection,
 } from "../../../../src/components/views/right_panel/UserInfo";
 import dis from "../../../../src/dispatcher/dispatcher";
@@ -194,45 +195,6 @@ describe("<UserInfo />", () => {
             // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
-        });
-    });
-});
-
-describe("disambiguateDevices", () => {
-    it("does not add ambiguous key to unique names", () => {
-        const initialDevices = [
-            { deviceId: "id1", getDisplayName: () => "name1" },
-            { deviceId: "id2", getDisplayName: () => "name2" },
-            { deviceId: "id3", getDisplayName: () => "name3" },
-        ];
-        disambiguateDevices(initialDevices);
-
-        // mutates input so assert against initialDevices
-        initialDevices.forEach((device) => {
-            expect(device).not.toHaveProperty("ambiguous");
-        });
-    });
-
-    it("adds ambiguous key to all ids with non-unique names", () => {
-        const uniqueNameDevices = [
-            { deviceId: "id3", getDisplayName: () => "name3" },
-            { deviceId: "id4", getDisplayName: () => "name4" },
-            { deviceId: "id6", getDisplayName: () => "name6" },
-        ];
-        const nonUniqueNameDevices = [
-            { deviceId: "id1", getDisplayName: () => "nonUnique" },
-            { deviceId: "id2", getDisplayName: () => "nonUnique" },
-            { deviceId: "id5", getDisplayName: () => "nonUnique" },
-        ];
-        const initialDevices = [...uniqueNameDevices, ...nonUniqueNameDevices];
-        disambiguateDevices(initialDevices);
-
-        // mutates input so assert against initialDevices
-        uniqueNameDevices.forEach((device) => {
-            expect(device).not.toHaveProperty("ambiguous");
-        });
-        nonUniqueNameDevices.forEach((device) => {
-            expect(device).toHaveProperty("ambiguous", true);
         });
     });
 });
@@ -497,5 +459,85 @@ describe("<UserOptionsSection />", () => {
         await waitFor(() => {
             expect(screen.getByText(/operation failed/i)).toBeInTheDocument();
         });
+    });
+});
+
+describe("disambiguateDevices", () => {
+    it("does not add ambiguous key to unique names", () => {
+        const initialDevices = [
+            { deviceId: "id1", getDisplayName: () => "name1" },
+            { deviceId: "id2", getDisplayName: () => "name2" },
+            { deviceId: "id3", getDisplayName: () => "name3" },
+        ];
+        disambiguateDevices(initialDevices);
+
+        // mutates input so assert against initialDevices
+        initialDevices.forEach((device) => {
+            expect(device).not.toHaveProperty("ambiguous");
+        });
+    });
+
+    it("adds ambiguous key to all ids with non-unique names", () => {
+        const uniqueNameDevices = [
+            { deviceId: "id3", getDisplayName: () => "name3" },
+            { deviceId: "id4", getDisplayName: () => "name4" },
+            { deviceId: "id6", getDisplayName: () => "name6" },
+        ];
+        const nonUniqueNameDevices = [
+            { deviceId: "id1", getDisplayName: () => "nonUnique" },
+            { deviceId: "id2", getDisplayName: () => "nonUnique" },
+            { deviceId: "id5", getDisplayName: () => "nonUnique" },
+        ];
+        const initialDevices = [...uniqueNameDevices, ...nonUniqueNameDevices];
+        disambiguateDevices(initialDevices);
+
+        // mutates input so assert against initialDevices
+        uniqueNameDevices.forEach((device) => {
+            expect(device).not.toHaveProperty("ambiguous");
+        });
+        nonUniqueNameDevices.forEach((device) => {
+            expect(device).toHaveProperty("ambiguous", true);
+        });
+    });
+});
+
+describe("isMuted", () => {
+    // this member has a power level of 0
+    const isMutedMember = new RoomMember(mockRoom.roomId, defaultUserId);
+
+    it("returns false if either argument is falsy", () => {
+        // @ts-ignore to let us purposely pass incorrect args
+        expect(isMuted(isMutedMember, null)).toBe(false);
+        // @ts-ignore to let us purposely pass incorrect args
+        expect(isMuted(null, {})).toBe(false);
+    });
+
+    it("when powerLevelContent.events and .events_default are undefined, returns false", () => {
+        const powerLevelContents = {};
+        expect(isMuted(isMutedMember, powerLevelContents)).toBe(false);
+    });
+
+    it("when powerLevelContent.events is undefined, uses .events_default", () => {
+        const higherPowerLevelContents = { events_default: 10 };
+        expect(isMuted(isMutedMember, higherPowerLevelContents)).toBe(true);
+
+        const lowerPowerLevelContents = { events_default: -10 };
+        expect(isMuted(isMutedMember, lowerPowerLevelContents)).toBe(false);
+    });
+
+    it("when powerLevelContent.events is defined but '.m.room.message' isn't, uses .events_default", () => {
+        const higherPowerLevelContents = { events: {}, events_default: 10 };
+        expect(isMuted(isMutedMember, higherPowerLevelContents)).toBe(true);
+
+        const lowerPowerLevelContents = { events: {}, events_default: -10 };
+        expect(isMuted(isMutedMember, lowerPowerLevelContents)).toBe(false);
+    });
+
+    it("when powerLevelContent.events and '.m.room.message' are defined, uses the value", () => {
+        const higherPowerLevelContents = { events: { "m.room.message": -10 }, events_default: 10 };
+        expect(isMuted(isMutedMember, higherPowerLevelContents)).toBe(false);
+
+        const lowerPowerLevelContents = { events: { "m.room.message": 10 }, events_default: -10 };
+        expect(isMuted(isMutedMember, lowerPowerLevelContents)).toBe(true);
     });
 });
