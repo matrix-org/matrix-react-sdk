@@ -3696,5 +3696,8 @@
     "Text": "文字",
     "Create a link": "建立連結",
     "Link": "連結",
-    "Force 15s voice broadcast chunk length": "強制15秒語音廣播區塊長度"
+    "Force 15s voice broadcast chunk length": "強制15秒語音廣播區塊長度",
+    "Sign out of %(count)s sessions|one": "登出 %(count)s 個工作階段",
+    "Sign out of %(count)s sessions|other": "登出 %(count)s 個工作階段",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "登出其他所有工作階段（%(otherSessionsCount)s）"
 }
