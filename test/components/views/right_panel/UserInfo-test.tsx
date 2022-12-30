@@ -21,7 +21,7 @@ import { mocked } from "jest-mock";
 import { Room, User, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
-import UserInfo from "../../../../src/components/views/right_panel/UserInfo";
+import UserInfo, { disambiguateDevices } from "../../../../src/components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -179,6 +179,45 @@ describe("<UserInfo />", () => {
             // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
+        });
+    });
+});
+
+describe("disambiguateDevices", () => {
+    it("does not add ambiguous key to unique names", () => {
+        const initialDevices = [
+            { deviceId: "id1", getDisplayName: () => "name1" },
+            { deviceId: "id2", getDisplayName: () => "name2" },
+            { deviceId: "id3", getDisplayName: () => "name3" },
+        ];
+        disambiguateDevices(initialDevices);
+
+        // mutates input so assert against initialDevices
+        initialDevices.forEach((device) => {
+            expect(device).not.toHaveProperty("ambiguous");
+        });
+    });
+
+    it("adds ambiguous key to all ids with non-unique names", () => {
+        const uniqueNameDevices = [
+            { deviceId: "id3", getDisplayName: () => "name3" },
+            { deviceId: "id4", getDisplayName: () => "name4" },
+            { deviceId: "id6", getDisplayName: () => "name6" },
+        ];
+        const nonUniqueNameDevices = [
+            { deviceId: "id1", getDisplayName: () => "nonUnique" },
+            { deviceId: "id2", getDisplayName: () => "nonUnique" },
+            { deviceId: "id5", getDisplayName: () => "nonUnique" },
+        ];
+        const initialDevices = [...uniqueNameDevices, ...nonUniqueNameDevices];
+        disambiguateDevices(initialDevices);
+
+        // mutates input so assert against initialDevices
+        uniqueNameDevices.forEach((device) => {
+            expect(device).not.toHaveProperty("ambiguous");
+        });
+        nonUniqueNameDevices.forEach((device) => {
+            expect(device).toHaveProperty("ambiguous", true);
         });
     });
 });

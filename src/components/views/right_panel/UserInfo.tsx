@@ -85,7 +85,7 @@ export interface IDevice {
     getDisplayName(): string;
 }
 
-const disambiguateDevices = (devices: IDevice[]) => {
+export const disambiguateDevices = (devices: IDevice[]) => {
     const names = Object.create(null);
     for (let i = 0; i < devices.length; i++) {
         const name = devices[i].getDisplayName();
