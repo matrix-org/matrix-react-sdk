@@ -3696,5 +3696,8 @@
     "Text": "Szöveg",
     "Create a link": "Hivatkozás készítése",
     "Link": "Hivatkozás",
-    "Force 15s voice broadcast chunk length": "Hang közvetítések 15 másodperces darabolásának kényszerítése"
+    "Force 15s voice broadcast chunk length": "Hang közvetítések 15 másodperces darabolásának kényszerítése",
+    "Sign out of %(count)s sessions|one": "Kijelentkezés %(count)s munkamenetből",
+    "Sign out of %(count)s sessions|other": "Kijelentkezés %(count)s munkamenetből",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Kijelentkezés minden munkamenetből (%(otherSessionsCount)s)"
 }
