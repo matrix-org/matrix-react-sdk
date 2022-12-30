@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { Room, User, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
@@ -32,6 +32,7 @@ import dis from "../../../../src/dispatcher/dispatcher";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import MultiInviter from "../../../../src/utils/MultiInviter";
 import * as mockVerification from "../../../../src/verification";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
@@ -459,5 +460,42 @@ describe("<UserOptionsSection />", () => {
     it("shows the invite button when canInvite is true", () => {
         renderComponent({ canInvite: true });
         expect(screen.getByRole("button", { name: /invite/i })).toBeInTheDocument();
+    });
+
+    it("clicking the invite button will call MultiInviter.invite", async () => {
+        // to save mocking, we will reject the call to .invite
+        const inviteSpy = jest.spyOn(MultiInviter.prototype, "invite");
+        const mockErrorMessage = new Error("test error message");
+        inviteSpy.mockRejectedValue(mockErrorMessage);
+
+        // render the component and click the button
+        renderComponent({ canInvite: true });
+        const inviteButton = screen.getByRole("button", { name: /invite/i });
+        expect(inviteButton).toBeInTheDocument();
+        await userEvent.click(inviteButton);
+
+        // check that we have called .invite
+        expect(inviteSpy).toHaveBeenCalledWith([member.userId]);
+
+        // check that the test error message is displayed
+        await waitFor(() => {
+            expect(screen.getByText(mockErrorMessage.message)).toBeInTheDocument();
+        });
+    });
+
+    it("if calling .invite throws something strange, show default error message", async () => {
+        const inviteSpy = jest.spyOn(MultiInviter.prototype, "invite");
+        inviteSpy.mockRejectedValue({ this: "could be anything" });
+
+        // render the component and click the button
+        renderComponent({ canInvite: true });
+        const inviteButton = screen.getByRole("button", { name: /invite/i });
+        expect(inviteButton).toBeInTheDocument();
+        await userEvent.click(inviteButton);
+
+        // check that the default test error message is displayed
+        await waitFor(() => {
+            expect(screen.getByText(/operation failed/i)).toBeInTheDocument();
+        });
     });
 });
