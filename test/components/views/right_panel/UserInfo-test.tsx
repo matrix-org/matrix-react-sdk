@@ -18,7 +18,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
-import { Room, User, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { Room, User, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
@@ -26,11 +26,15 @@ import UserInfo, {
     DeviceItem,
     disambiguateDevices,
     IDevice,
+    UserOptionsSection,
 } from "../../../../src/components/views/right_panel/UserInfo";
+import dis from "../../../../src/dispatcher/dispatcher";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import * as mockVerification from "../../../../src/verification";
+
+jest.mock("../../../../src/dispatcher/dispatcher");
 
 jest.mock("../../../../src/utils/DMRoomMap", () => {
     const mock = {
@@ -43,6 +47,21 @@ jest.mock("../../../../src/utils/DMRoomMap", () => {
         sharedInstance: mock,
     };
 });
+
+const mockRoom = mocked({
+    roomId: "!fkfk",
+    getType: jest.fn().mockReturnValue(undefined),
+    isSpaceRoom: jest.fn().mockReturnValue(false),
+    getMember: jest.fn().mockReturnValue(undefined),
+    getMxcAvatarUrl: jest.fn().mockReturnValue("mock-avatar-url"),
+    name: "test room",
+    on: jest.fn(),
+    currentState: {
+        getStateEvents: jest.fn(),
+        on: jest.fn(),
+    },
+    getEventReadUpTo: jest.fn(),
+} as unknown as Room);
 
 const mockClient = mocked({
     getUser: jest.fn(),
@@ -61,7 +80,11 @@ const mockClient = mocked({
     },
     checkDeviceTrust: jest.fn(),
     checkUserTrust: jest.fn(),
+    getRoom: jest.fn(),
 } as unknown as MatrixClient);
+
+const defaultUserId = "@test:test";
+const defaultUser = new User(defaultUserId);
 
 beforeAll(() => {
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
@@ -72,9 +95,6 @@ beforeEach(() => {
 });
 
 describe("<UserInfo />", () => {
-    const defaultUserId = "@test:test";
-    const defaultUser = new User(defaultUserId);
-
     const verificationRequest = {
         pending: true,
         on: jest.fn(),
@@ -142,33 +162,19 @@ describe("<UserInfo />", () => {
     });
 
     describe("with a room", () => {
-        const room = {
-            roomId: "!fkfk",
-            getType: jest.fn().mockReturnValue(undefined),
-            isSpaceRoom: jest.fn().mockReturnValue(false),
-            getMember: jest.fn().mockReturnValue(undefined),
-            getMxcAvatarUrl: jest.fn().mockReturnValue("mock-avatar-url"),
-            name: "test room",
-            on: jest.fn(),
-            currentState: {
-                getStateEvents: jest.fn(),
-                on: jest.fn(),
-            },
-        } as unknown as Room;
-
         it("renders user info", () => {
-            renderComponent({ room });
+            renderComponent({ room: mockRoom });
             expect(screen.getByRole("heading", { name: defaultUserId })).toBeInTheDocument();
         });
 
         it("does not render space header when room is not a space room", () => {
-            renderComponent({ room });
+            renderComponent({ room: mockRoom });
             expect(screen.queryByTestId("space-header")).not.toBeInTheDocument();
         });
 
         it("renders space header when room is a space room", () => {
             const spaceRoom = {
-                ...room,
+                ...mockRoom,
                 isSpaceRoom: jest.fn().mockReturnValue(true),
             };
             renderComponent({ room: spaceRoom });
@@ -176,12 +182,12 @@ describe("<UserInfo />", () => {
         });
 
         it("renders encryption info panel without pending verification", () => {
-            renderComponent({ phase: RightPanelPhases.EncryptionPanel, room });
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, room: mockRoom });
             expect(screen.getByRole("heading", { name: /encryption/i })).toBeInTheDocument();
         });
 
         it("renders encryption verification panel with pending verification", () => {
-            renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest, room });
+            renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest, room: mockRoom });
 
             expect(screen.queryByRole("heading", { name: /encryption/i })).not.toBeInTheDocument();
             // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
@@ -231,10 +237,9 @@ describe("disambiguateDevices", () => {
 });
 
 describe("<DeviceItem />", () => {
-    const userId = "testId";
     const device: IDevice = { deviceId: "deviceId", getDisplayName: () => "deviceName" };
     const defaultProps = {
-        userId,
+        userId: defaultUserId,
         device,
     };
 
@@ -294,7 +299,7 @@ describe("<DeviceItem />", () => {
     });
 
     it("when userId is the same as userId from client, uses isCrossSigningVerified to determine if button is shown", () => {
-        mockClient.getUserId.mockReturnValueOnce(userId);
+        mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         renderComponent();
 
         // set trust to be false for isVerified, true for isCrossSigningVerified
@@ -327,7 +332,7 @@ describe("<DeviceItem />", () => {
     });
 
     it("calls verifyDevice if client.getUser returns an object", async () => {
-        mockClient.getUser.mockReturnValueOnce({} as User);
+        mockClient.getUser.mockReturnValueOnce(defaultUser);
         // set mock return of isGuest to short circuit verifyDevice call to avoid
         // even more mocking
         mockClient.isGuest.mockReturnValueOnce(true);
@@ -338,6 +343,121 @@ describe("<DeviceItem />", () => {
         await userEvent.click(button);
 
         expect(mockVerifyDevice).toHaveBeenCalledTimes(1);
-        expect(mockVerifyDevice).toHaveBeenCalledWith({}, device);
+        expect(mockVerifyDevice).toHaveBeenCalledWith(defaultUser, device);
+    });
+});
+
+describe("<UserOptionsSection />", () => {
+    const member = new RoomMember(mockRoom.roomId, defaultUserId);
+    const defaultProps = { member, isIgnored: false, canInvite: false, isSpace: false };
+
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<UserOptionsSection {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
+        });
+    };
+
+    it("always shows share user button", () => {
+        renderComponent();
+        expect(screen.getByRole("button", { name: /share link to user/i })).toBeInTheDocument();
+    });
+
+    it("does not show ignore or direct message buttons when member userId matches client userId ", () => {
+        mockClient.getUserId.mockReturnValueOnce(member.userId);
+        renderComponent();
+
+        expect(screen.queryByRole("button", { name: /ignore/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: /message/i })).not.toBeInTheDocument();
+    });
+
+    it("shows ignore, direct message and mention buttons when member userId does not match client userId ", () => {
+        // call to client.getUserId returns undefined, which will not match member.userId
+        renderComponent();
+
+        expect(screen.getByRole("button", { name: /ignore/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /message/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /mention/i })).toBeInTheDocument();
+    });
+
+    it("when call to client.getRoom is null, does not show read receipt button", () => {
+        mockClient.getRoom.mockReturnValueOnce(null);
+        renderComponent();
+
+        expect(screen.queryByRole("button", { name: /jump to read receipt/i })).not.toBeInTheDocument();
+    });
+
+    it("when call to client.getRoom is non-null and room.getEventReadUpTo is null, does not show read receipt button", () => {
+        mockRoom.getEventReadUpTo.mockReturnValueOnce(null);
+        mockClient.getRoom.mockReturnValueOnce(mockRoom);
+        renderComponent();
+
+        expect(screen.queryByRole("button", { name: /jump to read receipt/i })).not.toBeInTheDocument();
+    });
+
+    it("when calls to client.getRoom and room.getEventReadUpTo are non-null, shows read receipt button", () => {
+        mockRoom.getEventReadUpTo.mockReturnValueOnce("1234");
+        mockClient.getRoom.mockReturnValueOnce(mockRoom);
+        renderComponent();
+
+        expect(screen.getByRole("button", { name: /jump to read receipt/i })).toBeInTheDocument();
+    });
+
+    it("clicking the read receipt button calls dispatch with correct event_id", async () => {
+        const mockEventId = "1234";
+        mockRoom.getEventReadUpTo.mockReturnValue(mockEventId);
+        mockClient.getRoom.mockReturnValue(mockRoom);
+        renderComponent();
+
+        const readReceiptButton = screen.getByRole("button", { name: /jump to read receipt/i });
+
+        expect(readReceiptButton).toBeInTheDocument();
+        await userEvent.click(readReceiptButton);
+        expect(dis.dispatch).toHaveBeenCalledWith({
+            action: "view_room",
+            event_id: mockEventId,
+            highlighted: true,
+            metricsTrigger: undefined,
+            room_id: "!fkfk",
+        });
+
+        mockRoom.getEventReadUpTo.mockReset();
+        mockClient.getRoom.mockReset();
+    });
+
+    it("firing the read receipt event handler with a null event_id calls dispatch with undefined not null", async () => {
+        const mockEventId = "1234";
+        // the first call is the check to see if we should render the button, second call is
+        // when the button is clicked
+        mockRoom.getEventReadUpTo.mockReturnValueOnce(mockEventId).mockReturnValueOnce(null);
+        mockClient.getRoom.mockReturnValue(mockRoom);
+        renderComponent();
+
+        const readReceiptButton = screen.getByRole("button", { name: /jump to read receipt/i });
+
+        expect(readReceiptButton).toBeInTheDocument();
+        await userEvent.click(readReceiptButton);
+        expect(dis.dispatch).toHaveBeenCalledWith({
+            action: "view_room",
+            event_id: undefined,
+            highlighted: true,
+            metricsTrigger: undefined,
+            room_id: "!fkfk",
+        });
+
+        mockClient.getRoom.mockReset();
+    });
+
+    it("does not show the invite button when canInvite is false", () => {
+        renderComponent();
+        expect(screen.queryByRole("button", { name: /invite/i })).not.toBeInTheDocument();
+    });
+
+    it("shows the invite button when canInvite is true", () => {
+        renderComponent({ canInvite: true });
+        expect(screen.getByRole("button", { name: /invite/i })).toBeInTheDocument();
     });
 });
