@@ -21,7 +21,6 @@ import { act } from "react-dom/test-utils";
 import { Beacon, Room, RoomMember, MatrixEvent, getBeaconInfoIdentifier } from "matrix-js-sdk/src/matrix";
 
 import BeaconMarker from "../../../../src/components/views/beacon/BeaconMarker";
-import * as mockSmartMarker from "../../../../src/components/views/location/SmartMarker";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import {
     getMockClientWithEventEmitter,
@@ -43,6 +42,7 @@ describe("<BeaconMarker />", () => {
 
     const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
+    const mockMarker = new maplibregl.Marker();
 
     const mockClient = getMockClientWithEventEmitter({
         getClientWellKnown: jest.fn().mockReturnValue({
@@ -99,15 +99,17 @@ describe("<BeaconMarker />", () => {
     it("renders nothing when beacon is not live", () => {
         const room = setupRoom([notLiveEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(notLiveEvent));
-        const { container } = renderComponent({ beacon });
-        expect(container.innerHTML).toBe("");
+        const { asFragment } = renderComponent({ beacon });
+        expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
+        expect(screen.queryByTestId("avatar-img")).not.toBeInTheDocument();
     });
 
     it("renders nothing when beacon has no location", () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
-        const { container } = renderComponent({ beacon });
-        expect(container.innerHTML).toBe("");
+        const { asFragment } = renderComponent({ beacon });
+        expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
+        expect(screen.queryByTestId("avatar-img")).not.toBeInTheDocument();
     });
 
     it("renders marker when beacon has location", () => {
@@ -116,29 +118,26 @@ describe("<BeaconMarker />", () => {
         beacon?.addLocations([location1]);
         const { asFragment } = renderComponent({ beacon });
         expect(asFragment()).toMatchSnapshot();
+        expect(screen.getByTestId("avatar-img")).toBeInTheDocument();
     });
 
     it("updates with new locations", () => {
-        // we need to mock the SmartMarker here to be able to check the geoUris
-        const uriSmartMarker = jest.spyOn(mockSmartMarker, "default");
-        uriSmartMarker.mockImplementation((props) => <div data-testid={props.geoUri} />);
-
+        const lonLat1 = { lon: 41, lat: 51 };
+        const lonLat2 = { lon: 42, lat: 52 };
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon?.addLocations([location1]);
+
+        // render the component then add a new location, check mockMarker called as expected
         renderComponent({ beacon });
+        expect(mockMarker.setLngLat).toHaveBeenLastCalledWith(lonLat1);
+        expect(mockMarker.addTo).toHaveBeenCalledWith(mockMap);
 
-        expect(screen.getByTestId(geoUri1)).toBeInTheDocument();
-
+        // add a location, check mockMarker called with new location details
         act(() => {
             beacon?.addLocations([location2]);
         });
-
-        // updated to latest location
-        expect(screen.queryByTestId(geoUri1)).not.toBeInTheDocument();
-        expect(screen.getByTestId(geoUri2)).toBeInTheDocument();
-
-        // restore the mock implimentation to avoid affecting other tests
-        uriSmartMarker.mockRestore();
+        expect(mockMarker.setLngLat).toHaveBeenLastCalledWith(lonLat2);
+        expect(mockMarker.addTo).toHaveBeenCalledWith(mockMap);
     });
 });
