@@ -506,14 +506,16 @@ interface IPowerLevelsContent {
     redact?: number;
 }
 
-const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsContent) => {
+export const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsContent) => {
     if (!powerLevelContent || !member) return false;
 
     const levelToSend =
         (powerLevelContent.events ? powerLevelContent.events["m.room.message"] : null) ||
         powerLevelContent.events_default;
 
-    return levelToSend && member.powerLevel < levelToSend;
+    if (!levelToSend) return false;
+
+    return member.powerLevel < levelToSend;
 };
 
 const getPowerLevels = (room: Room): IPowerLevelsContent =>
