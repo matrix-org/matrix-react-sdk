@@ -3696,5 +3696,8 @@
     "Text": "Texte",
     "Create a link": "Crée un lien",
     "Link": "Lien",
-    "Force 15s voice broadcast chunk length": "Forcer la diffusion audio à utiliser des morceaux de 15s"
+    "Force 15s voice broadcast chunk length": "Forcer la diffusion audio à utiliser des morceaux de 15s",
+    "Sign out of %(count)s sessions|one": "Déconnecter %(count)s session",
+    "Sign out of %(count)s sessions|other": "Déconnecter %(count)s sessions",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Déconnecter toutes les autres sessions (%(otherSessionsCount)s)"
 }
