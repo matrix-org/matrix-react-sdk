@@ -549,7 +549,7 @@ interface IBaseProps {
     stopUpdating(): void;
 }
 
-const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBaseRoomProps, "powerLevels">) => {
+export const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBaseRoomProps, "powerLevels">) => {
     const cli = useContext(MatrixClientContext);
 
     // check if user can be kicked/disinvited

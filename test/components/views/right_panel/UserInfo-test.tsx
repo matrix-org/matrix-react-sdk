@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { Room, User, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
@@ -28,6 +28,7 @@ import UserInfo, {
     getPowerLevels,
     IDevice,
     isMuted,
+    RoomKickButton,
     UserOptionsSection,
 } from "../../../../src/components/views/right_panel/UserInfo";
 import dis from "../../../../src/dispatcher/dispatcher";
@@ -461,6 +462,42 @@ describe("<UserOptionsSection />", () => {
             expect(screen.getByText(/operation failed/i)).toBeInTheDocument();
         });
     });
+});
+
+describe.only("<RoomKickButton />", () => {
+    const roomKickMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const defaultProps = { room: mockRoom, member: roomKickMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<RoomKickButton {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
+        });
+    };
+
+    it("returns nothing if member.membership is undefined", () => {
+        // .membership is undefined in our member by default
+        const { asFragment } = renderComponent();
+        expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
+    });
+
+    it("renders a button if member.membership is 'invite' or 'join'", () => {
+        const memberWithInviteMembership = { ...roomKickMember, membership: "invite" };
+        const memberWithJoinMembership = { ...roomKickMember, membership: "join" };
+
+        renderComponent({ member: memberWithInviteMembership });
+        expect(screen.getByRole("button")).toBeInTheDocument();
+
+        cleanup();
+
+        renderComponent({ member: memberWithJoinMembership });
+        expect(screen.getByRole("button")).toBeInTheDocument();
+    });
+
+    // next test the kick label
 });
 
 describe("disambiguateDevices", () => {
