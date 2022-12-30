@@ -319,7 +319,7 @@ const MessageButton = ({ member }: { member: RoomMember }) => {
     );
 };
 
-const UserOptionsSection: React.FC<{
+export const UserOptionsSection: React.FC<{
     member: RoomMember;
     isIgnored: boolean;
     canInvite: boolean;
@@ -368,16 +368,14 @@ const UserOptionsSection: React.FC<{
         if (member.roomId && !isSpace) {
             const onReadReceiptButton = function () {
                 const room = cli.getRoom(member.roomId);
-                if (room) {
-                    dis.dispatch<ViewRoomPayload>({
-                        action: Action.ViewRoom,
-                        highlighted: true,
-                        // this could return null, the default prevents a type error
-                        event_id: room.getEventReadUpTo(member.userId) || undefined,
-                        room_id: member.roomId,
-                        metricsTrigger: undefined, // room doesn't change
-                    });
-                }
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    highlighted: true,
+                    // this could return null, the default prevents a type error
+                    event_id: room?.getEventReadUpTo(member.userId) || undefined,
+                    room_id: member.roomId,
+                    metricsTrigger: undefined, // room doesn't change
+                });
             };
 
             const onInsertPillButton = function () {
