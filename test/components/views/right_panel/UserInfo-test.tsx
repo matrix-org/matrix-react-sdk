@@ -25,6 +25,7 @@ import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/Cross
 import UserInfo, {
     DeviceItem,
     disambiguateDevices,
+    getPowerLevels,
     IDevice,
     isMuted,
     UserOptionsSection,
@@ -539,5 +540,12 @@ describe("isMuted", () => {
 
         const lowerPowerLevelContents = { events: { "m.room.message": 10 }, events_default: -10 };
         expect(isMuted(isMutedMember, lowerPowerLevelContents)).toBe(true);
+    });
+});
+
+describe("getPowerLevels", () => {
+    it("returns an empty object when room.currentState.getStateEvents return null", () => {
+        mockRoom.currentState.getStateEvents.mockReturnValueOnce(null);
+        expect(getPowerLevels(mockRoom)).toEqual({});
     });
 });

@@ -518,8 +518,8 @@ export const isMuted = (member: RoomMember, powerLevelContent: IPowerLevelsConte
     return member.powerLevel < levelToSend;
 };
 
-const getPowerLevels = (room: Room): IPowerLevelsContent =>
-    room?.currentState?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent() || {};
+export const getPowerLevels = (room: Room): IPowerLevelsContent =>
+    room.currentState.getStateEvents(EventType.RoomPowerLevels, "")?.getContent() || {};
 
 export const useRoomPowerLevels = (cli: MatrixClient, room: Room) => {
     const [powerLevels, setPowerLevels] = useState<IPowerLevelsContent>(getPowerLevels(room));
