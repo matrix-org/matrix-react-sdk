@@ -3696,5 +3696,8 @@
     "Text": "Text",
     "Create a link": "Vytvořit odkaz",
     "Link": "Odkaz",
-    "Force 15s voice broadcast chunk length": "Vynutit 15s délku bloku hlasového vysílání"
+    "Force 15s voice broadcast chunk length": "Vynutit 15s délku bloku hlasového vysílání",
+    "Sign out of %(count)s sessions|one": "Odhlásit se z %(count)s relace",
+    "Sign out of %(count)s sessions|other": "Odhlásit se z %(count)s relací",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Odhlásit se ze všech ostatních relací (%(otherSessionsCount)s)"
 }
