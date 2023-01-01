@@ -3696,5 +3696,8 @@
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Verify your current session for enhanced secure messaging.": "Verifica la tua sessione attuale per messaggi più sicuri.",
     "Your current session is ready for secure messaging.": "La tua sessione attuale è pronta per i messaggi sicuri.",
-    "Force 15s voice broadcast chunk length": "Forza lunghezza pezzo trasmissione vocale a 15s"
+    "Force 15s voice broadcast chunk length": "Forza lunghezza pezzo trasmissione vocale a 15s",
+    "Sign out of %(count)s sessions|one": "Disconnetti %(count)s sessione",
+    "Sign out of %(count)s sessions|other": "Disconnetti %(count)s sessioni",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Disconnetti tutte le altre sessioni (%(otherSessionsCount)s)"
 }
