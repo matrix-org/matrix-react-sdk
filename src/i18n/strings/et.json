@@ -3699,5 +3699,8 @@
     "Link": "Link",
     "Sign out of %(count)s sessions|one": "Logi %(count)s'st sessioonist välja",
     "Sign out of %(count)s sessions|other": "Logi %(count)s'st sessioonist välja",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Logi kõikidest ülejäänud sessioonidest välja: %(otherSessionsCount)s sessioon(i)"
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Logi kõikidest ülejäänud sessioonidest välja: %(otherSessionsCount)s sessioon(i)",
+    "Yes, end my recording": "Jah, lõpeta salvestamine",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Kui hakkad kuulama seda ringhäälingukõnet, siis hetkel toimuv ringhäälingukõne salvestamine lõppeb.",
+    "Listen to live broadcast?": "Kas soovid kuulata ringhäälingukõnet?"
 }
