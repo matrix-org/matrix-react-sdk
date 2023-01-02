@@ -3678,5 +3678,18 @@
     "%(count)s sessions selected|one": "%(count)s sesion i përzgjedhur",
     "%(count)s sessions selected|other": "%(count)s sesione të përzgjedhur",
     "Failed to read events": "S’u arrit të lexohen akte",
-    "Failed to send event": "S’u arrit të dërgohet akt"
+    "Failed to send event": "S’u arrit të dërgohet akt",
+    "Mark as read": "Vëri shenjë si të lexuar",
+    "Text": "Tekst",
+    "Create a link": "Krijoni një lidhje",
+    "Link": "Lidhje",
+    "Sign out of %(count)s sessions|one": "Dilni nga %(count)s sesion",
+    "Sign out of %(count)s sessions|other": "Dilni nga %(count)s sesione",
+    "Verify your current session for enhanced secure messaging.": "Verifikoni sesionin tuaj të tanishëm për shkëmbim me siguri të thelluar mesazhesh.",
+    "Your current session is ready for secure messaging.": "Sesioni juaj i tanishëm është gati për shkëmbim të siguruar mesazhesh.",
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Dil nga krejt sesionet e tjerë (%(otherSessionsCount)s)",
+    "Force 15s voice broadcast chunk length": "Detyro gjatësi copëzash transmetimi zanor prej 15s",
+    "Yes, end my recording": "Po, përfundoje regjistrimin tim",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Nëse filloni të dëgjoni te ky transmetim i drejtpërdrejtë, regjistrimi juaj i tanishëm i një transmetimi të drejtpërdrejtë do të përfundojë.",
+    "Listen to live broadcast?": "Të dëgjohet te transmetimi i drejtpërdrejtë?"
 }
