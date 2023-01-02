@@ -20,7 +20,7 @@ import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
 import RoomAvatar from "../../../../src/components/views/avatars/RoomAvatar";
-import { stubClient } from "../../../test-utils";
+import { filterConsole, stubClient } from "../../../test-utils";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { LocalRoom } from "../../../../src/models/LocalRoom";
 import * as AvatarModule from "../../../../src/Avatar";
@@ -28,6 +28,11 @@ import { DirectoryMember } from "../../../../src/utils/direct-messages";
 
 describe("RoomAvatar", () => {
     let client: MatrixClient;
+
+    filterConsole(
+        // unrelated for this test
+        "Room !room:example.com does not have an m.room.create event",
+    );
 
     beforeAll(() => {
         client = stubClient();

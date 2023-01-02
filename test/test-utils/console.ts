@@ -26,11 +26,11 @@ const originalFunctions: FilteredConsole = {
 
 /**
  * Allows to filter out specific messages in console.*.
+ * Automagically restores the original function by implementing an afterAll hook.
  *
  * @param ignoreList Messages to be filtered
- * @returns function to restore the console
  */
-export const filterConsole = (...ignoreList: string[]): (() => void) => {
+export const filterConsole = (...ignoreList: string[]): void => {
     for (const [key, originalFunction] of Object.entries(originalFunctions)) {
         window.console[key as keyof FilteredConsole] = (...data: any[]) => {
             const message = data?.[0]?.message || data?.[0];
@@ -43,9 +43,9 @@ export const filterConsole = (...ignoreList: string[]): (() => void) => {
         };
     }
 
-    return () => {
+    afterAll(() => {
         for (const [key, originalFunction] of Object.entries(originalFunctions)) {
             window.console[key as keyof FilteredConsole] = originalFunction;
         }
-    };
+    });
 };
