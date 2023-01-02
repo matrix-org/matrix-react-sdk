@@ -26,6 +26,21 @@ import { IRoomState } from "../../../../../src/components/structures/RoomView";
 import { createTestClient, flushPromises, getRoomContext, mkEvent, mkStubRoom } from "../../../../test-utils";
 import { EditWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer";
 import EditorStateTransfer from "../../../../../src/utils/EditorStateTransfer";
+import { Emoji } from "../../../../../src/components/views/rooms/wysiwyg_composer/components/Emoji";
+import { ChevronFace } from "../../../../../src/components/structures/ContextMenu";
+import dis from "../../../../../src/dispatcher/dispatcher";
+import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
+import { ActionPayload } from "../../../../../src/dispatcher/payloads";
+
+jest.mock("../../../../../src/components/views/rooms/EmojiButton", () => ({
+    EmojiButton: ({ addEmoji }: { addEmoji: (emoji: string) => void }) => {
+        return (
+            <button aria-label="Emoji" type="button" onClick={() => addEmoji("🦫")}>
+                Emoji
+            </button>
+        );
+    },
+}));
 
 describe("EditWysiwygComposer", () => {
     afterEach(() => {
@@ -268,5 +283,30 @@ describe("EditWysiwygComposer", () => {
 
         // Then we don't get it because we are disabled
         expect(screen.getByRole("textbox")).not.toHaveFocus();
+    });
+
+    it("Should add emoji", async () => {
+        // When
+        render(
+            <MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={defaultRoomContext}>
+                    <EditWysiwygComposer editorStateTransfer={editorStateTransfer} />
+                    <Emoji menuPosition={{ chevronFace: ChevronFace.Top }} />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>,
+        );
+        // Same behavior than in RoomView.tsx
+        const dispatcherRef = dis.register((payload: ActionPayload) => {
+            dis.dispatch<ComposerInsertPayload>({
+                ...(payload as ComposerInsertPayload),
+                composerType: ComposerType.Edit,
+            });
+        });
+
+        screen.getByLabelText("Emoji").click();
+
+        // Then
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(/🦫/));
+        dis.unregister(dispatcherRef);
     });
 });

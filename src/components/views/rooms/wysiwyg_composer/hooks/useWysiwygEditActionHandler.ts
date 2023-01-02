@@ -52,11 +52,7 @@ export function useWysiwygEditActionHandler(
                     if (payload.timelineRenderingType !== roomContext.timelineRenderingType) break;
                     if (payload.composerType !== ComposerType.Edit) break;
 
-                    if (payload.userId) {
-                        // TODO insert mention - see SendMessageComposer
-                    } else if (payload.event) {
-                        // TODO insert quote message - see SendMessageComposer
-                    } else if (payload.text) {
+                    if (payload.text) {
                         setSelection(composerContext.selection).then(() => composerFunctions.insertText(payload.text));
                     }
                     break;
