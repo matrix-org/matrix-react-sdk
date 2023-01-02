@@ -189,7 +189,7 @@ export class RoomViewStore extends EventEmitter {
         // through, but that's probably okay for now.
         let stateChanged = false;
         for (const key of Object.keys(newState)) {
-            if (this.state[key] !== newState[key]) {
+            if (this.state[key as keyof State] !== newState[key as keyof State]) {
                 stateChanged = true;
                 break;
             }
