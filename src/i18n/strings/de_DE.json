@@ -3699,5 +3699,6 @@
     "Force 15s voice broadcast chunk length": "Die Chunk-Länge der Sprachübertragungen auf 15 Sekunden erzwingen",
     "Sign out of %(count)s sessions|one": "Von %(count)s Sitzung abmelden",
     "Sign out of %(count)s sessions|other": "Von %(count)s Sitzungen abmelden",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Von allen anderen Sitzungen abmelden (%(otherSessionsCount)s)"
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Von allen anderen Sitzungen abmelden (%(otherSessionsCount)s)",
+    "Listen to live broadcast?": "Echtzeitübertragung anhören?"
 }
