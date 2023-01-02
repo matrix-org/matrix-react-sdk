@@ -42,6 +42,7 @@ describe("LinkModal", () => {
                 isTextEnabled={isTextEnabled}
                 onClose={onClose}
                 composerContext={{ selection: defaultValue }}
+                isEdition={false}
             />,
         );
     };

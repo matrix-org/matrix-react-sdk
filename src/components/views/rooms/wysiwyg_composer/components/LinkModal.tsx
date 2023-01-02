@@ -17,17 +17,28 @@ limitations under the License.
 import { FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import React, { ChangeEvent, useState } from "react";
 
-import { _td } from "../../../../../languageHandler";
+import { _t, _td } from "../../../../../languageHandler";
 import Modal from "../../../../../Modal";
-import QuestionDialog from "../../../dialogs/QuestionDialog";
 import Field from "../../../elements/Field";
 import { ComposerContextState } from "../ComposerContext";
 import { isSelectionEmpty, setSelection } from "../utils/selection";
+import BaseDialog from "../../../dialogs/BaseDialog";
+import DialogButtons from "../../../elements/DialogButtons";
 
-export function openLinkModal(composer: FormattingFunctions, composerContext: ComposerContextState) {
+export function openLinkModal(
+    composer: FormattingFunctions,
+    composerContext: ComposerContextState,
+    isEdition: boolean,
+) {
     const modal = Modal.createDialog(
         LinkModal,
-        { composerContext, composer, onClose: () => modal.close(), isTextEnabled: isSelectionEmpty() },
+        {
+            composerContext,
+            composer,
+            onClose: () => modal.close(),
+            isTextEnabled: !isEdition && isSelectionEmpty(),
+            isEdition,
+        },
         "mx_CompoundDialog",
         false,
         true,
@@ -43,48 +54,70 @@ interface LinkModalProps {
     isTextEnabled: boolean;
     onClose: () => void;
     composerContext: ComposerContextState;
+    isEdition: boolean;
 }
 
-export function LinkModal({ composer, isTextEnabled, onClose, composerContext }: LinkModalProps) {
+export function LinkModal({ composer, isTextEnabled, onClose, composerContext, isEdition }: LinkModalProps) {
     const [fields, setFields] = useState({ text: "", link: "" });
     const isSaveDisabled = (isTextEnabled && isEmpty(fields.text)) || isEmpty(fields.link);
 
     return (
-        <QuestionDialog
+        <BaseDialog
             className="mx_LinkModal"
-            title={_td("Create a link")}
-            button={_td("Save")}
-            buttonDisabled={isSaveDisabled}
-            hasCancelButton={true}
-            onFinished={async (isClickOnSave: boolean) => {
-                if (isClickOnSave) {
+            title={isEdition ? _td("Edit link") : _td("Create a link")}
+            hasCancel={true}
+            onFinished={() => onClose()}
+        >
+            <form
+                id="link_form"
+                className="mx_LinkModal_content"
+                onSubmit={async (evt) => {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+
                     await setSelection(composerContext.selection);
                     composer.link(fields.link, isTextEnabled ? fields.text : undefined);
-                }
-                onClose();
-            }}
-            description={
-                <div className="mx_LinkModal_content">
-                    {isTextEnabled && (
-                        <Field
-                            autoFocus={true}
-                            label={_td("Text")}
-                            value={fields.text}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                setFields((fields) => ({ ...fields, text: e.target.value }))
-                            }
-                        />
-                    )}
+                    onClose();
+                }}
+            >
+                {isTextEnabled && (
                     <Field
-                        autoFocus={!isTextEnabled}
-                        label={_td("Link")}
-                        value={fields.link}
+                        required={true}
+                        autoFocus={true}
+                        label={_td("Text")}
+                        value={fields.text}
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            setFields((fields) => ({ ...fields, link: e.target.value }))
+                            setFields((fields) => ({ ...fields, text: e.target.value }))
                         }
                     />
+                )}
+                <Field
+                    required={true}
+                    autoFocus={!isTextEnabled}
+                    label={_td("Link")}
+                    value={fields.link}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setFields((fields) => ({ ...fields, link: e.target.value }))
+                    }
+                />
+
+                <div className="mx_LinkModal_buttons">
+                    <button
+                        className="danger"
+                        onClick={() => {
+                            // TODO
+                        }}
+                    >
+                        {_t("Remove")}
+                    </button>
+                    <DialogButtons
+                        primaryButton={_t("Save")}
+                        primaryDisabled={isSaveDisabled}
+                        primaryIsSubmit={true}
+                        onCancel={() => onClose()}
+                    />
                 </div>
-            }
-        />
+            </form>
+        </BaseDialog>
     );
 }

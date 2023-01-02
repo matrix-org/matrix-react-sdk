@@ -17,13 +17,18 @@ limitations under the License.
 .mx_LinkModal {
     padding: $spacing-32;
 
-    .mx_Dialog_content {
-        margin-top: 30px;
-        margin-bottom: 42px;
-    }
-
     .mx_LinkModal_content {
         display: flex;
         flex-direction: column;
+
+        .mx_LinkModal_buttons {
+            display: flex;
+            align-items: baseline;
+
+            .mx_Dialog_buttons {
+                display: inline-block;
+            }
+        }
     }
+
 }
