@@ -3699,5 +3699,8 @@
     "Force 15s voice broadcast chunk length": "Paksakan panjang bagian siaran suara 15d",
     "Sign out of %(count)s sessions|one": "Keluar dari %(count)s sesi",
     "Sign out of %(count)s sessions|other": "Keluar dari %(count)s sesi",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Keluar dari semua sesi lain (%(otherSessionsCount)s)"
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Keluar dari semua sesi lain (%(otherSessionsCount)s)",
+    "Yes, end my recording": "Ya, hentikan rekaman saya",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Jika Anda mendengarkan siaran langsung ini, rekaman siaran langsung Anda saat ini akan dihentikan.",
+    "Listen to live broadcast?": "Dengarkan siaran langsung?"
 }
