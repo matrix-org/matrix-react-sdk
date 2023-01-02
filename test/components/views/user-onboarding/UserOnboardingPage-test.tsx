@@ -57,6 +57,7 @@ describe("UserOnboardingPage", () => {
 
     afterEach(() => {
         jest.useRealTimers();
+        jest.restoreAllMocks();
     });
 
     afterAll(() => {
