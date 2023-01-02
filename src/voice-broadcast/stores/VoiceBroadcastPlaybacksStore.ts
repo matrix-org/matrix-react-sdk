@@ -37,7 +37,7 @@ export class VoiceBroadcastPlaybacksStore
     extends TypedEventEmitter<VoiceBroadcastPlaybacksStoreEvent, EventMap>
     implements IDestroyable
 {
-    private current: VoiceBroadcastPlayback | null;
+    private current: VoiceBroadcastPlayback | null = null;
 
     /** Playbacks indexed by their info event id. */
     private playbacks = new Map<string, VoiceBroadcastPlayback>();
@@ -113,14 +113,5 @@ export class VoiceBroadcastPlaybacksStore
         }
 
         this.playbacks = new Map();
-    }
-
-    public static readonly _instance = new VoiceBroadcastPlaybacksStore();
-
-    /**
-     * TODO Michael W: replace when https://github.com/matrix-org/matrix-react-sdk/pull/9293 has been merged
-     */
-    public static instance() {
-        return VoiceBroadcastPlaybacksStore._instance;
     }
 }
