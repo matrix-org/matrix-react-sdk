@@ -3699,5 +3699,8 @@
     "Force 15s voice broadcast chunk length": "Примусово обмежити тривалість голосових трансляцій до 15 с",
     "Sign out of %(count)s sessions|one": "Вийти з %(count)s сеансу",
     "Sign out of %(count)s sessions|other": "Вийти з %(count)s сеансів",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Вийти з усіх інших сеансів (%(otherSessionsCount)s)"
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Вийти з усіх інших сеансів (%(otherSessionsCount)s)",
+    "Yes, end my recording": "Так, завершити мій запис",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Якщо ви почнете слухати цю трансляцію наживо, ваш поточний запис трансляції наживо завершиться.",
+    "Listen to live broadcast?": "Слухати трансляцію наживо?"
 }
