@@ -3699,5 +3699,8 @@
     "Force 15s voice broadcast chunk length": "Vynútiť 15s dĺžku sekcie hlasového vysielania",
     "Sign out of %(count)s sessions|one": "Odhlásiť sa z %(count)s relácie",
     "Sign out of %(count)s sessions|other": "Odhlásiť sa z %(count)s relácií",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Odhlásiť sa zo všetkých ostatných relácií (%(otherSessionsCount)s)"
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Odhlásiť sa zo všetkých ostatných relácií (%(otherSessionsCount)s)",
+    "Yes, end my recording": "Áno, ukončiť moje nahrávanie",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Ak začnete počúvať toto živé vysielanie, váš aktuálny záznam živého vysielania sa ukončí.",
+    "Listen to live broadcast?": "Počúvať živé vysielanie?"
 }
