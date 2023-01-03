@@ -3642,7 +3642,6 @@
     "Requires compatible homeserver.": "Kompatibilis matrix szerverre van szükség.",
     "Low bandwidth mode": "Alacsony sávszélesség mód",
     "Hide notification dot (only display counters badges)": "Értesítés pötty elrejtése (csak darabszám megjelenítés)",
-    "Under active development": "Aktív fejlesztés alatt",
     "Under active development.": "Aktív fejlesztés alatt.",
     "Favourite Messages": "Kedvenc üzenetek",
     "Temporary implementation. Locations persist in room history.": "Átmeneti megvalósítás. A helyadatok megmaradnak a szoba naplójában.",
