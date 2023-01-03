@@ -28,7 +28,7 @@ import DialogButtons from "../../../elements/DialogButtons";
 export function openLinkModal(
     composer: FormattingFunctions,
     composerContext: ComposerContextState,
-    isEdition: boolean,
+    isEditing: boolean,
 ) {
     const modal = Modal.createDialog(
         LinkModal,
@@ -36,8 +36,8 @@ export function openLinkModal(
             composerContext,
             composer,
             onClose: () => modal.close(),
-            isTextEnabled: !isEdition && isSelectionEmpty(),
-            isEdition,
+            isTextEnabled: !isEditing && isSelectionEmpty(),
+            isEditing,
         },
         "mx_CompoundDialog",
         false,
@@ -54,22 +54,21 @@ interface LinkModalProps {
     isTextEnabled: boolean;
     onClose: () => void;
     composerContext: ComposerContextState;
-    isEdition: boolean;
+    isEditing: boolean;
 }
 
-export function LinkModal({ composer, isTextEnabled, onClose, composerContext, isEdition }: LinkModalProps) {
+export function LinkModal({ composer, isTextEnabled, onClose, composerContext, isEditing }: LinkModalProps) {
     const [fields, setFields] = useState({ text: "", link: "" });
     const isSaveDisabled = (isTextEnabled && isEmpty(fields.text)) || isEmpty(fields.link);
 
     return (
         <BaseDialog
             className="mx_LinkModal"
-            title={isEdition ? _td("Edit link") : _td("Create a link")}
+            title={isEditing ? _td("Edit link") : _td("Create a link")}
             hasCancel={true}
             onFinished={() => onClose()}
         >
             <form
-                id="link_form"
                 className="mx_LinkModal_content"
                 onSubmit={async (evt) => {
                     evt.preventDefault();
@@ -102,14 +101,18 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                 />
 
                 <div className="mx_LinkModal_buttons">
-                    <button
-                        className="danger"
-                        onClick={() => {
-                            // TODO
-                        }}
-                    >
-                        {_t("Remove")}
-                    </button>
+                    {isEditing && (
+                        <button
+                            type="button"
+                            className="danger"
+                            onClick={() => {
+                                composer.removeLinks();
+                                onClose();
+                            }}
+                        >
+                            {_t("Remove")}
+                        </button>
+                    )}
                     <DialogButtons
                         primaryButton={_t("Save")}
                         primaryDisabled={isSaveDisabled}

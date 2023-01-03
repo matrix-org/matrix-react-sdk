@@ -27,6 +27,7 @@ import { SubSelection } from "../../../../../../src/components/views/rooms/wysiw
 describe("LinkModal", () => {
     const formattingFunctions = {
         link: jest.fn(),
+        removeLinks: jest.fn(),
     } as unknown as FormattingFunctions;
     const defaultValue: SubSelection = {
         focusNode: null,
@@ -35,14 +36,14 @@ describe("LinkModal", () => {
         anchorOffset: 4,
     };
 
-    const customRender = (isTextEnabled: boolean, onClose: () => void) => {
+    const customRender = (isTextEnabled: boolean, onClose: () => void, isEditing = false) => {
         return render(
             <LinkModal
                 composer={formattingFunctions}
                 isTextEnabled={isTextEnabled}
                 onClose={onClose}
                 composerContext={{ selection: defaultValue }}
-                isEdition={false}
+                isEditing={isEditing}
             />,
         );
     };
@@ -129,5 +130,16 @@ describe("LinkModal", () => {
 
         // Then
         expect(formattingFunctions.link).toHaveBeenCalledWith("l", "t");
+    });
+
+    it("Should remove the link", async () => {
+        // When
+        const onClose = jest.fn();
+        customRender(true, onClose, true);
+        await userEvent.click(screen.getByText("Remove"));
+
+        // Then
+        expect(formattingFunctions.removeLinks).toHaveBeenCalledTimes(1);
+        expect(onClose).toBeCalledTimes(1);
     });
 });
