@@ -217,6 +217,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
         let lastRoomId: string;
         let mergedTimeline: MatrixEvent[] = [];
         let ourEventsIndexes: number[] = [];
+
         for (let i = (results?.results?.length || 0) - 1; i >= 0; i--) {
             const result = results.results[i];
 
