@@ -77,20 +77,20 @@ describe("Spaces", () => {
         cy.stopSynapse(synapse);
     });
 
-    it.only("should allow user to create public space", () => {
-        openSpaceCreateMenu()
-            .within(() => {
-                cy.get(".mx_SpaceCreateMenuType_public").click();
-                cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').selectFile(
-                    "cypress/fixtures/riot.png",
-                    { force: true },
-                );
-                cy.get('input[label="Name"]').type("Let's have a Riot");
-                cy.get('input[label="Address"]').should("have.value", "lets-have-a-riot");
-                cy.get('textarea[label="Description"]').type("This is a space to reminisce Riot.im!");
-                cy.contains(".mx_AccessibleButton", "Create").click();
-            })
-            .percySnapshotElement("Space create menu");
+    it("should allow user to create public space", () => {
+        openSpaceCreateMenu().as("space-create-menu");
+        cy.get("@space-create-menu").percySnapshotElement("Space create menu");
+        cy.get("@space-create-menu").within(() => {
+            cy.get(".mx_SpaceCreateMenuType_public").click();
+            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').selectFile(
+                "cypress/fixtures/riot.png",
+                { force: true },
+            );
+            cy.get('input[label="Name"]').type("Let's have a Riot");
+            cy.get('input[label="Address"]').should("have.value", "lets-have-a-riot");
+            cy.get('textarea[label="Description"]').type("This is a space to reminisce Riot.im!");
+            cy.contains(".mx_AccessibleButton", "Create").click();
+        });
 
         // Create the default General & Random rooms, as well as a custom "Jokes" room
         cy.get('input[label="Room name"][value="General"]').should("exist");
