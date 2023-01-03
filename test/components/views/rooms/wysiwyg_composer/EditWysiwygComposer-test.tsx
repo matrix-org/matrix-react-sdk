@@ -31,16 +31,7 @@ import { ChevronFace } from "../../../../../src/components/structures/ContextMen
 import dis from "../../../../../src/dispatcher/dispatcher";
 import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
 import { ActionPayload } from "../../../../../src/dispatcher/payloads";
-
-jest.mock("../../../../../src/components/views/rooms/EmojiButton", () => ({
-    EmojiButton: ({ addEmoji }: { addEmoji: (emoji: string) => void }) => {
-        return (
-            <button aria-label="Emoji" type="button" onClick={() => addEmoji("🦫")}>
-                Emoji
-            </button>
-        );
-    },
-}));
+import * as EmojiButton from "../../../../../src/components/views/rooms/EmojiButton";
 
 describe("EditWysiwygComposer", () => {
     afterEach(() => {
@@ -287,6 +278,18 @@ describe("EditWysiwygComposer", () => {
 
     it("Should add emoji", async () => {
         // When
+
+        // We are not testing here the emoji button (open modal, select emoji ...)
+        // Instead we are directly firing an emoji to make the test easier to write
+        jest.spyOn(EmojiButton, "EmojiButton").mockImplementation(
+            ({ addEmoji }: { addEmoji: (emoji: string) => void }) => {
+                return (
+                    <button aria-label="Emoji" type="button" onClick={() => addEmoji("🦫")}>
+                        Emoji
+                    </button>
+                );
+            },
+        );
         render(
             <MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={defaultRoomContext}>
@@ -295,7 +298,10 @@ describe("EditWysiwygComposer", () => {
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>,
         );
-        // Same behavior than in RoomView.tsx
+        // Same behavior as in RoomView.tsx
+        // RoomView is re-dispatching the composer messages.
+        // It adds the composerType fields where the value refers if the composer is in editing or not
+        // The listeners in the RTE ignore the message if the composerType is missing in the payload
         const dispatcherRef = dis.register((payload: ActionPayload) => {
             dis.dispatch<ComposerInsertPayload>({
                 ...(payload as ComposerInsertPayload),
