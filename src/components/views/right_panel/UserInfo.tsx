@@ -887,7 +887,7 @@ export const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
             <BanToggleButton room={room} member={member} startUpdating={startUpdating} stopUpdating={stopUpdating} />
         );
     }
-    if (!isMe && canAffectUser && editPowerLevel && me.powerLevel >= editPowerLevel && !room.isSpaceRoom()) {
+    if (!isMe && canAffectUser && me.powerLevel >= Number(editPowerLevel) && !room.isSpaceRoom()) {
         muteButton = (
             <MuteToggleButton
                 member={member}
