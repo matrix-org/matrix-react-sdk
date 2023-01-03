@@ -863,8 +863,7 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     // if these do not exist in the event then they should default to 50 as per the spec
     const { ban: banPowerLevel = 50, kick: kickPowerLevel = 50, redact: redactPowerLevel = 50 } = powerLevels;
 
-    const userId = cli.getUserId();
-    const me = userId && room.getMember(userId);
+    const me = room.getMember(cli.getUserId() || "");
     if (!me) {
         // we aren't in the room, so return no admin tooling
         return <div />;

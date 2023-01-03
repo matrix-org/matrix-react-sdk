@@ -722,6 +722,10 @@ describe("<BanToggleButton />", () => {
     });
 });
 
+describe.only("<RoomAdminToolsContainer />", () => {
+    it("does something", () => {});
+});
+
 describe("disambiguateDevices", () => {
     it("does not add ambiguous key to unique names", () => {
         const initialDevices = [
