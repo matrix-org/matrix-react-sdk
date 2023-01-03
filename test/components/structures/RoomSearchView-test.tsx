@@ -336,7 +336,7 @@ describe("<RoomSearchView/>", () => {
                         result: {
                             room_id: room.roomId,
                             event_id: "$4",
-                            sender: client.getUserId(),
+                            sender: client.getUserId() ?? "",
                             origin_server_ts: 1,
                             content: { body: "Foo2", msgtype: "m.text" },
                             type: EventType.RoomMessage,
@@ -347,7 +347,7 @@ describe("<RoomSearchView/>", () => {
                                 {
                                     room_id: room.roomId,
                                     event_id: "$3",
-                                    sender: client.getUserId(),
+                                    sender: client.getUserId() ?? "",
                                     origin_server_ts: 1,
                                     content: { body: "Between", msgtype: "m.text" },
                                     type: EventType.RoomMessage,
@@ -357,7 +357,7 @@ describe("<RoomSearchView/>", () => {
                                 {
                                     room_id: room.roomId,
                                     event_id: "$5",
-                                    sender: client.getUserId(),
+                                    sender: client.getUserId() ?? "",
                                     origin_server_ts: 1,
                                     content: { body: "After", msgtype: "m.text" },
                                     type: EventType.RoomMessage,
