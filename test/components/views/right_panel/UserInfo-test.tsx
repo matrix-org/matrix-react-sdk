@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, waitFor, cleanup } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
-import { Room, User, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
+import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
@@ -29,6 +29,7 @@ import UserInfo, {
     getPowerLevels,
     IDevice,
     isMuted,
+    PowerLevelEditor,
     RoomAdminToolsContainer,
     RoomKickButton,
     UserOptionsSection,
@@ -89,6 +90,7 @@ const mockClient = mocked({
     checkUserTrust: jest.fn(),
     getRoom: jest.fn(),
     credentials: {},
+    setPowerLevel: jest.fn(),
 } as unknown as MatrixClient);
 
 const defaultUserId = "@test:test";
@@ -497,6 +499,66 @@ describe("<UserOptionsSection />", () => {
     });
 });
 
+describe("<PowerLevelEditor />", () => {
+    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+
+    const defaultProps = {
+        user: defaultMember,
+        room: mockRoom,
+        roomPermissions: {
+            modifyLevelMax: 100,
+            canEdit: false,
+            canInvite: false,
+        },
+    };
+
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<PowerLevelEditor {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
+        });
+    };
+
+    it("renders a power level combobox", () => {
+        renderComponent();
+
+        expect(screen.getByRole("combobox", { name: "Power level" })).toBeInTheDocument();
+    });
+
+    it("renders a combobox and attempts to change power level on change of the combobox", async () => {
+        const startPowerLevel = 999;
+        const powerLevelEvent = new MatrixEvent({
+            type: EventType.RoomPowerLevels,
+            content: { users: { [defaultUserId]: startPowerLevel }, users_default: 1 },
+        });
+        mockRoom.currentState.getStateEvents.mockReturnValue(powerLevelEvent);
+        mockClient.getUserId.mockReturnValueOnce(defaultUserId);
+        mockClient.setPowerLevel.mockResolvedValueOnce({ event_id: "123" });
+        renderComponent();
+
+        const changedPowerLevel = 100;
+
+        fireEvent.change(screen.getByRole("combobox", { name: "Power level" }), {
+            target: { value: changedPowerLevel },
+        });
+
+        await screen.findByText("Demote", { exact: true });
+
+        // firing the event will raise a dialog warning about self demotion, wait for this to appear then click on it
+        await userEvent.click(await screen.findByText("Demote", { exact: true }));
+        expect(mockClient.setPowerLevel).toHaveBeenCalledTimes(1);
+        expect(mockClient.setPowerLevel).toHaveBeenCalledWith(
+            mockRoom.roomId,
+            defaultMember.userId,
+            changedPowerLevel,
+            powerLevelEvent,
+        );
+    });
+});
+
 describe("<RoomKickButton />", () => {
     const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
     const memberWithInviteMembership = { ...defaultMember, membership: "invite" };
@@ -562,7 +624,6 @@ describe("<RoomKickButton />", () => {
         createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
 
         renderComponent({ member: memberWithInviteMembership });
-        screen.debug();
         await userEvent.click(screen.getByText(/disinvite from/i));
 
         // check the last call arguments and the presence of the spaceChildFilter callback

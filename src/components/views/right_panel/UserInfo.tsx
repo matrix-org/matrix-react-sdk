@@ -957,8 +957,7 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
         const powerLevels = room?.currentState.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
         if (!powerLevels) return;
 
-        const userId = cli.getUserId();
-        const me = userId && room.getMember(userId);
+        const me = room.getMember(cli.getUserId() || "");
         if (!me) return;
 
         const them = user;
@@ -1015,7 +1014,7 @@ const PowerLevelSection: React.FC<{
     }
 };
 
-const PowerLevelEditor: React.FC<{
+export const PowerLevelEditor: React.FC<{
     user: RoomMember;
     room: Room;
     roomPermissions: IRoomPermissions;
