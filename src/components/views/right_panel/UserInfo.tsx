@@ -574,7 +574,7 @@ export const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Om
                 space: room,
                 spaceChildFilter: (child: Room) => {
                     // Return true if the target member is not banned and we have sufficient PL to ban them
-                    const myMember = cli.credentials.userId && child.getMember(cli.credentials.userId);
+                    const myMember = child.getMember(cli.credentials.userId || "");
                     const theirMember = child.getMember(member.userId);
                     return (
                         myMember &&
