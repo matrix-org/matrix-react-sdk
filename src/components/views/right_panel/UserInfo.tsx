@@ -843,7 +843,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
     );
 };
 
-const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
+export const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     room,
     children,
     member,

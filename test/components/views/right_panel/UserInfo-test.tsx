@@ -29,6 +29,7 @@ import UserInfo, {
     getPowerLevels,
     IDevice,
     isMuted,
+    RoomAdminToolsContainer,
     RoomKickButton,
     UserOptionsSection,
 } from "../../../../src/components/views/right_panel/UserInfo";
@@ -722,8 +723,76 @@ describe("<BanToggleButton />", () => {
     });
 });
 
-describe.only("<RoomAdminToolsContainer />", () => {
-    it("does something", () => {});
+describe("<RoomAdminToolsContainer />", () => {
+    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    defaultMember.membership = "invite";
+
+    const defaultProps = {
+        room: mockRoom,
+        member: defaultMember,
+        startUpdating: jest.fn(),
+        stopUpdating: jest.fn(),
+        powerLevels: {},
+    };
+
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<RoomAdminToolsContainer {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
+        });
+    };
+
+    it("returns a single empty div if room.getMember is falsy", () => {
+        const { asFragment } = renderComponent();
+        expect(asFragment()).toMatchInlineSnapshot(`
+            <DocumentFragment>
+              <div />
+            </DocumentFragment>
+        `);
+    });
+
+    it("can return a single empty div in case where room.getMember is not falsy", () => {
+        mockRoom.getMember.mockReturnValueOnce(defaultMember);
+        const { asFragment } = renderComponent();
+        expect(asFragment()).toMatchInlineSnapshot(`
+            <DocumentFragment>
+              <div />
+            </DocumentFragment>
+        `);
+    });
+
+    it("returns kick, redact messages, ban buttons if conditions met", () => {
+        const mockMeMember = new RoomMember(mockRoom.roomId, "arbitraryId");
+        mockMeMember.powerLevel = 51; // defaults to 50
+        mockRoom.getMember.mockReturnValueOnce(mockMeMember);
+
+        const defaultMemberWithPowerLevel = { ...defaultMember, powerLevel: 0 };
+
+        renderComponent({ member: defaultMemberWithPowerLevel });
+
+        expect(screen.getByRole("heading", { name: /admin tools/i })).toBeInTheDocument();
+        expect(screen.getByText(/disinvite from room/i)).toBeInTheDocument();
+        expect(screen.getByText(/ban from room/i)).toBeInTheDocument();
+        expect(screen.getByText(/remove recent messages/i)).toBeInTheDocument();
+    });
+
+    it("returns mute toggle button if conditions met", () => {
+        const mockMeMember = new RoomMember(mockRoom.roomId, "arbitraryId");
+        mockMeMember.powerLevel = 51; // defaults to 50
+        mockRoom.getMember.mockReturnValueOnce(mockMeMember);
+
+        const defaultMemberWithPowerLevelAndJoinMembership = { ...defaultMember, powerLevel: 0, membership: "join" };
+
+        renderComponent({
+            member: defaultMemberWithPowerLevelAndJoinMembership,
+            powerLevels: { events: { "m.room.power_levels": 1 } },
+        });
+
+        expect(screen.getByText(/mute/i)).toBeInTheDocument();
+    });
 });
 
 describe("disambiguateDevices", () => {
