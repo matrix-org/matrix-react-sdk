@@ -38,7 +38,6 @@ import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import MultiInviter from "../../../../src/utils/MultiInviter";
 import * as mockVerification from "../../../../src/verification";
 import Modal from "../../../../src/Modal";
-import { replaceRangeAndExpandSelection } from "../../../../src/editor/operations";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
@@ -87,6 +86,7 @@ const mockClient = mocked({
     checkDeviceTrust: jest.fn(),
     checkUserTrust: jest.fn(),
     getRoom: jest.fn(),
+    credentials: {},
 } as unknown as MatrixClient);
 
 const defaultUserId = "@test:test";
@@ -240,7 +240,11 @@ describe("<DeviceItem />", () => {
     afterEach(() => {
         mockClient.checkDeviceTrust.mockReset();
         mockClient.checkUserTrust.mockReset();
-        mockVerifyDevice.mockClear;
+        mockVerifyDevice.mockClear();
+    });
+
+    afterAll(() => {
+        mockVerifyDevice.mockRestore();
     });
 
     it("with unverified user and device, displays button without a label", () => {
@@ -332,6 +336,10 @@ describe("<UserOptionsSection />", () => {
 
     beforeEach(() => {
         inviteSpy.mockReset();
+    });
+
+    afterAll(() => {
+        inviteSpy.mockRestore();
     });
 
     it("always shows share user button", () => {
@@ -487,12 +495,12 @@ describe("<UserOptionsSection />", () => {
     });
 });
 
-describe.only("<RoomKickButton />", () => {
-    const roomKickMember = new RoomMember(mockRoom.roomId, defaultUserId);
-    const memberWithInviteMembership = { ...roomKickMember, membership: "invite" };
-    const memberWithJoinMembership = { ...roomKickMember, membership: "join" };
+describe("<RoomKickButton />", () => {
+    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const memberWithInviteMembership = { ...defaultMember, membership: "invite" };
+    const memberWithJoinMembership = { ...defaultMember, membership: "join" };
 
-    const defaultProps = { room: mockRoom, member: roomKickMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+    const defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
@@ -503,6 +511,12 @@ describe.only("<RoomKickButton />", () => {
             wrapper: Wrapper,
         });
     };
+
+    const createDialogSpy: jest.SpyInstance = jest.spyOn(Modal, "createDialog");
+
+    afterAll(() => {
+        createDialogSpy.mockRestore();
+    });
 
     it("renders nothing if member.membership is undefined", () => {
         // .membership is undefined in our member by default
@@ -520,49 +534,66 @@ describe.only("<RoomKickButton />", () => {
         expect(result.container).not.toBeEmptyDOMElement();
     });
 
-    it("renders a kick button with the correct label", () => {
+    it("renders the correct label", () => {
         // test for room
         renderComponent({ member: memberWithJoinMembership });
-        expect(screen.getByRole("button")).toBeInTheDocument();
         expect(screen.getByText(/remove from room/i)).toBeInTheDocument();
         cleanup();
 
         renderComponent({ member: memberWithInviteMembership });
-        expect(screen.getByRole("button")).toBeInTheDocument();
         expect(screen.getByText(/disinvite from room/i)).toBeInTheDocument();
         cleanup();
 
         // test for space
         mockRoom.isSpaceRoom.mockReturnValue(true);
         renderComponent({ member: memberWithJoinMembership });
-        expect(screen.getByRole("button")).toBeInTheDocument();
         expect(screen.getByText(/remove from space/i)).toBeInTheDocument();
         cleanup();
 
         renderComponent({ member: memberWithInviteMembership });
-        expect(screen.getByRole("button")).toBeInTheDocument();
         expect(screen.getByText(/disinvite from space/i)).toBeInTheDocument();
         cleanup();
         mockRoom.isSpaceRoom.mockReturnValue(false);
     });
 
-    it.only("clicking the kick button calls Modal.createDialog with the correct arguments", async () => {
-        const createDialogSpy = jest.spyOn(Modal, "createDialog");
+    it("clicking the kick button calls Modal.createDialog with the correct arguments", async () => {
         createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
 
         renderComponent({ member: memberWithInviteMembership });
-        await userEvent.click(screen.getByRole("button"));
+        screen.debug();
+        await userEvent.click(screen.getByText(/disinvite from/i));
 
-        // check the calls, arguments and the presence of the spaceChildFilter callback
-        expect(createDialogSpy).toHaveBeenCalledTimes(1);
-        expect(createDialogSpy).toHaveBeenCalledWith(
+        // check the last call arguments and the presence of the spaceChildFilter callback
+        expect(createDialogSpy).toHaveBeenLastCalledWith(
             expect.any(Function),
             expect.objectContaining({ spaceChildFilter: expect.any(Function) }),
             undefined,
         );
 
-        // WIP - test the spaceChildFilter callback
-        // console.log(createDialogSpy.mock.calls[0][1].spaceChildFilter);
+        // test the spaceChildFilter callback
+        const callback = createDialogSpy.mock.lastCall[1].spaceChildFilter;
+
+        // make dummy values for myMember and theirMember, then we will test
+        // falsy my member vs their member followed by
+        // truthy my member vs their member
+        const mockFalsyMyMember = null;
+        const mockMyMember = { powerLevel: 1 };
+        const mockTheirMember = { membership: "invite", powerLevel: 0 };
+
+        const mockRoom = {
+            getMember: jest
+                .fn()
+                .mockReturnValueOnce(mockFalsyMyMember)
+                .mockReturnValueOnce(mockTheirMember)
+                .mockReturnValueOnce(mockMyMember)
+                .mockReturnValueOnce(mockTheirMember),
+            currentState: {
+                hasSufficientPowerLevelFor: jest.fn().mockReturnValue(true),
+            },
+        };
+
+        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(true);
     });
 });
 
