@@ -23,6 +23,7 @@ import { Phase, VerificationRequest } from "matrix-js-sdk/src/crypto/verificatio
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import UserInfo, {
+    BanToggleButton,
     DeviceItem,
     disambiguateDevices,
     getPowerLevels,
@@ -514,8 +515,8 @@ describe("<RoomKickButton />", () => {
 
     const createDialogSpy: jest.SpyInstance = jest.spyOn(Modal, "createDialog");
 
-    afterAll(() => {
-        createDialogSpy.mockRestore();
+    afterEach(() => {
+        createDialogSpy.mockReset();
     });
 
     it("renders nothing if member.membership is undefined", () => {
@@ -579,6 +580,130 @@ describe("<RoomKickButton />", () => {
         const mockFalsyMyMember = null;
         const mockMyMember = { powerLevel: 1 };
         const mockTheirMember = { membership: "invite", powerLevel: 0 };
+
+        const mockRoom = {
+            getMember: jest
+                .fn()
+                .mockReturnValueOnce(mockFalsyMyMember)
+                .mockReturnValueOnce(mockTheirMember)
+                .mockReturnValueOnce(mockMyMember)
+                .mockReturnValueOnce(mockTheirMember),
+            currentState: {
+                hasSufficientPowerLevelFor: jest.fn().mockReturnValue(true),
+            },
+        };
+
+        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(true);
+    });
+});
+
+describe("<BanToggleButton />", () => {
+    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const memberWithBanMembership = { ...defaultMember, membership: "ban" };
+
+    const defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<BanToggleButton {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
+        });
+    };
+
+    const createDialogSpy: jest.SpyInstance = jest.spyOn(Modal, "createDialog");
+
+    afterEach(() => {
+        createDialogSpy.mockReset();
+    });
+
+    it("renders the correct labels for banned and unbanned members", () => {
+        // test for room
+        // defaultMember is not banned
+        renderComponent();
+        expect(screen.getByText("Ban from room")).toBeInTheDocument();
+        cleanup();
+
+        renderComponent({ member: memberWithBanMembership });
+        expect(screen.getByText("Unban from room")).toBeInTheDocument();
+        cleanup();
+
+        // test for space
+        mockRoom.isSpaceRoom.mockReturnValue(true);
+        renderComponent();
+        expect(screen.getByText("Ban from space")).toBeInTheDocument();
+        cleanup();
+
+        renderComponent({ member: memberWithBanMembership });
+        expect(screen.getByText("Unban from space")).toBeInTheDocument();
+        cleanup();
+        mockRoom.isSpaceRoom.mockReturnValue(false);
+    });
+
+    it("clicking the ban or unban button calls Modal.createDialog with the correct arguments if user is not banned", async () => {
+        createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
+
+        renderComponent();
+        await userEvent.click(screen.getByText(/ban from/i));
+
+        // check the last call arguments and the presence of the spaceChildFilter callback
+        expect(createDialogSpy).toHaveBeenLastCalledWith(
+            expect.any(Function),
+            expect.objectContaining({ spaceChildFilter: expect.any(Function) }),
+            undefined,
+        );
+
+        // test the spaceChildFilter callback
+        const callback = createDialogSpy.mock.lastCall[1].spaceChildFilter;
+
+        // make dummy values for myMember and theirMember, then we will test
+        // falsy my member vs their member followed by
+        // truthy my member vs their member
+        const mockFalsyMyMember = null;
+        const mockMyMember = { powerLevel: 1 };
+        const mockTheirMember = { membership: "is not ban", powerLevel: 0 };
+
+        const mockRoom = {
+            getMember: jest
+                .fn()
+                .mockReturnValueOnce(mockFalsyMyMember)
+                .mockReturnValueOnce(mockTheirMember)
+                .mockReturnValueOnce(mockMyMember)
+                .mockReturnValueOnce(mockTheirMember),
+            currentState: {
+                hasSufficientPowerLevelFor: jest.fn().mockReturnValue(true),
+            },
+        };
+
+        expect(callback(mockRoom)).toBe(null);
+        expect(callback(mockRoom)).toBe(true);
+    });
+
+    it("clicking the ban or unban button calls Modal.createDialog with the correct arguments if user _is_ banned", async () => {
+        createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
+
+        renderComponent({ member: memberWithBanMembership });
+        await userEvent.click(screen.getByText(/ban from/i));
+
+        // check the last call arguments and the presence of the spaceChildFilter callback
+        expect(createDialogSpy).toHaveBeenLastCalledWith(
+            expect.any(Function),
+            expect.objectContaining({ spaceChildFilter: expect.any(Function) }),
+            undefined,
+        );
+
+        // test the spaceChildFilter callback
+        const callback = createDialogSpy.mock.lastCall[1].spaceChildFilter;
+
+        // make dummy values for myMember and theirMember, then we will test
+        // falsy my member vs their member followed by
+        // truthy my member vs their member
+        const mockFalsyMyMember = null;
+        const mockMyMember = { powerLevel: 1 };
+        const mockTheirMember = { membership: "ban", powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
