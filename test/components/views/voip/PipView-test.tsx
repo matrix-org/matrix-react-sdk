@@ -112,7 +112,7 @@ describe("PipView", () => {
         sdkContext = new TestSdkContext();
         voiceBroadcastRecordingsStore = new VoiceBroadcastRecordingsStore();
         voiceBroadcastPreRecordingStore = new VoiceBroadcastPreRecordingStore();
-        voiceBroadcastPlaybacksStore = new VoiceBroadcastPlaybacksStore();
+        voiceBroadcastPlaybacksStore = new VoiceBroadcastPlaybacksStore(voiceBroadcastRecordingsStore);
         sdkContext.client = client;
         sdkContext._VoiceBroadcastRecordingsStore = voiceBroadcastRecordingsStore;
         sdkContext._VoiceBroadcastPreRecordingStore = voiceBroadcastPreRecordingStore;
@@ -279,8 +279,17 @@ describe("PipView", () => {
         });
 
         it("should render the voice broadcast recording PiP", () => {
-            // check for the „Live“ badge
+            // check for the „Live“ badge to be present
             expect(screen.queryByText("Live")).toBeInTheDocument();
+        });
+
+        it("and a call it should show both, the call and the recording", async () => {
+            await withCall(async () => {
+                // Broadcast: Check for the „Live“ badge to be present
+                expect(screen.queryByText("Live")).toBeInTheDocument();
+                // Call: Check for the „Fill screen“ button to be present
+                expect(screen.queryByLabelText("Fill screen")).toBeInTheDocument();
+            });
         });
     });
 
