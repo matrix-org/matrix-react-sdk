@@ -3699,5 +3699,8 @@
     "Force 15s voice broadcast chunk length": "Hang közvetítések 15 másodperces darabolásának kényszerítése",
     "Sign out of %(count)s sessions|one": "Kijelentkezés %(count)s munkamenetből",
     "Sign out of %(count)s sessions|other": "Kijelentkezés %(count)s munkamenetből",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Kijelentkezés minden munkamenetből (%(otherSessionsCount)s)"
+    "Sign out of all other sessions (%(otherSessionsCount)s)": "Kijelentkezés minden munkamenetből (%(otherSessionsCount)s)",
+    "Yes, end my recording": "Igen, a felvétel befejezése",
+    "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Ha hallgatja ezt az élő közvetítést akkor a jelenlegi élő közvetítésének a felvétele befejeződik.",
+    "Listen to live broadcast?": "Élő közvetítés hallgatása?"
 }
