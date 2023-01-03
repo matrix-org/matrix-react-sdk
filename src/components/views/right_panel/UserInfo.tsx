@@ -656,7 +656,7 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
     );
 };
 
-const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBaseRoomProps, "powerLevels">) => {
+export const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBaseRoomProps, "powerLevels">) => {
     const cli = useContext(MatrixClientContext);
 
     const isBanned = member.membership === "ban";
@@ -682,7 +682,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
                 spaceChildFilter: isBanned
                     ? (child: Room) => {
                           // Return true if the target member is banned and we have sufficient PL to unban
-                          const myMember = cli.credentials.userId && child.getMember(cli.credentials.userId);
+                          const myMember = child.getMember(cli.credentials.userId || "");
                           const theirMember = child.getMember(member.userId);
                           return (
                               myMember &&
@@ -694,7 +694,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
                       }
                     : (child: Room) => {
                           // Return true if the target member isn't banned and we have sufficient PL to ban
-                          const myMember = cli.credentials.userId && child.getMember(cli.credentials.userId);
+                          const myMember = child.getMember(cli.credentials.userId || "");
                           const theirMember = child.getMember(member.userId);
                           return (
                               myMember &&
