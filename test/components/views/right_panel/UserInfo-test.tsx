@@ -37,6 +37,8 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import MultiInviter from "../../../../src/utils/MultiInviter";
 import * as mockVerification from "../../../../src/verification";
+import Modal from "../../../../src/Modal";
+import { replaceRangeAndExpandSelection } from "../../../../src/editor/operations";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
@@ -326,6 +328,12 @@ describe("<UserOptionsSection />", () => {
         });
     };
 
+    const inviteSpy = jest.spyOn(MultiInviter.prototype, "invite");
+
+    beforeEach(() => {
+        inviteSpy.mockReset();
+    });
+
     it("always shows share user button", () => {
         renderComponent();
         expect(screen.getByRole("button", { name: /share link to user/i })).toBeInTheDocument();
@@ -428,7 +436,6 @@ describe("<UserOptionsSection />", () => {
 
     it("clicking the invite button will call MultiInviter.invite", async () => {
         // to save mocking, we will reject the call to .invite
-        const inviteSpy = jest.spyOn(MultiInviter.prototype, "invite");
         const mockErrorMessage = new Error("test error message");
         inviteSpy.mockRejectedValue(mockErrorMessage);
 
@@ -448,7 +455,6 @@ describe("<UserOptionsSection />", () => {
     });
 
     it("if calling .invite throws something strange, show default error message", async () => {
-        const inviteSpy = jest.spyOn(MultiInviter.prototype, "invite");
         inviteSpy.mockRejectedValue({ this: "could be anything" });
 
         // render the component and click the button
@@ -462,10 +468,30 @@ describe("<UserOptionsSection />", () => {
             expect(screen.getByText(/operation failed/i)).toBeInTheDocument();
         });
     });
+
+    it("calling .invite with a null roomId still calls .invite and shows default error message", async () => {
+        inviteSpy.mockRejectedValue({ this: "could be anything" });
+
+        // render the component and click the button
+        renderComponent({ canInvite: true, member: { ...member, roomId: null } });
+        const inviteButton = screen.getByRole("button", { name: /invite/i });
+        expect(inviteButton).toBeInTheDocument();
+        await userEvent.click(inviteButton);
+
+        expect(inviteSpy).toHaveBeenCalledTimes(1);
+
+        // check that the default test error message is displayed
+        await waitFor(() => {
+            expect(screen.getByText(/operation failed/i)).toBeInTheDocument();
+        });
+    });
 });
 
-describe("<RoomKickButton />", () => {
+describe.only("<RoomKickButton />", () => {
     const roomKickMember = new RoomMember(mockRoom.roomId, defaultUserId);
+    const memberWithInviteMembership = { ...roomKickMember, membership: "invite" };
+    const memberWithJoinMembership = { ...roomKickMember, membership: "join" };
+
     const defaultProps = { room: mockRoom, member: roomKickMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
 
     const renderComponent = (props = {}) => {
@@ -478,16 +504,13 @@ describe("<RoomKickButton />", () => {
         });
     };
 
-    it("returns nothing if member.membership is undefined", () => {
+    it("renders nothing if member.membership is undefined", () => {
         // .membership is undefined in our member by default
-        const { asFragment } = renderComponent();
-        expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
+        const { container } = renderComponent();
+        expect(container).toBeEmptyDOMElement();
     });
 
     it("renders something if member.membership is 'invite' or 'join'", () => {
-        const memberWithInviteMembership = { ...roomKickMember, membership: "invite" };
-        const memberWithJoinMembership = { ...roomKickMember, membership: "join" };
-
         let result = renderComponent({ member: memberWithInviteMembership });
         expect(result.container).not.toBeEmptyDOMElement();
 
@@ -495,6 +518,51 @@ describe("<RoomKickButton />", () => {
 
         result = renderComponent({ member: memberWithJoinMembership });
         expect(result.container).not.toBeEmptyDOMElement();
+    });
+
+    it("renders a kick button with the correct label", () => {
+        // test for room
+        renderComponent({ member: memberWithJoinMembership });
+        expect(screen.getByRole("button")).toBeInTheDocument();
+        expect(screen.getByText(/remove from room/i)).toBeInTheDocument();
+        cleanup();
+
+        renderComponent({ member: memberWithInviteMembership });
+        expect(screen.getByRole("button")).toBeInTheDocument();
+        expect(screen.getByText(/disinvite from room/i)).toBeInTheDocument();
+        cleanup();
+
+        // test for space
+        mockRoom.isSpaceRoom.mockReturnValue(true);
+        renderComponent({ member: memberWithJoinMembership });
+        expect(screen.getByRole("button")).toBeInTheDocument();
+        expect(screen.getByText(/remove from space/i)).toBeInTheDocument();
+        cleanup();
+
+        renderComponent({ member: memberWithInviteMembership });
+        expect(screen.getByRole("button")).toBeInTheDocument();
+        expect(screen.getByText(/disinvite from space/i)).toBeInTheDocument();
+        cleanup();
+        mockRoom.isSpaceRoom.mockReturnValue(false);
+    });
+
+    it.only("clicking the kick button calls Modal.createDialog with the correct arguments", async () => {
+        const createDialogSpy = jest.spyOn(Modal, "createDialog");
+        createDialogSpy.mockReturnValueOnce({ finished: Promise.resolve([]), close: jest.fn() });
+
+        renderComponent({ member: memberWithInviteMembership });
+        await userEvent.click(screen.getByRole("button"));
+
+        // check the calls, arguments and the presence of the spaceChildFilter callback
+        expect(createDialogSpy).toHaveBeenCalledTimes(1);
+        expect(createDialogSpy).toHaveBeenCalledWith(
+            expect.any(Function),
+            expect.objectContaining({ spaceChildFilter: expect.any(Function) }),
+            undefined,
+        );
+
+        // WIP - test the spaceChildFilter callback
+        // console.log(createDialogSpy.mock.calls[0][1].spaceChildFilter);
     });
 });
 
