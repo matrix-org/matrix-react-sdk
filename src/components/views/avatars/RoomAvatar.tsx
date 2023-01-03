@@ -118,7 +118,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
     };
 
-    private get roomIdName(): string {
+    private get roomIdName(): string | undefined {
         const room = this.props.room;
 
         if (room) {
@@ -132,7 +132,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
             }
         }
 
-        return this.props.room.roomId || this.props.oobData.roomId;
+        return this.props.room?.roomId || this.props.oobData?.roomId;
     }
 
     public render() {
