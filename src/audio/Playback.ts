@@ -45,7 +45,7 @@ export const DEFAULT_WAVEFORM = arraySeed(0, PLAYBACK_WAVEFORM_SAMPLES);
 
 function makePlaybackWaveform(input: number[]): number[] {
     // First, convert negative amplitudes to positive so we don't detect zero as "noisy".
-    const noiseWaveform = input.map(v => Math.abs(v));
+    const noiseWaveform = input.map((v) => Math.abs(v));
 
     // Then, we'll resample the waveform using a smoothing approach so we can keep the same rough shape.
     // We also rescale the waveform to be 0-1 so we end up with a clamped waveform to rely upon.
@@ -83,7 +83,7 @@ export class Playback extends EventEmitter implements IDestroyable, PlaybackInte
      * @param {number[]} seedWaveform Optional seed waveform to present until the proper waveform
      * can be calculated. Contains values between zero and one, inclusive.
      */
-    constructor(private buf: ArrayBuffer, seedWaveform = DEFAULT_WAVEFORM) {
+    public constructor(private buf: ArrayBuffer, seedWaveform = DEFAULT_WAVEFORM) {
         super();
         // Capture the file size early as reading the buffer will result in a 0-length buffer left behind
         this.fileSize = this.buf.byteLength;
@@ -174,7 +174,8 @@ export class Playback extends EventEmitter implements IDestroyable, PlaybackInte
         // Overall, the point of this is to avoid memory-related issues due to storing a massive
         // audio buffer in memory, as that can balloon to far greater than the input buffer's
         // byte length.
-        if (this.buf.byteLength > 5 * 1024 * 1024) { // 5mb
+        if (this.buf.byteLength > 5 * 1024 * 1024) {
+            // 5mb
             logger.log("Audio file too large: processing through <audio /> element");
             this.element = document.createElement("AUDIO") as HTMLAudioElement;
             const prom = new Promise((resolve, reject) => {
@@ -186,25 +187,33 @@ export class Playback extends EventEmitter implements IDestroyable, PlaybackInte
         } else {
             // Safari compat: promise API not supported on this function
             this.audioBuf = await new Promise((resolve, reject) => {
-                this.context.decodeAudioData(this.buf, b => resolve(b), async e => {
-                    try {
-                        // This error handler is largely for Safari as well, which doesn't support Opus/Ogg
-                        // very well.
-                        logger.error("Error decoding recording: ", e);
-                        logger.warn("Trying to re-encode to WAV instead...");
+                this.context.decodeAudioData(
+                    this.buf,
+                    (b) => resolve(b),
+                    async (e) => {
+                        try {
+                            // This error handler is largely for Safari as well, which doesn't support Opus/Ogg
+                            // very well.
+                            logger.error("Error decoding recording: ", e);
+                            logger.warn("Trying to re-encode to WAV instead...");
 
-                        const wav = await decodeOgg(this.buf);
+                            const wav = await decodeOgg(this.buf);
 
-                        // noinspection ES6MissingAwait - not needed when using callbacks
-                        this.context.decodeAudioData(wav, b => resolve(b), e => {
-                            logger.error("Still failed to decode recording: ", e);
+                            // noinspection ES6MissingAwait - not needed when using callbacks
+                            this.context.decodeAudioData(
+                                wav,
+                                (b) => resolve(b),
+                                (e) => {
+                                    logger.error("Still failed to decode recording: ", e);
+                                    reject(e);
+                                },
+                            );
+                        } catch (e) {
+                            logger.error("Caught decoding error:", e);
                             reject(e);
-                        });
-                    } catch (e) {
-                        logger.error("Caught decoding error:", e);
-                        reject(e);
-                    }
-                });
+                        }
+                    },
+                );
             });
 
             // Update the waveform to the real waveform once we have channel data to use. We don't

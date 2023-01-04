@@ -32,36 +32,41 @@ import { StickerEventPreview } from "./previews/StickerEventPreview";
 import { ReactionEventPreview } from "./previews/ReactionEventPreview";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { IPreview } from "./previews/IPreview";
+import { VoiceBroadcastInfoEventType } from "../../voice-broadcast";
+import { VoiceBroadcastPreview } from "./previews/VoiceBroadcastPreview";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which
 // the change happened.
 const ROOM_PREVIEW_CHANGED = "room_preview_changed";
 
-const PREVIEWS: Record<string, {
-    isState: boolean;
-    previewer: IPreview;
-}> = {
-    'm.room.message': {
+const PREVIEWS: Record<
+    string,
+    {
+        isState: boolean;
+        previewer: IPreview;
+    }
+> = {
+    "m.room.message": {
         isState: false,
         previewer: new MessageEventPreview(),
     },
-    'm.call.invite': {
+    "m.call.invite": {
         isState: false,
         previewer: new LegacyCallInviteEventPreview(),
     },
-    'm.call.answer': {
+    "m.call.answer": {
         isState: false,
         previewer: new LegacyCallAnswerEventPreview(),
     },
-    'm.call.hangup': {
+    "m.call.hangup": {
         isState: false,
         previewer: new LegacyCallHangupEvent(),
     },
-    'm.sticker': {
+    "m.sticker": {
         isState: false,
         previewer: new StickerEventPreview(),
     },
-    'm.reaction': {
+    "m.reaction": {
         isState: false,
         previewer: new ReactionEventPreview(),
     },
@@ -72,6 +77,10 @@ const PREVIEWS: Record<string, {
     [M_POLL_START.altName]: {
         isState: false,
         previewer: new PollStartEventPreview(),
+    },
+    [VoiceBroadcastInfoEventType]: {
+        isState: true,
+        previewer: new VoiceBroadcastPreview(),
     },
 };
 
@@ -94,7 +103,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
     })();
 
     // null indicates the preview is empty / irrelevant
-    private previews = new Map<string, Map<TagID|TAG_ANY, string|null>>();
+    private previews = new Map<string, Map<TagID | TAG_ANY, string | null>>();
 
     private constructor() {
         super(defaultDispatcher, {});
@@ -168,7 +177,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
             changed = changed || anyPreview !== map.get(TAG_ANY);
             map.set(TAG_ANY, anyPreview);
 
-            const tagsToGenerate = Array.from(map.keys()).filter(t => t !== TAG_ANY); // we did the any tag above
+            const tagsToGenerate = Array.from(map.keys()).filter((t) => t !== TAG_ANY); // we did the any tag above
             for (const genTagId of tagsToGenerate) {
                 const realTagId: TagID = genTagId === TAG_ANY ? null : genTagId;
                 const preview = previewDef.previewer.getTextFor(event, realTagId);
@@ -191,7 +200,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
         }
 
         // At this point, we didn't generate a preview so clear it
-        this.previews.set(room.roomId, new Map<TagID|TAG_ANY, string|null>());
+        this.previews.set(room.roomId, new Map<TagID | TAG_ANY, string | null>());
         this.emit(UPDATE_EVENT, this);
         this.emit(MessagePreviewStore.getPreviewChangedEventName(room), room);
     }
@@ -199,7 +208,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
     protected async onAction(payload: ActionPayload) {
         if (!this.matrixClient) return;
 
-        if (payload.action === 'MatrixActions.Room.timeline' || payload.action === 'MatrixActions.Event.decrypted') {
+        if (payload.action === "MatrixActions.Room.timeline" || payload.action === "MatrixActions.Event.decrypted") {
             const event = payload.event; // TODO: Type out the dispatcher
             const isHistoricalEvent = payload.hasOwnProperty("isLiveEvent") && !payload.isLiveEvent;
             if (!this.previews.has(event.getRoomId()) || isHistoricalEvent) return; // not important

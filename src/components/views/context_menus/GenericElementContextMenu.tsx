@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 interface IProps {
     element: React.ReactNode;
@@ -29,7 +29,7 @@ interface IProps {
  * menu.
  */
 export default class GenericElementContextMenu extends React.Component<IProps> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -48,6 +48,6 @@ export default class GenericElementContextMenu extends React.Component<IProps> {
     };
 
     public render(): JSX.Element {
-        return <div>{ this.props.element }</div>;
+        return <div>{this.props.element}</div>;
     }
 }

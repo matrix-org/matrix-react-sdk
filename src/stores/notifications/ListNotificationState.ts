@@ -27,11 +27,11 @@ export class ListNotificationState extends NotificationState {
     private rooms: Room[] = [];
     private states: { [roomId: string]: RoomNotificationState } = {};
 
-    constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
+    public constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
         super();
     }
 
-    public get symbol(): string {
+    public get symbol(): string | null {
         return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
@@ -98,4 +98,3 @@ export class ListNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-

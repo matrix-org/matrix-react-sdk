@@ -15,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
-import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
+import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 
 import EmojiPicker from "./EmojiPicker";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
-import { Action } from '../../../dispatcher/actions';
+import { Action } from "../../../dispatcher/actions";
 import RoomContext from "../../../contexts/RoomContext";
-import { FocusComposerPayload } from '../../../dispatcher/payloads/FocusComposerPayload';
+import { FocusComposerPayload } from "../../../dispatcher/payloads/FocusComposerPayload";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -38,10 +38,10 @@ interface IState {
 }
 
 class ReactionPicker extends React.Component<IProps, IState> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
+    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
 
         this.state = {
@@ -50,7 +50,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
         this.addListeners();
     }
 
-    componentDidUpdate(prevProps) {
+    public componentDidUpdate(prevProps) {
         if (prevProps.reactions !== this.props.reactions) {
             this.addListeners();
             this.onReactionsChange();
@@ -65,7 +65,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
         }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         if (this.props.reactions) {
             this.props.reactions.removeListener(RelationsEvent.Add, this.onReactionsChange);
             this.props.reactions.removeListener(RelationsEvent.Remove, this.onReactionsChange);
@@ -79,9 +79,11 @@ class ReactionPicker extends React.Component<IProps, IState> {
         }
         const userId = MatrixClientPeg.get().getUserId();
         const myAnnotations = this.props.reactions.getAnnotationsBySender()[userId] || [];
-        return Object.fromEntries([...myAnnotations]
-            .filter(event => !event.isRedacted())
-            .map(event => [event.getRelation().key, event.getId()]));
+        return Object.fromEntries(
+            [...myAnnotations]
+                .filter((event) => !event.isRedacted())
+                .map((event) => [event.getRelation().key, event.getId()]),
+        );
     }
 
     private onReactionsChange = () => {
@@ -107,9 +109,9 @@ class ReactionPicker extends React.Component<IProps, IState> {
         } else {
             MatrixClientPeg.get().sendEvent(this.props.mxEvent.getRoomId(), EventType.Reaction, {
                 "m.relates_to": {
-                    "rel_type": RelationType.Annotation,
-                    "event_id": this.props.mxEvent.getId(),
-                    "key": reaction,
+                    rel_type: RelationType.Annotation,
+                    event_id: this.props.mxEvent.getId(),
+                    key: reaction,
                 },
             });
             dis.dispatch({ action: "message_sent" });
@@ -128,13 +130,15 @@ class ReactionPicker extends React.Component<IProps, IState> {
         return true;
     };
 
-    render() {
-        return <EmojiPicker
-            onChoose={this.onChoose}
-            isEmojiDisabled={this.isEmojiDisabled}
-            selectedEmojis={this.state.selectedEmojis}
-            showQuickReactions={true}
-        />;
+    public render() {
+        return (
+            <EmojiPicker
+                onChoose={this.onChoose}
+                isEmojiDisabled={this.isEmojiDisabled}
+                selectedEmojis={this.state.selectedEmojis}
+                showQuickReactions={true}
+            />
+        );
     }
 }
 
