@@ -57,7 +57,7 @@ interface IProps {
     voiceBroadcastRecording: Optional<VoiceBroadcastRecording>;
     voiceBroadcastPreRecording: Optional<VoiceBroadcastPreRecording>;
     voiceBroadcastPlayback: Optional<VoiceBroadcastPlayback>;
-    movePersistedElement: MutableRefObject<() => void>;
+    movePersistedElement: MutableRefObject<(() => void) | undefined>;
 }
 
 interface IState {

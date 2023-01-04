@@ -41,7 +41,7 @@ interface Props {
     room: Room;
     viewingRoom: boolean;
     onStartMoving: (e: React.MouseEvent<Element, MouseEvent>) => void;
-    movePersistedElement: MutableRefObject<() => void>;
+    movePersistedElement: MutableRefObject<(() => void) | undefined>;
 }
 
 /**
