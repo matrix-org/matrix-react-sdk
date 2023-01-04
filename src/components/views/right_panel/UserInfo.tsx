@@ -1423,7 +1423,7 @@ const BasicUserInfo: React.FC<{
 
 export type Member = User | RoomMember;
 
-const UserInfoHeader: React.FC<{
+export const UserInfoHeader: React.FC<{
     member: Member;
     e2eStatus?: E2EStatus;
     roomId?: string;
@@ -1563,11 +1563,11 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     switch (phase) {
         case RightPanelPhases.RoomMemberInfo:
         case RightPanelPhases.SpaceMemberInfo:
-            content = room && devices && (
+            content = (
                 <BasicUserInfo
-                    room={room}
+                    room={room as Room}
                     member={member as User}
-                    devices={devices}
+                    devices={devices as IDevice[]}
                     isRoomEncrypted={Boolean(isRoomEncrypted)}
                 />
             );
