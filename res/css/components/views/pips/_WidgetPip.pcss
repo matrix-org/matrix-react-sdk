@@ -30,6 +30,11 @@ limitations under the License.
     height: 60px;
     width: 100%;
     box-sizing: border-box;
+    transition: opacity ease 0.15s;
+
+    .mx_WidgetPip:not(:hover) > & {
+        opacity: 0;
+    }
 }
 
 .mx_WidgetPip_header {
