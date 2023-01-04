@@ -46,6 +46,8 @@ limitations under the License.
         padding: $spacing-12;
         color: $call-primary-content;
         background-color: $call-background;
+
+        --facepile-background: $call-background;
         border-radius: 8px;
 
         display: flex;
@@ -57,10 +59,6 @@ limitations under the License.
         .mx_FacePile {
             width: fit-content;
             margin: $spacing-8 auto 0;
-
-            .mx_FacePile_faces .mx_BaseAvatar_image {
-                border-color: $call-background;
-            }
         }
 
         .mx_CallView_preview {
@@ -137,7 +135,8 @@ limitations under the License.
                         }
 
                         &.mx_CallView_deviceButton_audio::before {
-                            mask-image: url("$(res)/img/voip/call-view/mic-on.svg");
+                            mask-image: url("$(res)/img/element-icons/mic.svg");
+                            mask-size: 14px;
                         }
 
                         &.mx_CallView_deviceButton_video::before {
@@ -181,7 +180,8 @@ limitations under the License.
 
                         .mx_CallView_deviceButton {
                             &.mx_CallView_deviceButton_audio::before {
-                                mask-image: url("$(res)/img/voip/call-view/mic-off.svg");
+                                mask-image: url("$(res)/img/element-icons/Mic-off.svg");
+                                mask-size: 14px;
                             }
 
                             &.mx_CallView_deviceButton_video::before {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from "react";
+import React, { MutableRefObject, useContext, useRef } from "react";
 import { CallEvent, CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
@@ -54,9 +54,10 @@ const SHOW_CALL_IN_STATES = [
 ];
 
 interface IProps {
-    voiceBroadcastRecording?: Optional<VoiceBroadcastRecording>;
-    voiceBroadcastPreRecording?: Optional<VoiceBroadcastPreRecording>;
-    voiceBroadcastPlayback?: Optional<VoiceBroadcastPlayback>;
+    voiceBroadcastRecording: Optional<VoiceBroadcastRecording>;
+    voiceBroadcastPreRecording: Optional<VoiceBroadcastPreRecording>;
+    voiceBroadcastPlayback: Optional<VoiceBroadcastPlayback>;
+    movePersistedElement: MutableRefObject<() => void>;
 }
 
 interface IState {
@@ -162,6 +163,8 @@ class PipContainerInner extends React.Component<IProps, IState> {
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Dock, this.onWidgetDockChanges);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Undock, this.onWidgetDockChanges);
     }
+
+    private onMove = () => this.props.movePersistedElement.current?.();
 
     private onRoomViewStoreUpdate = () => {
         const newRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
@@ -292,24 +295,20 @@ class PipContainerInner extends React.Component<IProps, IState> {
 
     public render() {
         const pipMode = true;
-        let pipContent: CreatePipChildren | null = null;
-
-        if (this.props.voiceBroadcastPlayback) {
-            pipContent = this.createVoiceBroadcastPlaybackPipContent(this.props.voiceBroadcastPlayback);
-        }
-
-        if (this.props.voiceBroadcastPreRecording) {
-            pipContent = this.createVoiceBroadcastPreRecordingPipContent(this.props.voiceBroadcastPreRecording);
-        }
+        let pipContent: Array<CreatePipChildren> = [];
 
         if (this.props.voiceBroadcastRecording) {
-            pipContent = this.createVoiceBroadcastRecordingPipContent(this.props.voiceBroadcastRecording);
+            pipContent = [this.createVoiceBroadcastRecordingPipContent(this.props.voiceBroadcastRecording)];
+        } else if (this.props.voiceBroadcastPreRecording) {
+            pipContent = [this.createVoiceBroadcastPreRecordingPipContent(this.props.voiceBroadcastPreRecording)];
+        } else if (this.props.voiceBroadcastPlayback) {
+            pipContent = [this.createVoiceBroadcastPlaybackPipContent(this.props.voiceBroadcastPlayback)];
         }
 
         if (this.state.primaryCall) {
             // get a ref to call inside the current scope
             const call = this.state.primaryCall;
-            pipContent = ({ onStartMoving, onResize }) => (
+            pipContent.push(({ onStartMoving, onResize }) => (
                 <LegacyCallView
                     onMouseDownOnHeader={onStartMoving}
                     call={call}
@@ -317,28 +316,31 @@ class PipContainerInner extends React.Component<IProps, IState> {
                     pipMode={pipMode}
                     onResize={onResize}
                 />
-            );
+            ));
         }
 
-        if (!!pipContent) {
+        if (this.state.showWidgetInPip) {
+            pipContent.push(({ onStartMoving }) => (
+                <WidgetPip
+                    widgetId={this.state.persistentWidgetId}
+                    room={MatrixClientPeg.get().getRoom(this.state.persistentRoomId)!}
+                    viewingRoom={this.state.viewedRoomId === this.state.persistentRoomId}
+                    onStartMoving={onStartMoving}
+                    movePersistedElement={this.props.movePersistedElement}
+                />
+            ));
+        }
+
+        if (pipContent.length) {
             return (
                 <PictureInPictureDragger
                     className="mx_LegacyCallPreview"
                     draggable={pipMode}
                     onDoubleClick={this.onDoubleClick}
+                    onMove={this.onMove}
                 >
                     {pipContent}
                 </PictureInPictureDragger>
-            );
-        }
-
-        if (this.state.showWidgetInPip) {
-            return (
-                <WidgetPip
-                    widgetId={this.state.persistentWidgetId}
-                    room={MatrixClientPeg.get().getRoom(this.state.persistentRoomId)!}
-                    viewingRoom={this.state.viewedRoomId === this.state.persistentRoomId}
-                />
             );
         }
 
@@ -346,7 +348,7 @@ class PipContainerInner extends React.Component<IProps, IState> {
     }
 }
 
-export const PipContainer: React.FC<IProps> = (props) => {
+export const PipContainer: React.FC = () => {
     const sdkContext = useContext(SDKContext);
     const voiceBroadcastPreRecordingStore = sdkContext.voiceBroadcastPreRecordingStore;
     const { currentVoiceBroadcastPreRecording } = useCurrentVoiceBroadcastPreRecording(voiceBroadcastPreRecordingStore);
@@ -357,12 +359,14 @@ export const PipContainer: React.FC<IProps> = (props) => {
     const voiceBroadcastPlaybacksStore = sdkContext.voiceBroadcastPlaybacksStore;
     const { currentVoiceBroadcastPlayback } = useCurrentVoiceBroadcastPlayback(voiceBroadcastPlaybacksStore);
 
+    const movePersistedElement = useRef<() => void>();
+
     return (
         <PipContainerInner
             voiceBroadcastPlayback={currentVoiceBroadcastPlayback}
             voiceBroadcastPreRecording={currentVoiceBroadcastPreRecording}
             voiceBroadcastRecording={currentVoiceBroadcastRecording}
-            {...props}
+            movePersistedElement={movePersistedElement}
         />
     );
 };

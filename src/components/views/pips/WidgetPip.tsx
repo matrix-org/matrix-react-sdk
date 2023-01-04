@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, useCallback, useMemo, useRef } from "react";
+import React, { FC, MutableRefObject, useCallback, useMemo } from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 
 import PersistentApp from "../elements/PersistentApp";
@@ -27,7 +27,6 @@ import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayo
 import { useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleButton, RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
-import PictureInPictureDragger, { CreatePipChildren } from "../../structures/PictureInPictureDragger";
 import { Icon as BackIcon } from "../../../../res/img/element-icons/back.svg";
 import { Icon as HangupIcon } from "../../../../res/img/element-icons/call/hangup.svg";
 import { _t } from "../../../languageHandler";
@@ -41,12 +40,14 @@ interface Props {
     widgetId: string;
     room: Room;
     viewingRoom: boolean;
+    onStartMoving: (e: React.MouseEvent<Element, MouseEvent>) => void;
+    movePersistedElement: MutableRefObject<() => void>;
 }
 
 /**
  * A picture-in-picture view for a widget.
  */
-export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom }) => {
+export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMoving, movePersistedElement }) => {
     const widget = useMemo(
         () => WidgetStore.instance.getApps(room.roomId).find((app) => app.id === widgetId)!,
         [room, widgetId],
@@ -70,7 +71,7 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom }) => {
                     action: Action.ViewRoom,
                     room_id: room.roomId,
                     view_call: true,
-                    metricsTrigger: undefined,
+                    metricsTrigger: "WebFloatingCallWindow",
                 });
             } else if (viewingRoom) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
@@ -78,15 +79,12 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom }) => {
                 defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
-                    metricsTrigger: undefined,
+                    metricsTrigger: "WebFloatingCallWindow",
                 });
             }
         },
         [room, call, widget, viewingRoom],
     );
-
-    const movePersistedElement = useRef<() => void>();
-    const onMove = useCallback(() => movePersistedElement.current?.(), [movePersistedElement]);
 
     const onLeaveClick = useCallback(
         (ev) => {
@@ -106,45 +104,36 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom }) => {
         [call, widget],
     );
 
-    const content: CreatePipChildren = useCallback(
-        ({ onStartMoving }) => (
-            <div className="mx_WidgetPip_content" onMouseDown={onStartMoving} onClick={onBackClick}>
-                <Toolbar className="mx_WidgetPip_header">
-                    <RovingAccessibleButton
-                        onClick={onBackClick}
-                        className="mx_WidgetPip_backButton"
-                        aria-label={_t("Back")}
-                    >
-                        <BackIcon className="mx_Icon mx_Icon_16" />
-                        {roomName}
-                    </RovingAccessibleButton>
-                </Toolbar>
-                <PersistentApp
-                    persistentWidgetId={widgetId}
-                    persistentRoomId={room.roomId}
-                    pointerEvents="none"
-                    movePersistedElement={movePersistedElement}
-                />
-                {(call !== null || WidgetType.JITSI.matches(widget.type)) && (
-                    <Toolbar className="mx_WidgetPip_footer">
-                        <RovingAccessibleTooltipButton
-                            onClick={onLeaveClick}
-                            tooltip={_t("Leave")}
-                            aria-label={_t("Leave")}
-                            alignment={Alignment.Top}
-                        >
-                            <HangupIcon className="mx_Icon mx_Icon_24" />
-                        </RovingAccessibleTooltipButton>
-                    </Toolbar>
-                )}
-            </div>
-        ),
-        [onBackClick, roomName, widgetId, room, movePersistedElement, call, onLeaveClick, widget],
-    );
-
     return (
-        <PictureInPictureDragger className="mx_WidgetPip" draggable={true} onMove={onMove}>
-            {content}
-        </PictureInPictureDragger>
+        <div className="mx_WidgetPip" onMouseDown={onStartMoving} onClick={onBackClick}>
+            <Toolbar className="mx_WidgetPip_header">
+                <RovingAccessibleButton
+                    onClick={onBackClick}
+                    className="mx_WidgetPip_backButton"
+                    aria-label={_t("Back")}
+                >
+                    <BackIcon className="mx_Icon mx_Icon_16" />
+                    {roomName}
+                </RovingAccessibleButton>
+            </Toolbar>
+            <PersistentApp
+                persistentWidgetId={widgetId}
+                persistentRoomId={room.roomId}
+                pointerEvents="none"
+                movePersistedElement={movePersistedElement}
+            />
+            {(call !== null || WidgetType.JITSI.matches(widget.type)) && (
+                <Toolbar className="mx_WidgetPip_footer">
+                    <RovingAccessibleTooltipButton
+                        onClick={onLeaveClick}
+                        tooltip={_t("Leave")}
+                        aria-label={_t("Leave")}
+                        alignment={Alignment.Top}
+                    >
+                        <HangupIcon className="mx_Icon mx_Icon_24" />
+                    </RovingAccessibleTooltipButton>
+                </Toolbar>
+            )}
+        </div>
     );
 };

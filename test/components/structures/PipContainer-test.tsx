@@ -37,6 +37,7 @@ import {
     wrapInSdkContext,
     mkRoomCreateEvent,
     mockPlatformPeg,
+    flushPromises,
 } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { CallStore } from "../../../src/stores/CallStore";
@@ -79,6 +80,12 @@ describe("PipContainer", () => {
     let voiceBroadcastPreRecordingStore: VoiceBroadcastPreRecordingStore;
     let voiceBroadcastPlaybacksStore: VoiceBroadcastPlaybacksStore;
 
+    const actFlushPromises = async () => {
+        await act(async () => {
+            await flushPromises();
+        });
+    };
+
     beforeEach(async () => {
         user = userEvent.setup();
 
@@ -118,7 +125,7 @@ describe("PipContainer", () => {
         SdkContextClass.instance = sdkContext;
         voiceBroadcastRecordingsStore = new VoiceBroadcastRecordingsStore();
         voiceBroadcastPreRecordingStore = new VoiceBroadcastPreRecordingStore();
-        voiceBroadcastPlaybacksStore = new VoiceBroadcastPlaybacksStore();
+        voiceBroadcastPlaybacksStore = new VoiceBroadcastPlaybacksStore(voiceBroadcastRecordingsStore);
         sdkContext.client = client;
         sdkContext._VoiceBroadcastRecordingsStore = voiceBroadcastRecordingsStore;
         sdkContext._VoiceBroadcastPreRecordingStore = voiceBroadcastPreRecordingStore;
@@ -326,23 +333,34 @@ describe("PipContainer", () => {
     });
 
     describe("when there is a voice broadcast recording and pre-recording", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             setUpVoiceBroadcastPreRecording();
             setUpVoiceBroadcastRecording();
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast recording PiP", () => {
-            // check for the „Live“ badge
+            // check for the „Live“ badge to be present
             expect(screen.queryByText("Live")).toBeInTheDocument();
+        });
+
+        it("and a call it should show both, the call and the recording", async () => {
+            await withCall(async () => {
+                // Broadcast: Check for the „Live“ badge to be present
+                expect(screen.queryByText("Live")).toBeInTheDocument();
+                // Call: Check for the „Fill screen“ button to be present
+                expect(screen.queryByLabelText("Fill screen")).toBeInTheDocument();
+            });
         });
     });
 
     describe("when there is a voice broadcast playback and pre-recording", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             mkVoiceBroadcast(room);
             setUpVoiceBroadcastPreRecording();
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast pre-recording PiP", () => {
@@ -352,9 +370,10 @@ describe("PipContainer", () => {
     });
 
     describe("when there is a voice broadcast pre-recording", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             setUpVoiceBroadcastPreRecording();
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast pre-recording PiP", () => {
@@ -368,6 +387,10 @@ describe("PipContainer", () => {
             setUpRoomViewStore();
             viewRoom(room.roomId);
             mkVoiceBroadcast(room);
+            await actFlushPromises();
+
+            expect(voiceBroadcastPlaybacksStore.getCurrent()).toBeTruthy();
+
             await voiceBroadcastPlaybacksStore.getCurrent()?.start();
             viewRoom(room2.roomId);
             renderPip();
@@ -384,11 +407,12 @@ describe("PipContainer", () => {
     describe("when viewing a room with a live voice broadcast", () => {
         let startEvent!: MatrixEvent;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             setUpRoomViewStore();
             viewRoom(room.roomId);
             startEvent = mkVoiceBroadcast(room);
             renderPip();
+            await actFlushPromises();
         });
 
         it("should render the voice broadcast playback pip", () => {
@@ -397,15 +421,16 @@ describe("PipContainer", () => {
         });
 
         describe("and the broadcast stops", () => {
-            beforeEach(() => {
-                act(() => {
-                    const stopEvent = mkVoiceBroadcastInfoStateEvent(
-                        room.roomId,
-                        VoiceBroadcastInfoState.Stopped,
-                        alice.userId,
-                        client.getDeviceId() || "",
-                        startEvent,
-                    );
+            beforeEach(async () => {
+                const stopEvent = mkVoiceBroadcastInfoStateEvent(
+                    room.roomId,
+                    VoiceBroadcastInfoState.Stopped,
+                    alice.userId,
+                    client.getDeviceId() || "",
+                    startEvent,
+                );
+
+                await act(async () => {
                     room.currentState.setStateEvents([stopEvent]);
                     defaultDispatcher.dispatch<IRoomStateEventsActionPayload>(
                         {
@@ -416,6 +441,7 @@ describe("PipContainer", () => {
                         },
                         true,
                     );
+                    await flushPromises();
                 });
             });
 
@@ -426,9 +452,10 @@ describe("PipContainer", () => {
         });
 
         describe("and leaving the room", () => {
-            beforeEach(() => {
-                act(() => {
+            beforeEach(async () => {
+                await act(async () => {
                     viewRoom(room2.roomId);
+                    await flushPromises();
                 });
             });
 

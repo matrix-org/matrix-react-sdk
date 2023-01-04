@@ -47,7 +47,7 @@ interface IChildrenOptions {
 
 interface IProps {
     className?: string;
-    children: CreatePipChildren;
+    children: Array<CreatePipChildren>;
     draggable: boolean;
     onDoubleClick?: () => void;
     onMove?: () => void;
@@ -91,6 +91,10 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         document.removeEventListener("mousemove", this.onMoving);
         document.removeEventListener("mouseup", this.onEndMoving);
         UIStore.instance.off(UI_EVENTS.Resize, this.onResize);
+    }
+
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
+        if (prevProps.children !== this.props.children) this.snap(true);
     }
 
     private animationCallback = () => {
@@ -233,6 +237,13 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
             transform: `translateX(${this.translationX}px) translateY(${this.translationY}px)`,
         };
 
+        const children = this.props.children.map((create: CreatePipChildren) => {
+            return create({
+                onStartMoving: this.onStartMoving,
+                onResize: this.onResize,
+            });
+        });
+
         return (
             <aside
                 className={this.props.className}
@@ -241,10 +252,7 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
                 onClickCapture={this.onClickCapture}
                 onDoubleClick={this.props.onDoubleClick}
             >
-                {this.props.children({
-                    onStartMoving: this.onStartMoving,
-                    onResize: this.onResize,
-                })}
+                {children}
             </aside>
         );
     }
