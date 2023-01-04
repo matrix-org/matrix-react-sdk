@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { EventType, MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { act, render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { createTestClient, mkEvent, mkStubRoom, mockPlatformPeg, stubClient } from "../../../test-utils";
+import { createTestClient, flushPromises, mkEvent, mkStubRoom, mockPlatformPeg, stubClient } from "../../../test-utils";
 import MessageComposer from "../../../../src/components/views/rooms/MessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -40,6 +40,7 @@ import { Action } from "../../../../src/dispatcher/actions";
 import { VoiceBroadcastInfoState, VoiceBroadcastRecording } from "../../../../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";
+import Modal from "../../../../src/Modal";
 
 jest.mock("../../../../src/components/views/rooms/wysiwyg_composer", () => ({
     SendWysiwygComposer: jest.fn().mockImplementation(() => <div data-testid="wysiwyg-composer" />),
@@ -59,6 +60,33 @@ const startVoiceMessage = async (renderResult: RenderResult): Promise<void> => {
     });
 };
 
+const setCurrentBroadcastRecording = (room: Room, state: VoiceBroadcastInfoState): void => {
+    const recording = new VoiceBroadcastRecording(
+        mkVoiceBroadcastInfoStateEvent(room.roomId, state, "@user:example.com", "ABC123"),
+        MatrixClientPeg.get(),
+        state,
+    );
+    SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
+};
+
+const waitForModal = async (): Promise<void> => {
+    await flushPromises();
+    await flushPromises();
+};
+
+const shouldClearModal = async (): Promise<void> => {
+    afterEach(async () => {
+        Modal.closeCurrentModal("force");
+        await waitForModal();
+    });
+};
+
+const expectVoiceMessageRecordingTriggered = (renderResult: RenderResult): void => {
+    // Checking for the voice message dialog text, if no mic can be found.
+    // By this we know at least that starting a voice message was triggered.
+    expect(renderResult.getByText("No microphone found")).toBeInTheDocument();
+};
+
 describe("MessageComposer", () => {
     stubClient();
     const cli = createTestClient();
@@ -69,6 +97,8 @@ describe("MessageComposer", () => {
 
     afterEach(() => {
         jest.useRealTimers();
+
+        SdkContextClass.instance.voiceBroadcastRecordingsStore.clearCurrent();
 
         // restore settings
         act(() => {
@@ -378,27 +408,54 @@ describe("MessageComposer", () => {
             });
         });
 
-        describe("when recording a voice broadcast and trying to start a voice message", () => {
+        describe("when clicking start a voice message", () => {
             let renderResult: RenderResult;
 
             beforeEach(async () => {
-                const recording = new VoiceBroadcastRecording(
-                    mkVoiceBroadcastInfoStateEvent(
-                        room.roomId,
-                        VoiceBroadcastInfoState.Started,
-                        "@user:example.com",
-                        "ABC123",
-                    ),
-                    MatrixClientPeg.get(),
-                );
-                SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
                 renderResult = wrapAndRender({ room }).renderResult;
                 await startVoiceMessage(renderResult);
             });
 
-            it("should not start a voice message and display an info dialog", async () => {
+            shouldClearModal();
+
+            it("should try to start a voice message", () => {
+                expectVoiceMessageRecordingTriggered(renderResult);
+            });
+        });
+
+        describe("when recording a voice broadcast and trying to start a voice message", () => {
+            let renderResult: RenderResult;
+
+            beforeEach(async () => {
+                setCurrentBroadcastRecording(room, VoiceBroadcastInfoState.Started);
+                renderResult = wrapAndRender({ room }).renderResult;
+                await startVoiceMessage(renderResult);
+                await waitForModal();
+            });
+
+            shouldClearModal();
+
+            it("should not start a voice message and display the info dialog", async () => {
                 expect(renderResult.queryByLabelText("Stop recording")).not.toBeInTheDocument();
-                expect(await renderResult.findByText("Can't start voice message")).toBeInTheDocument();
+                expect(renderResult.getByText("Can't start voice message")).toBeInTheDocument();
+            });
+        });
+
+        describe("when there is a stopped voice broadcast recording and trying to start a voice message", () => {
+            let renderResult: RenderResult;
+
+            beforeEach(async () => {
+                setCurrentBroadcastRecording(room, VoiceBroadcastInfoState.Stopped);
+                renderResult = wrapAndRender({ room }).renderResult;
+                await startVoiceMessage(renderResult);
+                await waitForModal();
+            });
+
+            shouldClearModal();
+
+            it("should try to start a voice message and should not display the info dialog", async () => {
+                expect(renderResult.queryByText("Can't start voice message")).not.toBeInTheDocument();
+                expectVoiceMessageRecordingTriggered(renderResult);
             });
         });
     });
