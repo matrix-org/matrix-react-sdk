@@ -125,6 +125,7 @@ describe("<UserInfo />", () => {
 
     const defaultProps = {
         user: defaultUser,
+        room: mockRoom,
         // idk what is wrong with this type
         phase: RightPanelPhases.RoomMemberInfo as RightPanelPhases.RoomMemberInfo,
         onClose: jest.fn(),
@@ -141,12 +142,12 @@ describe("<UserInfo />", () => {
     };
 
     it("closes on close button click", async () => {
-        const onClose = jest.fn();
-        renderComponent({ onClose });
+        renderComponent();
+        screen.debug();
 
         await userEvent.click(screen.getByTestId("base-card-close-button"));
 
-        expect(onClose).toHaveBeenCalled();
+        expect(defaultProps.onClose).toHaveBeenCalled();
     });
 
     describe("without a room", () => {
@@ -216,12 +217,11 @@ describe("<UserInfo />", () => {
     });
 });
 
-describe.only("<UserInfoHeader />", () => {
+describe("<UserInfoHeader />", () => {
     const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
 
     const defaultProps = {
         member: defaultMember,
-        // e2eStatus: E2EStatus.Normal,
         roomId: mockRoom.roomId,
     };
 
@@ -686,16 +686,15 @@ describe("<RoomKickButton />", () => {
         const callback = createDialogSpy.mock.lastCall[1].spaceChildFilter;
 
         // make dummy values for myMember and theirMember, then we will test
-        // falsy my member vs their member followed by
-        // truthy my member vs their member
-        const mockFalsyMyMember = null;
+        // null vs their member followed by
+        // my member vs their member
         const mockMyMember = { powerLevel: 1 };
         const mockTheirMember = { membership: "invite", powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
                 .fn()
-                .mockReturnValueOnce(mockFalsyMyMember)
+                .mockReturnValueOnce(null)
                 .mockReturnValueOnce(mockTheirMember)
                 .mockReturnValueOnce(mockMyMember)
                 .mockReturnValueOnce(mockTheirMember),
@@ -771,16 +770,15 @@ describe("<BanToggleButton />", () => {
         const callback = createDialogSpy.mock.lastCall[1].spaceChildFilter;
 
         // make dummy values for myMember and theirMember, then we will test
-        // falsy my member vs their member followed by
+        // null vs their member followed by
         // truthy my member vs their member
-        const mockFalsyMyMember = null;
         const mockMyMember = { powerLevel: 1 };
         const mockTheirMember = { membership: "is not ban", powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
                 .fn()
-                .mockReturnValueOnce(mockFalsyMyMember)
+                .mockReturnValueOnce(null)
                 .mockReturnValueOnce(mockTheirMember)
                 .mockReturnValueOnce(mockMyMember)
                 .mockReturnValueOnce(mockTheirMember),
@@ -810,16 +808,15 @@ describe("<BanToggleButton />", () => {
         const callback = createDialogSpy.mock.lastCall[1].spaceChildFilter;
 
         // make dummy values for myMember and theirMember, then we will test
-        // falsy my member vs their member followed by
-        // truthy my member vs their member
-        const mockFalsyMyMember = null;
+        // null vs their member followed by
+        // my member vs their member
         const mockMyMember = { powerLevel: 1 };
         const mockTheirMember = { membership: "ban", powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
                 .fn()
-                .mockReturnValueOnce(mockFalsyMyMember)
+                .mockReturnValueOnce(null)
                 .mockReturnValueOnce(mockTheirMember)
                 .mockReturnValueOnce(mockMyMember)
                 .mockReturnValueOnce(mockTheirMember),
