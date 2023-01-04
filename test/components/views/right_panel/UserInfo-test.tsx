@@ -43,7 +43,6 @@ import MultiInviter from "../../../../src/utils/MultiInviter";
 import * as mockVerification from "../../../../src/verification";
 import Modal from "../../../../src/Modal";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
-import * as mockUserIdentifier from "../../../../src/customisations/UserIdentifier";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
