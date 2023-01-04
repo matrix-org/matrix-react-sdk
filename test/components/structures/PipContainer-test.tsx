@@ -248,6 +248,7 @@ describe("PipContainer", () => {
                 action: Action.ViewRoom,
                 room_id: room.roomId,
                 view_call: true,
+                metricsTrigger: expect.any(String),
             });
             defaultDispatcher.unregister(dispatcherRef);
 
@@ -313,6 +314,7 @@ describe("PipContainer", () => {
             expect(dispatcherSpy).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
+                metricsTrigger: expect.any(String),
             });
             defaultDispatcher.unregister(dispatcherRef);
 
@@ -349,8 +351,8 @@ describe("PipContainer", () => {
             await withCall(async () => {
                 // Broadcast: Check for the „Live“ badge to be present
                 expect(screen.queryByText("Live")).toBeInTheDocument();
-                // Call: Check for the „Fill screen“ button to be present
-                expect(screen.queryByLabelText("Fill screen")).toBeInTheDocument();
+                // Call: Check for the „Leave“ button to be present
+                screen.getByRole("button", { name: "Leave" });
             });
         });
     });
