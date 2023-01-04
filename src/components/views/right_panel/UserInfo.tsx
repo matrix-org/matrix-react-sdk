@@ -1059,7 +1059,7 @@ export const PowerLevelEditor: React.FC<{
             if (!powerLevelEvent) return;
 
             const myUserId = cli.getUserId();
-            const myPower = myUserId && powerLevelEvent.getContent().users[myUserId];
+            const myPower = powerLevelEvent.getContent().users[myUserId || ""];
             if (myPower && parseInt(myPower) <= powerLevel && myUserId !== target) {
                 const { finished } = Modal.createDialog(QuestionDialog, {
                     title: _t("Warning!"),
@@ -1459,7 +1459,7 @@ export const UserInfoHeader: React.FC<{
                         resizeMethod="scale"
                         fallbackUserId={member.userId}
                         onClick={onMemberAvatarClick}
-                        {...(avatarUrl ? { urls: [avatarUrl] } : {})}
+                        urls={avatarUrl ? [avatarUrl] : undefined}
                     />
                 </div>
             </div>
@@ -1547,7 +1547,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
 
     const classes = ["mx_UserInfo"];
 
-    let cardState: IRightPanelCardState = {};
+    let cardState = undefined as unknown as IRightPanelCardState;
     // We have no previousPhase for when viewing a UserInfo without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {
         cardState = { member };
