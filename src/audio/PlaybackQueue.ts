@@ -25,7 +25,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import { arrayFastClone } from "../utils/arrays";
 import { PlaybackManager } from "./PlaybackManager";
 import { isVoiceMessage } from "../utils/EventUtils";
-import { RoomViewStore } from "../stores/RoomViewStore";
+import { SdkContextClass } from "../contexts/SDKContext";
 
 /**
  * Audio playback queue management for a given room. This keeps track of where the user
@@ -48,10 +48,10 @@ export class PlaybackQueue {
     private currentPlaybackId: string; // event ID, broken out from above for ease of use
     private recentFullPlays = new Set<string>(); // event IDs
 
-    constructor(private room: Room) {
+    public constructor(private room: Room) {
         this.loadClocks();
 
-        RoomViewStore.instance.addRoomListener(this.room.roomId, (isActive) => {
+        SdkContextClass.instance.roomViewStore.addRoomListener(this.room.roomId, (isActive) => {
             if (!isActive) return;
 
             // Reset the state of the playbacks before they start mounting and enqueuing updates.
@@ -116,8 +116,8 @@ export class PlaybackQueue {
                         const instance = this.playbacks.get(next);
                         if (!instance) {
                             logger.warn(
-                                "Voice message queue desync: Missing playback for next message: "
-                                + `Current=${this.currentPlaybackId} Last=${last} Next=${next}`,
+                                "Voice message queue desync: Missing playback for next message: " +
+                                    `Current=${this.currentPlaybackId} Last=${last} Next=${next}`,
                             );
                         } else {
                             this.playbackIdOrder = orderClone;
@@ -175,8 +175,8 @@ export class PlaybackQueue {
                     }
                 } else {
                     logger.warn(
-                        "Voice message queue desync: Expected playback stop to be last in order. "
-                        + `Current=${this.currentPlaybackId} Last=${last} EventID=${mxEvent.getId()}`,
+                        "Voice message queue desync: Expected playback stop to be last in order. " +
+                            `Current=${this.currentPlaybackId} Last=${last} EventID=${mxEvent.getId()}`,
                     );
                 }
             }
@@ -188,8 +188,8 @@ export class PlaybackQueue {
                 if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
                     const lastInstance = this.playbacks.get(this.currentPlaybackId);
                     if (
-                        lastInstance.currentState === PlaybackState.Playing
-                        || lastInstance.currentState === PlaybackState.Paused
+                        lastInstance.currentState === PlaybackState.Playing ||
+                        lastInstance.currentState === PlaybackState.Paused
                     ) {
                         order.push(this.currentPlaybackId);
                     }

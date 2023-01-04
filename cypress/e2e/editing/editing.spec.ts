@@ -24,19 +24,14 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
 const sendEvent = (roomId: string): Chainable<ISendEventResponse> => {
-    return cy.sendEvent(
-        roomId,
-        null,
-        "m.room.message" as EventType,
-        MessageEvent.from("Message").serialize().content,
-    );
+    return cy.sendEvent(roomId, null, "m.room.message" as EventType, MessageEvent.from("Message").serialize().content);
 };
 
 describe("Editing", () => {
     let synapse: SynapseInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
+        cy.startSynapse("default").then((data) => {
             synapse = data;
             cy.initTestUser(synapse, "Edith").then(() => {
                 cy.injectAxe();
@@ -50,7 +45,7 @@ describe("Editing", () => {
     });
 
     it("should close the composer when clicking save after making a change and undoing it", () => {
-        cy.get<string>("@roomId").then(roomId => {
+        cy.get<string>("@roomId").then((roomId) => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
         });
@@ -62,7 +57,7 @@ describe("Editing", () => {
             cy.get(".mx_BasicMessageComposer_input").type("Foo{backspace}{backspace}{backspace}{enter}");
             cy.checkA11y();
         });
-        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "Message");
+        cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "Message");
 
         // Assert that the edit composer has gone away
         cy.get(".mx_EditMessageComposer").should("not.exist");

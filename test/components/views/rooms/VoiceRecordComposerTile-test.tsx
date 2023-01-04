@@ -17,13 +17,14 @@ limitations under the License.
 import React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
-import { ISendEventResponse, MatrixClient, MsgType, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MsgType, Room } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
 import VoiceRecordComposerTile from "../../../../src/components/views/rooms/VoiceRecordComposerTile";
-import { IUpload, VoiceRecording } from "../../../../src/audio/VoiceRecording";
+import { VoiceRecording } from "../../../../src/audio/VoiceRecording";
 import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { IUpload } from "../../../../src/audio/VoiceMessageRecording";
 
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -56,7 +57,7 @@ describe("<VoiceRecordComposerTile/>", () => {
             durationSeconds: 1337,
             contentType: "audio/ogg",
             getPlayback: () => ({
-                thumbnailWaveform: [],
+                thumbnailWaveform: [1.4, 2.5, 3.6],
             }),
         } as unknown as VoiceRecording;
         voiceRecordComposerTile = mount(<VoiceRecordComposerTile {...props} />);
@@ -64,13 +65,11 @@ describe("<VoiceRecordComposerTile/>", () => {
             recorder: mockRecorder,
         });
 
-        mocked(doMaybeLocalRoomAction).mockImplementation((
-            roomId: string,
-            fn: (actualRoomId: string) => Promise<ISendEventResponse>,
-            _client?: MatrixClient,
-        ) => {
-            return fn(roomId);
-        });
+        mocked(doMaybeLocalRoomAction).mockImplementation(
+            <T extends {}>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
+                return fn(roomId);
+            },
+        );
     });
 
     describe("send", () => {
@@ -80,21 +79,21 @@ describe("<VoiceRecordComposerTile/>", () => {
                 "body": "Voice message",
                 "file": undefined,
                 "info": {
-                    "duration": 1337000,
-                    "mimetype": "audio/ogg",
-                    "size": undefined,
+                    duration: 1337000,
+                    mimetype: "audio/ogg",
+                    size: undefined,
                 },
                 "msgtype": MsgType.Audio,
                 "org.matrix.msc1767.audio": {
-                    "duration": 1337000,
-                    "waveform": [],
+                    duration: 1337000,
+                    waveform: [1434, 2560, 3686],
                 },
                 "org.matrix.msc1767.file": {
-                    "file": undefined,
-                    "mimetype": "audio/ogg",
-                    "name": "Voice message.ogg",
-                    "size": undefined,
-                    "url": "mxc://example.com/voice",
+                    file: undefined,
+                    mimetype: "audio/ogg",
+                    name: "Voice message.ogg",
+                    size: undefined,
+                    url: "mxc://example.com/voice",
                 },
                 "org.matrix.msc1767.text": "Voice message",
                 "org.matrix.msc3245.voice": {},

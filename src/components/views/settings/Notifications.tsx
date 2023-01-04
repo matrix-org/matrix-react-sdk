@@ -18,6 +18,7 @@ import React from "react";
 import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
 
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -41,6 +42,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
+import { clearAllNotifications, getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -106,9 +108,12 @@ interface IState {
     pushers?: IPusher[];
     threepids?: IThreepid[];
 
+    deviceNotificationsEnabled: boolean;
     desktopNotifications: boolean;
     desktopShowBody: boolean;
     audioNotifications: boolean;
+
+    clearingNotifications: boolean;
 }
 
 export default class Notifications extends React.PureComponent<IProps, IState> {
@@ -119,19 +124,24 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         this.state = {
             phase: Phase.Loading,
+            deviceNotificationsEnabled: SettingsStore.getValue("deviceNotificationsEnabled") ?? true,
             desktopNotifications: SettingsStore.getValue("notificationsEnabled"),
             desktopShowBody: SettingsStore.getValue("notificationBodyEnabled"),
             audioNotifications: SettingsStore.getValue("audioNotificationsEnabled"),
+            clearingNotifications: false,
         };
 
         this.settingWatchers = [
-            SettingsStore.watchSetting("notificationsEnabled", null, (...[,,,, value]) =>
+            SettingsStore.watchSetting("notificationsEnabled", null, (...[, , , , value]) =>
                 this.setState({ desktopNotifications: value as boolean }),
             ),
-            SettingsStore.watchSetting("notificationBodyEnabled", null, (...[,,,, value]) =>
+            SettingsStore.watchSetting("deviceNotificationsEnabled", null, (...[, , , , value]) => {
+                this.setState({ deviceNotificationsEnabled: value as boolean });
+            }),
+            SettingsStore.watchSetting("notificationBodyEnabled", null, (...[, , , , value]) =>
                 this.setState({ desktopShowBody: value as boolean }),
             ),
-            SettingsStore.watchSetting("audioNotificationsEnabled", null, (...[,,,, value]) =>
+            SettingsStore.watchSetting("audioNotificationsEnabled", null, (...[, , , , value]) =>
                 this.setState({ audioNotifications: value as boolean }),
             ),
         ];
@@ -148,21 +158,35 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     public componentDidMount() {
         // noinspection JSIgnoredPromiseFromCall
         this.refreshFromServer();
+        this.refreshFromAccountData();
     }
 
     public componentWillUnmount() {
-        this.settingWatchers.forEach(watcher => SettingsStore.unwatchSetting(watcher));
+        this.settingWatchers.forEach((watcher) => SettingsStore.unwatchSetting(watcher));
+    }
+
+    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
+        if (this.state.deviceNotificationsEnabled !== prevState.deviceNotificationsEnabled) {
+            this.persistLocalNotificationSettings(this.state.deviceNotificationsEnabled);
+        }
     }
 
     private async refreshFromServer() {
         try {
-            const newState = (await Promise.all([
-                this.refreshRules(),
-                this.refreshPushers(),
-                this.refreshThreepids(),
-            ])).reduce((p, c) => Object.assign(c, p), {});
+            const newState = (
+                await Promise.all([this.refreshRules(), this.refreshPushers(), this.refreshThreepids()])
+            ).reduce((p, c) => Object.assign(c, p), {});
 
-            this.setState<keyof Omit<IState, "desktopNotifications" | "desktopShowBody" | "audioNotifications">>({
+            this.setState<
+                keyof Omit<
+                    IState,
+                    | "deviceNotificationsEnabled"
+                    | "desktopNotifications"
+                    | "desktopShowBody"
+                    | "audioNotifications"
+                    | "clearingNotifications"
+                >
+            >({
                 ...newState,
                 phase: Phase.Ready,
             });
@@ -170,6 +194,22 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             logger.error("Error setting up notifications for settings: ", e);
             this.setState({ phase: Phase.Error });
         }
+    }
+
+    private async refreshFromAccountData() {
+        const cli = MatrixClientPeg.get();
+        const settingsEvent = cli.getAccountData(getLocalNotificationAccountDataEventType(cli.deviceId));
+        if (settingsEvent) {
+            const notificationsEnabled = !(settingsEvent.getContent() as LocalNotificationSettings).is_silenced;
+            await this.updateDeviceNotifications(notificationsEnabled);
+        }
+    }
+
+    private persistLocalNotificationSettings(enabled: boolean): Promise<{}> {
+        const cli = MatrixClientPeg.get();
+        return cli.setAccountData(getLocalNotificationAccountDataEventType(cli.deviceId), {
+            is_silenced: !enabled,
+        });
     }
 
     private async refreshRules(): Promise<Partial<IState>> {
@@ -212,7 +252,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const rule: IAnnotatedPushRule = Object.assign(r, { kind });
                 const category = categories[rule.rule_id] ?? RuleClass.Other;
 
-                if (rule.rule_id[0] === '.') {
+                if (rule.rule_id[0] === ".") {
                     defaultRules[category].push(rule);
                 }
             }
@@ -239,7 +279,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const vectorState = definition.ruleToVectorState(rule);
                 preparedNewState.vectorPushRules[category].push({
                     ruleId: rule.rule_id,
-                    rule, vectorState,
+                    rule,
+                    vectorState,
                     description: _t(definition.description),
                 });
             }
@@ -278,8 +319,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private showSaveError() {
         Modal.createDialog(ErrorDialog, {
-            title: _t('Error saving notification preferences'),
-            description: _t('An error occurred whilst saving your notification preferences.'),
+            title: _t("Error saving notification preferences"),
+            description: _t("An error occurred whilst saving your notification preferences."),
         });
     }
 
@@ -288,13 +329,17 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         try {
             const masterRule = this.state.masterPushRule;
-            await MatrixClientPeg.get().setPushRuleEnabled('global', masterRule.kind, masterRule.rule_id, !checked);
+            await MatrixClientPeg.get().setPushRuleEnabled("global", masterRule.kind, masterRule.rule_id, !checked);
             await this.refreshFromServer();
         } catch (e) {
             this.setState({ phase: Phase.Error });
             logger.error("Error updating master push rule:", e);
             this.showSaveError();
         }
+    };
+
+    private updateDeviceNotifications = async (checked: boolean) => {
+        await SettingsStore.setValue("deviceNotificationsEnabled", null, SettingLevel.DEVICE, checked);
     };
 
     private onEmailNotificationsChanged = async (email: string, checked: boolean) => {
@@ -318,7 +363,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     append: true,
                 });
             } else {
-                const pusher = this.state.pushers.find(p => p.kind === "email" && p.pushkey === email);
+                const pusher = this.state.pushers.find((p) => p.kind === "email" && p.pushkey === email);
                 pusher.kind = null; // flag for delete
                 await MatrixClientPeg.get().setPusher(pusher);
             }
@@ -354,14 +399,16 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     let enabled: boolean;
                     let actions: PushRuleAction[];
                     if (checkedState === VectorState.On) {
-                        if (rule.actions.length !== 1) { // XXX: Magic number
+                        if (rule.actions.length !== 1) {
+                            // XXX: Magic number
                             actions = PushRuleVectorState.actionsFor(checkedState);
                         }
                         if (this.state.vectorKeywordRuleInfo.vectorState === VectorState.Off) {
                             enabled = true;
                         }
                     } else if (checkedState === VectorState.Loud) {
-                        if (rule.actions.length !== 3) { // XXX: Magic number
+                        if (rule.actions.length !== 3) {
+                            // XXX: Magic number
                             actions = PushRuleVectorState.actionsFor(checkedState);
                         }
                         if (this.state.vectorKeywordRuleInfo.vectorState === VectorState.Off) {
@@ -372,20 +419,20 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     }
 
                     if (actions) {
-                        await cli.setPushRuleActions('global', rule.kind, rule.rule_id, actions);
+                        await cli.setPushRuleActions("global", rule.kind, rule.rule_id, actions);
                     }
                     if (enabled !== undefined) {
-                        await cli.setPushRuleEnabled('global', rule.kind, rule.rule_id, enabled);
+                        await cli.setPushRuleEnabled("global", rule.kind, rule.rule_id, enabled);
                     }
                 }
             } else {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 if (!actions) {
-                    await cli.setPushRuleEnabled('global', rule.rule.kind, rule.rule.rule_id, false);
+                    await cli.setPushRuleEnabled("global", rule.rule.kind, rule.rule.rule_id, false);
                 } else {
-                    await cli.setPushRuleActions('global', rule.rule.kind, rule.rule.rule_id, actions);
-                    await cli.setPushRuleEnabled('global', rule.rule.kind, rule.rule.rule_id, true);
+                    await cli.setPushRuleActions("global", rule.rule.kind, rule.rule.rule_id, actions);
+                    await cli.setPushRuleEnabled("global", rule.rule.kind, rule.rule.rule_id, true);
                 }
             }
 
@@ -397,23 +444,21 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private onClearNotificationsClicked = () => {
-        MatrixClientPeg.get().getRooms().forEach(r => {
-            if (r.getUnreadNotificationCount() > 0) {
-                const events = r.getLiveTimeline().getEvents();
-                if (events.length) {
-                    // noinspection JSIgnoredPromiseFromCall
-                    MatrixClientPeg.get().sendReadReceipt(events[events.length - 1]);
-                }
-            }
-        });
+    private onClearNotificationsClicked = async (): Promise<void> => {
+        try {
+            this.setState({ clearingNotifications: true });
+            const client = MatrixClientPeg.get();
+            await clearAllNotifications(client);
+        } finally {
+            this.setState({ clearingNotifications: false });
+        }
     };
 
     private async setKeywords(keywords: string[], originalRules: IAnnotatedPushRule[]) {
         try {
             // De-duplicate and remove empties
-            keywords = Array.from(new Set(keywords)).filter(k => !!k);
-            const oldKeywords = Array.from(new Set(originalRules.map(r => r.pattern))).filter(k => !!k);
+            keywords = Array.from(new Set(keywords)).filter((k) => !!k);
+            const oldKeywords = Array.from(new Set(originalRules.map((r) => r.pattern))).filter((k) => !!k);
 
             // Note: Technically because of the UI interaction (at the time of writing), the diff
             // will only ever be +/-1 so we don't really have to worry about efficiently handling
@@ -422,8 +467,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             const diff = arrayDiff(oldKeywords, keywords);
 
             for (const word of diff.removed) {
-                for (const rule of originalRules.filter(r => r.pattern === word)) {
-                    await MatrixClientPeg.get().deletePushRule('global', rule.kind, rule.rule_id);
+                for (const rule of originalRules.filter((r) => r.pattern === word)) {
+                    await MatrixClientPeg.get().deletePushRule("global", rule.kind, rule.rule_id);
                 }
             }
 
@@ -440,12 +485,12 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             }
             const kind = PushRuleKind.ContentSpecific;
             for (const word of diff.added) {
-                await MatrixClientPeg.get().addPushRule('global', kind, word, {
+                await MatrixClientPeg.get().addPushRule("global", kind, word, {
                     actions: PushRuleVectorState.actionsFor(ruleVectorState),
                     pattern: word,
                 });
                 if (ruleVectorState === VectorState.Off) {
-                    await MatrixClientPeg.get().setPushRuleEnabled('global', kind, word, false);
+                    await MatrixClientPeg.get().setPushRuleEnabled("global", kind, word, false);
                 }
             }
 
@@ -461,90 +506,120 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         const originalRules = objectClone(this.state.vectorKeywordRuleInfo.rules);
 
         // We add the keyword immediately as a sort of local echo effect
-        this.setState({
-            phase: Phase.Persisting,
-            vectorKeywordRuleInfo: {
-                ...this.state.vectorKeywordRuleInfo,
-                rules: [
-                    ...this.state.vectorKeywordRuleInfo.rules,
+        this.setState(
+            {
+                phase: Phase.Persisting,
+                vectorKeywordRuleInfo: {
+                    ...this.state.vectorKeywordRuleInfo,
+                    rules: [
+                        ...this.state.vectorKeywordRuleInfo.rules,
 
-                    // XXX: Horrible assumption that we don't need the remaining fields
-                    { pattern: keyword } as IAnnotatedPushRule,
-                ],
+                        // XXX: Horrible assumption that we don't need the remaining fields
+                        { pattern: keyword } as IAnnotatedPushRule,
+                    ],
+                },
             },
-        }, async () => {
-            await this.setKeywords(this.state.vectorKeywordRuleInfo.rules.map(r => r.pattern), originalRules);
-        });
+            async () => {
+                await this.setKeywords(
+                    this.state.vectorKeywordRuleInfo.rules.map((r) => r.pattern),
+                    originalRules,
+                );
+            },
+        );
     };
 
     private onKeywordRemove = (keyword: string) => {
         const originalRules = objectClone(this.state.vectorKeywordRuleInfo.rules);
 
         // We remove the keyword immediately as a sort of local echo effect
-        this.setState({
-            phase: Phase.Persisting,
-            vectorKeywordRuleInfo: {
-                ...this.state.vectorKeywordRuleInfo,
-                rules: this.state.vectorKeywordRuleInfo.rules.filter(r => r.pattern !== keyword),
+        this.setState(
+            {
+                phase: Phase.Persisting,
+                vectorKeywordRuleInfo: {
+                    ...this.state.vectorKeywordRuleInfo,
+                    rules: this.state.vectorKeywordRuleInfo.rules.filter((r) => r.pattern !== keyword),
+                },
             },
-        }, async () => {
-            await this.setKeywords(this.state.vectorKeywordRuleInfo.rules.map(r => r.pattern), originalRules);
-        });
+            async () => {
+                await this.setKeywords(
+                    this.state.vectorKeywordRuleInfo.rules.map((r) => r.pattern),
+                    originalRules,
+                );
+            },
+        );
     };
 
     private renderTopSection() {
-        const masterSwitch = <LabelledToggleSwitch
-            data-test-id='notif-master-switch'
-            value={!this.isInhibited}
-            label={_t("Enable for this account")}
-            onChange={this.onMasterRuleChanged}
-            disabled={this.state.phase === Phase.Persisting}
-        />;
+        const masterSwitch = (
+            <LabelledToggleSwitch
+                data-testid="notif-master-switch"
+                value={!this.isInhibited}
+                label={_t("Enable notifications for this account")}
+                caption={_t("Turn off to disable notifications on all your devices and sessions")}
+                onChange={this.onMasterRuleChanged}
+                disabled={this.state.phase === Phase.Persisting}
+            />
+        );
 
         // If all the rules are inhibited, don't show anything.
         if (this.isInhibited) {
             return masterSwitch;
         }
 
-        const emailSwitches = (this.state.threepids || []).filter(t => t.medium === ThreepidMedium.Email)
-            .map(e => <LabelledToggleSwitch
-                data-test-id='notif-email-switch'
-                key={e.address}
-                value={this.state.pushers.some(p => p.kind === "email" && p.pushkey === e.address)}
-                label={_t("Enable email notifications for %(email)s", { email: e.address })}
-                onChange={this.onEmailNotificationsChanged.bind(this, e.address)}
-                disabled={this.state.phase === Phase.Persisting}
-            />);
+        const emailSwitches = (this.state.threepids || [])
+            .filter((t) => t.medium === ThreepidMedium.Email)
+            .map((e) => (
+                <LabelledToggleSwitch
+                    data-testid="notif-email-switch"
+                    key={e.address}
+                    value={this.state.pushers.some((p) => p.kind === "email" && p.pushkey === e.address)}
+                    label={_t("Enable email notifications for %(email)s", { email: e.address })}
+                    onChange={this.onEmailNotificationsChanged.bind(this, e.address)}
+                    disabled={this.state.phase === Phase.Persisting}
+                />
+            ));
 
-        return <>
-            { masterSwitch }
+        return (
+            <>
+                {masterSwitch}
 
-            <LabelledToggleSwitch
-                data-test-id='notif-setting-notificationsEnabled'
-                value={this.state.desktopNotifications}
-                onChange={this.onDesktopNotificationsChanged}
-                label={_t('Enable desktop notifications for this session')}
-                disabled={this.state.phase === Phase.Persisting}
-            />
+                <LabelledToggleSwitch
+                    data-testid="notif-device-switch"
+                    value={this.state.deviceNotificationsEnabled}
+                    label={_t("Enable notifications for this device")}
+                    onChange={(checked) => this.updateDeviceNotifications(checked)}
+                    disabled={this.state.phase === Phase.Persisting}
+                />
 
-            <LabelledToggleSwitch
-                data-test-id='notif-setting-notificationBodyEnabled'
-                value={this.state.desktopShowBody}
-                onChange={this.onDesktopShowBodyChanged}
-                label={_t('Show message in desktop notification')}
-                disabled={this.state.phase === Phase.Persisting}
-            />
+                {this.state.deviceNotificationsEnabled && (
+                    <>
+                        <LabelledToggleSwitch
+                            data-testid="notif-setting-notificationsEnabled"
+                            value={this.state.desktopNotifications}
+                            onChange={this.onDesktopNotificationsChanged}
+                            label={_t("Enable desktop notifications for this session")}
+                            disabled={this.state.phase === Phase.Persisting}
+                        />
+                        <LabelledToggleSwitch
+                            data-testid="notif-setting-notificationBodyEnabled"
+                            value={this.state.desktopShowBody}
+                            onChange={this.onDesktopShowBodyChanged}
+                            label={_t("Show message in desktop notification")}
+                            disabled={this.state.phase === Phase.Persisting}
+                        />
+                        <LabelledToggleSwitch
+                            data-testid="notif-setting-audioNotificationsEnabled"
+                            value={this.state.audioNotifications}
+                            onChange={this.onAudioNotificationsChanged}
+                            label={_t("Enable audible notifications for this session")}
+                            disabled={this.state.phase === Phase.Persisting}
+                        />
+                    </>
+                )}
 
-            <LabelledToggleSwitch
-                data-test-id='notif-setting-audioNotificationsEnabled'
-                value={this.state.audioNotifications}
-                onChange={this.onAudioNotificationsChanged}
-                label={_t('Enable audible notifications for this session')}
-                disabled={this.state.phase === Phase.Persisting}
-            />
-
-            { emailSwitches }
-        </>;
+                {emailSwitches}
+            </>
+        );
     }
 
     private renderCategory(category: RuleClass) {
@@ -554,43 +629,55 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         let clearNotifsButton: JSX.Element;
         if (
-            category === RuleClass.VectorOther
-            && MatrixClientPeg.get().getRooms().some(r => r.getUnreadNotificationCount() > 0)
+            category === RuleClass.VectorOther &&
+            MatrixClientPeg.get()
+                .getRooms()
+                .some((r) => r.getUnreadNotificationCount() > 0)
         ) {
-            clearNotifsButton = <AccessibleButton
-                onClick={this.onClearNotificationsClicked}
-                kind='danger'
-                className='mx_UserNotifSettings_clearNotifsButton'
-            >{ _t("Clear notifications") }</AccessibleButton>;
+            clearNotifsButton = (
+                <AccessibleButton
+                    onClick={this.onClearNotificationsClicked}
+                    disabled={this.state.clearingNotifications}
+                    kind="danger"
+                    className="mx_UserNotifSettings_clearNotifsButton"
+                    data-testid="clear-notifications"
+                >
+                    {_t("Clear notifications")}
+                </AccessibleButton>
+            );
         }
 
         if (category === RuleClass.VectorOther && this.isInhibited) {
             // only render the utility buttons (if needed)
             if (clearNotifsButton) {
-                return <div className='mx_UserNotifSettings_floatingSection'>
-                    <div>{ _t("Other") }</div>
-                    { clearNotifsButton }
-                </div>;
+                return (
+                    <div className="mx_UserNotifSettings_floatingSection">
+                        <div>{_t("Other")}</div>
+                        {clearNotifsButton}
+                    </div>
+                );
             }
             return null;
         }
 
         let keywordComposer: JSX.Element;
         if (category === RuleClass.VectorMentions) {
-            keywordComposer = <TagComposer
-                tags={this.state.vectorKeywordRuleInfo?.rules.map(r => r.pattern)}
-                onAdd={this.onKeywordAdd}
-                onRemove={this.onKeywordRemove}
-                disabled={this.state.phase === Phase.Persisting}
-                label={_t("Keyword")}
-                placeholder={_t("New keyword")}
-            />;
+            keywordComposer = (
+                <TagComposer
+                    tags={this.state.vectorKeywordRuleInfo?.rules.map((r) => r.pattern)}
+                    onAdd={this.onKeywordAdd}
+                    onRemove={this.onKeywordRemove}
+                    disabled={this.state.phase === Phase.Persisting}
+                    label={_t("Keyword")}
+                    placeholder={_t("New keyword")}
+                />
+            );
         }
 
         const VectorStateToLabel = {
-            [VectorState.On]: _t('On'),
-            [VectorState.Off]: _t('Off'),
-            [VectorState.Loud]: _t('Noisy'),
+            [VectorState.On]: _t("On"),
+            [VectorState.Off]: _t("Off"),
+            [VectorState.Loud]: _t("Noisy"),
         };
 
         const makeRadio = (r: IVectorPushRule, s: VectorState) => (
@@ -604,17 +691,18 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             />
         );
 
-        const fieldsetRows = this.state.vectorPushRules[category].map(r =>
+        const fieldsetRows = this.state.vectorPushRules[category].map((r) => (
             <fieldset
                 key={category + r.ruleId}
-                data-test-id={category + r.ruleId}
-                className='mx_UserNotifSettings_gridRowContainer'
+                data-testid={category + r.ruleId}
+                className="mx_UserNotifSettings_gridRowContainer"
             >
-                <legend className='mx_UserNotifSettings_gridRowLabel'>{ r.description }</legend>
-                { makeRadio(r, VectorState.Off) }
-                { makeRadio(r, VectorState.On) }
-                { makeRadio(r, VectorState.Loud) }
-            </fieldset>);
+                <legend className="mx_UserNotifSettings_gridRowLabel">{r.description}</legend>
+                {makeRadio(r, VectorState.Off)}
+                {makeRadio(r, VectorState.On)}
+                {makeRadio(r, VectorState.Loud)}
+            </fieldset>
+        ));
 
         let sectionName: TranslatedString;
         switch (category) {
@@ -631,37 +719,43 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 throw new Error("Developer error: Unnamed notifications section: " + category);
         }
 
-        return <>
-            <div data-test-id={`notif-section-${category}`} className='mx_UserNotifSettings_grid'>
-                <span className='mx_UserNotifSettings_gridRowLabel mx_UserNotifSettings_gridRowHeading'>{ sectionName }</span>
-                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Off] }</span>
-                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.On] }</span>
-                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Loud] }</span>
-                { fieldsetRows }
-            </div>
-            { clearNotifsButton }
-            { keywordComposer }
-        </>;
+        return (
+            <>
+                <div data-testid={`notif-section-${category}`} className="mx_UserNotifSettings_grid">
+                    <span className="mx_UserNotifSettings_gridRowLabel mx_UserNotifSettings_gridRowHeading">
+                        {sectionName}
+                    </span>
+                    <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.Off]}</span>
+                    <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.On]}</span>
+                    <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.Loud]}</span>
+                    {fieldsetRows}
+                </div>
+                {clearNotifsButton}
+                {keywordComposer}
+            </>
+        );
     }
 
     private renderTargets() {
         if (this.isInhibited) return null; // no targets if there's no notifications
 
-        const rows = this.state.pushers.map(p => <tr key={p.kind+p.pushkey}>
-            <td>{ p.app_display_name }</td>
-            <td>{ p.device_display_name }</td>
-        </tr>);
+        const rows = this.state.pushers.map((p) => (
+            <tr key={p.kind + p.pushkey}>
+                <td>{p.app_display_name}</td>
+                <td>{p.device_display_name}</td>
+            </tr>
+        ));
 
         if (!rows.length) return null; // no targets to show
 
-        return <div className='mx_UserNotifSettings_floatingSection'>
-            <div>{ _t("Notification targets") }</div>
-            <table>
-                <tbody>
-                    { rows }
-                </tbody>
-            </table>
-        </div>;
+        return (
+            <div className="mx_UserNotifSettings_floatingSection">
+                <div>{_t("Notification targets")}</div>
+                <table>
+                    <tbody>{rows}</tbody>
+                </table>
+            </div>
+        );
     }
 
     public render() {
@@ -669,15 +763,17 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // Ends up default centered
             return <Spinner />;
         } else if (this.state.phase === Phase.Error) {
-            return <p data-test-id='error-message'>{ _t("There was an error loading your notification settings.") }</p>;
+            return <p data-testid="error-message">{_t("There was an error loading your notification settings.")}</p>;
         }
 
-        return <div className='mx_UserNotifSettings'>
-            { this.renderTopSection() }
-            { this.renderCategory(RuleClass.VectorGlobal) }
-            { this.renderCategory(RuleClass.VectorMentions) }
-            { this.renderCategory(RuleClass.VectorOther) }
-            { this.renderTargets() }
-        </div>;
+        return (
+            <div className="mx_UserNotifSettings">
+                {this.renderTopSection()}
+                {this.renderCategory(RuleClass.VectorGlobal)}
+                {this.renderCategory(RuleClass.VectorMentions)}
+                {this.renderCategory(RuleClass.VectorOther)}
+                {this.renderTargets()}
+            </div>
+        );
     }
 }

@@ -21,11 +21,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import AutocompleteWrapperModel, {
-    GetAutocompleterComponent,
-    UpdateCallback,
-    UpdateQuery,
-} from "./autocomplete";
+import AutocompleteWrapperModel, { GetAutocompleterComponent, UpdateCallback, UpdateQuery } from "./autocomplete";
 import { unicodeToShortcode } from "../HtmlUtils";
 import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
@@ -89,7 +85,7 @@ export type Part = IBasePart | IPillCandidatePart | IPillPart;
 abstract class BasePart {
     protected _text: string;
 
-    constructor(text = "") {
+    public constructor(text = "") {
         this._text = text;
     }
 
@@ -117,7 +113,7 @@ abstract class BasePart {
     public remove(offset: number, len: number): string | undefined {
         // validate
         const strWithRemoval = this.text.slice(0, offset) + this.text.slice(offset + len);
-        for (let i = offset; i < (len + offset); ++i) {
+        for (let i = offset; i < len + offset; ++i) {
             const chr = this.text.charAt(i);
             if (!this.acceptsRemoval(i, chr)) {
                 return strWithRemoval;
@@ -216,8 +212,7 @@ abstract class PlainBasePart extends BasePart {
 
             // or split if the previous character is a space
             // or if it is a + and this is a :
-            return this._text[offset - 1] !== " " &&
-                (this._text[offset - 1] !== "+" || chr !== ":");
+            return this._text[offset - 1] !== " " && (this._text[offset - 1] !== "+" || chr !== ":");
         }
         return true;
     }
@@ -253,7 +248,7 @@ export class PlainPart extends PlainBasePart implements IBasePart {
 }
 
 export abstract class PillPart extends BasePart implements IPillPart {
-    constructor(public resourceId: string, label) {
+    public constructor(public resourceId: string, label) {
         super(label);
     }
 
@@ -262,7 +257,7 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     protected acceptsRemoval(position: number, chr: string): boolean {
-        return position !== 0;  //if you remove initial # or @, pill should become plain
+        return position !== 0; //if you remove initial # or @, pill should become plain
     }
 
     public toDOMNode(): Node {
@@ -291,10 +286,12 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     public canUpdateDOMNode(node: HTMLElement): boolean {
-        return node.nodeType === Node.ELEMENT_NODE &&
-               node.nodeName === "SPAN" &&
-               node.childNodes.length === 1 &&
-               node.childNodes[0].nodeType === Node.TEXT_NODE;
+        return (
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.nodeName === "SPAN" &&
+            node.childNodes.length === 1 &&
+            node.childNodes[0].nodeType === Node.TEXT_NODE
+        );
     }
 
     // helper method for subclasses
@@ -411,7 +408,7 @@ export class EmojiPart extends BasePart implements IBasePart {
 }
 
 class RoomPillPart extends PillPart {
-    constructor(resourceId: string, label: string, private room: Room) {
+    public constructor(resourceId: string, label: string, private room?: Room) {
         super(resourceId, label);
     }
 
@@ -419,8 +416,8 @@ class RoomPillPart extends PillPart {
         let initialLetter = "";
         let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(this.room ? this.room.name : this.resourceId);
-            avatarUrl = Avatar.defaultAvatarUrlForString(this.room ? this.room.roomId : this.resourceId);
+            initialLetter = Avatar.getInitialLetter(this.room?.name || this.resourceId);
+            avatarUrl = Avatar.defaultAvatarUrlForString(this.room?.roomId ?? this.resourceId);
         }
         this.setAvatarVars(node, avatarUrl, initialLetter);
     }
@@ -430,12 +427,12 @@ class RoomPillPart extends PillPart {
     }
 
     protected get className() {
-        return "mx_Pill " + (this.room.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
+        return "mx_Pill " + (this.room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
     }
 }
 
 class AtRoomPillPart extends RoomPillPart {
-    constructor(text: string, room: Room) {
+    public constructor(text: string, room: Room) {
         super(text, text, room);
     }
 
@@ -452,7 +449,7 @@ class AtRoomPillPart extends RoomPillPart {
 }
 
 class UserPillPart extends PillPart {
-    constructor(userId, displayName, private member: RoomMember) {
+    public constructor(userId, displayName, private member: RoomMember) {
         super(userId, displayName);
     }
 
@@ -487,7 +484,7 @@ class UserPillPart extends PillPart {
 }
 
 class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
-    constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
+    public constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
         super(text);
     }
 
@@ -511,7 +508,7 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
         return true;
     }
 
-    get type(): IPillCandidatePart["type"] {
+    public get type(): IPillCandidatePart["type"] {
         return Type.PillCandidate;
     }
 }
@@ -519,12 +516,7 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
 export function getAutoCompleteCreator(getAutocompleterComponent: GetAutocompleterComponent, updateQuery: UpdateQuery) {
     return (partCreator: PartCreator) => {
         return (updateCallback: UpdateCallback) => {
-            return new AutocompleteWrapperModel(
-                updateCallback,
-                getAutocompleterComponent,
-                updateQuery,
-                partCreator,
-            );
+            return new AutocompleteWrapperModel(updateCallback, getAutocompleterComponent, updateQuery, partCreator);
         };
     };
 }
@@ -538,7 +530,7 @@ interface IAutocompleteCreator {
 export class PartCreator {
     protected readonly autoCompleteCreator: IAutocompleteCreator;
 
-    constructor(
+    public constructor(
         private readonly room: Room,
         private readonly client: MatrixClient,
         autoCompleteCreator: AutoCompleteCreator = null,
@@ -610,13 +602,12 @@ export class PartCreator {
     }
 
     public roomPill(alias: string, roomId?: string): RoomPillPart {
-        let room;
+        let room: Room | undefined;
         if (roomId || alias[0] !== "#") {
             room = this.client.getRoom(roomId || alias);
         } else {
             room = this.client.getRooms().find((r) => {
-                return r.getCanonicalAlias() === alias ||
-                       r.getAltAliases().includes(alias);
+                return r.getCanonicalAlias() === alias || r.getAltAliases().includes(alias);
             });
         }
         return new RoomPillPart(alias, room ? room.name : alias, room);

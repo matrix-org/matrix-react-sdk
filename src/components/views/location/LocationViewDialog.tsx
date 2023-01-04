@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import { locationEventGeoUri, isSelfLocation } from '../../../utils/location';
-import Map from './Map';
-import SmartMarker from './SmartMarker';
-import ZoomButtons from './ZoomButtons';
+import { locationEventGeoUri, isSelfLocation } from "../../../utils/location";
+import Map from "./Map";
+import SmartMarker from "./SmartMarker";
+import ZoomButtons from "./ZoomButtons";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
@@ -38,7 +38,7 @@ interface IState {
  * Dialog to view m.location events maximised
  */
 export default class LocationViewDialog extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -54,18 +54,14 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
         this.setState({ error });
     };
 
-    render() {
+    public render() {
         const { mxEvent } = this.props;
 
         // only pass member to marker when should render avatar marker
         const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
         const geoUri = locationEventGeoUri(mxEvent);
         return (
-            <BaseDialog
-                className='mx_LocationViewDialog'
-                onFinished={this.props.onFinished}
-                fixedWidth={false}
-            >
+            <BaseDialog className="mx_LocationViewDialog" onFinished={this.props.onFinished} fixedWidth={false}>
                 <Map
                     id={this.getBodyId()}
                     centerGeoUri={geoUri}
@@ -73,18 +69,17 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
                     interactive
                     className="mx_LocationViewDialog_map"
                 >
-                    {
-                        ({ map }) =>
-                            <>
-                                <SmartMarker
-                                    map={map}
-                                    id={`${this.getBodyId()}-marker`}
-                                    geoUri={geoUri}
-                                    roomMember={markerRoomMember}
-                                />
-                                <ZoomButtons map={map} />
-                            </>
-                    }
+                    {({ map }) => (
+                        <>
+                            <SmartMarker
+                                map={map}
+                                id={`${this.getBodyId()}-marker`}
+                                geoUri={geoUri}
+                                roomMember={markerRoomMember}
+                            />
+                            <ZoomButtons map={map} />
+                        </>
+                    )}
                 </Map>
             </BaseDialog>
         );

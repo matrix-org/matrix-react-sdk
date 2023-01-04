@@ -54,11 +54,11 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     if (!stats?.isDirectory) {
         throw new Error(`No such template: ${template}`);
     }
-    const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
+    const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), "react-sdk-synapsedocker-"));
 
     // copy the contents of the template dir, omitting homeserver.yaml as we'll template that
     console.log(`Copy ${templateDir} -> ${tempDir}`);
-    await fse.copy(templateDir, tempDir, { filter: f => path.basename(f) !== 'homeserver.yaml' });
+    await fse.copy(templateDir, tempDir, { filter: (f) => path.basename(f) !== "homeserver.yaml" });
 
     const registrationSecret = randB64Bytes(16);
     const macaroonSecret = randB64Bytes(16);
@@ -101,12 +101,9 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
 
     const synapseId = await dockerRun({
         image: "matrixdotorg/synapse:develop",
-        containerName: `react-sdk-cypress-synapse-${crypto.randomBytes(4).toString("hex")}`,
-        params: [
-            "--rm",
-            "-v", `${synCfg.configDir}:/data`,
-            "-p", `${synCfg.port}:8008/tcp`,
-        ],
+        containerName: `react-sdk-cypress-synapse`,
+        params: ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`],
+        cmd: "run",
     });
 
     console.log(`Started synapse with id ${synapseId} on port ${synCfg.port}.`);
@@ -116,9 +113,12 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
         containerId: synapseId,
         params: [
             "curl",
-            "--connect-timeout", "30",
-            "--retry", "30",
-            "--retry-delay", "1",
+            "--connect-timeout",
+            "30",
+            "--retry",
+            "30",
+            "--retry-delay",
+            "1",
             "--retry-all-errors",
             "--silent",
             "http://localhost:8008/health",

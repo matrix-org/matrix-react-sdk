@@ -57,7 +57,7 @@ export interface IConfigOptions {
     branding?: {
         welcome_background_url?: string | string[]; // chosen at random if array
         auth_header_logo_url?: string;
-        auth_footer_links?: {text: string, url: string}[];
+        auth_footer_links?: { text: string; url: string }[];
     };
 
     map_style_url?: string; // for location-shared maps
@@ -116,6 +116,12 @@ export interface IConfigOptions {
     voip?: {
         obey_asserted_identity?: boolean; // MSC3086
     };
+    element_call: {
+        url?: string;
+        use_exclusively?: boolean;
+        participant_limit?: number;
+        brand?: string;
+    };
 
     logout_redirect_url?: string;
 
@@ -135,9 +141,6 @@ export interface IConfigOptions {
         servers: string[];
     };
 
-    piwik?: false | {
-        policy_url: string; // deprecated in favour of `privacy_policy_url` at root instead
-    };
     posthog?: {
         project_api_key: string;
         api_host: string; // hostname
@@ -160,7 +163,7 @@ export interface IConfigOptions {
 
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
-    terms_and_conditions_links?: { url: string, text: string }[];
+    terms_and_conditions_links?: { url: string; text: string }[];
 
     latex_maths_delims?: {
         inline?: {
@@ -176,8 +179,18 @@ export interface IConfigOptions {
     sync_timeline_limit?: number;
     dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
 
-    // XXX: Undocumented URL for the "Learn more about spaces" link in the "Communities don't exist" messaging.
-    spaces_learn_more_url?: string;
+    voice_broadcast?: {
+        // length per voice chunk in seconds
+        chunk_length?: number;
+        // max voice broadcast length in seconds
+        max_length?: number;
+    };
+
+    user_notice?: {
+        title: string;
+        description: string;
+        show_once?: boolean;
+    };
 }
 
 export interface ISsoRedirectOptions {

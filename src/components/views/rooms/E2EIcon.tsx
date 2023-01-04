@@ -16,11 +16,11 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import Tooltip from "../elements/Tooltip";
+import Tooltip, { Alignment } from "../elements/Tooltip";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 
 export enum E2EState {
@@ -49,19 +49,32 @@ interface IProps {
     size?: number;
     onClick?: () => void;
     hideTooltip?: boolean;
+    tooltipAlignment?: Alignment;
     bordered?: boolean;
 }
 
-const E2EIcon: React.FC<IProps> = ({ isUser, status, className, size, onClick, hideTooltip, bordered }) => {
+const E2EIcon: React.FC<IProps> = ({
+    isUser,
+    status,
+    className,
+    size,
+    onClick,
+    hideTooltip,
+    tooltipAlignment,
+    bordered,
+}) => {
     const [hover, setHover] = useState(false);
 
-    const classes = classNames({
-        mx_E2EIcon: true,
-        mx_E2EIcon_bordered: bordered,
-        mx_E2EIcon_warning: status === E2EState.Warning,
-        mx_E2EIcon_normal: status === E2EState.Normal,
-        mx_E2EIcon_verified: status === E2EState.Verified,
-    }, className);
+    const classes = classNames(
+        {
+            mx_E2EIcon: true,
+            mx_E2EIcon_bordered: bordered,
+            mx_E2EIcon_warning: status === E2EState.Warning,
+            mx_E2EIcon_normal: status === E2EState.Normal,
+            mx_E2EIcon_verified: status === E2EState.Verified,
+        },
+        className,
+    );
 
     let e2eTitle;
     if (isUser) {
@@ -80,7 +93,7 @@ const E2EIcon: React.FC<IProps> = ({ isUser, status, className, size, onClick, h
 
     let tip;
     if (hover && !hideTooltip) {
-        tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} />;
+        tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} alignment={tooltipAlignment} />;
     }
 
     if (onClick) {
@@ -92,14 +105,16 @@ const E2EIcon: React.FC<IProps> = ({ isUser, status, className, size, onClick, h
                 className={classes}
                 style={style}
             >
-                { tip }
+                {tip}
             </AccessibleButton>
         );
     }
 
-    return <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style}>
-        { tip }
-    </div>;
+    return (
+        <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style}>
+            {tip}
+        </div>
+    );
 };
 
 export default E2EIcon;

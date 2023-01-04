@@ -63,11 +63,14 @@ describe("Algorithm", () => {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
 
-        client.getRoom.mockImplementation(roomId => {
+        client.getRoom.mockImplementation((roomId) => {
             switch (roomId) {
-                case room.roomId: return room;
-                case roomWithCall.roomId: return roomWithCall;
-                default: return null;
+                case room.roomId:
+                    return room;
+                case roomWithCall.roomId:
+                    return roomWithCall;
+                default:
+                    return null;
             }
         });
         client.getRooms.mockReturnValue([room, roomWithCall]);
@@ -81,17 +84,13 @@ describe("Algorithm", () => {
         setupAsyncStoreWithClient(WidgetMessagingStore.instance, client);
 
         MockedCall.create(roomWithCall, "1");
-        const call = CallStore.instance.get(roomWithCall.roomId);
+        const call = CallStore.instance.getCall(roomWithCall.roomId);
         if (call === null) throw new Error("Failed to create call");
 
         const widget = new Widget(call.widget);
         WidgetMessagingStore.instance.storeMessaging(widget, roomWithCall.roomId, {
             stop: () => {},
         } as unknown as ClientWidgetApi);
-
-        Object.defineProperty(navigator, "mediaDevices", {
-            value: { enumerateDevices: async () => [] },
-        });
 
         // End of setup
 

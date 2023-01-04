@@ -35,7 +35,7 @@ export class BlurhashEncoder {
     private seq = 0;
     private pendingDeferredMap = new Map<number, IDeferred<string>>();
 
-    constructor() {
+    public constructor() {
         this.worker = new BlurhashWorker();
         this.worker.onmessage = this.onMessage;
     }
@@ -57,4 +57,3 @@ export class BlurhashEncoder {
         return deferred.promise;
     }
 }
-

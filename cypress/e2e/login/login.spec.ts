@@ -22,10 +22,7 @@ describe("Login", () => {
     let synapse: SynapseInstance;
 
     beforeEach(() => {
-        cy.visit("/#/login");
-        cy.startSynapse("consent").then(data => {
-            synapse = data;
-        });
+        cy.stubDefaultServer();
     });
 
     afterEach(() => {
@@ -37,7 +34,11 @@ describe("Login", () => {
         const password = "p4s5W0rD";
 
         beforeEach(() => {
-            cy.registerUser(synapse, username, password);
+            cy.startSynapse("consent").then((data) => {
+                synapse = data;
+                cy.registerUser(synapse, username, password);
+                cy.visit("/#/login");
+            });
         });
 
         it("logs in with an existing account and lands on the home screen", () => {
@@ -51,28 +52,29 @@ describe("Login", () => {
             cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
             cy.get(".mx_ServerPickerDialog_continue").click();
             // wait for the dialog to go away
-            cy.get('.mx_ServerPickerDialog').should('not.exist');
+            cy.get(".mx_ServerPickerDialog").should("not.exist");
 
             cy.get("#mx_LoginForm_username").type(username);
             cy.get("#mx_LoginForm_password").type(password);
-            cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
-            cy.url().should('contain', '/#/home');
-            cy.stopMeasuring("from-submit-to-home");
+            cy.url().should("contain", "/#/home", { timeout: 30000 });
         });
     });
 
     describe("logout", () => {
         beforeEach(() => {
-            cy.initTestUser(synapse, "Erin");
+            cy.startSynapse("consent").then((data) => {
+                synapse = data;
+                cy.initTestUser(synapse, "Erin");
+            });
         });
 
         it("should go to login page on logout", () => {
             cy.get('[aria-label="User menu"]').click();
 
             // give a change for the outstanding requests queue to settle before logging out
-            cy.wait(500);
+            cy.wait(2000);
 
             cy.get(".mx_UserMenu_contextMenu").within(() => {
                 cy.get(".mx_UserMenu_iconSignOut").click();
@@ -94,7 +96,7 @@ describe("Login", () => {
             cy.get('[aria-label="User menu"]').click();
 
             // give a change for the outstanding requests queue to settle before logging out
-            cy.wait(500);
+            cy.wait(2000);
 
             cy.get(".mx_UserMenu_contextMenu").within(() => {
                 cy.get(".mx_UserMenu_iconSignOut").click();

@@ -34,7 +34,7 @@ interface IState {}
 
 export interface IApp extends IWidget {
     roomId: string;
-    eventId: string;
+    eventId?: string; // not present on virtual widgets
     // eslint-disable-next-line camelcase
     avatar_url?: string; // MSC2765 https://github.com/matrix-org/matrix-doc/pull/2765
 }
@@ -104,7 +104,11 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
     private generateApps(room: Room): IApp[] {
         return WidgetEchoStore.getEchoedRoomWidgets(room.roomId, WidgetUtils.getRoomWidgets(room)).map((ev) => {
             return WidgetUtils.makeAppConfig(
-                ev.getStateKey(), ev.getContent(), ev.getSender(), ev.getRoomId(), ev.getId(),
+                ev.getStateKey(),
+                ev.getContent(),
+                ev.getSender(),
+                ev.getRoomId(),
+                ev.getId(),
             );
         });
     }
@@ -116,19 +120,24 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
 
         // first clean out old widgets from the map which originate from this room
         // otherwise we are out of sync with the rest of the app with stale widget events during removal
-        Array.from(this.widgetMap.values()).forEach(app => {
+        Array.from(this.widgetMap.values()).forEach((app) => {
             if (app.roomId !== room.roomId) return; // skip - wrong room
-            this.widgetMap.delete(WidgetUtils.getWidgetUid(app));
+            if (app.eventId === undefined) {
+                // virtual widget - keep it
+                roomInfo.widgets.push(app);
+            } else {
+                this.widgetMap.delete(WidgetUtils.getWidgetUid(app));
+            }
         });
 
         let edited = false;
-        this.generateApps(room).forEach(app => {
+        this.generateApps(room).forEach((app) => {
             // Sanity check for https://github.com/vector-im/element-web/issues/15705
             const existingApp = this.widgetMap.get(WidgetUtils.getWidgetUid(app));
             if (existingApp) {
                 logger.warn(
                     `Possible widget ID conflict for ${app.id} - wants to store in room ${app.roomId} ` +
-                    `but is currently stored as ${existingApp.roomId} - letting the want win`,
+                        `but is currently stored as ${existingApp.roomId} - letting the want win`,
                 );
             }
 
@@ -146,7 +155,7 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
         if (
             persistentWidgetId &&
             ActiveWidgetStore.instance.getPersistentRoomId() === room.roomId &&
-            !roomInfo.widgets.some(w => w.id === persistentWidgetId)
+            !roomInfo.widgets.some((w) => w.id === persistentWidgetId)
         ) {
             logger.log(`Persistent widget ${persistentWidgetId} removed from room ${room.roomId}: destroying.`);
             ActiveWidgetStore.instance.destroyPersistentWidget(persistentWidgetId, room.roomId);
@@ -169,21 +178,41 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
         this.emit(UPDATE_EVENT, roomId);
     };
 
-    public getRoom = (roomId: string, initIfNeeded = false) => {
+    public get(widgetId: string, roomId: string | undefined): IApp | undefined {
+        return this.widgetMap.get(WidgetUtils.calcWidgetUid(widgetId, roomId));
+    }
+
+    public getRoom(roomId: string, initIfNeeded = false): IRoomWidgets {
         if (initIfNeeded) this.initRoom(roomId); // internally handles "if needed"
-        return this.roomMap.get(roomId);
-    };
+        return this.roomMap.get(roomId)!;
+    }
 
     public getApps(roomId: string): IApp[] {
         const roomInfo = this.getRoom(roomId);
         return roomInfo?.widgets || [];
     }
 
+    public addVirtualWidget(widget: IWidget, roomId: string): IApp {
+        this.initRoom(roomId);
+        const app = WidgetUtils.makeAppConfig(widget.id, widget, widget.creatorUserId, roomId, undefined);
+        this.widgetMap.set(WidgetUtils.getWidgetUid(app), app);
+        this.roomMap.get(roomId)!.widgets.push(app);
+        return app;
+    }
+
+    public removeVirtualWidget(widgetId: string, roomId: string): void {
+        this.widgetMap.delete(WidgetUtils.calcWidgetUid(widgetId, roomId));
+        const roomApps = this.roomMap.get(roomId);
+        if (roomApps) {
+            roomApps.widgets = roomApps.widgets.filter((app) => !(app.id === widgetId && app.roomId === roomId));
+        }
+    }
+
     public doesRoomHaveConference(room: Room): boolean {
         const roomInfo = this.getRoom(room.roomId);
         if (!roomInfo) return false;
 
-        const currentWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
+        const currentWidgets = roomInfo.widgets.filter((w) => WidgetType.JITSI.matches(w.type));
         const hasPendingWidgets = WidgetEchoStore.roomHasPendingWidgetsOfType(room.roomId, [], WidgetType.JITSI);
         return currentWidgets.length > 0 || hasPendingWidgets;
     }
@@ -193,8 +222,8 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
         if (!roomInfo) return false;
 
         // A persistent conference widget indicates that we're participating
-        const widgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
-        return widgets.some(w => ActiveWidgetStore.instance.getWidgetPersistence(w.id, room.roomId));
+        const widgets = roomInfo.widgets.filter((w) => WidgetType.JITSI.matches(w.type));
+        return widgets.some((w) => ActiveWidgetStore.instance.getWidgetPersistence(w.id, room.roomId));
     }
 }
 
