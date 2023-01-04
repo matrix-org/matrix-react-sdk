@@ -50,7 +50,7 @@ async function checkIdentityServerUrl(u) {
     // XXX: duplicated logic from js-sdk but it's quite tied up in the validation logic in the
     // js-sdk so probably as easy to duplicate it than to separate it out so we can reuse it
     try {
-        const response = await fetch(u + "/_matrix/identity/api/v1");
+        const response = await fetch(u + "/_matrix/identity/v2");
         if (response.ok) {
             return null;
         } else if (response.status < 200 || response.status >= 300) {
@@ -82,7 +82,7 @@ interface IState {
 export default class SetIdServer extends React.Component<IProps, IState> {
     private dispatcherRef: string;
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         let defaultIdServer = "";
@@ -103,11 +103,11 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         };
     }
 
-    componentDidMount(): void {
+    public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
     }
 
-    componentWillUnmount(): void {
+    public componentWillUnmount(): void {
         dis.unregister(this.dispatcherRef);
     }
 
@@ -372,7 +372,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         });
     };
 
-    render() {
+    public render() {
         const idServerUrl = this.state.currentClientIdServer;
         let sectionTitle;
         let bodyText;
