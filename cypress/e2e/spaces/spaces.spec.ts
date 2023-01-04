@@ -78,9 +78,8 @@ describe("Spaces", () => {
     });
 
     it("should allow user to create public space", () => {
-        openSpaceCreateMenu().as("space-create-menu");
-        cy.get("@space-create-menu").percySnapshotElement("Space create menu");
-        cy.get("@space-create-menu").within(() => {
+        openSpaceCreateMenu().percySnapshotElement("Space create menu");
+        cy.get(".mx_SpaceCreateMenu_wrapper .mx_ContextualMenu").within(() => {
             cy.get(".mx_SpaceCreateMenuType_public").click();
             cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').selectFile(
                 "cypress/fixtures/riot.png",
