@@ -45,7 +45,8 @@ interface Props {
 }
 
 /**
- * A picture-in-picture view for a widget.
+ * A picture-in-picture view for a widget. Additional controls are shown if the
+ * widget is a call of some sort.
  */
 export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMoving, movePersistedElement }) => {
     const widget = useMemo(
