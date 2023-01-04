@@ -60,7 +60,7 @@ export class VoiceBroadcastRecording
 {
     private state: VoiceBroadcastInfoState;
     private recorder: VoiceBroadcastRecorder;
-    private sequence = 1;
+    private sequence = 0;
     private dispatcherRef: string;
     private chunkEvents = new VoiceBroadcastChunkEvents();
     private chunkRelationHelper: RelationsHelper;
@@ -268,7 +268,7 @@ export class VoiceBroadcastRecording
             event_id: this.infoEvent.getId(),
         };
         content["io.element.voice_broadcast_chunk"] = {
-            sequence: this.sequence++,
+            sequence: ++this.sequence,
         };
 
         await this.client.sendMessage(this.infoEvent.getRoomId(), content);
