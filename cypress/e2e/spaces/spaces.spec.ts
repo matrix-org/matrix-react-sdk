@@ -77,8 +77,9 @@ describe("Spaces", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("should allow user to create public space", () => {
-        openSpaceCreateMenu().percySnapshotElement("Space create menu");
+    it.only("should allow user to create public space", () => {
+        openSpaceCreateMenu();
+        cy.get("#mx_ContextualMenu_Container").percySnapshotElement("Space create menu");
         cy.get(".mx_SpaceCreateMenu_wrapper .mx_ContextualMenu").within(() => {
             cy.get(".mx_SpaceCreateMenuType_public").click();
             cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').selectFile(
