@@ -32,6 +32,7 @@ import UserInfo, {
     PowerLevelEditor,
     RoomAdminToolsContainer,
     RoomKickButton,
+    UserInfoHeader,
     UserOptionsSection,
 } from "../../../../src/components/views/right_panel/UserInfo";
 import dis from "../../../../src/dispatcher/dispatcher";
@@ -41,8 +42,16 @@ import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import MultiInviter from "../../../../src/utils/MultiInviter";
 import * as mockVerification from "../../../../src/verification";
 import Modal from "../../../../src/Modal";
+import { E2EStatus } from "../../../../src/utils/ShieldUtils";
+import * as mockUserIdentifier from "../../../../src/customisations/UserIdentifier";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
+
+jest.mock("../../../../src/customisations/UserIdentifier", () => {
+    return {
+        getDisplayUserIdentifier: jest.fn().mockReturnValue("customUserIdentifier"),
+    };
+});
 
 jest.mock("../../../../src/utils/DMRoomMap", () => {
     const mock = {
@@ -100,8 +109,9 @@ beforeAll(() => {
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
 });
 
-beforeEach(() => {
+afterEach(() => {
     mockClient.getUser.mockClear().mockReturnValue({} as unknown as User);
+    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
 });
 
 describe("<UserInfo />", () => {
@@ -204,6 +214,46 @@ describe("<UserInfo />", () => {
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
+    });
+});
+
+describe.only("<UserInfoHeader />", () => {
+    const defaultMember = new RoomMember(mockRoom.roomId, defaultUserId);
+
+    const defaultProps = {
+        member: defaultMember,
+        // e2eStatus: E2EStatus.Normal,
+        roomId: mockRoom.roomId,
+    };
+
+    const renderComponent = (props = {}) => {
+        const Wrapper = (wrapperProps = {}) => {
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+        };
+
+        return render(<UserInfoHeader {...defaultProps} {...props} />, {
+            wrapper: Wrapper,
+        });
+    };
+
+    it("does not render an e2e icon in the header if e2eStatus prop is undefined", () => {
+        renderComponent();
+        const header = screen.getByRole("heading", { name: defaultUserId });
+
+        expect(header.getElementsByClassName("mx_E2EIcon")).toHaveLength(0);
+    });
+
+    it("renders an e2e icon in the header if e2eStatus prop is defined", () => {
+        renderComponent({ e2eStatus: E2EStatus.Normal });
+        const header = screen.getByRole("heading", { name: defaultUserId });
+
+        expect(header.getElementsByClassName("mx_E2EIcon")).toHaveLength(1);
+    });
+
+    it("renders custom user identifiers in the header", () => {
+        renderComponent();
+
+        expect(screen.getByText("customUserIdentifier")).toBeInTheDocument();
     });
 });
 
