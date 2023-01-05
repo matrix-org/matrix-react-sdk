@@ -1716,7 +1716,7 @@
     "Securely cache encrypted messages locally for them to appear in search results.": "Arama sonuçlarında gozükmeleri için iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Çapraz imzalı cihazlara güvenmeden, güvenilir olarak işaretlemek için, bir kullanıcı tarafından kullanılan her bir oturumu ayrı ayrı doğrulayın.",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|one": "İletilerin arama sonuçlarında gözükmeleri için %(rooms)s odasından %(size)s  yardımıyla depolayarak, şifrelenmiş iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|other": "İletilerin arama sonuçlarında gözükmeleri için %(rooms)s odalardan %(size)s  yardımıyla depolayarak, şifrelenmiş iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
+    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|other": "İletilerin arama sonuçlarında gözükmeleri için %(rooms)s odalardan %(size)s yardımıyla depolayarak, şifrelenmiş iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
     "not found in storage": "Cihazda bulunamadı",
     "This bridge was provisioned by <user />.": "Bu köprü <user /> tarafından sağlandı.",
     "Render LaTeX maths in messages": "Mesajlarda LaTex maths işleyin",
