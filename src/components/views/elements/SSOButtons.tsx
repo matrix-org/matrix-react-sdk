@@ -107,7 +107,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
 
     let icon;
     let brandClass;
-    const brandIcon = idp ? getIcon(idp.brand) : null;
+    const brandIcon = idp?.brand ? getIcon(idp.brand) : null;
     if (brandIcon) {
         const brandName = idp.brand.split(".").pop();
         brandClass = `mx_SSOButton_brand_${brandName}`;
