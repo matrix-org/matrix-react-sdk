@@ -60,21 +60,25 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     console.log(`Copy ${templateDir} -> ${tempDir}`);
     await fse.copy(templateDir, tempDir, { filter: (f) => path.basename(f) !== "homeserver.yaml" });
 
-    const registrationSecret = randB64Bytes(16);
-    const macaroonSecret = randB64Bytes(16);
-    const formSecret = randB64Bytes(16);
+    // HACK START
+    // const registrationSecret = randB64Bytes(16);
+    // const macaroonSecret = randB64Bytes(16);
+    // const formSecret = randB64Bytes(16);
+    // HACK END
 
     const port = await getFreePort();
     const baseUrl = `http://localhost:${port}`;
 
     // now copy homeserver.yaml, applying substitutions
-    console.log(`Gen ${path.join(templateDir, "homeserver.yaml")}`);
-    let hsYaml = await fse.readFile(path.join(templateDir, "homeserver.yaml"), "utf8");
-    hsYaml = hsYaml.replace(/{{REGISTRATION_SECRET}}/g, registrationSecret);
-    hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
-    hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
-    hsYaml = hsYaml.replace(/{{PUBLIC_BASEURL}}/g, baseUrl);
-    await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
+    // HACK START
+    // console.log(`Gen ${path.join(templateDir, "homeserver.yaml")}`);
+    // let hsYaml = await fse.readFile(path.join(templateDir, "homeserver.yaml"), "utf8");
+    // hsYaml = hsYaml.replace(/{{REGISTRATION_SECRET}}/g, registrationSecret);
+    // hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
+    // hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
+    // hsYaml = hsYaml.replace(/{{PUBLIC_BASEURL}}/g, baseUrl);
+    // await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
+    // HACK END
 
     // now generate a signing key (we could use synapse's config generation for
     // this, or we could just do this...)
@@ -82,12 +86,28 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     const signingKey = randB64Bytes(32);
     console.log(`Gen ${path.join(templateDir, "localhost.signing.key")}`);
     await fse.writeFile(path.join(tempDir, "localhost.signing.key"), `ed25519 x ${signingKey}`);
+    
+    // HACK START
+    await dockerRun({
+        image: "matrixdotorg/dendrite-monolith:main",
+        // /usr/bin/generate-keys -private-key /mnt/matrix_key.pem
+        //image: "matrixdotorg/dendrite-demo-pinecone:main",
+        params: ["--rm", "--entrypoint=", "-v", `${tempDir}:/mnt`],
+        // image: "matrixdotorg/synapse:develop",
+        containerName: `react-sdk-cypress-synapse-keygen`,
+        // params: ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`],
+        cmd: ["/usr/bin/generate-keys", "-private-key", "/mnt/matrix_key.pem"],
+    });
+    // HACK END
 
     return {
         port,
         baseUrl,
         configDir: tempDir,
-        registrationSecret,
+        // HACK START
+        // registrationSecret,
+        registrationSecret: "secret",
+        // HACK START
     };
 }
 
@@ -99,12 +119,17 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
 
     console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
 
+    // HACK START
     const synapseId = await dockerRun({
-        image: "matrixdotorg/synapse:develop",
+        image: "matrixdotorg/dendrite-monolith:main",
+        //image: "matrixdotorg/dendrite-demo-pinecone:main",
+        params: ["--rm", "-v", `${synCfg.configDir}:/etc/dendrite`, "-p", `${synCfg.port}:8008/tcp`],
+        // image: "matrixdotorg/synapse:develop",
         containerName: `react-sdk-cypress-synapse`,
-        params: ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`],
-        cmd: "run",
+        // params: ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`],
+        cmd: ["run"],
     });
+    // HACK END
 
     console.log(`Started synapse with id ${synapseId} on port ${synCfg.port}.`);
 
@@ -112,16 +137,27 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
     await dockerExec({
         containerId: synapseId,
         params: [
-            "curl",
-            "--connect-timeout",
-            "30",
-            "--retry",
-            "30",
-            "--retry-delay",
-            "1",
-            "--retry-all-errors",
-            "--silent",
-            "http://localhost:8008/health",
+            // HACK START
+            // "curl",
+            // "--connect-timeout",
+            // "30",
+            // "--retry",
+            // "30",
+            // "--retry-delay",
+            // "1",
+            // "--retry-all-errors",
+            // "--silent",
+            "sh",
+            "-c",
+            "sleep 3 && wget --spider -q http://localhost:8008/_dendrite/monitor/health",
+            // "wget",
+            // "--spider",
+            // "-q",
+            // HACK END
+            // HACK START
+            // "http://localhost:8008/health",
+            // "http://localhost:8008/_dendrite/monitor/health",
+            // HACK END
         ],
     });
 
