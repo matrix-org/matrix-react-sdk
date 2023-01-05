@@ -105,10 +105,10 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
         PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id, action);
     };
 
-    let icon;
-    let brandClass;
+    let icon: JSX.Element | undefined;
+    let brandClass: string | undefined;
     const brandIcon = idp?.brand ? getIcon(idp.brand) : null;
-    if (brandIcon) {
+    if (idp?.brand && brandIcon) {
         const brandName = idp.brand.split(".").pop();
         brandClass = `mx_SSOButton_brand_${brandName}`;
         icon = <img src={brandIcon} height="24" width="24" alt={brandName} />;
