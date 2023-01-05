@@ -312,5 +312,20 @@
     "The server is not configured to indicate what the problem is (CORS).": "เซิร์ฟเวอร์ไม่ได้กำหนดค่าเพื่อระบุว่าปัญหาคืออะไร (CORS).",
     "A connection error occurred while trying to contact the server.": "เกิดข้อผิดพลาดในการเชื่อมต่อขณะพยายามติดต่อกับเซิร์ฟเวอร์.",
     "Your area is experiencing difficulties connecting to the internet.": "พื้นที่ของคุณประสบปัญหาในการเชื่อมต่ออินเทอร์เน็ต.",
-    "The server has denied your request.": "เซิร์ฟเวอร์ปฏิเสธคำขอของคุณ."
+    "The server has denied your request.": "เซิร์ฟเวอร์ปฏิเสธคำขอของคุณ.",
+    "We couldn't log you in": "เราไม่สามารถเข้าสู่ระบบของคุณได้",
+    "You do not have permission to start a conference call in this room": "คุณไม่ได้รับอนุญาตให้เริ่มการประชุมทางโทรศัพท์ในห้องนี้",
+    "Permission Required": "ต้องได้รับอนุญาต",
+    "Failed to transfer call": "โอนสายไม่สำเร็จ",
+    "Transfer Failed": "การโอนสายล้มเหลว",
+    "Unable to transfer call": "ไม่สามารถโอนสายได้",
+    "There was an error looking up the phone number": "เกิดข้อผิดพลาดในการค้นหาหมายเลขโทรศัพท์",
+    "Unable to look up phone number": "ไม่สามารถค้นหาหมายเลขโทรศัพท์",
+    "You've reached the maximum number of simultaneous calls.": "คุณมีการโทรพร้อมกันถึงจำนวนสูงสุดแล้ว.",
+    "Too Many Calls": "โทรมากเกินไป",
+    "You cannot place calls without a connection to the server.": "คุณไม่สามารถโทรออกได้หากไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์.",
+    "Connectivity to the server has been lost": "ขาดการเชื่อมต่อกับเซิร์ฟเวอร์",
+    "You cannot place calls in this browser.": "คุณไม่สามารถโทรออกในเบราว์เซอร์นี้.",
+    "Calls are unsupported": "ไม่รองรับการโทร",
+    "You're already in a call with this person.": "คุณอยู่ในสายกับบุคคลนี้แล้ว."
 }
