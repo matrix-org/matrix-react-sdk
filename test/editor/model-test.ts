@@ -348,8 +348,8 @@ describe("editor/model", function () {
             expect(model.parts[0].text).toBe("foo@a");
         });
     });
-    describe('emojis', function() {
-        it('regional emojis should be separated to prevent them to be converted to flag', () => {
+    describe("emojis", function () {
+        it("regional emojis should be separated to prevent them to be converted to flag", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([], pc, renderer);

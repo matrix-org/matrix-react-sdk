@@ -592,7 +592,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         // text. This ensures that emojis with spaces in between or that are made
         // up of multiple unicode characters are still counted as purely emoji
         // messages.
-        contentBodyTrimmed = contentBodyTrimmed.replace(EMOJI_SEPARATOR_REGEX, '');
+        contentBodyTrimmed = contentBodyTrimmed.replace(EMOJI_SEPARATOR_REGEX, "");
 
         const match = BIGEMOJI_REGEX.exec(contentBodyTrimmed);
         emojiBody =
