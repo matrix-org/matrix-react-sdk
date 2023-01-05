@@ -2731,5 +2731,8 @@
     "%(senderName)s ended a voice broadcast": "%(senderName)s finis voĉan elsendon",
     "You ended a voice broadcast": "Vi finis voĉan elsendon",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s finis <a>voĉan elsendon</a>",
-    "You ended a <a>voice broadcast</a>": "Vi finis <a>voĉan elsendon</a>"
+    "You ended a <a>voice broadcast</a>": "Vi finis <a>voĉan elsendon</a>",
+    "Voice broadcast": "Voĉan elsendo",
+    "Live": "Vivi",
+    "play voice broadcast": "ludu voĉan elsendon"
 }
