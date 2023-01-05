@@ -58,7 +58,7 @@ interface LinkModalProps {
 }
 
 export function LinkModal({ composer, isTextEnabled, onClose, composerContext, isEditing }: LinkModalProps) {
-    const [fields, setFields] = useState({ text: "", link: "" });
+    const [fields, setFields] = useState({ text: "", link: isEditing ? composer.getLink() : "" });
     const isSaveDisabled = (isTextEnabled && isEmpty(fields.text)) || isEmpty(fields.link);
 
     return (
