@@ -117,15 +117,16 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
         icon = <img src={src} height="24" width="24" alt={idp.name} />;
     }
 
-    const classesSecondPart: classNames.Argument = {
-        mx_SSOButton_mini: mini,
-        mx_SSOButton_default: !idp,
-        mx_SSOButton_primary: primary,
-    };
-    if (brandClass) {
-        classesSecondPart[brandClass] = true;
-    }
-    const classes = classNames("mx_SSOButton", classesSecondPart);
+    const brandPart = brandClass ? { [brandClass]: brandClass } : undefined;
+    const classes = classNames(
+        "mx_SSOButton",
+        {
+            mx_SSOButton_mini: mini,
+            mx_SSOButton_default: !idp,
+            mx_SSOButton_primary: primary,
+        },
+        brandPart,
+    );
 
     if (mini) {
         // TODO fallback icon
