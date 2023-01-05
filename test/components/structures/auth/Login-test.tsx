@@ -220,7 +220,7 @@ describe("Login", function () {
     });
 
     it("should show branded SSO buttons", async () => {
-        const idpsWithBrands = Object.values(IdentityProviderBrand).map((brand) => ({
+        const idpsWithIcons = Object.values(IdentityProviderBrand).map((brand) => ({
             id: brand,
             brand,
             name: `Provider ${brand}`,
@@ -231,11 +231,11 @@ describe("Login", function () {
                 {
                     type: "m.login.sso",
                     identity_providers: [
-                        ...idpsWithBrands,
+                        ...idpsWithIcons,
                         {
                             id: "foo",
                             name: "Provider foo",
-                        }
+                        },
                     ],
                 },
             ],
@@ -244,14 +244,13 @@ describe("Login", function () {
         const { container } = getComponent();
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
 
-        for (const idp of idpsWithBrands) {
+        for (const idp of idpsWithIcons) {
             const ssoButton = container.querySelector(`.mx_SSOButton.mx_SSOButton_brand_${idp.brand}`);
             expect(ssoButton).toBeTruthy();
-            expect(ssoButton.querySelector(`img[alt="${idp.brand}"]`)).toBeTruthy();
+            expect(ssoButton?.querySelector(`img[alt="${idp.brand}"]`)).toBeTruthy();
         }
 
         const ssoButtons = container.querySelectorAll(".mx_SSOButton");
-        expect(ssoButtons.length).toBe(idpsWithBrands.length + 1);
+        expect(ssoButtons.length).toBe(idpsWithIcons.length + 1);
     });
-
 });
