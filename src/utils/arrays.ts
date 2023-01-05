@@ -248,7 +248,7 @@ export class ArrayUtil<T> {
      * Create a new array helper.
      * @param a The array to help. Can be modified in-place.
      */
-    constructor(private a: T[]) {}
+    public constructor(private a: T[]) {}
 
     /**
      * The value of this array, after all appropriate alterations.
@@ -281,7 +281,7 @@ export class GroupedArray<K, T> {
      * Creates a new group helper.
      * @param val The group to help. Can be modified in-place.
      */
-    constructor(private val: Map<K, T[]>) {}
+    public constructor(private val: Map<K, T[]>) {}
 
     /**
      * The value of this group, after all applicable alterations.
@@ -313,3 +313,13 @@ export const concat = (...arrays: Uint8Array[]): Uint8Array => {
         return concatenated;
     }, new Uint8Array(0));
 };
+
+/**
+ * Async version of Array.every.
+ */
+export async function asyncEvery<T>(values: T[], predicate: (value: T) => Promise<boolean>): Promise<boolean> {
+    for (const value of values) {
+        if (!(await predicate(value))) return false;
+    }
+    return true;
+}

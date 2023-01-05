@@ -56,11 +56,11 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
         disabled: false,
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
-            percentage: 0,
+            percentage: percentageOf(this.props.playback.timeSeconds, 0, this.props.playback.durationSeconds),
         };
 
         // We don't need to de-register: the class handles this for us internally

@@ -66,7 +66,6 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import Modal from "../../Modal";
 import ErrorDialog from "../../components/views/dialogs/ErrorDialog";
 import { SdkContextClass } from "../../contexts/SDKContext";
-import { VoiceBroadcastRecordingsStore } from "../../voice-broadcast";
 
 // TODO: Destroy all of this code
 
@@ -83,7 +82,7 @@ interface IAppTileProps {
 
 // TODO: Don't use this because it's wrong
 export class ElementWidget extends Widget {
-    constructor(private rawDefinition: IWidget) {
+    public constructor(private rawDefinition: IWidget) {
         super(rawDefinition);
     }
 
@@ -165,7 +164,7 @@ export class StopGapWidget extends EventEmitter {
     private readonly virtual: boolean;
     private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
 
-    constructor(private appTileProps: IAppTileProps) {
+    public constructor(private appTileProps: IAppTileProps) {
         super();
         this.client = MatrixClientPeg.get();
 
@@ -292,7 +291,7 @@ export class StopGapWidget extends EventEmitter {
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
         this.messaging.on(`action:${ElementWidgetActions.JoinCall}`, () => {
             // pause voice broadcast recording when any widget sends a "join"
-            VoiceBroadcastRecordingsStore.instance().getCurrent()?.pause();
+            SdkContextClass.instance.voiceBroadcastRecordingsStore.getCurrent()?.pause();
         });
 
         // Always attach a handler for ViewRoom, but permission check it internally

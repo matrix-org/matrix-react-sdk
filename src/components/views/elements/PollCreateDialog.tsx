@@ -138,7 +138,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         const pollStart = PollStartEvent.from(
             this.state.question.trim(),
             this.state.options.map((a) => a.trim()).filter((a) => !!a),
-            this.state.kind,
+            this.state.kind.name,
         ).serialize();
 
         if (!this.props.editingMxEvent) {
@@ -256,7 +256,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         );
     }
 
-    onPollTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    public onPollTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         this.setState({
             kind: M_POLL_KIND_DISCLOSED.matches(e.target.value) ? M_POLL_KIND_DISCLOSED : M_POLL_KIND_UNDISCLOSED,
         });

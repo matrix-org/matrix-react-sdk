@@ -134,7 +134,7 @@ export class PosthogAnalytics {
     private readonly enabled: boolean = false;
     private static _instance = null;
     private platformSuperProperties = {};
-    private static ANALYTICS_EVENT_TYPE = "im.vector.analytics";
+    public static readonly ANALYTICS_EVENT_TYPE = "im.vector.analytics";
     private propertiesForNextEvent: Partial<Record<"$set" | "$set_once", UserProperties>> = {};
     private userPropertyCache: UserProperties = {};
     private authenticationType: Signup["authenticationType"] = "Other";
@@ -146,7 +146,7 @@ export class PosthogAnalytics {
         return this._instance;
     }
 
-    constructor(private readonly posthog: PostHog) {
+    public constructor(private readonly posthog: PostHog) {
         const posthogConfig = SdkConfig.getObject("posthog");
         if (posthogConfig) {
             this.posthog.init(posthogConfig.get("project_api_key"), {
