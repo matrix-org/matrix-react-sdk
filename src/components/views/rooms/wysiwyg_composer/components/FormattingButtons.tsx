@@ -24,6 +24,7 @@ import { Icon as UnderlineIcon } from "../../../../../../res/img/element-icons/r
 import { Icon as StrikeThroughIcon } from "../../../../../../res/img/element-icons/room/composer/strikethrough.svg";
 import { Icon as InlineCodeIcon } from "../../../../../../res/img/element-icons/room/composer/inline_code.svg";
 import { Icon as LinkIcon } from "../../../../../../res/img/element-icons/room/composer/link.svg";
+import { Icon as BulletListIcon } from "../../../../../../res/img/element-icons/room/composer/bullet_list.svg";
 import AccessibleTooltipButton from "../../../elements/AccessibleTooltipButton";
 import { Alignment } from "../../../elements/Tooltip";
 import { KeyboardShortcut } from "../../../settings/KeyboardShortcut";
@@ -109,6 +110,12 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 label={_td("Strikethrough")}
                 onClick={() => composer.strikeThrough()}
                 icon={<StrikeThroughIcon className="mx_FormattingButtons_Icon" />}
+            />
+            <Button
+                isActive={actionStates.inlineCode === "reversed"}
+                label={_td("Bullet list")}
+                onClick={() => composer.orderedList()}
+                icon={<BulletListIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 isActive={actionStates.inlineCode === "reversed"}
