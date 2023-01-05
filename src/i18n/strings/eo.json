@@ -2726,5 +2726,10 @@
     "Sending invites... (%(progress)s out of %(count)s)|one": "Sendante inviton...",
     "Sending invites... (%(progress)s out of %(count)s)|other": "Sendante invitojn... (%(progress)s el %(count)s)",
     "Loading new room": "Ŝarĝante novan ĉambron",
-    "Upgrading room": "Altgradiga ĉambro"
+    "Upgrading room": "Altgradiga ĉambro",
+    "Stop live broadcasting?": "Ĉu ĉesi rekta elsendo?",
+    "%(senderName)s ended a voice broadcast": "%(senderName)s finis voĉan elsendon",
+    "You ended a voice broadcast": "Vi finis voĉan elsendon",
+    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s finis <a>voĉan elsendon</a>",
+    "You ended a <a>voice broadcast</a>": "Vi finis <a>voĉan elsendon</a>"
 }
