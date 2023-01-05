@@ -19,7 +19,13 @@ import { chunk } from "lodash";
 import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
-import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "matrix-js-sdk/src/@types/auth";
+import {
+    IdentityProviderBrand,
+    IIdentityProvider,
+    ISSOFlow,
+    DELEGATED_OIDC_COMPATIBILITY,
+    SSOAction,
+} from "matrix-js-sdk/src/@types/auth";
 
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
@@ -28,9 +34,10 @@ import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
-interface ISSOButtonProps extends Omit<IProps, "flow"> {
+interface ISSOButtonProps extends IProps {
     idp?: IIdentityProvider;
     mini?: boolean;
+    action?: SSOAction;
 }
 
 const getIcon = (brand: IdentityProviderBrand | string) => {
@@ -79,14 +86,23 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     idp,
     primary,
     mini,
+    action,
+    flow,
     ...props
 }) => {
-    const label = idp ? _t("Continue with %(provider)s", { provider: idp.name }) : _t("Sign in with single sign-on");
+    let label: string;
+    if (idp) {
+        label = _t("Continue with %(provider)s", { provider: idp.name });
+    } else if (DELEGATED_OIDC_COMPATIBILITY.findIn<boolean>(flow)) {
+        label = _t("Continue");
+    } else {
+        label = _t("Sign in with single sign-on");
+    }
 
     const onClick = () => {
         const authenticationType = getAuthenticationType(idp?.brand ?? "");
         PosthogAnalytics.instance.setAuthenticationType(authenticationType);
-        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
+        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id, action);
     };
 
     let icon;
@@ -128,14 +144,15 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
 interface IProps {
     matrixClient: MatrixClient;
     flow: ISSOFlow;
-    loginType?: "sso" | "cas";
+    loginType: "sso" | "cas";
     fragmentAfterLogin?: string;
     primary?: boolean;
+    action?: SSOAction;
 }
 
 const MAX_PER_ROW = 6;
 
-const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentAfterLogin, primary }) => {
+const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentAfterLogin, primary, action }) => {
     const providers = flow.identity_providers || [];
     if (providers.length < 2) {
         return (
@@ -146,6 +163,8 @@ const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentA
                     fragmentAfterLogin={fragmentAfterLogin}
                     idp={providers[0]}
                     primary={primary}
+                    action={action}
+                    flow={flow}
                 />
             </div>
         );
@@ -167,6 +186,8 @@ const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentA
                             idp={idp}
                             mini={true}
                             primary={primary}
+                            action={action}
+                            flow={flow}
                         />
                     ))}
                 </div>
