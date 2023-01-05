@@ -19,6 +19,7 @@ import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-l
 import { mocked, MockedObject } from "jest-mock";
 import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
 import fetchMock from "fetch-mock-jest";
+import { DELEGATED_OIDC_COMPATIBILITY } from "matrix-js-sdk/src/@types/auth";
 
 import SdkConfig from "../../../../src/SdkConfig";
 import { mkServerConfig, mockPlatformPeg, unmockPlatformPeg } from "../../../test-utils";
@@ -191,5 +192,30 @@ describe("Login", function () {
 
         fireEvent.click(container.querySelector(".mx_SSOButton"));
         expect(platform.startSingleSignOn.mock.calls[1][0].baseUrl).toBe("https://server2");
+    });
+
+    it("should show single Continue button if OIDC MSC3824 compatibility is given by server", async () => {
+        mockClient.loginFlows.mockResolvedValue({
+            flows: [
+                {
+                    type: "m.login.sso",
+                    [DELEGATED_OIDC_COMPATIBILITY.name]: true,
+                },
+                {
+                    type: "m.login.password",
+                },
+            ],
+        });
+
+        const { container } = getComponent();
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+
+        const ssoButtons = container.querySelectorAll(".mx_SSOButton");
+
+        expect(ssoButtons.length).toBe(1);
+        expect(ssoButtons[0].textContent).toBe("Continue");
+
+        // no password form visible
+        expect(container.querySelector("form")).toBeFalsy();
     });
 });
