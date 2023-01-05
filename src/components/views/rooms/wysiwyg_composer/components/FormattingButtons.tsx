@@ -112,7 +112,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 icon={<StrikeThroughIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
-                isActive={actionStates.inlineCode === "reversed"}
+                isActive={actionStates.orderedList === "reversed"}
                 label={_td("Bullet list")}
                 onClick={() => composer.orderedList()}
                 icon={<BulletListIcon className="mx_FormattingButtons_Icon" />}
