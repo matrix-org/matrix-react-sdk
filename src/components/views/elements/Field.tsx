@@ -261,6 +261,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         } = this.props;
 
         this.inputRef = inputRef || React.createRef();
+
         inputProps.placeholder = inputProps.placeholder ?? inputProps.label;
         inputProps.id = this.id; // this overwrites the id from props
 

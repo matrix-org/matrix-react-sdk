@@ -95,7 +95,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                 )}
                 <Field
                     required={true}
-                    autoFocus={!isTextEnabled}
+                    autoFocus={!hasText}
                     label={_td("Link")}
                     value={fields.link}
                     placeholder=""
