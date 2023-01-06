@@ -30,6 +30,8 @@ describe("FormattingButtons", () => {
         strikeThrough: jest.fn(),
         inlineCode: jest.fn(),
         link: jest.fn(),
+        orderedList: jest.fn(),
+        unorderedList: jest.fn(),
     } as unknown as FormattingFunctions;
 
     const actionStates = {
@@ -39,6 +41,8 @@ describe("FormattingButtons", () => {
         strikeThrough: "enabled",
         inlineCode: "enabled",
         link: "enabled",
+        orderedList: "enabled",
+        unorderedList: "enabled",
     } as AllActionStates;
 
     afterEach(() => {
@@ -56,6 +60,8 @@ describe("FormattingButtons", () => {
         expect(screen.getByLabelText("Strikethrough")).not.toHaveClass("mx_FormattingButtons_active");
         expect(screen.getByLabelText("Code")).not.toHaveClass("mx_FormattingButtons_active");
         expect(screen.getByLabelText("Link")).not.toHaveClass("mx_FormattingButtons_active");
+        expect(screen.getByLabelText("Bulleted list")).not.toHaveClass("mx_FormattingButtons_active");
+        expect(screen.getByLabelText("Numbered list")).not.toHaveClass("mx_FormattingButtons_active");
     });
 
     it("Should call wysiwyg function on button click", () => {
@@ -68,6 +74,8 @@ describe("FormattingButtons", () => {
         screen.getByLabelText("Strikethrough").click();
         screen.getByLabelText("Code").click();
         screen.getByLabelText("Link").click();
+        screen.getByLabelText("Bulleted list").click();
+        screen.getByLabelText("Numbered list").click();
 
         // Then
         expect(wysiwyg.bold).toHaveBeenCalledTimes(1);
@@ -75,6 +83,8 @@ describe("FormattingButtons", () => {
         expect(wysiwyg.underline).toHaveBeenCalledTimes(1);
         expect(wysiwyg.strikeThrough).toHaveBeenCalledTimes(1);
         expect(wysiwyg.inlineCode).toHaveBeenCalledTimes(1);
+        expect(wysiwyg.orderedList).toHaveBeenCalledTimes(1);
+        expect(wysiwyg.unorderedList).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
