@@ -943,7 +943,6 @@
     "The integration manager is offline or it cannot reach your homeserver.": "Der Integrationsassistent ist außer Betrieb oder kann deinen Heim-Server nicht erreichen.",
     "not stored": "nicht gespeichert",
     "Backup has a signature from <verify>unknown</verify> user with ID %(deviceId)s": "Die Sicherung hat eine Signatur von <verify>unbekanntem</verify> Nutzer mit ID %(deviceId)s",
-    "Clear notifications": "Benachrichtigungen löschen",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Vom Identitäts-Server <current /> trennen, und stattdessen mit <new /> verbinden?",
     "The identity server you have chosen does not have any terms of service.": "Der von dir gewählte Identitäts-Server gibt keine Nutzungsbedingungen an.",
     "Disconnect identity server": "Verbindung zum Identitäts-Server trennen",

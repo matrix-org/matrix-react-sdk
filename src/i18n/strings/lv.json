@@ -1755,7 +1755,6 @@
     "Clear all data": "Notīrīt visus datus",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Visu šīs sesijas datu dzēšana ir neatgriezeniska. Šifrētās ziņas tiks zaudētas, ja vien to atslēgas nebūs dublētas.",
     "Clear all data in this session?": "Notīrīt visus šīs sesijas datus?",
-    "Clear notifications": "Notīrīt paziņojumus",
     "Recent searches": "Nesenie meklējumi",
     "To search messages, look for this icon at the top of a room <icon/>": "Lai meklētu ziņas, istabas augšpusē meklējiet šo ikonu <icon/>",
     "Other searches": "Citi meklējumi",

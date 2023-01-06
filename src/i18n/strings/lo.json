@@ -2609,7 +2609,6 @@
     "Please fill why you're reporting.": "ກະລຸນາຕື່ມຂໍ້ມູນວ່າເປັນຫຍັງທ່ານກໍາລັງລາຍງານ.",
     "Email (optional)": "ອີເມວ (ທາງເລືອກ)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
-    "Clear notifications": "ລຶບລ້າງການແຈ້ງເຕືອນ",
     "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນເຫຼົ່ານີ້ໂດຍໃຊ້ລະບົບປະຕູດຽວ( SSO) ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
     "Unable to load device list": "ບໍ່ສາມາດໂຫຼດລາຍຊື່ອຸປະກອນໄດ້",
     "Your homeserver does not support device management.": "homeserver ຂອງທ່ານບໍ່ຮອງຮັບການຈັດການອຸປະກອນ.",

@@ -993,7 +993,6 @@
     "Backup is not signed by any of your sessions": "La copia de seguridad no está firmada por ninguna de tus sesiones",
     "This backup is trusted because it has been restored on this session": "Esta copia de seguridad es de confianza porque ha sido restaurada en esta sesión",
     "Your keys are <b>not being backed up from this session</b>.": "<b>No se está haciendo una copia de seguridad de tus claves en esta sesión</b>.",
-    "Clear notifications": "Limpiar notificaciones",
     "Enable desktop notifications for this session": "Activa las notificaciones de escritorio para esta sesión",
     "Enable audible notifications for this session": "Activar notificaciones sonoras para esta sesión",
     "Checking server": "Comprobando servidor",

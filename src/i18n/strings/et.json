@@ -1175,7 +1175,6 @@
     "not found": "pole leitavad",
     "Manage": "Halda",
     "Enable": "Võta kasutusele",
-    "Clear notifications": "Eemalda kõik teavitused",
     "Failed to change power level": "Õiguste muutmine ei õnnestunud",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Sa ei saa seda muudatust hiljem tagasi pöörata, sest annad teisele kasutajale samad õigused, mis sinul on.",
     "Deactivate user?": "Kas deaktiveerime kasutajakonto?",

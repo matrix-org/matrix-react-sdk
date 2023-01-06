@@ -1173,7 +1173,6 @@
     "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s ha iniziato una telefonata. (non supportata da questo browser)",
     "%(senderName)s placed a video call.": "%(senderName)s ha iniziato una videochiamata.",
     "%(senderName)s placed a video call. (not supported by this browser)": "%(senderName)s ha iniziato una videochiamata. (non supportata da questo browser)",
-    "Clear notifications": "Cancella le notifiche",
     "Error upgrading room": "Errore di aggiornamento stanza",
     "Double check that your server supports the room version chosen and try again.": "Controlla che il tuo server supporti la versione di stanza scelta e riprova.",
     "Unencrypted": "Non criptato",

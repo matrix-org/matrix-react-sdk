@@ -1172,7 +1172,6 @@
     "%(senderName)s placed a video call.": "%(senderName)s videóhívást indított.",
     "%(senderName)s placed a video call. (not supported by this browser)": "%(senderName)s videóhívást indított. (ebben a böngészőben nem támogatott)",
     "Match system theme": "Rendszer témájához megfelelő",
-    "Clear notifications": "Értesítések törlése",
     "Error upgrading room": "Hiba a szoba verziófrissítésekor",
     "Double check that your server supports the room version chosen and try again.": "Ellenőrizze még egyszer, hogy a kiszolgálója támogatja-e kiválasztott szobaverziót, és próbálja újra.",
     "Unencrypted": "Titkosítatlan",

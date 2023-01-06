@@ -1117,7 +1117,6 @@
     "Connecting to integration manager...": "Integrazio kudeatzailera konektatzen…",
     "Cannot connect to integration manager": "Ezin da integrazio kudeatzailearekin konektatu",
     "The integration manager is offline or it cannot reach your homeserver.": "Integrazio kudeatzailea lineaz kanpo dago edo ezin du zure hasiera-zerbitzaria atzitu.",
-    "Clear notifications": "Garbitu jakinarazpenak",
     "Manage integrations": "Kudeatu integrazioak",
     "Ignored/Blocked": "Ezikusia/Blokeatuta",
     "Error adding ignored user/server": "Errorea ezikusitako erabiltzaile edo zerbitzaria gehitzean",

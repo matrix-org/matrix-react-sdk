@@ -1136,7 +1136,6 @@
     "Connecting to integration manager...": "Připojování se ke správci integrací...",
     "Cannot connect to integration manager": "Nepovedlo se připojení ke správci integrací",
     "The integration manager is offline or it cannot reach your homeserver.": "Správce integrací neběží nebo se nemůže připojit k vašemu domovskému serveru.",
-    "Clear notifications": "Odstranit oznámení",
     "Manage integrations": "Správa integrací",
     "Ignored/Blocked": "Ignorováno/Blokováno",
     "Error adding ignored user/server": "Chyba při přidávání ignorovaného uživatele/serveru",

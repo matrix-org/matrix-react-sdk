@@ -368,7 +368,6 @@
     "We encountered an error trying to restore your previous session.": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Ваш обліковий запис має перехресне підписування особи у таємному сховищі, але цей сеанс йому ще не довіряє.",
     "in account data": "у даних облікового запису",
-    "Clear notifications": "Очистити сповіщення",
     "Theme added!": "Тему додано!",
     "Email addresses": "Адреси е-пошти",
     "Phone numbers": "Номери телефонів",

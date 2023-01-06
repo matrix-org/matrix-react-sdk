@@ -905,7 +905,6 @@
     "Backup has a <validity>valid</validity> signature from this user": "Záloha je podpísaná <validity>platným</validity> kľúčom od tohoto používateľa",
     "Backup has a <validity>invalid</validity> signature from this user": "Záloha je podpísaná <validity>neplatným</validity> kľúčom od tohoto používateľa",
     "Backup has a signature from <verify>unknown</verify> user with ID %(deviceId)s": "Podpis zálohy pochádza od <verify>neznámeho</verify> používateľa ID %(deviceId)s",
-    "Clear notifications": "Vymazať oznámenia",
     "Change identity server": "Zmeniť server totožností",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Naozaj si želáte odpojiť od servera totožností <current /> a pripojiť sa namiesto toho k serveru <new />?",
     "Disconnect identity server": "Odpojiť server totožností",

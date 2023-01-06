@@ -1232,7 +1232,6 @@
     "Connect this session to Key Backup": "Подключить этот сеанс к резервированию ключей",
     "Backup is not signed by any of your sessions": "Резервная копия не подписана ни одним из ваших сеансов",
     "This backup is trusted because it has been restored on this session": "Эта резервная копия является доверенной, потому что она была восстановлена в этом сеансе",
-    "Clear notifications": "Убрать уведомления",
     "Invalid theme schema.": "Неверная схема темы.",
     "Error downloading theme information.": "Ошибка при загрузке информации темы.",
     "Theme added!": "Тема добавлена!",

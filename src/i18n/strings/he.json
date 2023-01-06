@@ -705,7 +705,6 @@
     "Failed to save your profile": "שמירת הפרופיל שלך נכשלה",
     "Enable audible notifications for this session": "אפשר התראות נשמעות עבור התחברות זו",
     "Enable desktop notifications for this session": "החל התראות עבור התחברות זו",
-    "Clear notifications": "נקה התראות",
     "The integration manager is offline or it cannot reach your homeserver.": "מנהל האינטגרציה לא מקוון או שהוא לא יכול להגיע לשרת הבית שלך.",
     "Cannot connect to integration manager": "לא ניתן להתחבר אל מנהל האינטגרציה",
     "Connecting to integration manager...": "מתחבר למנהל האינטגרציה ...",

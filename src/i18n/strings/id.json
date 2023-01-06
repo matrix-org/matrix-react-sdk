@@ -1251,7 +1251,6 @@
     "There was an error loading your notification settings.": "Sebuah kesalahan terjadi saat memuat pengaturan notifikasi Anda.",
     "Mentions & keywords": "Sebutan & kata kunci",
     "New keyword": "Kata kunci baru",
-    "Clear notifications": "Hapus notifikasi",
     "Enable audible notifications for this session": "Aktifkan notifikasi bersuara untuk sesi ini",
     "Enable desktop notifications for this session": "Aktifkan notifikasi desktop untuk sesi ini",
     "Enable email notifications for %(email)s": "Aktifkan notifikasi email untuk %(email)s",

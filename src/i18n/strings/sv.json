@@ -1228,7 +1228,6 @@
     "Your keys are <b>not being backed up from this session</b>.": "Dina nycklar <b>säkerhetskopieras inte från den här sessionen</b>.",
     "Back up your keys before signing out to avoid losing them.": "Säkerhetskopiera dina nycklar innan du loggar ut för att undvika att du blir av med dem.",
     "Start using Key Backup": "Börja använda nyckelsäkerhetskopiering",
-    "Clear notifications": "Rensa aviseringar",
     "Enable desktop notifications for this session": "Aktivera skrivbordsaviseringar för den här sessionen",
     "Enable audible notifications for this session": "Aktivera ljudaviseringar för den här sessionen",
     "<a>Upgrade</a> to your own domain": "<a>Uppgradera</a> till din egen domän",

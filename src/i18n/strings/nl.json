@@ -1227,7 +1227,6 @@
     "Backup is not signed by any of your sessions": "De back-up is door geen van jouw sessies ondertekend",
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
     "Your keys are <b>not being backed up from this session</b>.": "Jouw sleutels worden <b>niet geback-upt van deze sessie</b>.",
-    "Clear notifications": "Meldingen wissen",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Je moet je <b>persoonlijke informatie</b> van de identiteitsserver <idserver /> <b>verwijderen</b> voordat je ontkoppelt. Helaas kan de identiteitsserver <idserver /> op dit moment niet worden bereikt. Mogelijk is hij offline.",
     "Your homeserver does not support cross-signing.": "Jouw homeserver biedt geen ondersteuning voor kruiselings ondertekenen.",
     "Homeserver feature support:": "Homeserver functie ondersteuning:",

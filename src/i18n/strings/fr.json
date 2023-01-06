@@ -1172,7 +1172,6 @@
     "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s a passé un appel audio. (non pris en charge par ce navigateur)",
     "%(senderName)s placed a video call.": "%(senderName)s a passé un appel vidéo.",
     "%(senderName)s placed a video call. (not supported by this browser)": "%(senderName)s a passé un appel vidéo. (non pris en charge par ce navigateur)",
-    "Clear notifications": "Vider les notifications",
     "Error upgrading room": "Erreur lors de la mise à niveau du salon",
     "Double check that your server supports the room version chosen and try again.": "Vérifiez que votre serveur prend en charge la version de salon choisie et réessayez.",
     "Unencrypted": "Non chiffré",

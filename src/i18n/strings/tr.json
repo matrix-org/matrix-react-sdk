@@ -585,7 +585,6 @@
     "Backing up %(sessionsRemaining)s keys...": "%(sessionsRemaining)s anahtar yedekleniyor...",
     "All keys backed up": "Bütün yedekler yedeklendi",
     "Start using Key Backup": "Anahtar Yedekleme kullanmaya başla",
-    "Clear notifications": "Bildirimleri temizle",
     "Show message in desktop notification": "Masaüstü bildiriminde mesaj göster",
     "Display Name": "Ekran Adı",
     "Profile picture": "Profil resmi",

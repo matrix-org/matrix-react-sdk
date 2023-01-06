@@ -1035,7 +1035,6 @@
     "Backup is not signed by any of your sessions": "备份没有被你的任何一个会话签名",
     "This backup is trusted because it has been restored on this session": "此备份是受信任的因为它恢复到了此会话上",
     "Your keys are <b>not being backed up from this session</b>.": "你的密钥<b>没有被此会话备份</b>。",
-    "Clear notifications": "清除通知",
     "Enable desktop notifications for this session": "为此会话启用桌面通知",
     "Enable audible notifications for this session": "为此会话启用声音通知",
     "Checking server": "检查服务器",

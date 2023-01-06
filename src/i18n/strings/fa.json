@@ -1569,7 +1569,6 @@
     "Enable audible notifications for this session": "فعال‌سازی اعلان‌های صدادار برای این نشست",
     "Show message in desktop notification": "پیام‌ها را در اعلان دسکتاپ نشان بده",
     "Enable desktop notifications for this session": "فعال‌سازی اعلان‌های دسکتاپ برای این نشست",
-    "Clear notifications": "پاک‌کردن اعلان‌ها",
     "The integration manager is offline or it cannot reach your homeserver.": "مدیر یکپارچه‌سازی‌ یا آفلاین است و یا نمی‌تواند به سرور شما متصل شود.",
     "Cannot connect to integration manager": "امکان اتصال به مدیر یکپارچه‌سازی‌ها وجود ندارد",
     "Connecting to integration manager...": "در حال اتصال به مدیر پکپارچه‌سازی...",
