@@ -33,15 +33,15 @@ declare global {
             startHomeserver(template: string): Chainable<HomeserverInstance>;
 
             /**
-             * Custom command wrapping task:dendriteStop whilst preventing uncaught exceptions
+             * Custom command wrapping task:{homeserver}Stop whilst preventing uncaught exceptions
              * for if Homeserver stopping races with the app's background sync loop.
-             * @param homeserver the homeserver instance returned by startDendrite
+             * @param homeserver the homeserver instance returned by start{Homeserver}
              */
             stopHomeserver(homeserver: HomeserverInstance): Chainable<AUTWindow>;
 
             /**
              * Register a user on the given Homeserver using the shared registration secret.
-             * @param dendrite the homeserver instance returned by startDendrite
+             * @param homeserver the homeserver instance returned by start{Homeserver}
              * @param username the username of the user to register
              * @param password the password of the user to register
              * @param displayName optional display name to set on the newly registered user
@@ -57,8 +57,8 @@ declare global {
 }
 
 function startHomeserver(template: string): Chainable<HomeserverInstance> {
-    // TODO (devon): inject server specific command
-    return cy.task<HomeserverInstance>("dendriteStart", template);
+    let homeserverName = Cypress.env("HOMESERVER");
+    return cy.task<HomeserverInstance>(homeserverName + "Start", template);
 }
 
 function stopHomeserver(homeserver?: HomeserverInstance): Chainable<AUTWindow> {
@@ -66,8 +66,8 @@ function stopHomeserver(homeserver?: HomeserverInstance): Chainable<AUTWindow> {
     // Navigate away from app to stop the background network requests which will race with Homeserver shutting down
     return cy.window({ log: false }).then((win) => {
         win.location.href = "about:blank";
-        // TODO (devon): inject server specific command
-        cy.task("dendriteStop", homeserver.serverId);
+        let homeserverName = Cypress.env("HOMESERVER");
+        cy.task(homeserverName + "Stop", homeserver.serverId);
     });
 }
 
