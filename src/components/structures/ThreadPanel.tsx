@@ -220,14 +220,12 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
 
     const timelineSet: Optional<EventTimelineSet> =
         filterOption === ThreadFilterType.My ? room?.threadsTimelineSets[1] : room?.threadsTimelineSets[0];
-    const hasThreads = room?.threadsTimelineSets[0]?.getLiveTimeline()?.getEvents()?.length > 0;
+    const hasThreads = Boolean(room?.threadsTimelineSets?.[0]?.getLiveTimeline()?.getEvents()?.length);
 
     useEffect(() => {
         const room = mxClient.getRoom(roomId);
-        room.createThreadsTimelineSets()
-            .then(() => {
-                return room.fetchRoomThreads();
-            })
+        room?.createThreadsTimelineSets()
+            .then(() => room.fetchRoomThreads())
             .then(() => {
                 setFilterOption(ThreadFilterType.All);
                 setRoom(room);
