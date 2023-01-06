@@ -114,7 +114,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             <Button
                 isActive={actionStates.orderedList === "reversed"}
                 label={_td("Bullet list")}
-                onClick={() => composer.orderedList()}
+                onClick={() => composer.unorderedList()}
                 icon={<BulletListIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
