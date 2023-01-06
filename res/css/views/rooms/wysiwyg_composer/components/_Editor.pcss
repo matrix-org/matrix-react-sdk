@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 .mx_WysiwygComposer_Editor_container {
-    line-height: 2.2rem;
-
     @keyframes visualbell {
         from {
             background-color: $visual-bell-bg-color;
@@ -27,6 +25,7 @@ limitations under the License.
     }
 
     .mx_WysiwygComposer_Editor_content {
+        line-height: $font-22px; // copied from .mx_EventTile variable
         white-space: pre-wrap;
         word-wrap: break-word;
         outline: none;
@@ -42,8 +41,17 @@ limitations under the License.
         ol {
             margin-top: 0;
             margin-bottom: 0;
+            padding-inline-start: $spacing-28;
+        }
+
+        ul {
             list-style-type: circle;
-            padding-inline-start: 28px;
+        }
+
+        // model output always includes a linebreak but we do not want the user
+        // to see it when writing input
+        br:last-child {
+            display: none;
         }
     }
 
