@@ -85,6 +85,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                         autoFocus={true}
                         label={_td("Text")}
                         value={fields.text}
+                        placeholder=""
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                             setFields((fields) => ({ ...fields, text: e.target.value }))
                         }
@@ -95,6 +96,7 @@ export function LinkModal({ composer, isTextEnabled, onClose, composerContext, i
                     autoFocus={!isTextEnabled}
                     label={_td("Link")}
                     value={fields.link}
+                    placeholder=""
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         setFields((fields) => ({ ...fields, link: e.target.value }))
                     }
