@@ -16,17 +16,18 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+// import { SynapseInstance } from "../../plugins/synapsedocker";
+import { DendriteInstance } from "../../plugins/dendritedocker";
 
 describe("Login", () => {
-    let synapse: SynapseInstance;
+    let synapse: DendriteInstance;
 
     beforeEach(() => {
         cy.stubDefaultServer();
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopDendrite(synapse);
     });
 
     describe("m.login.password", () => {
@@ -34,14 +35,14 @@ describe("Login", () => {
         const password = "p4s5W0rD";
 
         beforeEach(() => {
-            cy.startSynapse("consent").then((data) => {
+            cy.startDendrite("consent").then((data) => {
                 synapse = data;
                 cy.registerUser(synapse, username, password);
                 cy.visit("/#/login");
             });
         });
 
-        it("logs in with an existing account and lands on the home screen", () => {
+        it.only("logs in with an existing account and lands on the home screen", () => {
             cy.injectAxe();
 
             cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
@@ -64,7 +65,7 @@ describe("Login", () => {
 
     describe("logout", () => {
         beforeEach(() => {
-            cy.startSynapse("consent").then((data) => {
+            cy.startDendrite("consent").then((data) => {
                 synapse = data;
                 cy.initTestUser(synapse, "Erin");
             });

@@ -168,7 +168,7 @@ client_api:
 
   # If set, allows registration by anyone who knows the shared secret, regardless
   # of whether registration is otherwise disabled.
-  registration_shared_secret: "secret"
+  registration_shared_secret: "{{REGISTRATION_SECRET}}"
 
   # Whether to require reCAPTCHA for registration. If you have enabled registration
   # then this is HIGHLY RECOMMENDED to reduce the risk of your homeserver being used

@@ -14,42 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// TODO (devon): abstract this whole thing into a homeserver.ts
-
 /// <reference types="cypress" />
 
 import * as crypto from "crypto";
 
 import Chainable = Cypress.Chainable;
 import AUTWindow = Cypress.AUTWindow;
-import { SynapseInstance } from "../plugins/synapsedocker";
+import { DendriteInstance } from "../plugins/dendritedocker";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
-             * Start a synapse instance with a given config template.
-             * @param template path to template within cypress/plugins/synapsedocker/template/ directory.
+             * Start a dendrite instance with a given config template.
+             * @param template path to template within cypress/plugins/dendritedocker/template/ directory.
              */
-            startSynapse(template: string): Chainable<SynapseInstance>;
+            startDendrite(template: string): Chainable<DendriteInstance>;
 
             /**
-             * Custom command wrapping task:synapseStop whilst preventing uncaught exceptions
-             * for if Synapse stopping races with the app's background sync loop.
-             * @param synapse the synapse instance returned by startSynapse
+             * Custom command wrapping task:dendriteStop whilst preventing uncaught exceptions
+             * for if Dendrite stopping races with the app's background sync loop.
+             * @param dendrite the dendrite instance returned by startDendrite
              */
-            stopSynapse(synapse: SynapseInstance): Chainable<AUTWindow>;
+            stopDendrite(dendrite: DendriteInstance): Chainable<AUTWindow>;
 
             /**
-             * Register a user on the given Synapse using the shared registration secret.
-             * @param synapse the synapse instance returned by startSynapse
+             * Register a user on the given Dendrite using the shared registration secret.
+             * @param dendrite the dendrite instance returned by startDendrite
              * @param username the username of the user to register
              * @param password the password of the user to register
              * @param displayName optional display name to set on the newly registered user
              */
             registerUser(
-                synapse: SynapseInstance,
+                dendrite: DendriteInstance,
                 username: string,
                 password: string,
                 displayName?: string,
@@ -58,16 +56,16 @@ declare global {
     }
 }
 
-function startSynapse(template: string): Chainable<SynapseInstance> {
-    return cy.task<SynapseInstance>("synapseStart", template);
+function startDendrite(template: string): Chainable<DendriteInstance> {
+    return cy.task<DendriteInstance>("dendriteStart", template);
 }
 
-function stopSynapse(synapse?: SynapseInstance): Chainable<AUTWindow> {
-    if (!synapse) return;
-    // Navigate away from app to stop the background network requests which will race with Synapse shutting down
+function stopDendrite(dendrite?: DendriteInstance): Chainable<AUTWindow> {
+    if (!dendrite) return;
+    // Navigate away from app to stop the background network requests which will race with Dendrite shutting down
     return cy.window({ log: false }).then((win) => {
         win.location.href = "about:blank";
-        cy.task("synapseStop", synapse.synapseId);
+        cy.task("dendriteStop", dendrite.dendriteId);
     });
 }
 
@@ -79,7 +77,7 @@ export interface Credentials {
 }
 
 function registerUser(
-    synapse: SynapseInstance,
+    synapse: DendriteInstance,
     username: string,
     password: string,
     displayName?: string,
@@ -123,6 +121,6 @@ function registerUser(
         }));
 }
 
-Cypress.Commands.add("startSynapse", startSynapse);
-Cypress.Commands.add("stopSynapse", stopSynapse);
-Cypress.Commands.add("registerUse", registerUser);
+Cypress.Commands.add("startDendrite", startDendrite);
+Cypress.Commands.add("stopDendrite", stopDendrite);
+Cypress.Commands.add("registerUser", registerUser);

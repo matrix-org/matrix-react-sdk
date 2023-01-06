@@ -20,6 +20,7 @@ import "@percy/cypress";
 import "cypress-real-events";
 
 import "./synapse";
+import "./dendrite";
 import "./login";
 import "./labs";
 import "./client";
