@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -94,11 +94,11 @@ describe("Notifier", () => {
         });
 
         mockClient.pushRules = {
-            global: undefined,
+            global: {},
         };
-        accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId);
+        accountDataEventKey = getLocalNotificationAccountDataEventType(mockClient.deviceId!);
 
-        testRoom = new Room(roomId, mockClient, mockClient.getUserId());
+        testRoom = new Room(roomId, mockClient, mockClient.getUserId()!);
 
         MockPlatform = mockPlatformPeg({
             supportsNotifications: jest.fn().mockReturnValue(true),
@@ -109,8 +109,8 @@ describe("Notifier", () => {
 
         Notifier.isBodyEnabled = jest.fn().mockReturnValue(true);
 
-        mockClient.getRoom.mockImplementation((id) => {
-            return id === roomId ? testRoom : new Room(id, mockClient, mockClient.getUserId());
+        mockClient.getRoom.mockImplementation((id: string) => {
+            return id === roomId ? testRoom : new Room(id, mockClient, mockClient.getUserId()!);
         });
     });
 
@@ -448,7 +448,7 @@ describe("Notifier", () => {
 
             dis.dispatch<ThreadPayload>({
                 action: Action.ViewThread,
-                thread_id: rootEvent.getId(),
+                thread_id: rootEvent.getId() ?? null,
             });
 
             await waitFor(() => expect(SdkContextClass.instance.roomViewStore.getThreadId()).toBe(rootEvent.getId()));

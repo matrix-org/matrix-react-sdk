@@ -79,7 +79,7 @@ const msgTypeHandlers: Record<string, (e: MatrixEvent) => string | null> = {
     },
 };
 
-class Notifier {
+class NotifierClass {
     public notifsByRoom: Record<string, Notification[]> = {};
 
     // A list of event IDs that we've received but need to wait until
@@ -501,6 +501,8 @@ class Notifier {
         }
     }
 }
+
+export const Notifier = new NotifierClass();
 
 if (!window.mxNotifier) {
     window.mxNotifier = Notifier;
