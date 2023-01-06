@@ -50,6 +50,7 @@ import { localNotificationsAreSilenced, createLocalNotificationSettingsIfNeeded 
 import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
 import ToastStore from "./stores/ToastStore";
 import { ElementCall } from "./models/Call";
+import { VoiceBroadcastChunkEventType } from "./voice-broadcast";
 
 /*
  * Dispatches:
@@ -77,6 +78,13 @@ const msgTypeHandlers: Record<string, (e: MatrixEvent) => string | null> = {
     [M_LOCATION.altName! as string]: (event: MatrixEvent) => {
         return TextForEvent.textForLocationEvent(event)();
     },
+    [MsgType.Audio]: (event: MatrixEvent): string | null => {
+        if (event.getContent()?.[VoiceBroadcastChunkEventType]) {
+            // mute broadcast chunks
+            return null;
+        }
+        return TextForEvent.textForEvent(event);
+    },
 };
 
 class NotifierClass {
@@ -98,7 +106,7 @@ class NotifierClass {
         return TextForEvent.textForEvent(ev);
     }
 
-    private displayPopupNotification(ev: MatrixEvent, room: Room): void {
+    public displayPopupNotification(ev: MatrixEvent, room: Room): void {
         const plaf = PlatformPeg.get();
         const cli = MatrixClientPeg.get();
         if (!plaf) {
@@ -184,7 +192,7 @@ class NotifierClass {
         };
     }
 
-    private async playAudioNotification(ev: MatrixEvent, room: Room): Promise<void> {
+    public async playAudioNotification(ev: MatrixEvent, room: Room): Promise<void> {
         const cli = MatrixClientPeg.get();
         if (localNotificationsAreSilenced(cli)) {
             return;
@@ -373,7 +381,7 @@ class NotifierClass {
         return this.toolbarHidden;
     }
 
-    public onSyncStateChange(state: SyncState, lastState: SyncState | null, data?: ISyncStateData | undefined) {
+    public onSyncStateChange(state: SyncState, lastState?: SyncState | null, data?: ISyncStateData | undefined) {
         if (state === SyncState.Syncing) {
             this.isSyncing = true;
         } else if (state === SyncState.Stopped || state === SyncState.Error) {
@@ -443,7 +451,7 @@ class NotifierClass {
         }
     }
 
-    private evaluateEvent(ev: MatrixEvent) {
+    public evaluateEvent(ev: MatrixEvent) {
         let roomId = ev.getRoomId();
         if (LegacyCallHandler.instance.getSupportsVirtualRooms() && roomId) {
             // Attempt to translate a virtual room to a native one
